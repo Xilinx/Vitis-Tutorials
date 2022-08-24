@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>ホストとカーネルを使用したコード設定 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../../../_static/doctools.js"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>ホストとカーネルを使用したコード設定</li><li class="wy-breadcrumbs-aside"><a href="../../../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/06-cholesky-accel/03-Algorithm_Acceleration/docs/module1_baseline/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><p><strong>モジュール 1</strong> のコード、ファイル、および手順</p>
+<blockquote>
+<div><p><strong>このモジュール</strong><br />1. ホスト/カーネルの実例の OpenCL API を確認<br />2. Vitis を GUI から実行、またはソフトウェアおよびハードウェア エミュレーションを実行する make を実行<br />3. Vitis アナライザーを実行してアプリケーション タイムラインを確認<br />4. Vitis HLS を実行してスループットのボトルネックを判別<br />5. HLS にテストベンチを挿入してすばやくイテレーションおよびカーネル コードの変更を検証<em></em><em></em><em></em></p>
+</div></blockquote>
+<div class="section" id="understanding-code-setup-with-host-and-kernel">
+<h1>ホストとカーネルを使用したコード設定<a class="headerlink" href="#understanding-code-setup-with-host-and-kernel" title="Permalink to this heading">¶</a></h1>
+<p>各モジュールのソースコードは、ローカルの <code>./src</code> ディレクトリの下にあります。</p><ul> <li><p>ホスト コードを確認すると、複数の API が使用されていることがわかります。データがカーネル間をどのように転送されるかに注目してください。実行モデルでは、次が実行されます。</p><ul class="simple"> <li><p>ホスト プログラムが、Alveo データセンター アクセラレータ カード上の PCIe インターフェイスまたはエンベデッド プラットフォームの AXI バスを介して、カーネルで必要なデータをグローバル メモリに書き込みます。</p></li> <li><p>ホスト プログラムが、入力パラメーターを使用してカーネルを設定します。</p></li> <li><p>ホスト プログラムが FPGA のカーネル関数の実行をトリガーします。</p></li> <li><p>カーネルが、必要に応じてグローバル メモリからのデータを読み出しながら、計算を実行します。</p></li> <li><p>カーネルがグローバル メモリにデータを書き込み、ホストにタスクが終了したことを通知します。</p></li> <li><p>ホスト プログラムがグローバル メモリからホスト メモリにデータを読み出し、必要に応じて処理を続けます。</p></li> </ul>
+</li>
+<li><p>カーネル コードを見てください。このコードは、Vitis ツールでコンパイルされ、ハードウェア記述 (Vivado ツールがザイリンクス デバイスにインプリメント) に変換されます。ホスト コードとカーネル コードは独立して開発およびコンパイルされるので、ヘッダー ファイルで extern &ldquo;C&rdquo; リンクを使用してカーネル関数宣言を囲むか、カーネル コードで関数全体を囲みます。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span><span class="w"> </span><span class="p">{</span><span class="w"></span> <span class="w"></span><span class="kt">void</span><span class="w"> </span><span class="nf">kernel_function</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span> <span class="w"></span><span class="p">}</span><span class="w"></span></pre></div>
+</div></li> </ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="build-and-emulate-with-vitis">
+<h1>Vitis での作成およびエミュレーション<a class="headerlink" href="#build-and-emulate-with-vitis" title="Permalink to this heading">¶</a></h1>
+<p>このチュートリアルの各モジュールでは、GUI またはコマンド ライン (このチュートリアルの内容ではより効率的) を使用して Vitis を実行できます。</p>
+<details>
+  <summary><b>クリックして展開(<code>Vitis GUI</code> の手順)</b></summary><div class="section" id="using-vitis-via-the-gui">
+<h2>Vitis を GUI で使用<a class="headerlink" href="#using-vitis-via-the-gui" title="Permalink to this heading">¶</a></h2>
+<p>ヒント: 次の画像を表示する場合、右クリックで別のタブやウィンドウで開くようにすると、内容を表示されたままにできます。</p>
+<ol class="simple"><li><p>ターミナルを開きます。</p></li> <li><p>Vitis を設定して起動します。</p></li> <li><p>[File] → [Import] をクリックします <a href="../images/gui1_import.png">(画像)</a>。</p></li> <li><p>Vitis プロジェクトでエクスポートした ZIP ファイルのデフォルトをそのまま使用し、[Next] をクリックします <a href="../images/gui2_next.png">(画像)</a>。</p></li> <li><p>次のウィンドウで [Browse] をクリックし、./docs/module1_baseline/project に移動します <a href="../images/gui3_browse.png">(画像)</a>。</p></li> <li><p>vitis_export_archive.ide.zip を選択し、[OK] をクリックします <a href="../images/gui4_zip.png">(画像)</a>。</p></li> <li><p>次のウィンドウで [Finish] をクリックします <a href="../images/gui5_finish.png">(画像)</a>。</p></li></ol>
+</div>
+<div class="section" id="setting-up-the-platform">
+<h2>プラットフォームの設定<a class="headerlink" href="#setting-up-the-platform" title="Permalink to this heading">¶</a></h2>
+<ol class="simple"><li><p>中央のウィンドウ ペインで、プラットフォーム リンクの直後にある 3 つのドット アイコン <code>[…]</code> をクリックします <a href="../images/gui6_platform.png">(画像)</a>。</p></li> <li><p>システムからアクセス可能なプラットフォームを指定します。</p></li></ol>
+</div>
+<div class="section" id="building-and-emulating-the-design">
+<h2>デザインのビルドとエミュレーション<a class="headerlink" href="#building-and-emulating-the-design" title="Permalink to this heading">¶</a></h2>
+<p>[Assistant] ウィンドウに 3 つのメイン フローが表示されます。</p>
+<ol class="simple"><li><p><code>Emulation-SW</code>: 論理レベルでデザインを検証します。</p></li> <li><p><code>Emulation-HW</code>: カーネルをサイクル精度表記にコンパイルして、メトリクスをより正確に測定します。</p></li> <li><p><code>Hardware</code>: フル コンパイルを開始し、ビットストリームを生成します。</p></li></ol>
+<p>ソフトウェア エミュレーションを実行します (数分かかります)。</p>
+<p>ハードウェア エミュレーション実行します (約 10 ～ 20 分かかります)。</p>
+<p>ハードウェア エミュレーションが完了したら、次の Vitis アナライザーのセクションに進みます。</p>
+</details><p><em><strong></strong>または</em></p>
+<details>
+  <summary><b>クリックして展開(<code>make</code> の手順)</b></summary></div>
+<div class="section" id="using-make">
+<h2><strong>make</strong> の使用<a class="headerlink" href="#using-make" title="Permalink to this heading">¶</a></h2>
+<ol class="simple"><li><p>ターミナルを開きます。</p></li> <li><p>Vitis を設定します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">./build</span></code> に移動します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span> <span class="pre">TARGET=sw_emu</span></code> を実行します (論理エミュレーションの場合)。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span> <span class="pre">TARGET=hw_emu</span></code> を実行 (より詳細なエミュレーションの場合。10 分以上かかります)。</p><ul class="simple"> <li><p>現時点では hw ターゲットを実行すると 1 時間以上かかってしまうので、実行しないようにしてください。</p></li> </ul>
+</li>
+</ol>
+</details></div>
+</div>
+<hr class="docutils" />
+<div class="section" id="vitis-analyzer-for-application-end-to-end-timeline-analysis">
+<h1>Vitis アナライザーを使用したアプリケーションのエンド ツー エンドのタイムライン解析<a class="headerlink" href="#vitis-analyzer-for-application-end-to-end-timeline-analysis" title="Permalink to this heading">¶</a></h1>
+<p>Vitis アナライザーは、システム全体からカーネルの詳細まで、デザインのさまざまな側面を参照できるグラフィカル ツールです。</p>
+<details>
+  <summary><b>クリックして展開(<code>Vitis Analyzer</code></b> の手順)</summary><ol><li><p>ターミナル、Vitis を設定します。</p></li> <li><p><code>vitis_analyzer &amp;</code> を実行します。</p></li> <li><p>[File] → [Open Summary] をクリックします。</p></li> <li><p><code>./build</code> を参照します。</p></li> <li><p>cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (青色の play アイコンが前に付いています)</p></li> <li><p>Vitis アナライザーの使用方法は、この 45 秒の <a class="reference external" href="../images/analyzer_anim.gif">looping gif</a> を参照してください。</p>
+<p>次を確認してください。</p>
+<ol class="simple"><li><p>プロファイル サマリ</p></li> <li><p>ガイダンス レポート - 改善点を示します。</p></li> <li><p>アプリケーション タイムライン - 詳細は次を参照してください。</p></li></ol></li></ol>
+<p>アプリケーション タイムラインの構造は次のとおりです。</p><ul> <li><p><em>ホスト</em></p><ul class="simple"> <li><p><strong>[OpenCL API Calls]</strong>: すべての OpenCL API 呼び出しがここでトレースされます。アクティビティ時間はホストの視点から測定されます。</p></li> <li><p><strong>[General]</strong>: clCreateProgramWithBinary、clCreateContext、および clCreateCommandQueue などの一般的な OpenCL API 呼び出しがここでトレースされます。</p></li> <li><p><strong>[Queue]</strong>: 特定のコマンド キューに関連する OpenCL API 呼び出しがここでトレースされます。これには clEnqueueMigrateMemObjects および clEnqueueNDRangeKernel などのコマンドが含まれます。ユーザー アプリケーションで複数のコマンド キューが作成された場合は、このセクションにすべてのキューとそのアクティビティが表示されます。</p></li> <li><p><strong>[Data Transfer]</strong>: このセクションでは、ホストからデバイス メモリまでの DMA 転送がトレースされます。OpenCL ランタイムにインプリメントされる DMA スレッドは複数あり、通常は同数の DMA チャネルがあります。DMA 転送は clEnqueueMigrateMemObjects などの OpenCLAPI を呼び出して、ユーザー アプリケーションにより開始されます。これらの DMA 要求がランタイムに転送され、スレッドの 1 つに割り当てられます。ホストからデバイスまでのデータ転送は [Write] の下、デバイスからホストまでのデータ転送は [Read] の下に表示されます。</p></li> <li><p><strong>[Kernel Enqueues]</strong>: ホスト プログラムによりエンキューされたカーネルが表示されます。ここに示されるカーネルを、デバイスのカーネル/CU と混同しないようにしてください。この「カーネル」は NDRangeKernels と、OpenCL コマンドの clEnqueueNDRangeKernels および clEnqueueTask で作成されるタスクのことです。これらはホストの視点から測定された時間に対してプロットされます。複数のカーネルが同時に実行されるようにスケジュールでき、実行がスケジュールされた時点からカーネル実行の終了までがトレースされます。重複するカーネル実行の数に応じて、複数のエントリが異なる行に表示されます。</p></li> </ul>
+</li>
+<li><p><em>[Device &quot;name&quot;]</em></p>
+<p><strong>[Binary Container &ldquo;name&rdquo;]</strong>: バイナリ コンテナー名。</p><ul class="simple"> <li><p><strong>[Accelerator &quot;name&quot;]</strong>: FPGA 上の計算ユニット (アクセラレータ) の名前。</p></li> </ul>
+</li>
+</ul>
+</details></div>
+<hr class="docutils" />
+<div class="section" id="vitis-hls-for-kernel-optimizations">
+<h1>Vitis HLS を使用したカーネル最適化<a class="headerlink" href="#vitis-hls-for-kernel-optimizations" title="Permalink to this heading">¶</a></h1>
+<p>デバイス LUT およびフロップにインプリメントされるようになっている C++ カーネル (別名「ファブリック」) は、高位合成ツールの Vitis HLS で自動的にコンパイルされます。このチュートリアルでは、Vitis HLS を手動で実行して、基盤となる合成テクノロジとコレスキー カーネル アルゴリズムに関する追加情報を示します。</p>
+<details>
+  <summary><b>クリックして展開(<code>Vitis HLS</code> の手順)</b></summary><ol class="simple"><li><p>ターミナル、Vitis を設定します。</p></li> <li><p><code>./build/cholesky_kernel_hw_emu/cholesky_kernel</code> に移動します。</p><ul class="simple"> <li><p>その階層には、もう 1 つ cholesky_kernel ディレクトリがあるはずです。</p></li> </ul>
+</li>
+<li><p><code>vitis_hls -p cholesky_kernel &amp;</code> を実行して、Vitis 高位合成 GUI を起動します。</p></li> <li><p>Vitis HLS で高位合成レポートが表示されるようになりました。</p></li> <li><p>GUI で <strong>[Synthesis Summary Report]</strong> ウィンドウを展開します。</p></li> <li><p><strong>[Performance &amp; Resources]</strong> セクションでループと関数を展開します。</p></li> <li><p>このクリップの <strong>[II violation]</strong> を右クリックして、コード内の II 違反を見つけます。<a class="reference external" href="../images/HLS_anim.gif"><strong>50s HLS looping GIF</strong></a></p></li></ol>
+<p>注記: 元の Vitis HLS ウィンドウ レイアウトに戻すには、[Windows] メニューから [Reset Perspective] をクリックします。</p>
+<div class="section" id="initiation-interval">
+<h2>開始間隔 (II)<a class="headerlink" href="#initiation-interval" title="Permalink to this heading">¶</a></h2>
+<p>この関数では、2 つのループに対する II 違反が 8 になっています。その 1 つは次のようになります。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Loop only takes one element every 8 clock cycles!!!</span>
+<span class="c1">// We expected one every cycle (II of 1)</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">tmp</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dataA</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dataA</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">];</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>このバージョンのアルゴリズムでは、累算ありの double データ型を使用しているので、操作が実行されて終了するまでシリコンが 300MHz で 8 サイクルで動作する必要があります。サンプルは、1 つずつ 8 サイクルの間隔でしか計算できません。これが次のモジュールで取り組む最初のボトルネックです。</p>
+</div>
+<div class="section" id="kernel-latency">
+<h2>カーネル レイテンシ<a class="headerlink" href="#kernel-latency" title="Permalink to this heading">¶</a></h2>
+<p>それでは、レイテンシについて見てみましょう。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cholesky_kernel/solution/syn/report/cholesky_kernel_csynth.rpt</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* Loop:
++--------------------+--------+---------+-------------+-----------+-----------+------------+----------+
+|                    | Latency (cycles) |  Iteration  |  Initiation Interval  |    Trip    |          |
+|       Loop Name    |  min   |   max   |   Latency   |  achieved |   target  |    Count   | Pipelined|
++--------------------+--------+---------+-------------+-----------+-----------+------------+----------+
+|- VITIS_LOOP_32_..  |       ?|        ?|            3|          1|          1|           ?|    yes   |
+|- Loop_first_col    |       ?|        ?|           34|          1|          1|           ?|    yes   |
+|- Loop_col          |       ?|        ?|            ?|          -|          -|           ?|    no    |
+| + Loop_diag        |      17|  2097161|           18|          8|          1| 1 ~ 262144 |    yes   |
+| + Loop_row         |       ?|        ?| 61 ~ 2097205|          -|          -|           ?|    no    |
+|  ++ Loop_vec_mul   |      17|  2097161|           18|          8|          1| 1 ~ 262144 |    yes   |
+|- VITIS_LOOP_67_..  |       ?|        ?|            4|          1|          1|           ?|    yes   |
++--------------------+--------+---------+-------------+-----------+-----------+------------+----------+
+</pre></div>
+</div>
+<p>次の点に注意してください。</p><ul class="simple"> <li><p><code>VITIS</code> が名前の先頭に付いたループ: Vitis HLS で自動的にラベル付けされたループで、ソース コードにはラベルは付いていません。表に含まれているそれ以外のループにはラベルが付いています。</p></li> <li><p>クエスチョン マーク (?) は、関数へのスカラー入力に依存するために計算できないメトリクスを表します。この例では、行列サイズはコンフィギュレーション可能であり、レイテンシはそのサイズによって異なります。</p></li> <li><p>最後の Pipelined 列は、各サイクルで入力を処理するようにループが制約されているかどうかを示します。単純なループまたはほとんどの入れ子のループは、通常ツールによって自動的にパイプライン処理されます。</p></li> </ul>
+<p>コレスキー関数への入力として、ユーザーが行列 N のサイズを渡します (この例の場合、64 でした)。</p>
+<p>最初のループでは、開始間隔 II=1 で N 回の繰り返しが必要で、II=3 なので、終了するのに N x 3 かかります。<code>Loop_first_col</code> ループは N x 34 かかり、<code>Loop_col</code> ループは N 回 ((<code>Loop_diag</code> は N * 18) + (<code>Loop_row</code> は N * (N + 18)) 実行されます。最後のループは、最初のループと同様に N 回の繰り返しを必要とします。</p>
+<p>次の場合、おおよその所要時間を見積もることができます。 <code>N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N</code></p>
+<p>このため、基本的にアルゴリズムのレイテンシは、行列のサイズである N の 3 乗で計算できます。</p>
+</div>
+<div class="section" id="adding-a-c-testbench-for-the-kernel">
+<h2>カーネル用の C++ テストベンチの追加<a class="headerlink" href="#adding-a-c-testbench-for-the-kernel" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルでは、カーネルをラップして Vitis HLS 環境でシミュレーションするあらかじめ作成された C++ の main プログラムを用意しています。</p>
+<p><strong>手順:</strong></p>
+<ol><li><p>ターミナルの <code>docs</code> ディレクトリから次を実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="o">./</span><span class="n">hls_tb</span> <span class="o">./</span><span class="n">module1_baseline</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">cholesky_kernel_hw_emu</span><span class="o">/</span><span class="n">cholesky_kernel</span>
+<span class="n">cp</span> <span class="o">./</span><span class="n">module1_baseline</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">cholesky_kernel</span><span class="o">.</span><span class="n">hpp</span> <span class="o">./</span><span class="n">module1_baseline</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">cholesky_kernel_hw_emu</span><span class="o">/</span><span class="n">cholesky_kernel</span><span class="o">/</span><span class="n">hls_tb</span>
+</pre></div>
+</div>
+</li> <li><p>Vitis HLS GUI が閉じている場合は、開き直します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">./</span><span class="n">module1_baseline</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">cholesky_kernel_hw_emu</span><span class="o">/</span><span class="n">cholesky_kernel</span>
+<span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">cholesky_kernel</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+</li> <li><p>GUI の [Explorer] ウィンドウの左ペインで [Source] の下の [Test Bench] を見つけます。右クリックして [Add file] を選択し、test_hls.cpp を選択します。この操作を ./hls_tb/tb_data の matrix_input.dat と golden_result.dat の 2 つのデータ ファイルに対して繰り返します。</p></li> <li><p>メインメニューで [Project] → [Run C simulation] をクリックします。これにより、「Csim」と呼ばれる純粋な論理シミュレーションが実行されます。HLS の合成するものは使用されません。</p></li> <li><p>[Project] → [Run C simulation] をクリックします。</p></li> <li><p>[Solution] → [Run C Synthesis] → [Active Solution] をクリックします。</p></li> <li><p>[Solution] → [Run C/RTL Cosimulation] をクリックします。ポップアップ ウィンドウで [OK] をクリックします。</p></li></ol>
+<p>Vitis HLS 協調シミュレーションは、クロック サイクルで実際レイテンシを示すサイクル精度の RTL シミュレーションを実行します。テストベンチでは、行列は 16x16 です。</p>
+</details></div>
+</div>
+<hr class="docutils" />
+<div class="section" id="wrap-up-for-module-1">
+<h1>モジュール 1 のまとめ<a class="headerlink" href="#wrap-up-for-module-1" title="Permalink to this heading">¶</a></h1>
+<p><strong>重要ポイント:</strong></p><ul class="simple"> <li><p>Alveo カードのアルゴリズムをアクセラレーションするには、プログラムにホストとカーネル デザイン ユニットが必要です。</p></li> <li><p>Vitis はアプリケーションのビルドをしやすくし、ホスト カーネル通信をイネーブルにするドライバーを提供します。</p></li> <li><p>Vitis には操作のシーケンスを理解するのに役立つ解析ツールが含まれます。</p></li> <li><p>Vitis HLS は C コード アルゴリズムをハードウェア言語に変換して、ザイリンクス デバイスにインプリメントするコンパイラ テクノロジです。</p></li> </ul>
+<hr class="docutils" />
+<div class="section" id="next">
+<h2>次の手順<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h2>
+<p>次は<a class="reference internal" href="../module2_pipeline/README.html"><span class="doc">モジュール 2</span></a> に進みます。</p>
+<hr class="docutils" />
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>使用されるカーネル リソース (通常の浮動小数点 vs 倍精度浮動小数点) - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../../../../" id="documentation_options" src="../../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../../../_static/doctools.js"></script>
+    <script src="../../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>使用されるカーネル リソース (通常の浮動小数点 vs 倍精度浮動小数点)</li><li class="wy-breadcrumbs-aside"><a href="../../../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/06-cholesky-accel/03-Algorithm_Acceleration/docs/module3_datatype/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><p><strong>モジュール 3</strong> のコード、ファイル、および手順 (<a class="reference external" href="../module1_baseline/README.html">モジュール 1</a> と同じフローで GUI を設定または make を実行)</p>
+<p>このモジュールでは、カーネル コードとホスト コードの両方を 64 ビット浮動小数点データ型 (double) ではなく、32 ビット浮動小数点データ型 (float) を使用するように変更し、データ型のサイズを下げることで、パフォーマンスおよび使用率がどれくらい改善されるかについて説明します。</p>
+<p>U50 カードに搭載されているザイリンクス デバイスは、ハードウェア リソース (DSP ブロックおよびロジック) を使用して浮動小数点をインプリメント可能な UltraScale+ デバイスです。浮動小数点演算子は、多くのハードウェアを使用する傾向があります。このモジュールでは、32 ビットの浮動小数点型にサイズを下げた場合の節約量を測定します。</p><ul class="simple"> <li><p>Vitis とハードウェア エミュレーションのみを実行します (モジュール 1 を参照)。ソフトウェア エミュレーションや実際のハードウェア コンパイルを実行する必要はありません。</p></li> <li><p>Vitis アナライザーを実行して、デバイス リソースへの影響とパフォーマンスの向上の両方を測定します。</p></li> <li><p>前のモジュールの使用率と比較してください。</p></li> </ul>
+<p>カーネルの実行時間は短縮されましたか。</p><ul class="simple"> <li><p>Vitis HLS を実行して、II を含む詳細なパラメーターを測定します (II は開始間隔であり、生成されたハードウェアは II クロック サイクルごとにデータを消費できます)。<II></p></li> </ul>
+<p>リソースの使用率はモジュール 1 および 2 より少なくなっていますか。II は以前とは異なっていますか。</p>
+<div class="section" id="kernel-resources-used-regular-floating-point-versus-double">
+<h1>使用されるカーネル リソース (通常の浮動小数点 vs 倍精度浮動小数点)<a class="headerlink" href="#kernel-resources-used-regular-floating-point-versus-double" title="Permalink to this heading">¶</a></h1>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>名前</th>
+<th align="right">LUT</th>
+<th align="right">LUTAsMem</th>
+<th align="right">REG</th>
+<th align="right">BRAM</th>
+<th align="right">DSP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>double</code> を使用したカーネル</td>
+<td align="right">10190</td>
+<td align="right">799</td>
+<td align="right">10191</td>
+<td align="right">514</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td><code>float</code> を使用したカーネル</td>
+<td align="right">5071</td>
+<td align="right">746</td>
+<td align="right">5124</td>
+<td align="right">258</td>
+<td align="right">12</td>
+</tr>
+</tbody>
+</table><p>ロジックとストレージの両方すべてでリソース使用率が低下します。</p><ul class="simple"> <li><p>32 ビット ワードを格納するので (doble データ型の場合は 64 ビットだった)、ストレージが約半分に減ります。</p></li> <li><p>また、演算子は消費するロジックが少ないため、DSP ブロックも少なくなります。</p></li> </ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="takeaway-for-this-module">
+<h1>このモジュールのまとめ<a class="headerlink" href="#takeaway-for-this-module" title="Permalink to this heading">¶</a></h1>
+<p>データの精度を下げることで、パフォーマンスを向上させることができます。ザイリンクス デバイスでは、データ型を簡素化することで、かなり結果が改善されます。</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="next">
+<h1>次の手順<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference internal" href="../module4_dataflow/README.html"><span class="doc">モジュール 4</span></a> に進みます。</p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

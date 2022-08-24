@@ -1,0 +1,449 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Multi-Kernel FIR Filter Implementation &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Accelerators/Feature_Tutorials/03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Multi-Kernel FIR Filter Implementation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/MultiKernel/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
+   <h1>Super Sampling Rate FIR Filters</h1>
+   <h2>Implementation on the AI Engine</h2>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h1>Multi-Kernel FIR Filter</h1>
+ </td>
+ </tr>
+</table><div class="section" id="multi-kernel-fir-filter-implementation">
+<h1>Multi-Kernel FIR Filter Implementation<a class="headerlink" href="#multi-kernel-fir-filter-implementation" title="Permalink to this heading">¶</a></h1>
+<p>In this second part of the tutorial you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.</p>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory to continue.</p>
+<div class="section" id="designing-the-kernel">
+<h2>Designing the Kernel<a class="headerlink" href="#designing-the-kernel" title="Permalink to this heading">¶</a></h2>
+<p>As in the Single-kernel tutorial, this design will use streaming input and output but the performances must be improved. Limitations can come from two sources:</p>
+<ul class="simple">
+<li><p>Limit on the bandwidth side</p></li>
+<li><p>Limit in the compute performance side</p></li>
+</ul>
+<p>In the single-kernel section of the tutorial the maximum throughput was 225 Msps, which shows that the streams are starved due to a limitation of the compute performance. The data type <code class="docutils literal notranslate"><span class="pre">cint16</span></code> is 32-bit wide and the maximum bandwidth of the AXI-Stream connection array is 1x <code class="docutils literal notranslate"><span class="pre">cint16</span></code> per clock cycle on a single stream. In the single-kernel part, four of them were read in four clock cycles, but the computation was taking 16 clock cycles for the 32 taps. For the optimal trade-off, the computation should take only four clock cycles for each of the four input samples read from the stream. In four clock cycles, eight taps can be processed, the complete filtering operation should be split onto four AI Engines.</p>
+<p>The Single-Kernel Filter can be represented by this convolution:</p>
+<p><img src="../Images/FourKernelDivision_1.jpg" width=1000><br></p>
+<p>After subdivision into four Kernels, each one on a different AI Engine, the filter can be represented by four smaller filters in parallel running on the same data stream, except that for some of these kernels the beginning of the stream is discarded:</p>
+<p><img src="../Images/FourKernelDivision_2.jpg" width=1000><br></p>
+<p>The four AI Engines each perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of <code class="docutils literal notranslate"><span class="pre">mac</span></code> operations. For computations being performed on four lanes, the accumulator vector is <code class="docutils literal notranslate"><span class="pre">v4cacc48</span></code>, which is a 384 bit vector that can be sent to the next AI Engine in the chain in one clock cycle.</p>
+<p><img src="../Images/FourKernels.jpg" width=800><br></p>
+</div>
+<div class="section" id="c-code-analysis">
+<h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this heading">¶</a></h2>
+<p>As shown in the previous figure, there are three different types of kernels that differ from their interface:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Location</th>
+<th align="center">Inputs</th>
+<th align="right">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">First block</td>
+<td align="center">Stream In</td>
+<td align="right">Cascade Out</td>
+</tr>
+<tr>
+<td align="left">Middle Block</td>
+<td align="center">Stream In<br>Cascade In</td>
+<td align="right">Cascade Out</td>
+</tr>
+<tr>
+<td align="left">Last Block</td>
+<td align="center">Stream In<br>Cascade In</td>
+<td align="right">Stream Out</td>
+</tr>
+</tbody>
+</table><p>They have been named with respect to their cascade connection structure:</p>
+<ul class="simple">
+<li><p>FIR_MultiKernel_cout</p></li>
+<li><p>FIR_MultiKernel_cincout</p></li>
+<li><p>FIR_MultiKernel_cincout</p></li>
+<li></li>
+</ul>
+<p>The class declaration for the first one is:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span><span class="w"> </span><span class="n">NSamples</span><span class="p">,</span><span class="kt">int</span><span class="w"> </span><span class="n">ShiftAcc</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FIR_MultiKernel_cout</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="n">weights</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span><span class="w"></span>
+<span class="w">	</span><span class="k">alignas</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="n">delay_line</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w"></span>
+
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">FIR_MultiKernel_cout</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cint16</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">taps</span><span class="p">)[</span><span class="mi">8</span><span class="p">])</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taps</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">		</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">delay_line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">cint16</span><span class="p">){</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">};</span><span class="w"></span>
+<span class="w">	</span><span class="p">};</span><span class="w"></span>
+
+<span class="w">	</span><span class="kt">void</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w">  </span><span class="n">sin</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span><span class="w">  </span><span class="n">cout</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">	</span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">registerKernelClass</span><span class="p">()</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="n">REGISTER_FUNCTION</span><span class="p">(</span><span class="n">FIR_MultiKernel_cout</span><span class="o">::</span><span class="n">filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">	</span><span class="p">};</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="data-and-coefficients-management-and-operation-scheduling">
+<h3>Data and Coefficients Management and Operation Scheduling<a class="headerlink" href="#data-and-coefficients-management-and-operation-scheduling" title="Permalink to this heading">¶</a></h3>
+<p>The difference between the single-kernel case and this case is that the tap array contains eight elements and that the delay line is only 16 element deep. In the previous section you saw that there were only two <code class="docutils literal notranslate"><span class="pre">mul4</span></code> and <code class="docutils literal notranslate"><span class="pre">mac4</span></code> intrinsics for cint16 x cint16 operations.</p>
+<p><img src="../Images/Mul4Intrinsics.jpg" width=800><br></p>
+<p>More interestingly is the one that uses a <code class="docutils literal notranslate"><span class="pre">v16cint16</span></code> for the data register. Filter output compute for an eight tap filter on four lanes in parallel requires (8+3 = 11) data in the buffer. The delay-line should contain at least eight samples as the seven previous samples will be needed for the computation of the first output.</p>
+<p>The following image gives an idea of data update scheduling and how it is interleaved with <code class="docutils literal notranslate"><span class="pre">mul4</span></code>/<code class="docutils literal notranslate"><span class="pre">mac4</span></code> operations (only the first eight outputs).</p>
+<p><img src="../Images/Scheduling8tapFilter.jpg" width=800><br></p>
+<p>The related C++ code is as follows:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="p">,</span><span class="n">ShiftAcc</span><span class="o">&gt;::</span><span class="n">filter</span><span class="p">(</span><span class="n">input_stream_cint16</span><span class="o">*</span><span class="w"> </span><span class="n">sin</span><span class="p">,</span><span class="n">output_stream_cacc48</span><span class="o">*</span><span class="w"> </span><span class="n">cout</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">	</span><span class="n">v8cint16</span><span class="w"> </span><span class="n">taps</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="o">*</span><span class="p">(</span><span class="n">v8cint16</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">weights</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">v16cint16</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">v16cint16</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">delay_line</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">v16cint16</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">	</span><span class="n">v4cacc48</span><span class="w"> </span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">undef_v4cacc48</span><span class="p">();</span><span class="w"></span>
+
+
+
+<span class="c1">// Computes 16 samples per iteration</span>
+<span class="w">	</span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">		</span><span class="n">chess_prepare_for_pipelining</span><span class="w"></span>
+<span class="w">		</span><span class="n">chess_loop_range</span><span class="p">(</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">,</span><span class="n">NSamples</span><span class="o">/</span><span class="mi">16</span><span class="p">)</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">readincr_v4</span><span class="p">(</span><span class="n">sin</span><span class="p">));</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">readincr_v4</span><span class="p">(</span><span class="n">sin</span><span class="p">));</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">readincr_v4</span><span class="p">(</span><span class="n">sin</span><span class="p">));</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mul4</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">upd_v</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">readincr_v4</span><span class="p">(</span><span class="n">sin</span><span class="p">));</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">acc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mac4</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">data</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mh">0x3210</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">taps</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mh">0x0000</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">writeincr_v4</span><span class="p">(</span><span class="n">cout</span><span class="p">,</span><span class="n">acc</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">	</span><span class="p">}</span><span class="w"></span>
+
+<span class="w">	</span><span class="o">*</span><span class="n">ptr_delay_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This code is the one of <code class="docutils literal notranslate"><span class="pre">FIR_MultiKernel_cout</span></code>, the output is sent to the cascade stream using the <code class="docutils literal notranslate"><span class="pre">writeincr_v4(cout,acc)</span></code> instruction.</p>
+<p>At the graph level, all kernels are first declared in a class:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FIRGraph_4Kernels</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">graph</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">kernel</span><span class="w"> </span><span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+
+<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">	</span><span class="n">input_port</span><span class="w"> </span><span class="n">in</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="w"></span>
+<span class="w">	</span><span class="n">output_port</span><span class="w"> </span><span class="n">out</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The constructor takes charge of the next operations. The first operation is to create the kernels: 1x<strong>FIR_MultiKernel_cout</strong>, 2x<strong>FIR_MultiKernel_cincout</strong>, 1x<strong>FIR_MultiKernel_cin</strong></p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">FIRGraph_4Kernels</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cincout</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_2</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">kernel</span><span class="o">::</span><span class="n">create_object</span><span class="o">&lt;</span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIR_MultiKernel_cin</span><span class="o">&lt;</span><span class="n">NUM_SAMPLES</span><span class="p">,</span><span class="n">SHIFT</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">taps4_3</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The AI Engine compiler needs to know the location of the source code for the kernels:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">NChunks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NChunks</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.9</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">source</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;aie_kernels/FirSingleStream.cpp&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">headers</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">&quot;aie_kernels/FirSingleStream.h&quot;</span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To shorten the place time by a few seconds, you can constrain the core location. A single one is necessary because all the others will be constrained by the <strong>cascade</strong> connection:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Constraints: location of the first kernel in the cascade</span>
+<span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tile</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>All the kernels need to discard a specific number of elements. This will be handled by the initialization function as this must be done beforehand and only once:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Discard first elements of the stream, depending on position in the cascade</span>
+<span class="n">initialization_function</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SingleStream::FIRinit&lt;0&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">initialization_function</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SingleStream::FIRinit&lt;8&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">initialization_function</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SingleStream::FIRinit&lt;16&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">initialization_function</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SingleStream::FIRinit&lt;24&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, all kernels must be connected together. This is done at the end of the constructor of the class:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Cascade Connections and output connection</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NChunks</span><span class="mi">-1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">cascade</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">NChunks</span><span class="mi">-1</span><span class="p">].</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">out</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Input Streams connections</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">NChunks</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">connect</span><span class="o">&lt;</span><span class="n">stream</span><span class="o">&gt;</span><span class="p">(</span><span class="n">in</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The initialization function is very simple. It simply reads data from the input stream. Because there is no argument, the raw API for stream access must be used:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="kt">int</span><span class="w"> </span><span class="n">Delay</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="n">SingleStream</span><span class="o">::</span><span class="n">FIRinit</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Delay</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">get_ss</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="compilation-and-analysis">
+<h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
+<p>Ensure that the <code class="docutils literal notranslate"><span class="pre">InitPythonPath</span></code> has been sourced in the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory.</p>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> three methods are defined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compile</span></code></p>
+<ul>
+<li><p>Compiles the graph and the kernels</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simulate</span></code></p>
+<ul>
+<li><p>Runs the AI Engine System C simulator</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">visualize</span></code></p>
+<ul>
+<li><p>Runs <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code> on the output summary</p></li>
+</ul>
+</li>
+</ul>
+<p>Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instantiation of kernels. In <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.</p>
+<p>To have the simulation running, input data must be generated. Change directory to <code class="docutils literal notranslate"><span class="pre">data</span></code> and type <code class="docutils literal notranslate"><span class="pre">GenerateStreams</span></code>. The following parameter should be set for this example:</p>
+<p><img src="../Images/GenerateSingleStream.jpg" width=800><br></p>
+<p>Click <strong>Generate</strong> then <strong>Exit</strong>. The generated file <code class="docutils literal notranslate"><span class="pre">PhaseIn_0.txt</span></code> should contain mainly 0’s, with a few 1’s and 10’s.</p>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> and wait for <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code> GUI to display. The Vitis analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.</p>
+<p>Click <strong>Graph</strong> to visualize the graph of the application:</p>
+<p><img src="../Images/Graph4Kernels.jpg" width=800><br></p>
+<p>The four kernels and their four independent input streams are clearly visible. A single input with a FIFO of eight between each AI Engine can also be implemented.</p>
+<p>Click <strong>Array</strong> to visualize where the kernel has been placed, and how it is fed from the the PL:</p>
+<p><img src="../Images/Array4Kernels.jpg" width=800><br></p>
+<p>In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph.</p>
+<p>Finally click <strong>Trace</strong> to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:</p>
+<p><img src="../Images/Timeline4Kernels.jpg" width=1500><br></p>
+<p>Now the output of the filter can be displayed. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to <code class="docutils literal notranslate"><span class="pre">Emulation-AIE/aiesimulator_output/data</span></code> and look at the <code class="docutils literal notranslate"><span class="pre">Output_0.txt</span></code>. You can see that you have two complex outputs per line which is prepended with a time stamp.  <code class="docutils literal notranslate"><span class="pre">ProcessAIEOutput</span> <span class="pre">Output_0.txt</span></code>.</p>
+<p><img src="../Images/GraphOutput4Kernels.jpg" width=1000><br></p>
+<p>The top graph reflects the outputs where the abscissa is the time at which this output occured. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.</p>
+<p>The performance of this architecture can be measured using the timestamped output. In the same directory (<code class="docutils literal notranslate"><span class="pre">Emulation-AIE/aiesimulator_output/data</span></code>) type <code class="docutils literal notranslate"><span class="pre">StreamThroughput</span> <span class="pre">Output_0.txt</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Output_0</span><span class="o">.</span><span class="n">txt</span> <span class="o">--&gt;</span>   <span class="mf">950.35</span> <span class="n">Msps</span>
+
+<span class="o">-----------------------</span>
+
+<span class="n">Total</span> <span class="n">Throughput</span> <span class="o">--&gt;</span>     <span class="mf">950.35</span> <span class="n">Msps</span>
+</pre></div>
+</div>
+<p>This architecture achieves very close to 1 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.</p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup><br><sup>XD020</sup></br></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

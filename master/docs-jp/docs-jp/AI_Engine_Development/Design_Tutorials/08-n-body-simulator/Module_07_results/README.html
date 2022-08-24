@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Creating the Animation GIF &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Creating the Animation GIF</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docs/AI_Engine_Development/Design_Tutorials/08-n-body-simulator/Module_07_results/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="creating-the-animation-gif">
+<h1>Creating the Animation GIF<a class="headerlink" href="#creating-the-animation-gif" title="Permalink to this heading">¶</a></h1>
+<p>You can create a gif from your own <code class="docutils literal notranslate"><span class="pre">data/animation_data.txt</span></code> file using the following command:</p>
+<p><em>Estimated time: 3 minutes</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">animation</span>
+</pre></div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h2>
+<p>The following is a GIF created from the <code class="docutils literal notranslate"><span class="pre">data/animation_data_golden.txt</span></code> file. You should get a similar GIF from your own data.</p>
+<div class="section" id="particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps">
+<h3>12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 Timesteps<a class="headerlink" href="#particles-simulated-on-a-400-tile-ai-engine-accelerator-for-300-timesteps" title="Permalink to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../../../../_images/animation.gif" /></p>
+</div>
+</div>
+<div class="section" id="latency-performance-comparisons">
+<h2>Latency Performance Comparisons<a class="headerlink" href="#latency-performance-comparisons" title="Permalink to this heading">¶</a></h2>
+<p>Following is a table comparing the executions times to simulate 12,800 particles for one timestep on the different N-Body Simulators explored in this tutorial.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Name</th>
+<th>Hardware</th>
+<th>Algorithm</th>
+<th>Average Execution Time for 1 Timestep (seconds)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python NBody Simulator</td>
+<td>x86 Linux Machine</td>
+<td>O(N)</td>
+<td>14.96</td>
+</tr>
+<tr>
+<td>C++ NBody Simulator</td>
+<td>A72 Embedded Arm Processor</td>
+<td>O(N<sup>2</sup>)</td>
+<td>124.79</td>
+</tr>
+<tr>
+<td>AI Engine NBody Simulator</td>
+<td>Versal AI Engine IP</td>
+<td>O(N)</td>
+<td>0.004657468</td>
+</tr>
+</tbody>
+</table><p>As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation and a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. A vectorized C++ NBody Simulator O(N) implementation can be created with pthreads, but is left as an exercise for the user.</p>
+</div>
+<div class="section" id="design-throughput-calculations-effective-vs-theoretical">
+<h2>Design Throughput Calculations (Effective vs. Theoretical)<a class="headerlink" href="#design-throughput-calculations-effective-vs-theoretical" title="Permalink to this heading">¶</a></h2>
+<p>The following table describes the total number of floating-point operations (FLOP) for 1 iteration of a single <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> AI Engine kernel:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Section of Code</th>
+<th>mac</th>
+<th>mul</th>
+<th>add</th>
+<th>sub</th>
+<th>invsqr</th>
+<th>Total FLOP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Step 1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Step 2</td>
+<td>96</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>192</td>
+</tr>
+<tr>
+<td>Step 3</td>
+<td>2,470,400</td>
+<td>1,228,800</td>
+<td>51,200</td>
+<td>1,228,800</td>
+<td>3,276,800</td>
+<td>10,726,400</td>
+</tr>
+</tbody>
+</table><p><strong>Note: Each section is clearly commented in the <code class="docutils literal notranslate"><span class="pre">nbody.cc</span></code> source file.</strong></p>
+<p><strong>Note: To calculate the total, each <code class="docutils literal notranslate"><span class="pre">mac</span></code> is considered 2 operations (<code class="docutils literal notranslate"><span class="pre">mul</span></code> and <code class="docutils literal notranslate"><span class="pre">add</span></code>).</strong></p>
+<p>Thus, each <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (i.e. 400 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.004657468 seconds. <strong>Therefore the effective throughput of the entire design is ~921.2 GFLOP/s</strong>.</p>
+<p>The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we’re only using 1/10th of its potential!</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Effective Throughput</th>
+<th>Theoretical Peak Throughput</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.9212 TFLOP/s</td>
+<td>8 TFLOP/s</td>
+</tr>
+</tbody>
+</table><p>This design of an N-Body Simulator on the AI Engine is a straightforward implementation without any major optimizations done. To further maximize the throughput of the entire design:</p>
+<ul class="simple">
+<li><p>you can explore increasing <code class="docutils literal notranslate"><span class="pre">FMAX</span></code> of the PL kernels from 200 MHz to closer to 500 MHz to reduce the latency of moving data from DDR to the AI Engine</p></li>
+<li><p>PL kernels currently implement a round-robin method of transmitting data. They could be designed to cache and schedule in an optimized way to increate data bandwidth</p></li>
+<li><p>you can refactor the <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel to reduce its reliance on the scalar processor and only use the vector processor in each AI Engine tile by approximating inverse square root</p></li>
+</ul>
+</div>
+<div class="section" id="optional-building-x1-design-and-x10-design">
+<h2>(Optional) Building x1_design and x10_design<a class="headerlink" href="#optional-building-x1-design-and-x10-design" title="Permalink to this heading">¶</a></h2>
+<p>What has been presented so far is the 100 compute unit AI Engine design utilizing all 400 AI Engine tiles. However, to get there you had to create the intermediate AI Engine designs that contain a single compute unit (4 tiles) and 10 compute units (40 tiles). If you wish to run the <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>, hardware emulation, or build an AI Engine NBody Simulator with significantly shorter build times, feel free to build the <code class="docutils literal notranslate"><span class="pre">x1_design</span></code> or <code class="docutils literal notranslate"><span class="pre">x10_design</span></code>.</p>
+<div class="section" id="building-the-x1-design-simulates-128-particles">
+<h3>Building the x1_design (simulates 128 particles)<a class="headerlink" href="#building-the-x1-design-simulates-128-particles" title="Permalink to this heading">¶</a></h3>
+<p><em>Estimated time: 1 hour</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">x1_design</span>
+<span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">|</span><span class="n">hw_emu</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>128 particles simulated for 300 timesteps</p>
+<p><img alt="alt text" src="../../../../../_images/animation1.gif" /></p>
+<div class="section" id="building-the-x10-design-simulates-1-280-particles">
+<h4>Building the x10_design (simulates 1,280 particles)<a class="headerlink" href="#building-the-x10-design-simulates-1-280-particles" title="Permalink to this heading">¶</a></h4>
+<p><em>Estimated time: 1 hour</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">x10_design</span>
+<span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">|</span><span class="n">hw_emu</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>1,280 particles simulated for 300 timesteps</p>
+<p><img alt="alt text" src="../../../../../_images/animation2.gif" /></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://support.xilinx.com/">support.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

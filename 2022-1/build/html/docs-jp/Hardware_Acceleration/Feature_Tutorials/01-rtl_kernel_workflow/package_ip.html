@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>IP/XO パッケージ フロー - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>IP/XO パッケージ フロー</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/package_ip.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="package-ip-package-xo-flow">
+<h1>IP/XO パッケージ フロー<a class="headerlink" href="#package-ip-package-xo-flow" title="Permalink to this heading">¶</a></h1>
+<p>この演習で説明するプロセスは、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1393) の <a class="reference external" href="https://docs.xilinx.com/r/ja-JP/1393-vitis-application-acceleration/RTL-%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E9%96%8B%E7%99%BA%E3%83%95%E3%83%AD%E3%83%BC">RTL カーネルの開発フロー</a>に説明されている [Package IP] フローに従っています。</p>
+<blockquote>
+<div><p><strong>重要:</strong> チュートリアルのコマンドを実行する前に、<a class="reference external" href="https://docs.xilinx.com/r/ja-JP/1393-vitis-application-acceleration/Vitis-%E7%92%B0%E5%A2%83%E3%81%AE%E8%A8%AD%E5%AE%9A">Vitis 環境の設定</a>に説明されているように、次のコマンドを実行してツール環境を設定する必要があります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> <span class="c1">#setup Xilinx Vitis tools. XILINX_VITIS and XILINX_VIVADO will be set in this step.</span>
+ <span class="nb">source</span> &lt;VITIS_install_path&gt;/settings64.sh
+ <span class="c1">#Setup Xilinx runtime. XILINX_XRT will be set in this step.</span>
+ <span class="nb">source</span> &lt;XRT_install_path&gt;/setup.sh
+</pre></div>
+</div>
+</div></blockquote>
+<div class="section" id="create-a-new-project">
+<h2>新規プロジェクトの作成<a class="headerlink" href="#create-a-new-project" title="Permalink to this heading">¶</a></h2>
+<ol><li><p>チュートリアル フォルダーに移動します (<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow</span></code>)。</p></li> <li><p>ターミナル ウィンドウに <code class="docutils literal notranslate"><span class="pre">vivado</span></code> コマンドを入力して Vivado® IDE を起動します。</p></li> <li><p><strong>[Create Project]</strong> をクリックするか、<strong>[File]</strong> → <strong>[Project]</strong> → <strong>[New]</strong> をクリックします。</p>
+<p>New Project ウィザードが開きます。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li> <li><p>New Project ウィザードの [Project Name] ページで、次のように設定します。</p>
+<ol class="simple"><li><p><strong>[Project name]</strong> にプロジェクト名 (<code class="docutils literal notranslate"><span class="pre">rtl_kernel</span></code> など) を入力し、<strong>[Project location]</strong> でプロジェクト ディレクトリを指定します。</p></li> <li><p><strong>[Create Project subdirectory]</strong> チェック ボックスをオンにします。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li></ol></li> <li><p>[Project Type] ページで、次のように設定します。</p>
+<ol class="simple"><li><p><strong>[RTL Project]</strong> をオンにします。</p></li> <li><p><strong>[Do not specify sources at this time]</strong> をオンにします。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li></ol></li> <li><p>[Default Part] ページで <strong>[Boards]</strong> を選択し、[Search] フィールドに「<code class="docutils literal notranslate"><span class="pre">U200</span></code>」と入力します。</p>
+<ol class="simple"><li><p><strong>[Alveo U200 Data Center Accelerator Card]</strong> を選択し、<strong>[Next]</strong> をクリックします。</p></li></ol>
+<p>[New Project Summary] ページが表示されます。</p></li> <li><p>プロジェクトの詳細を確認し、<strong>[Finish]</strong> をクリックしてプロジェクトを作成します。</p>
+<p>Vivado IDE に作成した新規プロジェクトが開きます。</p>
+<p><img alt="New Project Summary" src="../../../../_images/new_project_open.png" /></p></li></ol>
+</div>
+<div class="section" id="add-kernel-sources">
+<h2>カーネル ソースの追加<a class="headerlink" href="#add-kernel-sources" title="Permalink to this heading">¶</a></h2>
+<p>次に、プロジェクトに RTL ファイルを追加し、IP としてパッケージします。このチュートリアルでは RTL ファイルは提供されていますが、実際にはこの時点で独自の RTL コードを挿入します。</p>
+<ol><li><p>[Sources] ウィンドウで <strong>[Add Sources]</strong> ボタン (<img alt="Add Sources" src="../../../../_images/icon_add_sources.png" />) をクリックします。Add Sources ウィザードが開きます。</p></li> <li><p><strong>[Add or create design sources]</strong> をオンにし、<strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[Add Directories]</strong> をクリックし、<code class="docutils literal notranslate"><span class="pre">reference-files/src</span></code> の <code class="docutils literal notranslate"><span class="pre">IP</span></code> ディレクトリ (RTL ソースを含む) を選択します。</p>
+<blockquote>
+<div><p><strong>注記:</strong> ユーザーの RTL IP を追加するには、それに必要なフォルダーまたはファイルを指定します。</p>
+</div></blockquote>
+<p><img alt="Add Design Sources" src="../../../../_images/add_rtl_sources.png" /></p></li> <li><p><strong>[Copy sources into project]</strong> および <strong>[Add sources from subdirectories]</strong> をオンにします。</p></li> <li><p><strong>[Finish]</strong> をクリックします。</p>
+<p>ファイルがプロジェクトに追加され、Vivado Design Suite で <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.v</span></code> がデザインの最上位ファイルとして認識されます。この RTL モジュールには、<a class="reference internal" href="README.html"><span class="doc">概要</span></a>で説明されている RTL カーネルの<strong>ハードウェア インターフェイス要件</strong>と互換性のあるインターフェイスが含まれます。これは、[Sources] ウィンドウでファイルをダブルクリックしてコード エディター ウィンドウで開くと、<code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> モジュール定義に含まれます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">Vadd_A_B</span> <span class="c1">#(</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_S_AXI_CONTROL_ADDR_WIDTH</span> <span class="o">=</span> <span class="mi">12</span> <span class="p">,</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_S_AXI_CONTROL_DATA_WIDTH</span> <span class="o">=</span> <span class="mi">32</span> <span class="p">,</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_M00_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mi">64</span> <span class="p">,</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_M00_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mi">512</span><span class="p">,</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_M01_AXI_ADDR_WIDTH</span>       <span class="o">=</span> <span class="mi">64</span> <span class="p">,</span>
+  <span class="n">parameter</span> <span class="n">integer</span> <span class="n">C_M01_AXI_DATA_WIDTH</span>       <span class="o">=</span> <span class="mi">512</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="open-the-ip-packager">
+<h2>IP パッケージャーを開く<a class="headerlink" href="#open-the-ip-packager" title="Permalink to this heading">¶</a></h2>
+<p>ファイルをプロジェクトに追加したので、カーネルとして使用する IP をパッケージできます。</p>
+<ol><li><p><strong>[Tools]</strong> → <strong>[Create&nbsp;and Package New IP]</strong> をクリックします。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[Package your current project]</strong> をオンにして <strong>[Next]</strong> をクリックします。</p></li> <li><p>[IP location] で IP がパッケージされるデフォルト ディレクトリを確認します。</p></li> <li><p><strong>Next</strong> をクリックします。サマリ ページが表示されます。<img alt="Create and Package IP" src="../../../../_images/create_and_package_ip.png" /></p></li> <li><p>サマリを確認し、<strong>[Finish]</strong> をクリックします。</p>
+<p>[Package IP] ウィンドウが表示されます。</p>
+<p><img alt="Package IP Window" src="../../../../_images/package_ip_interface.png" /></p></li></ol>
+</div>
+<div class="section" id="specify-the-control-protocol">
+<h2>制御プロトコルの指定<a class="headerlink" href="#specify-the-control-protocol" title="Permalink to this heading">¶</a></h2>
+<ol><li><p>[Packaging Steps] の下から <strong>[Compatibility]</strong> を選択します。</p></li> <li><p><strong>[Package for Vitis]</strong> をオンにし、<strong>[Package for IPI]</strong> および <strong>[Ignore Freq_Hz]</strong> もオンになっていることを確認します。これにより、Vitis ツール フローで使用するカーネル オブジェクト (.xo) として IP をパッケージできるほか、カスタム IP と互換性のある特定のザイリンクス パーツまたはデバイス ファミリーを設定することもできます。</p>
+<p><img alt="Package for Vitis" src="../../../../_images/control_protocol.png" /></p></li></ol>
+<p><strong>[Package for Vitis]</strong> チェック ボックスをオンにすると、RTL カーネルの <strong>[Control protocol]</strong> を指定できます。デフォルトは <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> ですが、<a class="reference external" href="https://docs.xilinx.com/r/ja-JP/1393-vitis-application-acceleration/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E5%88%B6%E5%BE%A1%E5%8F%AF%E8%83%BD%E3%81%AA%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB">ソフトウェア制御可能なカーネル</a>に説明されているように、<code class="docutils literal notranslate"><span class="pre">user_managed</span></code> や<code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> などのほかのプロトコルもサポートされます。</p>
+<ol class="simple"><li><p>このチュートリアルでは <code class="docutils literal notranslate"><span class="pre">user_managed</span></code> を選択します。ツールが Vitis カーネルに必要なプロパティを設定します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">set_property</span> <span class="n">sdx_kernel</span> <span class="n">true</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
+<span class="n">set_property</span> <span class="n">sdx_kernel_type</span> <span class="n">rtl</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
+<span class="n">set_property</span> <span class="n">ipi_drc</span> <span class="p">{</span><span class="n">ignore_freq_hz</span> <span class="n">true</span><span class="p">}</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
+<span class="n">set_property</span> <span class="n">vitis_drc</span> <span class="p">{</span><span class="n">ctrl_protocol</span> <span class="n">user_managed</span><span class="p">}</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>ヒント</strong>: <strong>[Package for Vitis]</strong> チェック ボックスをオンにしたため、<strong>[Ports and Interfaces]</strong> ページに DRC エラーが表示されるようになります。このエラーは、Vitis と互換性のある IP に少なくとも 1 つの AXIS (AXI-Stream) インターフェイス、または少なくとも 1 つの定義済みレジスタが AXI スレーブ インターフェイスにある必要があることを意味します。この場合のエラーは、<code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> インターフェイスに定義済みのレジスタがないために発生します。これは、この後すぐに追加します。</p>
+</div></blockquote>
+</div>
+<div class="section" id="edit-ports-and-interfaces">
+<h2>ポートおよびインターフェイスの編集<a class="headerlink" href="#edit-ports-and-interfaces" title="Permalink to this heading">¶</a></h2>
+<ol><li><p>[Packaging Steps] の下から <strong>[Ports and Interfaces]</strong> を選択します。[Ports and Interfaces] ページが表示されます。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">m00_axi</span></code> インターフェイスを右クリックし、<strong>[Associate Clocks]</strong> をクリックします。</p>
+<p>[Associate Clocks] ダイアログ ボックスが開き、使用可能なクロックのリストが表示されます。この場合、AXI インターフェイスに関連付ける <code class="docutils literal notranslate"><span class="pre">ap_clk</span></code> インターフェイスのみがリストされます。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">ap_clk</span></code> を選択して <strong>[OK]</strong> をクリックします。</p></li> <li><p>プロセスを繰り返し、<code class="docutils literal notranslate"><span class="pre">ap_clk</span></code> を <code class="docutils literal notranslate"><span class="pre">m01_axi</span></code> インターフェイス、<code class="docutils literal notranslate"><span class="pre">s_axi_control</span></code> インターフェイスに関連付けます。</p></li></ol>
+</div>
+<div class="section" id="add-control-registers-and-address-offsets">
+<h2>制御レジスタおよびアドレス オフセットの追加<a class="headerlink" href="#add-control-registers-and-address-offsets" title="Permalink to this heading">¶</a></h2>
+<p>[Ports and Interfaces] ページのエラーを修正するには、少なくとも 1 つのレジスタを <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> インターフェイスに追加する必要があります。これは、[Package IP] ウィンドウの <strong>[Addressing and Memory]</strong> ページで実行します。ユーザー管理カーネルには、次の属性のレジスタを追加する必要があります。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>名前</th>
+<th>説明</th>
+<th>オフセット</th>
+<th>サイズ (ビット数)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USER_CTRL</td>
+<td>制御信号</td>
+<td>0x000</td>
+<td>32</td>
+</tr>
+<tr>
+<td>scalar00</td>
+<td>スカラー値</td>
+<td>0x010</td>
+<td>32</td>
+</tr>
+<tr>
+<td>A</td>
+<td>ポインター引数</td>
+<td>0x018</td>
+<td>64</td>
+</tr>
+<tr>
+<td>B</td>
+<td>ポインター引数</td>
+<td>0x024</td>
+<td>64</td>
+</tr>
+</tbody>
+</table><ol><li><p>[Packaging Steps] の下から <strong>[Addressing and Memory]</strong> を選択します。[Addressing and Memory] ページが表示されます。</p></li> <li><p>[Address Blocks] の下から <strong>[reg0]</strong> を右クリックし、<strong>[Add Reg]</strong> をクリックします。</p></li> <li><p>[Add Register] ダイアログ ボックスにレジスタ名を入力し、<strong>[OK]</strong> をクリックします。RTL カーネルのレジスタを定義したので、[Ports and Interfaces] ページのエラーがなります。</p>
+<blockquote>
+<div><p><strong>ヒント:</strong> 上記の表にリストされているレジスタを追加する必要があります。[Tcl Console] ウィンドウで次の Tcl コマンドを使用し、必要なレジスタを追加することもできます。</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">ipx</span><span class="p">::</span><span class="n">add_register</span> <span class="n">CTRL</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]</span>
+   <span class="n">ipx</span><span class="p">::</span><span class="n">add_register</span> <span class="n">scalar00</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]</span>
+   <span class="n">ipx</span><span class="p">::</span><span class="n">add_register</span> <span class="n">A</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]</span>
+   <span class="n">ipx</span><span class="p">::</span><span class="n">add_register</span> <span class="n">B</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_address_blocks</span> <span class="n">reg0</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">get_memory_maps</span> <span class="n">s_axi_control</span> <span class="o">-</span><span class="n">of_objects</span> <span class="p">[</span><span class="n">ipx</span><span class="p">::</span><span class="n">current_core</span><span class="p">]]]</span>
+</pre></div>
+</div>
+<p>[Addressing and Memory] ページでレジスタを追加したら、説明、オフセット、レジスタのサイズを追加する必要があります。</p>
+<p><img alt="missing image" src="../../../../_images/address-memory-win.png" /></p></li> <li><p>各レジスタの <strong>[Description]</strong> フィールドをクリックし、上の表に示す説明を入力します。</p></li> <li><p><strong>[Address Offset]</strong> フィールドをクリックし、オフセットを入力します。</p></li> <li><p><strong>[Size]</strong> フィールドをクリックし、サイズを入力します。</p>
+<blockquote>
+<div><p><strong>重要:</strong> 説明はオプションですが、オフセットとサイズは必須です。</p>
+</div></blockquote>
+<p>すべてのレジスタの属性を上の表に従って入力したら、各ポインター引数に M_AXI インターフェイスを関連付ける必要があります。</p></li> <li><p>[Registers] の表でレジスタ <code class="docutils literal notranslate"><span class="pre">A</span></code> を右クリックし、<strong>[Add Register Parameter]</strong> をクリックします。</p>
+<ol class="simple"><li><p>[Add Register Parameter] ダイアログ ボックスで、ASSOCIATED_BUSIF パラメーターを追加して <strong>[OK]</strong> をクリックします。<br />このパラメーターは、バス インターフェイスをレジスタに関連付けます。</p></li> <li><p>レジスタ <code class="docutils literal notranslate"><span class="pre">B</span></code> に対して、上記の 2 手順を繰り返します。</p></li> <li><p>ASSOCIATED_BUSIF の [Value] フィールドで、レジスタ <code class="docutils literal notranslate"><span class="pre">A</span></code> には「<code class="docutils literal notranslate"><span class="pre">m00_axi</span></code>」、レジスタ <code class="docutils literal notranslate"><span class="pre">B</span></code> には「<code class="docutils literal notranslate"><span class="pre">m01_axi</span></code>」と入力します。</p></li></ol>
+<p>次の図のようになるはずです。</p></li></ol>
+<p><img alt="../../../../_images/address-memory-win.png" src="../../../../_images/address-memory-win.png" /></p>
+</div>
+<div class="section" id="check-integrity-assign-properties-and-package-ip">
+<h2>整合性のチェック、プロパティの割り当て、および IP のパッケージ<a class="headerlink" href="#check-integrity-assign-properties-and-package-ip" title="Permalink to this heading">¶</a></h2>
+<ol class="simple"><li><p>[Packaging Steps] の下から <strong>[Review and Package]</strong> を選択します。[Review and Package] ページが表示されます。IP をパッケージする準備ができました。その前に、IP をパッケージしたときにアーカイブ ファイルが生成されるように設定されているかを確認します。これが、<strong>[Package for Vitis]</strong> をオンにした場合のデフォルト動作です。</p></li> <li><p>[Review and Package] ページの <strong>[After Packaging]</strong> セクションを見ます。アーカイブが生成されるように設定されていない場合は、<strong>[Edit packaging settings]</strong> をクリックしてアーカイブの生成をイネーブルにする必要があります。[Settings] ダイアログ ボックスの [IP] → [Packager] ページが表示されます。</p></li></ol><ul class="simple"> <li><p>[After Packaging] セクションで <strong>[Create archive of IP]</strong> をオンにし、<strong>[OK]</strong> をクリックします。<strong>[Review and Package]</strong> ページがアップデートされ、アーカイブが作成されることが示されます。</p></li> </ul>
+<p><img alt="Enable Archive" src="../../../../_images/enable_archive_settings.png" /></p>
+<ol><li><p><strong>[Package IP]</strong> をクリックします。</p>
+<p>IP をパッケージすると、IP が正常にパッケージ化されたことを示すダイアログ ボックスが表示されます。</p></li></ol>
+<p><strong>Package for Vitis</strong> をオンにしたので、ツールが自動的に <code class="docutils literal notranslate"><span class="pre">package_xo</span></code> コマンドを実行し、Vitis カーネル (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) ファイルを作成するようになります。<code class="docutils literal notranslate"><span class="pre">package_xo</span></code> コマンドは、IP ファイルと <code class="docutils literal notranslate"><span class="pre">kernel.xml</span></code> ファイルを生成された <code class="docutils literal notranslate"><span class="pre">.xo</span></code> ファイルにパッケージします。[Tcl Console] ウィンドウからは、<code class="docutils literal notranslate"><span class="pre">package_xo</span></code> コマンドが実行されたことを確認できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package_xo</span> <span class="o">-</span><span class="n">xo_path</span> <span class="o">&lt;</span><span class="n">tutorial_path</span><span class="o">&gt;/</span><span class="n">rtl_kernel</span><span class="o">/</span><span class="n">rtl_kernel</span><span class="o">.</span><span class="n">srcs</span><span class="o">/</span><span class="n">sources_1</span><span class="o">/</span><span class="n">imports</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">xo</span><span class="o">/</span><span class="n">Vadd_A_B</span><span class="o">.</span><span class="n">xo</span> <span class="o">-</span><span class="n">kernel_name</span> <span class="n">Vadd_A_B</span> <span class="o">-</span><span class="n">ip_directory</span> <span class="o">&lt;</span><span class="n">tutorial_path</span><span class="o">&gt;/</span><span class="n">rtl_kernel</span><span class="o">/</span><span class="n">rtl_kernel</span><span class="o">.</span><span class="n">srcs</span><span class="o">/</span><span class="n">sources_1</span><span class="o">/</span><span class="n">imports</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">IP</span> <span class="o">-</span><span class="n">ctrl_protocol</span> <span class="n">user_managed</span>
+</pre></div>
+</div>
+<p>説明:</p><ul class="simple"> <li><p><strong>package_xo</strong>: Vivado IP からコンパイル済みオブジェクト ファイル (.xo) を作成するコマンド。</p></li> <li><p><strong>-xo_path</strong>: XO ファイルのパスと名前を指定します。</p></li> <li><p><strong>-kernel_name</strong>: 作成するカーネルの名前を指定します。RTL モジュール名と一致している必要があります。</p></li> <li><p><strong>-ip_directory</strong>: パッケージ済み Vivado IP を検索するパスを指定します。</p></li> <li><p>-<strong>ctrl_protocol</strong>: カーネルがインプリメントする制御プロトコルを指定します。</p></li> </ul>
+<p><code class="docutils literal notranslate"><span class="pre">package_xo</span></code> コマンドが完了したら、<code class="docutils literal notranslate"><span class="pre">reference-files/rtl_kernel/rtl_kernel.srcs/sources_1/imports</span></code> フォルダーに移動します。ここには <code class="docutils literal notranslate"><span class="pre">IP</span></code> フォルダーおよび <code class="docutils literal notranslate"><span class="pre">xo</span></code> フォルダーがあります。<code class="docutils literal notranslate"><span class="pre">xo</span></code> フォルダー内の <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> ファイルを確認します。<code class="docutils literal notranslate"><span class="pre">.xo</span></code> ファイルには、カーネルの IP 記述と、カーネルをデバイス バイナリ (<code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>) にリンクするために Vitis コンパイラによって使用される kernel.xml ファイルが含まれています。</p>
+<p><code class="docutils literal notranslate"><span class="pre">.xo</span></code> ファイルは、このチュートリアルの後の演習で説明するように、Vitis アプリケーション アクセラレーション フローで使用します。</p>
+</div>
+<div class="section" id="next-steps">
+<h2>次のステップ<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>次の手順では、ユーザー管理 RTL カーネルをアクセラレーション アプリケーションに統合するために必要な<a class="reference internal" href="host-code.html"><span class="doc">ホスト アプリケーションのコード記述</span></a>を確認します。 </br></p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.md">メイン ページに戻る</a> &mdash; <a href="./README.md">このチュートリアルの初めに戻る</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>HBM の使用 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="ホスト メモリ アクセス" href="../08-using-hostmem/README.html" />
+    <link rel="prev" title="Vivado インプリメンテーションの制御" href="../06-controlling-vivado-implementation/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../01-rtl_kernel_workflow/README.html">RTL カーネル入門</a></li><li class="toctree-l3"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">C と RTL の混合</a></li><li class="toctree-l3"><a class="reference internal" href="../03-dataflow_debug_and_optimization/README.html">データフローのデバッグおよび最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../04-mult-ddr-banks/README.html">複数 DDR バンクの使用</a></li><li class="toctree-l3"><a class="reference internal" href="../05-using-multiple-cu/README.html">複数の計算ユニットの使用</a></li><li class="toctree-l3"><a class="reference internal" href="../06-controlling-vivado-implementation/README.html">Vivado インプリメンテーションの制御</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">HBM のための最適化</a><ul><li class="toctree-l4"><a class="reference internal" href="#入門チュートリアル">入門</a></li><li class="toctree-l4"><a class="reference internal" href="#before-you-begin">開始前の確認事項</a></li><li class="toctree-l4"><a class="reference internal" href="#tutorial-overview">チュートリアルの概要</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html">ホスト メモリ アクセス</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#xrt-and-platform-version">XRT およびプラットフォーム バージョン</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#tutorial-description">チュートリアルの説明</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#running-the-application">アプリケーションの実行</a></li><li class="toctree-l3"><a class="reference internal" href="../08-using-hostmem/README.html#summary">サマリ</a></li><li class="toctree-l3"><a class="reference internal" href="../09-using-ethernet-on-alveo/README.html">Alveo での GT カーネルおよびイーサネット IP の使用</a></li></ul></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>HBM の使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="using-hbm">
+<h1>HBM の使用<a class="headerlink" href="#using-hbm" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<div class="section" id="introduction">
+<h2>入門チュートリアル<a class="headerlink" href="#入門チュートリアル" title="Permalink to this heading"></a></h2>
+<p>このチュートリアルでは、DDR メモリを使用して既存のアプリケーションを HBM メモリに移行する基本的な手順について説明します。このチュートリアルではまず、DDR と HBM の構造的な違いと、実現可能な理論上の帯域幅について説明します。2 番目のセクションでは、簡単な例を使用して、DDR から HBM にアプリケーションを移行するのに必要な手順を示します。</p>
+</div>
+<div class="section" id="before-you-begin">
+<h2>開始前の確認事項<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p><strong>ヒント</strong>: このチュートリアルには、約 2 時間かかります。</p>
+</div></blockquote>
+<p>このチュートリアルでは、次を使用します。</p><ul class="simple"> <li><p>BASH Linux シェル コマンド。</p></li> <li><p>2022.1 Vitis コア開発キット リリースおよび <em>xilinx_u200_xdma_201830_2</em> および <em>xilinx_u50_gen3x16_xdma_201920_3</em> プラットフォーム。必要であれば、ほかのバージョンおよびプラットフォームを使用するように変更することもできます。また、このチュートリアルを実行するには、DDR および HBM をサポートするザイリンクス Alveo™ データセンター アクセラレーション カードが必要です。</p></li> </ul>
+<blockquote>
+<div><p><strong>重要:</strong></p><ul class="simple"> <li><p>例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements">インストール</a>の手順に従って、Vitis コア開発キットをインストールしてください。</p></li> <li><p>ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、<a class="reference external" href="https://japan.xilinx.com/products/boards-and-kits/alveo.html">Alveo ポートフォリオ</a> ページの手順に従って、カードとソフトウェア ドライバーを正しくインストールしてください。</p></li> </ul>
+</div></blockquote>
+<div class="section" id="accessing-the-tutorial-reference-files">
+<h3>チュートリアル リファレンス ファイルの入手<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>ターミナルに <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">http://github.com/Xilinx/Vitis-Tutorials</span></code> コマンドを入力します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Feature_Tutorials/04-using-hbm</span></code> ディレクトリに移動し、<code class="docutils literal notranslate"><span class="pre">reference-files</span></code> ディレクトリにアクセスします。</p></li></ol>
+</div>
+<div class="section" id="generating-all-the-xclbins">
+<h3>すべての xclbins の生成<a class="headerlink" href="#generating-all-the-xclbins" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>このチュートリアルでは、操作を進めた結果が表示されます。ただし、xclbins を生成する場合、複数の <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> を生成するのに数時間かかることがあります。これらの構築を待たずにチュートリアルに集中できるように、これらすべてを事前に構築しておくことをお勧めします。次の手順では、次の 2 つのモジュールに必要な xclbins を構築します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">makefile/Makefile</span></code> の <code class="docutils literal notranslate"><span class="pre">PLATFORM</span></code> 変数 (使用するプラットフォームを指定) をアップデートします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ifeq ($(memtype), DDR)
+PLATFORM :=xilinx_u200_gen3x16_xdma_2_202110_1
+else
+PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
+endif
+</pre></div>
+</div>
+</li> <li><p>次のコマンドを実行して、モジュール 2 (DDR から HBM への移行) 用に 3 つの xclbins を構築します。xclbins を構築する時間は約 7 ～ 8 時間です。これらは、並行して実行することもできます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">04-using-hbm/makefile;</span>&nbsp;<span class="pre">make</span> <span class="pre">ddr_addSeq_build</span>&nbsp;<span class="pre">hbm_addSeq_2Banks_build</span> <span class="pre">hbm_addSeq_overlap_build</span></code></p></li> <li><p>次のコマンドを実行して、モジュール 3 (HBM 帯域幅の結果) 用の xclbins を 10 個構築します。次のコマンドはデフォルトで並列ジョブを実行するため、xclbins の構築には約 5 ～ 6 時間かかります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">04-using-hbm/makefile;</span>&nbsp;<span class="pre">make</span> <span class="pre">build_without_rama</span> <span class="pre">build_with_rama</span></code></p>
+<p>マシンに複数の構築ジョブを並行して実行するのに十分なリソースがない場合は、次のコマンドを使用してこれらを常に直列で実行できますが、その場合は数時間かかる可能性があります。</p>
+<p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">04-using-hbm/makefile;</span>&nbsp;<span class="pre">make</span> <span class="pre">noramajob-64</span> <span class="pre">noramajob-128</span> <span class="pre">noramajob-256</span> <span class="pre">noramajob-512</span> <span class="pre">noramajob-1024</span> <span class="pre">ramajob-64</span> <span class="pre">ramajob-128</span> <span class="pre">ramajob-256</span> <span class="pre">ramajob-512</span> <span class="pre">ramajob-1024;</span></code></p></li></ol>
+<p>詳細は、./makefile/Makefile を参照してください。</p>
+</div>
+</div>
+<div class="section" id="tutorial-overview">
+<h2>チュートリアルの概要<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
+<ol class="simple"><li><p><a class="reference internal" href="1_overview.html"><span class="doc">HBM の概要</span></a>: DDR と HBM の構造的な違いと、HBM による理論的な最大帯域幅の概要を示します。</p></li> <li><p><a class="reference internal" href="2_Migrating_to_HBM.html"><span class="doc">DDR から HBM への移行</span></a>: 既存の DDR ベースのアプリケーションを HBM に移行する手順を説明します。</p></li> <li><p><a class="reference internal" href="3_BW_Explorations.html"><span class="doc">HBM 帯域幅の確認</span></a>: アクセス パターンとトランザクション サイズに基づいて、1 つのカーネル ポートを使用して達成可能な帯域幅を表示します。</p></li></ol>
+<div class="section" id="id1">
+<h3><a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p align="center"><b>次の手順: <a href="1_overview.md">HBM の概要</b></p></br><hr/>
+<p align="center"><b><a href="docs/README.md">チュートリアルの初めに戻る</a></b></p><p>Apache ライセンス、バージョン 2.0 (以下「ライセンス」) に基づいてライセンス付与されています。本ライセンスに準拠しないと、このファイルを使用することはできません。ライセンスのコピーは、http://www.apache.org/licenses/LICENSE-2.0 から入手できます。</p>
+<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../06-controlling-vivado-implementation/README.html" class="btn btn-neutral float-left" title="Controlling Vivado Implementation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../08-using-hostmem/README.html" class="btn btn-neutral float-right" title="Host Memory Access" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

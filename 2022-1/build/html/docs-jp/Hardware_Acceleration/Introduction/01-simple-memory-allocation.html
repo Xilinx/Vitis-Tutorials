@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>概要 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>概要</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Hardware_Acceleration/Introduction/01-simple-memory-allocation.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーションの入門チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>概要<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>読み込んだ FPGA イメージには、非常に単純なベクター加算コアが含まれています。任意の長さのバッファー 2 つを入力として使用し、同じの長さバッファーを出力として生成します。「ベクター加算コア」という名前からわかるように、このコアは 2 つの値を加算します。</p>
+<p>提供されているコードは、FPGA 用に最適化されていません。次のコードに示すアルゴリズムを直接 FPGA ファブリックに読み込んだのとほぼ同じです。特に効率が良いわけではありません。インプリメンテーション ツールである程度の最適化は実行されますが、コードに変更を加えることにより、それよりもより良い結果が得られます。このコードでは、1 クロックごとに加算を 1 回ずつ処理することは可能ですが、1 回に 32 ビット出力を 1 つしか処理できません。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">vadd_sw</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>この時点では、このコードがプロセッサに勝ることはあり得ません。FPGA ファブリックのクロックは、CPU クロックよりもかなり低速です。この資料のはじめに紹介した比喩に戻ってたとえると、モノレールの各車両に 1 人しか乗客を乗せていないのと同じ状況です。また、PCIe 上でのデータ転送、DMA のセットアップなどのオーバーヘッドもあります。次のいくつかの例では、この関数の入力および出力のバッファーを効率よく管理する方法を見ていきます。Alveo データセンター アクセラレータ カードでのアクセラレーションの効果が見られるのはその後になります。</p>
+</div>
+<div class="section" id="key-code">
+<h1>キー コード<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>この例では、実際に FPGA 上で演算を実行してみます。カード上で演算を実行するには、次の操作を実行する必要があります。</p>
+<ol class="simple"><li><p>カードとのデータの送受信に使用するバッファーを割り当て、データを挿入します。</p></li> <li><p>ホスト メモリ空間と Alveo グローバル メモリとの間でこれらのバッファーを転送します。</p></li> <li><p>カーネルを実行してこれらのバッファーのデータを処理します。</p></li> <li><p>カーネルでの処理結果をホスト メモリ空間に戻し、プロセッサからアクセスできるようにします。</p></li></ol>
+<p>これらの操作のうちカード上で実行されるのは 1 つだけです。メモリ管理はアプリケーションのパフォーマンスに大きく影響するので、まずメモリ管理から見てみます。</p>
+<p>アクセラレーションに関する作業を実行したことがない場合、メモリの割り当てに <code class="docutils literal notranslate"><span class="pre">malloc()</span></code> または <code class="docutils literal notranslate"><span class="pre">new</span></code> への標準呼び出しを使用してしまいがちです。この例では、これらの標準呼び出しを使用して、ホストと Alveo カードとの間でデータを転送する一連のバッファーを割り当てます。4 つのバッファーを割り当てます。加算の入力に使用する 2 つの入力バッファー、Alveo で使用する出力バッファー、および <code class="docutils literal notranslate"><span class="pre">vadd</span></code> 関数のソフトウェア インプリメンテーションに使用する追加のバッファーです。これにより、Alveo 用のメモリの割り当て方法と、プロセッサの実行効率に与える影響を見ることができます。</p>
+<p>バッファーは次に示すように割り当てられています。この例では、<code class="docutils literal notranslate"><span class="pre">BUFSIZE</span></code> は 24 MiB (<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> 型の 6 × 1024 × 1024) です。ここに示していないコードは、前の例とまったく同じか、機能的に同等のコードです。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="kt">uint32_t</span><span class="p">[</span><span class="n">BUFSIZE</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+<p>これにより、<strong>ページング方式</strong>を使用する、<strong>境界に揃えられていない</strong>、<strong>仮想</strong>メモリが割り当てられます。特に、「境界に揃えられていない」ことが後で問題になります。</p>
+<p>バッファーを割り当て、初期テスト ベクター値を挿入したら、Alveo グローバル メモリに転送します。これには、<code class="docutils literal notranslate"><span class="pre">CL_MEM_USE_HOST_PTR</span></code> フラグを使用して OpenCL バッファー オブジェクトを作成します。これにより、API に対して、バッファーを割り当てる代わりにポインターが提供されます。これ自体は悪くありませんが、ポインターを割り当てる設定はしていないので、パフォーマンスの劣化を招きます。</p>
+<p>次のコードには、割り当て済みのバッファーを OpenCL バッファー オブジェクトにマップするコードが含まれています。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">outBufVec</span><span class="p">;</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">a_to_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                 </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">a</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">b_to_device</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                       </span><span class="n">b</span><span class="p">,</span><span class="w"></span>
+<span class="w">                       </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">c_from_device</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                                  </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                        </span><span class="n">c</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">inBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">b_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">outBufVec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">c_from_device</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>ここでは、<code class="docutils literal notranslate"><span class="pre">cl::Buffer</span></code> オブジェクトを割り当てています。これが API で認識され、前に割り当てたバッファーから <code class="docutils literal notranslate"><span class="pre">a</span></code>、<code class="docutils literal notranslate"><span class="pre">b</span></code>、および <code class="docutils literal notranslate"><span class="pre">c</span></code> ポインターで渡されます。<code class="docutils literal notranslate"><span class="pre">CL_MEM_READ_ONLY</span></code> および <code class="docutils literal notranslate"><span class="pre">CL_MEM_WRITE_ONLY</span></code> は、ランタイムでこれらのバッファーのカーネルからのアクセス権を指定します。つまり、<code class="docutils literal notranslate"><span class="pre">a</span></code> および <code class="docutils literal notranslate"><span class="pre">b</span></code> はホストからカードに書き込まれますが、カーネルから見るとこれらは<strong>読み取り専用</strong>です。その後、<code class="docutils literal notranslate"><span class="pre">c</span></code> がカードからホストにリードバックされます。カーネルから見ると、これは<strong>書き込み専用</strong>です。さらに、これらのバッファー オブジェクトをベクターに追加して、一度に複数のバッファーを転送できるようにします。実質的にはベクターにポインターを追加しているだけで、データ バッファーそのものを追加しているわけではありません。</p>
+<p>次に、入力バッファーを Alveo カードに転送します。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">event_sp</span><span class="p">;</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cl_event</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>このコード抜粋では、主要なイベントは 108 行目の enqueueMigrateMemObjects() への呼び出しです。バッファーのベクターに 0 を渡しており、これがホストからデバイスへの転送であることを示します。<code class="docutils literal notranslate"><span class="pre">cl::Event</span></code> オブジェクトも渡します。</p>
+<p>ここで、同期化について少し説明しておきましょう。転送をエンキューするということは、その転送をランタイムの「やるべきことリスト」に追加することですが、ランタイムはその転送が完了するのを待つわけではありません。<code class="docutils literal notranslate"><span class="pre">cl::Event</span></code> オブジェクトを登録することにより、今後いつでもそのイベントが発生したときに待機するようにできます。通常ここは待機するところではありませんが、さまざまな操作にかかった時間を簡単に表示できるようにするため、コード内のさまざまな時点に挿入しています。これによりアプリケーションにわずかなオーバーヘッドが追加されますが、これは演習であって、最大パフォーマンスを得るために最適化する例ではありません。</p>
+<p>ここで、カーネルに何を渡すのかをランタイムに指示する必要があるので、次のコードに示すようにします。引数リストは次のとおりです。</p>
+<p><code class="docutils literal notranslate"><span class="pre">(uint32_t*a,</span> <span class="pre">uint32_t*b,</span> <span class="pre">uint32_t*c,</span> <span class="pre">uint32_t</span> <span class="pre">size)</span></code></p>
+<p>この場合、<code class="docutils literal notranslate"><span class="pre">a</span></code> は引数 0、<code class="docutils literal notranslate"><span class="pre">b</span></code> は引数 1、のようになります。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">a_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">b_to_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">c_from_device</span><span class="p">);</span><span class="w"></span>
+<span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>次に、コマンド キューにカーネル自体を追加し、実行が開始するようにします。通常は、転送とカーネルの間に同期化するのではなく、連続実行されるようにエンキューします。カーネルの実行をコマンド キューに追加する行は、次のようになります。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">krnl</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>この時点で待機しない場合は、<code class="docutils literal notranslate"><span class="pre">cl::Event</span></code> オブジェクトではなく <code class="docutils literal notranslate"><span class="pre">NULL</span></code> を渡します。</p>
+<p>最後に、カーネルが処理を完了したら、メモリをホストに戻し、CPU から新しい値にアクセスできるようにします。これは、次のように実行します。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">outBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+<span class="n">clWaitForEvents</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">cl_event</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">event_sp</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>この例では、同期化を待機します。これらのエンキュー関数を呼び出すときに、エントリを<strong>ノンブロッキング</strong>方式でコマンド キューに配置するということに注意してください。転送をエンキューした直後にバッファーにアクセスしようとすると、リードバックは完了しています。</p>
+<p>例 0 から FPGA コンフィギュレーションを除外すると、カーネルを実行するために新しく追加するのは次のものです。</p>
+<ol class="simple"><li><p>通常の方法でバッファーを割り当てます。これより良い方法がありますが、アクセラレーションを初めて試す多くの人がこの方法を使用します。</p></li> <li><p>割り当て済みバッファーを cl::Buffer オブジェクトにマップします。</p></li> <li><p>入力バッファー (a および b) の Alveo デバイス グローバル メモリへの移動をエンキューします。</p></li> <li><p>カーネル引数、バッファーおよびスカラー値の両方を設定します。</p></li> <li><p>カーネルを実行します。</p></li> <li><p>カーネルの結果を CPU のホスト メモリにリードバックし、読み出しの完了を同期化します。</p></li></ol>
+<p>これが実際のアプリケーションであれば、同期化は 1 回のみ必要です。前述のように、この例では、ワークフローのさまざまな操作のタイミングをより良くレポートするため、いくつかの同期化を使用しています。</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>アプリケーションの実行<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>XRT ランタイムが初期化されたら、ビルド ディレクトリから次のコマンドを実行してアプリケーションを実行します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">./01_simple_malloc</span> <span class="pre">alveo_examples</span></code></p>
+<p>プログラムにより、次のようなメッセージが表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 1: Vector Add with Malloc() --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBINFile Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: ./alveo_examples.xclbin
+Running kernel test with malloc()ed buffers
+WARNING: unaligned host pointer 0x154f7909e010 detected, this leads to extra memcpy
+WARNING: unaligned host pointer 0x154f7789d010 detected, this leads to extra memcpy
+WARNING: unaligned host pointer 0x154f7609c010 detected, this leads to extra memcpy
+
+Simple malloc vadd example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:              247.371 ms
+Allocating memory buffer:           0.030 ms
+Populating buffer inputs:           47.955 ms
+Software VADD run:                  35.706 ms
+Map host buffers to OpenCL buffers: 64.656 ms
+Memory object migration enqueue:    24.829 ms
+Set kernel arguments:               0.009 ms
+OCL Enqueue task:                   0.064 ms
+Wait for kernel to complete:        92.118 ms
+Read back computation results:      24.887 ms
+</pre></div>
+</div>
+<p>境界に揃えられていないポインターに関する警告がいくつか表示されています。割り当てに関して何もしていないので、Alveo カードとの間で転送されるバッファーはどれも、Alveo DMA エンジンで必要な 4 KiB 境界に揃えられていません。そのため、転送の前にバッファーの内容を境界に揃うようにコピーする必要がありますが、この操作には時間がかかります。</p>
+<p>ここからは、これらの数値に注意します。複数の実行間でレイテンシに多少の変動はありますが、各エリアの差に注目します。ベースラインは次のとおりです。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>操作</th>
+<th align="center">例 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCL の初期化</td>
+<td align="center">247.371 ms</td>
+</tr>
+<tr>
+<td>バッファーの割り当て</td>
+<td align="center">30 &micro;s</td>
+</tr>
+<tr>
+<td>バッファーへの値の挿入</td>
+<td align="center">47.955 ms</td>
+</tr>
+<tr>
+<td>ソフトウェア VADD</td>
+<td align="center">35.706 ms</td>
+</tr>
+<tr>
+<td>バッファーのマップ</td>
+<td align="center">64.656 ms</td>
+</tr>
+<tr>
+<td>バッファーの書き出し</td>
+<td align="center">24.829 ms</td>
+</tr>
+<tr>
+<td>カーネル引数の設定</td>
+<td align="center">9 &micro;s</td>
+</tr>
+<tr>
+<td>カーネルの実行時間</td>
+<td align="center">92.118 ms</td>
+</tr>
+<tr>
+<td>バッファーの読み込み</td>
+<td align="center">24.887 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-418.228 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU (アルゴリズムのみ)</td>
+<td align="center">-170.857 ms</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="extra-exercises">
+<h1>追加演習<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>この演習に、追加で次のことを試してみてください。</p><ul class="simple"> <li><p>割り当てるバッファーのサイズを変えてみます。バッファー サイズと個々の操作のタイミングとの間にどのような関係がありますか。どれも同じレートでスケーリングしますか。</p></li> <li><p>各ステップ間の同期化を削除すると、実行時間にどのように影響しますか。</p></li> <li><p>Alveo からホストに最後にバッファーをコピーした後の同期化を削除すると、どうなりますか。</p></li> </ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>学習ポイント<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1><ul class="simple"> <li><p>ここでもまた、FPGA コンフィギュレーション「税」を支払う必要があります。これを補うため、実行時間を CPU よりも 250 ms 以上短縮する必要があります。1 つのバッファーを処理するだけのこの単純な例では、CPU を上回るスピードを達成するのは無理です。</p></li> <li><p>単純に割り当てられたメモリは、メモリのコピーに時間がかかるので、アクセラレータに移動するには適しません。この後の例で、この影響を調べてみます。</p></li> <li><p>OpenCL はコマンド キューで機能します。同期化の方法およびタイミングは開発者しだいですが、CPU がバッファーのデータにアクセスする前に同期しているようにするため、Alveo グローバル メモリからバッファーをリードバックするときに注意が必要です。</p></li> </ul>
+<p><a class="reference internal" href="02-aligned-memory-allocation.html"><span class="doc">読み出し例 2: 単純なメモリ割り当て</span></a></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

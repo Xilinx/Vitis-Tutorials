@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>カスタム IP を使用した Versal プラットフォームの作成 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="PetaLinux のビルドとシステムのカスタマイズ" href="../02_petalinux_customization/README.html" />
+    <link rel="prev" title="KV260 での Vitis カスタム エンベデッド プラットフォームの作成" href="../../Design_Tutorials/01-Edge-KV260/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Vitis_Platform_Creation.html#design-tutorials">設計チュートリアル</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html#feature-tutorials">機能チュートリアル</a><ul class="current"><li class="toctree-l3 current"><a class="current reference internal" href="#">カスタム IP を使用した Versal プラットフォームの作成</a></li><li class="toctree-l3"><a class="reference internal" href="#overview">概要</a><ul><li class="toctree-l4"><a class="reference internal" href="#step-1-create-a-hardware-platform">手順 1: ハードウェア プラットフォームの作成</a></li><li class="toctree-l4"><a class="reference internal" href="#step-2-add-custom-ip-into-the-block-design">手順 2: ブロックデザインへのカスタム IP の追加</a></li><li class="toctree-l4"><a class="reference internal" href="#step-3-create-the-software-components-with-petalinux">手順 3: PetaLinux でのソフトウェア コンポーネントの作成</a></li><li class="toctree-l4"><a class="reference internal" href="#step-4-package-the-platform-in-the-vitis-software-platform">手順 4: Vitis ソフトウェア プラットフォームでのプラットフォームのパッケージ</a></li><li class="toctree-l4"><a class="reference internal" href="#step-5-test-the-platform">手順 5: プラットフォームのテスト</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#support">Support</a></li><li class="toctree-l3"><a class="reference internal" href="#license">ライセンス</a></li><li class="toctree-l3"><a class="reference internal" href="../02_petalinux_customization/README.html">PetaLinux のビルドとシステムのカスタマイズ</a></li></ul></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Vitis_Platform_Creation.html">Vitis プラットフォームの作成チュートリアル</a> &raquo;</li><li>カスタム IP を使用した Versal プラットフォームの作成</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Vitis_Platform_Creation/Feature_Tutorials/01_platform_creation_streaming_ip/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ プラットフォームの作成チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</br></a>
+    </td>
+ </tr>
+</table><div class="section" id="versal-platform-creation-with-custom-ip">
+<h1>カスタム IP を使用した Versal プラットフォームの作成<a class="headerlink" href="#versal-platform-creation-with-custom-ip" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2021.2</strong></em></p>
+<p>Vitis プラットフォームの作成チュートリアル  このチュートリアルは、基本の<a class="reference external" href="../../Introduction/03_Edge_VCK190">「Versal プラットフォーム作成チュートリアル」</a>に対する「アドオン」です。そのため、各手順で必要に応じて、基本のチュートリアルの対応する部分へのリンクが表示されます。</p>
+<p>このチュートリアルでは、VCK190ボードをターゲットとしています (https://japan.xilinx.com/products/boards-and-kits/vck190.html を参照)。</p>
+</div>
+<div class="section" id="overview">
+<h1>概要<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>チュートリアルの構成は次のとおりです。</p><ul class="simple"> <li><p><a class="reference external" href="#versal-platform-creation-with-custom-ip">カスタム IP を使用した Versal プラットフォームの作成</a></p></li> <li><p><a class="reference external" href="#overview">概要</a></p><ul> <li><p><a class="reference external" href="#step-1-create-a-hardware-platform">手順 1: ハードウェア プラットフォームの作成</a></p></li> <li><p><a class="reference external" href="#step-2-add-custom-ip-into-the-block-design">手順 2: ブロックデザインへのカスタム IP の追加</a></p></li> <li><p><a class="reference external" href="#step-3-create-the-software-components-with-petalinux">手順 3: PetaLinux でのソフトウェア コンポーネントの作成</a></p></li> <li><p><a class="reference external" href="#step-4-package-the-platform-in-the-vitis-software-platform">手順 4: Vitis ソフトウェア プラットフォームでのプラットフォームのパッケージ</a></p></li> <li><p><a class="reference external" href="#step-5-test-the-platform">手順 5: プラットフォームのテスト</a></p></li> </ul>
+</li>
+<li><p><a class="reference external" href="#support">Support</a></p></li> <li><p><a class="reference external" href="#license">ライセンス</a></p></li> </ul>
+<div class="section" id="step-1-create-a-hardware-platform">
+<h2>手順 1: ハードウェア プラットフォームの作成<a class="headerlink" href="#step-1-create-a-hardware-platform" title="Permalink to this heading">¶</a></h2>
+<p>VCK190 ボード用にあらかじめ構築済みのデザイン例を使用して、ハードウェア プラットフォームを構築します。この方法を使用すると、IPインテグレーター ブロック デザインを手動で作成する必要がなく、時間を節約できます。</p>
+<p><a class="reference external" href="../../Introduction/03_Edge_VCK190/step0">手順 0: Versal プラットフォーム作成チュートリアル</a>の手順に従います。オプションの手順は省略できます。</p>
+</div>
+<div class="section" id="step-2-add-custom-ip-into-the-block-design">
+<h2>手順 2: ブロックデザインへのカスタム IP の追加<a class="headerlink" href="#step-2-add-custom-ip-into-the-block-design" title="Permalink to this heading">¶</a></h2>
+<p>この手順では、前の手順で作成したプラットフォーム デザインに DDS コンパイラ IP を追加します。DDS コンパイラ IP は、 Vivado® Design Suite のザイリンクス IP カタログに含まれています。この IP の詳細は、製品ガイド (<a class="reference external" href="https://japan.xilinx.com/cgi-bin/docs/ipdoc?c=dds_compiler;v=v6_0;d=pg141-dds-compiler.pdf">PG141</a>) を参照してください。これは一般公開 IP なので、シミュレーションがサポートされていますが、独自の IP コアを追加する場合は、シミュレーションをサポートするシミュレーション モデルを提供する必要があります。</p>
+<ol><li><p>前の手順で作成したシステム ブロック デザインを閉じてしまった場合は再度開きます。</p></li> <li><p><strong>[Add IP]</strong> (+ アイコン) ボタンをクリックして、<strong>dds</strong> を検索します。DDS コンパイラ IP をダブルクリックしてキャンバスに追加します。</p>
+<p><img alt="missing image" src="../../../../_images/addip.png" /></p></li> <li><p>DDS IP を次のように設定します。一部の設定は必須ではなく、このデザイン例の目的にのみ使用されることに注意してください。必須要件は、この IP には AXI4 ストリーム インターフェイスが 1 つしかないため、位相出力ポートはオフにする必要があるという点のみです。</p>
+<p>a. [Configuration] タブの設定</p>
+<p><img alt="missing image" src="../../../../_images/dds_config.png" /></p>
+<p>b. [Implementation] タブの設定</p>
+<p><img alt="missing image" src="../../../../_images/dds_impl.png" /></p>
+<p>c. [Detailed Implementation] タブの設定</p>
+<p>このページはデフォルト設定をそのまま使用します。</p>
+<p>d. [Output Frequency] タブの設定</p>
+<p>周波数の値は調整できますが、サンプル レートに注意してください。クロック レートは 300 MHz です。1 サイクル内でサンプルが少なすぎると、正弦波を正しくサンプリングできません。</p>
+<p><img alt="missing image" src="../../../../_images/dds_freq.png" /></p></li> <li><p>コンフィギュレーション ページを終了して、<code class="docutils literal notranslate"><span class="pre">aclk</span></code> ポートを Clocking Wizard の <code class="docutils literal notranslate"><span class="pre">clk_out3</span></code> 信号に接続します。</p></li> <li><p>これでブロック デザインは次のようになるはずです。</p></li></ol>
+<p><img alt="missing image" src="../../../../_images/212_ipi_fully_connection_dds.png" /></p>
+<ol class="simple"><li><p>[Platform Setup] ウィンドウを開き、M_AXIS_DATA ポートをイネーブルにします。SP タグを <code class="docutils literal notranslate"><span class="pre">AXIS</span></code> に設定します。Vitis™ リンカーではこれが使用されて、アクセラレータに接続されます。</p></li></ol>
+<p><img alt="missing image" src="../../../../_images/dds_if.png" /></p>
+<ol class="simple"><li><p>ブロック デザインの出力ファイルを生成し直します。</p></li> <li><p>ハードウェア プラットフォームをエクスポートします。プラットフォーム タイプを選択するページで、<strong>[Hardware and hardware emulation]</strong> を選択して、このプラットフォームでエミュレーションを実行します。</p></li></ol>
+</div>
+<div class="section" id="step-3-create-the-software-components-with-petalinux">
+<h2>手順 3: PetaLinux でのソフトウェア コンポーネントの作成<a class="headerlink" href="#step-3-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h2>
+<p>この手順では、Vitis 統合ソフトウェア プラットフォームの必須コンポーネントを含む PetaLinux プロジェクトを作成します。<a class="reference external" href="../../Introduction/03_Edge_VCK190/step2">手順 2: Versal プラットフォーム作成チュートリアル</a>の手順に従います。</p>
+</div>
+<div class="section" id="step-4-package-the-platform-in-the-vitis-software-platform">
+<h2>手順 4: Vitis ソフトウェア プラットフォームでのプラットフォームのパッケージ<a class="headerlink" href="#step-4-package-the-platform-in-the-vitis-software-platform" title="Permalink to this heading">¶</a></h2>
+<p>この手順では、Vitis IDE でハードウェア XSA をソフトウェア コンポーネントと共にパッケージします。<a class="reference external" href="../../Introduction/03_Edge_VCK190/step3">手順 3: Versal プラットフォーム作成チュートリアル</a>の手順に従います。</p>
+</div>
+<div class="section" id="step-5-test-the-platform">
+<h2>手順 5: プラットフォームのテスト<a class="headerlink" href="#step-5-test-the-platform" title="Permalink to this heading">¶</a></h2>
+<p>この手順では、簡単な <code class="docutils literal notranslate"><span class="pre">vadd</span></code> アプリケーションを構築し、ハードウェア エミュレーションを実行してプラットフォームをテストします。<a class="reference external" href="../../Introduction/03_Edge_VCK190/step4">手順 4: Versal プラットフォーム作成チュートリアル</a>の指示に従いますが、いくつか変更を加えます。</p>
+<p>そのページでテスト 2 を実行するだけです。<code class="docutils literal notranslate"><span class="pre">vadd</span></code> システム プロジェクトを作成したら、次のように変更をします。</p>
+<ol class="simple"><li><p><code class="docutils literal notranslate"><span class="pre">vadd_kernels</span></code> プロジェクトの <code class="docutils literal notranslate"><span class="pre">src</span></code> フォルダーの下にある <code class="docutils literal notranslate"><span class="pre">krnl_vadd.cpp</span></code> ファイルを開きます。このファイルの先頭に次のヘッダー ファイルを追加します。これらは、AXIS データ型および HLS ストリーム データ型をサポートするために使用されます。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;ap_int.h&quot;</span> <span class="c1">#include &quot;ap_axi_sdata.h&quot;</span> <span class="c1">#include &quot;hls_stream.h&quot;</span></pre></div>
+</div>
+<ol class="simple"><li><p>カーネル関数定義の前に <code class="docutils literal notranslate"><span class="pre">pkt</span></code> という名前の型を定義します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">ap_axis</span><span class="o">&lt;</span><span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">&gt;</span> <span class="n">pkt</span><span class="p">;</span></pre></div>
+</div>
+<ol class="simple"><li><p>最上位関数に 2 つのポートを追加します。<code class="docutils literal notranslate"><span class="pre">dds_in</span></code> ポートは AXI4-Stream 型で、<code class="docutils literal notranslate"><span class="pre">wave_out</span></code> ポートは AXI-MM 型です。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">krnl_vadd</span><span class="p">(</span><span class="n">uint32_t</span><span class="o">*</span> <span class="n">in1</span><span class="p">,</span> <span class="n">uint32_t</span><span class="o">*</span> <span class="n">in2</span><span class="p">,</span> <span class="n">uint32_t</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">,</span> <span class="nb">int</span> <span class="o">*</span><span class="n">wave_out</span><span class="p">,</span> <span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">pkt</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dds_in</span><span class="p">)</span> <span class="p">{</span></pre></div>
+</div>
+<ol class="simple"><li><p>このデザインでは、DDS IP からのデータは処理されず、DDR 出力へ渡されるだけです。これには、関数本体に次のように数行を追加します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="c1">#pragma HLS PIPELINE II = 1</span> <span class="n">pkt</span> <span class="n">value</span> <span class="o">=</span> <span class="n">dds_in</span><span class="o">.</span><span class="n">read</span><span class="p">();</span> <span class="n">wave_out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">data</span><span class="p">;</span> <span class="p">}</span></pre></div>
+</div>
+<p>これでカーネル コードの変更が完了しました。作業を保存してファイルを閉じます。</p>
+<blockquote>
+<div><p>注記: <code class="docutils literal notranslate"><span class="pre">vadd</span></code> カーネルを完全な修正コードについては、<a class="reference internal" href="golden/kernel_modifications.html"><span class="doc">カーネル コードの修正</span></a>を参照してください。</p>
+</div></blockquote>
+<ol class="simple"><li><p>Vitis リンカーでカーネルの AXI ストリーム ポートとプラットフォームの対応インターフェイスを正しくリンクするようにするには、<code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> というコンフィギュレーション ファイルを作成し、次の行を追加します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">connectivity</span><span class="p">]</span> <span class="n">stream_connect</span> <span class="o">=</span> <span class="n">AXIS</span><span class="p">:</span><span class="n">krnl_vadd_1</span><span class="o">.</span><span class="n">dds_in</span></pre></div>
+</div>
+<p>このコマンドは、2 つの AXI4-Stream ポート間の接続を示します。コロンの前はマスター インターフェイスの名前で、コロンの後はスレーブ インターフェイスの名前である必要があります。このデザインの場合、パラメーターからの AXIS sptag はAXI マスター側を表しているため、先に配置します。ここでは、プラットフォームの作成時に定義された <code class="docutils literal notranslate"><span class="pre">sptag</span></code> を指定するだけで、Vitis リンカーが自動的に検出します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">system_cfg</span></code> ファイルは <code class="docutils literal notranslate"><span class="pre">vadd_system_hw_link</span></code> プロジェクトの下に置きます。ほかのディレクトリを選択することもできますが、バイナリ コンテナー設定でそのディレクトリを正しく指定するようにしてください。</p>
+<p>バイナリ コンテナー設定で config ファイルを指定します。</p>
+<p><img alt="missing image" src="../../../../_images/212_config_file.png" /></p>
+<ol><li><p>次に、ホスト コードを変更して、DDR からデータを読み取ります。<code class="docutils literal notranslate"><span class="pre">vadd</span></code> プロジェクトの <code class="docutils literal notranslate"><span class="pre">src</span></code> フォルダーの下にある <code class="docutils literal notranslate"><span class="pre">vadd.cpp</span></code> ファイルを開き、次のように変更します。</p>
+<p>a. ヘッダー ファイルを追加します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;ap_int.h&quot;</span> <span class="c1">#include &lt;stdio.h&gt;</span></pre></div>
+</div>
+<p>b. DDS 出力データ用に新しい <code class="docutils literal notranslate"><span class="pre">cl_mem</span> <span class="pre">buffer</span></code> を作成します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cl</span><span class="p">::</span><span class="n">Buffer</span> <span class="n">buffer_waveout</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span></pre></div>
+</div>
+<p>c. バッファーをカーネルにボンディングします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="n">narg</span><span class="o">++</span><span class="p">,</span><span class="n">buffer_waveout</span><span class="p">);</span></pre></div>
+</div>
+<p>d. ホスト バッファーをデバイス バッファーにマップします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="o">*</span><span class="n">ptr_waveout</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">q</span><span class="o">.</span><span class="n">enqueueMapBuffer</span> <span class="p">(</span><span class="n">buffer_waveout</span> <span class="p">,</span> <span class="n">CL_TRUE</span> <span class="p">,</span> <span class="n">CL_MAP_READ</span> <span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span></pre></div>
+</div>
+<p>e. DDR からデータを読み出します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="o">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_waveout</span><span class="p">},</span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">);</span></pre></div>
+</div>
+<p>f. データがファイルに保存されます。DDS コンパイラの IP 出力は 16 ビットの符号付きデータで、ホスト バッファーの 32 ビット整数データであるため、データは 17 ビット左にシフトされます。これは、追加の符号付きビットを削除し、実際のペイロード データを保持するためです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">FILE</span> <span class="o">*</span><span class="n">fp_dout</span><span class="p">;</span> <span class="n">fp_dout</span><span class="o">=</span><span class="n">fopen</span><span class="p">(</span><span class="s2">&quot;wave_out.txt&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">);</span> <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="n">fprintf</span><span class="p">(</span><span class="n">fp_dout</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">ptr_waveout</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="mi">17</span><span class="p">);</span> <span class="p">}</span> <span class="n">fclose</span><span class="p">(</span><span class="n">fp_dout</span><span class="p">);</span></pre></div>
+</div>
+<p>g. バッファーのマップを解除します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="o">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">buffer_waveout</span> <span class="p">,</span> <span class="n">ptr_waveout</span><span class="p">);</span></pre></div>
+</div>
+<blockquote>
+<div><p>注記: <code class="docutils literal notranslate"><span class="pre">vadd</span></code> ホスト アプリケーションの完全な修正コードについては、<a class="reference internal" href="golden/host_modifications.html"><span class="doc">ホスト コードの修正</span></a>を参照してください。</p>
+</div></blockquote></li> <li><p>変更した <code class="docutils literal notranslate"><span class="pre">vadd</span></code> アプリケーションでエミュレーションを実行します。<a class="reference external" href="../../Introduction/03_Edge_VCK190/step4.md#optional-test-the-application-on-hardware-emulation">手順 4 - エミュレーション: Versal プラットフォーム作成チュートリアル</a>の手順に従います。</p></li> <li><p>コンソール ウィンドウに「Test Passed」と表示されたら、生成された <code class="docutils literal notranslate"><span class="pre">wave_out.txt</span></code> ファイルを QEMU ターゲットからコピーします。XSCT コンソール ウィンドウをまだ起動していない場合は、まず <code class="docutils literal notranslate"><span class="pre">Xilinx</span></code> メニューから起動します。</p></li></ol>
+<p>次のコマンドを使用して <code class="docutils literal notranslate"><span class="pre">tcf</span></code> ターゲットに接続します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connect</span> <span class="o">-</span><span class="n">host</span> <span class="mf">127.0.0.1</span> <span class="o">-</span><span class="n">port</span> <span class="mi">1440</span></pre></div>
+</div>
+<p>次のコマンドを使用して、<code class="docutils literal notranslate"><span class="pre">tcf</span></code> ターゲットからホスト マシンに <code class="docutils literal notranslate"><span class="pre">wave_out.txt</span></code> ファイルをコピーします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tfile copy -to-host /mnt/sd-mmcblk0p1/wave_out.txt $(YOUR_DIR)/wave_out.txt</pre></div>
+</div>
+<p>wave_out.txt ファイルが $(YOUR_DIR) にコピーされます。データをプロットするツールを選択します。選択可能なオプションには MATLAB® があります。MATLAB がインストールされていない場合は、Excel などのその他のサードパーティ ツールでも同様の機能が提供されます。ツールを選択して、正弦波を出力します。</p>
+<p><img alt="missing image" src="../../../../_images/sinewave.png" /></p>
+</div>
+</div>
+<div class="section" id="support">
+<h1>サポート<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub 問題は、リクエストやバグの追跡に使用します。質問については、<a class="reference external" href="https://support.xilinx.com">forums.xilinx.com</a> を参照してください。</p>
+</div>
+<div class="section" id="license">
+<h1>ライセンス<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Apache ライセンス、バージョン 2.0 (以下「ライセンス」) に基づいてライセンス付与されています。本ライセンスに準拠しないと、このファイルを使用することはできません。</p>
+<p>ライセンスのコピーは、<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a> から入手できます。</p>
+<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
+<p align="center"><sup>XD019 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../../Design_Tutorials/01-Edge-KV260/README.html" class="btn btn-neutral float-left" title="Vitis Custom Embedded Platform Creation Example on KV260" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../02_petalinux_customization/README.html" class="btn btn-neutral float-right" title="PetaLinux Building and System Customization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

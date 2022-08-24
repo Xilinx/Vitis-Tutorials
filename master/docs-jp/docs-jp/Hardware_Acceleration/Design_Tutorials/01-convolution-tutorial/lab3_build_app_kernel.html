@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>2-D たたみ込みカーネルとホスト アプリケーションのビルド - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>2-D たたみ込みカーネルとホスト アプリケーションのビルド</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial/lab3_build_app_kernel.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="building-the-2-d-convolution-kernel-and-host-application">
+<h1>2-D たたみ込みカーネルとホスト アプリケーションのビルド<a class="headerlink" href="#building-the-2-d-convolution-kernel-and-host-application" title="Permalink to this heading">¶</a></h1>
+<p>この演習では、ザイリンクス Alveo U200 アクセラレータ カードをターゲットに、Vitis アプリケーション アクセラレーション開発フローを使用したハードウェア カーネルのビルドに焦点を当てます。ホスト側アプリケーションは、カーネルを呼び出すためのすべてのデータ移動と実行トリガーを調整するためにインプリメントされます。この演習では、実際のパフォーマンスを測定し、見積もりのパフォーマンスと CPU のみのパフォーマンスと比較します。</p>
+<div class="section" id="host-application">
+<h2>ホスト アプリケーション<a class="headerlink" href="#host-application" title="Permalink to this heading">¶</a></h2>
+<p>このセクションでは、たたみ込みカーネルの実行を調整るためにホスト アプリケーションがどのように記述されるかについて簡単に説明します。前の演習では、1080p HD ビデオを処理する 60 FPS パフォーマンス目標を満たすため、複数の計算ユニットが必要になると見積もられていました。ホスト アプリケーションは、計算ユニット数に依存しないように設計されています。具体的には、計算ユニットが対称である場合 (同じカーネルのインスタンスおよびメモリのデバイス DDR バンクへの接続が同一である場合)、ホスト アプリケーションは計算ユニットを何個でも処理できます。</p>
+<p><strong>ヒント</strong>: ホスト プログラミングおよび Vitis ツールに関するその他の<a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">チュートリアル</a>および<a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples">例</a>もあります。</p>
+<div class="section" id="host-application-variants">
+<h3>さまざまなホスト アプリケーション<a class="headerlink" href="#host-application-variants" title="Permalink to this heading">¶</a></h3>
+<p>たたみ込みチュートリアルの最上位フォルダーに移動し、ディレクトリを <code class="docutils literal notranslate"><span class="pre">src</span></code> に変更して、ファイルをリストします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/src ls</pre></div>
+</div>
+<p><strong>host.cpp</strong> と <strong>host_randomized.cpp</strong> の 2 つのファイルがあります。これらは、ホスト アプリケーションの 2 つの異なるバージョンをビルドするために使用できます。カーネル計算ユニットとのやり取りは、<strong>pgm</strong> 画像ファイルを入力として使用する点を除き、まったく同じです。このファイルは、画像シーケンス (ビデオ) をエミュレートするために複数回繰り返されます。ランダム化されたホストは、ランダムに生成された画像シーケンスを使用します。ランダムな入力画像生成をするホストには、依存関係がありません。一方、<strong>host.cpp</strong> のホスト コードは OpenCV ライブラリを使用します。特に、<strong>OpenCV 2.4</strong> ライブラリを使用して、RAW 画像形式のロード、アンロード、変換をします。</p>
+</div>
+<div class="section" id="host-application-details">
+<h3>ホスト アプリケーションの詳細<a class="headerlink" href="#host-application-details" title="Permalink to this heading">¶</a></h3>
+<p>ホスト アプリケーションは、コマンド ライン引数の解析から開始します。次は、入力画像を受け取り、OpenCV を使用するホストによって提供されるコマンド ライン オプションです (<code class="docutils literal notranslate"><span class="pre">src/host.cpp</span></code> ソース ファイルを参照)。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">CmdLineParser</span><span class="w"> </span><span class="n">parser</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--nruns&quot;</span><span class="p">,</span><span class="w">   </span><span class="s">&quot;-n&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Number of times the image is processed&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--fpga&quot;</span><span class="p">,</span><span class="w">    </span><span class="s">&quot;-x&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;FPGA binary (xclbin) file to use&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--input&quot;</span><span class="p">,</span><span class="w">   </span><span class="s">&quot;-i&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Input image file&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--filter&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;-f&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Filter type (0-6)&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--maxreqs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-r&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Maximum number of outstanding requests&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;3&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--compare&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;-c&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Compare FPGA and SW performance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">host_randomized.cpp</span></code> ファイルには、これらのオプションがすべて含まれるほか、<code class="docutils literal notranslate"><span class="pre">width</span></code> および <code class="docutils literal notranslate"><span class="pre">height</span></code> オプションも追加されています。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--width&quot;</span><span class="p">,</span><span class="w">   </span><span class="s">&quot;-w&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Image width&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;1920&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">parser</span><span class="p">.</span><span class="n">addSwitch</span><span class="p">(</span><span class="s">&quot;--height&quot;</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;-h&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Image height&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1080&quot;</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>アプリケーションの起動とパフォーマンス測定には、別のオプションを使用できます。この演習では、これらのアプリケーションへのコマンド ライン入力のほとんどを最上位ディレクトリの <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> という makefile を使用して設定します。このファイルを使用すると、これらのオプションのほとんどを設定できます。</p>
+<p>ホスト アプリケーションはコマンドライン オプションを解析したら、OpenCL コンテキストを作成し、<code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> を読み取ってロードし、プロファイリングをイネーブルした順不同の実行を含むコマンド キューを作成します。その後、メモリ割り当てが実行され、入力画像が読み込まれます (またはランダムに生成されます)。</p>
+<p>設定が完了すると、アプリケーションは <code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> オブジェクトを作成し、それを使用して複数の画像でフィルタリング要求を出します。タイマーは、ソフトウェアとハードウェアの両方の実行の実行時間測定値を取得するために使用されます。最後に、ホスト アプリケーションがパフォーマンス結果のサマリを表示します。大変な部分のほとんどは、<code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> および <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> で実行されます。これらのクラスは、複数の計算ユニットでのフィルタリング演算の実行を管理および調整します。ホスト アプリケーションのバージョンはどちらも、これらのクラスに基づいています。</p>
+</div>
+<div class="section" id="d-filtering-requests">
+<h3>2D フィルタリング要求<a class="headerlink" href="#d-filtering-requests" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> クラスは、フィルタリング要求ディスパッチャー クラスにより使用されます。このクラスのオブジェクトは、特定の画像の単一カラー チャンネル (YUV) を処理する単一の要求をカプセル化します。基本的に、2-D たたみ込みフィルタリング要求のエンキューに必要な OpenCL リソースにハンドルを割り当てて保持します。これらのリソースには、OpenCL バッファー、イベント リスト、カーネルおよびコマンド キューへのハンドルが含まれます。アプリケーションは、カーネルのすべてのエンキュー コマンドに渡される単一のコマンド キューを作成します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> クラスのオブジェクトを作成したら、そのオブジェクトを使用して <code class="docutils literal notranslate"><span class="pre">Filter2D</span></code> メソッドを呼び出せるようになります。この呼び出しは、入力データまたはフィルター係数の移動、カーネル呼び出し、出力データのホストへの読み戻しなど、すべての操作をキューに入れます。同じ API 呼び出しは、これらの転送間の依存関係のリストを作成し、ホストへの出力データ転送の完了を知らせる出力イベントも作成します。</p>
+</div>
+<div class="section" id="d-filter-dispatcher">
+<h3>2D フィルター ディスパッチャー<a class="headerlink" href="#d-filter-dispatcher" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> クラスは、カーネル呼び出すスケジュールするためのエンドユーザー API を提供する最上位クラスです。すべての呼び出しは、前述のように、<code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> オブジェクトを使用してカーネル エンキューと関連データの転送をスケジュールします。<code class="docutils literal notranslate"><span class="pre">Filter2DDispatcher</span></code> は基本的に要求オブジェクトのベクターを保持するコンテナー クラスです。インスタンシエートされる <code class="docutils literal notranslate"><span class="pre">Filter2DRequest</span></code> オブジェクトの数は、構築時にディスパッチャー クラスの <strong>max</strong> パラメーターとして定義されます。このパラメーターの最小値は、計算ユニットの数と同じくらい小さくでき、計算ユニットごとに少なくとも 1 つのカーネル エンキュー呼び出しを並行して実行できます。ただし、ホストとデバイス間で発生する入力データと出力データの転送を重複させることができるので、値は大きい方が適しています。</p>
+</div>
+</div>
+<div class="section" id="building-the-application">
+<h2>アプリケーションのビルド<a class="headerlink" href="#building-the-application" title="Permalink to this heading">¶</a></h2>
+<p>ホスト アプリケーションは、チュートリアルに含まれる <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> を使用してビルドできます。前述のように、ホスト アプリケーションには、入力画像を処理するバージョンと、ランダム データを生成して画像として処理するバージョンの 2 つのバージョンがあります。</p>
+<p>最上位の <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> には、<code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> というファイルが含まれます。このファイルには、エミュレーション モード用に異なるホスト ビルドとカーネル バージョンを生成するために使用可能なオプションのほとんどが含まれます。また、特定数のテスト画像を使用してエミュレーションを起動する方法も含まれます。このファイルに含まれるオプションの詳細は、次のとおりです。</p>
+<div class="section" id="kernel-build-options">
+<h3>カーネルのビルド オプション<a class="headerlink" href="#kernel-build-options" title="Permalink to this heading">¶</a></h3><ul class="simple"> <li><p>TARGET: カーネルのビルド ターゲットを選択。選択肢は、<code class="docutils literal notranslate"><span class="pre">hw</span></code>、<code class="docutils literal notranslate"><span class="pre">sw_emu</span></code>、<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code>。</p></li> <li><p>PLATFORM: ビルドに使用されるターゲット ザイリンクス プラットフォーム。</p></li> <li><p>ENABLE_STALL_TRACE: ストール データを生成するためにカーネルをイネーブル。選択肢は <code class="docutils literal notranslate"><span class="pre">yes</span></code>、<code class="docutils literal notranslate"><span class="pre">no</span></code>。</p></li> <li><p>TRACE_DDR: トレース データを格納するメモリ バンクを選択。選択肢は、u200 カードの場合 DDR[0] ～ DDR[3]。</p></li> <li><p>KERNEL_CONFIG_FILE: カーネル コンフィギュレーション ファイル。</p></li> <li><p>VPP_TEMP_DIRS: Vitis カーネル コンパイラ (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) の一時的なログ ディレクトリ。</p></li> <li><p>VPP_LOG_DIRS: <code class="docutils literal notranslate"><span class="pre">v++</span></code> のログ ディレクトリ。</p></li> <li><p>USE_PRE_BUILT_XCLBIN: このチュートリアルをスピードアップするために使用可能なプリビルドの FPGA バイナリ ファイルの使用をイネーブル。</p></li> </ul>
+</div>
+<div class="section" id="host-build-options">
+<h3>ホストのビルド オプション<a class="headerlink" href="#host-build-options" title="Permalink to this heading">¶</a></h3><ul class="simple"> <li><p>ENABLE_PROF: ホスト アプリケーションの OpenCL プロファイリングをイネーブルにします。</p></li> <li><p>OPENCV_INCLUDE: OpenCV インクルード ディレクトリ パス。</p></li> <li><p>OPENCV_LIB: OpenCV ライブラリ ディレクトリ パス。</p></li> </ul>
+</div>
+<div class="section" id="application-runtime-options">
+<h3>アプリケーションのランタイム オプション<a class="headerlink" href="#application-runtime-options" title="Permalink to this heading">¶</a></h3><ul class="simple"> <li><p>FILTER_TYPE: 6 つの異なるフィルター タイプから選択。選択肢は、0-6 (Identity、Blur、Motion Blur、Edges、Sharpen、Gaussian、Emboss)。</p></li> <li><p>PARALLEL_ENQ_REQS: 並列エンキュー要求のアプリケーション コマンドライン引数</p></li> <li><p>NUM_IMAGES: 処理する画像の数</p></li> <li><p>IMAGE_WIDTH: 使用する画像の幅</p></li> <li><p>IMAGE_HEIGHT: 使用する画像の高さ</p></li> <li><p>INPUT_TYPE: ホスト バージョンを選択</p></li> <li><p>INPUT_IMAGE: 画像ファイルのパスと名前</p></li> <li><p>PROFILE_ALL_IMAGES: CPU と FPGA を比較する際にすべての画像を使用するかどうか</p></li> <li><p>NUM_IMAGES_SW_EMU: sw_emu に使用する画像の数を設定</p></li> <li><p>NUM_IMAGES_HW_EMU: hw_emu に使用する画像の数を設定</p></li> </ul>
+<p>ランダム化されたデータを使用してホスト アプリケーションをビルドするには、次の手順に従います。</p>
+<ol class="simple"><li><p>makefile オプションを編集します。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/ vim make_options.mk</pre></div>
+</div>
+<ol class="simple"><li><p><strong>INPUT_TYPE</strong> オプションが <code class="docutils literal notranslate"><span class="pre">random</span></code> に設定されていることを確認します。これにより、<code class="docutils literal notranslate"><span class="pre">host_randomized.cpp</span></code> アプリケーションがビルドされます。</p></li></ol>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">############## Host Application Options</span> <span class="nv">INPUT_TYPE</span> <span class="o">:=</span>random</pre></div>
+</div>
+<p><strong>ヒント</strong>: <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> をビルドするには、<strong>OpenCV 2.4</strong> のインストール パスを示す次の 2 つの変数を <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> ファイルに含める必要があります。</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">############## OpenCV Installation Paths</span> <span class="nv">OPENCV_INCLUDE</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/include <span class="nv">OPENCV_LIB</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/lib</pre></div>
+</div>
+<ol class="simple"><li><p>Vitis アプリケーション アクセラレーション開発フローおよびザイリンクス ランタイム ライブラリを設定するためのインストール用のスクリプトを呼び出します。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> /**User XRT Install Path**/setup.sh <span class="nb">source</span> /**User Vitis Install Path**/settings64.sh</pre></div>
+</div>
+<ol class="simple"><li><p>パスを正しく設定したら、次のように makefile コマンドを使用してホスト アプリケーションをビルドします。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make host</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">build</span></code> フォルダー内に <code class="docutils literal notranslate"><span class="pre">host.exe</span></code> がビルドされます。カーネル コードとは別にホスト アプリケーションをビルドすることで、ホスト コードが正しくコンパイルされ、すべてのライブラリ パスが設定されたことを確認できます。</p>
+</div>
+<div class="section" id="running-software-emulation">
+<h3>ソフトウェア エミュレーションの実行<a class="headerlink" href="#running-software-emulation" title="Permalink to this heading">¶</a></h3>
+<p>ソフトウェア エミュレーション モードでカーネルをビルドして実行するには、次の bash コマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>sw_emu</pre></div>
+</div>
+<p>ソフトウェア エミュレーション モードでのみ使用される xclbin ファイルがビルドされ、エミュレーション実行が開始されます。エミュレーションが終了すると、次のようなコンソール出力が表示されます。次は、ランダム入力画像の場合の出力です。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+
+Xilinx 2D Filter Example Application <span class="o">(</span>Randomized Input Version<span class="o">)</span>
+
+FPGA binary       : ./fpgabinary.sw_emu.xclbin
+Number of runs    : <span class="m">1</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">5</span>
+Max requests      : <span class="m">12</span>
+Compare perf.     : <span class="m">1</span>
+
+Programming FPGA device
+Generating a random 1920x1080 input image
+Running FPGA accelerator on <span class="m">1</span> images
+  finished Filter2DRequest
+  finished Filter2DRequest
+  finished Filter2DRequest
+Running Software version
+Comparing results
+
+Test PASSED: Output matches reference
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>入力画像を処理に使用する場合は、OpenCV パスと INPUT_TYPE を <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> ファイル内の空の文字列として設定し、再度実行します。コンソール出力は次のようになります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+
+Xilinx 2D Filter Example Application
+
+FPGA binary       : ./fpgabinary.sw_emu.xclbin
+Input image       : ../test_images/picadilly_1080p.bmp
+Number of runs    : <span class="m">1</span>
+Filter <span class="nb">type</span>       : <span class="m">3</span>
+Max requests      : <span class="m">12</span>
+Compare perf.     : <span class="m">1</span>
+
+Programming FPGA device
+Running FPGA accelerator on <span class="m">1</span> images
+  finished Filter2DRequest
+  finished Filter2DRequest
+  finished Filter2DRequest
+Running Software version
+Comparing results
+
+Test PASSED: Output matches reference
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>次の入力および出力画像は、フィルター タイプの選択でエッジ検出を実行する 3 を設定した場合のものです。</p>
+<p><img alt="missing image" src="../../../../_images/inputImage50.jpg" /> <img alt="missing image" src="../../../../_images/outputImage.jpg" /></p>
+</div>
+<div class="section" id="running-hardware-emulation">
+<h3>ハードウェア エミュレーションの実行<a class="headerlink" href="#running-hardware-emulation" title="Permalink to this heading">¶</a></h3>
+<p>アプリケーションは、ソフトウェア エミュレーションと同様の方法を使用して、ハードウェア エミュレーション モードで実行できます。必要な変更は TARGET のみで、<code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> に設定する必要があります。</p>
+<p><strong>注記</strong>: ハードウェア エミュレーションには時間がかかる場合があります。<code class="docutils literal notranslate"><span class="pre">Makefile</span></code> のデフォルト設定では、単一の画像のみがシミュレーションされますが、ランダム入力画像の場合は、画像の高さを 30 ～ 100 ピクセルの範囲に維持することで、画像サイズを小さく設定することをお勧めします。画像の高さと幅は、<code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> ファイルで指定できます。</p>
+<ol class="simple"><li><p>次のコマンドを使用してハードウェア エミュレーションを起動します。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>hw_emu</pre></div>
+</div>
+<p>ハードウェア カーネルをエミュレーション モードでビルドし、ホスト アプリケーションを起動します。コンソール ウィンドウに表示される出力は、<code class="docutils literal notranslate"><span class="pre">sw_emu</span></code> の場合と同じようになります。ただし、ハードウェア エミュレーション後には、Vitis アナライザーを使用して異なる合成レポートを解析し、異なる波形を表示できます。</p>
+</div>
+</div>
+<div class="section" id="system-run">
+<h2>システム実行<a class="headerlink" href="#system-run" title="Permalink to this heading">¶</a></h2>
+<p>このセクションでは、FPGA ハードウェアを使用してホスト アプリケーションを実行し、Vitis アナライザーおよびホスト アプリケーションのコンソール出力を使用してシステム全体のパフォーマンスを解析します。</p>
+<div class="section" id="building-the-hardware-xclbin">
+<h3>ハードウェア XCLBIN のビルド<a class="headerlink" href="#building-the-hardware-xclbin" title="Permalink to this heading">¶</a></h3>
+<p>カーネルの機能が検証され、そのリソースの使用率に問題がなければ、ハードウェア カーネル ビルド プロセスを開始できます。カーネルのビルド プロセスでは、実際のアクセラレータ カードをターゲットにした xclbin ファイルを作成します。これは FPGA 実行ファイルであり、ホストが FPGA カードに読み取ってロードできます。xclbin のビルドには数時間かかり、次のように構築されます。</p>
+<ol class="simple"><li><p><code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> ファイルで ENABLE_PROF?=yes に設定すると、パフォーマンス プロファイリングを有効にできます。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> ENABLE_PROF?<span class="o">=</span>yes</pre></div>
+</div>
+<ol><li><p>次のコマンドを使用してハードウェア run を起動します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span> make build <span class="nv">TARGET</span><span class="o">=</span>hw</pre></div>
+</div></li></ol>
+<blockquote>
+<div><p><strong>ヒント</strong>: <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> ファイルで <strong>USE_PRE_BUILT_XCLBIN := 1</strong> を設定すると、プリビルドの xclbin ファイルが利用可能な場合は、そのファイルを使用できます。</p>
+</div></blockquote>
+</div>
+<div class="section" id="application-run-using-fpga-kernel">
+<h3>FPGA カーネルを使用したアプリケーション実行<a class="headerlink" href="#application-run-using-fpga-kernel" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>アプリケーションを実行するには、次の手順に従います。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>hw</pre></div>
+</div>
+<p>次のようなコンソール ログが生成されます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>hw
+</pre></div>
+</div>
+<p>It should produce a console log similar to the one shown below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+
+Xilinx 2D Filter Example Application <span class="o">(</span>Randomized Input Version<span class="o">)</span>
+
+FPGA binary       : ../xclbin/fpgabinary.hw.xclbin
+Number of runs    : <span class="m">60</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">3</span>
+Max requests      : <span class="m">12</span>
+Compare perf.     : <span class="m">1</span>
+
+Programming FPGA device
+Generating a random 1920x1080 input image
+Running FPGA accelerator on <span class="m">60</span> images
+Running Software version
+Comparing results
+
+Test PASSED: Output matches reference
+
+FPGA Time         :     <span class="m">0</span>.4240 s
+FPGA Throughput   :   <span class="m">839</span>.4765 MB/s
+CPU  Time         :    <span class="m">28</span>.9083 s
+CPU  Throughput   :    <span class="m">12</span>.3133 MB/s
+FPGA Speedup      :    <span class="m">68</span>.1764 x
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+<p>コンソール出力から、CPU と比較して 68 倍のアクセラレーションが達成できたことがわかります。達成されたスループットは 839 MB/s で、見積もりのスループット 900 MB/s に近い値で、6.66% の差しかありません。</p>
+</div>
+<div class="section" id="profile-summary">
+<h3>プロファイル サマリ<a class="headerlink" href="#profile-summary" title="Permalink to this heading">¶</a></h3>
+<p>このセクションでは、Vitis アナライザーを使用してさまざまなパフォーマンス パラメーターとトレースを解析し、システム パフォーマンスを解析します。</p>
+<p>アプリケーションが実行されると、エミュレーション モードであろうが実際のハードウェアであろうが、ランタイム アクティビティのトレース ファイルを生成できます。このトレース ファイルは、Vitis アナライザーで表示できます。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Using-the-Vitis-Analyzer">Vitis アナライザーの使用</a>を参照してください。</p>
+<p>アプリケーション実行中に生成されるトレース情報は、ホスト アプリケーションと同じディレクトリにある <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> ファイル内で異なるオプションを指定すると制御できます。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File">xrt.ini ファイル</a>を参照してください。演習で使用した <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> ファイル (このチュートリアルの一番上のフォルダーにあります) を見てみてください。</p>
+<ol class="simple"><li><p>デザインを実行したら、次の手順を使用してランタイム プロファイル サマリ レポートを開くことができます。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer ./build/fpgabinary.xclbin.run_summary</pre></div>
+</div>
+<ol><li><p>Vitis アナライザー ツールが開いたら、左側のメニューから <strong>[Profile Summary]</strong> をクリックし、右側に表示されるウィンドウから <strong>[Compute Unit Utilization]</strong> を選択します。</p>
+<p>このレポートには、計算ユニットの測定されたパフォーマンスに関する統計が表示されます。3 つの計算ユニットを使用して <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> をビルドしたので、次のように表示されます。</p>
+<p><img alt="Compute Unit Utilization" src="../../../../_images/cuPerf.jpg" /></p>
+<p>この表から、<strong>[Avg Time]</strong> 列に表示されるカーネル計算時間が約 7 ms で、前の演習のカーネル レイテンシの見積もりとほぼ同じであることがわかります。</p>
+<p>もう 1 つの重要な測定値は、<strong>[CU Utilization]</strong> 列で、100% に非常に近い値になっています。これは、ホストが PCIe を介して計算ユニットにデータを継続的に供給できることを意味します。つまり、ホスト PICe の帯域幅は十分であり、計算ユニットが飽和状態になることはありませんでした。これは、ホストの帯域幅使用率からも確認できます。これを表示するには、レポートで <strong>[Host Data Transfers]</strong> を選択します。次の図のような表が表示されます。この表から、ホスト帯域幅が完全には使用されていないことがわかります。</p>
+<p><img alt="missing image" src="../../../../_images/bwUtil.jpg" /></p>
+<p>同様に、レポートで <strong>[Kernel Data Transfers]</strong> を選択すると、カーネルとデバイスの DDR メモリ間で使用される帯域幅を確認できます。次に示すように、すべての計算ユニットに対して 1 つのメモリ バンク (DDR[1]) を使用しました。</p></li></ol>
+<p><img alt="missing image" src="../../../../_images/bwKernel.jpg" /></p>
+</div>
+<div class="section" id="application-timeline">
+<h3>アプリケーション タイムライン<a class="headerlink" href="#application-timeline" title="Permalink to this heading">¶</a></h3>
+<p>アプリケーション タイムラインを使用すると、起動ごとの CU レイテンシや帯域幅使用率などのパフォーマンス パラメーターを確認することもできます。</p>
+<ol><li><p>左側のメニューから <strong>[Application Timeline]</strong> をクリックします。</p>
+<p>次に示すように、右側のウィンドウにアプリケーション タイムラインが表示されます。</p>
+<p><img alt="missing image" src="../../../../_images/cuTime.jpg" /></p>
+<p>見やすいように拡大し、デバイス側のトレースに進みます。CU の場合は、0 行目のトランザクションにカーソルを置くと、計算の開始時間と終了時間、およびレイテンシがツール ヒントに表示されます。これは、前のセクションで見たものと類似しているはずです。</p></li></ol>
+<p>次に示すように、ホスト データ転送トレースも重要です。このレポートからは、ホストの読み出しおよび書き込み帯域幅がギャップがあるために十分に利用されていないことがわかり、読み出しおよび書き込みトランザクションが発生していない時間が表示されます。これらのギャップは重要で、ホスト PCIe 帯域幅が一部しか使用されていないことを意味します。</p>
+<p><img alt="missing image" src="../../../../_images/hostTrace.jpg" /></p>
+<p>このことに加え、Alveo U200 アクセラレータ カードには複数の DDR バンクがあることがわかっているので、アプリケーションの全体的なスループットはさらに向上できます。さらに多くの計算ユニットを使用すると、1 つのビデオ ストリームをアクセラレーションしてスループットを向上させたり、複数のビデオス トリームを同時に処理したりできます。</p>
+<p>この演習では、次のことを学びました。</p><ul class="simple"> <li><p>ビデオ フィルターをビルドして実行し、パフォーマンスを解析する方法</p></li> <li><p>複数 CU のデザイン用に最適化されたホスト側アプリケーションを記述する方法</p></li> <li><p>カーネルのパフォーマンスを見積もって測定したパフォーマンスと比較する方法</p></li> </ul>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>まとめ<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>お疲れさまでした。これで、このチュートリアルのすべての演習を終了しました。このチュートリアルでは、Vitis カーネルのハードウェア インプリメンテーションのパフォーマンスとアクセラレーション要件を見積もる方法を学びました。異なるツールを使用してカーネルのパフォーマンスを解析し、パフォーマンスの見積もりと実際の測定値を比較して、両方のパフォーマンスの数値がどれだけ近いかを確認しました。また、FPGA ベースのインプリメンテーション用に最適化されたメモリ キャッシュまたは階層を簡単に作成して、アプリケーションのパフォーマンスを大幅に向上可能なことも確認しました。最後に、特定のカーネルの複数 CU から最高のパフォーマンスを達成できるよう最適化されたホスト コードを記述する方法を学びました。</p>
+<hr class="docutils" />
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></b></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

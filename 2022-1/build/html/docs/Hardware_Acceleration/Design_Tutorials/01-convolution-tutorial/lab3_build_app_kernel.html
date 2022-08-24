@@ -208,10 +208,7 @@ vim make_options.mk
 </pre></div>
 </div>
 <p><strong>TIP:</strong> To build the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> you must include the following two variables that point to <strong>OpenCV 2.4</strong> install path in <code class="docutils literal notranslate"><span class="pre">make_options.mk</span></code> file:</p>
-<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">############## OpenCV Installation Paths</span>
-<span class="nv">OPENCV_INCLUDE</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/include
-<span class="nv">OPENCV_LIB</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/lib
-</pre></div>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">############## OpenCV Installation Paths</span> <span class="nv">OPENCV_INCLUDE</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/include <span class="nv">OPENCV_LIB</span> <span class="o">:=</span>/**OpenCV2.4 User Install Path**/lib</pre></div>
 </div>
 <ol class="simple">
 <li><p>Source the install specific scripts for setting up the Vitis application acceleration development flow and the Xilinx RunTime Library:</p></li>

@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Versal カスタム プラットフォーム作成チュートリアル - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="KV260 での Vitis カスタム エンベデッド プラットフォームの作成" href="../01-Edge-KV260/README.html" />
+    <link rel="prev" title="ZCU104 での Vitis カスタム エンベデッド プラットフォームの作成" href="../02-Edge-AI-ZCU104/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a><ul class="current"><li class="toctree-l2 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html#design-tutorials">設計チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../02-Edge-AI-ZCU104/README.html">MPSoC でのカスタム プラットフォーム作成チュートリアル</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">Versal でのカスタム プラットフォームの作成チュートリアル</a><ul><li class="toctree-l4"><a class="reference internal" href="#requirements">要件</a></li><li class="toctree-l4"><a class="reference internal" href="#reference">参考資料</a></li><li class="toctree-l4"><a class="reference internal" href="#changelog">変更履歴</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="../01-Edge-KV260/README.html">KV260 スターター キットでのカスタム プラットフォームの作成例</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../../Vitis_Platform_Creation.html#feature-tutorials">機能チュートリアル</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Vitis_Platform_Creation.html">Vitis プラットフォームの作成チュートリアル</a> &raquo;</li><li>Versal カスタム プラットフォーム作成チュートリアル</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody"><!-- 
+# Copyright 2020 Xilinx Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ プラットフォームの作成チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</br></a>
+    </td>
+ </tr>
+</table><div class="section" id="versal-custom-platform-creation-tutorial">
+<h1>Versal カスタム プラットフォーム作成チュートリアル<a class="headerlink" href="#versal-custom-platform-creation-tutorial" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: 2021.2</strong></em></p>
+<p><strong>注記</strong>: <em></em>チュートリアルの<strong>バージョン 2022.1</strong> は現在準備中です。Versal プラットフォームの作成に Vitis 2021.1 を使用する場合はまず、<a class="reference internal" href="../../../Getting_Started/Vitis_Platform/README.html"><span class="doc">Versal プラットフォーム クイック スタート</span></a>を参照してください。</p>
+<p>このモジュールでは、VCK190 評価ボードのアクセラレーション アプリケーションを実行するカスタム プラットフォームを作成します。</p>
+<p>通常の Vitis アクセラレーション プラットフォーム設計は、ベースのブータブル デザインのビルドから開始してから、プラットフォームに必要なコンポーネントとプロパティを追加します。エラーの発生を防ぐため、各ステップを次の手順に進む前に検証する必要があります。次の図はこのワークフローを示しています。</p>
+<p><img alt="Vitis Platform Creation Steps Diagram" src="../../../../_images/platform_creation_steps.svg" /></p>
+<p>Vivado からは、プラットフォーム作成者がプラットフォームをすばやくビルドできるように、拡張可能なプラットフォームのデザイン例が提供されています。CIPS、NOC、DDR コントローラー、およびプラットフォーム プロパティのプリセットも追加されています。これにより、手順 0 と手順 1 のプラットフォーム作成プロセスが効率的になります。プラットフォーム ハードウェア デザインにコンポーネントを追加する場合は、デザイン例の作成後に追加できます (オプション)。</p>
+<p>PetaLinux プロジェクトに XSA をインポートし、その他いくつかオプションを設定して、ソフトウェア コンポーネントを準備します。ソフトウェアおよびハードウェアのコンポーネントをビルドした後、プラットフォームをパッケージします。</p>
+<p>各手順ごとに生成されたファイルをテストして、問題なく動作することを確認します。頻繁にテストをすることで、エラーが発生した場合にその原因を絞り込みやすくなります。最後に、このプラットフォームでテスト アプリケーションをいくつか実行し、このカスタマイズ済みのプラットフォームをテストします。</p>
+<p>次の目次リンクを使用して、これらの手順を実行してください。</p><ul class="simple"> <li><p><a class="reference internal" href="step0.html"><span class="doc">手順 0: ベースのブータブル デザインの作成</span></a></p></li> <li><p><a class="reference internal" href="step1.html"><span class="doc">手順 1: Vitis プラットフォームのハードウェア設定</span></a></p></li> <li><p><a class="reference internal" href="step2.html"><span class="doc">手順 2: PetaLinux でのソフトウェア コンポーネントの作成</span></a></p></li> <li><p><a class="reference internal" href="step3.html"><span class="doc">手順 3: Vitis プラットフォームの作成</span></a></p></li> <li><p><a class="reference internal" href="step4.html"><span class="doc">手順 4: プラットフォームのテスト</span></a></p></li> <li><p><a class="reference internal" href="faq.html"><span class="doc">よくある質問</span></a></p></li> </ul>
+<div class="section" id="requirements">
+<h2>要件<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアル デザインは、VCK190 プロダクション ボードおよび VCK190 ES1 ボードをサポートしています。</p><ul class="simple"> <li><p>Vitis 2021.2 は VCK190 プロダクション ボードをサポートしています。このボードを使用するために追加のライセンスや設定は必要ありません。</p></li> <li><p>VOK190 ES1 ボードを使用する場合は、Vitis 2021.2 で追加の EA ライセンス設定が必要です。</p></li> </ul>
+<p>このデザインには、インターネットにアクセスできる Linux ホストマシンが必要です。Linux OS では、Vitis ソフトウェアと PetaLinux がサポートされる必要があります。</p>
+</div>
+<div class="section" id="reference">
+<h2>参考資料<a class="headerlink" href="#reference" title="Permalink to this heading">¶</a></h2><ul class="simple"> <li><p><a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration">『Vitis 統合ソフトウェア プラットフォーム: アプリケーション アクセラレーション開発』 (UG1393)</a></p><ul> <li><p><a class="reference external" href="https://docs.xilinx.com/r/2021.2-English/ug1393-vitis-application-acceleration/Platform-Creation-Basics">プラットフォーム作成の一般規則</a></p></li> </ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/Xilinx/Vitis_Embedded_Platform_Source">Vitis エンベデッド プラットフォーム ソース GitHub リポジトリ</a></p></li> </ul>
+</div>
+<div class="section" id="changelog">
+<h2>変更履歴<a class="headerlink" href="#changelog" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="id1">
+<h3>2021.2<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3><ul class="simple"> <li><p>手順 1 では、Vivado プロジェクトがハードウェアとハードウェアのエミュレーション用に XSA を個別にエクスポートします。<a class="reference internal" href="step3.html"><span class="doc">手順 3</span></a> でプラットフォームを作成する際に、ハードウェアとハードウェア エミュレーション用に別々の XSA を指定することをお勧めします。</p></li> </ul>
+</div>
+<div class="section" id="id2">
+<h3>2021.1<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3><ul class="simple"> <li><p>手順 0: Vivado サンプル デザインには、クロックおよび割り込みのをさらにカスタマイズ可能なオプションがあります。</p></li> <li><p>手順 1: [Platform Setup] ウィザードでジョブは問題なく実行できるため、プラットフォーム セットアップ用の Tcl コマンドを削除しました。</p></li> <li><p>手順 2: PetaLinux ルート ファイル システム コンフィギュレーションで必要なのは、<strong>xrt</strong> パッケージのみです。<strong>packagegroup-petalinux-xrt</strong> は、PetaLinux によって削除されます。</p></li> <li><p>手順 2: PetaLinux は ZOCL ノード デバイス ツリーを作成できます。このため、デバイス ツリーの手動更新命令が削除されます。</p></li> <li><p>手順 2: PetaLinux 2021.1 には GCC 6.0 よりも後のバージョンが必要です。Yocto 設定で [Enable buildtools extended] をオンにすると、回避できます。</p></li> <li><p>手順 3: Vitis は BIF を生成できます。カスタム BIF を追加する手動ステップは削除されました。</p></li> </ul>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../02-Edge-AI-ZCU104/README.html" class="btn btn-neutral float-left" title="Vitis Custom Embedded Platform Creation Example on ZCU104" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../01-Edge-KV260/README.html" class="btn btn-neutral float-right" title="Vitis Custom Embedded Platform Creation Example on KV260" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

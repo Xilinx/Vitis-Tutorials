@@ -1,0 +1,8 @@
+-M
+microblaze-fdt
+-device
+loader,file=<pmufw.elf>
+-machine-path
+.
+-display
+none

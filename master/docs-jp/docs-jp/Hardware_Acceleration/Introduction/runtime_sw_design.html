@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>メモリ割り当ての概念 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>メモリ割り当ての概念</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Hardware_Acceleration/Introduction/runtime_sw_design.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis ™ - ランタイムおよびシステムの最適化 - ランタイム ソフトウェア デザイン</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="memory-allocation-concepts">
+<h1>メモリ割り当ての概念<a class="headerlink" href="#memory-allocation-concepts" title="Permalink to this heading">¶</a></h1>
+<p>CPU 上でプログラムを実行する際は、ハードウェアでメモリがどのように管理されているかを気にすることは通常ありません。一部のプロセッサ アーキテクチャではアライメントなどの問題が発生することがありますが、現代の OS およびコンパイラではこれらが抽象化されているので、ユーザーが下位ドライバーにかかわる作業 (またはアクセラレーション) を実行するのでない限り、ユーザーには見えないようになっています。</p>
+<p>基本的には、メモリには 6 つの属性があると考えることができます。まずデータ バッファーへのポインターでは、データ ポインターは<strong>仮想</strong>または<strong>物理</strong>です。そのポインターが指定するメモリは、<strong>ページング方式</strong>を使用しているか、<strong>物理的に連続</strong>しています。最後に、プロセッサの視点から見ると、メモリは<strong>キャッシュ可能</strong>または<strong>キャッシュ不可能</strong>です。</p>
+<p>現代のほとんどの OS では、仮想メモリが使用されています。これには多くの理由がありますが、この資料では説明ません。ここでは、XRT を実行するのに通常に使用される Linux では、仮想メモリが使用されるということを知っておくだけで十分です。そのため、標準 C または C++ のユーザー空間の API 関数 (malloc()、new など) を使用すると、ポインターが指定するのは物理メモリ アドレスではなく仮想メモリ アドレスです。</p>
+<p>また、ほとんどの場合、<strong>ページング方式</strong>を使用するメモリのアドレス ブロックを指定するポインターを使用することになります。Linux を含む現代のほとんどの OS では、アドレス範囲はページという単位に分割され、各ページのサイズは 4 KiB です (サイズは OS によって異なる可能性あり)。各ページは、物理メモリの対応するページにマップされます。この説明は、不正確に単純化されていると指摘する声もあるかもしれませんが、この資料はコンピューター アーキテクチャの教科書ではないので、ここでは詳細な説明は省きます。</p>
+<p>ただし、重要なことを 2 点指摘しておきます。1 点目は、標準 C の API を使用してヒープからバッファーを割り当てても、物理メモリ アドレスは取得できないということ、2 点目は、1 つのバッファーではなく長さが 4 KiB のメモリ ページ N 個が取得されるということです。これを具体的に説明します。たとえば、6 MiB のバッファーを割り当てるとします。ページ数は次のようになります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1024</span> <span class="n">B</span> <span class="o">*</span> <span class="mi">1024</span> <span class="n">B</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="n">B</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">536</span> <span class="n">Pages</span></pre></div>
+</div>
+<p>6 MiB バッファー全体をホストから Alveo Alveo データセンター アクセラレータ カードにコピーする場合は、1536 個の仮想ページ アドレスを物理メモリ アドレスに変換する必要があります。その後、これらの物理アドレスをスキャッター ギャザー リストにまとめ、スキャッター ギャザー機能を持つ DMA エンジンにエンキューし、これらのページを 1 つずつそれぞれのデスティネーションにコピーします。Alveo カードからバッファーをホスト メモリの仮想、ページング方式アドレス範囲にコピーする場合は、この逆になります。ホスト プロセッサは通常高速なので、このリストを作成するのにそれほど時間はかかりません。ただし、バッファーのサイズがそれなりに大きいため、システムの全体的なレイテンシに影響する可能性があるので、システムの全体的なパフォーマンスへの影響を理解しておくことが重要です。</p>
+<p>次に、このようなシステムの簡略図を示します。この例には、A および B という 2 つの仮想バッファーがあります。この例では、バッファー A のデータを Alveo に転送して処理し、バッファー B をアップデートして、結果をバッファー A に戻します。この図から、仮想メモリから物理メモリにどのようにマップされるのかがわかります。Alveo カード内では、アクセラレータは物理メモリ アドレスでのみ操作を実行するので、データは常に連続して格納されます。これは、これが一般的に最高のパフォーマンスを得ることのできる構成だからです。</p>
+<p><img alt="Non-Contiguous Memory Transfer to Alveo" src="../../../_images/runtime_virtual_memory.jpg" /></p>
+<p>このような単純なデータフローであっても、既に少し複雑です。ここで、何メガバイト (またはギガバイト) にも及び、何千ページもある非常に大きなバッファーを考えてみてください。ホスト プロセッサがいくら高速でも、これらのスキャッター ギャザー リストを作成して管理し、ページ テーブルも管理するのにどれだけ時間がかかるか想像がつきます。実際のメモリは通常この例ほど細分割されていませんが、ページの物理アドレスは事前にわからないので、これらのアドレスはそれぞれ固有なアドレスとして処理する必要があります。</p>
+<p>物理メモリでページがすべて連続しているとわかっていれば、スキャッター ギャザー リストを作成するのもずっと簡単になります。データ バイトが順に並んでいれば、物理アドレスをインクリメントするとデータ [n+1] が得られるので、バッファーの開始アドレスとサイズがわかればスキャッター ギャザー リストを作成できます。</p>
+<p>これは、DMA と Alveo カードの間の操作だけでなく、多くの DMA 操作で有益です。現代のオペレーティング システムでは、この目的のためだけに、メモリ アロケーター (通常はカーネル サービスを介して提供) があります。Linux では、これは連続メモリ アロケーター サブシステムを使用して実行されます。これはカーネル空間の機能ですが、dmabuf、XRT API、グラフィック ドライバーなど、さまざまなメカニズムを介してユーザーが確認できます。先ほどのバッファーを連続で割り当てると、次の図に示すように、すっきりとした図になります。</p>
+<p><img alt="Contiguous Memory Layout Example" src="../../../_images/runtime_contiguous_memory.jpg" /></p>
+<p>バッファーが 4k ページの境界で開始しない場合はどうなるでしょうか。DMA エンジンではある程度のアライメントが必要ですが、Alveo の DMA も例外ではありません。割り当てられたメモリがページの境界に揃えられていない場合、ランタイムにより自動的に揃えられます。そのために memcpy() 演算が追加されるので、演算コストが高くなります。これはできるだけ早期に解決すべき問題なので、警告メッセージを非表示に設定していなければ、ランタイムから警告メッセージも表示されます。この問題の特定方法および修正方法は、後ほど説明します。</p>
+<p>最後に、メモリが<strong>キャッシュ可能</strong>なのか、<strong>キャッシュ不可能</strong>なのかを知る必要があります。外部メモリへのアクセスはコストが高いので、現代のほぼすべてのプロセッサにレイテンシが非常に短い内部データ キャッシュがあります。プロセッサのアーキテクチャによって、キャッシュのサイズは数十キロバイトから数メガバイトまでさまざまです。この内部キャッシュ メモリは、必要に応じて外部の物理メモリと同期化されます。通常、このキャッシュ管理はプロセッサ上で実行されているソフトウェアには見えません。キャッシュを使用する利点は実行時間の短縮により確認できますが、開発者がキャッシュに手を加える必要は通常ありません。</p>
+<p>ただし、DMA を使用する場合は、CCIX などのキャッシュ コヒーレンシを共有する技術がなく、プロセッサとアクセラレータが共有する必要のあるデータはすべて、転送前に外部メモリと同期化させる必要があります。DMA 転送を開始する前に、キャッシュにあるデータを外部メモリに<strong>フラッシュ</strong>する必要があります。同様に、外部メモリからデータが戻されると、キャッシュにあるデータを<strong>無効化</strong>して、外部メモリから更新する必要があります。これらの操作は、x86 型のプロセッサでは非常に高速に実行され、ランタイムにより透過的に実行されます。ただし、ほかのアーキテクチャでは、キャッシュ管理がパフォーマンスに影響する可能性があるので、API にキャッシュ不可能なバッファーを割り当て、操作する機能があります。キャッシュ不可能なバッファーのデータにアクセスするプロセッサは、キャッシュ管理操作のみを実行する場合よりも処理速度がかなり遅くなります。これは通常、プロセッサがバッファーに順次にアクセスしているものの、バッファーに含まれるデータにはアクセスしないモデルで使用されます。</p>
+</div>
+<div class="section" id="alveo-guided-software-introduction">
+<h1>Alveo ソフトウェア入門<a class="headerlink" href="#alveo-guided-software-introduction" title="Permalink to this heading">¶</a></h1>
+<p>ここまでで、多くの背景情報を学びました。ソフトウェアの例を実行する前に、ここまでで学んだ重要点を復習しておきます。</p><ul class="simple"> <li><p>アクセラレーションは通常、同じタスクを<strong>高速に</strong>実行する方法 (アムダールの法則) と、<strong>同じ時間内</strong>により多くのタスクを実行する方法 (グスタフソンの法則) を組み合わせて実行されます。これら 2 つ方法では、最適化方法および最適化の効果があるか異なります。</p></li> <li><p>アクセラレーションには「アクセラレーション税」 (コスト) がかかります。実際のシステムでアクセラレーションを達成するには、それで得られる利益が、アクセラレーションのために発生する追加レイテンシを上回る必要があります。つまり、アルゴリズムで「コストに見合う価値」が最大限になるような方法を選択する必要があります。</p></li> <li><p>Alveo カードとの通信には、OpenCL や XRT ネイティブ API などの上位 API を使用します。ソフトウェア側の最適化は、ハードウェア カーネルの最適化とは別に、ライブラリを使用して実行されます。</p></li> <li><p>メモリの割り当てと管理は、アプリケーションの全体的なパフォーマンスに大きな影響を与えます。</p></li> </ul>
+<p>これらのトピックについて、例を使用して詳しく説明します。</p>
+<p><span class="doc"><a class="reference internal" href="guided_sw_examples.html">次のセクション</a>: ソフトウェアの例</span></p>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

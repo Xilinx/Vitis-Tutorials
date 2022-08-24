@@ -1,0 +1,14 @@
+{
+  "xclbin-location": "/usr/lib/dpu.xclbin",
+  "ivas-library-repo": "/usr/lib/ivas",
+  "kernels": [
+    {
+      "kernel-name": "resize_accel_rgb:resize_accel_rgb_1",
+      "library-name": "libivas_xresize_bgr.so",
+      "config": {
+        "use_mean": 1,
+        "mean_value": 128
+      }
+    }
+  ]
+}

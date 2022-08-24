@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>DSP Library Tutorial &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware" href="../09-debug-walkthrough/README.html" />
+    <link rel="prev" title="Using Floating-Point in the AI Engine" href="../07-AI-Engine-Floating-Point/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../AI_Engine_Development.html#design-tutorials">Design Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../AI_Engine_Development.html#feature-tutorials">Feature Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../02-using-gmio/README.html">Using GMIO with AIE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-rtp-reconfiguration/README.html">Runtime Parameter Reconfiguration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-packet-switching/README.html">Packet Switching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-AI-engine-versal-integration/README.html">Versal Integration for Hardware Emulation and Hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-versal-system-design-clocking-tutorial/README.html">Versal System Design Clocking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-AI-Engine-Floating-Point/README.html">Using Floating-Point in the AI Engine</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DSP Library Tutorial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#part-1-creating-a-single-kernel-graph">Part 1: Creating a Single Kernel Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#part-2-creating-a-multi-kernel-graph">Part 2: Creating a Multi Kernel Graph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#part-3-optimizing-filter-performance">Part 3: Optimizing Filter Performance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#references">References</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../09-debug-walkthrough/README.html">Debug Walkthrough</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../10-aie-dsp-lib-model-composer/README.html">AI Engine DSP Library and Model Composer Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../11-ai-engine-emulation-waveform-analysis/README.html">Versal Emulation Waveform Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../12-axis-traffic-generator/README.html">AXIS External Traffic Generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../13-aie-performance-analysis/README.html">AI Engine Performance and Deadlock Analysis Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../13-aie-performance-analysis/README.html#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../13-aie-performance-analysis/README.html#license">License</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../14-implementing-iir-filter/README.html">Implementing an IIR Filter on the AI Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01-aie_a_to_z/README.html">A to Z Bare-metal Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../15-post-link-recompile/README.html">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../15-post-link-recompile/README.html#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../15-post-link-recompile/README.html#ai-engine-application-post-link-recompile">AI Engine Application Post-Link Recompile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../15-post-link-recompile/README.html#objectives">Objectives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../16-external-traffic-generator-aie/README.html">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../16-external-traffic-generator-aie/README.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../16-external-traffic-generator-aie/README.html#design-overview">Design Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../16-external-traffic-generator-aie/README.html#tutorial-steps">Tutorial Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../AI_Engine_Development.html">AI Engine Development</a> &raquo;</li>
+      <li>DSP Library Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/08-dsp-library/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="dsp-library-tutorial">
+<h1>DSP Library Tutorial<a class="headerlink" href="#dsp-library-tutorial" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#introduction">Introduction</a></p></li>
+<li><p><a class="reference external" href="#before-you-begin">Before You Begin</a></p></li>
+<li><p><a class="reference external" href="#part-1-creating-a-single-kernel-graph">Part 1: Creating a Single Kernel Graph</a></p></li>
+<li><p><a class="reference external" href="#part-2-creating-a-multi-kernel-graph">Part 2: Creating a Multi Kernel Graph</a></p></li>
+<li><p><a class="reference external" href="#part-3-optimizing-filter-performance">Part 3: Optimizing Filter Performance</a></p></li>
+<li><p><a class="reference external" href="#references">References</a></p></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.</p>
+<p>This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design’s performance using simulation. It does not take the design to a hardware implementation, however.</p>
+<div class="section" id="objectives">
+<h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h3>
+<p>After completing the tutorial, you should be able to:</p>
+<ul class="simple">
+<li><p>Build signal processing datapath using the Vitis™ application acceleration development flow</p></li>
+<li><p>Evaluate the performance and resource utilization metrics of a design</p></li>
+<li><p>Adjust filter parameters to meet system performance requirements</p></li>
+</ul>
+</div>
+<div class="section" id="tutorial-overview">
+<h3>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h3>
+<p>This tutorial shows how to construct a simple two-stage decimation filter. This filter is not targeted at a specific real-life application, but is used to show how to use the DSP Library to construct filter chains.</p>
+<ul class="simple">
+<li><p>Part 1 shows how to use create an AI Engine project and instantiate a parameterized FIR filter from DSPLib</p></li>
+<li><p>Part 2 shows how to cascade filters together into a chain</p></li>
+<li><p>Part 3 shows how to optimize performance of the filter chain by tuning individual filters</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="before-you-begin">
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="documentation-explore-ai-engine-architecture">
+<h3><em>Documentation</em>: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493">Versal ACAP AI Engines for Dummies</a></p></li>
+<li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009 AI Engine Architecture Manual</a></p></li>
+</ul>
+</div>
+<div class="section" id="tools-installing-the-tools">
+<h3><em>Tools</em>: Installing the Tools<a class="headerlink" href="#tools-installing-the-tools" title="Permalink to this heading">¶</a></h3>
+<p>Tools Documentation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environmentw">UG1076 Versal ACAP AI Engine Programming Environment</a></p></li>
+<li><p><a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html">Vitis DSP Library (DSPLib) Documentation</a></p></li>
+</ul>
+<p>To run through this tutorial, you will need to download and install the following tools:</p>
+<ul class="simple">
+<li><p>Install the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation">Vitis Software Platform 2022.1</a></p></li>
+<li><p>Obtain licenses for the AI Engine tools</p></li>
+<li><p>Download the <a class="reference external" href="https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp">DSP Library</a></p></li>
+<li><p>Download and setup the <a class="reference external" href="https://www.xilinx.com/member/vck190_headstart.html#docs">VCK190 Vitis Platform for 2022.1</a></p></li>
+</ul>
+</div>
+<div class="section" id="environment-setting-up-your-target-platform-environment">
+<h3><em>Environment</em>: Setting Up Your Target Platform Environment<a class="headerlink" href="#environment-setting-up-your-target-platform-environment" title="Permalink to this heading">¶</a></h3>
+<p>When the elements of the Vitis software platform are installed, follow the steps below:</p>
+<ol class="simple">
+<li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
+<li><p>Set up your <code class="docutils literal notranslate"><span class="pre">DSPLIB_ROOT</span></code>environment variable at the location you downloaded the DSP Library.</p></li>
+</ol>
+</div>
+<div class="section" id="other-tutorials-learn-basic-vitis-compiler-and-ai-engine-concepts">
+<h3><em>Other Tutorials</em>: Learn Basic Vitis Compiler and AI Engine Concepts<a class="headerlink" href="#other-tutorials-learn-basic-vitis-compiler-and-ai-engine-concepts" title="Permalink to this heading">¶</a></h3>
+<p>For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">https://github.com/Xilinx/Vitis-Tutorials</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="part-1-creating-a-single-kernel-graph">
+<h2>Part 1: Creating a Single Kernel Graph<a class="headerlink" href="#part-1-creating-a-single-kernel-graph" title="Permalink to this heading">¶</a></h2>
+<p>Part 1 of this tutorial will:</p>
+<ul class="simple">
+<li><p>Shows a basic Makefile for AI Engine and X86 compilation, simulation and visualization.</p></li>
+<li><p>Link in the DSPLib functions</p></li>
+<li><p>Create a simple graph containing a parameterized DSPLib FIR filter.</p></li>
+<li><p>Compile and simulate the design</p></li>
+<li><p>Evaluate the results.</p></li>
+</ul>
+<div class="section" id="understanding-the-source-files">
+<h3>Understanding the Source Files<a class="headerlink" href="#understanding-the-source-files" title="Permalink to this heading">¶</a></h3>
+<p>To begin this tutorial, go to the <strong>part 1</strong> directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```bash
+cd part_1
+```
+</pre></div>
+</div>
+<p>List the files available in <code class="docutils literal notranslate"><span class="pre">aie/src</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="n">aie</span><span class="o">/</span><span class="n">src</span>
+<span class="n">fir_graph</span><span class="o">.</span><span class="n">h</span>  <span class="n">system_settings</span><span class="o">.</span><span class="n">h</span>  <span class="n">test</span><span class="o">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">system_settings.h</span></code> files is a standard header file that defines the constants used in this project. It includes the header file “&lt;adf.h&gt;”. This is the Adaptive Data Flow (ADF) header file, which provides the classes used for specifying graphs. It also includes the FIR Filter kernel’s header file, <code class="docutils literal notranslate"><span class="pre">fir_sr_sym_graph.hpp</span></code>.</p>
+<p>The design itself it implemented in <code class="docutils literal notranslate"><span class="pre">fir_graph.h</span></code>. A graph is used to define elements and the connections between them that make up the design. We will go over some of the key aspects of this file.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">adf</span><span class="w"></span>
+<span class="nn">namespace</span><span class="w"> </span><span class="nn">dsplib</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">xf</span><span class="o">::</span><span class="nn">dsp</span><span class="o">::</span><span class="nn">aie</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This simplifies accessing the ADF and DSPLib classes.</p>
+<p>The FIR filter taps are declared as a vector, and initialized:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int16</span><span class="o">&gt;</span><span class="w"> </span><span class="n">chan_taps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int16</span><span class="o">&gt;</span><span class="p">{</span><span class="w"></span>
+<span class="w">		 </span><span class="mi">-17</span><span class="p">,</span><span class="w">      </span><span class="mi">-65</span><span class="p">,</span><span class="w">      </span><span class="mi">-35</span><span class="p">,</span><span class="w">       </span><span class="mi">34</span><span class="p">,</span><span class="w">      </span><span class="mi">-13</span><span class="p">,</span><span class="w">       </span><span class="mi">-6</span><span class="p">,</span><span class="w">       </span><span class="mi">18</span><span class="p">,</span><span class="w">      </span><span class="mi">-22</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="p">....</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The following line instantiates the DSPLib FIR filter kernel, named chan_FIR (channel filter):</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="n">dsplib</span><span class="o">::</span><span class="n">fir</span><span class="o">::</span><span class="n">sr_sym</span><span class="o">::</span><span class="n">fir_sr_sym_graph</span><span class="o">&lt;</span><span class="n">DATA_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">COEFF_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">FIR_LEN_CHAN</span><span class="p">,</span><span class="w"> </span><span class="n">SHIFT_CHAN</span><span class="p">,</span><span class="w"> </span><span class="n">ROUND_MODE_CHAN</span><span class="p">,</span><span class="w"> </span><span class="n">WINDOW_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">AIES_CHAN</span><span class="o">&gt;</span><span class="w"> </span><span class="n">chan_FIR</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The filter’s template parameters and their meanings can be found in UG1295.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="n">port</span><span class="o">&lt;</span><span class="n">input</span><span class="o">&gt;</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">port</span><span class="o">&lt;</span><span class="n">output</span><span class="o">&gt;</span><span class="w"> </span><span class="n">out</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Specifies the input and output ports for this graph.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">		</span><span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">chan_FIR</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">chan_FIR</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>These statements connect our graph’s input and outputs to the FIR filter’s input and outputs, respectively.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="w">		</span><span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">chan_FIR</span><span class="p">.</span><span class="n">m_firKernels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tile</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>This statement specifies a location attribute for the filter kernel. It specifies the X/Y location of the AI Engine tile within the AI Engine array in which to place the kernel. Location placements for kernels are optional, but shown here to illustrate how physical constraints can be incorporated into the source code. The results of this statement will be seen later when viewing the compilation results.</p>
+<p>There is a second graph that will instanciate this <code class="docutils literal notranslate"><span class="pre">FIRGraph</span></code> and connect it to the PLIO elements which are points at which data can be moved onto and off of the AI Engine array:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TopGraph</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">graph</span><span class="w"></span>
+<span class="w">	</span><span class="p">{</span><span class="w"></span>
+<span class="w">	</span><span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="w">		</span><span class="n">input_plio</span><span class="w"> </span><span class="n">in</span><span class="p">;</span><span class="w"></span>
+<span class="w">		</span><span class="n">output_plio</span><span class="w"> </span><span class="n">out</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">FirGraph</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">		</span><span class="n">TopGraph</span><span class="p">()</span><span class="w"></span>
+<span class="w">		</span><span class="p">{</span><span class="w"></span>
+<span class="w">			</span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;128 bits read in&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_128_bits</span><span class="p">,</span><span class="s">&quot;data/input_128b.txt&quot;</span><span class="p">,</span><span class="w">  </span><span class="mi">250</span><span class="p">);</span><span class="w"></span>
+<span class="w">			</span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">output_plio</span><span class="o">::</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;128 bits read out&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">adf</span><span class="o">::</span><span class="n">plio_128_bits</span><span class="p">,</span><span class="s">&quot;data/output_128b.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">			</span><span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">in</span><span class="p">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">F</span><span class="p">.</span><span class="n">in</span><span class="p">);</span><span class="w"></span>
+<span class="w">			</span><span class="n">connect</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">		</span><span class="p">};</span><span class="w"></span>
+<span class="w">	</span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The third file, <code class="docutils literal notranslate"><span class="pre">test.cpp</span></code>, can be considered the testbench component. It is not intended for hardware implementation, but rather to drive the simulation. The main function is specified, which runs the simulation.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">filter</span><span class="p">.</span><span class="n">init</span><span class="p">()</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">filter</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">NUM_ITER</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">filter</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compile-the-application">
+<h3>Compile the application<a class="headerlink" href="#compile-the-application" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> is very simple. It allows the user to compile for 2 different targets <code class="docutils literal notranslate"><span class="pre">x86</span></code> and <code class="docutils literal notranslate"><span class="pre">hw</span></code>, visualize the compiler output in <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>, run an AI Engine or X86 simulation and visualize also the output in <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>.</p>
+<p>Currently the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> does not specifies where the DSP Lib includes are located. The first step of this tutorial will consist in adding the following lines, on line 37:</p>
+<div class="highlight-Makefile notranslate"><div class="highlight"><pre><span></span><span class="c">#########  Add DSP include files location   #########</span>
+<span class="nv">DSP_FLAGS</span> <span class="o">:=</span> --include<span class="o">=</span><span class="k">$(</span>DSPLIB_ROOT<span class="k">)</span>/L1/src/aie
+<span class="nv">DSP_FLAGS</span> <span class="o">+=</span> --include<span class="o">=</span><span class="k">$(</span>DSPLIB_ROOT<span class="k">)</span>/L1/include/aie
+<span class="nv">DSP_FLAGS</span> <span class="o">+=</span> --include<span class="o">=</span><span class="k">$(</span>DSPLIB_ROOT<span class="k">)</span>/L2/include/aie
+</pre></div>
+</div>
+<p>You type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aie</span></code> to run the following command:</p>
+<div class="highlight-BASH notranslate"><div class="highlight"><pre><span></span>aiecompiler -target<span class="o">=</span>hw <span class="k">$(</span>AIE_FLAGS<span class="k">)</span> <span class="k">$(</span>DSP_FLAGS<span class="k">)</span> <span class="k">$(</span>AIE_GRAPH_FILES<span class="k">)</span>
+</pre></div>
+</div>
+<p>This compiles the design and maps it to the AI Engine Tiles.</p>
+<p>Visualizing the compilation results is performed by typing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">compviz</span></code> which runs the following command:</p>
+<div class="highlight-BASH notranslate"><div class="highlight"><pre><span></span>	vitis_analyzer <span class="k">$(</span>AIE_OUT_DIR<span class="k">)</span>/test.aiecompile_summary
+</pre></div>
+</div>
+<p>After <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code> opens, it will display the Summary page, which provides a brief summary of the project.</p>
+<p><img alt="Vitis Analyzer Summary" src="../../../../_images/DSPLib_tutorial_part_1_Vitis_Analyzer_Summary.png" /></p>
+<p>Selecting <strong>Graph</strong> on the navigation bar shows a diagram of the filter implementation. It illustrates the data connectivity points into and out of the graph (128-bit interfaces), and the symmetrical FIR filter kernel being implemented on a single tile with ping-pong buffers on either side of it.</p>
+<p><img alt="Vitis Analyzer Graph" src="../../../../_images/DSPLib_tutorial_part_1_Vitis_Analyzer_Graph.png" /></p>
+<p>Selecting <strong>Array</strong> on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in <code class="docutils literal notranslate"><span class="pre">fir_filter.h</span></code>. Clicking on the components on the diagram will take you to the appropriate tab below which provides a description of the element. Conversely you can select the various element tabs (Kernels / PL / Buffers / Ports / Nets / Tiles) and click on a component to see where it is located on the array.</p>
+<p><img alt="Vitis Analyzer Array" src="../../../../_images/DSPLib_tutorial_part_1_Vitis_Analyzer_Array.png" /></p>
+<p>You can select the other entries on the navigation bar to see additional implementation details.</p>
+<p>When you are done examining the design, click <strong>File -&gt; Exit</strong></p>
+</div>
+<div class="section" id="running-the-design-through-simulation">
+<h3>Running the Design through Simulation<a class="headerlink" href="#running-the-design-through-simulation" title="Permalink to this heading">¶</a></h3>
+<p>We can now run the simulation for this AI Engine application. I order to get a runtime trace of this simulation we need to specify it to the simulator. Add the following flag (<code class="docutils literal notranslate"><span class="pre">--dump-vcd=sim</span></code>) in the command belonging to the <code class="docutils literal notranslate"><span class="pre">aiesim</span></code> rule:</p>
+<div class="highlight-MAKEFILE notranslate"><div class="highlight"><pre><span></span><span class="nf">aiesim</span><span class="o">:</span>
+	aiesimulator --pkg-dir<span class="o">=</span><span class="k">$(</span>AIE_OUT_DIR<span class="k">)</span> --dump-vcd<span class="o">=</span>sim
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aiesim</span></code> to run the AI Engine simulation, and it will automatically generate the trace of this simulation stored in the file <strong>sim.vcd</strong>.</p>
+</div>
+<div class="section" id="using-vitis-analyzer-to-look-at-the-simulation-results">
+<h3>Using Vitis Analyzer to look at the Simulation Results<a class="headerlink" href="#using-vitis-analyzer-to-look-at-the-simulation-results" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aieviz</span></code> to visualize the output of the simulation in <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>.</p>
+<p>Selecting <strong>Trace</strong> on the navigation bar shows the simulation trace. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, etc.</p>
+<p><img alt="Vitis Analyzer Trace" src="../../../../_images/DSPLib_tutorial_part_1_Vitis_Analyzer_Trace.png" /></p>
+</div>
+</div>
+<div class="section" id="part-2-creating-a-multi-kernel-graph">
+<h2>Part 2: Creating a Multi Kernel Graph<a class="headerlink" href="#part-2-creating-a-multi-kernel-graph" title="Permalink to this heading">¶</a></h2>
+<p>Part 2 of this tutorial will:</p>
+<ul class="simple">
+<li><p>demonstrate how to connect together filters to create a filter chain.</p></li>
+<li><p>show how to identify areas for optimization within the chain</p></li>
+</ul>
+<div class="section" id="changes-to-the-filter-graph-from-part-1">
+<h3>Changes to the Filter Graph from Part 1<a class="headerlink" href="#changes-to-the-filter-graph-from-part-1" title="Permalink to this heading">¶</a></h3>
+<p>For Part 2, we have cascaded a halfband filter after the FIR filter that was in the design in part 1.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">system_settings.h</span></code> file, constants for the halfband filter have been added, as well as the kernel’s header file, <code class="docutils literal notranslate"><span class="pre">fir_interpolate_hb_graph.hpp</span></code>.</p>
+<p>In the file <code class="docutils literal notranslate"><span class="pre">fir_graph.h</span></code>, the notable changes are the following:</p>
+<p>The constants for the second filter have been added:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">std</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int16</span><span class="o">&gt;</span> <span class="n">hb_taps</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int16</span><span class="o">&gt;</span><span class="p">{</span>
+          <span class="mi">23</span><span class="p">,</span>      <span class="o">-</span><span class="mi">63</span><span class="p">,</span>      <span class="mi">143</span><span class="p">,</span>     <span class="o">-</span><span class="mi">281</span><span class="p">,</span>      <span class="mi">503</span><span class="p">,</span>     <span class="o">-</span><span class="mi">845</span><span class="p">,</span>     <span class="mi">1364</span><span class="p">,</span>    <span class="o">-</span><span class="mi">2173</span><span class="p">,</span>
+        <span class="mi">3557</span><span class="p">,</span>    <span class="o">-</span><span class="mi">6568</span><span class="p">,</span>    <span class="mi">20729</span><span class="p">,</span>    <span class="mi">32767</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>The second (halfband) filter has been instantiated:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>	<span class="n">dsplib</span><span class="p">::</span><span class="n">fir</span><span class="p">::</span><span class="n">interpolate_hb</span><span class="p">::</span><span class="n">fir_interpolate_hb_graph</span><span class="o">&lt;</span><span class="n">DATA_TYPE</span><span class="p">,</span> <span class="n">COEFF_TYPE</span><span class="p">,</span> <span class="n">FIR_LEN_HB</span><span class="p">,</span> <span class="n">SHIFT_HB</span><span class="p">,</span> <span class="n">ROUND_MODE_HB</span><span class="p">,</span> <span class="n">WINDOW_SIZE</span><span class="o">&gt;</span> <span class="n">hb_FIR</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Also, the output of the channel FIR filter is now cascaded into the halfband filter, whose output is now connected to the graph’s output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>		<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">chan_FIR</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">hb_FIR</span><span class="o">.</span><span class="ow">in</span><span class="p">);</span>
+		<span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">hb_FIR</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The class <code class="docutils literal notranslate"><span class="pre">TopGraph</span></code> and testbench file, <code class="docutils literal notranslate"><span class="pre">test.cpp</span></code>, are unchanged.</p>
+</div>
+<div class="section" id="build-ai-engine-emulation">
+<h3>Build AI Engine Emulation<a class="headerlink" href="#build-ai-engine-emulation" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aie</span></code> to build compile the graph.</p>
+</div>
+<div class="section" id="id1">
+<h3>Running the Design through Simulation<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aiesim</span></code> to run the simulation and save the trace.</p>
+</div>
+<div class="section" id="using-vitis-analyzer-to-look-at-the-compilation-and-simulation-results">
+<h3>Using Vitis Analyzer to look at the Compilation and Simulation Results<a class="headerlink" href="#using-vitis-analyzer-to-look-at-the-compilation-and-simulation-results" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aieviz</span></code> to start <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>.</p>
+<p>Selecting <strong>Graph</strong> on the navigation bar shows a diagram of the filter implementation. In this version of the graph, we can now see the two kernels, each implemented in the own AI Engine tile.</p>
+<p><img alt="Vitis Analyzer Graph" src="../../../../_images/DSPLib_tutorial_part_2_Vitis_Analyzer_Graph.png" /></p>
+<p>Selecting the <strong>Array</strong> option on the navigation bar shows the physical implementation of the design on the AI Engine array. You can see the two kernels are located in the tiles specified by the location constraints.</p>
+<p><img alt="Vitis Analyzer Array" src="../../../../_images/DSPLib_tutorial_part_2_Vitis_Analyzer_Array.png" /></p>
+<p>Selecting the <strong>Trace</strong> option on the navigation bar shows the tile (18,0) (the chan_FIR kernel) spending most of its time running kernel code, while tile (19,0) (hb_FIR) spends significant time being idle in _main. chan_FIR is the bottleneck in this datapath, which is not surprising because it has many more taps to compute.</p>
+<p><img alt="Vitis Analyzer Trace" src="../../../../_images/DSPLib_tutorial_part_2_Vitis_Analyzer_Trace.png" /></p>
+<p>In part 3, we are going to use filter parameters to attempt to increase the performance of the chan_FIR filter, to increase overall performance of the chain.</p>
+</div>
+</div>
+<div class="section" id="part-3-optimizing-filter-performance">
+<h2>Part 3: Optimizing Filter Performance<a class="headerlink" href="#part-3-optimizing-filter-performance" title="Permalink to this heading">¶</a></h2>
+<p>Part 3 of this tutorial will:</p>
+<ul class="simple">
+<li><p>demonstrate how to use the CASC_LEN parameter to increase filter performance.</p></li>
+</ul>
+<div class="section" id="id2">
+<h3>Changes to the Filter Graph from Part 1<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>For Part 3, we are going to increase the performance of the design by adjusting the TP_CASC_LEN parameter on the chan_FIR filter.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">system_settings.h</span></code>, the following parameter has been changed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define AIES_CHAN         5</span>
+</pre></div>
+</div>
+<p>informing the library element to allocate 5 AI Engines to the FIR filter kernel.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">fir_graph.h</span></code>, the only change here is using a for loop to lock the location constraints of the chan_FIR AI Engine tiles.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="k">for</span> <span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">AIES_CHAN</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span>
+                <span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">chan_FIR</span><span class="o">.</span><span class="n">m_firKernels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="mi">18</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">location</span><span class="o">&lt;</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">hb_FIR</span><span class="o">.</span><span class="n">m_firKernels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">=</span> <span class="n">tile</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The testbench file, <code class="docutils literal notranslate"><span class="pre">test.cpp</span></code>, is unchanged.</p>
+</div>
+<div class="section" id="id3">
+<h3>Build AI Engine Emulation<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aie</span></code> to build compile the graph.</p>
+</div>
+<div class="section" id="id4">
+<h3>Running the Design through Simulation<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aiesim</span></code> to run the simulation and save the trace.</p>
+</div>
+<div class="section" id="id5">
+<h3>Using Vitis Analyzer to look at the Compilation and Simulation Results<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>Type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">aieviz</span></code> to start <code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span></code>.</p>
+<p>Selecting <strong>Graph</strong> on the navigation bar shows a diagram of the filter implementation. It illustrates the data connectivity points into and out of the graph (128-bit interfaces), and the symmetrical FIR filter kernel being implemented on five tiles, followed by a single tile implementing the halfband filter.</p>
+<p><img alt="Vitis Analyzer Graph" src="../../../../_images/DSPLib_tutorial_part_3_Vitis_Analyzer_Graph.png" /></p>
+<p>Selecting the <strong>Array</strong> option on the navigation bar shows the physical implementation of the design on the AI Engine array; with the tile’s locations being determined by the location constraints.</p>
+<p><img alt="Vitis Analyzer Array" src="../../../../_images/DSPLib_tutorial_part_3_Vitis_Analyzer_Array.png" /></p>
+<p>Selecting the <strong>Trace</strong> option on the navigation bar now shows the channel filter tiles ((18,0) through (22,0)) almost fully occupied with processing the data; the computational load between the channel filter’s constituent engines now matching that of the halfband filter (23,0). The design now completes in 8 iterations in 24 microseconds, compared to 57.</p>
+<p><img alt="Vitis Analyzer Trace" src="../../../../_images/DSPLib_tutorial_part_3_Vitis_Analyzer_Trace.png" /></p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial has demonstrated the following:</p>
+<ul class="simple">
+<li><p>How to create a Makefile to handle an AI Engine Project</p></li>
+<li><p>How to create a graph based design description and described the basic element required</p></li>
+<li><p>How to incorporate the FIR filter elements provided by the DSP Library</p></li>
+<li><p>How to compile and simulate the design</p></li>
+<li><p>How to view and interpret the results of an AI Engine based compilation and simulation</p></li>
+<li><p>How to adjust FIR parameters to tune the design performance</p></li>
+</ul>
+<p>In doing so, it has hopefully provided a foundation upon which the user can begin to create their own designs in Vitis using the DSP Library.</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<p>The following documents provide supplemental material useful with this tutorial.</p>
+<div class="section" id="ug1076-versal-acap-ai-engine-programming-environment">
+<h3><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076 Versal ACAP AI Engine Programming Environment</a><a class="headerlink" href="#ug1076-versal-acap-ai-engine-programming-environment" title="Permalink to this heading">¶</a></h3>
+<p>Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.</p>
+</div>
+<div class="section" id="vitis-dsp-library-dsplib-documentation">
+<h3><a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html">Vitis DSP Library (DSPLib) Documentation</a><a class="headerlink" href="#vitis-dsp-library-dsplib-documentation" title="Permalink to this heading">¶</a></h3>
+<p>Contains information regarding the DSPLib example kernels used by this tutorial.</p>
+</div>
+<div class="section" id="vitis-unified-software-development-platform-2022-1-documentation">
+<h3><a class="reference external" href="https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation">Vitis Unified Software Development Platform 2022.1 Documentation</a><a class="headerlink" href="#vitis-unified-software-development-platform-2022-1-documentation" title="Permalink to this heading">¶</a></h3>
+<p>Following links point to Vitis software platform related documents referred in this tutorial:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration">Vitis Application Acceleration Development Flow Documentation</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis Application Acceleration Development Flow Tutorials</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD022 | &copy; Copyright 2021-2022 Xilinx, Inc.</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../07-AI-Engine-Floating-Point/README.html" class="btn btn-neutral float-left" title="Using Floating-Point in the AI Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../09-debug-walkthrough/README.html" class="btn btn-neutral float-right" title="AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

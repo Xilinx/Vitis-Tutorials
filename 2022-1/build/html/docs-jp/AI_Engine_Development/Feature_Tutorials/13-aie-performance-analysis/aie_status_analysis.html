@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>AI Engine Status Analysis &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>AI Engine Status Analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/13-aie-performance-analysis/aie_status_analysis.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  </table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="ai-engine-status-analysis">
+<h1>AI Engine Status Analysis<a class="headerlink" href="#ai-engine-status-analysis" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<p>This tutorial shows you how to output a summary of the AI Engine status for further analysis in Vitis Analyzer. The main methods to output AI Engine status are as follows:</p>
+<ul class="simple">
+<li><p><strong>Automated and periodic AI Engine status output:</strong> After initial setup in <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code>, this method requires minimal user intervention, because the tool outputs the status at specified time intervals.</p></li>
+<li><p><strong>Manual output the AI Engine status:</strong> This method requires that you run a command each time you want a status output report.</p></li>
+</ul>
+<p>You can then open the status output in Vitis Analyzer for further analysis.</p>
+<p><strong>Note:</strong> The default working directory in this step is <code class="docutils literal notranslate"><span class="pre">testcase_nofifo_hang</span></code>, unless explicitly stated otherwise.</p>
+<p><strong>Note:</strong> The description here is based on the hardware flow. The methods decribed in this tutorial also apply for the hardware emulation flow.</p>
+<div class="section" id="setting-up-and-running-the-design">
+<h2>Setting Up and Running the Design<a class="headerlink" href="#setting-up-and-running-the-design" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Change the directory to <code class="docutils literal notranslate"><span class="pre">testcase_nofifo_hang</span></code>.</p></li>
+<li><p>Modify the host code (<code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>) to call <code class="docutils literal notranslate"><span class="pre">gr.end();</span></code>, which causes the design to hang forever.</p></li>
+<li><p>Build the hardware package. See the example commands below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">testcase_nofifo_hang</span>
+<span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s/gr.end(.*);/gr.end();/&#39;</span> <span class="n">sw</span><span class="o">/</span><span class="n">host</span><span class="o">.</span><span class="n">cpp</span>
+<span class="n">make</span> <span class="n">package</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
+</pre></div>
+</div>
+</li>
+<li><p>Boot from the SD card. In Linux, change the working directory to <code class="docutils literal notranslate"><span class="pre">/run/media/mmcblk0p1</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">mmcblk0p1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Choose one of the following options to dump the AI Engine status.</p></li>
+</ol>
+</div>
+<div class="section" id="option-1-automated-and-periodic-ai-engine-status-output">
+<h2><strong>Option 1: Automated and Periodic AI Engine Status Output</strong><a class="headerlink" href="#option-1-automated-and-periodic-ai-engine-status-output" title="Permalink to this heading">¶</a></h2>
+<p>In the working directory <code class="docutils literal notranslate"><span class="pre">/run/media/mmcblk0p1</span></code>, create the file <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code>, and put the following contents into it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
+<span class="n">aie_status</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>You can also specify the interval at which the AI Engine status should be probed and analyzed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
+<span class="n">aie_status</span><span class="o">=</span><span class="n">true</span>
+<span class="n">aie_status_interval_us</span><span class="o">=</span><span class="mi">10000</span>
+</pre></div>
+</div>
+<p>Run the application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>After some time, messages such as the following will be printed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">XRT</span><span class="p">]</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">Potential</span> <span class="n">deadlock</span><span class="o">/</span><span class="n">hang</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">AI</span> <span class="n">Engines</span><span class="o">.</span> <span class="n">Graph</span> <span class="p">:</span> <span class="n">gr</span>
+<span class="p">[</span><span class="n">XRT</span><span class="p">]</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">Potential</span> <span class="n">stuck</span> <span class="n">cores</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">AI</span> <span class="n">Engines</span><span class="o">.</span> <span class="n">Graph</span> <span class="p">:</span> <span class="n">gr</span> <span class="n">Tile</span> <span class="p">:</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="n">Status</span> <span class="mh">0x1001</span> <span class="p">:</span> <span class="n">Enable</span><span class="p">,</span><span class="n">Stream_Stall_MS0</span>
+<span class="p">[</span><span class="n">XRT</span><span class="p">]</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">Potential</span> <span class="n">stuck</span> <span class="n">cores</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">AI</span> <span class="n">Engines</span><span class="o">.</span> <span class="n">Graph</span> <span class="p">:</span> <span class="n">gr</span> <span class="n">Tile</span> <span class="p">:</span> <span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="n">Status</span> <span class="mh">0x201</span> <span class="p">:</span> <span class="n">Enable</span><span class="p">,</span><span class="n">Lock_Stall_E</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> These messages indicate that the design might be stuck. However, it is your responsibility to determine if it is a true deadlock based on the design.</p>
+<p>Wait for some time. Either kill the application run by hitting <strong>Ctrl+C</strong> or suspend it by hitting <strong>Ctrl+Z</strong>. You will then see that multiple files are generated in the working directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aie_status_edge.json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aieshim_status_edge.json</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.csv</span></code></p></li>
+</ul>
+<p>Copy them to the local server for further analysis in Vitis Analyzer.</p>
+<div class="section" id="analyzing-the-automated-status-output">
+<h3><strong>Analyzing the Automated Status Output</strong><a class="headerlink" href="#analyzing-the-automated-status-output" title="Permalink to this heading">¶</a></h3>
+<p>Open the run summary file with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>	<span class="n">vitis_analyzer</span> <span class="n">xrt</span><span class="o">.</span><span class="n">run_summary</span>
+</pre></div>
+</div>
+<p>In Vitis Analyzer, click <strong>Set AI Engine compile summary</strong> in Summary view.</p>
+<p><img alt="set compile summary" src="../../../../_images/aie_status1.PNG" /></p>
+<p>In the prompted dialog box, click the <strong>…</strong> button, and select the AI Engine compile summary (such as <code class="docutils literal notranslate"><span class="pre">./Work/graph.aiecompile_summary</span></code>) to set the AI Engine compile summary.</p>
+<p>The graph view is as shown in the following figure.</p>
+<p><img alt="graph view" src="../../../../_images/aie_status2.PNG" /></p>
+<p><strong>1:</strong> The red arrow from the data input from the PL to the window buffers <code class="docutils literal notranslate"><span class="pre">buf0</span></code> and <code class="docutils literal notranslate"><span class="pre">buf0d</span></code> indicates that the input is trying to write to the buffer, but it cannot.</p>
+<p><strong>2:</strong> Kernel <code class="docutils literal notranslate"><span class="pre">k[0]</span></code> is trying to write to <code class="docutils literal notranslate"><span class="pre">k[1]</span></code>, but has stalled at the output stream port. See the red circle on the kernel instance.</p>
+<p><strong>3:</strong> Kernel <code class="docutils literal notranslate"><span class="pre">k[1]</span></code> is trying to read from buffers <code class="docutils literal notranslate"><span class="pre">buf1</span></code> and <code class="docutils literal notranslate"><span class="pre">buf1d</span></code>, but has stalled. See the red circle on the kernel instance.</p>
+<p><strong>4:</strong> The graph output to the PL is not stalled.</p>
+<p>The Tile Status window also shows the information about the kernel, status, stalled port, and so on.</p>
+<p><img alt="graph view" src="../../../../_images/aie_status3.PNG" /></p>
+<p><strong>1:</strong> Tile [25,0] (kernel <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code>) is in status <code class="docutils literal notranslate"><span class="pre">Stream</span> <span class="pre">Stall</span> <span class="pre">-</span> <span class="pre">Output</span> <span class="pre">Ch</span> <span class="pre">0</span></code>, which indicates that the kernel is stalled on writing output stream channel 0.</p>
+<p><strong>2:</strong> Tile [24,0] (kernel <code class="docutils literal notranslate"><span class="pre">aie_dest2</span></code>) is in status <code class="docutils literal notranslate"><span class="pre">Lock</span> <span class="pre">Stall</span> <span class="pre">-</span> <span class="pre">East</span></code>, which is stalled on port <code class="docutils literal notranslate"><span class="pre">inm</span></code>.</p>
+<p>The Buffers view shows the buffer status of the graph. Click the <strong>Buffers</strong> window to select it, and then select the buffer in the graph to be analyzed.</p>
+<p><img alt="graph view" src="../../../../_images/aie_status4.PNG" /></p>
+<p>The PING-PONG buffers are highlighted in the Buffers window. The Lock Status column shows the buffer lock status. The different statuses are as follows:</p>
+<ul class="simple">
+<li><p><strong>Acquired for read:</strong> The buffer has been acquired for read by the consumer kernel.</p></li>
+<li><p><strong>Released for read:</strong> The buffer has been released for read by the producer kernel.</p></li>
+<li><p><strong>Acquired for write:</strong> The buffer has been acquired for write by the producer kernel.</p></li>
+<li><p><strong>Released for write:</strong> The buffer has been released for write by the consumer kernel.</p></li>
+</ul>
+<p>In this example, it shows that <code class="docutils literal notranslate"><span class="pre">buf1</span></code> is “Acquired for write” and <code class="docutils literal notranslate"><span class="pre">buf1d</span></code> is “Released for write”. It indicates that <code class="docutils literal notranslate"><span class="pre">buf1</span></code> has already been acquired for write by <code class="docutils literal notranslate"><span class="pre">k[0]</span></code>. The <code class="docutils literal notranslate"><span class="pre">buf1d</span></code> buffer is released for write, but not released for read. Consequently, the buffers are not able to be acquired for read by <code class="docutils literal notranslate"><span class="pre">k[1]</span></code>, and <code class="docutils literal notranslate"><span class="pre">k[1]</span></code> is stalled.</p>
+</div>
+</div>
+<div class="section" id="option-2-manual-output-the-ai-engine-status">
+<h2><strong>Option 2: Manual output the AI Engine status</strong><a class="headerlink" href="#option-2-manual-output-the-ai-engine-status" title="Permalink to this heading">¶</a></h2>
+<p>In Linux, run the application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">mmcblk0p1</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>After the design runs for some time, either kill the application run by hitting <strong>Ctrl+C</strong> or suspend it by hitting <strong>Ctrl+Z</strong>. Dump the AI Engine status into a JSON file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xbutil</span> <span class="n">examine</span> <span class="o">-</span><span class="n">r</span> <span class="n">aie</span> <span class="o">-</span><span class="n">d</span> <span class="mi">0</span> <span class="o">-</span><span class="n">f</span> <span class="n">json</span> <span class="o">-</span><span class="n">o</span> <span class="n">xbutil_status</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>Copy the JSON output to a local server for further analysis in Vitis Analyzer.</p>
+<div class="section" id="analyzing-the-manual-status-output">
+<h3><strong>Analyzing the Manual Status Output</strong><a class="headerlink" href="#analyzing-the-manual-status-output" title="Permalink to this heading">¶</a></h3>
+<ol>
+<li><p>In Vitis Analyzer, click <strong>File → Import Xbutil JSON Output…</strong>.</p></li>
+<li><p>In the prompted window, set the following options:</p>
+<p>• <strong>Xbutil JSON File</strong>: Select the JSON file that was manually generated with the <code class="docutils literal notranslate"><span class="pre">xbutil</span></code> command. For example, select the file <code class="docutils literal notranslate"><span class="pre">xbutil_status.json</span></code>.</p>
+<p>• <strong>AI Engine Compile Summary</strong>: Select the AI Engine compile summary file. For example, <code class="docutils literal notranslate"><span class="pre">./Work/graph.aiecompile_summary</span></code>.</p>
+<p>• <strong>Run Summary</strong>: The run summary to be written. A default name is provided. The run summary can be used to reload the analysis next time by clicking <strong>File → Open Summary…</strong> or <strong>File → Open Recent → Run Summary</strong>.</p>
+</li>
+</ol>
+<p>The Graph and Array views are shown in Vitis Analyzer. The analysis is similar as <strong>Analyzing the Automated Status Output</strong>.</p>
+<p><img alt="graph view" src="../../../../_images/aie_status5.PNG" /></p>
+</div>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
+<p>After completing this tutorial, you have learned how to output the live status of the AI Engine and how to analyze it in Vitis Analyzer.</p>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD051 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

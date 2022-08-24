@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>手順 3: プラットフォームのテスト - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>手順 3: プラットフォームのテスト</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/step3.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody"><!--
+# Copyright 2022 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><ul class="simple"> <li><p><a class="reference external" href="#step-3-test-the-platform">手順 3: プラットフォームのテスト</a></p><ul> <li><p><a class="reference external" href="#test-1-read-platform-info">テスト 1: プラットフォーム情報の読み込み</a></p></li> <li><p><a class="reference external" href="#test-2-run-vector-addition-application">テスト 2: Vector Addition アプリケーション</a></p></li> <li><p><a class="reference external" href="#fast-track-for-vector-addition">ベクター加算のスクリプトを使用した実行</a></p></li> <li><p><a class="reference external" href="#test-3-run-a-vitis-ai-demo">テスト 3: Vitis AI デモの実行</a></p><ul> <li><p><a class="reference external" href="#create-the-design">デザインの作成</a></p></li> <li><p><a class="reference external" href="#run-application-on-board">ボード上でのアプリケーションの実行</a></p></li> <li><p><a class="reference external" href="#known-issues">既知の問題</a></p></li> </ul>
+</li>
+<li><p><a class="reference external" href="#congratulations">まとめ</a></p></li> </ul>
+</li>
+</ul>
+<div class="section" id="step-3-test-the-platform">
+<h1>手順 3: プラットフォームのテスト<a class="headerlink" href="#step-3-test-the-platform" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="test-1-read-platform-info">
+<h2>テスト 1: プラットフォーム情報の読み込み<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
+<p>手順 2 で設定した Vitis 環境設定では、<strong>platforminfo</strong> ツールで XPFM プラットフォーム情報をレポートできます。</p>
+<details><summary><strong>詳細なログ</strong></summary><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run in zcu104_software_platform directory</span> platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm <span class="o">==========================</span> Basic Platform <span class="nv">Information</span> <span class="o">==========================</span> Platform: zcu104_custom File: /group/bcapps/sven/project/WorkSpace/zcu104_software_platform/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm Description: <span class="nv">zcu104_custom</span> <span class="o">=====================================</span> Hardware Platform <span class="o">(</span>Shell<span class="o">)</span> <span class="nv">Information</span> <span class="o">=====================================</span> Vendor: xilinx Board: zcu104_custom_platform Name: zcu104_custom_platform Version: <span class="m">0</span>.0 Generated Version: <span class="m">2022</span>.1.0 Hardware: <span class="m">1</span> Software Emulation: <span class="m">1</span> Hardware Emulation: <span class="m">1</span> Hardware Emulation Platform: <span class="m">0</span> FPGA Family: zynquplus FPGA Device: xczu7ev Board Vendor: xilinx.com Board Name: xilinx.com:zcu104:1.1 Board Part: xczu7ev-ffvc1156-2-e <span class="o">=================</span> Clock <span class="nv">Information</span> <span class="o">=================</span> Default Clock Index: <span class="m">2</span> Clock Index: <span class="m">1</span> Frequency: <span class="m">100</span>.000000 Clock Index: <span class="m">2</span> Frequency: <span class="m">200</span>.000000 Clock Index: <span class="m">3</span> Frequency: <span class="m">400</span>.000000 <span class="o">==================</span> Memory <span class="nv">Information</span> <span class="o">==================</span> Bus SP Tag: HP0 Bus SP Tag: HP1 Bus SP Tag: HP2 Bus SP Tag: HP3 Bus SP Tag: HPC0 Bus SP Tag: <span class="nv">HPC1</span> <span class="o">=============================</span> Software Platform <span class="nv">Information</span> <span class="o">=============================</span> Number of Runtimes: <span class="m">1</span> Default System Configuration: zcu104_custom System Configurations: System Config Name: zcu104_custom System Config Description: zcu104_custom System Config Default Processor Group: linux_domain System Config Default Boot Image: standard System Config Is QEMU Supported: <span class="m">1</span> System Config Processor Groups: Processor Group Name: linux on psu_cortexa53 Processor Group CPU Type: cortex-a53 Processor Group OS Name: linux System Config Boot Images: Boot Image Name: standard Boot Image Type: Boot Image BIF: zcu104_custom/boot/linux.bif Boot Image Data: zcu104_custom/linux_domain/image Boot Image Boot Mode: sd Boot Image RootFileSystem: Boot Image Mount Path: /mnt Boot Image Read Me: zcu104_custom/boot/generic.readme Boot Image QEMU Args: zcu104_custom/qemu/pmu_args.txt:zcu104_custom/qemu/qemu_args.txt Boot Image QEMU Boot: Boot Image QEMU Dev Tree: Supported Runtimes: Runtime: OpenCL</pre></div>
+</div>
+</details><p>クロック情報とメモリ情報が正しく設定されていることを確認できます。</p>
+</div>
+<div class="section" id="test-2-run-vector-addition-application">
+<h2>テスト 2: Vector Addition アプリケーション<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h2>
+<p>ベクター加算は、最も単純なアクセラレーション PL カーネルです。Vitis では、このアプリケーションを自動的に作成できます。このテストを実行すると、プラットフォームの AXI 制御バス、メモリ インターフェイス、および割り込み設定が正しく機能しているかどうかを確認できます。</p>
+<ol><li><p>次のアプリケーション ディレクトリを作成します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> WorkSpace mkdir zcu104_application_vitis</pre></div>
+</div></li> <li><p>Vector Addition アプリケーションの作成</p><ul class="simple"> <li><p><strong>[File] → [Switch Workspace] → [other] → [Brose]</strong> をクリックして、Vitis のワークスペースを作成したディレクトリに切り替えます。<strong>Zcu104_application_vitis</strong> はこちらです。</p></li> <li><p><strong>[File] → [New] → [Application Project]</strong> をクリックします。</p></li> <li><p><strong>[Next]</strong> をクリック</p></li> <li><p><strong>[add]</strong> ボタンをクリックして、<code class="docutils literal notranslate"><span class="pre">zcu104_software_platform</span></code> フォルダーの下にある <code class="docutils literal notranslate"><span class="pre">zcu104_custom</span></code> のフォルダーを選択します。</p></li> <li><p>プラットフォームとして <strong>zcu104_custom</strong> を選択し、<strong>[Next]</strong> をクリックします。</p></li> <li><p>プロジェクトの名前を <strong>vadd</strong> に設定し、<strong>[Next]</strong> をクリックします。</p></li> <li><p>ドメインを <strong>linux on psu_cortexa53</strong> に設定し、<strong>[Sysroot path]</strong> を <code class="docutils literal notranslate"><span class="pre">&lt;full_pathname_to_zcu104_software_platform&gt;/sysroots/cortexa72-cortexa53-xilinx-linux</span></code> (手順 2 で <strong>sdk.sh</strong> を実行して作成) に設定します。<strong>[Root FS]</strong> を rootfs.ext4 に、<strong>[Kernel Image]</strong> を [Image] に設定します。これらのファイルは、手順 2 で生成された <code class="docutils literal notranslate"><span class="pre">zcu104_software_platform/pfm/sw_comp</span></code> ディレクトリにあります。<strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[System Optimization Examples] → [Vector Addition]</strong> をクリックし、<strong>[Finish]</strong> をクリックしてアプリケーションを生成します。</p></li> <li><p>[Explorer] ビューで <strong>vadd.prj</strong> ファイルをダブルクリックして開き、<strong>[Active build configuration]</strong> を <strong>[Emulation-SW]</strong> から <strong>[Hardware]</strong> に変更します。</p></li> <li><p>[Explorer] ビューで <strong>vadd_system</strong> を選択し、ツールバーの <strong>[Build]</strong> ボタンをクリックします。</p></li> </ul>
+<p><strong>注記:</strong> このアプリケーションをエミュレーション モードでテストする場合は、手順 8 で <strong>[Active build configuration]</strong> を <strong>[Emulation-SW]</strong> から <strong>[Emulation-HW]</strong> に変更します。</p></li> <li><p>ボード上での Vector Addition アプリケーションの実行</p><ul> <li><p>Vitis がリモート サーバーで実行されている場合は、<strong>zcu104_application_vitis/vadd_system/Hardware/package/sd_card.img</strong> をローカルにコピーします。</p></li> <li><p>SD カード イメージライター アプリケーション (Windows では Etcher、Linux では dd など) を使用して <strong>sd_card.img</strong> を SD カードに書き込みます。</p></li> <li><p>SD ブート モードで ZCU104 ボードを SD カードを使用してブートします。</p>
+<details><summary><strong>ザイリンクス ダウンロード ウェブサイトからの共通イメージを使用している場合は、ここをクリックすると表示される手順に従ってアプリケーションを実行します。</strong></summary><ul class="simple"> <li><p>自動マウントされた FAT32 パーティションに移動します</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1</pre></div>
+</div><ul class="simple"> <li><p>vadd アプリケーションを実行します</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_vadd krnl_vadd.xclbin</pre></div>
+</div><ul class="simple"> <li><p>プログラムの結果と XRT のデバッグ情報が表示されます。</p></li> </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span></pre></div>
+</div>
+</details><details><summary><strong>PetaLinux プロジェクトからのイメージを使用している場合は、ここをクリックすると表示される手順に従ってアプリケーションを実行します。</strong></summary><p>まず、ユーザー <code class="docutils literal notranslate"><span class="pre">petalinux</span></code> でログインし、新しいパスワード (sudo パスワード) を設定する必要があります。</p><ul class="simple"> <li><p>システムにログインします。</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>petalinux login:petalinux You are required to change your password immediately <span class="o">(</span>administrator enforced<span class="o">)</span>. New password: Retype new password: petalinux:~$ sudo su We trust you have received the usual lecture from the <span class="nb">local</span> System Administrator. It usually boils down to these three things: <span class="c1">#1) Respect the privacy of others.</span> <span class="c1">#2) Think before you type.</span> <span class="c1">#3) With great power comes great responsibility.</span> Password: petalinux:/home/petalinux#</pre></div>
+</div><ul class="simple"> <li><p>自動マウントされた FAT32 パーティションに移動します</p></li> </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">petalinux</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">petalinux</span><span class="c1"># cd /run/media/mmcblk0p1/</span></pre></div>
+</div><ul class="simple"> <li><p>vadd アプリケーションを実行します</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./simple_vadd krnl_vadd.xclbin</pre></div>
+</div><ul class="simple"> <li><p>プログラムの結果と XRT のデバッグ情報が表示されます。</p></li> </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span></pre></div>
+</div>
+</details></li> </ul>
+</li>
+<li><p>エミュレーション モードでのベクター加算アプリケーションのテスト (オプション)</p><ul class="simple"> <li><p>QEMU を起動するには、Vitis メニューから <strong>[Xilinx] → [Start/Stop Emulator]</strong> をクリックします。プロジェクトは vadd で、コンフィギュレーションは [Emulation - HW] です。[Start] をクリックします。Linux が起動するまで待ちます。root/root でログインします。</p></li> <li><p><strong>vadd</strong> プロジェクト (vadd_system システム プロジェクトではない) を右クリックし、<strong>[Run] → [Launch on Emulator]</strong> をクリックします。</p></li> </ul>
+<p>結果が [Console] タブに表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Loading</span><span class="p">:</span> <span class="s1">&apos;./binary_container_1.xclbin&apos;</span> <span class="n">TEST</span> <span class="n">PASSED</span></pre></div>
+</div></li></ol>
+</div>
+<div class="section" id="fast-track-for-vector-addition">
+<h2>ベクター加算のスクリプトを使用した実行<a class="headerlink" href="#fast-track-for-vector-addition" title="Permalink to this heading">¶</a></h2>
+<p>作成したカスタム プラットフォーム上にテスト アプリケーションを作成するスクリプトが用意されています。これらのスクリプトを使用するには、次の手順を実行します。</p>
+<ol><li><p>ビルドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to the step directory, e.g.</span> <span class="nb">cd</span> step3_validate make all</pre></div>
+</div>
+<p>デフォルトの検証では、ハードウェア エミュレーションが使用されます。ハードウェア ボード上で vadd アプリケーションを確認するには、次のコマンドを実行して SD カード イメージを生成してください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> step3_validate make vadd_hw</pre></div>
+</div></li> <li><p>生成されたファイルをクリーンアップするには、次を実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean</pre></div>
+</div></li></ol>
+</div>
+<div class="section" id="test-3-run-a-vitis-ai-demo">
+<h2>テスト 3: Vitis AI デモの実行<a class="headerlink" href="#test-3-run-a-vitis-ai-demo" title="Permalink to this heading">¶</a></h2>
+<p><strong>注記</strong>: Vitis 2022.1 の Vitis AI はリリースされていません。したがって、この手順はまだ完全ではありません。Vitis 2022.1 の Vitis AI がリリースされたら、この手順はすぐに更新される予定です。</p>
+<details>
+<summary><strong>Vitis AI デモ</strong></summary><p>このテストでは、DPU-TRD で Vitis AI テスト アプリケーションを実行し、カスタム プラットフォームで DPU 機能を検証します。次の手順のほとんどは、<a class="reference external" href="https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow"> Vitis-AI DPU-TRD</a> に準拠しています。</p>
+<div class="section" id="create-the-design">
+<h3>デザインの作成<a class="headerlink" href="#create-the-design" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>Vitis IDE に Vitis AI リポジトリを追加します。</p><ul class="simple"> <li><p>Vitis IDE をまだ起動していない場合は、起動します。vadd アプリケーションのワークスペースは再利用できます。</p></li> <li><p>[Window] → [Preferences] をクリックします。</p></li> <li><p>[Library Repository] タブをクリックします。</p></li> <li><p>Vitis AI を追加します。</p><ul> <li><p><strong>[Add]</strong> ボタンをクリックします。</p></li> <li><p>[Input ID]: vitis-ai</p></li> <li><p>[Name]: Vitis AI</p></li> <li><p>[Location]: ターゲット ダウンロード ディレクトリを指定するか、空のままにします。このフィールドが空の場合、Vitis はデフォルトのパス ( <code class="docutils literal notranslate"><span class="pre">~/.Xilinx</span></code>) を使用します。</p></li> <li><p>[Git URL]: <code class="docutils literal notranslate"><span class="pre">https://github.com/Xilinx/Vitis-AI.git</span></code></p></li> <li><p>[Branch]: プラットフォームを使用して検証するブランチです。Vitis 2021.1 に一致する Vitis-AI バージョン <code class="docutils literal notranslate"><span class="pre">master</span></code> に使用します。<code class="docutils literal notranslate"><span class="pre">master</span></code> を最新のパッチ適用済みバージョンに使用できます 。master ブランチは、新しいリリースが出れば移行する点に留意してください。<code class="docutils literal notranslate"><span class="pre">master</span></code> ブランチは、ある時点から Vitis 2021.2 と互換性のない新しいリリースをポイントすることになります。</p></li> </ul>
+</li>
+</ul>
+<p><img alt="missing image" src="../../../../_images/vitis_repo_add_vai.png" /></p></li> <li><p>Vitis AI ライブラリをダウンロードします。</p><ul class="simple"> <li><p>[Xilinx] → [Libraries] をクリックします。</p></li> <li><p>先ほど追加した Vitis-AI エントリを検索します。[Download] ボタンをクリックします。</p></li> <li><p>Vitis-AI リポジトリのダウンロードが完了するまで待ちます。</p></li> <li><p>[OK] をクリックしてこのウィンドウを閉じます。</p></li> </ul>
+<p>Vitis IDE は、各リポジトリのアップストリーム ステータスをチェックします。アップデートがある場合、ソース URL がリモート Git リポジトリであれば、ユーザーがそのアップデートをダウンロードできるようになります。</p></li> <li><p>Vitis-AI 用の sysroot をダウンロードします。</p>
+<p>Vitis-AI は PetaLinux とはリリース サイクルが異なるため、Vitis-AI 関連の PetaLinux シピは PetaLinux リリースよりも後にリリースされます。このチュートリアルのリリース時点では、Vitis-AI 関連のレシピはまだリリースされていません。Vitis-AI に依存する PetaLinux の sysroot/sdk を構築することはできません。プリビルドの Vitis-AI sdk を使用する必要があります。</p><ul class="simple"> <li><p>Vitis-AI クロス コンパイル環境設定スクリプトを <code class="docutils literal notranslate"><span class="pre">wget</span> <span class="pre">https://raw.githubusercontent.com/Xilinx/Vitis-AI/1.4/setup/mpsoc/VART/host_cross_compiler_setup.sh</span></code> を使用してダウンロードします。</p></li> <li><p>インストール ディレクトリのスクリプトを更新します。デフォルトのインストール パスは <code class="docutils literal notranslate"><span class="pre">install_path=~/petalinux_sdk_2021.1</span></code> です。ここでは、PetaLinux 2021.2 を使用しているので、<code class="docutils literal notranslate"><span class="pre">install_path=~/petalinux_sdk_2021.2</span></code> に変更してください。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">./host_cross_compiler_setup.sh</span></code> スクリプトを実行して、クロスコンパイル環境を設定します。</p></li> </ul>
+<p>Vitis-AI レシピがリリースされたら、このチュートリアルの PetaLinux を使用して sysroot に Vitis-AI の依存関係を構築する手順を更新する予定です。</p></li> <li><p>zcu104_custom プラットフォームで Vitis-AI デザインを作成します。</p><ul class="simple"> <li><p><strong>[File]</strong> → <strong>[New]</strong> → <strong>[Application Project]</strong> をクリックします。</p></li> <li><p>[Welcome] ページで <strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>zcu104_custom</strong> プラットフォームを選択します。[Next] をクリックします。</p></li> <li><p>プロジェクトの名前を <strong>dpu_trd</strong> に設定し、<strong>[Next]</strong> をクリックします。</p></li> <li><p>[Domain] に <strong>linux on psu_cortexa53</strong> を、<strong>Sys_root path</strong> を前の手順の sysroot インストール パス (例: <code class="docutils literal notranslate"><span class="pre">~/petalinux_sdk_2021.2/sysroots/cortexa72-cortexa53-xilinx-linux/</span></code>) に設定します。</p></li> <li><p><strong>[Root FS]</strong> を rootfs.ext4 に、<strong>[Kernel Image]</strong> を [Image] に設定します。これらのファイルは、手順 2 で生成された <code class="docutils literal notranslate"><span class="pre">zcu104_software_platform/sw_comp</span></code> ディレクトリにあります。<strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[dsa]</strong> → <strong>[DPU Kernel (RTL Kernel)]</strong> をクリックし、[Finish] をクリックしてアプリケーションを生成します。 <img alt="missing image" src="../../../../_images/vitis_add_dpu.png" /></p></li> </ul>
+</li>
+<li><p>ビルド ターゲットのアップデート</p><ul class="simple"> <li><p>dpu_trd_system.sprj システム プロジェクト ファイルをダブルクリックします。</p></li> <li><p>[Active Build Configuration] を <strong>[Hardware]</strong> に変更します。</p></li> </ul>
+</li>
+<li><p>ZCU104 の DPU 設定を確認してアップデートします。デフォルトで作成されるデザインには、ZCU102 の DPU 設定があります。</p><ul class="simple"> <li><p><strong>dpu_trd_kernels/src/prj/Vitis</strong> ディレクトリから <strong>dpu_conf.vh</strong> を開きます。</p></li> <li><p>37 行目の <code class="docutils literal notranslate"><span class="pre">URAM_DISABLE</span></code> を <code class="docutils literal notranslate"><span class="pre">URAM_ENABLE</span></code> に変更します。</p></li> <li><p>Ctrl + S キーを押して変更を保存します。</p></li> </ul>
+<p><strong>注記</strong>: ZCU104 には ZU7EV デバイスが搭載されています。ZCU102 の ZU9EG よりも BRAM は少ないですが、URAM を含みます。URAM サポートをオンにすると、DPU によるオンチップ メモリ要件を満たすことができます。</p></li> <li><p>system_hw_link をアップデートして、カーネルが適切にインスタンシエーションされるようにします。</p>
+<p>ZCU104 は ZCU102 よりも LUT リソースが少ないため、ZCU102 のような PL に Softmax IP を含めると、タイミング クロージャの目標を満たすのが困難になり、インプリメンテーションにはかなり時間がかかります。Vitis-AI DPU-TRD デザインでは、ZCU104 のハードウェアの Softmax IP が削除されます。ホスト アプリケーションは、ハードウェアで Softmax IP を検出しない場合、ソフトウェアを使用してソフトマックスを計算します。結果は同じですが、計算時間は異なります。ここではプラットフォームの検証を目的としているので、テスト アプリケーションでソフトマックス カーネルを削除します。</p><ul class="simple"> <li><p>dpu_trd_system_hw_link.prj をダブルクリックします。</p></li> <li><p>[Hardware Functions] ウィンドウで sfm_xrt_top インスタンスを右クリックして [Remove] をクリックして削除します。</p></li> <li><p>sfx_xrt_top インスタンスを削除したら、[Hardware Functions] ウィンドウの残りのインスタンス、DPUCZDX8G の [Compute Units] は 2 に設定します。</p></li> </ul>
+</li>
+<li><p>system_hw_link v++ を確認して、カーネルが適切にインスタンシエーションされるようにします。</p>
+<p>DPU カーネルには、1x クロックと 2x クロックの 2 つの位相の揃えられたクロックが必要です。コンフィギュレーションは [Example Design] に保存されます。DPU カーネルとプラットフォーム間のクロックおよび AXI インターフェイス接続が設定されます。</p>
+<p>次は、プロジェクトで設定を確認する方法です。</p><ul class="simple"> <li><p><strong>[Assistant View]</strong> を表示します。</p></li> <li><p><strong>dpu_trd_system [System]</strong> をダブルクリックします。</p></li> <li><p>左側のツリー パネルを展開し、[dpu_trd_system] → [dpu_trd_system_hw_link] → [Hardware] → [dpu] をクリックします。</p></li> </ul>
+<p><img alt="missing image" src="../../../../_images/hw_link_dpu.png" /></p><ul> <li><p>[V++ Configuration Settings] の行にある <code class="docutils literal notranslate"><span class="pre">...</span></code> ボタンをクリックすると、次のようなコンフィギュレーションが表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">clock</span><span class="p">]</span> <span class="n">freqHz</span><span class="o">=</span><span class="mi">300000000</span><span class="p">:</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">aclk</span> <span class="n">freqHz</span><span class="o">=</span><span class="mi">600000000</span><span class="p">:</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">ap_clk_2</span> <span class="n">freqHz</span><span class="o">=</span><span class="mi">300000000</span><span class="p">:</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">aclk</span> <span class="n">freqHz</span><span class="o">=</span><span class="mi">600000000</span><span class="p">:</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">ap_clk_2</span> <span class="p">[</span><span class="n">connectivity</span><span class="p">]</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_GP0</span><span class="p">:</span><span class="n">HPC0</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_HP0</span><span class="p">:</span><span class="n">HP0</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_1</span><span class="o">.</span><span class="n">M_AXI_HP2</span><span class="p">:</span><span class="n">HP1</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_GP0</span><span class="p">:</span><span class="n">HPC0</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_HP0</span><span class="p">:</span><span class="n">HP2</span> <span class="n">sp</span><span class="o">=</span><span class="n">DPUCZDX8G_2</span><span class="o">.</span><span class="n">M_AXI_HP2</span><span class="p">:</span><span class="n">HP3</span></pre></div>
+</div></li> </ul>
+<blockquote>
+<div><p>注記: この内容はビルド時に dpu-link.cfg に書き込まれ、v++ リンカー コマンド ラインに渡されます。</p>
+</div></blockquote>
+<blockquote>
+<div><p>注記: v++ リンク コンフィギュレーションをカスタマイズするには、v++ コンフィギュレーション設定に内容を追加するか、独自のコンフィギュレーション ファイルを作成して、<strong>[V++ Command Line Options]</strong> フィールドに <code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">&lt;your_config_file.cfg&gt;</span></code> を追加します。コンフィギュレーション ファイルに相対パスを使用する必要がある場合、ベースのディレクトリは <code class="docutils literal notranslate"><span class="pre">dpu_trd_system_hw_link/Hardware</span></code> ディレクトリです。</p>
+</div></blockquote></li> <li><p>パッケージ オプションをアップデートして、依存モデルを SD カードに追加します。</p></li></ol><ul class="simple"> <li><p>dpu_trd_system.sprj をダブルクリックします。</p></li> <li><p>[Package options] の [...] ボタンをクリックします。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">--package.sd_dir=../../dpu_trd/src/app</span></code> と入力します。</p></li> <li><p>[OK] をクリックします。</p></li> </ul>
+<p><code class="docutils literal notranslate"><span class="pre">--package.sd_dir</span></code> で割り当てられたディレクトリ内のすべての内容が sd_card.img の FAT32 パーティションに追加されます。検証用にサンプルとモデルがパッケージにされます。</p>
+<p>パス名の dpu_trd は、この例のアプリケーション プロジェクト名です。プロジェクト名が異なる場合は、プロジェクト名を適宜アップデートしてください。</p>
+<ol class="simple"><li><p>ハードウェア デザインを構築します。</p></li></ol><ul class="simple"> <li><p>dpu_trd_system システム プロジェクトを選択します。</p></li> <li><p>ハンマー ボタンをクリックして、システム プロジェクトをビルドします。</p></li> <li><p>生成された SD カード イメージは、 <strong>dpu_trd_system/Hardware/package/sd_card.img</strong> にあります。</p></li> </ul>
+<p><strong>注記</strong>: Vitis-AI プロジェクト作成フローの詳細は、<a class="reference external" href="https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow">Vitis-AI の資料</a>を参照してください。</p>
+</div>
+<div class="section" id="run-application-on-board">
+<h3>ボード上でのアプリケーションの実行<a class="headerlink" href="#run-application-on-board" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>イメージを SD へ書き込みます。</p><ul class="simple"> <li><p>sd_card.img を、ローカルのワークステーションまたは SD カード リーダーを搭載したラップトップにコピーします。</p></li> <li><p>この画像を <a class="reference external" href="https://www.balena.io/etcher/">balena Etcher</a> または同様のツールを使用する SD カードに書き込みます。</p></li> </ul>
+</li>
+<li><p>ボードをブートします。</p><ul class="simple"> <li><p>SD カードを ZCU104 に挿入します。</p></li> <li><p>ブート モードを SD boot に設定します。</p></li> <li><p>USB UART ケーブルを接続します。</p></li> <li><p>ボードに電源を投入します。1 分で Linux が正しく起動するはずです。</p></li> </ul>
+</li>
+<li><p>ext4 パーティションのサイズを変更します。</p><ul class="simple"> <li><p>UART コンソールが接続されていない場合は接続します。</p></li> <li><p>ZCU104 ボードの UART コンソールで、<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">.</span></code> を実行して現在使用可能なディスク サイズを確認します。</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root@petalinux:~# df . Filesystem 1K-blocks Used Available Use% Mounted on /dev/root <span class="m">564048</span> <span class="m">398340</span> <span class="m">122364</span> <span class="m">77</span>% /</pre></div>
+</div><ul class="simple"> <li><p><code class="docutils literal notranslate"><span class="pre">resize-part</span> <span class="pre">/dev/mmcblk0p2</span></code> を実行して、ext4 パーティションのサイズを変更します。<strong>Yes</strong> と **100% ** を入力して、残りの SD カードすべてを使用するようにサイズが変更されたことを確認します。</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root@petalinux:~# resize-part /dev/mmcblk0p2 /dev/mmcblk0p2 Warning: Partition /dev/mmcblk0p2 is being used. Are you sure you want to <span class="k">continue</span>? parted: invalid token: <span class="m">100</span>% Yes/No? yes End? <span class="o">[</span>2147MB<span class="o">]</span>? <span class="m">100</span>% Information: You may need to update /etc/fstab. resize2fs <span class="m">1</span>.45.3 <span class="o">(</span><span class="m">14</span>-Jul-2019<span class="o">)</span> Filesystem at /dev/mmcblk0p2 is mounted on /media/sd-mmcblk0p2<span class="p">;</span> o<span class="o">[</span> <span class="m">72</span>.751329<span class="o">]</span> EXT4-fs <span class="o">(</span>mmcblk0p2<span class="o">)</span>: resizing filesystem from <span class="m">154804</span> to <span class="m">1695488</span> blocks n-line resizing required <span class="nv">old_desc_blocks</span> <span class="o">=</span> <span class="m">1</span>, <span class="nv">new_desc_blocks</span> <span class="o">=</span> <span class="m">1</span> <span class="o">[</span> <span class="m">75</span>.325525<span class="o">]</span> EXT4-fs <span class="o">(</span>mmcblk0p2<span class="o">)</span>: resized filesystem to <span class="m">1695488</span> The filesystem on /dev/mmcblk0p2 is now <span class="m">1695488</span> <span class="o">(</span>4k<span class="o">)</span> blocks long.</pre></div>
+</div><ul class="simple"> <li><p>使用可能なサイズを再度チェックして、ext4 パーティション サイズが拡大されたことを確認します。</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root@petalinux:~# df . -h Filesystem Size Used Available Use% Mounted on /dev/root <span class="m">6</span>.1G <span class="m">390</span>.8M <span class="m">5</span>.4G <span class="m">7</span>% /</pre></div>
+</div>
+<p><strong>注記</strong>: 使用可能なサイズは、SD カードのサイズによって異なります。</p>
+<p><strong>注記</strong>: <strong>resize-part</strong> は、<a class="reference internal" href="step2.html"><span class="doc">手順 2</span></a> で追加したスクリプトです。Linux ユーティリティの <strong>parted</strong> と <strong>resize2fs</strong> を呼び出して、ext4 パーティションを拡張して残りの SD カードが入るようにします。</p></li> <li><p>依存ファイルをホーム フォルダーにコピーします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Libraries</span> root@petalinux:~# cp -r /mnt/sd-mmcblk0p1/app/samples/ ~ <span class="c1"># Model</span> root@petalinux:~# cp /mnt/sd-mmcblk0p1/app/model/resnet50.xmodel ~ <span class="c1"># Host app</span> root@petalinux:~# cp /mnt/sd-mmcblk0p1/dpu_trd ~ <span class="c1"># Image to test</span> root@petalinux:~# cp /mnt/sd-mmcblk0p1/app/img/bellpeppe-994958.JPEG ~</pre></div>
+</div></li> <li><p>アプリケーションを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>root@petalinux:~# env <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>samples/lib <span class="nv">XLNX_VART_FIRMWARE</span><span class="o">=</span>/mnt/sd-mmcblk0p1/dpu.xclbin ./dpu_trd bellpeppe-994958.JPEG</pre></div>
+</div>
+<p>bell pepper の可能性が最も高いことあ表示されます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>score<span class="o">[</span><span class="m">945</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.992235 text: bell pepper, score<span class="o">[</span><span class="m">941</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00315807 text: acorn squash, score<span class="o">[</span><span class="m">943</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00191546 text: cucumber, cuke, score<span class="o">[</span><span class="m">939</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.000904801 text: zucchini, courgette, score<span class="o">[</span><span class="m">949</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00054879 text: strawberry,</pre></div>
+</div></li></ol>
+<details>
+<summary><strong>詳細な結果表示</strong></summary><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span> <span class="m">196</span>.247066<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.250926<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.254833<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.258679<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.269515<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.273384<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.277243<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.281076<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.285073<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.288984<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.293230<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.297096<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.300963<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.307660<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> zocl_xclbin_read_axlf The XCLBIN already loaded <span class="o">[</span> <span class="m">196</span>.307672<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> zocl_xclbin_read_axlf 1cdede23-0755-458e-8dac-7ef1b3845fa4 ret: <span class="m">0</span> <span class="o">[</span> <span class="m">196</span>.317747<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, <span class="nv">ref</span><span class="o">=</span><span class="m">1</span> <span class="o">[</span> <span class="m">196</span>.325431<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Reconfiguration not supported <span class="o">[</span> <span class="m">196</span>.337206<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, <span class="nv">ref</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span> <span class="m">196</span>.337361<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.348581<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.352580<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.356638<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, <span class="nv">ref</span><span class="o">=</span><span class="m">1</span> <span class="o">[</span> <span class="m">196</span>.356659<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.367712<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.371560<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.375507<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, <span class="nv">ref</span><span class="o">=</span><span class="m">2</span> <span class="o">[</span> <span class="m">196</span>.375539<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.386590<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.390439<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.394331<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, <span class="nv">ref</span><span class="o">=</span><span class="m">3</span> <span class="o">[</span> <span class="m">196</span>.394822<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device <span class="o">[</span> <span class="m">196</span>.405867<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">196</span>.409717<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> opened device score<span class="o">[</span><span class="m">945</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.992235 text: bell pepper, score<span class="o">[</span><span class="m">941</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00315807 text: acorn squash, score<span class="o">[</span><span class="m">943</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00191546 text:<span class="o">[</span> <span class="m">196</span>.413579<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 locked, <span class="nv">ref</span><span class="o">=</span><span class="m">4</span> cucumber, cuke, score<span class="o">[</span><span class="m">939</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.000904801 text: zucchini, co<span class="o">[</span> <span class="m">197</span>.997865<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, <span class="nv">ref</span><span class="o">=</span><span class="m">3</span> urgette, score<span class="o">[</span><span class="m">949</span><span class="o">]</span> <span class="o">=</span> <span class="m">0</span>.00054879 text: strawberry, <span class="o">[</span> <span class="m">198</span>.010569<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">198</span>.032534<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, <span class="nv">ref</span><span class="o">=</span><span class="m">2</span> <span class="o">[</span> <span class="m">198</span>.032546<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">198</span>.229797<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, <span class="nv">ref</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span> <span class="m">198</span>.229803<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">198</span>.241056<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> bitstream 1cdede23-0755-458e-8dac-7ef1b3845fa4 unlocked, <span class="nv">ref</span><span class="o">=</span><span class="m">0</span> <span class="o">[</span> <span class="m">198</span>.241059<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device <span class="o">[</span> <span class="m">198</span>.252434<span class="o">]</span> <span class="o">[</span>drm<span class="o">]</span> Pid <span class="m">948</span> closed device</pre></div>
+</div>
+<p>アプリケーションを起動する前に <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">6</span> <span class="pre">&gt;</span> <span class="pre">/proc/sys/kernel/printk</span></code> を実行すると、XRT で結果は表示されなくなります。</p>
+</details></div>
+<div class="section" id="known-issues">
+<h3>既知の問題<a class="headerlink" href="#known-issues" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>ZCU104 の PMIC (irps5401) のデフォルト設定では、負荷が高いときに DPU を実行する余裕はありません。負荷が高すぎる場合は、クラッシュしたりハングしたりすることがあります。</p><ul class="simple"> <li><p>詳細は、<a class="reference external" href="https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues">DPU TRD の既知の問題</a>を参照してください。(参照: <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/issues/101">問題 101</a>)</p></li> </ul>
+</li>
+</ol>
+</details></div>
+</div>
+<div class="section" id="congratulations">
+<h2>まとめ<a class="headerlink" href="#congratulations" title="Permalink to this heading">¶</a></h2>
+<p>カスタム プラットフォームを最初から作成し、簡単な vadd アプリケーションと比較的複雑な Vitis-AI ユース ケースを使用して検証しました。</p>
+<p>このリポジトリに含まれるほかのチュートリアルも参照してください。</p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

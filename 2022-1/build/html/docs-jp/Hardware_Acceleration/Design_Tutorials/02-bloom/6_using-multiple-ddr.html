@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>複数 DDR バンクの活用 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>複数 DDR バンクの使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/02-bloom/6_using-multiple-ddr.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="using-multiple-ddr-banks">
+<h1>複数 DDR バンクの使用<a class="headerlink" href="#using-multiple-ddr-banks" title="Permalink to this heading">¶</a></h1>
+<p>前の手順では、FPGA に転送するドキュメントを複数のバッファーに分割してホストのデータ転送と FPGA での計算がオーバーラップするようにし、さらに FPGA からフラグをホストにすぐに送信して FPGA での計算と CPU でのスコアの計算がオーバーラップするようにしました。これにより、アプリケーションの実行時間が短縮されました。</p>
+<p>ホストとカーネルが同じバンクに同時にアクセスしようとするため、メモリ競合が発生していることもわかりました。このセクションでは、複数の DDR バンクを設定して、カーネルのパフォーマンスを向上します。</p>
+<p>Alveo カードには複数の DDR バンクがあり、複数のバンクを交互に使用することにより競合を最小限に抑えることができます。</p><ul class="simple"> <li><p>ホストは、ワードを DDR バンク 1 と DDR バンク 2 に交互に書き込みます。</p></li> <li><p>ホストがワードを DDR バンク 1 に書き込んでいるときに、カーネルは DDR バンク 2 からフラグを読み出します。</p></li> <li><p>ホストがドキュメントを DDR バンク 2 に書き込んでいるときに、カーネルは DDR バンク 1 からフラグを読み出します。</p></li> </ul>
+<p>カーネルは DDR バンク 1 とバンク 2 から交互に読み出すので、<code class="docutils literal notranslate"><span class="pre">maxi</span></code> ポートは両方の DDR バンクに接続します。<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory">カーネル ポートのメモリへのマッピング</a>で説明されるように、<code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">--link</span></code> コマンドでカーネル引数と DDR バンクの接続を構築する必要があります。この場合、<code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/makefile/connectivity.cfg</span></code> コンフィギュレーション ファイルで接続が指定されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``` [connectivity] sp=runOnfpga_1.input_words:DDR[1:2] ```</pre></div>
+</div><ul class="simple"> <li><p><code class="docutils literal notranslate"><span class="pre">-sp</span></code> オプションは、<code class="docutils literal notranslate"><span class="pre">input_words</span></code> が DDR バンク 1 と 2 の両方に接続されることを <code class="docutils literal notranslate"><span class="pre">v++</span></code> リンカーに指示します。接続が変更されたので、カーネルをビルドし直す必要があります。</p></li> </ul>
+<div class="section" id="code-modifications">
+<h2>コードの変更<a class="headerlink" href="#code-modifications" title="Permalink to this heading">¶</a></h2>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code> に移動し、ファイル エディターで <code class="docutils literal notranslate"><span class="pre">run_sw_overlap_multiDDR.cpp</span></code> を開きます。</p></li> <li><p>ホスト コードからワードを 2 つの DDR バンクに交互に送信する必要があります。ホスト コードでの DDR バンク割り当ては、OpenCL API へのザイリンクス ベンダー拡張でサポートされています。ザイリンクス拡張ポインター オブジェクト (<code class="docutils literal notranslate"><span class="pre">cl_mem_ext_ptr_t</span></code>) が 2 つ作成されます (<code class="docutils literal notranslate"><span class="pre">buffer_words_ext[0]</span></code> および <code class="docutils literal notranslate"><span class="pre">buffer_words_ext[1]</span></code>)。<code class="docutils literal notranslate"><span class="pre">flags</span></code> は、カーネルがアクセスできるように、バッファーが送信される DDR バンクを指定します。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">cl_mem_ext_ptr_t</span><span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XCL_MEM_TOPOLOGY</span><span class="p">;</span><span class="w"> </span><span class="c1">// DDR[1]</span>
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">obj</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">input_doc_words</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XCL_MEM_TOPOLOGY</span><span class="p">;</span><span class="w"> </span><span class="c1">// DDR[2]</span>
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">obj</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">input_doc_words</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</li> <li><p>次の 2 つのバッファー、<code class="docutils literal notranslate"><span class="pre">buffer_doc_words[0]</span></code> と <code class="docutils literal notranslate"><span class="pre">buffer_doc_words[1]</span></code> が次のように、<code class="docutils literal notranslate"><span class="pre">DDR[1]</span></code> と <code class="docutils literal notranslate"><span class="pre">DDR[2]</span></code> で作成されます。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">buffer_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="n">buffer_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffer_words_ext</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="n">buffer_inh_flags</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span><span class="n">output_inh_flags</span><span class="p">);</span><span class="w"></span>
+<span class="n">buffer_bloom_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">CL_MEM_USE_HOST_PTR</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">bloom_filter_size</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="n">bloom_filter</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Set buffer kernel arguments (needed to migrate the buffers in the correct memory)</span>
+<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_inh_flags</span><span class="p">);</span><span class="w"></span>
+<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_bloom_filter</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Make buffers resident in the device</span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_bloom_filter</span><span class="p">,</span><span class="w"> </span><span class="n">buffer_doc_words</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">buffer_doc_words</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">buffer_inh_flags</span><span class="p">},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_CONTENT_UNDEFINED</span><span class="p">);</span><span class="w"></span>
+
+<span class="c1">// Create sub-buffers, one for each transaction</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">total_doc_size</span><span class="o">/</span><span class="n">num_iter</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+<span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">num_iter</span><span class="p">];</span><span class="w"></span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_inh_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="n">i</span><span class="o">*</span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">),</span><span class="w"> </span><span class="n">subbuf_doc_sz</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">)};</span><span class="w"></span>
+<span class="w">    </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_inh_flags</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span><span class="w"> </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_inh_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// The doc words sub-buffers will be alternating in DDR[1] and DDR[2]</span>
+<span class="w">    </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buffer_doc_words</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="mi">2</span><span class="p">].</span><span class="n">createSubBuffer</span><span class="w"> </span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span><span class="w">  </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</li> <li><p>カーネル引数 input_words は、<code class="docutils literal notranslate"><span class="pre">buffer_doc_words[0]</span></code> および <code class="docutils literal notranslate"><span class="pre">buffer_doc_words[1]</span></code> から作成されたサブバッファーの配列に交互に設定され、各カーネル実行でデータが DDR バンク 1 と 2 に交互に送信されます。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_iter</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">buffDone</span><span class="p">,</span><span class="w"> </span><span class="n">krnlDone</span><span class="p">,</span><span class="w"> </span><span class="n">flagDone</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">total_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subbuf_doc_info</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">uint</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">load_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">total_size</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">kernel</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">load_filter</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_doc_words</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">wordWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buffDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">wordWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">krnlWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">krnlDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">subbuf_inh_flags</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span><span class="w"> </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnlWait</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">flagWait</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">flagDone</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</li></ol>
+<div class="section" id="run-the-application-using-8-words-in-parallel">
+<h3>8 ワードを並列処理するアプリケーションを実行<a class="headerlink" href="#run-the-application-using-8-words-in-parallel" title="Permalink to this heading">¶</a></h3>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">makefile</span></code> ディレクトリに移動し、<code class="docutils literal notranslate"><span class="pre">make</span></code> コマンドを実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> cd $LAB_WORK_DIR/makefile; make run STEP=multiDDR TARGET=hw PF=8 ITER=8</pre></div>
+</div>
+<p>次の出力が表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Processing</span> <span class="mf">1398.905</span> <span class="n">MBytes</span> <span class="n">of</span> <span class="n">data</span>
+  <span class="n">MultiDDR</span><span class="o">-</span> <span class="n">Splitting</span> <span class="n">data</span> <span class="ow">in</span> <span class="mi">8</span> <span class="n">sub</span><span class="o">-</span><span class="n">buffers</span> <span class="n">of</span> <span class="mf">174.863</span> <span class="n">MBytes</span> <span class="k">for</span> <span class="n">FPGA</span> <span class="n">processing</span>
+  <span class="o">--------------------------------------------------------------------</span>
+  <span class="n">Executed</span> <span class="n">FPGA</span> <span class="n">accelerated</span> <span class="n">version</span>  <span class="o">|</span>   <span class="mf">426.6388</span> <span class="n">ms</span>   <span class="p">(</span> <span class="n">FPGA</span> <span class="mf">175.113</span> <span class="n">ms</span> <span class="p">)</span>
+  <span class="n">Executed</span> <span class="n">Software</span><span class="o">-</span><span class="n">Only</span> <span class="n">version</span>     <span class="o">|</span>   <span class="mf">3058.8499</span> <span class="n">ms</span>
+  <span class="o">--------------------------------------------------------------------</span>
+  <span class="n">Verification</span><span class="p">:</span> <span class="n">PASS</span>
+</pre></div>
+</div>
+</li></ol>
+<p>FPGA の全体的な時間は 230 ms から 175 ms に削減されました。</p>
+</div>
+<div class="section" id="review-the-profile-report-and-timeline-trace">
+<h3>プロファイル サマリ レポートおよびタイムライン トレースの確認<a class="headerlink" href="#review-the-profile-report-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>次のコマンドを実行して、タイムライン トレース レポートを表示します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/multiDDR/kernel_8/hw/runOnfpga_hw.xclbin.run_summary</pre></div>
+</div></li> <li><p>タイムライン トレース レポートの次の部分を表示します。</p>
+<p><img alt="missing image" src="../../../../_images/multiDDR_timeline_trace_1.PNG" /></p><ul class="simple"> <li><p>タイムライン トレースから、ホストは DDR に交互に書き込んでいるのがわかります。マウスを [Data Transfer] → [Write] のトランザクションの上に置くと、ホストがバンク 1 とバンク 2 に交互に書き込んでいるのがわかります。フラグのサイズは比較的小さいので、カーネルは常に DDR バンク 1 に書き込みます。</p></li> <li><p>複数のバンクを使用しない前の演習では、カーネルが前のエンキューで DDR に書き込んだフラグをホストが読み出すまで、カーネルは次のワードを読み出すことができませんでした。この演習では、これらのアクセスは異なる DDR バンクに対して実行されるので、同時に発生します。</p></li> </ul>
+<p>この結果、ホストからの転送、デバイスでの計算、フラグ データのホストへの送信を含む FPGA 計算時間が短縮されます。</p></li> <li><p>プロファイル レポートで次を確認します。</p><ul> <li><p><em></em>[Data Transfer: Host to Global Memory] セクションに、次のように示されます。</p><ul> <li><p>ホストからのグローバル メモリ書き込み転送に約 145.7 ms かかっており、これは 207 ms よりも短くなっています。</p></li> <li><p>ホストからのグローバル メモリ読み出し転送には約 37.9 ms かかります。</p>
+<p><img alt="missing image" src="../../../../_images/multiDDR_profile_host.PNG" /></p></li> </ul>
+</li>
+<li><p>[Kernels &amp; Compute Unit: Compute Unit Utilization]<em> </em>セクションを見ると、CU 使用率が前の演習の 73% から 89.5% に増加しています。</p>
+<p><img alt="missing image" src="../../../../_images/multiDDR_profile_CU_util.PNG" /></p></li> <li><p>[Kernels &amp; Compute Unit: Compute Unit Utilization]<em> </em>を見ると、メモリ競合が前の演習の 21 ms から 5 ms に削減されています。</p>
+<p><img alt="missing image" src="../../../../_images/multiDDR_stalls.PNG" /></p></li> </ul>
+</li>
+</ol>
+<p>1 つの DDR を使用した前の手順と比較した場合、全体的なアプリケーションの向上はありません。FPGA 計算のパフォーマンスは向上しましたが、CPU のパフォーマンスに制限されるスコアの計算がボトルネックになっています。CPU を高速化できれば、パフォーマンスを向上できます。</p>
+<p>これらの結果から、アプリケーションのスループットは 1399 MB/426 ms = 約 3.27 GB/s であることがわかります。ソフトウェアのみのバージョンと比較すると、7.2 倍 (3058 ms/426 ms) のパフォーマンスを得ることができました。</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>まとめ<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>お疲れさまでした。これで、このチュートリアルのすべての演習を終了しました。</p>
+<p>このチュートリアルでは、ホスト アプリケーションとアクセラレータとのデータ転送を最適化することにより、パフォーマンスを大幅に向上できることを学びました。初期インプリメンテーションでは、ソフトウェア インプリメンテーションと比べて 4 倍のパフォーマンスが得られました。データの並列処理を利用してデータ転送と計算をオーバーラップさせ、複数の DDR バンクを使用して CPU での処理と FPGA での処理をオーバーラップさせることにより、アプリケーションのパフォーマンスをさらに 1.8 倍に、合計で 7.2 倍のアクセラレーションを達成できました。</p>
+<hr class="docutils" />
+<p align="center" class="sphinxhide"><b><a href="./README.md">チュートリアルの初めに戻る</a></b></p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
