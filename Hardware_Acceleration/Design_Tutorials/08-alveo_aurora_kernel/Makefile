@@ -90,6 +90,24 @@ $(XCLBIN_OBJ): krnl_aurora.xo strm_issue_$(TARGET).xo strm_dump_$(TARGET).xo krn
 
 CXXFLAGS := -std=c++17 -Wno-deprecated-declarations
 CXXFLAGS += -I$(XILINX_XRT)/include
+
+# Special setting for CentOS/RHEL 7 to bypass possible XRT Native API compiling error
+OSDIST = $(shell lsb_release -i |awk -F: '{print tolower($$2)}' | tr -d ' 	' )
+OSREL = $(shell lsb_release -r |awk -F: '{print tolower($$2)}' |tr -d ' 	')
+ifneq ($(findstring centos,$(OSDIST)),)
+ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
+ifeq ($(HOST_ARCH), x86)
+CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+endif
+endif
+else ifneq ($(findstring redhat,$(OSDIST)),)
+ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
+ifeq ($(HOST_ARCH), x86)
+CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+endif
+endif
+endif
+
 LDFLAGS := -L$(XILINX_XRT)/lib
 LDFLAGS += $(LDFLAGS) -lxrt_coreutil
 EXECUTABLE := host_krnl_aurora_test
