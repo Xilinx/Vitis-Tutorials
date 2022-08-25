@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -130,9 +131,9 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-<section id="step-4-test-the-platform">
+<div class="section" id="step-4-test-the-platform">
 <h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
-<section id="test-1-read-platform-info">
+<div class="section" id="test-1-read-platform-info">
 <h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
 <p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
 <details><summary><strong>Click for detailed logs</strong></summary>  <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in zcu104_custom_pkg directory</span>
@@ -216,8 +217,8 @@ Supported Runtimes:
 </pre></div>
 </div>
 </details><p>We can verify clock information and memory information are set as expected.</p>
-</section>
-<section id="test-2-run-vector-addition-application">
+</div>
+<div class="section" id="test-2-run-vector-addition-application">
 <h2>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h2>
 <p>Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.</p>
 <ol>
@@ -271,8 +272,8 @@ Supported Runtimes:
 </div>
 </li>
 </ol>
-</section>
-<section id="fast-track-for-vector-addtion">
+</div>
+<div class="section" id="fast-track-for-vector-addtion">
 <h2>Fast Track for Vector Addtion<a class="headerlink" href="#fast-track-for-vector-addtion" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to create the test applications on the custom platform we created. To use these scripts, please run the following steps.</p>
 <ol>
@@ -294,11 +295,11 @@ make vadd_hw
 </div>
 </li>
 </ol>
-</section>
-<section id="test-3-run-a-vitis-ai-demo">
+</div>
+<div class="section" id="test-3-run-a-vitis-ai-demo">
 <h2>Test 3: Run a Vitis-AI Demo<a class="headerlink" href="#test-3-run-a-vitis-ai-demo" title="Permalink to this heading">¶</a></h2>
 <p>This test will run a Vitis-AI test application in DPU-TRD to verify DPU function on our custom platform. The most instructions below follows <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow">Vitis-AI DPU-TRD document</a>.</p>
-<section id="create-the-design">
+<div class="section" id="create-the-design">
 <h3>Create the design<a class="headerlink" href="#create-the-design" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Add Vitis-AI repository into Vitis IDE</p>
@@ -425,8 +426,8 @@ make vadd_hw
 <li><p>The generated SD card image is located at <strong>dpu_trd_system/Hardware/package/sd_card.img</strong>.</p></li>
 </ul>
 <p><strong>Note</strong>: Please refer to <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/tree/master/dsa/DPU-TRD/prj/Vitis#6-gui-flow">Vitis-AI document</a> for details about Vitis-AI project creation flow.</p>
-</section>
-<section id="run-application-on-board">
+</div>
+<div class="section" id="run-application-on-board">
 <h3>Run Application on Board<a class="headerlink" href="#run-application-on-board" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Write image to SD</p>
@@ -561,8 +562,8 @@ score<span class="o">[</span><span class="m">949</span><span class="o">]</span> 
 </pre></div>
 </div>
 <p>The XRT prints can be eliminated by running <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">6</span> <span class="pre">&gt;</span> <span class="pre">/proc/sys/kernel/printk</span></code> before launching the application.</p>
-</details></section>
-<section id="known-issues">
+</details></div>
+<div class="section" id="known-issues">
 <h3>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>The default setting of PMIC (irps5401) on ZCU104 can’t afford DPU running on heavy loading. You may see crash or hang on heavy loading.</p>
@@ -571,14 +572,14 @@ score<span class="o">[</span><span class="m">949</span><span class="o">]</span> 
 </ul>
 </li>
 </ol>
-</section>
-</section>
-<section id="congratulations">
+</div>
+</div>
+<div class="section" id="congratulations">
 <h2>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this heading">¶</a></h2>
 <p>We have completed creating a custom platform from scratch and verifying it with a simple vadd application and a relatively complex Vitis-AI use cases.</p>
 <p>Please feel free to check more tutorials in this repository.</p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

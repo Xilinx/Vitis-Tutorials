@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -101,9 +100,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -136,9 +136,9 @@ function OptanonWrapper() { }
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2021.2 Versal™ AI Engine</h1>
    </td>
  </tr>
-</table><section id="axis-external-traffic-generator-feature-tutorial">
+</table><div class="section" id="axis-external-traffic-generator-feature-tutorial">
 <h1>AXIS External Traffic Generator Feature Tutorial<a class="headerlink" href="#axis-external-traffic-generator-feature-tutorial" title="Permalink to this heading">¶</a></h1>
-<section id="table-of-contents">
+<div class="section" id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="#introduction">Introduction</a></p></li>
@@ -147,8 +147,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="#running-hardware-emulation">Running Hardware Emulation</a></p></li>
 <li><p><a class="reference external" href="#references">References</a></p></li>
 </ul>
-</section>
-<section id="introduction">
+</div>
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The Xilinx® Versal™ adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.</p>
 <p>This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.</p>
@@ -160,7 +160,7 @@ function OptanonWrapper() { }
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
 </ol>
 <p>This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.</p>
-<section id="objectives">
+<div class="section" id="objectives">
 <h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h3>
 <p>After completing the tutorial, you should be able to:</p>
 <ul class="simple">
@@ -171,22 +171,22 @@ function OptanonWrapper() { }
 <li><p>Capture the AI Engine output in python</p></li>
 <li><p>Plot/Graph the data in python and compare against a golden reference model</p></li>
 </ul>
-</section>
-<section id="prerequisites">
+</div>
+<div class="section" id="prerequisites">
 <h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h3>
 <p>To demonstrate this feature in a meaningful way you’ll also make use of a DSPLibrary function - the “Fast Fourier Transform” or FFT. The DSP Library Tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing.</p>
 <ul class="simple">
 <li><p>https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/08-dsp-library</p></li>
 </ul>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h3>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h3>
 <p>The following figure gives an overview of how the data will flow through this example design.</p>
 <p><img alt="Alt Text" src="../../../../_images/10k_ft_overview.png" /></p>
 <p>One way this flow enhances simulation coverage is by emulating the PLIO interface and the XRT Host interactions.</p>
 <p>Additionally, this allows the same input data to be run through hardware emulation and a Python (or other language) model of your computation. This can be helpful for verifying correctness, understanding numerical precision, and regression testing mathematical algorithms. This tutorial will demonstrate an FFT running in the AI Engine array and compare its output to a Numpy FFT.</p>
-</section>
-<section id="directory-structure">
+</div>
+<div class="section" id="directory-structure">
 <h3>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>traffic_generator_install
 ├───images        images for this README
@@ -196,18 +196,18 @@ function OptanonWrapper() { }
     └───pysrc     python traffic generator 
 </pre></div>
 </div>
-</section>
-</section>
-<section id="before-you-begin">
+</div>
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
-<section id="documentation-explore-ai-engine-architecture">
+<div class="section" id="documentation-explore-ai-engine-architecture">
 <h3><em>Documentation</em>: Explore AI Engine Architecture<a class="headerlink" href="#documentation-explore-ai-engine-architecture" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493">Versal ACAP AI Engines for Dummies</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf">AM009 AI Engine Architecture Manual</a></p></li>
 </ul>
-</section>
-<section id="tools-installing-the-tools">
+</div>
+<div class="section" id="tools-installing-the-tools">
 <h3><em>Tools</em>: Installing the Tools<a class="headerlink" href="#tools-installing-the-tools" title="Permalink to this heading">¶</a></h3>
 <p>Tools Documentation:</p>
 <ul class="simple">
@@ -222,8 +222,8 @@ function OptanonWrapper() { }
 <li><p>Download and setup the <a class="reference external" href="https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms">Xilinx DSP Library (DSPLib) 2020.2</a></p></li>
 <li><p>Download and setup the <a class="reference external" href="https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms">VCK190 Vitis Platform for 2021.2</a></p></li>
 </ul>
-</section>
-<section id="environment-setting-up-your-target-platform-environment">
+</div>
+<div class="section" id="environment-setting-up-your-target-platform-environment">
 <h3><em>Environment</em>: Setting Up Your Target Platform Environment<a class="headerlink" href="#environment-setting-up-your-target-platform-environment" title="Permalink to this heading">¶</a></h3>
 <p>When the elements of the Vitis software platform are installed, update the target platform environment script.</p>
 <p>Create a script file named <code class="docutils literal notranslate"><span class="pre">env_setup_2021.sh</span></code> in your favorite text editor. Replace the placeholders with the appropriate paths:</p>
@@ -237,9 +237,9 @@ function OptanonWrapper() { }
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> env_setup_2021.sh
 </pre></div>
 </div>
-</section>
-</section>
-<section id="validation-confirming-tool-installation">
+</div>
+</div>
+<div class="section" id="validation-confirming-tool-installation">
 <h2><em>Validation</em>: Confirming Tool Installation<a class="headerlink" href="#validation-confirming-tool-installation" title="Permalink to this heading">¶</a></h2>
 <p>Ensure that you are using the 2021.2 version of Xilinx tools.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which vitis
@@ -247,27 +247,27 @@ which aiecompiler
 <span class="nb">echo</span> <span class="nv">$DSPLIB_ROOT</span>
 </pre></div>
 </div>
-<section id="validation-python-environment">
+<div class="section" id="validation-python-environment">
 <h3><em>Validation</em>: Python Environment<a class="headerlink" href="#validation-python-environment" title="Permalink to this heading">¶</a></h3>
 <p>A python 3.6 or newer environment is required for this tutorial. Struct, numpy, and matplotlib packages are also required. To confirm they are installed open a terminal and type this command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -c <span class="s1">&#39;import numpy, matplotlib, struct&#39;</span>
 </pre></div>
 </div>
 <p>If this returns without error, you have the libraries required to proceed.</p>
-</section>
-<section id="other-tutorials-learn-basic-vitis-compiler-and-ai-engine-concepts">
+</div>
+<div class="section" id="other-tutorials-learn-basic-vitis-compiler-and-ai-engine-concepts">
 <h3><em>Other Tutorials</em>: Learn Basic Vitis Compiler and AI Engine Concepts<a class="headerlink" href="#other-tutorials-learn-basic-vitis-compiler-and-ai-engine-concepts" title="Permalink to this heading">¶</a></h3>
 <p>For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs:</p>
 <ul class="simple">
 <li><p>https://github.com/Xilinx/Vitis-Tutorials</p></li>
 </ul>
-</section>
-</section>
-<section id="system-view">
+</div>
+</div>
+<div class="section" id="system-view">
 <h2>System View<a class="headerlink" href="#system-view" title="Permalink to this heading">¶</a></h2>
 <p><img alt="Alt Text" src="../../../../_images/v777_sysOverview.png" /></p>
 <p>In the previous figure the AXIS traffic generator provides a path to the AI Engine input via a sim_ipc IP core. You will see this IP core on the BD in a later step. The AI Engine array has multiple AXI streaming inputs but for this tutorial you will use just one. Different application requirements such as precision and throughput will use different data types and PLIO widths. For example the cint16 datatype often maximizes AI Engine compute capabilities while floating point datatypes provide the most dynamic range. The traffic generator XO files see all data as byte arrays of different widths based on the PLIO width and the corresponding XO file linked with <code class="docutils literal notranslate"><span class="pre">v++</span></code>. For this tutorial you will send an array of complex 16-bit integers into the AI Engine array and perform a Fast Fourier Transform (FFT) using the DSP Library for AI Engine.</p>
-<section id="connecting-the-axi-traffic-xos">
+<div class="section" id="connecting-the-axi-traffic-xos">
 <h3>Connecting the AXI Traffic XOs<a class="headerlink" href="#connecting-the-axi-traffic-xos" title="Permalink to this heading">¶</a></h3>
 <p><img alt="Alt Text" src="../../../../_images/v777_tgen_picture.png" /></p>
 <ol>
@@ -289,8 +289,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </div>
 </li>
 </ol>
-</section>
-<section id="understanding-the-python">
+</div>
+<div class="section" id="understanding-the-python">
 <h3>Understanding the Python<a class="headerlink" href="#understanding-the-python" title="Permalink to this heading">¶</a></h3>
 <p>The following diagram illustrates the connections between the several steps required to interact with the traffic generators.</p>
 <ol class="simple">
@@ -310,7 +310,7 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </ol>
 <p><img alt="Alt Text" src="../../../../_images/v777_python_threading.png" /></p>
 <p>Regardless of the PLIO width the AXI Traffic Master and Slave both operate on a python bytes-like object. Numpy arrays can be either real or complex valued and have a convenient built-in method called “tobytes()” that makes interacting with the ipc_axis_master_util/slave_util very straightforward.</p>
-<section id="creating-a-sine-wave-data-vector">
+<div class="section" id="creating-a-sine-wave-data-vector">
 <h4>Creating a Sine Wave Data Vector<a class="headerlink" href="#creating-a-sine-wave-data-vector" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">Nsamps</span><span class="p">)</span>
 <span class="n">Fs</span> <span class="o">=</span> <span class="mf">245.76e6</span>
@@ -325,8 +325,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 <span class="k">return</span> <span class="n">cscaled</span>
 </pre></div>
 </div>
-</section>
-<section id="convert-numpy-to-byte-array">
+</div>
+<div class="section" id="convert-numpy-to-byte-array">
 <h4>Convert Numpy to Byte Array<a class="headerlink" href="#convert-numpy-to-byte-array" title="Permalink to this heading">¶</a></h4>
 <p>Following is an example of python code showing the axis_master side for cint16 data types.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Convert numpy complex vector into two columns of int16s </span>
@@ -344,8 +344,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </pre></div>
 </div>
 <p>See the provided python file for examples of floats and cfloat data types.</p>
-</section>
-<section id="generate-axi-transactions">
+</div>
+<div class="section" id="generate-axi-transactions">
 <h4>Generate AXI Transactions<a class="headerlink" href="#generate-axi-transactions" title="Permalink to this heading">¶</a></h4>
 <p>Next you will examine the AXI Streaming transactions required to interact with the traffic generators. The provided python script performs these steps for you if you would like to provide only a numpy array. Having a better understanding of the underlying transactions can be helpful and that is what will be explained in detail now.</p>
 <p>In the code snippet below on lines 1 to 5 the byte array to be sent needs to be broken into pieces equal to the width of the PLIO interface. Because the PLIO interface width is commonly identified with units of bits (PLIO32/64/128 are 32, 64, and 128 bits wide) the width of the transaction in bytes is divided by 8.</p>
@@ -383,8 +383,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 [//]: #Lines 17-22
 [//]: #For each transaction of PLIOWIDTH a single bit representing a byte-enable flag must be set. For PLIO32, which is 4 bytes, those 4 enable flags can be encoded as 0b1111 or 0xF. Similarly, PLIO64 is 0xFF and PLIO128 is 0xFFFF.
  --><p>For more information see: <a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/ug761_axi_reference_guide.pdf">UG761 AXI Reference Guide</a>.</p>
-</section>
-<section id="receive-ai-engine-array-output">
+</div>
+<div class="section" id="receive-ai-engine-array-output">
 <h4>Receive AI Engine Array Output<a class="headerlink" href="#receive-ai-engine-array-output" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Receive byte array from AXI traffic generator slave</span>
 <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out0_util</span><span class="o">.</span><span class="n">sample_transaction</span><span class="p">()</span>
@@ -404,8 +404,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 <span class="n">cVec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rvec</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ivec</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="convert-byte-array-to-numpy">
+</div>
+<div class="section" id="convert-byte-array-to-numpy">
 <h4>Convert Byte Array to Numpy<a class="headerlink" href="#convert-byte-array-to-numpy" title="Permalink to this heading">¶</a></h4>
 <p>This section briefly covers how to capture data from the AI Engine array. For full details please see the python function <code class="docutils literal notranslate"><span class="pre">convert_bytes_to_numpy()</span></code>. The <code class="docutils literal notranslate"><span class="pre">sample_transaction()</span></code> method blocks and returns a full AXI payload consisting of all the data received from the AI Engine array. This is different than the transmitting AXI side because the data is captured as an array of bytes with TLAST forming the packet boundary. The format string variable is important for interpreting the byte array appropriately. For this tutorial a cint16 window type was used as the output. The <code class="docutils literal notranslate"><span class="pre">unpack()</span></code> method interprets the output as an array of int16s (2 bytes each) and then takes the even samples to form the real and imaginary components of the complex vector. These are packed into a single complex data vector.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Receive byte array from AXI traffic generator slave</span>
@@ -426,8 +426,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 <span class="n">cVec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rvec</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ivec</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="plot-the-results">
+</div>
+<div class="section" id="plot-the-results">
 <h4>Plot the results<a class="headerlink" href="#plot-the-results" title="Permalink to this heading">¶</a></h4>
 <p>Matplotlib is a helpful python library that mimics other plotting tools. In this tutorial the traffic generator output data will be plotted or saved as a PNG image. A visual inspection can be helpful for iterative debugging prior to developing self-checking test benches or golden data vectors.</p>
 <p>The python function “plot results” displays several graphs of the output data with different colors defined in a legend.</p>
@@ -436,21 +436,21 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">aie_out</span><span class="p">))),</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">aie_out</span><span class="p">),</span><span class="n">label</span>  <span class="o">=</span><span class="s2">&quot;aie_out I &quot;</span><span class="p">)</span>   
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="running-hardware-emulation">
+</div>
+</div>
+</div>
+<div class="section" id="running-hardware-emulation">
 <h2>Running Hardware Emulation<a class="headerlink" href="#running-hardware-emulation" title="Permalink to this heading">¶</a></h2>
-<section id="ai-engine-and-versal-integration">
+<div class="section" id="ai-engine-and-versal-integration">
 <h3>AI Engine and Versal Integration<a class="headerlink" href="#ai-engine-and-versal-integration" title="Permalink to this heading">¶</a></h3>
 <p>The process of linking XO files via <code class="docutils literal notranslate"><span class="pre">v++</span></code> and the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> is covered in depth in the following two tutorials. For this tutorial these steps are handled by the provided makefile and you will review only the highlights.</p>
 <p>https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration</p>
 <p>https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_04_AI_Engine_and_PL_Integration</p>
-</section>
-<section id="section-1-compile-xo-files-and-ai-engine-graph">
+</div>
+<div class="section" id="section-1-compile-xo-files-and-ai-engine-graph">
 <h3>Section 1: Compile XO Files and AI Engine Graph<a class="headerlink" href="#section-1-compile-xo-files-and-ai-engine-graph" title="Permalink to this heading">¶</a></h3>
 <p>The first step is to take any v++ kernels (HLS C) and your AI Engine kernels and graph and compile them into their respective <code class="docutils literal notranslate"><span class="pre">.xo</span></code> and <code class="docutils literal notranslate"><span class="pre">.o</span></code> files. You can compile the kernels and graph in parallel because they do not rely on each other at this stage.</p>
-<section id="compiling-the-xo-files-using-v">
+<div class="section" id="compiling-the-xo-files-using-v">
 <h4>Compiling the XO Files Using v++<a class="headerlink" href="#compiling-the-xo-files-using-v" title="Permalink to this heading">¶</a></h4>
 <p>To compile the <code class="docutils literal notranslate"><span class="pre">sim_ipc_axis_master</span></code> and <code class="docutils literal notranslate"><span class="pre">sim_ipc_axis_slave</span></code> files, use the <code class="docutils literal notranslate"><span class="pre">v++</span></code> compiler command - which takes in an HLS kernel source and produces an <code class="docutils literal notranslate"><span class="pre">.xo</span></code> file.</p>
 <p>To compile the kernels, run the following command:</p>
@@ -458,8 +458,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </pre></div>
 </div>
 <p>This won’t take for long for this tutorial.</p>
-</section>
-<section id="compiling-an-ai-engine-adf-graph-for-v-flow">
+</div>
+<div class="section" id="compiling-an-ai-engine-adf-graph-for-v-flow">
 <h4>Compiling an AI Engine ADF Graph for V++ Flow<a class="headerlink" href="#compiling-an-ai-engine-adf-graph-for-v-flow" title="Permalink to this heading">¶</a></h4>
 <p>An ADF Graph can be connected to an extensible Vitis platform. That is, the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through the <code class="docutils literal notranslate"><span class="pre">v++</span></code> connectivity directives. Note the following:</p>
 <ul class="simple">
@@ -474,8 +474,8 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </pre></div>
 </div>
 <p>This may take a few minutes.</p>
-</section>
-<section id="connecting-the-traffic-generators-with-v">
+</div>
+<div class="section" id="connecting-the-traffic-generators-with-v">
 <h4>Connecting the traffic generators with V++<a class="headerlink" href="#connecting-the-traffic-generators-with-v" title="Permalink to this heading">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">v++</span></code> lets you integrate your AI Engine, HLS, and RTL kernels into an existing extensible platform. This step is where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx) and <code class="docutils literal notranslate"><span class="pre">v++</span></code> builds the hardware design for you in addition to integrating the AI Engine and PL kernels in the design.</p>
 <p>You have a number of kernels at your disposal, but you need to tell the linker how you want to connect them together (from the AI Engine array to PL and vice versa). These connections are described in a configuration file: <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> in this tutorial.</p>
@@ -494,9 +494,9 @@ VPP_LINK_FLAGS :<span class="o">=</span> -l --platform <span class="k">$(</span>
 </pre></div>
 </div>
 <p>This will likely take more than 5 or 10 minutes.</p>
-</section>
-</section>
-<section id="section-3-compile-the-a72-host-application">
+</div>
+</div>
+<div class="section" id="section-3-compile-the-a72-host-application">
 <h3>Section 3: Compile the A72 Host Application<a class="headerlink" href="#section-3-compile-the-a72-host-application" title="Permalink to this heading">¶</a></h3>
 <p>After all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code is using <a class="reference external" href="http://www.github.com/Xilinx/XRT">XRT</a> (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker that it is using the the libraries: <code class="docutils literal notranslate"><span class="pre">-ladf_api_xrt</span> <span class="pre">-lxrt_coreutil</span></code>.</p>
 <ol>
@@ -516,16 +516,16 @@ graph_top.end<span class="o">()</span><span class="p">;</span>
 </li>
 </ol>
 <p>This won’t take very long.</p>
-</section>
-<section id="section-4-package-the-design">
+</div>
+<div class="section" id="section-4-package-the-design">
 <h3>Section 4: Package the Design<a class="headerlink" href="#section-4-package-the-design" title="Permalink to this heading">¶</a></h3>
 <p>With all the AI Engine outputs and the new platform created, you can now generate the Programmable Device Image (PDI) and a package to be used in the hardware emulated SD card. The PDI contains all executables, bitstreams, and configurations of every element of the device, and the packaged SD card directory contains everything to boot Linux and have your generated application and <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>.</p>
 <p>To package the design, run the following command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make package
 </pre></div>
 </div>
-</section>
-<section id="section-5-run-hardware-emulation">
+</div>
+<div class="section" id="section-5-run-hardware-emulation">
 <h3>Section 5: Run Hardware Emulation<a class="headerlink" href="#section-5-run-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>After packaging, everything is set to run emulation or hardware.</p>
 <ol>
@@ -567,8 +567,8 @@ graph_top.end<span class="o">()</span><span class="p">;</span>
 </li>
 </ol>
 <p><strong>IMPORTANT</strong>: To rerun the application you need to restart QEMU from scratch.</p>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h3>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial you learned how to:</p>
 <ul class="simple">
@@ -580,19 +580,19 @@ graph_top.end<span class="o">()</span><span class="p">;</span>
 <li><p>Plot/Graph the data in python and compare against a golden reference model</p></li>
 </ul>
 <p>To read more about the use of Vitis in the AI Engine flow see: <em>UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Running Hardware Emulation &amp; Traffic Generators</em>.</p>
-<section id="support">
+<div class="section" id="support">
 <h4>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h4>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h4>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h4>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"><sup>XD066 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
-</section>
-</section>
+<p align="center"><sup>XD066 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
+</div>
+</div>
 
 
            </div>

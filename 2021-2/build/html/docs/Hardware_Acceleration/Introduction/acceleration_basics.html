@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="acceleration-concepts">
+</table><div class="section" id="acceleration-concepts">
 <h1>Acceleration Concepts<a class="headerlink" href="#acceleration-concepts" title="Permalink to this heading">¶</a></h1>
 <p>Rather than diving immediately into the API, especially if you don’t have much experience with acceleration,
 let’s start with a simplified analogy to help explain what must happen in an acceleration system.</p>
@@ -131,8 +131,8 @@ for you, this is the model for <strong>Vitis acceleration</strong>.  FPGAs and A
 the low-latency streaming of a domain-specific architecture for unparalleled performance.</p>
 <p>But, as the joke goes, even a Ferrari isn’t fast enough if you never learn to change gears.  So, let’s abandon
 metaphor and roll up our sleeves.</p>
-</section>
-<section id="identifying-acceleration">
+</div>
+<div class="section" id="identifying-acceleration">
 <h1>Identifying Acceleration<a class="headerlink" href="#identifying-acceleration" title="Permalink to this heading">¶</a></h1>
 <p>In general, for acceleration systems we are trying to hit a particular performance target, whether that target
 is expressed in terms of overall end-to-end latency, frames per second, raw throughput, or something else.</p>
@@ -178,8 +178,8 @@ any heterogeneous accelerator.</p>
 <li><p>Have well-defined data dependencies, preferably sequential or stream-based processing.  Random-access should be avoided unless it can be bounded.</p></li>
 <li><p>Take long enough to process that the overhead of transferring the data between the CPU and the accelerator does not dominate the accelerator run time.</p></li>
 </ul>
-</section>
-<section id="alveo-overview">
+</div>
+<div class="section" id="alveo-overview">
 <h1>Alveo Overview<a class="headerlink" href="#alveo-overview" title="Permalink to this heading">¶</a></h1>
 <p>Before diving into the software, let us familiarize ourselves with the capabilities of the Alveo Data Center
 accelerator card itself.  Each Alveo card combines three essential things: a powerful FPGA or ACAP for
@@ -221,8 +221,8 @@ external memory is still expensive in terms of overall system performance.</p></
 <li><p>Within the FPGA fabric, streaming from one operation to the next is effectively free (this is our train
 analogy from earlier; we’ll explore it in more detail later).</p></li>
 </ul>
-</section>
-<section id="xilinx-runtime-xrt-and-apis">
+</div>
+<div class="section" id="xilinx-runtime-xrt-and-apis">
 <h1>Xilinx Runtime (XRT) and APIs<a class="headerlink" href="#xilinx-runtime-xrt-and-apis" title="Permalink to this heading">¶</a></h1>
 <p>Although this may seem obvious, any hardware acceleration system can be broadly discussed in two parts: the
 hardware architecture and implementation, and the software that interacts with that hardware.  For Vitis,
@@ -263,7 +263,7 @@ extensions for FPGA-specific tasks.)</p>
 <p><img alt="XRT Stack" src="../../../_images/basics_xrt_stack.jpg" /></p>
 <p>In the next <a class="reference internal" href="runtime_sw_design.html"><span class="doc">section</span></a>, you’ll learn the basic concepts of memory management
 you’ll need to understand to optimize your application.</p>
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

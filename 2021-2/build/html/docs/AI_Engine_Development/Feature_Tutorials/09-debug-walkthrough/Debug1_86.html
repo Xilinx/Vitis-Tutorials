@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -120,57 +120,57 @@ function OptanonWrapper() { }
 <p><a class="reference external" href="#6-x86simulator-Features">6. x86simulator Features</a></p>
 <p><a class="reference external" href="#7-Command-Line-Projects-Support">7. Command Line Projects Support</a></p>
 <p><a class="reference external" href="#Limitations">Limitations</a></p>
-<section id="launch-and-verify-software-emulation-in-vitis-ide">
+<div class="section" id="launch-and-verify-software-emulation-in-vitis-ide">
 <h1>1. Launch and Verify Software Emulation in Vitis IDE<a class="headerlink" href="#launch-and-verify-software-emulation-in-vitis-ide" title="Permalink to this heading">¶</a></h1>
-<section id="step-1-1-select-software-emulation-configuration">
+<div class="section" id="step-1-1-select-software-emulation-configuration">
 <h2>Step 1.1 Select Software Emulation Configuration<a class="headerlink" href="#step-1-1-select-software-emulation-configuration" title="Permalink to this heading">¶</a></h2>
-<img src="images/se_config.png" width="300"></section>
-<section id="step-1-2-build-configuration">
+<img src="images/se_config.png" width="300"></div>
+<div class="section" id="step-1-2-build-configuration">
 <h2>Step 1.2 Build Configuration<a class="headerlink" href="#step-1-2-build-configuration" title="Permalink to this heading">¶</a></h2>
 <p>To improve debug visibility, enable <code class="docutils literal notranslate"><span class="pre">-O0</span></code> in aiengine domain project build configuration.</p>
-<img src="images/86_build_cfg.png" width="450"></section>
-<section id="step-1-3-build-with-x86-emulator">
+<img src="images/86_build_cfg.png" width="450"></div>
+<div class="section" id="step-1-3-build-with-x86-emulator">
 <h2>Step 1.3 Build with x86 Emulator<a class="headerlink" href="#step-1-3-build-with-x86-emulator" title="Permalink to this heading">¶</a></h2>
-<img src="images/se_build0.png" width="300"></section>
-<section id="step-1-4-run-with-x86-emulator">
+<img src="images/se_build0.png" width="300"></div>
+<div class="section" id="step-1-4-run-with-x86-emulator">
 <h2>Step 1.4 Run with x86 Emulator<a class="headerlink" href="#step-1-4-run-with-x86-emulator" title="Permalink to this heading">¶</a></h2>
 <img src="images/86_run.png" width="450"><p>Note: Both step 1.2 and 1.3 are right click on aiengine domain project to select x86simulator. Ignore <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">SW</span> <span class="pre">Emulator</span></code> from Vitis IDE GUI.</p>
-</section>
-<section id="step-1-5-console-displays-emulation-result">
+</div>
+<div class="section" id="step-1-5-console-displays-emulation-result">
 <h2>Step 1.5 Console Displays Emulation Result<a class="headerlink" href="#step-1-5-console-displays-emulation-result" title="Permalink to this heading">¶</a></h2>
-<img src="images/86_run1.png" width="450"></section>
-<section id="step-1-6-verify-run-result">
+<img src="images/86_run1.png" width="450"></div>
+<div class="section" id="step-1-6-verify-run-result">
 <h2>Step 1.6 Verify Run Result<a class="headerlink" href="#step-1-6-verify-run-result" title="Permalink to this heading">¶</a></h2>
 <p>X86 emulator output files from design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/x86simulator_output/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/x86simulator_output/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/x86simulator_output/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. Vitis IDE supports <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> feature to compare two files, highlight two files to be compared then right click one of highlighted file and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> then <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span></code>.
 For example, Compare <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold3.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out3.txt</span></code></p>
-<img src="images/se_compare.png" width="600"></section>
-</section>
-<section id="printf-support">
+<img src="images/se_compare.png" width="600"></div>
+</div>
+<div class="section" id="printf-support">
 <h1>2. <code class="docutils literal notranslate"><span class="pre">printf</span></code> Support<a class="headerlink" href="#printf-support" title="Permalink to this heading">¶</a></h1>
 <p>The simplest form of tracing is to use a formatted <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. You can add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your code to be processed during x86 emulation, or AIE emulation, and remove them or comment them out for hardware builds. To help identify which kernel is printing which line the <code class="docutils literal notranslate"><span class="pre">X86SIM_KERNEL_NAME</span></code> macro can be useful.</p>
-<section id="step-2-1-add-printf-statement">
+<div class="section" id="step-2-1-add-printf-statement">
 <h2>Step 2.1 Add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement<a class="headerlink" href="#step-2-1-add-printf-statement" title="Permalink to this heading">¶</a></h2>
 <p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">&lt;adf/x86sim/x86simDebug.h&gt;</span></code> at line 24 and <code class="docutils literal notranslate"><span class="pre">printf(&quot;%s:</span> <span class="pre">%s,</span> <span class="pre">%d\n&quot;,</span> <span class="pre">__FUNCTION__,</span> <span class="pre">X86SIM_KERNEL_NAME,</span> <span class="pre">__LINE__);</span></code> statement at line 37 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> file.
 <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> can be found from Vitis IDE’s explorer, browse to <code class="docutils literal notranslate"><span class="pre">beamformer</span></code> project, click on <code class="docutils literal notranslate"><span class="pre">src</span></code> then <code class="docutils literal notranslate"><span class="pre">kernel</span></code> to expand the directory, and click on <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code>. The file will be displayed at the center of the Vitis IDE. To use X86SIM_KERNEL_NAME you must include <code class="docutils literal notranslate"><span class="pre">adf/x86sim/x86simDebug.h</span></code> header file in graph kernel code.</p>
-</section>
-<section id="step-2-2-compile-the-project">
+</div>
+<div class="section" id="step-2-2-compile-the-project">
 <h2>Step 2.2 Compile the Project<a class="headerlink" href="#step-2-2-compile-the-project" title="Permalink to this heading">¶</a></h2>
 <p>Highlight the beamformer project, right-click to enable pull-down menu, and select <strong>Build Project</strong> to build the beamformer project.</p>
-</section>
-<section id="step-2-3-run-the-project">
+</div>
+<div class="section" id="step-2-3-run-the-project">
 <h2>Step 2.3 Run the Project<a class="headerlink" href="#step-2-3-run-the-project" title="Permalink to this heading">¶</a></h2>
 <p>Highlight the beamformer project, right-click to enable pull-down menu, select <strong>Run As</strong>, and then <strong>Launch SW Emulator</strong> to run the project in Vitis IDE.</p>
-</section>
-<section id="step-2-4-expected-result">
+</div>
+<div class="section" id="step-2-4-expected-result">
 <h2>Step 2.4 Expected Result<a class="headerlink" href="#step-2-4-expected-result" title="Permalink to this heading">¶</a></h2>
 <p>Expect to observe the output of <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement displayed at Vitis IDE console window.
 <img src="images/86_sw_printf.png" width="600"></p>
-</section>
-</section>
-<section id="printf-with-vector-data-types">
+</div>
+</div>
+<div class="section" id="printf-with-vector-data-types">
 <h1>3. Printf() with Vector Data Types<a class="headerlink" href="#printf-with-vector-data-types" title="Permalink to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> supports output array data value via printf().</p>
-<section id="step-3-1-add-printf-in-source-code">
+<div class="section" id="step-3-1-add-printf-in-source-code">
 <h2>Step 3.1 Add printf() in source code<a class="headerlink" href="#step-3-1-add-printf-in-source-code" title="Permalink to this heading">¶</a></h2>
 <p>Add these three lines at line 52 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> and recompile the AI Engine domain project.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>int16_t* <span class="nv">print_ptr</span> <span class="o">=</span> <span class="o">(</span>int16_t*<span class="o">)</span><span class="p">&amp;</span>bufa0<span class="p">;</span>
@@ -178,32 +178,32 @@ For example, Compare <code class="docutils literal notranslate"><span class="pre
     printf<span class="o">(</span><span class="s2">&quot;vector %d real:%d image:%d\n&quot;</span>, pp, print_ptr<span class="o">[</span>pp*2<span class="o">]</span>, print_ptr<span class="o">[</span>pp*2+1<span class="o">])</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="step-3-2-compile-and-run-x86simulator">
+</div>
+<div class="section" id="step-3-2-compile-and-run-x86simulator">
 <h2>Step 3.2 Compile and Run <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code><a class="headerlink" href="#step-3-2-compile-and-run-x86simulator" title="Permalink to this heading">¶</a></h2>
 <p>Follow step 1.3 to build the project and step 1.4 to run <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>.</p>
-</section>
-<section id="step-3-3-expected-result">
+</div>
+<div class="section" id="step-3-3-expected-result">
 <h2>Step 3.3 Expected Result<a class="headerlink" href="#step-3-3-expected-result" title="Permalink to this heading">¶</a></h2>
 <p>Array values are displayed at console.</p>
 <img src="images/86_printf_array.png" width="600"><p>Note: With the AI Engine simulator the –profile option is required in order to observe <code class="docutils literal notranslate"><span class="pre">printf()</span></code> outputs but with <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> no additional options are needed to enable <code class="docutils literal notranslate"><span class="pre">printf()</span></code> calls. This is one of the benefits of the <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>.</p>
-</section>
-<section id="step-3-4-reverse-added-printf-statements">
+</div>
+<div class="section" id="step-3-4-reverse-added-printf-statements">
 <h2>Step 3.4 Reverse Added printf() Statements<a class="headerlink" href="#step-3-4-reverse-added-printf-statements" title="Permalink to this heading">¶</a></h2>
 <p>Remove added three lines from line 52 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> for other features.</p>
-</section>
-</section>
-<section id="vitis-ide-debugger-support">
+</div>
+</div>
+<div class="section" id="vitis-ide-debugger-support">
 <h1>4. Vitis IDE Debugger Support<a class="headerlink" href="#vitis-ide-debugger-support" title="Permalink to this heading">¶</a></h1>
-<section id="step-4-1-launch-sw-emulator-debugger">
+<div class="section" id="step-4-1-launch-sw-emulator-debugger">
 <h2>Step 4.1 Launch SW Emulator Debugger<a class="headerlink" href="#step-4-1-launch-sw-emulator-debugger" title="Permalink to this heading">¶</a></h2>
-<img src="images/86_IDE_debug0.png" width="600"></section>
-<section id="step-4-2-debug-run-time">
+<img src="images/86_IDE_debug0.png" width="600"></div>
+<div class="section" id="step-4-2-debug-run-time">
 <h2>Step 4.2 Debug Run Time<a class="headerlink" href="#step-4-2-debug-run-time" title="Permalink to this heading">¶</a></h2>
 <p>All Vitis IDE debug functionalities are supported, e.g. step in, step over, step return, inspect variable values, set/clear break points…
 <img src="images/86_IDE_debug1.png" width="900"></p>
-</section>
-<section id="step-4-3-inspect-array-values">
+</div>
+<div class="section" id="step-4-3-inspect-array-values">
 <h2>Step 4.3 Inspect Array Values<a class="headerlink" href="#step-4-3-inspect-array-values" title="Permalink to this heading">¶</a></h2>
 <p>Double click on <code class="docutils literal notranslate"><span class="pre">Variables</span></code> view to enlarge view area. Double click again to make it back to original size.
 To inspect vector values, click on arrow of <code class="docutils literal notranslate"><span class="pre">bufa0</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">data</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">val</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">data</span></code> (where array&lt;v1cint16, 8&gt; is shown, arrow of <code class="docutils literal notranslate"><span class="pre">__elems_</span></code> (where shows <code class="docutils literal notranslate"><span class="pre">__elems_[0]</span></code> to <code class="docutils literal notranslate"><span class="pre">__elems_[7]</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">__elems_[0]</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">val</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">data</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">__elems_</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">__elems_[0]</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">val</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">VBitDataBase&lt;16,</span> <span class="pre">true,</span> <span class="pre">false&gt;</span></code>, arrow of <code class="docutils literal notranslate"><span class="pre">data</span></code>, (x)=0. It shows unsigned value of 61038 that translates to signed decimal value of -4498.
@@ -237,9 +237,9 @@ Follow above steps and click on <code class="docutils literal notranslate"><span
 ...
 </pre></div>
 </div>
-</section>
-</section>
-<section id="x86simulator-configuration-file">
+</div>
+</div>
+<div class="section" id="x86simulator-configuration-file">
 <h1>5. x86simulator Configuration File<a class="headerlink" href="#x86simulator-configuration-file" title="Permalink to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code> defines all supported features.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># For Timeout : define timeout as integer value</span>
@@ -280,59 +280,59 @@ trace-print<span class="o">=</span>no
 --trace-print         Print kernel stall events during simulation
 </pre></div>
 </div>
-</section>
-<section id="x86simulator-features">
+</div>
+<div class="section" id="x86simulator-features">
 <h1>6. x86simulator Features<a class="headerlink" href="#x86simulator-features" title="Permalink to this heading">¶</a></h1>
 <p>All x86simulator supported features allow users to debug designs without using the debugger and do not require any instrumentation of kernel code. To enable feature, user can  update the configuration file, <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code> from <code class="docutils literal notranslate"><span class="pre">no</span></code> to <code class="docutils literal notranslate"><span class="pre">yes</span></code> for the selected feature, or pass in command line option e.g. <code class="docutils literal notranslate"><span class="pre">x86simulator</span> <span class="pre">--dump</span></code>.</p>
-<section id="x86simulator-data-dump">
+<div class="section" id="x86simulator-data-dump">
 <h2>x86simulator Data Dump<a class="headerlink" href="#x86simulator-data-dump" title="Permalink to this heading">¶</a></h2>
 <p>This feature allows users to dump and inspect data traffic at kernel ports with data types.</p>
-<section id="step-6-1-1-enable-dump-feature">
+<div class="section" id="step-6-1-1-enable-dump-feature">
 <h3>Step 6.1.1 Enable Dump Feature<a class="headerlink" href="#step-6-1-1-enable-dump-feature" title="Permalink to this heading">¶</a></h3>
 <p>Update the configuration file, <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code>, change <code class="docutils literal notranslate"><span class="pre">dump=no</span></code> to <code class="docutils literal notranslate"><span class="pre">dump=yes</span></code>. Or add <code class="docutils literal notranslate"><span class="pre">--dump</span></code> to run configuration and click on <code class="docutils literal notranslate"><span class="pre">Apply</span></code> then <code class="docutils literal notranslate"><span class="pre">Close</span></code>.</p>
-<img src="images/86_dump_conf.png" width="600"></section>
-<section id="step-6-1-2-run-x86simulator">
+<img src="images/86_dump_conf.png" width="600"></div>
+<div class="section" id="step-6-1-2-run-x86simulator">
 <h3>Step 6.1.2 Run x86simulator<a class="headerlink" href="#step-6-1-2-run-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>Select aiengine domain project, right click on <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">As</span></code> and select <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">SW</span> <span class="pre">Emulator</span></code>. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump</span></code> directory. Filename are in the format of <code class="docutils literal notranslate"><span class="pre">platform_[sink]/[src]_index.txt</span></code> for platform input/output files and <code class="docutils literal notranslate"><span class="pre">graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt</span></code> for graph input/output files.
 <img src="images/86_sim_dump.png" width="600"></p>
-</section>
-</section>
-<section id="x86simulator-deadlock-detection">
+</div>
+</div>
+<div class="section" id="x86simulator-deadlock-detection">
 <h2>x86simulator Deadlock Detection<a class="headerlink" href="#x86simulator-deadlock-detection" title="Permalink to this heading">¶</a></h2>
 <p>AI Engine designs can run into simulator hangs. A common cause is insufficient input data for the requested number of graph iterations, mismatch between production and consumption of stream data, cyclic dependency with stream, cascade stream or asynchronous windows, or wrong order of blocking protocol calls (acquisition of async window, read/write from streams).</p>
-<section id="step-6-2-1-enable-deadlock-detection-feature">
+<div class="section" id="step-6-2-1-enable-deadlock-detection-feature">
 <h3>Step 6.2.1 Enable Deadlock Detection Feature<a class="headerlink" href="#step-6-2-1-enable-deadlock-detection-feature" title="Permalink to this heading">¶</a></h3>
 <p>Update the configuration file, <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code>, change <code class="docutils literal notranslate"><span class="pre">stop-on-deadlock=no</span></code> to <code class="docutils literal notranslate"><span class="pre">stop-on-deadlock=yes</span></code>. Or add <code class="docutils literal notranslate"><span class="pre">--stop-on-deadlock</span></code> to run configuration and click on <code class="docutils literal notranslate"><span class="pre">Apply</span></code> then <code class="docutils literal notranslate"><span class="pre">Close</span></code>.</p>
-</section>
-<section id="step-6-2-2-setup-deadlock-condition">
+</div>
+<div class="section" id="step-6-2-2-setup-deadlock-condition">
 <h3>Step 6.2.2 Setup Deadlock Condition<a class="headerlink" href="#step-6-2-2-setup-deadlock-condition" title="Permalink to this heading">¶</a></h3>
 <p>Empty <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/data/dlbf_din0.txt</span></code> file.
 Note: Make sure to backup the file content for other feature runs.</p>
-</section>
-<section id="step-6-2-3-run-x86simulator">
+</div>
+<div class="section" id="step-6-2-3-run-x86simulator">
 <h3>Step 6.2.3 Run x86simulator<a class="headerlink" href="#step-6-2-3-run-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>Select aiengine domain project, right click on <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">As</span></code> and select <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">SW</span> <span class="pre">Emulator</span></code>. x86simulator will be launched and run the aiengine domain project. x86simulator detects error and output messages on console. File <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot</span></code> is generated.</p>
-<img src="images/86_deadlock.png" width="600"></section>
-<section id="step-6-2-4-converts-generated-dot-file-to-png-file-with-dot-application">
+<img src="images/86_deadlock.png" width="600"></div>
+<div class="section" id="step-6-2-4-converts-generated-dot-file-to-png-file-with-dot-application">
 <h3>Step 6.2.4 Converts Generated dot file to png file with <code class="docutils literal notranslate"><span class="pre">dot</span></code> Application<a class="headerlink" href="#step-6-2-4-converts-generated-dot-file-to-png-file-with-dot-application" title="Permalink to this heading">¶</a></h3>
 <p>Use <code class="docutils literal notranslate"><span class="pre">dot</span></code> application converts .dot file to .png file, <code class="docutils literal notranslate"><span class="pre">dot</span> <span class="pre">-Tpng</span> <span class="pre">simulator_state_post_analysis.dot</span> <span class="pre">&gt;</span> <span class="pre">simulator_state_post_analysis.png</span></code>. Open the <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.png</span></code>, paths in red indicate the root cause of the deadlock.</p>
 <img src="images/86_deadlock1.png" width="600"><p><strong>IMPORTANT: Absence of deadlock for x86 simulation does not mean absence of deadlock in SystemC simulation. X86 simulation does not model timing and resource constraints and thus there are fewer causes of deadlock. On the other hand, if x86 simulation deadlocks, SystemC simulation deadlocks as well, so it is beneficial to fix the deadlock in x86 simulation before proceeding with SystemC simulation.</strong></p>
-</section>
-</section>
-<section id="x86simulator-trace-report">
+</div>
+</div>
+<div class="section" id="x86simulator-trace-report">
 <h2>x86simulator Trace Report<a class="headerlink" href="#x86simulator-trace-report" title="Permalink to this heading">¶</a></h2>
-<section id="step-6-3-1-enable-trace-feature">
+<div class="section" id="step-6-3-1-enable-trace-feature">
 <h3>Step 6.3.1 Enable Trace Feature<a class="headerlink" href="#step-6-3-1-enable-trace-feature" title="Permalink to this heading">¶</a></h3>
 <p>Update the configuration file, <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code>, change <code class="docutils literal notranslate"><span class="pre">trace=no</span></code> to <code class="docutils literal notranslate"><span class="pre">trace=yes</span></code> and <code class="docutils literal notranslate"><span class="pre">trace-print=no</span></code> to <code class="docutils literal notranslate"><span class="pre">trace-print=yes</span></code> Or add <code class="docutils literal notranslate"><span class="pre">--trace</span></code> and <code class="docutils literal notranslate"><span class="pre">--trace-print</span></code> to run configuration and click on <code class="docutils literal notranslate"><span class="pre">Apply</span></code> then <code class="docutils literal notranslate"><span class="pre">Close</span></code>.</p>
 <p>Note:
 <code class="docutils literal notranslate"><span class="pre">--trace</span></code> option to get a full trace report at the end of the simulation.
 <code class="docutils literal notranslate"><span class="pre">--trace-print</span></code> option to get output displayed on the console while the simulation is running.</p>
-</section>
-<section id="step-6-3-2-run-x86simulator">
+</div>
+<div class="section" id="step-6-3-2-run-x86simulator">
 <h3>Step 6.3.2 Run x86simulator<a class="headerlink" href="#step-6-3-2-run-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>Select aiengine domain project, right click on <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">As</span></code> and select <code class="docutils literal notranslate"><span class="pre">Launch</span> <span class="pre">SW</span> <span class="pre">Emulator</span></code>. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files <code class="docutils literal notranslate"><span class="pre">x86sim_event_trace.data</span></code> and <code class="docutils literal notranslate"><span class="pre">x86sim_event_trace.data.txt</span></code> are at <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/x86simulator_output/trace</span></code> directory.</p>
-<img src="images/86_trace.png" width="600"></section>
-<section id="step-6-3-3-x86simulator-trace-events-supported">
+<img src="images/86_trace.png" width="600"></div>
+<div class="section" id="step-6-3-3-x86simulator-trace-events-supported">
 <h3>Step 6.3.3 x86simulator Trace Events supported<a class="headerlink" href="#step-6-3-3-x86simulator-trace-events-supported" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>Start of a kernel iteration.</p></li>
@@ -342,8 +342,8 @@ Note: Make sure to backup the file content for other feature runs.</p>
 <li><p>Start of a lock stall, i.e., the start of an attempt to acquire a window port where the lock is initially not available.</p></li>
 <li><p>End of a lock stall, i.e., the point in time where an attempt to acquire a window port that initially blocked, finally returns.</p></li>
 </ol>
-</section>
-<section id="differences-between-trace-and-trace-print">
+</div>
+<div class="section" id="differences-between-trace-and-trace-print">
 <h3>Differences between <code class="docutils literal notranslate"><span class="pre">trace</span></code> and <code class="docutils literal notranslate"><span class="pre">trace-print</span></code><a class="headerlink" href="#differences-between-trace-and-trace-print" title="Permalink to this heading">¶</a></h3>
 <p>Besides output to file versus output to console, The columns of the output of –trace-print contain the following information.</p>
 <ol class="simple">
@@ -352,9 +352,9 @@ Note: Make sure to backup the file content for other feature runs.</p>
 <li><p>Event type.</p></li>
 <li><p>Numeric value whose meaning depends on the event type: It encodes the port that you are waiting on for a lock or stream stall. It encodes the iteration number of a start of an iteration event.</p></li>
 </ol>
-</section>
-</section>
-<section id="x86simulator-memory-access-violation-and-valgrind">
+</div>
+</div>
+<div class="section" id="x86simulator-memory-access-violation-and-valgrind">
 <h2>x86simulator Memory Access Violation and Valgrind<a class="headerlink" href="#x86simulator-memory-access-violation-and-valgrind" title="Permalink to this heading">¶</a></h2>
 <p>Memory access violations occur when a kernel is reading or writing out of bounds of an object or reading uninitialized memory. This can manifest itself in multiple ways like a simulator crash or hang. It can also cause simulator results to be non-repeatable. The <code class="docutils literal notranslate"><span class="pre">x86simulator</span> <span class="pre">--valgrind</span></code> option will find memory access violations in kernel source code.
 Note: Valgrind needs to be installed for this feature to work. Xilinx recommends using Valgrind version 3.16.1.
@@ -364,7 +364,7 @@ This option allows detection of memory access violations in kernel source code u
 <li><p>Out-of-bounds read</p></li>
 <li><p>Read of uninitialized memory</p></li>
 </ol>
-<section id="step-6-4-1-setup-environmental-variables">
+<div class="section" id="step-6-4-1-setup-environmental-variables">
 <h3>Step 6.4.1 Setup Environmental Variables<a class="headerlink" href="#step-6-4-1-setup-environmental-variables" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> requires <code class="docutils literal notranslate"><span class="pre">VALGRIND_HOME</span></code>, <code class="docutils literal notranslate"><span class="pre">VALGRIND_LIB</span></code> and <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environmental variables to be configured per your host computer configuration.
 Exit out of Vitis IDE, setup following environmental variables and relaunch Vitis IDE.
@@ -374,12 +374,12 @@ For example,</p>
 <span class="nb">export</span> <span class="nv">VALGRIND_LIB</span><span class="o">=</span><span class="si">${</span><span class="nv">FULL_PATH_TO_VALGRIND_LIB</span><span class="si">}</span>
 </pre></div>
 </div>
-</section>
-<section id="step-6-4-2-enable-valgrind-feature">
+</div>
+<div class="section" id="step-6-4-2-enable-valgrind-feature">
 <h3>Step 6.4.2 Enable Valgrind Feature<a class="headerlink" href="#step-6-4-2-enable-valgrind-feature" title="Permalink to this heading">¶</a></h3>
 <p>Update the configuration file, <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options</span></code>, change <code class="docutils literal notranslate"><span class="pre">valgrind=no</span></code> to <code class="docutils literal notranslate"><span class="pre">valgrind=yes</span></code>. Or Add <code class="docutils literal notranslate"><span class="pre">--valgrind</span></code> to run configuration and click on <code class="docutils literal notranslate"><span class="pre">Apply</span></code> then <code class="docutils literal notranslate"><span class="pre">Close</span></code>.</p>
-</section>
-<section id="step-6-4-3-run-x86simulator">
+</div>
+<div class="section" id="step-6-4-3-run-x86simulator">
 <h3>Step 6.4.3 Run x86simulator<a class="headerlink" href="#step-6-4-3-run-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>An example of no invalid memory access message from <code class="docutils literal notranslate"><span class="pre">valgrind</span></code>,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>==150659== Memcheck, a memory error detector
@@ -400,16 +400,16 @@ date
 ==150659== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 </pre></div>
 </div>
-</section>
-<section id="step-6-4-4-error-message-with-an-unintialized-variable">
+</div>
+<div class="section" id="step-6-4-4-error-message-with-an-unintialized-variable">
 <h3>Step 6.4.4 Error Message with an Unintialized Variable<a class="headerlink" href="#step-6-4-4-error-message-with-an-unintialized-variable" title="Permalink to this heading">¶</a></h3>
 <p>Add these two lines at line 35 of <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>int demo<span class="p">;</span>
 printf<span class="o">(</span><span class="s2">&quot;%s, %d\n&quot;</span>, __FUNCTION__, demo<span class="o">)</span><span class="p">;</span>
 </pre></div>
 </div>
-</section>
-<section id="step-6-4-5-expected-errors-from-valgrind">
+</div>
+<div class="section" id="step-6-4-5-expected-errors-from-valgrind">
 <h3>Step 6.4.5 Expected Errors from <code class="docutils literal notranslate"><span class="pre">valgrind</span></code><a class="headerlink" href="#step-6-4-5-expected-errors-from-valgrind" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>==32176== Memcheck, a memory error detector
 ==32176== Copyright (C) 2002-2015, and GNU GPL&#39;d, by Julian Seward et al.
@@ -476,37 +476,37 @@ bf8x8_fst_api, 0
 <li><p>The error message is generated by <code class="docutils literal notranslate"><span class="pre">valgrind</span></code> application instead of <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>.</p></li>
 <li><p>Running the x86simulator with the Valgrind option will increase the simulation run time.</p></li>
 </ol>
-</section>
-<section id="step-6-4-6-reverse-added-error">
+</div>
+<div class="section" id="step-6-4-6-reverse-added-error">
 <h3>Step 6.4.6 Reverse Added Error<a class="headerlink" href="#step-6-4-6-reverse-added-error" title="Permalink to this heading">¶</a></h3>
 <p>Remove added lines, line 35 and 36 from <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api.cpp</span></code> file for other <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> features.</p>
-</section>
-</section>
-</section>
-<section id="command-line-projects-support">
+</div>
+</div>
+</div>
+<div class="section" id="command-line-projects-support">
 <h1>7. Command Line Projects Support<a class="headerlink" href="#command-line-projects-support" title="Permalink to this heading">¶</a></h1>
 <p>All above <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> features are supported in command line projects. Since Vitis IDE provides GUI debug support with flow control and multiple views, command line projects need GDB capabilities to fulfill the gap.</p>
-<section id="x86simulator-using-gdb">
+<div class="section" id="x86simulator-using-gdb">
 <h2>x86simulator Using GDB<a class="headerlink" href="#x86simulator-using-gdb" title="Permalink to this heading">¶</a></h2>
-<section id="step-7-1-1-download-the-project">
+<div class="section" id="step-7-1-1-download-the-project">
 <h3>Step 7.1.1 Download the project<a class="headerlink" href="#step-7-1-1-download-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Clone the project source from git repository and unzip the downloaded zip file.</p>
-</section>
-<section id="step-7-1-2-prepare-makefiles-and-source-code">
+</div>
+<div class="section" id="step-7-1-2-prepare-makefiles-and-source-code">
 <h3>Step 7.1.2 Prepare Makefiles and source code<a class="headerlink" href="#step-7-1-2-prepare-makefiles-and-source-code" title="Permalink to this heading">¶</a></h3>
 <p>Use this tutorial’s Makefile.sw_emu that configures right target to build.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
 cp Makefile.sw_emu Makefile
 </pre></div>
 </div>
-</section>
-<section id="step-7-1-3-build-project">
+</div>
+<div class="section" id="step-7-1-3-build-project">
 <h3>Step 7.1.3 Build Project<a class="headerlink" href="#step-7-1-3-build-project" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make libadf.a
 </pre></div>
 </div>
-</section>
-<section id="step-7-1-4-enable-gdb-to-work-with-x86simulator">
+</div>
+<div class="section" id="step-7-1-4-enable-gdb-to-work-with-x86simulator">
 <h3>Step 7.1.4 Enable GDB to Work with <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code><a class="headerlink" href="#step-7-1-4-enable-gdb-to-work-with-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>Update the configuration file, ${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options, change <code class="docutils literal notranslate"><span class="pre">gdb=no</span></code> to <code class="docutils literal notranslate"><span class="pre">gdb=yes</span></code> then launch <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>. Or issue command <code class="docutils literal notranslate"><span class="pre">x86simulator</span> <span class="pre">--gdb</span></code> to launch <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>.
 By default, when running the <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> with the <code class="docutils literal notranslate"><span class="pre">--gdb</span></code> command line switch it breaks immediately before entering main() in graph.cpp. This pauses execution before any AI Engine kernels have started because the graph has not been run. To exit GDB type quit or help for more commands.</p>
@@ -514,8 +514,8 @@ By default, when running the <code class="docutils literal notranslate"><span cl
 <img src="images/86_gdb1.png" width="600"><p>After <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> is launched successfully with <code class="docutils literal notranslate"><span class="pre">gdb</span></code>, set up a breakpoint by <code class="docutils literal notranslate"><span class="pre">break</span></code> command.</p>
 <img src="images/86_gdb2.png" width="600"><p>Continue execution until a breakpoint is hit. Examine local variables and/or call stack.</p>
 <img src="images/86_gdb3.png" width="600"><p>Clear all breakpoints and continue execution until end of program. Issue <code class="docutils literal notranslate"><span class="pre">quit</span></code> to exit out of gdb.</p>
-<img src="images/86_gdb4.png" width="600"></section>
-<section id="step-7-1-5-gdb-commands">
+<img src="images/86_gdb4.png" width="600"></div>
+<div class="section" id="step-7-1-5-gdb-commands">
 <h3>Step 7.1.5 GDB Commands<a class="headerlink" href="#step-7-1-5-gdb-commands" title="Permalink to this heading">¶</a></h3>
 <p>| GDB commands | Descriptions |
 | :—| :—|
@@ -526,38 +526,38 @@ By default, when running the <code class="docutils literal notranslate"><span cl
 | info locals                  | Shows the current status of local variables within the scope of the function call shown in the call stack. |
 | info stack                   | Shows a track of the function call stack at the current breakpoint. |
 | print &lt;local_variable_name&gt;  | Prints the current value of a single variable. |</p>
-</section>
-</section>
-<section id="x86simulator-using-gdb-server">
+</div>
+</div>
+<div class="section" id="x86simulator-using-gdb-server">
 <h2>x86simulator Using GDB server<a class="headerlink" href="#x86simulator-using-gdb-server" title="Permalink to this heading">¶</a></h2>
-<section id="step-7-2-1-project-preparation">
+<div class="section" id="step-7-2-1-project-preparation">
 <h3>Step 7.2.1 Project preparation<a class="headerlink" href="#step-7-2-1-project-preparation" title="Permalink to this heading">¶</a></h3>
 <p>Follow step 7.1.1 to 7.1.3 to prepare project using GDN server.</p>
-</section>
-<section id="step-7-2-2-enable-gdb-server-to-work-with-x86simulator">
+</div>
+<div class="section" id="step-7-2-2-enable-gdb-server-to-work-with-x86simulator">
 <h3>Step 7.2.2 Enable GDB Server to Work with <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code><a class="headerlink" href="#step-7-2-2-enable-gdb-server-to-work-with-x86simulator" title="Permalink to this heading">¶</a></h3>
 <p>Since this feature uses GDB server, requires two terminals working together. One terminal for <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> and the other terminal for GDB server.</p>
 <p>Terminal 1 to launch <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>. Update the configuration file, ${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options, change <code class="docutils literal notranslate"><span class="pre">valgrind-gdb=no</span></code> to <code class="docutils literal notranslate"><span class="pre">valgrind-gdb=yes</span></code> then launch <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>. Or issue command <code class="docutils literal notranslate"><span class="pre">x86simulator</span> <span class="pre">--valgrind-gdb</span></code> to launch <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code>.</p>
-<img src="images/86_valgrind_gdb0.png" width="600"></section>
-<section id="step-7-2-3-launch-gdb-server">
+<img src="images/86_valgrind_gdb0.png" width="600"></div>
+<div class="section" id="step-7-2-3-launch-gdb-server">
 <h3>Step 7.2.3 Launch GDB Server<a class="headerlink" href="#step-7-2-3-launch-gdb-server" title="Permalink to this heading">¶</a></h3>
 <p>Terminal 2, follow step 6.4.1 to setup Vitis tool and valgrind tool environmental variables.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">PROJECT_PATH</span><span class="si">}</span>
 gdb ./Work/pthread/sim.out
 </pre></div>
 </div>
-<img src="images/86_valgrind_gdb1.png" width="600"></section>
-<section id="step-7-2-4-using-gdb-commands">
+<img src="images/86_valgrind_gdb1.png" width="600"></div>
+<div class="section" id="step-7-2-4-using-gdb-commands">
 <h3>Step 7.2.4 Using GDB Commands<a class="headerlink" href="#step-7-2-4-using-gdb-commands" title="Permalink to this heading">¶</a></h3>
 <p>Issue command <code class="docutils literal notranslate"><span class="pre">target</span> <span class="pre">remote</span> <span class="pre">|</span> <span class="pre">/opt/rh/devtoolset-6/root/usr/lib64/balgrind../../bin/vgdb</span></code> from GDB server terminal to run and debug application.</p>
 <img src="images/86_valgrind_gdb2.png" width="600"><p>Set up a breakpoint at kernel function, <code class="docutils literal notranslate"><span class="pre">bf8x8_fst_api</span></code> and continue to execution until breakpoint is hit.</p>
 <img src="images/86_valgrind_gdb3.png" width="600"><p>Breakpoint hit.</p>
 <img src="images/86_valgrind_gdb4.png" width="600"><p>Issue debug command <code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">stack</span></code> to inspect call stack, <code class="docutils literal notranslate"><span class="pre">delete</span></code> to clear all breakpoints and <code class="docutils literal notranslate"><span class="pre">c</span></code> to complete program execution.</p>
 <img src="images/86_valgrind_gdb5.png" width="600"><p>After program finishes execution from DBG server, valgrind runs to completion and summarizes overall status.</p>
-<img src="images/86_valgrind_gdb6.png" width="600"></section>
-</section>
-</section>
-<section id="limitations">
+<img src="images/86_valgrind_gdb6.png" width="600"></div>
+</div>
+</div>
+<div class="section" id="limitations">
 <h1>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h1>
 <ol class="simple">
 <li><p>Hardware constraints check is not supported in software emulator. Functionalities verified in software emulator need to check resource constraints in AI Engine emulator before running on the hardware board.</p></li>
@@ -569,12 +569,12 @@ gdb ./Work/pthread/sim.out
 <li><p>Packet Stream connections have a field known as the packet ID. If the source of the packet ID field comes from within the ADF graph, the x86 simulator uses the canonical, zero-based indexing scheme for packet IDs. The first branch on the output of a split node has a packet ID equal to 0 followed by 1, 2, 3, etc. If the source of the packet ID field comes from outside the ADF graph there will be discrepancies between the AI Engine simulator and the x86 simulator. The nature of packet merging means that the x86 simulator and the AI Engine simulator produce non-deterministic results. If an AI Engine on a packet split branch finishes processing data before any of the other branches its data appears on the output of the packet merge first. Exactly which core finishes first is highly dependent on both the kernel code and the incoming data. So any downstream processing blocks must be prepared to handle this behavior.</p></li>
 <li><p>Both synchronous and asynchronous run-time parameters are fully supported in the x86 simulator. However the precise timing and cycle accuracy of when an RTP update occurs differs between the x86 simulator and the AI Engine simulator. Asynchronous RTPs in particular do not affect a kernel on a specific known cycle by their very nature of being asynchronous. This is true of asynchronous RTPs in both the x86 simulator and the AI Engine simulator.</p></li>
 </ol>
-</section>
-<section id="support">
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -587,7 +587,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

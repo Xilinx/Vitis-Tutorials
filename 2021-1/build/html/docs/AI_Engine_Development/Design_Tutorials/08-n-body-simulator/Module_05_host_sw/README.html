@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -99,14 +100,14 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="building-the-design">
+  <div class="section" id="building-the-design">
 <h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p><em>Estimated time: less than 1 minute</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">all</span>
 </pre></div>
 </div>
 <p>or follow steps 1 and 2 as follows:</p>
-<section id="step-1-compile-host-software">
+<div class="section" id="step-1-compile-host-software">
 <h2>Step 1: Compile Host Software<a class="headerlink" href="#step-1-compile-host-software" title="Permalink to this heading">¶</a></h2>
 <p>Following is an example of how to compile the <code class="docutils literal notranslate"><span class="pre">../Module_02_aie/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp</span></code> file.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aarch64-linux-gnu-g++ -Wall -c -g \
@@ -130,8 +131,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The same compilation options were used to compile the <code class="docutils literal notranslate"><span class="pre">host/nbody.cpp</span></code>, <code class="docutils literal notranslate"><span class="pre">host/log.cpp</span></code>, <code class="docutils literal notranslate"><span class="pre">host/main_xrt.cpp</span></code>, and <code class="docutils literal notranslate"><span class="pre">host/main_animate.cpp</span></code> files.</p>
-</section>
-<section id="step-2-link-host-software">
+</div>
+<div class="section" id="step-2-link-host-software">
 <h2>Step 2: Link Host Software<a class="headerlink" href="#step-2-link-host-software" title="Permalink to this heading">¶</a></h2>
 <p>Following is an example of how to link the <code class="docutils literal notranslate"><span class="pre">build/aie_control.o</span></code>, <code class="docutils literal notranslate"><span class="pre">build/nbody.o</span></code>, <code class="docutils literal notranslate"><span class="pre">build/log.o</span></code>, and <code class="docutils literal notranslate"><span class="pre">build/ps_app.o</span></code> into a <code class="docutils literal notranslate"><span class="pre">build/ps_app.exe</span></code> executable:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aarch64-linux-gnu-g++ ./build/aie_control_xrt.o \
@@ -151,9 +152,9 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The same linking options were used to generate the <code class="docutils literal notranslate"><span class="pre">build/ps_app_animate.exe</span></code> executable.</p>
-</section>
-</section>
-<section id="host-software">
+</div>
+</div>
+<div class="section" id="host-software">
 <h1>Host Software<a class="headerlink" href="#host-software" title="Permalink to this heading">¶</a></h1>
 <p>After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the <a class="reference external" href="https://xilinx.github.io/XRT/2021.1/html/xrt_native_apis.html">XRT site</a>.</p>
 <p>This module compiles the following host applications and custom APIs:</p>
@@ -163,15 +164,15 @@ function OptanonWrapper() { }
 <li><p><code class="docutils literal notranslate"><span class="pre">host/main_xrt.cpp</span></code> - Host application that compares AI Engine output to golden data (functional check)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">host/main_animate.cpp</span></code> - Host application that runs the design for multiple iterations and saves position data to a file to post-process and create an <code class="docutils literal notranslate"><span class="pre">animation.gif</span></code> later.</p></li>
 </ul>
-</section>
-<section id="nbodysimulator-api">
+</div>
+<div class="section" id="nbodysimulator-api">
 <h1>NBodySimulator API<a class="headerlink" href="#nbodysimulator-api" title="Permalink to this heading">¶</a></h1>
 <p>The NBodySimulator API is a C++ implementation of an N-Body Simulator which runs on the native A72 processor. It also writes the position data to an <code class="docutils literal notranslate"><span class="pre">animation_data.txt</span></code> file which you will post-process later to create an <code class="docutils literal notranslate"><span class="pre">animation.gif</span></code>.</p>
-</section>
-<section id="logger-api">
+</div>
+<div class="section" id="logger-api">
 <h1>Logger API<a class="headerlink" href="#logger-api" title="Permalink to this heading">¶</a></h1>
 <p>The Logger API is used to save logging messages from the host applications to the <code class="docutils literal notranslate"><span class="pre">run.log</span></code> file. The host application can set the log level of which messages are written to the <code class="docutils literal notranslate"><span class="pre">run.log</span></code> and which messages are shown on the console during execution. By default, the log level is set to <code class="docutils literal notranslate"><span class="pre">LMESSAGE</span></code>, meaning all messages will be written to <code class="docutils literal notranslate"><span class="pre">run.log</span></code>. The cout log level is set to <code class="docutils literal notranslate"><span class="pre">LINFO</span></code>, meaning any messages set to <code class="docutils literal notranslate"><span class="pre">LINFO</span></code> will be also displayed on the output console during execution.</p>
-<section id="log-levels">
+<div class="section" id="log-levels">
 <h2>Log Levels:<a class="headerlink" href="#log-levels" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>LMESSAGE</p></li>
@@ -179,9 +180,9 @@ function OptanonWrapper() { }
 <li><p>LERROR</p></li>
 <li><p>LNONE</p></li>
 </ul>
-</section>
-</section>
-<section id="host-applications">
+</div>
+</div>
+<div class="section" id="host-applications">
 <h1>Host Applications<a class="headerlink" href="#host-applications" title="Permalink to this heading">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">host/main_xrt.cpp</span></code> host application is compiled into the <code class="docutils literal notranslate"><span class="pre">build/ps_app.exe</span></code> executable. This host application reads in the <code class="docutils literal notranslate"><span class="pre">m2s_i.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">input_j.txt</span></code> files that initalize the <code class="docutils literal notranslate"><span class="pre">m2s_x2</span></code> PL kernel’s <code class="docutils literal notranslate"><span class="pre">ibuff</span></code> and <code class="docutils literal notranslate"><span class="pre">jbuff</span></code> DDR buffer inputs.  This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the <code class="docutils literal notranslate"><span class="pre">s2m_x4</span></code> PL kernel completes, this host application compares the AI Engine output to the golden output files (<code class="docutils literal notranslate"><span class="pre">s2m_x4_k0.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">s2m_x4_k1.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">s2m_x4_k2.txt</span></code>, and <code class="docutils literal notranslate"><span class="pre">s2m_x4_k3.txt</span></code> files). If there are any data mismatches, then the <code class="docutils literal notranslate"><span class="pre">TEST</span> <span class="pre">FAILED</span></code>, else the <code class="docutils literal notranslate"><span class="pre">TEST</span> <span class="pre">PASSED</span></code>. If you provide the <code class="docutils literal notranslate"><span class="pre">--profile</span></code> command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">host/main_animate.cpp</span></code> host application is compiled into the <code class="docutils literal notranslate"><span class="pre">build/ps_animate.exe</span></code> executable. This host application does the following:</p>
@@ -196,16 +197,16 @@ function OptanonWrapper() { }
 <p>The host application repeats these actions for 300 timesteps. You can provide the <code class="docutils literal notranslate"><span class="pre">--timesteps</span> <span class="pre">&lt;num_timesteps&gt;</span></code> command line input to specify how many timesteps (iterations) the design runs for.</p>
 <p>The following is the general execution flow for the host applications.</p>
 <p><img alt="alt text" src="../../../../../_images/host_app_flow_chart_2.PNG" /></p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">XRT Documentation</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Xilinx/XRT">XRT Github Repo</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/devhostapp.html#vpy1519742402284">Vitis Host Application Documentation</a></p></li>
 </ul>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h1>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h1>
 <p>After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module, <a class="reference external" href="../Module_06_sd_card_and_hw_run">Module 06 - SD Card and Hardware Run</a>.</p>
 <p>© Copyright 2021 Xilinx, Inc.</p>
@@ -220,7 +221,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD068 | © Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD068 | © Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

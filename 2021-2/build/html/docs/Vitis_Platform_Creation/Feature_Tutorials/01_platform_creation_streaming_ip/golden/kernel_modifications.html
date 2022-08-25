@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -101,7 +101,7 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
              
   <p>Here it lists the changes required for the vadd kernel for this tutorial. Please mind that this is just one example and there are also other ways to implement the same functions.</p>
-<section id="include-necessary-file-headers">
+<div class="section" id="include-necessary-file-headers">
 <h1>1. Include necessary file headers.<a class="headerlink" href="#include-necessary-file-headers" title="Permalink to this heading">¶</a></h1>
 <p>Add following ‘include’ commands at the beginning of the file, just before the ‘define’ command.</p>
 <p><em><strong>OLD</strong></em>:</p>
@@ -116,8 +116,8 @@ function OptanonWrapper() { }
 <span class="c1">#define DATA_SIZE 4096</span>
 </pre></div>
 </div>
-</section>
-<section id="define-the-axi-stream-data-type">
+</div>
+<div class="section" id="define-the-axi-stream-data-type">
 <h1>2. Define the AXI stream data type<a class="headerlink" href="#define-the-axi-stream-data-type" title="Permalink to this heading">¶</a></h1>
 <p>Define a new ‘pkt’ type before the kernel function definition.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -135,8 +135,8 @@ function OptanonWrapper() { }
 <span class="o">...</span>
 </pre></div>
 </div>
-</section>
-<section id="add-more-ports-to-the-kernel-functions">
+</div>
+<div class="section" id="add-more-ports-to-the-kernel-functions">
 <h1>3. Add more ports to the kernel functions<a class="headerlink" href="#add-more-ports-to-the-kernel-functions" title="Permalink to this heading">¶</a></h1>
 <p>Modify the kernel function to include more ports for interacting with the IP inside platform.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -148,8 +148,8 @@ function OptanonWrapper() { }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">krnl_vadd</span><span class="p">(</span><span class="n">uint32_t</span><span class="o">*</span> <span class="n">in1</span><span class="p">,</span> <span class="n">uint32_t</span><span class="o">*</span> <span class="n">in2</span><span class="p">,</span> <span class="n">uint32_t</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="nb">int</span> <span class="n">size</span><span class="p">,</span> <span class="nb">int</span> <span class="o">*</span><span class="n">wave_out</span><span class="p">,</span> <span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">pkt</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">dds_in</span><span class="p">)</span> <span class="p">{</span>
 </pre></div>
 </div>
-</section>
-<section id="add-a-piece-of-logic-in-the-kernel-function-body">
+</div>
+<div class="section" id="add-a-piece-of-logic-in-the-kernel-function-body">
 <h1>4. Add a piece of logic in the kernel function body<a class="headerlink" href="#add-a-piece-of-logic-in-the-kernel-function-body" title="Permalink to this heading">¶</a></h1>
 <p>This logic simply read the data into the kernel and then send it out through another port. You can add it into any place and here is an example of adding it at the end of the function body.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -167,13 +167,13 @@ function OptanonWrapper() { }
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-</section>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,10 +106,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="architect-a-device-accelerated-application">
+</table><div class="section" id="architect-a-device-accelerated-application">
 <h1>Architect a Device-Accelerated Application<a class="headerlink" href="#architect-a-device-accelerated-application" title="Permalink to this heading">¶</a></h1>
 <p>In this lab, you evaluate the available functions or loops from the original C code, and identify which functions to target for FPGA acceleration. You must manually review the code, loop structure, and access patterns before actually running any tool.</p>
-<section id="identify-functions-to-accelerate-on-the-fpga">
+<div class="section" id="identify-functions-to-accelerate-on-the-fpga">
 <h2>Identify Functions to Accelerate on the FPGA<a class="headerlink" href="#identify-functions-to-accelerate-on-the-fpga" title="Permalink to this heading">¶</a></h2>
 <p>In the <code class="docutils literal notranslate"><span class="pre">02-bloom/cpu_src</span></code> directory, the main function calls the <code class="docutils literal notranslate"><span class="pre">runOnCPU</span></code> function. This function is implemented in the <code class="docutils literal notranslate"><span class="pre">02-bloom/cpu_src/compute_score_host.cpp</span></code> file.</p>
 <p>The algorithm can be divided into two sections:</p>
@@ -118,7 +118,7 @@ function OptanonWrapper() { }
 <li><p>Computing document score based on output flags created in the previous section.</p></li>
 </ul>
 <p>You will evaluate which of these sections are a good fit for the FPGA.</p>
-<section id="evaluate-the-murmurhash2-function">
+<div class="section" id="evaluate-the-murmurhash2-function">
 <h3>Evaluate the MurmurHash2 Function<a class="headerlink" href="#evaluate-the-murmurhash2-function" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/cpu_src</span></code> directory for the original source code.</p></li>
@@ -164,8 +164,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality">
+</div>
+<div class="section" id="evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality">
 <h3>Evaluate the First “for” Loop in the runCPU Function—”Hash” Functionality<a class="headerlink" href="#evaluate-the-first-for-loop-in-the-runcpu-function-hash-functionality" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Open <code class="docutils literal notranslate"><span class="pre">compute_score_host.cpp</span></code> file in the file editor.</p></li>
@@ -211,8 +211,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>Keep <code class="docutils literal notranslate"><span class="pre">compute_score_host.cpp</span></code> open in the file editor.</p></li>
 </ol>
-</section>
-<section id="evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality">
+</div>
+<div class="section" id="evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality">
 <h3>Evaluate the Second “for” Loop in the runOnCPU Function—”Profile Compute Score” Functionality<a class="headerlink" href="#evaluate-the-second-for-loop-in-the-runoncpu-function-profile-compute-score-functionality" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Look at the following code that computes the document score.</p>
@@ -244,9 +244,9 @@ function OptanonWrapper() { }
 </li>
 <li><p>Close the file editor.</p></li>
 </ol>
-</section>
-</section>
-<section id="establish-the-realistic-goal-for-the-overall-application">
+</div>
+</div>
+<div class="section" id="establish-the-realistic-goal-for-the-overall-application">
 <h2>Establish the Realistic Goal for the Overall Application<a class="headerlink" href="#establish-the-realistic-goal-for-the-overall-application" title="Permalink to this heading">¶</a></h2>
 <p>The Compute Score function is calculated on the CPU. Based on your calculations in the previous lab, it takes about 380 ms. You cannot accelerate the function further for a given CPU. Even if the FPGA can compute the hash function in zero time, the application will still take at the minimum of 380 ms, but running the FPGA in no time is also not realistic. You also need to account for sending the data from the CPU to the FPGA and retrieving it back to the CPU from the FPGA which will also add a delay.</p>
 <ol>
@@ -258,7 +258,7 @@ function OptanonWrapper() { }
 <p>The goal of application has been established to compute the hashes and overall score of the 10,000 documents in about 380 ms.</p>
 </li>
 </ol>
-<section id="determine-the-maximum-achievable-throughput">
+<div class="section" id="determine-the-maximum-achievable-throughput">
 <h3>Determine the Maximum Achievable Throughput<a class="headerlink" href="#determine-the-maximum-achievable-throughput" title="Permalink to this heading">¶</a></h3>
 <p>In most FPGA-accelerated systems, the maximum achievable throughput is limited by the PCIe® bus. The PCIe bus performance is influenced by many different aspects, such as the motherboard, drivers, targeted shell, and transfer sizes. The Vitis core development kit provides a utility, <code class="docutils literal notranslate"><span class="pre">xbutil</span></code>.</p>
 <p>Run the <code class="docutils literal notranslate"><span class="pre">xbutil</span> <span class="pre">validate</span></code> command to measure the maximum PCIe bandwidth that can be achieved. The throughput on your design target cannot exceed this upper limit.</p>
@@ -274,8 +274,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The PCIe FPGA write bandwidth is about 9 GB/sec and the FPGA read bandwidth is about 12 GB/sec. The PCIe bandwidth is 3.1 GB/sec above your established goal.</p>
-</section>
-<section id="identifying-parallelization-for-an-fpga-application">
+</div>
+<div class="section" id="identifying-parallelization-for-an-fpga-application">
 <h3>Identifying Parallelization for an FPGA Application<a class="headerlink" href="#identifying-parallelization-for-an-fpga-application" title="Permalink to this heading">¶</a></h3>
 <p>In Software, the flow will look similar to the following figure.
 <img alt="missing image" src="../../../../_images/Architect1.PNG" /></p>
@@ -301,9 +301,9 @@ function OptanonWrapper() { }
 <p>The application conceptually can similar to the following figure.</p>
 <p><img alt="missing image" src="../../../../_images/Architect2.PNG" /></p>
 <p>Transferring words from the host to CPU, Compute on FPGA, transferring words from the FPGA to CPU all can be executed in parallel. The CPU starts to calculate the profile score as soon as the flags are received;essentially, the profile score on the CPU can also start calculations in parallel. With the pipelining as shown above, the latency of the Compute on FPGA will become invisible.</p>
-</section>
-</section>
-<section id="next-steps">
+</div>
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In this lab, you profiled an application and determined which parts were best-suited for FPGA acceleration. You also created the setup to create an optimized kernel to achieve your acceleration goal. You will explore these steps in the following lab sections:</p>
 <ul class="simple">
@@ -313,8 +313,8 @@ function OptanonWrapper() { }
 </ul>
 <p>In the next section, you will <a class="reference internal" href="4_implement-kernel.html"><span class="doc">implement the kernel</span></a> by applying the “Methodology for Developing C/C++ Kernels” to create an optimized kernel to meet the requirements of the kernel specification.</p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -118,10 +119,10 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
  </tr>
-</table><section id="step-2-create-the-software-components-with-petalinux">
+</table><div class="section" id="step-2-create-the-software-components-with-petalinux">
 <h1>Step 2: Create the Software Components with PetaLinux<a class="headerlink" href="#step-2-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h1>
 <p>In this step, we’ll create a PetaLinux project that includes Vitis Platform required components.</p>
-<section id="create-the-petalinux-project">
+<div class="section" id="create-the-petalinux-project">
 <h2>Create the PetaLinux Project<a class="headerlink" href="#create-the-petalinux-project" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Setup PetaLinux environment: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;petaLinux_tool_install_dir&gt;/settings.sh</span></code></p></li>
@@ -137,8 +138,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;path to xsa dir
 <p><strong>Note</strong>: PetaLinux 2021.1 requires GCC version &gt;= 6.0. If your GCC version doesn’t meet this requirement, please enable <strong>Enable buildtools extended</strong> from <strong>petalinux-config → Yocto settings</strong>, which uses the pre-compiled gcc binaries from the PetaLinux tool. For more information, please refer to UG1144.</p>
 </li>
 </ol>
-</section>
-<section id="customize-root-file-system-kernel-device-tree-and-u-boot">
+</div>
+<div class="section" id="customize-root-file-system-kernel-device-tree-and-u-boot">
 <h2>Customize Root File System, Kernel, Device Tree and U-boot<a class="headerlink" href="#customize-root-file-system-kernel-device-tree-and-u-boot" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Prepare a user-rootfsconfig file to define the additional rootfs package.</p>
@@ -194,8 +195,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;path to xsa dir
 <p><img alt="missing image" src="../../../../_images/petalinux_root_filesystem_type.png" /></p>
 </li>
 </ol>
-</section>
-<section id="customize-device-tree">
+</div>
+<div class="section" id="customize-device-tree">
 <h2>Customize Device-tree<a class="headerlink" href="#customize-device-tree" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Apply VCK190 device tree</p>
@@ -214,8 +215,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;path to xsa dir
 </li>
 </ol>
 <p><strong>Note</strong>: PetaLinux 2021.1 will detect XSA type and generate ZOCL node in device tree automatically and update interrupt input number according to your hardware settings in XSA if the XSA is an extensible XSA. This is a new feature from 2021.1.</p>
-</section>
-<section id="build-petalinux-image">
+</div>
+<div class="section" id="build-petalinux-image">
 <h2>Build PetaLinux Image<a class="headerlink" href="#build-petalinux-image" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>From any directory within the PetaLinux project, build the PetaLinux project.</p>
@@ -231,8 +232,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;path to xsa dir
 <p>Sysroot <strong>sdk.sh</strong> will be generated in <strong>images/linux</strong> directory. We will extract it in next step.</p>
 </li>
 </ol>
-</section>
-<section id="fast-track">
+</div>
+<div class="section" id="fast-track">
 <h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create PetaLinux project and generate outputs. To use these scripts, please run the following steps.</p>
 <ol>
@@ -250,8 +251,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;path to xsa dir
 </li>
 </ol>
 <p><strong>Note: Now HW platform and SW platform are all generated. Next we would <a class="reference internal" href="step3.html"><span class="doc">package the Vitis Platform</span></a>.</strong></p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

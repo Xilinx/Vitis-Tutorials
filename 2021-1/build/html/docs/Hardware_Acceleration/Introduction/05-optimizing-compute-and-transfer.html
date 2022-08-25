@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>Looking back at the previous example, once the data grew beyond a certain size the transfer of data into and
 out of our application started to become the bottleneck.  Given that the transfer over PCIe will generally
@@ -137,8 +138,8 @@ it back.  We want to end up with something like this:</p>
 <p>By subdividing the buffer in this way and choosing an optimal number of subdivisions, we can balance
 execution and transfer times for our application and get significantly higher throughput.  Using the same
 hardware kernel, let’s take a look at what’s required to set this up in the host code.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>The algorithmic flow of the code will be mostly the same.  Before queueing up transfers, we’ll loop through
 the buffer and subdivide it.  We want to follow a few general rules, though.  First, we want to try to divide
@@ -271,8 +272,8 @@ API directly from main(), but it’s otherwise unchanged.</p>
 with individual sub-buffers.  Because they’ve already been migrated back to host memory, and because when
 creating sub-buffers the underlying pointers don’t change, we can still work with the parent even though we
 have children (and the parent buffer somehow even manages to sleep through the night!).</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./05_pipelined_vadd</span> <span class="pre">alveo_examples</span></code></p>
@@ -334,8 +335,8 @@ Wait for kernel to complete:        692.173 ms
 </table><p>Mission accomplished for sure this time. Look at those margins!</p>
 <p>There’s no way this would turn around on us now, right?  Let’s sneak out early - I’m sure there isn’t an
 “other shoe” that’s going to drop.</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -343,14 +344,14 @@ Wait for kernel to complete:        692.173 ms
 <li><p>Capture the traces again too; can you see the difference?  How does the choice of the number of sub-buffers
 impact runtime (if it does)?</p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Intelligently managing your data transfer and command queues can lead to significant speedups.</p></li>
 </ul>
 <p>Read <a class="reference internal" href="06-meet-the-other-shoe.html"><span class="doc">Example 6: Meet the Other Shoe</span></a></p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

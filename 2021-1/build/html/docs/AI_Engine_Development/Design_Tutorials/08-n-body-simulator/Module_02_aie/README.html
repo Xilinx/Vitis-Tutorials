@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="build-the-design">
+</table><div class="section" id="build-the-design">
 <h1>Build the Design<a class="headerlink" href="#build-the-design" title="Permalink to this heading">¶</a></h1>
 <p><em>Estimated time: 2 hours</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
@@ -123,7 +124,7 @@ function OptanonWrapper() { }
 	        <span class="o">-</span><span class="n">workdir</span><span class="o">=</span><span class="n">work</span>
 </pre></div>
 </div>
-<section id="ai-engine-design">
+<div class="section" id="ai-engine-design">
 <h2>AI Engine Design<a class="headerlink" href="#ai-engine-design" title="Permalink to this heading">¶</a></h2>
 <p>The following AI Engine features are used in this design:</p>
 <ul class="simple">
@@ -134,8 +135,8 @@ function OptanonWrapper() { }
 <li><p>4:1 packet merge</p></li>
 <li><p>PL Kernels designed to support packet switching in AI Engine</p></li>
 </ul>
-</section>
-<section id="a-single-nbody-kernel">
+</div>
+<div class="section" id="a-single-nbody-kernel">
 <h2>A Single Nbody() Kernel<a class="headerlink" href="#a-single-nbody-kernel" title="Permalink to this heading">¶</a></h2>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">src/nbody.cc</span></code> file. It contains the implementation of a single AI Engine kernel mapped to a single AI Engine tile called <code class="docutils literal notranslate"><span class="pre">nbody()</span></code>. This kernel takes in the <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code> values for 32 particles, computes the N-Body gravity equations for a single timestep, and outputs the new <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code> values for the 32 particles. This kernel takes in two inputs: <code class="docutils literal notranslate"><span class="pre">w_input_i</span></code> and <code class="docutils literal notranslate"><span class="pre">w_input_j</span></code>. The <code class="docutils literal notranslate"><span class="pre">w_input_i</span></code> window contains the <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code> floating point values for 32 particles. The <code class="docutils literal notranslate"><span class="pre">w_input_j</span></code> window contains the only <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">m</span></code> floating-point values for the same 32 particles. This kernel produces one output: <code class="docutils literal notranslate"><span class="pre">w_output_i</span></code> which contains the new <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code> floating-point values for the 32 particles in the next timestep.</p>
 <table border="1" class="docutils">
@@ -161,8 +162,8 @@ function OptanonWrapper() { }
 </tbody>
 </table><p><img alt="alt text" src="../../../../../_images/data_formats.png" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel is sectioned into two major <code class="docutils literal notranslate"><span class="pre">for</span></code> loops. The first major <code class="docutils literal notranslate"><span class="pre">for</span></code> loop (around lines 38-61) calculates the new <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span></code> positions for the 32 particles. The second major <code class="docutils literal notranslate"><span class="pre">for</span></code> loop (around lines 64-202) calculates the new <code class="docutils literal notranslate"><span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span></code> velocities for the 32 particles. The output mass (<code class="docutils literal notranslate"><span class="pre">m</span></code>) values remain the same as the inputs. The <code class="docutils literal notranslate"><span class="pre">w_output_i</span></code> window is then sent to the <code class="docutils literal notranslate"><span class="pre">transmit_new_i</span></code> kernel (source: <code class="docutils literal notranslate"><span class="pre">src/transmit_new_i.cc</span></code>) to be written to the final output window.</p>
-</section>
-<section id="four-nbody-kernels-packet-switched">
+</div>
+<div class="section" id="four-nbody-kernels-packet-switched">
 <h2>Four NBody() Kernels Packet Switched<a class="headerlink" href="#four-nbody-kernels-packet-switched" title="Permalink to this heading">¶</a></h2>
 <p>Next, review the <code class="docutils literal notranslate"><span class="pre">src/nbody_subsystem.h</span></code> graph. This graph creates four N-Body kernels, a packet splitter kernel, and a packet merger kernel. Review the packet switching feature tutorial to learn more about the packet switching feature in the AI Engine: <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching">04-packet-switching</a>.</p>
 <p><img alt="alt text" src="docs/AI_Engine_Development/Design_Tutorials/08-n-body-simulator/Module_02_aie/images/nbody_subsystem%20(1).PNG" /></p>
@@ -193,15 +194,15 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table><p>A single instance of the <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph can simulate 128 particles using four AI Engine tiles.</p>
-<section id="workload-distribution-and-input-j">
+<div class="section" id="workload-distribution-and-input-j">
 <h3>Workload Distribution and input_j<a class="headerlink" href="#workload-distribution-and-input-j" title="Permalink to this heading">¶</a></h3>
 <p>To calculate the N-Body gravity equations for 128 particles, each <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel calculates the N-Body gravity equations for 32 particles. However, in order to calculate acceleration and the new velocities, an <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel needs to know the data in the other kernels. For example, if particle 0 is mapped to <code class="docutils literal notranslate"><span class="pre">nbody_kernel[0]</span></code> and particle 32 is mapped to <code class="docutils literal notranslate"><span class="pre">nbody_kernel[1]</span></code>,  then <code class="docutils literal notranslate"><span class="pre">nbody_kernel[0]</span></code> needs to know the data in <code class="docutils literal notranslate"><span class="pre">nbody_kernel[1]</span></code> to accurately calculate the summation equation for acceleration and then calculate the new velocity of particle 0.</p>
 <p>This is where the <code class="docutils literal notranslate"><span class="pre">input_j</span></code> stream plays a vital role in data sharing. Even though the <code class="docutils literal notranslate"><span class="pre">input_j</span></code> data stream has a window size for 32 particles worth of data, the <code class="docutils literal notranslate"><span class="pre">LOOP_COUNT_J</span></code> value can be set to allow the <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels to take in any number of 32 particles worth of data at a time. For a single instance of the <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph, the <code class="docutils literal notranslate"><span class="pre">LOOP_COUNT_J</span></code> should be set to 4 to stream in data for all four kernels. For the final AI Engine graph, which contains 100 instances of the <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph, the <code class="docutils literal notranslate"><span class="pre">LOOP_COUNT_J</span></code> value is set to 400 to stream in data for all 400 kernels to each <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel.</p>
 <p><img alt="alt text" src="../../../../../_images/input_j_description.png" /></p>
 <p>For example, to calculate the new velocity of particle 0 mapped in <code class="docutils literal notranslate"><span class="pre">nbody_kernel[0]</span></code>, the <code class="docutils literal notranslate"><span class="pre">nbody_kernel[0]</span></code> can retrieve the data value of particle 32 from the <code class="docutils literal notranslate"><span class="pre">input_j</span></code> stream. This way, all <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels will have the data values for all other particles mapped in the other <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels through data streaming from <code class="docutils literal notranslate"><span class="pre">input_j</span></code>.</p>
-</section>
-</section>
-<section id="n-body-subsystems">
+</div>
+</div>
+<div class="section" id="n-body-subsystems">
 <h2>100 N-Body Subsystems<a class="headerlink" href="#n-body-subsystems" title="Permalink to this heading">¶</a></h2>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">nbody_x4_x100.h</span></code>. It contains the definition of the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> graph which contains 100 instances of the <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph. Each <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> is mapped to four AI Engine tiles which each contain an <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel. Therefore, the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> graph contains 400 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels using up all of the 400 available AI Engine tiles. Since each <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel simulates 32 particles, the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> simulates 12,800 particles (32 particles * 400 kernels). There are 100 <code class="docutils literal notranslate"><span class="pre">input_i</span></code> ports (<code class="docutils literal notranslate"><span class="pre">input_i0-99</span></code>) and a single <code class="docutils literal notranslate"><span class="pre">input_j</span></code> port. For 1 iteration, the <code class="docutils literal notranslate"><span class="pre">input_i</span></code> ports receive 4 packetized <code class="docutils literal notranslate"><span class="pre">w_input_i</span></code> data which are distributed to 4 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels in each <code class="docutils literal notranslate"><span class="pre">nbody_subsystem</span></code> graph. The <code class="docutils literal notranslate"><span class="pre">input_j</span></code> is a 1:400 broadcast stream to the 400 <code class="docutils literal notranslate"><span class="pre">w_input_j</span></code> ports in the 400 <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernels.</p>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">nbody_x4_100.cpp</span></code> file. It contains an instance of the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> graph and simulates it for one iteration. Also, review the data files in the data folder where you will find the input data files for the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> (<code class="docutils literal notranslate"><span class="pre">input_i0-99.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">input_j.txt</span></code>) used by the <code class="docutils literal notranslate"><span class="pre">nbodySystem</span></code> graph.</p>
@@ -211,8 +212,8 @@ function OptanonWrapper() { }
 <p>The red highlighted region encompasses four AI Engine tiles which contain a single compute unit.</p>
 <p>Following is the graph visualization of a single compute unit on the Vitis Analyzer tool.
 <img alt="alt text" src="../../../../../_images/aie_single_cu.PNG" /></p>
-</section>
-<section id="why-packet-switching">
+</div>
+<div class="section" id="why-packet-switching">
 <h2>Why Packet Switching?<a class="headerlink" href="#why-packet-switching" title="Permalink to this heading">¶</a></h2>
 <p>You might be curious about the need to implement the packet switching scheme 1:4/4:1. This was done to circumvent an AI Engine architecture limitation on the number of simultaneous input and output AXI-Streams allowed per AI Engine column. There are 50 AI Engine columns in the AI Engine array. Each column contains 8 AI Engine tiles. Each AI Engine column is allowed a maximum of 6 32-bit AXI-Stream inputs and 4 32-bit AXI-Stream outputs.</p>
 <p>In the design, each <code class="docutils literal notranslate"><span class="pre">nbody()</span></code> kernel is mapped to an AI Engine tile. Meaning each column of 8 AI Engine tiles has 9 inputs streams and 8 output streams, violating these constraints.</p>
@@ -232,16 +233,16 @@ function OptanonWrapper() { }
 <li><p>1 <code class="docutils literal notranslate"><span class="pre">output_i</span></code> stream coming from tiles 0-3 in a column</p></li>
 <li><p>1 <code class="docutils literal notranslate"><span class="pre">output_i</span></code> stream coming from tiles 4-7 in a column</p></li>
 </ul>
-</section>
-<section id="optional-simulate-the-ai-engine-design">
+</div>
+<div class="section" id="optional-simulate-the-ai-engine-design">
 <h2>(Optional) Simulate the AI Engine Design<a class="headerlink" href="#optional-simulate-the-ai-engine-design" title="Permalink to this heading">¶</a></h2>
 <p><em>Estimated time: a few days</em></p>
 <p>Run the following make command to invoke the aiesimulator.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">sim</span>
 </pre></div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching">Packet Switching AI Engine Tutorial</a></p></li>
@@ -249,8 +250,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/compile_graph_application.html#rsb1512607764188">Compiling an AI Engine Graph Application</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/simulate_graph_application.html#yql1512608436352">Simulating an AI Engien Graph Application</a></p></li>
 </ul>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>After compiling the 100 compute unit N-Body Simulator design, you are ready to create the PL datamover kernels in the next module, <a class="reference external" href="../Module_03_pl_kernels">Module 03 - PL Design</a>.</p>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
@@ -264,8 +265,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p></div>
+</div>
 
 
            </div>

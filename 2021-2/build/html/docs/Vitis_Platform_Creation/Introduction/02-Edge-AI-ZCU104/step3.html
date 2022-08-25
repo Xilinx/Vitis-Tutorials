@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -114,9 +114,9 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="step-3-create-the-vitis-platform">
+--><div class="section" id="step-3-create-the-vitis-platform">
 <h1>Step 3: Create the Vitis Platform<a class="headerlink" href="#step-3-create-the-vitis-platform" title="Permalink to this heading">¶</a></h1>
-<section id="prepare-files-for-platform-packaging">
+<div class="section" id="prepare-files-for-platform-packaging">
 <h2>Prepare Files for Platform Packaging<a class="headerlink" href="#prepare-files-for-platform-packaging" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>We would store all the necessary files for Vitis platform creation flow. Here we name it <code class="docutils literal notranslate"><span class="pre">zcu104_custom_pkg</span> </code>. Then we create a <code class="docutils literal notranslate"><span class="pre">pfm</span></code> folder inside to hold platform creation source components.</p>
@@ -186,8 +186,8 @@ mkdir sd_dir
 </ul>
 </li>
 </ol>
-</section>
-<section id="create-a-vitis-platform">
+</div>
+<div class="section" id="create-a-vitis-platform">
 <h2>Create a Vitis Platform<a class="headerlink" href="#create-a-vitis-platform" title="Permalink to this heading">¶</a></h2>
 <p>We can create a Vitis platform with Vitis IDE or with XSCT command line. Vitis IDE can create the platform if your design only contains one XSA. If your design has to XSA (hw and hw-emu), please use XSCT to create the platform.</p>
 <details><summary><strong>Click here to expand the detailed steps using Vitis IDE to create a Vitis platform</strong></summary>  
@@ -283,8 +283,8 @@ platform generate
 </pre></div>
 </div>
 <p>To support better generalization, the example <a class="reference external" href="./ref_files/step3_pfm/Makefile">Makefile</a> and <a class="reference external" href="./ref_files/step3_pfm/xsct_create_pfm.tcl">xsct_create_pfm.tcl</a> in ref_files directory use variables to represent the file names and directory location. Please refer to them if you would like to get more programability in your scripts.</p>
-</details></section>
-<section id="fast-track">
+</details></div>
+<div class="section" id="fast-track">
 <h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to create the Vitis platform. To use these scripts, please run the following steps.</p>
 <ol>
@@ -301,12 +301,12 @@ platform generate
 </div>
 </li>
 </ol>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Next let’s try to <a class="reference internal" href="step4.html"><span class="doc">build some applications on this platform and test them.</span></a></p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

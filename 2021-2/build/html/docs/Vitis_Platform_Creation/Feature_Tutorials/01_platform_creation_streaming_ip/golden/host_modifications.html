@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -101,7 +101,7 @@ function OptanonWrapper() { }
            <div itemprop="articleBody">
              
   <p>Here it lists the changes required for the vadd host application for this tutorial. Please mind that this is just one example and there are also other ways to implement the same functions.</p>
-<section id="include-necessary-file-headers">
+<div class="section" id="include-necessary-file-headers">
 <h1>1. Include necessary file headers.<a class="headerlink" href="#include-necessary-file-headers" title="Permalink to this heading">¶</a></h1>
 <p>Add the new ‘include’ commands at the beginning of the file around the same place of other ‘include’ commands that already exists.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -121,8 +121,8 @@ function OptanonWrapper() { }
 <span class="c1">#include &lt;stdio.h&gt;</span>
 </pre></div>
 </div>
-</section>
-<section id="create-a-new-cl-mem-buffer">
+</div>
+<div class="section" id="create-a-new-cl-mem-buffer">
 <h1>2. Create a new cl_mem buffer<a class="headerlink" href="#create-a-new-cl-mem-buffer" title="Permalink to this heading">¶</a></h1>
 <p>Create a new buffer to communicate with the data from the newly added port of kernel.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -139,8 +139,8 @@ function OptanonWrapper() { }
 <span class="n">cl</span><span class="p">::</span><span class="n">Buffer</span> <span class="n">buffer_waveout</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span>
 </pre></div>
 </div>
-</section>
-<section id="bond-the-buffer-with-new-arguments-of-the-kernel">
+</div>
+<div class="section" id="bond-the-buffer-with-new-arguments-of-the-kernel">
 <h1>3. Bond the buffer with new arguments of the kernel<a class="headerlink" href="#bond-the-buffer-with-new-arguments-of-the-kernel" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>OLD</strong></em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OCL_CHECK</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="n">narg</span><span class="o">++</span><span class="p">,</span> <span class="n">buffer_a</span><span class="p">));</span>
@@ -158,8 +158,8 @@ function OptanonWrapper() { }
 <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="n">narg</span><span class="o">++</span><span class="p">,</span><span class="n">buffer_waveout</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="map-the-new-buffer-to-a-pointer">
+</div>
+<div class="section" id="map-the-new-buffer-to-a-pointer">
 <h1>4. Map the new buffer to a pointer<a class="headerlink" href="#map-the-new-buffer-to-a-pointer" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>OLD</strong></em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OCL_CHECK</span><span class="p">(</span><span class="n">err</span><span class="p">,</span>
@@ -181,8 +181,8 @@ function OptanonWrapper() { }
 <span class="nb">int</span> <span class="o">*</span><span class="n">ptr_waveout</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">q</span><span class="o">.</span><span class="n">enqueueMapBuffer</span> <span class="p">(</span><span class="n">buffer_waveout</span> <span class="p">,</span> <span class="n">CL_TRUE</span> <span class="p">,</span> <span class="n">CL_MAP_READ</span> <span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">));</span>
 </pre></div>
 </div>
-</section>
-<section id="read-data-from-ddr">
+</div>
+<div class="section" id="read-data-from-ddr">
 <h1>5. Read data from DDR<a class="headerlink" href="#read-data-from-ddr" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>OLD</strong></em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OCL_CHECK</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_result</span><span class="p">},</span> <span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">));</span>
@@ -193,8 +193,8 @@ function OptanonWrapper() { }
 <span class="n">q</span><span class="o">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">({</span><span class="n">buffer_waveout</span><span class="p">},</span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="save-the-data-into-a-file">
+</div>
+<div class="section" id="save-the-data-into-a-file">
 <h1>6. Save the data into a file<a class="headerlink" href="#save-the-data-into-a-file" title="Permalink to this heading">¶</a></h1>
 <p>This can be added right after the piece of result verification that already exists.</p>
 <p><em><strong>OLD</strong></em></p>
@@ -230,8 +230,8 @@ function OptanonWrapper() { }
  <span class="n">fclose</span><span class="p">(</span><span class="n">fp_dout</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="unmap-the-buffer-object">
+</div>
+<div class="section" id="unmap-the-buffer-object">
 <h1>7. Unmap the buffer object<a class="headerlink" href="#unmap-the-buffer-object" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>OLD</strong></em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OCL_CHECK</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">buffer_a</span><span class="p">,</span> <span class="n">ptr_a</span><span class="p">));</span>
@@ -247,13 +247,13 @@ function OptanonWrapper() { }
 <span class="n">q</span><span class="o">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">buffer_waveout</span> <span class="p">,</span> <span class="n">ptr_waveout</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-</section>
+</div>
 
 
            </div>

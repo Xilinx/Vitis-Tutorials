@@ -82,7 +82,9 @@ Vitis Tutorials
    :hidden:
 
    Main <https://xilinx.github.io/Vitis-Tutorials/>
-   
+   2021.2 <https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html>
+   2021.1 <https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html>
+   2020.1 <https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html>
 
 
       

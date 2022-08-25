@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -119,11 +119,11 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
  </tr>
-</table><section id="step-1-hardware-settings-for-vitis-platform">
+</table><div class="section" id="step-1-hardware-settings-for-vitis-platform">
 <h1>Step 1: Hardware Settings for Vitis Platform<a class="headerlink" href="#step-1-hardware-settings-for-vitis-platform" title="Permalink to this heading">¶</a></h1>
 <p>The Versal Extensible Platform Example has setup the platform properties. We will review these properties in this step.</p>
 <p>For a custom board platform, you will need to setup these properties manually. They can be set in GUI or Tcl. We will discuss the setup flow in detail.</p>
-<section id="review-the-versal-extensible-platform-example-platform-setup">
+<div class="section" id="review-the-versal-extensible-platform-example-platform-setup">
 <h2>Review the Versal Extensible Platform Example Platform Setup<a class="headerlink" href="#review-the-versal-extensible-platform-example-platform-setup" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Launch Vivado and open the design we created in step 0 if you haven’t</p>
@@ -173,8 +173,8 @@ function OptanonWrapper() { }
 <p><img alt="Vivado Platform Setup: Interrupt" src="../../../../_images/vivado_platform_setup_irq.png" /></p>
 </li>
 </ol>
-</section>
-<section id="review-the-simulation-model">
+</div>
+<div class="section" id="review-the-simulation-model">
 <h2>Review the Simulation Model<a class="headerlink" href="#review-the-simulation-model" title="Permalink to this heading">¶</a></h2>
 <p>The Versal Extensible Platform Example has setup the simulation model of each IP properly. We will review the settings in this session. If you created the block design by yourself, please make sure these settings are applied before running emulation on your platform.</p>
 <p>Some blocks in the block design has multiple types of simulation models. Vitis emulation requires these blocks to use SystemC TLM (Transaction-level Modeling) model when available. TLM is the default simulation model for CIPS, NOC and AI Engine. We can review them to make sure they are correct before exporting the hardware.</p>
@@ -189,8 +189,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>Review the simulation model property for NOC and AI Engine in the block diagram.</p></li>
 </ol>
-</section>
-<section id="export-hardware-xsa">
+</div>
+<div class="section" id="export-hardware-xsa">
 <h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Generate Block Diagram</p>
@@ -223,8 +223,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="export-hardware-emulation-xsa">
+</div>
+<div class="section" id="export-hardware-emulation-xsa">
 <h2>Export Hardware Emulation XSA<a class="headerlink" href="#export-hardware-emulation-xsa" title="Permalink to this heading">¶</a></h2>
 <p>A change in Vitis 2021.2 requires hardware and hardware emulation provide their own XSA files during platform creation step in XSCT. One XSA with both hardware and hardware emulation content is still supported in 2021.2. It will be deprecated in the future.</p>
 <blockquote>
@@ -243,16 +243,16 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now we finish the Hardware platform creation flow. Next we would go to <a class="reference internal" href="step2.html"><span class="doc">step 2</span></a> to create platform software.</p>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+<div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="https://www.xilinx.com/support/answers/72033.html">AR# 72033: How do I add boards and example designs to my Vivado environment?</a></p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
 
 
            </div>

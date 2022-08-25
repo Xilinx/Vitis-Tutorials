@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -99,8 +98,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -135,7 +136,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="debug-walkthrough-tutorial-from-simulation-to-hardware">
+</table><div class="section" id="debug-walkthrough-tutorial-from-simulation-to-hardware">
 <h1>Debug Walkthrough Tutorial - From Simulation to Hardware<a class="headerlink" href="#debug-walkthrough-tutorial-from-simulation-to-hardware" title="Permalink to this heading">¶</a></h1>
 <table style="width:100%">
     <tr>
@@ -145,7 +146,7 @@ function OptanonWrapper() { }
     <td width="20%" align="center"><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></td>
     <td width="20%" align="center"><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></td>
   </tr>
-</table><section id="introduction">
+</table><div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>System level debug of AI Engine designs that could use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application can be done at several stages in the design flow. System level debug of AI Engine designs can be categorized as follows:</p>
 <ol class="simple">
@@ -165,8 +166,8 @@ function OptanonWrapper() { }
 <p>This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.</p>
 <p>To target the VCK190 production board, modify PLATFORM variable in the Makefile(s) to:
 PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm</p>
-</section>
-<section id="example-design-beamformer">
+</div>
+<div class="section" id="example-design-beamformer">
 <h2>Example Design: Beamformer<a class="headerlink" href="#example-design-beamformer" title="Permalink to this heading">¶</a></h2>
 <p>The architecture of the beamformer design consists of three kernels with slight differences which are scalable to various matrix sizes and throughput requirements. The design methodology is applicable to matrix multiplication including, but not limited to, 5G wireless communication.</p>
 <p>One feature of the beamforming architecture is that only a small number of kernels are required by various system configurations. Depending on the location of the kernels in the cascading chain, they are named first, middle, and last. All the kernels implement (8x8) times (8x12) matrix multiplication and only differ in the input and output interfaces.
@@ -176,8 +177,8 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <p>This design has 64 tiles and 88 programmable logic input/output (PLIO) streams that the PS application prepares input data for, sends  data to AI Engine kernels via PL kernels. AI Engine kernels process the data received and then send it back to the PL kernels. The PS application receives the processed data, then saves it to the designated directory/files, compares it to golden data, and prints out “TEST PASSED” or “TEST FAILED” result on the console.</p>
 <p>The complete beamformer design is shown in the Vitis™ analyzer.
 <img alt="VA_beamformer.png&quot;" src="../../../../_images/VA_beamformer.png" /></p>
-</section>
-<section id="methods">
+</div>
+<div class="section" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
 <p>There are several ways to debug a system design that include PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. For projects that are command-line based and would like to port to Vitis™ IDE, reference <a class="reference internal" href="Debug0_po.html"><span class="doc">Port command-line based projects to Vitis IDE</span></a> for detail steps.</p>
 <p>For ease of use, a Vitis IDE exported project, <code class="docutils literal notranslate"><span class="pre">beamformer.ide.zip</span></code> can be donwloaded from <a class="reference external" href="https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip">https://www.xilinx.com/bin/public/openDownload?filename=beamformer.ide.zip</a>. Then import this zip file into the Vitis IDE.</p>
@@ -195,8 +196,8 @@ At the end of computation, the partial summations are sent to the next AI Engine
 <li><p><a href="Debug3_hw.md">AI Engine Source Code Debug on Hardware</a></p></li>
 <li><p><a href="Debug5_bc.md">AI Engine/PL Kernel Debug with XRT Utilities</a></p></li>
 </ul>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -209,8 +210,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

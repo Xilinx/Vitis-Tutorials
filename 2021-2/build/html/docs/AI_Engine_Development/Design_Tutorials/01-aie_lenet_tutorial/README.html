@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -97,9 +96,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -134,10 +134,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="lenet-tutorial">
+</table><div class="section" id="lenet-tutorial">
 <h1>LeNet Tutorial<a class="headerlink" href="#lenet-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="table-of-contents">
+<div class="section" id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="#introduction">Introduction</a></p>
 <p><a class="reference external" href="#Before-you-begin">Before You Begin</a></p>
@@ -146,14 +146,14 @@ function OptanonWrapper() { }
 <p><a class="reference external" href="#software-design-details">Software Design Details</a></p>
 <p><a class="reference external" href="#throughput-measurement-details">Throughput Measurement Details</a></p>
 <p><a class="reference external" href="#references">References</a></p>
-</section>
-<section id="introduction">
+</div>
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The Xilinx® Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the Processor System (PS) (Scalar Engines that include the Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and AI Engines which belong in the Intelligent Engine category.</p>
 <p>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.</p>
 <p>The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided that you can modify to suit your own needs in a different context.</p>
 <details>
-  <summary>Objectives</summary> <section id="objectives">
+  <summary>Objectives</summary> <div class="section" id="objectives">
 <h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h3>
 <p>After completing the tutorial, you should be able to:</p>
 <ul class="simple">
@@ -186,9 +186,9 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 </details>
-</p></section>
-</section>
-<section id="before-you-begin">
+</p></div>
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>Note: This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.</p>
 <details><summary>Documentation: Explore AI Engine Architecture</summary> <ul class="simple">
@@ -244,16 +244,16 @@ which aiecompiler
 </pre></div>
 </div>
 </details>
-</p></section>
-<section id="building-the-lenet-design">
+</p></div>
+<div class="section" id="building-the-lenet-design">
 <h2>Building the LeNet Design<a class="headerlink" href="#building-the-lenet-design" title="Permalink to this heading">¶</a></h2>
 <details>
   <summary>LeNet Design Build</summary> <p>In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the Programmable Logic (PL) kernels and Processing System (PS) host application). You can review <a class="reference external" href="#ai-engine-documentation">Integrating the Application Section in the AI Engine Documentation</a> for the general flow. The following image shows the Vitis tool flow with the <code class="docutils literal notranslate"><span class="pre">make</span></code> targets (in blue) and input source files and output file generation (in red) at each step.</p>
 <p><img alt="Image of LeNet Vitis Tool Flow" src="../../../../_images/Lenet_vitis_toolflow_2021_1.PNG" /></p>
 <p>At the end of this section, the design flow will generate a new directory (called <code class="docutils literal notranslate"><span class="pre">build/</span></code>) that contains the <code class="docutils literal notranslate"><span class="pre">Work/</span></code>, <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code>, and <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolders. The <code class="docutils literal notranslate"><span class="pre">Work/</span></code> subfolder is an output from the AI Engine compiler. The <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> subfolder contains the build for hardware emulation. The <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolder contains the build for hardware run on a VCK190 board.</p>
 </details>
-</p></section>
-<section id="make-steps">
+</p></div>
+<div class="section" id="make-steps">
 <h2>Make Steps<a class="headerlink" href="#make-steps" title="Permalink to this heading">¶</a></h2>
 <p>To run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> steps (for example, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">kernels</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">graph</span></code>, etc), you must be in the lenet tutorial folder.</p>
 <details>
@@ -852,8 +852,8 @@ cd ../../;
 </pre></div>
 </div>
 </details>
-</p></section>
-<section id="hardware-design-details">
+</p></div>
+<div class="section" id="hardware-design-details">
 <h2>Hardware Design Details<a class="headerlink" href="#hardware-design-details" title="Permalink to this heading">¶</a></h2>
 <details>
   <summary>LeNet Architecture and AI Engine/PL Function Partitioning</summary><p>The architecture of the LeNet design is shown in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable for implementation in PL rather than in the AI Engine array. With appropriate data rearrangement, the computations in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.</p>
@@ -900,8 +900,8 @@ In this design, the output from the first AI Engine tile (core01) is a 576x8 mat
 <p>[1] One image on 5x5 kernel with bias value of 1</p>
 <p>[2] Rearrange2 fanouts to two AI Engine tiles (core03 and core05) to implement the FC1+RELU layer</p>
 </details>
-</p></section>
-<section id="software-design-details">
+</p></div>
+<div class="section" id="software-design-details">
 <h2>Software Design Details<a class="headerlink" href="#software-design-details" title="Permalink to this heading">¶</a></h2>
 <p>The software design in the LeNet tutorial consists of the following sections:</p>
 <details>
@@ -1036,8 +1036,8 @@ Compare data in <code class="docutils literal notranslate"><span class="pre">out
 After post-processing the data, release the allocated objects using <code class="docutils literal notranslate"><span class="pre">xrtBOFree</span></code>, <code class="docutils literal notranslate"><span class="pre">xrtGraphClose</span></code> and <code class="docutils literal notranslate"><span class="pre">xrtDeviceClose</span></code> functions.</p></li>
 </ol>
 </details>
-</p></section>
-<section id="throughput-measurement-details">
+</p></div>
+<div class="section" id="throughput-measurement-details">
 <h2>Throughput Measurement Details<a class="headerlink" href="#throughput-measurement-details" title="Permalink to this heading">¶</a></h2>
 <p>To measure throughput the design is run in hardware and trace data is captured in run time.
 To set up the flow to measure throughput, build the design with <code class="docutils literal notranslate"><span class="pre">TARGET</span></code>=hw and <code class="docutils literal notranslate"><span class="pre">EN_TRACE</span></code>=1. A xrt.ini with below contents is included:</p>
@@ -1064,15 +1064,15 @@ To set up the flow to measure throughput, build the design with <code class="doc
 <span class="n">Throughput</span> <span class="o">=</span> <span class="mi">19</span><span class="p">,</span><span class="mi">617</span> <span class="n">images</span><span class="o">/</span><span class="n">s</span> <span class="n">x</span> <span class="p">(</span><span class="mi">250</span> <span class="o">/</span> <span class="mi">150</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span><span class="mi">695</span> <span class="n">images</span><span class="o">/</span><span class="n">s</span>
 </pre></div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <p>The following documents provide supplemental information for this tutorial.</p>
-<section id="ai-engine-documentation">
+<div class="section" id="ai-engine-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this heading">¶</a></h3>
 <p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.</p>
-</section>
-<section id="xilinx-runtime-xrt-architecture">
+</div>
+<div class="section" id="xilinx-runtime-xrt-architecture">
 <h3><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">Xilinx Runtime (XRT) Architecture</a><a class="headerlink" href="#xilinx-runtime-xrt-architecture" title="Permalink to this heading">¶</a></h3>
 <p>The following are links to the XRT information used by this tutorial:</p>
 <ul class="simple">
@@ -1080,8 +1080,8 @@ To set up the flow to measure throughput, build the design with <code class="doc
 <li><p><a class="reference external" href="https://github.com/Xilinx/XRT">XRT Github Repo</a>: Contains the XRT source code.</p></li>
 <li><p><a class="reference external" href="https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h">XRT AIE API</a>: Documents the AI Engine XRT API calls</p></li>
 </ul>
-</section>
-<section id="vitis-unified-software-development-platform-2021-1-documentation">
+</div>
+<div class="section" id="vitis-unified-software-development-platform-2021-1-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html">Vitis Unified Software Development Platform 2021.1 Documentation</a><a class="headerlink" href="#vitis-unified-software-development-platform-2021-1-documentation" title="Permalink to this heading">¶</a></h3>
 <p>The following are links to Vitis related information referenced in this tutorial:</p>
 <ul class="simple">
@@ -1089,7 +1089,7 @@ To set up the flow to measure throughput, build the design with <code class="doc
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis Application Acceleration Development Flow Tutorials</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html">Vitis HLS</a></p></li>
 </ul>
-<section id="revision-history">
+<div class="section" id="revision-history">
 <h4>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Oct 2021 - Updated for 2021.2</p></li>
@@ -1108,10 +1108,10 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD015 | © Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
-</section>
-</section>
+<p align="center"><sup>XD015 | © Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
+</div>
+</div>
 
 
            </div>

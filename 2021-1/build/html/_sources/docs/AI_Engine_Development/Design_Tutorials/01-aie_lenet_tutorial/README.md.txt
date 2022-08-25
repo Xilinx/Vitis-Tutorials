@@ -479,6 +479,8 @@ The following is a description of the output objects that results from executing
 |Output Objects|Description|
 |  ---  |  ---  |
 |build/lenet_xrt.elf|The executable that will run on an A72 processor.|
+
+
 </details>
 
 <details>
@@ -567,6 +569,7 @@ The output of the Package step is the package directory that contains the conten
 |  ---  |  ---  |
 |build/hw_emu/package|The hardware emulation package that contains the boot file, hardware emulation launch script, the PLM and PMC boot files, the PMC and QEMU command argument specification files, and the Vivado simulation folder.|
 
+
 </details>
 
 <details>
@@ -616,11 +619,12 @@ The `lenet_xrt.elf` should execute, and after a few minutes, you should see the 
 Press CtrlA, let go of the keyboard, and then press x 
 ```
 
+
 </details>
 
 <details>
   <summary>TARGET=hw: Run on Hardware</summary> 
-	  
+
 To run your design on hardware, re-run the following steps with TARGET=hw
 
 ```
@@ -665,6 +669,7 @@ cd /mnt/sd-mmcblk0p1
 export XILINX_XRT=/usr
 ./lenet_xrt.elf a.xclbin
 ```
+
 
 </details>
 </p>
@@ -944,6 +949,7 @@ The steps in the tutorial to run the A72 application are described as follows:
    After post-processing the data, release the allocated objects using `xrtBOFree`, `xrtGraphClose` and `xrtDeviceClose` functions.
 
 </details>
+</p>
 
 ## Throughput Measurement Details
 To measure throughput the design is run in hardware and trace data is captured in run time.

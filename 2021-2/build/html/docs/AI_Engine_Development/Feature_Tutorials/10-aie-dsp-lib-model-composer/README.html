@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -102,9 +101,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -139,15 +139,15 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="designing-with-the-ai-engine-dsplib-and-vitis-model-composer">
+</table><div class="section" id="designing-with-the-ai-engine-dsplib-and-vitis-model-composer">
 <h1>Designing with the AI Engine DSPLib and Vitis Model Composer<a class="headerlink" href="#designing-with-the-ai-engine-dsplib-and-vitis-model-composer" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
 Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>Install the tools:</p>
 <ul class="simple">
@@ -180,8 +180,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 </div></blockquote>
 </div></blockquote>
 </div></blockquote>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The goal of this tutorial is to implement the Decimation Filter Chain depicted below:</p>
 <p><img alt="Decimation Filter Chain" src="../../../../_images/DecimationChain.svg" /></p>
@@ -232,8 +232,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <li><p>XMC_DSPLib_Solution_Stage3.slx</p></li>
 </ul>
 <p>These are there to help you if you cannot complete any of the 3 stages.</p>
-</section>
-<section id="stage-1-create-and-simulate-the-design">
+</div>
+<div class="section" id="stage-1-create-and-simulate-the-design">
 <h2>Stage 1: Create and Simulate the Design<a class="headerlink" href="#stage-1-create-and-simulate-the-design" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>On the MATLAB GUI, select the <strong>Home Tab</strong> and click <strong>Simulink</strong>.</p></li>
@@ -443,8 +443,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <ol class="simple">
 <li><p>Run the design. The added filters are compiled and the design is run through the 5000 samples. The difference between the output should still be 0.</p></li>
 </ol>
-</section>
-<section id="stage-2-further-analysis-of-the-design">
+</div>
+<div class="section" id="stage-2-further-analysis-of-the-design">
 <h2>Stage 2: Further Analysis of the Design<a class="headerlink" href="#stage-2-further-analysis-of-the-design" title="Permalink to this heading">¶</a></h2>
 <p>When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.</p>
 <ol class="simple">
@@ -493,8 +493,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>If you want to save some data in a workspace variable for some more complex analysis. This can be done using the <strong>Variable Size Signal</strong> to Workspace block within the <strong>Xilinx Toolbox –&gt; AI Engine –&gt; Tools  blockset</strong>:</p>
 <p><img alt="missing image" src="../../../../_images/Image_015.png" /></p>
 <p>All the simulations that occur in Simulink are the so-called ‘Emulation-SW’. These types of simulation are bit-exact, but they do not provide any information about timing.</p>
-</section>
-<section id="stage-3-generate-the-code-and-perform-emulation-ai-engine">
+</div>
+<div class="section" id="stage-3-generate-the-code-and-perform-emulation-ai-engine">
 <h2>Stage 3: Generate the Code and Perform Emulation-AI Engine<a class="headerlink" href="#stage-3-generate-the-code-and-perform-emulation-ai-engine" title="Permalink to this heading">¶</a></h2>
 <p>In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.</p>
 <ol class="simple">
@@ -558,8 +558,8 @@ Vitis Model Composer can be used to create complex systems targeting the PL (RTL
 <p>Vitis Analyzer is then launched. From here you can see the <strong>Graph View</strong>, the <strong>Array View</strong>, the <strong>Timeline</strong>, and the <strong>Profile</strong> information.</p>
 <p><img alt="missing image" src="../../../../_images/Image_022.png" /></p>
 <p><img alt="missing image" src="../../../../_images/Image_023.png" /></p>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>Model Composer is a very efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks will be available in subsequent releases).</p>
 <p>This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.</p>
@@ -576,8 +576,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD058 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD058 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -105,11 +106,11 @@ function OptanonWrapper() { }
    <a href="https://github.com/Xilinx/Vitis-Tutorials/branches/all">See 2021.1 Vitis Application Acceleration Development Flow Tutorials</a>
   </td>
  </tr>
-</table><section id="dataflow-viewer-basics">
+</table><div class="section" id="dataflow-viewer-basics">
 <h1>Dataflow Viewer Basics<a class="headerlink" href="#dataflow-viewer-basics" title="Permalink to this heading">¶</a></h1>
 <p>The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible. The optimization is done in two parts - first, the compiler infers the parallel tasks and sets up the communication channels and the associated control; second, after the generated RTL design is simulated, you can analyze the performance of the DATAFLOW optimization. Due to this fact, the Dataflow viewer lets you see the dataflow structure inferred by the tool, inspect the channels (FIFO/PIPO), and examine the effect of channel depth on performance. Performance data is then back-annotated to the Dataflow viewer from the co-simulation results. The Dataflow viewer also displays a representation of the dataflow graph structure, showing the different processes and the underlying producer-consumer connections.</p>
 <p><strong>Tip:</strong> You must apply the DATAFLOW pragma or directive to your design for the Dataflow viewer to be populated. You can apply dataflow to the top-level function, or specify regions of a function, or loops. For more information, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/optdirectives.html#rdd1585343102486">set_directive_dataflow</a> in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).</p>
-<section id="taking-the-tour">
+<div class="section" id="taking-the-tour">
 <h2>Taking the tour<a class="headerlink" href="#taking-the-tour" title="Permalink to this heading">¶</a></h2>
 <p>As the first exercise in this tutorial you will synthesize the example design and bring up the Dataflow viewer to take a tour of the features of the viewer. In this lab, you will look at a simple <a class="reference external" href="./reference-files/dataflow/diamond.cpp">dataflow example</a>, found in the <code class="docutils literal notranslate"><span class="pre">reference-files/dataflow</span></code> folder.</p>
 <p>In this lab, you will:</p>
@@ -117,7 +118,7 @@ function OptanonWrapper() { }
 <li><p>Learn how to bring up the Dataflow viewer for a given dataflow region.</p></li>
 <li><p>Understand how to use the different features of the Dataflow viewer (both before and after cosimulation).</p></li>
 </ol>
-<section id="first-lab">
+<div class="section" id="first-lab">
 <h3>First Lab<a class="headerlink" href="#first-lab" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>Change directory to the <code class="docutils literal notranslate"><span class="pre">03-dataflow_debug_and_optimization/reference-files/dataflow</span></code> directory, you can launch the Vitis HLS GUI by issuing the following command:</p></li>
@@ -139,11 +140,11 @@ function OptanonWrapper() { }
 </li>
 </ol>
 <p>In the preceding figure there are four areas of interest:</p>
-<section id="module-hierarchy-view">
+<div class="section" id="module-hierarchy-view">
 <h4>Module Hierarchy View<a class="headerlink" href="#module-hierarchy-view" title="Permalink to this heading">¶</a></h4>
 <p>First is the <strong>Module Hierarchy</strong> view which shows the function hierarchy that is inside the top-level <code class="docutils literal notranslate"><span class="pre">diamond</span></code> function. In addition to displaying the module hierarchy, you can inspect the details of each sub-function in the hierarchy such as latency, II, and logic resource estimates.</p>
-</section>
-<section id="the-dataflow-graph-pane">
+</div>
+<div class="section" id="the-dataflow-graph-pane">
 <h4>The Dataflow Graph Pane<a class="headerlink" href="#the-dataflow-graph-pane" title="Permalink to this heading">¶</a></h4>
 <p>The second area of interest is the Dataflow Graph view which displays the connectivity between the functions inside the dataflow region in graph form. Ports of the dataflow region are represented by horizontal grey bars (see figure for the <code class="docutils literal notranslate"><span class="pre">vecIn</span></code> and <code class="docutils literal notranslate"><span class="pre">vecOut</span></code> ports).</p>
 <p>The nodes in the graph (shown as blue boxes) represent the functions or loops inside the dataflow region. Note that these might contain functions inferred by the compiler and not just functions defined by the user. These inferred functions will typically contain the suffix <code class="docutils literal notranslate"><span class="pre">_proc</span></code>.</p>
@@ -155,8 +156,8 @@ function OptanonWrapper() { }
 </ul>
 <p>The Dataflow Graph view has several useful features like the <code class="docutils literal notranslate"><span class="pre">Zoom</span> <span class="pre">In/Out</span></code> commands (the scroll mouse button can also be used to zoom in and out), <code class="docutils literal notranslate"><span class="pre">Zoom</span> <span class="pre">Fit</span></code>, and <code class="docutils literal notranslate"><span class="pre">Zoom</span> <span class="pre">Full</span></code> commands, displayed on the toolbar menu. In addition, FIFO channels can be shown grouped or ungrouped in the graph as can PIPO channels using the <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">All</span></code> and <code class="docutils literal notranslate"><span class="pre">Ungroup</span> <span class="pre">All</span></code> commands. Individual channel groups can be expanded or grouped using the <code class="docutils literal notranslate"><span class="pre">+</span></code> or <code class="docutils literal notranslate"><span class="pre">-</span></code> commands. Finally, there is a <code class="docutils literal notranslate"><span class="pre">Legend</span></code> command that displays the color syntax used in the graph.</p>
 <p>To the top right of the graph pane, the <code class="docutils literal notranslate"><span class="pre">Filter</span></code> icon lets you filter different channel subtypes such as stream/task level/scalar propagation FIFO as well as PIPO and stream of blocks.</p>
-</section>
-<section id="dataflow-properties-table">
+</div>
+<div class="section" id="dataflow-properties-table">
 <h4>Dataflow Properties Table<a class="headerlink" href="#dataflow-properties-table" title="Permalink to this heading">¶</a></h4>
 <p>At the bottom part of the GUI is the Dataflow Properties table which shows various details about the dataflow processes (or functions) and the dataflow channels.</p>
 <ol class="simple">
@@ -169,9 +170,9 @@ function OptanonWrapper() { }
 <blockquote>
 <div><p><strong>TIP:</strong> You can open the Dataflow viewer before running RTL co-simulation, but the viewer will not be able to show the important simulation performance details such as read/write block times, co-sim depth, and stall times.</p>
 </div></blockquote>
-</section>
-</section>
-<section id="viewing-the-dataflow-graph-after-rtl-co-simulation">
+</div>
+</div>
+<div class="section" id="viewing-the-dataflow-graph-after-rtl-co-simulation">
 <h3>Viewing the Dataflow Graph after RTL co-simulation<a class="headerlink" href="#viewing-the-dataflow-graph-after-rtl-co-simulation" title="Permalink to this heading">¶</a></h3>
 <p>After synthesis, you must run co-simulation. For more information, refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/cosimulationinvitishls.html#fwf1584724080811">C/RTL Co-Simulation in Vitis HLS</a> in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <ol>
@@ -201,8 +202,8 @@ The Co-simulation dialog box displays as shown in the figure below.</p>
 <p>Additionally, the <code class="docutils literal notranslate"><span class="pre">Cosim</span> <span class="pre">Category</span></code> column in the Process and Channel tables is used to categorize the processes/channels into one of the four possible self-explanatory states: “none”, “read_block”, “write_block” and “read_block and write_block”.</p>
 </li>
 </ol>
-</section>
-<section id="viewing-dataflow-performance-using-waveforms">
+</div>
+<div class="section" id="viewing-dataflow-performance-using-waveforms">
 <h3>Viewing Dataflow Performance using Waveforms<a class="headerlink" href="#viewing-dataflow-performance-using-waveforms" title="Permalink to this heading">¶</a></h3>
 <p>The Dataflow viewer by design can only show you the static view of the dataflow optimization. The graph shows the call-graph like structure of the dataflow region (as shown below). In this graph, you can get a sense of the throughput of your design by observing the II and Latency of each function along a given path.</p>
 <p><img alt="Throughput" src="../../../../_images/throughput.png" /></p>
@@ -239,17 +240,17 @@ The Co-simulation dialog box displays as shown in the figure below.</p>
 <li><p>The RTL level signals are also available for inspection when you expand the <code class="docutils literal notranslate"><span class="pre">RTL</span> <span class="pre">Signals</span></code> section.</p></li>
 <li><p>It should be noted that, in this default form of HLS dataflow (i.e., with PIPO channels only), successive communicating tasks in a kernel run do not overlap: <code class="docutils literal notranslate"><span class="pre">funcB</span></code> and <code class="docutils literal notranslate"><span class="pre">funcC</span></code> can only start once their buffer from <code class="docutils literal notranslate"><span class="pre">funcA</span></code> (ping or pong) is released. <code class="docutils literal notranslate"><span class="pre">funcB</span></code> and <code class="docutils literal notranslate"><span class="pre">funcC</span></code> could possibly start earlier, if FIFOs were used as an alternative channel to ping-pong buffers, when the data are consumed in the same order in which they are produced. PIPOs are generally used when data is written into the buffer in random order and therefore, the entire buffer is locked until all processing has been completed before releasing access to the buffer. FIFOs are generally used when you have a streaming type of application where data is consumed in the order that it is created. This allows for the consumer to start processing as soon as there is data in the FIFO.</p></li>
 </ul>
-</section>
-</section>
-<section id="next-step">
+</div>
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p><a class="reference internal" href="fifo_sizing_and_deadlocks.html"><span class="doc">FIFO Sizing and Deadlocks</span></a>: Review how to use the deadlock detection feature in the GUI and how to resize FIFOs to avoid deadlocks and achieve better performance.</p></li>
 </ol>
 </br>
 <hr/>
-<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

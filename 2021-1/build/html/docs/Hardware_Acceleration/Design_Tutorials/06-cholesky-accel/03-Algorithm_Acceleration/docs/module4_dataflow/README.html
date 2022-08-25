@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -145,7 +146,7 @@ For the <code>DATAFLOW</code> optimization to work, the data must flow through t
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</details><section id="code-modifications-for-the-cholesky-kernel">
+</details><div class="section" id="code-modifications-for-the-cholesky-kernel">
 <h1>Code modifications for the Cholesky kernel<a class="headerlink" href="#code-modifications-for-the-cholesky-kernel" title="Permalink to this heading">¶</a></h1>
 <p>In this module 4 the code for the algorithm is moved into the header file <code>cholesky_kernel.hpp</code>.</p>
 <p>There is now an explicit parallelization and the number of parallel compute, it is determined by <code class="docutils literal notranslate"><span class="pre">NCU</span></code>, a constant set in <code class="docutils literal notranslate"><span class="pre">cholesky_kernel.cpp</span></code> through <code class="docutils literal notranslate"><span class="pre">#define</span> <span class="pre">NCU</span> <span class="pre">16</span></code>.</p>
@@ -166,8 +167,8 @@ For the <code>DATAFLOW</code> optimization to work, the data must flow through t
 </div>
 <p>To ensure <code class="docutils literal notranslate"><span class="pre">DATAFLOW</span></code> is applied the dataA is divided into <code class="docutils literal notranslate"><span class="pre">NCU</span></code> portions.</p>
 <p>Finally the loop is unrolled with a factor <code class="docutils literal notranslate"><span class="pre">NCU</span></code> which implies we have <code class="docutils literal notranslate"><span class="pre">NCU</span></code> (i.e. 16) copies of <code class="docutils literal notranslate"><span class="pre">chol_col</span></code> created each working on a chunk of the data.</p>
-</section>
-<section id="running-the-design">
+</div>
+<div class="section" id="running-the-design">
 <h1>Running the design<a class="headerlink" href="#running-the-design" title="Permalink to this heading">¶</a></h1>
 <p>Same as in module 1:</p>
 <ul class="simple">
@@ -175,8 +176,8 @@ For the <code>DATAFLOW</code> optimization to work, the data must flow through t
 <li><p>run Vitis Analyzer</p></li>
 <li><p>run Vitis HLS and see how it offers a dataflow viewer that can be accessed by right-clicking on the function (<code>chol_col_wrapper</code>) in which dataflow is applied from the synthesis summary report. See <a class="reference external" href="../images/HLS_dataflow_anim.gif"><strong>this animation</strong></a> to see how to access it and confirm that the replications were applied.</p></li>
 </ul>
-</section>
-<section id="result-summary">
+</div>
+<div class="section" id="result-summary">
 <h1>Result Summary<a class="headerlink" href="#result-summary" title="Permalink to this heading">¶</a></h1>
 <p>Actual results comparing the runs for all modules including execution on the CPU<sup>(*)</sup>:</p>
 <table border="1" class="docutils">
@@ -217,11 +218,11 @@ For the <code>DATAFLOW</code> optimization to work, the data must flow through t
 </tr>
 </tbody>
 </table><p>(*): Reference CPU is the Intel® Xeon® Processor E5-2640 v3 (as available on Nimbix)</p>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h1>
 <p>This concludes this introductory tutorial on Vitis Hardware Acceleration. <a class="reference internal" href="../../../../README.html"><span class="doc">Click here</span></a> to find more Vitis design optimization tutorials.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
 
 
            </div>
