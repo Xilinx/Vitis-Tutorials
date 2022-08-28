@@ -30,12 +30,7 @@ At the end of this section, the design flow will generate a new directory (calle
 <summary>Make Steps</summary>
 
 ## Make Steps
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
-```bash
-cd Makefiles
-```
-
-The following options can be specified in the make steps. See the make steps for instructions how to apply them.
+To run the following `make` steps (for example, `make kernels`, `make xsa`, and so on), you must be in the `HLS/` folder. The following options can be specified in the `make` steps. Instructions for how to apply them are provided later in this section.
 
 * TARGET: it can be set to "hw" or "hw_emu" to build the design in hardware or hardware emulation flow. Default is "hw_emu".
 
