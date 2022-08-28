@@ -139,7 +139,8 @@ The following line instantiates the DSPLib FIR filter kernel, named chan_FIR (ch
 	dsplib::fir::sr_sym::fir_sr_sym_graph<DATA_TYPE, COEFF_TYPE, FIR_LEN_CHAN, SHIFT_CHAN, ROUND_MODE_CHAN, WINDOW_SIZE, AIES_CHAN> chan_FIR;
 ```
 
-The filter's template parameters and their meanings can be found in UG1295.
+The filter's template parameters and their meanings can be found in the DSP Library documentation.
+ * https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/rst/class_xf_dsp_aie_fir_sr_sym_fir_sr_sym_graph.html
 
 ```C++
 	port<input> in;
