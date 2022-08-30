@@ -17,6 +17,7 @@ The Xilinx Alveo Data Center accelerator cards provide networking connectivity s
 
 This simple tutorial illustrates the steps to include GTY transceivers in RTL kernel and integrate it in top level hardware overlay design with Vitis. Alveo U200 card is used as example platform and you could apply similar steps to other Alveo cards easily. Please note the example design in this tutorial has no realistic functions and is just used for methodology explaination here. Two lane number configurations (x1 and x4) are provided here.
 
+To finish the example design steps in this tutorial, you will need at least two license keys: **xxv_eth_mac_pcs** and **x_eth_mac**. You can refer to [10G/25G Ethernet Subsystem Ordering Instructions](https://www.xilinx.com/products/intellectual-property/ef-di-25gemac/ef-di-25gemac-order.html) for more information.
 
 ## Features and Design Overview
 
