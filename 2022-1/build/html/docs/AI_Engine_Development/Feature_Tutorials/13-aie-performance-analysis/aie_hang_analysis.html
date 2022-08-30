@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>AI Engine Deadlock Analysis &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>AI Engine Deadlock Analysis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/13-aie-performance-analysis/aie_hang_analysis.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  </table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="ai-engine-deadlock-analysis">
+<h1>AI Engine Deadlock Analysis<a class="headerlink" href="#ai-engine-deadlock-analysis" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<p>This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:</p>
+<ol class="simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">event</span></code> in Vitis Analyzer to analyze design hangs.</p></li>
+<li><p>Using waveforms in hardware emulation to check AI Engine input and output activities.</p></li>
+<li><p>Using event APIs to analyze data activities for AI Engine input and output in hardware flows.</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">xbutil</span></code> to report AI Engine and AI Engine shim status.</p></li>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">devmem</span></code> Linux command to probe AI Engine registers.</p></li>
+</ol>
+<p><strong>Note:</strong> The default working directory in this step is <code class="docutils literal notranslate"><span class="pre">testcase_nofifo_hang</span></code>, unless explicitly stated otherwise.</p>
+<div class="section" id="common-deadlock-scenarios">
+<h2>Common Deadlock Scenarios<a class="headerlink" href="#common-deadlock-scenarios" title="Permalink to this heading">¶</a></h2>
+<p>A deadlock is usually caused by insufficient FIFOs, or the access rate not matching between multiple FIFOs (or different branches of the same net in stream multicast). The following figure shows some deadlock scenarios:</p>
+<p><img alt="Deadlock Scenarios" src="../../../../_images/figure51.PNG" /></p>
+<p><strong>Scenario 1:</strong> This scenario occurs when K1 tries to write to FIFO0, but the FIFO is full. K2 is still waiting for data coming from FIFO1 before consuming data from FIFO0.</p>
+<p><strong>Scenario 2:</strong> This scenario occurs when NET0 multicasts to multiple destinations, and the destinations are connected by stream or cascade stream (FIFO1). The NET0 branch 1 is full because K2 is waiting for data from FIFO1, but K1 is still hungry for data from NET0 branch 0 to produce data for FIFO1.</p>
+<p><strong>Scenario 3:</strong> This scenario occurs when K1 and K2 are connected by buffers (including RTP buffers) and streams. When K1 is trying to write data to K2 using FIFO0, K2 is still trying to acquire lock for the ping or pong buffer. K1 will not release the lock of the buffer until it finishes its current iteration.</p>
+</div>
+<div class="section" id="ai-engine-deadlock-example-and-analysis-in-ai-engine-simulator">
+<h2>AI Engine Deadlock Example and Analysis in AI Engine Simulator<a class="headerlink" href="#ai-engine-deadlock-example-and-analysis-in-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
+<p>The example is similar to the one used in <a class="reference internal" href="aie_execution_measurement.html"><span class="doc">AI Engine Execution and Measurement</span></a>, except that it does not have a FIFO for the stream connection:</p>
+<p><img alt="Deadlock Example Graph" src="../../../../_images/figure61.PNG" /></p>
+<p>When the design stalls, <code class="docutils literal notranslate"><span class="pre">graph::wait()</span></code> and <code class="docutils literal notranslate"><span class="pre">graph::end()</span></code> hang. It needs to interrupt graph execution by:</p>
+<ul class="simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">graph::wait(CYCLE_NUMBER)</span></code>: specifying the number of cycles to wait for the API to return (if the graph does not return after <code class="docutils literal notranslate"><span class="pre">CYCLE_NUMBER</span></code> cycles, this API still returns immediately).</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">graph::end(CYCLE_NUMBER)</span></code>: specifying the number of cycles to wait for the graph to be ended (if the graph does not return after <code class="docutils literal notranslate"><span class="pre">CYCLE_NUMBER</span></code> cycles, this API still ends the graph immediately).</p></li>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">--simulation-cycle-timeout</span> <span class="pre">CYCLE_NUMBER</span></code> option for <code class="docutils literal notranslate"><span class="pre">aiesimulator</span></code>.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">CYCLE_NUMBER</span></code> should be large enough for AI Engine simulator to record all the stall events, or for hardware to run into hang status.</p>
+<ol>
+<li><p>In this example, examine <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>. We wait for 10000 cycles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gr</span><span class="o">.</span><span class="n">init</span><span class="p">();</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run AI Engine simulator using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
+</pre></div>
+</div>
+</li>
+<li><p>Open <strong>Trace</strong> view in Vitis Analyzer by using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">aiesimulator_output</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">aierun_summary</span>
+</pre></div>
+</div>
+<p><img alt="Trace View" src="../../../../_images/figure71.PNG" /></p>
+<p>The hang occurs after the following activities:</p>
+<p><strong>1:</strong> Kernel <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code> acquires the lock of read buffer (<code class="docutils literal notranslate"><span class="pre">buf0</span></code>) and write buffer (<code class="docutils literal notranslate"><span class="pre">buf1</span></code>).</p>
+<p><strong>2:</strong> Kernel <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code> starts.</p>
+<p><strong>3:</strong> Kernel hangs in stream stall.</p>
+<p><strong>4:</strong> S2mm is waiting for kernel <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code> to release buffer <code class="docutils literal notranslate"><span class="pre">buf0</span></code>.</p>
+</li>
+</ol>
+<div class="section" id="ai-engine-stall-analysis-with-vitis-analyzer">
+<h3>AI Engine Stall Analysis with Vitis Analyzer<a class="headerlink" href="#ai-engine-stall-analysis-with-vitis-analyzer" title="Permalink to this heading">¶</a></h3>
+<p>Vitis Analyzer can use the event trace from the AI Engine simulation to do stall analysis that shows an overview of the stall status in metrics. It also helps you determine where the stall has happened, and the possible causes.</p>
+<p>If you are using Vitis Analyzer to do stall analysis, run the AI Engine simulator with <code class="docutils literal notranslate"><span class="pre">--online</span> <span class="pre">-wdb</span> <span class="pre">-ctf</span></code> options to generate event trace information in the background:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+aiesimulator --pkg-dir=./Work --online -wdb -ctf
+```
+</pre></div>
+</div>
+<p><strong>Note:</strong> For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the <em>Versal ACAP AI Engine Programming Environment User Guide</em> (<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076</a>).</p>
+<p>In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls in the design:</p>
+<p><img alt="Performance Metrics View" src="../../../../_images/a.PNG" /></p>
+<p>Each tile shows percentages for each type of stall. From the metrics table, it can be seen that tile (24,0) has a large percentage of lock stall (99.161%), and tile (25,0) has a large percentage of stream stall (98.627%). These metrics indicate that the design is hanging, and that analysis is required.</p>
+<p>In the Graph view of Vitis Analzyer, you can visualize the stalled path in the graph, which can give an indication of where the stall has happened in the design. By understanding the design behavior, it is also possible to estimate what the cause of the hang might be.</p>
+<p>For example, as the following figure shows, in this design, kernel <code class="docutils literal notranslate"><span class="pre">k[0]</span></code> hangs in stream stall. The full destination port is <code class="docutils literal notranslate"><span class="pre">gr.k[1]/in</span></code>, which means that the destination kernel <code class="docutils literal notranslate"><span class="pre">k[1]</span></code> is not receiving data from the stream.</p>
+<p><img alt="Stream stall in Graph View" src="../../../../_images/b.PNG" /></p>
+<p>Switch to <strong>Lock Stalls</strong> in the Stalls view, and select the stall. The red path to kernel <code class="docutils literal notranslate"><span class="pre">k[1]</span></code> shows that it is trying to acquire the lock of the input buffer, but without success. The blue path shows that kernel <code class="docutils literal notranslate"><span class="pre">k[0]</span></code> is holding the lock of the buffer.</p>
+<p><img alt="Lock stall in Graph View" src="../../../../_images/c.PNG" /></p>
+<p>From the above analysis, the cause of the hang is given. The direct resolution, without modifying kernel code, is to increase the FIFO size between the two kernels.</p>
+<p>For more information about AI Engine stall analysis feature, refer to the <em>Versal ACAP AI Engine Programming Environment User Guide</em> (<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076</a>).</p>
+</div>
+</div>
+<div class="section" id="ai-engine-deadlock-detection-in-the-hardware-emulation-flow">
+<h2>AI Engine Deadlock Detection in the Hardware Emulation Flow<a class="headerlink" href="#ai-engine-deadlock-detection-in-the-hardware-emulation-flow" title="Permalink to this heading">¶</a></h2>
+<p>Like AI Engine simulator, the hardware emulation flow can also dump VCD for AI Engine. To dump VCD, write <code class="docutils literal notranslate"><span class="pre">AIE_DUMP_VCD=foo</span></code> in a file and specify this file for the <code class="docutils literal notranslate"><span class="pre">-aie-sim-options</span></code> option of <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code>.</p>
+<p>It is usually helpful to view the input and output of AI Engine in the waveform. The <code class="docutils literal notranslate"><span class="pre">-g</span></code> option can be added to <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> to launch the XSIM waveform. The command looks like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+./launch_hw_emu.sh -g -aie-sim-options ./sim_options.txt
+```
+</pre></div>
+</div>
+<p>When the XSIM GUI pops up, add <code class="docutils literal notranslate"><span class="pre">ai_engine_0</span></code> or the PL kernels’ signals to the waveform. Click <strong>Start</strong> in XSIM. In the Linux prompt, run the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+cd /run/media/mmcblk0p1
+./host.exe a.xclbin
+```
+</pre></div>
+</div>
+<p>After the PS code completes in Linux, check the input to the AI Engine <code class="docutils literal notranslate"><span class="pre">S00_AXIS</span></code> and the output from the AI Engine <code class="docutils literal notranslate"><span class="pre">M00_AXIS</span></code>:</p>
+<p><img alt="XSIM" src="../../../../_images/figure81.PNG" /></p>
+<p>After the PS receives 104 samples, the design hangs. <code class="docutils literal notranslate"><span class="pre">TVALID</span></code> is always High, indicating that the PL kernel <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> is still trying to send data to the AI Engine, but <code class="docutils literal notranslate"><span class="pre">TREADY</span></code> from the AI Engine turns to Low, and remains Low. There are also no samples from the AI Engine to the PL in the <code class="docutils literal notranslate"><span class="pre">M00_AXIS</span></code> interface of the AI Engine.</p>
+<p>Analysis of the VDC file in Vitis Analyzer is similar to analysis in AI Engine simulator. A workaround is to move the VCD file generated by the hardware emulation flow to the working directory and open it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+vitis_analyzer aiesimulator_output/default.aierun_summary
+```
+</pre></div>
+</div>
+</div>
+<div class="section" id="ai-engine-deadlock-detection-in-the-hardware-flow">
+<h2>AI Engine Deadlock Detection in the Hardware Flow<a class="headerlink" href="#ai-engine-deadlock-detection-in-the-hardware-flow" title="Permalink to this heading">¶</a></h2>
+<p>If a deadlock does not show in the AI Engine simulator or hardware emulation flows, it might still show in the hardware flow.</p>
+<p>The PS code to profile how much data has been transferred for the input and output is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+event::handle handle = event::start_profiling(*dout, event::io_stream_running_event_count);
+event::handle handle2 = event::start_profiling(*din, event::io_stream_running_event_count);
+if(handle==event::invalid_handle || handle2==event::invalid_handle){
+	printf(&quot;ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n&quot;);
+	return 1;
+}
+
+//kernel run
+auto s2mm_run = s2mm(out_bo, nullptr, OUTPUT_SIZE);//1st run for s2mm has started
+auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
+gr.run(4);
+// Wait graph for some cycles
+gr.wait(50000); // wait for AIE kernel to complete or at most 50000 cycles
+
+long long data_out_count = event::read_profiling(handle);
+long long data_in_count = event::read_profiling(handle2);
+event::stop_profiling(handle);
+event::stop_profiling(handle2);
+std::cout&lt;&lt;&quot;Output data received:&quot;&lt;&lt;data_out_count&lt;&lt;std::endl;
+std::cout&lt;&lt;&quot;Input data sent:&quot;&lt;&lt;data_in_count&lt;&lt;std::endl;
+```
+</pre></div>
+</div>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> needs to be started after <code class="docutils literal notranslate"><span class="pre">event::start_profiling</span></code>. Otherwise, the data transfer begins after <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> starts, and that happens before <code class="docutils literal notranslate"><span class="pre">event::start_profiling</span></code> and <code class="docutils literal notranslate"><span class="pre">gr.run(4)</span></code>.</p>
+<p>The output is similar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```
+Output data received:0
+Input data sent:104
+```
+</pre></div>
+</div>
+<p>From how much data has been transferred for the input and output, the status of the design can be estimated. The <code class="docutils literal notranslate"><span class="pre">graph.wait(50000)</span></code> in the above code can be replaced with <code class="docutils literal notranslate"><span class="pre">sleep</span></code> or <code class="docutils literal notranslate"><span class="pre">usleep</span></code> APIs to wait a certain amount of time depending on the scale of the design.</p>
+<p>If necessary, an Integrated Logic Analyzer (ILA) can be inserted to probe the interfaces of the PL kernels to detect the AI Engine and PL kernels’ running status.</p>
+<p>Refer to <a class="reference internal" href="aie_status_analysis.html"><span class="doc">AI Engine Status Analysis</span></a> for how to use Vitis Analyzer to understand the AI Engine status in both hardware and hardware emulation.</p>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
+<p>After completing this tutorial, you have learned how to detect and analyze design hang issues.</p>
+</div>
+</div>
+<div class="section" id="appendix-optional">
+<h2>Appendix (Optional)<a class="headerlink" href="#appendix-optional" title="Permalink to this heading">¶</a></h2>
+<p>This section provides details of other methods of detecting and analyzing AI Engine running status.</p>
+<div class="section" id="manual-dump-and-register-reading-to-detect-ai-engine-status-in-hardware-emulation-and-hardware">
+<h3>Manual Dump and Register Reading to Detect AI Engine Status in Hardware Emulation and Hardware<a class="headerlink" href="#manual-dump-and-register-reading-to-detect-ai-engine-status-in-hardware-emulation-and-hardware" title="Permalink to this heading">¶</a></h3>
+<ul>
+<li><p><strong>Using <code class="docutils literal notranslate"><span class="pre">xbutil</span></code> to report graph running status:</strong> The following command can be used to report graph running status:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xbutil</span> <span class="n">examine</span> <span class="o">-</span><span class="n">r</span> <span class="n">aie</span> <span class="o">-</span><span class="n">d</span> <span class="mi">0000</span><span class="p">:</span><span class="mf">00.0</span>
+</pre></div>
+</div>
+<p>The output of above command is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  ```
+  --------------------------
+  1/1 [0000:00:00.0] : edge
+  --------------------------
+  Aie
+    Aie_Metadata
+    GRAPH[ 0] Name      : gr
+              Status    : idle
+      SNo.  Core [C:R]          Iteration_Memory [C:R]        Iteration_Memory_Addresses    
+      [ 0]   24:1                24:0                          8324                          
+      [ 1]   25:1                24:0                          7012                          
+
+  Core [ 0]
+      Column                : 24
+      Row                   : 1
+      Core:
+          Status                : east_lock_stall
+          Program Counter       : 0x000001f0
+          Link Register         : 0x000000b0
+          Stack Pointer         : 0x0003a100
+      DMA:
+          MM2S:
+              Channel:
+                  Id                    : 0
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+                  Id                    : 1
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+          S2MM:
+              Channel:
+                  Id                    : 0
+                  Channel Status        : stalled_on_requesting_lock
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+                  Id                    : 1
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+      Locks:
+          0                     : acquired_for_read
+          1                     : released_for_read
+          2                     : acquired_for_write
+          3                     : released_for_write
+          4                     : released_for_write
+          5                     : released_for_write
+          6                     : released_for_write
+          7                     : released_for_write
+          8                     : released_for_write
+          9                     : released_for_write
+          10                    : released_for_write
+          11                    : released_for_write
+          12                    : released_for_write
+          13                    : released_for_write
+          14                    : released_for_write
+          15                    : released_for_write
+
+      Events:
+          core                  : 1, 2, 5, 22, 26, 28, 29, 31, 32, 35, 38, 39, 44, 73, 74, 78, 82, 86, 90, 94, 98, 102, 106, 114
+          memory                : 1, 20, 21, 25, 33, 43, 44, 45, 46, 47, 48, 106, 113
+
+  Core [ 1]
+      Column                : 25
+      Row                   : 1
+      Core:
+          Status                : stream_stall_ms0
+          Program Counter       : 0x000003f0
+          Link Register         : 0x00000260
+          Stack Pointer         : 0x00029c20
+      DMA:
+          MM2S:
+              Channel:
+                  Id                    : 0
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+                  Id                    : 1
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+          S2MM:
+              Channel:
+                  Id                    : 0
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+                  Id                    : 1
+                  Channel Status        : idle
+                  Queue Size            : 0
+                  Queue Status          : okay
+                  Current BD            : 0
+
+      Locks:
+          0                     : released_for_write
+          1                     : released_for_write
+          2                     : released_for_write
+          3                     : released_for_write
+          4                     : released_for_write
+          5                     : released_for_write
+          6                     : released_for_write
+          7                     : released_for_write
+          8                     : released_for_write
+          9                     : released_for_write
+          10                    : released_for_write
+          11                    : released_for_write
+          12                    : released_for_write
+          13                    : released_for_write
+          14                    : released_for_write
+          15                    : released_for_write
+
+      Events:
+          core                  : 1, 2, 5, 22, 24, 28, 29, 31, 32, 35, 38, 39, 41, 44, 73, 74, 75, 76, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 94, 95, 96, 98, 99, 100, 102, 103, 104, 106, 114
+          memory                : 1
+  		```
+</pre></div>
+</div>
+<p><strong>Tip:</strong> If a design hangs in Linux, press <strong>Ctrl+Z</strong> to suspend the design and run command.</p>
+<p>It is seen that <code class="docutils literal notranslate"><span class="pre">core[0]</span></code> (tile_24_1, <code class="docutils literal notranslate"><span class="pre">aie_dest2</span></code>)  is in the status <code class="docutils literal notranslate"><span class="pre">east_lock_stall</span></code>, and <code class="docutils literal notranslate"><span class="pre">core[1]</span></code> (tile_25_1, <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code>) is in the status <code class="docutils literal notranslate"><span class="pre">stream_stall_ms0</span></code>. That is to say, <code class="docutils literal notranslate"><span class="pre">aie_dest1</span></code> is trying to write to the consumer <code class="docutils literal notranslate"><span class="pre">aie_dest2</span></code>, while <code class="docutils literal notranslate"><span class="pre">aie_dest2</span></code> is still trying to acquire lock to start.</p>
+<p><strong>Tip:</strong> Cross-probe between <strong>Graph</strong> and <strong>Array</strong> view in Vitis Analyzer to understand kernels, buffers, and the locations of ports.
+`</p>
+</li>
+<li><p><strong>Using <code class="docutils literal notranslate"><span class="pre">devmem</span></code> to probe AI Engine registers to see AI Engine status:</strong> By using the <code class="docutils literal notranslate"><span class="pre">devmem</span></code> command, you can read AI Engine registers to see the AI Engine internal status. The register reference can be found in the <em>Versal ACAP AI Engine Register Reference</em> (<a class="reference external" href="https://www.xilinx.com/html_docs/registers/am015/am015-versal-aie-register-reference.html">AM015</a>).</p>
+<p>For example, the core status registers can be found here:</p>
+<p><img alt="core status" src="../../../../_images/figure111.PNG" /></p>
+<p>Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  root@versal-rootfs-common-2022_1:/run/media/mmcblk0p1# devmem 0x2000C872004
+  0x00001000
+  root@versal-rootfs-common-2022_1:/run/media/mmcblk0p1# devmem 0x2000C072004 
+  0x00000200
+  ```
+</pre></div>
+</div>
+<p>Value <code class="docutils literal notranslate"><span class="pre">0x00001000</span></code> indicates that it is <code class="docutils literal notranslate"><span class="pre">Stream_Stall_MS0</span></code>, and value <code class="docutils literal notranslate"><span class="pre">0x00000200</span></code> indicates that it is <code class="docutils literal notranslate"><span class="pre">Lock_Stall_E</span></code>. The analysis of the result is similar to using <code class="docutils literal notranslate"><span class="pre">xbutil</span></code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD051 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

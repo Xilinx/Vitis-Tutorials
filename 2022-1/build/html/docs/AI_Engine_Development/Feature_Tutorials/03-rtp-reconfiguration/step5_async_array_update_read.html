@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Asynchronous Array RTP Update and Read for AI Engine Kernel &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Asynchronous Array RTP Update and Read for AI Engine Kernel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/03-rtp-reconfiguration/step5_async_array_update_read.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="asynchronous-array-rtp-update-and-read-for-ai-engine-kernel">
+<h1>Asynchronous Array RTP Update and Read for AI Engine Kernel<a class="headerlink" href="#asynchronous-array-rtp-update-and-read-for-ai-engine-kernel" title="Permalink to this heading">¶</a></h1>
+<p>This step demonstrates:</p>
+<ul class="simple">
+<li><p>The Array RTP update for AI Engine kernels</p></li>
+<li><p>Asynchronous read of Array RTP for AI Engine kernels</p></li>
+<li><p>C++ version of XRT API to control PL kernels</p></li>
+<li><p>C++ version of XRT API to control graph execution</p></li>
+</ul>
+<p>The example design is similar to <a class="reference internal" href="step4_async_aie_array.html"><span class="doc">Asynchronous Update of Scalar RTP for PL inside a Graph, and Array RTP Update for AI Engine Kernel</span></a>, except that the AI Engine kernel has an asynchronous output, and the PL kernel inside the graph is pulled out of the graph. The example shows how to perform asynchronous reads of array RTP by the ADF API and the XRT API. The PL kernels and graph execution are controlled by the C++ version of the XRT API. This differs from the previous steps which used the OpenCL API or the C version of the XRT API.</p>
+<p>The system to be implemented is as follows:</p>
+<p><img alt="missing image" src="../../../../_images/figure9.PNG" /></p>
+<p><strong>Note</strong>: The default working directory in this step is “step5”, unless explicitly specified otherwise.</p>
+<div class="section" id="review-graph-and-rtp-code">
+<h2>Review Graph and RTP Code<a class="headerlink" href="#review-graph-and-rtp-code" title="Permalink to this heading">¶</a></h2>
+<p>In the AI Engine kernel code (<code class="docutils literal notranslate"><span class="pre">aie/kernels/hb24.cc</span></code>), the interface is declared as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">fir24_sym</span><span class="p">(</span><span class="n">input_window</span><span class="o">&lt;</span><span class="n">cint16</span><span class="o">&gt;</span> <span class="o">*</span> <span class="n">iwin</span><span class="p">,</span> <span class="n">output_window</span><span class="o">&lt;</span><span class="n">cint16</span><span class="o">&gt;</span> <span class="o">*</span> <span class="n">owin</span><span class="p">,</span>  <span class="n">const</span> <span class="n">int32</span><span class="p">(</span><span class="o">&amp;</span><span class="n">coeffs</span><span class="p">)[</span><span class="mi">12</span><span class="p">],</span> <span class="n">int32</span><span class="p">(</span><span class="o">&amp;</span><span class="n">coeffs_readback</span><span class="p">)[</span><span class="mi">12</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>For the RTP array input, <code class="docutils literal notranslate"><span class="pre">const</span></code> is used for the array reference. From the graph, the RTP port can only be <code class="docutils literal notranslate"><span class="pre">input</span></code> or <code class="docutils literal notranslate"><span class="pre">inout</span></code>. The <code class="docutils literal notranslate"><span class="pre">inout</span></code> port in the graph can only be read by the PS program, it cannot be written by the PS program. Therefore, another port <code class="docutils literal notranslate"><span class="pre">coeffs_readback</span></code> is defined to read back the coefficient.</p>
+<p>In the graph definition (<code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>), the RTP declaration and connection are added as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">port</span><span class="o">&lt;</span><span class="n">direction</span><span class="p">::</span><span class="ow">in</span><span class="o">&gt;</span> <span class="n">coefficients</span><span class="p">;</span>
+<span class="n">port</span><span class="o">&lt;</span><span class="n">direction</span><span class="p">::</span><span class="n">inout</span><span class="o">&gt;</span> <span class="n">coefficients_readback</span><span class="p">;</span>
+<span class="n">connect</span><span class="o">&lt;</span> <span class="n">parameter</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="k">async</span><span class="p">(</span><span class="n">fir24</span><span class="o">.</span><span class="ow">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+<span class="n">connect</span><span class="o">&lt;</span> <span class="n">parameter</span> <span class="o">&gt;</span><span class="p">(</span><span class="k">async</span><span class="p">(</span><span class="n">fir24</span><span class="o">.</span><span class="n">inout</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">coefficients_readback</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code> (for AI Engine simulator), the RTP update and read commands are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">narrow_filter</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> <span class="o">//</span> <span class="n">start</span> <span class="n">PL</span> <span class="n">kernel</span> <span class="o">&amp;</span> <span class="n">AIE</span> <span class="n">kernel</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients_readback</span><span class="p">,</span><span class="n">coeffs_readback</span><span class="p">,</span><span class="mi">12</span><span class="p">);</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span> <span class="o">//</span> <span class="n">wait</span> <span class="n">PL</span> <span class="n">kernel</span> <span class="o">&amp;</span> <span class="n">AIE</span> <span class="n">kernel</span> <span class="n">to</span> <span class="n">complete</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients_readback</span><span class="p">,</span><span class="n">coeffs_readback</span><span class="p">,</span><span class="mi">12</span><span class="p">);</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">wide_filter</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> <span class="o">//</span> <span class="n">start</span> <span class="n">PL</span> <span class="n">kernel</span> <span class="o">&amp;</span> <span class="n">AIE</span> <span class="n">kernel</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients_readback</span><span class="p">,</span><span class="n">coeffs_readback</span><span class="p">,</span><span class="mi">12</span><span class="p">);</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Because the RTP read is asynchronous, it can not ensure that reads are happening in between kernels running. Only after graph <code class="docutils literal notranslate"><span class="pre">wait()</span></code> runs (which is a synchronization point), are the coefficients updated and can be read back.</p>
+</div>
+<div class="section" id="run-ai-engine-compiler-and-ai-engine-simulator">
+<h2>Run AI Engine Compiler and AI Engine Simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
+<p>Compile the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) using the AI Engine compiler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
+</pre></div>
+</div>
+<p>The corresponding AI Engine compiler command is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>aiecompiler -platform=$PLATFORM_REPO_PATHS/xilinx_vck190_es1_base_202210_1/xilinx_vck190_es1_base_202210_1.xpfm -include=&quot;./aie&quot; -include=&quot;./data&quot; -include=&quot;./aie/kernels&quot; -include=&quot;./&quot; -workdir=./Work aie/graph.cpp
+</pre></div>
+</div>
+<p>After the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) has been generated, verify for correctness using the AI Engine simulator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-hardware-cosimulation-and-hardware-flow">
+<h2>Run Hardware Cosimulation and Hardware Flow<a class="headerlink" href="#run-hardware-cosimulation-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
+<p>The Makefile rule targets introduced in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous update of Scalar RTP</span></a>, <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP</span></a> and <a class="reference internal" href="step3_async_array.html"><span class="doc">Asynchronous Update of Array RTP</span></a> still apply here.</p>
+<p>Details about tool options and host code in <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP for PL inside a Graph</span></a>, and <a class="reference internal" href="step4_async_aie_array.html"><span class="doc">Array RTP Update for AI Engine Kernel</span></a> are similar. This section only focuses on the different part.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>, the C++ version of the XRT API is used to control PL kernels outside of the graph:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Open</span> <span class="n">xclbin</span>
+<span class="n">auto</span> <span class="n">device</span> <span class="o">=</span> <span class="n">xrt</span><span class="p">::</span><span class="n">device</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="o">//</span><span class="n">device</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">auto</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">load_xclbin</span><span class="p">(</span><span class="n">xclbinFilename</span><span class="p">);</span>
+<span class="n">auto</span> <span class="n">dhdl</span> <span class="o">=</span> <span class="n">xrtDeviceOpenFromXcl</span><span class="p">(</span><span class="n">device</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">s2mm</span> <span class="o">&amp;</span> <span class="n">random_noise</span> <span class="n">kernel</span> <span class="n">handle</span>
+<span class="n">auto</span> <span class="n">s2mm</span> <span class="o">=</span> <span class="n">xrt</span><span class="p">::</span><span class="n">kernel</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="s2">&quot;s2mm&quot;</span><span class="p">);</span>
+<span class="n">auto</span> <span class="n">random_noise</span> <span class="o">=</span> <span class="n">xrt</span><span class="p">::</span><span class="n">kernel</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="s2">&quot;random_noise&quot;</span><span class="p">);</span>
+
+<span class="o">//</span> <span class="n">output</span> <span class="n">memory</span>
+<span class="n">auto</span> <span class="n">out_bo</span> <span class="o">=</span> <span class="n">xrt</span><span class="p">::</span><span class="n">bo</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">output_size_in_bytes</span><span class="p">,</span><span class="n">s2mm</span><span class="o">.</span><span class="n">group_id</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+<span class="n">auto</span> <span class="n">host_out</span><span class="o">=</span><span class="n">out_bo</span><span class="o">.</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="nb">complex</span><span class="o">&lt;</span><span class="n">short</span><span class="o">&gt;*&gt;</span><span class="p">();</span>
+
+<span class="o">//</span><span class="n">kernel</span> <span class="n">run</span>
+<span class="n">auto</span> <span class="n">s2mm_run</span> <span class="o">=</span> <span class="n">s2mm</span><span class="p">(</span><span class="n">out_bo</span><span class="p">,</span> <span class="n">nullptr</span><span class="p">,</span> <span class="n">OUTPUT_SIZE</span><span class="p">);</span><span class="o">//</span><span class="mi">1</span><span class="n">st</span> <span class="n">run</span> <span class="k">for</span> <span class="n">s2mm</span> <span class="n">has</span> <span class="n">started</span>
+<span class="n">auto</span> <span class="n">random_noise_run</span> <span class="o">=</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">nullptr</span><span class="p">,</span> <span class="n">OUTPUT_SIZE</span><span class="p">);</span>
+
+<span class="o">...</span> <span class="o">//</span><span class="n">About</span> <span class="n">graph</span> <span class="n">control</span>
+
+<span class="o">//</span> <span class="n">wait</span> <span class="k">for</span> <span class="n">s2mm</span> <span class="n">done</span>
+<span class="n">auto</span> <span class="n">state</span> <span class="o">=</span> <span class="n">s2mm_run</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;s2mm completed with status(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">state</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+
+<span class="n">out_bo</span><span class="o">.</span><span class="n">sync</span><span class="p">(</span><span class="n">XCL_BO_SYNC_BO_FROM_DEVICE</span><span class="p">);</span>
+
+<span class="o">...</span> <span class="o">//</span><span class="n">Post</span><span class="o">-</span><span class="n">processing</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">adf</span></code> API to control graph execution is similar to that used in the previous step. In this step, the C++ verion of XRT API to control graph execution is introduced. They can be switched by a user-defined macro <code class="docutils literal notranslate"><span class="pre">__USE_ADF_API__</span></code>. The C++ XRT API to update and read the array RTP is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">narrow_filter</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">180</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="o">-</span><span class="mi">391</span><span class="p">,</span> <span class="o">-</span><span class="mi">720</span><span class="p">,</span> <span class="o">-</span><span class="mi">834</span><span class="p">,</span> <span class="o">-</span><span class="mi">478</span><span class="p">,</span> <span class="mi">505</span><span class="p">,</span> <span class="mi">2063</span><span class="p">,</span> <span class="mi">3896</span><span class="p">,</span> <span class="mi">5535</span><span class="p">,</span> <span class="mi">6504</span><span class="p">};</span>
+<span class="nb">int</span> <span class="n">wide_filter</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">21</span><span class="p">,</span> <span class="o">-</span><span class="mi">249</span><span class="p">,</span> <span class="mi">319</span><span class="p">,</span> <span class="o">-</span><span class="mi">78</span><span class="p">,</span> <span class="o">-</span><span class="mi">511</span><span class="p">,</span> <span class="mi">977</span><span class="p">,</span> <span class="o">-</span><span class="mi">610</span><span class="p">,</span> <span class="o">-</span><span class="mi">844</span><span class="p">,</span> <span class="mi">2574</span><span class="p">,</span> <span class="o">-</span><span class="mi">2754</span><span class="p">,</span> <span class="o">-</span><span class="mi">1066</span><span class="p">,</span> <span class="mi">18539</span><span class="p">};</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;size of cofficient read back:&quot;</span><span class="o">&lt;&lt;</span><span class="n">sizeof</span><span class="p">(</span><span class="n">coeffs_readback</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;size of filter&quot;</span><span class="o">&lt;&lt;</span><span class="n">sizeof</span><span class="p">(</span><span class="n">narrow_filter</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">auto</span> <span class="n">ghdl</span><span class="o">=</span><span class="n">xrt</span><span class="p">::</span><span class="n">graph</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="n">uuid</span><span class="p">,</span><span class="s2">&quot;gr&quot;</span><span class="p">);</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;gr.fir24.in[1]&quot;</span><span class="p">,</span><span class="n">narrow_filter</span><span class="p">);</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;gr.fir24.inout[0]&quot;</span><span class="p">,</span> <span class="n">coeffs_readback</span><span class="p">);</span><span class="o">//</span><span class="n">Async</span> <span class="n">read</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Graph wait done&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;gr.fir24.inout[0]&quot;</span><span class="p">,</span><span class="n">coeffs_readback</span><span class="p">);</span><span class="o">//</span><span class="n">read</span> <span class="n">after</span> <span class="n">gr</span><span class="o">.</span><span class="n">wait</span><span class="p">,</span> <span class="n">gr</span><span class="o">.</span><span class="n">update</span> <span class="n">has</span> <span class="n">been</span> <span class="n">taken</span> <span class="n">effective</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+
+<span class="o">//</span><span class="n">second</span> <span class="n">run</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;gr.fir24.in[1]&quot;</span><span class="p">,</span><span class="n">wide_filter</span><span class="p">);</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="n">ghdl</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;gr.fir24.inout[0]&quot;</span><span class="p">,</span> <span class="n">coeffs_readback</span><span class="p">);</span><span class="o">//</span><span class="n">Async</span> <span class="n">read</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Coefficients read back are:&quot;</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">12</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+	<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">coeffs_readback</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command to build the host exectuable file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">host</span>
+</pre></div>
+</div>
+<p>Notice the following linker script links libraries <code class="docutils literal notranslate"><span class="pre">adf_api_xrt</span></code>, and <code class="docutils literal notranslate"><span class="pre">xrt_coreutil</span></code>, which are necessary for the <code class="docutils literal notranslate"><span class="pre">adf</span></code> API to work together with the <code class="docutils literal notranslate"><span class="pre">XRT</span></code> API.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+</pre></div>
+</div>
+<p>Run the following make command to build all necessary files and launch HW cosimulation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_hw_emu</span>
+</pre></div>
+</div>
+<p>In the Linux prompt, run following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">export</span> <span class="n">XILINX_XRT</span><span class="o">=/</span><span class="n">usr</span>
+<span class="n">export</span> <span class="n">XCL_EMULATION_MODE</span><span class="o">=</span><span class="n">hw_emu</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>To exit QEMU press Ctrl+A, x</p>
+<p>For hw mode, run following make command to generate an SD card package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">package</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
+</pre></div>
+</div>
+<p>In hardware, after booting Linux from the SD card, run following commands in the Linux prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">export</span> <span class="n">XILINX_XRT</span><span class="o">=/</span><span class="n">usr</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print a message similar to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Coefficients</span> <span class="n">read</span> <span class="n">back</span> <span class="n">are</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span>     <span class="o">-</span><span class="mi">80</span><span class="p">,</span>    <span class="o">-</span><span class="mi">391</span><span class="p">,</span>   <span class="o">-</span><span class="mi">720</span><span class="p">,</span>   <span class="o">-</span><span class="mi">834</span><span class="p">,</span>   <span class="o">-</span><span class="mi">478</span><span class="p">,</span>   <span class="mi">505</span><span class="p">,</span>    <span class="mi">2063</span><span class="p">,</span>   <span class="mi">3896</span><span class="p">,</span>   <span class="mi">5535</span><span class="p">,</span>   <span class="mi">6504</span><span class="p">,</span>
+<span class="n">Graph</span> <span class="n">wait</span> <span class="n">done</span>
+<span class="n">Coefficients</span> <span class="n">read</span> <span class="n">back</span> <span class="n">are</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span>     <span class="o">-</span><span class="mi">80</span><span class="p">,</span>    <span class="o">-</span><span class="mi">391</span><span class="p">,</span>   <span class="o">-</span><span class="mi">720</span><span class="p">,</span>   <span class="o">-</span><span class="mi">834</span><span class="p">,</span>   <span class="o">-</span><span class="mi">478</span><span class="p">,</span>   <span class="mi">505</span><span class="p">,</span>    <span class="mi">2063</span><span class="p">,</span>   <span class="mi">3896</span><span class="p">,</span>   <span class="mi">5535</span><span class="p">,</span>   <span class="mi">6504</span><span class="p">,</span>
+<span class="n">Update</span> <span class="n">fir24</span> <span class="n">done</span>
+<span class="n">Coefficients</span> <span class="n">read</span> <span class="n">back</span> <span class="n">are</span><span class="p">:</span><span class="o">-</span><span class="mi">21</span><span class="p">,</span> <span class="o">-</span><span class="mi">249</span><span class="p">,</span>   <span class="mi">319</span><span class="p">,</span>    <span class="o">-</span><span class="mi">78</span><span class="p">,</span>    <span class="o">-</span><span class="mi">511</span><span class="p">,</span>   <span class="mi">977</span><span class="p">,</span>    <span class="o">-</span><span class="mi">610</span><span class="p">,</span>   <span class="o">-</span><span class="mi">844</span><span class="p">,</span>   <span class="mi">2574</span><span class="p">,</span>   <span class="o">-</span><span class="mi">2754</span><span class="p">,</span>  <span class="o">-</span><span class="mi">1066</span><span class="p">,</span>  <span class="mi">18539</span><span class="p">,</span>
+<span class="n">s2mm</span> <span class="n">completed</span> <span class="k">with</span> <span class="n">status</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">TEST</span> <span class="n">PASSED</span>
+</pre></div>
+</div>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
+<p>In this tutorial you learned about:</p>
+<ul class="simple">
+<li><p>The concepts of synchronous and asynchronous scalar RTP</p></li>
+<li><p>Asynchronous array RTP</p></li>
+<li><p>Asynchronous array RTP read</p></li>
+<li><p>Launching AI Engine simulator, HW cosimulation, and HW</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD001 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

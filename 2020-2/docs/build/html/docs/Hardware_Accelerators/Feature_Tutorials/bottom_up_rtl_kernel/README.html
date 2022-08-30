@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Bottom-up RTL Kernel Flow with Vitis for Acceleration &mdash; Vitis™ Tutorials 2020.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2020.2
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Introduction/README.html">Introduction to Vitis Hardware Accelerators Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/01-convolution-tutorial/README.html">Accelerating Video Convolution Filtering Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/03-rtl_stream_kernel_integration/README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/04-traveling-salesperson/README.html">The Travelling Salesman Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Design_Tutorials/05-bottom_up_rtl_kernel/README.html">Bottom-up RTL Kernel Flow with Vitis for Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-dataflow_debug_and_optimization/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Runtime_and_System_Optimization/Feature_Tutorials/04-using-hbm/README.html">Using HBM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.html">Versal Custom Platform Creation Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Bottom-up RTL Kernel Flow with Vitis for Acceleration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Accelerators/Feature_Tutorials/bottom_up_rtl_kernel/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="bottom-up-rtl-kernel-flow-with-vitis-for-acceleration">
+<h1>Bottom-up RTL Kernel Flow with Vitis for Acceleration<a class="headerlink" href="#bottom-up-rtl-kernel-flow-with-vitis-for-acceleration" title="Permalink to this heading">¶</a></h1>
+<p>RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a timing consuming and error-prone process. The Xilinx® Vitis™ unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado® Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.</p>
+<div class="section" id="about-this-tutorial">
+<h2>About This Tutorial<a class="headerlink" href="#about-this-tutorial" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial introduces a bottom-up Vitis-based RTL kernel construct and wrap-up process, as well as the host-kernel interaction with <a class="reference external" href="https://xilinx.github.io/XRT/">Xilinx Runtime library (XRT)</a>. All the steps in this tutorial use the command-line interface, except those needed to view waveform or system diagram.</p>
+<p>This tutorial uses an example design to illustrate the relevant concept and steps. The following image shows the block diagram of this design. It is a simple AES accelerator design and comprises two kernels, <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> and <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code>. The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel is the core AES computation core with AXI streams slave and master ports. The <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> kernel handles the host-kernel data exchange, and the implementation of AES-ECB and AES-CBD modes along with the krnl_aes module.</p>
+<div align="center">
+<img src="./doc/images/block_diagram-top.svg" alt="top block diagram" >
+</div><p>Alveo™ Data Center accelerator cards are the target platform for this tutorial, which describes the following tasks:</p>
+<ul class="simple">
+<li><p>Packing RTL design to Vitis-compliant RTL kernel with command line interface</p></li>
+<li><p>Using MMCM/PLL in the RTL kernel</p></li>
+<li><p>Using Vivado XSIM to simulate the design</p></li>
+<li><p>Using Xilinx AXI VIP to verify the RTL design with AXI interface</p></li>
+<li><p>Using three RTL kernel control modes with XRT: <code class="docutils literal notranslate"><span class="pre">ap_ctrl_none</span></code>, <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> and <code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code>.</p></li>
+<li><p>Host programming for the RTL kernel with XRT Native API</p></li>
+<li><p>Using Vitis hardware emulation to get an insight look of the RTL kernel operation</p></li>
+</ul>
+<p><strong>Note</strong>: This is not a detailed tools usage guideline, so only basic ideas and steps are shown. You will need to refer to other documents for details.</p>
+</div>
+<div class="section" id="device-and-software-requirements">
+<h2>Device and Software Requirements<a class="headerlink" href="#device-and-software-requirements" title="Permalink to this heading">¶</a></h2>
+<p>The designs have been verified with the following software/hardware environment and tool chain versions:</p>
+<ul class="simple">
+<li><p>Operating Systems:</p>
+<ul>
+<li><p>Redhat/CentOS 7 (See <a class="reference external" href="#additional-requirements-for-redhatcentos">Additional Requiements for RedHat/CentOS</a>)</p></li>
+<li><p>Ubuntu 18.04/20.04 (See <a class="reference external" href="#additional-requirements-for-ubuntu">Additional Requiements for Ubuntu</a>)</p></li>
+<li><p>Perl package installed for Verilog simulation (<strong>required</strong>)</p></li>
+<li><p>OpenSSL library installed for hardware output validate (<strong>required</strong>)</p></li>
+<li><p>GCC 7</p></li>
+</ul>
+</li>
+<li><p>Vitis: 2020.2</p></li>
+<li><p>XRT: 2.8.743</p></li>
+<li><p>Hardware and Platform for your Alveo card (you need both the deployment and development platforms):</p>
+<ul>
+<li><p>Alveo U200: xilinx_u200_xdma_201830_2</p></li>
+<li><p>Alveo U250: xilinx_u250_xdma_201830_2</p></li>
+<li><p>Alveo U50: xilinx_u50_gen3x16_xdma_201920_3</p></li>
+<li><p>Alveo U280: xilinx_u280_xdma_201920_3</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="additional-requirements-for-redhat-centos">
+<h3>Additional Requirements for RedHat/CentOS<a class="headerlink" href="#additional-requirements-for-redhat-centos" title="Permalink to this heading">¶</a></h3>
+<p>If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl <span class="nb">enable</span> devtoolset-7 bash
+</pre></div>
+</div>
+<p>To install OpenSSL library for CentOS/Redhat, use:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install openssl-devel
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-requirements-for-ubuntu">
+<h3>Additional Requirements for Ubuntu<a class="headerlink" href="#additional-requirements-for-ubuntu" title="Permalink to this heading">¶</a></h3>
+<p>To install OpenSSL library for Ubuntu, use:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install libssl-dev
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tutorial-contents">
+<h2>Tutorial Contents<a class="headerlink" href="#tutorial-contents" title="Permalink to this heading">¶</a></h2>
+<p>This tutorial is separated into three parts, and are intended to be used in order.</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="doc/aes.html"><span class="doc">AES Introduction and Core AES Computing RTL Module</span></a></p></li>
+</ol>
+<p>This part gives a brief introduction to AES algorithm and the core RTL module for AES acceleration. The RTL AES module uses native Verilog interface. A simple Verilog testbench is provided to verify the function of the RTL module.</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="doc/krnl_aes.html"><span class="doc">Creating and Packing Vitis Compatible RTL Kernel krnl_aes</span></a></p></li>
+</ol>
+<p>This part packs the RTL module described in the first part into a Vitis kernel called <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code>, which can be integrated into Vitis. The <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel has four internal AES pipelines and includes AXI control slave and AXI stream master/slave ports.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">krn_aes</span></code> kernel has a mix control model of <code class="docutils literal notranslate"><span class="pre">ap_ctrl_none</span></code> and <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code>.
+An MMCM IP is used in this kernel to generate required core clock, while the AXI interface uses the standard platform clock. A simple Verilog testbench with Xilinx AXI VIPs are provided to verify the function of the kernel.</p>
+<p>In this part, we also integrate the <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel with a few HLS kernels to generate a usable XCLBIN file. A host test program with XRT native API is used to test the function of the <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel.</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="doc/krnl_cbc.html"><span class="doc">Creating and Packing Vitis Compatible RTL Kernel krnl_cbc</span></a></p></li>
+</ol>
+<p>This part introduces a new RTL kernel called <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code>, which has AXI master interfaces as well as AXI stream interfaces. This kernel will be connected with the <code class="docutils literal notranslate"><span class="pre">krnl_aes</span></code> kernel to implement AES-ECB and AES-CBC mode encryption/decryption functions.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">krnl_cbc</span></code> kernel supports <code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> control models. You can study and compare the behavior and performance differences between <code class="docutils literal notranslate"><span class="pre">ap_ctrl_chain</span></code> and <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code> model usint the provided AXI VIP based testbench, hardware emulation, and host program.</p>
+<p>The directory structure and brief explanations of the design repository are as follows.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── aes                                         # Directory for first part: aes
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_aes.f                          #   file list file for xsim simulation
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── runsim_aes_xsim.sh                      #   shell script to run the simulation with xsim
+│   └── xsim.tcl                                #   xsim tcl script for simulation
+│
+├── common                                      # common resources
+│   └── plain_gen.pl                                # Perl script to generate input data for RTL simulation
+│
+├── doc                                         # documents
+│
+├── krnl_aes                                    # Directory for second part: krnl_aes
+│   ├── hls                                     #   HLS sources
+│   ├── host/                                   #   Host test program    
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
+│   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
+│   ├── krnl_aes_test.cfg                       #   Vitis v++ link config file
+│   ├── krnl_aes_test.xdc                       #   Vitis v++ link constraint
+│   ├── krnl_aes.xdc                            #   constraint for kernel krnl_aes
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
+│   ├── runsim_krnl_aes_xsim.sh                 #   shell script to run the simulation with xsim   
+│   ├── setup_emu.sh                            #   shell script to enable/disable hw_emu emulation mode
+│   └── xrt.ini                                 #   XRT config file for emulation/profiling
+│
+├── krnl_cbc                                    # Directory for third pard: krnl_cbc
+│   ├── host/                                   #   Host test program  
+│   ├── rtl/                                    #   Verilog sources
+│   ├── tbench/                                 #   Verilog/SystemVerilog testbench files
+│   ├── filelist_krnl_cbc.f                     #   xsim simulation command file
+│   ├── gen_ip.tcl                              #   Vivado tcl script to generate required IPs
+│   ├── krnl_cbc_test.cfg                       #   Vitis v++ link config file
+│   ├── krnl_cbc_test.xdc                       #   Vitis v++ link constraint
+│   ├── Makefile                                #   Makefile for all operation
+│   ├── pack_kernel.tcl                         #   Vivado tcl script to pack the kernel
+│   ├── runsim_krnl_cbc_xsim.sh                 #   shell script to run the simulation with xsim   
+│   ├── setup_emu.sh                            #   shell script to enable/disable hw_emu emulation mode
+│   ├── xrt.ini                                 #   XRT config file for emulation/profiling
+│   └── xsim.tcl                                #   xsim tcl script to set hw_emu simulation options
+│
+└── README.md
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on August 5, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

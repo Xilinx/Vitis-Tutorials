@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Experiencing Acceleration Performance &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Experiencing Acceleration Performance</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/02-bloom/2_experience-acceleration.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="experiencing-acceleration-performance">
+<h1>Experiencing Acceleration Performance<a class="headerlink" href="#experiencing-acceleration-performance" title="Permalink to this heading">¶</a></h1>
+<p>In this lab, you will experience the acceleration potential by running the application first as a software-only version and then as an optimized FPGA-accelerated version using a precompiled FPGA accelerator.</p>
+<ol>
+<li><p>Run the following command to set up the application.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Source the Vitis runtime environment</span>
+<span class="nb">export</span> <span class="nv">LAB_WORK_DIR</span><span class="o">=</span>&lt;Downloaded Github repository&gt;/Hardware_Acceleration/Design_Tutorials/02-bloom
+</pre></div>
+</div>
+</li>
+<li><p>Next, build the C application:</p>
+<ol>
+<li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">cpu_src</span></code> directory.</p></li>
+<li><p>Use the following command to run the original application with the number of documents as the argument, and generate the golden output file for comparison.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$LAB_WORK_DIR</span>/cpu_src/
+make run
+</pre></div>
+</div>
+<p>The generated output compute scores are stored in the host code in the <code class="docutils literal notranslate"><span class="pre">cpu_profile_score</span></code> array that represents the outputs for the total number of specified documents. The results will look similar to the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">host</span> <span class="mi">100000</span>
+<span class="n">Initializing</span> <span class="n">data</span>
+<span class="n">Creating</span> <span class="n">documents</span> <span class="o">-</span> <span class="n">total</span> <span class="n">size</span> <span class="p">:</span> <span class="mf">1398.903</span> <span class="n">MBytes</span> <span class="p">(</span><span class="mi">349725824</span> <span class="n">words</span><span class="p">)</span>
+<span class="n">Creating</span> <span class="n">profile</span> <span class="n">weights</span>
+
+<span class="n">Total</span> <span class="n">execution</span> <span class="n">time</span> <span class="n">of</span> <span class="n">CPU</span>          <span class="o">|</span>  <span class="mf">2949.3867</span> <span class="n">ms</span>
+<span class="n">Compute</span> <span class="n">Hash</span> <span class="n">processing</span> <span class="n">time</span>         <span class="o">|</span>  <span class="mf">2569.3266</span> <span class="n">ms</span>
+<span class="n">Compute</span> <span class="n">Score</span> <span class="n">processing</span> <span class="n">time</span>        <span class="o">|</span>   <span class="mf">380.0601</span> <span class="n">ms</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Execution</span> <span class="n">COMPLETE</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Run the application on the FPGA.
+For the purposes of this lab, the FPGA accelerator is implemented with an 8x parallelization factor.</p>
+<ul>
+<li><p>Eight input words are processed in parallel, producing eight output flags in parallel during each clock cycle.</p>
+<p>To run the optimized application on the FPGA, run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run_fpga <span class="nv">SOLUTION</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>The following output displays.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Processing</span> <span class="mf">1398.905</span> <span class="n">MBytes</span> <span class="n">of</span> <span class="n">data</span>
+<span class="n">Splitting</span> <span class="n">data</span> <span class="ow">in</span> <span class="mi">8</span> <span class="n">sub</span><span class="o">-</span><span class="n">buffers</span> <span class="n">of</span> <span class="mf">174.863</span> <span class="n">MBytes</span> <span class="k">for</span> <span class="n">FPGA</span> <span class="n">processing</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Executed</span> <span class="n">FPGA</span> <span class="n">accelerated</span> <span class="n">version</span>  <span class="o">|</span>   <span class="mf">427.1341</span> <span class="n">ms</span>   <span class="p">(</span> <span class="n">FPGA</span> <span class="mf">230.345</span> <span class="n">ms</span> <span class="p">)</span>
+<span class="n">Executed</span> <span class="n">Software</span><span class="o">-</span><span class="n">Only</span> <span class="n">version</span>     <span class="o">|</span>   <span class="mf">3057.6307</span> <span class="n">ms</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Verification</span><span class="p">:</span> <span class="n">PASS</span>
+</pre></div>
+</div>
+<p>The computed throughput is:</p>
+<p>Throughput = Total data/Total time = 1.39 GB/427.1341ms = 3.25 GB/s</p>
+<p>By efficiently leveraging FPGA acceleration, the throughput of the application increases by a factor of 7.</p>
+</li>
+</ul>
+</li>
+</ol>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>In this step, you observed the acceleration that can be achieved using an FPGA. Next, you will <a class="reference internal" href="3_architect-the-application.html"><span class="doc">architect the application for the application</span></a> and dive into what functions can be accelerated by profiling the original applications. You will also define the interface boundaries and performance constraints to achieve the desired acceleration.</p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="docs/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphnixhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

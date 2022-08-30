@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Overview &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Hardware_Acceleration/Introduction/05-optimizing-compute-and-transfer.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>Looking back at the previous example, once the data grew beyond a certain size the transfer of data into and
+out of our application started to become the bottleneck.  Given that the transfer over PCIe will generally
+take a relatively fixed amount of time, you might be tempted to create four instances of the <code class="docutils literal notranslate"><span class="pre">wide_vadd</span></code>
+kernel and enqueue them all to chew through the large buffer in parallel.</p>
+<p>This is actually the traditional GPU model - batch a bunch of data over PCIe to the high-bandwidth memory,
+and then process it in very wide patterns across an array of embedded processors.</p>
+<p>In an FPGA we generally want to solve that problem differently.   If we have a kernel capable of consuming a
+full 512 bits of data on each tick of the clock, our biggest problem isn’t parallelization, it’s feeding its
+voracious appetite.  If we’re bursting data to and from DDR we can very easily hit our bandwidth cap. Putting
+multiple cores in parallel and operating continually on the same buffer all but ensures we’ll run into
+bandwidth contention.  That will actually have the opposite of the desired effect - our cores will all run
+slower.</p>
+<p>So what should we do?  Remember that the <code class="docutils literal notranslate"><span class="pre">wide_vadd</span></code> kernel is actually a bad candidate for acceleration in
+the first place.  The computation is so simple we can’t really take advantage of the parallelism of an FPGA.
+Fundamentally there’s not too much you can do when your algorithm boils down to A+B.  But it does let us show
+a few techniques optimizing around something that’s about as algorithmically simple as it gets.</p>
+<p>To that end we’ve actually been a bit tricky with our hardware design for the ‘wide_vadd’ kernel.  Instead of
+just consuming the data raw off of the bus, we’re buffering the data internally a bit using the FPGA block
+RAM (which is fundamentally an extremely fast SRAM) and then performing the computation.  As a result we can
+absorb a little time between successive bursts, and we’ll use that to our advantage.</p>
+<p>Remember that we’ve split our interfaces across multiple DDR banks, as shown in the previous example.  Since
+the PCIe bandwidth is much lower than the total bandwidth of any given DDR memory on the Alveo™ Data Center
+accelerator card, and we’re transferring data to two different DDR banks, we know we’ll have interleaving
+between the two.  And so, because we can “squeeze in between the cracks” as it were, we can start processing
+the data as it arrives instead of waiting for it to completely transfer, processing it, and then transferring
+it back.  We want to end up with something like this:</p>
+<p><img alt="Overlapping Compute and Transfer" src="../../../_images/05_overlapping_execution.jpg" /></p>
+<p>By subdividing the buffer in this way and choosing an optimal number of subdivisions, we can balance
+execution and transfer times for our application and get significantly higher throughput.  Using the same
+hardware kernel, let’s take a look at what’s required to set this up in the host code.</p>
+</div>
+<div class="section" id="key-code">
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>The algorithmic flow of the code will be mostly the same.  Before queueing up transfers, we’ll loop through
+the buffer and subdivide it.  We want to follow a few general rules, though.  First, we want to try to divide
+the buffer on aligned boundaries to keep transfers efficient, and second we want to make sure we’re not
+subdividing buffers when they’re so small that it makes no sense.  We’ll define a constant <code class="docutils literal notranslate"><span class="pre">NUM_BUFS</span></code> to set
+our number of buffers, and then write a new function to subdivide them:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">subdivide_buffer</span><span class="w"> </span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&gt;</span><span class="w">  </span><span class="o">&amp;</span><span class="n">divided</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">buf_in</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="n">cl_mem_flags</span><span class="w"> </span><span class="n">flags</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="kt">int</span><span class="w"> </span><span class="n">num_divisions</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="c1">// Get the size of the buffer</span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf_in</span><span class="p">.</span><span class="n">getInfo</span><span class="o">&lt;</span><span class="n">CL_MEM_SIZE</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_divisions</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">4096</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">return</span><span class="mi">-1</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">     </span><span class="n">cl_buffer_region</span><span class="w"> </span><span class="n">region</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">err</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">region</span><span class="p">.</span><span class="n">origin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">     </span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">num_divisions</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">     </span><span class="c1">// Round region size up to nearest 4k for efficient burst behavior</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">4096</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="mi">4096</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">4096</span><span class="p">));</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w">  </span><span class="p">(</span><span class="n">inti</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_divisions</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="k">if</span><span class="w">  </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">num_divisions</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">region</span><span class="p">.</span><span class="n">origin</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                  </span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">region</span><span class="p">.</span><span class="n">origin</span><span class="p">;</span><span class="w"></span>
+<span class="w">              </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf_in</span><span class="p">.</span><span class="n">createSubBuffer</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                  </span><span class="n">CL_BUFFER_CREATE_TYPE_REGION</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                  </span><span class="o">&amp;</span><span class="n">region</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                  </span><span class="o">&amp;</span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">CL_SUCCESS</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">               </span><span class="n">returnerr</span><span class="p">;</span><span class="w"></span>
+<span class="w">           </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="n">divided</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="n">region</span><span class="p">.</span><span class="n">origin</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">region</span><span class="p">.</span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="n">return0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>What we’re doing here is looping through the buffer(s) <code class="docutils literal notranslate"><span class="pre">NUM_BUFS</span></code> times, calling <code class="docutils literal notranslate"><span class="pre">cl::Buffer.createSubBuffer()</span></code>
+for each sub-buffer we want to create.  The <code class="docutils literal notranslate"><span class="pre">cl_buffer_region</span></code> struct defines the start address and size of
+the sub-buffer we want to create.  It’s important to note that sub-buffers can overlap, although in our case
+we’re not using them in that way.</p>
+<p>We return a vector of <code class="docutils literal notranslate"><span class="pre">cl::Buffer</span></code> objects that we can then use to enqueue multiple operations, as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">enqueue_subbuf_vadd</span><span class="p">(</span><span class="n">cl</span><span class="o">::</span><span class="n">CommandQueue</span><span class="w"> </span><span class="o">&amp;</span><span class="n">q</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cl</span><span class="o">::</span><span class="n">Kernel</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnl</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="o">&amp;</span><span class="n">event</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"></span>
+<span class="w">                        </span><span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// Get the size of the buffer</span>
+<span class="w">      </span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="w"> </span><span class="n">k_event</span><span class="p">,</span><span class="w"> </span><span class="n">m_event</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">krnl_events</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">static</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Event</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tx_events</span><span class="p">,</span><span class="w"> </span><span class="n">rx_events</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">c_vec</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">getInfo</span><span class="o">&lt;</span><span class="n">CL_MEM_SIZE</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="n">in_vec</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">in_vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">in_vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">in_vec</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tx_events</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m_event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">krnl_events</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">m_event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">tx_events</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">m_event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tx_events</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="n">tx_events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tx_events</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
+<span class="w">         </span><span class="n">tx_events</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">krnl</span><span class="p">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">size</span><span class="w"> </span><span class="o">/</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">)));</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueTask</span><span class="p">(</span><span class="n">krnl</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">krnl_events</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">k_event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">krnl_events</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">k_event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rx_events</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="n">krnl_events</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">rx_events</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span><span class="w"></span>
+<span class="w">         </span><span class="n">rx_events</span><span class="p">.</span><span class="n">pop_back</span><span class="w"> </span><span class="p">();</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="n">c_vec</span><span class="p">.</span><span class="n">push_back</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMigrateMemObjects</span><span class="p">(</span><span class="n">c_vec</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="n">CL_MIGRATE_MEM_OBJECT_HOST</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">krnl_events</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                 </span><span class="o">&amp;</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="n">rx_events</span><span class="p">.</span><span class="n">push_back</span><span class="w"> </span><span class="p">(</span><span class="n">event</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this new function we’re doing basically the same sequence of events that we had before:</p>
+<ol class="simple">
+<li><p>Enqueue migration of the buffer from the host memory to the Alveo memory.</p></li>
+<li><p>Set the kernel arguments to the current buffer.</p></li>
+<li><p>Enqueue the run of the kernel.</p></li>
+<li><p>Enqueue a transfer back of the results.</p></li>
+</ol>
+<p>The difference, though, is that now we’re doing them in an actual queued, sequential fashion.  We aren’t
+waiting for the events to fully complete now, as we were in previous examples, because that would defeat the
+whole purpose of pipelining.  So now we’re using event-based dependencies.  By using <code class="docutils literal notranslate"><span class="pre">cl::Event</span></code> objects we
+can build a chain of events that must complete before any subsequent chained events (non-linked events can
+still be scheduled at any time).</p>
+<p>We enqueue multiple runs of the kernel and then wait for all of them to complete, which will result in much
+more efficient scheduling.  Note that if we had built the same structure as in
+<a class="reference internal" href="04-parallelizing-the-data-path.html"><span class="doc">Example 4</span></a> using this queuing method we’d see the same results as then,
+because the runtime has no way of knowing whether or not we can safely start processing before sending all of
+the data.  As designers we have to tell the scheduler what can and cannot be done.</p>
+<p>And, finally, none of this would happen in the correct sequence if we didn’t do one more very important
+thing: we have to specify that we can use an out of order command queue by passing in the flag
+<code class="docutils literal notranslate"><span class="pre">CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE</span></code> when we create it.</p>
+<p>The code in this example should otherwise seem familiar.  We now call those functions instead of calling the
+API directly from main(), but it’s otherwise unchanged.</p>
+<p>There is something interesting, though, about mapping buffer <code class="docutils literal notranslate"><span class="pre">c</span></code> back into userspace - we don’t have to work
+with individual sub-buffers.  Because they’ve already been migrated back to host memory, and because when
+creating sub-buffers the underlying pointers don’t change, we can still work with the parent even though we
+have children (and the parent buffer somehow even manages to sleep through the night!).</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>With the XRT initialized, run the application by running the following command from the build directory:</p>
+<p><code class="docutils literal notranslate"><span class="pre">./05_pipelined_vadd</span> <span class="pre">alveo_examples</span></code></p>
+<p>The program will output a message similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 5: Pipelining Kernel Execution --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: ’./alveo_examples.xclbin’
+
+-- Running kernel test with XRT-allocated contiguous buffers and wide VADD (16 values/clock)
+
+OCL-mapped contiguous buffer example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:              263.001ms
+Allocate contiguous OpenCL buffers: 915.048 ms
+Map buffers to userspace pointers:  0.282 ms
+Populating buffer inputs:           1166.471 ms
+Software VADD run:                  1195.575ms
+Memory object migration enqueue:    0.441ms
+Wait for kernel to complete:        692.173 ms
+</pre></div>
+</div>
+<p>And comparing these results to the previous run:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Operation</th>
+<th align="center">Example 4</th>
+<th align="center">Example 5</th>
+<th align="center">&Delta;4&rarr;5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Software VADD</td>
+<td align="center">820.596 ms</td>
+<td align="center">1166.471 ms</td>
+<td align="center">345.875 ms</td>
+</tr>
+<tr>
+<td>Hardware VADD (Total)</td>
+<td align="center">1184.897 ms</td>
+<td align="center">692.172 ms</td>
+<td align="center">−492.725 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">364.186 ms</td>
+<td align="center">−503.402 ms</td>
+<td align="center">867.588 ms</td>
+</tr>
+</tbody>
+</table><p>Mission accomplished for sure this time. Look at those margins!</p>
+<p>There’s no way this would turn around on us now, right?  Let’s sneak out early - I’m sure there isn’t an
+“other shoe” that’s going to drop.</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>Some things to try to build on this experiment:</p>
+<ul class="simple">
+<li><p>Play around with the buffer sizes again.  Is there a similar inflection point in this exercise?</p></li>
+<li><p>Capture the traces again too; can you see the difference?  How does the choice of the number of sub-buffers
+impact runtime (if it does)?</p></li>
+</ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Intelligently managing your data transfer and command queues can lead to significant speedups.</p></li>
+</ul>
+<p>Read <a class="reference internal" href="06-meet-the-other-shoe.html"><span class="doc">Example 6: Meet the Other Shoe</span></a></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

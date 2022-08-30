@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Step 4: Test the Platform &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Step 4: Test the Platform</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260/step4.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <!--
+# Copyright 2021 Xilinx Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table><div class="section" id="step-4-test-the-platform">
+<h1>Step 4: Test the Platform<a class="headerlink" href="#step-4-test-the-platform" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="#step-4-test-the-platform">Step 4: Test the Platform</a></p>
+<ul>
+<li><p><a class="reference external" href="#test-1-read-platform-info">Test 1: Read Platform Info</a></p>
+<ul>
+<li><p><a class="reference external" href="#test-2-run-vector-addition-application">Test 2: Run Vector Addition Application</a></p></li>
+<li><p><a class="reference external" href="#congratulations">Congratulations</a></p></li>
+<li><p><a class="reference external" href="#fast-track">Fast Track</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="test-1-read-platform-info">
+<h2>Test 1: Read Platform Info<a class="headerlink" href="#test-1-read-platform-info" title="Permalink to this heading">¶</a></h2>
+<p>With Vitis environment setup, <strong>platforminfo</strong> tool can report XPFM platform information.</p>
+<details><summary><strong>Click for detailed logs</strong></summary>  <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># in kv260_custom_pkg directory</span>
+platforminfo ./kv260_custom/export/kv260_custom/kv260_custom.xpfm
+<span class="o">==========================</span>
+Basic Platform <span class="nv">Information</span>
+<span class="o">==========================</span>
+Platform:           kv260_custom_platform
+File:               &lt;your path to&gt;/kv260_custom_platform.xpfm
+Description:        
+A custom platform KV260 <span class="nv">platform</span>
+    
+
+<span class="o">=====================================</span>
+Hardware Platform <span class="o">(</span>Shell<span class="o">)</span> <span class="nv">Information</span>
+<span class="o">=====================================</span>
+Vendor:                           xilinx
+Board:                            KV260_Custom_Platform
+Name:                             KV260_Custom_Platform
+Version:                          <span class="m">0</span>.0
+Generated Version:                <span class="m">2021</span>.1
+Hardware:                         <span class="m">1</span>
+Software Emulation:               <span class="m">1</span>
+Hardware Emulation:               <span class="m">1</span>
+Hardware Emulation Platform:      <span class="m">0</span>
+FPGA Family:                      zynquplus
+FPGA Device:                      xck26
+Board Vendor:                     xilinx.com
+Board Name:                       xilinx.com:kv260:1.1
+Board Part:                       XCK26-SFVC784-2LV-C
+
+<span class="o">=================</span>
+Clock <span class="nv">Information</span>
+<span class="o">=================</span>
+  Default Clock Index: <span class="m">2</span>
+  Clock Index:         <span class="m">1</span>
+    Frequency:         <span class="m">100</span>.000000
+  Clock Index:         <span class="m">2</span>
+    Frequency:         <span class="m">200</span>.000000
+  Clock Index:         <span class="m">3</span>
+    Frequency:         <span class="m">400</span>.000000
+
+<span class="o">==================</span>
+Memory <span class="nv">Information</span>
+<span class="o">==================</span>
+  Bus SP Tag: HP0
+  Bus SP Tag: HP1
+  Bus SP Tag: HP2
+  Bus SP Tag: HP3
+  Bus SP Tag: HPC0
+  Bus SP Tag: <span class="nv">HPC1</span>
+
+<span class="o">=============================</span>
+Software Platform <span class="nv">Information</span>
+<span class="o">=============================</span>
+Number of Runtimes:            <span class="m">1</span>
+Default System Configuration:  kv260_custom_platform
+System Configurations:
+  System Config Name:                      kv260_custom_platform
+  System Config Description:               kv260_custom_platform
+  System Config Default Processor Group:   xrt
+  System Config Default Boot Image:        standard
+  System Config Is QEMU Supported:         <span class="m">1</span>
+  System Config Processor Groups:
+    Processor Group Name:      xrt
+    Processor Group CPU Type:  cortex-a53
+    Processor Group OS Name:   linux
+  System Config Boot Images:
+    Boot Image Name:           standard
+    Boot Image Type:           
+    Boot Image BIF:            kv260_custom_platform/boot/linux.bif
+    Boot Image Data:           kv260_custom_platform/xrt/image
+    Boot Image Boot Mode:      sd
+    Boot Image RootFileSystem: 
+    Boot Image Mount Path:     /mnt
+    Boot Image Read Me:        kv260_custom_platform/boot/generic.readme
+    Boot Image QEMU Args:      kv260_custom_platform/qemu/pmu_args.txt:kv260_custom_platform/qemu/qemu_args.txt
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
+Supported Runtimes:
+  Runtime: OpenCL
+</pre></div>
+</div>
+</details><p>We can verify clock information and memory information are set as expected.</p>
+<div class="section" id="test-2-run-vector-addition-application">
+<h3>Test 2: Run Vector Addition Application<a class="headerlink" href="#test-2-run-vector-addition-application" title="Permalink to this heading">¶</a></h3>
+<p>Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.</p>
+<ol class="simple">
+<li><p>Creating Vector Addition Application</p>
+<ul class="simple">
+<li><p>Open Vitis workspace you were using before.</p></li>
+<li><p>Select <strong>File -&gt; New -&gt; Application Project</strong>.</p></li>
+<li><p>Click <strong>Next</strong></p></li>
+<li><p>Select <strong>kv260_custom</strong> as platform, click <strong>Next</strong>.</p></li>
+<li><p>Name the project <strong>vadd</strong>, click <strong>Next</strong>.</p></li>
+<li><p>Set Domain to <strong>linux on psu_cortexa53</strong>,</p></li>
+<li><p>Set <strong>Sys_root path</strong> to <code class="docutils literal notranslate"><span class="pre">&lt;full_pathname_to_kv260_custom_pkg&gt;/sysroots/cortexa72-cortexa53-xilinx-linux</span></code>(as you created by running <strong>sdk.sh</strong>).</p></li>
+<li><p>Set <strong>Root FS</strong> to rootfs.ext4 in <code class="docutils literal notranslate"><span class="pre">kv260_custom_plnx/images/linux</span></code> directory, which was generated in Step 2.</p></li>
+<li><p>Set <strong>Kernel Image</strong> to Image in <code class="docutils literal notranslate"><span class="pre">kv260_custom_plnx/images/linux</span></code> directory. Click <strong>Next</strong>.</p></li>
+<li><p>Select <strong>Acceleration templates with PL and AIE accelerators -&gt; Vector Addition</strong> and click <strong>Finish</strong> to generate the application.</p></li>
+<li><p>In the Explorer window double click the <strong>vadd.prj</strong> file to open it, change the <strong>Active Build configuration</strong> from <strong>Emulation-SW</strong> to <strong>Hardware</strong>.</p></li>
+<li><p>Select <strong>vadd_system</strong> in Explorer window and Click <strong>Build</strong> icon in toolbar.</p></li>
+</ul>
+</li>
+</ol>
+<p>The build task would take 10-30 minutes. When build completes, the build result is located in <code class="docutils literal notranslate"><span class="pre">vadd_system/Hardware/</span></code> directory.</p>
+<ul class="simple">
+<li><p>package.build/package/system.bit: PL bitstream including vadd kernel and platform components.</p></li>
+<li><p>package/sd_card/binary_container_1.xclbin: Acceleration binary container for XRT configuration. It includes system.bit and metadata that describes the kernels.</p></li>
+<li><p>package/sd_card/vadd: Compiled host application</p></li>
+</ul>
+<blockquote>
+<div><p>Note: If you cannot see the <strong>kv260_custom</strong> platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to <strong>kv260_custom_pkg/kv260_custom</strong> directory.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Note: KV260 Platform doesn’t support emulation.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Note: Sysroot for application project is required for host application cross-compilation. Linux kernel image and rootfs are optional in this tutorial because we will use the pre-installed Linux kernel and rootfs of KV260 Starter Kit. It’s still beneficial adding Kernel Image and rootfs information when creating the application project because the v++ package step can complete with these files when building the system project. If you skip adding Image and rootfs, you can build host application and hw_link component seperatedly. The required files will still be generated.</p>
+</div></blockquote>
+<ol>
+<li><p>Prepare the files to transfer to the board</p>
+<p>Kria SOM uses <code class="docutils literal notranslate"><span class="pre">xmutil</span></code> to load applications dynamically. The load process includes downloading PL bit stream and loading device tree overlay. <code class="docutils literal notranslate"><span class="pre">xmutil</span></code> requires the application files to be stored in <code class="docutils literal notranslate"><span class="pre">/lib/firmware/xilinx</span></code> directory.</p>
+<p>The files related to this application need to have same file names but different extensions. Since this is a vector addition application, we will call it vadd in this example. The final directory on the board would look like this.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># On target board</span>
+ls /lib/firmware/xilinx/vadd
+vadd.dtbo
+vadd.bit.bin
+shell.json
+</pre></div>
+</div>
+<p>The bitstream needs to be in bin format so that fpgamanager can load it. Convert <code class="docutils literal notranslate"><span class="pre">.bit</span></code> file to <code class="docutils literal notranslate"><span class="pre">.bit.bin</span></code> file with the following commands.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> vadd_system/Package
+<span class="nb">echo</span> <span class="s1">&#39;all:{system.bit}&#39;</span>&gt;bootgen.bif
+bootgen -w -arch zynqmp -process_bitstream bin -image bootgen.bif
+mv system.bit.bin vadd.bit.bin
+</pre></div>
+</div>
+<p>The source of DTBO is generated in Step 2. We need to do some small updates to generate the dtbo and rename it so that the file name is aligned with application name.</p>
+<ul class="simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">step2_petalinux/dt_output/pl.dtsi</span></code></p></li>
+<li><p>Update the line of <code class="docutils literal notranslate"><span class="pre">firmware-name</span> <span class="pre">=</span></code>, type in <code class="docutils literal notranslate"><span class="pre">vadd.bit.bin</span></code> as its value so that xmutil can load the bitstream. <code class="docutils literal notranslate"><span class="pre">firmware-name</span> <span class="pre">=</span> <span class="pre">&quot;vadd.bit.bin&quot;;</span></code></p></li>
+<li><p>Compile <code class="docutils literal notranslate"><span class="pre">pl.dtsi</span></code> to dtbo with command <code class="docutils literal notranslate"><span class="pre">dtc</span> <span class="pre">-&#64;</span> <span class="pre">-O</span> <span class="pre">dtb</span> <span class="pre">-o</span> <span class="pre">step4_validate/vadd.dtbo</span> <span class="pre">step2_petalinux/dt_output/pl.dtsi</span></code></p></li>
+</ul>
+<p>Prepare shell.json. You can copy it from other applications or create one with the following contents.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;shell_type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;XRT_FLAT&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;num_slots&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p>Transferring the files to the board</p>
+<p>Make sure the Ethernet cable of SOM Starter Kit is connected. Use SCP or SFTP to upload the files from host to target board.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Running on host machine</span>
+scp vadd.dtbo vadd.bit.bin shell.json vadd binary_container_1.xclbin petalinux@&lt;SOM Starter Kit IP&gt;:/home/petalinux
+</pre></div>
+</div>
+</li>
+<li><p>Load the hardware</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Running on target board</span>
+sudo mkdir /lib/firmware/xilinx/vadd
+<span class="nb">cd</span> /home/petalinux
+mv vadd.dtbo vadd.bit.bin shell.json /lib/firmware/xilinx/vadd
+sudo xmutil listapps
+sudo xmutil unloadapp
+sudo xmutil loadapp vadd
+</pre></div>
+</div>
+</li>
+<li><p>Running Vector Addition Application on the Board</p>
+<ul class="simple">
+<li><p>Run vadd application</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x ./vadd
+./vadd binary_container_1.xclbin
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>It should show program prints.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> xilinx-k26-starterkit-2021_1:~$ ./vadd binary_container_1.xclbin
+ INFO: Reading binary_container_1.xclbin
+ Loading: &#39;binary_container_1.xclbin&#39;
+ TEST PASSED
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>Note: If you get errors like “error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
+or directory”, it’s because XRT is not installed in KV260 default rootfs. Please run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">dnf</span> <span class="pre">install</span> <span class="pre">xrt</span></code> to install XRT.</p>
+</div></blockquote>
+</div>
+<div class="section" id="congratulations">
+<h3>Congratulations<a class="headerlink" href="#congratulations" title="Permalink to this heading">¶</a></h3>
+<p>We have completed creating a custom platform from scratch and verifying it with a simple vadd application.</p>
+<p>Please feel free to check more tutorials in this repository.</p>
+</div>
+<div class="section" id="fast-track">
+<h3>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h3>
+<p>If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> in <a class="reference external" href="./ref_files">ref_files</a> directory to generate the reference design and compare with your design.</p>
+<p>Since the PetaLinux project requires KV260 BSP, please download KV260 <a class="reference external" href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM">Starter Kit BSP</a> and save it to <code class="docutils literal notranslate"><span class="pre">ref_files/step2_petalinux</span></code> directory before running make.</p>
+<p>The command line flow has slight differences comparing to Vitis IDE flow.</p>
+<ul class="simple">
+<li><p>The vector addition application is called <code class="docutils literal notranslate"><span class="pre">vadd</span></code> and <code class="docutils literal notranslate"><span class="pre">binary_container_1.xclbin</span></code> in Vitis IDE flow. The generated files in command line flow are called <code class="docutils literal notranslate"><span class="pre">simple_vadd</span></code> and <code class="docutils literal notranslate"><span class="pre">krnl_vadd.xclbin</span></code>.</p></li>
+</ul>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>AI Engine GMIO Performance Profile &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>AI Engine GMIO Performance Profile</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<div class="section" id="ai-engine-gmio-performance-profile">
+<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#ai-engine-gmio-performance-profile" title="Permalink to this heading">¶</a></h1>
+<p>=======</p>
+</div>
+<div class="section" id="id1">
+<h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>AI Engine tools support mapping the GMIO port to the tile DMA one-to-one. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit on the number of GMIO ports supported for a given device. For example, the XCVC1902 device on the VCK190 board
+has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, it supports two MM2S and two S2MM channels. Hence there can be a maximum of 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs supported, but note that it can be further limited by the existing hardware platform.</p>
+<p>In this example, 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs are utilized in the graph and the performance from one input and one output to 32 inputs and 32 outputs through various ways is profiled. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.</p>
+<div class="section" id="design-introduction">
+<h2>Design Introduction<a class="headerlink" href="#design-introduction" title="Permalink to this heading">¶</a></h2>
+<p>This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph.</p>
+<p>Change the working directory to <code class="docutils literal notranslate"><span class="pre">perf_profile_aie_gmio</span></code>. Take a look at the graph code in <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">const</span> <span class="nb">int</span> <span class="n">col</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">49</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">39</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">47</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">7</span><span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">mygraph</span><span class="p">:</span> <span class="n">public</span> <span class="n">adf</span><span class="p">::</span><span class="n">graph</span>
+<span class="p">{</span>
+<span class="n">private</span><span class="p">:</span>
+  <span class="n">adf</span><span class="p">::</span><span class="n">kernel</span> <span class="n">k</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+
+<span class="n">public</span><span class="p">:</span>
+  <span class="n">adf</span><span class="p">::</span><span class="n">input_gmio</span> <span class="n">gmioIn</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+  <span class="n">adf</span><span class="p">::</span><span class="n">output_gmio</span> <span class="n">gmioOut</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+
+  <span class="n">mygraph</span><span class="p">()</span>
+  <span class="p">{</span>
+	<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">32</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+		<span class="n">gmioIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">adf</span><span class="p">::</span><span class="n">input_gmio</span><span class="p">::</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;gmioIn&quot;</span><span class="o">+</span><span class="n">std</span><span class="p">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="o">/*</span><span class="n">size_t</span> <span class="n">burst_length</span><span class="o">*/</span><span class="mi">256</span><span class="p">,</span><span class="o">/*</span><span class="n">size_t</span> <span class="n">bandwidth</span><span class="o">*/</span><span class="mi">100</span><span class="p">);</span>
+		<span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">adf</span><span class="p">::</span><span class="n">output_gmio</span><span class="p">::</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;gmioOut&quot;</span><span class="o">+</span><span class="n">std</span><span class="p">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="o">/*</span><span class="n">size_t</span> <span class="n">burst_length</span><span class="o">*/</span><span class="mi">256</span><span class="p">,</span><span class="o">/*</span><span class="n">size_t</span> <span class="n">bandwidth</span><span class="o">*/</span><span class="mi">100</span><span class="p">);</span>
+		<span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">adf</span><span class="p">::</span><span class="n">kernel</span><span class="p">::</span><span class="n">create</span><span class="p">(</span><span class="n">vec_incr</span><span class="p">);</span>
+		<span class="n">adf</span><span class="p">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">adf</span><span class="p">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1024</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">gmioIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="ow">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+		<span class="n">adf</span><span class="p">::</span><span class="n">connect</span><span class="o">&lt;</span><span class="n">adf</span><span class="p">::</span><span class="n">window</span><span class="o">&lt;</span><span class="mi">1032</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="ow">in</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+		<span class="n">adf</span><span class="p">::</span><span class="n">source</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">=</span> <span class="s2">&quot;vec_incr.cc&quot;</span><span class="p">;</span>
+		<span class="n">adf</span><span class="p">::</span><span class="n">runtime</span><span class="o">&lt;</span><span class="n">adf</span><span class="p">::</span><span class="n">ratio</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="n">adf</span><span class="p">::</span><span class="n">location</span><span class="o">&lt;</span><span class="n">adf</span><span class="p">::</span><span class="n">kernel</span><span class="o">&gt;</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">=</span><span class="n">adf</span><span class="p">::</span><span class="n">tile</span><span class="p">(</span><span class="n">col</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">0</span><span class="p">);</span>
+	<span class="p">}</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>In the previous code, there are location constraints <code class="docutils literal notranslate"><span class="pre">adf::location</span></code> for each kernel. This is to save time for <code class="docutils literal notranslate"><span class="pre">aiecompiler</span></code>. Note that each kernel has an input window size of 1024 bytes and output window size of 1032 bytes.</p>
+<p>Next, examine the kernel code <code class="docutils literal notranslate"><span class="pre">aie/vec_incr.cc</span></code>. It adds each int32 input by one and additionally outputs the cycle counter of the AI Engine tile. Due to the later introduction, this counter can be used to calculate the system throughput.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;aie_api/aie.hpp&gt;</span>
+<span class="c1">#include &lt;aie_api/aie_adf.hpp&gt;</span>
+<span class="c1">#include &lt;aie_api/utils.hpp&gt;</span>
+
+<span class="n">void</span> <span class="n">vec_incr</span><span class="p">(</span><span class="n">input_window</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;*</span> <span class="n">data</span><span class="p">,</span><span class="n">output_window</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;*</span> <span class="n">out</span><span class="p">){</span>
+	<span class="n">aie</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int32</span><span class="p">,</span><span class="mi">16</span><span class="o">&gt;</span> <span class="n">vec1</span><span class="o">=</span><span class="n">aie</span><span class="p">::</span><span class="n">broadcast</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+	<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+	<span class="n">chess_prepare_for_pipelining</span>
+	<span class="n">chess_loop_range</span><span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+	<span class="p">{</span>
+		<span class="n">aie</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int32</span><span class="p">,</span><span class="mi">16</span><span class="o">&gt;</span> <span class="n">vdata</span><span class="o">=</span><span class="n">window_readincr_v</span><span class="o">&lt;</span><span class="mi">16</span><span class="o">&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+		<span class="n">aie</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">int32</span><span class="p">,</span><span class="mi">16</span><span class="o">&gt;</span> <span class="n">vresult</span><span class="o">=</span><span class="n">aie</span><span class="p">::</span><span class="n">add</span><span class="p">(</span><span class="n">vdata</span><span class="p">,</span><span class="n">vec1</span><span class="p">);</span>
+		<span class="n">window_writeincr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">vresult</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="n">aie</span><span class="p">::</span><span class="n">tile</span> <span class="n">tile</span><span class="o">=</span><span class="n">aie</span><span class="p">::</span><span class="n">tile</span><span class="p">::</span><span class="n">current</span><span class="p">();</span>
+	<span class="n">unsigned</span> <span class="n">long</span> <span class="n">long</span> <span class="n">time</span><span class="o">=</span><span class="n">tile</span><span class="o">.</span><span class="n">cycles</span><span class="p">();</span><span class="o">//</span><span class="n">cycle</span> <span class="n">counter</span> <span class="n">of</span> <span class="n">the</span> <span class="n">AI</span> <span class="n">Engine</span> <span class="n">tile</span>
+	<span class="n">window_writeincr</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">time</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Next, examine the host code <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>. The concepts introduced in <a class="reference internal" href="single_aie_gmio.html"><span class="doc">AIE GMIO Programming Model</span></a> apply here. This section explains new concepts and how performance profiling is done. Some constants defined in the code are as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if !defined(__AIESIM__) &amp;&amp; !defined(__X86SIM__) &amp;&amp; !defined(__ADF_FRONTEND__)</span>
+<span class="n">const</span> <span class="nb">int</span> <span class="n">ITERATION</span><span class="o">=</span><span class="mi">512</span><span class="p">;</span>
+<span class="c1">#else</span>
+<span class="n">const</span> <span class="nb">int</span> <span class="n">ITERATION</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+<span class="c1">#endif</span>
+<span class="n">const</span> <span class="nb">int</span> <span class="n">BLOCK_SIZE_in_Bytes</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="n">ITERATION</span><span class="p">;</span>
+<span class="n">const</span> <span class="nb">int</span> <span class="n">BLOCK_SIZE_out_Bytes</span><span class="o">=</span><span class="mi">1032</span><span class="o">*</span><span class="n">ITERATION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If it is for hardware flow, <code class="docutils literal notranslate"><span class="pre">ITERATION</span></code> is 512 otherwise, it is 4. This is to make sure that the AI Engine simulator can finish in a short amount of time.</p>
+<p>In the main function, the PS code is going to profile <code class="docutils literal notranslate"><span class="pre">num</span></code> GMIO inputs and outputs, and <code class="docutils literal notranslate"><span class="pre">num</span></code> is from 1, 2, 4, to 32. Non-blocking GMIO APIs (<code class="docutils literal notranslate"><span class="pre">GMIO::gm2aie_nb</span></code> and <code class="docutils literal notranslate"><span class="pre">GMIO::aie2gm_nb</span></code>) are used for GMIO transactions, and <code class="docutils literal notranslate"><span class="pre">GMIO::wait</span></code> is used for output data synchronization. Only when the input and output data are transferred for the kernel, can the kernel be finished. This is because the graph is started for all the AI Engine kernels, but only some of the kernels are profiled. After the code for profiling, the remaining kernels are flushed by transferring data to and from the remaining AI Engine kernels.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">num</span><span class="o">&lt;=</span><span class="mi">32</span><span class="p">;</span><span class="n">num</span><span class="o">*=</span><span class="mi">2</span><span class="p">){</span>
+  <span class="o">//</span><span class="n">Pre</span><span class="o">-</span><span class="n">processing</span>
+  <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">32</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">BLOCK_SIZE_in_Bytes</span><span class="o">/</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+     <span class="n">dinArray</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">j</span><span class="o">+</span><span class="n">num</span><span class="p">;</span>
+    <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ITERATION</span><span class="p">);</span>
+
+   <span class="o">//</span><span class="n">Profile</span> <span class="n">starts</span> <span class="n">here</span>
+   <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+   	<span class="n">gr</span><span class="o">.</span><span class="n">gmioIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">gm2aie_nb</span><span class="p">(</span><span class="n">dinArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_in_Bytes</span><span class="p">);</span>
+    <span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">aie2gm_nb</span><span class="p">(</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="o">//</span><span class="n">Profile</span> <span class="n">ends</span> <span class="n">here</span>
+
+   <span class="o">//</span><span class="n">check</span> <span class="n">output</span> <span class="n">correctness</span>
+   <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">BLOCK_SIZE_out_Bytes</span><span class="o">/</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+          <span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="o">%</span><span class="mi">258</span><span class="o">!=</span><span class="mi">256</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">%</span><span class="mi">258</span><span class="o">!=</span><span class="mi">257</span> <span class="o">&amp;&amp;</span> <span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">!=</span><span class="n">j</span><span class="o">+</span><span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">j</span><span class="o">/</span><span class="mi">258</span><span class="o">*</span><span class="mi">2</span><span class="p">){</span>
+             <span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;ERROR:dout[&quot;</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s2">&quot;][&quot;</span><span class="o">&lt;&lt;</span><span class="n">j</span><span class="o">&lt;&lt;</span><span class="s2">&quot;]=&quot;</span><span class="o">&lt;&lt;</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+             <span class="n">error</span><span class="o">++</span><span class="p">;</span>
+           <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+
+  <span class="o">//</span><span class="n">flush</span> <span class="n">remain</span> <span class="n">stalling</span> <span class="n">kernels</span>
+  <span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">32</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+   <span class="n">gr</span><span class="o">.</span><span class="n">gmioIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">gm2aie_nb</span><span class="p">(</span><span class="n">dinArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_in_Bytes</span><span class="p">);</span>
+   <span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">aie2gm_nb</span><span class="p">(</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">gr</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<div class="section" id="performance-profiling-methods">
+<h3>Performance Profiling Methods<a class="headerlink" href="#performance-profiling-methods" title="Permalink to this heading">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp">
+<h1>In this example, some methods for profiling the design are introduced. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:<a class="headerlink" href="#in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="id2">
+<h2>Performance Profiling Methods<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>In this example, we will introduce some methods for profiling the design. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>d8d61191… Updated headers and footers, fixed image references (#33)</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Profile</span> <span class="n">starts</span> <span class="n">here</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">gr</span><span class="o">.</span><span class="n">gmioIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">gm2aie_nb</span><span class="p">(</span><span class="n">dinArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_in_Bytes</span><span class="p">);</span>
+  <span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">aie2gm_nb</span><span class="p">(</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="o">//</span><span class="n">Profile</span> <span class="n">ends</span> <span class="n">here</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> This tutorial assumes that AI Engine runs at 1 GHz.</p>
+<ol class="simple">
+<li><p>Profile by C++ class API</p></li>
+</ol>
+<p>The code to use C++ class API is common for Linux system for various platforms. The <code class="docutils literal notranslate"><span class="pre">Timer</span></code> is defined as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Timer</span> <span class="p">{</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">high_resolution_clock</span><span class="p">::</span><span class="n">time_point</span> <span class="n">mTimeStart</span><span class="p">;</span>
+  <span class="n">public</span><span class="p">:</span>
+    <span class="n">Timer</span><span class="p">()</span> <span class="p">{</span> <span class="n">reset</span><span class="p">();</span> <span class="p">}</span>
+    <span class="n">long</span> <span class="n">long</span> <span class="n">stop</span><span class="p">()</span> <span class="p">{</span>
+      <span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">high_resolution_clock</span><span class="p">::</span><span class="n">time_point</span> <span class="n">timeEnd</span> <span class="o">=</span>
+          <span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">high_resolution_clock</span><span class="p">::</span><span class="n">now</span><span class="p">();</span>
+      <span class="k">return</span> <span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">microseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">timeEnd</span> <span class="o">-</span>
+                                                                  <span class="n">mTimeStart</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">count</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">void</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span> <span class="n">mTimeStart</span> <span class="o">=</span> <span class="n">std</span><span class="p">::</span><span class="n">chrono</span><span class="p">::</span><span class="n">high_resolution_clock</span><span class="p">::</span><span class="n">now</span><span class="p">();</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The code to start profiling is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Timer</span> <span class="n">timer</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The code to end profiling and calculate performance is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">double</span> <span class="n">timer_stop</span><span class="o">=</span><span class="n">timer</span><span class="o">.</span><span class="n">stop</span><span class="p">();</span>
+<span class="n">double</span> <span class="n">throughput</span><span class="o">=</span><span class="p">(</span><span class="n">BLOCK_SIZE_in_Bytes</span><span class="o">+</span><span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">)</span><span class="o">*</span><span class="n">num</span><span class="o">/</span><span class="n">timer_stop</span><span class="o">*</span><span class="mi">1000000</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="p">;</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Throughput (by timer GMIO in num=&quot;</span><span class="o">&lt;&lt;</span><span class="n">num</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,out num=&quot;</span><span class="o">&lt;&lt;</span><span class="n">num</span><span class="o">&lt;&lt;</span><span class="s2">&quot;):</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">&lt;&lt;</span><span class="n">throughput</span><span class="o">&lt;&lt;</span><span class="s2">&quot;M Bytes/s&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The code is guarded by macro <code class="docutils literal notranslate"><span class="pre">__TIMER__</span></code>. To use this method of profiling, define <code class="docutils literal notranslate"><span class="pre">__TIMER__</span></code> for g++ cross compiler in <code class="docutils literal notranslate"><span class="pre">sw/Makefile</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CXXFLAGS += -std=c++14 -D__TIMER__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+</pre></div>
+</div>
+<p>To run it in hardware, use the following make command to build the hardware image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">package</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
+</pre></div>
+</div>
+<p>After the package is done, run the following commands in the Linux prompt after booting Linux from an SD card:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">XILINX_XRT</span><span class="o">=/</span><span class="n">usr</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">mmcblk0p1</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>The output in hardware is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GMIO::malloc completed
+Throughput (by timer GMIO in num=1,out num=1):5076.64M Bytes/s
+Throughput (by timer GMIO in num=2,out num=2):8335.5M Bytes/s
+Throughput (by timer GMIO in num=4,out num=4):9543.97M Bytes/s
+Throughput (by timer GMIO in num=8,out num=8):9717.18M Bytes/s
+Throughput (by timer GMIO in num=16,out num=16):10154.1M Bytes/s
+Throughput (by timer GMIO in num=32,out num=32):10246.8M Bytes/s
+AIE GMIO PASSED!
+GMIO::free completed
+PASS!
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Profile by AI Engine cycles got from AI Engine kernels</p></li>
+</ol>
+<p>In this design, the AI Engine cycles output at the end of each iteration. Each iteration produces 256 int32 data, plus a long long AI Engine cycle counter number. The very beginning cycle and the last cycle of all the AI Engine kernels to be profiled are recorded because multiple AI Engine kernels start at different cycles though they are enabled by the same <code class="docutils literal notranslate"><span class="pre">graph::run</span></code>. Thus, the system throughput for all the kernels can be calculated.</p>
+<p>Note that there is some gap between the actual performance and the calculated number because there is already some data transfer before the recorded starting cycle. However, the overhead is negligible when the total iteration number is high, which is 512 in this example.</p>
+<p>The code to get AI Engine cycles and calculate the system throughput is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="n">long</span> <span class="n">start</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="n">long</span> <span class="n">long</span> <span class="n">end</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="n">long</span> <span class="n">long</span> <span class="n">very_beginning</span><span class="o">=</span><span class="mh">0x0FFFFFFFFFFFFFFF</span><span class="p">;</span>
+<span class="n">long</span> <span class="n">long</span> <span class="n">the_last</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=*</span><span class="p">(</span><span class="n">long</span> <span class="n">long</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">256</span><span class="p">];</span>
+  <span class="n">end</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=*</span><span class="p">(</span><span class="n">long</span> <span class="n">long</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">doutArray</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">BLOCK_SIZE_out_Bytes</span><span class="o">/</span><span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">];</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;</span><span class="n">very_beginning</span><span class="p">){</span>
+    <span class="n">very_beginning</span><span class="o">=</span><span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">end</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="n">the_last</span><span class="p">){</span>
+    <span class="n">the_last</span><span class="o">=</span><span class="n">end</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Throughput (by AIE kernel cycles in=&quot;</span><span class="o">&lt;&lt;</span><span class="n">num</span><span class="o">&lt;&lt;</span><span class="s2">&quot;,out=&quot;</span><span class="o">&lt;&lt;</span><span class="n">num</span><span class="o">&lt;&lt;</span><span class="s2">&quot;) =&quot;</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">double</span><span class="p">)(</span><span class="n">BLOCK_SIZE_in_Bytes</span><span class="o">+</span><span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">)</span><span class="o">*</span><span class="n">num</span><span class="o">/</span><span class="p">(</span><span class="n">double</span><span class="p">)(</span><span class="n">the_last</span><span class="o">-</span><span class="n">very_beginning</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span><span class="o">&lt;&lt;</span><span class="s2">&quot;M Bytes/s&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The code is guarded by macro <code class="docutils literal notranslate"><span class="pre">__AIE_CYCLES__</span></code>. To use this method of profiling, define <code class="docutils literal notranslate"><span class="pre">__AIE_CYCLES__</span></code> for g++ cross compiler in <code class="docutils literal notranslate"><span class="pre">sw/Makefile</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CXXFLAGS += -std=c++14 -D__AIE_CYCLES__ -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+</pre></div>
+</div>
+<p>The commands to build and run in hardware are the same as previously shown. The output in hardware is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GMIO::malloc completed
+Throughput (by AIE kernel cycles in=1,out=1) =6545.68M Bytes/s
+Throughput (by AIE kernel cycles in=2,out=2) =10267.4M Bytes/s
+Throughput (by AIE kernel cycles in=4,out=4) =11036.8M Bytes/s
+Throughput (by AIE kernel cycles in=8,out=8) =10807.9M Bytes/s
+Throughput (by AIE kernel cycles in=16,out=16) =10958.2M Bytes/s
+Throughput (by AIE kernel cycles in=32,out=32) =10892.8M Bytes/s
+AIE GMIO PASSED!
+GMIO::free completed
+PASS!
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Profile by event API</p></li>
+</ol>
+<p>The AI Engine has hardware performance counters and can be configured to count hardware events for measuring performance metrics. The API used in this example is to profile graph throughput regarding the specific GMIO port. There may be confliction when multiple GMIO ports are used for event API because of the restriction that performance counter is shared between GMIO ports that access the same AI Engine-PL interface column. Thus, only one GMIO output is profiled to show this methodology.</p>
+<p>The code to start profiling is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;total input/output num=&quot;</span><span class="o">&lt;&lt;</span><span class="n">num</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">event</span><span class="p">::</span><span class="n">handle</span> <span class="n">handle</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">handle</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">::</span><span class="n">start_profiling</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">gmioOut</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">event</span><span class="p">::</span><span class="n">io_stream_start_to_bytes_transferred_cycles</span><span class="p">,</span> <span class="n">BLOCK_SIZE_out_Bytes</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code to end profling and calculate performance is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">long</span> <span class="n">long</span> <span class="n">cycle_count</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">cycle_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">::</span><span class="n">read_profiling</span><span class="p">(</span><span class="n">handle</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="n">event</span><span class="p">::</span><span class="n">stop_profiling</span><span class="p">(</span><span class="n">handle</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="p">}</span>
+<span class="k">for</span><span class="p">(</span><span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="n">double</span> <span class="n">bandwidth</span> <span class="o">=</span> <span class="p">(</span><span class="n">double</span><span class="p">)</span><span class="n">BLOCK_SIZE_out_Bytes</span> <span class="o">/</span> <span class="p">((</span><span class="n">double</span><span class="p">)</span><span class="n">cycle_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span> <span class="o">*</span><span class="mi">1000</span><span class="p">;</span> <span class="o">//</span><span class="n">byte</span> <span class="n">per</span> <span class="n">second</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s2">&quot;Throughput (by event API) gmioOut[&quot;</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="o">&lt;&lt;</span><span class="s2">&quot;] bandwidth=&quot;</span><span class="o">&lt;&lt;</span><span class="n">bandwidth</span><span class="o">&lt;&lt;</span><span class="s2">&quot;M Bytes/s&quot;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">event::start_profiling</span> <span class="pre">is</span></code> called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates <code class="docutils literal notranslate"><span class="pre">BLOCK_SIZE_out_Bytes</span></code> bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.</p>
+<p>For detailed usage about event API, refer to the <em>Versal ACAP AI Engine Programming Environment User Guide</em> ([UG1076]).</p>
+<p>The code is guarded by macro <code class="docutils literal notranslate"><span class="pre">__USE_EVENT_PROFILE__</span></code>. To use this method of profiling, define <code class="docutils literal notranslate"><span class="pre">__USE_EVENT_PROFILE__</span></code> for g++ cross compiler in <code class="docutils literal notranslate"><span class="pre">sw/Makefile</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CXXFLAGS += -std=c++14 -D__USE_EVENT_PROFILE__ -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+</pre></div>
+</div>
+<p>The commands to build and run in hardware are the same as previously shown. The output in hardware is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GMIO::malloc completed
+total input/output num=1
+Throughput (by event API) gmioOut[0] bandwidth=3321.1M Bytes/s
+total input/output num=2
+Throughput (by event API) gmioOut[0] bandwidth=2737.72M Bytes/s
+total input/output num=4
+Throughput (by event API) gmioOut[0] bandwidth=1608.08M Bytes/s
+total input/output num=8
+Throughput (by event API) gmioOut[0] bandwidth=1044.15M Bytes/s
+total input/output num=16
+Throughput (by event API) gmioOut[0] bandwidth=972.539M Bytes/s
+total input/output num=32
+Throughput (by event API) gmioOut[0] bandwidth=989.08M Bytes/s
+AIE GMIO PASSED!
+GMIO::free completed
+PASS!
+</pre></div>
+</div>
+<p>It is seen that when the used GMIO ports number increases, the performance for the specific GMIO port drops, indicating that the total system throughput is limited by NOC and DDR bandwidth.</p>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
+<p>In this tutorial, you learned about:</p>
+<ul class="simple">
+<li><p>Programming model for AI Engine GMIO</p></li>
+<li><p>Ways to profile system performance and also, about the NOC and DDR bandwidth.</p></li>
+</ul>
+<p><br></br></p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);</p>
+<p>you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software</p>
+<p>distributed under the License is distributed on an “AS IS” BASIS,</p>
+<p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p>See the License for the specific language governing permissions and</p>
+<p>limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

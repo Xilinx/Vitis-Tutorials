@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Overview &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Hardware_Acceleration/Introduction/03-xrt-memory-allocation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>Ensuring that our allocated memory is aligned to page boundaries gave us a significant improvement over our
+initial configuration.  There is another workflow we can use with OpenCL, though, which is to have OpenCL and
+XRT allocate the buffers and then map them to userspace pointers for use by the application.  Let’s
+experiment with that and see the effect it has on our timing.</p>
+</div>
+<div class="section" id="key-code">
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>Conceptually this is a small change, but unlike Example 2 this example is a bit more involved in terms of the
+required code changes.  This is mostly because instead of using standard userspace memory allocation,
+we’re going to ask the OpenCL runtime to allocate buffers for us.  Once we have the buffers, we then need to
+map them into userspace so that we can access the data they contain.</p>
+<p>For our allocation, we change from the previous example’s code to the following:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">cl</span><span class="o">::</span><span class="n">Memory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">inBufVec</span><span class="p">,</span><span class="w"> </span><span class="n">outBufVec</span><span class="p">;</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">a_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">b_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">c_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_WRITE_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">d_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_WRITE</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_ALLOC_HOST_PTR</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>In this case we’re allocating our OpenCL buffer objects significantly earlier in the program, and we also
+don’t have userspace pointers yet.  We can still, though, pass these buffer objects to enqueue
+<code class="docutils literal notranslate"><span class="pre">MigrateMemObjects()</span></code> and other OpenCL functions.  The backing storage is allocated at this point, we just
+don’t have a userspace pointer to it.</p>
+<p>The call to the <code class="docutils literal notranslate"><span class="pre">cl::Buffer</span></code> constructor looks very similar to what we had before.  In fact, only two things
+have changed: we pass in the flag <code class="docutils literal notranslate"><span class="pre">CL_MEM_ALLOC_HOST_PTR</span></code> instead of <code class="docutils literal notranslate"><span class="pre">CL_MEM_USE_HOST_PTR</span></code> to tell the
+runtime that we want to allocate a buffer instead of using an existing buffer.  We also no longer need to
+pass in a pointer to the user buffer (since we’re allocating a new one), so we pass <code class="docutils literal notranslate"><span class="pre">NULL</span></code> instead.</p>
+<p>We then need to map our OpenCL buffers to the userspace pointers to <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">d</span></code> that we’ll use immediately in software.  There’s no need to map a pointer to <code class="docutils literal notranslate"><span class="pre">c</span></code> at this time, we can do that later when we need to read from that buffer after kernel execution.  We do this as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+
+<span class="kt">uint32_t</span><span class="o">*</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="o">*</span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_WRITE</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">CL_MAP_READ</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Once we perform the mapping, we can use the userspace pointers as normal to access the buffer contents.One
+thing to note, though, is that the OpenCL runtime does do reference counting of the opened buffers, so we
+need a corresponding call to <code class="docutils literal notranslate"><span class="pre">enqueueUnmapMemObject()</span></code> for each buffer that we map.</p>
+<p>The execution flow through the kernel is the same, but we see something new when the time comes to migrate
+the input buffer back into the device. Rather than manually enqueueing a migration, we can instead just map
+the buffer.  The OpenCL runtime will recognize that the buffer contents are currently resident in the Alveo
+Data Center accelerator card global memory and will take care of migrating the buffer back to the host for
+us.  This is a coding style choice you must make, but fundamentally the code below is sufficient to migrate
+<code class="docutils literal notranslate"><span class="pre">c</span></code> back to the host memory.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint32_t</span><span class="o">*</span><span class="p">)</span><span class="n">q</span><span class="p">.</span><span class="n">enqueueMapBuffer</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_TRUE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MAP_READ</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">BUFSIZE</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Finally, as we mentioned earlier you need to unmap the memory objects so that they can be destroyed cleanly
+by the runtime.  We do this at the end of the program instead of using <code class="docutils literal notranslate"><span class="pre">free()</span></code> on the buffers as before.
+This must be done before the command queue is finished.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">a_buf</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">b_buf</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">c_buf</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">enqueueUnmapMemObject</span><span class="p">(</span><span class="n">d_buf</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">);</span><span class="w"></span>
+<span class="n">q</span><span class="p">.</span><span class="n">finish</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To summarize the key workflow for this use model, we need to:</p>
+<ol class="simple">
+<li><p><strong>Allocate</strong> our buffers using the CL_MEM_ALLOC_HOST_PTR flag.</p></li>
+<li><p><strong>Map</strong> our input buffers to userspace pointers to populate them.</p></li>
+<li><p>Run the kernel as usual.</p></li>
+<li><p><strong>Map</strong> the output buffer(s) to migrate them back to host memory.</p></li>
+<li><p><strong>Unmap</strong> all of our buffers once we’re done using them so they can be destroyed properly.</p></li>
+</ol>
+</div>
+<div class="section" id="running-the-application">
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>With the XRT initialized, run the application by running the following command from the build directory:</p>
+<p><code class="docutils literal notranslate"><span class="pre">./03_buffer_map</span> <span class="pre">alveo_examples</span></code></p>
+<p>The program will output a message similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 3: Allocate and Map Contiguous Buffers --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: &#39;./alveo_examples.xclbin&#39;
+Running kernel test with XRT-allocated contiguous buffers
+
+OCL-mapped contiguous buffer example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:              247.460 ms
+Allocate contiguous OpenCL buffers: 30.365 ms
+Map buffers to userspace pointers:  0.222 ms
+Populating buffer inputs:           22.527 ms
+Software VADD run :                 24.852 ms
+Memory object migration enqueue :   6.739 ms
+Set kernel arguments:               0.014 ms
+OCL Enqueue task:                   0.102 ms
+Wait for kernel to complete :       92.068 ms
+Read back computation results :     2.243 ms
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Operation</th>
+<th align="center">Example 2</th>
+<th align="center">Example 3</th>
+<th align="center">&Delta;2&rarr;3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCL Initialization</td>
+<td align="center">256.254 ms</td>
+<td align="center">247.460 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Buffer Allocation</td>
+<td align="center">55 &micro;s</td>
+<td align="center">30.365 ms</td>
+<td align="center">30.310 ms</td>
+</tr>
+<tr>
+<td>Buffer Population</td>
+<td align="center">47.884 ms</td>
+<td align="center">22.527 ms</td>
+<td align="center">-25.357 ms</td>
+</tr>
+<tr>
+<td>Software VADD</td>
+<td align="center">35.808 ms</td>
+<td align="center">24.852 ms</td>
+<td align="center">-10.956 ms</td>
+</tr>
+<tr>
+<td>Buffer Mapping</td>
+<td align="center">9.103 ms</td>
+<td align="center">222 &micro;s</td>
+<td align="center">-8.881 ms</td>
+</tr>
+<tr>
+<td>Write Buffers Out</td>
+<td align="center">6.615 ms</td>
+<td align="center">6.739 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Set Kernel Args</td>
+<td align="center">14 &micro;s</td>
+<td align="center">14 &micro;s</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Kernel Runtime</td>
+<td align="center">92.110 ms</td>
+<td align="center">92.068 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Read Buffer In</td>
+<td align="center">2.479 ms</td>
+<td align="center">2.243 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-330.889 ms</td>
+<td align="center">-323.996 ms</td>
+<td align="center">-6.893 ms</td>
+</tr>
+<tr>
+<td>&Delta;FPGA&rarr;CPU (algorithm only)</td>
+<td align="center">-74.269 ms</td>
+<td align="center">-76.536 ms</td>
+<td align="center">-</td>
+</tr>
+</tbody>
+</table><p>You may have expected a speedup here, but we see that rather than speeding up any particular operation,
+instead we’ve shifted the latencies in the system around.  Effectively we’ve paid our taxes from a different
+bank account, but at the end of the day we can’t escape them.  On embedded systems with a unified memory map
+for the processor and the kernels we would see significant differences here, but on server-class CPUs we
+don’t.</p>
+<p>One thing to think about is that although pre-allocating the buffers in this way took longer, you don’t
+generally want to allocate buffers in your application’s critical path.  By using this mechanism, the runtime
+use of your buffers is much faster.</p>
+<p>You may even wonder why it’s faster for the CPU to access this memory.  While we haven’t discussed it to this
+point, allocating memory via this API pins the virtual addresses to physical memory.  This makes it more
+efficient for both the CPU and the DMA to access it.  As with all things in engineering, though, this comes
+at a price - allocation time is higher and you run the risk of fragmenting the available memory if you
+allocate many small buffers.</p>
+<p>In general, buffers should be allocated outside the critical path of your application and this method shifts the burden away from your high-performance sections if used correctly.</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>Some things to try to build on this experiment:</p>
+<ul class="simple">
+<li><p>Once again, vary the size of the buffers allocated.  Do the relationships that you derived in the previous
+example still hold true?</p></li>
+<li><p>Experiment with other sequences for allocating memory and enqueuing transfers.</p></li>
+<li><p>What happens if you modify the input buffer and run the kernel a second time?</p></li>
+</ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Using the OpenCL and XRT APIs can lead to localized performance boosts, although fundamentally there’s no
+escaping your taxes.</p></li>
+<li><p>Our long pole is becoming our kernel runtime, though, and we can easily speed that up.  Let’s take a look
+at that in our next few examples.</p></li>
+</ul>
+<p>Read <a class="reference internal" href="04-parallelizing-the-data-path.html"><span class="doc">Example 4: Parallelizing the Data Path</span></a></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

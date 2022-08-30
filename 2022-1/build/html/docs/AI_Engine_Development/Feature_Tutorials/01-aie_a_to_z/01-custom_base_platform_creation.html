@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Custom Platform Creation &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Custom Platform Creation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/01-aie_a_to_z/01-custom_base_platform_creation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="custom-platform-creation">
+<h1>Custom Platform Creation<a class="headerlink" href="#custom-platform-creation" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="platforms">
+<h2>Platforms<a class="headerlink" href="#platforms" title="Permalink to this heading">¶</a></h2>
+<p>A platform is the starting point of your design and will be used to build Vitis™ software platform applications.</p>
+<blockquote>
+<div><p><strong>Note</strong>: AMD-Xilinx recommends using the VCK190 base platform provided on Xilinx.com as a starting point for designs. This page is intended for users who would like to understand how the base platform is generated. Other users can start directly from <a href="./02-aie_application_creation.md">AI Engine Development</a></b>.</p>
+</div></blockquote>
+<p>In this first section of the tutorial an example of how to create a new platform is shown. This starts with building the hardware system using the AI Engine in the Vivado® Design Suite.</p>
+<p>This is in most ways a traditional Vivado design. You are building the platform, that is, the part of the design that you do not want the Vitis tools to configure or modify. This can include completely unrelated logic, any hierarchy you want to have in the design, but there are some rules that you must follow:</p>
+<ul class="simple">
+<li><p>Your design must contain an IP integrator block diagram containing the CIPS, NOC, and other infrastructure IP</p></li>
+<li><p>Your design must have at least one clock that you will expose to Vitis for use with any kernels that it adds
+This clock must have an associated <code class="docutils literal notranslate"><span class="pre">proc_sys_reset</span></code> block.</p></li>
+</ul>
+<p>This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).</p>
+<div class="section" id="step-1-build-versal-extensible-embedded-platform-example-design-in-vivado">
+<h3>Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado<a class="headerlink" href="#step-1-build-versal-extensible-embedded-platform-example-design-in-vivado" title="Permalink to this heading">¶</a></h3>
+<ol>
+<li><p>Launch Vivado IDE and select <em><strong>Open Example Project</strong></em> from the Welcome window. You can also do it by clicking <em><strong>File</strong></em> from the menu and select <em><strong>Project</strong></em> and then <em><strong>Open Example</strong></em>.</p></li>
+<li><p>Click <em><strong>Next</strong></em> to skip the first page of the wizard. In the template selection page, select the <em><strong>Versal Extensible Embedded Platform</strong></em> template. Click <em><strong>Next</strong></em>.</p></li>
+<li><p>Name this project as <em><strong>custom_pfm_vck190</strong></em> and click <em><strong>Next</strong></em>.</p></li>
+<li><p>In the board selection page, select <em><strong>VCK190 Evaluation Platform</strong></em>. If you are going to target other platform, you may select others. Click <em><strong>Next</strong></em>.</p></li>
+<li><p>In the design preset page, make the following changes:</p>
+<p><img alt="missing image" src="../../../../_images/221_design_preset_config.png" /></p>
+</li>
+<li><p>Click <em><strong>Finish</strong></em> to complete the example design creation phase and this will open up the Vivado project with the template design you just created.
+You can open the block design to view the details of the platform design.
+By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you may use this as a baseline design and make further modifications on top of it.</p>
+<p><img alt="missing image" src="../../../../_images/211_block_design_complete.png" /></p>
+</li>
+<li><p>Click <em><strong>Generate Block Design</strong></em> from the Flow Navigator panel on the left, click <em><strong>Generate</strong></em> and wait for the process to complete.</p></li>
+<li><p>Click <em><strong>File</strong></em> from the menu and select <em><strong>Export Platform</strong></em>.</p>
+<p>a. On the second page, select <em><strong>Hardware and hardware emulation</strong></em> as the platform type.</p>
+<p><img alt="missing image" src="../../../../_images/221_export_xsa_pg1.png" /></p>
+<p>b. On the third page select <em><strong>Pre-synthesis</strong></em>.</p>
+<p><img alt="missing image" src="../../../../_images/export_xsa_pg2.png" /></p>
+<p>c. On the fourth page, add the name of the platform.</p>
+<p><img alt="missing image" src="../../../../_images/export_xsa_updated.PNG" />
+Here we name the board as “xd” because of software limitation.</p>
+<p>d. On the fourth page, set the name of the XSA and click <em><strong>Finish</strong></em>.</p>
+<p><img alt="missing image" src="../../../../_images/export_xsa_pg4.png" /></p>
+</li>
+<li><p>Close the Vivado project after platform export process finishes.</p></li>
+</ol>
+</div>
+<div class="section" id="step-2-build-the-platform-in-the-vitis-software-platform">
+<h3>Step 2. Build the Platform in the Vitis Software Platform<a class="headerlink" href="#step-2-build-the-platform-in-the-vitis-software-platform" title="Permalink to this heading">¶</a></h3>
+<ol>
+<li><p>Open the Vitis IDE and select a workspace.</p></li>
+<li><p>On the Welcome Page, select <em><strong>Create Platform Project</strong></em> or select <em><strong>File → New →  Platform Project …</strong></em>.</p></li>
+<li><p>Set the platform project name to <em><strong>base_pfm_vck190</strong></em> and click <em><strong>Next</strong></em>.</p>
+<p><img alt="missing image" src="../../../../_images/211_create_platform_pg1.png" /></p>
+</li>
+<li><p>Use the XSA generated in the previous step and set the Operating System to  <em><strong>aie_runtime</strong></em> and the Processor to <em><strong>ai_engine</strong></em>. Click <em><strong>Finish</strong></em> to create the platform project.</p>
+<p><img alt="missing image" src="../../../../_images/create_platform_pg2.png" /></p>
+</li>
+<li><p>Then build the platform by clicking on the hammer icon.</p>
+<p><img alt="missing image" src="../../../../_images/build_platform.png" /></p>
+</li>
+</ol>
+<blockquote>
+<div><p><strong>Note</strong>: If you modify the XSA file later, first right-click the platform project and select <em><strong>Update Hardware Specification</strong></em> and then rebuild the platform project.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>The generated platform can be found in <code class="docutils literal notranslate"><span class="pre">base_pfm_vck190/export</span></code>.</p></li>
+</ol>
+<p>In this step, you created the platform starting with building the hardware platform in the Vivado Design Suite. Then you built the platform in the Vitis software platform, based on the exported XSA file.</p>
+<p>In the next step, you will build an AI Engine application using this platform.</p>
+<p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to AI Engine Development</a></b></p><p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

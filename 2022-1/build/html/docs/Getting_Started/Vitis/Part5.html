@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Vitis Getting Started Tutorial &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Vitis HLS" href="../Vitis_HLS/Getting_Started_Vitis_HLS.html" />
+    <link rel="prev" title="Vitis Flow 101 – Part 4 : Build and Run the Example" href="Part4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../Vitis-Getting-Started.html">Getting Started</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Getting_Started_Vitis.html">Vitis Introduction and Getting Started</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Part1.html">Part 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Part2.html">Part 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Part3.html">Part 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Part4.html">Part 4</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Part 5</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#part-5-visualizing-results-and-analyzing-reports">Part 5 : Visualizing Results and Analyzing Reports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#locating-the-reports-and-summaries">Locating the Reports and Summaries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opening-the-run-summary-with-vitis-analyzer">Opening the Run Summary with Vitis Analyzer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#homework">Homework</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wrap-up-and-next-steps">Wrap-Up and Next Steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Vitis_HLS/Getting_Started_Vitis_HLS.html">Vitis HLS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Vitis_Libraries/README.html">Vitis Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Vitis_Platform/README.html">Vitis Platform</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../Vitis-Getting-Started.html">Introduction</a> &raquo;</li>
+          <li><a href="Getting_Started_Vitis.html">Vitis Flow 101</a> &raquo;</li>
+      <li>Vitis Getting Started Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Getting_Started/Vitis/Part5.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="vitis-getting-started-tutorial">
+<h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="part-5-visualizing-results-and-analyzing-reports">
+<h2>Part 5 : Visualizing Results and Analyzing Reports<a class="headerlink" href="#part-5-visualizing-results-and-analyzing-reports" title="Permalink to this heading">¶</a></h2>
+<p>Now that you have successfully built and run the vector-add example, now you can look at the results and reports generated along the way. This example is configured to generate build and run summaries for all three build targets (software emulation, hardware emulation and hardware). Any of these summary reports can be viewed and analyzed using the Vitis analyzer tool as described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Using-the-Vitis-Analyzer">Using the Vitis Analyzer</a>.</p>
+<p>The results will be different depending on the summary or report you open. The hardware run is fully accurate, hardware emulation is a cycle-approximate simulation, and software emulation should only be used for functional considerations. Also, since the U200 and ZCU102 cards have different characteristics, the results will be different between these two targets. View the results from the platform and build target that you want to analyze:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">u200/sw_emu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u200/hw_emu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">u200/hw</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zcu102/sw_emu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zcu102/hw_emu</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zcu102/hw</span></code></p></li>
+</ul>
+<p>For this lab you will be opening and viewing results from the <code class="docutils literal notranslate"><span class="pre">u200/hw_emu</span></code> build and run.</p>
+</div>
+<div class="section" id="locating-the-reports-and-summaries">
+<h2>Locating the Reports and Summaries<a class="headerlink" href="#locating-the-reports-and-summaries" title="Permalink to this heading">¶</a></h2>
+<p>If you look into the directory where you ran the application, you will notice that a few files were generated by the run:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vadd.xo.compile_summary</span></code>: A summary report of the compiled kernel</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vadd.xclbin.info</span></code>: A text report of the device binary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vadd.xclbin.link_summary</span></code>: A summary report of the linked device binary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opencl_trace.csv</span></code>: A timeline of events occurring during the application runtime</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">summary.csv</span></code>: A report of the application profile</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code>: A summary report of the events of the application runtime</p></li>
+</ul>
+<p><em>IMPORTANT: If you targeted the ZCU102 hardware, these files are stored on the SD card and must be copied back to your workstation to continue this lab. Refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform">Running Emulation on an Embedded Processor Platform</a> for more information.</em></p>
+<p>The generation of these files and reports is controlled by runtime options located in the <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file.  This tutorial contains a pre-existing <code class="docutils literal notranslate"><span class="pre">xrt.ini</span></code> file which enables the generation a timeline of execution, and the profile summary data, with the following content:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Debug<span class="o">]</span>
+<span class="nv">opencl_trace</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opening-the-run-summary-with-vitis-analyzer">
+<h2>Opening the Run Summary with Vitis Analyzer<a class="headerlink" href="#opening-the-run-summary-with-vitis-analyzer" title="Permalink to this heading">¶</a></h2>
+<p>Use the following command to open the summary in Vitis Analyzer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis_analyzer ./vadd.xclbin.link_summary
+</pre></div>
+</div>
+<p>This opens the Vitis Analyzer tool and loads the various reports and displays the run summary. You can navigate to the various reports using the left pane of the Vitis Analyzer or by clicking on the links provided in the summary report.</p>
+<ul class="simple">
+<li><p>Open the System Diagram.</p>
+<ul>
+<li><p>The System Diagram is a graphical view of the contents of the Xilinx device. It shows the various hardware kernels, how they are connected to platform resources such a global memory banks.</p></li>
+<li><p>Notice the Estimated Resources information displayed next to the <code class="docutils literal notranslate"><span class="pre">vadd</span></code> kernel.</p></li>
+<li><p>Click on the “Settings” icon located in the top right corner of the diagram and check the “Show Interface Ports” box. Notice that the diagram now displays the mapping of kernel arguments to kernel ports and shows bandwidth information for each port.</p></li>
+<li><p>Click on each of the three tabs (Compute Units, Kernels and Memories) located at the bottom of the diagram and look at the information displayed in each of them.</p></li>
+</ul>
+</li>
+<li><p>Open the System Guidance report</p>
+<ul>
+<li><p>The Guidance report flags issues and potential issues in your application and kernel, and provides actionable feedback on how to improve it.</p></li>
+<li><p>This simple example is not fully optimized and Guidance reports several warnings. Inspect each of these warnings to learn more about optimization opportunities and design best practices.</p></li>
+<li><p>What can you learn about the width of the kernel ports?</p></li>
+</ul>
+</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">link_summary</span></code> also includes the <code class="docutils literal notranslate"><span class="pre">compile_summary</span></code>. Take a look at the various elements of the <code class="docutils literal notranslate"><span class="pre">compile_summary</span></code> report by selecting them in the Vitis Analyzer tool.</p>
+<p>Now open the <code class="docutils literal notranslate"><span class="pre">xrt.run_summary</span></code> by using the <strong>File &gt; Open Summary</strong> command from the Vitis Analyzer main menu.</p>
+<ul class="simple">
+<li><p>Open the Profile Summary report</p>
+<ul>
+<li><p>The Profile Summary provides annotated details regarding the overall application performance. All data generated during the execution of the application is grouped into categories.</p></li>
+<li><p>Use the left pane of the report to navigate through the various categories and explore all the metrics reported in the Profile Summary.</p></li>
+</ul>
+</li>
+<li><p>Open the Timeline Trace</p>
+<ul>
+<li><p>The Timeline Trace collects displays host and kernel events on a common timeline to help visualize the overall health and performance of your system. The graphical representation is very useful to see issues regarding kernel synchronization and efficient concurrent execution.</p></li>
+<li><p>Zoom in and scroll to the far right of the timeline trace to visualize the point where the host program transfers the buffers and executes of the kernel.</p></li>
+<li><p>Hover over the various activity events to get more details about each of them.</p></li>
+<li><p>Can you relate the timeline activity to the sequence of API calls in the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> file?</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="img" src="../../../_images/part5_timeline_trace.png" /></p>
+<p>When you are done exploring the various reports in Vitis Analyzer, you can close the tool.</p>
+</div>
+<div class="section" id="homework">
+<h2>Homework<a class="headerlink" href="#homework" title="Permalink to this heading">¶</a></h2>
+<p>Now that you have learned the basics of the Vitis flow, you can try some experiments on your own. A good place to start is to try making changes to the host program. If you only change the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> file, then you do not need to rebuild the FPGA binary,  which makes for very quick build-and-run iterations.</p>
+<ul class="simple">
+<li><p>In the host program, the size of the vectors is hardcoded to 4096 elements (through the DATA_SIZE macro).</p>
+<ul>
+<li><p>What happens if you increase this size to a much larger value?</p></li>
+<li><p>What do you see in Vitis Analyzer?</p></li>
+</ul>
+</li>
+<li><p>The host program only calls the accelerator once.</p>
+<ul>
+<li><p>What happens if you put a loop around Step 4 in <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> to iterate a few more times?</p></li>
+<li><p>How does the Timeline Trace look now?</p></li>
+<li><p>Can you make it so that the host program sends different vectors to the kernel each time the host calls it?</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="wrap-up-and-next-steps">
+<h2>Wrap-Up and Next Steps<a class="headerlink" href="#wrap-up-and-next-steps" title="Permalink to this heading">¶</a></h2>
+<p>Congratulations for completing the <strong>Vitis Flow 101</strong> tutorial. You should now have an understanding of all the essential concepts of the Vitis programming and execution model, including coding considerations and how to build, run and visualize reports.</p>
+<p>The vector-add example is as simple as it gets, yet it offers a lot to learn and it is a very good sandbox to dig deeper into key aspects of the flow. The <a class="reference external" href="https://developer.xilinx.com/en/articles/acceleration-basics.html">Get Moving with Alveo tutorial</a> leverages the same vector-add example and takes it several steps further by illustrating common optimization techniques. Be sure to check it out.</p>
+<p>Return to the <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis Tutorials</a> home page.</p>
+<hr class="docutils" />
+<p>License statement</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0</p>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Part4.html" class="btn btn-neutral float-left" title="Vitis Flow 101 – Part 4 : Build and Run the Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Vitis_HLS/Getting_Started_Vitis_HLS.html" class="btn btn-neutral float-right" title="Vitis HLS" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

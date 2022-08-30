@@ -1,0 +1,33 @@
+ {
+    "name": "01-rtl_kernel_workflow",
+    "description": "01-rtl_kernel_workflow",
+    "flow": "vitis",
+ 
+    "platform_allowlist": ["u200"],
+ 
+    "testinfo": {
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_sw_emu": 30,
+                    "vitis_hw_emu": 200,
+                    "vitis_hw_build": 470,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "make_options" : [ "TARGET='$user_test_mode'", "XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/Vitis-Tutorials'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'" ],
+        "category": "canary",
+        "custom_build_target": {
+            "all": "run",
+            "hw": "xclbin"
+        },
+        "custom_board_target": "run"
+    }
+}

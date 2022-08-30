@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Vitis™ Getting Started Tutorial &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Vitis™ Getting Started Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Getting_Started/Vitis/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="vitis-getting-started-tutorial">
+<h1>Vitis™ Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<p><img alt="img" src="../../../_images/vitis_101.png" /></p>
+<p>Welcome to the Vitis Getting Started tutorial. The Vitis tool provides a unified flow for developing FPGA accelerated application targeted to either Data Center accelerator cards or Embedded Processor platforms. If you are looking to learn more about the Vitis application acceleration development flow in order to get started with FPGA acceleration, you have come to the right place.</p>
+<p>This tutorial is divided into two separate flows: the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow">Data Center flow</a>, and the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Application-Acceleration-Development-Flow">Embedded Processor flow</a>. These two flows are similar in that host applications and accelerated kernels written for one flow can be used in the other flow, and the build processes are similar. However, while similar the flows are also different in that the build and runtime environments of Data Center accelerator cards and Embedded Processor platforms have different requirements that must be met.</p>
+<p>This tutorial provides instructions for building and running on both the Alveo U200 Data Center accelerator card, and the Zynq Ultrascale MPSoC ZCU102 platform. These instructions can be easily adapted to other Xilinx cards.</p>
+<p>The two flows in this tutorial are both organized into 5 parts and are designed to walk you through all the key aspects of the Vitis flow.</p>
+<ul class="simple">
+<li><p><strong>Part 1</strong> covers all the essential concepts of the Vitis FPGA acceleration flow in under 10 minutes</p></li>
+<li><p><strong>Part 2</strong> guides you through the process of installing the Vitis tools, platforms and runtime library.</p></li>
+<li><p><strong>Part 3</strong> explains the source code of vector-add example used in the rest of the tutorial</p></li>
+<li><p><strong>Part 4</strong> describes the Data Center flow and the Embedded Platform flow. Each flow includes the commands required to compile, link and run the example on your acceleration card</p></li>
+<li><p><strong>Part 5</strong> gives an overview of Vitis Analyzer and shows how to open and analyze reports</p></li>
+</ul>
+<div class="section" id="part-1-essential-concepts">
+<h2>Part 1 : Essential Concepts<a class="headerlink" href="#part-1-essential-concepts" title="Permalink to this heading">¶</a></h2>
+<p>The Vitis unified software platform provides a framework for developing and delivering FPGA accelerated applications using standard programming languages like C and C++. The Vitis flow offers all of the features of a standard software development environment, including:</p>
+<ul class="simple">
+<li><p>Compiler or cross-compiler for host applications running on x86 or Arm® processors</p></li>
+<li><p>Cross-compilers for building the FPGA binary</p></li>
+<li><p>Debugging environment to help identify and resolve issues in the code</p></li>
+<li><p>Performance profilers to identify bottlenecks and help you optimize the application</p></li>
+</ul>
+<div class="section" id="understanding-the-vitis-programming-and-execution-model">
+<h3>Understanding the Vitis Programming and Execution Model<a class="headerlink" href="#understanding-the-vitis-programming-and-execution-model" title="Permalink to this heading">¶</a></h3>
+<p>A Vitis accelerated application consists of two distinct components: a software program running on a standard processor such as an X86 processor, or ARM embedded processor, and a Xilinx device binary (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) containing hardware accelerated functions, or kernels.</p>
+<ul class="simple">
+<li><p>The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the <a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">XRT native API</a> implemented by the Xilinx Runtime library (XRT), or OpenCL 1.2 C/C++ API to interact with the acceleration kernel in the Xilinx device. A description of the host application and required API calls can be found in the Vitis documentation under <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming">Host Programming</a>.</p></li>
+<li><p>The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the Xilinx device. Refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/C/C-Kernels">C/C++ Kernels</a>, or <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels">RTL Kernels</a> in the Vitis documentation for coding requirements. The kernels are integrated with a Vitis hardware platform using standard AXI interfaces.</p></li>
+</ul>
+<p><img alt="img" src="../../../_images/part1_execution_model.png" /></p>
+<p>Vitis accelerated applications can execute on either Data Center or Embedded Processor acceleration platforms:</p>
+<ul class="simple">
+<li><p>On Data Center accelerator cards, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.</p></li>
+<li><p>On Embedded Processor platforms, the software program runs on an ARM processor of a Xilinx MPSoC device and the kernels run within the same device.</p></li>
+</ul>
+<p>Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.</p>
+<p>There are multiple ways by which the software program can interact with the hardware kernels. The simplest method can be decomposed into the following steps:</p>
+<ol class="simple">
+<li><p>The host application writes the data needed by a kernel into the global memory of the FPGA device.</p></li>
+<li><p>The host program sets up the input parameters of the kernel.</p></li>
+<li><p>The host program triggers the execution of the kernel.</p></li>
+<li><p>The kernel performs the required computation, accessing global memory to read or write data, as necessary. Kernels can also use streaming connections to communicate with other kernels, passing data from one kernel to the next.</p></li>
+<li><p>The kernel notifies the host that it has completed its task.</p></li>
+<li><p>The host program transfers data from global memory back into host memory, or can give ownership of the data to another kernel.</p></li>
+</ol>
+</div>
+<div class="section" id="understanding-the-vitis-build-process">
+<h3>Understanding the Vitis Build Process<a class="headerlink" href="#understanding-the-vitis-build-process" title="Permalink to this heading">¶</a></h3>
+<p>The Vitis build process follows a standard compilation and linking process for both the host program and the kernel code:</p>
+<ul class="simple">
+<li><p>The host program is built using the GNU C++ compiler (g++) for Data Center applications or the GNU C++ Arm cross-compiler for Embedded Processor devices.</p></li>
+<li><p>The FPGA binary is built using the Vitis compiler (v++). First the kernels are compiled into a Xilinx object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the Xilinx device binary (.xclbin) file. As described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command">Vitis Compiler Command</a>, the Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.</p></li>
+</ul>
+<p><img alt="img" src="../../../_images/part1_build_flow.png" /></p>
+</div>
+<div class="section" id="understanding-vitis-build-targets">
+<h3>Understanding Vitis Build Targets<a class="headerlink" href="#understanding-vitis-build-targets" title="Permalink to this heading">¶</a></h3>
+<p>The Vitis compiler provides three different build targets: two emulation targets used for debug and validation purposes, and the default hardware target used to generate the actual FPGA binary:</p>
+<ul class="simple">
+<li><p>Software Emulation - The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.</p></li>
+<li><p>Hardware Emulation - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.</p></li>
+<li><p>Hardware - The kernel code is compiled into a hardware description language (RTL), and then synthesized and implemented for a target Xilinx device, resulting in a binary (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) file that will run on the actual FPGA.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>TIP</strong>: As described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation">Running Emulation</a>, there are significant differences in the build and runtime environments between Data Center and Embedded Processor platforms. These two flows will be discussed in detail in the following sections.</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p><strong>Click here for <a class="reference internal" href="Part2.html"><span class="doc">Installation and Setup Instructions</span></a></strong></p>
+<hr class="docutils" />
+<p>License statement</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0</p>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

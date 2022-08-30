@@ -1,0 +1,26 @@
+[host_machine]
+system = 'linux'
+cpu_family = 'aarch64'
+cpu = 'arm64'
+endian = 'little'
+
+[build_machine]
+system = 'linux'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+[properties]
+c_args = ['--sysroot=<SYSROOT>']
+cpp_args = ['--sysroot=<SYSROOT>']
+c_link_args = ['--sysroot=<SYSROOT>','-L<SYSROOT>/lib', '-L<SYSROOT>/usr/lib']
+cpp_link_args = ['--sysroot=<SYSROOT>','-L<SYSROOT>/lib', '-L<SYSROOT>/usr/lib']
+pkg_config_libdir = ['<SYSROOT>/usr/lib/pkgconfig:<SYSROOT>/usr/share/pkgconfig']
+sys_root = '<SYSROOT>'
+
+[binaries]
+c = ['<NATIVESYSROOT>/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-gcc']
+cpp = ['<NATIVESYSROOT>/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-g++']
+ar = ['<NATIVESYSROOT>/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-ar']
+pkgconfig = ['<NATIVESYSROOT>/usr/bin/pkg-config']
+strip = ['<NATIVESYSROOT>/usr/bin/aarch64-xilinx-linux/aarch64-xilinx-linux-strip']

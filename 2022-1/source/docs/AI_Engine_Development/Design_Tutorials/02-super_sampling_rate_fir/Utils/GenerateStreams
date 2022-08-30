@@ -1,0 +1,66 @@
+#
+# Copyright 2021-2022 Xilinx, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#!/bin/bash
+
+echo " "
+echo "Stream Content Generation"
+echo " "
+
+# Saves arguments in 2 environment variables that can be read vy Python
+export NArgs=$BASH_ARGC
+export Args=$*
+
+python - <<END
+
+import os
+
+from math import floor
+from shutil import copyfile
+from tkinter import *
+from GenerationLib import *
+from functools import partial
+
+# gets variable from environment variable
+NArgs = int(os.environ['NArgs'])
+ArgsChain = os.environ['Args']
+Args = ArgsChain.split()
+
+# No argument
+if (NArgs<1):
+	print("\n================================================================================================\n")
+	print("Usage:\nGenerateStreams DataType PLIO_Width NPhases NStreams NSamples NFrames SequenceType Basename")
+	print("\tDatatype: cint16, int16, int32")
+	print("\tPLIO_Width: 32, 64 or 128")
+	print("\tNPhases: any integer >= 1")
+	print("\tNStreams: 1 or 2")
+	print("\tNSamples: integer, multiple of 8")
+	print("\tNFrames: Any integer >= 1")
+	print("\tSequenceType: Dirac, Linear, SinCos, Random")
+	print("\tBasename: file name that will prepend phase and stream index")
+	print("\n================================================================================================\n")
+else:
+	dtval = Args[0]
+	pliow = int(Args[1])
+	NPhases = int(Args[2])
+	NStreams = int(Args[3])
+	NSamples = int(Args[4])
+	NFrames = int(Args[5])
+	SeqType = Args[6]
+	Basename = Args[7]
+
+	GenerateTestVector(dtval,pliow,NPhases,NStreams,NSamples,NFrames,SeqType,Basename)
+
+END

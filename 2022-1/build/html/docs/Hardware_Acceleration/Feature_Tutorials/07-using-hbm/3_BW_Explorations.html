@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>HBM Bandwidth Explorations &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>HBM Bandwidth Explorations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/3_BW_Explorations.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="hbm-bandwidth-explorations">
+<h1>HBM Bandwidth Explorations<a class="headerlink" href="#hbm-bandwidth-explorations" title="Permalink to this heading">¶</a></h1>
+<p>In this section, you will observe achievable bandwidth using one HBM master port. You will also explore access to single or multiple Pseudo channels as various transaction sizes are initiated by the kernel master port.</p>
+<ul class="simple">
+<li><p>The topology, for example, M0 to single PC0 directly across the switch or M0 to a group PC0-1 or M0 to a group PC0-3.</p></li>
+<li><p>The number of bytes in the transaction vary from 64 bytes to 1024 bytes,</p></li>
+<li><p>Addressing used: sequential/linear accesses or random accesses,</p></li>
+<li><p>Use of the Random Access Memory Attachment (RAMA) IP to achieve better results.The RAMA IP is specifically designed to assist HBM-based designs with non-ideal
+traffic masters and use cases. For more information, refer to <a href="https://www.xilinx.com/support/documentation/ip_documentation/rama/v1_1/pg310-rama.pdf"> RAMA LogiCORE IP Product Guide</a></p></li>
+</ul>
+<p>This section, via the above different configurations analyze enough data so that the developers will understand and make better decisions for their designs.</p>
+<p>If your application is memory bound, it’s always beneficial to access 64-bytes of data whether it’s DDR or HBM. For this project, datawidth is set to 512 bits by default using <code class="docutils literal notranslate"><span class="pre">dwidth</span></code> variable in Makefile. You can experiment with smaller data width by changing this variable. Additionally, performance measured is based on M_AXI interface memory performance read-only and write performance is not measured in this section. The measured bandwidth is using C++ std::chrono to record the time just before kernel enqueues and just after the queue finish command. The bandwidth is reported in GB/s achieved.</p>
+<p>The kernel ports in1,in2, and out are connected to all the HBM channels. In this scenario, each kernel port will have access to all the HBM channels. The application should implement this connectivity only if the application requires accessing all the channels. HBM memory subsystem will attempt to give the kernel the best access to all the memories connected to, say, kernel port in1 to M11 or M12 of the HBM subsystem. The application will experience extra latency to access the Psuedo channels on the extremes, say PC0 or PC31, from the middle master M12. Due to this, the application may require more outstanding transaction settings on AXI interfaces connected to kernel ports.</p>
+<p>In this module, all the kernel ports are connected to all the Psudeo channels for simplicity.</p>
+<p>Let’s start with Bandwidth experiments using sequential accesses first.</p>
+<div class="section" id="sequential-accesses">
+<h2>Sequential Accesses<a class="headerlink" href="#sequential-accesses" title="Permalink to this heading">¶</a></h2>
+<p>In this step, first, you will build the xclbin that can support transaction size of, say 64 bytes, 128 bytes, 256 bytes,512 bytes, 1024 bytes. Next, you can explore achievable bandwidth accessing a single Pseudo channel of HBM (256MB), two Psuedo channels (512MB), and four Psuedo channels (1024MB)</p>
+<p>Here is an example of building the application using following target for Master 0 accessing PC0 as shown below. (Don’t run this command)</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build</span> <span class="pre">TARGET=hw</span> <span class="pre">memtype=HBM</span> <span class="pre">banks=0_31</span> <span class="pre">dsize=256</span> <span class="pre">addrndm=0</span>&#160; <span class="pre">txSize=64</span> <span class="pre">buildxclbin=1</span></code></p>
+<p>The project provides the following flexibility to run an application using arguments, as shown below.</p>
+<ul class="simple">
+<li><p>dsize=256 will access only a single Pseudo channel, because the datasize on the host size is 256 MB</p></li>
+<li><p>txSize=64 will queue each command equivalent of 64 bytes from kernel port. Since each transfer is 64 bytes, this will be equivalent to a Burst length of 1. txSize=128 will be identical to Burst Length of 2, and so on.</p></li>
+<li><p>banks0_31 configures kernel’s AXI master ports connect to all the banks. During the build, Makefile will create the HBM_connectivity.cfg file in the respective build directory. Refer to <code class="docutils literal notranslate"><span class="pre">mem_connectivity.mk</span></code> for more information.  You can also create your custom connectivity by updating in_M0, in_M1, and out_M2 variables</p></li>
+<li><p>addrndm=0 will ensure the address generated is sequential when the kernel is run. As seen previously, this is an argument to the kernel passed down from the host code.</p></li>
+</ul>
+<p>The above build command will create the xclbin under <Project>/build/HBM_addSeq_allBanks_d512_txSize64</p>
+<p>You can run the following command to generate the builds for txSize of 64,128,256,512,1024 bytes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build_without_rama</span></code>    # This command is already executed in the first module</p>
+<ul>
+<li><p>If the machine doesn’t have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">noramajob-64</span> <span class="pre">noramajob-128</span> <span class="pre">noramajob-256</span> <span class="pre">noramajob-512</span> <span class="pre">noramajob-1024</span></code></p>
+</li>
+</ul>
+<p>To run the application with the above build created for txSize of 64,128,256,512,1024 bytes AND accessing 1,2,4 Pseudo channels (using dsize argument)</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all_hbm_seq_run</span></code></p>
+<p>The above target will generate the output file <code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/makefile/Run_SequentialAddress.perf</span></code> file with the following data</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Addr</span> <span class="n">Pattern</span>   <span class="n">Total</span> <span class="n">Size</span><span class="p">(</span><span class="n">MB</span><span class="p">)</span> <span class="n">Transaction</span> <span class="n">Size</span><span class="p">(</span><span class="n">B</span><span class="p">)</span> <span class="n">Throughput</span> <span class="n">Achieved</span><span class="p">(</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">Sequential</span>     <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">64</span>                     <span class="mf">13.0996</span>
+<span class="n">Sequential</span>     <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">128</span>                    <span class="mf">13.0704</span>
+<span class="n">Sequential</span>     <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">256</span>                    <span class="mf">13.1032</span>
+<span class="n">Sequential</span>     <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">512</span>                    <span class="mf">13.0747</span>
+<span class="n">Sequential</span>     <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">1024</span>                   <span class="mf">13.0432</span>
+
+<span class="n">Sequential</span>     <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">64</span>                     <span class="mf">13.1244</span>
+<span class="n">Sequential</span>     <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">128</span>                    <span class="mf">13.1142</span>
+<span class="n">Sequential</span>     <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">256</span>                    <span class="mf">13.1285</span>
+<span class="n">Sequential</span>     <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">512</span>                    <span class="mf">13.1089</span>
+<span class="n">Sequential</span>     <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">1024</span>                   <span class="mf">13.1097</span>
+
+<span class="n">Sequential</span>     <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">64</span>                     <span class="mf">13.148</span>
+<span class="n">Sequential</span>     <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">128</span>                    <span class="mf">13.1435</span>
+<span class="n">Sequential</span>     <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">256</span>                    <span class="mf">13.1506</span>
+<span class="n">Sequential</span>     <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">512</span>                    <span class="mf">13.1539</span>
+<span class="n">Sequential</span>     <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">1024</span>                   <span class="mf">13.1454</span>
+</pre></div>
+</div>
+<p>This use case shows the maximum results when using one kernel master, M0 to access HBM. The table above shows the measured bandwidth in GB/s achieved.</p>
+<p>The top 5 rows show the point to point accesses, ie, 256 MB accesses, with the Transaction size variation. The bandwidth is consistent around 13 GB/s.</p>
+<p>The next ten rows show a grouping of 2 pseudo channels and 4 pseudo channels, ie, 512 MB and 1024 MB, respectively, and the bandwidth is constant.</p>
+<div class="section" id="conclusion-the-bandwidth-achieved-for-sequential-accesses-is-mostly-independent-of-the-topology-and-is-constant-at-about-13-gb-s">
+<h3>Conclusion: The bandwidth achieved for sequential accesses is mostly independent of the topology and is constant at about 13 GB/s.<a class="headerlink" href="#conclusion-the-bandwidth-achieved-for-sequential-accesses-is-mostly-independent-of-the-topology-and-is-constant-at-about-13-gb-s" title="Permalink to this heading">¶</a></h3>
+</div>
+</div>
+<div class="section" id="random-accesses">
+<h2>Random Accesses<a class="headerlink" href="#random-accesses" title="Permalink to this heading">¶</a></h2>
+<p>We are using the same topologies as the previous step but using an addressing scheme using random addresses within the selected range.</p>
+<p>To run all the variations like in the previous step, You can also use the following Makefile target to run the application. There is no need to rebuild the xclbins again.</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all_hbm_rnd_run</span></code></p>
+<p>The above target will generate the output file <code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/makefile/Run_RandomAddress.perf</span></code> file with the following data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Addr</span> <span class="n">Pattern</span>   <span class="n">Total</span> <span class="n">Size</span><span class="p">(</span><span class="n">MB</span><span class="p">)</span> <span class="n">Transaction</span> <span class="n">Size</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>  <span class="n">Throughput</span> <span class="n">Achieved</span><span class="p">(</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">64</span>                     <span class="mf">4.75379</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">128</span>                    <span class="mf">9.59893</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">256</span>                    <span class="mf">12.6164</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">512</span>                    <span class="mf">13.1338</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">1024</span>                   <span class="mf">13.155</span>
+
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">64</span>                     <span class="mf">0.760776</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">128</span>                    <span class="mf">1.49869</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">256</span>                    <span class="mf">2.71119</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">512</span>                    <span class="mf">4.4994</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">1024</span>                   <span class="mf">6.54655</span>
+
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">64</span>                     <span class="mf">0.553107</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">128</span>                    <span class="mf">1.07469</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">256</span>                    <span class="mf">1.99473</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">512</span>                    <span class="mf">3.49935</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">1024</span>                   <span class="mf">5.5307</span>
+</pre></div>
+</div>
+<p>The top 5 rows show the point to point accesses, ie 256 MB accesses, with a Transaction size variation. The bandwidth drops compared to the top 5 rows in the previous step when the address pattern was sequential. You can still experience decent bandwidth for larger transaction sizes, though.</p>
+<p>The bandwidth drops compared to the top 5 rows from 13GB/s using the sequential accesses at the previous step. You can still experience better bandwidth for larger transaction sizes than 64 bytes though, this is simply explained because when accessing 128 bytes or more, then, only the first access is random the next accesses in the transaction are sequential, so the memory is better utilized, efficiency-wise.</p>
+<p>When the master is addressing 2 or 4 PCs to access a larger range, the bandwidth will drop significantly. So it’s important to observe that a single M_AXI connected to 1 PC will provide better bandwidth than connected to multiple PCs.</p>
+<p>Let’s use the specific example of Row 13, the transaction size is 256 bytes and using a 1 GB of randomly accessed data - i.e. utilizing PC0-3. We can see the performance is ~2 GB/s. If this was a real design need, it would be advantageous to change the microarchitecture of said design to use 4 M_AXI to access 4 individual PC in an exclusive manner. This means that the kernel code would have to check the index/address it wished to access and then exclusively use one of the pointer arguments (translating to one of the 4 M_AXI) to make this memory access. As you might have already understood the access range is now 256 MB per pointer/M_AXI, which basically means that we fall back to a use case where we have one master accessing one PC, and this is exactly the situation in Row 3. As a result, this would provide 12+ GB/s of bandwidth using 4 interfaces but with only one utilized at a time. You could try to further improve the situation by making 2 parallel accesses using those 4 M_AXI but this means that the part of the design providing the indexes/addresses need to provide 2 in parallel, which might be a challenge too.</p>
+<div class="section" id="conclusion-the-bandwith-is-higher-when-accessing-a-single-pseudo-channel-over-256-mb-data-or-less-compared-to-accessing-multiple-pseudo-channels">
+<h3>Conclusion: The bandwith is higher when accessing a single Pseudo Channel over 256 MB data (or less) compared to accessing multiple Pseudo Channels.<a class="headerlink" href="#conclusion-the-bandwith-is-higher-when-accessing-a-single-pseudo-channel-over-256-mb-data-or-less-compared-to-accessing-multiple-pseudo-channels" title="Permalink to this heading">¶</a></h3>
+</div>
+</div>
+<div class="section" id="random-accesses-with-rama-ip">
+<h2>Random Accesses with RAMA IP<a class="headerlink" href="#random-accesses-with-rama-ip" title="Permalink to this heading">¶</a></h2>
+<p>In this step, we are using the same topologies as the previous step, but now we are using RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.</p>
+<p>The v++ linker requires a tcl file to connect the RAMA IP to the Axi Master ports. Refer to the file <code class="docutils literal notranslate"><span class="pre">./makefile/rama_post_sys_link.tcl</span></code> for more information</p>
+<p>The Makefile creates the cfg-rama.ini file shown below and configures the v++ linking phase using <code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">cfg-rama.ini</span></code> option.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">advanced</span><span class="p">]</span>
+<span class="n">param</span><span class="o">=</span><span class="n">compiler</span><span class="o">.</span><span class="n">userPostSysLinkTcl</span><span class="o">=&lt;</span><span class="n">Project</span><span class="o">&gt;/</span><span class="n">makefile</span><span class="o">/</span><span class="n">rama_post_sys_link</span><span class="o">.</span><span class="n">tcl</span>
+</pre></div>
+</div>
+<p>To build all the xclbins, run the following target.</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build_with_rama</span></code>   # This command is already executed in the first module</p>
+<ul>
+<li><p>If the machine doesn’t have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below</p>
+<p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">ramajob-64</span> <span class="pre">ramajob-128</span> <span class="pre">ramajob-256</span> <span class="pre">ramajob-512</span> <span class="pre">ramajob-1024</span> <span class="pre">-j6</span></code></p>
+</li>
+</ul>
+<p>To run all the variations like in the previous step, You can also use the following Makefile target to build and run the application.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`make all_hbm_rnd_rama_run`
+</pre></div>
+</div>
+<p>The above target will generate the output file <code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/makefile/Run_RandomAddressRAMA.perf</span></code> file with the following data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Addr</span> <span class="n">Pattern</span>   <span class="n">Total</span> <span class="n">Size</span><span class="p">(</span><span class="n">MB</span><span class="p">)</span> <span class="n">Transaction</span> <span class="n">Size</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>  <span class="n">Throughput</span> <span class="n">Achieved</span><span class="p">(</span><span class="n">GB</span><span class="o">/</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">64</span>                     <span class="mf">4.75415</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">128</span>                    <span class="mf">9.59875</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">256</span>                    <span class="mf">12.6208</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">512</span>                    <span class="mf">13.1328</span>
+<span class="n">Random</span>         <span class="mi">256</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0</span><span class="p">)</span>             <span class="mi">1024</span>                   <span class="mf">13.1261</span>
+
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">64</span>                     <span class="mf">6.39976</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">128</span>                    <span class="mf">9.59946</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">256</span>                    <span class="mf">12.799</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">512</span>                    <span class="mf">13.9621</span>
+<span class="n">Random</span>         <span class="mi">512</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_1</span><span class="p">)</span>           <span class="mi">1024</span>                   <span class="mf">14.1694</span>
+
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">64</span>                     <span class="mf">6.39984</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">128</span>                    <span class="mf">9.5997</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">256</span>                    <span class="mf">12.7994</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">512</span>                    <span class="mf">13.7546</span>
+<span class="n">Random</span>         <span class="mi">1024</span> <span class="p">(</span><span class="n">M0</span><span class="o">-&gt;</span><span class="n">PC0_3</span><span class="p">)</span>          <span class="mi">1024</span>                   <span class="mf">14.0694</span>
+</pre></div>
+</div>
+<p>The top 5 rows show the point to point accesses, i.e. 256 MB accesses, with a transaction size variation. The bandwidth achieved is very similar to the previous step without RAMA IP.
+The next ten rows with access to 512 MB and 1024MB respectively show a significant increase in achieved bandwidth compared to the previous step when configuration didn’t utilised  RAMA IP.</p>
+<div class="section" id="conclusion-the-rama-ip-significantly-improves-memory-access-efficiency-in-cases-where-the-required-memory-access-exceeds-256-mb-one-hbm-pseudo-channel">
+<h3>Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required memory access exceeds 256 MB (one HBM pseudo-channel)<a class="headerlink" href="#conclusion-the-rama-ip-significantly-improves-memory-access-efficiency-in-cases-where-the-required-memory-access-exceeds-256-mb-one-hbm-pseudo-channel" title="Permalink to this heading">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h1>
+<p>Congratulations! You have completed the tutorial.</p>
+<p>In this tutorial, you learned it’s relatively easy to migrate a DDR-based application to HBM based application using v++ flow. You also experimented with how the HBM based application throughput varies based on the address patterns and the overall memory being accessed by the kernel.</p>
+<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p><p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

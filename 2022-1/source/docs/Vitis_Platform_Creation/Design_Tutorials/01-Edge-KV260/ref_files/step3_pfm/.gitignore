@@ -1,0 +1,6 @@
+platform_repo
+build
+boot/*.elf
+image/boot.scr
+image/system.dtb
+.Xil

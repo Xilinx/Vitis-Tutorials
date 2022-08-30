@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Using Aurora IP in Alveo with Vitis Flow &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Getting Started with RTL Kernels" href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" />
+    <link rel="prev" title="Host Code Optimization" href="../07-host-code-opt/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL Systems Integration Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Choleskey Algorithm Acceleration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Aurora Kernel on Alveo</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#develop-krnl-aurora-kernel">Develop <em>krnl_aurora</em> kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#strm-issue-and-strm-dump-kernel"><em>strm_issue</em> and <em>strm_dump</em> Kernel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kernel-integration-linking">Kernel Integration (Linking)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#host-program">Host Program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#one-more-thing">One More Thing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#revision-history">Revision History</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
+      <li>Using Aurora IP in Alveo with Vitis Flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="using-aurora-ip-in-alveo-with-vitis-flow">
+<h1>Using Aurora IP in Alveo with Vitis Flow<a class="headerlink" href="#using-aurora-ip-in-alveo-with-vitis-flow" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>Aurora 64B/66B is a lightweight, serial communications protocol for multi-gigabit links. On Alveo card, Aurora IP utilize GT transceiver (such as GTY) to realize the high speed data transfer.
+Each kind of Alveo accelerator cards have one or two QSFP28 ports, which connects to the GT transceiver of the FPGA. The user can integrate Aurora IP into Alveo card to implement full-duplex communication between cards at up to 100 Gbps data throughput on each QSFP28 port. The Aurora IP provides standard AXI Stream ports to user application for data transfer, and with Vitis flow, the users can easily integrate the Aurora IP into their acceleration design based on the Vitis target platform.</p>
+<p>Following is the block diagram of Aurora 64B/66B communication channel.</p>
+<p><img alt="Aurora Channel" src="../../../../_images/aurora.png" /></p>
+<p>For details on Aurora 64B/66B protocol please refer to <a class="reference external" href="https://docs.xilinx.com/v/u/en-US/aurora_64b66b_protocol_spec_sp011">Aurora 64B/66B Protocol Specification</a>.<br/>
+For details on Aurora 64B/66B IP please refer to <a class="reference external" href="https://docs.xilinx.com/v/u/en-US/pg074-aurora-64b66b">Aurora 64B/66B IP Product Guide</a>.</p>
+<p>This tutorial will provide an example design and step-by-step instruction for integrating Aurora IP into Alveo accelerator cards with Vitis flow. The example design integrates a four-lane Aurora kernel with 10 Gbps lane rate (achieve total 40 Gbps throughput). The complete design steps in this tutorial includes: Aurora IP generation, reference RTL top module for Aurora IP, example test system integration, and example x86 host program. Following is the hardware block diagram of the example design.</p>
+<p><img alt="Block Diagram" src="../../../../_images/diagram.png" /></p>
+<p>There are three kernels in the hardware design:</p>
+<ul class="simple">
+<li><p><strong>krnl_aurora</strong>: this is a RTL kernel. <strong>krnl_aurora</strong> instantiates the Aurora core IP, an AXIS data FIFO for data transmit, an AXIS data FIFO for data receive, and an AXI control slave for Aurora IP status read back.</p></li>
+<li><p><strong>strm_issue</strong>: this is a HLS kernel, which implements a simple AXI master to AXI stream bridge for data transmit. It read the data from on-board global memory and send them to the Aurora core.</p></li>
+<li><p><strong>strm_dump</strong>: this is a HLS kernel, which implements a simple AXI stream to AXI master bridge for data receive. It receive the data from Aurora core and write them to the on-board global memory.</p></li>
+</ul>
+<p>In the example design, host transfers block data into the on-board global memory, loads the data to Aurora core, and then stores the loopback data into on-board global memory for integrity check. To run the real hardware test of the design, you will need a 40 Gbps QSFP+ (0dB, 0W) loopback module inserted in the QSFP port of the Alveo cards. In case your Alveo card has two QSFP ports, please insert the module into QSFP 0. The loopback module looks like below photo.</p>
+<p><img alt="Loopback" src="../../../../_images/loopback.jpg" /></p>
+<p>The design supports Ubuntu 18.04/20.04 and Redhat/CentOS 7/8 systems and is validated on following XRT and target platform version:</p>
+<ul class="simple">
+<li><p>XRT 2.13.466</p></li>
+<li><p>Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1</p></li>
+<li><p>Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1</p></li>
+</ul>
+<p>All the flows in the example design are provided as command line fashion, which utilize Makefile and Tcl scripts. During some steps in this tutorial, some GUI operations are used for explicit explanation purpose. Below is the files description of the design directory.</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span>├── hls
+│   ├── strm_dump.cpp                   # HLS C source code for strm_dump kernel
+│   └── strm_issue.cpp                  # HLS C source code for strm_issue kernel
+├── host
+│   └── host_krnl_aurora_test.cpp       # x86 host program
+├── krnl_aurora_test.cfg                # Vitis link configuration file
+├── Makefile                            # Makefile for full flow
+├── README.md
+├── rtl
+│   ├── krnl_aurora_control_s_axi.v     # Verilog source code for AXI control slave module
+│   └── krnl_aurora.v                   # Verilog source code for top level of krnl_aurora
+├── tcl
+│   ├── gen_aurora_ip.tcl               # Tcl script to generate Aurora IP
+│   ├── gen_fifo_ip.tcl                 # Tcl script to generate AXI stream data FIFO
+│   └── pack_kernel.tcl                 # Tcl script to package the RTL kernel krnl_aurora
+└── xdc
+    └── aurora_64b66b_0.xdc             # additional XDC file for krnl_aurora
+</pre></div>
+</div>
+<p><strong>Notes:</strong> If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the following command to install and switch to GCC 7 before compiling the x86 host program.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl <span class="nb">enable</span> devtoolset-7 bash
+</pre></div>
+</div>
+</div>
+<div class="section" id="develop-krnl-aurora-kernel">
+<h2>Develop <em>krnl_aurora</em> kernel<a class="headerlink" href="#develop-krnl-aurora-kernel" title="Permalink to this heading">¶</a></h2>
+<p><strong>krnl_aurora</strong> is our core kernel for the example design. From the previous block diagram, you can see that <strong>krnl_aurora</strong> includes three sub-module: core Aurora 64B/66B IP, an AXI stream data FIFO IP for data transmit, an AXI stream data FIFO IP for data receive, and an AXI control slave for Aurora status monitoring.</p>
+<div class="section" id="generate-aurora-64b-66b-core-ip">
+<h3>Generate Aurora 64B/66B Core IP<a class="headerlink" href="#generate-aurora-64b-66b-core-ip" title="Permalink to this heading">¶</a></h3>
+<p>Now let’s generate the Aurora IP. To illustrate the IP configuration options more clearly, we firstly use Vivado GUI to see the graphical Aurora IP configuration options with U200 card as example.</p>
+<p>Please start the Vivado GUI, then in the <em>Tcl Console</em> window enter following example command to create a project using the FPGA part corresponding to your Alveo card. In following command line, <em>xcu200-fsgd2104-2-e</em> is the FPGA part name of U200 card.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create_project</span> <span class="n">aurora_test</span> <span class="o">-</span><span class="n">part</span> <span class="n">xcu200</span><span class="o">-</span><span class="n">fsgd2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p>After the project created, click <em>IP Catalog</em> in the <em>PROJECT MANAGER</em> on the left, find <em>Aurora 64B66B</em> IP in the list, and double click it. Afterwards, the Aurora 64B66B IP configuration window pops up, and we review and make necessary necessary to the options as explained below.</p>
+<p>We configure the <em>Core Options</em> tab as below:</p>
+<ul class="simple">
+<li><p>Physical Layer</p>
+<ul>
+<li><p><strong>GT Type</strong>: GTY (default)</p></li>
+<li><p><strong>Line Rate (Gbps)</strong>: 10.3125 (default)</p></li>
+<li><p><strong>Column Used</strong>: right (default)</p></li>
+<li><p><strong>Lanes</strong>: 4 (the example design uses four lanes)</p></li>
+<li><p><strong>Starting GT Quad</strong>: Quad X1Y5 (default, the Vitis linking process will choose the correct GT Quad)</p></li>
+<li><p><strong>Starting GT Lane</strong>: X1Y20 (default, the Vitis linking process will choose the correct GT Lane)</p></li>
+<li><p><strong>GT Refclk Selection</strong>: MGTREFCLK0 of Quad X1Y5 (default, the Vitis linking process will choose the correct GT Refclk)</p></li>
+<li><p><strong>GT Refclk (MHz)</strong>: 161.1328125 (This matches the GT clock source on the Alveo card)</p></li>
+<li><p><strong>INIT clk (MHz)</strong>: 100 (we will use the 100MHz clock provided in the U200 target platform as the INIT clk)</p></li>
+<li><p><strong>Generate Aurora without GT</strong>: keep unselected (we want the Aurora IP include the GT transceiver)</p></li>
+</ul>
+</li>
+<li><p>Link Layer</p>
+<ul>
+<li><p><strong>Dataflow Mode</strong>: Duplex (default)</p></li>
+<li><p><strong>Interface</strong>: Streaming (we use streaming mode in the example design)</p></li>
+<li><p><strong>Flow Control</strong>: None (default)</p></li>
+<li><p><strong>USER K</strong>: keep unselected (we don’t use USER-K in the example design)</p></li>
+<li><p><strong>Little Endian Support</strong>: keep unselected (we don’t need littl endian support in the example design)</p></li>
+</ul>
+</li>
+<li><p>Error Detection</p>
+<ul>
+<li><p><strong>CRC</strong>: keep unselected (we don’t need CRC in the example design)</p></li>
+</ul>
+</li>
+<li><p>Debug and Control</p>
+<ul>
+<li><p><strong>DRP Mode</strong>: Native (actually we don’t use DRP function in the example design)</p></li>
+<li><p><strong>Vivado Lab Tools</strong>: keep unselected (we don’t need use this feature in the example design)</p></li>
+<li><p><strong>Additional transceiver control and status ports</strong>: keep unselected (we don’t need use this feature in the example design)</p></li>
+</ul>
+</li>
+</ul>
+<p>We configure the <em>Shared Logic</em> tab as below:</p>
+<ul class="simple">
+<li><p>Shared Logic</p>
+<ul>
+<li><p>Include Shared Logic in core (in the example design, we use a single Aurora module)</p></li>
+</ul>
+</li>
+</ul>
+<p>Following above settings, the Aurora 64B66B IP configuration window is as below:</p>
+<p><img alt="Block Diagram" src="../../../../_images/aurora_ip.png" /></p>
+<p>The configured IP will have an AXI stream slave port and an AXI stream master port, and the data width is 256 bits, namely 64 bits per lane. These two AXI stream ports work on 161.1328125 MHz <em>user_clk</em> domain, which is 1/64 of 10.3125 Gbps lane speed.</p>
+<p>After clicking <em>OK</em> button, and Aurora IP configuration is finished. What we actually need is the generated <em>aurora_64b66b_0.xci</em> file, which will be used in the later IP package step. Just like mentioned earlier, the Aurora IP generation step will be finished by Vivado Tcl script in this tutorial, so let’s look at the script file <em>./tcl/gen_aurora_ip.tcl</em>, which is used to generate the same output as above GUI flow. The major part of this script is as below:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>create_ip -name aurora_64b66b \
+          -vendor xilinx.com \
+          -library ip \
+          -version 12.0 \
+          -module_name aurora_64b66b_0 \
+          -dir ./ip_generation
+
+set_property -dict [list CONFIG.C_AURORA_LANES {4} \
+                         CONFIG.C_LINE_RATE {10.3125} \
+                         CONFIG.C_REFCLK_FREQUENCY {161.1328125} \
+                         CONFIG.C_INIT_CLK {100} \
+                         CONFIG.interface_mode {Streaming} \
+                         CONFIG.drp_mode {Native} \
+                         CONFIG.SupportLevel {1}] \
+             [get_ips aurora_64b66b_0]
+</pre></div>
+</div>
+<p>With the script, you can use following command line to generate the Aurora IP (u200 card as example):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vivado</span> <span class="o">-</span><span class="n">mode</span> <span class="n">batch</span> <span class="o">-</span><span class="n">source</span> <span class="o">./</span><span class="n">tcl</span><span class="o">/</span><span class="n">pack_kernel</span><span class="o">.</span><span class="n">tcl</span> <span class="o">-</span><span class="n">tclargs</span> <span class="n">xcu200</span><span class="o">-</span><span class="n">fsgd2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p>But hold a minute, since a Makefile is provided to manage the full flow, we will use the <em>make</em> command to finish all the steps.</p>
+</div>
+<div class="section" id="generate-axi-stream-data-fifo-ip">
+<h3>Generate AXI Stream Data FIFO IP<a class="headerlink" href="#generate-axi-stream-data-fifo-ip" title="Permalink to this heading">¶</a></h3>
+<p>The AXI stream data FIFO IP is used to isolate the clock domains of the Aurora AXI stream port and Alveo platform AXI system, as well as provide data buffer especially for RX (receive) channels. This IP is simple and we provide a Tcl script <em>./tcl/gen_fifo_ip.tcl</em> to generate it. Two options need modification: AXI stream data width is 32 bytes (256 bits), and the IP provides asynchronous clock. The major part of the script file shows as below:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>create_ip -name axis_data_fifo \
+          -vendor xilinx.com \
+          -library ip \
+          -version 2.0 \
+          -module_name axis_data_fifo_0 \
+          -dir ./ip_generation
+
+set_property -dict [list CONFIG.TDATA_NUM_BYTES {32} \
+                         CONFIG.IS_ACLK_ASYNC {1}] \
+             [get_ips axis_data_fifo_0]
+</pre></div>
+</div>
+<p>Similarly, we will use <em>make</em> command to generate the IP later.</p>
+</div>
+<div class="section" id="axi-control-slave-module">
+<h3>AXI Control Slave Module<a class="headerlink" href="#axi-control-slave-module" title="Permalink to this heading">¶</a></h3>
+<p>In this example design, we don’t configure the Aurora IP dynamically, but just monitor some status signal output from the Aurora IP. Meanwhile, <strong>krnl_aurora</strong> is designed to an always-run kernel, which means the host will not control the kernel running. Thus a simple AXI slave RTL module is used here. It implements a single read-only AXI slave register, connecting to those output status signals from the Aurora IP.</p>
+<p>You can find the RTL source of this module at <em>./rtl/krnl_aurora_control_s_axi.v</em>.</p>
+</div>
+<div class="section" id="krnl-aurora-top-module">
+<h3><em>krnl_aurora</em> Top Module<a class="headerlink" href="#krnl-aurora-top-module" title="Permalink to this heading">¶</a></h3>
+<p>The top level Verilog file for <strong>krnl_aurora</strong> is located at <em>./rtl/krnl_aurora.v</em>. While instantiates Aurora IP, AXI stream data FIFO IP and AXI control slave module, the top module inserts CDC module between Aurora IP and AXI control slave, which work in different domain. The top module also generates <em>reset_pb</em> and <em>pma_init</em> signals for Aurora IP. Please refer to the documents of Aurora 64B/66B IP for more details.</p>
+</div>
+<div class="section" id="package-krnl-aurora-kernel">
+<h3>Package <em>krnl_aurora</em> Kernel<a class="headerlink" href="#package-krnl-aurora-kernel" title="Permalink to this heading">¶</a></h3>
+<p>The Tcl script <em>./tcl/pack_kernel.tcl</em> is provided to package the IP files and RTL modules described above to a Vitis kernel file. Some things to pay attention to:</p>
+<ul class="simple">
+<li><p>The <em>init_clk</em> signal in the top level is automatically inferred as clock interface, but we manually remove it from the interface in the script. The reason is we would like to manually connect this clock pin to the designated clock source pin, so we should remove it from clock interface to avoid auto connection in Vitis linking stage</p></li>
+<li><p>In addition to the auto inferred AXI / AXI stream interfaces, we manually infer the pre-defined differential <em>gt_port</em> type interface, and bond the top level GT TX/RX signals to the interface. Thus we easily connect the GT interface to the QSFP interface provided in the Alveo target platform.</p></li>
+<li><p>In addition to the auto inferred normal clock, we manually infer the pre-defined differential <em>gt_refclk</em> type interface, and bond the top level GT reference clock signals to the interface. Thus we easily connect the GT reference clock interface to the corresponding interface provided in the Alveo target platform.</p></li>
+<li><p>An additional XDC file <em>./xdc/aurora_64b66b_0.xdc</em> is packed into the kernel file as well, since the generated Aurora IP doesn’t the reference clock definition for top level integration.</p></li>
+</ul>
+<p>We will use <em>make</em> command to call this script to generate the kernel file <strong>krnl_aurora.xo</strong> later.</p>
+</div>
+</div>
+<div class="section" id="strm-issue-and-strm-dump-kernel">
+<h2><em>strm_issue</em> and <em>strm_dump</em> Kernel<a class="headerlink" href="#strm-issue-and-strm-dump-kernel" title="Permalink to this heading">¶</a></h2>
+<p>These two kernels use HLS to implement 256-bit AXI-to-AXIS and AXIS-to-AXI conversion function. The AXI stream data width 256 matches to those AXI stream port of <strong>krnl_aurora</strong>, so they can be connected together directly in later linking stage. You can find the source code for the two kernels at <em>./hls/strm_issue.cpp</em> and <em>./hls/strm_dump.cpp</em>.</p>
+<p>In the example design flow, Vitis command <em>v++</em> will be used by <em>make</em> tool to compile these two kernels to XO files <strong>strm_issue.xo</strong> and <strong>strm_dump.xo</strong>.</p>
+</div>
+<div class="section" id="kernel-integration-linking">
+<h2>Kernel Integration (Linking)<a class="headerlink" href="#kernel-integration-linking" title="Permalink to this heading">¶</a></h2>
+<p>After the three kernels are ready, the <em>make</em> tool call Vitis <em>v++</em> command to finish the linking job. The configuration file <em>krnl_aurora_test.cfg</em> designates the connection topology of the kernels.</p>
+<p>The major part of the configuration file is as below (use U200 for example):</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span>[connectivity]
+nk=krnl_aurora:1:krnl_aurora_0
+nk=strm_issue:1:strm_issue_0
+nk=strm_dump:1:strm_dump_0
+
+# AXI connection
+stream_connect=krnl_aurora_0.rx_axis:strm_dump_0.data_input
+stream_connect=strm_issue_0.data_output:krnl_aurora_0.tx_axis
+
+# ---------------------------------------
+# Aurora signal connection (GT / clock)
+# ---------------------------------------
+# uncomment following lines for xilinx_u200_gen3x16_xdma_1_202110_1
+connect=io_clk_qsfp_refclka_00:krnl_aurora_0/gt_refclk
+connect=krnl_aurora_0/gt_port:io_gt_qsfp_00
+connect=krnl_aurora_0/init_clk:ii_level0_wire/ulp_m_aclk_freerun_ref_00
+</pre></div>
+</div>
+<p>Please note the last part of the configuration file, which is Aurora/GT related connection. In the above snippet, <em>io_clk_qsfp_refclka_00</em> and <em>io_gt_qsfp_00</em> are the GT reference clock interface and GT port interface, respectively. <em>ii_level0_wire/ulp_m_aclk_freerun_ref_00</em> is the output pin for a 100MHz clock. These interfaces and clock pins information can be obtained by Vivado command <em>platforminfo –verbose</em>. Or you can also open the auto created Vivado project ULP block design to view these port/interface/signal name. Please note the default uncommented lines in the <em>krnl_aurora_test.cfg</em> file is for Alveo U200 card. If you using other supported Alveo cards, you should uncomment the relevant lines according your card model.</p>
+<p>There is another thing we need to note. We have known the AXI stream ports of the Aurora IP work on 256 bits on around 161 MHz, and the external AXI stream ports of <strong>krnl_aurora</strong> will be connected to 300 MHz kernel clock by default in the linking stage, so there will not be performance bottleneck here. In the higher lane speed case, it might not be the case, which will be explained later.</p>
+<p>The hardware linking step is finished by this command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>make xclbin <span class="nv">PART</span><span class="o">=</span>xxxx <span class="nv">PLATFORM</span><span class="o">=</span>xxx
+</pre></div>
+</div>
+<p>Here <em>PLATFORM</em> is the Alveo target platform you are using, and the <em>PART</em> is the matching FPGA part number. You can find the applicable <em>PLATFORM</em> and <em>PART</em> string in the <em>Makefile</em>. If no <em>PART</em> and <em>PLATFORM</em> variables are assigned explicitly, the default <em>PART</em> and <em>PLATFORM</em> strings in the <em>Makefile</em> are for Alveo U200 card. <strong>Don’t forget to modify relevant lines of <em>krnl_aurora_test.cfg</em> file if you are not using U200 card</strong>.</p>
+<p>After issuing <em>make</em> command, the full hardware building flow will go through from the beginning according to the dependency, including IP generation, RTL kernel packaging, HLS kernel compilation and finally linking to generate hardware container (XCLBIN) file.</p>
+<p>After the building finishes, you could use following command to launch Vivado to open the auto generated link project to review the implementation result, including block design, timing, floorplan, etc.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vivado ./_x/link/vivado/vpl/prj/prj.xpr <span class="p">&amp;</span>
+</pre></div>
+</div>
+<p>Following is the screenshot of portion of the block design for User Level Partition (ULP) with U200 card as the example. You can check that all the ports of <strong>krnl_aurora</strong> have be connected correctly.</p>
+<p><img alt="ULP Block Design " src="../../../../_images/ulp_bd.png" /></p>
+<p>Following is the timing result and placement information of the implemented hardware in U200 case.</p>
+<p><img alt="ULP Block Design " src="../../../../_images/impl_result.png" /></p>
+</div>
+<div class="section" id="host-program">
+<h2>Host Program<a class="headerlink" href="#host-program" title="Permalink to this heading">¶</a></h2>
+<p>The example host program is in <em>./host/host_krnl_aurora_test.cpp</em>. It use XRT Native API to load XCLBIN file, transfer data to and from the card, and control the start and finish of <strong>strm_dump</strong> and <strong>strm_issue</strong>. For <strong>krnl_aurora</strong>, since it is an always-run kernel, so the host only use the API <em>read_register</em> function to check the status of Aurora.</p>
+<p>To compile the host program just enter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">host</span>
+</pre></div>
+</div>
+<p>This will all GNU <em>g++</em> tool to compile the host program and generate the executable <strong>host_krnl_aurora_test</strong>. To run it, use following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">host_krnl_aurora_test</span> <span class="p">[</span><span class="o">-</span><span class="n">m</span> <span class="n">MEGABYTES</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><em>MEGABYTES</em> is the size of data block you want to transfer, and the default value is 100.</p>
+<p>The host program will compare the received data and sent data, and report the data transfer throughput and data verification result. With the <em>10Gbps x 4</em> lanes configuration, the measured Aurora data transfer throughput is about 4.6GB/s. Refer to below example running log:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ./host_krnl_aurora_test 
+
+------------------------ krnl_aurora loopback <span class="nb">test</span> ------------------------
+Transfer size: <span class="m">100</span> MB
+
+Generate TX data block.
+Program running <span class="k">in</span> hardware mode
+Load krnl_aurora_test_hw.xclbin
+Create kernels
+Create TX and RX device buffer
+Transfer TX data into device buffer
+Check whether startup status of Aurora kernel is ready...
+Aurora kernel startup status is GOOD: <span class="m">1000111111111</span>
+<span class="o">[</span><span class="m">12</span><span class="o">]</span>channel_up <span class="o">[</span><span class="m">11</span><span class="o">]</span>soft_err <span class="o">[</span><span class="m">10</span><span class="o">]</span>hard_err <span class="o">[</span><span class="m">9</span><span class="o">]</span>mmcm_not_locked_out <span class="o">[</span><span class="m">8</span><span class="o">]</span>gt_pll_lock <span class="o">[</span><span class="m">7</span>:4<span class="o">]</span>line_up <span class="o">[</span><span class="m">3</span>:0<span class="o">]</span>gt_powergood
+Begin data loopback transfer
+Data loopback transfer finish
+Transfer <span class="nb">time</span> <span class="o">=</span> <span class="m">21</span>.805 ms
+Fetch RX data from device buffer and verification
+Data loopback transfer <span class="nv">throughput</span> <span class="o">=</span> <span class="m">4586</span>.1 MB/s
+Aurora Error Status:
+SOFT_ERR: <span class="m">0</span>
+HARD_ERR: <span class="m">0</span>
+
+Data verfication SUCCEED
+</pre></div>
+</div>
+</div>
+<div class="section" id="one-more-thing">
+<h2>One More Thing<a class="headerlink" href="#one-more-thing" title="Permalink to this heading">¶</a></h2>
+<p>You can see that the example design implements <em>10Gbps x 4</em> lanes, if you want to implement the Aurora transfer with the highest throughput 25Gbps per lane, following things need to do:</p>
+<div class="section" id="about-aurora-ip">
+<h3>1. About Aurora IP<a class="headerlink" href="#about-aurora-ip" title="Permalink to this heading">¶</a></h3>
+<p>The only different option when configuring the Aurora IP is the <strong>C_LINE_RATE</strong>, you should set this to <em>25.78125</em> Gbps, which can be generated by the 161.1328125 MHz reference clock.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>set_property -dict [list CONFIG.C_AURORA_LANES {4} \
+                         CONFIG.C_LINE_RATE {25.78125} \
+                         CONFIG.C_REFCLK_FREQUENCY {161.1328125} \
+                         CONFIG.C_INIT_CLK {100} \
+                         CONFIG.interface_mode {Streaming} \
+                         CONFIG.drp_mode {Native} \
+                         CONFIG.SupportLevel {1}] \
+             [get_ips aurora_64b66b_0]
+</pre></div>
+</div>
+<p>In these configuration, since the AXI stream ports data width per lane is still 64 bits, so the AXI stream interfaces work on 25.78125 GHz / 64 = 402.8 MHz.</p>
+</div>
+<div class="section" id="rtl-kernel-krnl-aurora">
+<h3>2. RTL Kernel <em>krnl_aurora</em><a class="headerlink" href="#rtl-kernel-krnl-aurora" title="Permalink to this heading">¶</a></h3>
+<p>As you have knowns that the Aurora IP AXI stream ports for the 4 lane configuration works on 256 bits &#64; 402.8 MHz. However the default kernel clock provided to the external AXI stream port (connected to AXI stream data FIFO) is 300 MHz during link stage. So there will be throughput mismatch issues here, which will lead to data loss (the Aurora IP AXI stream port for RX doesn’t support <em>TREADY</em> signal). To resolve this issue, one possible solution is to expand the external AXI stream port data width of <strong>krnl_aurora</strong> kernel. For example, we expand the external AXI stream data width to 512 bits, thus we generate the AXI stream data FIFO with 512 bits data width. So we also need a 256bit-to-512bit and another 512bit-to-256bit AXI stream data width converter IP in the <strong>krnl_aurora</strong> kernel top level module. Following is the block diagram of the <strong>krnl_aurora</strong> design with 25 Gbps lane speed.</p>
+<p><img alt="Block Diagram 25 Gbps" src="../../../../_images/25g_kernel.png" /></p>
+</div>
+<div class="section" id="hls-kernel-strm-issue-and-strm-dump">
+<h3>3. HLS Kernel <em>strm_issue</em> and <em>strm_dump</em><a class="headerlink" href="#hls-kernel-strm-issue-and-strm-dump" title="Permalink to this heading">¶</a></h3>
+<p>According to the explanation above, these two mover kernels should also have 512 bits AXI stream data width instead of original 256 bits to match <strong>krnl_aurora</strong>.</p>
+</div>
+<div class="section" id="top-level-linking-consideration">
+<h3>4. Top-level Linking Consideration<a class="headerlink" href="#top-level-linking-consideration" title="Permalink to this heading">¶</a></h3>
+<p>For DDR based Alveo card (such as U200 and U250), the single DDR bank provides approximately 19.2 GB/s bandwidth. For 25 Gbps x 4 lane Aurora IP, the unidirectional throughput is about 12.5 GB/s. So when implementing the 25 Gbps lane speed loopback example design, if we make both the <strong>strm_dump</strong> and <strong>strm_issue</strong> kernels access the same DDR bank, performance will be degraded by DDR bandwidth limitation. So to achieve the highest performance, we could connect the AXI masters of the two HLS kernels to different DDR bank. We can control the kernel <em>slr</em> and <em>sp</em> assignment in the v++ linking configuration file. As an example, for U200 case, add following lines at the last of <em>krnl_aurora_test.cfg</em> file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">slr</span><span class="o">=</span>strm_issue_0:SLR1
+<span class="nv">slr</span><span class="o">=</span>strm_dump_0:SLR1
+<span class="nv">slr</span><span class="o">=</span>krnl_aurora_0:SLR2
+<span class="nv">sp</span><span class="o">=</span>strm_issue_0.m_axi_gmem:DDR<span class="o">[</span><span class="m">1</span><span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>strm_dump_0.m_axi_gmem:DDR<span class="o">[</span><span class="m">2</span><span class="o">]</span>
+</pre></div>
+</div>
+<br/><p>Based on the four adjustments mentioned above, we implement a test design with U200 card, and observe about 11.5 GB/s throughput, like below running log:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ./host_krnl_aurora_test
+
+------------------------ krnl_aurora loopback <span class="nb">test</span> ------------------------
+Transfer size: <span class="m">100</span> MB
+
+Generate TX data block.
+Program running <span class="k">in</span> hardware mode
+Load krnl_aurora_test_hw.xclbin
+Create kernels
+Create TX and RX device buffer
+Transfer TX data into device buffer
+Check whether startup status of Aurora kernel is ready...
+Aurora kernel startup status is GOOD: <span class="m">1000111111111</span>
+<span class="o">[</span><span class="m">12</span><span class="o">]</span>channel_up <span class="o">[</span><span class="m">11</span><span class="o">]</span>soft_err <span class="o">[</span><span class="m">10</span><span class="o">]</span>hard_err <span class="o">[</span><span class="m">9</span><span class="o">]</span>mmcm_not_locked_out <span class="o">[</span><span class="m">8</span><span class="o">]</span>gt_pll_lock <span class="o">[</span><span class="m">7</span>:4<span class="o">]</span>line_up <span class="o">[</span><span class="m">3</span>:0<span class="o">]</span>gt_powergood
+Begin data loopback transfer
+Data loopback transfer finish
+Transfer <span class="nb">time</span> <span class="o">=</span> <span class="m">8</span>.723 ms
+Fetch RX data from device buffer and verification
+Data loopback transfer <span class="nv">throughput</span> <span class="o">=</span> <span class="m">11463</span>.9 MB/s
+Aurora Error Status:
+SOFT_ERR: <span class="m">0</span>
+HARD_ERR: <span class="m">0</span>
+
+Data verification SUCCEED
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<p>Xilinx Aurora protocol and IP provide a lightweight and easy-to-use high-performance point-to-point communication solution on Alveo accelerator card. With Vitis flow, the user can use Aurora IP on Alveo cards easily to implements high speed inter-card communication without the involvement of PCIe and host. This enables various and flexible distributed or pipelined hardware acceleration applications.</p>
+</div>
+<div class="section" id="revision-history">
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<details>
+  <summary>2022.1</summary><ul class="simple">
+<li><p>Initial release</p></li>
+</ul>
+ </details><p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../07-host-code-opt/README.html" class="btn btn-neutral float-left" title="Host Code Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../Feature_Tutorials/01-rtl_kernel_workflow/README.html" class="btn btn-neutral float-right" title="Getting Started with RTL Kernels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

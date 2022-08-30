@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Introduction - PS Application creation and Run &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction - PS Application creation and Run</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/01-aie_a_to_z/04-ps_application_creation_run_all.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="introduction-ps-application-creation-and-run">
+<h1>Introduction - PS Application creation and Run<a class="headerlink" href="#introduction-ps-application-creation-and-run" title="Permalink to this heading">¶</a></h1>
+<p>In this section of the tutorial, you will learn how to build a PS bare-metal application using the XSA created in the previous step and then build, as well as run the complete system.</p>
+<div class="section" id="step-1-create-a-new-platform-in-the-bare-metal-domain">
+<h2>Step 1. Create a New Platform in the Bare-metal Domain<a class="headerlink" href="#step-1-create-a-new-platform-in-the-bare-metal-domain" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Open the Vitis IDE with the same workspace directory as the previous step. Click <em><strong>File → New →  Platform Project</strong></em>.</p></li>
+<li><p>Set the Platform Project Name to <em><strong>AIE_A-to-Z_pfm_vck190</strong></em> and click <em><strong>Next</strong></em>.</p></li>
+<li><p>Use the XSA generated in the previous step that you can find in <code class="docutils literal notranslate"><span class="pre">workspace/simple_application_system_hw_link/Emulation-HW/binary_container_1.xsa</span></code>, set <em><strong>standalone</strong></em> as <em><strong>Operating system</strong></em> and <em><strong>CIPS_0_pspmc_0_psv_cortexa72_0</strong></em> as <em><strong>Processor</strong></em>, and click <em><strong>Finish</strong></em>.</p></li>
+<li><p>Build the platform.</p></li>
+</ol>
+</div>
+<div class="section" id="step-2-build-the-baremetal-ai-engine-control-application">
+<h2>Step 2. Build the Baremetal AI Engine Control Application<a class="headerlink" href="#step-2-build-the-baremetal-ai-engine-control-application" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Create a new application by clicking on <em><strong>New → Application Project</strong></em>.</p></li>
+<li><p>Select <em><strong>AIE_A-to-Z_pfm_vck190</strong></em> as the platform.</p></li>
+<li><p>Set the name for the application (example <code class="docutils literal notranslate"><span class="pre">A-to-Z_app</span></code>), select the A72_0 processor domain (<code class="docutils literal notranslate"><span class="pre">CIPS_0_pspmc_0_psv_cortexa72_0</span></code>), and click <em><strong>Next</strong></em>.</p></li>
+<li><p>On the next page, select <em><strong>standalone</strong></em> for the <em><strong>domain</strong></em>.</p></li>
+<li><p>Finally, select the <em><strong>Empty Application (C++)</strong></em> template and click <em><strong>Finish</strong></em>.</p></li>
+<li><p>Right-click on the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder under the <em><strong>A-to-Z_app</strong></em> project and click <em><strong>Import Sources</strong></em>.</p></li>
+<li><p>Import the <code class="docutils literal notranslate"><span class="pre">aie_control.cpp</span></code> file from the AI Engine application project (<code class="docutils literal notranslate"><span class="pre">simple_application/Emulation-AIE/Work/ps/c_rts/aie_control.cpp</span></code>).</p></li>
+<li><p>Import <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> from the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder from the git repository</p></li>
+</ol>
+<p>Go through the <code class="docutils literal notranslate"><span class="pre">main.cpp</span></code> file. You can see that the code is initializing the input data and the memory space for the output data. One thing to note is the use of the <code class="docutils literal notranslate"><span class="pre">.init()</span></code> and <code class="docutils literal notranslate"><span class="pre">.run()</span></code> APIs to control the AI Engine.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Starting AIE Graph</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Graph Initialization</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="n">mygraph</span><span class="o">.</span><span class="n">init</span><span class="p">();</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Done </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;- </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+
+<span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Running Graph for 4 iterations</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="n">mygraph</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>There are two options to enable an AI Engine graph from a system:</p>
+<ul class="simple">
+<li><p>Enable the graph in the PDI. This means that the graph will be started during BOOT and will run forever.</p></li>
+<li><p>Enable the AI Engine graph from the PS program using <code class="docutils literal notranslate"><span class="pre">&lt;graph&gt;.init()</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;graph&gt;.run()</span></code> APIs. This is what we are using in this case.</p></li>
+</ul>
+<ol class="simple">
+<li><p>Right-click on A72 PS application (<code class="docutils literal notranslate"><span class="pre">A-to-Z_app)</span></code> and select <em><strong>C/C++ Build Settings</strong></em>.</p></li>
+</ol>
+<p><img alt="missing image" src="../../../../_images/ps_app_cfg1.png" /></p>
+<ol class="simple">
+<li><p>In the directories section under ARM v8 g++ compiler, add the directory for the AI Engine application:</p></li>
+</ol>
+<ul>
+<li><p>The sources folder for the AI Engine application (<code class="docutils literal notranslate"><span class="pre">${workspace_loc:/simple_application/src}</span></code>)</p>
+<p><img alt="missing image" src="../../../../_images/212_ps_app_cfg2.png" /></p>
+</li>
+</ul>
+<p>And make sure the <code class="docutils literal notranslate"><span class="pre">${env_var:XILINX_VITIS}/aietools/include</span></code> is already added in the directory settings.</p>
+<p>11.Modify the Linker Script to increase the heap size for AIE library</p>
+<ul>
+<li><p>In the Project Explorer, expand the A-to-z_app.</p></li>
+<li><p>In the src directory, double-click <code class="docutils literal notranslate"><span class="pre">lscript.ld</span></code> to open the linker script for this project.</p></li>
+<li><p>In the linker script modify the Heap size to <code class="docutils literal notranslate"><span class="pre">0x100000</span></code> (1MB).</p>
+<p><img alt="missing image" src="../../../../_images/heapsize.PNG" /></p>
+</li>
+</ul>
+<ol class="simple">
+<li><p>Build the A72 PS application (<code class="docutils literal notranslate"><span class="pre">A-to-Z_app</span></code>) .</p></li>
+</ol>
+</div>
+<div class="section" id="step-3-build-the-full-system">
+<h2>Step 3. Build the Full System<a class="headerlink" href="#step-3-build-the-full-system" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Click <em><strong>simple_application_system.sprj</strong></em>. Add the following options in the <em><strong>Packaging options</strong></em> box:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">package</span><span class="o">.</span><span class="n">ps_elf</span> <span class="o">../../</span><span class="n">A</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Z_app</span><span class="o">/</span><span class="n">Debug</span><span class="o">/</span><span class="n">A</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Z_app</span><span class="o">.</span><span class="n">elf</span><span class="p">,</span><span class="n">a72</span><span class="o">-</span><span class="mi">0</span> <span class="o">--</span><span class="n">package</span><span class="o">.</span><span class="n">defer_aie_run</span>
+</pre></div>
+</div>
+<p><img alt="missing image" src="../../../../_images/package_option.png" /></p>
+<blockquote>
+<div><p><strong>Note</strong>: The option  <code class="docutils literal notranslate"><span class="pre">--package.defer_aie_run</span></code> is required when running the AI Engine graph from the PS (see the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow">Versal ACAP AI Engine Programming Environment User Guide (UG1076)</a>).</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>Build the <em><strong>simple_application_system</strong></em> project.</p></li>
+</ol>
+</div>
+<div class="section" id="step-4-run-the-system-in-hardware-emulation">
+<h2>Step 4. Run the System in Hardware Emulation<a class="headerlink" href="#step-4-run-the-system-in-hardware-emulation" title="Permalink to this heading">¶</a></h2>
+<p>Now that the system is built, we can test it in HW emulation.</p>
+<ol>
+<li><p>Right-click on the <em><strong>simple_application_system</strong></em> and click <em><strong>Run As → Launch HW emulator</strong></em>.</p>
+<p><img alt="missing image" src="../../../../_images/run-hw-emu.png" /></p>
+</li>
+<li><p>On the <em><strong>Launch On Emulator</strong></em> pop-up window click <em><strong>Start Emulator and Run</strong></em></p>
+<p><img alt="missing image" src="../../../../_images/run-hw-emu-2.png" /></p>
+</li>
+</ol>
+<blockquote>
+<div><p><strong>Note</strong> You can use the option <em><strong>Launch Emulator in GUI mode to display waveforms</strong></em> to open Vivado Simulator and observe the waveform from the PL signals. If you select this option make sure you run the simulation in Vivado simulator as QEMU will wait for it.</p>
+</div></blockquote>
+<ol>
+<li><p>You should see the application running successfully with no error in the Vitis Emulation console.</p>
+<p><img alt="missing image" src="../../../../_images/hw-emu_output.png" /></p>
+</li>
+<li><p>To stop the emulator click <em><strong>Xilinx &gt; Start/Stop Emulator</strong></em> and click <em><strong>Stop</strong></em>
+<img alt="missing image" src="../../../../_images/stop-hw-emu.png" /></p></li>
+</ol>
+</div>
+<div class="section" id="step-5-build-the-system-targeting-the-hardware">
+<h2>Step 5. Build the System targeting the Hardware<a class="headerlink" href="#step-5-build-the-system-targeting-the-hardware" title="Permalink to this heading">¶</a></h2>
+<p>Before you run the system in Hardware you need to rebuild the system to target the Hardware.</p>
+<ol class="simple">
+<li><p>In the <em><strong>simple_application_system.sprj</strong></em> page, change the <em><strong>Active build configuration</strong></em> to <em><strong>Hardware</strong></em></p></li>
+<li><p>Add the following options in the <em><strong>Packaging options</strong></em> box:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">package</span><span class="o">.</span><span class="n">ps_elf</span> <span class="o">../../</span><span class="n">A</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Z_app</span><span class="o">/</span><span class="n">Debug</span><span class="o">/</span><span class="n">A</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">Z_app</span><span class="o">.</span><span class="n">elf</span><span class="p">,</span><span class="n">a72</span><span class="o">-</span><span class="mi">0</span> <span class="o">--</span><span class="n">package</span><span class="o">.</span><span class="n">defer_aie_run</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Select the <em><strong>simple_application_system</strong></em> and click on the hammer to build the system</p></li>
+</ol>
+</div>
+<div class="section" id="step-6-run-the-system-in-hardware">
+<h2>Step 6. Run the System in Hardware<a class="headerlink" href="#step-6-run-the-system-in-hardware" title="Permalink to this heading">¶</a></h2>
+<p>We have two ways to run the application.</p>
+<p>A: Use Jtag to launch the application.</p>
+<ol>
+<li><p>Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to JTAG.</p></li>
+<li><p>Right-click on the <em><strong>simple_application_system</strong></em> and click <em><strong>Run As → Launch Hardware</strong></em>.</p>
+<p><img alt="missing image" src="../../../../_images/run-on-hw.png" /></p>
+</li>
+<li><p>You should see the application running successfully with no error.</p>
+<p><img alt="missing image" src="../../../../_images/hw_output.png" /></p>
+</li>
+</ol>
+<p>B: Use SD card to run the application.</p>
+<ol>
+<li><p>Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable and set BOOT MODE to SD Boot.</p></li>
+<li><p>Right-click on the <em><strong>simple_application_system</strong></em> and expand Hardware.In the <code class="docutils literal notranslate"><span class="pre">package</span></code> directory you would find a sd_card.img file.</p>
+<blockquote>
+<div><p>We can find the sd_card.img file in <strong>package</strong> and <strong>package_aie_debug</strong> directories. The sd_card.img in <strong>package_aie_debug</strong> directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the <strong>package</strong> directory is for free running. So we choose sd_card.img in <strong>package</strong> directory for SD Card free running.</p>
+</div></blockquote>
+</li>
+<li><p>Format your SD Card SD card FAT32 partition using the sd_card.img file.</p>
+<p><img alt="missing image" src="../../../../_images/package_sd_card.png" /></p>
+</li>
+<li><p>Insert your SD card into your board and power on your board.</p></li>
+<li><p>You should see the application running successfully with no error.</p>
+<p><img alt="missing image" src="../../../../_images/hw_output.png" /></p>
+</li>
+</ol>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<p>In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to control the system. Then we have run the system is HW emulation and HW</p>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

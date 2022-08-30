@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>RTC_GEN RTL Kernel Creation &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../../README.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/README.html">Master</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Getting Started Pathway</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis/README.html">Vitis Flow 101 Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis_HLS/README.html">Vitis HLS Analysis and Optimization</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Hardware Accelerators</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../02-bloom/README.html">Optimizing Accelerated FPGA Applications: Bloom Filter Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01-convolution-tutorial/README.html">Optimizing Accelerated FPGA Applications: Convolution Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Mixed Kernels Design Tutorial with AXI Stream and Vitis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Feature_Tutorials/01-rtl_kernel_workflow/README.html">Getting Started with RTL Kernels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Feature_Tutorials/02-mixing-c-rtl-kernels/README.html">Mixing C++ and RTL Kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Runtime and System Optimization</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/01-host-code-opt/README.html">Host Code Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Design_Tutorials/02-ivas-ml/README.html">IVAS ZCU104 ML Acceleration Reference Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/01-mult-ddr-banks/README.html">Using Multiple DDR Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/02-using-multiple-cu/README.html">Using Multiple Compute Units</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Runtime_and_System_Optimization/Feature_Tutorials/03-controlling-vivado-implementation/README.html">Controlling Vivado Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Vitis Platform Creation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/01-Overview/README.html">Platform Creation Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Introduction/02-Edge-AI-ZCU104/README.html">Vitis Custom Embedded Platform Creation Example on ZCU104</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/">Main</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../README.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../README.html" class="icon icon-home"></a> &raquo;</li>
+      <li>RTC_GEN RTL Kernel Creation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/docs/Hardware_Accelerators/Design_Tutorials/03-rtl_stream_kernel_integration/doc/rtc_gen_tutorial.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="rtc-gen-rtl-kernel-creation">
+<h1>RTC_GEN RTL Kernel Creation<a class="headerlink" href="#rtc-gen-rtl-kernel-creation" title="Permalink to this heading">¶</a></h1>
+<p>It is very easy for the user to use Vitis/Vivado RTL Kernel Wizard to create and develop RTL based kernel which could be seamlessly integrated with other HLS C or Vitis Vision library based kernel with Vitis. This tutorial will show the detailed steps to create <em>rtc_gen</em> kernel. We use Alveo U200 as the target platform for the tutorial.</p>
+<div class="section" id="determine-top-level-design-specification">
+<h2>Determine Top Level Design Specification<a class="headerlink" href="#determine-top-level-design-specification" title="Permalink to this heading">¶</a></h2>
+<p>The <em>rtc_gen</em> kernel is required to read font library from global memory into on-chip SRAM, then output the clock image via AXI stream port. Considerting the font library reading is a one-time job, and no global memory bandwidth requirement exists during normal work, so we use 32-bit (data bus) AXI4 master interface for the font reading port to save resources. In the downstream processing pipeline, we will use <em>XF_NPP8</em> format (processing 8 pixels in each clock cycle), so we select the AXI stream width as 64-bit, which could transfer eight pixels in each AXI stream transaction. For control register, we will use an AXI slave interface compatible with XRT, so we could use the standard OpenCL API to program and control the kernel.</p>
+<p>Thus we generalize the top level design specification for <em>rtc_gen</em> kernel as below:</p>
+<p><strong>Bus interfaces</strong></p>
+<ul class="simple">
+<li><p>AXI-Lite slave interface for control</p></li>
+<li><p>AXI-Lite master interface for font data loading, data width 32-bit, address width 64-bit</p></li>
+<li><p>AXI stream master interface for clock digit image output, data width 64-bit</p></li>
+</ul>
+<p><strong>Control Register</strong></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Register</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>work_mode</td>
+<td>1</td>
+<td>[0]: determine the kernel working mode <br> 0 - load font from global memory to on-chip SRAM via AXI read master <br> 1 - output RTC digit figure via AXI steam master</td>
+</tr>
+<tr>
+<td>cs_count</td>
+<td>32</td>
+<td>[21:0]: Centi-second counter. For example, if the system clock is 200MHz, cs_count should be set to 2,000,000</td>
+</tr>
+<tr>
+<td>time_format</td>
+<td>1</td>
+<td>[0]: determine whether centisecond is included in the output digit images <br> 0 - disable centiseconds output <br> 1 - enable centiseconds output</td>
+</tr>
+<tr>
+<td>time_set_val</td>
+<td>32</td>
+<td>Set time value for internel free-running clock: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds</td>
+</tr>
+<tr>
+<td>time_set_en</td>
+<td>1</td>
+<td>[0]: write 1 to this bit will load the time_set_value to internel free-running clock.</td>
+</tr>
+<tr>
+<td>read_addr</td>
+<td>64</td>
+<td>AXI master offset address, this is the pointer for FPGA device buffer address for reading font library</td>
+</tr>
+</tbody>
+</table><div align="center">
+<img src="./images/rtc_gen_block.png" alt="RTL Kernel" >
+</div><br/></div>
+<div class="section" id="use-rtl-kernel-wizard-to-create-kernel-frame">
+<h2>Use RTL Kernel Wizard to Create Kernel Frame<a class="headerlink" href="#use-rtl-kernel-wizard-to-create-kernel-frame" title="Permalink to this heading">¶</a></h2>
+<p>Now we use RTL Kernel Wizard to create the frame for <em>rtc_gen</em> kernel. We will launch the Wizard from Vivado. Please refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/devrtlkernel.html#qnk1504034323350">Vitis Application Acceleration Development Flow Documentation</a> for detailed user guide of RTL kernel and RTL Kernel Wizard.</p>
+<p>Please change to <em>./rtc_gen</em> directory of the git repo, create a directory named <em>vivado_project</em>, then enter this directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">./</span><span class="n">rtc_gen</span>
+<span class="n">mkdir</span> <span class="n">vivado_project</span>
+<span class="n">cd</span> <span class="o">./</span><span class="n">vivado_project</span>
+<span class="n">vivado</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>We create a new RTL project named <em>rtc_gen_kernel</em> in the just created <em>vivado_project</em> directory. During the part selection page, select *<em>Alveo U200 Data Center Accelerator Card</em>.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_1.png" alt="RTL Kernel" >
+</div><br/><p>When the project is created, in the Flow Navigator, click the IP catalog command, type RTL Kernel in the IP catalog search box, then double-click RTL Kernel Wizard to launch the wizard.</p>
+<p>In the <em>General Settings</em> tab of the RTL Kernel Wizard, set the kernel name to <strong>rtc_gen</strong>, set the kernel vendor to <strong>xilinx.com</strong>, change the <em>has reset</em> option to value 1, refer to below snapshot.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_2.png" alt="RTL Kernel" >
+</div><br/><p>In the <em>Scalars</em> tab, configure the kernel arguments as our design specification. Refer to the <strong>Control Register</strong> table and below snapshot. Please note <strong>read_addr</strong> register is not considered scalar argument as AXI master pointer, so we don’t need to configure it in this tab. We are using <strong>uint</strong> as argument type here, though all these bit might not be used.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_3.png" alt="RTL Kernel" >
+</div><br/><p>In the <em>Global Memory</em> tab, configure the AXI master interfaces parameters according to our design specification. Name the AXI master interface to <strong>fontread_axi_m</strong>, change the width to 4 bytes (32-bit), and set the relating argument name to <strong>read_addr</strong>. Refer to below snapshot.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_4.png" alt="RTL Kernel" >
+</div><br/><p>In the <em>Streaming interfaces</em> tab, set the number of AXI4-Sttream interfaces to 1, name it to <strong>dataout_axis_m</strong>, set the mode the <strong>Master</strong>, and set the width to 8 bytes (64-bit). Refer to below snapshot.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_5.png" alt="RTL Kernel" >
+</div><br/><p>Finally review the summary page of the wizard, and click <em>OK</em> button to generate the RTL kernel top level framework.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_6.png" alt="RTL Kernel" >
+</div><br/><p>For the next “Generate Output Products” pop-up window, just click <em>Skip</em> button close the window. Now you can see the <em>rtc_gen.xci</em> file in the <em>Design Sources</em> group of <em>Sources</em> view. Right click the <em>rtc_gen.xci</em> file, select <em>Open IP Example Design</em>.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_7.png" alt="RTL Kernel" >
+</div><br/><p>In the <em>Open IP Example Design</em> pop-up window directly click <em>OK</em> button, then another project named <em>rtc_gen_ex</em> will be created in <em>./vivado_project</em> directory and open automatically in another Vivado session. We will use project <em>rtc_gen_ex</em> as the major working project to finish the <em>rtc_gen</em> kernel development.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_8.png" alt="RTL Kernel" >
+</div><br/><p>In the <em>rtc_gen_ex</em> project, you can see a few automatically generated Verilog/SystemVerilog source code files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_gen_control_s_axi</span><span class="o">.</span><span class="n">v</span>                 
+<span class="n">rtc_gen_example_adder</span><span class="o">.</span><span class="n">v</span>                
+<span class="n">rtc_gen_example_axi_read_master</span><span class="o">.</span><span class="n">sv</span>     
+<span class="n">rtc_gen_example_axi_write_master</span><span class="o">.</span><span class="n">sv</span>   
+<span class="n">rtc_gen_example_counter</span><span class="o">.</span><span class="n">sv</span>              
+<span class="n">rtc_gen_example_number_generator</span><span class="o">.</span><span class="n">sv</span>    
+<span class="n">rtc_gen_example</span><span class="o">.</span><span class="n">sv</span> 
+<span class="n">rtc_gen_example_vadd_axis</span><span class="o">.</span><span class="n">sv</span>
+<span class="n">rtc_gen_example_vadd</span><span class="o">.</span><span class="n">sv</span>
+<span class="n">rtc_gen_tb</span><span class="o">.</span><span class="n">sv</span>
+<span class="n">rtc_gen</span><span class="o">.</span><span class="n">v</span>
+</pre></div>
+</div>
+<p>In the <em>Sources</em> view, <em>Hierarchy</em> tab, we can see the HDL file hierarchy. Now we have finished the kernel framework creation.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_9.png" alt="RTL Kernel" >
+</div><br/></div>
+<div class="section" id="rtc-gen-kernel-development">
+<h2>RTC_GEN Kernel Development<a class="headerlink" href="#rtc-gen-kernel-development" title="Permalink to this heading">¶</a></h2>
+<p>We will use following generated RTL files in our <em>rtc_gen</em> kernel:</p>
+<ul>
+<li><p><strong>rtc_gen_control_s_axi.v</strong></p>
+<p>It is the AXI Lite slave interface to upper level system and XRT. It includes all the kernel argument as well as the kernel control signals (ap_start, ap_done, ap_idle, ap_ready).</p>
+</li>
+<li><p><strong>rtc_gen_example_axi_read_master.sv</strong></p>
+<p>It is a simple AXI Lite read master which could be called by our kernel directly. It uses four control signals to trigger the master to finish data reading tasks:</p>
+<ul class="simple">
+<li><p><em>ctrl_start</em>: single cycle pulse to start the master state machine</p></li>
+<li><p><em>ctrl_done</em>: single cycle pulse indicating the finish the AXI reading task</p></li>
+<li><p><em>ctrl_addr_offset</em>: base address for AXI reading operation. Kernel argument <em>read_addr</em> can be used to drive this signal</p></li>
+<li><p><em>ctrl_xfer_size_in_bytes</em>: number of byes to be read from AXI bus.</p></li>
+</ul>
+<p>The example master also use an AXI stream port for reading data transfer, which could be connected to FIFO like data pipeline easily.</p>
+</li>
+<li><p><strong>rtc_gen_example_counter.sv</strong></p>
+<p>The sub-module of the example AXI read master.</p>
+</li>
+<li><p><strong>rtc_gen.v</strong>
+It is the example top level kernel wrapper instantiating all the submodule. We will modify this module to construct our <em>rtc_gen</em> kernel.</p></li>
+<li><p><strong>rt_gen_tb.sv</strong>
+It is an example testbench using Xilinx AXI Verification IP. We can modify this testbench to test our <em>rtc_gen</em> kernel.</p></li>
+</ul>
+<p>In addition to these five files, we could also refer to <em>rtc_gen_example_vadd.sv</em> for the connection of AXI read master. For AXI stream port, it is simple and we don’t need the example for reference. For <em>rtc_gen</em> kernel, a Verilog file <em>rtc_gen_core.v</em> is created to finish the core function of the kernel. The function diagram of <em>rtc_gen_core</em> is shown in following diagram.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_10.png" alt="RTL Kernel" >
+</div><br/><p>To make the core source code directory clean, we put all the necessary generated, newly composed or modified RTL files in <em>~/rtc_gen/src</em> directory. Please review the directory for these source code files. Please note <em>SPSR.v</em> is a parameterized SRAM template which could be synthesized to FPGA BlockRAM.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen_control_s_axi</span><span class="o">.</span><span class="n">v</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen_core</span><span class="o">.</span><span class="n">v</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen_example_axi_read_master</span><span class="o">.</span><span class="n">sv</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen_example_counter</span><span class="o">.</span><span class="n">sv</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen_tb</span><span class="o">.</span><span class="n">sv</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rtc_gen</span><span class="o">.</span><span class="n">v</span>
+<span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">SPSR</span><span class="o">.</span><span class="n">v</span>
+</pre></div>
+</div>
+<p>Now we remove all the existing Verilog/SystemVerilog source codes (except for thos in <em>IP</em> group) from the <em>rtc_gen_ex</em> project in Vivado, then add the files in <em>./rtc_gen/src</em> to the project (<em>rtc_gen_tb.sv</em> for <em>Simulation-Only Sources</em>, other files for <em>Design Sources</em>). Thus you can see the design hierarchy as below snapshot, and we finish the coding for kernel <em>rtc_gen</em>.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_11.png" alt="RTL Kernel" >
+</div><br/><p>Now you can simulation the design and go through normal RTL design flow with standard Vivado design methodology. A text format font library file <em>font_sim_data.txt</em> in <em>./rtc_gen</em> directory is provided, which could be read in by testbench <em>rtc_gen_tb.sv</em> for simulation. Please copy it to <em>./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen_ex.sim/sim_1/behav/xsim/</em> for simulation runs.</p>
+</div>
+<div class="section" id="package-the-rtl-kernel">
+<h2>Package the RTL Kernel<a class="headerlink" href="#package-the-rtl-kernel" title="Permalink to this heading">¶</a></h2>
+<p>After you confirm the design is OK, select <em>Generate RTL Kernel</em> from <em>Flow</em> Menu, then select <em>Sources-only kernel</em> in the pop-up window, click <em>OK</em> button to finish the <em>rtc_gen</em> RTL kernel creation.</p>
+<div align="center">
+<img src="./images/rtl_kernel_wiz_12.png" alt="RTL Kernel" >
+</div><br/><p>The generated kernel file is <em>./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen.xo</em>, which can be used in downstream Vitis intergartion flow. From the Vivado <em>Tcl Console</em> view, you can see the Vivado actually use following command line to finish the kernel packaging:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package_xo</span>  <span class="o">-</span><span class="n">xo_path</span> <span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">vivado_project</span><span class="o">/</span><span class="n">rtc_gen_ex</span><span class="o">/</span><span class="n">exports</span><span class="o">/</span><span class="n">rtc_gen</span><span class="o">.</span><span class="n">xo</span> \
+            <span class="o">-</span><span class="n">kernel_name</span> <span class="n">rtc_gen</span> \
+            <span class="o">-</span><span class="n">ip_directory</span> <span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">vivado_project</span><span class="o">/</span><span class="n">rtc_gen_ex</span><span class="o">/</span><span class="n">rtc_gen</span> \
+            <span class="o">-</span><span class="n">kernel_xml</span> <span class="o">./</span><span class="n">rtc_gen</span><span class="o">/</span><span class="n">vivado_project</span><span class="o">/</span><span class="n">rtc_gen_ex</span><span class="o">/</span><span class="n">imports</span><span class="o">/</span><span class="n">kernel</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p><em>./rtc_gen/vivado_project/rtc_gen_ex/rtc_gen</em> is the folder for <em>rtc_gen</em> IP, and <em>./rtc_gen/vivado_project/rtc_gen_ex/imports/kernel.xml</em> is the kernel description file. So we could copy out these items to standlone directory and just use the command line above to package the kernel. This is also where the <em>./hw/rtc_gen_ip</em> directory and <em>./hw/rtc_gen_kernel.xml</em> file come from.</p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc. Xilinx is now a part of AMD.
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

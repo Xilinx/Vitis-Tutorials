@@ -1,0 +1,12 @@
+{
+  "xclbin-location": "/usr/lib/dpu.xclbin",
+  "ivas-library-repo": "/usr/lib/ivas",
+  "element-mode": "passthrough",
+  "kernels": [
+    {
+      "kernel-name": "v_multi_scaler:v_multi_scaler_1",
+      "library-name": "libivas_xcrop.so",
+      "config": {}
+    }
+  ]
+}

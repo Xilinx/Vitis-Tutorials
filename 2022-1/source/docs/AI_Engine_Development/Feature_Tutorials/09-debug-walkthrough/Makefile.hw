@@ -1,0 +1,127 @@
+#
+# Copyright 2022 Xilinx, Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+#     Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+TARGET   = hw
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+XSA      = bf_${TARGET}.xsa
+HOST_EXE = host.exe
+ROOTFS   = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 
+IMAGE    = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image 
+
+GRAPH    = aie/graph.cpp
+LIBADF   = libadf.a
+
+AIE_CMPL_CMD = aiecompiler -log-level=5 -v -platform=${PLATFORM} --pl-freq=500 -genArchive -include="./aie" -include="./aie/inc" -include="./aie/kernels" -include="./data" -include="./" --xlopt=0 --num-trace-streams=8 --event-trace=runtime --event-trace-port=plio --broadcast-enable-core=true -workdir=./Work ${GRAPH}
+AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
+
+##########################################################################################################################################################
+### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
+################################################################################################################################################
+
+
+XOS      = $(subst .cpp,.xo,$(wildcard pl_kernels/*.cpp)) 
+VCC      = v++
+VPP_SPEC = system.cfg
+VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
+# VPP_FLAGS= --verbose --config ${VPP_SPEC}  
+
+.PHONY: clean
+
+all: xsa host package data
+
+aie: ${LIBADF}
+${LIBADF}: ${GRAPH}
+	${AIE_CMPL_CMD}
+
+aiesim: ${LIBADF}
+	${AIE_SIM_CMD}
+
+xsa: guard-PLATFORM_REPO_PATHS ${XSA}
+${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS}
+	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF} \
+	       -t ${TARGET} ${VPP_FLAGS} -o $@
+
+kernels: guard-PLATFORM_REPO_PATHS ${XOS}
+${XOS}:
+	make -C pl_kernels/
+
+host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
+
+${HOST_EXE}: sw/*.cpp
+	make -C sw/
+
+###
+# Guarding Checks. Do not modify.
+###
+check_defined = \
+	$(strip $(foreach 1,$1, \
+		$(call __check_defined,$1,$(strip $(value 2)))))
+
+__check_defined = \
+	$(if $(value $1),, \
+		$(error Undefined $1$(if $2, ($2))))
+
+guard-PLATFORM_REPO_PATHS:
+	$(call check_defined, PLATFORM_REPO_PATHS, Set to location of xilinx_vck190_base_202210_1 platform)
+
+guard-ROOTFS:
+	$(call check_defined, ROOTFS, Set to location of xilinx-versal-common-v2022.1/rootfs.ext4)
+
+guard-IMAGE:
+	$(call check_defined, IMAGE, Set to location of xilinx-versal-common-v2022.1/Image)
+
+guard-CXX:
+	$(call check_defined, CXX, Ensure xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux script was run)
+
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Ensure xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux script was run)
+###
+
+data:
+	wget https://www.xilinx.com/bin/public/openDownload?filename=beamformer_data.zip -O beamformer_data.zip && unzip beamformer_data.zip
+
+package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
+package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
+	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
+		--package.rootfs ${ROOTFS} \
+		--package.kernel_image ${IMAGE} \
+		--package.boot_mode=sd \
+		--package.image_format=ext4 \
+		--package.defer_aie_run \
+		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
+		--package.sd_file ${HOST_EXE}
+
+package_dbg: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_dbg_${TARGET}
+package_dbg_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} data 
+	${VCC} -p -t ${TARGET} -f ${PLATFORM} ${XSA} ${LIBADF} \
+		--package.rootfs ${ROOTFS} \
+		--package.kernel_image ${IMAGE} \
+		--package.boot_mode=sd \
+		--package.image_format=ext4 \
+		--package.defer_aie_run \
+		--package.enable_aie_debug \
+		--package.sd_dir data \
+		--package.sd_file embedded_exec.sh \
+		--package.sd_file ${HOST_EXE}
+
+run_hw_emu: launch_hw_emu.sh
+launch_hw_emu.sh: package_hw_emu
+	./launch_hw_emu.sh
+
+clean:
+	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
+	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
+	       ilpProblem* sol.db drivers .Xil
+	make -C pl_kernels clean
+	make -C sw clean

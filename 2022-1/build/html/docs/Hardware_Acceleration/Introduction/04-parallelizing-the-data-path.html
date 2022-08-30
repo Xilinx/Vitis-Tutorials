@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Overview &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Hardware_Acceleration/Introduction/04-parallelizing-the-data-path.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>We’ve made some big gains in our overall system throughput, but the bottleneck is now very clearly the
+accelerator itself.  Remember that there are two axes on which we can optimize a design: we can throw more
+resources at a problem to solve it faster, which is bound by <strong>Amdahl’s Law</strong>, or we can do more fundamental
+operations in parallel following <strong>Gustafson’s Law</strong>.</p>
+<p>In this case we’ll try optimizing along the axis of Amdahl’s Law. Up until now our accelerator has been
+following basically the same algorithm as the CPU, performing one 32-bit addition on each clock tick.  But,
+because the CPU has a significantly faster clock (and has the advantage of not having to transfer the data
+over PCIe) it’s always been able to beat us.  Now it’s time to turn the tables.</p>
+<p>Our DDR controller natively has a 512-bit wide interface internally.  If we parallelize the data flow in the
+accelerator, that means we’ll be able to process 16 array elements per clock tick instead of one. So, we
+should be able to get an instant 16x speed-up by just vectorizing the input.</p>
+</div>
+<div class="section" id="key-code">
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>In this example, if we continue to focus on the host software and treat the kernel as a black box we wind up
+with code that’s essentially identical to the code from Example 3.  All we need to do is change the kernel
+name from <code class="docutils literal notranslate"><span class="pre">vadd</span></code> to <code class="docutils literal notranslate"><span class="pre">wide_vadd</span></code>.</p>
+<p>Since the code is the same, this is a good opportunity to introduce another concept of working with memory in
+XRT and OpenCL.  On the Alveo Data Center accelerator cards we have four memory banks available, and while it
+isn’t necessary with these simple accelerators you may find that you wish to spread operations among them to
+help maximize the bandwidth available to each of the interfaces.  For our simple vector addition example,
+just for illustration purposes we’ve used the topology shown here:</p>
+<p><img alt="Wide VADD Memory Connectivity" src="../../../_images/04_parallizing_the_data_path.jpg" /></p>
+<p>What we gain by doing this is the ability to perform high-bandwidth transactions simultaneously with different external memory banks.  Remember, long bursts are generally better for performance than many small reads and writes, but you can’t fundamentally perform two operations on the memory at the same time.</p>
+<p>It’s easy enough to specify the hardware connectivity via command line switches, but when we want to actually transfer buffers down to the hardware we need to specify which memories to use for XRT.  Xilinx accomplishes this by way of an extension to the standard OpenCL library, using a struct <code class="docutils literal notranslate"><span class="pre">cl_mem_ext_ptr_t</span></code> in combination with the buffer allocation flag <code class="docutils literal notranslate"><span class="pre">CL_MEM_EXT_PTR_XILINX</span></code>.  In the code that looks like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Declare physical memory bank connectivity</span>
+<span class="n">cl_mem_ext_ptr_t</span><span class="w"> </span><span class="n">bank1_ext</span><span class="p">,</span><span class="w"> </span><span class="n">bank2_ext</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank2_ext</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XCL_MEM_TOPOLOGY</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank2_ext</span><span class="p">.</span><span class="n">obj</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank2_ext</span><span class="p">.</span><span class="n">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank1_ext</span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XCL_MEM_TOPOLOGY</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank1_ext</span><span class="p">.</span><span class="n">obj</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="n">bank1_ext</span><span class="p">.</span><span class="n">param</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Allocate buffers</span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">a_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="o">&amp;</span><span class="n">bank1_ext</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Bufferb_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_ONLY</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="o">&amp;</span><span class="n">bank2_ext</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+<span class="n">cl</span><span class="o">::</span><span class="n">Buffer</span><span class="w"> </span><span class="nf">c_buf</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">cl_mem_flags</span><span class="o">&gt;</span><span class="p">(</span><span class="n">CL_MEM_READ_WRITE</span><span class="w"> </span><span class="o">|</span><span class="w"></span>
+<span class="w">                                           </span><span class="n">CL_MEM_EXT_PTR_XILINX</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">),</span><span class="w"></span>
+<span class="w">                 </span><span class="o">&amp;</span><span class="n">bank1_ext</span><span class="p">,</span><span class="w"></span>
+<span class="w">                 </span><span class="nb">NULL</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>You can see that this code is very similar to the previous example, with the difference being that we’re
+passing our <code class="docutils literal notranslate"><span class="pre">cl_mem_ext_ptr_t</span></code> object to the <code class="docutils literal notranslate"><span class="pre">cl::Buffer</span></code> constructor and are using the flags field to
+specify the memory bank we need to use for that particular buffer.  Note again that there is fundamentally no
+reason for us to do this for such a simple example, but since this example is so structurally similar to the
+previous one it seemed like a good time to mix it in.  This can be a very useful technique for performance
+optimization for very heavy workloads.</p>
+<p>Otherwise, aside from switching to the <code class="docutils literal notranslate"><span class="pre">wide_vadd</span></code> kernel the code here is exactly unchanged other than
+increasing the buffer size to 1 GiB.  This was done to better accentuate the differences between the hardware
+and software.</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>With the XRT initialized, run the application by running the following command from the build directory:</p>
+<p><code class="docutils literal notranslate"><span class="pre">./04_wide_vadd</span> <span class="pre">alveo_examples</span></code></p>
+<p>The program will output a message similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 4: Parallelizing the Data Path --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: &#39;./alveo_examples.xclbin&#39;
+Running kernel test XRT-allocated buffers and wide data path:
+
+OCL-mapped contiguous buffer example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:              244.463 ms
+Allocate contiguous OpenCL buffers: 37.903 ms
+Map buffers to userspace pointers:  0.333 ms
+Populating buffer inputs:           30.033 ms
+Software VADD run :                 21.489 ms
+Memory object migration enqueue :   4.639 ms
+Set kernel arguments:               0.012 ms
+OCL Enqueue task:                   0.090 ms
+Wait for kernel to complete :       9.003 ms
+Read back computation results :     2.197 ms
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Operation</th>
+<th align="center">Example 3</th>
+<th align="center">Example 4</th>
+<th align="center">&Delta;3&rarr;4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCL Initialization</td>
+<td align="center">247.460 ms</td>
+<td align="center">244.463  ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Buffer Allocation</td>
+<td align="center">30.365 ms</td>
+<td align="center">37.903 ms</td>
+<td align="center">7.538 ms</td>
+</tr>
+<tr>
+<td>Buffer Population</td>
+<td align="center">22.527 ms</td>
+<td align="center">30.033 ms</td>
+<td align="center">7.506 ms</td>
+</tr>
+<tr>
+<td>Software VADD</td>
+<td align="center">24.852 ms</td>
+<td align="center">21.489 ms</td>
+<td align="center">-3.363 ms</td>
+</tr>
+<tr>
+<td>Buffer Mapping</td>
+<td align="center">222 &micro;s</td>
+<td align="center">333 &micro;s</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Write Buffers Out</td>
+<td align="center">66.739 ms</td>
+<td align="center">4.639 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Set Kernel Args</td>
+<td align="center">14 &micro;s</td>
+<td align="center">12 &micro;s</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Kernel Runtime</td>
+<td align="center">92.068 ms</td>
+<td align="center">9.003 ms</td>
+<td align="center">-83.065 ms</td>
+</tr>
+<tr>
+<td>Read Buffer In</td>
+<td align="center">2.243 ms</td>
+<td align="center">2.197 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-323.996 ms</td>
+<td align="center">-247.892 ms</td>
+<td align="center">-76.104 ms</td>
+</tr>
+<tr>
+<td>&Delta;FPGA&rarr;CPU (algorithm only)</td>
+<td align="center">-76.536 ms</td>
+<td align="center">5.548 ms</td>
+<td align="center">-82.084 ms</td>
+</tr>
+</tbody>
+</table><p>Mission accomplished - we’ve managed to beat the CPU!</p>
+<p>There are a couple of interesting bits here, though.  The first thing to notice is that, as you probably
+expected, the time required to transfer that data into and out of the FPGA hasn’t changed.  Like we disussed
+in earlier sections, that’s effectively a fixed time based on your memory topology, amount of data, and
+overall system memory bandwidth utilization.  You’ll see some minor run-to-run variability here, especially
+in a virtualized environment like a cloud data center, but for the most part you can treat it like a
+fixed-time operation.</p>
+<p>The more interesting one, though, is the achieved speedup.  You might be surprised to see that widening the
+data path to 16 words per clock did not, in fact, result in a 16x speedup.  The kernel itself processes 16
+words per clock, but what we’re seeing in the timed results is a cumulative effect of the external DDR
+latency.  Each interface will burst in data, process it, and burst it out.  But the inherent latency of going
+back and forth to DDR slows things down and we only actually achieve a 10x speedup over the single-word
+implementation.</p>
+<p>Unfortunately, we’re hitting a fundamental problem with vector addition: it’s too easy.  The computational
+complexity of vadd is O(N), and a very simpleO(N) at that.  As a result you very quickly become I/O bandwidth
+bound, not computation bound.  With more complex algorithms, such as nested loops which are O(Nx) or even
+computationally complex O(N) algorithms like filters needing lots of calculations, we can achieve
+significantly higher acceleration by performing more computation inside the FPGA fabric instead of going out
+to the memory quite so often.  The best candidate algorithms for acceleration have very little data transfer
+and lots of calculations.</p>
+<p>We can also run another experiment with a larger buffer.  Change the buffer size:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define BUFSIZE (1024*1024*256)</span><span class="c1">// 256*sizeof(uint32_t) = 1 GiB</span>
+</pre></div>
+</div>
+<p>Rebuild and run it again, and now let’s switch over to a simplified set of metrics as in the table below.  I
+think you get the idea on OpenCL initialization by now, too, so we’ll only compare the algorithm’s
+performance.  That doesn’t mean that this initialization time isn’t important, but you should architect your
+application so it’s a one-time cost that you pay during other initialization operations.</p>
+<p>We will also stop tracking the buffer allocation and initialization times.  Again this is something that
+you’d generally want to do when setting up your application.  If you’re routinely allocating large buffers in
+the critical path of your application, odds are you’d get more “bang for your buck” rethinking your
+architecture rather than trying to apply hardware acceleration.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Operation</th>
+<th align="center">Example 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Software VADD</td>
+<td align="center">820.596 ms</td>
+</tr>
+<tr>
+<td>Buffer PCIe TX</td>
+<td align="center">383.907 ms</td>
+</tr>
+<tr>
+<td>VADD Kernel</td>
+<td align="center">484.050 ms</td>
+</tr>
+<tr>
+<td>Buffer PCIe RX</td>
+<td align="center">316.825 ms</td>
+</tr>
+<tr>
+<td>Hardware VADD (Total)</td>
+<td align="center">1184.897 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">364.186 ms</td>
+</tr>
+</tbody>
+</table><p>Oh no!  We had such a good thing going, and here we went and ruined it.  With this larger buffer we’re not beating the CPU anymore at all.  What happened?</p>
+<p>Looking closely at the numbers, we can see that while the hardware kernel itself is processing the data pretty efficiently, the data transfer to and from the FPGA is really eating up a lot of our time.  In fact, if you were to draw out our overall execution timeline, it would look something like figure 3.4 at this point.</p>
+<p><img alt="Kernel Execution Timeline" src="../../../_images/04_kernel_execution_time.jpg" /></p>
+<p>This chart is figurative, but to relative scale.  Looking closely at the numbers, we see that in order to
+beat the CPU our entire kernel would need to run to completion in only about 120 ms.  For that to work we
+would need to run four times faster (not likely), process four times as much data per clock, or run four
+accelerators in parallel. Which one should we pick?  Let’s leave that for the next example.</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>Some things to try to build on this experiment:</p>
+<ul class="simple">
+<li><p>Play around with the buffer sizes again.  Can you find the inflection point where the CPU becomes faster?</p></li>
+<li><p>Try to capture the Vitis Timeline Trace and view this for yourself.  The instructions for doing so are
+found in the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx_2020_1/vitis_doc/index.html">Vitis Documentation</a></p></li>
+</ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Parallelizing the kernel can provide great results, but you need to take care that your data transfer
+doesn’t start to dominate your execution time.  Or if it does, that you stay under your target execution
+time.</p></li>
+<li><p>Simple computation isn’t always a good candidate for acceleration, unless you’re trying to free up the
+processor to work on other tasks.  Better candidates for acceleration are complex workloads with high
+complexity, especially O(Nx) algorithms like nested loops, etc.</p></li>
+<li><p>If you have to wait for all of the data to transfer before you begin processing you may have trouble
+hitting your overall performance target even if your kernels are highly optimized.</p></li>
+</ul>
+<p>Now we’ve seen that just parallelizing the data path isn’t quite enough.  Let’s see what we can do about
+those transfer times.</p>
+<p>Read <a class="reference internal" href="05-optimizing-compute-and-transfer.html"><span class="doc">Example 5: Optimizing Compute and Transfer</span></a></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

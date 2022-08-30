@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Overview &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/docs/Hardware_Acceleration/Introduction/02-aligned-memory-allocation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>In our last example we allocated memory simply, but as we saw the DMA engine requires that our buffers be
+aligned to 4 KiB pages boundaries.  If the buffers are not so aligned, which they likely won’t be if don’t
+explicitly ask for it, then the runtime will copy the buffers so that their contents are aligned.</p>
+<p>That’s an expensive operation, but can we quantify how expensive?  And how can we allocate aligned memory?</p>
+</div>
+<div class="section" id="key-code">
+<h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>This is a relatively short example in that we’re only changing four lines vs. Example 1, our buffer
+allocation.  There are various ways to allocate aligned memory but in this case we’ll make use of a POSIX
+function, <code class="docutils literal notranslate"><span class="pre">posix_memalign()</span></code>.   This change replaces our previous allocation with the code shown below.
+We also need to include an additional header not shown in the listing, <code class="docutils literal notranslate"><span class="pre">memory</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="o">*</span><span class="n">c</span><span class="p">,</span><span class="o">*</span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+<span class="n">posix_memalign</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="mi">4096</span><span class="p">,</span><span class="w"> </span><span class="n">BUFSIZE</span><span class="o">*</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">uint32_t</span><span class="p">));</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note that for our calls to <code class="docutils literal notranslate"><span class="pre">posix_memalign()</span></code>, we’re passing in our requested alignment, which in this case
+is 4 KiB as we discussed previously.</p>
+<p>Otherwise, this is the only change to the code vs. the first example.  Note that we have changed the allocation for <em>all</em> of the buffers, including buffer <code class="docutils literal notranslate"><span class="pre">d</span></code> which is only used by the CPU baseline VADD function.  We’ll see if this has any impact on the runtime performance for both the accelerator and the CPU.</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>With the XRT initialized, run the application by running the following command from the build directory:</p>
+<p><code class="docutils literal notranslate"><span class="pre">./02_aligned_malloc</span> <span class="pre">alveo_examples</span></code></p>
+<p>The program will output a message similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 2: Vector Add with Aligned Allocation --
+
+Loading XCLBin to program the Alveo board:
+
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: &#39;./alveo_examples.xclbin&#39;
+Running kernel test with aligned virtual buffers
+
+Simple malloc vadd example complete!
+
+--------------- Key execution times ---------------
+OpenCL Initialization:                 256.254 ms
+Allocating memory buffer:              0.055 ms
+Populating buffer inputs:              47.884 ms
+Software VADD run:                     35.808 ms
+Map host buffers to OpenCL buffers :   9.103 ms
+Memory object migration enqueue:       6.615 ms
+Set kernel arguments:                  0.014 ms
+OCL Enqueue task:                      0.116 ms
+Wait for kernel to complete:           92.110 ms
+Read back computation results:         2.479 ms
+</pre></div>
+</div>
+<p>This seems at first glance to be much better!  Let’s compare these results to our results from Example 1 to see how things have changed.  Refer to table below for details, noting that we’ll exclude minor run-to-run variation from the comparison to help keep things clean.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Operation</th>
+<th align="center">Example 1</th>
+<th align="center">Example 2</th>
+<th align="center">&Delta;1&rarr;2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OCL Initialization</td>
+<td align="center">247.371 ms</td>
+<td align="center">256.254 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Buffer Allocation</td>
+<td align="center">30 &micro;s</td>
+<td align="center">55 &micro;s</td>
+<td align="center">25 &micro;s</td>
+</tr>
+<tr>
+<td>Buffer Population</td>
+<td align="center">47.955 ms</td>
+<td align="center">47.884 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Software VADD</td>
+<td align="center">35.706 ms</td>
+<td align="center">35.808 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Buffer Mapping</td>
+<td align="center">64.656 ms</td>
+<td align="center">9.103 ms</td>
+<td align="center">-55.553 ms</td>
+</tr>
+<tr>
+<td>Write Buffers Out</td>
+<td align="center">24.829 ms</td>
+<td align="center">6.615 ms</td>
+<td align="center">-18.214 ms</td>
+</tr>
+<tr>
+<td>Set Kernel Args</td>
+<td align="center">9 &micro;s</td>
+<td align="center">14 &micro;s</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Kernel Runtime</td>
+<td align="center">92.118 ms</td>
+<td align="center">92.110 ms</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td>Read Buffer In</td>
+<td align="center">24.887 ms</td>
+<td align="center">2.479 ms</td>
+<td align="center">-22.408 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-418.228 ms</td>
+<td align="center">-330.889 ms</td>
+<td align="center">87.339 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU (algorithm only)</td>
+<td align="center">-170.857 ms</td>
+<td align="center">-74.269 ms</td>
+<td align="center">96.588 ms</td>
+</tr>
+</tbody>
+</table><p>Nice!  By only changing four lines of code we’ve managed to shave nearly 100 ms off of our execution time.
+The CPU is still faster, but just by changing one minor thing about how we’re allocating memory we saw huge
+improvement.  That’s really down to the memory copy that’s needed for alignment;  if we take a few extra
+microseconds to ensure the buffers are aligned when we allocate them, we can save orders of magnitude more
+time later when those buffers are consumed.</p>
+<p>Also note that as expected in this use-case, the software runtime is the same.  We’re changing the alignment
+of the allocated memory, but otherwise it’s normal userspace memory allocation.</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>Some things to try to build on this experiment:</p>
+<ul class="simple">
+<li><p>Once again vary the size of the buffers allocated.  Do the relationships that you derived in the previous
+example still hold true?</p></li>
+<li><p>Experiment with other methods of allocating aligned memory (not the OCL API).  Do you see differences
+between the approaches, beyond minor run-to-run fluctuations?</p></li>
+</ul>
+</div>
+<div class="section" id="key-takeaways">
+<h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>Unaligned memory will kill your performance.  Always ensure buffers you want to share with the Alveo card
+are aligned.</p></li>
+</ul>
+<p>Now we’re getting somewhere!  Let’s try using the OpenCL API to allocate memory and see what happens.</p>
+<p>Read <a class="reference internal" href="03-xrt-memory-allocation.html"><span class="doc">Example 3: Memory Allocation with XRT</span></a></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

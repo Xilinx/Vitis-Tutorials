@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Mixed Kernels Design Tutorial with AXI Stream and Vitis &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="The Traveling Salesperson Problem" href="../04-traveling-salesperson/README.html" />
+    <link rel="prev" title="Accelerating Video Convolution Filtering Application" href="../01-convolution-tutorial/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">Introduction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">Design Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">Bloom Filter Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">Convolution Example</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RTL Systems Integration Example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rtl-kernel-rtc-gen-xo">RTL Kernel: rtc_gen (XO)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hls-c-kernel-alpha-mix-xo">HLS C Kernel: alpha_mix (XO)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hls-c-kernel-strm-dump-xo">HLS C Kernel: strm_dump (XO)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bitstream-implementation-xclbin">Bitstream Implementation (XCLBIN)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-program">Test Program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-use-this-repository">How to Use This Repository</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#revision-history">Revision History</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">Traveling Salesperson Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">Bottom RTL Kernel Design Flow Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">Choleskey Algorithm Acceleration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT Host Code Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Aurora Kernel on Alveo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">Feature Tutorials</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../Hardware-Acceleration.html">Vitis Hardware Acceleration</a> &raquo;</li>
+      <li>Mixed Kernels Design Tutorial with AXI Stream and Vitis</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="mixed-kernels-design-tutorial-with-axi-stream-and-vitis">
+<h1>Mixed Kernels Design Tutorial with AXI Stream and Vitis<a class="headerlink" href="#mixed-kernels-design-tutorial-with-axi-stream-and-vitis" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: Vitis 2022.1</strong></em></p>
+<p>This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.</p>
+<div align="center">
+<img src="./doc/images/alpha_mixing.jpg" alt="Alpha Mixing" >
+</div><p><br/><br/></p>
+<p>The hardware design includes three kernels: <em>rtc_gen</em>, <em>alpha_mix</em>, and <em>strm_dump</em>. These kernels are directly connected together using AXI stream link. The topology of the design is shown in the figure below.</p>
+<div align="center">
+<img src="./doc/images/topo.png" alt="Topology" >
+</div><p>The designs have been verified with following software/hardware environment and tool chain version:</p>
+<ul class="simple">
+<li><p>Operating System</p>
+<ul>
+<li><p>Redhat/CentOS 7.4 - 7.9</p></li>
+<li><p>Ubuntu 18.04/20.04</p></li>
+<li><p>OpenCV libraries required</p></li>
+</ul>
+</li>
+<li><p>Vitis: 2022.1</p></li>
+<li><p>XRT: 2.13.466</p></li>
+<li><p>Hardware and Platform (need both the deployment and development platforms)</p>
+<ul>
+<li><p>Alveo U200 - xilinx_u200_gen3x16_xdma_2_202110_1</p></li>
+<li><p>Alveo U250 - xilinx_u250_gen3x16_xdma_4_1_202210_1</p></li>
+<li><p>Alveo U50  - xilinx_u50_gen3x16_xdma_5_202210_1</p></li>
+<li><p>Alveo U55C - xilinx_u55c_gen3x16_xdma_3_202210_1</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Additional Requirements for RedHat/CentOS 7</strong>
+The host program is using XRT Native API, which need higher version of GCC. If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum install centos-release-scl
+sudo yum install devtoolset-7-gcc-c++
+scl <span class="nb">enable</span> devtoolset-7 bash
+</pre></div>
+</div>
+<p>The directory struction and brief explainations are as below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── doc/                            # documents
+├── hw/                             # Hardware build working directory
+│   ├── alpha_mix.cpp               # HLS C source code for alpha_mix kernel
+│   ├── build_rtc_gen_xo.sh         # shell script to call Vivado to package rtc_gen kernel IP to xo file
+│   ├── config_gen.mk               # Makefile sub-module to generate Vitis linking configuration files
+│   ├── include/                    # Vision Vision library include file for HLS C
+│   ├── Makefile                    # Makefile for hardware building
+│   ├── package_rtc_gen.tcl         # Vivado tcl script to package rtc_gen kernel IP to xo file
+│   ├── rtc_gen_ip/                 # IP directory for rtc_gen kernel, including all the RTL source codes
+│   ├── rtc_gen_kernel.xml          # Kernel desctiption file for rtc_gen kernel
+│   └── strm_dump.cpp               # HLS C source for strm_dump kernel
+├── README.md
+├── rtc_gen                         # working directory for rtc_gen kernel development
+│   ├── font_sim_data.txt           # text format font library file for RTL simulation
+│   └── src/                        # RTL source code for rtc_gen kernel
+└── sw/                             # Test program directory
+    ├── build/                      # Software build working directory
+    │   ├── font.dat                # Font library file including 11 characters
+    │   ├── setup_emu.sh            # setup script for emulation mode
+    │   └── xrt.ini                 # XRT configuration for emulation and debug
+    ├── CMakeLists.txt              # cmake configuration file
+    ├── media/                      # Media files for test program
+    └── src/                        # Test program source codes
+        ├── rtc_alpha_tb.cpp        # Test program for the whole design
+        └── rtc_gen_test.cpp        # Test program for rtc_gen kernel
+</pre></div>
+</div>
+<div class="section" id="rtl-kernel-rtc-gen-xo">
+<h2>RTL Kernel: rtc_gen (XO)<a class="headerlink" href="#rtl-kernel-rtc-gen-xo" title="Permalink to this heading">¶</a></h2>
+<p><em>rtc_gen</em> is the real-time clock digit image generation kernel written in Verilog HDL. <em>rtc_gen</em> has an internal always-run real-time-clock driven by AXI bus clock with a clock divider. The time value can be set by host via kernel arguments. The kernel will firstly load the font image library for digits 0-9 from global memory to on-chip buffer, then output the real-time-clock digit image through AXI stream port. The user can also read out the time value from the internal always-run time counter.</p>
+<p>The character size in the font library is 240 (height) by 160 (width) pixels, and the font library includes 11 characters, i.e. digits 0-9 and colon. Refer to the image below for the font library contents.</p>
+<div align="center">
+<img src="./doc/images/font_lib.png" alt="Font Library" >
+</div>
+<br/><br/><p>Each pixel in the font library is represented with 4-bit, which is actually the opacity value for each pixel. When output through AXI stream port, the 4-bit opacity value will be expanded to 8-bit by left shifting 4-bit then add 15 (i.e., expand 0xB to 0xBF). The opacity value will be used by the downstream alpha-mixing kernel to generate time digit with color setting. The font image data size for single chracter is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">240</span> <span class="n">x</span> <span class="mi">160</span> <span class="n">x</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">153</span><span class="p">,</span><span class="mi">600</span> <span class="n">bits</span> <span class="o">=</span> <span class="mi">19</span><span class="p">,</span><span class="mi">200</span> <span class="nb">bytes</span>
+</pre></div>
+</div>
+<p>The total font image library size is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">19</span><span class="p">,</span><span class="mi">200</span> <span class="n">x</span> <span class="mi">11</span> <span class="o">=</span> <span class="mi">211</span><span class="p">,</span><span class="mi">200</span> <span class="nb">bytes</span>
+</pre></div>
+</div>
+<p><em>rtc_gen</em> support two time format: one is with centi-second, namely HOUR:MIN:SEC:CENTISEC, including 11 characters; the other is without centi-second, namely HOUR:MIN:SEC, including 8 chracters. The time format is set in kernel arguments. Refer to the figures below for examples of the two output time format.</p>
+<div align="center">
+<img src="./doc/images/time_format.png" alt="Time Format" >
+</div><p>The <em>rtc_gen</em> kernel has three bus interfaces:</p>
+<ul class="simple">
+<li><p>AXI-Lite slave interface for kernel argument and control</p></li>
+<li><p>AXI-Lite master interface for font library data loading</p></li>
+<li><p>AXI stream master interface for clock digit image output</p></li>
+</ul>
+<p>The kernel is composed of three blocks: <em>rtc_gen_axi_read_master</em> for AXI master based font library reading, <em>rtc_gen_control_s_axi</em> for AXI slave based kernel arguments and control, and <em>rtc_gen_core</em> for core kernel function and AXI stream output. <em>rtc_gen_axi_read_master</em> is a standard block generated by Vitis/Vivado RTL Kernel Wizard. <em>rtc_gen_control_s_axi</em> is also a generated block, but we need to make some modifications to it to add time value read-out function.</p>
+<div align="center">
+<img src="./doc/images/rtc_gen_block.png" alt="rtc_gen Block" >
+</div><p>When triggered by the host, the kernel will read time value from internel real-time-clock, and output a frame of time image corresponding to the time value.</p>
+<p>Following table summarizes the arguments used by <em>rtc_gen</em> kernel.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>No.</th>
+<th>Arguments</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>work_mode</td>
+<td>1</td>
+<td>[0]: determine the kernel working mode <br> 0 - load font from global memory to on-chip SRAM via AXI read master <br> 1 - output RTC digit figure via AXI steam master</td>
+</tr>
+<tr>
+<td>1</td>
+<td>cs_count</td>
+<td>32</td>
+<td>[21:0]: Centi-second counter. For example, if the system clock is 200MHz, cs_count should be set to 2,000,000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>time_format</td>
+<td>1</td>
+<td>[0]: determine whether centisecond is included in the output digit images <br> 0 - disable centiseconds output <br> 1 - enable centiseconds output</td>
+</tr>
+<tr>
+<td>3</td>
+<td>time_set_val</td>
+<td>32</td>
+<td>Set time value for internal free-running clock: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds</td>
+</tr>
+<tr>
+<td>4</td>
+<td>time_set_en</td>
+<td>1</td>
+<td>[0]: write 1 to this bit will load the time_set_value to internal free-running clock.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>time_val</td>
+<td>32</td>
+<td>Read-only regsiter for internal real-time-clock time value: <br> [31:24] - hours <br> [23:16] - minutes <br> [15:8] - seconds <br> [7:0] - centi-seconds</td>
+</tr>
+<tr>
+<td>6</td>
+<td>read_addr</td>
+<td>64</td>
+<td>AXI master pointer, this is the FPGA device buffer address for font library</td>
+</tr>
+</tbody>
+</table><p><br/><br/></p>
+<p>Please read <a class="reference internal" href="doc/rtc_gen_tutorial.html"><span class="doc">RTC_GEN RTL Kernel Creation</span></a> for more details of the RTL kernel <em>rtc_gen</em> and the step-by-step guideline to create this RTL kernel.</p>
+</div>
+<div class="section" id="hls-c-kernel-alpha-mix-xo">
+<h2>HLS C Kernel: alpha_mix (XO)<a class="headerlink" href="#hls-c-kernel-alpha-mix-xo" title="Permalink to this heading">¶</a></h2>
+<p>The kernel <em>alpha_mix</em> finishes follow tasks in order:</p>
+<ul class="simple">
+<li><p>Receive the clock digit image from <em>rtc_gen</em> kernel via AXI stream port</p></li>
+<li><p>Resize the clock digit image with Vitis Vison Library resize function</p></li>
+<li><p>Load the background image from global memory, then execute alpha mixing with the clock digit image</p></li>
+<li><p>Send out the mixed image via AXI stream port</p></li>
+</ul>
+<div align="center">
+<img src="./doc/images/alpha_flow.png" alt="alpha_mix flow" >
+</div><p>The <em>alpha_mix</em> kernel has four bus interfaces:</p>
+<ul class="simple">
+<li><p>AXI-Lite slave interface for control</p></li>
+<li><p>AXI-Lite master interface for background image loading</p></li>
+<li><p>AXI stream slave interface for clock digit image receiving</p></li>
+<li><p>AXI stream master interface for mixed image output</p></li>
+</ul>
+<p>Following table summarized the arguments used by <em>alpha_mix</em> kernel. Please note the kernel use <em>XF_NPPC8</em> mode, namely eight pixels will be processed at each clock cycle, so please ensure the <em>background image width</em> and <em>resized time image width</em> are integer multiples of 8, otherwise the kernel might hang.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>No.</th>
+<th>Arguments</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>reserved</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>bgr_img_input</td>
+<td>64</td>
+<td>AXI master pointer, FPGA device buffer for input background image</td>
+</tr>
+<tr>
+<td>2</td>
+<td>reserved</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>3</td>
+<td>time_img_rows_in</td>
+<td>32</td>
+<td>Input time image height</td>
+</tr>
+<tr>
+<td>4</td>
+<td>time_img_cols_in</td>
+<td>32</td>
+<td>Input time image width</td>
+</tr>
+<tr>
+<td>5</td>
+<td>time_img_rows_rsz</td>
+<td>32</td>
+<td>Resized time image height</td>
+</tr>
+<tr>
+<td>6</td>
+<td>time_img_cols_rsz</td>
+<td>32</td>
+<td>Resized time image width</td>
+</tr>
+<tr>
+<td>7</td>
+<td>time_img_pos_row</td>
+<td>32</td>
+<td>Time image vertical coordinate, start from 0</td>
+</tr>
+<tr>
+<td>8</td>
+<td>time_img_pos_col</td>
+<td>32</td>
+<td>Time image horizontal coordinate, start from 0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>time_char_color</td>
+<td>32</td>
+<td>Time figure color, bit range [23:0] used for [RGB]</td>
+</tr>
+<tr>
+<td>10</td>
+<td>time_bgr_color</td>
+<td>32</td>
+<td>Time background color, bit range [23:0] used for [RGB]</td>
+</tr>
+<tr>
+<td>11</td>
+<td>time_bgr_opacity</td>
+<td>32</td>
+<td>Time background opacity, [7:0] used, value range from 0 - 255</td>
+</tr>
+<tr>
+<td>12</td>
+<td>bgr_img_rows</td>
+<td>32</td>
+<td>Background image height</td>
+</tr>
+<tr>
+<td>13</td>
+<td>bgr_img_cols</td>
+<td>32</td>
+<td>Background image width</td>
+</tr>
+</tbody>
+</table><p>You could refer to below figure for the meaning of some kernel arguments.</p>
+<div align="center">
+<img src="./doc/images/alpha_arg.png" alt="alpha_mix kernel arguments" >
+</div><p>Please read <a class="reference internal" href="doc/alpha_mix_tutorial.html"><span class="doc">ALPHA_MIX HLS C Kernel Creation</span></a> for more details of the HLS C kernel <em>alpha_mix</em>.</p>
+</div>
+<div class="section" id="hls-c-kernel-strm-dump-xo">
+<h2>HLS C Kernel: strm_dump (XO)<a class="headerlink" href="#hls-c-kernel-strm-dump-xo" title="Permalink to this heading">¶</a></h2>
+<p><em>strm_dump</em> is a simple HLS kernel to dump the input AXI stream to global memory via AXI Lite master.</p>
+<p>Following table summarizes the arguments used by <em>strm_dump</em> kernel.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>No.</th>
+<th>Arguments</th>
+<th>Width</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>reserved</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>output_addr</td>
+<td>64</td>
+<td>AXI master pointer, this is the FPGA device buffer address for output image</td>
+</tr>
+<tr>
+<td>2</td>
+<td>byte_size</td>
+<td>32</td>
+<td>Data quantity to be output in bytes. This can be calculated based on time format and color depth</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="bitstream-implementation-xclbin">
+<h2>Bitstream Implementation (XCLBIN)<a class="headerlink" href="#bitstream-implementation-xclbin" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="rtc-gen-test-hw-xclbin-rtc-gen-test-hw-emu-xclbin">
+<h3>rtc_gen_test_hw.xclbin / rtc_gen_test_hw_emu.xclbin<a class="headerlink" href="#rtc-gen-test-hw-xclbin-rtc-gen-test-hw-emu-xclbin" title="Permalink to this heading">¶</a></h3>
+<p>This is a simple test system for <em>rtc_gen</em> kernel, which integrates two kernels: <em>rtc_gen</em> and <em>strm_dump</em>, which are connected together using AXI stream bus. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.</p>
+<div align="center">
+<img src="./doc/images/rtc_gen_test_diagram.png" alt="rtc_gen_test Diagram" >
+</div></div>
+<div class="section" id="rtc-alpha-hw-xclbin-rtc-alpha-hw-emu-xclbin">
+<h3>rtc_alpha_hw.xclbin / rtc_alpha_hw_emu.xclbin<a class="headerlink" href="#rtc-alpha-hw-xclbin-rtc-alpha-hw-emu-xclbin" title="Permalink to this heading">¶</a></h3>
+<p>This is the fully implemented system, which integrated all the three kernels: <em>rtc_gen</em>, <em>alpha_mix</em> and <em>strm_dump</em>, which are connected together via AXI stream bus. Please note the function of the kernel <em>strm_dump</em> is very easy to be merged into <em>alpha_mix</em> kernel. We separated the <em>strm_dump</em> kernel here just to demonstrate the kernel-to-kernel AXI stream connection functionality. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.</p>
+<div align="center">
+<img src="./doc/images/rtc_alpha_diagram.png" alt="rtc_alpha Diagram" >
+</div></div>
+</div>
+<div class="section" id="test-program">
+<h2>Test Program<a class="headerlink" href="#test-program" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="rtc-gen-test-cpp">
+<h3>rtc_gen_test.cpp<a class="headerlink" href="#rtc-gen-test-cpp" title="Permalink to this heading">¶</a></h3>
+<p>This program first judges the running mode according to the environment variable <em>XCL_EMULATION_MODE</em>, then chooses to  use binary file <em>rtc_gen_test_hw.xclbin</em> or <em>rtc_gen_test_hw_emu.xclbin</em> to finish the testing of RTL kernel <em>rtc_gen</em>. It will test both the 8-digit and 11-digit clock format, and the generated clock image will be displayed directly. The program also uses <em>kernel::read_register</em> API to read and print out the value of register <em>time_val</em> of <em>rtc_gen</em> kernel, namely the value of the internal hardware time counter. The value of <em>time_val</em> is also used to control the image display refresh. To ensure the correct operation of <em>xclRegRead</em> function, please ensure to create or modify <em>xrt.ini</em> file in the execution directory to add following lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Runtime</span><span class="p">]</span>
+<span class="n">rw_shared</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rtc-alpha-tb-cpp">
+<h3>rtc_alpha_tb.cpp<a class="headerlink" href="#rtc-alpha-tb-cpp" title="Permalink to this heading">¶</a></h3>
+<p>This program first judges the running mode according to the environment variable <em>XCL_EMULATION_MODE</em>, then chooses to use binary file <em>rtc_alpha_hw.xclbin</em> or <em>rtc_alpha_hw_emu.xclbin</em> to mix the generated real time clock images to a background image. The user can select background image, set time format, and set clock time by command parameters. The user can also change the color, size, and position of the clock image by modifying the program source code. This test program also uses <em>kernel::read_register</em> API to read the value of register <em>time_val</em> of <em>rtc_gen</em> kernel and use that value to control image display refresh.</p>
+<br/></div>
+</div>
+<div class="section" id="how-to-use-this-repository">
+<h2>How to Use This Repository<a class="headerlink" href="#how-to-use-this-repository" title="Permalink to this heading">¶</a></h2>
+<p>Before going through the following steps, don’t forget to source XRT and Vitis setup files, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">xilinx</span><span class="o">/</span><span class="n">xrt</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">xilinx</span><span class="o">/</span><span class="n">Vitis</span><span class="o">/</span><span class="mf">2020.2</span><span class="o">/</span><span class="n">settings64</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>The two test programs need to display images. So if you are using remote server, please use VNC desktop, or ssh connection with X11 forwarding along with local X11 server.</p>
+<div class="section" id="build-the-hardware">
+<h3>Build the hardware<a class="headerlink" href="#build-the-hardware" title="Permalink to this heading">¶</a></h3>
+<p>Change to <em>./hw</em> directory, then use <strong>make</strong> command to finish the building of three XO files and to XCLBIN files. All available make command option includes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
+      <span class="n">Display</span> <span class="n">help</span> <span class="n">information</span>
+
+<span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">/</span><span class="n">hw_emu</span><span class="o">&gt;</span> <span class="n">PLATFORM</span><span class="o">=&lt;</span><span class="n">FPGA</span> <span class="n">PLATFORM</span><span class="o">&gt;</span>
+      <span class="n">Command</span> <span class="n">to</span> <span class="n">build</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">rtc_gen_test</span> <span class="ow">and</span> <span class="n">rtc_alpha</span> <span class="n">xclbin</span> <span class="ow">and</span> <span class="n">necessary</span> <span class="n">kernel</span> <span class="n">files</span> <span class="p">(</span><span class="n">xo</span><span class="p">)</span> <span class="k">for</span>  
+      <span class="n">specified</span> <span class="n">target</span> <span class="ow">and</span> <span class="n">platform</span><span class="o">.</span> <span class="n">By</span> <span class="n">default</span><span class="p">,</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span><span class="p">,</span> <span class="n">PLATFORM</span><span class="o">=</span><span class="n">xilinx_u200_xdma_201830_2</span>
+
+<span class="n">make</span> <span class="n">all_xo</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw</span><span class="o">/</span><span class="n">hw_emu</span><span class="o">&gt;</span> <span class="n">PLATFORM</span><span class="o">=&lt;</span><span class="n">FPGA</span> <span class="n">PLATFORM</span><span class="o">&gt;</span>
+      <span class="n">Command</span> <span class="n">to</span> <span class="n">build</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">kernel</span> <span class="n">files</span> <span class="p">(</span><span class="n">xo</span><span class="p">),</span> <span class="n">including</span> <span class="n">rtc_gen</span><span class="o">.</span><span class="n">xo</span><span class="p">,</span> <span class="n">alpha_mix</span><span class="o">.</span><span class="n">xo</span> <span class="ow">and</span> <span class="n">strm_dump</span><span class="o">.</span><span class="n">xo</span>
+      <span class="n">By</span> <span class="n">default</span><span class="p">,</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span><span class="p">,</span> <span class="n">PLATFORM</span><span class="o">=</span><span class="n">xilinx_u200_xdma_201830_2</span>
+
+<span class="n">make</span> <span class="n">clean</span>
+      <span class="n">Command</span> <span class="n">to</span> <span class="n">remove</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">generated</span> <span class="n">files</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In the make command options, the TARGET can be <em>hw</em> or <em>hw_emu</em>. Because the <em>rtc_gen</em> kernel doesn’t provide software emulation model, <em>sw_emu</em> mode cannot be used. When the TARGET is <em>hw</em>, the XCLBIN and XO files will be with <em>_hw</em> postfix; when the TARGET is <em>hw_emu</em>, the XCLBIN and XO files will be with <em>_hw_emu</em> postfix. Please note the RTL kernel <em>rtc_gen</em> will not be affected by the <em>hw</em> or <em>hw_emu</em> option, and there will only be a XO file <em>rtc_gen.xo</em>.</p>
+<p>The PLATFORM could be one of the six choices: xilinx_u200_xdma_201830_2, xilinx_u250_gen3x16_xdma_3_1_202020_1, xilinx_u250_xdma_201830_2, xilinx_u50_gen3x16_xdma_201920_3 and xilinx_u280_xdma_201920_3. No matter whether you have these Alveo cards installed, you can use the platform as the build PLATFORM if you have installed the development platform package (deb or rpm packages) on your system. You can look into <em>/opt/xilinx/platform</em> directory or use command <em>platforminfo -l</em> to check which platforms have been installed. The finally generated xclbin and xo files will be in <em>./hw</em> directory after the successful execution of the make command.</p>
+<p>For example, if you would like to build all XO and XCLBIN files in hardware emulation mode with U50 card, just input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="nb">all</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw_emu</span> <span class="n">PLATFORM</span><span class="o">=</span><span class="n">xilinx_u50_gen3x16_xdma_201920_3</span>
+</pre></div>
+</div>
+<p>Because the XCLBIN file building for hardware target needs a long time, to save your time, we also provide the pre-built XCLBIN files (<em>rtc_gen_test_hw.xclbin</em> and <em>rtc_alpha_hw.xclbin</em>) for each kind of supported Alveo platforms. Please note they are built with <em>TARGET=hw</em> option and cannot be used in <em>hw_emu</em> mode. For <em>hw_emu</em> target XCLBIN files, it’s much faster to build and system dependent, so please build them by yourself.</p>
+<p>You can download the pre-built XCLBIN files via the link: <a class="reference external" href="https://www.xilinx.com/bin/public/openDownload?filename=rtl_stream_kernel_xclbin_2020.2.tgz">https://www.xilinx.com/bin/public/openDownload?filename=rtl_stream_kernel_xclbin_2020.2.tgz</a></p>
+<p><strong>To use the pre-built xclbin files, please copy the two xclbin files corresponding to your target platform into <em>./hw</em> directory, which will be used directly in downstream steps.</strong></p>
+</div>
+<div class="section" id="build-and-run-the-software">
+<h3>Build and run the software<a class="headerlink" href="#build-and-run-the-software" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Step 1: generate Makefile</p></li>
+</ul>
+<p>Change to <em>./sw/build</em> directory, then enter <strong>cmake ..</strong> or <strong>cmake3 ..</strong> command. This will generate the <em>Makefile</em> for software builds, as well as link the two XCLBIN files in <em>./hw</em> directory to <em>./sw/build</em> directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">./</span><span class="n">sw</span><span class="o">/</span><span class="n">build</span>
+<span class="n">cmake</span> <span class="o">..</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 2: compile the programs</p></li>
+</ul>
+<p>Enter <strong>make</strong> command, then the two C++ program will be compiled. This will generate two executables: <em>rtc_gen_test</em> and <em>rtc_alpha_tb</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
+</pre></div>
+</div>
+<p>Please note because XRT low level API <em>xclRegRead</em> is used in the test program, so there are different link library sets for the hardware mode and hardware emulation mode. Altogether four executables will be generated after the successful compilation: <em>rtc_alpha_tb</em>, <em>rtc_alpha_tb_emu</em>, <em>rtc_gen_test</em>, <em>rtc_gen_test_emu</em>. Please use the correct executables for hardware or hardware emulation modes.</p>
+<ul class="simple">
+<li><p>Step 3: configure running mode (hardware or hardware emulation)</p></li>
+</ul>
+<p>Script <em>setup_emu.sh</em> is provided to set the running mode.</p>
+<p><strong>Run in hardware mode</strong></p>
+<p>If you didn’t enter emulation mode before, just run the executables <em>rtc_gen_test</em> and <em>rtc_alpha_ab</em> to run in hardware mode. If you have entered hardware emulation mode and want to exit to real hardware mode, just use following command before running the exeutables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">setup_emu</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">s</span> <span class="n">off</span>
+</pre></div>
+</div>
+<p><strong>Run in hardware emulation mode</strong></p>
+<p>To try the test programs in hardware emulation mode, you should use the executables <em>rtc_gen_test_emu</em> and <em>rtc_alpha_tb_emu</em>. Before running them, please run following command firstly：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">setup_emu</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">s</span> <span class="n">on</span> <span class="o">-</span><span class="n">p</span> <span class="n">PLATFORM_NAME</span>
+</pre></div>
+</div>
+<p>The <em>PLATFORM_NAME</em> is one of the six supported platform, you could run following command to get help information:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">setup_emu</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>For example, if you want to run the executable in hardware emulation mode with U50 platform, just input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">setup_emu</span><span class="o">.</span><span class="n">sh</span> <span class="o">-</span><span class="n">s</span> <span class="n">on</span> <span class="o">-</span><span class="n">p</span> <span class="n">xilinx_u50_gen3x16_xdma_201920_3</span>
+</pre></div>
+</div>
+<p><em>setup_emu.sh</em> will generate necessary configuration file and setting up the environment.</p>
+<p><strong>Note:</strong> The <em>PLATFORM_NAME</em> you input here should be consistent with the XCLBIN files in <em>./sw/build</em> directory.</p>
+<p>For more detailes on the hardware emulation for this example design, please read <a class="reference internal" href="doc/hw_emu_tutorial.html"><span class="doc">Emulation Turotial</span></a></p>
+<ul class="simple">
+<li><p>Step 4: run executables <strong>rtc_gen_test</strong> or <strong>rtc_gen_test_emu</strong></p></li>
+</ul>
+<p>Run the executable <em>rtc_gen_test</em> or <em>rtc_gen_test_emu</em> to finish the program running in hardware or hardware emulation mode. Firstly an eight-digit clock will be displayed, keep the image window front and press <em>ESC</em> key, a second eleven-digit clock will be displayed. Keep the image window front then Press <em>ESC</em> key again to exit the program. It will also read and print out the value of register <em>time_val</em> of the kernel. <strong>Don’t forget to set running mode to hardware emulation before running <em>rtc_gen_test_emu</em>.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">rtc_gen_test</span>
+
+<span class="ow">or</span>
+
+<span class="o">./</span><span class="n">rtc_gen_test_emu</span>
+</pre></div>
+</div>
+<p>The program will firstly judge the running mode (hw or hw_emu), then look for <em>./sw/build/rtc_gen_test_hw.xclbin</em> or <em>./sw/build/rtc_gen_test_hw_emu.xclbin</em> file and analyze it to get the platform it is using, then compare it with the card you have installed. If mismatching is detected, error information will be reported and the program will exit.</p>
+<p><strong>Note</strong>: running under hardware emulation mode may take a long time since it is actually running RTL simulation.</p>
+<ul class="simple">
+<li><p>Step 5: run executables <strong>rtc_alpha_tb</strong> or <strong>rtc_alpha_tb_emu</strong></p></li>
+</ul>
+<p>Run the executable <em>rtc_alpha_tb</em> or <em>rtc_alpha_tb_emu</em> to finish the program running in hardware or hardware emulation mode. There are a few command parameters for the executable, the usage is as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_alpha_tb</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="n">BACK_IMAGE</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span>
+
+  <span class="o">-</span><span class="n">i</span> <span class="n">BACK_IMAGE</span><span class="p">:</span> <span class="nb">set</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">background</span> <span class="n">image</span><span class="p">,</span> <span class="n">default</span> <span class="ow">is</span> <span class="o">../</span><span class="n">media</span><span class="o">/</span><span class="n">alveo</span><span class="o">.</span><span class="n">jpg</span>
+  <span class="o">-</span><span class="n">f</span> <span class="p">:</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">use</span> <span class="n">eleven</span><span class="o">-</span><span class="n">digit</span> <span class="n">clock</span><span class="p">,</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">eight</span><span class="o">-</span><span class="n">digit</span>
+  <span class="o">-</span><span class="n">s</span> <span class="p">:</span> <span class="n">use</span> <span class="n">system</span> <span class="n">time</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">the</span> <span class="n">clock</span><span class="p">,</span> <span class="n">default</span> <span class="n">don</span><span class="s1">&#39;t set the clock</span>
+  <span class="o">-</span><span class="n">h</span> <span class="p">:</span> <span class="nb">print</span> <span class="n">help</span> <span class="n">information</span>
+</pre></div>
+</div>
+<p>There are three images provided in <em>./sw/media</em> directory: alveo.jpg, vitis.jpg and victor.jpg, and you could also use other images. Please note the images should be in three-channel format (RGB without transparency). Also please use images big enough, otherwise please modify the program source code to adjust the clock image size or position.</p>
+<p>Following is some execution command line examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rtc_alpha_tb</span>
+      <span class="n">Mix</span> <span class="n">the</span> <span class="n">clock</span> <span class="n">image</span> <span class="k">with</span> <span class="o">../</span><span class="n">media</span><span class="o">/</span><span class="n">alveo</span><span class="o">.</span><span class="n">jpg</span> <span class="ow">and</span> <span class="n">display</span><span class="p">,</span> <span class="n">don</span><span class="s1">&#39;t sync the kernel internal real-time-clock </span>
+      <span class="k">with</span> <span class="n">Linux</span> <span class="n">system</span> <span class="n">clock</span><span class="p">,</span> <span class="ow">and</span> <span class="n">use</span> <span class="mi">8</span><span class="o">-</span><span class="n">digit</span> <span class="nb">format</span><span class="o">.</span>
+
+<span class="n">rtc_alpha_tb</span> <span class="o">-</span><span class="n">i</span> <span class="o">../</span><span class="n">media</span><span class="o">/</span><span class="n">vitis</span><span class="o">.</span><span class="n">jpg</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">s</span>
+      <span class="n">Mix</span> <span class="n">the</span> <span class="n">clock</span> <span class="n">image</span> <span class="k">with</span> <span class="o">../</span><span class="n">media</span><span class="o">/</span><span class="n">vitis</span><span class="o">.</span><span class="n">jpg</span> <span class="ow">and</span> <span class="n">display</span><span class="p">,</span> <span class="n">sync</span> <span class="n">the</span> <span class="n">kernel</span> <span class="n">internal</span> <span class="n">real</span><span class="o">-</span><span class="n">time</span><span class="o">-</span><span class="n">clock</span> <span class="k">with</span>
+      <span class="n">Linux</span> <span class="n">system</span> <span class="n">clock</span><span class="p">,</span> <span class="ow">and</span> <span class="n">use</span> <span class="mi">11</span><span class="o">-</span><span class="n">digit</span> <span class="nb">format</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>To exit the program, just keep the image window front, then press <strong>ESC</strong> key.</p>
+<p>The program will firstly judge the running mode (hw or hw_emu), then look for <em>./sw/build/rtc_alpha_hw.xclbin</em> or <em>./sw/build/rtc_alpha_hw_emu.xclbin</em> file and analyze it to get the platform it is using, then compare it with the card you have installed. If mismatching is detected, error information will be reported and the program will exit.</p>
+<p>You could make modification to following <em>#define</em> section at the beginning of <em>./sw/src/rtc_alpha_tb.cpp</em> file to adjust the color, size, position and opacity of the clock image, then repeat <strong>step 2</strong> to re-compile the program and run to see the result. Don’t forget to ensure that the width of background image and resized clock image are integer multiples of 8.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// position of clock image, top-left corner is (0,0)</span>
+<span class="cp">#define RTC_POSITION_ROW 64</span>
+<span class="cp">#define RTC_POSITION_COL 400</span>
+
+<span class="c1">// resized clock image size for 8-digit font digit size</span>
+<span class="c1">// ensure RTC_IMG_WIDTH is integer multiple of 8</span>
+<span class="cp">#define RTC_IMG_WIDTH_8D 480</span>
+<span class="cp">#define RTC_IMG_HEIGHT_8D 90</span>
+
+<span class="c1">// resized clock image size for 11-digit font digit size</span>
+<span class="c1">// ensure RTC_IMG_WIDTH is integer multiple of 8</span>
+<span class="cp">#define RTC_IMG_WIDTH_11D 528</span>
+<span class="cp">#define RTC_IMG_HEIGHT_11D 72</span>
+
+<span class="c1">// clock image font color</span>
+<span class="cp">#define FONT_COLOR_R 255</span>
+<span class="cp">#define FONT_COLOR_G 255</span>
+<span class="cp">#define FONT_COLOR_B 255</span>
+
+<span class="c1">// clock image background color</span>
+<span class="cp">#define BGR_COLOR_R 80</span>
+<span class="cp">#define BGR_COLOR_G 80</span>
+<span class="cp">#define BGR_COLOR_B 80</span>
+
+<span class="c1">// clock image background opacity</span>
+<span class="cp">#define BGR_OPA 100</span>
+</pre></div>
+</div>
+<p><strong>Note</strong>: running under hardware emulation mode may take a long time since it is actually running RTL simulation. You could use some smaller background image to reduce the run time, and don’t forget to modify those size and position parameters described above accordingly in this case.</p>
+<ul class="simple">
+<li><p>Step 6: try Vitis profiling function with <strong>rtc_gen_test</strong> and <strong>rtc_alpha_tb</strong> program.</p></li>
+</ul>
+<p>Vitis provides powerful profiling features which enable you to get a deeper view into the performance, bandwidth usage, design bottleneck, etc. Please read <a class="reference internal" href="doc/profile_tutorial.html"><span class="doc">Profiling the Application</span></a> for more details.</p>
+</div>
+</div>
+<div class="section" id="revision-history">
+<h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
+<details>
+  <summary> 2022.1 </summary><ul class="simple">
+<li><p>Update Vitis target platform support</p></li>
+<li><p>In host program, use XRT Native API to replace original OpenCL API.</p></li>
+</ul>
+</details><details>
+  <summary>2020.1</summary><ul class="simple">
+<li><p>Initial release</p></li>
+</ul>
+ </details><p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../01-convolution-tutorial/README.html" class="btn btn-neutral float-left" title="Accelerating Video Convolution Filtering Application" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../04-traveling-salesperson/README.html" class="btn btn-neutral float-right" title="The Traveling Salesperson Problem" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

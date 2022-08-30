@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>1. Prepare Software Emulation Project in Vitis IDE &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>1. Prepare Software Emulation Project in Vitis IDE</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/Debug1_se.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h2>AI Engine Debug with Software Emulator</h2>
+ </td>
+ </tr>
+</table><p>Software emulation supports fast emulation execution and <code class="docutils literal notranslate"><span class="pre">printf()</span></code> to help verify the kernel’s functionalities. Users can check the output by examining design output files in the <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code> directory.</p>
+<p>Hardware constraints such as heap/stack sizes and program memory size are not verified in software emulator.</p>
+<p>The following steps outline the procedure:</p>
+<p><a class="reference external" href="#1-Prepare-Software-Emulation-Project-in-Vitis-IDE">1. Prepare Software Emulation Project in Vitis IDE</a></p>
+<p><a class="reference external" href="#2-Run-and-Verify-Software-Emulation-in-Vitis-IDE">2. Run and Verify Software Emulation in Vitis IDE</a></p>
+<p><a class="reference external" href="#3-Launch-Debugger-to-Debug-Design">3. Launch Debugger to Debug Design</a></p>
+<p><a class="reference external" href="#4-Command-line-project-build-and-run-with-software-emulator">4. Command line project build and run with software emulator</a></p>
+<div class="section" id="prepare-software-emulation-project-in-vitis-ide">
+<h1>1. Prepare Software Emulation Project in Vitis IDE<a class="headerlink" href="#prepare-software-emulation-project-in-vitis-ide" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-1-1-select-software-emulation-configuration">
+<h2>Step 1.1 Select Software Emulation Configuration<a class="headerlink" href="#step-1-1-select-software-emulation-configuration" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_config.png" width="300"></div>
+<div class="section" id="step-1-2-build-ai-engine-domain-project">
+<h2>Step 1.2 Build AI Engine domain project<a class="headerlink" href="#step-1-2-build-ai-engine-domain-project" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_build0.png" width="300">
+Above step is required to generated aie_control_xrt.cpp that works with software emulation.<p><strong>Important: For software emulation to work properly, it is mandatory having tool generated <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp</span></code> from software emulation target and import to PS domain application.
+For hardware and hardware emulation targets, it is also mandatory to build AI Engine domain project for hardware/hardware emulation target then import generated <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp</span></code> to PS domain project to build system project. Tool generated <code class="docutils literal notranslate"><span class="pre">${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp</span></code> can not be mix used for different targets.</strong></p>
+</div>
+<div class="section" id="step-1-3-import-aie-control-xrt-cpp-to-ps-domain">
+<h2>Step 1.3 Import aie_control_xrt.cpp to PS domain<a class="headerlink" href="#step-1-3-import-aie-control-xrt-cpp-to-ps-domain" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_import0.png" width="300">
+<img src="images/se_import1.png" width="450"></div>
+<div class="section" id="step-1-4-import-host-cpp-to-ps-domain">
+<h2>Step 1.4 Import host.cpp to PS domain<a class="headerlink" href="#step-1-4-import-host-cpp-to-ps-domain" title="Permalink to this heading">¶</a></h2>
+<p>Due to software emulation requires PS application to synchronize AIE data to and from host memory, xrtBOSync() calls are required to synchronize them. An updated host.cpp is provided from this tutorial. Import from tutorial’s <code class="docutils literal notranslate"><span class="pre">sw/host.cpp.sw_emu</span></code> to <code class="docutils literal notranslate"><span class="pre">${WORKSPACE}/beamformer_ps/src/host.cpp</span></code>.
+The updated host.cpp contains mandatory changes to make software emulation work.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>...
+<span class="m">195</span>     <span class="c1">#if defined(__SYNCBO_ENABLE__)</span>
+<span class="m">196</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">0</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">197</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">1</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">198</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">2</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">199</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">3</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">200</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">4</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">201</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">5</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">202</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">6</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">203</span>     xrtBOSync<span class="o">(</span>cin_bohdl<span class="o">[</span><span class="m">7</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, cin_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">204</span>
+<span class="m">205</span>     xrtBOSync<span class="o">(</span>din_bohdl<span class="o">[</span><span class="m">0</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, dlbf_din_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">206</span>     xrtBOSync<span class="o">(</span>din_bohdl<span class="o">[</span><span class="m">1</span><span class="o">]</span>, XCL_BO_SYNC_BO_TO_DEVICE, ulbf_din_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">207</span>     <span class="c1">#endif</span>
+...
+<span class="m">274</span>     <span class="c1">#if defined(__SYNCBO_ENABLE__)</span>
+<span class="m">275</span>     xrtBOSync<span class="o">(</span>out_bohdl<span class="o">[</span><span class="m">0</span><span class="o">]</span>, XCL_BO_SYNC_BO_FROM_DEVICE, out_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">276</span>     xrtBOSync<span class="o">(</span>out_bohdl<span class="o">[</span><span class="m">1</span><span class="o">]</span>, XCL_BO_SYNC_BO_FROM_DEVICE, out_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">277</span>     xrtBOSync<span class="o">(</span>out_bohdl<span class="o">[</span><span class="m">2</span><span class="o">]</span>, XCL_BO_SYNC_BO_FROM_DEVICE, out_size_in_bytes, <span class="m">0</span><span class="o">)</span><span class="p">;</span>
+<span class="m">278</span>     <span class="c1">#endif</span>
+...
+</pre></div>
+</div>
+<p>IDE needs to add <code class="docutils literal notranslate"><span class="pre">__SYNCBO_ENABLE__</span></code> flag in build.</p>
+<img src="images/se_config_1.png" width="450"></div>
+<div class="section" id="step-1-5-build-system-project">
+<h2>Step 1.5 Build system project<a class="headerlink" href="#step-1-5-build-system-project" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_build.png" width="300"></div>
+</div>
+<div class="section" id="run-and-verify-software-emulation-in-vitis-ide">
+<h1>2. Run and Verify Software Emulation in Vitis IDE<a class="headerlink" href="#run-and-verify-software-emulation-in-vitis-ide" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-2-1-configure-environment-variables">
+<h2>Step 2.1 Configure Environment Variables<a class="headerlink" href="#step-2-1-configure-environment-variables" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_env_var.png" width="600">
+Add environment variables to software emulation run configuration and debug configuration.<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/mnt:/tmp:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export</span> <span class="nv">XCL_EMULATION_MODE</span><span class="o">=</span>sw_emu
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-2-run-with-software-emulator">
+<h2>Step 2.2 Run with Software Emulator<a class="headerlink" href="#step-2-2-run-with-software-emulator" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_run.png" width="450"></div>
+<div class="section" id="step-2-3-verify-run-result">
+<h2>Step 2.3 Verify Run Result<a class="headerlink" href="#step-2-3-verify-run-result" title="Permalink to this heading">¶</a></h2>
+<p>Software emulator output files from design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. Vitis IDE supports <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> feature to compare two files, highlight two files to be compared then right click one of highlighted file and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> then <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span></code>.
+For example, Compare <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold3.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-SW/data/ulbf_out3.txt</span></code></p>
+<img src="images/se_compare.png" width="600"></div>
+</div>
+<div class="section" id="launch-debugger-to-debug-design">
+<h1>3. Launch Debugger to Debug Design<a class="headerlink" href="#launch-debugger-to-debug-design" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-3-1-launch-software-emulation-debugger">
+<h2>Step 3.1 Launch Software Emulation Debugger<a class="headerlink" href="#step-3-1-launch-software-emulation-debugger" title="Permalink to this heading">¶</a></h2>
+<img src="images/se_debug.png" width="450"></div>
+<div class="section" id="step-3-2-debug-with-software-emulator">
+<h2>Step 3.2 Debug with Software Emulator<a class="headerlink" href="#step-3-2-debug-with-software-emulator" title="Permalink to this heading">¶</a></h2>
+<p>Click on <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">Emulator</span> <span class="pre">and</span> <span class="pre">Debug</span></code> to allow software emulator and debugger to run.
+<img src="images/se_debug0.png" width="450"></p>
+<img src="images/se_debug1.png" width="900"><p>Example of debugging mm2s_v8.cpp
+<img src="images/se_debug2.png" width="900"></p>
+<p>Note: Accessing vector variables values from software emulator is not fully supported. Recommend using <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> to inspect vector variables values.
+<img src="images/se_debug3.png" width="900"></p>
+</div>
+</div>
+<div class="section" id="command-line-project-build-and-run-with-software-emulator">
+<h1>4. Command line project build and run with software emulator<a class="headerlink" href="#command-line-project-build-and-run-with-software-emulator" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="step-4-1-download-the-project">
+<h2>Step 4.1 Download the project<a class="headerlink" href="#step-4-1-download-the-project" title="Permalink to this heading">¶</a></h2>
+<p>Clone the project source from git repository and unzip the downloaded zip file.</p>
+</div>
+<div class="section" id="step-4-2-prepare-makefiles-and-source-code">
+<h2>Step 4.2 Prepare Makefiles and source code<a class="headerlink" href="#step-4-2-prepare-makefiles-and-source-code" title="Permalink to this heading">¶</a></h2>
+<ol class="simple">
+<li><p>Use this tutorial’s Makefile.sw_emu that configures right target to build.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
+cp Makefile.sw_emu Makefile
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Use this tutorial’s sw_emu files <code class="docutils literal notranslate"><span class="pre">Makefile.sw_emu,</span> <span class="pre">host.cpp.sw_emu,</span> <span class="pre">aie_control_xrt.cpp.sw_emu</span></code> at sw directory that has software emulator related updates.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> sw
+cp Makefile.sw_emu Makefile
+cp host.cpp.sw_emu host.cpp
+cp aie_control_xrt.cpp.sw_emu aie_control_xrt.cpp
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-3-build-project">
+<h2>Step 4.3 Build project<a class="headerlink" href="#step-4-3-build-project" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="si">${</span><span class="nv">DOWNLOAD_PATH</span><span class="si">}</span>/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
+make
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-4-4-run-project">
+<h2>Step 4.4 Run project<a class="headerlink" href="#step-4-4-run-project" title="Permalink to this heading">¶</a></h2>
+<p>Execute generated shell script, <code class="docutils literal notranslate"><span class="pre">./launch_sw_emu.sh</span></code>.</p>
+</div>
+<div class="section" id="step-4-5-petalinux-boot">
+<h2>Step 4.5 Petalinux boot<a class="headerlink" href="#step-4-5-petalinux-boot" title="Permalink to this heading">¶</a></h2>
+<p>Expects to see Petalinux boots up with Linux prompt to accept Linux commands and run PS application.</p>
+</div>
+<div class="section" id="step-4-6-set-up-environment-variables">
+<h2>Step 4.6 Set up environment variables<a class="headerlink" href="#step-4-6-set-up-environment-variables" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/mnt:/tmp:<span class="nv">$LD_LIBRARY_PATH</span>
+<span class="nb">export</span> <span class="nv">XCL_EMULATION_MODE</span><span class="o">=</span>sw_emu
+</pre></div>
+</div>
+<p><strong>Important: These environment variables are mandatory, or application run with errors.</strong></p>
+</div>
+<div class="section" id="step-4-7-run-application">
+<h2>Step 4.7 Run application<a class="headerlink" href="#step-4-7-run-application" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /run/media/mmcblk0p1
+./host.exe a.xclbin
+</pre></div>
+</div>
+<p>Expect to see <code class="docutils literal notranslate"><span class="pre">TEST</span> <span class="pre">PASSED</span></code> from terminal.</p>
+<img src="images/se_cl_run.png" width="600"></div>
+</div>
+<div class="section" id="limitations">
+<h1>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h1>
+<p>Limitations from <code class="docutils literal notranslate"><span class="pre">x86simulator</span></code> are applicable in software emulator.</p>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">LICENSE</span><span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

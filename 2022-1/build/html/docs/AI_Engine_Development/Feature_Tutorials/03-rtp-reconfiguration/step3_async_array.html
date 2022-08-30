@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Asynchronous Update of Array RTP &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Asynchronous Update of Array RTP</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/03-rtp-reconfiguration/step3_async_array.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table><div class="section" id="asynchronous-update-of-array-rtp">
+<h1>Asynchronous Update of Array RTP<a class="headerlink" href="#asynchronous-update-of-array-rtp" title="Permalink to this heading">¶</a></h1>
+<p>This step demonstrates how runtime array parameters can be passed to kernels. You will change the filter coefficient at runtime and observe the result. The system to be implemented is as follows.</p>
+<p><img alt="missing image" src="../../../../_images/figure4.PNG" /></p>
+<p><strong>Note:</strong> The default working directory in this step is “step3”, unless specified explicitly otherwise.</p>
+<div class="section" id="review-graph-and-rtp-code">
+<h2>Review Graph and RTP Code<a class="headerlink" href="#review-graph-and-rtp-code" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">aie/fir24_sym_param.h</span></code>gives a forward declaration of a 24-tap symmetric FIR filter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">fir24_sym</span><span class="p">(</span><span class="n">input_window</span><span class="o">&lt;</span><span class="n">cint16</span><span class="o">&gt;</span> <span class="o">*</span> <span class="n">iwin</span><span class="p">,</span> <span class="n">output_window</span><span class="o">&lt;</span><span class="n">cint16</span><span class="o">&gt;</span> <span class="o">*</span> <span class="n">owin</span><span class="p">,</span>  <span class="n">const</span> <span class="n">int32</span><span class="p">(</span><span class="o">&amp;</span><span class="n">coeffs</span><span class="p">)[</span><span class="mi">12</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in <code class="docutils literal notranslate"><span class="pre">aie/kernels/hb24.cc</span></code>.</p>
+<p>The filter coefficients are given in:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data/narrow_filter.txt</span></code> (with a normalized bandwidth of 0.3 pi)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data/wide_filter.txt</span></code> (with a normalized bandwidth of 0.8 pi)</p></li>
+</ul>
+<p>Examine <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code> again. Notice the code to connect the coefficients input port of the graph to the <code class="docutils literal notranslate"><span class="pre">coeffs</span></code> parameter of the filter kernel. This should be specified as an asynchronous runtime parameter (with <code class="docutils literal notranslate"><span class="pre">adf::async</span></code>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">connect</span> <span class="nb">filter</span> <span class="n">coefficients</span>
+<span class="n">connect</span><span class="o">&lt;</span> <span class="n">parameter</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="k">async</span><span class="p">(</span><span class="n">fir24</span><span class="o">.</span><span class="ow">in</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>Check <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>. Examine the code to update the coefficients using <code class="docutils literal notranslate"><span class="pre">narrow_filter</span></code> in the ping buffer for 16 iterations.
+Then update the coefficients using <code class="docutils literal notranslate"><span class="pre">wide_filter</span></code> in the pong buffer for another 16 iterations. Note that <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> specifies the <code class="docutils literal notranslate"><span class="pre">narrow_filter</span></code> and <code class="docutils literal notranslate"><span class="pre">wide_filter</span></code> coefficients in <code class="docutils literal notranslate"><span class="pre">int</span></code> arrays based on the data in the filter files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">run</span> <span class="k">for</span> <span class="mi">16</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">update</span> <span class="n">narrow</span> <span class="nb">filter</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">wait</span><span class="p">,</span> <span class="n">update</span> <span class="n">wide</span> <span class="nb">filter</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">run</span> <span class="k">for</span> <span class="mi">16</span> <span class="n">iterations</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">narrow_filter</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> 
+<span class="n">gr</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">gr</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">wide_filter</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
+<span class="n">gr</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> 
+</pre></div>
+</div>
+<p>In this snippet, the first graph update call initializes the coefficients parameter using the <code class="docutils literal notranslate"><span class="pre">narrow_filter</span></code> with 12 elements for the first 16 iterations. The <code class="docutils literal notranslate"><span class="pre">wait()</span></code> is blocking, and forces the execution to wait until the first 16 iterations finish. Subsequently, the next update call initializes the coefficients parameter using <code class="docutils literal notranslate"><span class="pre">wide_filter</span></code> with 12 elements for the next 16 iterations. The number of iterations are specified as a parameter to the <code class="docutils literal notranslate"><span class="pre">run()</span></code> API. Note that <code class="docutils literal notranslate"><span class="pre">update()</span></code> has a third parameter that speicfies the size of the array to be updated.</p>
+</div>
+<div class="section" id="run-the-ai-engine-compiler-and-ai-engine-simulator">
+<h2>Run the AI Engine Compiler and AI Engine Simulator<a class="headerlink" href="#run-the-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
+<p>Compile the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) using the AI Engine compiler:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aie</span>
+</pre></div>
+</div>
+<p>After the AI Engine graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) has been generated, verify for correctness using the AI Engine simulator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">aiesim</span>
+</pre></div>
+</div>
+<p>After simulation completes, you should see <code class="docutils literal notranslate"><span class="pre">output.txt</span></code> under <code class="docutils literal notranslate"><span class="pre">aiesimulator_output/data</span></code>. You can compare <code class="docutils literal notranslate"><span class="pre">output.txt</span></code> with the golden reference in <code class="docutils literal notranslate"><span class="pre">data/golden.txt</span></code> using the following commands in command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">T</span> <span class="n">aiesimulator_output</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">output</span><span class="o">.</span><span class="n">txt</span> <span class="o">&gt;</span> <span class="n">aiesimulator_output</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">output_data</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">diff</span> <span class="o">-</span><span class="n">w</span> <span class="n">aiesimulator_output</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">output_data</span><span class="o">.</span><span class="n">txt</span> <span class="o">./</span><span class="n">data</span><span class="o">/</span><span class="n">golden</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>If you have MATLAB or Octave, you can use the following script to visualize the data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;./aiesimulator_output/data/output_data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;-ascii&#39;</span><span class="p">);</span>
+<span class="n">cxdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">(:,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">i</span><span class="p">;</span>
+<span class="n">narrow_spectrum</span> <span class="o">=</span> <span class="mi">20</span><span class="o">*</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">cxdata</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">1024</span><span class="p">)))));</span>
+<span class="n">wide_spectrum</span> <span class="o">=</span> <span class="mi">20</span><span class="o">*</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">fftshift</span><span class="p">(</span><span class="n">fft</span><span class="p">(</span><span class="n">cxdata</span><span class="p">(</span><span class="mi">1025</span><span class="p">:</span><span class="mi">2048</span><span class="p">)))));</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">narrow_spectrum</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><img alt="missing image" src="../../../../_images/figure5.PNG" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">wide_spectrum</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><img alt="missing image" src="../../../../_images/figure6.PNG" /></p>
+</div>
+<div class="section" id="run-hardware-emulation-and-hardware-flow">
+<h2>Run Hardware Emulation and Hardware Flow<a class="headerlink" href="#run-hardware-emulation-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">pl_kernels</span></code> directory contains a kernel that generates samples of random noise. The noise generator is implemented as a free-running programmable logic (PL) kernel, with samples consumed by the filter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extern</span> <span class="s2">&quot;C&quot;</span> <span class="n">void</span> <span class="n">random_noise</span><span class="p">(</span><span class="n">hls</span><span class="p">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="nb">complex</span><span class="o">&lt;</span><span class="n">short</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">#pragma HLS INTERFACE axis port=out</span>
+<span class="c1">#pragma HLS INTERFACE ap_ctrl_none port=return</span>
+</pre></div>
+</div>
+<p>The PL kernel has two <code class="docutils literal notranslate"><span class="pre">#pragma</span></code> specified for vitis HLS. <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">HLS</span> <span class="pre">INTERFACE</span> <span class="pre">axis</span> <span class="pre">port=out</span></code> indicates that port “<code class="docutils literal notranslate"><span class="pre">out</span></code>” will be implemented with an AXI4-Stream interface, while <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">HLS</span> <span class="pre">INTERFACE</span> <span class="pre">ap_ctrl_none</span> <span class="pre">port=return</span></code> indicates that the kernel has no block control signals (i.e., it is a free-running kernel). Free-running means that the kernel will keep running after the FPGA has been configured, the clock has been activated, and the reset is deactivated. The execution of a free-running kernel depends on the availability of input data, or readiness of a receiving buffer. It does not require explicit control in the host code when running aiesimulator, HW emulation, and HW flows.</p>
+<p>PL kernels need to be compiled into Xilinx object (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) files. Run the following make command to compile it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="o">-</span><span class="n">C</span> <span class="n">pl_kernels</span>
+</pre></div>
+</div>
+<p>The corresponding v++ -c command is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">++</span> <span class="o">-</span><span class="n">c</span> <span class="o">--</span><span class="n">platform</span> <span class="n">xilinx_vck190_base_202210_1</span> <span class="o">-</span><span class="n">k</span> <span class="n">random_noise</span> <span class="n">random_noise</span><span class="o">.</span><span class="n">cpp</span> <span class="o">-</span><span class="n">o</span> <span class="n">random_noise</span><span class="o">.</span><span class="n">xo</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">save</span><span class="o">-</span><span class="n">temps</span>
+</pre></div>
+</div>
+<p>The Makefile rule targets introduced in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous update of scalar RTP</span></a> and <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous update of scalar RTP</span></a> still apply here. Details about tool options and host code in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous update of scalar RTP</span></a> are similar. However, you can just choose to run following make command to launch HW emulation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_hw_emu</span>
+</pre></div>
+</div>
+<p>And in the Linux prompt, run the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">export</span> <span class="n">XILINX_XRT</span><span class="o">=/</span><span class="n">usr</span>
+<span class="n">export</span> <span class="n">XCL_EMULATION_MODE</span><span class="o">=</span><span class="n">hw_emu</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>To exit QEMU press Ctrl+A, x.</p>
+<p>For hw mode, run following make command to generate an SD card package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">package</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
+</pre></div>
+</div>
+<p>And in hardware, after booting Linux from the SD card, run following commands in the Linux prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">mnt</span>
+<span class="n">export</span> <span class="n">XILINX_XRT</span><span class="o">=/</span><span class="n">usr</span>
+<span class="o">./</span><span class="n">host</span><span class="o">.</span><span class="n">exe</span> <span class="n">a</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+<p>The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
+<p>In this step you learned about:</p>
+<ul class="simple">
+<li><p>The concepts of asynchronous update of array RTP</p></li>
+<li><p>How to control the execution between different RTP updates</p></li>
+<li><p>Free-running PL kernel</p></li>
+</ul>
+<p>Next, review <a class="reference internal" href="step4_async_aie_array.html"><span class="doc">Asynchronous Update of Array RTP Update for AI Engine Kernel</span></a>.</p>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD001 | &copy; Copyright 2020-2022 Xilinx, Inc.</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>
