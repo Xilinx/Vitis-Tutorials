@@ -1,4 +1,4 @@
- {
+{
     "name": "03-dataflow_debug_and_optimization",
     "description": "03-dataflow_debug_and_optimization",
     "flow": "hls",
@@ -10,7 +10,8 @@
         "disable": false,
         "user": {
             "negative": 1,
-            "error_string": [".*ERROR:.*"]
+            "error_string": [".*ERROR: [COSIM 212-361].*", ".*ERROR: [HLS 200-742].*", ".*ERROR: [COSIM 212-4].*"],
+            "ignore": [".*"]
         },
         "jobs": [
             {
