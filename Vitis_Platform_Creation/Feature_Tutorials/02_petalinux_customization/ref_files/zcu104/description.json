@@ -6,7 +6,7 @@
     "platform_allowlist": ["zcu104"],
     "platform_blocklist": [],
     "testinfo": {
-        "test_name": "GS_pfm",
+        "test_name": "PFM_F_02-petalinux_zcu104",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_zynqmp.sh"
