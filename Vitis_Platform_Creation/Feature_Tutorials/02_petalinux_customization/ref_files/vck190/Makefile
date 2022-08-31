@@ -23,7 +23,7 @@ PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
 #XSA_NAME	?=xsa_file_for_petalinux
 PDI_DIR		=pdi_dir
 #PDI_PATH	=$(ROOT_DIR)/$(PDI_DIR)
-XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202210_1/hw/
+XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/hw/
 XSA_NAME	?=hw
 #PDI=$(wildcard $(PDI_PATH)/*.pdi)
 
