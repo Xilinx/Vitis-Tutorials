@@ -9,10 +9,10 @@
         "test_name": "PFM_F_02-petalinux_vck190",
         "tasks": {
             "build": {
-                "pre_exec": "./env_setup_versal.sh"
+                "pre_exec": "./env_setup_petalinux.sh"
             },
             "board": {
-                "pre_exec": "./env_setup_versal.sh"
+                "pre_exec": "./env_setup_petalinux.sh"
             }
          },
         "jobs": [
