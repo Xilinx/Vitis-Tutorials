@@ -37,13 +37,16 @@ Transmit delay: 0 msec/char 0 msec/line
 ```
 
 7. Power on the board.
-8. Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
-9. Run the following commands into the TeraTerm terminal:
+8. Wait until you see the `xilinx-vck190-20221 login` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+9. Give login as `petalinux` and password as `petalinux`.
+10. Run the following commands into the TeraTerm terminal:
+
 
 ```
-cd /mnt/sd-mmcblk0p1
-export XILINX_XRT=/usr
-./test_bf_app.exe 0 aie.xclbin
+sudo su
+mount /dev/mmcblk0p1 /mnt
+cd /mnt
+./test_bf_app.exe 0 aie.xsa
 ```
 The `test_bf_app.exe` should execute functional and performance tests. At the end of the application, you should see the following final output:
 

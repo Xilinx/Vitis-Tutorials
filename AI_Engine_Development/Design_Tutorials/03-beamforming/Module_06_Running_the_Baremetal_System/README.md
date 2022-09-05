@@ -15,7 +15,7 @@ In this module, you will package the bare-metal system to generate the final boo
 
 ## Building the Design: Hardware Emulation
 
-For hardware emulation, the ``–-package`` command adds the PDI and EMULATION_DATA sections to the XCLBIN file and outputs a new XCLBIN file (``a.xclbin``):
+For hardware emulation, the ``–-package`` command adds the PDI and EMULATION_DATA sections to the XSA file and outputs a new XSA file (``aie.xsa``):
 
 ```bash
 make package
@@ -36,7 +36,7 @@ v++ -p                                                                          
     --package.boot_mode=sd                                                                       \
     --package.image_format=fat32                                                                 \
     --package.ps_elf ../Module_05_Baremetal_Host_Application/build/main_partial_ps.elf,a72-0     \
-    ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xclbin   \
+    ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xsa      \
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 ```
 
@@ -48,7 +48,7 @@ Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.d
 |  ---  |  ---  |
 |vck190_v1_0.xpfm|The custom embedded platform created in Module 01.|
 |main_partial_ps.elf|The baremetal PS host application created in Module 05.|
-|beamforming.rev1.hw_emu.xclbin|The XCLBIN file created in Module 04. |
+|beamforming.rev1.hw_emu.xsa|The XSA file created in Module 04. |
 |libadf.a|The AI Engine application created in Module 02.|
 
 ### Build Products
@@ -68,7 +68,7 @@ make run_emu
 or
 ```
 cd build/hw_emu_main_partial/hw_emu_main_partial.package
-export XILINX_XRT/usr
+mount /dev/mmcblk0p1 /mnt;cd /mnt
 ./launch_hw_emu.sh
 ```
 This step takes several hours to complete. You can open a new shell and continue with the next section while hardware emulation completes.  
@@ -77,7 +77,7 @@ To exit QEMU simulation, press **Ctrl+A**, let go of the keyboard, and then pres
 
 ## Building the Design: Hardware
 
-For hardware builds, the package process creates an XCLBIN file containing the ELF files and graph configuration data objects (CDOs) for the AI Engine application. Because you already ran the ``main_partial.elf`` host application during hardware emulation, use the ``main_full.elf`` for the hardware package:
+For hardware builds, the package process creates an XSA file containing the ELF files and graph configuration data objects (CDOs) for the AI Engine application. Because you already ran the ``main_partial.elf`` host application during hardware emulation, use the ``main_full.elf`` for the hardware package:
 
 ```bash
 make package TARGET=hw MAIN=main_full
@@ -93,7 +93,7 @@ v++ -p                                                                          
     --package.boot_mode=sd                                                                       \
     --package.image_format=fat32                                                                 \
     --package.ps_elf ../Module_05_Baremetal_Host_Application/build/main_full_ps.elf,a72-0     \
-    ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xclbin   \
+    ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xsa      \
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 ```
 ### Dependencies
@@ -102,7 +102,7 @@ v++ -p                                                                          
 |  ---  |  ---  |
 |vck190_v1_0.xpfm|The custom embedded platform created in Module 01.|
 |main_full_ps.elf|The bare-metal PS host application created in Module 05.|
-|beamforming.rev1.hw.xclbin|The XCLBIN file created in Module 04. |
+|beamforming.rev1.hw.xsa|The XSA file created in Module 04. |
 |libadf.a|The AI Engine application created in Module 02.|
 
 ### Build Products
