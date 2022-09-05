@@ -48,6 +48,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
  <td>This tutorial demonstrates how to integrate Aurora IP in user design on Alveo card with Vitis flow to realize high-speed inter-card communications.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/09-sssp-application/">Single Source Shortest Path Application</a></td>
+ <td>This tutorial demonstrates how to design an application of finding shortest path with Vitis Graph library on Alveo U50.</td>
+ </tr>
  
 </table>
 

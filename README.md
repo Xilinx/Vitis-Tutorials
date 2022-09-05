@@ -149,7 +149,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                     :new: </a>
             </td>
             <td>
-                &nbsp;
+                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application :new: </a>
             </td>
         </tr>
 	<tr>

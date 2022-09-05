@@ -1,0 +1,40 @@
+{
+    "name": "HW_D_09-sssp-app",
+    "gui": "false",
+    "description": "HW_D_09-sssp-app", 
+    "flow": "vitis",
+    
+    "platform_whitelist": [ "u50" ],
+    "platform_blacklist": [],
+    
+    "testinfo": {
+        "test_name": "HW_D_09-sssp-app",
+        "disable": false,
+        "jobs": [
+            {
+                "cmd": "-xclbin PROJECT/shortpath_hw.xclbin -o PROJECT/csr_data/offset.mtx -c PROJECT/csr_data/indicesweights.mtx -n PROJECT/csr_data/node.mtx",
+                "max_memory_MB": {
+                    "vitis_hw_build": 40960, 
+                    "vitis_hw_run": 10240
+                }, 
+                "max_time_min": {
+                    "vitis_hw_build": 470,
+                    "vitis_hw_run": 30
+                }
+            }
+        ], 
+        "targets": [ 
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ], 
+        "make_option" : ["TARGET='$user_test_mode'","XF_PROJ_ROOT='${GITHUB_LIBS_REPO}/Vitis-Tutorials'", "PLATFORM_REPO_PATHS='$PLATFORM_PATH'", "VITIS_LIBRARIES_PATHS='$DSPLIB_VITIS'"],
+        "category": "canary",
+        "custom_build_target":
+        {
+            "all": "run",
+            "hw": "xclbin"
+        },
+        "custom_board_target": "run"
+    }
+}
