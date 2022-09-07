@@ -4,25 +4,7 @@ TARGET := hw_emu
 PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
-CXXFLAGS := -g -std=c++17 -Wall -O0
-
-#Check OS and setting env for xrt c++ api
-OSDIST = $(shell lsb_release -i |awk -F: '{print tolower($$2)}' | tr -d ' 	' )
-OSREL = $(shell lsb_release -r |awk -F: '{print tolower($$2)}' |tr -d ' 	')
-# for centos and redhat
-ifneq ($(findstring centos,$(OSDIST)),)
-ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
-ifeq ($(HOST_ARCH), x86)
-CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-endif
-endif
-else ifneq ($(findstring redhat,$(OSDIST)),)
-ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
-ifeq ($(HOST_ARCH), x86)
-CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-endif
-endif
-endif
+CXXFLAGS += -g -std=c++17 -Wall -O0
 
 run: build
 ifeq ($(TARGET),hw)
