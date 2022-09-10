@@ -41,7 +41,7 @@ MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 CSR_DIR := $(CUR_DIR)/csr_data
 OFFSET := $(CSR_DIR)/offset.mtx
-INDICE := $(CSR_DIR)/indices_weights.mtx
+INDICE := $(CSR_DIR)/indicesweights.mtx
 NODE := $(CSR_DIR)/node.mtx
 XFLIB_DIR = $(VITIS_LIBRARIES_PATHS)/graph
 
