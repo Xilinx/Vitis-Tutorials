@@ -22,7 +22,7 @@ ifneq ($(LAB),$(filter $(LAB),run1))
 endif
 
 VPP_COMMON_OPTS := -s -t $(TARGET) --platform $(PLATFORM)
-CFLAGS := -g -std=c++17 -I$(XILINX_XRT)/include
+CXXFLAGS := -g -std=c++17 -I$(XILINX_XRT)/include
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -pthread -lrt -lxrt_coreutil
 NUMDEVICES := 1
 
@@ -50,7 +50,7 @@ $(XCLBIN): $(XOS)
 
 # host rules
 $(HOST_EXE): $(HOST_SRC)
-	g++ $(CFLAGS) -o $@ $+ $(LFLAGS)
+	g++ $(CXXFLAGS) -o $@ $+ $(LFLAGS)
 	@echo 'Compiled Host Executable: $(HOST_EXE)'
 
 $(EMCONFIG_FILE):
