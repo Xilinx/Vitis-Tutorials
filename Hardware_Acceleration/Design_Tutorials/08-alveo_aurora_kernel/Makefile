@@ -45,8 +45,10 @@ PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 #PART := xcu50-fsvh2104-2-e
 #PLATFORM ?= xilinx_u50_gen3x16_xdma_5_202210_1
 
+#PART := xcu280-fsvh2892-2L-e
+#PLATFORM ?= xilinx_u280_gen3x16_xdma_1_202211_1
 
-# TARGET: set the build target, can be hw or hw_emu
+# TARGET: set the build target, only hw target is supported for designs including GT kernel
 TARGET := hw
 
 
@@ -129,5 +131,5 @@ all: xclbin host
 clean:
 	$(RM) -rf ip_generation vivado_pack_krnl_project
 	$(RM) -rf *.xo *.xclbin *.xclbin.info *.xclbin.link_summary *.jou *.log *.xo.compile_summary _x
-	$(RM) -rf *.dat *.pb xsim.dir *.xml *.ltx *.csv *.json *.protoinst *.wdb *.wcfg host_krnl_aurora_test
+	$(RM) -rf *.dat *.pb xsim.dir *.xml *.ltx *.csv *.protoinst *.wdb *.wcfg host_krnl_aurora_test
 
