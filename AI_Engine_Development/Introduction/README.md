@@ -47,7 +47,37 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td width="7%" align="center"><b>Event Trace in HW</b>
  <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
-  <tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux</a></td>
+ <td>Base / Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="../Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
+ <td>Custom</td>
+ <td>Baremetal</td>
+ <td>x</td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
  <td align="center"><a href="../Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -243,27 +273,12 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  </tr>
   <tr>
- <td align="center"><a href="../Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>Custom</td>
- <td>Baremetal</td>
- <td>x</td>
- <td> </td>
- <td>MM2S / S2MM</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td>x</td>
- <td>x</td>
- <td> </td>
- <td> </td>
- </tr>
-  <tr>
  <td align="center"><a href="../Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AIE Application </a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
  <td> </td>
- <td>MM2S / S2MM</td>
+ <td> MM2S / S2MM </td>
  <td> </td>
  <td>x</td>
  <td> </td>
@@ -277,10 +292,25 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>Linux</td>
  <td> </td>
  <td> </td>
- <td>MM2S/S2MM/PolarClip</td>
+ <td> MM2S / S2MM / PolarClip </td>
  <td>x</td>
  <td>x</td>
  <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="../Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
+ <td>Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
  <td>x</td>
  <td> </td>
  <td> </td>
@@ -350,21 +380,8 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>x</td>
  <td> </td>
  <td>x</td>
- </tr> <tr>
- <td align="center"><a href="../Design_Tutorials/04-custom-platform-emulation/">AIE Emulation on Custom Platforms</a></td>
- <td>Custom</td>
- <td>Linux</td>
- <td> </td>
- <td> </td>
- <td>MM2S / S2MM</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td> </td>
- <td> </td>
- </tr><tr>
+ </tr> 
+ <tr>
  <td align="center"><a href="../Design_Tutorials/06-fft2d_AIEvsHLS/">2D-FFT</a></td>
  <td>Base</td>
  <td>Linux</td>
