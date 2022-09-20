@@ -22,12 +22,14 @@
  </tr>
 </table>
 
-***Version: 2022.1***   
+***Version: 2022.2***   
 ***Board: VCK190***
 
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
 
-This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
+This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. 
+
+This is a quick start for Versal platform creation. If you have queries about some steps or settings or want to create a platform for customer's board please refer to [Versal Custom Platform Creation Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/). Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
@@ -59,7 +61,7 @@ This time we will utilize Versal extensible platform from the CED example, using
 
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
    - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
-   - Configure Memory Settings. By default, the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
+   - Configure Memory Settings. By default, the example design will enable the on board DDR4 and LPDDR4. If you have additional on board memories, you can enable it. 
    - Click **Next**.
    - Review the new project summary and click **Finish**.
    - After a while, you will see the design example has been generated.
@@ -68,7 +70,7 @@ This time we will utilize Versal extensible platform from the CED example, using
 
    ![Vivado Design Block Diagram](images/vivado_design_diagram.png)
 
-   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190
+   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. The instantiated `axi_smc_vip_hier` in purple color is a hierarchy in which smart connects and dummy IPs are packaged together for clear view and better understanding. 
    
 4. Generate Block Diagram
 
@@ -95,34 +97,34 @@ This time we will utilize Versal extensible platform from the CED example, using
    - Input Name: **VCK190_Custom_Platform**, click Next
    - Update file name to **vck190_custom_hw**, click Next.
    - Review the summary. Click **Finish**.
-   - **vck190_custom_hw.xsa** file will be generated in `Vivado project location` directory.
+   - **vck190_custom_hw.xsa** file will be generated in Vivado project location directory.
 
 ## Step 2: Create Vitis Platform
 
 1. Download Versal common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory and extract the common image.
 
    ```bash
-   tar xvf ../xilinx-versal-common-v2022.1.tar.gz .
+   tar xvf ../xilinx-versal-common-v2022.2.tar.gz .
    ```
 
 2. Create the device tree file
+   Device tree describes the hardware components of the system. `createdts` command can generate the device tree file according to the hardware configurations from XSA file. If there are any settings not available in XSA, for example, any driver nodes that don't have corresponding hardware, or user have their own design hardware, User needs to add customization settings in `system-user.dtsi`.
 
-   Utilize XSCT tool to execute one command to generate device tree files:
+   Besides uboot in common image does not have default environment variables. So updating the bootargs manually is needed. A pre-prepared [system-user.dtsi](ref_files/system-user.dtsi) file which adds pre-defined bootargs is under `ref_files` directory. Please copy `system-user.dtsi` to `WorkSpace` directory and follow below steps to generate the DTB file.
 
    ```bash
    cd WorkSpace
    source <Vitis_Install_Directory>/settings64.sh
    xsct 
    ```
-   Then execute ` createdts ` command in XSCT console like below:
+   Then execute `createdts` command in XSCT console like the following:
 
    ```bash
    createdts -hw <full path>/vck190_custom_hw.xsa -out . -zocl \
-   -platform-name mydevice -git-branch xlnx_rel_v2022.1 -board  \
-   versal-vck190-reva-x-ebm-02-reva -compile   
+   -platform-name mydevice -git-branch xlnx_rel_v2022.1 -board versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile   
    ```
 
-   Notice `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa `. Besides below information would show in XSCT console. Please ignore the warning and that means you succeed to get system.dtb file which is located in <mydevice/psv_cortexa72_0/device_tree_domain/bsp/>.
+   Notice `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa `. Besides below information would show in XSCT console. Please ignore the the following warning and that means you succeed to get system.dtb file which is located in <mydevice/psv_cortexa72_0/device_tree_domain/bsp/>.
 
    ```bash
    pl.dtsi:9.21-46.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property
@@ -131,40 +133,21 @@ This time we will utilize Versal extensible platform from the CED example, using
 
    Type `exit` in console to exit XSCT console.
 
-   As uboot image in common image package does not have default environment variables. So we need to update the bootargs manually. We prepare one system-user.dtsi under `ref_files` directory. Just copy it to device tree BSP directory and modify system-top.dts to include it like below.
-
-   ```bash
-   cp system-user.dtsi mydevice/psv_cortexa72_0/device_tree_domain/bsp/
-   echo "#include \"system-user.dtsi\"" >> mydevice/psv_cortexa72_0/device_tree_domain/bsp/system-top.dts
-   ```
-
-   Rebuild the dts file:
-
-   ```bash
-   cd mydevice/psv_cortexa72_0/device_tree_domain/bsp/
-   gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o \
-   system.dts system-top.dts  #preprocess the dts file because DTC command can not recognize the #include grammar
-   dtc -I dts -O dtb -o system.dtb system.dts # compile the dts
-   ```
-
-   Then the updated DTB file is located in <mydevice/psv_cortexa72_0/device_tree_domain/bsp/> folder.
-   
-
 3. Create Vitis platform
 
-   - Create two directories under `WorkSpace` directory for FAT32 partition and boot components. Then prepare  images like the following:
+   - Create two directories under `WorkSpace` directory for FAT32 partition and boot components. Then prepare images like the following:
 
       ```bash
       cd WorkSpace
       mkdir sd_dir
       mkdir boot
-      cp xilinx-versal-common-v2022.1/boot.scr sd_dir/
-      cp xilinx-versal-common-v2022.1/bl31.elf boot/
-      cp xilinx-versal-common-v2022.1/u-boot.elf boot/
+      cp xilinx-versal-common-v2022.2/boot.scr sd_dir/
+      cp xilinx-versal-common-v2022.2/bl31.elf boot/
+      cp xilinx-versal-common-v2022.2/u-boot.elf boot/
       cp mydevice/psv_cortexa72_0/device_tree_domain/bsp/system.dtb boot/
       ```
 
-   - install SDK tool by typing `sh xilinx-versal-common-v2022.1/sdk.sh -d xilinx-versal-common-v2022.1/ -y` in console. Option of -d is to specify the directory where to install. Option of -y means confirmation. So it will be installed in `xilinx-versal-common-v2022.1/` folder.
+   - install SDK tool by typing `sh xilinx-versal-common-v2022.2/sdk.sh -d xilinx-versal-common-v2022.2/ -y` in console. Option of -d is to specify the directory where to install. Option of -y means confirmation. So it will be installed in `xilinx-versal-common-v2022.2/` folder.
    - Run Vitis by typing `vitis` in the console.
    - In the Vitis IDE, select **File > New > Platform Project** to create a platform project.
    - Enter the project name. For this example, type `vck190_custom`, click **Next**.
@@ -201,9 +184,9 @@ This time we will utilize Versal extensible platform from the CED example, using
    
      ![missing image](./images/vitis_create_vadd.png)
 
-   - Input **Sysroot** path <xilinx-versal-common-v2022.1/sysroots/cortexa72-cortexa53-xilinx-linux>
-   - Input **RootFS** path <xilinx-versal-common-v2022.1/rootfs.ext4>
-   - Input **Kernel Image** path <xilinx-versal-common-v2022.1/Image>
+   - Input **Sysroot** path <xilinx-versal-common-v2022.2/sysroots/cortexa72-cortexa53-xilinx-linux>
+   - Input **RootFS** path <xilinx-versal-common-v2022.2/rootfs.ext4>
+   - Input **Kernel Image** path <xilinx-versal-common-v2022.2/Image>
    -  Click **Next**. 
    - Select template **Vector Addition**. Click **Finish**.
    - Select **vadd_system** project
@@ -329,8 +312,16 @@ To use these scripts, please download Versal common image from [Xilinx website d
    ```bash
    # cd to the ref_files directory, e.g.
    cd ref_files
-   make all COMMON_IMAGE_VERSAL=<path/to/common_image/>
+   make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  #Specify the path of the common image
    ```
+   This command is to generate platform with pre-built software components and do sw emulation by running vadd application to test this platform
+
+   ```
+   make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  #Specify the path of the common image
+   ```
+   This command is to generate platform with pre-built software components and do hw test on board by running vadd application to test this platform
+
+
 
 2. To clean the generated files, please run
 

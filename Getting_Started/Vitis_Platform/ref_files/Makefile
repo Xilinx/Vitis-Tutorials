@@ -30,16 +30,17 @@ PLATFORM_NAME=vck190_custom
 PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
-
+AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
 
 .PHONY: help 
 
 help:
 	@echo "Makefile usage"
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
-	
+	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
-all: check-common-image hw sw_comps dtb sysroot pfm  vadd vadd_hw
+all: check-common-image hw sw_comps dtb sysroot pfm  vadd aie_adder
+sd_card:check-common-image  sysroot pfm aie_adder_hw
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -70,14 +71,7 @@ sw_comps:$(COMMON_IMAGE_VERSAL)/Image
 #generate the DTB file
 dtb: $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.1 -board  versal-vck190-reva-x-ebm-02-reva"
-	@echo "add system-user.dtsi to add bootargs"
-	cp system-user.dtsi $(DTB_LOCATION)/
-	echo "#include \"system-user.dtsi\"" >> $(DTB_LOCATION)/system-top.dts 
-	@echo "preprocess the dts"
-	gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o $(DTB_LOCATION)/system.dts $(DTB_LOCATION)/system-top.dts 
-	@echo "compile the DTB"
-	dtc -I dts -O dtb -o $(DTB_LOCATION)/system.dtb $(DTB_LOCATION)/system.dts
+	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.1 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile"
 	cp $(DTB_LOCATION)/system.dtb  $(BOOT)/
 	
 # Target: sysroot
@@ -107,10 +101,16 @@ vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
 # vadd_hw is a place-holder for manual build and test on hardware
 vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+aie_adder: 
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+aie_adder_hw: 
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 clean:
 	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
 	$(MAKE) -C $(PL_EXAMPLE_PATH) clean
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
 
 ultraclean:
 	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SW_COMP) $(BOOT) $(SD_DIR) $(SYSROOT) Vitis_Accel_Examples
