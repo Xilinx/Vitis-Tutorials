@@ -10,6 +10,9 @@
          "tasks": {
             "build": {
                 "pre_exec": "./env_setup_alveo.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_alveo.sh"
             }
          },
         "jobs": [

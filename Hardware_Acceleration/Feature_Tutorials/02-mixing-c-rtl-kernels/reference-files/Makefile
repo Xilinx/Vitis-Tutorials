@@ -25,7 +25,7 @@ XCLBIN := krnl_vadd.$(TARGET).$(DEVICE).xclbin
 RTL_KRNL := ./src/rtl_kernel/rtl_kernel_wizard_0.xo
 
 # Host building global settings
-CXXFLAGS := -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -lOpenCL -pthread -lrt -lstdc++
+CXXFLAGS += -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -lOpenCL -pthread -lrt -lstdc++
 CXXFLAGS2 := -lOpenCL
 
 # Kernel compiler & linker global settings

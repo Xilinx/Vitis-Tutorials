@@ -22,7 +22,7 @@ ifneq ($(LAB),$(filter $(LAB),run1))
 endif
 
 VPP_COMMON_OPTS := -s -t $(TARGET) --platform $(PLATFORM)
-CXXFLAGS := -g -std=c++17 -I$(XILINX_XRT)/include
+CXXFLAGS += -g -std=c++17 -I$(XILINX_XRT)/include
 LFLAGS := -L$(XILINX_XRT)/lib -lxilinxopencl -pthread -lrt -lxrt_coreutil
 NUMDEVICES := 1
 
