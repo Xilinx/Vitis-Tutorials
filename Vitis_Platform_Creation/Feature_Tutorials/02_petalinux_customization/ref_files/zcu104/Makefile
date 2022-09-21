@@ -74,10 +74,10 @@ update_rootfs_config:
 
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
+	$(MAKE)  update_config
 	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(XSA_PATH)/$(XSA_NAME).xsa --silentconfig
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
+	$(MAKE)  update_rootfs_config
+	$(MAKE)  update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:

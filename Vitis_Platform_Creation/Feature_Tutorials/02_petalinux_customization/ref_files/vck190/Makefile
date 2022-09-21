@@ -23,7 +23,7 @@ PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
 #XSA_NAME	?=xsa_file_for_petalinux
 PDI_DIR		=pdi_dir
 #PDI_PATH	=$(ROOT_DIR)/$(PDI_DIR)
-XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202220_1/hw/
+XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/hw/
 XSA_NAME	?=hw
 #PDI=$(wildcard $(PDI_PATH)/*.pdi)
 
@@ -83,10 +83,10 @@ update_rootfs_config:
 
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template versal --force -n $(PETALINUX_PROJ_NAME)
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
+	$(MAKE)  update_config
 	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(XSA_PATH)/$(XSA_NAME).xsa --silentconfig
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
-	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
+	$(MAKE)  update_rootfs_config
+	$(MAKE)  update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:
