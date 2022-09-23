@@ -48,6 +48,10 @@
 <td align="center"><a href="./09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
 <td>This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.</td>
 </tr> 
+ <tr>
+<td align="center"><a href="./10-p2p-card-to-card/">Enabling FPGA to FPGA P2P Transfer using Native XRT C++ API</a></td>
+<td>This tutorial demonstrates how to enable p2p transfer from one FPGA device to another using XRT API host code.</td>
+</tr>
  </table>
 
 

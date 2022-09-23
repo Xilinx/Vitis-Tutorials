@@ -32,8 +32,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td colspan="3" height="48">
-                Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience
-                necessary!
+                Start here! Learn the basics of the Vitis programming model by putting together your very first application. No experience necessary!
             </td>
         </tr>
         <tr>
@@ -49,7 +48,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./Getting_Started/Vitis_Libraries">Vitis Libraries Introduction</a>
             </td>
             <td>
-                <a href="./Getting_Started/Vitis_Platform/">Vitis Platform Introduction :new:</a>
+                <a href="./Getting_Started/Vitis_Platform/">Vitis Platform Introduction </a>
             </td>
         </tr>
     </tbody>
@@ -65,8 +64,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td colspan="2" height="48">
-                Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++,
-                OpenCL, and even Verilog and VHDL.
+                Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even Verilog and VHDL.
             </td>
         </tr>
         <tr>
@@ -95,12 +93,10 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and
-                    Optimization</a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration
-                    Example</a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a>
             </td>
         </tr>
         <tr>
@@ -140,19 +136,26 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo :new: </a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo
-                    :new: </a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application :new: </a>
+            </td>
+        </tr>
+	<tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API :new: </a>
             </td>
             <td>
                 &nbsp;
             </td>
         </tr>
-    </tbody>
+	</tbody>
 </table>
 
 
@@ -165,8 +168,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td colspan="3" height="48">
-                Learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL
-                IP/kernels and software applications running on the embedded processors.
+                Learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
             </td>
         </tr>
         <tr>
@@ -179,8 +181,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW
-                    Emu and HW</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/02-using-gmio">Using GMIO with AIE</a>
@@ -219,7 +220,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/08-dsp-library">DSP Library Tutorial</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/04-custom-platform-emulation">AIE Emulation on Custom Platforms</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
             </td>
         </tr>
         <tr>
@@ -230,19 +231,18 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/10-aie-dsp-lib-model-composer">AIE DSP Library and Model Composer</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis">Versal Emulation Waveform
-                    Analysis</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis">Versal Emulation Waveform Analysis</a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/12-axis-traffic-generator">AXIS External Traffic Generator</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
             </td>
         </tr>
         <tr>
@@ -252,8 +252,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
-            <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
+            <td>               
             </td>
         </tr>
         <tr>
@@ -261,11 +260,21 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows :new:</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AIE Simulation and Emulation</a>
             </td>
             <td>
             </td>
         </tr>
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a>
+            </td>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux :new:</a>
+            </td>
+            <td>
+            </td>
+        </tr>	    
     </tbody>
 </table>
 
@@ -280,8 +289,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
         </tr>
         <tr>
             <td colspan="3" height="48">
-                Learn how to build custom platforms for Vitis to target your own boards built with Xilinx devices, and how to modify and
-                extend existing platforms.
+                Learn how to build custom platforms for Vitis to target your own boards built with Xilinx devices, and how to modify and extend existing platforms.
             </td>
         </tr>
         <tr>            
@@ -305,7 +313,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="./Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190">Custom Platform Creation on Versal</a>
 			</td> 
 			<td>
-				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization :new:</a>
+				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization </a>
 			</td>
 		</tr>		
             <tr>
@@ -326,14 +334,12 @@ The Vitis Tutorials take users through the design methodology and programming mo
             </tr>
             <tr>
                 <td colspan="2" height="48">
-                    Check out tutorials that other developers shared! We welcome your contribution, you may share end-to-end designs, tips
-                    and tricks, or designs and examples that can help Xilinx users.
+                    Check out tutorials that other developers shared! We welcome your contribution, you may share end-to-end designs, tips and tricks, or designs and examples that can help Xilinx users.
                 </td>
             </tr>
             <tr>
                 <td colspan="2" height="24">
-                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README.md">Versal Custom Thin Platform
-                        Extensible System</a>
+                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README.md">Versal Custom Thin Platform Extensible System</a>
                 </td>
             </tr>
         </tbody>
@@ -356,8 +362,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis Acceleration Examples</a>
 			</td>
 			<td>
-				This repository illustrates specific scenarios related to host code and kernel programming through small working
-				examples. They can get you started with Vitis acceleration application coding and optimization.
+				This repository illustrates specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
 			</td>
 		</tr>
 		<tr>
@@ -365,8 +370,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/xilinx/Vitis-AI-Tutorials">Machine Learning Tutorials</a>
 			</td>
 			<td>
-				The repository helps to get you the lay of the land working with machine learning and the Vitis AI toolchain on Xilinx
-				devices. It illustrates specific workflows or stages within Vitis AI and gives examples of common use cases.
+				The repository helps to get you the lay of the land working with machine learning and the Vitis AI toolchain on Xilinx devices. It illustrates specific workflows or stages within Vitis AI and gives examples of common use cases.
 			</td>
 		</tr>
 		<tr>
@@ -374,9 +378,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="http://xilinx.github.io/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
 			</td>
 			<td>
-				Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft
-				processor. These tutorials cover open-source operating systems and bare-metal drivers available from Xilinx, compilers,
-				debuggers, and profiling tools for traditional SoC software development.
+				Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare-metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
 			</td>
 		</tr>
 		<tr>
@@ -384,10 +386,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="https://github.com/Xilinx/Vitis_Model_Composer">Vitis Model Composer Tutorials</a>
 			</td>
 			<td>
-				Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of
-				performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer
-				AI Engine, HLS and HDL libraries within the Simulink™ environment, enable the rapid design exploration of an algorithm
-				and accelerate the path to production.
+				Learn rapid design exploration using Vitis Model Composer. Vitis Model Composer provides a library of performance-optimized blocks for design and implementation of DSP algorithms on Xilinx devices. The Vitis Model Composer AI Engine, HLS and HDL libraries within the Simulink™ environment, enable the rapid design exploration of an algorithm and accelerate the path to production.
 			</td>
 		</tr>
 	</tbody>

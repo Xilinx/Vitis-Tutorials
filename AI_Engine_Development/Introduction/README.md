@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -20,13 +20,13 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 ## Environment Settings
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to setup environment ( **NOT** apply to tutorials that do not use the VCK190 base platform ):
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the xilinx-versal-common-v2022.1/sdk.sh.
-2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.1/rootfs.ext4`
-3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.1/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the xilinx-versal-common-v2022.2/sdk.sh.
+2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`
+3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ### Feature Tutorials
@@ -47,7 +47,37 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td width="7%" align="center"><b>Event Trace in HW</b>
  <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
-  <tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux</a></td>
+ <td>Base / Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="../Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
+ <td>Custom</td>
+ <td>Baremetal</td>
+ <td>x</td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
  <td align="center"><a href="../Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -243,27 +273,12 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  </tr>
   <tr>
- <td align="center"><a href="../Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>Custom</td>
- <td>Baremetal</td>
- <td>x</td>
- <td> </td>
- <td>MM2S / S2MM</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td>x</td>
- <td>x</td>
- <td> </td>
- <td> </td>
- </tr>
-  <tr>
  <td align="center"><a href="../Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AIE Application </a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
  <td> </td>
- <td>MM2S / S2MM</td>
+ <td> MM2S / S2MM </td>
  <td> </td>
  <td>x</td>
  <td> </td>
@@ -277,10 +292,25 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>Linux</td>
  <td> </td>
  <td> </td>
- <td>MM2S/S2MM/PolarClip</td>
+ <td> MM2S / S2MM / PolarClip </td>
  <td>x</td>
  <td>x</td>
  <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="../Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
+ <td>Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
  <td>x</td>
  <td> </td>
  <td> </td>
@@ -350,21 +380,8 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>x</td>
  <td> </td>
  <td>x</td>
- </tr> <tr>
- <td align="center"><a href="../Design_Tutorials/04-custom-platform-emulation/">AIE Emulation on Custom Platforms</a></td>
- <td>Custom</td>
- <td>Linux</td>
- <td> </td>
- <td> </td>
- <td>MM2S / S2MM</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td>x</td>
- <td> </td>
- <td> </td>
- <td> </td>
- </tr><tr>
+ </tr> 
+ <tr>
  <td align="center"><a href="../Design_Tutorials/06-fft2d_AIEvsHLS/">2D-FFT</a></td>
  <td>Base</td>
  <td>Linux</td>

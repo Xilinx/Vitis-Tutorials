@@ -1,13 +1,13 @@
 {
-    "name": "AI_Engine_Development-04-custome-platform-emulation",
-    "description": "04-custome-platform-emulation",
+    "name": "AI_Engine_Development-17-RTL-IP-with-AIE-Engines",
+    "description": "17-RTL-IP-with-AIE-Engines",
     "flow": "versal",
 
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "AIE_D_04-PFM-Emu",
+        "test_name": "AIE_F_17-RTL-AIE",
         "disable": false,
         "jobs": [
             {
@@ -34,7 +34,9 @@
             "HOST_ARCH=aarch64",
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
             "SYSROOT=${SYSROOT}",
-            "XF_PROJ_ROOT=${ARTIFACTS}",
+            "SDKTARGETSYSROOT=${SYSROOT}",
+            "ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
+            "IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./sw", 
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"

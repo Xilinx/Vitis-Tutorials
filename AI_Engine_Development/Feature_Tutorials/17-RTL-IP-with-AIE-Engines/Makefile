@@ -34,10 +34,9 @@ KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
 SDKTARGETSYSROOT ?= $(SYSROOT)
-SYSROOT ?= $(XF_PROJ_ROOT)/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/ref_files/step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux
-BASE_PLATFORM=$(XF_PROJ_ROOT)/vck190_xpfm/vck190_custom.xpfm
-ROOTFS=$(XF_PROJ_ROOT)/vck190_xpfm/rootfs.ext4
-IMAGE ?= $(XF_PROJ_ROOT)/vck190_xpfm/Image
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4
+IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.1/Image
 
 # Command-line options
 VPP := v++
@@ -46,8 +45,8 @@ AIECC := aiecompiler
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS_AIETOOLS)/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  -workdir=./Work
 
-VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) -g --save-temps
-VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xclbin
+VPP_XO_FLAGS := -c --platform $(PLATFORM) -g --save-temps
+VPP_LINK_FLAGS := -l --platform $(PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
@@ -108,9 +107,9 @@ xclbin: $(GRAPH_O) $(KERNEL_XO)
 # For hardware and hardware emulation, compile the PS code and generate the main.elf. This is needed for creating the PDI.
 host: guard-SYSROOT guard-CXX
 	cd ./sw
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
-	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
+	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
+	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
+	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ *.o $(GCC_LIB) -std=c++14 -o host.exe
 ############################################################################################################################
 
 ##################################################################################################
@@ -118,14 +117,14 @@ host: guard-SYSROOT guard-CXX
 package: guard-IMAGE guard-ROOTFS
 	cd ./sw
 	v++ -p -t ${TARGET} \
-		-f ${BASE_PLATFORM} \
+		-f ${PLATFORM} \
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
-		--package.sd_file host.exe ../tutorial.xclbin ../libadf.a
+		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
 ###################################################################################################
 
 ###########################################################################
