@@ -35,8 +35,6 @@ The data from the PLIO is first connected to the `pktsplit<n>` instance, which s
 
 Each AI Engine kernel works similarly to a non-packet switching kernel. The output data is merged by the `pktmerge<n>` instance, which automatically inserts the packet headers with packet IDs, and `TLAST` for the last data of the packet.
 
-__Hint: Make sure the packet length matches the window size for either kernel input or output window.__
-
 Change the working directory to `window_aie`. The example graph code is in `aie/graph.h`, shown as follows.
 
 	class mygraph: public adf::graph {
