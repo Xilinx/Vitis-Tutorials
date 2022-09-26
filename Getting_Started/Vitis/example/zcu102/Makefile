@@ -7,6 +7,7 @@ TARGET := hw_emu
 PLATFORM := xilinx_zcu102_base_202210_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
+EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_$(TARGET).sh
 SDKTARGETSYSROOT := $(SYSROOT)
 ROOTFS ?= $(EDGE_COMMON_SW)

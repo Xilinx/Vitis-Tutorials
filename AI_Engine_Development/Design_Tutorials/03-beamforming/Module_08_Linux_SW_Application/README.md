@@ -43,11 +43,11 @@ One of the first things the host application does is bind the UIO drivers to the
 
 These functions call the `mmap` function to bind the physical address of the PL kernels to a memory pointer. The host application uses the memory pointer to access the register maps of the PL kernels.   
 
-### Changes in 2021.1
+### Changes in 2022.1
 
 All AI Engine related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled aie_control_xrt.cpp. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in host_app.cpp. These changes are implemented in the source code in this module.
 
-Thus, host application is agnostic to AI Engine source code starting 2021.1.
+Thus, host application is agnostic to AI Engine source code starting 2022.1.
 
 
 ## Load AIE XCLBIN   
@@ -119,10 +119,10 @@ Lastly, restart the PL kernels to send/receive PL traffic to/from the AI Engine.
 The ``beamformer.cpp`` file takes two command line arguments:
 
 ```
-./beamformer.exe <argv[1]> a.xclbin
+./beamformer.exe <argv[1]> aie.xsa
 ```
 
-The `a.xclbin` is the AI Engine PDI. You can specify the ``<argv[1]>`` variable for the program to execute a different test. Below is a table of the test options:
+The `aie.xsa` is the AI Engine PDI. You can specify the ``<argv[1]>`` variable for the program to execute a different test. Below is a table of the test options:
 
 | argv\[1\]  | Description  |
 | -------- |-----|

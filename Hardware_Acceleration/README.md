@@ -64,6 +64,10 @@ The methodology for developing optimized accelerated applications is comprised o
   <td align="center"><a href="./Design_Tutorials/08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
  <td>This tutorial demonstrates how to integrate Aurora IP in user design on Alveo card with Vitis flow to realize high-speed inter-card communications.</td>
  </tr>
+  </tr>
+  <td align="center"><a href="./Design_Tutorials/09-sssp-application/">Single Source Shortest Path Application</a></td>
+ <td>This tutorial demonstrates how to design an application of finding shortest path with Vitis Graph library on Alveo U50.</td>
+ </tr>
 </table>
 
 
@@ -110,6 +114,10 @@ The methodology for developing optimized accelerated applications is comprised o
  <tr>
 <td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
 <td>This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.</td>
+</tr>
+ <tr>
+<td align="center"><a href="./Feature_Tutorials/10-p2p-card-to-card/">Enabling FPGA to FPGA P2P Transfer using Native XRT C++ API</a></td>
+<td>This tutorial demonstrates how to enable p2p transfer from one FPGA device to another using XRT API host code.</td>
 </tr>
  </table>
 

@@ -1,10 +1,10 @@
 
 {
     "name": "Vitis_Platform_Creation-Design_Tutorials-01-Edge-KV260",
-    "description": "Creating a custom kv260 platform from scratch",
+    "description": "Vitis_Platform_Creation-Design_Tutorials-01-Edge-KV260",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": ["zcu"],
+    "platform_allowlist": ["zcu102"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_01-KV260",

@@ -10,54 +10,6 @@
 
 The <a href="./Introduction/">Introduction</a> page contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you check the introduction page for details before starting to use the AIE tutorials.
 
-### Design Tutorials
-
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto ACAP kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary build options to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
-
-
-
- <table style="width:100%">
- <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/README.md">LeNet Tutorial</a></td>
- <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/README.md">Super Sampling Rate FIR Filters</a></td>
- <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/03-beamforming/README.md">Beamforming Design</a></td>
- <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
- </tr> <tr>
- <td align="center"><a href="./Design_Tutorials/04-custom-platform-emulation/README.md">AIE Emulation on Custom Platforms</a></td>
- <td>This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.</td>
- </tr><tr>
- <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.md">2D-FFT</a></td>
- <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
- </tr><tr>
- <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.md">FIR Filter</a></td>
- <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
- </tr> <tr>
- <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.md">N-Body Simulator</a></td>
- <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:<li>A Python model of an N-Body Simulator run on x86 machine
-   <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles
-   <li>AI Engine packet switching
-   <li>AI Engine single-precision floating point calculations
-   <li>AI Engine 1:400 broadcast streams
-   <li>Codeless PL HLS datamover kernels from the Vitis™ Utility Library
-   <li>PL HLS packet switching kernels
-   <li>PS Host Application that validates the data coming out of the AI Engine design
-   <li>C++ model of an N-Body Simulator
-   <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
-   <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
- </tr>
-</table>
-
-
 
 ### Feature Tutorials
 
@@ -66,7 +18,15 @@ The methodology for developing optimized accelerated applications is comprised o
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
  </tr>
-  <tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux</a></td>
+ <td>This tutorial intoduces a platform-based approach to develop the adaptable subsystem that contains PL kernels and AI Engine graph, demonstrates how you can quickly validate the design by means of hardware emulation or hardware using the base platform, and quickly switch to the custom platform with minimal changes.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
+ <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a></td>
  <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR</td>
  </tr>
@@ -124,10 +84,6 @@ This tutorial introduces you to performance analysis and optimization methods, a
  <td>
 This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
  </tr>
-  <tr>
- <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
- </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AI Engine Application </a></td>
  <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
@@ -136,6 +92,55 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
  <td>This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.</td>
  </tr>
+<tr>
+ <td align="center"><a href="./Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
+ <td>This tutorial demonstrates how to reuse any AXI-based IP you have created as an RTL IP, control your platform, and convert your RTL IP to an RTL kernel allowing for a more streamlined process for creating the design you need.</td>
+</tr>
  </table>
+
+### Design Tutorials
+
+The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto ACAP kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary build options to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
+
+
+
+ <table style="width:100%">
+ <tr>
+ <td width="35%" align="center"><b>Tutorial</b>
+ <td width="65%" align="center"><b>Description</b>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/README.md">LeNet Tutorial</a></td>
+ <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/README.md">Super Sampling Rate FIR Filters</a></td>
+ <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/03-beamforming/README.md">Beamforming Design</a></td>
+ <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
+ </tr> <tr>
+ <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.md">2D-FFT</a></td>
+ <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
+ </tr><tr>
+ <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.md">FIR Filter</a></td>
+ <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
+ </tr> <tr>
+ <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.md">N-Body Simulator</a></td>
+ <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:<li>A Python model of an N-Body Simulator run on x86 machine
+   <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles
+   <li>AI Engine packet switching
+   <li>AI Engine single-precision floating point calculations
+   <li>AI Engine 1:400 broadcast streams
+   <li>Codeless PL HLS datamover kernels from the Vitis™ Utility Library
+   <li>PL HLS packet switching kernels
+   <li>PS Host Application that validates the data coming out of the AI Engine design
+   <li>C++ model of an N-Body Simulator
+   <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
+   <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
+ </tr>
+</table>
+
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

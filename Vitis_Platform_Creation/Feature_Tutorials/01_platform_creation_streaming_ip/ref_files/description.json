@@ -1,0 +1,37 @@
+{
+    "name": "Vitis_Platform_Creation-Feature_Tutorials-01_platform_creation_streaming_ip",
+    "description": "Petalinux customization for Versal Board",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "PFM_F_01-streamingip",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw"
+        ],
+        "custom_build_target":
+        {
+            "all": "all"
+        }
+        
+    },
+    "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"
+}
+

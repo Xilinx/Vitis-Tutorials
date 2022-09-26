@@ -149,10 +149,19 @@ The Vitis Tutorials take users through the design methodology and programming mo
                     :new: </a>
             </td>
             <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application :new: </a>
+            </td>
+        </tr>
+	<tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API
+                    :new: </a>
+            </td>
+            <td>
                 &nbsp;
             </td>
         </tr>
-    </tbody>
+	</tbody>
 </table>
 
 
@@ -219,7 +228,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/08-dsp-library">DSP Library Tutorial</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/04-custom-platform-emulation">AIE Emulation on Custom Platforms</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
             </td>
         </tr>
         <tr>
@@ -230,7 +239,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/10-aie-dsp-lib-model-composer">AIE DSP Library and Model Composer</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
             </td>
         </tr>
         <tr>
@@ -242,7 +251,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/12-axis-traffic-generator">AXIS External Traffic Generator</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
             </td>
         </tr>
         <tr>
@@ -252,8 +261,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
             <td>
                 <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
-            <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
+            <td>               
             </td>
         </tr>
         <tr>
@@ -261,11 +269,21 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows :new:</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AIE Simulation and Emulation :new:</a>
             </td>
             <td>
             </td>
         </tr>
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a>
+            </td>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux :new:</a>
+            </td>
+            <td>
+            </td>
+        </tr>	    
     </tbody>
 </table>
 

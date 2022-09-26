@@ -1,7 +1,7 @@
 
 {
-    "name": "Vitis_Platform_Creation-Design_Tutorials-03_Edge_VCk190",
-    "description": "Creating a custom platform based on vck190 which is regarded as a customer's board",
+    "name": "Vitis_Platform_Creation-Introduction-03-Edge-VCK190",
+    "description": "Vitis_Platform_Creation-Introduction-03-Edge-VCK190",
     "gui": "false",
     "flow": "vitis",
     "platform_allowlist": ["versal"],

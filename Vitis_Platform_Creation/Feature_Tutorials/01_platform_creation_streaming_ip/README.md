@@ -8,11 +8,11 @@
 
 # Versal Platform Creation with Custom IP
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.1***
 
-In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Introduction/03_Edge_VCK190). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
+In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
-This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).  
+This tutorial targets the Versal board. 
 
 # Overview
 The tutorial is structured as follows:
@@ -20,17 +20,16 @@ The tutorial is structured as follows:
 - [Overview](#overview)
     - [Step 1: Create a Hardware Platform](#step-1-create-a-hardware-platform)
     - [Step 2: Add Custom IP into the Block Design](#step-2-add-custom-ip-into-the-block-design)
-    - [Step 3: Create the Software Components with PetaLinux](#step-3-create-the-software-components-with-petalinux)
-    - [Step 4: Package the Platform in the Vitis Software Platform](#step-4-package-the-platform-in-the-vitis-software-platform)
-    - [Step 5: Test the Platform](#step-5-test-the-platform)
+    - [Step 3: Package the Platform in the Vitis Software Platform](#step-4-package-the-platform-in-the-vitis-software-platform)
+    - [Step 4: Test the Platform](#step-5-test-the-platform)
 - [Support](#support)
 - [License](#license)
 
 ### Step 1: Create a Hardware Platform
 
-In this tutorial, you will use the prebuilt example design for VCK190 board to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.
+In this tutorial, you will use the prebuilt example design for Versal to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.
 
-Follow the instructions in [Versal platform creation tutorial-Step0](../../Introduction/03_Edge_VCK190/step0.md). You can skip the optional steps.
+Follow the instructions in [Versal platform creation tutorial-Step1](../../Design_Tutorials/03_Edge_VCK190/step1.md). You can skip the optional steps.
 
 
 ### Step 2: Add Custom IP into the Block Design
@@ -78,28 +77,22 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 9. Export the hardware platform. In the platform type selection page, choose **Hardware and hardware emulation** to run emulation with this platform.
 
 
-### Step 3: Create the Software Components with PetaLinux
+### Step 3: Package the Platform in the Vitis Software Platform
 
-In this step, you will create a PetaLinux project that includes the Vitis unified software platform required components. Follow the instructions in [Versal platform creation tutorial-Step2](../../Introduction/03_Edge_VCK190/step2.md).
-
-
-### Step 4: Package the Platform in the Vitis Software Platform
-
-In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in [Versal platform creation tutorial-Step3](../../Introduction/03_Edge_VCK190/step3.md).
+In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in [Versal platform creation tutorial-Step2](../../Design_Tutorials/03_Edge_VCK190/step2.md).
 
 
-### Step 5: Test the Platform
+### Step 4: Test the Platform
 
-In this step, you will build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions in [Versal platform creation tutorial-Step4](../../Introduction/03_Edge_VCK190/step4.md), but we will make some modifications.
+In this step, you will build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions in [Versal platform creation tutorial-Step4](../../Design_Tutorials/03_Edge_VCK190/step3.md), but we will make some modifications.
 
-You just need to run test 2 on that page. After creating the `vadd` system project, make the following changes.
+You just need to run Application1 on that page. After creating the `vadd` system project, make the following changes.
 
 1. Open up the `krnl_vadd.cpp` file under the `src` folder of the `vadd_kernels` project. Add the following header files at the beginning of this file. These are used to support the AXIS data type and HLS stream data type.
 
 ```
 #include "ap_int.h"
 #include "ap_axi_sdata.h"
-#include "hls_stream.h"
 ```
 2. Define a type named `pkt` before the kernel function definition.
 
@@ -107,26 +100,41 @@ You just need to run test 2 on that page. After creating the `vadd` system proje
 typedef ap_axis<15, 0, 0, 0> pkt;
 ```
 
-3. Add two ports into the top level function. The `dds_in` port is an AXI4-Stream type and the `wave_out` port is an AXI-MM type.
+3. In this design, the data from the DDS IP is not processed. It is just passed to the DDR. To do that, add a function, similar to the following:
+
+```
+static void dss_process( int *wave, hls::stream<pkt> &s_in) {
+    for (int i = 0; i < 1024; i++) 
+    {
+        #pragma HLS PIPELINE II = 1
+        pkt value = s_in.read();
+        wave[i] = value.data;
+    }
+}
+```
+
+4. Add two ports into the top level function. The `dds_in` port is an AXI4-Stream type and the `wave_out` port is an AXI-MM type.
 
 ```
 void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
 ```
 
-4. In this design, the data from the DDS IP is not processed. It is just passed to the DDR. To do that, add a few lines to the function body, similar to the following:
+5. Declare the two ports added in step4 in the `krnl_vadd` function.
 
 ```
-for (int i = 0; i < 1024; i++) {
-#pragma HLS PIPELINE II = 1
-   pkt value = dds_in.read();
-   wave_out[i] = value.data;
+#pragma HLS INTERFACE m_axi port = wave_out bundle = gmem2
+#pragma HLS INTERFACE axis port = dds_in
+```
 
-}
+6. Add one line to call the `dss_process` function in the `krnl_vadd` function.
+
+```
+dss_process(wave_out,dds_in);
 ```
 
 Now the kernel code modification is complete. Save your work and close the file.
 
-> Note: For the complete modification code reference on the  `vadd` kernel, see [kernel code modifications](./golden/kernel_modifications.md).
+> Note: For the complete modification code reference on the  `vadd` kernel, see [kernel code modifications](./code_modification_guide/kernel_modifications.md).
 
 
 5. To direct the Vitis linker to correctly link the kernel's AXI stream port with the corresponding interface of the platform, create a configuration file called `system.cfg` and add the following lines to it.
@@ -196,26 +204,45 @@ Specify the config file in binary container settings:
      q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
      ```
 
-    > Note: For the complete modification code reference on the `vadd` host application, see [host code modifications](./golden/host_modifications.md).
+    > Note: For the complete modification code reference on the `vadd` host application, see [host code modifications](./code_modification_guide/host_modifications.md).
 
-7. Now run emulation on the modified `vadd` application. Follow the instructions in [Versal platform creation tutorial-Step4 Emulation](../../Introduction/03_Edge_VCK190/step4.md#optional-test-the-application-on-hardware-emulation).
+7. Now run emulation on the modified `vadd` application. Follow the instructions in [Versal platform creation tutorial-Step3 Emulation](../../Design_Tutorials/03_Edge_VCK190/step3.md#optional-test-the-application-on-hardware-emulation).
 
 8. After 'Test Passed' appears in the console window, copy over the generated `wave_out.txt` file from the QEMU target. First, launch the XSCT console window from `Xilinx` menu if you have not already done so.
 
-Connect to the `tcf` target using the following command:
+  Connect to the `tcf` target using the following command:
 
-```
-connect -host 127.0.0.1 -port 1440
-```
+  ```
+  connect -host 127.0.0.1 -port 1440
+  ```
 
-Copy the `wave_out.txt` file from the `tcf` target to the host machine using the following command:
+  Copy the `wave_out.txt` file from the `tcf` target to the host machine using the following command:
 
-```
-tfile copy -to-host /mnt/sd-mmcblk0p1/wave_out.txt $(YOUR_DIR)/wave_out.txt
-````
-The wave_out.txt file will be copied over to $(YOUR_DIR). Choose a tool to plot the data. A possible option is MATLAB®. If you do not have MATLAB installed, other third-party tools, such as Excel, also provide a similar feature. Use your preferred method to print out a sine wave.
+  ```
+  tfile copy -to-host /run/media/mmcblk0p1/wave_out.txt $(YOUR_DIR)/wave_out.txt
+  ````
+
+  The wave_out.txt file will be copied over to $(YOUR_DIR). Choose a tool to plot the data. A possible option is the tool `gnuplot` which is an open source tool and easy to use it to print out the sine wave.
 
   ![missing image](images/sinewave.png)
+
+# Fast Track
+
+Scripts are provided to re-create the project.  For the moment, this script only supports running emulation. 
+
+1. Run build
+
+  ```
+  # cd to the step directory, e.g.
+  cd ref_files/
+  make all COMMON_IMAGE_VERSAL=<path/to/common_image/> # to specify the common image path
+  ```
+
+2. To clean the generated files, please run
+
+  ```bash
+  make clean
+  ```
 
 # Support
 
@@ -231,4 +258,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD019 | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD019 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>

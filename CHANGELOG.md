@@ -1,4 +1,15 @@
 # Vitis-Tutorials ChangeLog
+## 2022.1_update (Sep 15th, 2022)
+
+### New Tutorials 
+- AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/
+- Hardware_Acceleration/Design_Tutorials/09-sssp-application/
+- Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card/
+
+### Tutorial Updates
+- AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines/
+    * moved from AI_Engine_Development/Design_Tutorials/04-custom-platform-emulation
+
 ## 2022.1 (May 6th, 2022)
 
 ### New Features
@@ -19,7 +30,7 @@
     * Add lpddr4 to the platform; Add Yocto support; Add HW_Emu support. 
 - Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/ 
     * Introduce XRT Native API to replace OpenCL API.
-- AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter :
+- AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter/
     * Add part II 
 
 

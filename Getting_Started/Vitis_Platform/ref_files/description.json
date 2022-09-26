@@ -1,6 +1,6 @@
 {
     "name": "Getting_Started-Vitis_Platform",
-    "description": "Quickly create a Versal Platform",
+    "description": "Getting_Started-Vitis_Platform",
     "gui": "false",
     "flow": "vitis",
     "platform_allowlist": ["vck190"],
