@@ -46,10 +46,11 @@ createdts -hw <static XSA> \
     -git-branch xlnx_rel_v2022.1
 ```
 
-Add the following contents to system-user.dtsi. 
+The generated device tree files are located in build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp path.
+
+Create **system-user.dtsi** file in this directory and add the following contents to system-user.dtsi. 
 
 ```
-
 &amba_pl {
 	ai_engine@20000000000 {
 		#address-cells = <0x02>;
@@ -114,6 +115,8 @@ dtc -I dts -O dtb -o system.dtb system.dts
 
 You can find the system.dtb file in step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/ directory.
 
+
+
 ### Creating the Vitis Platform
 
 The Vitis platform creation workflow for DFX platforms is almost identical to the flat platform with the following exceptions
@@ -121,11 +124,14 @@ The Vitis platform creation workflow for DFX platforms is almost identical to th
 1. The platform creation can only be down with XSCT. Vitis IDE doesn't support to create DFX platforms.
 2. When creating the DFX platform, both static XSA and RP XSA are required. Static XSA will be used to create boot.bin. RP XSA will be used to link acceleration kernels.
 
+
+#### Prepare for Platform Packaging
+
 User should prepare the following components before creating the platform.
 
 | Component                                     | Conventional Path or Filename                         | Description                                                   |
 | --------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------- |
-| Boot components in BOOT.BIN                   | boot/bl31.elf</br>boot/u-boot.elf</br>boot/system.dtb | All components referred in linux.bif should be in this folder |
+| Boot components                   | boot/bl31.elf</br>boot/u-boot.elf</br>boot/system.dtb | All components referred in linux.bif should be in this folder |
 | Boot components in FAT32 partition of SD Card | sd_dir/boot.scr                                        | U-boot configuration file to store in FAT32 partition of SD card                                    |
 | Linux Software Components         | sw_comp/Image</br>sw_comp/rootfs.ext4</br>sw_comp/sysroots | Linux components for application creation and Linux booting. They can be packaged into platform or stay standalone and be linked during application creation process. |
 
@@ -206,6 +212,36 @@ tree -L 3 --charset ascii
 > Note: If you run the fast track script, the boot directory only has linux.bif file because the platform creation script xsct_create_pfm.tcl uses `<petalinux_project>/images/linux` directory as boot directory for components of the BIF file. To make the GUI flow easier, we copy these components to boot directory for preparation.
 
 
+#### Generating Static Boot Image
+
+A DFX platform boot the static region during power on. The static boot image can include static region PDI for hardware configuration, ARM Trusted Firmware bl31.elf, u-boot.elf and device tree for u-boot.
+
+When creating a DFX platform, static boot.bin is required. We generate this boot image before creating the platform.
+
+Static PDI is included in the static region XSA. We can use XSCT command `openhw $(XSA_NAME)_static.xsa` to extract the XSA and find the PDI.
+
+Run bootgen command to create the boot.bin.
+```
+bootgen -arch versal -image bootgen.bif -o boot.bin;
+```
+
+The bootgen.bif should contain the following information.
+```
+the_ROM_image:
+{
+image {
+	{ type=bootimage, file=<static>.pdi }
+}
+image {
+	id = 0x1c000000, name=apu_subsystem 
+	{ type=raw, load=0x00001000, file=build/boot/system.dtb }
+	{ core=a72-0, exception_level=el-3, trustzone, file=build/boot/bl31.elf }
+	{ core=a72-0, exception_level=el-2, file=build/boot/u-boot.elf }
+}
+}
+```
+
+
 ### Platform Packaging
 
 We will use XSCT command line tool to create the Vitis DFX platform. 
@@ -216,20 +252,20 @@ Create a tcl file with XSCT commands.
 
 ```Tcl
 # Create a platform project
-platform create -name vck190_custom \
-    -desc "A custom platform VCK190 platform" \
-    -hw <Hardware>.xsa \
-    -hw_emu <Hardware_Emulation>.xsa \
+platform create -name vck190_dfx_custom \
+    -desc "A custom VCK190 DFX platform" \
+    -hw <Static>.xsa \
+    -rp {id 0 hw <RP>.xsa hw_emu <HW_EMU>.xsa} \
     -out <Output_Directory> \
     -no-boot-bsp 
 
-# If you don't need to support hardware emulation, you can omit the option -hw_emu and its value.
-
 # AIE domain
 domain create -name aiengine -os aie_runtime -proc ai_engine
+domain config -qemu-data ./boot
 
 # Add Linux domain
-domain create -name xrt -proc psv_cortexa72 -os linux -arch {64-bit} -runtime {ocl} -sd-dir {./sd_dir}  -bootmode {sd}
+domain create -name xrt -proc psv_cortexa72 -os linux -sd-dir {./sd_dir} 
+domain config -hw-boot-bin <PATH to Boot.bin>
 domain config -boot {./boot}
 domain config -generate-bif
 domain config -qemu-data ./boot
@@ -245,14 +281,14 @@ platform generate
 The `platform create` command needs the following input values:
 
 - `-name`: Platform name
-- `-hw`: Hardware XSA file location
-- `-hw_emu`: Hardware emulation XSA file location
+- `-hw`: Static Hardware XSA file location
+- `-rp`: The reconfigureable partition info with ID, XSA and hardware emulation XSA info. ID is reserved for multi-partition DFX. For now only one partition is supported. Please use `id 0`.
 - `-out`: platform output path. In this example, we set output directory to **step2_sw/build/pfm**.
 - `-sd-dir`: the directory that contains the files to be included in the FAT32 partition of the SD card image.
 
 > Note: Hardware and hardware emulation XSA are both required by v++ link in 2022.1. In future releases you will be able to provide only one XSA if you only need to run one target build.
 
-The `domain` command will setup one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. It will use files in `./sd_dir` to form the FAT32 partition of the SD card image and files in `./boot` directory to generate boot.bin. We have stored required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
+The `domain` command will setup one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. The DFX platform Linux domain requires user to provide the boot.bin to boot the static region. It will use files in `./sd_dir` to form the FAT32 partition of the SD card image. We have stored required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
 
 You can pass the values to the script directly by replacing the variable with the actual value, or define them in the header of the tcl script, or pass the value to XSCT when calling this script. 
 
