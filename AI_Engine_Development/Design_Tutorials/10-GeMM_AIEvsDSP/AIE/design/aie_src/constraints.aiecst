@@ -1,0 +1,268 @@
+{
+  "NodeConstraints": {
+    "DataInA0_CASC0": {
+      "shim": {
+        "column": 23,
+        "channel": 0
+      }
+    },
+    "DataInA0_CASC1": {
+      "shim": {
+        "column": 24,
+        "channel": 0
+      }
+    },
+    "DataInA0_CASC2": {
+      "shim": {
+        "column": 21,
+        "channel": 4
+      }
+    },
+    "DataInA0_CASC3": {
+      "shim": {
+        "column": 22,
+        "channel": 0
+      }
+    },
+    "DataInB0_CASC0": {
+      "shim": {
+        "column": 22,
+        "channel": 4
+      }
+    },
+    "DataInB0_CASC1": {
+      "shim": {
+        "column": 21,
+        "channel": 0
+      }
+    },
+    "DataInB0_CASC2": {
+      "shim": {
+        "column": 20,
+        "channel": 0
+      }
+    },
+    "DataInB0_CASC3": {
+      "shim": {
+        "column": 19,
+        "channel": 0
+      }
+    },
+    "DataInB1_CASC0": {
+      "shim": {
+        "column": 18,
+        "channel": 0
+      }
+    },
+    "DataInB1_CASC1": {
+      "shim": {
+        "column": 17,
+        "channel": 0
+      }
+    },
+    "DataInB1_CASC2": {
+      "shim": {
+        "column": 16,
+        "channel": 0
+      }
+    },
+    "DataInB1_CASC3": {
+      "shim": {
+        "column": 15,
+        "channel": 0
+      }
+    },
+    "DataInB2_CASC0": {
+      "shim": {
+        "column": 28,
+        "channel": 0
+      }
+    },
+    "DataInB2_CASC1": {
+      "shim": {
+        "column": 27,
+        "channel": 0
+      }
+    },
+    "DataInB2_CASC2": {
+      "shim": {
+        "column": 26,
+        "channel": 0
+      }
+    },
+    "DataInB2_CASC3": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    },
+    "DataInB3_CASC0": {
+      "shim": {
+        "column": 44,
+        "channel": 0
+      }
+    },
+    "DataInB3_CASC1": {
+      "shim": {
+        "column": 43,
+        "channel": 0
+      }
+    },
+    "DataInB3_CASC2": {
+      "shim": {
+        "column": 44,
+        "channel": 4
+      }
+    },
+    "DataInB3_CASC3": {
+      "shim": {
+        "column": 43,
+        "channel": 4
+      }
+    },
+    "DataInB4_CASC0": {
+      "shim": {
+        "column": 40,
+        "channel": 0
+      }
+    },
+    "DataInB4_CASC1": {
+      "shim": {
+        "column": 39,
+        "channel": 0
+      }
+    },
+    "DataInB4_CASC2": {
+      "shim": {
+        "column": 38,
+        "channel": 0
+      }
+    },
+    "DataInB4_CASC3": {
+      "shim": {
+        "column": 37,
+        "channel": 0
+      }
+    },
+    "DataInB5_CASC0": {
+      "shim": {
+        "column": 14,
+        "channel": 0
+      }
+    },
+    "DataInB5_CASC1": {
+      "shim": {
+        "column": 13,
+        "channel": 0
+      }
+    },
+    "DataInB5_CASC2": {
+      "shim": {
+        "column": 12,
+        "channel": 0
+      }
+    },
+    "DataInB5_CASC3": {
+      "shim": {
+        "column": 11,
+        "channel": 0
+      }
+    },
+    "DataInB6_CASC0": {
+      "shim": {
+        "column": 10,
+        "channel": 0
+      }
+    },
+    "DataInB6_CASC1": {
+      "shim": {
+        "column": 9,
+        "channel": 0
+      }
+    },
+    "DataInB6_CASC2": {
+      "shim": {
+        "column": 8,
+        "channel": 0
+      }
+    },
+    "DataInB6_CASC3": {
+      "shim": {
+        "column": 7,
+        "channel": 0
+      }
+    },
+    "DataInB7_CASC0": {
+      "shim": {
+        "column": 34,
+        "channel": 0
+      }
+    },
+    "DataInB7_CASC1": {
+      "shim": {
+        "column": 33,
+        "channel": 0
+      }
+    },
+    "DataInB7_CASC2": {
+      "shim": {
+        "column": 32,
+        "channel": 0
+      }
+    },
+    "DataInB7_CASC3": {
+      "shim": {
+        "column": 31,
+        "channel": 0
+      }
+    },
+    "DataOutC0": {
+      "shim": {
+        "column": 19,
+        "channel": 0
+      }
+    },
+    "DataOutC1": {
+      "shim": {
+        "column": 15,
+        "channel": 0
+      }
+    },
+    "DataOutC2": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    },
+    "DataOutC3": {
+      "shim": {
+        "column": 43,
+        "channel": 0
+      }
+    },
+    "DataOutC4": {
+      "shim": {
+        "column": 37,
+        "channel": 0
+      }
+    },
+    "DataOutC5": {
+      "shim": {
+        "column": 11,
+        "channel": 0
+      }
+    },
+    "DataOutC6": {
+      "shim": {
+        "column": 7,
+        "channel": 0
+      }
+    },
+    "DataOutC7": {
+      "shim": {
+        "column": 31,
+        "channel": 0
+      }
+    }
+  }
+}
