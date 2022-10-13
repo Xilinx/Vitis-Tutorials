@@ -25,7 +25,7 @@ XSA=./step1_hw/build/vivado/$(PLATFORM_NAME)_static.xsa
 XPFM=./step2_sw/build/pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 
 .PHONY: all clean step1 step2 step3 
-all: step1 step2 step4
+all: step1 step2 step3
 
 step1: $(XSA)
 
@@ -41,11 +41,11 @@ $(XPFM): $(XSA)
 
 
 
-step4: $(XPFM)
-	echo "Step 4: Validating the platform"
-	$(MAKE) -C step4_validate all
+step3: $(XPFM)
+	echo "Step 3: Validating the platform"
+	$(MAKE) -C step3_validate all
 
 clean:
 	$(MAKE) -C step1_hw clean
 	$(MAKE) -C step2_sw clean
-	$(MAKE) -C step4_validate clean
+	$(MAKE) -C step3_validate clean
