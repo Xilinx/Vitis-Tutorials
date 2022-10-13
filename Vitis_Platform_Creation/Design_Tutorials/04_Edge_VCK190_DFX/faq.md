@@ -148,6 +148,16 @@ This error can happen when XRT tries to access kernel register but it's not acce
 1. Aperture setup of the PL_CTRL_S_AXI interface. Make sure the APERTURE and HDL_ATTRIBUTE.LOCKED properties are applied to the PL_CTRL_AXI_S interface. If it's incorrect, v++ link will assign incorrect address to kernels.
 2. PL_CTRL_S_AXI interface width. Make sure the PL_CTRL_AXI_S interface is freezed after doing validation because the validation step calculates the bus width. You can check the with by right click the VitisRegion.bd, select Generate Output Products. If you select "Do not launch", Vivado will generate the wrapper and skip IP synthesis. Check VitisRegion.v. If the PL_CTRL_S_AXI_araddr is defined as a bus like `input [43:0]PL_CTRL_S_AXI_araddr`, it's correct. If it's `input PL_CTRL_S_AXI_araddr`, it's incorrect. 
 
+### ERROR: [BD 41-2666] NoC BDC Aperture Error: Dead-end aperture.
 
+Issue: When running Generate Block Design in step 1, Vivado reports the following error message:
+
+```
+ERROR: [BD 41-2666] NoC BDC Aperture Error: Dead-end aperture. BDC Aperture 0x800000000 [0x180000000] on /VitisRegion/DDR_2 is not used by any downstream NoC endpoints or BDC boundary apertures. A NoC BDC aperture must have a path to a NoC endpoint or downstream BDC aperture that covers the upstream BDC aperture. Downstream endpoints: /noc_ddr/MC0_2
+```
+
+Solution:
+
+In the error message, it lists the BDC Aperture `0x800000000 [0x180000000]` on BDC interface `/VitisRegion/DDR_2` is not used by downstream NOC endpoint `/noc_ddr/MC0_2`. It's because that the noc_ddr only enables 2GB memory space. Please check that you followed the noc_ddr setup instructions to enable `DDR LOW 1` address region.
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
