@@ -1,0 +1,28 @@
+<!-- © Copyright 2021 Xilinx, Inc.  -->
+<!--                                                                    -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License");      -->
+<!-- you may not use this file except in compliance with the License.     -->
+<!-- You may obtain a copy of the License at                               -->
+<!--                                                                       -->
+<!--     http://www.apache.org/licenses/LICENSE-2.0                        -->
+<!--                                                                       -->
+<!-- Unless required by applicable law or agreed to in writing, software   -->
+<!-- distributed under the License is distributed on an "AS IS" BASIS,     -->
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. -->
+<!-- See the License for the specific language governing permissions and  -->
+<!-- limitations under the License.  -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<root versionMajor="1" versionMinor="5">
+  <kernel name="gemm_large_ocm" language="ip_c" vlnv="xilinx.com:user:gemm_large_ocm:1.0" attributes="" hash="" preferredWorkGroupSizeMultiple="0" workGroupSize="1" debug="false" compileOptions="" profileType="" interrupt="true" hwControlProtocol="ap_ctrl_hs">
+    <ports>
+      <port name="S_AXI" mode="slave" range="0x10000" dataWidth="32" portType="addressable" base="0x0"/>
+    </ports>
+    <args>
+      <arg name="gemm_ctrl"     addressQualifier="0" id="0"  port="S_AXI"           size="0x4" offset="0x1C" hostOffset="0x0" hostSize="0x4" type="unsigned int"/>
+</args>
+    <compileWorkGroupSize x="1" y="1" z="1"/>
+    <maxWorkGroupSize x="1" y="1" z="1"/>
+  </kernel>
+</root>
+
