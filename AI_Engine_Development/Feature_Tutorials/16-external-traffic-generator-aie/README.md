@@ -9,7 +9,7 @@
 
 # Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 # Introduction
 
@@ -46,7 +46,7 @@ The external traffic generators use Python and require non-standard packages to 
 2. Install the appropriate packges using `pip`.
 
     ```bash
-    pip -r install requirements.txt
+    pip3 install requirements.txt
     ```
 
     This file contains the following packages:
@@ -67,7 +67,7 @@ The external traffic generators use Python and require non-standard packages to 
 4. Add the provided packages for external traffic generators to the `PYTHONPATH`. Run the following command:
 
     ```bash
-    export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:${PYTHONPATH}
+    export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:${PYTHONPATH}
     ```
 
 ### Xilinx Tools Initialization
@@ -77,14 +77,14 @@ Before starting this tutorial, run the following steps.
 1. Set up the following paths in the script `env_setup.sh`:
 
 ```bash
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
+export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.1 - Directory>
+export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
 export XILINX_XRT=/<user-path>/opt/xilinx/xrt
 export PYTHON3_LOCATION=<user-path>
 ```
 
-2. The script sets the necessary paths to run the tutorial:
+2. This env_setup.sh sets the necessary paths to run the tutorial:
 
     - `ROOTFS`, `IMAGE`, `SYSROOT`, `CXX`, and `SDKTARGETSYSROOT` for host software compilation.
     - `LIBRARY_PATH` to handle external traffic generator handles.
@@ -153,10 +153,10 @@ sc=ai_engine_0.DataOut1:s2mm.s
 
 To work with external traffic generators in hardware emulation, introduce hooks in the PL. For that purpose, Xilinx provides a complete set of XO files with various bitwidths in `$XILINX_VITIS/data/emulation/XO/`:
 
-- `sim_ipc_master_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
-- `sim_ipc_slave_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
+- `sim_ipc_axis_master_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
+- `sim_ipc_axis_slave_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
 
-In this tutorial, there are 32-bit interfaces. Copy the files `sim_ipc_master_32.xo` and `sim_ipc_slave_32.xo` into the  `pl_kernels` directory. The configuration file is the one in `system_etg.cfg`:
+In this tutorial, there are 32-bit interfaces. Copy the files `sim_ipc_axis_master_32.xo` and `sim_ipc_axis_slave_32.xo` into the  `pl_kernels` directory. The configuration file is the one in `system_etg.cfg`:
 
 ```bash
 [connectivity]
@@ -219,7 +219,7 @@ Navigate to line 69, the `s2mm` function. This function performs the following o
 
 ### C++ Application
 
-A C++ application has also been created to test this feature. On top of reading and writing files, this application uses the original HLS code of the `polar_clip` function to test it in situ. The following image shows the general flow of the Python to be used in `aiesimulator`, `x86simulator`, and `hw_emu`:
+A C++ application has also been created to test this feature. On top of reading and writing files, this application uses the original HLS code of the `polar_clip` function to test it in situ. The following image shows the general flow of the C++ to be used in `aiesimulator`, `x86simulator`, and `hw_emu`:
 
 ![Diagram of the C++ ETG](./images/TutorialImages-CppETG.svg)
 
@@ -292,10 +292,10 @@ make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=PYTHON clean aie aiesim
 make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP clean aie traffic_gen aiesim
 --> Same but with a C++ external TG
 
-make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=PYTHON clean aie xclbin host package hw_emu
+make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=PYTHON clean aie xclbin host package run_emu
 --> Runs hw_emu with Python External TG. You have to get out from Qemu (CTRL A + X) and close the 2 plots to finish the simulation.
 
-make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP traffic_gen hw_emu
+make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP traffic_gen run_emu
 --> Runs hw_emu with C++ external TG. Here, you take advantage of the already compiled xclbin and created package.
 ```
 

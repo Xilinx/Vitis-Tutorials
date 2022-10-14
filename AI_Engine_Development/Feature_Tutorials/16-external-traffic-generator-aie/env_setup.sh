@@ -15,9 +15,9 @@
 
 #Setup environment variables
 
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
+export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.1 - Directory>
+export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
 export XILINX_XRT=/<user-path>/opt/xilinx/xrt
 export PYTHON3_LOCATION=<user-path>
 
@@ -46,7 +46,7 @@ echo "XILINX_VERSAL_SW   : "$XILINX_VERSAL_SW
 
 
 # Python setup
-export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:${PYTHONPATH}
+export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:${PYTHONPATH}
 export PATH=$PYTHON3_LOCATION:$PATH
 
 export LD_LIBRARY_PATH_SAVE=$LD_LIBRARY_PATH

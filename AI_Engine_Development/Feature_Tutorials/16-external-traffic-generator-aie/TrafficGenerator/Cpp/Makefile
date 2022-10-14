@@ -12,22 +12,22 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-PROTO_PATH=$(XILINX_VIVADO)/data/simmodels/xsim/2022.1/lnx64/6.2.0/ext/protobuf/
-GCC=/tools/batonroot/rodin/devkits/lnx64/gcc-6.2.0/bin/gcc
+PROTO_PATH=$(XILINX_VIVADO)/data/simmodels/xsim/2022.2/lnx64/6.2.0/ext/protobuf/
+GCC=${XILINX_VIVADO}/tps/lnx64/gcc-6.2.0/bin/gcc
 # GCC_DIR := $(XILINX_VITIS)/lnx64/tools/gcc
 # GCC=$(GCC_DIR)/bin/gcc
-IPC_XTLM= $(XILINX_VIVADO)/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/cpp/src/
-IPC_XTLM_INC= $(XILINX_VIVADO)/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/cpp/inc/
-LOCAL_IPC= $(IPC_XTLM)../
+IPC_XTLM= $(XILINX_VIVADO)/data/emulation/cpp/src/xtlm_ipc
+IPC_XTLM_INC= $(XILINX_VIVADO)/data/emulation/cpp/inc/xtlm_ipc
+LOCAL_IPC= $(IPC_XTLM)
 
-LD_LIBRARY_PATH:=$(XILINX_VIVADO)/data/simmodels/xsim/2022.1/lnx64/6.2.0/ext/protobuf/:$(XILINX_VIVADO)/lib/lnx64.o/Default:$(XILINX_VIVADO)/lib/lnx64.o/:$(LD_LIBRARY_PATH)
+LD_LIBRARY_PATH:=$(XILINX_VIVADO)/data/simmodels/xsim/2022.2/lnx64/6.2.0/ext/protobuf/:$(XILINX_VIVADO)/lib/lnx64.o/Default:$(XILINX_VIVADO)/lib/lnx64.o/:$(LD_LIBRARY_PATH)
 
 PLKERNELS_DIR := ../../pl_kernels
 PLKERNELS := $(PLKERNELS_DIR)/polar_clip.cpp
 
 
-IPC_SRC := $(LOCAL_IPC)/src/axis/*.cpp $(LOCAL_IPC)/src/common/*.cpp $(LOCAL_IPC)/src/common/*.cc
-INC_FLAGS := -I$(LOCAL_IPC)/inc -I$(LOCAL_IPC)/inc/axis/ -I$(LOCAL_IPC)/inc/common/  -I$(PROTO_PATH)/include/ -I$(PLKERNELS_DIR) -I$(XILINX_HLS)/include
+IPC_SRC := $(IPC_XTLM)/axis/*.cpp $(IPC_XTLM)/common/*.cpp $(IPC_XTLM)/common/*.cc
+INC_FLAGS := -I$(IPC_XTLM_INC) -I$(IPC_XTLM_INC)/axis/ -I$(IPC_XTLM_INC)/common/  -I$(PROTO_PATH)/include/ -I$(PLKERNELS_DIR) -I$(XILINX_HLS)/include -I$(XILINX_VIVADO)/data/simmodels/xsim/2022.2/lnx64/6.2.0/ext/protobuf/include
 LIB_FLAGS := -L$(PROTO_PATH)/ -lprotobuf -L$(XILINX_VIVADO)/lib/lnx64.o/ -lrdizlib -L$(GCC)/../../lib64/ -lstdc++ -lpthread
 
 

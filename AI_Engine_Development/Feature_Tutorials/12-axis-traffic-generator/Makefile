@@ -184,8 +184,9 @@ run: all run_emu
 # If SPRITE is running python will run in a background process.
 run_emu: 
 # $(PYTHON) sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 &
-	cd ./sw
-	python3 pysrc/run_traffic_gen.py ${PLIO_WIDTH} 0 & 
+	cd ./sw/pysrc
+	python3 run_traffic_gen.py ${PLIO_WIDTH} 0 & 
+	cd ..
 	$(EMU_CMD)
 
 ###########################################################################
