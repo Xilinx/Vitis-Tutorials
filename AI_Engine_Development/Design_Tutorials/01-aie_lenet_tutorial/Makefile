@@ -480,7 +480,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 4000 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -no-reboot -timeout 4000 | tee embedded_run.log
 
 endif
 else
