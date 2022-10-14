@@ -16,7 +16,7 @@
 
 ECHO=@echo
 
-.PHONY: help
+.PHONY: help xclbin host all clean
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -50,9 +50,6 @@ PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 
 # TARGET: set the build target, only hw target is supported for designs including GT kernel
 TARGET := hw
-
-
-.phony: all clean
 
 
 ################## IP resource generation 
@@ -92,24 +89,6 @@ $(XCLBIN_OBJ): krnl_aurora.xo strm_issue_$(TARGET).xo strm_dump_$(TARGET).xo krn
 
 CXXFLAGS := -std=c++17 -Wno-deprecated-declarations
 CXXFLAGS += -I$(XILINX_XRT)/include
-
-# Special setting for CentOS/RHEL 7 to bypass possible XRT Native API compiling error
-OSDIST = $(shell lsb_release -i |awk -F: '{print tolower($$2)}' | tr -d ' 	' )
-OSREL = $(shell lsb_release -r |awk -F: '{print tolower($$2)}' |tr -d ' 	')
-ifneq ($(findstring centos,$(OSDIST)),)
-ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
-ifeq ($(HOST_ARCH), x86)
-CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-endif
-endif
-else ifneq ($(findstring redhat,$(OSDIST)),)
-ifeq (7,$(shell echo $(OSREL) | awk -F. '{print tolower($$1)}' ))
-ifeq ($(HOST_ARCH), x86)
-CXXFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
-endif
-endif
-endif
-
 LDFLAGS := -L$(XILINX_XRT)/lib
 LDFLAGS += $(LDFLAGS) -lxrt_coreutil
 EXECUTABLE := host_krnl_aurora_test
@@ -132,4 +111,3 @@ clean:
 	$(RM) -rf ip_generation vivado_pack_krnl_project
 	$(RM) -rf *.xo *.xclbin *.xclbin.info *.xclbin.link_summary *.jou *.log *.xo.compile_summary _x
 	$(RM) -rf *.dat *.pb xsim.dir *.xml *.ltx *.csv *.protoinst *.wdb *.wcfg host_krnl_aurora_test
-

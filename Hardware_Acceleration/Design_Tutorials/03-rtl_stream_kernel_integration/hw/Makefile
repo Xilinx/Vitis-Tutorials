@@ -14,7 +14,7 @@
 
 ECHO=@echo
 
-.PHONY: help
+.PHONY: help all xll_xo clean
 
 help::
 	$(ECHO) ""
@@ -51,8 +51,6 @@ XOS_RTC_GEN_TEST = rtc_gen.xo strm_dump_$(TARGET).xo
 KERNEL_FLAGS_ALPHA_MIX := --kernel alpha_mix -I. -I./include --advanced.prop kernel.alpha_mix.kernel_flags="-std=c++0x -D__SDSVHLS__ -DHLS_NO_XIL_FPO_LIB"
 KERNEL_FLAGS_STRM_DUMP := --kernel strm_dump -I. -I./include --advanced.prop kernel.strm_dump.kernel_flags="-std=c++0x -D__SDSVHLS__ -DHLS_NO_XIL_FPO_LIB"
 
-.phony: clean traces
-
 include config_gen.mk
 
 all: rtc_alpha_$(TARGET).xclbin rtc_gen_test_$(TARGET).xclbin
@@ -76,4 +74,3 @@ rtc_gen_test_$(TARGET).xclbin: $(XOS_RTC_GEN_TEST) config_rtc_gen_test
 
 clean:
 	$(RM) -r _x .Xil .ipcache *.ltx *.log *.jou *.info *.xclbin *.xclbin.* *.xo *.xo.* *.str *.cfg
-	

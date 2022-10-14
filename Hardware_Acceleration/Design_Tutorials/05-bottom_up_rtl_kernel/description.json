@@ -14,16 +14,16 @@
             {
                 "max_memory_MB": 76800, 
                 "max_time_min": {
-                    "build_hw": 180
+                    "vitis_hw_build": 360
                 }
             }
         ], 
         "targets": [
-            "vitis_hw"
+            "vitis_hw_build"
         ],  
         "custom_build_target":
         {
             "all": "all"
-        }              
+        }           
     }
 }

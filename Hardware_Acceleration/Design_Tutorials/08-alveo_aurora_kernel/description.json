@@ -4,27 +4,31 @@
     "gui": "false",
     "flow": "vitis",
 
-    "platform_whitelist": [ "u200", "u250"],
+    "platform_allowlist": [ "u200"],
     "platform_blacklist": [],
      
     "testinfo": {
         "test_name": "HW_D_08-alveo-aurora",
         "disable": false, 
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_alveo.sh"
+            }
+        },
         "jobs": [
             {
                 "max_memory_MB": 76800, 
                 "max_time_min": {
-                    "vitis_hw": 360
+                    "vitis_hw_build": 360
                 }
             }
         ], 
         "targets": [
-            "vitis_hw"
+            "vitis_hw_build"
         ],
         "custom_build_target":
         {
             "all": "all"
         }
-
     }
 }

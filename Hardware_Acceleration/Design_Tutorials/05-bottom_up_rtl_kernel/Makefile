@@ -14,7 +14,7 @@
 
 ECHO=@echo
 
-.PHONY: help
+.PHONY: build_krnl_aes build_krnl_cbc all
 
 PART := xcu200-fsgd2104-2-e
 #PART := xcu250-figd2104-2L-e

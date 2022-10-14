@@ -18,9 +18,9 @@ LANE := 1
 
 ECHO=@echo
 
-.PHONY: help
+.PHONY: help all gen_ip pack_kernel build_hw clean
 
-help::
+help:
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make gen_ip"
 	$(ECHO) "      Command to generate the IPs used in this design"
