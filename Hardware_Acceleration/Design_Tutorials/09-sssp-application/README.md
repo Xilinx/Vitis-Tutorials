@@ -8,7 +8,7 @@
 
 # Single Source Shortest Path Application with Vitis Libraries for Acceleration
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 Design your application using the optimized Vitis&trade; accelerated libraries. Vitis libraries offer out-of-the-box acceleration with minimal to zero-code changes to your applications, accelerating your x86 host application code calling Vitis accelerated library APIs or developing accelerators on Xilinx platforms calling kernels in your code. You can work at an application level and focus your core competencies on solving problems by using the libraries in commonly-used programming languages and leveraging Xilinx platforms as an enabler in your application.
 
