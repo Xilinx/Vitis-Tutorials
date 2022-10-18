@@ -9,7 +9,7 @@
 
 # Optimizing Accelerated FPGA Applications: Bloom Filter Example
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 

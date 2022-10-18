@@ -12,7 +12,7 @@
 
 # Vitis™ Getting Started Tutorial
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ![img](./images/vitis_101.png)
 
@@ -47,7 +47,7 @@ The Vitis unified software platform provides a framework for developing and deli
 
 A Vitis accelerated application consists of two distinct components: a software program running on a standard processor such as an X86 processor, or ARM embedded processor, and a Xilinx device binary (`xclbin`) containing hardware accelerated functions, or kernels.
 
-* The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the [XRT native API](https://xilinx.github.io/XRT/master/html/index.html) implemented by the Xilinx Runtime library (XRT), or OpenCL 1.2 C/C++ API to interact with the acceleration kernel in the Xilinx device. A description of the host application and required API calls can be found in the Vitis documentation under [Host Programming](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming).
+* The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the [XRT native API](https://xilinx.github.io/XRT/master/html/index.html) implemented by the Xilinx Runtime library (XRT) to interact with the acceleration kernel in the Xilinx device. A description of the host application and required API calls can be found in the Vitis documentation under [Host Programming](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming).
 
 * The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the Xilinx device. Refer to [C/C++ Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/C/C-Kernels), or [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Vitis documentation for coding requirements. The kernels are integrated with a Vitis hardware platform using standard AXI interfaces.
 

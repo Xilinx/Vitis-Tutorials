@@ -8,7 +8,7 @@
 
 # Getting Started with RTL Kernels
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Tutorial Overview
 
@@ -30,7 +30,7 @@ Using these reference files, the tutorial guides you through the process of buil
 The labs in this tutorial use:
 
 * BASH Linux shell commands
-* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. 
+* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
 * If necessary, the tutorial can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  

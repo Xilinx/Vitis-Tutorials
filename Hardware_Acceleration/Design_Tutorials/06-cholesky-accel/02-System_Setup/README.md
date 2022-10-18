@@ -11,7 +11,7 @@
 In order to proceed to the Vitis optimization part of the tutorial, we'll need to setup the environment and the tools. Please follow the below steps to install and setup Vitis and Alveo U50 accelerator card.
 
 ## Install Vitis Software Platform
-The [Vitis Unified Software Development Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. To develop applications, you will need to download and install the Vitis core development kit from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html), Vitis 2020.1 will be used for this tutorial.
+The [Vitis Unified Software Development Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. To develop applications, you will need to download and install the Vitis core development kit from [Xilinx Download Center](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html), Vitis 2022.2 will be used for this tutorial.
 
 **<u>*Note:*</u>** The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and target development platform for Alveo card must be installed to work with Vitis.
 
@@ -52,7 +52,7 @@ To install Alveo U50 accelerator card on your server, follow the instructions in
 To configure the environment to run the Vitis software platform, run the following scripts, which set up the environment to run in a specific command shell.
 ~~~
 #setup XILINX_VITIS and XILINX_VIVADO variables
-source <Vitis_install_path>/Vitis/2022.1/settings64.sh
+source <Vitis_install_path>/Vitis/2022.2/settings64.sh
 #setup XILINX_XRT
 source /opt/xilinx/xrt/setup.sh
 ~~~

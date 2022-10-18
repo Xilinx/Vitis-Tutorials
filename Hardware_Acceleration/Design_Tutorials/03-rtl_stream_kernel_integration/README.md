@@ -11,7 +11,7 @@
 
 # Mixed Kernels Design Tutorial with AXI Stream and Vitis
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.
 
@@ -32,8 +32,8 @@ The designs have been verified with following software/hardware environment and 
   * Redhat/CentOS 7.4 - 7.9
   * Ubuntu 18.04/20.04
   * OpenCV libraries required
-* Vitis: 2022.1
-* XRT: 2.13.466
+* Vitis: 2022.2
+* XRT: 2.14.344
 * Hardware and Platform (need both the deployment and development platforms)
   * Alveo U200 - xilinx_u200_gen3x16_xdma_2_202110_1
   * Alveo U250 - xilinx_u250_gen3x16_xdma_4_1_202210_1
@@ -233,7 +233,7 @@ Before going through the following steps, don't forget to source XRT and Vitis s
 
 ~~~
 source /opt/xilinx/xrt/setup.sh
-source /opt/xilinx/Vitis/2020.2/settings64.sh
+source /opt/xilinx/Vitis/2022.2/settings64.sh
 ~~~
 
 The two test programs need to display images. So if you are using remote server, please use VNC desktop, or ssh connection with X11 forwarding along with local X11 server.
@@ -248,11 +248,11 @@ make
 
 make all TARGET=<hw/hw_emu> PLATFORM=<FPGA PLATFORM>
       Command to build all the rtc_gen_test and rtc_alpha xclbin and necessary kernel files (xo) for  
-      specified target and platform. By default, TARGET=hw, PLATFORM=xilinx_u200_xdma_201830_2
+      specified target and platform. By default, TARGET=hw, PLATFORM=xilinx_u200_gen3x16_xdma_2_202110_1
 
 make all_xo TARGET=<hw/hw_emu> PLATFORM=<FPGA PLATFORM>
       Command to build all the kernel files (xo), including rtc_gen.xo, alpha_mix.xo and strm_dump.xo
-      By default, TARGET=hw, PLATFORM=xilinx_u200_xdma_201830_2
+      By default, TARGET=hw, PLATFORM=xilinx_u200_gen3x16_xdma_2_202110_1
 
 make clean
       Command to remove all the generated files.
@@ -260,7 +260,7 @@ make clean
 
 In the make command options, the TARGET can be *hw* or *hw_emu*. Because the *rtc_gen* kernel doesn't provide software emulation model, *sw_emu* mode cannot be used. When the TARGET is *hw*, the XCLBIN and XO files will be with *_hw* postfix; when the TARGET is *hw_emu*, the XCLBIN and XO files will be with *_hw_emu* postfix. Please note the RTL kernel *rtc_gen* will not be affected by the *hw* or *hw_emu* option, and there will only be a XO file *rtc_gen.xo*.
 
-The PLATFORM could be one of the six choices: xilinx_u200_xdma_201830_2, xilinx_u250_gen3x16_xdma_3_1_202020_1, xilinx_u250_xdma_201830_2, xilinx_u50_gen3x16_xdma_201920_3 and xilinx_u280_xdma_201920_3. No matter whether you have these Alveo cards installed, you can use the platform as the build PLATFORM if you have installed the development platform package (deb or rpm packages) on your system. You can look into */opt/xilinx/platform* directory or use command *platforminfo -l* to check which platforms have been installed. The finally generated xclbin and xo files will be in *./hw* directory after the successful execution of the make command. 
+The PLATFORM could be one of the six choices: xilinx_u200_gen3x16_xdma_2_202110_1, xilinx_u250_gen3x16_xdma_3_1_202020_1, xilinx_u250_xdma_201830_2, xilinx_u50_gen3x16_xdma_201920_3 and xilinx_u280_xdma_201920_3. No matter whether you have these Alveo cards installed, you can use the platform as the build PLATFORM if you have installed the development platform package (deb or rpm packages) on your system. You can look into */opt/xilinx/platform* directory or use command *platforminfo -l* to check which platforms have been installed. The finally generated xclbin and xo files will be in *./hw* directory after the successful execution of the make command. 
 
 For example, if you would like to build all XO and XCLBIN files in hardware emulation mode with U50 card, just input:
 
@@ -331,7 +331,7 @@ source setup_emu.sh -s on -p xilinx_u50_gen3x16_xdma_201920_3
 
 **Note:** The *PLATFORM_NAME* you input here should be consistent with the XCLBIN files in *./sw/build* directory.
 
-For more detailes on the hardware emulation for this example design, please read [Emulation Turotial](./doc/hw_emu_tutorial.md)
+For more detailes on the hardware emulation for this example design, please read [Emulation Tutorial](./doc/hw_emu_tutorial.md)
 
 * Step 4: run executables **rtc_gen_test** or **rtc_gen_test_emu**
 
@@ -421,7 +421,7 @@ Vitis provides powerful profiling features which enable you to get a deeper view
 ## Revision History
 
 <details>
-  <summary> 2022.1 </summary>
+  <summary> 2022.2 </summary>
 
  - Update Vitis target platform support
  - In host program, use XRT Native API to replace original OpenCL API.
@@ -429,7 +429,7 @@ Vitis provides powerful profiling features which enable you to get a deeper view
 </details>
 
 <details>
-  <summary>2020.1</summary>
+  <summary>2022.2</summary>
 
   - Initial release
 

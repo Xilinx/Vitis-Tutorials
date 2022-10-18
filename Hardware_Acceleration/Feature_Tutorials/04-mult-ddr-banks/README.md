@@ -9,7 +9,7 @@
 
 # Using Multiple DDR Banks
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -44,7 +44,7 @@ The example in this tutorial uses a C++ kernel; however, the steps described are
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
@@ -70,7 +70,7 @@ Note: This tutorial showcases only hw_emu flow. If the user wants to run HW flow
 
    ```bash
      #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-     source /opt/Xilinx/Vitis/2022.1/settings64.sh
+     source /opt/Xilinx/Vitis/2022.2/settings64.sh
      #Setup runtime. XILINX_XRT will be set in this step
      source /opt/xilinx/xrt/setup.sh
    ```

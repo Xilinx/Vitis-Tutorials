@@ -1,14 +1,14 @@
 Enabling FPGA to FPGA P2P transfer using native XRT C++ API
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Version:** Vitis 2022.1
+**Version:** Vitis 2022.2
 
 XRT and Platform version
 ========================
 
 The following XRT and platform versions are used for this tutorial design.
 
-**XRT Version**:    2022.1
+**XRT Version**:    2022.2
 
 **Platform**: xilinx_u50_gen3x16_xdma_5_202210_1 and xilinx_u200_gen3x16_xdma_2_202110_1   
 

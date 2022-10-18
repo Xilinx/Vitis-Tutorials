@@ -8,7 +8,7 @@
 
 # Mixing C++ and RTL Kernels
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -43,7 +43,7 @@ Before running any of the examples, ensure you have set up the Vitis core develo
 
   ```bash
     #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-    source /opt/Xilinx/Vitis/2022.1/settings64.sh
+    source /opt/Xilinx/Vitis/2022.2/settings64.sh
     #Setup runtime. XILINX_XRT will be set in this step
     source /opt/xilinx/xrt/setup.sh
   ```

@@ -27,7 +27,7 @@
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2022.1 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2022.2 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -58,10 +58,10 @@ cd sw_emu
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd 1
-v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
+emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1
+v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -113,8 +113,6 @@ If you look at the directory contents for the `u200/sw_emu` directory you should
 * **vadd.xclbin**: The device binary linking the kernel and target platform
 * **vadd.xclbin.info**: A text report of the device binary
 * **vadd.xclbin.link_summary**: A summary report of the linked device binary
-* **opencl_trace.csv**: A report of events occurring during the application runtime
-* **summary.csv**: A report of the application profile
 * **xrt.run_summary**: A summary report of the events of the application runtime
 
 These files and reports are the results of the build and run process targeting the software emulation build. You wil be taking a closer look at some of these files in Part 5 of this tutorial.
@@ -133,10 +131,10 @@ cd hw_emu
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd 1
-v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
+emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1
+v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 Refer to *Targeting Software Emulation* for a brief explanation of these different commands. The only difference with the previous step is the `v++` target (`-t`) option which is changed from `sw_emu` to `hw_emu`. All other options remain the same.
@@ -164,9 +162,9 @@ cd hw
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-g++ -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I${XILINX_XRT}/include/ -L${XILINX_XRT}/lib/ -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
+g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
+v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 To target Hardware, the `v++ -t` option is set to `hw` and the `emconfigutil` command is not needed, as you will be running on an actual hardware platform rather than an emulated platform. All other options remain identical.

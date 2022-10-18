@@ -11,7 +11,7 @@
 
 # Using GT Kernel in Alveo with Vitis Flow
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 The Xilinx Alveo Data Center accelerator cards provide networking connectivity such as one or two QSFP28 ports depending on the card. The QSFP28 interface can support a variety of Ethernet configurations including 10GbE, 25GbE, 40GbE, and 100GbE. Multiple instances of a single lane Ethernet protocol is also possible. With Vitis flow and the latest platforms, users can create RTL kernels containing GTY transceivers, provide streaming connection to other kernels including HLS compute units, datapath buffering into DRAM memories, and driver access for moving data between the host and FPGA by the Vitis tools to implement of full integrated design.
 

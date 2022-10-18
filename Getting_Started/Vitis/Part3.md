@@ -56,22 +56,29 @@ The Vitis online documentation provides comprehensive information on [C/C++ Kern
 
 ### The Source Code for the Host Program
 
-The source code for the host program is written in C/C++ and uses standard OpenCL APIs to interact with the hardware-accelerated vector-add kernel.
+The source code for the host program is written in C/C++ and uses the native XRT APIs to interact with the hardware-accelerated vector-add kernel.
 
 * Open the [`host.cpp`](./example/src/host.cpp) file located in the `src` directory of this tutorial
 
 There are 4 main steps in the source code for this simple example.
 
-* **Step 1:** The OpenCL environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then a command queue and the kernel object are created. All Vitis applications will have code very similar to the one in this section.
+* **Step 1:** The runtime environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first Xilinx device it found. Then the kernel object is created. All Vitis applications will have code very similar to the one in this section.
 
-* **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms, it is more efficient to allocate memory aligned on 4k page boundaries. On embedded platforms, it is more efficient to perform contiguous memory allocation. A simple way of achieving either of these is to let the Xilinx Runtime allocate host memory when creating the buffers. This is done by using the cl::Buffer constructor to create the buffers and then mapping the allocated memory to user-space pointers.
+* **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms.
 
 ```cpp
-    // Create the buffers and allocate memory   
-    cl::Buffer in1_buf(context, CL_MEM_READ_ONLY,  sizeof(int) * DATA_SIZE, NULL, &err);
+    std::cout << "Allocate Buffer in Global Memory\n";
+    auto boIn1 = xrt::bo(device, vector_size_bytes, krnl.group_id(0)); //Match kernel arguments to RTL kernel
+    auto boIn2 = xrt::bo(device, vector_size_bytes, krnl.group_id(1));
+    auto boOut = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
 
-    // Map host-side buffer memory to user-space pointers
-    int *in1 = (int *)q.enqueueMapBuffer(in1_buf, CL_TRUE, CL_MAP_WRITE, 0, sizeof(int) * DATA_SIZE);
+    // Map the contents of the buffer object into host memory
+    auto bo0_map = boIn1.map<int*>();
+    auto bo1_map = boIn2.map<int*>();
+    auto bo2_map = boOut.map<int*>();
+    std::fill(bo0_map, bo0_map + DATA_SIZE, 0);
+    std::fill(bo1_map, bo1_map + DATA_SIZE, 0);
+    std::fill(bo2_map, bo2_map + DATA_SIZE, 0);
 ```
 
 *NOTE: A common alternative is for the application to explicitly allocate host memory and reuse the corresponding pointers when creating the buffers. The approach used in this example was chosen because it is the most portable and efficient across both data-center and embedded platforms.*
@@ -79,24 +86,23 @@ There are 4 main steps in the source code for this simple example.
 * **Step 3:** The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to device memory, the execution of the kernel, and lastly the transfer of the results back to host memory. These operations are enqueued in the command queue declared in Step 1. It is important to keep in mind that these three function calls are non-blocking. The commands are put in the queue and the Xilinx Runtime is responsible for submitting them to the device. Because the queue used in the host code in this example is an ordered queue, these commands are guaranteed to execute in the specified order. However, the queue could also be an out-of-order queue in which the non-blocking calls would be executed when ready, rather than in order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
 
 ```cpp
-    // Set kernel arguments
-    krnl_vector_add.setArg(0, in1_buf);
-    krnl_vector_add.setArg(1, in2_buf);
-    krnl_vector_add.setArg(2, out_buf);
-    krnl_vector_add.setArg(3, DATA_SIZE);
+    // Synchronize buffer content with device side
+    std::cout << "synchronize input buffer data to device global memory\n";
+    boIn1.sync(XCL_BO_SYNC_BO_TO_DEVICE);
+    boIn2.sync(XCL_BO_SYNC_BO_TO_DEVICE);
 
-    // Schedule transfer of inputs to device memory, execution of kernel, and transfer of outputs back to host memory
-    q.enqueueMigrateMemObjects({in1_buf, in2_buf}, 0 /* 0 means from host*/); 
-    q.enqueueTask(krnl_vector_add);
-    q.enqueueMigrateMemObjects({out_buf}, CL_MIGRATE_MEM_OBJECT_HOST);
+    std::cout << "Execution of the kernel\n";
+    auto run = krnl(boIn1, boIn2, boOut, DATA_SIZE); //DATA_SIZE=size
+    run.wait();
 
-    // Wait for all scheduled operations to finish
-    q.finish();
+    // Get the output;
+    std::cout << "Get the output data from the device" << std::endl;
+    boOut.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 ```
 
-* **Step 4:** The call to `q.finish()` returns when all previously enqueued operations have completed. In this case, it implies that the output buffer containing the results of the kernel have been migrated back to host memory and can safely be used by the software application. Here the results are simply checked against expected values before the program finishes.
+* **Step 4:** The `run.wait()` returns when the kernel has completed. At that time the output buffer containing the results of the kernel are migrated back to host memory and can safely be used by the software application. Here the results are simply checked against expected values before the program finishes.
 
-This example shows the simplest way of using OpenCL APIs to interact with the hardware accelerator. As always, additional information can be found in the [OpenCL Programming](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/OpenCL-Programming).
+This example shows the simplest way of using XRT API to interact with the hardware accelerator. 
 
 ## Next Step
 

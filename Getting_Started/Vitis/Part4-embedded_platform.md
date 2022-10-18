@@ -27,7 +27,7 @@
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2022.1 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2022.2 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -35,7 +35,6 @@
 
 ```bash
 source <VITIS_install_path>/settings64.sh
-unset LD_LIBRARY_PATH
 ```
 
 * Then make sure the following environment variables are correctly set to point to your installed ZCU102 platform, rootfs and sysroot directories respectively.
@@ -43,12 +42,8 @@ unset LD_LIBRARY_PATH
 ```bash
 export PLATFORM_REPO_PATHS=<path to the ZCU102 platform install dir>
 export ROOTFS=<path to the ZYNQMP common image directory, containing rootfs>
-```
-
-* To properly source the cross-compilation SDK, run the `environment-setup-cortexa72-cortexa53-xilinx-linux` script in the $ROOTFS directory.
-
-```bash
-source $ROOTFS/environment-setup-cortexa72-cortexa53-xilinx-linux
+export SYSROOT=$ROOTFS/sysroots/cortexa72-cortexa53-xilinx-linux
+export SDKTARGETSYSROOT=$SYSROOT
 ```
 
 *NOTE: The ZYNQMP common image file can be downloaded from the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) page, and contains the Sysroot, Rootfs, and boot Image for Xilinx Zynq MPSoC devices.*
@@ -68,27 +63,27 @@ cd sw_emu
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-$CXX -Wall -g -std=c++11 ../../src/host.cpp -o ./app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t sw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
+$CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
+v++ -c -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
 ```
 
 Here is a brief explanation of each of these four commands:
 
-1. `$CXX` compiles the host application using the ARM cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the SDK environment setup script. Refer to [Building the Host Program](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Host-Program) for more information.
+1. `$CXX` compiles the host application using the ARM cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the SDK environment setup script. Refer to [Building the Host Program](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Host-Program) for more information. This should resolve to `$XILINX_VITIS/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++`
 2. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). Refer to [Compiling Kernels with the Vitis Compiler](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-Kernels-with-the-Vitis-Compiler) for more information.
 3. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels) for more information.
 4. `v++ -p` packages the host executable, the rootfs, the FPGA binary and a few other files and generates a bootable image. Refer to [Packaging for Embedded Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-for-Embedded-Platforms) for more information. 
 
 There are two important differences to take note of here between building for Data Center accelerator cards and building for Embedded Platforms. 
 
-* The first is the use of the `v++ --package` command. This is a required step in the Embedded Processor platform flow, and is largely option in the Data Center flow. The Data Center application runs in the X86 environment, and loads the xclbin from disk. However, in the Embedded Platform flow, generally the processor must be booted from an SD card, and the `--package` option gathers the files and generates the SD card.
+* The first is the use of the `v++ --package` command. This is a required step in the Embedded Processor platform flow, and is largely optional in the Data Center flow. The Data Center application runs in the X86 environment, and loads the xclbin from disk. However, in the Embedded Platform flow, generally the processor must be booted from an SD card, and the `--package` option gathers the files and generates the SD card.
 * The second is the `emconfigutil` command. This command is used in the Data Center flow to build an emulation version of the hardware platform. However, in the Embedded Platform flow, the embedded processor requires the use of an emulation environment (QEMU) as described in [Running Emulation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation). In this flow you will use a `launch_emulation` script rather than the emulation platform.
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu` so we are building for software emulation.
 
-Notice also the `--config` option which is used to specify the name of a configuration file containing additional options. Here we are using this configuration file to specify the name of the targeted platform and the mapping of kernel arguments to specific memory banks.
+Notice also the `--config` option which is used to specify the name of a configuration file containing additional options. 
 
 ```bash
 save-temps=1
@@ -129,12 +124,14 @@ If you look at the directory contents for the `zcu104/sw_emu` directory you shou
 
 * **app.exe**: The compiled and linked host application
 * **vadd.xclbin**: The device binary linking the kernel and target platform
-* **opencl_trace.csv**: A report of events occurring during the application runtime
+* **native_trace.csv**: A report of events occurring during the application runtime
 * **summary.csv**: A report of the application profile
 * **xrt.ini**: The runtime initilization file
 * **xrt.run_summary**: A summary report of the events of the application runtime
 
-These files and reports are the results of the build and run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform), for example:
+These files and reports are the results of the build and run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform). 
+
+This command must be run from a Linux shell, outside of the QEMU environment. For example:
 
 ```bash
 scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
@@ -159,10 +156,11 @@ cd hw_emu
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-$CXX -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++
-v++ -c -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
-v++ -p -t hw_emu --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file ./run_hw_emu.sh
+$CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
+v++ -c -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+--package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw_emu.sh
 ```
 
 Refer to *Targeting Software Emulation* for a brief explanation of these different commands. The only difference with the previous step is the `v++` target (`-t`) option which is changed from `sw_emu` to `hw_emu`. All other options remain the same.
@@ -183,7 +181,9 @@ export XCL_EMULATION_MODE=hw_emu
 
 You should see messages that say TEST PASSED indicating that the run completed successfully
 
-Running the application in the QEMU generates some report files during the run. These files and reports are the results of the run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform), for example:
+Running the application in the QEMU generates some report files during the run. These files and reports are the results of the run process targeting the software emulation build. You will be taking a closer look at some of these files in Part 5 of this tutorial. To examine these files later, you must retrieve them from the QEMU environment and copy them into your local system. You can do this using the `scp` command as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform). 
+
+This command must be run from a Linux shell, outside of the QEMU environment. For example:
 
 ```bash
 scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
@@ -208,10 +208,11 @@ cd hw
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
-$CXX -Wall -g -std=c++11 ../../src/host.cpp -o app.exe -I/usr/include/xrt -lOpenCL -lpthread -lrt -lstdc++ -O
-v++ -c -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo 
-v++ -l -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xo -o vadd.xclbin
-v++ -p -t hw --platform xilinx_zcu102_base_202210_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file xrt.ini --package.sd_file app.exe --package.sd_file vadd.xclbin --package.sd_file ./run_hw.sh
+$CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
+v++ -c -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+--package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw.sh
 ```
 
 To target Hardware, the `v++ -t` option is set to `hw` and the `emconfigutil` command is not needed, as you will be running on an actual hardware platform rather than an emulated platform. All other options remain identical. 
@@ -227,7 +228,7 @@ cd /run/media/mmcblk0p1
 
 You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the zcu102/hw folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the ZCU102 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.2) to use for examples of host application and kernel coding.
 
 ## Next Step
 

@@ -8,7 +8,7 @@
 
 # Controlling Vivado Implementation
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -34,7 +34,7 @@ The Vitis core development kit provides two methods to control the Vivado tool f
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
+* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**

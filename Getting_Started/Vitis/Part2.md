@@ -75,7 +75,7 @@ The packages required for each platform can be found on the corresponding downlo
 To configure the environment to run Vitis, run the following script which sets up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2022.1/settings64.sh
+source <Vitis_install_path>/Vitis/2022.2/settings64.sh
 ```
 
 *NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*

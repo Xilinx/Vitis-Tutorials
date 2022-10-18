@@ -24,7 +24,7 @@
  
 # The Traveling Salesperson Problem
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -48,7 +48,7 @@ The execution could take over a minute for 13 cities depending on your CPU, and 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
+* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -60,7 +60,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2022.1/settings64.sh
+source <Vitis_install_path>/Vitis/2022.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 

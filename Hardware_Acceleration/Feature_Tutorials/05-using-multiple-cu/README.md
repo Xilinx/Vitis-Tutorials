@@ -8,7 +8,7 @@
 
 # Using Multiple Compute Units
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -37,7 +37,7 @@ An OpenCV version of the host code is also provided in the source code directory
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2022.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
+* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
 If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**

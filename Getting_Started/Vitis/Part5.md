@@ -33,8 +33,6 @@ If you look into the directory where you ran the application, you will notice th
 * `vadd.xo.compile_summary`: A summary report of the compiled kernel
 * `vadd.xclbin.info`: A text report of the device binary
 * `vadd.xclbin.link_summary`: A summary report of the linked device binary
-* `opencl_trace.csv`: A timeline of events occurring during the application runtime
-* `summary.csv`: A report of the application profile
 * `xrt.run_summary`: A summary report of the events of the application runtime
 
 *IMPORTANT: If you targeted the ZCU102 hardware, these files are stored on the SD card and must be copied back to your workstation to continue this lab. Refer to [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform) for more information.*
@@ -43,7 +41,7 @@ The generation of these files and reports is controlled by runtime options locat
 
 ```bash
 [Debug]
-opencl_trace=true
+native_xrt_trace=true
 ```
 
 ## Opening the Run Summary with Vitis Analyzer
@@ -60,7 +58,7 @@ This opens the Vitis Analyzer tool and loads the various reports and displays th
   * The System Diagram is a graphical view of the contents of the Xilinx device. It shows the various hardware kernels, how they are connected to platform resources such a global memory banks. 
   * Notice the Estimated Resources information displayed next to the `vadd` kernel.
   * Click on the "Settings" icon located in the top right corner of the diagram and check the "Show Interface Ports" box. Notice that the diagram now displays the mapping of kernel arguments to kernel ports and shows bandwidth information for each port.
-  * Click on each of the three tabs (Compute Units, Kernels and Memories) located at the bottom of the diagram and look at the information displayed in each of them.
+  * Click on each of the tabs (Compute Units, Kernels, Memories, Clocks) located at the bottom of the diagram and look at the information displayed in each of them.
 * Open the System Guidance report
   * The Guidance report flags issues and potential issues in your application and kernel, and provides actionable feedback on how to improve it.
   * This simple example is not fully optimized and Guidance reports several warnings. Inspect each of these warnings to learn more about optimization opportunities and design best practices.
