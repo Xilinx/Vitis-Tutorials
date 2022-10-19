@@ -28,7 +28,7 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -43,7 +43,7 @@ In this tutorial, you will work through the Vitis HLS tool GUI to build, analyze
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.1 Vitis core development kit release.
+* 2022.2 Vitis core development kit release.
 
 >**IMPORTANT:**  
 >
@@ -55,7 +55,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2022.1/settings64.sh
+source <Vitis_install_path>/Vitis/2022.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
