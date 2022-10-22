@@ -10,7 +10,7 @@
 
 # AI Engine Graph Execution and Measurement
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.
 
