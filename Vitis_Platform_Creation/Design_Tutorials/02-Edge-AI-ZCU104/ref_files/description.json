@@ -4,7 +4,7 @@
     "description": "Creating a custom ZCU104 platform from scratch",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": ["zcu"],
+    "platform_allowlist": ["zcu104"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_02-ZCU104",
@@ -27,9 +27,22 @@
         "targets": [
             "vitis_hw_emu"
         ],
+        "make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
+            "SYSROOT=${SYSROOT}",
+			"SDKTARGETSYSROOT=${SYSROOT}",
+			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
+			"IMAGE=${EDGE_COMMON_SW}/Image",
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
+        ],
         "custom_build_target":
         {
-            "all": "all"
+            "all": "all",
+            "hw" : "sd_card"
         }
     },
     "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"

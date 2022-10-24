@@ -41,7 +41,7 @@ platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 Basic Platform Information
 ==========================
 Platform:           zcu104_custom
-File:               /group/bcapps/sven/project/WorkSpace/zcu104_software_platform/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
+File:               /group/bcapps/sven/project/workspace/zcu104_software_platform/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 Description:        
 zcu104_custom
     
@@ -50,13 +50,13 @@ zcu104_custom
 Hardware Platform (Shell) Information
 =====================================
 Vendor:                           xilinx
-Board:                            zcu104_custom_platform
-Name:                             zcu104_custom_platform
+Board:                            name
+Name:                             name
 Version:                          0.0
-Generated Version:                2022.1.0
+Generated Version:                2022.2
 Hardware:                         1
 Software Emulation:               1
-Hardware Emulation:               1
+Hardware Emulation:               0
 Hardware Emulation Platform:      0
 FPGA Family:                      zynquplus
 FPGA Device:                      xczu7ev
@@ -91,7 +91,7 @@ Software Platform Information
 Number of Runtimes:            1
 Default System Configuration:  zcu104_custom
 System Configurations:
-System Config Name:                      zcu104_custom
+  System Config Name:                      zcu104_custom
   System Config Description:               zcu104_custom
   System Config Default Processor Group:   linux_domain
   System Config Default Boot Image:        standard
@@ -114,7 +114,6 @@ System Config Name:                      zcu104_custom
     Boot Image QEMU Dev Tree:  
 Supported Runtimes:
   Runtime: OpenCL
-
 ```
 
 </details>
@@ -142,7 +141,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Click **add** button and choose the folder of `zcu104_custom` which is  located under `zcu104_software_platform` folder.
    - Select **zcu104_custom** as platform, click **next**.
    - Name the project **vadd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```<full_pathname_to_zcu104_software_platform>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in Step2). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_software_platform/pfm/sw_comp` directory, which are prepared in Step 2. click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```zcu104_software_platform/xilinx-zynqmp-common-v2022.2/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in Step2). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_software_platform/pfm/sw_comp` directory, which are prepared in Step 2. click **next**.
    - Select **System Optimization Examples -> Vector Addition** and click **finish** to generate the application.
    - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
    - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
@@ -255,7 +254,7 @@ Scripts are provided to create the test applications on the custom platform we c
 
    ```bash
    cd step3_validate
-   make vadd_hw
+   make sd_card
    ```
 
 2. To clean the generated files, please run
@@ -263,10 +262,14 @@ Scripts are provided to create the test applications on the custom platform we c
    ```bash
    make clean
    ```
+   
+The command line flow has slight differences comparing to Vitis IDE flow.
+
+   - The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd`.xclbin.
 
 ### Test 3: Run a Vitis-AI Demo
 
-**Note**: Vitis AI for Vitis 2022.1 is not released. So we make this step gather up for the moment. We will update it to Vitis 2022.1 soon after Vitis AI for Vitis 2022.1 released.
+**Note**: Vitis AI for Vitis 2022.2 is not released. So we make this step gather up for the moment. We will update it to Vitis 2022.2 soon after Vitis AI for Vitis 2022.2 released.
 
 <details>
 <summary><strong>Vitis-AI Demo</strong></summary>

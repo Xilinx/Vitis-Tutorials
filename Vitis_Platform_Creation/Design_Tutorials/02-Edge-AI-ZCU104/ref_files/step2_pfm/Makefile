@@ -16,7 +16,7 @@
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
-VERSION=2022.1
+VERSION=2022.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
@@ -32,6 +32,7 @@ help:
 	
 
 all: check-common-image sw_comps dtb pfm_fsbl pfm  sysroot 
+sd_card:all
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -57,14 +58,7 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 #generate dtb file	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.1 -board  zcu104-revc"
-	@echo "add system-user.dtsi to add bootargs"
-	cp system-user.dtsi mydevice/psu_cortexa53_0/device_tree_domain/bsp/
-	echo "#include \"system-user.dtsi\"" >> mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts 
-	@echo "preprocess the dts"
-	gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dts mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts 
-	@echo "compile the DTB"
-	dtc -I dts -O dtb -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dts
+	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.2 -board  zcu104-revc -dtsi system-user.dtsi -compile"
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(BOOT)/
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(SD_DIR)/
 

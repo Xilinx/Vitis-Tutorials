@@ -16,7 +16,7 @@
 
 ## Step 1: Create Hardware Platform
 
-In this step, we will use Vivado to create the hardware design for the ZCU104 Vitis acceleration platform. We will start from a ZCU104 preset design, add platform required peripherals and configure them. After everything is set, we will export the hardware design to XSA.
+In this step, we will use Vivado to create the hardware design for the ZCU104 Vitis acceleration platform. Start from a ZCU104 preset design, add platform required peripherals and configure them. After everything is set, we will export the hardware design to XSA.
 
 ### Create Base Vivado Project from Preset
 
@@ -137,7 +137,7 @@ We will add the **Clocking Wizard** to the block diagram and enable clock signal
    - If it's not opened yet, use menu **Window -> Platform Setup** to open it.
    - Click **Clock** tab
    - Enable all clocks under clk_wiz_0: **clk_out1**, **clk_out2**, **clk_out3**
-   - Change their ID to **0**, **1** and **2**
+   - Change their ID to **1**, **2** and **3**
    - Set a default clock: click **Is Default** for **clk_out2**
    - After everything is setup, it should report **Info: No problem with Clock interface**.
 
@@ -199,7 +199,7 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
    - Go to Platform Setup tab
    - Go to Interrupt tab
-   - Enable intr under axi_intc_0
+   - Enable **intr** under axi_intc_0
    - Tcl console shows the corresponding tcl command for this setup: 
 
    ```
@@ -227,14 +227,14 @@ The IPI design connection would like below till now:
 
 2. Enable AXI Master interfaces from AXI Interconnect
 
-   - Under ps8_0_axi_periph, click M01_AXI, press Shift and click M07_AXI to multi-select master interfaces from M01_AXI to M07_AXI.
+   - Under ps8_0_axi_periph, click **M01_AXI**, press Shift and click **M07_AXI** to multi-select master interfaces from **M01_AXI** to **M07_AXI**.
    - Right click the selection and click on Enable.
    - Keep the Memport and sptag default to M_AXI_GP and empty. 
 
    Note:
 
    - v++ will not cascade another level of AXI Interconnect if the AXI master interface is exported from AXI Interconnect IP.
-   - AXI Master interfaces from PS and AXI Interconnect are functionally equalent to the platform.
+   - AXI Master interfaces from PS and AXI Interconnect are functionally equivalent to the platform.
    - In general, platform designer should export as many as AXI interfaces to the platform. Application developer should decide which interface to use.
 
 3. Enable AXI Slave interfaces from PS to allow kernels access DDR memory
@@ -297,7 +297,7 @@ When a component comes with multiple types of simulation models, selecting Syste
 
    This step is optional for Vitis platforms. In most cases a flat (non-DFX) Vitis platform doesn't need to generate bitstream before exporting the platform. You can execute this step after you understand its benefits and your requirements.
    
-   - Generating bitstream will run through hardware design implemtation for the platform. It can report errors in the early stage if your platform hardware design has potential errors that cannot be reported by the Validated Design DRC.
+   - Generating bitstream will run through hardware design implementation for the platform. It can report errors in the early stage if your platform hardware design has potential errors that cannot be reported by the Validated Design DRC.
 
    Here are the steps to generate bitstream.
 
@@ -371,7 +371,7 @@ Scripts are provided to re-create projects and generate outputs. To use these sc
    ```
    # cd to the step directory, e.g.
    cd step1_vivado
-   make
+   make all
    ```
    
 2. To clean the generated files, please run
@@ -379,6 +379,30 @@ Scripts are provided to re-create projects and generate outputs. To use these sc
    ```bash
    make clean
    ```
+
+This script creates the same design, generate block diagram and export XSA.
+
+   
+
+A top level all in one build script is also provided. To build everything (step 1 to step 3) with one command, please go to ***ref_files*** directory and run
+
+```bash
+make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  #Specify the path of the common image
+```
+
+This command is to generate platform with pre-built software components and do sw emulation by running `vadd` application to test this platform
+
+```bash
+make sd_card COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  #Specify the path of the common image
+```
+
+This command is to generate platform with pre-built software components and do hw test on board by running `vadd` application to test this platform
+
+To clean all the generated files, please run
+
+```bash
+make clean
+```
 
 ### Next Step 
 

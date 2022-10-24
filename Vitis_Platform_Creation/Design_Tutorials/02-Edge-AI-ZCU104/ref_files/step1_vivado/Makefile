@@ -25,7 +25,8 @@ help:
 	@echo "make all 	## to generate hw platform and export XSA file"
 
 
-all: hw 
+all: hw
+sd_card:all 
 
 
 hw:

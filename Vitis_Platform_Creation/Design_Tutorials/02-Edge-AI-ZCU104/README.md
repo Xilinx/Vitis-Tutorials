@@ -24,9 +24,9 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2022.1 + Vitis AI 2.0***
+***Version: Vitis 2022.2 Vivado 2022.2***
 
-**Note**: **Vitis-AI 2.0 for Vitis 2022.1** is not available for the moment. Vitis-AI application will be updated soon after Vitis-AI for Vitis 2022.1 released.
+**Note**: **Vitis-AI for Vitis 2022.2** is not available for the moment. Vitis-AI application will be updated soon after Vitis-AI for Vitis 2022.2 released.
 
 In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run ***Vitis acceleration applications*** including ***Vitis-AI applications***. Of course, general ***embedded software application*** can also run on this platform. This example system total structure is like below for your reference.
  
@@ -65,6 +65,8 @@ We'll introduce the platform creation steps in the following pages. Each page de
 
 
 ## Change Log
+### 2022.2
+- `createdts` add user's device tree file support
 
 ### 2022.1
 - From this version we begin to use pre-built Linux common image instead of building Linux components with PetaLinux because the pre-built common image provides most common features for Vitis acceleration and it can help expedite the platform creation process. If you wish to leverage the PetaLinux tool to customize your system you can refer to the [PetaLinux Customization Tutorial](../../Feature_Tutorials/02_petalinux_customization/README.md).
@@ -79,7 +81,7 @@ We'll introduce the platform creation steps in the following pages. Each page de
   - [Platform Creation General Rules](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Embedded-Platforms-in-Vitis)
   - [Setting up the Vitis environment](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Vitis-AI Github Repository](https://github.com/Xilinx/Vitis-AI)
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

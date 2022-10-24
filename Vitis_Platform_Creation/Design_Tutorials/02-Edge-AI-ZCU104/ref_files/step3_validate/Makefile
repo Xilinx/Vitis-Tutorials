@@ -26,10 +26,10 @@ VAI_DPU_TRD_PATH = Vitis-AI/dsa/DPU-TRD/prj/Vitis/
 help:
 	@echo "Makefile usage"
 	@echo "make all 	## to build vadd application and run sw emulation on the platform created in former step"
-
+	@echo "make sd_card ## to build vadd application and run hw test on the platform created in former step"
 
 all: platforminfo vadd 
-
+sd_card:vadd_hw
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2022.1
@@ -40,7 +40,7 @@ $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples $(PLATFORM)
 vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(PLATFORM)
 	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
 
-vadd_hw: 
+vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(PLATFORM)
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 #Vitis AI 2.0 is under preparation. We will update it as soon as possible.
@@ -57,9 +57,9 @@ platforminfo:
 	$(MAKE) -C platforminfo
 
 clean:
-	$(MAKE) -C $(PL_EXAMPLE_PATH) clean
-	$(MAKE) -C $(VAI_DPU_TRD_PATH) clean
-	$(MAKE) -C platforminfo  clean
+	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
+	-$(MAKE) -C $(VAI_DPU_TRD_PATH) clean
+	-$(MAKE) -C platforminfo  clean
 	cd $(VAI_DPU_TRD_PATH); git reset --hard
 
 ultraclean:clean

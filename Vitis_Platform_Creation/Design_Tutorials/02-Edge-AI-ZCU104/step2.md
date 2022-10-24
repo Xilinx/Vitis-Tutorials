@@ -41,9 +41,12 @@ As most of the components are extracted from the common image package we will pr
    ```bash
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
+   .
+   ├── xilinx-zynqmp-common-v2022.2.tar.gz
+   ├── zcu104_appliation_vitis
+   ├── zcu104_custom_platform
+   └── zcu104_software_platform
    ```
-
-   ![step2_common_image.PNG](./images/step2_common_image.PNG)
 
 2. Extract the common image.
     
@@ -52,12 +55,24 @@ As most of the components are extracted from the common image package we will pr
    ```bash
    mkdir zcu104_software_platform
    cd zcu104_software_platform
-   tar xvf ../xilinx-zynqmp-common-v2022.1.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2022.2.tar.gz -C .
    ```
 
-   you can see **xilinx-zynqmp-common-v2022.1** folder which contains some components located in **zcu104_software_platform** folder like below.
-   
-   ![common_image_content.PNG](./images/common_image_content.PNG)
+   you can see **xilinx-zynqmp-common-v2022.2** folder which contains some components located in **zcu104_software_platform** folder like the following.
+
+   ```bash
+   tree -L 2
+   ├── xilinx-zynqmp-common-v2022.2
+   │   ├── bl31.elf
+   │   ├── boot.scr
+   │   ├── Image
+   │   ├── README.txt
+   │   ├── rootfs.ext4
+   │   ├── rootfs.manifest
+   │   ├── rootfs.tar.gz
+   │   ├── sdk.sh
+   │   └── u-boot.elf
+   ```
 
 From the above picture, you can see boot file, kernel image, rootfs and SDK tool are ready. DTB and first stage boot related files are not available. Since Vitis can generate FSBL and PMU firmware by enabling the option of **Generate boot components** when creating a platform. We will create a Vitis platform and enable the option of **Generate boot components** to generate the FSBL and PMU firmware.
 
@@ -65,9 +80,7 @@ From the above picture, you can see boot file, kernel image, rootfs and SDK tool
 
 As mentioned above we will create a Vitis Platform to obtain FSBL and PMU firmware. Using Vitis IDE and XSCT command both are capable of creating this platform. However, Vitis IDE can only support one XSA file as input. If your design has two XSA (hw and hw-emu), please use XSCT to create the platform.
 
-
  <details>
-
  <summary><strong>Click here to expand the detailed steps using Vitis IDE to create a Vitis platform</strong></summary>  
  
 
@@ -161,25 +174,30 @@ In this step, we create a platform to get FSBL and PMU firmware. We will add all
 
 ### Create the device tree file
 
-Utilize XSCT tool to execute one command to generate device tree files:
+Device tree describes the hardware components of the system. `createdts` command can generate the device tree file according to the hardware configurations from XSA file. If there are any settings not available in XSA, for example, any driver nodes that don't have corresponding hardware, or user have their own design hardware, User needs to add customization settings in `system-user.dtsi`.
+
+Besides uboot in common image does not have default environment variables. So updating the bootargs manually is needed. A pre-prepared [system-user.dtsi](./ref_files/step2_pfm/system-user.dtsi) file which adds pre-defined bootargs is under `step2_pfm` directory. Please copy `system-user.dtsi` file to `zcu104_software_platform` directory and follow these steps to generate the DTB file.
+
+   First, go to `zcu104_software_platform` directory and launch `XSCT` tool.
 
    ```bash
    cd zcu104_software_platform
    xsct 
    ```
-   Then execute ` createdts ` command in XSCT console like below:
+   Then execute ` createdts ` command in XSCT console like the following:
 
    ```bash
-   createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform.xsa -zocl  -platform-name mydevice \
-    -git-branch xlnx_rel_v2022.1 -board  zcu104-revc -compile
+   createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hw.xsa -zocl  -platform-name mydevice \
+    -git-branch xlnx_rel_v2022.2 -board  zcu104-revc  -dtsi system-user.dtsi -compile
    ```
    The `createdts` command needs the following input values:
 
-   -  `-name`: Platform name
    -  `-hw`: Hardware XSA file with path
+   -  `-platform-name`: Platform name
    -  `-git-branch`: device tree branch
    -  `-board`: board name of the device. You can check the board name at <DTG Repo>/device_tree/data/kernel_dtsi.
    -  `-zocl`: enable the zocl driver support
+   -  `-dtsi`: Add user's device tree file support
    -  `-compile`: specify the option to compile the device tree
 
    Notice below information would show in XSCT console. Please ignore the warning and that means you succeed to get system.dtb file which is located in <mydevice/psu_cortexa53_0/device_tree_domain/bsp>.
@@ -191,41 +209,15 @@ Utilize XSCT tool to execute one command to generate device tree files:
    pl.dtsi:27.26-31.5: Warning (simple_bus_reg): /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
    ```
 
-   > Note: Createdts is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option you can execute help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it according to above operation. Or, you can select menu **Xilinx > XSCT Console ** to start the XSCT tool after you launch Vitis.
+   > Note: `createdts` is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option you can execute help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it according to above operation. Or, you can select menu **Xilinx > XSCT Console ** to start the XSCT tool after you launch Vitis.
 
    Execute the following command to exit XSCT console.
 
    ```bash
    exit
    ```
-
-   
-#### Update the Device tree
-
-   Device tree describes the hardware components of the system. `createdts` command can generate the device tree file according to the hardware configurations from XSA file. If there are any settings not available in XSA, for example, any driver nodes that don't have corresponding hardware, or user have their own design hardware, User needs to add customization settings in `system-user.dtsi`.
-
-   Besides uboot in common image does not have default environment variables. So updating the bootargs manually is needed. A pre-prepared `system-user.dtsi` file which adds pre-defined bootargs is under `ref_files` directory. Please copy this file to device tree BSP directory and modify system-top.dts to include this file. Please update DTS and rebuild it according to the following steps.
-
-   Go to `zcu104_software_platform` directory.
-
-   ```bash
-   cd zcu104_software_platform
-   cp system-user.dtsi  mydevice/psu_cortexa53_0/device_tree_domain/bsp/
-   echo "#include \"system-user.dtsi\"" >> mydevice/psu_cortexa53_0/device_tree_domain/bsp/system-top.dts
-   ```
-
-   Then rebuild the dts file
-
-   ```bash
-   cd zcu104_software_platform/mydevice/psu_cortexa53_0/device_tree_domain/bsp/
-   gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o system.dts system-top.dts  #preprocess the dts file because DTC command can not recognize the #include grammar
-   dtc -I dts -O dtb -o system.dtb system.dts # compile the dts
-   ```
  
-   Then you can find the updated system.dtb file in <zcu104_software_platform/mydevice/psu_cortexa53_0/device_tree_domain/bsp/> directory.
-   
-
-After this step, all the components platform creation need is ready. Next we will attach all the components to our platform and build it.
+After this step, all the components for platform creation are ready. Next we will attach all the components to our platform and build it.
 
 ### Create Vitis Platform
    
@@ -239,20 +231,20 @@ After this step, all the components platform creation need is ready. Next we wil
    mkdir pfm/sw_comp 
    cp zcu104_platform_fsbl/zynqmp_fsbl/fsbl_a53.elf pfm/boot/fsbl.elf        #rename it to fsbl.elf in case of V++ can not find it by name 
    cp zcu104_platform_fsbl/zynqmp_pmufw/pmufw.elf pfm/boot/
-   cp xilinx-zynqmp-common-v2022.1/bl31.elf pfm/boot/
-   cp xilinx-zynqmp-common-v2022.1/u-boot.elf pfm/boot/
+   cp xilinx-zynqmp-common-v2022.2/bl31.elf pfm/boot/
+   cp xilinx-zynqmp-common-v2022.2/u-boot.elf pfm/boot/
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb  pfm/boot/
-   cp xilinx-zynqmp-common-v2022.1/boot.scr pfm/sd_dir/
+   cp xilinx-zynqmp-common-v2022.2/boot.scr pfm/sd_dir/
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb  pfm/sd_dir/
-   cp xilinx-zynqmp-common-v2022.1/rootfs.ext4 pfm/sw_comp
-   cp xilinx-zynqmp-common-v2022.1/Image pfm/sw_comp
+   cp xilinx-zynqmp-common-v2022.2/rootfs.ext4 pfm/sw_comp
+   cp xilinx-zynqmp-common-v2022.2/Image pfm/sw_comp
    ```
 
    > Note: fsbl_a53.elf, pmufw.elf, bl31.elf, u-boot.elf and system.dtb in boot DIR are the source of BOOT.BIN image. Boot.src and system.dtb in sd_dir are for u-boot initialization and Linux boot up and will be packaged to FAT32 partition by V++ package tool. Image and rootfs.ext4 are Linux kernel and root file system and also will be packaged to SD.IMG by V++ tool.
    
 2. Install the sysroot 
 
-   - Go to common image extracted directory <WorkSpace/zcu104_software_platform/xilinx-zynqmp-common-v2022.1/>
+   - Go to common image extracted directory <WorkSpace/zcu104_software_platform/xilinx-zynqmp-common-v2022.2/>
    - Type ./sdk.sh -d <Install Target Dir> to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory  **.** (This is an example. < . > means current Dir ) and confirm.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
@@ -271,13 +263,15 @@ After this step, all the components platform creation need is ready. Next we wil
      - **uncheck** option **Generate boot components**, because we have got FSBL and PMU already.</br>
      - Click **Finish**.
   
+   >Note: If you want to do hardware emulation, please select `zcu104_custom_platform_hwemu.xsa` when you use Vitis IDE to create the platform.
+
 4. Set up the software settings in Platform Settings view
    
    - Click the **linux on psu_cortexa53** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
 
    - **Bif file**: Click the drop-down icon and select **Generate BIF**.
 
-     > Note: The file names in `<>` are placeholders. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
+     > Note: The file names in `<>` are placeholders in bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
    - **Boot Components Directory**: Browse to **zcu104_software_platform/pfm/boot** and click OK.
 
