@@ -14,8 +14,8 @@ To proceed with this tutorial, set up the environment and the tools. Ensure that
 
 ## Prerequisites
 
- - [Vitis 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
- - [Xilinx RunTime (XRT) 2022.1](https://xilinx.github.io/XRT/)
+ - [Vitis 2022.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+ - [Xilinx RunTime (XRT) 2022.2](https://xilinx.github.io/XRT/)
  - [Alveo U50 packages](https://www.xilinx.com/products/boards-and-kits/alveo/u50.html)
 
 ## Setting up the Vitis&trade; Environment
@@ -23,7 +23,7 @@ To proceed with this tutorial, set up the environment and the tools. Ensure that
 To be able to work with the libraries, you must set up the Vitis environment first. For instructions to set up the Vitis environment, refer to the [Vitis online documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform). Following are some example scripts to set up Vitis tools and XRT:
 
 ```
-  $ source <Vitis Tool Installation Path>/Xilinx/Vitis/2022.1/settings64.sh
+  $ source <Vitis Tool Installation Path>/Xilinx/Vitis/2022.2/settings64.sh
   $ source <XRT Installation Path>/xrt/setup.sh
   $ export PLATFORM_REPO_PATHS=<Platform Installation Path>/xilinx/platforms
   $ export DEVICE=xilinx_u50_gen3x16_xdma_5_202210_1
@@ -36,7 +36,7 @@ You must clone the Vitis Libraries from [Vitis_Libraries](https://github.com/Xil
 ```
   $ git clone https://github.com/Xilinx/Vitis_Libraries.git
   $ cd Vitis_Libraries/
-  $ git checkout master  
+  $ git checkout main 
 ```
 
 After the download is completed, browse the subfolders to open the Graph library.
