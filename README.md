@@ -394,4 +394,3 @@ The Vitis Tutorials take users through the design methodology and programming mo
 
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
-

@@ -208,7 +208,7 @@ package2: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 ##################################################################################################
 # Runs Hw emulation
 run_emu:
-	./launch_hw_emu.sh
+	./launch_hw_emu.sh -no-reboot -run-app ./embedded_exec.sh
 
 ########################################################
 
