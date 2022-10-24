@@ -20,7 +20,7 @@
         ],
         "custom_build_target":
         {
-            "all": "aiesim"
+            "all": "run"
         },
         "tasks": {
             "build": {

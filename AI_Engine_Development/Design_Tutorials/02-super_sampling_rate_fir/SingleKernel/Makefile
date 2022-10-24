@@ -40,6 +40,6 @@ clean:
 	rm -f vitis_analyzer*
 
 data:
-	GenerateStreams cint16 64 1 1 512 4 Dirac data/PhaseIn
+	cd ../Utils && ./GenerateStreams cint16 64 1 1 512 4 Dirac ../SingleKernel/data/PhaseIn
 
 .PHONY: all clean aie aiesim aieviz data

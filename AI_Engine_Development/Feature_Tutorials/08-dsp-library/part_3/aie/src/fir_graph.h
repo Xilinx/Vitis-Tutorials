@@ -56,9 +56,9 @@ public:
 	FirGraph(): chan_FIR(chan_taps), hb_FIR(hb_taps) {
 		// Margin gets automatically added within the FIR graph class.
 		// Margin equals to FIR length rounded up to nearest multiple of 32 Bytes.
-		connect<>(in, chan_FIR.in);
-		connect<>(chan_FIR.out, hb_FIR.in);
-		connect<>(hb_FIR.out, out);
+		connect<>(in, chan_FIR.in[0]);
+		connect<>(chan_FIR.out[0], hb_FIR.in[0]);
+		connect<>(hb_FIR.out[0], out);
 
         for (int i=0; i < AIES_CHAN; i++)  {
         	location<kernel>(chan_FIR.m_firKernels[i]) = tile(18+i, 0);

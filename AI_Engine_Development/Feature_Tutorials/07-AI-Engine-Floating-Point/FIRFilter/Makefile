@@ -17,6 +17,9 @@
 all:
 	make -C Emulation-AIE all
 
+run:
+	make -C Emulation-AIE aie aiesim
+
 aie:
 	make -C Emulation-AIE aie
 

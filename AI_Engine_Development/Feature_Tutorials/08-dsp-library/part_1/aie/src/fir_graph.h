@@ -50,8 +50,8 @@ private:
 		{
 			// Margin gets automatically added within the FIR graph class.
 			// Margin equals to FIR length rounded up to nearest multiple of 32 Bytes.
-			connect<>(in, chan_FIR.in);
-			connect<>(chan_FIR.out, out);
+			connect<>(in, chan_FIR.in[0]);
+			connect<>(chan_FIR.out[0], out);
 
 			location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
 
