@@ -1,13 +1,21 @@
 
 {
-    "name": "Vitis_Platform_Creation-Introduction-03-Edge-VCK190",
-    "description": "Creating a custom VCK190 platform from scratch",
+    "name": "Vitis_Platform_Creation-Design_Tutorials-03_Edge_VCk190",
+    "description": "Creating a custom platform based on vck190 which is regarded as a customer's board",
     "gui": "false",
     "flow": "vitis",
-    "platform_allowlist": [ "vck190"],
+    "platform_allowlist": ["vck190"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_03-VCK190",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
         "jobs": [
             {
                 "max_memory_MB": 32768,
@@ -17,17 +25,25 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu"
+            "vitis_sw_emu",
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
+			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
+			"IMAGE=${EDGE_COMMON_SW}/Image",
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
         ],
         "custom_build_target":
         {
-            "all": "all"
-        },
-        "tasks": {
-            "build": {
-                "pre_exec": "/proj/petalinux/2021.2/petalinux-v2021.2_1014_1/tool/petalinux-v2021.2-final/settings.sh"
-            }
+            "all": "all",
+            "hw" : "sd_card"
         }
-    },
-    "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"
+    }
 }

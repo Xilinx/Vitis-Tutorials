@@ -1,5 +1,5 @@
-﻿<!-- 
-# Copyright 2020 Xilinx Inc.
+<!-- 
+# Copyright 2022 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,62 +25,63 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2021.2***
+***Version: 2022.2***
 
-**Note**: ***Version 2022.1*** of this tutorial is under preparation. Please refer the [Versal Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) for a reference first if you try to use Vitis 2022.1 to create a Versal Platform.
+In this module, VCK190 board will be regarded as a customer's board. We will create a hardware design based on the Versal Extensible Part Support Example Design, use pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform for this customer's board. Last we will run several applications to test this platform. If you merely create a platform to validate your kernels. Then the [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) would be a quick choice for you.
 
-In this module, we will create a custom platform to run acceleration applications for VCK190 evaluation board. 
+This example system total structure is like the following for your reference.
 
-In a general Vitis acceleration platform design, we start from building a base bootable design, then add platform required components and properties to it. We need to validate each step before going to the next step to prevent error prograting. This workflow is described in the following diagram.
+![Vitis Platform structure](images/structure.svg)
 
-![Vitis Platform Creation Steps Diagram](images/platform_creation_steps.svg)
+In a general Vitis acceleration platform design, Vitis platform and application development can be divided into these parts:
 
-To enable platform creators build platforms quickly, Vivado provides a Versal extensible platform example design. It adds presets for CIPS, NOC, DDR controllers and platform properties. This would make the platform creation process efficient in step 0 and step 1. Optionally, if user would like to add more components to the platform hardware design, they can be added after the example design has been created.
+1. Platform hardware design creation in Vivado. It exports an XSA file with clock, reset, AXI interface and interrupt signals and properties.
+2. Platform software preparation with common image or using PetaLinux tool, including Linux kernel, rootfs, device tree and boot components.
+3. Platform creation in Vitis to combine all hardware and software components and generate XPFM description.
+4. Create applications in Vitis against the platform. Vitis generates host application, xclbin and sd_card.img.
+5. Write sd_card.img to SD card or update host application and xclbin to an existing SD card.
 
-To prepare the software components, we will import XSA into PetaLinux project and do some additional configurations. After building software and hardware components, we'll package the platform. 
+In this module we will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. Compared with the Versal Extensible Design which is used in [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md), the part support design leaves the board level configurations, e.g., PS side peripherals and DDR related parameters for user to do config.
 
-In each step, we'll test the generated files to make sure they work as expected. A frequent test methodology can help to narrow down the root causes if any error occurs. At last, we'll run several test applications on this platform to test this customized platform.
+To prepare the software components, we will utilize common image released by Xilinx and `createdts` command to generate Device tree file. 
+
+After the whole software and hardware components are ready, we'll package the platform. 
+ 
+In each step, we'll validate the generated files to make sure they work as expected. A frequent test methodology can help to narrow down the root causes if any error occurs. At last, we'll run several test applications on this platform to test this platform.
+
+The total flow is like the following:
+
+![Vitis Platform structure](images/flow.svg)
+
+
 
 Please navigate through these steps with the following table of contents links.
 
-- [Step 0: Create a Base Bootable Design](./step0.md)
-- [Step 1: Hardware Settings for Vitis Platform](./step1.md)
-- [Step 2: Create the Software Components with PetaLinux](./step2.md)
-- [Step 3: Create the Vitis Platform](./step3.md)
-- [Step 4: Test the Platform](./step4.md)
+- [Step 1: Create a Hardware Design](./step1.md)
+- [Step 2: Create a Vitis Platform](./step2.md)
+- [Step 3: Run applications on the Vitis Platform](./step3.md)
 - [Frequently Asked Questions](faq.md)
 
 
 
-## Requirements
-
-This tutorial design supports VCK190 production board and VCK190 ES1 board.
-
-- Vitis 2021.2 supports VCK190 production board. No additional licenses and settings are needed to use this board.
-- Vitis 2021.2 requires additional Versal ES device installation, additional EA license setup to use VCK190 ES1 board.
-
-This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux. 
-
 ## Reference
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
-   - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html)
+- [UG1393: Vitis Acceleration Flow User Guide](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+- [Versal ACAP Programmable Network on Chip and Integrated Memory Controller LogiCORE IP Product Guide (PG313)](https://docs.xilinx.com/r/en-US/pg313-network-on-chip)
 
 
 ## Changelog
-
+### 2022.2
+- `createdts` add support for user's device tree
+### 2022.1
+- From this version we begin to use pre-built Linux common image instead of building Linux components with PetaLinux because the pre-built common image provides most common features for Vitis acceleration and it can help expedite the platform creation process. If you wish to leverage the PetaLinux tool to customize your system you can refer to the [PetaLinux Customization Tutorial](../../Feature_Tutorials/02_petalinux_customization/README.md).
+- Simplify the device tree generation flow by using the newly introduced `createdts` XSCT command.
+- Add validation for every step's output.
 ### 2021.2
 - In Step 1, the Vivado project exports XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it's recommended to provide seperate XSA for hardware and hardware emulation.
 
-### 2021.1
-- Step 0: Vivado example design has more customizable options for clocks and interrupts.
-- Step 1: Removed tcl commands for platform setup because the Platform Setup Wizard can do the job well.
-- Step 2: In PetaLinux root file system configuration, only **xrt** package is needed. **packagegroup-petalinux-xrt** is removed by PetaLinux.
-- Step 2: PetaLinux can create ZOCL node device tree. So manual update device tree instructions are removed.
-- Step 2: PetaLinux 2021.1 requires GCC > 6.0. Workaround is to enable "Enable buildtools extended" in Yocto settings.
-- Step 3: Vitis can generate BIF. Manual steps of adding custom BIF are removed.
 
 
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
 
