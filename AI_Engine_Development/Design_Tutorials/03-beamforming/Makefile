@@ -17,7 +17,7 @@
 # Target all: Generate the Vitis platform and verify it including base bootable design
 # Target main: Generate the Vitis platform and verify it without base bootable design
 # ---------------------------------
-.PHONY: all clean step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8
+.PHONY: all step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8
 
 
 RELATIVE_PROJECT_DIR := ./
@@ -62,7 +62,8 @@ step3:
 
 SHELL := /bin/bash
 step3b:
-	source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && $(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw_emu REV=rev1
+	#source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && 
+	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw_emu REV=rev1
 
 step4:
 	$(MAKE) -C Module_05_Baremetal_Host_Application application MAIN=main_partial
@@ -75,7 +76,8 @@ step5:
 
 SHELL := /bin/bash
 step6:
-	source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && unset LD_LIBRARY_PATH && source /proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh && $(MAKE) -C Module_07_Petalinux petalinux
+	#source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && unset LD_LIBRARY_PATH && source /proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh && 
+	$(MAKE) -C Module_07_Petalinux petalinux
 
 step7:
 	$(MAKE) -C Module_08_Linux_SW_Application exe

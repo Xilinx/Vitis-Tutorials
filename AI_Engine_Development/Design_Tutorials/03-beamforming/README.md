@@ -9,7 +9,7 @@
 
 # Beamforming Tutorial
 
-***Version: Vitis 2021.2***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -63,7 +63,7 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
 4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf)).
-5. Download the VCK190 PetaLinux 2021.2 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
+5. Download the VCK190 PetaLinux 2022.2 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
 ](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 To build and run the Beamforming tutorial, you will also need to have downloaded and installed the following tools:
@@ -79,14 +79,20 @@ When the elements of the Vitis software platform are installed, update the shell
 1. Edit the `env_setup.sh` script with your file paths:
 
 ```bash
-export XILINX_XRT=/opt/xilinx/xrt
-export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2021.2-final.bsp)
+export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2022.2-final.bsp)
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2021.2/settings64.sh
-source $XILINX_XRT/setup.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2022.2/settings64.sh
 source <path-to-installed-PetaLinux>/settings.sh
 ```
-2. Source the environment script:
+2. Source the environment script in bash shell:
+
+To get bash shell, use the below command
+
+```bash
+export SHELL=/bin/bash
+echo $SHELL
+```
+Source the environment script
 
 ```bash
 source env_setup.sh
@@ -94,7 +100,7 @@ source env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Make sure you are using the 2021.2 version of the Xilinx tools.
+Make sure you are using the 2022.2 version of the Xilinx tools.
 
 ```bash
 which vitis

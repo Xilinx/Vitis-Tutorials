@@ -49,22 +49,22 @@ EMBEDDED_EXEC_SCRIPT := $(MODULE_09_DIR)/embedded_exec.sh
 # =========================================================
 BUILD_DIR := $(MODULE_09_DIR)/build
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package_$(TARGET)
-AIE_XSA := $(BUILD_DIR)/aie_$(TARGET)/aie.xsa 
+AIE_XCLBIN := $(BUILD_DIR)/aie_$(TARGET)/aie.xclbin 
 
-####### TARGET: make aie_xsa #######
-aie_xsa: $(BUILD_DIR)/aie_$(TARGET)/aie.xsa
+####### TARGET: make aie.xclbin #######
+aie.xclbin: $(BUILD_DIR)/aie_$(TARGET)/aie.xclbin
 
-$(BUILD_DIR)/aie_$(TARGET)/aie.xsa:
+$(BUILD_DIR)/aie_$(TARGET)/aie.xclbin:
 	mkdir -p $(BUILD_DIR); 		\
 	cd $(BUILD_DIR);		\
 	v++ -s -p -t $(TARGET) -f $(MODULE_01_DIR)/sw/build/vck190_v1_0/export/vck190_v1_0/vck190_v1_0.xpfm \
 	--package.out_dir $(BUILD_DIR)/aie_$(TARGET) \
 	--config $(MODULE_09_DIR)/package.cfg \
 	$(LIBADF_A)
-	mv $(BUILD_DIR)/a.xclbin $(AIE_XSA)
+	mv $(BUILD_DIR)/a.xclbin $(AIE_XCLBIN)
 
 ####### TARGET: make package #######
-package: aie_xsa $(BUILD_DIR)/package_$(TARGET)/sd_card.img
+package: aie.xclbin $(BUILD_DIR)/package_$(TARGET)/sd_card.img
 
 $(BUILD_DIR)/package_$(TARGET)/sd_card.img:
 	cd $(BUILD_DIR); 								\
@@ -76,7 +76,7 @@ $(BUILD_DIR)/package_$(TARGET)/sd_card.img:
 	--package.out_dir $(EMBEDDED_PACKAGE_OUT)                   	 		\
 	--package.image_format=ext4                                         		\
 	--package.defer_aie_run                                             		\
-	--package.sd_file $(AIE_XSA) 	                                    	\
+	--package.sd_file $(AIE_XCLBIN) 	                                    	\
 	--package.sd_file $(MODULE_08_DIR)/test_bf_app.exe 				\
 	--package.sd_file $(EMBEDDED_EXEC_SCRIPT)					\
 	$(MODULE_04_DIR)/build/rev1/$(TARGET)/beamforming.rev1.$(TARGET).xsa $(LIBADF_A)

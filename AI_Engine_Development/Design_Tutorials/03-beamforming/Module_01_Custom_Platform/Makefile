@@ -12,20 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#Check environment setup
-ifndef PLATFORM_REPO_PATHS
-  PLATFORM_REPO_PATHS=/proj/xbuilds/$(TOOLVERSION)/internal_platforms/
-  export PLATFORM_REPO_PATHS
-endif
-ifndef XILINX_VITIS
-  XILINX_VITIS = /opt/xilinx/Vitis/$(TOOL_VERSION)
-  export XILINX_VITIS
-endif
-ifndef XILINX_XRT
-  XILINX_XRT = /opt/xilinx/xrt
-  export XILINX_XRT
-endif
-
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 #PERL ?= /tools/xgs/perl/5.8.5/bin/perl

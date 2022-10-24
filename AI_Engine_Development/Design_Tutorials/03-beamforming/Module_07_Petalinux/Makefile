@@ -11,13 +11,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# =========================================================
-# PROJECT and MODULE REPOS
-# =========================================================
-ifndef PATH_TO_BSP
-  PATH_TO_BSP=/proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/bsp/release
-  export PATH_TO_BSP
-endif
+
 
 #relative beamforming directory
 RELATIVE_PROJECT_DIR := ../
@@ -26,11 +20,6 @@ RELATIVE_PROJECT_DIR := ../
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
-
-# =========================================================
-# BSP SELECTION
-# =========================================================
-BSP :=  xilinx-vck190-v2022.1-final.bsp
 
 # =========================================================
 # XSA SELECTION
