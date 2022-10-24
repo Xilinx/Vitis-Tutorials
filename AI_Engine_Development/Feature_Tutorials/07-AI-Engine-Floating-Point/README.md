@@ -9,30 +9,22 @@
 
 # Using Floating-Point in the AI Engine
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
 The purpose of this set of examples is to understand floating-point vector computations within the AI Engine.
 
 
-## Before You Begin
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
-Before starting to explore these examples, refer to the following documents:
+Before starting this tutorial run the following steps.
 
-- Versal® ACAP AI Engine architecture documentation
-  - **[AI Engine Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)**
-  - **[Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)**
-  - **[Architecture Details Summary](Details.md)**
-- Tools and documentation lounge
-  - **[AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)**
-  - **[UG1076: Versal ACAP AI Engine Programming Environment User Guide](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)**
-- Also, download and install:
-  - Vitis 2022.1 **[Download Vitis](https://www.xilinx.com/support/download.html)**
-  - Licenses for AI Engine tools.
-  - Base Platform **[VCK190 Vitis Platform](https://www.xilinx.com/support/download.html)**
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-Before starting this tutorial, set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
 ## AI Engine Architecture Details

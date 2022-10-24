@@ -6,7 +6,7 @@
     "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
     "testinfo": {
-        "test_name": "AIE_F_15-post-link",
+        "test_name": "AIE_F_15-post-link-WithoutIntermediatePlatform",
         "jobs": [
             {
                 "max_memory_MB": 32768,
@@ -30,11 +30,11 @@
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./",
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh",
-            "PFM_NAME=xilinx_vck190_base_202220_1" 
+            "PFM_NAME=xilinx_vck190_base_202220_1"
        ],
         "custom_build_target":
         {
-            "all": "hw_emu"
+            "all": "all"
         },
         "tasks": {
             "build": {

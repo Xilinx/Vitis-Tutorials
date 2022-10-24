@@ -62,7 +62,7 @@ The external traffic generators use Python and require non-standard packages to 
     ```bash
     python3 -c 'import numpy, matplotlib, struct, multiprocessing'
     ```
-    
+
 
 4. Add the provided packages for external traffic generators to the `PYTHONPATH`. Run the following command:
 
@@ -70,35 +70,31 @@ The external traffic generators use Python and require non-standard packages to 
     export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:${PYTHONPATH}
     ```
 
-### Xilinx Tools Initialization
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+
+Before starting this tutorial run the following steps.
+
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+
 
 Before starting this tutorial, run the following steps.
 
 1. Set up the following paths in the script `env_setup.sh`:
 
 ```bash
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
-export XILINX_XRT=/<user-path>/opt/xilinx/xrt
 export PYTHON3_LOCATION=<user-path>
 ```
 
-2. This env_setup.sh sets the necessary paths to run the tutorial:
 
-    - `ROOTFS`, `IMAGE`, `SYSROOT`, `CXX`, and `SDKTARGETSYSROOT` for host software compilation.
-    - `LIBRARY_PATH` to handle external traffic generator handles.
-    - `PATH` and `PYTHONPATH` for the Python-based external traffic generator.
-
-
-3. This tutorial targets the VCK190 board, which is currently available on the [Xilinx website](https://www.xilinx.com/products/boards-and-kits/vck190.html). Because this tutorial is about simulation, you do not need to have the real hardware.
-
-4. Run the `source env_setup.sh` script in the console.
+2. Run the `source env_setup.sh` script in the console.
 
 
 # Design Overview
 
-This tutorial is based on a basic design, as shown below. This design contains two AI Engine kernels with an intermediate kernel in the PL. The overall system is fed and flushed from kernels that are also in the PL. 
+This tutorial is based on a basic design, as shown below. This design contains two AI Engine kernels with an intermediate kernel in the PL. The overall system is fed and flushed from kernels that are also in the PL.
 
 ![Diagram of the design](./images/TutorialImages-CompleteSystem.svg)
 
@@ -330,4 +326,3 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 <p align="center"><sup>XD136 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
-

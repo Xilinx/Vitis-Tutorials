@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 
 ## Introduction
@@ -27,9 +27,6 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 Before beginning this tutorial you should be familiar with Versal ACAP architecture and more specifically on the AI Engine array processor and interconnect architecture.
 
-- [Xilinx Website for Versal ACAP AI Core Series](https://www.xilinx.com/products/silicon-devices/acap/versal-ai-core.html)
-- [Introduction to the AI Engine](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
-- [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
 
 Software requirements include:
 * [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
@@ -38,10 +35,14 @@ Software requirements include:
   - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2021a or R2021b.
   - **Vitis Model Composer** that is available with the usual install of **Vitis**.
 
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
-Before starting this tutorial, run the following step:
+Before starting this tutorial run the following steps.
 
-1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
 ### Accessing the Tutorial Reference Files

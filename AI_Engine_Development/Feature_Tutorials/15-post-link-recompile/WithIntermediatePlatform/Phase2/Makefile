@@ -12,12 +12,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4
+IMAGE ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/Image
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 # Makefile input options
 TARGET ?= hw_emu
 
 #Directories
-FILES_DIR := $(PWD)/../../Files
+FILES_DIR := ../../Files
 DATA_DIR := $(FILES_DIR)/data
 PLATFORM_DIR := ${PLATFORM_REPO_PATHS}
 AIE2:= $(FILES_DIR)/AIE2
@@ -25,25 +28,14 @@ PL:=$(FILES_DIR)/PL
 HwLink:=$(FILES_DIR)/HwLink
 PS:=$(FILES_DIR)/PS
 
-# Platform
-VERSAL_SW := ${PLATFORM_DIR}/sw/versal/xilinx-versal-common-v2022.1
+# Initial Base PLATFORM
 BASE_PLATFORM := ${PLATFORM_DIR}/$(PFM_NAME)/$(PFM_NAME).xpfm
-PLATFORM_SW := ${PLATFORM_DIR}/$(PFM_NAME)/sw/$(PFM_NAME)
 
-IMAGE   := ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/Image
-
-# New platform
+# Phase1 Generated platform
 PFM := Phase1_container
-# Phase 1 output
 XCLBIN := ../Phase1/$(PFM).xclbin
 XSA    := ../Phase1/$(PFM).xsa
 
-# Phase 2 platform creation outut
-NEW_PLATFORM := ./platform_repo/$(PFM)/export/$(PFM)/$(PFM).xpfm
-NEW_PLATFORM_SW := ./platform_repo/$(PFM)/export/$(PFM)/sw/$(PFM)
-
-NEW_ROOTFS := $(NEW_PLATFORM_SW)/xrt/rootfs/rootfs.ext4
-NEW_SYSROOT := $(NEW_PLATFORM_SW)/xrt/sysroot
 
 # File names and locations
 GRAPH2 := ${AIE2}/src/graph.cpp
@@ -61,17 +53,14 @@ AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE2}/src" -include="${AIE2}/data" -include="${AIE2}/src/aie_kernels"
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
-AIE_FLAGS += -platform=$(NEW_PLATFORM)
+AIE_FLAGS += -platform=$(XSA)
 AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
-
-VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
-VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(HwLink)/$(CONFIG_FILE) -o $(XSA)
 
 
 .ONESHELL:
-.PHONY: clean all pfm aie2 host package2 run_emu
+.PHONY: clean all aie2 host package2 run_emu
 
-phase2: pfm aie2 host package2 run_emu
+phase2: aie2 host package2 run_emu
 
 ###
 # Guarding Checks. Do not modify.
@@ -99,8 +88,8 @@ guard-CXX:
 # Directory of the xsa and xclbin
 #  Generic Versal sw  directory
 #  VCK190 specific sw  directory
-pfm:
-		xsct xsct_create_pfm.tcl ${PFM} ../Phase1 ${VERSAL_SW} ${PLATFORM_SW}
+# pfm:
+# 		xsct xsct_create_pfm.tcl ${PFM} ../Phase1 ${VERSAL_SW} ${PLATFORM_SW}
 
 
 ########################################################
@@ -133,25 +122,23 @@ $(GRAPH2_O): $(GRAPH2)
 GCC_FLAGS := -Wall -c \
 			 -std=c++14 \
 			 -Wno-int-to-pointer-cast \
-			 --sysroot=$(NEW_PLATFORM_SW)/xrt/sysroot/aarch64-xilinx-linux
+			 --sysroot=$(SDKTARGETSYSROOT)
 
 
 GCC_INCLUDES :=  -I./ -I${AIE2}/src \
 				-I$(XILINX_VITIS)/aietools/include \
 				-I$(XILINX_VITIS)/include \
 				-I${PS}/src \
-				-I$(NEW_SYSROOT)/aarch64-xilinx-linux/usr/include \
-				-I$(NEW_SYSROOT)/aarch64-xilinx-linux/usr/include/xrt \
-				-I$(XILINX_VIVADO)/include
+				-I$(SDKTARGETSYSROOT)/usr/include/xrt \
+				-I$(SDKTARGETSYSROOT)/usr/include
 
 
-GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil \
-			 --sysroot=$(NEW_SYSROOT)/aarch64-xilinx-linux \
-			 -L$(NEW_SYSROOT)/aarch64-xilinx-linux/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
-			 -L${XILINX_VITIS}/aietools/lib/lnx64.o
 
-LDCLFLAGS := $(GCC_LIB)
+ifeq ($(TARGET),sw_emu)
+	GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o  --sysroot=${SDKTARGETSYSROOT}
+else
+	GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o  --sysroot=${SDKTARGETSYSROOT}
+endif
 
 
 host: guard-CXX
@@ -166,20 +153,21 @@ host: guard-CXX
 
 package2: guard-PLATFORM_REPO_PATHS
 	v++ -p -t ${TARGET} \
-		-f ${NEW_PLATFORM} \
-		--package.rootfs=${NEW_ROOTFS} \
+		-f ${BASE_PLATFORM} \
+		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
-		--package.sd_file host.exe  $(XSA) libadf2.a
+		--package.sd_file host.exe  $(XSA) libadf2.a \
+		--package.sd_file ${FILES_DIR}/embedded_exec.sh
 
 ########################################################
 
 ##################################################################################################
 # Runs Hw emulation
 run_emu:
-	./launch_hw_emu.sh
+	./launch_hw_emu.sh -run-app ./embedded_exec.sh
 
 ########################################################
 
@@ -192,7 +180,3 @@ clean:
 	rm -rf aiesimulator_output pl_sample*
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
-	make clean_pfm
-
-clean_pfm:
-	rm -rf build platform_repo

@@ -30,6 +30,7 @@
 # make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP aie kernels xclbin host package  traffic_gen run_emu
 #   -->  HW simulation using a C++ Traffic generator
 
+export PFM_NAME := xilinx_vck190_base_202220_1
 
 # Makefile input options if not defined from top-level stage
 

@@ -15,10 +15,7 @@
 
 #Setup environment variables
 
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
-export XILINX_XRT=/<user-path>/opt/xilinx/xrt
+
 export PYTHON3_LOCATION=<user-path>
 
 
@@ -27,12 +24,6 @@ export PYTHON3_LOCATION=<user-path>
 # =========================================================
 # Platform Selection...
 # =========================================================
-export PFM_NAME=xilinx_vck190_base_202220_1
-
-
-# Source XRT, VITIS, and Aietools...
-source $XILINX_TOOLS_LOCATION/settings64.sh
-
 
 export TOOLS_VERSION=`basename $XILINX_VITIS`
 
@@ -49,19 +40,6 @@ echo "XILINX_VERSAL_SW   : "$XILINX_VERSAL_SW
 export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:${PYTHONPATH}
 export PATH=$PYTHON3_LOCATION:$PATH
 
-export LD_LIBRARY_PATH_SAVE=$LD_LIBRARY_PATH
-unset LD_LIBRARY_PATH
-
-export ROOTFS=$XILINX_VERSAL_SW/rootfs.ext4
-export IMAGE=$XILINX_VERSAL_SW/Image
-export SYSROOT=$XILINX_VERSAL_SW/sysroots/cortexa72-cortexa53-xilinx-linux
-
-# Setup SDKTARGETSYSROOT and CXX...
-#source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
-export SDKTARGETSYSROOT=$XILINX_VERSAL_SW/sysroots/cortexa72-cortexa53-xilinx-linux
-export CXX="aarch64-linux-gnu-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$SDKTARGETSYSROOT"
-
-
 # LIBRARY_PATH setting
-export LIBRARY_PATH=$LD_LIBRARY_PATH_SAVE:$XILINX_VIVADO/lib/lnx64.o:$XILINX_VIVADO/data/simmodels/xsim/$TOOLS_VERSION/lnx64/6.2.0/ext/protobuf:/usr/lib/x86_64-linux-gnu
+export LIBRARY_PATH=$LD_LIBRARY_PATH:$XILINX_VIVADO/lib/lnx64.o:$XILINX_VIVADO/data/simmodels/xsim/$TOOLS_VERSION/lnx64/6.2.0/ext/protobuf:/usr/lib/x86_64-linux-gnu
 export LD_LIBRARY_PATH=$LIBRARY_PATH

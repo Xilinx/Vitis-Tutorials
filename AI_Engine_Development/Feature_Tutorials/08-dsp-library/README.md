@@ -9,13 +9,26 @@
 
 # DSP Library Tutorial
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
+
+## Introduction
+
+The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
+
+This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
+
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+
+Before starting this tutorial run the following steps.
+
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+
 
 ## Table of Contents
 
-* [Introduction](#introduction)
-
-* [Before You Begin](#before-you-begin)
 
 * [Part 1: Creating a Single Kernel Graph](#part-1-creating-a-single-kernel-graph)
 
@@ -26,11 +39,7 @@
 * [References](#references)
 
 
-## Introduction
 
-The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
-
-This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
 ### Objectives
 
@@ -49,45 +58,6 @@ This tutorial shows how to construct a simple two-stage decimation filter. This 
 * Part 3 shows how to optimize performance of the filter chain by tuning individual filters
 
 
-## Before You Begin
-
-### *Documentation*: Explore AI Engine Architecture
-
-* [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
-
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
-
-### *Tools*: Installing the Tools
-
-Tools Documentation:
-
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environmentw)
-
-* [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
-
-To run through this tutorial, you will need to download and install the following tools:
-
-* Install the [Vitis Software Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
-
-* Obtain licenses for the AI Engine tools
-
-* Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
-
-* Download and setup the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
-
-### *Environment*: Setting Up Your Target Platform Environment
-
-When the elements of the Vitis software platform are installed, follow the steps below:
-
-1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
-2. Set up your `DSPLIB_ROOT`environment variable at the location you downloaded the DSP Library.
-
-
-### *Other Tutorials*: Learn Basic Vitis Compiler and AI Engine Concepts
-
-For novice users, following link provides tutorials to understand the basic Vitis compiler concepts and building simple AI Engine designs:
-
-* [https://github.com/Xilinx/Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 ## Part 1: Creating a Single Kernel Graph
 
@@ -381,22 +351,6 @@ This tutorial has demonstrated the following:
 * How to adjust FIR parameters to tune the design performance
 
 In doing so, it has hopefully provided a foundation upon which the user can begin to create their own designs in Vitis using the DSP Library.
-
-## References
-The following documents provide supplemental material useful with this tutorial.
-
-### [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
-Contains chapters on how to develop AI Engine graphs, how to use the Ai Engine compiler, and AI Engine simulation, and performance analysis.
-
-### [Vitis DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
-Contains information regarding the DSPLib example kernels used by this tutorial.
-
-### [Vitis Unified Software Development Platform 2022.1 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
-Following links point to Vitis software platform related documents referred in this tutorial:
-
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
-
-* [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 
 ## License

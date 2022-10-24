@@ -17,7 +17,7 @@
 TARGET ?= hw_emu
 
 #Directories
-FILES_DIR := $(PWD)/../../Files
+FILES_DIR := ../../Files
 DATA_DIR := $(FILES_DIR)/data
 PLATFORM_DIR := ${PLATFORM_REPO_PATHS}
 AIE:= $(FILES_DIR)/AIE
@@ -57,8 +57,7 @@ VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TA
 .ONESHELL:
 .PHONY: clean all kernels aie  link
 
-phase1: kernels aie link
-
+phase1: clean  kernels aie link
 
 ###
 # Guarding Checks. Do not modify.
@@ -118,6 +117,7 @@ kernels: $(KERNEL_XO)
 
 %.xo: ${PL}/src/%.cpp
 	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
+
 ########################################################
 
 
@@ -126,8 +126,8 @@ kernels: $(KERNEL_XO)
 # the hardware part of the design. This creates an xclbin
 # that will be used to run the design on the platform.
 link: $(GRAPH_O) $(KERNEL_XO)
-	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [xclbin] failed error code: $$?"; exit 1)
-	@echo "COMPLETE: .xclbin created."
+	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [link] failed error code: $$?"; exit 1)
+	@echo "COMPLETE: .xsa created."
 ########################################################
 
 
@@ -139,3 +139,4 @@ clean:
 	rm -rf aiesimulator_output pl_sample*
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
+	rm -rf aie_primitive.json  drivers  vpl_gen_fixed_presynth.pdi
