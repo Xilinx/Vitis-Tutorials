@@ -21,7 +21,7 @@ EMCONFIG_FILE = emconfig.json
 EXECUTABLE = ./host_ps_on_x86
 PACKAGE_OUT = ./package.$(TARGET)
 
-BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm
+BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
 
 # Command-line options
 VPP := v++
@@ -43,7 +43,7 @@ GCC_FLAGS := -Wall -c \
 GCC_INCLUDES := -I./ -I../aie \
 		-I${XILINX_VITIS}/aietools/include \
 
-GCC_LIB :=  -ladf_api_xrt_swemu -lxrt_coreutil \
+GCC_LIB :=  -ladf_api_xrt -lxrt_coreutil \
 	    -L${XILINX_VITIS}/aietools/lib/lnx64.o \
 	    -L${XILINX_XRT}/lib
 		   
@@ -65,7 +65,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202210_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202220_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.2/rootfs.ext4)

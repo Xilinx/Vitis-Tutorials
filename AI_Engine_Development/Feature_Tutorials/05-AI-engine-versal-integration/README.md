@@ -9,7 +9,7 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -19,15 +19,15 @@ This tutorial demonstrates creating a system design running on the AI Engine, PS
 
 This tutorial steps through software emulation, hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. By default, the Makefile is set for `sw_emu`. If you need to build for `hw_emu`,`hw`, use the corresponding TARGET option as instructed in corresponding sections.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
-2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-This tutorial targets VCK190 production board for 2022.1 version. 
+This tutorial targets VCK190 production board for 2022.2 version. 
 
 ## Objectives
 
@@ -90,7 +90,7 @@ make aie
 Or
 
 ```bash
-aiecompiler --target=x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+aiecompiler --target=x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
 ```
 
 | Flag | Description |
@@ -179,8 +179,8 @@ make kernels
 ```
 Or
 ```bash
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
 ```
 
 Looking at the `v++` command line, you will see several options. The following table describes each option:
@@ -229,7 +229,7 @@ make xsa
 ```
 or
 ```bash
-v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 | Flag/Switch | Description |
@@ -295,11 +295,11 @@ Or
 ```bash	
 cd ./sw
 v++ -p -t sw_emu  \
-	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
-	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 \
+	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm \
+	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4 \
 	--package.image_format=ext4 \
 	--package.boot_mode=sd \
-	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image \
+	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/Image \
 	--package.defer_aie_run \
 	--package.sd_file embedded_exec.sh \
 	--package.sd_file host.exe ../tutorial.xsa ../libadf.a
@@ -358,7 +358,7 @@ d. You should see an output displaying **TEST PASSED**. When this is shown, run 
 **Note:** The next step 'Run PS applicaion on x86' is a process to run software emulation on x86. The main advantage of running PS application on x86 is that it does not require to boot-up linux and hence the software emulation runs very faster when compared with running on QEMU emulator. You can either choose to follow these steps or jump directly to **Section 4** and run Hardware Emulation and Hardware steps.  
 
 #### Run PS application on x86 process
-This step demonstrates how softwre emulation can run the PS application on x86 process instead of ARM process for an AIE Design. Software emulation is an abstract model and does not use any of the petalinux drivers like Zynq OpenCL (ZOCL), interrupt controller or Device Tree Binary (DTB). Hence, the overhead of creating sd_card.img, booting petalinux on full QEMU machine is too heavy weight for software emulation and can be avoided.
+This step demonstrates how software emulation can run the PS application on x86 process instead of ARM process for an AIE Design. Software emulation is an abstract model and does not use any of the petalinux drivers like Zynq OpenCL (ZOCL), interrupt controller or Device Tree Binary (DTB). Hence, the overhead of creating sd_card.img, booting petalinux on full QEMU machine is too heavy weight for software emulation and can be avoided.
 
 There are no changes required in the AIE graph compilation for x86sim target, V++ compile and link steps. For the rest of the stages like, host compilation, package and launch emulation, follow these steps.
 
@@ -381,7 +381,7 @@ c. Use the tutorial's Makefile.sw_x86 that configures the right GCC_FLAGS, GCC_L
 ```bash
 cp -rf Makefile.sw_x86 Makefile
 ```
-d. Open the Makefile and observe the linking option `-ladf_api_xrt_swemu` in GCC_LIB which is used for x86 process. Compile the host application by running the following command
+d. Open the Makefile and observe the linking option `-ladf_api_xrt` in GCC_LIB which is used for x86 process. Compile the host application by running the following command
 
 ```bash
 make host
@@ -393,9 +393,9 @@ cd ./sw
  
 g++ -Wall -c -std=c++14 -D__SYNCBO_ENABLE__ -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I$XILINX_XRT/include -I./ -I../aie -I$XILINX_VITIS/aietools/include  -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
  
-g++ -Wall -c -std=c++14 -D__SYNCBO_ENABLE__ -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I$XILINX_XRT/include -I./ -I../aie -I$XILNX_VITIS/aietools/include  -o host.o host.cpp
+g++ -Wall -c -std=c++14 -D__SYNCBO_ENABLE__ -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I$XILINX_XRT/include -I./ -I../aie -I$XILINX_VITIS/aietools/include  -o host.o host.cpp
  
-g++ *.o -ladf_api_xrt_swemu -lxrt_coreutil -L$XILINX_VITIS/aietools/lib/lnx64.o -L$XILINX_XRT/lib -o ./host_ps_on_x86
+g++ *.o -ladf_api_xrt -lxrt_coreutil -L$XILINX_VITIS/aietools/lib/lnx64.o -L$XILINX_XRT/lib -o ./host_ps_on_x86
 
 ```
 e. This step packages the design. In addition to package, the `emconfigutil` command is used to generate the device, board and device tree details(emconfig.json) and those details are required by XRT before loading the xclbin.	
@@ -405,7 +405,7 @@ make package
 ```
 or
 ```bash
-emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --nd 1
+emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm --nd 1
 ```
 followed by,
 
@@ -413,7 +413,7 @@ followed by,
 cd ./sw
 v++ -p -t sw_emu \
     --package.defer_aie_run \
-    --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
+    --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm \
     --package.sd_dir $PLATFORM_REPO_PATHS/sw/versal/xrt \
     --package.out_dir ./package.sw_emu \
     --package.ps_on_x86 \
@@ -457,7 +457,7 @@ make aie TARGET=hw
 ```
 Or
 ```bash
-aiecompiler --target=hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --xlopt=0 -workdir=./Work aie/graph.cpp
+aiecompiler --target=hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --xlopt=0 -workdir=./Work aie/graph.cpp
 ```
 
 The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
@@ -629,8 +629,8 @@ make kernels TARGET=hw_emu
 or
 
 ```bash
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --save-temps -g -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --save-temps -g -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm --save-temps -g -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm --save-temps -g -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
 ```
 
 To get more details about several options of `v++` command line, refer to the **Compiling HLS Kernels Using V++** topic in **Section-3**
@@ -659,7 +659,7 @@ make xsa TARGET=hw_emu
 Or
 
 ```bash
-v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsad
+v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsad
 ```
 
 Now you have a generated `.xsa` that will be used to execute your design on the platform.
@@ -701,11 +701,11 @@ Or
 ```bash
 cd ./sw
 v++ --package -t hw_emu \
-	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
-	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 \
+	-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm \
+	--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4 \
 	--package.image_format=ext4 \
 	--package.boot_mode=sd \
-	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image \
+	--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/Image \
 	--package.defer_aie_run \
 	--package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
@@ -794,7 +794,7 @@ Explore the two reports and take notice of any differences and similarities. The
 	Or
 
 	```bash
-	v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
+	v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
 	```
 
 2. Then re-run the packaging step with:
@@ -808,11 +808,11 @@ Explore the two reports and take notice of any differences and similarities. The
 	```bash
 	cd ./sw
 	v++ --package -t hw \
-		-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
-		--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/rootfs.ext4 \
+		-f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm \
+		--package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4 \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
-		--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.1/Image \
+		--package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2022.2/Image \
 		--package.defer_aie_run \
 		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
 	cd ..
@@ -837,7 +837,7 @@ You should see **TEST PASSED**. You have successfully run your design on hardwar
 In this tutorial you learned the following:
 
 * How to compile PLIO and PL Kernels using `v++ -c`.
-* How to link the `libadf.a`, PLIO and PL kernels to the `xilinx_vck190_base_202210_1` platform.
+* How to link the `libadf.a`, PLIO and PL kernels to the `xilinx_vck190_base_202220_1` platform.
 * How to use Vitis&trade; Analyzer to explore the various reports generated from compilation and emulation/simulation.
 * How to package your host code, and the generated `xclbin` and `libadf.a` into an SD card directory.
 * How to execute the design for software emulation.

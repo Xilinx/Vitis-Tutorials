@@ -9,7 +9,7 @@
 
 # AI Engine A-to-Z Flow for Linux
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -40,7 +40,7 @@ The foundation of the Vitis environment design methodology is an iterative appro
 
 The steps in this tutorial are tightly coupled with the recommended best practices and introduce you to a complete end-to-end flow for a Linux-based host application for AI Engines and PL kernels using a base platform. You can then create a custom platform and re-target the design using the custom platform.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 ## Objectives
 
