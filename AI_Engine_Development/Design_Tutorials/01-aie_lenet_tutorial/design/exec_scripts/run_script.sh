@@ -19,10 +19,10 @@ echo ""
 SECONDS=0
 
 #export XLC_EMULATION_MODE=hw_emu
-export XILINX_XRT=/usr
+#export XILINX_XRT=/usr
 
 # Executing the elf...
-./lenet_xrt.elf a.xclbin
+./lenet_aie_xrt.elf a.xclbin
 
 return_code=$?
 

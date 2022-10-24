@@ -107,15 +107,15 @@ LENET_INSTS := 1
 
 # =========================================================
 # No of Design Iterations 
-#   16(default).
+#   1(default).
 # =========================================================
 ITER_CNT := 1
 
 # =========================================================
 # PL Frequency in Mhz:
-#   250Mhz(default)
+#   312.5Mhz(default)
 # =========================================================
-PL_FREQ := 250
+PL_FREQ := 312.5
 HZ_UNIT := 1000000
 VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * $(HZ_UNIT)" | bc`)
 #VPP_CLOCK_FREQ := $(PL_FREQ)000000
@@ -132,6 +132,11 @@ EN_TRACE	:= 0
 ######################################
 LAUNCH_HW_EMU_EXEC := 0
 
+############################################################
+# maximum cycle count for aiesimulator to get powerfrom vcd
+# default 100
+# #########################################################
+MAX_CYCLES   := 100000
 # =========================================================
 # Source directories
 # =========================================================
@@ -185,10 +190,9 @@ LENET_KERNEL_XO  := $(PL_SRC_REPO)/$(LENET_KERNEL_TOP)/$(LENET_KERNEL_TOP).xo
 
 LIBADF_A := $(BUILD_TARGET_DIR)/libadf.a
 
-APP_OBJ_NAME := lenet_xrt
-APP_ELF := $(APP_OBJ_NAME).elf
-APP_ELF_INF_RUN := $(APP_OBJ_NAME)_inf_run.elf
-XSA := vck190_aie_lenet.$(TARGET).xsa
+APP_OBJ_NAME := lenet_aie
+APP_ELF := $(APP_OBJ_NAME)_xrt.elf
+XSA := vck190_$(APP_OBJ_NAME).$(TARGET).xsa
 
 # =========================================================
 # Kernel Source Files repository
@@ -203,7 +207,7 @@ GRAPH_SRC_CPP := $(AIE_SRC_REPO)/graph.cpp
 # =========================================================
 # Application Source Files repository
 # =========================================================
-APP_SRC_CPP 	 := $(HOST_APP_SRC_REPO)/lenet_app.cpp
+APP_SRC_CPP 	 := $(HOST_APP_SRC_REPO)/lenet_aie_app.cpp
 AIE_CONTROL_CPP := $(BUILD_TARGET_DIR)/$(WORK_DIR)/ps/c_rts/aie_control_xrt.cpp
 
 # =========================================================
@@ -232,7 +236,7 @@ AIE_FLAGS += --workdir=$(WORK_DIR)
 #-o - Alias of --output-dir=<dir> option
 AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
 AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data
-
+AIE_SIM_FLAGS += --simulation-cycle-timeout $(MAX_CYCLES)
 # =========================================================
 # Application Compiler and Linker Flags
 # =========================================================
@@ -242,7 +246,8 @@ GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG
-GCC_FLAGS += -DLENET_INSTS=$(ITER_CNT)
+GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+GCC_FLAGS += -DLENET_INSTS=$(LENET_INSTS)
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
 GCC_INC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
@@ -273,7 +278,7 @@ VPP_LINK_FLAGS := --clock.freqHz $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_TOP)_0
 VPP_LINK_FLAGS += --clock.freqHz $(VPP_CLOCK_FREQ):$(LENET_KERNEL_TOP)_0
 
 VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
-VPP_LINK_FLAGS += --advanced.param compiler.userPostDebugProfileOverlayTcl=$(DIRECTIVES_REPO)/noc_qos.tcl
+VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/noc_qos.tcl
 VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/lenet_x$(LENET_INSTS).cfg
 
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD=16
@@ -307,7 +312,6 @@ PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA) $(LIBADF_A)
-PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
@@ -415,30 +419,13 @@ $(BUILD_TARGET_DIR)/$(XSA):$(KERNEL_XOS) $(SYSTEM_CONFIGS_REPO)/*
 # 	aie_control.o
 #	lenet_app.o 
 # 	lenet_xrt.elf
-# For infinite run....
-# 	app_control_inf_run.o
-#	lenet_xrt_app_inf_run.o
-# 	lenet_xrt_inf_run.elf
-ALL_APP_ELFS := $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-application: graph $(ALL_APP_ELFS)
-
-REG_GCC_FLAGS := $(GCC_FLAGS)
-REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
 
 $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
-	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
-	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
+	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app.o $(GCC_INC_LIB) $(GCC_LIB)
 	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
-
-INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
-INF_RUN_GCC_FLAGS += -DITER_CNT=-1
-
-$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
-	@rm -rf $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app_inf_run.o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control_inf_run.o
-	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB)
-	$(CXX) $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/$(APP_OBJ_NAME)_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 
 # =========================================================
 # Step 5. Package Generation  
