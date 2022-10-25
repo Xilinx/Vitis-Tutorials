@@ -9,7 +9,7 @@
 
 # AI Engine Graph Integration and Validation using a Custom Linux Platform
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 In this tutorial, you will use the design sources that are used to run the system design on base platform in [Running system design on AI Engine, PS, and PL using base platform](../05-AI-engine-versal-integration/README.md). You will re-target the design to use the custom platform created in [Creating Custom Platfom based on VCK190 Evaluation board](../../../Getting_Started/Vitis_Platform/README.md).
 
@@ -25,7 +25,7 @@ As described in [AI Engine A-to-Z Flow for Linux](README.md), two steps (tutoria
 
 After you complete these prerequisite tutorials, you are ready to run AI Engine graph integration and validation using a custom Linux platform. 
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 
 ## Setting up the environment
@@ -38,7 +38,7 @@ First, set up the environment for integrating the subsystem with the custom plat
 
    For example: `BASE_PLATFORM = ${PLATFORM_REPO_PATHS}/vck190_custom.xpfm`
 
-3. Make sure your `ROOTFS` and `IMAGE` are still pointing to the `xilinx-versal-common-v2022.1` directory. 
+3. Make sure your `ROOTFS` and `IMAGE` are still pointing to the `xilinx-versal-common-v2022.2` directory. 
    
    **Note** : The `$PLATFORM_REPO_PATHS` now points to the custom platform and it does not contain the `rootfs.ext4` and `Image` files as pointed in the Makefile.
    
