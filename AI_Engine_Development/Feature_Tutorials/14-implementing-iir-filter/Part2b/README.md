@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2b
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Preliminaries
 
