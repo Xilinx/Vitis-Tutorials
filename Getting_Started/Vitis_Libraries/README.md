@@ -8,7 +8,7 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 This tutorial focuses on how to leverage the Vitis Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile and simulate on its own till instantiate it into top-level design.
 
@@ -19,7 +19,7 @@ Before playing with the libraries, you need to set up Vitis environment first. F
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2022.1/settings64.sh
+$ source <Vitis Tool Installation Path>/Vitis/2022.2/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
@@ -173,7 +173,7 @@ vitis_hls -p prj_impulse_test.prj &
 
 You may browse into the source files, synthesis report or waveform viewer by simply selecting them from the 'Explorer' window and 'Flow Navigator' window.
 
-The top_module.cpp calls the FFT library and the parameters are defined in the data_path.hpp file. For detailed instructions about how to use FFT library, please refer to the Vitis Library [github.io](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L1.html#fixed-point-1-d-ssr-fft-usage) page.
+The top_module.cpp calls the FFT library and the parameters are defined in the data_path.hpp file. For detailed instructions about how to use FFT library, please refer to the Vitis Library [Doc Portal](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/user_guide/L1.html_5).
 
 3. Export IP in HLS project
 
@@ -302,7 +302,7 @@ In this tutorial, we explain how to leverage a L1 Vitis library element to build
 
 ## Reference
 
-Documentation on Vitis Libraries: https://xilinx.github.io/Vitis_Libraries/
+Documentation on Vitis Libraries: https://docs.xilinx.com/r/en-US/Vitis_Libraries
 
 
 <p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p>
