@@ -9,9 +9,9 @@
 
 ## PetaLinux Building and System Customization
 
-***Version: PetaLinux 2022.1***
+***Version: PetaLinux 2022.2***
 
-A Vitis platform requires software components. In this module we'd like to demonstrate software environment customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
+In this module we'd like to demonstrate platform software components customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
 
 Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.
 
@@ -29,15 +29,20 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 2. Download the base platform and place it under `workspace`  folder. Then extract it.
 
    ```bash
-   unzip xilinx_zcu104_base_202210_1.zip #extract the base platform
+   unzip xilinx_zcu104_base_202220_1.zip #extract the base platform
+   cd xilinx_zcu104_base_202220_1
    tree -L 2
-   ├── xilinx_zcu104_base_202210_1
-   │   ├── hw
-   │   ├── hw_emu
-   │   ├── sw
-   │   ├── version
-   │   └── xilinx_zcu104_base_202210_1.xpfm
-   └── xilinx_zcu104_base_202210_1.zip
+   .
+   ├── hw
+   │   └── hw.xsa
+   ├── hw_emu
+   │   └── hw_emu.xsa
+   ├── sw
+   │   ├── xilinx_zcu104_base_202220_1
+   │   └── xilinx_zcu104_base_202220_1.spfm
+   ├── version
+   └── xilinx_zcu104_base_202220_1.xpfm
+   4 directories, 5 files
    ```
 
 ### Create a PetaLinux Project
@@ -51,12 +56,13 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 2. Create a PetaLinux project named **zcu104_petalinux** and configure the hw option with the XSA file:
 
    ```bash
+   cd workspace
    petalinux-create --type project --template zynqMP --name zcu104_petalinux
    cd zcu104_petalinux
-   petalinux-config --get-hw-description=xilinx_zcu104_base_202210_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202210_1> directory. if you want to do emulation you can choose hw_emu.xsa 
+   petalinux-config --get-hw-description=xilinx_zcu104_base_202220_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202220_1> directory. if you want to do emulation you can choose hw_emu.xsa 
    ```
 
-   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as "zynqMP". If your platform is using Versal chipset. Please set this option to `versal`.
+   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as `zynqMP`. If your platform is using Versal chipset. Please set this option to `versal`.
 
    > Note: If user are customizing Linux image for VCK190 board, Please ensure the XSA file is exported from a normal project (not a Vitis extensible project ) and includes the device image.
 
