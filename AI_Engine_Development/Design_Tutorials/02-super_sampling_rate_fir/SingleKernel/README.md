@@ -9,7 +9,7 @@
 
 # Single-Kernel FIR Filter Implementation
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 In this first part of the tutorial you will use a basic filtering application and analyze the performance that can be achieved.
 
