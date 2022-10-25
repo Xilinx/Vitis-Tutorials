@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Super Sampling Rate FIR Filter
 

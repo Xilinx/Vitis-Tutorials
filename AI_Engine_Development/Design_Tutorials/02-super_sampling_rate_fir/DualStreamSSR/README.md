@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
