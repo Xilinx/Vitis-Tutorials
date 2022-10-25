@@ -213,6 +213,6 @@ void fft_2d(
    hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_inp,
    hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_out,
    hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_inp,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out,
-   uint32_t iterCnt
+   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out//,
+   //uint32_t iterCnt
    );
