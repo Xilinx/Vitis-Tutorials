@@ -20,8 +20,10 @@ import os
 #import array as arr
 
 fftPts = [32,64,128,256,1024]
-iterCnt = 8
+iterCnt = 16
 pliowidth = 128
+
+os.system("rm -rf c*")
 
 for fftPt in fftPts:
    ioDir = "cint16_IOfiles/fft2d_" + str(fftPt) + "x" + str(fftPt * 2)  + "_ioFiles"
@@ -63,3 +65,5 @@ for fftPt in fftPts:
 
 fptr_row_cfloat.close()
 fptr_col_cfloat.close()
+
+os.system("chmod 755 -R *")

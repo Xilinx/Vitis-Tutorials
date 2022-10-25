@@ -23,7 +23,7 @@
 ////////////////////////////////////////////////////////////
 void mm2s0(
    hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
-   int matSz
+   ap_uint<25> matSz, ap_int<16> iterCnt
   );
 
 ////////////////////////////////////////////////////////////
@@ -32,8 +32,9 @@ void mm2s0(
 void dmaHls_rowsToCols(
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
-      int matSz, int rows, int cols, int &stg0_errCnt,
-      ap_uint<128> goldenVal
+      ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
+      ap_uint<25> &stg0_errCnt, ap_uint<128> goldenVal,
+      ap_int<16> iterCnt
      );
 
 ////////////////////////////////////////////////////////////
@@ -41,7 +42,8 @@ void dmaHls_rowsToCols(
 ////////////////////////////////////////////////////////////
 void s2mm1(
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
-      int matSz, int &stg1_errCnt, ap_uint<128> goldenVal
+      ap_uint<25> matSz, ap_uint<25> &stg1_errCnt, ap_uint<128> goldenVal,
+      ap_int<16> iterCnt
      );
 
 ////////////////////////////////////////////////////////////
@@ -55,5 +57,6 @@ int dma_hls(
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
-      int matSz, int rows, int cols, int iterCnt
+      ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
+      ap_int<16> iterCnt
      );

@@ -23,9 +23,9 @@ FFT2D_graph fft2d_graph;
    int main(int argc, char ** argv)
    {
       fft2d_graph.init();
-
+      
       fft2d_graph.run(ITER_CNT * MAT_ROWS);
-
+      
       fft2d_graph.end();
       
       return 0;
