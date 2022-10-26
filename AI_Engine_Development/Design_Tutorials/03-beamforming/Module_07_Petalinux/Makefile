@@ -11,8 +11,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-
-
 #relative beamforming directory
 RELATIVE_PROJECT_DIR := ../
 
@@ -79,13 +77,13 @@ update_dtsi:
 update_linux.bif:
 	@cp -f linux.bif $(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/linux.bif
 
-update_boot: 
+update_boot:
 	mkdir -p build/image
 	cp -f build/vck190_linux/images/linux/boot.scr ./build/image/.
 	cp -f init.sh ./build/image/.
 	cp -f platform_desc.txt ./build/image/.
 
-petalinux_create: 
+petalinux_create:
 	mkdir $(BUILD_DIR) -p; \
 	cd $(BUILD_DIR); \
 	petalinux-create -t project -s $(PATH_TO_BSP)/$(BSP) -n $(PETALINUX_DIR)
@@ -107,14 +105,14 @@ petalinux_build:
 	cd $(BUILD_DIR)/$(PETALINUX_DIR) && petalinux-package --boot --u-boot
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_linux.bif
 
-platform: 
+platform:
 	xsct xsct_create_pfm.tcl vck190_custom $(XSA)
 
 petalinux: $(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/Image
 
 $(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/Image: $(XSA)
-	$(MAKE) petalinux_create 
-	$(MAKE) petalinux_config 
+	$(MAKE) petalinux_create
+	$(MAKE) petalinux_config
 	$(MAKE) petalinux_build
 	$(MAKE) update_boot
 	$(MAKE) platform

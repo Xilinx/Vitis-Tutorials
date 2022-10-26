@@ -37,7 +37,7 @@ Transmit delay: 0 msec/char 0 msec/line
 ```
 
 7. Power on the board.
-8. Wait until you see the `root@versal-rootfs-common-2021_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+8. Wait until you see the `root@versal-rootfs-common-2022_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 9. Run the following commands into the TeraTerm terminal:
 
 ```
@@ -67,4 +67,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p>
+<p align="center"> XD016 | &copy; Copyright 2022 Xilinx, Inc.</p>
