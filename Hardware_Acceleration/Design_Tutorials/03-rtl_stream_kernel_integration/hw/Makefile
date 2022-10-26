@@ -21,11 +21,11 @@ help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all TARGET=<hw/hw_emu> PLATFORM=platform_name"
 	$(ECHO) "      Command to build all the rtc_gen_test and rtc_alpha xclbin and necessary kernel files (xo) for specified Target and Shell."
-	$(ECHO) "      By default, TARGET=hw, PLATFORM=xilinx_u200_xdma_201830_2"
+	$(ECHO) "      By default, TARGET=hw, PLATFORM=xilinx_u200_gen3x16_xdma_2_202110_1"
 	$(ECHO) ""
 	$(ECHO) "  make all_xo TARGET=<hw/hw_emu> PLATFORM=platform_name"
 	$(ECHO) "      Command to build all the kernel files (xo), including rtc_gen.xo, alpha_mix.xo and strm_dump.xo"
-	$(ECHO) "      By default, TARGET=hw, PLATFORM=xilinx_u200_xdma_201830_2"
+	$(ECHO) "      By default, TARGET=hw, PLATFORM=xilinx_u200_gen3x16_xdma_2_202110_1"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
@@ -37,6 +37,7 @@ help::
 	$(ECHO) "  xilinx_u250_gen3x16_xdma_4_1_202210_1"
 	$(ECHO) "  xilinx_u50_gen3x16_xdma_5_202210_1"
 	$(ECHO) "  xilinx_u55c_gen3x16_xdma_3_202210_1"
+	$(ECHO) "  xilinx_u280_gen3x16_xdma_1_202211_1"
 	$(ECHO) ""
 
 PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
