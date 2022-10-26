@@ -9,27 +9,49 @@
  </tr>
 </table>
 
+## Vitis Platform Creation Tutorials
+
+The tutorials under the Vitis Platform Creation category help you learn how to develop a platform for your own board, or customize the Vitis platform on Xilinx demo boards.
+
+- The **[Design Tutorials](./Design_Tutorials/)** showcase end-to-end workflow for creating the Vitis extensible platforms from scratch for different device families and boards.
+- The **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop the platform.
+
 
 ### Design Tutorials
 
 <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
+  <td width="40%" align="center"><b>Tutorial</b>
+  <td width="20%" align="center"><b>Device Family</b>
+  <td width="20%" align="center"><b>Board</b>
+  <td width="20%" align="center"><b>Platform Type</b>
  </tr>
-  <tr>
- <td align="center"><a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">Custom Platform Creation Tutorial on MPSoC</a></td>
- <td>This tutorial demonstrates how you can create a custom Vitis platform on ZCU104 demo board and validate the platform.</td>
+ <tr>
+  <td align="center"><a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">Custom Platform Creation Tutorial on MPSoC</a></td>
+  <td>ZYNQ UltraScale+ MPSoC</td>
+  <td>ZCU104</td>
+  <td>Flat</td>
  </tr>
 
  <tr>
- <td align="center"><a href="./Design_Tutorials/03_Edge_VCK190/README.md">Custom Platform Creation Tutorial on Versal</a></td>
- <td>This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.</td>
+  <td align="center"><a href="./Design_Tutorials/03_Edge_VCK190/README.md">Custom Platform Creation Tutorial on Versal</a></td>
+  <td>Versal AI Core</td>
+  <td>VCK190</td>
+  <td>Flat</td>
  </tr>
+
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Platform Creation Example on KV260 Starter Kit</a></td>
- <td>Extend the <a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria SOM KV260 Starter Kit.
-</td>
+  <td align="center"><a href="./Design_Tutorials/04_Edge_VCK190_DFX/README.md">Custom Versal DFX Platform Creation Tutorial</a></td>
+  <td>Versal AI Core</td>
+  <td>VCK190</td>
+  <td>DFX</td>
+ </tr>
+
+  <tr>
+  <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Kria SOM Platform Creation Example</a></td>
+  <td>ZYNQ UltraScale+ MPSoC</td>
+  <td>KV260</td>
+  <td>Flat</td>
  </tr>
 </table>
 
@@ -39,16 +61,22 @@ These tutorials illustrate various platform features and how you can incorporate
 
 <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
+ <td width="40%" align="center"><b>Tutorial</b>
+  <td width="20%" align="center"><b>Device Family</b>
+  <td width="20%" align="center"><b>Board</b>
+  <td width="20%" align="center"><b>Platform Type</b>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/01_platform_creation_streaming_ip/">Incorporating Stream Interfaces</a></td>
- <td>This tutorial demonstrates how you can stream data between Vitis kernels and AXI stream connections exposed in the platform.</td>
+  <td>Generic but using Versal AI Core as example</td>
+  <td>VCK190</td>
+  <td>Flat</td>
  </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
- <td>This tutorial demonstrates how you can customize a PetaLinux project to work for Vitis acceleration applications.</td>
+ <td>ZYNQ UltraScale+ MPSoC and Versal AI Core</td>
+ <td>ZCU104 and VCK190</td>
+ <td>Flat</td>
  </tr>
  </table>
 
