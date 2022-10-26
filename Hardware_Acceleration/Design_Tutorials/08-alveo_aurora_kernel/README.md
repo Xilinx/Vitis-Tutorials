@@ -42,11 +42,14 @@ In the example design, host transfers block data into the on-board global memory
 
 ![Loopback](./images/loopback.jpg)
 
-The design supports Ubuntu 18.04/20.04 and Redhat/CentOS 7/8 systems and is validated on following XRT and target platform version:
+The design supports Ubuntu 18.04/20.04 and Redhat/CentOS 7/8 systems and is supported with following XRT and target platform version:
 
-* XRT 2.13.466
+* XRT 2.14.354
 * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
 * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1
+* Alveo U280: xilinx_u280_gen3x16_xdma_1_202211_1
+* Alveo U50: xilinx_u50_gen3x16_xdma_5_202210_1
+* Alveo U55C: xilinx_u55c_gen3x16_xdma_3_202210_1
 
 All the flows in the example design are provided as command line fashion, which utilize Makefile and Tcl scripts. During some steps in this tutorial, some GUI operations are used for explicit explanation purpose. Below is the files description of the design directory.
 

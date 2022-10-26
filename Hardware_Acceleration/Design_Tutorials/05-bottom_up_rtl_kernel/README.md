@@ -47,12 +47,13 @@ The designs have been verified with the following software/hardware environment 
   * OpenSSL library installed for hardware output validate (**required**)
   * GCC 7
 * Vitis: 2022.2
-* XRT: 2.13.466
+* XRT: 2.14.354
 * Hardware and Platform for your Alveo card (you need both the deployment and development platforms):
   * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
   * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1
   * Alveo U50: xilinx_u50_gen3x16_xdma_5_202210_1
   * Alveo U55C: xilinx_u55c_gen3x16_xdma_3_202210_1
+  * Alveo U280: xilinx_u280_gen3x16_xdma_1_202211_1
 
 ### Additional Requirements for RedHat/CentOS
 If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.

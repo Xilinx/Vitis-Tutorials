@@ -21,10 +21,11 @@ print_usage () {
   echo "  EMU_MODE: on  - turn on hw_emu mode"
   echo "            off - turn off emulation mode"
   echo "  PLATFORM: the installed development platform name, which can be ..."
-  echo "              xilinx_u200_xdma_201830_2 (default)"
-  echo "              xilinx_u250_xdma_201830_2"
-  echo "              xilinx_u280_xdma_201920_3"
-  echo "              xilinx_u50_gen3x16_xdma_201920_3"
+  echo "              xilinx_u200_gen3x16_xdma_2_202110_1 (default)"
+  echo "              xilinx_u250_gen3x16_xdma_4_1_202210_1"
+  echo "              xilinx_u280_gen3x16_xdma_1_202211_1"
+  echo "              xilinx_u50_gen3x16_xdma_5_202210_1"
+  echo "              xilinx_u55c_gen3x16_xdma_3_202210_1"
   echo "" 
 }
 
@@ -34,7 +35,7 @@ then
 fi
 
 switch=""
-platform="xilinx_u200_xdma_201830_2"
+platform="xilinx_u200_gen3x16_xdma_2_202110_1"
 
 while true;
 do
