@@ -9,7 +9,7 @@
 
 # Versal System Design Clocking
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -32,12 +32,12 @@ In the design the following clocking steps are used:
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
 For detailed information, see the Clocking the PL Kernels section [here](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
-**IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2022.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps before starting this tutorial:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
@@ -103,7 +103,7 @@ A brief explanation of the `v++` options:
 | `-o` | (required) The output, which will always be `.xo`.|
 | `--save-temps` | (optional) Will create a folder structure and save the compilation of the kernel.|
 
-For additional information, see [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command).
+For additional information, see [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
 
 After completion, you will have the `mm2s.xo`, `s2mm.xo`, `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
@@ -135,13 +135,13 @@ Here you may notice some connectivity and clocking options.
 * `nk` -- This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
 * `stream_connect` -- This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
 
-There are many more options available for `v++`. For a full list, see the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command).
+There are many more options available for `v++`. For a full list, see the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
 
 1. Modify the `system.cfg` file so that the second `stream_connect` has a stream depth of `1024`. Replace the line with `ai_engine_0.Dataout` line with this: `stream_connect=ai_engine_0.Dataout:s2mm.s:1024`
    * Keep this file open for now.
 2. The data output of the AI Engine is at 32-bit and at a high clock frequency. To reduce the possibilities of dropping data, you can attach the `s2mm` kernel to the AI Engine with a larger datawidth (eg. 64-bits) and the clock frequency to `s2mm` to keep relative bandwidth the same. To do this, the Vitis Compiler will auto instantiate a Clock Converter block and Datawidth Converter block to make sure connectivity is achieved.
    * Open the `s2mm.cpp` in `./pl_kernels` to see that the line `23` has 64-bit defined for both input and output.
-3. Because the `s2mm` kernel is running slower than the AI Engine output, you need to override the clock provided to it in **Step 2**. That was just for kernel compilation and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
+3. Because the `s2mm` kernel is running slower than thet for kernel compilation and linking is to make sure that clock is connected correctly. In the `system.cfg` file uncomment these lines:
     ```ini
     [clock]
     freqHz=200000000:s2mm.ap_clk
@@ -173,7 +173,7 @@ There are many more options available for `v++`. For a full list, see the docume
    * From the changes made in the previous steps, you will notice a new clock, Datawidth Converter, Clock Converter, and a new FIFO on the `s2mm` kernel.
       * Do note that if you change a kernel or connectivity you have to re-run the `v++` linker.
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command).**
+**NOTE: Any change to the `system.cfg` file can also be done on the command-line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).**
 
 ## Step 4 - Compiling Host Code
 
@@ -181,7 +181,7 @@ When the `v++` linker is complete, you can compile the host code that will run o
 
 1. Open `./sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application see [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
+    Do take note that [XRT](https://xilinx.github.io/XRT/2022.2/html/index.html) (Xilinx Runtime) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application see [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp` look at line 117 and 118 and comment them out. You should have uncommented the following line:
 
@@ -233,13 +233,8 @@ When running the VCK190 board, make sure you have the right onboard switches fli
 
 1. Insert the SD card and turn ON the board.
 2. Wait for the Linux command prompt to be available on an attached monitor and keyboard.
-3. Run the following commands:
-    ```bash
-    cd /mnt/sd-mmcblk0p1
-    export XILINX_XRT=/usr
-    ```
-4. To run your application enter the command: `./host.exe a.xclbin`
-5. You should see a **TEST PASSED** which means that the application ran successfully!
+3. To run your application enter the command: `./host.exe a.xclbin`
+4. You should see a **TEST PASSED** which means that the application ran successfully!
 
 **IMPORTANT**: To re-run the application, you must power cycle the board.
 
