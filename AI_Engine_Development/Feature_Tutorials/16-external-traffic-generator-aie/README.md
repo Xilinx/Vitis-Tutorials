@@ -85,6 +85,16 @@ Before starting this tutorial, run the following steps.
 1. Set up the following paths in the script `env_setup.sh`:
 
 ```bash
+
+export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
+export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
+export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
+export XILINX_XRT=/<user-path>/opt/xilinx/xrt
+export PYTHON3_LOCATION=<user-path>
+```
+
+2. This env_setup.sh sets the necessary paths to run the tutorial:
+=======
 export PYTHON3_LOCATION=<user-path>
 ```
 

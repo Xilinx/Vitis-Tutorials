@@ -9,7 +9,7 @@
 
 # Using RTL IP with AI Engines
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -59,7 +59,7 @@ The design that will be used is shown in the following figure:
 Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
 1. Open the `polar_clip_rtl_kernel.tcl` file.
-2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://www.xilinx.com/cgi-bin/docs/rdoc?d=xilinx2022_1/ug1118-vivado-creating-packaging-custom-ip.pdf).
+2. This Tcl script creates an IP following the Vivado IP Packaging flow as described in the [Creating and Packaging Custom IP User Guide (UG1118)](https://docs.xilinx.com/r/en-US/ug1118-vivado-creating-packaging-custom-ip/Creating-and-Packaging-Custom-IP).
 
     Note the following points:
 
@@ -77,7 +77,7 @@ Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces out_sample -of_objects [ipx::current_core]]
         ```
 
-    * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on RTL kernels and their requirements [here](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2022.1;d=devrtlkernel.html).
+    * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on RTL kernels and their requirements [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels).
 
         ```tcl
         package_xo -kernel_name $kernelName \
@@ -271,12 +271,6 @@ When launched, use the Linux prompt to run the design.
 
 2. Execute the following command when the emulated Linux prompt displays:
 
-	```bash
-	cd /mnt/sd-mmcblk0p1
-	export XILINX_XRT=/usr
-	```
-
-    This sets up the design to run emulation. Run the design using the following command:
 
     ```bash
     ./host.exe a.xclbin
