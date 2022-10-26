@@ -6,141 +6,455 @@
  </tr>
 </table>
 
-### Introduction 
+***Version: Vitis 2022.2***
 
-The <a href="./Introduction/">Introduction</a> page contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you check the introduction page for details before starting to use the AIE tutorials.
+## Introduction
 
+The tutorials under the AI Engine Development help you learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors. In order to successfully deploy AI Engine applications in hardware, you need to be aware of the Vitis and AI Engine tools and flows. 
 
-### Feature Tutorials
+- The AI Engine Development <a href="./Feature_Tutorials/">**Feature Tutorials**</a> highlight specific features and flows that help develop AI Engine applications.
+
+- The AI Engine Development <a href="./Design_Tutorials/">**Design Tutorials**</a> showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both these phases are demonstrated in these tutorials.
+
+These tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
+
+## Environment Settings
+
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+
+Run the following steps to setup environment ( **NOT** apply to tutorials that do not use the VCK190 base platform ):
+
+1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
+2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`
+3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.2/Image`.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+
+## Feature Tutorials
 
  <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
+ <td width="7%" align="center"><b>Tutorial</b>
+ <td width="7%" align="center"><b>Platform</b>
+ <td width="7%" align="center"><b>OS</b>
+ <td width="7%" align="center"><b>IDE Flow</b>
+ <td width="7%" align="center"><b>Libraries Used</b>
+ <td width="7%" align="center"><b>HLS Kernel</b>
+ <td width="7%" align="center"><b>x86 simulator</b>
+ <td width="7%" align="center"><b>aie simulator</b>
+ <td width="7%" align="center"><b>SW Emu</b>
+ <td width="7%" align="center"><b>HW Emu</b>
+ <td width="7%" align="center"><b>HW</b>
+ <td width="7%" align="center"><b>Event Trace in HW</b>
+ <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux</a></td>
- <td>This tutorial intoduces a platform-based approach to develop the adaptable subsystem that contains PL kernels and AI Engine graph, demonstrates how you can quickly validate the design by means of hardware emulation or hardware using the base platform, and quickly switch to the custom platform with minimal changes.</td>
+ <td>Base / Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
+ <td>Custom</td>
+ <td>Baremetal</td>
+ <td>x</td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a></td>
- <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/03-rtp-reconfiguration/">Runtime Parameter Reconfiguration</a></td>
- <td>Learn how to dynamically update AI Engine runtime parameters</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/04-packet-switching/">Packet Switching</a></td>
- <td>This tutorial illustrates how to use data packet switching with AI Engine designs to optimize efficiency.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AI Engine Versal Integration for Hardware Emulation and Hardware</a></td>
- <td>This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
+ <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AIE Versal Integration</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/06-versal-system-design-clocking-tutorial/">Versal System Design Clocking</a></td>
- <td>This tutorial demonstrates clocking concepts for the Vitis compiler by defining clocking for ADF graph PL kernels and PLIO kernels, using the clocking automation functionality.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point/">Using Floating-Point in the AI Engine</a></td>
- <td>These examples demonstrate floating-point vector computations in the AI Engine.</td>
+ <td align="center"><a href="./Feature_Tutorials/07-AI-Engine-Floating-Point/">Using Floating-Point in the AIE</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a></td>
- <td>This tutorial demonstrates how to use kernels provided by the DSP library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>MM2S / S2MM Variant</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
- <td>
-This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AI Engine DSP Library and Model Composer Tutorial</a></td>
- <td>
-This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.</td>
+ <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>x</td>
+ <td>DSPLib</td>
+ <td>MM2S / S2MM</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/">Versal Emulation Waveform Analysis</a></td>
- <td>
-This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal ACAP.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>Traffic Generators</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/12-axis-traffic-generator/">AXIS External Traffic Generator</a></td>
- <td>
-This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.</td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/13-aie-performance-analysis/">AI Engine Performance and Deadlock Analysis Tutorial</a></td>
- <td>
-This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
+ <td align="center"><a href="./Feature_Tutorials/13-aie-performance-analysis/">AIE Performance and Deadlock Analysis</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AI Engine</a></td>
- <td>
-This multi-part tutorial describes how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.</td>
+ <td align="center"><a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AIE</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AIE Application </a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> MM2S / S2MM </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+  <td align="center"><a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> MM2S / S2MM / PolarClip </td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/15-post-link-recompile/">Post-Link Recompile of an AI Engine Application </a></td>
- <td>This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado® tool run, which can take a long time if timing closure requires specific attention. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed. The tutorial demonstrates a Vitis IDE flow and a Makefile flow.</td>
- </tr>
-  <tr>
- <td align="center"><a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
- <td>This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.</td>
- </tr>
-<tr>
  <td align="center"><a href="./Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
- <td>This tutorial demonstrates how to reuse any AXI-based IP you have created as an RTL IP, control your platform, and convert your RTL IP to an RTL kernel allowing for a more streamlined process for creating the design you need.</td>
-</tr>
+ <td>Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
-### Design Tutorials
-
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto ACAP kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary build options to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
-
-
+## Design Tutorials
 
  <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
+ <td width="7%" align="center"><b>Tutorial</b>
+ <td width="7%" align="center"><b>Platform</b>
+ <td width="7%" align="center"><b>OS</b>
+ <td width="7%" align="center"><b>IDE Flow</b>
+ <td width="7%" align="center"><b>Libraries Used</b>
+ <td width="7%" align="center"><b>HLS Kernel</b>
+ <td width="7%" align="center"><b>x86 simulator</b>
+ <td width="7%" align="center"><b>aie simulator</b>
+ <td width="7%" align="center"><b>SW Emu</b>
+ <td width="7%" align="center"><b>HW Emu</b>
+ <td width="7%" align="center"><b>HW</b>
+ <td width="7%" align="center"><b>Event Trace in HW</b>
+ <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/README.md">LeNet Tutorial</a></td>
- <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/README.md">Super Sampling Rate FIR Filters</a></td>
- <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/03-beamforming/README.md">Beamforming Design</a></td>
- <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
+ <td align="center"><a href="../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
+ <td>Custom</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM / VADD</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
  </tr> <tr>
- <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/README.md">2D-FFT</a></td>
- <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
+ <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/">LeNet Tutorial</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>x</td>
+ <td></td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/02-super_sampling_rate_fir/">Super Sampling Rate FIR Filters</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/03-beamforming/">Beamforming Design</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/">2D-FFT</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>PL Data Generator and Checker</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr><tr>
- <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/README.md">FIR Filter</a></td>
- <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
+ <td align="center"><a href="./Design_Tutorials/07-firFilter_AIEvsHLS/">FIR Filter</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>PL Data Generator and Checker</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr> <tr>
- <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/README.md">N-Body Simulator</a></td>
- <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:<li>A Python model of an N-Body Simulator run on x86 machine
-   <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles
-   <li>AI Engine packet switching
-   <li>AI Engine single-precision floating point calculations
-   <li>AI Engine 1:400 broadcast streams
-   <li>Codeless PL HLS datamover kernels from the Vitis™ Utility Library
-   <li>PL HLS packet switching kernels
-   <li>PS Host Application that validates the data coming out of the AI Engine design
-   <li>C++ model of an N-Body Simulator
-   <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
-   <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
+ <td align="center"><a href="./Design_Tutorials/08-n-body-simulator/">N-Body Simulator</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>PL Datamover</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td> </td>
+ </tr> <tr>
+ <td align="center"><a href="./Design_Tutorials/10-GeMM_AIEvsDSP/">Versal GeMM Implementation</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>Datamover</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr>
-</table>
+ </table>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+ 
+
+ <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
