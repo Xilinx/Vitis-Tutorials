@@ -82,6 +82,6 @@ This tutorial demonstrates how to expand your code with PL Vitis Libraries L2 AP
 
 ## Reference
 
-Documents on [Vitis Libraries Docs](https://xilinx.github.io/Vitis_Libraries/).
+Documents on [Vitis Libraries Docs](https://docs.xilinx.com/r/en-US/Vitis_Libraries).
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
