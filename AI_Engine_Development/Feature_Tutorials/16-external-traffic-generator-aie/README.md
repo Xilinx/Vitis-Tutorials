@@ -94,7 +94,12 @@ export PYTHON3_LOCATION=<user-path>
 ```
 
 2. This env_setup.sh sets the necessary paths to run the tutorial:
-=======
+
+    - `ROOTFS`, `IMAGE`, `SYSROOT`, `CXX`, and `SDKTARGETSYSROOT` for host software compilation.
+    - `LIBRARY_PATH` to handle external traffic generator handles.
+    - `PATH` and `PYTHONPATH` for the Python-based external traffic generator.
+
+
 export PYTHON3_LOCATION=<user-path>
 ```
 
