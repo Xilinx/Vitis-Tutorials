@@ -24,7 +24,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 Run the following steps to setup environment ( **NOT** apply to tutorials that do not use the VCK190 base platform ):
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the xilinx-versal-common-v2022.1/sdk.sh.
+1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh`.
 2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.1/rootfs.ext4`
 3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
@@ -423,6 +423,20 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>x</td>
  <td> </td>
  <td> </td>
+ </tr><tr>
+ <td align="center"><a href="../Design_Tutorials/10-GeMM_AIEvsDSP/">Versal GeMM Implementation</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>Datamover</td>
+ <td> </td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
+ <td>x</td>
+ <td> </td>
+ <td>x</td>
  </tr>
  </table>
 

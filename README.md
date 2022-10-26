@@ -262,6 +262,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
             <td>               
+                 <a href="./AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation :new:</a>
             </td>
         </tr>
         <tr>
@@ -333,6 +334,13 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<td height="24">
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial :new:</a>
+                </td>			            
+				<td height="24">
+                </td>
+            </tr>            
         </tbody>
     </table>
     <table border="0" width="100%">
