@@ -49,7 +49,7 @@ EMBEDDED_EXEC_SCRIPT := $(MODULE_09_DIR)/embedded_exec.sh
 # =========================================================
 BUILD_DIR := $(MODULE_09_DIR)/build
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package_$(TARGET)
-AIE_XCLBIN := $(BUILD_DIR)/aie_$(TARGET)/aie.xclbin 
+AIE_XCLBIN := $(BUILD_DIR)/aie_$(TARGET)/aie.xclbin
 
 ####### TARGET: make aie.xclbin #######
 aie.xclbin: $(BUILD_DIR)/aie_$(TARGET)/aie.xclbin

@@ -146,7 +146,7 @@ The module shows when to create a custom platform rather than a base platform. I
 
 This module shows RTL designers how to:
 
-  * Map data storage and data capture functions to Custom RTL PL kernels which will connect to the AI Engine and custom platform.  
+  * Map data storage and data capture functions to Custom RTL PL kernels which will connect to the AI Engine and custom platform.
   * Design PL kernels with the beamforming PL source RTL as an example.
   * Package RTL PL kernels in to XO files.
 
@@ -182,7 +182,7 @@ This module shows developers how to:
 This module shows developers how to:
 
   * Build a custom PetaLinux software platform.
-  * Package the linked XSA and custom Petalinux software platform into a new Versal Custom Platform (``.xpfm``).   
+  * Package the linked XSA and custom Petalinux software platform into a new Versal Custom Platform (``.xpfm``).
 
 [Read more...](Module_07_Petalinux)
 
@@ -245,4 +245,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD016 | &copy; Copyright 2020–2021 Xilinx, Inc.</p>
+<p align="center"> XD016 | &copy; Copyright 2020–2021 Xilinx, Inc.</p

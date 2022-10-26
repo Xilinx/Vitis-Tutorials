@@ -62,7 +62,6 @@ step3:
 
 SHELL := /bin/bash
 step3b:
-	#source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && 
 	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw_emu REV=rev1
 
 step4:
@@ -76,14 +75,13 @@ step5:
 
 SHELL := /bin/bash
 step6:
-	#source /proj/xbuilds/2022.1_daily_latest/xbb/xrt/packages/setenv.sh && unset LD_LIBRARY_PATH && source /proj/petalinux/2022.1/petalinux-v2022.1_daily_latest/tool/petalinux-v2022.1-final/settings.sh && 
 	$(MAKE) -C Module_07_Petalinux petalinux
 
 step7:
 	$(MAKE) -C Module_08_Linux_SW_Application exe
 
 step8:
-	$(MAKE) -C Module_09_Running_the_Linux_System package TARGET=hw 
+	$(MAKE) -C Module_09_Running_the_Linux_System package TARGET=hw
 
 step8b:
 	$(MAKE) -C Module_09_Running_the_Linux_System package TARGET=hw_emu

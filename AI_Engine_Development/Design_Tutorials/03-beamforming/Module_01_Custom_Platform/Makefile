@@ -21,11 +21,11 @@ DEVICE_NAME := xcvc1902-vsva2197-2MP-e-S
 
 platform: xsa xpfm
 
-xsa: 
-	$(MAKE) xsa -C hw 
+xsa:
+	$(MAKE) xsa -C hw
 
-xpfm: 
-	$(MAKE) xpfm -C sw 
+xpfm:
+	$(MAKE) xpfm -C sw
 
 clean:
 	$(MAKE) clean -C hw
