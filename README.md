@@ -14,14 +14,38 @@
     src="./Getting_Started/Vitis/images/intro_video_new.png">
     </a>
 </div>
- <p align="center"> <a>Visit more Vitis developer videos on </a><a href="https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow">Xilinx YouTube Channel</a> </p>
+ <p align="center"> <a>Visit more Vitis developer videos on </a><a href="https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow">Adaptive Computing Developer YouTube Channel</a> </p>
 
-## Unlocking a new design experience for all developers
-The [Vitis&trade; unified software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html)  enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal&trade; ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows - no hardware expertise required.
+## Unlocking a new design experience for all developers with Vitis
+The [Vitis&trade; unified software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) enables the development of embedded software and accelerated applications on heterogeneous Xilinx&reg; platforms including FPGAs, SoCs, and Versal&trade; ACAPs. It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows.
+
+## Where to Start
+If you are new to Vitis and want to start with the basics, or just want to get a quick overview of what Vitis can offer, we recommend checking out the tutorials under <a href="./Getting_Started">Getting Started</a>, and from there exploring other tutorials on different topics.
+
+Otherwise, if you are looking for a specific tutorial for the desired device or platform, or are interested in a special application or feature, you can select a tutorial from the topics as listed under the [Tutorials](#tutorials). 
+
+In this repository, tutorials are divided into different topics by function and application with each topic containing 2 sections.
+- **Feature Tutorials** illustrate specific features or flows of Vitis, Libraries, XRT and platforms, some features may not be required by all designs but are still useful for some use cases.
+- **Design Tutorials** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
+
+## How to Get Help
+- Check <a href="./FAQs.md">FAQs</a>
+- For questions about Vitis, please visit <a href="https://support.xilinx.com/s/topic/0TO2E000000YKXhWAO/vitis?language=en_US">Vitis Forum</a>.
+- For questions or issues about tutorials, please submit an <a href="https://github.com/Xilinx/Vitis-Tutorials/issues">Issue</a>. 
+
+## How to Download the Repository
+To get a local copy of the Vitis-Tutorials repository, clone it to the local system by executing the following command:
+
+```
+git clone https://github.com/Xilinx/Vitis-Tutorials.git
+```
+
+The default branch is always consistent with the latest released Vitis version, if you need to run the tutorial on a different Vitis version, please checkout the branch that matches the tool version after cloning the repository with the `git checkout <branch>` command. 
+
+## Release Notes 
+- <a href="./CHANGELOG.md">Change Logs</a>
 
 ## Tutorials
-
-The Vitis Tutorials take users through the design methodology and programming model for deploying accelerated applications on all Xilinx platforms. Tutorials are divided into different topics by function and application. 
 
 <table border="0" width="100%">
     <tbody>
@@ -253,6 +277,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
             <td>               
+                 <a href="./AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation :new:</a>
             </td>
         </tr>
         <tr>
@@ -260,17 +285,18 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AIE Simulation and Emulation</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie">Python and C++ External Traffic Generators for AIE Simulation and Emulation</a>
             </td>
             <td>
+                 <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>            
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines">Using RTL IP with AI Engines</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/">AI Engine A-to-Z Flow for Linux :new:</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux :new:</a>
             </td>
             <td>
             </td>
@@ -313,7 +339,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<a href="./Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190">Custom Platform Creation on Versal</a>
 			</td> 
 			<td>
-				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization </a>
+				<a href="./Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization">PetaLinux Building and System Customization </a>
 			</td>
 		</tr>		
             <tr>
@@ -323,6 +349,13 @@ The Vitis Tutorials take users through the design methodology and programming mo
 				<td height="24">
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial :new:</a>
+                </td>			            
+				<td height="24">
+                </td>
+            </tr>            
         </tbody>
     </table>
     <table border="0" width="100%">
@@ -339,7 +372,7 @@ The Vitis Tutorials take users through the design methodology and programming mo
             </tr>
             <tr>
                 <td colspan="2" height="24">
-                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README.md">Versal Custom Thin Platform Extensible System</a>
+                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
                 </td>
             </tr>
         </tbody>
