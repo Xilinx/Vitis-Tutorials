@@ -31,7 +31,7 @@ help:
 	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## to generate platform with pre-built software components"
 	
 
-all: check-common-image sw_comps dtb pfm_fsbl pfm  sysroot 
+all: check-common-image sw_comps dtb pfm_fsbl pfm
 sd_card:all
 
 #target : check  whether the common image is ready 
@@ -78,8 +78,10 @@ pfm:
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
  
 #install SDK tool
-sysroot: $(COMMON_IMAGE_ZYNQMP)/sdk.sh
-	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
+sysroot: $(SYSROOT)
+
+$(SYSROOT): $(COMMON_IMAGE_ZYNQMP)/sdk.sh
+	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:
 	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice

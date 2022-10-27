@@ -34,6 +34,7 @@ COMMON_IMAGE_PATH ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VER
 
 SW_COMP_PATH=$(ABS_BUILD_PATH)/sw_comp
 SYSROOT_DIR=$(SW_COMP_PATH)/sysroots
+SYSROOT=sysroot
 
 BOOT_BIN_DIR=$(ABS_BUILD_PATH)/boot_bin
 BOOT_IMAGE=$(ABS_BUILD_PATH)/boot_bin/BOOT.BIN
@@ -41,15 +42,12 @@ SW_FILES=$(SD_DIR)/boot.scr $(BOOT_DIR)/u-boot.elf $(BOOT_DIR)/bl31.elf
 PDI_FILE=$(BOOT_BIN_DIR)/boot_static.pdi
 PLATFORM_OUT_PATH=$(ABS_BUILD_PATH)/pfm
 
-.PHONY: all sw_comp dtb help pfm bootimage
+.PHONY: all sw_comp dtb help pfm bootimage sysroot
 
 # --------------------------------------
 # Public targets
-# all: create PetaLinux project from XSA, update configuration, build PetaLinux project and sysroot
-# main: create PetaLinux project from XSA, update configuration, build PetaLinux project, without sysroot
-#
-# Note: This makefile is not designed with dependent awareness. 
-# If you change a source file, please run `make clean; make all` to rebuild from scratch.
+# all: prepare software components and build the platform
+# sysroot: install sysroot from sdk.sh
 # --------------------------------------
 
 all: $(DTB_FILE) sw_comp pfm
@@ -109,8 +107,10 @@ $(SW_FILES): $(DTB_FILE)
 
 # Target: sysroot
 # Install sysroot to sw_comp directory
-sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
-	rm -rf $(SYSROOT_DIR)/ && mkdir -p $(SYSROOT_DIR) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d $(SW_COMP_DIR)/ -y
+sysroot: $(SYSROOT)
+
+$(SYSROOT): $(COMMON_IMAGE_PATH)/sdk.sh
+	mkdir -p $(SYSROOT_DIR) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d $(SW_COMP_DIR)/ -y
 
 #----------
 $(PDI_FILE): $(STATIC_XSA)

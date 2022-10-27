@@ -32,7 +32,7 @@ help:
 	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## Generate platform with pre-built software components"
 	
 
-all: check-common-image sw_comps dtb dtbo pfm_fsbl pfm  sysroot 
+all: check-common-image sw_comps dtb dtbo pfm_fsbl pfm 
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -79,7 +79,9 @@ pfm:
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
  
 #install SDK tool
-sysroot: $(COMMON_IMAGE_ZYNQMP)/sdk.sh
+sysroot: $(SYSROOT)
+
+$(SYSROOT): $(COMMON_IMAGE_ZYNQMP)/sdk.sh
 	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:

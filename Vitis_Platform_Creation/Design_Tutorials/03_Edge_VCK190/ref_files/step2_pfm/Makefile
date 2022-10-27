@@ -35,7 +35,7 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	
 
-all: check-common-image sw_comps dtb sysroot pfm getplatforminfo
+all: check-common-image sw_comps dtb pfm getplatforminfo
 sd_card:all
 
 #target : check  whether the common image is ready 
@@ -66,8 +66,10 @@ dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
 	
 # Target: sysroot
 # Install sysroot to sw_comp directory
-sysroot: $(COMMON_IMAGE_VERSAL)/sdk.sh
-	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d  $(SYSROOT)/ -y
+sysroot: $(SYSROOT)
+
+$(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
+	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d  $(SYSROOT)/ -y
 
 # Target: pfm
 # Generate the Vitis platform with XSCT
