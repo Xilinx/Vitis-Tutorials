@@ -15,7 +15,6 @@
 
 #Setup environment variables
 
-
 export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
