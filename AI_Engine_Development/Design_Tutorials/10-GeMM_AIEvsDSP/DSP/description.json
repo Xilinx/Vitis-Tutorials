@@ -13,7 +13,7 @@
                "pre_exec": "./env_setup_versal.sh"
            },
            "board": {
-               "pre_exec": "./env_setup_versal.sh",
+               "pre_exec": "./env_setup_versal.sh"
            }
         },
         "disable": false, 
