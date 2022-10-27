@@ -8,6 +8,10 @@
 
 # Feature Tutorials
 
+The Hardware Acceleration **Feature Tutorials** illustrate specific features or flows of Vitis, some features may not be required by all designs but are still useful for some use cases.
+
+The <a href="../README.md">README</a> of Hardware Acceleration contains important information including tool version, environment settings, and a table describing the platform, kernels, and supported features or flows of each tutorial. It is strongly recommended that you review the details before starting to use the acceleration tutorials.
+
  <table style="width:100%">
  <tr>
  <td width="35%" align="center"><b>Tutorial</b>
@@ -55,4 +59,4 @@
  </table>
 
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
