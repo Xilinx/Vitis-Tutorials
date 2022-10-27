@@ -9,7 +9,9 @@
 
 # Design Tutorials
 
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
+The Hardware Acceleration **Design Tutorials** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
+
+The <a href="../README.md">README</a> of Hardware Acceleration contains important information including tool version, environment settings, and a table describing the platform, kernels, and supported features or flows of each tutorial. It is strongly recommended that you review the details before starting to use the acceleration tutorials.
 
 <table style="width:100%">
  <tr>
@@ -52,9 +54,13 @@ The methodology for developing optimized accelerated applications is comprised o
  <td align="center"><a href="./09-sssp-application/">Single Source Shortest Path Application</a></td>
  <td>This tutorial demonstrates how to design an application of finding shortest path with Vitis Graph library on Alveo U50.</td>
  </tr>
+<tr>
+ <td align="center"><a href="./10-get_moving_with_alveo/">Get Moving with Alveo</a></td>
+ <td>This tutorial provides you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology, understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target device in an optimal way.</td>
+ </tr>
  
 </table>
 
 
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>

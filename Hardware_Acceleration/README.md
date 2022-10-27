@@ -6,119 +6,226 @@
  </tr>
 </table>
 
-# Hardware Acceleration Tutorials
+***Version: Vitis 2022.2***
 
-## Introduction to Vitis Hardware Acceleration
+## Introduction
 
- <table style="width:100%">
- <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
- </tr>
- <tr>
- <td align="center"><a href="./Introduction/README.md">Introduction to Vitis Hardware Acceleration</a></td>
- <td>This tutorial provides you with an easy-to-follow, guided introduction to accelerating applications with Xilinx technology. We will begin from the first principles of acceleration: understanding the fundamental architectural approaches, identifying suitable code for acceleration, and interacting with the software APIs for managing memory and interacting with the target device in an optimal way.</td>
- </tr>
- </table>
+The tutorials under the Hardware Acceleration category help you learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL. You may also learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level events, and more. 
 
+- The Hardware Acceleration <a href="./Feature_Tutorials/">**Feature Tutorials**</a> illustrate specific features or flows of Vitis, some features may not be required by all designs but are still useful for some use cases.
 
-## Design Tutorials
+- The Hardware Acceleration <a href="./Design_Tutorials/">**Design Tutorials**</a> illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
 
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the hardware kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto FPGA kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary compiler options and pragmas to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
-
-
-
-<table style="width:100%">
- <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/02-bloom/README.md">Bloom Filter Example</a></td>
- <td>This tutorial shows how to achieve a 10x speed-up on a data analytics application using a combination of kernel and host code optimization techniques.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/README.md">Convolution Example</a></td>
- <td>This tutorial walks through the process of analyzing and optimizing a 2D convolution used for real-time processing of a video stream.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a></td>
- <td>This tutorial demonstrates how to integrate free-running RTL kernels, Vitis Library functions, and custom Vitis HLS kernels into a real system.</td>
- </tr>
-<tr>
- <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a></td>
- <td>This tutorial demonstrates the full flow to implement a HLS kernel from algorithm model to hardware.</td>
-</tr>
-<tr>
- <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a></td>
- <td>This tutorial demonstrates how to develope a complex RTL kernel from scratch via batch mode without GUI environment.</td>
- </tr>
- <tr>
- <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration </a></td>
- <td>This tutorial puts in practice the concepts of FPGA acceleration and illustrates how to gradually optimize a hardware accelerator implementing the Cholesky matrix decomposition algorithm.</td>
- </tr>
-  <tr>
- <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
- <td>This tutorial demonstrates how to optimize your CPU host code to get the most out of interaction between your hardware accelerators and your runtime software.</td>
- </tr>
-  <td align="center"><a href="./Design_Tutorials/08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
- <td>This tutorial demonstrates how to integrate Aurora IP in user design on Alveo card with Vitis flow to realize high-speed inter-card communications.</td>
- </tr>
-  </tr>
-  <td align="center"><a href="./Design_Tutorials/09-sssp-application/">Single Source Shortest Path Application</a></td>
- <td>This tutorial demonstrates how to design an application of finding shortest path with Vitis Graph library on Alveo U50.</td>
- </tr>
-</table>
-
-
-
+These tutorials target different boards including Alveo™ Data Center acceleration cards or MPSoC Evaluation Boards like ZCU104. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
 ## Feature Tutorials
 
  <table style="width:100%">
  <tr>
- <td width="35%" align="center"><b>Tutorial</b>
- <td width="65%" align="center"><b>Description</b>
+ <td width="14%" align="center"><b>Tutorial</b>
+ <td width="14%" align="center"><b>Board / Platform</b>
+ <td width="14%" align="center"><b>Kernel</b>
+ <td width="14%" align="center"><b>XRT APIs</b>
+ <td width="14%" align="center"><b>Libraries Used</b>
+ <td width="14%" align="center"><b>Highlighted Features</b>
+ <td width="14%" align="center"><b>IDE Flow</b>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/README.md">Getting Started with RTL Kernels</a></td>
- <td>This tutorial demonstrates how to use the Vitis core development kit to program an RTL kernel into an FPGA and build a Hardware Emulation using a common development flow.</td>
+ <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/">Getting Started with RTL Kernels</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/README.md">Mixing C and RTL</a></td>
- <td>This tutorial demonstrates how to work with an application containing RTL and C kernels, along with various design analysis features.</td>
+ <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/">Mixing C and RTL</a></td>
+ <td> </td>
+ <td>C + RTL</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/">Dataflow Debug and Optimization</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
 <tr>
- <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a></td>
- <td>This tutorial demonstrates how to debug and optimize the dataflow optimization in Vitis HLS.</td>
+ <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/">Using Multiple DDR Banks</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
-  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a></td>
- <td>This tutorial demonstrates how using multiple DDRs can improve data transfer between kernels and global memory.</td>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/">Using Multiple Compute Units</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
-  <tr>
- <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a></td>
- <td>This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA, which improves the parallelism in a combined host-kernel system.</td>
- </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/06-controlling-vivado-implementation/">Controlling Vivado Implementation</a></td>
- <td>This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/07-using-hbm/">Optimizing for HBM</a></td>
- <td>This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  <tr>
-<td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
-<td>This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.</td>
-</tr>
+ <td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
  <tr>
-<td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
-<td>This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.</td>
-</tr>
- <tr>
-<td align="center"><a href="./Feature_Tutorials/10-p2p-card-to-card/">Enabling FPGA to FPGA P2P Transfer using Native XRT C++ API</a></td>
-<td>This tutorial demonstrates how to enable p2p transfer from one FPGA device to another using XRT API host code.</td>
-</tr>
+ <td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
+ <td>U200</td>
+ <td>RTL</td>
+ <td> </td>
+ <td> </td>
+ <td>Ethernet Subsystem</td>
+ <td> </td>
+ </tr>
+<tr>
+ <td align="center"><a href="./Feature_Tutorials/10-p2p-card-to-card/">Enabling FPGA to FPGA P2P Transfer</a></td>
+ <td>U50 / U200</td>
+ <td>C</td>
+ <td>Native</td>
+ <td> </td>
+ <td>PCIe P2P</td>
+ <td> </td>
+ </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+## Design Tutorials
+
+ <table style="width:100%">
+ <tr>
+ <td width="14%" align="center"><b>Tutorial</b>
+ <td width="14%" align="center"><b>Board / Platform</b>
+ <td width="14%" align="center"><b>Kernel</b>
+ <td width="14%" align="center"><b>XRT APIs</b>
+ <td width="14%" align="center"><b>Libraries Used</b>
+ <td width="14%" align="center"><b>Highlighted Features</b>
+ <td width="14%" align="center"><b>IDE Flow</b>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/">Convolution Example</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials//02-bloom/">Bloom Filter Example</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/">RTL Systems Integration Example</a></td>
+ <td>U50 / 55C / U200 / U250 / U280</td>
+ <td>C + RTL</td>
+ <td>Native</td>
+ <td>Vision</td>
+ <td>Mixed kernel</td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/">Traveling Salesperson Problem</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/">Bottom RTL Kernel Design Flow Example</a></td>
+ <td>U50 / 55C / U200 / U250 / U280</td>
+ <td>C + RTL</td>
+ <td>Native</td>
+ <td> </td>
+ <td>RTL kernel</td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
+ <td>U50 / 55C / U200 / U250 / U280</td>
+ <td>C + RTL</td>
+ <td>Native</td>
+ <td> </td>
+ <td>GT kernel</td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/09-sssp-application/">Single Source Shortest Path Application</a></td>
+ <td>U50</td>
+ <td>C</td>
+ <td> </td>
+ <td>Graph</td>
+ <td>Vitis L3 Library</td>
+ <td>Yes</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/10-get_moving_with_alveo/">Get Moving with Alveo</a></td>
+ <td>U200</td>
+ <td>C</td>
+ <td>OpenCL</td>
+ <td>Vision</td>
+ <td>System Optimization</td>
+ <td> </td>
+ </tr>
+ </table>
+
+
+
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
