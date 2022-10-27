@@ -13,11 +13,19 @@
 #  limitations under the License.
 
 
-.PHONY: all_phases
+.PHONY: run
 
 
-FILES_DIR := $(PWD)/Files
+PFM_NAME := xilinx_vck190_base_202220_1
 
-all_phases:
-	make -C WithoutIntermediatePlatform FILES_DIR=$(FILES_DIR) all
-	make -C WithIntermediatePlatform FILES_DIR=$(FILES_DIR) all_phases
+run:
+	make -C SingleKernel PFM_NAME=$(PFM_NAME) run
+	make -C MultiKernel PFM_NAME=$(PFM_NAME) run
+	make -C SingleStreamSSR PFM_NAME=$(PFM_NAME) run
+	make -C DualStreamSSR PFM_NAME=$(PFM_NAME) run
+
+clean:
+	make -C SingleKernel clean
+	make -C MultiKernel  clean
+	make -C SingleStreamSSR  clean
+	make -C DualStreamSSR  clean

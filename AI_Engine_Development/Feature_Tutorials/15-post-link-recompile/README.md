@@ -38,8 +38,6 @@ Before you begin this tutorial, run the following steps:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
-An `addon_setup.sh` script is provided to initialize the platform name.
-
 The sub-directory `Files` contains all the source files necessary for this tutorial.
 
 ## AI Engine Application Post-Link Recompile

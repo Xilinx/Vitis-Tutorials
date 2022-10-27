@@ -20,8 +20,8 @@ TARGET ?= hw_emu
 .PHONY: all_phases
 
 all_phases:
-	make -C Phase1 phase1
-	make -C Phase2 phase2
+	make FILES_DIR=$(FILES_DIR) -C Phase1 phase1
+	make FILES_DIR=$(FILES_DIR) -C Phase2 phase2
 
 clean:
 	make -C Phase1 clean

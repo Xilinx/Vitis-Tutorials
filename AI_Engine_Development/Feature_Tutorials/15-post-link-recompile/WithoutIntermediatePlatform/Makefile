@@ -15,6 +15,7 @@
 
 # Makefile input options
 TARGET ?= hw_emu
+PFM_NAME ?= xilinx_vck190_base_202220_1
 
 #Directories
 FILES_DIR ?= $(PWD)/../Files
@@ -26,6 +27,7 @@ PL:=$(FILES_DIR)/PL
 HwLink:=$(FILES_DIR)/HwLink
 PS:=$(FILES_DIR)/PS
 CONSTRAINTS := $(FILES_DIR)/Constraints
+
 
 # Platform
 BASE_PLATFORM := ${PLATFORM_DIR}/$(PFM_NAME)/$(PFM_NAME).xpfm
@@ -206,10 +208,9 @@ package2: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 ########################################################
 
 ##################################################################################################
-https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/pull/398/conflict?name=AI_Engine_Development%252FFeature_Tutorials%252F16-external-traffic-generator-aie%252Fenv_setup.sh&ancestor_oid=1570b3659c9696de46dad826e89ed7ff107be447&base_oid=dd87352246e3a400ce0f5591b32a129b2b648d48&head_oid=be0472eecd25adff02692fd548a9e80c792d9fde# Runs Hw emulation
+# Runs Hw emulation
 run_emu:
-
-./launch_hw_emu.sh -no-reboot -run-app ./embedded_exec.sh
+	./launch_hw_emu.sh -no-reboot -run-app ./embedded_exec.sh
 
 ########################################################
 

@@ -23,7 +23,7 @@ AIE_DATA_DIR := $(PWD)/data
 
 AIE_GRAPH_FILES := $(AIE_SRC_DIR)/test.cpp
 PFM_NAME := xilinx_vck190_base_202220_1
-PLATFORM ?= $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
+PLATFORM := $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 
 # AIE compiler settings
@@ -77,4 +77,6 @@ cleanall: clean
 
 clean:
 	rm -rf *.log pl_sample* aiesimulator_output x86simulator_output libadf.a
-	rm -rf temp *.jou .AIE_SIM_CMD_LINE_OPTIONS .Xil aie/Work *.vcd
+	rm -rf temp *.jou .AIE_SIM_CMD_LINE_OPTIONS .Xil aie/Work *.vcd *.csv *.db
+
+	

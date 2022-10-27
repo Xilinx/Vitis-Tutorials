@@ -22,7 +22,7 @@ all:
 
 run:
 	make data
-	make -C Emulation-AIE aie aiesim
+	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aie aiesim
 
 aie:
 	make -C Emulation-AIE aie

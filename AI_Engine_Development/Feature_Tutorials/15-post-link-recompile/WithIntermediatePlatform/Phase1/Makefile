@@ -15,9 +15,10 @@
 
 # Makefile input options
 TARGET ?= hw_emu
+PFM_NAME ?= xilinx_vck190_base_202220_1
 
 #Directories
-FILES_DIR := ../../Files
+FILES_DIR ?= ../../Files
 DATA_DIR := $(FILES_DIR)/data
 PLATFORM_DIR := ${PLATFORM_REPO_PATHS}
 AIE:= $(FILES_DIR)/AIE
