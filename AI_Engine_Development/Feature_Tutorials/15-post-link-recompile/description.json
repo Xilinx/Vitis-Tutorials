@@ -34,7 +34,7 @@
        ],
         "custom_build_target":
         {
-            "all": "all"
+            "all": "all_phases"
         },
         "tasks": {
             "build": {
