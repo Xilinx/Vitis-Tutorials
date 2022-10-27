@@ -82,7 +82,7 @@ pfm:
 sysroot: $(SYSROOT)
 
 $(SYSROOT): $(COMMON_IMAGE_ZYNQMP)/sdk.sh
-	rm -rf $(SYSROOT)/ && mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
+	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:
 	$(RM) -r IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice dt_output dtg boot sd_dir dtbo_output
