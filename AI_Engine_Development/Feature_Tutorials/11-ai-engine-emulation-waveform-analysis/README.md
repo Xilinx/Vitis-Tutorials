@@ -9,7 +9,7 @@
 
 # Versal Emulation Waveform Analysis
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Introduction
 
@@ -19,14 +19,14 @@ This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) wav
 
 It is strongly recommended to go through the **Versal Integration tutorial** and the **Versal System Design Clocking tutorial** before running this tutorial.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps.
 
 1. Source VITIS and XRT.
 2. Set the AIE License.
-3. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-aarch64-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2022.1/sdk.sh`.
-4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2022.1` directory.
+3. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2022.2/sdk.sh`.
+4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
 5. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
 ## Objectives
@@ -173,7 +173,7 @@ After the building and packaging of the design is complete you can run hardware 
     remove_wave -of [get_wave_config] [get_waves -of [get_wave_config] -regexp ".*"]
 
     ## Set the appropriate paths based upon the platform being used
-    set scope_path "/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i"
+    set scope_path "/vitis_design_wrapper_sim_wrapper/vitis_design_wrapper_i/vitis_design_i"
 
     ## Create a wave group called CIPS and add all signals for the CIPS_0 to it
     set CIPS [add_wave_group CIPS]
@@ -226,7 +226,7 @@ After the building and packaging of the design is complete you can run hardware 
 
     **TIP**: The scale can be adjusted when emulation is running to fit your needs.
 
-**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_2/ug900-vivado-logic-simulation.pdf).
+**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://docs.xilinx.com/r/en-US/ug900-vivado-logic-simulation).
 
 ### Step 3: Using XSIM Waveform GUI and QEMU
 
@@ -237,27 +237,24 @@ A great benefit of having a waveform viewer showing live data is so you can see 
 2. Click back to the terminal where `./launch_hw_emu.sh` was launched. Notice that the QEMU instance has begun booting and when you see the following messages QEMU has finished launching.
 
     ```text
-    root@versal-rootfs-common-2021_1:~## Enabling notebook extension jupyter-js-widgets/extension...
-        - Validating: OK
-    xinit: giving up
-    xinit: unable to connect to X server: Connection refused
-    xinit: server error
-    [C 17:53:36.686 NotebookApp] Bad config encountered during initialization: No such notebook dir: ''/usr/share/example-notebooks''
-    ```
+    versal-rootfs-common-20222 login: root (automatic login)
 
-    **IMPORTANT**: Ignore the messages above.
+	petalinux
+	[   53.752390] audit: type=1006 audit(1666762798.812:2): pid=585 uid=0 old-auid=4294967295 auid=0 tty=(none) old-ses=4294967295 ses=1 res=1
+	[   53.753038] audit: type=1300 audit(1666762798.812:2): arch=c00000b7 syscall=64 success=yes exit=1 a0=8 a1=ffffc55ea440 a2=1 a3=ffff94b186b0 items=0 ppid=1 pid=585 auid=0 uid=0 gid=0 euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=(none) ses=1 comm="(systemd)" exe="/lib/systemd/systemd" key=(null)
+	[   53.753819] audit: type=1327 audit(1666762798.812:2): proctitle="(systemd)"
+                                                                                                                                   	 ^root@versal-rootfs-common-20222:~# mount /dev/mmcblk0p1 /mnt
+	root@versal-rootfs-common-20222:~# cd /mnt
+	root@versal-rootfs-common-20222:/mnt#  ls
+	BOOT.BIN          a.xclbin          data              host.exe
+	Image             boot.scr          embedded_exec.sh
+       ```
 
 3. Hit **Enter** a few times to clear these messages and you should see this prompt.
 
-    ```bash
-    root@versal-rootfs-common-2021_1:~#
-    ```
-
-4. Type in the following commands to launch the tutorial application.
+   Type in the following commands to launch the tutorial application.
 
     ```bash
-    export XILINX_XRT=/usr
-    cd /mnt/sd*1
     ./host.exe a.xclbin
     ```
 
@@ -291,7 +288,7 @@ The first key step to ensure emulation is operating correctly is making sure tha
 
     Expand these signals and notice that the NoC and the CIPS signals are all matched. This is showing that the CIPS is transferring configuration information to the PMC. These signals are TLM signals, because the blocks of the device they are targeting are modeled in SystemC. In this view, a wide colored block might not be one transaction (because it is a ***us*** timescale), so zoom in and notice there are more transactions occurring in a short amount of time.
 
-    Looking at the last interface, ***xilinx_vck190_base_ai_engine_0_0_S00_AXI_tlm***, the majority of the transactions are writes, and are configuring the AI Engine to the graph created in **Step 1**. These writes are specific to the Configuration Data Objects (CDO) that are commands that are passed to the PLM to configure the device, and in this interface, the AI Engine.
+    Looking at the last interface, ***vitis_design_ai_engine_0_0_S00_AXI_tlm***, the majority of the transactions are writes, and are configuring the AI Engine to the graph created in **Step 1**. These writes are specific to the Configuration Data Objects (CDO) that are commands that are passed to the PLM to configure the device, and in this interface, the AI Engine.
 
 3. Zoom the window to full by clicking the mouse on the lower right side, and drag to the upper left.
 
@@ -325,7 +322,7 @@ After bootup and the device is configured, the application can begin to run. In 
 
     Notice that the `s_axi_control` has a read transaction slightly after the second transaction has started of the ***FPD*** interface.
 
-3. Expand the **xilinx_vck190_base_CIPS_0_0_M_AXI_FPD_tlm** interface and the **Outstanding Reads** and you will see a **Row 0**. If you move the mouse over the **#3** or **#4** a context help menu shows you some signal information on where data is being transfered. Notice the `ARADDR` value of `0xa4060000` for **#3** and `0xa4050000` for **#4**, and understand that this is the address to the PL kernels that the Vitis linker auto-assigns it during linking. From the host code, you can determine that these kernels are activated before the AI Engine, soon after the application starts, so it is safe to say these signals are used to start them. Do remember that these kernels are simpler than others; more complex kernels will result in different transactions.
+3. Expand the **vitis_design_CIPS_0_0_M_AXI_FPD_tlm** interface and the **Outstanding Reads** and you will see a **Row 0**. If you move the mouse over the **#3** or **#4** a context help menu shows you some signal information on where data is being transfered. Notice the `ARADDR` value of `0xa4060000` for **#3** and `0xa4050000` for **#4**, and understand that this is the address to the PL kernels that the Vitis linker auto-assigns it during linking. From the host code, you can determine that these kernels are activated before the AI Engine, soon after the application starts, so it is safe to say these signals are used to start them. Do remember that these kernels are simpler than others; more complex kernels will result in different transactions.
 
 4. Zoom to fit by clicking the **Zoom Fit** button (![zoom fit](./images/zoom_to_fit.png)). Expand the ***NOISE*** group and expand ***Out_r***.
 
@@ -345,7 +342,7 @@ As mentioned in the **Overview** this design is sending RTP values to the AI Eng
     source ../../../../tcl/rtp_signals.tcl
     ```
 
-2. Expand the **AIENGINE** group, **xilinx_vck190_base_ai_engine_0_0_S00_AXI** interface, and expand the **Outstanding Writes**. You will see some write transactions; go to the second visible instance shown in the following.
+2. Expand the **AIENGINE** group, **vitis_design_ai_engine_0_0_S00_AXI** interface, and expand the **Outstanding Writes**. You will see some write transactions; go to the second visible instance shown in the following.
 
     ![RTP zoom loc](./images/rtp_zoom_loc.png)
 

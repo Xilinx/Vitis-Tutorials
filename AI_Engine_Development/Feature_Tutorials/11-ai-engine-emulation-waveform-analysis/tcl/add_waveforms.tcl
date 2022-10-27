@@ -15,7 +15,7 @@
 remove_wave -of [get_wave_config] [get_waves -of [get_wave_config] -regexp ".*"]
 
 # Set the appropriate paths based upon the platform being used
-set scope_path "/xilinx_vck190_base_wrapper_sim_wrapper/xilinx_vck190_base_wrapper_i/xilinx_vck190_base_i"
+set scope_path "/vitis_design_wrapper_sim_wrapper/vitis_design_wrapper_i/vitis_design_i"
 
 # Create a wave group called CIPS and add all signals for the CIPS_0 to it
 set CIPS [add_wave_group CIPS]
