@@ -457,4 +457,4 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
 
  
 
- <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+ <p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

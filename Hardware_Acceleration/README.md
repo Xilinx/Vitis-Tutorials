@@ -28,85 +28,85 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td width="14%" align="center"><b>XRT APIs</b>
  <td width="14%" align="center"><b>Libraries Used</b>
  <td width="14%" align="center"><b>Highlighted Features</b>
- <td width="14%" align="center"><b>IDE Flow</b>
+ <td width="14%" align="center"><b>GUI Flow</b>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/01-rtl_kernel_workflow/">Getting Started with RTL Kernels</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>Native</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>RTL kernel</td>
+ <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/">Mixing C and RTL</a></td>
+ <td>U200</td>
+ <td>RTL + C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td>C + RTL</td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Mixed C++ and RTL kernel</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/03-dataflow_debug_and_optimization/">Dataflow Debug and Optimization</a></td>
+ <td>HLS Part</td>
+ <td>C/C++</td>
+ <td>HLS</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>HLS design and analysis</td>
+ <td>Yes</td>
  </tr>
-<tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/">Using Multiple DDR Banks</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>Native</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>DDR bank assignment</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/05-using-multiple-cu/">Using Multiple Compute Units</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Multiple Compute Units</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/06-controlling-vivado-implementation/">Controlling Vivado Implementation</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Use Vivado in the Vitis flow</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/07-using-hbm/">Optimizing for HBM</a></td>
+ <td>U200 / U50</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>HBM and RAMA IP</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/08-using-hostmem/">Host Memory Access</a></td>
+ <td>U250</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Use Host Memory</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/09-using-ethernet-on-alveo/">Using GT Kernels and Ethernet IPs on Alveo</a></td>
  <td>U200</td>
  <td>RTL</td>
- <td> </td>
+ <td>Native</td>
  <td> </td>
  <td>Ethernet Subsystem</td>
  <td> </td>
@@ -114,7 +114,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
 <tr>
  <td align="center"><a href="./Feature_Tutorials/10-p2p-card-to-card/">Enabling FPGA to FPGA P2P Transfer</a></td>
  <td>U50 / U200</td>
- <td>C</td>
+ <td>C/C++</td>
  <td>Native</td>
  <td> </td>
  <td>PCIe P2P</td>
@@ -132,30 +132,30 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td width="14%" align="center"><b>XRT APIs</b>
  <td width="14%" align="center"><b>Libraries Used</b>
  <td width="14%" align="center"><b>Highlighted Features</b>
- <td width="14%" align="center"><b>IDE Flow</b>
+ <td width="14%" align="center"><b>GUI Flow</b>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/01-convolution-tutorial/">Convolution Example</a></td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
+ <td>Vision</td>
+ <td>Performance analysis and optimization</td>
+ <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials//02-bloom/">Bloom Filter Example</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Performance analysis and optimization</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/03-rtl_stream_kernel_integration/">RTL Systems Integration Example</a></td>
  <td>U50 / 55C / U200 / U250 / U280</td>
- <td>C + RTL</td>
+ <td>RTL + C/C++</td>
  <td>Native</td>
  <td>Vision</td>
  <td>Mixed kernel</td>
@@ -163,44 +163,44 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/04-traveling-salesperson/">Traveling Salesperson Problem</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>HLS</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>HLS design and analysis</td>
+ <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/">Bottom RTL Kernel Design Flow Example</a></td>
  <td>U50 / 55C / U200 / U250 / U280</td>
- <td>C + RTL</td>
+ <td>RTL + C/C++</td>
  <td>Native</td>
  <td> </td>
  <td>RTL kernel</td>
- <td> </td>
+ <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Performance analysis and optimization</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/07-host-code-opt/">XRT Host Code Optimization</a></td>
+ <td>U200</td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
- <td> </td>
+ <td>Host code optimization</td>
  <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
  <td>U50 / 55C / U200 / U250 / U280</td>
- <td>C + RTL</td>
+ <td>RTL + C/C++</td>
  <td>Native</td>
  <td> </td>
  <td>GT kernel</td>
@@ -209,16 +209,16 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <tr>
  <td align="center"><a href="./Design_Tutorials/09-sssp-application/">Single Source Shortest Path Application</a></td>
  <td>U50</td>
- <td>C</td>
- <td> </td>
+ <td>C/C++</td>
+ <td>OpenCL</td>
  <td>Graph</td>
- <td>Vitis L3 Library</td>
+ <td>Vitis Library</td>
  <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/10-get_moving_with_alveo/">Get Moving with Alveo</a></td>
  <td>U200</td>
- <td>C</td>
+ <td>C/C++</td>
  <td>OpenCL</td>
  <td>Vision</td>
  <td>System Optimization</td>
@@ -228,4 +228,4 @@ These tutorials target different boards including Alveo™ Data Center accelerat
 
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

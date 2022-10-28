@@ -31,4 +31,4 @@ The default branch of Vitis-Tutorials always follows the latest released Vitis t
 Contributions to Vitis-Tutorials are welcome. Please send your PRs to the branch that matches the version of the tool you created and verified the tutorial. Check <a href="./Developer_Contributed/README.md">here</a> for details. 
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>
