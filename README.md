@@ -426,4 +426,4 @@ The default branch is always consistent with the latest released Vitis version, 
 </table>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

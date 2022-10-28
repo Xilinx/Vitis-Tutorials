@@ -59,4 +59,4 @@ The <a href="../README.md">README</a> of Hardware Acceleration contains importan
  </table>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>

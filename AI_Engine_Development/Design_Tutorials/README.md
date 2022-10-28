@@ -59,4 +59,4 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
 </table>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>
