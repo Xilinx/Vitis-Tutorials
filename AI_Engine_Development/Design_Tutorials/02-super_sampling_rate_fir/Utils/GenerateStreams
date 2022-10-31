@@ -29,7 +29,6 @@ import os
 
 from math import floor
 from shutil import copyfile
-from tkinter import *
 from GenerationLib import *
 from functools import partial
 
