@@ -20,4 +20,4 @@ This section contains top-level getting started tutorials for Vitis
 * [**Vitis Platform**](./Vitis_Platform) :
   * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

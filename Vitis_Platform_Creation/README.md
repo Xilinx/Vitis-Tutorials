@@ -32,7 +32,7 @@
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/04_Edge_VCK190_DFX/README.md">Versal Custom DFX Platform Creation Tutorial</a></td>
- <td>This tutorial demonstrates how you can create a custom DFX platform to run acceleration applications for VCK190 evaluation board.
+ <td>This tutorial demonstrates how you can create a custom DFX platform to run acceleration applications on VCK190 evaluation board.
  </td>
  </tr>
 </table>
