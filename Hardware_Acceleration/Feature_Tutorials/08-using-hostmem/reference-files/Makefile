@@ -2,7 +2,7 @@ VPP := v++
 EMCONFIGUTIL := emconfigutil
 TARGET := hw
 LAB := run1
-DEVICE := xilinx_u250_gen3x16_xdma_3_1_202020_1
+DEVICE := xilinx_u250_gen3x16_xdma_4_1_202210_1
 
 KRNL_SRC := ./src/kernel.cpp
 
