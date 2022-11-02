@@ -2,9 +2,22 @@ build
 **.log
 **/.*.sw*
 **/core.*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Updated GeMM Design...
 **/vitis*
 **/vivado*
 **/.Xil
 **/.nfs*
 **/xpe_dir
 **/reports_dir
+<<<<<<< HEAD
+=======
+vitis*
+vivado*
+**/.Xil
+**/.nfs*
+>>>>>>> Updated GeMM Design...
+=======
+>>>>>>> Updated GeMM Design...

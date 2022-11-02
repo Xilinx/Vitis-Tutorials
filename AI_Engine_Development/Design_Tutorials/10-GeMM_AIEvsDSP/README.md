@@ -187,6 +187,8 @@ In the design directory of each implementation, edit `sample_env_setup.sh` scrip
 
 ```bash
 source sample_env_setup.sh
+In the design directory of each implementation, edit `env_setup.sh` script with your file paths, then source the environment script: 
+
 ``` 
 
 The script sets up the environment variables and sources scripts explained below:
@@ -255,6 +257,10 @@ It is important to understand that those 36 AI Engines are not all required for 
 The 32 core overlay maybe increased to increase the performance further in terms of throughput.
 
 Measurement:
+
+It is important to understand that those 36 AI Engines are not all required for the GeMM compute: 32 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is 18%. This means that they can be further loaded to further increase performance if a different configuration is used (different core overlay).
+The 32 core overlay maybe increased to increase the performance further in terms of throughput.
+
 1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the HLS design, resource utilization is measured using Vivado.
 2. AI Engine power consumption is measured using XPE. HLS power consumption is measured using Vivado (report power under implementation).
 3. Throughput is measured using viewing runtime profiling generated trace texts in `vitis_analyzer`.
