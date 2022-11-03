@@ -90,10 +90,14 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
  <td>This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.</td>
  </tr>
-<tr>
+ <tr>
  <td align="center"><a href="./17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
  <td>This tutorial demonstrates how to reuse any AXI-based IP you have created as an RTL IP, control your platform, and convert your RTL IP to an RTL kernel allowing for a more streamlined process for creating the design you need.</td>
-</tr>
+ </tr>
+ <tr>
+ <td align="center"><a href="./19-aie_external_io_sv/">Using Verilog Traffic Generators in AIE Simulation</a></td>
+ <td>This tutorial demonstrates how to use Verilog or System Verilog modules to drive traffic in and out of an ADF graph running in the AIE Simulator.</td>
+ </tr>
  </table>
 
 
