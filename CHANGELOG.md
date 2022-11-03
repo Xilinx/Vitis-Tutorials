@@ -3,7 +3,8 @@
 ## 2022.2 (Nov 2nd, 2022)
 ### New Tutorials 
 - Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ 
-- AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP/ 
+- AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP/
+- AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv
 
 ### Tutorial Updates
 - Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo/

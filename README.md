@@ -300,6 +300,15 @@ The default branch is always consistent with the latest released Vitis version, 
             </td>
             <td>
             </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation :new:</a>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
         </tr>	    
     </tbody>
 </table>
@@ -367,7 +376,7 @@ The default branch is always consistent with the latest released Vitis version, 
             </tr>
             <tr>
                 <td colspan="2" height="48">
-                    Check out tutorials that other developers shared! We welcome your contribution, you may share end-to-end designs, tips and tricks, or designs and examples that can help Xilinx users.
+                    Check out the tutorials that Vitis developers shared! We welcome your contribution, you may share end-to-end designs, tips and tricks, or designs and examples that can help Xilinx users.
                 </td>
             </tr>
             <tr>
