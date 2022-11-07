@@ -9,7 +9,7 @@
 
 # Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Table of Contents
 
@@ -171,7 +171,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
-This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
+This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the Xilinx Website and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
 </details>
 
@@ -182,27 +182,23 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.
 
-To set up XRT, if you have not done this already, run the following command:
 
-```
-* source \<XRT-Location\>/setup.sh
-```
-
-In the design directory of each implementation, edit `env_setup.sh` script with your file paths, then source the environment script: 
+In the design directory of each implementation, edit `sample_env_setup.sh` script with your file paths, then source the environment script: 
 
 ```bash
-source env_setup.sh
+source sample_env_setup.sh
 ``` 
 
 The script sets up the environment variables and sources scripts explained below:
 
-1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
-2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.1` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.1/sdk.sh` script.
-5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
-6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
-7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
+1. Unset the previous library paths with `unset LD_LIBRARY_PATH` command.
+2. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the vck190 platform "xilinx_vck190_base_202210_1".
+3. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
+4. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.2` directory is used in the step below.
+5. The platform is set up by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.2/sdk.sh` script.
+6. `DSPLIB_VITIS` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
+7. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
+8. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
 
 </details>
 
@@ -327,4 +323,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD073 | &copy; Copyright 2021–2022 Xilinx, Inc.</p>
+<p align="center"> XD073 | &copy; Copyright 2022 Xilinx, Inc.</p>

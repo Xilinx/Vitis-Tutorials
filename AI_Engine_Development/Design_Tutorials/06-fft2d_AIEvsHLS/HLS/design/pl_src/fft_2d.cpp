@@ -507,20 +507,21 @@ void fft_cols(
       
       #if FFT_2D_DT == 0 // cint16 datatype
          cmpxDataIn in[MAT_ROWS];
-         #pragma HLS STREAM variable=in depth=1024
+         //#pragma HLS STREAM variable=in depth=1024
+         #pragma HLS STREAM variable=in depth=32
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=4 dim=1
          
          cmpxDataOut out[MAT_ROWS];
-         #pragma HLS STREAM variable=out depth=1024
+         #pragma HLS STREAM variable=out depth=32
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=4 dim=1
       
       #else // cfloat datatype
          cmpxDataIn in[MAT_ROWS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=in depth=512
+         #pragma HLS STREAM variable=in depth=16
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=2 dim=1
          
          cmpxDataOut out[MAT_ROWS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=out depth=512
+         #pragma HLS STREAM variable=out depth=16
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=2 dim=1
       
       #endif
@@ -549,8 +550,8 @@ void fft_2d(
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_inp,
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_out,
       hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_inp,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out,
-      uint32_t iterCnt
+      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out//,
+      //uint32_t iterCnt
      )
 {
    #pragma HLS interface axis port=strmFFTrows_inp
@@ -558,22 +559,26 @@ void fft_2d(
    #pragma HLS interface axis port=strmFFTcols_inp
    #pragma HLS interface axis port=strmFFTcols_out
    
-   #pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
-   #pragma HLS INTERFACE s_axilite port=return bundle=control
+   //#pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
+   //#pragma HLS INTERFACE s_axilite port=return bundle=control
+   #pragma HLS interface ap_ctrl_none port=return
    
    #pragma HLS DATAFLOW
    
-   ITER_LOOP_FFT_ROWS:for(int i = iterCnt; i ; --i) {
-      #pragma HLS loop_tripcount min=1 max=8
-      //#pragma HLS DATAFLOW
-      
-      fft_rows(strmFFTrows_inp, strmFFTrows_out);
-   }
+   //ITER_LOOP_FFT_ROWS:for(int i = iterCnt; i ; --i) {
+   //   #pragma HLS loop_tripcount min=1 max=8
+   //   //#pragma HLS DATAFLOW
+   //   
+   //   fft_rows(strmFFTrows_inp, strmFFTrows_out);
+   //}
+   //
+   //ITER_LOOP_FFT_COLS:for(int j = iterCnt; j ; --j) {
+   //   #pragma HLS loop_tripcount min=1 max=8
+   //   //#pragma HLS DATAFLOW
+   //   
+   //   fft_cols(strmFFTcols_inp, strmFFTcols_out);
+   //}
    
-   ITER_LOOP_FFT_COLS:for(int j = iterCnt; j ; --j) {
-      #pragma HLS loop_tripcount min=1 max=8
-      //#pragma HLS DATAFLOW
-      
-      fft_cols(strmFFTcols_inp, strmFFTcols_out);
-   }
+   fft_rows(strmFFTrows_inp, strmFFTrows_out);
+   fft_cols(strmFFTcols_inp, strmFFTcols_out);
 }
