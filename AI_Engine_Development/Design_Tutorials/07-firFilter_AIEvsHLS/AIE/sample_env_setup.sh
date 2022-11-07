@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-unset LD_LIBRARY_PATH 
+unset LD_LIBRARY_PATH
 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1

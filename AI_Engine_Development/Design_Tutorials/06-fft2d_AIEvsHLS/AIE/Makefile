@@ -107,6 +107,7 @@ help::
 print-%  : ; @echo $* = $($*)
 
 # For SPRITE
+ifeq (,$(DSPLIB_ROOT))
 	DSPLIB_ROOT?=$(DSPLIB_VITIS)/dsp
 endif
 

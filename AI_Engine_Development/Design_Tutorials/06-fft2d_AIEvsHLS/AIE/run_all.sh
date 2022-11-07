@@ -82,11 +82,8 @@ fi
 ################################################
 if [[ ${arg_lst[tgt]} == "all" ]]
 then
-   trgt_loopStart=0
-=======
    tgt_lst=("hw" "hw_emu")
 
->>>>>>> Updated FIR and FFT README and Makefile...
 else
    tgt_lst=${arg_lst[tgt]}
 
