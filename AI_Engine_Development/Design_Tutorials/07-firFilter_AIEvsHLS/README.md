@@ -170,31 +170,20 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
  
 ## Setting up the Environment
 
-When the elements of the Vitis software platform are installed, create a shell environment script, `env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
-
-To set up XRT, if you have not done this already, run the following command:
+When the elements of the Vitis software platform are installed, create a shell environment script, `sample_env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
 
 ```bash
-# XRT Setup...
-export XILINX_XRT=<XRT-LOCATION>
-source $XILINX_XRT/setup.sh
-```
-
-Edit `env_setup.sh` script with your file paths, then source the environment script: 
-
-```bash
-source env_setup.sh
+source sample_env_setup.sh
 ``` 
 
 The script sets up the environment variables and sources scripts explained below:
 
-1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
-2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.1` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.1/sdk.sh` script FIRST.
-5. `DSPLIB_VITIS` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
-6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
-7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
+1. Unset the previous library paths with `unset LD_LIBRARY_PATH` command.
+2. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh` FIRST.
+3. Set up your `XLNX_VERSAL` to point to the `xilinx-versal-common-v2022.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the xilinx_vck190_base_202210_1 platform.
+5. Set up your `DSPLIB_VITIS`  environment variable based upon where you downloaded the Vitis DSP Library
+6. Set up Vitis: ```bash source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh```
 
 </details>
 

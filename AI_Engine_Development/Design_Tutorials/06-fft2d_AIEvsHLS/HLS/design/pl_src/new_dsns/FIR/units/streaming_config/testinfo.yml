@@ -1,0 +1,17 @@
+#template_tql < $HLS_REGR_HOME/common/template_unit.tql
+copy:
+-  $HLS_REGR_HOME/common/hls_qor*
+-  $HLS_REGR_HOME/common/default_qor_metric*
+description: This is a HLS testcase
+level: 4
+memory: 1
+owner: lucianol
+products: vivado_hls
+tags: [none]
+user:
+  hls_dataflow: 1
+  device: virtex7
+  prj_file: run_chan_config.prj.tcl
+  verilog_sim: 1
+  vhdl_sim: 1
+  qor_check: 1
