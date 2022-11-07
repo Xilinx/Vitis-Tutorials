@@ -197,7 +197,7 @@ Some things to try to build on this experiment:
 
 - Play around with the buffer sizes again.  Can you find the inflection point where the CPU becomes faster?
 - Try to capture the Vitis Timeline Trace and view this for yourself.  The instructions for doing so are
-  found in the [Vitis Documentation](https://www.xilinx.com/html_docs/xilinx_2020_1/vitis_doc/index.html)
+  found in the [Vitis Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 ## Key Takeaways
 

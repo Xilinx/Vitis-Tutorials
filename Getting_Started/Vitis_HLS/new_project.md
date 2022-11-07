@@ -103,7 +103,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
 
-   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Process Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Process-Overview) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+   This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 9. With your project settings now configured, click **Finish**.
     Vitis HLS opens the new project in the default view.

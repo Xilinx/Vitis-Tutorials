@@ -13,7 +13,7 @@
 
 ## Part 4 : Build and Run the Embedded Processor Application
 
- In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Embedded Processor Application Acceleration Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Application-Acceleration-Development-Flow), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
+ In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
 ![img](./images/embedded_processor_flow.png)
 
@@ -71,15 +71,15 @@ v++ -p -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu10
 
 Here is a brief explanation of each of these four commands:
 
-1. `$CXX` compiles the host application using the ARM cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the SDK environment setup script. Refer to [Building the Host Program](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Host-Program) for more information. This should resolve to `$XILINX_VITIS/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++`
-2. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). Refer to [Compiling Kernels with the Vitis Compiler](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-Kernels-with-the-Vitis-Compiler) for more information.
+1. `$CXX` compiles the host application using the ARM cross-compiler. This variable contains the full compiler executable plus flags relevant to cross-compilation, and is set when you source the SDK environment setup script. Refer to [Building the Software Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application) for more information. This should resolve to `$XILINX_VITIS/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++`
+2. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). Refer to [Compiling C/C++ PL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-C/C-PL-Kernels) for more information.
 3. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels) for more information.
 4. `v++ -p` packages the host executable, the rootfs, the FPGA binary and a few other files and generates a bootable image. Refer to [Packaging for Embedded Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-for-Embedded-Platforms) for more information. 
 
 There are two important differences to take note of here between building for Data Center accelerator cards and building for Embedded Platforms. 
 
 * The first is the use of the `v++ --package` command. This is a required step in the Embedded Processor platform flow, and is largely optional in the Data Center flow. The Data Center application runs in the X86 environment, and loads the xclbin from disk. However, in the Embedded Platform flow, generally the processor must be booted from an SD card, and the `--package` option gathers the files and generates the SD card.
-* The second is the `emconfigutil` command. This command is used in the Data Center flow to build an emulation version of the hardware platform. However, in the Embedded Platform flow, the embedded processor requires the use of an emulation environment (QEMU) as described in [Running Emulation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation). In this flow you will use a `launch_emulation` script rather than the emulation platform.
+* The second is the `emconfigutil` command. This command is used in the Data Center flow to build an emulation version of the hardware platform. However, in the Embedded Platform flow, the embedded processor requires the use of an emulation environment (QEMU) as described in [Simulating the Application with the Emulation Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Simulating-the-Application-with-the-Emulation-Flow). In this flow you will use a `launch_emulation` script rather than the emulation platform.
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu` so we are building for software emulation.
 

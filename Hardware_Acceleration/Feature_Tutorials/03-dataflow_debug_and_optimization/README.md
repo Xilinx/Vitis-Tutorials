@@ -14,7 +14,7 @@
 
 Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
 
-The aim of this tutorial is to give the user an overview of the techniques available in the Vitis HLS GUI with respect to understanding and debugging the dataflow optimization. You will be working through the Vivado kernel flow in the Vitis tool. For more information, refer to [Enabling the Vivado Kernel Flow](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vitis_hls_process.html#uiy1584905571731) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+The aim of this tutorial is to give the user an overview of the techniques available in the Vitis HLS GUI with respect to understanding and debugging the dataflow optimization. You will be working through the Vivado kernel flow in the Vitis tool. For more information, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ## Before You Begin
 

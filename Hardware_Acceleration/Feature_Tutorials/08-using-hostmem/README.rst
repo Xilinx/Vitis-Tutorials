@@ -5,7 +5,7 @@ Host Memory Access
 **Version:** Vitis 2022.2
 
 
-Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios. 
+Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA operation and allow the kernels to directly access the host memory as described in `Directly Accessing Host Memory <https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Directly-Accessing-Host-Memory>`_. The direct host memory access provides an alternate data transfer mechanism compared to XDMA based data transfer and can be useful in some of the scenarios. 
 
 - Custom kernel developers can use their already developed DMA engine as part of their kernel design. This specifically helps RTL kernel developers who are looking to reuse existing DMA IP. 
 - A platform can be designed even without an XDMA, such as the latest U50-NoDMA platform, providing a thin fixed logic with more available FPGA resources for the user logic or kernels. 
@@ -20,7 +20,7 @@ The following XRT and U250 platform versions are used for this tutorial design.
 
 **XRT Version**:    2022.2
 
-**Platform**: xilinx_u250_gen3x16_xdma_3_1_202020_1   
+**Platform**: xilinx_u250_gen3x16_xdma_4_1_202210_1   
 
 
 Tutorial Description
