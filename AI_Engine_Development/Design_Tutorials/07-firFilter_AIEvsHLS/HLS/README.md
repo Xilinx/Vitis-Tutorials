@@ -30,9 +30,9 @@ At the end of this section, the design flow will generate a new directory (calle
 <summary>Make Steps</summary>
 
 ## Make Steps
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
+To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `HLS/` folder.
 ```bash
-cd Makefiles
+cd HLS
 ```
 
 The following options can be specified in the make steps. See the make steps for instructions how to apply them.

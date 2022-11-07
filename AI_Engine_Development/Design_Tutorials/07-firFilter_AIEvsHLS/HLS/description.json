@@ -7,6 +7,7 @@
     "platform_blocklist": [],
     
     "testinfo": {
+        "test_name": "AIE_D_07-FIR_HLS",
         "tasks": {
            "build": {
                "pre_exec": "./env_setup_versal.sh"
@@ -38,7 +39,6 @@
         ],
         "targets": [ 
             "vitis_hw_build",
-            "vitis_hw_emu",
             "vitis_hw_run"
         ],
         "category": "canary",
