@@ -144,10 +144,13 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 
 * Obtain licenses for AI Engine tools
 
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
-* Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
+* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html#docs)
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
+
+* Download [xilinx-versal-common-v2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html#docs)
+
+* [DSP Library (DSPLIB) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
 
 </details>
 
@@ -475,4 +478,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
