@@ -25,7 +25,11 @@ export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
 #export XRT_ROOT=<Path to XRT RPMs - Directory>
 
 # Setup SDKTARGETSYSROOT and CXX...
+<<<<<<< HEAD
 source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+=======
+source $XILINX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+>>>>>>> Updated README, Makefile and Sample environment script
 
 # Source XRT, VITIS, and Aietools...
 source $XILNX_TOOLS_LOCATION/settings64.sh

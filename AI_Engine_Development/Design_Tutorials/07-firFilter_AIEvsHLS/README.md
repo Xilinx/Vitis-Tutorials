@@ -135,15 +135,6 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 
 * [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
 
-* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
-* Install the [Vitis Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
-* Installing the [Vitis Embedded Platforms 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=dtznqDN8RSf91SuduQDZ2A)
-* [Platforms Repository 2022.1](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1)
-
-* [Get Versal Commom Image, comman target and sysroot lincenses and sources](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-1.html)
-
-* Obtain licenses for AI Engine tools
-
 * Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html#docs)
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
@@ -155,7 +146,7 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 </details>
 
 <details>
-<summary>Platform</summary> 
+<summary>Platform</summary>
 
 ## Platform
 
@@ -168,7 +159,8 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 <details>
 <summary>Setting Up the Environment</summary>
  
-## Setting up the Environment
+## Environment: Setting Up the Shell Environment
+When the elements of the Vitis software platform are installed, update the shell environment script. 
 
 When the elements of the Vitis software platform are installed, create a shell environment script, `sample_env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
 
