@@ -13,7 +13,7 @@
 
 ## Part 4 : Build and Run the Data Center Application
 
- In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Data Center Application Acceleration Flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow), and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
+ In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Data Center Acceleration for Software Programmers](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers), and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
 ![img](./images/data_center_flow.png)
 
@@ -66,9 +66,9 @@ v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../s
 
 Here is a brief explanation of each of these four commands:
 
-1. `g++` compiles the host application using the standard GNU C compiler. Refer to [Building the Host Program](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Host-Program) for more information.
+1. `g++` compiles the host application using the standard GNU C compiler. Refer to [Building the Software Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application) for more information.
 2. `emconfigutil` generates an emulation configuration file which defines the device type and quantity of devices to emulate for the specified platform. Refer to [emconfigutil](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/emconfigutil-Utility) for more information.
-3. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). Refer to [Compiling Kernels with the Vitis Compiler](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-Kernels-with-the-Vitis-Compiler) for more information.
+3. `v++ -c` compiles the source code for the vector-add accelerator into a compiled kernel object (.xo file). Refer to [Compiling C/C++ PL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-C/C-PL-Kernels) for more information.
 4. `v++ -l` links the compiled kernel with the target platform and generates the FPGA binary (.xclbin file). Refer to [Linking the Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels) for more information.
 
 The `-t` option of the `v++` command specifies the build target. Here it is set to `sw_emu` so we are building for software emulation.

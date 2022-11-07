@@ -13,7 +13,7 @@
 ## Tutorial Overview
 
 In this tutorial you will examine the process of packaging an existing RTL design into an RTL kernel for use with the Vitis application acceleration development flow. 
-As explained in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) the RTL design typically contains a user-managed control scheme that determines how the design starts and ends operation, handles data inputs and outputs, and interacts with surrounding functions. This control scheme can include control registers that can be written to, or read from to define or determine the state of the kernel. 
+As explained in [Packaging RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) the RTL design typically contains a user-managed control scheme that determines how the design starts and ends operation, handles data inputs and outputs, and interacts with surrounding functions. This control scheme can include control registers that can be written to, or read from to define or determine the state of the kernel. 
 
 This tutorial includes an RTL design containing a simple vector accumulation example that performs a `B[i] = A[i]+B[i]` operation, which you will build into a Xilinx compiled object file (.xo) for use in the Vitis flow. It also contains a host application using the [XRT native API](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) which interacts with the kernel. The host application:
 
@@ -45,7 +45,7 @@ The labs in this tutorial use:
 
 ### Vector-Accumulate RTL IP
 
-An RTL kernel in the Vitis design flow must implement an execution model and satisfy the hardware interface requirements as described in [RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393). The Vector-Accumulate RTL IP used in this tutorial performs the operation `B[i]=A[i]+B[i]` and has the following characteristics:
+An RTL kernel in the Vitis design flow must implement an execution model and satisfy the hardware interface requirements as described in [Packaging RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393). The Vector-Accumulate RTL IP used in this tutorial performs the operation `B[i]=A[i]+B[i]` and has the following characteristics:
 
 - An AXI4-Lite slave interface (`s_axilite`) used to access programmable registers (control registers, scalar arguments, and pointer base addresses).
   - Offset `0x00` - Control Register: Controls and provides kernel status
