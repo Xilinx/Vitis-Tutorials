@@ -147,31 +147,21 @@ fft2d_AIEvsHLS
 <details>
 <summary>Installing the Tools</summary> 
 	
-## *Tools*: Installing the Tools
+## Installing the Tools
 
-Tools Documentation:
+* [AI Engine Tools Lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [Versal AI Engines Secure Site](https://www.xilinx.com/member/forms/registration/versal_ai_engines.html#documentation)
+* [AI Engine Documentation](https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html)
 
-* [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:
 
-To build and run the FIR filter tutorial (AI Engine and DSP implementations), you will need the following tools downloaded/installed:
+* Install the [Vitis Software Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html).
 
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
+* Obtain licenses for AI Engine tools.
 
-* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
-* Install the [Vitis Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
-* Installing the [Vitis Embedded Platforms 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=dtznqDN8RSf91SuduQDZ2A)
-* [Platforms Repository 2022.1](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2022.1)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
 
-* [Get Versal Commom Image, comman target and sysroot lincenses and sources](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-1.html)
-
-* Obtain licenses for AI Engine tools
-
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
-* Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
-
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
+* Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 </details>
 
@@ -191,7 +181,7 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
  
 ## Setting up the Environment
 
-When the elements of the Vitis software platform are installed, create a shell environment script, `env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
+When the elements of the Vitis software platform are installed, create a shell environment script, `sample_env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
 
 In the design directory of each implementation, edit `sample_env_setup.sh` script with your file paths, then source the environment script: 
 
