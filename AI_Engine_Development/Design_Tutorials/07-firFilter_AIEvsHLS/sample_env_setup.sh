@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+unset LD_LIBRARY_PATH
+
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
 export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
@@ -22,13 +24,8 @@ export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
 # if not set it will automatically be excluded from v++ packaging...
 #export XRT_ROOT=<Path to XRT RPMs - Directory>
 
-# Set the path to the VITIS LIBs, required only for AIE designs using Vitis DSP Libraries...
-# DSPLIB_ROOT variable is set in Makefile using DSPLIB_VITIS variable set below:
-export DSPLIB_VITIS=<Path to Vitis Libraries - Directory>
-
 # Setup SDKTARGETSYSROOT and CXX...
-unset LD_LIBRARY_PATH
-source $XILINX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 
 # Source XRT, VITIS, and Aietools...
 source $XILNX_TOOLS_LOCATION/settings64.sh
