@@ -32,7 +32,12 @@ At the end of this section, the design flow will generate a new directory (calle
 <summary>Make Steps</summary>
 
 ## Make Steps
-To run the following `make` steps (that is, `make kernels`, `make graph`, and so on), you must be in the `AIE/` folder. The options that can be specified in the `make` steps are as follows.
+To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `AIE/` folder.
+```bash
+cd AIE
+```
+
+The following options can be specified in the make steps. See the make steps for instructions on how to apply them.
 
 * TARGET: It can be set to "hw" or "hw_emu" to build the design in hardware or hardware emulation flow. Default is "hw_emu"
 
