@@ -157,11 +157,12 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 ## Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. 
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh` FIRST.
-2. Set up your `XLNX_VERSAL` to point to the `xilinx-versal-common-v2022.1` directory.
-3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the xilinx_vck190_base_202210_1 platform.
-4. Set up your `DSPLIB_VITIS`  environment variable based upon where you downloaded the Vitis DSP Library
-5. Set up Vitis: ```bash source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh```
+1. Unset the previous library paths with `unset LD_LIBRARY_PATH` command.
+2. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh` FIRST.
+3. Set up your `XLNX_VERSAL` to point to the `xilinx-versal-common-v2022.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the xilinx_vck190_base_202210_1 platform.
+5. Set up your `DSPLIB_VITIS`  environment variable based upon where you downloaded the Vitis DSP Library
+6. Set up Vitis: ```bash source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh```
 
 
 </details>
