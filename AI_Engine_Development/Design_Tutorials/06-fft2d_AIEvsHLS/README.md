@@ -193,7 +193,6 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 
 When the elements of the Vitis software platform are installed, create a shell environment script, `env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
 
-
 In the design directory of each implementation, edit `sample_env_setup.sh` script with your file paths, then source the environment script: 
 
 ```bash

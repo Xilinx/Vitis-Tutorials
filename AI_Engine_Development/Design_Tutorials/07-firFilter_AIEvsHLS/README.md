@@ -160,7 +160,6 @@ This tutorial targets the [VCK190 production board](https://www.xilinx.com/produ
 <summary>Setting Up the Environment</summary>
  
 ## Environment: Setting Up the Shell Environment
-When the elements of the Vitis software platform are installed, update the shell environment script. 
 
 When the elements of the Vitis software platform are installed, create a shell environment script, `sample_env_setup.sh`, using the template given as `sample_env_setup.sh`. Set the environment variables to your system specific paths.
 
@@ -169,7 +168,6 @@ source sample_env_setup.sh
 ``` 
 
 The script sets up the environment variables and sources scripts explained below:
-
 1. Unset the previous library paths with `unset LD_LIBRARY_PATH` command.
 2. Set up your platform by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.1/sdk.sh` FIRST.
 3. Set up your `XLNX_VERSAL` to point to the `xilinx-versal-common-v2022.1` directory.
