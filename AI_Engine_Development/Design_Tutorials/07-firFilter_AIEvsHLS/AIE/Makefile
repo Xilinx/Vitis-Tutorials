@@ -117,6 +117,12 @@ DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
 TARGET := hw_emu
 
 # =========================================================
+# Iteration Count:
+# 8(default)
+# =========================================================
+ITER_CNT := 8
+
+# =========================================================
 # FIR Chain Parameters:
 # N_FIR_FILTERS : Number for FIR filters in chain
 # N_FIR_TAPS    : Number of taps in each filter
@@ -134,12 +140,6 @@ N_AIE_ITERS     := $(shell echo $$(( $(INPUT_SAMPLES) * $(ITER_CNT) / $(FIR_WIND
 # =========================================================
 PL_FREQ        := 300
 VPP_CLOCK_FREQ := $(PL_FREQ)000000
-
-# =========================================================
-# Iteration Count:
-# 8(default)
-# =========================================================
-ITER_CNT := 8
 
 # =========================================================
 # Profiling and Trace Switches

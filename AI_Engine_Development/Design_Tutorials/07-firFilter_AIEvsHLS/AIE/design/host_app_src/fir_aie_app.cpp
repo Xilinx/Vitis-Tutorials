@@ -327,7 +327,7 @@ int main(int argc, char** argv)  {
     xrtDeviceClose(dhdl);
 
     //Report Final Result
-    cout << endl << "A72-Info: DSP FIR TEST [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
+    cout << endl << "A72-Info: AIE FIR TEST [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
         " Taps] TEST " << (errCnt ? "FAILED" : "PASSED") << endl << endl;
 
     //Exit with result
