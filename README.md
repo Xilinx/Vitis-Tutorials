@@ -42,6 +42,14 @@ git clone https://github.com/Xilinx/Vitis-Tutorials.git
 
 The default branch is always consistent with the latest released Vitis version, if you need to run the tutorial on a different Vitis version, please checkout the branch that matches the tool version after cloning the repository with the `git checkout <branch>` command. 
 
+Alternatively, you can also download the repository as a Zip file in two ways, the downloaded Zip file will contain only selected branch and the overall size will be smaller than the entire repository being cloned.
+
+ 1. From a browser, first select the desired branch, then click the small arrow on the green `Code` button at the top right of the repo contents and select `Download Zip`. 
+ 2. From a terminal, execute the below command. Take the 2022.2 branch as an example. 
+```
+wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && unzip 2022.2.zip 
+```
+
 ## Release Notes 
 - <a href="./CHANGELOG.md">Change Logs</a>
 
