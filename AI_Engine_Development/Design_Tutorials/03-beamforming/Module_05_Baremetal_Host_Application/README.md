@@ -227,11 +227,11 @@ The main function then calls the `test_ulbf` function. It starts the ULBF kernel
 * Xilinx Standalone Library Documentation OS and Libraries Document Collection ([UG643](https://www.xilinx.com/search/support-keyword-search.html#q=ug643))
 * [AI Engine Documentation: Building a Bare-Metal System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Building-a-Bare-metal-System)
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

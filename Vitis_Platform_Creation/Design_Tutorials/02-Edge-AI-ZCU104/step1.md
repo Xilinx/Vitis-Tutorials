@@ -14,7 +14,7 @@
 # limitations under the License.
 -->
 
-## Step 1: Create Hardware Platform
+# Step 1: Create Hardware Platform
 
 In this step, we will use Vivado to create the hardware design for the ZCU104 Vitis acceleration platform. Start from a ZCU104 preset design, add platform required peripherals and configure them. After everything is set, we will export the hardware design to XSA.
 

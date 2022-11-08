@@ -130,11 +130,11 @@ In this step you learned about:
    * Free-running PL kernel
 
 Next, review [Asynchronous Update of Array RTP Update for AI Engine Kernel](./step4_async_aie_array.md).	
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

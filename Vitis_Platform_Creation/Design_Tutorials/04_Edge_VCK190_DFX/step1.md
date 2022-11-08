@@ -22,7 +22,7 @@
  </tr>
 </table>
 
-## Step 1: Create the Hardware Design
+# Step 1: Create the Hardware Design
 
 The target of this hardware design is to illustrate how to partition of static region and dynamic region for DFX platforms. We will keep the design as simple as possible. Users can extend the design to fulfill more complex requirements later.
 

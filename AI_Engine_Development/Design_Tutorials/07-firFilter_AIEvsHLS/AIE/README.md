@@ -5,7 +5,9 @@
  </tr>
 </table>
 
-# Table of Contents
+# AI Engine Implementation
+
+## Table of Contents
 [Building the Design](#building-the-design)
 
 [Hardware Design Details](#hardware-design-details)
@@ -16,12 +18,12 @@
 
 [Revision History](#revision-history)
 
-# Building the Design
+## Building the Design
 
 <details>
 <summary>Design Build</summary>
 
-## Design Build
+### Design Build
 In this section, you will build and run the FIR filter design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow.
 
 At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, fir_aie_1firs_15taps) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
@@ -31,7 +33,7 @@ At the end of this section, the design flow will generate a new directory (calle
 <details>
 <summary>Make Steps</summary>
 
-## Make Steps
+### Make Steps
 To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
 ```bash
 cd Makefiles
@@ -98,7 +100,7 @@ AIESIM_INPUT_FILE := $(AIESIM_DATA_DIR)/input_impulse.txt
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
-## Build the Entire Design with a Single Command
+### Build the Entire Design with a Single Command
 If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:
 
 ```bash
@@ -123,7 +125,7 @@ The individual make steps to build the design with the options applied to them a
 <details>
 <summary>make kernels: Compile PL Kernels</summary>
 
-## make kernels: Compile PL Kernels
+### make kernels: Compile PL Kernels
 In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202210_1`) and compiles them into their respective XO files.
 
 The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
@@ -179,7 +181,7 @@ Summary of the switches used:
 <details>
 <summary>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow</summary>
 
-## make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
+### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
 
 An adaptive data flow (ADF) graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives.
 * The AI Engine ADF C++ graph of the design contains AI Engine kernels.
@@ -238,7 +240,7 @@ Summary of the switches used:
 <details>
 <summary>make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary>
 
-## make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform
+### make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 After the AI Engine graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file.
 
 The Vitis tools allow you to integrate the AI Engine graph and HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the AI Engine and PL kernels into the design).
@@ -313,7 +315,7 @@ Summary of the switches used:
  <details>
 <summary>make application: Compile the Host Application</summary>
 
-## make application: Compile the Host Application
+### make application: Compile the Host Application
 You can compile the host application by following the typical cross-compilation flow for the Cortex-A72. To build the application run the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 ```
 make application
@@ -418,7 +420,7 @@ Summary of the switches used:
 <details>
 <summary>make package: Package the Design</summary>
 
-## make package: Package the Design
+### make package: Package the Design
 With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications and `.xclbin`.
 
 The command to run this step is as follows (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
@@ -490,7 +492,7 @@ The output of the `v++` Package step is the package directory that contains the 
 <details>
 <summary>make run_emu: Run Hardware Emulation</summary>
 
-## make run_emu: Run Hardware Emulation
+### make run_emu: Run Hardware Emulation
 After packaging, everything is set to run emulation or hardware.
 To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 ```
@@ -508,7 +510,7 @@ root@versal-rootfs-common-2022_1:~#
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2022_1:~# xinit: giving up
+root@versal-rootfs-common-2022_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -547,7 +549,7 @@ In the XSIM Waveform Viewer, you will see the signals you added to the waveform 
 <details>
 <summary>TARGET=hw: Run on Hardware</summary>
 
-## Run on Hardware
+### Run on Hardware
 
 To run the design in hardware, re-run the following "make" steps with TARGET=hw and other applicable options (see the previously listed make steps)
 ```
@@ -608,11 +610,11 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 
 </details>
 
-# Hardware Design Details
+## Hardware Design Details
 <details>
 <summary>FIR Filter AI Engine Implementation architecture and  AI Engine/PL Function Partitioning</summary>
 
-## FIR Filter AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
+### FIR Filter AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
 The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and HLS & DSPs in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels are 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
 
 ![Image of FIR Filter AIE implementation architecture](images/fir_aie_block_diagram.png)
@@ -622,7 +624,7 @@ The following figure shows a high level block diagram of the design. The test ha
 <details>
 <summary>Design Details</summary>
 
-## Design Details
+### Design Details
 The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, and AI Engine and the interfaces among them. The `v++` linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by v++ -l step (make XSA in the tool flow section above) and include the following:
 * FIR Filter AI Engine Graph (`libadf.a`)
 * data mover kernel (`mm2s.[hw|hw_emu].xo` and `s2mm.[hw|hw_emu].xo`)
@@ -643,7 +645,7 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 <details>
 <summary>AI Engine and PL Kernels</summary>
 
-## AI Engine and PL Kernels
+### AI Engine and PL Kernels
 The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter from the AI Engine DSP library, (DSPLib), and uses a `for` loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine's  128-bit PLIO interfaces.
 
 The PL-based data mover consists of DATAMOVER kernels. It moves a data pattern into the AI Engine array through a streaming interface. The final FIR output from the AI Engine array is moved back into the DATAMOVER kernel through a streaming interface and is checked for errors. The AI Engine array interface with the DATAMOVER kernel uses an AXI4-Stream interface.
@@ -655,13 +657,13 @@ Some additional details regarding the data mover kernels include:
 
 </details>
 
-# Software Design Details
+## Software Design Details
 The software design in the FIR Filter AI Engine implementation consists of the following sections:
 
 <details>
 <summary>AI Engine Kernels and Graph Representation</summary>
 
-## AI Engine Kernels and Graph Representation
+### AI Engine Kernels and Graph Representation
 DSPLib FIR filter kernels are C/C++ programs written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review [AI Engine Kernel Programming Section in the AI Engine Documentation](#ai-engine-documentation) for a high-level overview of kernel programming. These DSPLib kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results to `build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/Work/fir_aie_graph.aiecompile_summary`. You can view the graph by running the following command:
 
 `vitis_analyzer build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/Work/fir_aie_graph.aiecompile_summary`
@@ -675,13 +677,13 @@ The following figures show the graph representation of the AI Engine kernels (N_
 <details>
 <summary>Data Flow Graph</summary>
 
-## Data Flow Graph
+### Data Flow Graph
 
 This section describes the overall data-flow graph specification of the FIR filter design using AI Engine which is compiled by the AI Engine compiler. Refer to [AI Engine Programming Section in the AI Engine Documentation](#ai-engine-documentation) for information on ADF graphs.
 
 The overall graph definition of the design is contained in the `fir_aiegraph.cpp` file. The top level graph in turns contains the subgraph, `fir_aie_graph.h`, which is described in the following subsection.
 
-### Define the Graph Class
+#### Define the Graph Class
 Define the FIR graph class by using the objects defined in the appropriate name space. It must include the ADF library. To access ADF library elements, the following declaration is used to scope into it:
 ` using namespace adf;`
 In addition the following namespace is declared to access the DSPLib library:
@@ -697,7 +699,7 @@ Declare the top level ports to the subgraph:
    port<output> out;
 ```
 
-### Instantiate DSPLib FIR Filters
+#### Instantiate DSPLib FIR Filters
 
 The DSPLib symmetric FIR Filter kernels are created using the following array declaration. The pre-processor #if statement is used as a workaround here because in C++ each array element requires its own template parameters, even if they are identical:
 ```
@@ -713,7 +715,7 @@ The DSPLib symmetric FIR Filter kernels are created using the following array de
 ```
 
 
-### Add Connectivity Information
+#### Add Connectivity Information
 This is done by using the templated connect<> object. For our cascaded chain, the first FIR filter must have its input connected to the subgraph input `in`, and the last FIR filter must have its output connected to the subgraph output `out`. If there is more than one FIR filter, their inputs and outputs must be daisy chained together:
 
 ```
@@ -726,7 +728,7 @@ This is done by using the templated connect<> object. For our cascaded chain, th
                 connect<>(FIR_ARRAY[N_FIR_FILTERS-1].out, out);
 ```
 
-### Top Level Application
+#### Top Level Application
 Define a top-level application file (`fir_aie_graph.cpp` in this design) specifies the top level port connectivity (the PLIO objects, which also have file names provided for simulation purposes). It then creates a platform object, connecting up the PLIO objects to it. It also creates an instance of the `FirGraph` graph, and connects the FilterChain to the platform's IOs
 that contains an instance of the graph class and connects the graph to a simulation platform to provide file input and output:
 ```
@@ -740,7 +742,7 @@ connect<> net0(platform.src[0], FilterChain.in);
 connect<> net1(FilterChain.out, platform.sink[0]);
 ```
 
-### Simulator Control
+#### Simulator Control
 
 For this graph to be simulated using the AI Engine simulator, or the x86 functional simulator, the main function is defined, which calls methods to initialize the FilterChain, runs it the specified number of iterations, and then performs cleanup:
 ```
@@ -765,28 +767,28 @@ Note that for running on hardware (hw) or hardware emulation (hw_emu), the main(
 <details>
 <summary>PL Kernels</summary>
 
-## PL Kernels
+### PL Kernels
 
 In addition to the kernels operating in the AI Engine array, this design specifies kernels to run in the PL region of the device (written in HLS C++). The software design of the data mover kernels are described below:
 
-### datamover (datamover.cpp)
+#### datamover (datamover.cpp)
 
 The datamover kernel reads and writes data from and to the AI Engine array using the AXI4-Stream interface.
 
-#### Arguments
+##### Arguments
 The datamover kernel takes the following arguments:
 * `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. In this design, the bit-size is set to 128.
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.
 
 The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
-#### pragma HLS INTERFACE s_axilite
+##### pragma HLS INTERFACE s_axilite
 The datamover kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and iterCnt). This interface is also associated with `return`.
 
-#### pragma HLS INTERFACE axis
+##### pragma HLS INTERFACE axis
 The datamover kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol).
 
-#### pragma HLS PIPELINE II=1
+##### pragma HLS PIPELINE II=1
 The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration are consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
@@ -794,7 +796,7 @@ The datamover kernel has a `for` loop that is a candidate for burst read because
 <details>
 <summary>PS Host Application</summary>
 
-## PS Host Application
+### PS Host Application
 The FIR filter AI Engine tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernel. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application.
 
 In addition to the PS host application (`design/app_src/fir_aie_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code.
@@ -807,65 +809,65 @@ Within the PS host application, three classes are defined (two for the PL kernel
 
 The main sections of the PS host application code is described in the following subsections:
 
-### Include graph.cpp
+#### Include graph.cpp
 Include the `fir_aie_graph.cpp` AI Engine application file. This file contains the instantiation of the AI Engine FIR FilterChain data flow graph object, and is required so the application code understands the structure of the graph.
 ```
 #include fir_aie_graph.cpp
 ```
 
-### load_xclbin Function
+#### load_xclbin Function
 This function is responsible for loading the XCLBIN file into the device.
 
-### Datamover Class
+#### Datamover Class
 This class provides the following methods for controlling/monitoring this kernel:
 * init(): opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
 * run(): starts execution of the datamover kernel
 * waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel
 
-### FIR Chain Class
+#### FIR Chain Class
 This class provides the following methods for controlling the graph:
 * init(): opens the AI Engine FIR chain graph
 * run(): resets and starts execution the AI Engine FIR chain graph
 * close(): closes the graph
 
-### Main Function
+#### Main Function
 This is the main PS application code that controls the kernels and runs data through the design. The various steps this code goes through is described in the following subsections.
 
-#### 1. Check Command Line Argument
+##### 1. Check Command Line Argument
 The beginning of the A72 application is represented by the main function. It takes in one command line argument: an XCLBIN file.
 
-#### 2. Open XCLBIN
+##### 2. Open XCLBIN
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.
 
-#### 3. Create and Initialize Data Mover Kernels and FIR Chain Graph
+##### 3. Create and Initialize Data Mover Kernels and FIR Chain Graph
 Create the kernel objects and initialize them.
 
-#### 4. Run the Data Mover Kernel and FIR Chain Graph
+##### 4. Run the Data Mover Kernel and FIR Chain Graph
 Start execution of the FIR Filter Graph and the datamover kernel.
 
-#### 5. Wait for Data Mover Kernels to Complete
+##### 5. Wait for Data Mover Kernels to Complete
 Wait for the datamover kernel to complete.
 
-#### 6. Verify Output Results
+##### 6. Verify Output Results
 Compare data in output with the reference golden data and get the error count from the kernel.
 
-#### 7. Release Allocated Resources
+##### 7. Release Allocated Resources
 Close the datamover kernel and FIR chain graph.
 
 </details>
 
-# References
+## References
 The following documents provide supplemental information for this tutorial.
 
-### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+#### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

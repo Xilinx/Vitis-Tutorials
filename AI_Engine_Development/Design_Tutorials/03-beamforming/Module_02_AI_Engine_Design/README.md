@@ -207,11 +207,11 @@ ULBF Output0: Throughput 8.6297e+08 Samples/s, i.e. 3.45188e+09 Bytes/s
 * [AI Engine System C Simulator](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator)
 * [AI Engine Profiling Graph Throughput](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Profiling-Graph-Throughput)
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

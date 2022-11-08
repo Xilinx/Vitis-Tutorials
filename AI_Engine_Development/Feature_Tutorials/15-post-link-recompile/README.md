@@ -59,11 +59,11 @@ This tutorial shows you how to modify an AI Engine application after the platfor
 
 Completing this tutorial should give you confidence to develop AI Engine designs based on a hardware/software platform, knowing that you can modify the AI Engine part and the processing system control application. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed.
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

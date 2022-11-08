@@ -21,7 +21,7 @@
  </tr>
 </table>
 
-## Step 2: Create the Vitis platform
+# Step 2: Create the Vitis platform
 
 In this step, we will create a Vitis platform running Linux operation system. The Vitis platform requires several software components which need to be prepared in advance. Due to the boot flow differences between KV260 and base platforms for Xilinx evaluation boards like ZCU104, platform developer needs to prepare one additional DTBO file besides the normal software components for Vitis platforms because device tree file of PL side depends on the hardware design and is loaded after Linux boots up. In addition, application developers need to add this DTBO file to the application deployment package as well. The other software components generation flow is similar to the flow described in the [ZCU104 tutorial](../02-Edge-AI-ZCU104/step2.md). However in this case the valuable software component is sysroot which is used for host application cross-compilation. So will go on utilizing the common image which provides the sysroot and expedite the process of platform creation in the meanwhile.
 

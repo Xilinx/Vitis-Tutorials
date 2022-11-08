@@ -164,11 +164,11 @@ The Graph and Array views are shown in Vitis Analyzer. The analysis is similar a
 After completing this tutorial, you have learned how to output the live status of the AI Engine and how to analyze it in Vitis Analyzer.
 
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

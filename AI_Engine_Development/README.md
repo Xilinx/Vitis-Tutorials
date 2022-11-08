@@ -20,12 +20,12 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 ## Environment Settings
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *[Vitis Software Platform Release Notes](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wlk1553469789555.html)* (v2022.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to setup environment ( **NOT** apply to tutorials that do not use the VCK190 base platform ):
 
 1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`
+2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
 3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 

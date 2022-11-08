@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -82,7 +82,7 @@ Same as step 1.1 of XRT flow.
 #### Step 2.2.1 Target Connection Setup
 
 Run the hardware server from computer that connects to target board. To do so, launch hw_server from the computer that has JTAG connection to the VCK190 board.
-<img src="images/hw_ta_hw.png" width="600">
+![alt text](images/hw_ta_hw.png)
 
 #### Step 2.2.2 Connect XSDB to Board
 Launch xsdb from your host computer at the same level of the design's Work directory. Issue this commands from the XSDB prompt,
@@ -121,7 +121,7 @@ After issuing the above command, expect to see result from [Step 3 Expected Resu
 
 ### Step 3 Expected Result with Vitis_Analyzer
 The Vitis™ Analyzer GUI is launched, select **Profile Summary** then **AI Engine & Memory** or **Interface Channels**.
-<img src="images/pr_hw_perf_va.png">
+![alt text](images/pr_hw_perf_va.png">
 
 ### Step 4 Open Multiple Profiling Runs with Vitis Analyzer
 You can run the application as many times as you would like with your preferences. However, some of these metrics' sets are interconnected because some use group events and others use individual events. For example, the heat_map metric set contains a metric that groups all kinds of stall events in a single metric along with other metrics that group data transfer events (load/store, streams, cascade, etc.) and vector instructions. To get a better view of which stall type(s) are prevalent, re-run with the stalls metric set. To better understand execution, re-run with the execution metric set.
@@ -135,15 +135,15 @@ Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB
 Follow step 1.5 for the XRT flow, or follow step 2.5 for XSDB flow to open first profiling `run_summary` file with vitis_analyzer.
 ### Step 4.4 Open Second Profiling Data
 Click on **+** from GUI to browse and select second profiling `run_summary` file. Two runs of profiling data are combined.
-<img src="images/pr_hw_perf_va_1.png">
+![alt text](images/pr_hw_perf_va_1.png">
 
 This example combines first run with `heat_map`, `conflicts`, and `input_bandwidths` metrics and second run with `execution`, `dma_locks` and `output_bandwidth` metrics.
 
 Click **%** to toggle between absolute and percentage values of collected design metrics.
-<img src="images/pr_hw_perf_va_2.png">
+![alt text](images/pr_hw_perf_va_2.png">
 
 Click the column header to sort the data within those rows. Click once to display selected row data in ascending order. Click twice to display selected row data in descending order. Click three times to disable sorting function.
-<img src="images/pr_hw_perf_va_4.png">
+![alt text](images/pr_hw_perf_va_4.png">
 
 
 ### Profiling Data Explanation
@@ -158,7 +158,7 @@ An easy way to know the definition of profile data category by moving mouse curs
 2. `Cumulative Memory Errors Time (ms)` indicates time taken due to ECC errors in any of the data memory banks as well as MM2S and S2MM DMAs.
 #### Interface profiling data
 Select `Profile Summary` then `Interface Channels`.
-<img src="images/pr_hw_perf_va_3.png">
+![alt text](images/pr_hw_perf_va_3.png">
 1. `PLIO Bandwidth` displays the design ran with PLIO bandwidth in unit of MB/s. This info is a good indication the design is I/O bound or compute bound design and provides guidance to optimize design performance.
 
 ### Profiling Data Analysis

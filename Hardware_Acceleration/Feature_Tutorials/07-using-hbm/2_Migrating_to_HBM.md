@@ -6,6 +6,8 @@
  </tr>
 </table>
 
+# Migrating to HBM
+
 ## Application Overview
 
 This tutorial uses a simple example of vector addition with DDR based implementation. Ports `in1` and `in2` are reading from DDR banks 0 and 1, respectively, and port `out` is writing the results in DDR bank 2. The tutorial will walk through the necessary changes to the existing application to migrate to HBM.

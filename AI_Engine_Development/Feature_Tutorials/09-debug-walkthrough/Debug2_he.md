@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -23,22 +23,22 @@ The following showcase features of the hardware emulator:
 ### Step 1 Build
 Select the build configuration to be **Emulation-HW**.
 
-<img src="images/he_run_cfg.png" width="200">
+![alt text](images/he_run_cfg.png)
 
 Highlight beamformer system project and right-click to select **build project**.
 It takes over 60 minutes to complete the build.
 
 ### Step 2 Launch Hardware Emulator
-<img src="images/he_run_init.png" width="450">
+![alt text](images/he_run_init.png)
 
 **Note:** It takes a couple of minutes to launch the emulator and boot up Petalinux.
 
 ### Step 3 During Debug
 #### Step 3.1 Debug - PS
-<img src="images/he_run_ps.png">
+![alt text](images/he_run_ps.png">
 
 #### Step 3.2 Debug - AI Engine
-<img src="images/he_run_aie.png">
+![alt text](images/he_run_aie.png">
 
 AI Engine only debugs within system project via hardware emulator, AI Engine emulator debug still applies. <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> are applicable at this condition.
 
@@ -91,41 +91,41 @@ Command option explanation:
 9. `-s tcp::${xrt_server_port}`: Defines the agent listening protocol and port. it is 4352 in example, but can be any free port.
 
 Expected result
-<img src="images/he_temp_run.png">
+![alt text](images/he_temp_run.png">
 
 **Note:** The previously listed step takes a couple of minutes to complete.
 
 ### Step 4 Setup Vitis AI Engine Debug Configuration
 
 #### Step 4.1 Configure Debug using Click-on Debug Icon
-<img src="images/he_cl_config0.png" width="300" >
+![alt text](images/he_cl_config0.png)
 
 #### Step 4.2 Under "Single Application Debug" to Create a New Debug Configuration
-<img src="images/he_cl_config1.png" width="600" >
+![alt text](images/he_cl_config1.png)
 
 #### Step 4.3 Setup New Debug Type Name and Connection
-<img src="images/he_cl_config2.png" width="600" >
+![alt text](images/he_cl_config2.png)
 
 #### Step 4.4 Setup New Connection Name, Host, and Port
-<img src="images/he_cl_config3.png" width="600" >
+![alt text](images/he_cl_config3.png)
 
 #### Step 4.5 Setup Execute Script of Newly Created Debug Type
-<img src="images/he_cl_config4.png" width="600" >
+![alt text](images/he_cl_config4.png)
 
 **Note:** The script, **aie_app_debug_em.tcl** is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab –e.g. `set aie_work_dir "${PROJECT_PATH}/beamformer/Work/"` and `set vitis_install "${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1"`
 
 #### Step 4.6 Close the debug configuration
-<img src="images/he_cl_config5.png" width="600" >
+![alt text](images/he_cl_config5.png)
 
 #### Step 4.7 Run PS (by resume) Application so AI Engine can be Initialized and Debugged
-<img src="images/he_cl_config6.png" width="450" >
+![alt text](images/he_cl_config6.png)
 
 #### Step 4.8 Wait until PS has Initialized AI Engine and Observe "Starting graph run" from the Console
-<img src="images/he_cl_config6_1.png" width="600" >
+![alt text](images/he_cl_config6_1.png)
 
 #### Step 4.9 Launch AI Engine Debugger to Debug the AI Engine Sub-project
-<img src="images/he_cl_config0.png" width="300" >
-<img src="images/he_cl_config7.png" width="600" >
+![alt text](images/he_cl_config0.png)
+![alt text](images/he_cl_config7.png)
 
 **Note:**
 1. The script, `aie_app_debug_em.tcl` is provided in this tutorial and needs to be updated to match your environment settings. The `aie_work_dir` variable should be the Work folder inside this lab. For example, `set aie_work_dir ${PROJECT_PATH}/beamformer/Work/` and `set vitis_install ${XILINX_VITIS_PATH}/Xilinx/Vitis/2022.1`
@@ -133,7 +133,7 @@ Expected result
 3. It takes some time depends on number of times in design to launch AI Engine debugger completely. Beamformer design contains 64 tiles that needs several minutes to complete.
 
 ### Step 5 Expected Vitis IDE
-<img src="images/he_cl_run.png">
+![alt text](images/he_cl_run.png">
 
 ### Step 6 Clean up Launched Processes
 ```bash

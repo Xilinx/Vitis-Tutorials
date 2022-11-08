@@ -11,13 +11,13 @@
 
 ***Version: Vitis 2022.2***
 
-# Introduction
+## Introduction
 
 Versal™ adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. In a bottom-up approach, each part of system is simulated independently before being integrated in a more complete simulation. An heterogeneous device as the Versal ACAP authorizes dataflows to go through a diversity of engines for completion.
 
 This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator (`x86simulator`), AI Engine simulator (`aiesimulator`), and in hardware emulation (`hw_emu`).
 
-## Objectives
+### Objectives
 
 After completing the tutorial, you will be able to do the following:
 
@@ -29,11 +29,11 @@ After completing the tutorial, you will be able to do the following:
 * Understand the necessary code changes in the graph and host to make the design work seamlessly between `x86simulator`, `aiesimulator`, and `hw_emu`.
 * Bring up results in Vitis Analyzer.
 
-## Before You Begin
+### Before You Begin
 
 This tutorial uses Python. In addition to having the Xilinx tools installed, you also need a valid installation of Python 3.
 
-### Python Environment Setup
+#### Python Environment Setup
 
 The external traffic generators use Python and require non-standard packages to be installed. Perform the following steps to install these packages.
 
@@ -99,7 +99,7 @@ export PYTHON3_LOCATION=<user-path>
     - `LIBRARY_PATH` to handle external traffic generator handles.
     - `PATH` and `PYTHONPATH` for the Python-based external traffic generator.
 
-
+```
 export PYTHON3_LOCATION=<user-path>
 ```
 
@@ -107,7 +107,7 @@ export PYTHON3_LOCATION=<user-path>
 2. Run the `source env_setup.sh` script in the console.
 
 
-# Design Overview
+## Design Overview
 
 This tutorial is based on a basic design, as shown below. This design contains two AI Engine kernels with an intermediate kernel in the PL. The overall system is fed and flushed from kernels that are also in the PL.
 
@@ -133,9 +133,9 @@ When using external traffic generators, communication with the simulator is achi
 ![External Traffic Generator based Simulation](./images/TutorialImages-ETGSimulation.svg)
 
 
-# Tutorial Steps
+## Tutorial Steps
 
-## Step 1: ADF Graph Modifications
+### Step 1: ADF Graph Modifications
 
 To use external traffic generators for any kind of simulation, you need to make modifications to the graph code, specifically the `graph.h` file. This file contains the PLIO constructors, which are used to connect the graph to the programmable logic.
 
@@ -146,7 +146,7 @@ To use external traffic generators for any kind of simulation, you need to make 
 
 **Note**: Code guarding this is optional. It is used in this instance to show the changes needed. These modifications are simple. Remove the filenames of the test vectors, and the simulator (AI Engine or x86) automatically takes responsibility for creating ports to connect Unix sockets.
 
-## Step 2: Linking for Hardware Emulation
+### Step 2: Linking for Hardware Emulation
 
 In a standard simulation, the various XO files (`mm2s`, `polar_clip`, and `s2mm`) would be created and linked to the AI Engine array, leaving no room for the external traffic generators. A configuration file for such a simulation can be seen in `system.cfg`:
 
@@ -180,18 +180,18 @@ sc=polar_clip_out.M00_AXIS:ai_engine_0.clip_out
 sc=ai_engine_0.DataOut1:s2mm.S00_AXIS
 ```
 
-## Step 3: External Traffic Generators
+### Step 3: External Traffic Generators
 
 The overall goal of the external traffic generator is to send or receive data to or from the AI Engine array through a specific port. The sender can generate data on the fly or read it from a file. The receiver can keep data and save it somewhere, or process it in a function. When the external traffic generator takes the place of a PL kernel that performs processing, it can use a Python/C++ model of the functionality or even use the original HLS function.
 
-### Python Scripts
+#### Python Scripts
 
 To test this design, you can use a Python script as an external traffic generator. Each kernel of the AI Engine is tested separately to show that multiple traffic generators can be run in parallel. The following image shows the general flow of the Python to be used in `aiesimulator`, `x86simulator`, and `hw_emu`:
 
 ![Diagram of the python ETG](./images/TutorialImages-PythonETG.svg)
 
 
-#### Script Analysis
+##### Script Analysis
 
 The general overview of what the script does as follows:
 
@@ -203,7 +203,7 @@ The general overview of what the script does as follows:
 
 The script contains a class `ExternalTraffic` that contains functions that communicate with the XTLM utilities objects.
 
-#### Instantiating the XTLM Utilies
+##### Instantiating the XTLM Utilies
 
 1. Navigate to `TrafficGenerator/Python` and open the file `xtg_aie.py`.
 2. Scroll to lines 155-159. This is where you instantiate the master/slave utilities for communicating with the simulator. To allow for direct connections to be made between the functions that will be generating the data and the simulator, the name of the utility being instantiated is the same as the name used in the following files:
@@ -213,7 +213,7 @@ The script contains a class `ExternalTraffic` that contains functions that commu
 
 These utility objects contain the functions to transport and receive packets of data for processing, and require the data to be converted into a byte array.
 
-#### Transmitting Data through the ipc_axis_master_util Utility
+##### Transmitting Data through the ipc_axis_master_util Utility
 
 In `xtg_aie.py`, go to line 35, the `mm2s` function. This function performs the following operations:
 
@@ -221,14 +221,14 @@ In `xtg_aie.py`, go to line 35, the `mm2s` function. This function performs the 
     2. It transforms the data into a byte array by using two's complement and OR-ing the real and imaginary values together.
     3. It sends the data in 128-sample packets to the utility using the `b_transport()` function.
 
-#### Receiving Data through the ipc_axis_slave_util Utility
+##### Receiving Data through the ipc_axis_slave_util Utility
 
 Navigate to line 69, the `s2mm` function. This function performs the following operations:
 
     1. It receives data using the `sample_transaction` function. This is a blocking function, so it will not continue until it sees data from the utility.
     2. It parses the data, which is still a byte array, and transports it back to the `run` function using the `self.child1.send()` function.
 
-### C++ Application
+#### C++ Application
 
 A C++ application has also been created to test this feature. On top of reading and writing files, this application uses the original HLS code of the `polar_clip` function to test it in situ. The following image shows the general flow of the C++ to be used in `aiesimulator`, `x86simulator`, and `hw_emu`:
 
@@ -264,7 +264,7 @@ The `run` method is called for the three instances, which creates a thread with 
 
 The `data_handler` method calls the send/receive data functions (defined in the implementation class) and then uses the transaction method implemented in the sockets to communicate in between the threads. The class `mm2s` reads data from an array initialized in `input.h`, and `s2mm` writes the data in the file `DataOut1.txt`. The     `polar_clip` is different. It reads and writes to a different socket, and in the middle it processes the data using the core processing function of the HLS IP of `polar_clip`.
 
-## Step 4: Testing the Functionalities
+### Step 4: Testing the Functionalities
 
 For simplicity, all the tests can be conducted using variables defined in the command line of the Makefile. The three variables are as follows:
 
@@ -311,7 +311,7 @@ make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP traffic_gen run_emu
 ```
 
 
-## Summary
+### Summary
 
 In this tutorial, you have learned about the following:
 
@@ -327,11 +327,11 @@ The advantages of using external traffic generators are as follows:
 - You can mimic the flow of a PL kernel that is needed by the AI Engine (for example, `polar_clip`).
 
 
-### Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-### License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

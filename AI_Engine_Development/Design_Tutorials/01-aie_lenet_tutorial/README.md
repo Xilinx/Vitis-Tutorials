@@ -1062,7 +1062,8 @@ The following are links to Vitis related information referenced in this tutorial
 
 * [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/irn1582730075765.html)
 
-# Revision History
+##### Revision History
+
 * May 2022 - Updated for 2022.1
 * Oct 2021 - Updated for 2021.2
 * July 2021 - Updated for 2021.1

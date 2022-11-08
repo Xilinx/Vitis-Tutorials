@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -35,28 +35,28 @@ The following steps showcase AI Engine Emulator features:
 ### Step 1. Select AI Engine Configuration
 From the top menu, select **Emulation-AIE** as the current active configuration.
 
-<img src="images/aie_sim_config.png" width="200">
+![alt text](images/aie_sim_config.png)
 
 ### Step 2. Build with AI Engine Emulator
 Right-click on AI Engine project and select **Build Project** to build.
 
-<img src="images/aie_sim_build.png" width="300">
+![alt text](images/aie_sim_build.png)
 
 ### Step 3. Debug with AI Engine Emulator
 Right-click on AI Engine project, select **Debug As** and **Launch AIE Emulator** to debug AI Engine project.
 
-<img src="images/he_debug_aie0.png" width="450">
+![alt text](images/he_debug_aie0.png)
 
 ### Step 4. Source Code Debug with AI Engine Emulator
 After debugger is launched, the resume, disconnect, step into, step over, and step return buttons can be used to examine source code execution flow. Placing the cursor on each available button pops up information about that button's functionality.
-<img src="images/he_debug.png" width="200">
+![alt text](images/he_debug.png)
 
 From the source code view, double-click on line number to setup breakpoint. Breakpoint view will show the newly added breakpoint.
 
-<img src="images/he_debug_breakpoint.png" width="800">
+![alt text](images/he_debug_breakpoint.png)
 
 During debug, highlighted areas indicate changes in values since the last step.
-<img src="images/he_run_aie.png">
+![alt text](images/he_run_aie.png">
 
 ### Step 5. Verify Result
 AI Engine emulator output files from the design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis™ IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select `compare with` > `each other with transformation` > `Predefined filters` > `Remove timestamp`.
@@ -74,25 +74,25 @@ Selecting `each other with transformation` is required because AI Engine emulati
 ### Step 1: Configuration Before Launching AI Engine Simulator
 Highlight beamformer sub-project, right-click to select **Run As** > **Run configurations...** to enter into a configuration that allows trace and profile selection.
 
-<img src="images/aie_sim_init.png" width="450">
+![alt text](images/aie_sim_init.png)
 
 **Note:** Enable VCD generation for event trace and enable profile generation for selected/all tiles.
 
-<img src="images/aie_sim_init1.png" width="450">
+![alt text](images/aie_sim_init1.png)
 
 **Note:** The `--simulation-cycle-timeout` shown in the previous image is OPTIONAL. In case of long run time, this option helps to control execution period so that trace and profile can be generated properly. Clear this option for other tests especially for source code debug to avoid shorter run time.
 
 ### Step 2: Launch AI Engine Emulator
 After run configuration is completed, right-click on beamformer sub-project to select **Run As** and **Launch AIE Emulator**.
-<img src="images/aie_sim_run.png">
+![alt text](images/aie_sim_run.png">
 Vitis™ IDE console displays `[Warning] : Sim result: 0` indicates this simulation run is completed.
 
 ### Step 3: Launch Vitis Analyzer
 Double-click on **${AIE_PROJECT}/Emulation-AIE/aiesimulator_output/default.aierun_summary** to launch Vitis_analyzer for event trace and profile information.
-<img src="images/aie_sim_va_launch.png">
+![alt text](images/aie_sim_va_launch.png">
 
-<img src="images/aie_sim_va.png">
-<img src="images/aie_sim_profile.png">
+![alt text](images/aie_sim_va.png">
+![alt text](images/aie_sim_profile.png">
 
 **Note:**
 1. Click on **Trace** for generated event trace info. Click on **Profile** for selected AI Engine tiles' profile report files. These events are timing approximately accurate and can be a good reference for how the design runs.
@@ -114,14 +114,14 @@ Highlight the beamformer sub-project, right-click to enable pull-down menu, and 
 ### Step 3. Enable `printf` in Run Configuration
 To enable `printf()` function, it is required to specify `--profile` in run configuration.
 
-<img src="images/aie_sim_printf0.png" width="450">
+![alt text](images/aie_sim_printf0.png)
 
 ### Step 4. Run the Project
 Highlight the beamformer sub-project, right-click to enable pull-down menu, and select **Run As** and **Launch AIE Emulator** to run the project in Vitis IDE.
 
 ### Step 5. Expected result
 Output of `printf()` statements displays on console window.
-<img src="images/aie_sim_printf.png">
+![alt text](images/aie_sim_printf.png">
 
 ### `printf` Limitations
 Adding `printf()` statements increases program memory size. Make sure not to exceed program memory size when using `printf()` statements to debug.
@@ -141,7 +141,7 @@ cd ${PROJECT_PATH}/Emulation-AIE/Work/aie/6_0/Release
 cd ${PROJECT_PATH}/Work/aie/6_0/Release
 readelf -S 6_0
 ```
-<img src="images/aie_sim_mem-check1.png" width="450">
+![alt text](images/aie_sim_mem-check1.png)
 
 ### Step 2. Add access to an invalid memory address
 Add these 7 lines at line 35 of `bf8x8_fst_api.cpp` file to access invalid memory address access, for example 0x00039900.
@@ -167,7 +167,7 @@ Highlight the beamformer sub-project, right-click to enable pull-down menu, sele
 ### Step 6. Expected result
 Access location at address 0x00039900 that is between sections and is not allowed to access. This triggers the memory check error(s) and displays at Vitis IDE console.
 
-<img src="images/aie_sim_mem-check3.png">
+![alt text](images/aie_sim_mem-check3.png">
 
 **Note**: The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.
 
@@ -175,7 +175,7 @@ Access location at address 0x00039900 that is between sections and is not allowe
 For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the `--enable-memory-check` option is enabled/disabled.
 Comment out line 38 and uncomment line 37 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
 Expect to see the segfault error from Vitis IDE console.
-<img src="images/aie_sim_mem-check4.png">
+![alt text](images/aie_sim_mem-check4.png">
 
 ### Step 8. Clean up
 Remove those added 7 lines of **bf8x8_fst_api.cpp** file from step 2 to maintain source code sanity.
@@ -242,7 +242,7 @@ Command options:
 **Note:** Debugger could be blocked from PS execution initially. Run PS application from simulator shell so debugger stops at first line of main function (default) from AI Engine tiles.
 
 ### Step 6. Expected Vitis IDE
-<img src="images/aie_cl_run.png">
+![alt text](images/aie_cl_run.png">
 
 ### Step 7. Clean up Launched Processes
 ```bash

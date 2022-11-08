@@ -396,11 +396,11 @@ Finally, software platform is generated with the `platform generate` command. Th
 * CIPS Product Guide ([PG352](https://www.xilinx.com/support/documentation/ip_documentation/versal_cips/v2_1/pg352-cips.pdf))
 * Versal ACAP Programmable Network on Chip and Integrated Memory Controller Product Guide ([PG313](https://www.xilinx.com/support/documentation/ip_documentation/axi_noc/v1_0/pg313-network-on-chip.pdf))
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

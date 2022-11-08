@@ -5,7 +5,9 @@
  </tr>
 </table>
 
-# Table of Contents
+# HLS Implementation
+
+## Table of Contents
 [Building the Design](#building-the-design)
 
 [Hardware Design Details](#hardware-design-details)
@@ -14,12 +16,12 @@
 
 [References](#references)
 
-# Building the Design
+## Building the Design
 
 <details>
 <summary>Design Build</summary>
 
-## Design Build
+### Design Build
 In this section, you will build and run the FIR filter design using the HLS/DSP implementation. The difference between this implementation and the AI Engine implementation, where users compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application), is that the FIR filter is now implemented in PL using DSP Engines.  
 
 At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are subdirectories named `fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, `fir_hls_1firs_15taps`) depending on the value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each subdirectory contains the `hw_emu/` and `hw/` subfolders. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
@@ -29,7 +31,7 @@ At the end of this section, the design flow will generate a new directory (calle
 <details>
 <summary>Make Steps</summary>
 
-## Make Steps
+### Make Steps
 To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
 ```bash
 cd Makefiles
@@ -82,7 +84,7 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
-## Build the Entire Design with a Single Command
+### Build the Entire Design with a Single Command
 If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:
 
 ```bash
@@ -107,7 +109,7 @@ The individual make steps to build the design with the options that applied to t
 <details>
 <summary>make kernels: Compile PL Kernels</summary>
 
-## make kernels: Compile PL Kernels
+### make kernels: Compile PL Kernels
 In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202210_1`) and compiles them into their respective XO files.
 
 The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
@@ -178,7 +180,7 @@ Summary of the switches used:
 <details>
 <summary>make xsa: Use Vitis Tools to Link HLS Kernels with the Platform</summary>
 
-## make xsa: Use Vitis Tools to Link HLS Kernels with the Platform
+### make xsa: Use Vitis Tools to Link HLS Kernels with the Platform
 After the PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file.
 
 The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the PL kernels into the design).
@@ -261,7 +263,7 @@ Summary of the Switches used:
  <details>
 <summary>make application: Compile the Host Application</summary>
 
-## make application: Compile the Host Application
+### make application: Compile the Host Application
 You can compile the host application by following the typical cross-compilation flow for the Cortex-A72. To build the application run the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 ```
 make application
@@ -329,7 +331,7 @@ Summary of the Switches used:
 <details>
 <summary>make package: Package the Design</summary>
 
-## make package: Package the Design
+### make package: Package the Design
 With the HLS kernel outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and `.xclbin`.
 
 The command to run this step is as follows (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
@@ -398,7 +400,7 @@ The output of the V++ Package step is the package directory that contains the co
 <details>
 <summary>make run_emu: Run Hardware Emulation</summary>
 
-## make run_emu: Run Hardware Emulation
+### make run_emu: Run Hardware Emulation
 After packaging, everything is set to run emulation or hardware.
 To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 ```
@@ -416,7 +418,7 @@ root@versal-rootfs-common-2022_1:~#
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2022_1:~# xinit: giving up
+root@versal-rootfs-common-2022_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -455,7 +457,7 @@ In the XSIM Waveform Viewer, you will see the signals you added to the waveform 
 <details>
 <summary>TARGET=hw: Run on Hardware</summary>
 
-## Run on Hardware
+### Run on Hardware
 
 To run the design in hardware, re-run the following "make" steps with TARGET=hw and other applicable options (see the make steps above)
 ```
@@ -508,11 +510,11 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 
 </details>
 
-# Hardware Design Details
+## Hardware Design Details
 <details>
 <summary>FIR Filter HLS Implementation Architecture</summary>
 
-## FIR Filter HLS Implementation Architecture
+### FIR Filter HLS Implementation Architecture
 
 The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and the data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel is AXI4-Stream. The data width of both the kernels is 128 bits, and they run at 250 MHz, providing a transfer rate of up to 1.2 GSPS.
 
@@ -523,7 +525,7 @@ The following figure shows a high level block diagram of the design. The test ha
 <details>
 <summary>Design Details</summary>
 
-## Design Details
+### Design Details
 The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, and AI Engine and the interfaces among them. The v++ linker step builds on top of the base platform by adding the PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. In the design, the components are added by v++ -l step (make XSA in the tool flow section above) and include the following:
 * FIR Filter Chain kernel (`fir_hls.[hw|hw_emu].xo`)
 * data mover kernel (`datamover.[hw|hw_emu].xo`)
@@ -544,7 +546,7 @@ Notice the system debugging and profiling IP (DPA) is added to the PL region of 
 <details>
 <summary>HLS PL Kernels</summary>
 
-## HLS PL Kernels
+### HLS PL Kernels
 In the HLS implementation of the FIR Filter design, the AI Engine is not used and therefore there are no AI Engine-related kernels and graphs. The compute and datamover functions are implemented as HLS kernels in the PL region.
 
 The PL kernel `fir_hls` implements the FIR filter chain.  It contains a single AXI-stream input port and a single AXI-stream output port.  Since the FIR function requires no initialization, no additional control/status ports are required.
@@ -558,16 +560,16 @@ Some additional details regarding the data mover kernels include:
 
 </details>
 
-# Software Design Details
+## Software Design Details
 The software design in the FIR Filter HLS implementation consists of the following sections:
 
 <details>
 <summary>PL Kernels</summary>
 
-## PL Kernels
+### PL Kernels
 For the HLS implementation of this design, the data mover kernel and the FIR filter chain are all implmented in HLS.
 
-### fir_hls (fir_hls.cpp)
+#### fir_hls (fir_hls.cpp)
 The fir_filter kernel consists of a single AXI-stream input and AXI-stream output.  The kernel makes use of the FIR Compiler IP, the same one that can be instantiated as an IP in Vivado tools. In HLS, it is instantiated as an object in the HLS code, and then cascaded together into a chain by the design.
 
 The following include allows us to utilize the FIR Compiler interface provided in the HLS IP libraries from the Vitis HLS Libraries Reference:
@@ -683,32 +685,32 @@ void fir_wrap (hls::stream<ap_axiu<32, 0, 0, 0> >& StreamIn,
 
 Finally, the `fir_hls` function it a top-level module / kernel available to be linked together to the other HLS kernels.
 
-#### Arguments
+##### Arguments
 The FIR kernel takes the following arguments:
 * `hls::stream<ap_axiu<32, 0, 0, 0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 32. The remaining three parameters should be set to 0.
 
 The fir_hls kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
-#### pragma HLS interface ap_ctrl_none port=return
+##### pragma HLS interface ap_ctrl_none port=return
 This kernel requires no additional control/status interfaces.
 
-### datamover (datamover.cpp)
+#### datamover (datamover.cpp)
 
 The datamover kernel reads and writes data from and to the AI Engine array, through the AXI4-Stream interface.
 
-#### Arguments
+##### Arguments
 The datamover kernel takes the following arguments:
 * `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit-size from 1-1024. In this design, the bit-size is set to 128.
 * `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.
 
 The datamover kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:
 
-#### pragma HLS INTERFACE s_axilite
+##### pragma HLS INTERFACE s_axilite
 The datamover kernels has one `s_axilite` interface (specifying an AXI4-Lite slave I/O protocol) with `bundle=control` associated with all the arguments (`size` and `iterCnt`). This interface is also associated with `return`.
 
-#### pragma HLS INTERFACE axis
+##### pragma HLS INTERFACE axis
 The datamover kernel has one `axis` interface (specifying an AXI4-Stream I/O protocol).
 
-#### pragma HLS PIPELINE II=1
+##### pragma HLS PIPELINE II=1
 The datamover kernel has a `for` loop that is a candidate for burst read because the memory addresses per loop iteration are consecutive (`ARBURST=INCR`). To pipeline this `for` loop, you can use this pragma by setting the initiation interval (`II`) = 1.
 
 </details>
@@ -716,64 +718,64 @@ The datamover kernel has a `for` loop that is a candidate for burst read because
 <details>
 <summary>PS Host Application</summary>
 
-## PS Host Application
+### PS Host Application
 The FIR filter HLS(DSP) tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernel. Review [Programming the PS Host Application Section in the AI Engine Documentation](#ai-engine-documentation) to understand the process to create a host application. Note that unlike the AI Engine implementation, there are no AI Engine graphs and associated control code.
 
 Within the PS host application, two classes are defined (datamover_class), which defines methods used to control and monitor the corresponding kernels.
 
 The main sections of the PS host application code is described in the following subsections:
 
-### load_xclbin Function
+#### load_xclbin Function
 This function is responsible for loading the XCLBIN file into the device.
 
-### Datamover Class
+#### Datamover Class
 This class provides the following methods for controlling/monitoring this kernel:
 * init(): opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
 * run(): starts execution of the datamover kernel
 * waitTo_complete(): waits for the datamover kernel to finish
 * close(): closes the input data buffer object and kernel
 
-### Main Function
+#### Main Function
 This is the main PS application code that controls the kernels and runs data through the design. The various steps this code goes through is described in the following subsections.
 
-#### 1. Check Command Line Argument
+##### 1. Check Command Line Argument
 The beginning of the A72 application is represented by the main function. It takes in one command line argument: an XCLBIN file.
 
-#### 2. Open XCLBIN
+##### 2. Open XCLBIN
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.
 
-#### 3. Create and Initialize Data Mover Kernels
+##### 3. Create and Initialize Data Mover Kernels
 Create the kernel objects and initialize them.
 
-#### 4. Run Data Mover Kernels
+##### 4. Run Data Mover Kernels
 Start execution of the datamover kernel.
 
-#### 5. Wait for Data Mover Kernels to Complete
+##### 5. Wait for Data Mover Kernels to Complete
 Wait for the datamover kernel to complete.
 
-#### 6. Verify Output Results
+##### 6. Verify Output Results
 Compare data in output with the reference golden data and get the error count from the kernel.
 
-#### 7. Release Allocated Resources
+##### 7. Release Allocated Resources
 Close the datamover kernel objects.
 
 </details>
 
-# References
+## References
 The following documents provide supplemental information for this tutorial.
 
-### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+#### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
-### [ FIR Compiler v7.2](https://www.xilinx.com/support/documentation/ip_documentation/fir_compiler/v7_2/pg149-fir-compiler.pdf)
+#### [ FIR Compiler v7.2](https://www.xilinx.com/support/documentation/ip_documentation/fir_compiler/v7_2/pg149-fir-compiler.pdf)
 Describes the FIR Compiler IP describes all of the parameters and settings and how they control the final filter implementation.
 
 
-# Support
+## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

@@ -17,12 +17,15 @@
 
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Platform Creation Quick Start</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/>
     </td>
  </tr>
 </table>
 
-***Version: 2022.2***   
+# Versal Platform Creation Quick Start
+
+***Version: 2022.2***
+
 ***Board: VCK190***
 
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 

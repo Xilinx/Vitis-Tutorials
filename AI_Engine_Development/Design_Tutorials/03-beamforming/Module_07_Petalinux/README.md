@@ -231,11 +231,11 @@ This script uses the XSA from Module 04 and the custom Petalinux image to genera
 * Libmetal and OpenAMP ([UG1186](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1186-zynq-openamp-gsg.pdf))
 * [Versal Platform Creation Tutorial](https://gitenterprise.xilinx.com/swm/Versal_Platform_Creation/tree/master/Tutorial-VCK190_Custom)
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

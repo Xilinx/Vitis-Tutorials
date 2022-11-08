@@ -17,12 +17,12 @@
 
 [Performance Details](#Performance-Details)
 
-# Building the Design
+## Building the Design
 
 <details>
 <summary>Design Build</summary> 
 
-## Design Build
+### Design Build
 
 In this section, you will build and run the 2D-FFT design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow. 
 
@@ -33,7 +33,7 @@ At the end of this section, the design flow will generate a new directory (calle
 <details>
 <summary>Make Steps</summary> 
 
-## Make Steps
+### Make Steps
 
 To run the following `make` steps (that is, `make kernels`, `make graph`, and so on), you must be in the `AIE/` folder. The options that can be specified in the `make` steps are as follows.
 
@@ -54,10 +54,10 @@ To run the following `make` steps (that is, `make kernels`, `make graph`, and so
 The Makefile uses the following directory references:
 
 ```
-# Relative fft_2d directory
+## Relative fft_2d directory
 RELATIVE_PROJECT_DIR := ./
 
-# Absolute fft_2d directory = <user path>/Tutorials/AI_Engine/fft_2d
+## Absolute fft_2d directory = <user path>/Tutorials/AI_Engine/fft_2d
 PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 DESIGN_REPO  := $(PROJECT_REPO)/design
@@ -90,7 +90,7 @@ WORK_DIR         := Work
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
-## Build the Entire Design with a Single Command
+### Build the Entire Design with a Single Command
 
 If you are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design for each case of `FFT_2D_INSTS` with one command: 
 
@@ -112,7 +112,7 @@ The generated files for each `FFT_2D_INSTS` are placed under an individual direc
 <details>
 <summary>make kernels: Compiling PL Kernels</summary> 
 
-## make kernels: Compiling PL Kernels
+### make kernels: Compiling PL Kernels
 
 In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202220_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`). 
 
@@ -158,7 +158,7 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 <details>
 <summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary> 
 
-## make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
+### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
 
 An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives). 
 
@@ -219,7 +219,7 @@ The following is a description of the output objects that results from executing
 <details>
 <summary>make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> 
 
-## make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
+### make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 
 After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XSA file. 
 
@@ -281,10 +281,10 @@ stream_connect=dma_hls_0.strmOut_to_colwiseFFT:ai_engine_0.DataIn1
 stream_connect=ai_engine_0.DataOut1:dma_hls_0.strmInp_from_colwiseFFT
 
 [advanced]
-# Disable Profiling in hw_emu so that it is faster...
+## Disable Profiling in hw_emu so that it is faster...
 param=hw_emu.enableProfiling=false
 
-# Export the xsa of the design..
+## Export the xsa of the design..
 param=compiler.addOutputTypes=hw_export
 
 ```
@@ -307,7 +307,7 @@ You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR
 <details>
 <summary>make application: Compiling the Host Application</summary> 
 
-## make application: Compiling the Host Application
+### make application: Compiling the Host Application
 
 You can compile the host application by following the typical cross-compilation flow for the Cortex A72. To build the application, run the following command (default `FFT_2D_DT=0`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `FFT_2D_PT=2048`):
 
@@ -378,7 +378,7 @@ The following is a description of the output objects that results from executing
 <details>
 <summary>make package: Packaging the Design</summary> 
 
-## make package: Packaging the Design
+### make package: Packaging the Design
 
 With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
 
@@ -448,7 +448,7 @@ The output of the Vitis compiler package step is the package directory that cont
 <details>
 <summary>make run_emu: Running Hardware Emulation</summary>
 
-## make run_emu: Running Hardware Emulation
+### make run_emu: Running Hardware Emulation
 
 After packaging, everything is set to run hardware emulation. To run emulation, use the following command (default `TARGET=hw_emu`):
 
@@ -508,7 +508,7 @@ The following figure shows a waveform view of the 32x64 - 1x design.
 <details>
 <summary>TARGET=hw: Running on Hardware</summary>
 
-## Running on Hardware
+### Running on Hardware
 
 To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps specified above).
 
@@ -566,11 +566,11 @@ export XILINX_XRT=/usr
 
 </details>
 
-# Hardware Design Details
+## Hardware Design Details
 <details>
 <summary>2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning</summary>
 
-## 2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
+### 2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
 
 The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 250 MHz.
 
@@ -583,7 +583,7 @@ The data mover is a PL-based data generator and checker. It generates impulse in
 <details>
 <summary>Design Details</summary>
 
-## Design Details
+### Design Details
 
 The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
 
@@ -609,11 +609,11 @@ The system debugging and profiling IP (DPA) is added to the PL region of the dev
 <details>
 <summary>AI Engine and PL Kernels</summary>
 
-## AI Engine and PL Kernels
+### AI Engine and PL Kernels
 
 The top-level AI Engine graph, `graph.cpp`, contains two sub-graphs: `FFTrows_graph` and `FFTcols_graph`. Each sub-graph contains the individual AI Engine kernel, `*FFTrow_gr.getKernels()`, and `*FFTcol_gr.getKernels()`, which performs `MAT_COLS` and `MAT_ROWS` point FFT respectively.
 
-### dma_hls
+#### dma_hls
 
 The PL-based data movers consist of the `dma_hls` kernel, which generates impulse input and checks the output of each FFT stage for the expected pattern.
 
@@ -622,22 +622,22 @@ The PL-based data movers consist of the `dma_hls` kernel, which generates impuls
 
 </details>
 
-# Software Design Details
+## Software Design Details
 
 The software design in the AI Engine 2D-FFT tutorial consists of the following sections:
 
 <details>
 <summary>Methodology</summary>
 
-## Methodology
+### Methodology
 
 The following figure elaborates on the AI Engine implementation methodology.
 
 ![Image of 2D-FFT AIE Implementation Methodology](images/fft_2d_aie_block_diagram_methodology.PNG)
 
-### AI Engine
+#### AI Engine
 
-#### Independent Cores
+##### Independent Cores
 
 Both AI Engine graphs for `FFTrows_graph` and `FFTcols_graph` are to be configured to be independent, with runtime ratios set to >= 0.6 so that each can be run independently of the other.
 
@@ -649,7 +649,7 @@ runtime<ratio>(*FFTcol_gr.getKernels()) = 0.6;
 ...
 ```
 
-#### Window Streaming Buffer Config
+##### Window Streaming Buffer Config
 
 The `FFTrows_graph` graph performs `MAT_COLS` point FFT and runs for `MAT_ROWS` number of iterations. For the `FFTcols_graph` graph, increase the `TP_WINDOW_VSIZE` to `MAT_COLS` instead of `MAT_ROWS` and it does `MAT_ROWS` point FFT, but runs for `MAT_ROWS` number of iterations instead of `MAT_COLS`. This reduces the ping-pong overhead which improves the overall throughput. 
 
@@ -698,13 +698,13 @@ Large windows may result in mapper errors due to excessive memory usage. The inc
 ...
 ```
 
-### Data Mover
+#### Data Mover
 
-#### Data Generation/Checking and Sequencing
+##### Data Generation/Checking and Sequencing
 
 The data mover comprises four loops: `mm2s0`, `s2mm0`, `mm2s1`, and `s2mm1`. The `s2mm0` and `mm2s1` functions are wrapped into a single function, `dmaHls_rowsToCols`. Within that the execution sequence, `s2mm0` is followed by `mm2s1`. The `s2mm0` and `s2mm1` functions check the output of the row-wise and col-wise FFT respectively against the expected golden output.
 
-#### Concurrent Scheduling
+##### Concurrent Scheduling
 
 Concurrent scheduling is required so that each function runs independently and the execution of one function is not blocking the other. The concurrent scheduling of the three functions `mm2s0`, `dmaHls_rowsToCols`, and `s2mm1` is achieved using `#pragma HLS DATAFLOW` as shown in the following example.
 
@@ -735,7 +735,7 @@ LOOP_ITER_S2MM1:for(int i = 0; i < iterCnt; ++i)
 ...
 ```
 
-#### Vitis HLS Scheduling and Dataflow View
+##### Vitis HLS Scheduling and Dataflow View
 
 The following figure shows the data mover scheduler view.
 
@@ -745,11 +745,11 @@ The following figure shows the data mover dataflow view.
 
 ![Image of Datamover Dataflow View](images/dma_hls_dataflow_view.PNG)
 
-### Streaming Interface Data Width
+#### Streaming Interface Data Width
 
 The streaming interface data width is kept at 128 bits to reduce read/write overhead while processing data.
 
-### Frequency Selection
+#### Frequency Selection
 
 AI Engine kernels are configured for `cint16 / 4bytes` and the streaming interface is at `128bit / 16bytes`. The frequency of the AI Engine array is 1000 MHz and the data mover is kept at 250 MHz, maintaining a 1:4 ratio.
 
@@ -758,7 +758,7 @@ AI Engine kernels are configured for `cint16 / 4bytes` and the streaming interfa
 <details>
 <summary>AI Engine Kernels and Graph Representation</summary>
 
-## AI Engine Kernels and Graph Representation
+### AI Engine Kernels and Graph Representation
 
 An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
 
@@ -774,13 +774,13 @@ The following figures show the graph representation of the AI Engine kernels (de
 <details>
 <summary>Adaptive Data Flow (ADF) Graph</summary>
 
-## Adaptive Data Flow (ADF) Graph
+### Adaptive Data Flow (ADF) Graph
 
 This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine which is compiled by the AI Engine compiler.
 
 The overall graph definition of the design is contained in the `graph.cpp` file. The top-level graph contains two sub-graphs, `FFTrows_graph` and `FFTcols_graph`, each with a `FFT_2D_INSTS` number of objects. The following describes the definition of the sub-graphs (the `FFTrows_graph` is used as illustration).
 
-### Defining the Graph Class
+#### Defining the Graph Class
 
 Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/user_guide/L2/func-fft.html) for FFIT. A general specification is put in for the ADF namespace:
 
@@ -869,7 +869,7 @@ class FFTrows_graph: public graph
 };
 ```
 
-### Top-Level Application
+#### Top-Level Application
 
 Define a top-level application file (`graph.cpp` in this design) that contains an instance of the graph class and connect the graph to a simulation platform to provide file input and output (in the case of `FFT2D_INSTS = 1` to the two sub-graphs):
 
@@ -905,15 +905,15 @@ The `main` function is called under the guard bounds of `\_\_AIESIM\_\_` as show
 <details>
 <summary>PL Data Mover Kernel</summary>
 
-## PL Data Mover Kernel
+### PL Data Mover Kernel
 
 In addition to the kernels operating in the AI Engine array, this design specifies a data mover kernel to run in the PL region of the device (written in HLS C++). The data mover kernel is brought into the design during the Vitis kernel compilation, which is further replicated based on the `FFT_2D_INSTS` value. The software design of the data mover kernel is described in the following sections. 
 
-### dma_hls (dma_hls.cpp)
+#### dma_hls (dma_hls.cpp)
 
 The `dma_hls` kernel reads data from a memory mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream interface.
 
-#### Top Function Declaration
+##### Top Function Declaration
 
 The `dma_hls` kernel takes the following arguments:
 
@@ -930,7 +930,7 @@ int dma_hls(
 - `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit size from 1-1024. In this design, the bit size is set to 128.
 - `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
 
-#### Top Function Definition
+##### Top Function Definition
 
 Use the `dataflow` pragma for concurrently scheduling the three functions `mm2s0`, `dmaHls_rowsToCols`, and `s2mm1`.
 
@@ -1004,7 +1004,7 @@ The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code
 <details>
 <summary>PS Host Application</summary>
 
-## PS Host Application
+### PS Host Application
 
 The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation to understand the process to create a host application.
 
@@ -1117,14 +1117,14 @@ int main(int argc, char** argv)
 
 </details>
 
-# Performance Details
+## Performance Details
 
 For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.
 
 <details>
 <summary>Resource Utilization and Power</summary> 
 
-### Resource Utilization and Power
+#### Resource Utilization and Power
 
 Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2021.1 version) tools.
 
@@ -1174,7 +1174,7 @@ vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 
 A summary of resource utilization and power for all variations is given in the following table.
 
-#### cint16 Design
+##### cint16 Design
 | Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
 |:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 2                       | 13%          | 28                            | 5%           | 5                | 6%                | 1172     | 419       | 859                       |
@@ -1193,7 +1193,7 @@ A summary of resource utilization and power for all variations is given in the f
 | 10               | 512 point<br/>(256 x 512)    | 20                      | 56%          | 300                           | 20%          | 42               | 7%                | 11720    | 4157      | 5068                      |
 | 10               | 2048 point<br/>(1024 x 2048) | 20                      | 78%          | 404                           | 20%          | 46               | 7%                | 11720    | 4157      | 5572                      |
 
-#### cfloat Design
+##### cfloat Design
 | Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
 |:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 2                       | 36%         | 24                            | 9%           | 5                | 6%                | 1172      | 413       | 932                       |
@@ -1212,7 +1212,7 @@ A summary of resource utilization and power for all variations is given in the f
 | 10               | 512 point<br/>(256 x 512)    | 20                      | 81%         | 240                           | 17%          | 42               | 7%                | 11720     | 4108      | 5307                      |
 | 10               | 2048 point<br/>(1024 x 2048) | 20                      | 92%         | 240                           | 21%          | 42               | 7%                | 11720     | 4108      | 5976                      |
 
-#### Power from XPE vs HW
+##### Power from XPE vs HW
 
 **cint16**
 | Number of Instances | FFT Configurations       | XPE Load(in A) | HW Load(in A) |
@@ -1231,7 +1231,7 @@ A summary of resource utilization and power for all variations is given in the f
 <details>
 <summary>Throughput and Latency</summary> 
 
-### Throughput and Latency
+#### Throughput and Latency
 
 Throughput is measured in mega-samples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the row-wise FFT kernel and the first sample from the col-wise FFT kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using Vitis analyzer. The steps to measure throughput and latency are listed below:
 
@@ -1281,7 +1281,7 @@ Throughput = (Samples transferred) / execution time
 
 A summary of throughput and latency for all variations is shown in the following table.
 
-#### cint16 Design
+##### cint16 Design
 | Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 32768              | 306.218                            |   306.218                       | 6.460                        | 6.460                       |
@@ -1300,7 +1300,7 @@ A summary of throughput and latency for all variations is shown in the following
 | 10               | 512 point<br/>(256 x 512)    | 2097152            | 6952.882                           |   695.288                       | 184.087                      | 184.083                     |
 | 10               | 2048 point<br/>(1024 x 2048) | 33554432           | 7528.710                           |  752.871                        | 2873.628                     | 2873.110                    |
 
-#### cfloat Design
+##### cfloat Design
 | Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point<br/>(32 x 64)       | 32768              | 190.658                            | 190.658                          | 10.721                      |  10.721                     |
@@ -1324,7 +1324,7 @@ A summary of throughput and latency for all variations is shown in the following
 <details>
 <summary>Performance per Watt</summary> 
 
-### Performance per Watt
+#### Performance per Watt
 
 Performance per Watt is represented as throughput in MSPS/power in Watts. The following example shows the calculation for the 1024 x 2048 point, 1-instance, and cint16 design:
 
@@ -1337,7 +1337,7 @@ Performance per Watt = Throughput(MSPS) / Power(Watt)
 
 A summary of performance per Watt for all variations is shown in the following table.
 
-#### cint16 Design
+##### cint16 Design
 | Number of Instances | FFT Configuration     | Performance per Watt (in MSPS/Watt)  |
 |:----------------:|:------------------------:|:-----------------------------------: |
 | 1                | 64 point (32 x 64)       | 356.48                               |
@@ -1356,7 +1356,7 @@ A summary of performance per Watt for all variations is shown in the following t
 | 10               | 512 point (256 x 512)    | 1371.65                              |
 | 10               | 2048 point (1024 x 2048) | 1351.17                              |
 
-#### cfloat Design
+##### cfloat Design
 | Number of Instances | FFT Configuration     | Performance per Watt (in MSPS/Watt)  |
 |:----------------:|:------------------------:|:------------------------------------:|
 | 1                | 64 point (32 x 64)       | 204.57                               |
@@ -1380,11 +1380,11 @@ A summary of performance per Watt for all variations is shown in the following t
 <details>
 <summary>Consolidated Summary</summary> 
 
-### Consolidated Summary
+#### Consolidated Summary
 
 A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.
 
-#### cint16 Design
+##### cint16 Design
 
 | FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
@@ -1404,7 +1404,7 @@ A consolidated summary of observations for all the point sizes and all the corre
 | 512 point<br/>(256 x 512)<br/> - x10    | 6952.882                           | 184.087                     | 20                   | 56%         | 300                        | 20%          | 11720    | 4157     | 5068                      | 1371.65                                 |
 | 2048 point<br/>(1024 x 2048)<br/> - x10 | 7528.710                           | 2873.628                    | 20                   | 78%         | 404                        | 20%          | 11720    | 4157     |   5572                    | 1351.17                                 |
  
-#### cfloat Design
+##### cfloat Design
 | FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
 | 64 point<br/>(32 x 64)<br/> - x1        | 190.658                             | 10.721                     | 2                    | 36%         | 24                         | 9%           | 1172     | 413      | 932                       | 204.57                                  |
@@ -1429,11 +1429,11 @@ Furthermore, the FFT point sizes increase, the power does _not_ increase proport
 
 </details>
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

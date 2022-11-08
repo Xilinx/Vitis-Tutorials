@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -47,8 +47,8 @@ cp Makefile.ILA Makefile
 make clean; make
 ```
 After the design is built. Inspect the ILA insertion with `mm2s_v4_1:s0` and `s2mm_v4_1:s0` interfaces.
-<img src="images/il_vivado0.png" width="900">
-<img src="images/il_vivado1.png" width="900">
+![alt text](images/il_vivado0.png)
+![alt text](images/il_vivado1.png)
 
 ### Step 3. Boot up the design
 Flash the SD card with the ILA enabled design, plug in the flashed SD card to VCK190 sd card slot and boot up the board.
@@ -59,61 +59,61 @@ Flash the SD card with the ILA enabled design, plug in the flashed SD card to VC
 #### Step 4.1. Target Connection Setup
 Run hardware server from computer that connects to target board. To do so, launch hw_server from the computer that has JTAG connection to the VCK190 board.
 
-<img src="images/hw_ta_hw.png" width="600">
+![alt text](images/hw_ta_hw.png)
 
 #### Step 4.2. Launch Vivado
 Launch Vivado™ from where the to be debugged project is by issue command, `vivado`.  
 
 #### Step 4.3. Setup Vivado Hardware Manager
 After Vivado is up, click on highlighted icon.
-<img src="images/il_open.png" width="900">
+![alt text](images/il_open.png)
 
 #### Step 4.4. Setup Hardware Target
-<img src="images/il_open_2.png" width="900">
+![alt text](images/il_open_2.png)
 
 #### Step 4.5. Input Hardware Target
 Enter hardware server's IP address or hostname to highlighted area and click **Next**.
-<img src="images/il_open_3.png" width="900">
+![alt text](images/il_open_3.png)
 
 #### Step 4.6. Check Hardware Target
 Confirm target's information from JTAG chain then click **Next**. 
-<img src="images/il_open_4.png" width="900">
+![alt text](images/il_open_4.png)
 
 #### Step 4.7. Select probe file
 Click the ellipsis (**...**) to select the generated probe file, `${PROJECT_PATH}/bf_hw.ltx` or `${PROJECT_PATH}/_x/link/int/bf_hw.ltx` from this design.
 
-<img src="images/il_pb_file.png" width="900">
+![alt text](images/il_pb_file.png)
 
 #### Step 4.8. Select ILA to be examined.
 Click on `hw_ila_1` to examine the design.
-<img src="images/il_pb_menu.png" width="900">
+![alt text](images/il_pb_menu.png)
 
 #### Step 4.9. Setup design's signals to be debugged
 Click on `+` to configure the desired signals and their values during run time.
-<img src="images/il_pb_trig.png" width="900">
+![alt text](images/il_pb_trig.png)
 
 Example below selects TVALID signal from `mm2s_v4_1_s0` and `vitis_design_s2mm_v4_1_0_so` interfaces that capture valid transfers are driven from master. Set value to `B (both transition` so transitions of valid data signals can be captured. 
 
-<img src="images/il_pb_trig1.png" width="900">
+![alt text](images/il_pb_trig1.png)
 
 #### Step 4.10. Enable ILA to capture the configured signals to debug
 Click one of highlighted icons to capture configured signals.
-<img src="images/il_trig_run.png" width="900">
+![alt text](images/il_trig_run.png)
 
 Wait for ILA is ready to capture signals, run the application from vck190 board.
 
 #### Step 4.11. Expected result
-<img src="images/il_run_done.png" width="900">
+![alt text](images/il_run_done.png)
 
 After completing above steps, we are able to see the captured, related AXI signals and data are shown in waveform with timing information from Vivado.
 
 #### Step 5. Examine captured results
-<img src="images/il_run_result.png" width="900">
+![alt text](images/il_run_result.png)
 
 Expand `slot_0:mm2s_v4_1_s0:Interface` and `slot_1:vitis_design_s2mm_v4_1_0_s0:Interface` by click on `>` icon.
 Review the above captured result. `mm2s_v4_1_s0:TVALID` shows '1' which indicates a valid data is available at the time marker pointed.
 Moving time marker across time line, changes of AIX protocol values indicate values changed at what time shown below. For example at clock cycle 4, `TVALID` is 1 where `TDATA` is `57f8a5855ea25c52`. This is how to determine when and what a valid data is sent/received.
-<img src="images/il_run_result1.png" width="900">
+![alt text](images/il_run_result1.png)
 
 
 # Support

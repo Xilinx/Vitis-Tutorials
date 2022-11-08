@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -73,7 +73,7 @@ aiesimulator --pkg-dir=./Work --i=. --profile
 ```
 
 ### Step 1.4 Expected Result
-<img src="images/pr_aie_perf.png" width="600">
+![alt text](images/pr_aie_perf.png)
 
 
 ```bash
@@ -108,7 +108,7 @@ After Petalinux boots up.
 cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
-<img src="images/pr_hw_emu_perf.png" width="600">
+![alt text](images/pr_hw_emu_perf.png)
 
 
 ## 3. Profiling APIs on HW
@@ -136,7 +136,7 @@ cd /run/media/mmcblk0p1
 ```
 
 ### Step 3.5 Expected result
-<img src="images/pr_hw_perf.png" width="600">
+![alt text](images/pr_hw_perf.png)
 
 **Note**: Due to slower memory access, hardware and hardware emulation performance values are not optimized and less than AI Engine simulation.
 
@@ -194,7 +194,7 @@ This outpt_plio object is configured using profile API for output performance me
         printf("cycle_count1 is ZERO!\n");
     }
 ```
-<img src="images/pr_aie_perf_tile.png" width="900">
+![alt text](images/pr_aie_perf_tile.png)
 Select the tile links to the output file by moving cursor on top of the tile.
 
 ### Step 4.4 Locate tile
@@ -203,7 +203,7 @@ Switch to `Trace` view, Locate tile(21,0).
 ### Step 4.5 Use tool to measure execution time
 To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AI Engine Simulation, hardware emulation or on Hardware.
 
-<img src="images/pr_aie_perf_vcd.png" width="900">
+![alt text](images/pr_aie_perf_vcd.png)
 
 ### Step 4.6 Performance Calculation
 Above example indicates 9.400 microseconds (us) is used for 10 iterations execution time. Each iteration execution time is 0.94 us or 940 nanoseconds (ns) in average.

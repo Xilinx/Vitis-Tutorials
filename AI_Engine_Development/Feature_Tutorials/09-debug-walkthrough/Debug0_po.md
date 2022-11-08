@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -22,34 +22,34 @@ This section documents the necessary steps to migrate command-line based project
 ## Step 1: Create project
 1. Launch Vitis IDE by issuing the command, `vitis`.
 2. Create a project as illustrated by the following images.
-<img src="images/po_new.png" width="450">
-<img src="images/po_platform.png" width="600">
-<img src="images/po_name.png" width="600">
-<img src="images/po_template.png" width="600">
+![alt text](images/po_new.png)
+![alt text](images/po_platform.png)
+![alt text](images/po_name.png)
+![alt text](images/po_template.png)
 
 3. After the previously listed steps are completed, the created system project is expected to have AI Engine and hardware link sub-projects, as illustrated in the following image.
 
-<img src="images/po_system.png" width="450">
+![alt text](images/po_system.png)
 
 4. Then you need to create PS and PL sub-projects under the system project.
-<img src="images/po_system_np.png" width="450">
-<img src="images/po_system_ps.png" width="600">
+![alt text](images/po_system_np.png)
+![alt text](images/po_system_ps.png)
 
 5. Fill in sysroot path, root FS, and kernel image information for PS application.
 
-<img src="images/po_system_ps_sysroot.png" width="600">
+![alt text](images/po_system_ps_sysroot.png)
 
 6. Select **Empty Application** under Acceleration templates with PL and AIE accelerators" for PS sub-project.
 
 After the previously listed steps are completed, you should have AI Engine, PS, PL and hardware link sub-projects under system project.
 
-<img src="images/po_expect_project.png" width="450">
+![alt text](images/po_expect_project.png)
 
 
 ## Step 2: Import project source code
 1. Import the source code for AI Engine sub-projects.
-<img src="images/po_import.png" width="450">
-<img src="images/po_import1.png" width="450">
+![alt text](images/po_import.png)
+![alt text](images/po_import1.png)
 
 2. Continue to import data for the AI Engine sub-project, source code for PS, PL, and hardware link sub-projects.
 
@@ -59,43 +59,43 @@ After the previously listed steps are completed, you should have AI Engine, PS, 
 
 ### Step 3.1: Configure AI Engine sub-project
 1. Configure top level graph.
-<img src="images/po_graph.png">
+![alt text](images/po_graph.png">
 
 2. Configure include paths.
-<img src="images/po_aie_c_config.png" width="450">
-<img src="images/po_aie_c_config1.png" width="450">
+![alt text](images/po_aie_c_config.png)
+![alt text](images/po_aie_c_config1.png)
 
 ### Step 3.2: Configure hardware link
 1. Configure the hardware link with the `v++` option
-<img src="images/po_hw_config.png">
-<img src="images/po_hw_config1.png" width="600">
+![alt text](images/po_hw_config.png">
+![alt text](images/po_hw_config1.png)
 
 2. Import the `system.cfg` file to the correct project/location.
-<img src="images/po_hw_config2.png">
+![alt text](images/po_hw_config2.png">
 
 ### Step 3.3: Configure hardware kernels
 1. Add hardware functions to project.
-<img src="images/po_hw_config3.png">
+![alt text](images/po_hw_config3.png">
 
 2. Configure number of instances for each PL kernel.
-<img src="images/po_hw_config4.png">
+![alt text](images/po_hw_config4.png">
 
 3. Update (comment out) `nk=kernel:1:kernel_n` line from the `system.cfg` file. This is because the Vitis IDE relies on the previous step to determine the number of instances for each PL kernel. Redundant configurations of the number of kernels in `system.cfg` results in compilation errors.
-<img src="images/po_hw_config5.png">
+![alt text](images/po_hw_config5.png">
 
 ### Step 3.4: Configure PS sub-project
 1. Right-click the PS sub-project.
-<img src="images/po_ps_c_config.png" width="450">
+![alt text](images/po_ps_c_config.png)
 
 2. Configure the PS application to include paths.
-<img src="images/po_ps_c_config2.png" width="600">
+![alt text](images/po_ps_c_config2.png)
 
 3. Configure the PS application link libraries.
-<img src="images/po_ps_c_config3.png" width="600">
+![alt text](images/po_ps_c_config3.png)
 
 ## Step 4: Configure system project in packaging options
 
-<img src="images/po_system_config.png">
+![alt text](images/po_system_config.png">
 
 **Note:** This configuration is optional and depends on the design.
 

@@ -53,11 +53,11 @@ The `test_bf_app.exe` should execute functional and performance tests. At the en
  ***** END TEST *****
 ```
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
