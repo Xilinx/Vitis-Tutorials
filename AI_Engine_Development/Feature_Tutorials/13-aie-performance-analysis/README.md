@@ -53,11 +53,11 @@ After completing this tutorial, you will understand how to:
 
 **Tip:** In this tutorial, the designs are self contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

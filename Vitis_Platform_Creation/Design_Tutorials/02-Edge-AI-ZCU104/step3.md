@@ -14,17 +14,19 @@
 # limitations under the License.
 -->
 
-- [Step 3: Test the Platform](#step-3-test-the-platform)
-  - [Test 1: Read Platform Info](#test-1-read-platform-info)
-  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
-  - [Fast Track for Vector Addition](#fast-track-for-vector-addition)
-  - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
-    - [Create the design](#create-the-design)
-    - [Run Application on Board](#run-application-on-board)
-    - [Known Issues](#known-issues)
-  - [Congratulations](#congratulations)
+# Step 3: Test the Platform
 
-## Step 3: Test the Platform
+- [Step 3: Test the Platform](#step-3-test-the-platform)
+    - [Test 1: Read Platform Info](#test-1-read-platform-info)
+    - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+    - [Fast Track for Vector Addition](#fast-track-for-vector-addition)
+    - [Test 3: Run a Vitis-AI Demo](#test-3-run-a-vitis-ai-demo)
+      - [Create the design](#create-the-design)
+      - [Run Application on Board](#run-application-on-board)
+      - [Known Issues](#known-issues)
+    - [Congratulations](#congratulations)
+
+
 
 ### Test 1: Read Platform Info
 

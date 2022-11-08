@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -141,29 +141,29 @@ vitis_analyzer xrt.run_summary
 **Note**: When you run vitis_analyzer for the first time to view the design, vitis_analyzer prompts you for the design's compile summary file. Select the `Work/project.aiecompile_summary` file.
 
 Select **Trace** from Vitis analyzer. Initially details of events are not shown.
-<img src="images/et_va_init2.png">
+![alt text](images/et_va_init2.png">
 
 Zoom in to see detailed information for each state of AI Engine tiles.
-<img src="images/et_va_run.png">
+![alt text](images/et_va_run.png">
 
 Now you know that all the steps of event trace running on hardware board.
 
 
 ## Event Trace Data Explanation
 * Select `Graph` view to examine design. Select `core[0]` at Column 6, Row 0 that runs `bf8x8_fst_api.cpp` as the first kernel.
-<img src="images/et_va_ex0.png">
+![alt text](images/et_va_ex0.png">
 
 * Select `Trace` view. Adjust the trace view to right size with `zoom in` or `zoom out` icons and move marker to end of `bf8x8_fst_api`, or beginning of `_main`. This is considered the beginning of an iteration. A period of `lock stall` indicates data is sent from PL to AIE tile.
-<img src="images/et_va_ex1.png">
+![alt text](images/et_va_ex1.png">
 
 * Move marker to beginning of `bf8x8_fst_api` when data is received from PL to process data and then sends processed data to `Tile(7,0)` runs `bf8x8_mid_api.cpp` as second kernel.
 * `Tile(7,0)` receives data from first kernel then sends the processed data to `Tile(8,0)` runs `bf8x8_mid_api.cpp` as third kernel.
 * `Tile(8,0)` receives data from second kernel then sends the processed data to `Tile(9,0)` runs `bf8x8_lst_api.cpp `as the last kerel.
 * Zoom in and inspect `Tile(7,0)` and `tile(8,0)` that runs `bf8x8_mid_api` kernel, they may start earlier than prior kernel which is normal, however there are `cascade stall` during within the execution timeline. This indicates tiles are running concurrently until they are blocked by available data from cascade interface. This is due to design uses cascade interface to send processed data between cores.
-<img src="images/et_va_ex2.png">
+![alt text](images/et_va_ex2.png">
 
 * Scroll down to inspect `Tile(9,0)` execution timeline. At end of `bf8x8_lst_api` execution it is considered end of an iteration.
-<img src="images/et_va_ex3.png">
+![alt text](images/et_va_ex3.png">
 
 * From above event trace timeline view, we can calculate one iteration execution time from 'tile(6,0)' to 'tile(9,0)' from above example is 58,141,279,628.0 ns - 58,141,261,960.0 ns = 17,668 ns.
 

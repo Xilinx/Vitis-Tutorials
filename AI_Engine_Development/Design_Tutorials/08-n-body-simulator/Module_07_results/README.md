@@ -97,11 +97,11 @@ make all TARGET=<hw|hw_emu>
 ![alt text](../x10_design/results/images/animation.gif)
 
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

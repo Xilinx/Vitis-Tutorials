@@ -307,11 +307,11 @@ If you built from scratch, you can open the block design in the Vivado project t
 * [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application) - HW vs HW_EMU
 * Vivado Design Suite User Guide Implementation Chapter 2: Implementing the Design ([UG904](https://www.xilinx.com/search/support-keyword-search.html#q=ug904))
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

@@ -149,11 +149,11 @@ Transmit delay: 0 msec/char 0 msec/line
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Deploying the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Deploying-the-System)
 * [Vitis Compiler Command Options](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-General-Options)
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

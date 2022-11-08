@@ -22,7 +22,7 @@
  </tr>
 </table>
 
-## Step 2: Create the Software Components and the Vitis DFX Platform
+# Step 2: Create the Software Components and the Vitis DFX Platform
 
 The software components of a Vitis extensible platform are identical no matter whether the platform supports DFX or not. Please refer to VCK190 Custom Platform Tutorial for details about preparing software components from common image or build them from scratch.
 

@@ -14,16 +14,17 @@ In this tutorial, you will learn how to add custom IPs into a Versal® ACAP plat
 
 This tutorial targets the Versal board. 
 
-# Overview
+## Overview
 The tutorial is structured as follows:
 - [Versal Platform Creation with Custom IP](#versal-platform-creation-with-custom-ip)
-- [Overview](#overview)
+  - [Overview](#overview)
     - [Step 1: Create a Hardware Platform](#step-1-create-a-hardware-platform)
     - [Step 2: Add Custom IP into the Block Design](#step-2-add-custom-ip-into-the-block-design)
-    - [Step 3: Package the Platform in the Vitis Software Platform](#step-4-package-the-platform-in-the-vitis-software-platform)
-    - [Step 4: Test the Platform](#step-5-test-the-platform)
-- [Support](#support)
-- [License](#license)
+    - [Step 3: Package the Platform in the Vitis Software Platform](#step-3-package-the-platform-in-the-vitis-software-platform)
+    - [Step 4: Test the Platform](#step-4-test-the-platform)
+  - [Fast Track](#fast-track)
+    - [Support](#support)
+    - [License](#license)
 
 ### Step 1: Create a Hardware Platform
 
@@ -220,13 +221,13 @@ Specify the config file in binary container settings:
 
   ```
   tfile copy -to-host /run/media/mmcblk0p1/wave_out.txt $(YOUR_DIR)/wave_out.txt
-  ````
+  ```
 
   The wave_out.txt file will be copied over to $(YOUR_DIR). Choose a tool to plot the data. A possible option is the tool `gnuplot` which is an open source tool and easy to use it to print out the sine wave.
 
   ![missing image](images/sinewave.png)
 
-# Fast Track
+## Fast Track
 
 Scripts are provided to re-create the project.  For the moment, this script only supports running emulation. 
 
@@ -244,11 +245,11 @@ Scripts are provided to re-create the project.  For the moment, this script only
   make clean
   ```
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](https://support.xilinx.com).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

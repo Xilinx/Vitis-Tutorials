@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
    </td>
@@ -24,18 +24,18 @@ The following showcase the features:
 #### Step 1.1. Target Connection Setup
 ##### Run hardware server from computer that connects to target board
 Launch hw_server from the computer that has JTAG connection to the VCK190 board.
-<img src="images/hw_ta_hw.png" width="600">
+![alt text](images/hw_ta_hw.png)
 
 #### Step 1.2. Vitis IDE Setup
 Create debug target connection from Vitis™ IDE.
 
-<img src="images/hw_ta_con.png" width="450">
-<img src="images/hw_ta_con1.png" width="450">
+![alt text](images/hw_ta_con.png)
+![alt text](images/hw_ta_con1.png)
 
 #### Step 1.3. Target Connection Verification
-<img src="images/hw_ta_test.png" width="450">
-<img src="images/hw_ta_test1.png" width="450">
-<img src="images/hw_ta_test2.png" width="450">
+![alt text](images/hw_ta_test.png)
+![alt text](images/hw_ta_test1.png)
+![alt text](images/hw_ta_test2.png)
 
 ### Step 2. Debug Project in Vitis IDE
 #### Step 2.1. Target Preparation
@@ -43,18 +43,18 @@ Create debug target connection from Vitis™ IDE.
 * Plug-in sd_card into SD card slot and power up the board.
 * After board boots up, click on **Debug** to launch debugger.
 
-<img src="images/hw_ta_sd.png">
+![alt text](images/hw_ta_sd.png">
 
 **Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file for regular use. `sd_card.img` at `Hardware/package_aie_debug` is for debug run on board.
 
 #### Step 2.2. Launch debugger
 Launch PS application with `xclbin` (or PS application expected variables), so it is ready to be debugged.
 
-<img src="images/hw_ta_run2.png" width="450">
+![alt text](images/hw_ta_run2.png)
 
 After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
 
-<img src="images/hw_ta_run.png">
+![alt text](images/hw_ta_run.png">
 
 The Debugger launches, where you can expect to see AI Engine cores, and 
 - the source code window that allows debug (step-into, step-through, step-return)
@@ -63,14 +63,14 @@ The Debugger launches, where you can expect to see AI Engine cores, and
 - the register view 
 The application is ready to be debugged.
 
-<img src="images/hw_ta_run1.png">
+![alt text](images/hw_ta_run1.png">
 
 From Vitis IDE, the application is being debugged during run time.
 
-<img src="images/hw_ta_run3.png" width="450">
+![alt text](images/hw_ta_run3.png)
 
 From Vitis IDE, click **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
-<img src="images/hw_ta_run4.png" width="450">
+![alt text](images/hw_ta_run4.png)
 
 <!--
 ## Command-line project debug with Vitis IDE
@@ -121,7 +121,7 @@ vitis -debug -h
 ```
 
 ### Step 3. Expected result
-<img src="images/aie_cl_run.png">
+![alt text](images/aie_cl_run.png">
 -->
 
 ## Limitations of Source Code Debug on Hardware

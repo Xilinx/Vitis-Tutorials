@@ -1,4 +1,4 @@
-
+﻿
 <table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
@@ -28,18 +28,18 @@ The following steps outline the procedure:
 ## 1. Prepare Software Emulation Project in Vitis IDE
 
 ### Step 1.1 Select Software Emulation Configuration
-<img src="images/se_config.png" width="300">
+![alt text](images/se_config.png)
 
 ### Step 1.2 Build AI Engine domain project
-<img src="images/se_build0.png" width="300">
+![alt text](images/se_build0.png)
 Above step is required to generated aie_control_xrt.cpp that works with software emulation.
 
 **Important: For software emulation to work properly, it is mandatory having tool generated `${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp` from software emulation target and import to PS domain application.
 For hardware and hardware emulation targets, it is also mandatory to build AI Engine domain project for hardware/hardware emulation target then import generated `${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp` to PS domain project to build system project. Tool generated `${PROJECT_PATH}/Work/ps/c_rts/aie_control_xrt.cpp` can not be mix used for different targets.**
 
 ### Step 1.3 Import aie_control_xrt.cpp to PS domain
-<img src="images/se_import0.png" width="300">
-<img src="images/se_import1.png" width="450">
+![alt text](images/se_import0.png)
+![alt text](images/se_import1.png)
 
 ### Step 1.4 Import host.cpp to PS domain
 Due to software emulation requires PS application to synchronize AIE data to and from host memory, xrtBOSync() calls are required to synchronize them. An updated host.cpp is provided from this tutorial. Import from tutorial's `sw/host.cpp.sw_emu` to `${WORKSPACE}/beamformer_ps/src/host.cpp`.
@@ -70,16 +70,16 @@ The updated host.cpp contains mandatory changes to make software emulation work.
 
 IDE needs to add `__SYNCBO_ENABLE__` flag in build.
 
-<img src="images/se_config_1.png" width="450">
+![alt text](images/se_config_1.png)
 
 
 ### Step 1.5 Build system project
-<img src="images/se_build.png" width="300">
+![alt text](images/se_build.png)
 
 ## 2. Run and Verify Software Emulation in Vitis IDE
 
 ### Step 2.1 Configure Environment Variables
-<img src="images/se_env_var.png" width="600">
+![alt text](images/se_env_var.png)
 Add environment variables to software emulation run configuration and debug configuration.
 
 ```bash
@@ -88,30 +88,30 @@ export XCL_EMULATION_MODE=sw_emu
 ```
 
 ### Step 2.2 Run with Software Emulator
-<img src="images/se_run.png" width="450">
+![alt text](images/se_run.png)
 
 ### Step 2.3 Verify Run Result
 Software emulator output files from design are located at `${PROJECT}/Emulation-SW/data`. Verify the output files `${PROJECT}/Emulation-SW/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis™ IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
 For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-SW/data/ulbf_out3.txt`
 
-<img src="images/se_compare.png" width="600">
+![alt text](images/se_compare.png)
 
 ## 3. Launch Debugger to Debug Design
 
 ### Step 3.1 Launch Software Emulation Debugger
-<img src="images/se_debug.png" width="450">
+![alt text](images/se_debug.png)
 
 ### Step 3.2 Debug with Software Emulator
 Click ***Start Emulator and Debug*** to allow software emulator and debugger to run.
-<img src="images/se_debug0.png" width="450">
+![alt text](images/se_debug0.png)
 
-<img src="images/se_debug1.png" width="900">
+![alt text](images/se_debug1.png)
 
 Example of debugging mm2s_v8.cpp
-<img src="images/se_debug2.png" width="900">
+![alt text](images/se_debug2.png)
 
 **Note**: Accessing vector variables values from software emulator is not fully supported. Recommend using `x86simulator` to inspect vector variables values.
-<img src="images/se_debug3.png" width="900">
+![alt text](images/se_debug3.png)
 
 ## 4. Command line project build and run with software emulator
 ### Step 4.1 Download the project
@@ -158,7 +158,7 @@ cd /run/media/mmcblk0p1
 ```
 Expect to see `TEST PASSED` from terminal.
 
-<img src="images/se_cl_run.png" width="600">
+![alt text](images/se_cl_run.png)
 
 
 ## Limitations

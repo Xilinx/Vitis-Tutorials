@@ -14,7 +14,7 @@
 # limitations under the License.
 -->
 
-## Step 3: Run application on the Platform
+# Step 3: Run application on the Platform
 
 ### Application1: Run a PL acceleration application
 

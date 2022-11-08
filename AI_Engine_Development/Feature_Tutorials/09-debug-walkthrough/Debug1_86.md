@@ -1,4 +1,4 @@
-
+﻿
 <table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware</h1>
@@ -36,29 +36,29 @@ The following steps outline the procedure:
 ## 1. Launch and Verify Software Emulation in Vitis IDE
 
 ### Step 1.1 Select Software Emulation Configuration
-<img src="images/se_config.png" width="300">
+![alt text](images/se_config.png)
 
 ### Step 1.2 Build Configuration
 To improve debug visibility, enable `-O0` in aiengine domain project build configuration.
 
-<img src="images/86_build_cfg.png" width="450">
+![alt text](images/86_build_cfg.png)
 
 ### Step 1.3 Build with x86 Emulator
-<img src="images/se_build0.png" width="300">
+![alt text](images/se_build0.png)
 
 ### Step 1.4 Run with x86 Emulator
-<img src="images/86_run.png" width="450">
+![alt text](images/86_run.png)
 
 **Note**: Both step 1.2 and 1.3 are right click on aiengine domain project to select x86simulator. Ignore `Launch SW Emulator` from Vitis™ IDE GUI.
 
 ### Step 1.5 Console Displays Emulation Result
-<img src="images/86_run1.png" width="450">
+![alt text](images/86_run1.png)
 
 ### Step 1.6 Verify Run Result
 X86 emulator output files from design are located at `${PROJECT}/Emulation-SW/x86simulator_output/data`. Verify the output files `${PROJECT}/Emulation-SW/x86simulator_output/data/dlbf_out[0-7].txt` and `${PROJECT}/Emulation-SW/x86simulator_output/data/ulbf_out[0-3].txt` against golden files `${PROJECT}/data/dlbf_gold[0-7].txt` and `${PROJECT}/data/ulbf_gold[0-3].txt` to ensure that the design's I/O functionalities are correct. Vitis IDE supports `compare with` feature to compare two files, highlight two files to be compared then right click one of highlighted file and select `compare with` then `each other`.
 For example, Compare `${PROJECT}/data/ulbf_gold3.txt` and `${PROJECT}/Emulation-SW/data/ulbf_out3.txt`
 
-<img src="images/se_compare.png" width="600">
+![alt text](images/se_compare.png)
 
 ## 2. `printf` Support
 The simplest form of tracing is to use a formatted `printf()` statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. You can add `printf()` statements to your code to be processed during x86 emulation, or AIE emulation, and remove them or comment them out for hardware builds. To help identify which kernel is printing which line the `X86SIM_KERNEL_NAME` macro can be useful.
@@ -75,7 +75,7 @@ Highlight the beamformer project, right-click to enable pull-down menu, select *
 
 ### Step 2.4 Expected Result
 Expect to observe the output of `printf()` statement displayed at Vitis IDE console window.
-<img src="images/86_sw_printf.png" width="600">
+![alt text](images/86_sw_printf.png)
 
 ## 3. Printf() with Vector Data Types
 `x86simulator` supports output array data value via printf().
@@ -93,7 +93,7 @@ Follow step 1.3 to build the project and step 1.4 to run `x86simulator`.
 ### Step 3.3 Expected Result
 Array values are displayed at console.
 
-<img src="images/86_printf_array.png" width="600">
+![alt text](images/86_printf_array.png)
 
 **Note**: With the AI Engine simulator the --profile option is required in order to observe `printf()` outputs but with `x86simulator` no additional options are needed to enable `printf()` calls. This is one of the benefits of the `x86simulator`.
 
@@ -104,17 +104,17 @@ Remove added three lines from line 52 of `bf8x8_fst_api.cpp` for other features.
 ## 4. Vitis IDE Debugger Support
 
 ### Step 4.1 Launch SW Emulator Debugger
-<img src="images/86_IDE_debug0.png" width="600">
+![alt text](images/86_IDE_debug0.png)
 
 ### Step 4.2 Debug during Run Time
 All Vitis IDE debug functionalities are supported, e.g. step in, step over, step return, inspect variable values, set/clear break points... Need to set break points to proper code to perform debug functionalities.
-<img src="images/86_IDE_debug1.png" width="900">
+![alt text](images/86_IDE_debug1.png)
 
 ### Step 4.3 Inspect Array Values
 Double click the `Variables` view to enlarge view area. Double click again to restore it back to the original size.
 To inspect vector values, click on arrow of `bufa0`, arrow of `data`, arrow of `val`, arrow of `data` (where array<v1cint16, 8> is shown, arrow of `__elems_` (where shows `__elems_[0]` to `__elems_[7]`, arrow of `__elems_[0]`, arrow of `val`, arrow of `data`, arrow of `__elems_`, arrow of `__elems_[0]`, arrow of `val`, arrow of `VBitDataBase<16, true, false>`, arrow of `data`, (x)=0. It shows unsigned value of 61038 that translates to signed decimal value of -4498.
 Follow above steps and click on `__elems_[1]` instead of `__elems_[0]`, the value is 5022.
-<img src="images/86_IDE_debug2.png" width="900">
+![alt text](images/86_IDE_debug2.png)
 
 To cross check, first input data set is `cint16` type and from input file at `$PROJECT_PATH/data/ulbf_cin17.txt`.
 ```bash
@@ -197,12 +197,12 @@ This feature allows users to dump and inspect data traffic at kernel ports with 
 #### Step 6.1.1 Enable Dump Feature
 Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options`, change `dump=no` to `dump=yes`. Or add `--dump` to run configuration and click on `Apply` then `Close`.
 
-<img src="images/86_dump_conf.png" width="600">
+![alt text](images/86_dump_conf.png)
 
 #### Step 6.1.2 Run x86simulator
 Select aiengine domain project, right click on **Run As** and select **Launch SW Emulator**. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump` directory. Filename are in the format of  `graph-name_sub-graph-class-name_sub-graph-instance-name_kernel-index_[in]/[out]_index.txt` for graph input/output files.
 
-<img src="images/86_sim_dump.png" width="600">
+![alt text](images/86_sim_dump.png)
 
 ### x86simulator Deadlock Detection
 AI Engine designs can run into simulator hangs. A common cause is insufficient input data for the requested number of graph iterations, mismatch between production and consumption of stream data, cyclic dependency with stream, cascade stream or asynchronous windows, or wrong order of blocking protocol calls (acquisition of async window, read/write from streams).
@@ -217,12 +217,12 @@ Empty `${PROJECT_PATH}/data/dlbf_din0.txt` file.
 #### Step 6.2.3 Run x86simulator
 Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. x86simulator detects error and output messages on console. File `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot` is generated.
 
-<img src="images/86_deadlock.png" width="600">
+![alt text](images/86_deadlock.png)
 
 #### Step 6.2.4 Converts Generated dot file to png file with `dot` Application
 Use `dot` application converts .dot file to .png file, `dot -Tpng simulator_state_post_analysis.dot > simulator_state_post_analysis.png`. Open the `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.png`, paths in red indicate the root cause of the deadlock.
 
-<img src="images/86_deadlock1.png" width="600">
+![alt text](images/86_deadlock1.png)
 
 **IMPORTANT: Absence of deadlock for x86 simulation does not mean absence of deadlock in SystemC simulation. X86 simulation does not model timing and resource constraints and thus there are fewer causes of deadlock. On the other hand, if x86 simulation deadlocks, SystemC simulation deadlocks as well, so it is beneficial to fix the deadlock in x86 simulation before proceeding with SystemC simulation.**
 
@@ -237,7 +237,7 @@ Update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim
 #### Step 6.3.2 Run x86simulator
 Select aiengine domain project, right click on `Run As` and select `Launch SW Emulator`. x86simulator will be launched and run the aiengine domain project. After x86simulator completes, generated files `x86sim_event_trace.data` and `x86sim_event_trace.data.txt` are at `${PROJECT_PATH}/Emulation-SW/x86simulator_output/trace` directory.
 
-<img src="images/86_trace.png" width="600">
+![alt text](images/86_trace.png)
 
 #### Step 6.3.3 x86simulator Trace Events supported
 1. Start of a kernel iteration.
@@ -399,19 +399,19 @@ By default, when running the `x86simulator` with the `--gdb` command line switch
 
 Launch x86simulator with gdb, issue command `x86simulator --gdb`.
 
-<img src="images/86_gdb1.png" width="600">
+![alt text](images/86_gdb1.png)
 
 After `x86simulator` is launched successfully with `gdb`, set up a breakpoint by `break` command.
 
-<img src="images/86_gdb2.png" width="600">
+![alt text](images/86_gdb2.png)
 
 Continue execution until a breakpoint is hit. Examine local variables and/or call stack.
 
-<img src="images/86_gdb3.png" width="600">
+![alt text](images/86_gdb3.png)
 
 Clear all breakpoints and continue execution until end of program. Issue `quit` to exit out of gdb.
 
-<img src="images/86_gdb4.png" width="600">
+![alt text](images/86_gdb4.png)
 
 
 #### Step 7.1.5 GDB Commands
@@ -436,7 +436,7 @@ Since this feature uses GDB server, requires two terminals working together. One
 
 Terminal 1 to launch `x86simulator`. Update the configuration file, ${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options, change `valgrind-gdb=no` to `valgrind-gdb=yes` then launch `x86simulator`. Or issue command `x86simulator --valgrind-gdb` to launch `x86simulator`.
 
-<img src="images/86_valgrind_gdb0.png" width="600">
+![alt text](images/86_valgrind_gdb0.png)
 
 #### Step 7.2.3 Launch GDB Server
 Terminal 2, follow step 6.4.1 to setup Vitis tool and valgrind tool environmental variables.
@@ -446,28 +446,28 @@ cd ${PROJECT_PATH}
 gdb ./Work/pthread/sim.out
 ```
 
-<img src="images/86_valgrind_gdb1.png" width="600">
+![alt text](images/86_valgrind_gdb1.png)
 
 #### Step 7.2.4 Using GDB Commands
 Issue command `target remote | /opt/rh/devtoolset-6/root/usr/lib64/balgrind../../bin/vgdb` from GDB server terminal to run and debug application.
 
-<img src="images/86_valgrind_gdb2.png" width="600">
+![alt text](images/86_valgrind_gdb2.png)
 
 Set up a breakpoint at kernel function, `bf8x8_fst_api` and continue to execution until breakpoint is hit.
 
-<img src="images/86_valgrind_gdb3.png" width="600">
+![alt text](images/86_valgrind_gdb3.png)
 
 Breakpoint hit.
 
-<img src="images/86_valgrind_gdb4.png" width="600">
+![alt text](images/86_valgrind_gdb4.png)
 
 Issue debug command `info stack` to inspect call stack, `delete` to clear all breakpoints and `c` to complete program execution.
 
-<img src="images/86_valgrind_gdb5.png" width="600">
+![alt text](images/86_valgrind_gdb5.png)
 
 After program finishes execution from DBG server, valgrind runs to completion and summarizes overall status.
 
-<img src="images/86_valgrind_gdb6.png" width="600">
+![alt text](images/86_valgrind_gdb6.png)
 
 
 ## Limitations

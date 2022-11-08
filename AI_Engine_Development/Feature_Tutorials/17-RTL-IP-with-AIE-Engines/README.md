@@ -294,14 +294,14 @@ The following image shows a debug waveform to show the data movement through the
 2. When the GUI opens up, add waveforms to the waveform viewer or you can use the existing `.wcfg` file in the repo by selecting **File > Simulation Waveform > Open Configuration**, locate the `custom.wcfg`, and click **OK**.
 3. Click **Run > Run All** or **F3**.
 
-## Summary
+### Summary
 
 This tutorial shows how to:
 * Create a custom RTL kernel from a Vivado IP.
 * Modify the ADF graph to handle more PLIO interfacing.
 * Build and execute the design in emulation.
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

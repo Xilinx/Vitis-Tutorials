@@ -130,11 +130,11 @@ The `a.xclbin` is the AI Engine PDI. You can specify the ``<argv[1]>`` variable 
 | 1      | <ul><li>Reset/ Load AIE</li><li>Functional test for 100k iterations with data integrity test every N iterations</li><li>Reset/ Load AIE</li><li>PERF test for all PLIOs  </li></ul>|
 |2|Continuously run the functional test for an infinite number of iterations. To exit, hit **Ctrl+C**. This does not guarantee graceful exit. System reboot is required. This mode helps measure the power of the system while it runs continuously. |
 
-# Support
+#### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+#### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

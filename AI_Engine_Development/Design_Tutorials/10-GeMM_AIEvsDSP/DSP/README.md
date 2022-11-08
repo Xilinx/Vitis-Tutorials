@@ -7,7 +7,7 @@
 
 # GeMM DSP58 Implementation
 
-# Table of Contents
+## Table of Contents
 
 [Building the Design](#Building-the-Design)
 
@@ -17,12 +17,12 @@
 
 [Performance Details](#Performance-Details)
 
-# Building the Design
+## Building the Design
 
 <details>
 <summary>Design Build</summary> 
 	
-## Design Build
+### Design Build
 
 In this section, you will build and run the Matrix Multiplication design using the DSP58 Engines in Versal device. You will compile the design and integrate it into a larger system design (including the PS host application).
 
@@ -37,7 +37,7 @@ Based on these inputs, the design flow will generate a new directory (called `bu
 <details>
 <summary>Make Steps</summary> 
 	
-## Make Steps
+### Make Steps
 
 To run the following `make` steps (for example, `make kernels`, `make xsa`, `make application`, and `make package`), you must be in the `gemm_dsp58/` folder. The following options can be specified in the `make` steps. Instructions for how to apply them are provided later in this section.
 
@@ -48,7 +48,7 @@ To run the following `make` steps (for example, `make kernels`, `make xsa`, `mak
 The Makefile uses the following directory references:
 
 ```
-# Relative directory
+## Relative directory
 RELATIVE_PROJECT_DIR := ./
 PROJECT_REPO := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 DESIGN_REPO  := $(PROJECT_REPO)/design
@@ -75,7 +75,7 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
-## Build the Entire Design with a Single Command
+### Build the Entire Design with a Single Command
 
 If you are already familiar with Vitis kernel compilation flows, you can build the entire design with one command: 
 
@@ -153,7 +153,7 @@ $(PROJECT_REPO)/build/gemm_GEMM_SIZExGEMM_SIZExGEMM_SIZE/gemm_large_ocm.xo
 <details>
 <summary>make kernels: Generates the PL Kernels </summary> 
 
-## make kernels: Generates the PL Kernels
+### make kernels: Generates the PL Kernels
 
 This step uses the RTL and mem_init_files specified above to generate the PL kernel (gemm_large_ocm.xo)
 
@@ -162,7 +162,7 @@ This step uses the RTL and mem_init_files specified above to generate the PL ker
 <details>
 <summary>make xsa: Using the Vitis Tools to Link PL Kernels with the Platform</summary> 
  
-## make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform
+### make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform
 
 After the kernel is generated, you can use the Vitis compiler to link it with the platform to generate an XSA file. 
 
@@ -212,9 +212,9 @@ nk=gemm_large_ocm:1:gemm_large_ocm_0
 id=0:gemm_large_ocm_0.S_AXI_ACLK
 
 [advanced]
-# Disable Profiling in hw_emu so that it is faster...
+## Disable Profiling in hw_emu so that it is faster...
 param=hw_emu.enableProfiling=false
-# Export the xsa of the design..
+## Export the xsa of the design..
 param=compiler.addOutputTypes=hw_export
 param=compiler.worstNegativeSlack=-0.210
 [vivado]
@@ -254,7 +254,7 @@ You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR
 <details>
 <summary>make application: Compile the Host Application</summary> 
 
-## make application: Compile the Host Application
+### make application: Compile the Host Application
 
 You can compile the host application by following the typical cross-compilation flow for the Cortex A72 processor. To build the application, run the following command 
 
@@ -314,7 +314,7 @@ The following is a description of the output objects that results from executing
 <details>
 <summary>make package: Packaging the Design</summary> 
  
-## make package: Packaging the Design
+### make package: Packaging the Design
 
 With the Kernel outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
 
@@ -374,7 +374,7 @@ The output of the V++ Package step is the package directory that contains the co
 <details>
 <summary>make run_emu: Running Hardware Emulation</summary>
 
-## make run_emu: Running Hardware Emulation
+### make run_emu: Running Hardware Emulation
 
 After packaging, everything is set to run hardware emulation. To run emulation, use the following command (default `TARGET=hw_emu`):
 
@@ -427,7 +427,7 @@ The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer 
 <details>
 <summary>TARGET=hw: Running on Hardware</summary>
 
-## Running on Hardware
+### Running on Hardware
 
 To run the design on hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps specified above).
 
@@ -486,12 +486,12 @@ export XILINX_XRT=/usr
 
 </details>
 
-# Hardware Design Details
+## Hardware Design Details
 
 <details>
 <summary> Matrix Multiplication using DSP58 Implementation Architecture </summary>
 
-## Matrix Multiplication using DSP58 Implementation Architecture 
+### Matrix Multiplication using DSP58 Implementation Architecture 
 
 In this design, Matrix Multiplication is implemented using DSP58 Systolic array of size 32x32. i.e There are 32 DSP58 cascade chains, each chain having 32 DSP58s. Thus 32x32 matrix is the basic matrix multiplication size. Larger matrices are broken down into submatrices of size 32x32. 
 
@@ -503,7 +503,7 @@ show in the below diagram
 
 ![Image of Matrix A data movement](images/Matrix_A_data_movement.png)
 
-### Calculating First Row of Output Matrix
+#### Calculating First Row of Output Matrix
 
 After Matrix A elements are shifted into cascade chain, last row of matrix B is driven clock-by-clock to the bottom most DSP of the first cascade chain, as shown in the below diagram
 
@@ -527,7 +527,7 @@ So bottom DSP of 2nd cascade chain starts on 2nd clock and it computes A[1,31] *
 clock delayed wrt first cascade chain and it generates its 32 outputs from clock 33 to 64. These outputs are Row 1 of the output matrix. Each subsequenct cascade chain is one clock delayed wrt previous 
 chain, and thus the last cascade chain generates Row 31 outputs on clock 63 to 94
 
-### 32x32 Matrix Multiplication Latency
+#### 32x32 Matrix Multiplication Latency
 
 For the first 32 clocks, Matrix A Row 0 is loaded into first cascade chain. Over next 32 clocks, First cascade chain calculates first row of output matrix, and for next 32 clocks, other rows of
 output matrix are generated. However after 64 clocks, first DSP cascade chain can receive first row data for next 32x32 matrix. 
@@ -540,7 +540,7 @@ Output matrix is -
 
 ![Image of GEMM DSP Implementation Output Matrix](images/output_matrix.png)
 
-### Data Flow for larger matrices 
+#### Data Flow for larger matrices 
 
 Matrix A00 is first multiplied with Matrix B00, which is the basic 32x32 matrix multiplication. Over the first 96 clocks, each DSP chain produces 32 outputs, thus total 1K outputs are generated which are the partial sums for the final output. These partial sums are written to 64 partial sum BRAMs.
 After 64 clocks, first cascade chain is done with A00 * B00 submatrix, and it then starts performing A00 * B01 to calculate partial sums for the
@@ -554,7 +554,7 @@ BRAM instead of partial Sum BRAM. This completes computation of the first row of
 
 Then we will move to the next row of Matrix A and all these steps are repeated. After 32 such iterations, 1Kx1Kx1K matrix multiplication will be completed
 
-### Matrix Calculation Latency for large matrices
+#### Matrix Calculation Latency for large matrices
 
 32x32 matrix calculation requires 96 clocks. However first cascade chain in the DSP58 array is done with its computation after 64 clocks, and it 
 can start receiving data for next submatrix. Thus for 32 clocks, there is overlap of previous and new submatrix calculations. So the total
@@ -571,7 +571,7 @@ The following figure shows block diagram of the design.
 <details>
 <summary>PL Kernel Details</summary>
 
-## PL Kernel Details
+### PL Kernel Details
 
 GeMM DSP RTL design can be divided into 2 main parts -
  First one is the core matrix mutliplication functionality, gemm_top module is the top level module which implements this functionality
@@ -600,7 +600,7 @@ GeMM DSP RTL design can be divided into 2 main parts -
 <details>
 <summary>Platform Details</summary>
 
-## Platform Details
+### Platform Details
 
 The base platform contains the control interface and processing system (CIPS), NoC,and the interfaces among them.
  The Vitis compiler linker step builds on top of the base platform by adding the PL kernels. To add the various 
@@ -618,30 +618,30 @@ To see a schematic view of the design with the extended platform as shown in the
 
 </details>
 
-# Software Design Details
+## Software Design Details
 
 The software design in Matrix Multiplication tutorial consists of the following sections:
 
 <details>
 <summary>Methodology</summary>
 
-## Methodology
+### Methodology
 
-### Frequency Selection
+#### Frequency Selection
 
 The `gemm_large_ocm` kernel operates at 750 MHz
 
-### Timing Closure
+#### Timing Closure
 
 For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xsa` step above. These strategies are required because timing is not met for default implementation settings. Routing Congestion limits operating frequency to 750MHz. 
 
 For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug904-vivado-implementation.pdf)
 
-## Data Flow
+### Data Flow
 
 Host ps_app writes Matrix A and B data and enables DUT. It then polls for Done signal from DUT. When DUT is done, Host app reads Output URAM and compares the URAM read data with golden data. Golden input Matrix data for Matrix A and B, and golden expected data are stored in arrays which are read by host app
 
-### Top Function
+#### Top Function
 
 The PS host application (`main.cpp`) is cross-compiled to get the executable. Flow in main.cpp is as follows -
 
@@ -692,7 +692,7 @@ The PS host application (`main.cpp`) is cross-compiled to get the executable. Fl
 4. main Function
 int main(int argc, char** argv)
 ```
-### Sub-Function Details
+#### Sub-Function Details
 test_gemm - This function programs matrix A and B URAMs from the array data and sets other control registers and then enables the gemm kernel
 
 check_done - This function polls for Done signal to be set from DUT.
@@ -705,7 +705,7 @@ gemm_soft_reset_pulse - This function generates soft reset to DUT.
 
 <summary>PS Host Application</summary>
 	
-## PS Host Application
+### PS Host Application
 
 ```
 void gemm_bring_up(void) 
@@ -722,7 +722,7 @@ unsigned int waddr;
     //    Write to address 0x1C, data = 0
     xrtKernelWriteRegister(gemm_top_khdl, 0x1C,  0x0);
 
-    // 3. Write to indirect address control register, Valid bit = 1, R/W# = 0
+    // 3. Write to indirect address control register, Valid bit = 1, R/W## = 0
     //    Write to address 0x18 data = 0x1
     xrtKernelWriteRegister(gemm_top_khdl, 0x18,  0x1);
 
@@ -788,7 +788,7 @@ unsigned int match_count;
     //    Done = read_data & 0x1;
     //}
 
-    // Write to indirect address control register, Vali = 1, R/W# = 1
+    // Write to indirect address control register, Vali = 1, R/W## = 1
     // Write to address 8, data = 0x3
     // xrtKernelWriteRegister (gemm_top_khdl, 0x18, 0x3);
 
@@ -824,14 +824,14 @@ unsigned int match_count;
 
 </details>
 
-# Performance Details
+## Performance Details
 
 For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for this tutorial. 
 
 <details>
 <summary>Resource Utilization</summary> 
 
-## Resource Utilization
+### Resource Utilization
 
 Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2022.2 version) tools.
 
@@ -882,7 +882,7 @@ Resource Utilization is same for rest of the matrix sizes, and is as follows -
 <details>
 <summary>Power</summary>
 
-## Power
+### Power
 
 Power is measured using the Vivado tool. The steps for retrieving this information from the Vivado project are as follows.
 
@@ -909,7 +909,7 @@ A summary of power utilization is given in the following table.
 <details>
 <summary>Throughput and Latency</summary> 
 
-## Throughput and Latency
+### Throughput and Latency
 
 Throughput is measured in Tera Operations Per Second (TOPS) When Host App is done writing Matrices A and B, it drives 
 Start signal to DUT. When DUT is done it drives Done output. A performance counter increments for all the clocks from
@@ -955,7 +955,7 @@ Latency for various matrix sizes is as shown in the below table
 <details>
 <summary>TOPs per Watt</summary> 
 
-## TOPs per Watt
+### TOPs per Watt
 
 TOPS and power utilization for DSP based martix multiplication is more or less independent of matrix size. TOPS is 1.49 and TOPs per Watt is 0.28 to 0.31 in this design 
 
@@ -978,7 +978,7 @@ TOPS and power utilization for DSP based martix multiplication is more or less i
 <details>
 <summary>Consolidated Summary</summary> 
 
-## Consolidated Summary
+### Consolidated Summary
 
 A summary of throughput and latency for all variations is shown in the following table.
 
@@ -997,11 +997,11 @@ A summary of throughput and latency for all variations is shown in the following
 ```
 </details>
 
-# Support
+## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

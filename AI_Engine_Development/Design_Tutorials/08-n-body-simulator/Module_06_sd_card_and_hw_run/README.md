@@ -141,11 +141,11 @@ scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data
 After running the design on hardware, you can compare the performance between the Python, C++, and AI Engine NBody Simulators in the next module, [Module 07 - Results](../Module_07_results).
 
 
-# Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
-# License
+### License
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

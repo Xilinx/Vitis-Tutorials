@@ -64,21 +64,21 @@ Copy `aie_status_edge.json`, `aieshim_status_edge.json`, `summary.csv` and `xrt.
 vitis_analyzer xrt.run_summary
 ```
 After above command issued, expect to see `vitis_analyzer` GUI is launched. Click on `Set AI Engine compile summary` in the summary view to set the AI Engine compile summary
-<img src="images/bc_va.png">
+![alt text](images/bc_va.png">
 
 ## AI Engine Status Explanation
 Click on `Graph` view then `Tile Status`.
 * `Tile Status`: Shows all tiles completed execution and at `Disabled, Done` state.
-<img src="images/bc_va1.png">
+![alt text](images/bc_va1.png">
 
 * `PC`: Shows the current PC (program counter) value. It can be cross-probed with source code by clicking it.
-<img src="images/bc_va3.png">
+![alt text](images/bc_va3.png">
 
 * `Error Event`: Shows error events that occurred before the status was generated.
 * `Buffers`: Shows buffer objects in the design with the current status.
 
 Click on `DMA Status`. DMA status shows each tile's DMA input/output channel status.
-<img src="images/bc_va2.png">
+![alt text](images/bc_va2.png">
 
 Reference [UG1076, Analyzing AI Engine Status in Vitis Analyzer](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Vitis-Analyzer) section for details.
 
@@ -135,12 +135,12 @@ cd /run/media/mmcblk0p1
 ```
 
 ### Step 2.5 Expected result is as follows.
-<img src="images/bc_err0.png" width="600">
+![alt text](images/bc_err0.png)
 
 
 ### Step 2.6 Report Mechanism with xbutil
 Issue command `xbutil examine -d 0000:00:00.0 -r error` to VCK190 console to get output from console.
-<img src="images/bc_err.png" width="600">
+![alt text](images/bc_err.png)
 
 # Support
 

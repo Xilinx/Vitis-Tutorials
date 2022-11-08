@@ -1,6 +1,7 @@
 
+##############################################################################
 Host Memory Access
-========================
+##############################################################################
 
 **Version:** Vitis 2022.2
 
@@ -13,8 +14,11 @@ Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA opera
 
 For more details about the host memory access feature please refer https://xilinx.github.io/XRT/master/html/hm.html
 
+
+***********************************
 XRT and Platform version
-========================
+***********************************
+
 
 The following XRT and U250 platform versions are used for this tutorial design.
 
@@ -23,15 +27,16 @@ The following XRT and U250 platform versions are used for this tutorial design.
 **Platform**: xilinx_u250_gen3x16_xdma_4_1_202210_1   
 
 
+***********************************
 Tutorial Description
-====================
+***********************************
 
 This tutorial attempts to demonstrate a scenario where adopting a host memory access data transfer scheme helped to improve overall performance. This is not a full-fledged application, rather a small example showing potential performance benefit by letting direct host memory access by the kernels. 
 
 A word of caution is that the performance numbers can greatly varied from one host server to another host server, so performance numbers demonstrated in this example should only be used as sample data that may not match when you are running this tutorial.  
 
 Kernel structure
-----------------
+========================
 
 This tutorial is created from a simple vector-add kernel. The vector-add kernel has 15 CUs on the FPGA. As the U250 card contains four SLRs, the 15 CUs are distributed in the following manner
 
@@ -46,7 +51,7 @@ This tutorial is created from a simple vector-add kernel. The vector-add kernel 
 
 
 Host code
----------
+========================
 The functionality of the host code is described as below: 
     
 - Creates dedicated 15 CU handles for 15 CUs
@@ -60,7 +65,7 @@ The greater number of CU executions in a given time interval signifies the more 
 As a side note, for brevity, the host code is simplified by using the same data input per CU execution. As the host code is solely focusing on CU execution, it is a simplified version without implementing other typical host functionalities such as verification of returned data from the CUs, error checking, etc.
  
 Kernel compilation
-------------------
+========================
 
 All the tutorial design files are self-contained inside the ``reference-files`` directory. 
 
@@ -137,8 +142,9 @@ Upon completion, you will get the XCLBIN file ``vadd.hw.run2.xclbin``.
 Once you have two XCLBINs ready you can simply focus on running the application for the rest of this tutorial. 
 
 
+***********************************
 Running the application 
-=======================
+***********************************
 
 
 **DDR Based Run**
@@ -276,7 +282,7 @@ A sample output from the run as below
 
 As you can see from a sample run above the number of kernel executions has been increased in host memory setup thus increasing the throughput of the application to 10.7 GBPs
    
-Open the vitis_analyzer using the newly generated .run_summary file. 
+Open the vitis_analyzer using the newly generated ``.run_summary`` file. 
 
 .. code::
     
@@ -299,9 +305,9 @@ You can review Application timeline as below
 
 Hovering the mouse on one of the data transfers shows the type of Data transfer is **Host Memory Synchronization**. This signifies the data transfer is merely a cache synchronization operation from the host operation perspective. As this cache invalidate/flush is very fast it has very little overhead on the host machine. The snapshot also shows under the **Kernel Enqueues** section there are now a greater number of rows (ROW0 to ROW9) signifying the host is now able to submit more kernel execution requests in parallel.  
 
-
+***********************************
 Summary 
-=======
+***********************************
 
 In summary, you have reviewed the following takeaways in this tutorial
 
@@ -311,8 +317,11 @@ In summary, you have reviewed the following takeaways in this tutorial
 2. Host code change 
   
 - Comparing and understanding Profile and Application timeline
-- A host memory-based paradigm can help to eliminate the data transfer burden from the host. In some usecases this might help to boost overall application performance. 
-   
+- A host memory-based paradigm can help to eliminate the data transfer burden from the host. In some use cases this might help to boost overall application performance. 
+
+
+
+
 ---------------------------------
 
 Licensed under the Apache License, Version 2.0 (the "License");

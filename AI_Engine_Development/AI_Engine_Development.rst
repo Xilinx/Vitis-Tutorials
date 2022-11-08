@@ -1,4 +1,4 @@
-﻿#######################################
+#######################################
 AI Engine Development
 #######################################
 
@@ -7,63 +7,28 @@ AI Engine Development
 
    See Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
 
+The tutorials under the AI Engine Development help you learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors. In order to successfully deploy AI Engine applications in hardware, you need to be aware of the Vitis and AI Engine tools and flows.
 
 
-The methodology for developing optimized accelerated applications is comprised of two major phases: architecting the application, and developing the kernels. In the first phase, you make key decisions about the application architecture by determining which software functions should be accelerated onto ACAP kernels, how much parallelism can be achieved, and how to deliver it in code. In the second phase, you implement the kernels by structuring the source code, and applying the necessary build optionss to create the kernel architecture needed to achieve the optimized performance target. The following examples illustrate the use of this methodology in real-world applications.
+* :doc:`Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>` highlight specific features and flows that help develop AI Engine applications.
+* :doc:`Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>` showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both these phases are demonstrated in these tutorials.
 
+Tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
 
 ******************************************
-Design Tutorials
+Environment Settings
 ******************************************
 
+Before beginning a tutorial, read and follow the `Vitis Software Platform Release Notes <https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wlk1553469789555.html>`_ (v2022.2) for setting up software and installing the VCK190 base platform.
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Design Tutorials
-   :hidden:
+Run the following steps to set up the environment (**NOT** apply to tutorials that do not use the VCK190 base platform):
 
-   LeNet Tutorial <./Design_Tutorials/01-aie_lenet_tutorial/README>
-   Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>
-   Beamforming Design <./Design_Tutorials/03-beamforming/README>
-   AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>
-   2D-FFT <./Design_Tutorials/06-fft2d_AIEvsHLS/README>
-   FIR Filter <./Design_Tutorials/07-firFilter_AIEvsHLS/README>
-   N-Body Simulator <./Design_Tutorials/08-n-body-simulator/README>
+1. Set up your platform by running the ``xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux`` script as provided in the platform download. This script sets up the ``SYSROOT`` and ``CXX`` variables. If the script is not present, you **must** run the ``xilinx-versal-common-v2022.2/sdk.sh``.
+2. Set up your ``ROOTFS`` to point to the ``xilinx-versal-common-v2022.2/rootfs.ext4``.
+3. Set up your ``IMAGE`` to point to ``xilinx-versal-common-v2022.2/Image``.
+4. Set up your ``PLATFORM_REPO_PATHS`` environment variable based upon where you downloaded the platform.
 
-
-
-
-.. list-table:: 
-   :widths: 20 80
-   :header-rows: 1
-   
-   * - Tutorial
-     - Description
-	 
-   * - :doc:`LeNet Tutorial <Design_Tutorials/01-aie_lenet_tutorial/README>`
-     - This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM) and AI Engine memory.
-
-   * - :doc:`Super Sampling Rate FIR Filters <./Design_Tutorials/02-super_sampling_rate_fir/README>`
-     - The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.
-
-   * - :doc:`Beamforming Design <./Design_Tutorials/03-beamforming/README>`
-     - This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.
-
-   * - :doc:`AIE Emulation on Custom Platforms <./Design_Tutorials/04-custom-platform-emulation/README>`
-     - This tutorial demonstrates the creation and emulation of an AIE design including the Adaptive DataFlow (ADF) graph, RTL kernels, and a custom VCK190 platform.
-
-   * - :doc:`2D-FFT <./Design_Tutorials/06-fft2d_AIEvsHLS/README>`
-     - This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines.
-
-   * - :doc:`FIR Filter <./Design_Tutorials/07-firFilter_AIEvsHLS/README>`
-     - This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.
-
-   * - :doc:`N-Body Simulator <./Design_Tutorials/08-n-body-simulator/README>`
-     - It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:
-
-       - A Python model of an N-Body Simulator run on x86 machine
-       - A scalable AI Engine design that can utilize up to 400 AI Engine tiles
 
 
 
@@ -77,76 +42,63 @@ Feature Tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Using GMIO with AIE <./Feature_Tutorials/02-using-gmio/README>
-   Runtime Parameter Reconfiguration <./Feature_Tutorials/03-rtp-reconfiguration/README>
-   Packet Switching <./Feature_Tutorials/04-packet-switching/README>
-   Versal Integration for Hardware Emulation and Hardware <./Feature_Tutorials/05-AI-engine-versal-integration/README>
-   Versal System Design Clocking <./Feature_Tutorials/06-versal-system-design-clocking-tutorial/README>
-   Using Floating-Point in the AI Engine <./Feature_Tutorials/07-AI-Engine-Floating-Point/README>
-   DSP Library Tutorial <./Feature_Tutorials/08-dsp-library/README>
-   Debug Walkthrough <./Feature_Tutorials/09-debug-walkthrough/README>
-   AI Engine DSP Library and Model Composer Tutorial <./Feature_Tutorials/10-aie-dsp-lib-model-composer/README>
-   Versal Emulation Waveform Analysis <./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README>
-   AXIS External Traffic Generator <./Feature_Tutorials/12-axis-traffic-generator/README>
-   AI Engine Performance and Deadlock Analysis Tutorial <./Feature_Tutorials/13-aie-performance-analysis/README>
-   Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>
-   A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>
-   Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>
-   Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./Feature_Tutorials/16-external-traffic-generator-aie/README>
+   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>
+
+.. csv-table:: Feature Tutorials
+   :header: "Tutorial","Platform","OS","IDE Flow","Libraries Used","HLS Kernel","x86 simulator","aie simulator","SW Emu","HW Emu","HW","Event Trace in HW","Profile in HW"
+   :widths: 22, 8, 8, 6, 7, 8, 7, 7, 5, 6, 4, 6, 6
+
+   ":doc:`AI Engine A-to-Z Flow for Linux <./docs/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/README>`","Base / Custom","Linux","","","MM2S / S2MM","x","x","x","x","x",""," "
+   ":doc:`A to Z Bare-metal Flow <./docs/Feature_Tutorials/01-aie_a_to_z/README>`","Custom","Baremetal","x","","MM2S / S2MM","","x","","x","x",""," "
+   ":doc:`Using GMIO with AIE <./docs/Feature_Tutorials/02-using-gmio/README>`","Base","Linux","","","","","x","","x","x","","x "
+   ":doc:`Runtime Parameter Reconfiguration <./docs/Feature_Tutorials/03-rtp-reconfiguration/README>`","Base","Linux","","","MM2S / S2MM","","x","","x","x",""," "
+   ":doc:`Packet Switching <./docs/Feature_Tutorials/04-packet-switching/README>`","Base","Linux","","","MM2S / S2MM","","x","","x","x",""," "
+   ":doc:`AIE Versal Integration <./docs/Feature_Tutorials/05-AI-engine-versal-integration/README>`","Base","Linux","","","MM2S / S2MM","x","x","x","x","x",""," "
+   ":doc:`Versal System Design Clocking <./docs/Feature_Tutorials/06-versal-system-design-clocking-tutorial/README>`","Base","Linux","","","MM2S / S2MM","","x","","x","x",""," "
+   ":doc:`Using Floating-Point in the AIE <./docs/Feature_Tutorials/07-AI-Engine-Floating-Point/README>`","Base","Linux","","","","","x","","","",""," "
+   ":doc:`DSP Library Tutorial  <./docs/Feature_Tutorials/08-dsp-library/README>`","Base","Linux","","DSPLib","MM2S / S2MM Variant","","x","","","",""," "
+   ":doc:`Debug Walkthrough Tutorial <./docs/Feature_Tutorials/09-debug-walkthrough/README>`","Base","Linux","x","","","x","x","x","x","x","x","x "
+   ":doc:`AIE DSPLib and Model Composer <./docs/Feature_Tutorials/10-aie-dsp-lib-model-composer/README>`","Base","Linux","x","DSPLib","MM2S / S2MM","x","x","","","",""," "
+   ":doc:`Versal Emulation Waveform Analysis <./docs/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README>`","Base","Linux","","","Traffic Generators","","","","x","",""," "
+   ":doc:`AXIS External Traffic Generator <./docs/Feature_Tutorials/12-axis-traffic-generator/README>`","Base","Linux","","DSPLib","MM2S / S2MM","","x","","x","",""," "
+   ":doc:`AIE Performance and Deadlock Analysis <./docs/Feature_Tutorials/13-aie-performance-analysis/README>`","Base","Linux","","","","","x","","x","x","","x "
+   ":doc:`Implementing an IIR Filter on the AIE <./docs/Feature_Tutorials/14-implementing-iir-filter/README>`","Base","Linux","x","","","x","x","x","","",""," "
+   ":doc:`Post-Link Recompile of an AIE Application <./docs/Feature_Tutorials/15-post-link-recompile/README>`","Base","Linux","","","MM2S / S2MM","","x","","x","x",""," "
+   ":doc:`Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./docs/Feature_Tutorials/16-external-traffic-generator-aie/README>`","Base","Linux","","","MM2S / S2MM / PolarClip","x","x","x","x","",""," "
+   ":doc:`Using RTL IP with AI Engines <./docs/Feature_Tutorials/17-RTL-IP-with-AIE-Engines/README>`","Custom","Linux","","","MM2S / S2MM","","x","","x","",""," "
 
 
-.. list-table:: 
-   :widths: 20 80
-   :header-rows: 1
-   
-   * - Tutorial
-     - Description
 
-   * - :doc:`Using GMIO with AIE <./Feature_Tutorials/02-using-gmio/README>`
-     - Introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engines and external DDR.
 
-   * - :doc:`Runtime Parameter Reconfiguration <./Feature_Tutorials/03-rtp-reconfiguration/README>`
-     - Learn how to dynamically update AI Engine runtime parameters.
 
-   * - :doc:`Packet Switching <./Feature_Tutorials/04-packet-switching/README>`
-     - This tutorial illustrates how to use data packet switching with AI Engine designs to optimize efficiency.
 
-   * - :doc:`AI Engine Versal Integration for Hardware Emulation and Hardware <./Feature_Tutorials/05-AI-engine-versal-integration/README>`
-     - This tutorial demonstrates creating a system design running on the AI Engine, PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.
+******************************************
+Design Tutorials
+******************************************
 
-   * - :doc:`Versal System Design Clocking <./Feature_Tutorials/06-versal-system-design-clocking-tutorial/README>`
-     - This tutorial demonstrates clocking concepts for the Vitis compiler by defining clocking for ADF graph PL kernels and PLIO kernels, using the clocking automation functionality.
 
-   * - :doc:`Using Floating-Point in the AI Engine <./Feature_Tutorials/07-AI-Engine-Floating-Point/README>`
-     - These examples demonstrate floating-point vector computations in the AI Engine.
 
-   * - :doc:`DSP Library Tutorial <./Feature_Tutorials/08-dsp-library/README>`
-     - This tutorial demonstrates how to use kernels provided by the DSP library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation.
+.. toctree::
+   :maxdepth: 3
+   :caption: Design Tutorials
+   :hidden:
 
-   * - :doc:`Debug Walkthrough <./Feature_Tutorials/09-debug-walkthrough/README>`
-     - This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.
+   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>
 
-   * - :doc:`AI Engine DSP Library and Model Composer Tutorial <./Feature_Tutorials/10-aie-dsp-lib-model-composer/README>`
-     - This tutorial shows how to design AI Engine applications using Model Composer. This set of blocksets for Simulink is used to demonstrate how easy it is to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
 
-   * - :doc:`Versal Emulation Waveform Analysis <./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/README>`
-     - This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal ACAP.
 
-   * - :doc:`AXIS External Traffic Generator <./Feature_Tutorials/12-axis-traffic-generator/README>`
-     - This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.
+.. csv-table:: Feature Tutorials
+   :header: "Tutorial","Platform","OS","IDE Flow","Libraries Used","HLS Kernel","x86 simulator","aie simulator","SW Emu","HW Emu","HW","Event Trace in HW","Profile in HW"
+   :widths: 22, 8, 8, 6, 7, 8, 7, 7, 5, 6, 4, 6, 6
 
-   * - :doc:`AI Engine Performance and Deadlock Analysis Tutorial <./Feature_Tutorials/13-aie-performance-analysis/README>`
-     - This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example.
+   ":doc:`Versal Custom Thin Platform Extensible System <./docs/Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README>`","Custom","Linux","","","MM2S / S2MM / VADD","","","","x","x",""," "
+   ":doc:`LeNet Tutorial <./docs/Design_Tutorials/01-aie_lenet_tutorial/README>`","Base","Linux","","","MM2S / S2MM","","x","","x","x","","x "
+   ":doc:`Super Sampling Rate FIR Filters <./docs/Design_Tutorials/02-super_sampling_rate_fir/README>`","Base","Linux","","","","","x","","","",""," "
+   ":doc:`Beamforming Design <./docs/Design_Tutorials/03-beamforming/README>`","Base","Linux","","","","","x","","x","x","","x "
+   ":doc:`2D-FFT <./docs/Design_Tutorials/06-fft2d_AIEvsHLS/README>`","Base","Linux","","DSPLib","PL Data Generator and Checker","","x","","x","x","","x "
+   ":doc:`FIR Filter <./docs/Design_Tutorials/07-firFilter_AIEvsHLS/README>`","Base","Linux","","DSPLib","PL Data Generator and Checker","","x","","x","x","","x "
+   ":doc:`N-Body Simulator <./docs/Design_Tutorials/08-n-body-simulator/README>`","Base","Linux","","","PL Datamover","","x","","x","x",""," "
+   ":doc:`Versal GeMM Implementation <./docs/Design_Tutorials/10-GeMM_AIEvsDSP/README>`","Base","Linux","","DSPLib","Datamover","","x","","x","x","","x "
 
-   * - :doc:`Implementing an IIR Filter on the AI Engine <./Feature_Tutorials/14-implementing-iir-filter/README>`
-     - This multi-part tutorial describes how to implement an `infinite impulse response (IIR) filter <https://en.wikipedia.org/wiki/Infinite_impulse_response>`_ on the AI Engine.
-	 
-   * - :doc:`A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>`
-     - This tutorial introduces a complete end to end flow for a bare-metal host application using AI Engines and PL kernels.
 
-   * - :doc:`Post-Link Recompile of an AI Engine Application <./Feature_Tutorials/15-post-link-recompile/README>`
-     - This tutorial shows you how to modify an AI Engine application after the platform has been frozen. It avoids a complete Vivado tool run, which can take a long time if timing closure requires specific attention. 
-
-   * - :doc:`Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./Feature_Tutorials/16-external-traffic-generator-aie/README>`
-     - This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array.
 
