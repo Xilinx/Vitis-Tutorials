@@ -54,6 +54,7 @@
            "CXX+=-Wformat-security",
            "CXX+=-Werror=format-security",
            "CXX+=--sysroot=${SYSROOT}",
+           "LAUNCH_HW_EMU_EXEC=1"
            ],
         "custom_build_target": {
             "all": "run",
