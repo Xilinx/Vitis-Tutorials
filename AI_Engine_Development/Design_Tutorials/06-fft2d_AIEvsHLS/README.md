@@ -9,7 +9,7 @@
 
 # Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2022.1***
 
 ## Table of Contents
 
@@ -195,8 +195,8 @@ The script sets up the environment variables and sources scripts explained below
 1. Unset the previous library paths with `unset LD_LIBRARY_PATH` command.
 2. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the vck190 platform "xilinx_vck190_base_202210_1".
 3. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-4. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.2` directory is used in the step below.
-5. The platform is set up by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.2/sdk.sh` script.
+4. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.1` directory is used in the step below.
+5. The platform is set up by running the `xilinx-versal-common-v2022.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.1/sdk.sh` script.
 6. `DSPLIB_VITIS` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
 7. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
 8. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -315,7 +315,7 @@ GitHub issues will be used for tracking requests and bugs. For questions, go to 
 
 # License
 
-© Copyright 2020-2022 Xilinx, Inc.
+© Copyright 2021 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 
