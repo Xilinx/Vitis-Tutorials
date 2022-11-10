@@ -13,6 +13,7 @@
 
 ***Version: Vitis 2022.1***
 
+The ***Using the GT Kernels on Alveo Accelerator Cards*** webinar demonstrated this tutorial live on August 25, feel free to [watch the webinar on-demand](https://pages.xilinx.com/EN-WB-2022-08-25-VitisGTKernels_LP-Registration.html) if you missed it. Check out [Vitis Developer 2022 Series](https://www.xilinx.com/about/events/2022/vitis-developer-series.html) to learn more about Vitis and the tutorials.  
 
 ## Introduction
 
