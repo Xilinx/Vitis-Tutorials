@@ -26,7 +26,7 @@ help::
 	$(ECHO) "  make host"
 	$(ECHO) "      Command to build host software for xclbin test"
 	$(ECHO) ""
-	$(ECHO) "  make all TARGET=hw option sw_emu or hw_emu"
+	$(ECHO) "  make build TARGET=hw option sw_emu or hw_emu"
 	$(ECHO) "      Command to build sw and hw"
 	$(ECHO) ""
 	$(ECHO) "  make run TARGET=hw option sw_emu or hw_emu"      
@@ -39,11 +39,7 @@ help::
 
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-CSR_DIR := $(CUR_DIR)/csr_data
-OFFSET := $(CSR_DIR)/offset.mtx
-INDICE := $(CSR_DIR)/indicesweights.mtx
-NODE := $(CSR_DIR)/node.mtx
-XFLIB_DIR = $(VITIS_LIBRARIES_PATHS)/graph
+XFLIB_DIR = $(VITIS_LIBS_PATHS)/graph
 
 
 
@@ -66,18 +62,11 @@ SHORT := $(BUILD_DIR)/sssp
 SEARCH := $(BUILD_DIR)/search
 
 
-.phony: emconfig
-emconfig:
-	emconfigutil --platform $(PLATFORM)
-	
-
-.phony: all clean
-
 ################## hardware build 
 COMMFLAGS := --platform $(PLATFORM) --target $(TARGET) --save-temps --debug 
 COMMFLAGS +=  -I $(XFLIB_DIR)/L2/include -I $(CUR_DIR)/kernel -I $(XFLIB_DIR)/../database/L1/include/hw -I $(XFLIB_DIR)/../quantitative_finance/L1/include -I $(XFLIB_DIR)/../utils/L1/include -I $(XFLIB_DIR)/L2/include -I $(XFLIB_DIR)/../database/L1/include/hw -I $(XFLIB_DIR)/../quantitative_finance/L1/include -I $(XFLIB_DIR)/../utils/L1/include
 HLSCFLAGS := --compile $(COMMFLAGS)
-LINKFLAGS := --link --optimize 3 $(COMMFLAGS)
+LINKFLAGS := --link --optimize 3 $(COMMFLAGS) 
 VPP_FLAGS_shortestPath_top +=  -D KERNEL_NAME=shortestPath_top
 VPP_FLAGS_shortestPath_top += --hls.clock 300000000:shortestPath_top
 VPP_LDFLAGS_shortestPath_top += --clock.defaultFreqHz 300000000
@@ -99,7 +88,7 @@ $(BUILD_DIR)/search.xo: $(CUR_DIR)/kernel/search.cpp
 	v++ $(HLSCFLAGS) --kernel search --temp_dir $(SEARCH) --report_dir $(REPORT_DIR) --output $@ $^
 
 $(XCLBIN_OBJ): $(BUILD_DIR)/weight_average.xo $(BUILD_DIR)/shortestPath_top.xo $(BUILD_DIR)/search.xo
-	v++ $(LINKFLAGS)   $(VPP_LDFLAGS_shortestPath_top) --temp_dir $(BUILD_DIR) --report_dir $(REPORT_DIR) --output $@ $(BUILD_DIR)/weight_average.xo $(BUILD_DIR)/shortestPath_top.xo $(BUILD_DIR)/search.xo 
+	v++ $(LINKFLAGS) $(VPP_LDFLAGS_shortestPath_top) --temp_dir $(BUILD_DIR) --report_dir $(REPORT_DIR) --output $@ $(BUILD_DIR)/weight_average.xo $(BUILD_DIR)/shortestPath_top.xo $(BUILD_DIR)/search.xo 
 ################## host build
 
 CXXFLAGS  += -fmessage-length=0 -I$(CUR_DIR)/host -I$(CUR_DIR)/kernel -I$(XILINX_XRT)/include -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
@@ -112,7 +101,7 @@ endif
 CXXFLAGS +=  -D USE_HBM
 CXXFLAGS +=  -I $(XFLIB_DIR)/L2/include -I $(CUR_DIR)/host -I $(CUR_DIR)/kernel -I $(XFLIB_DIR)/ext/xcl2 -I $(XFLIB_DIR)/../utils/L1/include -I $(XFLIB_DIR)/L2/include -I $(XFLIB_DIR)/../database/L1/include/hw -I $(XFLIB_DIR)/../quantitative_finance/L1/include -I $(XFLIB_DIR)/../utils/L1/include -I $(XFLIB_DIR)/ext/xcl2
 CXXFLAGS += -O3 
-LDFLAGS := -pthread -L$(XILINX_XRT)/lib -L$(XILINX_HLS)/lnx64/tools/fpo_v7_0  -Wl,--as-needed -lOpenCL -lxrt_coreutil -lgmp -lmpfr -lIp_floating_point_v7_0_bitacc_cmodel
+LDFLAGS := -pthread -L$(XILINX_XRT)/lib -L$(XILINX_HLS)/lnx64/tools/fpo_v7_1  -Wl,--as-needed -lOpenCL -lxrt_coreutil -lgmp -lmpfr -lIp_floating_point_v7_1_bitacc_cmodel
 ifeq (,$(findstring opencv,$(CXXFLAGS)))
 CXXFLAGS += $(XRT_CXXFLAGS)
 endif
@@ -120,27 +109,41 @@ endif
 EXECUTABLE := shortpath
 
 HOST_SRCS := ./host/main.cpp
-HOST_SRCS += $(XFLIB_DIR)/ext/xcl2/xcl2.cpp 
+HOST_SRCS += $(XFLIB_DIR)/ext/xcl2/xcl2.cpp
+
+HOST_ARGS :=  -xclbin $(XCLBIN_OBJ) -o csr_data/offset.mtx -c csr_data/indicesweights.mtx -n csr_data/node.mtx
 
 
 
 $(EXECUTABLE): $(HOST_SRCS) $(EMCONFIG)
 	$(CXX) -o $(EXECUTABLE) $^ $(CXXFLAGS) $(LDFLAGS)
 
+## Emulaiton FIles Generation
+
+EMCONFIG_FILE := emconfig.json
+
+$(EMCONFIG_FILE):
+	emconfigutil --platform $(PLATFORM)
 
 ################## all flow
+
+.phony: all clean
+
 xclbin: $(XCLBIN_OBJ)
 host: $(EXECUTABLE)
+emconfig: $(EMCONFIG_FILE)
 
 
-all: xclbin host emconfig
+build: host xclbin emconfig
 
-.phony: run
-run: all
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-	XCL_EMULATION_MODE=$(TARGET) ./$(EXECUTABLE) -xclbin $(XCLBIN_OBJ) -o $(OFFSET) -c $(INDICE) -n $(NODE)
+
+run: build
+ifeq ($(TARGET), hw)
+	cd $(CUR_DIR) && unset XCL_EMULATION_MODE; ./shortpath $(HOST_ARGS);
+	
 else
-	./$(EXECUTABLE) -xclbin $(XCLBIN_OBJ) -o $(OFFSET) -c $(INDICE) -n $(NODE)
+	cd $(CUR_DIR) && export XCL_EMULATION_MODE=$(TARGET); ./shortpath $(HOST_ARGS);
+	
 endif
 
 

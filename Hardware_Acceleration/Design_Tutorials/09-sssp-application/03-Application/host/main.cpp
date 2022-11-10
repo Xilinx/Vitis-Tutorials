@@ -25,6 +25,7 @@
     #include <cstring>
     #include <fstream>
     #include <iostream>
+    #include <sstream>
     #include <sys/time.h>
     #include <vector>
     #include <limits>
@@ -446,47 +447,68 @@
 
         std::cout << "kernels end------" << std::endl;
 
+    /*
+    ////// Option 1 - Interactive Mode //////
+    
+        std::cout << "********************************************************************************************* "<< std::endl;
+        std::cout <<"\n---------------------" << city << " City Shortest Path from source 0----------------\n";
+        std::cout << "The start point is: 0 " << "longitude: " << out[0] << " latitude: " << out[1] << std::endl;
+        std::cout << "Please input your choice: " << std::endl;
+        std::cout << "Input 0 : show all the result and exit."<< std::endl;
+        std::cout << "Input point range in ( 1 to "<< numVertices-1 << " ): show the path from start point to the enter point."<<std::endl;
+        std::cout << "Input y to exit !" << std::endl;
+        
+        int m;
 
-    std::cout << "********************************************************************************************* "<< std::endl;
-	std::cout <<"\n---------------------" << city << " City Shortest Path from source 0----------------\n";
-	std::cout << "The start point is: 0 " << "longitude: " << out[0] << " latitude: " << out[1] << std::endl;
-	std::cout << "Please input your choice: " << std::endl;
-	std::cout << "Input 0 : show all the result and exit."<< std::endl;
-	std::cout << "Input point range in ( 1 to "<< numVertices-1 << " ): show the path from start point to the enter point."<<std::endl;
-	std::cout << "Input y to exit !" << std::endl;
-	
-    int m;
+        while(std::cin >> m){
+            if(m==0)
+            {
+                std::cout << "Destination to point: "<< std::endl;
 
-	while(std::cin >> m){
-		if(m==0)
-		{
-			std::cout << "Destination to point: "<< std::endl;
+                    for (int i =1; i< numVertices;i++){
 
-        		for (int i =1; i< numVertices;i++){
+                            std::cout << "point" << i << "(" << "longitude: " << out[3*i] << " "<< "latitude: " <<out[3*i+1] << ") "<< "short weight path is: " <<out[3*i+2]<<std::endl;
+                    }
 
-            			std::cout << "point" << i << "(" << "longitude: " << out[3*i] << " "<< "latitude: " <<out[3*i+1] << ") "<< "short weight path is: " <<out[3*i+2]<<std::endl;
-       			 }
+                break;	
 
-			break;	
+            }
+            else if (m>numVertices-1)
+            {
+                std::cout << "Input point is out of range, please re-enter!" << std::endl;
+            
+            }
+            else if (std::cin.get()=='y')
+            {
+                break;
+            }
 
-		}
-		else if (m>numVertices-1)
-		{
-			std::cout << "Input point is out of range, please re-enter!" << std::endl;
-		
-		}
-		else if (std::cin.get()=='y')
-		{
-			break;
-		}
+            else
+            {
+                std::cout << "point" << m << "(" << "longitude: " << out[3*m] << " "<< "latitude: " <<out[3*m+1] << ") "<< "short weight path is: " <<out[3*m+2]<<std::endl;
+                std::cout << "Please continue to enter or input y to exit!" << std::endl;	
+            }
 
-		else
-		{
-			std::cout << "point" << m << "(" << "longitude: " << out[3*m] << " "<< "latitude: " <<out[3*m+1] << ") "<< "short weight path is: " <<out[3*m+2]<<std::endl;
-        	std::cout << "Please continue to enter or input y to exit!" << std::endl;	
-		}
+        }
+    */
 
-	}
+    ////// Option 2 - Output Mode //////
+
+        std::cout << "********************************************************************************************* "<< std::endl;
+        std::cout << "The results are printing..." << std::endl;
+
+        std::string result_file = "./result.txt";
+        std::ofstream resultofstream(result_file.c_str(),std::ios::app);
+        resultofstream <<"\n---------------------" << city << " City Shortest Path from source 0----------------\n";
+        resultofstream  << "The start point is: 0 " << "longitude: " << out[0] << " latitude: " << out[1] << std::endl;
+        resultofstream  << "Destination to point: "<< std::endl;
+        for (int i =1; i< numVertices;i++){
+            resultofstream  << "point" << i << "(" << "longitude: " << out[3*i] << " "<< "latitude: " <<out[3*i+1] << ") "<< "short weight path is: " <<out[3*i+2]<<std::endl;
+        };
+        resultofstream.close();
+
+        std::cout << "The writing is done." << std::endl;
+        return 0;
 
         #endif   
 }

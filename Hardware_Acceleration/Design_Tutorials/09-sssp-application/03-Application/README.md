@@ -14,7 +14,7 @@
 
 ```
   $ git clone https://github.com/Xilinx/Vitis-Tutorials.git
-  $ cd Vitis-Tutorials/Hardware_Acceleration/Design_Tutorials/09-sssp-application/03-Application/city/ 
+  $ cd Vitis-Tutorials/Hardware_Acceleration/Design_Tutorials/09-sssp-application/03-Application/ 
 ```
 
 * [Part 1](./docs/data_processing.md): Preparing the data

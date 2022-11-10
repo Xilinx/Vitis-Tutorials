@@ -33,53 +33,38 @@ extern "C" void shortestPath_top(ap_uint<32>* config,
                                  ap_uint<512>* pred512,
                                  ap_uint<32>* pred,
                                  ap_uint<8>* info) {
-    const int depth_E = E;
-    const int depth_V = V;
 // clang-format off
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 1 num_read_outstanding = \
-    32 max_write_burst_length = 2 max_read_burst_length = 8 bundle = gmem0 port = config depth = 4
+    32 max_write_burst_length = 2 max_read_burst_length = 8 bundle = gmem0 port = config
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 1 num_read_outstanding = \
-    32 max_write_burst_length = 2 max_read_burst_length = 8 bundle = gmem0 port = offset depth = depth_V
+    32 max_write_burst_length = 2 max_read_burst_length = 8 bundle = gmem0 port = offset
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 1 num_read_outstanding = \
-    32 max_write_burst_length = 2 max_read_burst_length = 32 bundle = gmem1 port = column depth = depth_E
+    32 max_write_burst_length = 2 max_read_burst_length = 32 bundle = gmem1 port = column
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 1 num_read_outstanding = \
-    32 max_write_burst_length = 2 max_read_burst_length = 32 bundle = gmem2 port = weight depth = depth_E
+    32 max_write_burst_length = 2 max_read_burst_length = 32 bundle = gmem2 port = weight
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    1 max_write_burst_length = 2 max_read_burst_length = 2 bundle = gmem3 port = ddrQue depth = depth_E*16
+    1 max_write_burst_length = 2 max_read_burst_length = 2 bundle = gmem3 port = ddrQue
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    1 max_write_burst_length = 2 max_read_burst_length = 2 bundle = gmem3 port = ddrQue512 depth = depth_E
+    1 max_write_burst_length = 2 max_read_burst_length = 2 bundle = gmem3 port = ddrQue512
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = result512 depth = depth_V
+    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = result512
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = info depth = 8
+    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = info
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = result depth = depth_V*16
+    32 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem4 port = result
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    1 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem5 port = pred512 depth = depth_V
+    1 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem5 port = pred512
 #pragma HLS INTERFACE m_axi offset = slave latency = 32 num_write_outstanding = 32 num_read_outstanding = \
-    1 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem5 port = pred depth = depth_V*16
+    1 max_write_burst_length = 64 max_read_burst_length = 2 bundle = gmem5 port = pred
 
 // clang-format on
-#pragma HLS INTERFACE s_axilite port = config bundle = control
-#pragma HLS INTERFACE s_axilite port = offset bundle = control
-#pragma HLS INTERFACE s_axilite port = column bundle = control
-#pragma HLS INTERFACE s_axilite port = weight bundle = control
-#pragma HLS INTERFACE s_axilite port = ddrQue bundle = control
-#pragma HLS INTERFACE s_axilite port = ddrQue512 bundle = control
-#pragma HLS INTERFACE s_axilite port = result bundle = control
-#pragma HLS INTERFACE s_axilite port = result512 bundle = control
-#pragma HLS INTERFACE s_axilite port = pred bundle = control
-#pragma HLS INTERFACE s_axilite port = pred512 bundle = control
-#pragma HLS INTERFACE s_axilite port = info bundle = control
-#pragma HLS INTERFACE s_axilite port = return bundle = control
-
 
 #ifndef __SYNTHESIS__
-    std::cout << "kernel_sssp call success" << std::endl;
+    std::cout << "kernel call success" << std::endl;
 #endif
-
-    xf::graph::singleSourceShortestPath<32, MAXOUTDEGREE>(config, offset, column, weight, ddrQue512, ddrQue, result512,result, pred512, pred, info);
+    xf::graph::singleSourceShortestPath<32, MAXOUTDEGREE>(config, offset, column, weight, ddrQue512, ddrQue, result512,
+                                                          result, pred512, pred, info);
 #ifndef __SYNTHESIS__
-    std::cout << "kernel_sssp call finish" << std::endl;
+    std::cout << "kernel call finish" << std::endl;
 #endif
 }
