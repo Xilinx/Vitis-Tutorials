@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-export PLATFORM=$(DEVICE)
+# export PLATFORM=$(DEVICE)
 
 all:
 	make data
