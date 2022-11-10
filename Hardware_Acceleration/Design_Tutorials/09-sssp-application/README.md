@@ -10,6 +10,8 @@
 
 ***Version: Vitis 2022.1***
 
+The ***Application Development with Vitis Accelerated Libraries*** webinar demonstrated this tutorial live on September 14, feel free to [watch the webinar on-demand](https://pages.xilinx.com/EN-WB-2022-09-14-VitisAcceleratedLibraries_LP-Registration.html) if you missed it. Check out [Vitis Developer 2022 Series](https://www.xilinx.com/about/events/2022/vitis-developer-series.html) to learn more about Vitis and the tutorials.  
+
 Design your application using the optimized Vitis&trade; accelerated libraries. Vitis libraries offer out-of-the-box acceleration with minimal to zero-code changes to your applications, accelerating your x86 host application code calling Vitis accelerated library APIs or developing accelerators on Xilinx platforms calling kernels in your code. You can work at an application level and focus your core competencies on solving problems by using the libraries in commonly-used programming languages and leveraging Xilinx platforms as an enabler in your application.
 
 ## Problem Description
