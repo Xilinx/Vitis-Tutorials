@@ -25,6 +25,8 @@
 ***Version: 2022.1***   
 ***Board: VCK190***
 
+The ***Vitis Embedded Extensible Platform Workflow, Simplified** webinar demonstrated this tutorial live on August 31, feel free to [watch the webinar on-demand](https://pages.xilinx.com/EN-WB-2022-08-31-VitisEmbeddedExtensiblePlatform_LP-Registration.html) if you missed it. Check out [Vitis Developer 2022 Series](https://www.xilinx.com/about/events/2022/vitis-developer-series.html) to learn more about Vitis and the tutorials.  
+
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
 
 This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and Createdts command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
