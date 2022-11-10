@@ -29,10 +29,10 @@ RM = rm -f
 RMDIR = rm -rf
 SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
 DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
-PLATFORM := $(PFM_NAME)
+# PLATFORM := $(PFM_NAME)
 
 # AIE compiler settings
-AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS}/aietools/include" -include="${XILINX_HLS}/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM_REPO_PATHS}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR)
+AIE_FLAGS = -v -dataflow -include="${XILINX_VITIS}/aietools/include" -include="${XILINX_HLS}/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM} -workdir=$(AIE_OUT_DIR)
 
 # Sources
 SRCS = ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.cpp ${AIE_TOP_DIR}/aie/aie_kernels/FirSingleStream.h ${AIE_TOP_DIR}/aie/graph.cpp  ${AIE_TOP_DIR}/aie/graph.h  ${AIE_TOP_DIR}/aie/system_settings.h  ${AIE_TOP_DIR}/aie/aie_kernels.h
