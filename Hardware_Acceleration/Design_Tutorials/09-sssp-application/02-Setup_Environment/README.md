@@ -141,7 +141,7 @@ graph/
 Run the following command to set the Vitis Library path for compiling with graph:
 
 ```
-  $ export VITIS_LIBRARIES_PATHS=<Vitis Libraries local path>/Vitis_Libraries
+  $ export VITIS_LIBS_PATHS=<Vitis Libraries local path>/Vitis_Libraries
 ```
 
 ## Setting Options
