@@ -7,9 +7,9 @@ JOBS := $(shell expr $(NCPUS) - 1)
 
 VISION_LIB_FLAGS := -I. -I./Vitis_Libraries/vision/L1/include --config vision_config.ini
 
-VPPFLAGS := --platform $(PFM) -t $(TARGET) -s -g
-VPPLFLAGS := --jobs $(JOBS) --config profile.ini
-
+VPPFLAGS := --platform $(PLATFORM) -t $(TARGET) -s -g
+VPPLFLAGS := --config profile.ini
+#VPPLFLAGS := --jobs $(JOBS) --config profile.ini
 BOARD_CONFIG := connectivity_u200.ini
 ifeq (u250, $(findstring u250, $(PLATFORM)))
 	BOARD_CONFIG := connectivity_u250.ini

@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2020.2 Vitis™ - Runtime and System Optimization - Guided Software Examples</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.2 Vitis™ - Runtime and System Optimization - Guided Software Examples</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
@@ -61,7 +61,7 @@ Once you edit the Makefile, ensure that your Vitis and XRT environments are set 
 done so already, run the commands:
 
 ```bash
-source /opt/Xilinx/Vitis/2021.2/settings.sh
+source /opt/Xilinx/Vitis/2022.2/settings.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
