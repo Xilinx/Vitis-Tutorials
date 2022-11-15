@@ -10,7 +10,7 @@
 
 ## Introduction
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 Xilinx FPGAs and Versal ACAP devices are uniquely suitable for low-latency acceleration of high performance algorithms and workloads. With the demise of traditional Moore's Law scaling, design-specific architectures(DSAs) are becoming the tool of choice for developers needing the optimal balance of capability, power, latency, and flexibility. But, approaching FPGA and ACAP development from a purely software background can seem daunting.
 
@@ -25,6 +25,35 @@ In this directory tree you will find a collection of documents and a directory n
 The `design_source` directory contains all of the design elements - hardware and software - for the
 tutorial you're currently reading. The example applications correspond to specific sections in the guide.
 Every effort has been made to keep the code samples as concise and "to the point" as possible.
+
+## Build the Software and Hardware
+
+
+
+Attached `Makefile` can be used to build the design:
+
+Command       |                    Run Result                            |
+--------------|----------------------------------------------------------|
+`make run TARGET=sw_emu` | 	Build and run Software Emulation             |
+`make run TARGET=hw_emu` | 	Build and run Hardware Emulation             |
+`make run TARGET=hw`     | 	Build and run the application on Hardware    |
+
+The above Makefile flow would need `PLATFORM` and `PLATFORM_REPO_PATH` 
+
+```
+export PLATFORM=xilinx_u250_gen3x16_xdma_4_1_202210_1 # Example to set the PLATFORM before launching the run 
+export PLATFORM_REPO_PATH=/opt/xilinx/platforms/      # Example to set the PLATFORM_REPO_PATH before launching the run
+```
+This tutorial uses OpenCV for the application, please set the OpenCV `env` variable as below
+```
+export OPENCV_INCLUDE=<path>/opencv-4.4.0/include
+export OPENCV_LIB=<path>/opencv-4.4.0/lib
+export LD_LIBRARY_PATH=<path>/opencv-4.4.0/lib:$LD_LIBRARY_PATH
+```
+
+Once the build is complited, a folder `build` under directory `design_source` will contain all the executables and alveo_example.xclbin to run the tutorial
+
+Note: The `hw_emu` is not tested for this release.
 
 ## Table of Contents
 

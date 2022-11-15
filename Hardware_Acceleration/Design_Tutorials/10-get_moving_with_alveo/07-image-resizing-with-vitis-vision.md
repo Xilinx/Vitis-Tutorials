@@ -58,7 +58,10 @@ In the Vitis Vision library, you configure things such as the number of pixels t
 
 With the XRT initialized, run the application by running the following command from the build directory:
 
-`./07_opencv_resize alveo_examples <path_to_image>`
+`./07_opencv_resize <path_to_image>`
+
+A fish.jpg is provided in design_source/test_data directory
+
 
 Because of the way we’ve configured the hardware in this example, your image must conform to certain requirements.  Because we’re processing eight pixels per clock, your input width must be a multiple of eight.
 

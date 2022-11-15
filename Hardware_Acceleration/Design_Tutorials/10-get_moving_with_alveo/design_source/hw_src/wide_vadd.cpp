@@ -1,7 +1,8 @@
 #include <hls_vector.h>
 
 using vint16 = hls::vector<int, 16>;
-
+extern "C"
+{
 void wide_vadd(vint16 *a, vint16 *b, vint16 *c, int size)
 {
 #pragma HLS INTERFACE m_axi bundle=in_a port=a depth=1024
@@ -12,4 +13,5 @@ void wide_vadd(vint16 *a, vint16 *b, vint16 *c, int size)
     {
         c[i] = a[i] + b[i];
     }
+}
 }

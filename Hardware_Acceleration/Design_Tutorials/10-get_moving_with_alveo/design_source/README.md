@@ -1,26 +1,26 @@
 # UG1352: Get Moving with Alveo
 
+**NOTE:** Please note that the Makefile under the `Introduction` directory take care of all the steps mentioned in this file including the `git clone`. 
+
 This repository contains the source files for the exercises in *UG1352: Get Moving
 With Alveo* and for the "Runtime and System Optimization" Vitis introductory tutorial.
 
-This repository makes use of Git submodules to pull in other repositories such as
-the Vitis Vision hardware accelerated library. To properly clone this repository
-be sure to include the ```--recurse-submodules``` command line switch.
+This repository makes use of Vitis Vision hardware accelerated library. Clone the Vitis_Libraries under hw_src folder.
 
 ```bash
-git clone --recurse-submodules https://github.com/Xilinx/Vitis-In-Depth-Tutorial.git
+git clone https://github.com/Xilinx/Vitis_Libraries.git
 ```
 
 This repository includes both hardware and software sources.
 
 This repository has been validated against the Vitis Unified Development Environment
-release 2020.1 and has been hardware-validated against the following platforms:
+release 2022.2 and has been hardware-validated against the following platforms:
 
-| Alveo Card |             Platform             |   XRT   |
-| :--------- | :------------------------------: | :-----: |
-| U200       |    xilinx_u200_xdma_201830_2     | 2.6.655 |
-| U250       |    xilinx_u250_xdma_201830_2     | 2.6.655 |
-| U50        | xilinx_u50_gen3x16_xdma_201920_3 | 2.6.655 |
+| Alveo Card |             Platform                          |   XRT    |
+| :--------- | :-------------------------------------------: | :-----:  |
+| U200       |    xilinx_u200_gen3x16_xdma_2_202110_1        | 2.14.354 |
+| U250       |    xilinx_u250_gen3x16_xdma_4_1_202210_1      | 2.14.354 |
+| U50        |    xilinx_u50_gen3x16_xdma_5_202210_1         | 2.14.354 |
 
 ## Building the Hardware Design
 
@@ -34,7 +34,7 @@ TARGET ?= hw
 # Options for DEVICE: u200, u250. Default platform is XDMA, defined by PLATFORM
 DEVICE ?= u250
 # If other some specific platforms needs to be used, provide platform path directly
-PLATFORM ?= xilinx_$(DEVICE)_xdma_201830_2
+PLATFORM ?= xilinx_$(DEVICE)_gen3x16_xdma_2_202110_1
 # If your platform is not in the standard install area edit this line
 PLATFORM_REPO_PATH ?= /opt/xilinx/platforms/
 ```
@@ -50,7 +50,7 @@ Alternately, if you want to specify a particular platform on the command line, r
 
 ```bash
 cd hw_src
-PLATFORM=xilinx_u50_gen3x16_xdma_201920_3 make
+PLATFORM=xilinx_u250_gen3x16_xdma_4_1_202210_1 make
 ```
 
 Substitute your platform name as needed.
