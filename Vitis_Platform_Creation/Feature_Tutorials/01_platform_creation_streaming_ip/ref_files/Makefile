@@ -41,7 +41,7 @@ help:
 
 
 all: hw check-common-image sw_comps dtb sysroot pfm vadd
-
+sd_card:hw check-common-image sw_comps dtb sysroot pfm vadd_hw
 
 #generate the XSA file 
 hw:
