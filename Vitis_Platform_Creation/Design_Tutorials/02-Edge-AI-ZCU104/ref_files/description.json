@@ -25,7 +25,10 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu"
+            "vitis_sw_emu",
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
         ],
         "make_options": [
             "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
