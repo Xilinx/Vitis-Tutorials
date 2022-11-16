@@ -1,0 +1,32 @@
+
+{
+    "name": "Vitis_Platform_Creation-Introduction-04-Edge-VCK190-DFX",
+    "description": "Creating a custom VCK190 DFX platform from scratch",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "PFM_D_04_VCK190_DFX",
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu"
+        ],
+        "custom_build_target":
+        {
+            "all": "all"
+        },
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+        }
+    }
+}

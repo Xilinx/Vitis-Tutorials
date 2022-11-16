@@ -4,13 +4,14 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Get
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
 TARGET := hw_emu
-PLATFORM := xilinx_zcu102_base_202210_1
+PLATFORM ?= xilinx_zcu102_base_202220_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_$(TARGET).sh
 SDKTARGETSYSROOT := $(SYSROOT)
 ROOTFS ?= $(EDGE_COMMON_SW)
+CXXFLAGS := -g -std=c++17 -Wall -O0 -fmessage-length=0
 
 run: build
 ifeq ($(TARGET),hw)
@@ -30,10 +31,10 @@ $(BUILD_DIR)/app.exe:
 	mkdir -p $(BUILD_DIR)
 	cp xrt.ini $(BUILD_DIR)
 	cp run_$(TARGET).sh $(BUILD_DIR)
-	$(CXX) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe -Wall -O0 -g -std=c++1y -fmessage-length=0 \
+	$(CXX) $(CXXFLAGS) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
 		-I$(SDKTARGETSYSROOT)/usr/include/xrt -L$(SDKTARGETSYSROOT)/usr/lib \
-		-I$XILINX_VIVADO/include \
-		-lOpenCL -pthread -lrt -lstdc++ --sysroot=$(SDKTARGETSYSROOT)
+		-I$(XILINX_VIVADO)/include \
+                -lxrt_coreutil -pthread --sysroot=$(SDKTARGETSYSROOT)
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:

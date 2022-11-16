@@ -1,9 +1,10 @@
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
 
 TARGET := hw_emu
-PLATFORM := xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
+CXXFLAGS += -g -std=c++17 -Wall -O0
 
 run: build
 ifeq ($(TARGET),hw)
@@ -20,9 +21,9 @@ build: host emconfig xclbin
 host: $(BUILD_DIR)/app.exe
 $(BUILD_DIR)/app.exe:
 	mkdir -p $(BUILD_DIR)
-	g++ -Wall -g -std=c++11 $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
+	g++ $(CXXFLAGS) $(SRCDIR)/host.cpp -o $(BUILD_DIR)/app.exe \
 		-I${XILINX_XRT}/include/ \
-		-L${XILINX_XRT}/lib/ -lOpenCL -pthread -lrt -lstdc++
+                -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:

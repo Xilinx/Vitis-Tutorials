@@ -140,7 +140,11 @@ The methodology for developing optimized accelerated applications is comprised o
    <li>Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
    <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
  </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/10-GeMM_AIEvsDSP/README.md">Versal GeMM Implementation</a></td>
+ <td>This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with RTL using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.</td>
+ </tr>
 </table>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>

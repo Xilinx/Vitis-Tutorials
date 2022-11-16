@@ -11,6 +11,8 @@
 
 ***Version: Vitis 2022.1***
 
+The ***AI Engine Development Using Vitis Model Composer*** webinar demonstrated this tutorial live on September 21, feel free to [watch the webinar on-demand](https://pages.xilinx.com/EN-WB-2022-09-21-AIEngineDevelopment_LP-Registration.html) if you missed it. Check out [Vitis Developer 2022 Series](https://www.xilinx.com/about/events/2022/vitis-developer-series.html) to learn more about Vitis and the tutorials.  
+
 ## Introduction
 
 The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.

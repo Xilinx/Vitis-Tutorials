@@ -1,0 +1,22 @@
+{
+    "daily": {
+        "gemm_32x32x32": {
+            "GEMM_SIZE": "32"
+        },
+        "gemm_64x64x64": {
+            "GEMM_SIZE": "64"
+        },
+        "gemm_128x128x128": {
+            "GEMM_SIZE": "128"
+        },
+        "gemm_256x256x256": {
+            "GEMM_SIZE": "256"
+        },
+        "gemm_512x512x512": {
+            "GEMM_SIZE": "512"
+        },
+        "gemm_1024x1024x1024": {
+            "GEMM_SIZE": "1024"
+        }
+    }
+}

@@ -17,11 +17,10 @@
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">Custom Platform Creation Tutorial on MPSoC</a></td>
  <td>This tutorial demonstrates how you can create a custom Vitis platform on ZCU104 demo board and validate the platform.</td>
  </tr>
-
  <tr>
  <td align="center"><a href="./Design_Tutorials/03_Edge_VCK190/README.md">Custom Platform Creation Tutorial on Versal</a></td>
  <td>This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.</td>
@@ -29,7 +28,12 @@
  <tr>
  <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Platform Creation Example on KV260 Starter Kit</a></td>
  <td>Extend the <a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria SOM KV260 Starter Kit.
-</td>
+ </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/04_Edge_VCK190_DFX/README.md">Versal Custom DFX Platform Creation Tutorial</a></td>
+ <td>This tutorial demonstrates how you can create a custom DFX platform to run acceleration applications on VCK190 evaluation board.
+ </td>
  </tr>
 </table>
 
