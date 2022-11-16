@@ -109,8 +109,10 @@ $(SW_FILES): $(DTB_FILE)
 
 # Target: sysroot
 # Install sysroot to sw_comp directory
-sysroot: $(COMMON_IMAGE_PATH)/sdk.sh
-	rm -rf $(SYSROOT_DIR)/ && mkdir -p $(SYSROOT_DIR) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d $(SW_COMP_DIR)/ -y
+sysroot:  $(SYSROOT_DIR)
+
+$(SYSROOT_DIR):$(COMMON_IMAGE_PATH)/sdk.sh
+	mkdir -p $(SYSROOT_DIR) && sh $(COMMON_IMAGE_PATH)/sdk.sh -d $(SYSROOT_DIR)/ -y
 
 #----------
 $(PDI_FILE): $(STATIC_XSA)

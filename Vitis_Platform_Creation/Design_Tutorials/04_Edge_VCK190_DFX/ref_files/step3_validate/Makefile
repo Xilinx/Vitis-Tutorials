@@ -16,7 +16,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
 COMMON_IMAGE_VERSAL ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
-SYSROOT_VERSAL ?= $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT_VERSAL ?= $(COMMON_IMAGE_VERSAL)/sysroots/sysroots/cortexa72-cortexa53-xilinx-linux
 
 
 PL_EXAMPLE_PATH=Vitis_Accel_Examples/cpp_kernels/simple_vadd/
