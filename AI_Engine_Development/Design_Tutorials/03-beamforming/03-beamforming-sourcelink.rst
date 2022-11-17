@@ -3,5 +3,4 @@ Version 2022.2
 #########################################################################
 
 
-
-`View source files <https://github.com/Xilinx/Vitis-Tutorials/tree/2022.2/AI_Engine_Development/Design_Tutorials/03-beamforming>`_
+To view the source files for this tutorial, click `here <https://github.com/Xilinx/Vitis-Tutorials/tree/2022.2/AI_Engine_Development/Design_Tutorials/03-beamforming>`_.
