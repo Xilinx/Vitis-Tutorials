@@ -363,11 +363,15 @@ Vitis Analyzer is then launched. From here you can see the **Graph View**, the *
 
 ![missing image](Images/Image_023.png)
 
-The Simulation Data Inspector opens-up and we can see the output frames and the estimate of the output throughput as shown below:
+The Simulation Data Inspector opens and shows the output of the AI Engine. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, we can use data cursors to select a specific time region over which to calculate throughput:
+
+1. Select the "Out1" signal from the list on the left. 
+2. Right-click on the plot and select "Data Cursors->Two". 
+3. Position the cursors at the beginning of the first and third signal frames, as shown below. 
 
 ![missing image](Images/Image_024.png)
 
-Here the estimated throughput is 44 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
+Here the estimated throughput is 28 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
 
 ## Stage 4: Increasing PLIO bitwidth and re-generate
 
@@ -383,11 +387,11 @@ Click **OK**. Place the block just after the input port, and a copy of this bloc
 
 Re-open the **Vitis Model Composer Hub** and click **Generate** to re-compile and re-simulate the design.
 
-After the AI Engine simulation, the estimated throughput is 177 MSPS. This is computed from the following timestamped (green) output data:
+After the AI Engine simulation, the estimated throughput is 126 MSPS. This is computed from the following timestamped (green) output data, calculated for two full frame periods:
 
 ![missing image](Images/Image_026.png)
 
-Three frames are received but only two interframe idle time are taken into account. A more precise estimate woul be to count the 512 output samples in between the 2 red vertical line. This gives almost 125 MSPS which is  1/8th of the input sample rate (1 GSPS). This means that the design can support for sure the 800 MSPS that were specified in the design.
+This gives around 125 MSPS which is  1/8th of the input sample rate (1 GSPS). This means that the design can support the 800 MSPS that were specified in the design.
 
 ## Conclusion
 
