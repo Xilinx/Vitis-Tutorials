@@ -8,6 +8,7 @@
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_D_01-KV260",
+        "disabled": "true",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_zynqmp.sh"
