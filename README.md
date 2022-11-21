@@ -184,7 +184,7 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
                 <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API :new: </a>
             </td>
             <td>
-                &nbsp;
+                <a href="./Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo">Get Moving with Alveo</a>
             </td>
         </tr>
 	</tbody>
