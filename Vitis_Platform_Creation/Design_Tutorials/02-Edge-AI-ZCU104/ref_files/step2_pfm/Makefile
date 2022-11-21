@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
@@ -20,7 +20,7 @@ VERSION=2022.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
-SYSROOT=sysroot
+SYSROOT=$(ROOT_DIR)/sysroot
 SW_COMP=sw_comp
 
 
@@ -31,7 +31,7 @@ help:
 	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## to generate platform with pre-built software components"
 	
 
-all: check-common-image sw_comps dtb pfm_fsbl pfm
+all: check-common-image sw_comps dtb pfm_fsbl pfm sysroot
 sd_card:all
 
 #target : check  whether the common image is ready 

@@ -20,7 +20,7 @@ COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(V
 BOOT=boot
 SD_DIR=sd_dir
 SW_COMP=sw_comp
-SYSROOT=sysroot
+SYSROOT=$(ROOT_DIR)/sysroot
 XSA_PATH=$(ROOT_DIR)/../step1_vivado/build/vivado/
 XSA_NAME=custom_hardware_platform
 PLATFORM_NAME=custom_platform
@@ -35,7 +35,7 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	
 
-all: check-common-image sw_comps dtb pfm getplatforminfo
+all: check-common-image sw_comps dtb pfm sysroot getplatforminfo
 sd_card:all
 
 #target : check  whether the common image is ready 
