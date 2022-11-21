@@ -19,10 +19,7 @@ unset LD_LIBRARY_PATH
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
 export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
 export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
-
-# Optionally Setup XRT_ROOT, pointing to XRT RPMs,
-# if not set it will automatically be excluded from v++ packaging...
-#export XRT_ROOT=<Path to XRT RPMs - Directory>
+export DSPLIB_VITIS=<Path to Vitis DSP Libs - Directory>
 
 # Setup SDKTARGETSYSROOT and CXX...
 source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
