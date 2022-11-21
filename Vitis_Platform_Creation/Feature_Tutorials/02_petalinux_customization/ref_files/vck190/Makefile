@@ -26,7 +26,7 @@ PDI_DIR		=pdi_dir
 XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/hw/
 XSA_NAME	?=hw
 #PDI=$(wildcard $(PDI_PATH)/*.pdi)
-
+IMAGE_DIR=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)/images/linux/
 # --------------------------------------
 # Note: This makefile is not designed with dependent awareness. 
 # If you change a source file, please run `make clean; make all` to rebuild from scratch.
@@ -40,17 +40,18 @@ help:
 	
 
 all: check-xsa petalinux_proj petalinux_build petalinux_build_sdk
-
+sd_card:check-xsa petalinux_proj petalinux_build sdimg
 check-xsa:
 ifeq ($(wildcard $(XSA_PATH)/$(XSA_NAME).xsa),)
 	@echo "'XSA_PATH' is not accesible, please either download base platform  from Xilinx official website and set this flag to sepcify the PLATFORM_PATH which contains xsa file, or provide yourself  xsa file path"
 	@make help
 	@echo "exit ....." && exit 1
 endif
-	mkdir -p $(PDI_DIR) && cd $(PDI_DIR) && unzip $(XSA_PATH)/$(XSA_NAME).xsa
+	mkdir -p $(PDI_DIR) && cd $(PDI_DIR) && cp $(XSA_PATH)/$(XSA_NAME).xsa . && unzip $(XSA_PATH)/$(XSA_NAME).xsa
 	@echo "check if your XSA file contains PDI file, if not please go to your Vivado project, set the projest to a normal project (not a extensible project) and regenerate the XSA file including the bit file"
 	@ls $(ROOT_DIR)/$(PDI_DIR)/*.pdi
-	
+	@echo "Transfer the XSA to fixed XSA for petalinux building "
+	v++ -l --platform $(ROOT_DIR)/$(PDI_DIR)/hw.xsa -t hw --save-temps -g  -o $(PDI_DIR)/fixed.xsa
 
 	
 
@@ -84,7 +85,7 @@ update_rootfs_config:
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template versal --force -n $(PETALINUX_PROJ_NAME)
 	$(MAKE)  update_config
-	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(XSA_PATH)/$(XSA_NAME).xsa --silentconfig
+	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(ROOT_DIR)/$(PDI_DIR)/fixed.xsa --silentconfig
 	$(MAKE)  update_rootfs_config
 	$(MAKE)  update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
@@ -96,6 +97,13 @@ petalinux_build:
 petalinux_build_sdk:
 	petalinux-build -p $(PETALINUX_DIR) --sdk
 	# cd $(PETALINUX_DIR) && petalinux-package --sysroot
-
+#to test the image
+sdimg:
+	mkdir -p sd_card 
+	cp $(IMAGE_DIR)/BOOT.BIN sd_card/
+	cp $(IMAGE_DIR)/boot.scr sd_card/
+	cp $(IMAGE_DIR)/Image sd_card/
+	cp run_app.sh sd_card/
+	$(XILINX_VITIS)/scripts/vitis/util/mkfsImage.sh -s sd_card -o sd_card.img -m 1 -e $(IMAGE_DIR)/rootfs.ext4
 clean:
-	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.xsa $(PDI_DIR)/ 
+	$(RM)  $(ABS_BUILD_PATH) vivado*.log *.log vivado*.jou *.xsa _x v++* fixed* $(PDI_DIR)/ sd_card/ sd_card.img boot/  -rf

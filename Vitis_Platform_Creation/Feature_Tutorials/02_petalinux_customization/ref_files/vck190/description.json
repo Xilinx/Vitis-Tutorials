@@ -24,11 +24,21 @@
             }
         ],
         "targets": [
-            "vitis_hw"
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
         ],
         "custom_build_target":
         {
-            "all": "all"
+            "all": "all",
+            "hw" : "sd_card"
         }
         
     },
