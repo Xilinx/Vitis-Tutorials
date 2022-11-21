@@ -27,20 +27,17 @@ ABS_XSA_HWEMU=$(ABS_HW_PATH)/$(XSA_NAME)_hw_emu.xsa
 .PHONY: all hw petalinux clean
 
 all: hw
+sd_card:all
 
 # target: hw
 # Build bare minial Vivado design and export XSA
 hw: $(ABS_BD_TCL)
 	mkdir -p $(ABS_HW_PATH)
-	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL)
-
-hw_proj: $(ABS_BD_TCL)
-	mkdir -p $(ABS_HW_PATH)
-	cd $(ABS_HW_PATH); vivado -mode tcl -notrace -source $(ROOT_DIR)/create_project.tcl
+	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -tclargs VCK190
 
 
 clean:
-	$(RM) -r $(ABS_HW_PATH)/myproj $(ABS_XSA) $(ABS_XSA_RP) $(ABS_XSA_HWEMU)
+	$(RM) -r $(ABS_HW_PATH)/project_1 $(ABS_XSA) $(ABS_XSA_RP) $(ABS_XSA_HWEMU)
 
 cleanlog:
 	$(RM) $(ABS_HW_PATH)/vivado*.log $(ABS_HW_PATH)/vivado*.jou 

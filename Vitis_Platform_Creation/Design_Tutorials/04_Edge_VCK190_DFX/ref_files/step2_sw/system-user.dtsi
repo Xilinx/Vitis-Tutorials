@@ -54,10 +54,5 @@ chosen {
 		compatible = "fixed-clock";
 		phandle = <0x13>;
 	};
-	zyxclmm_drm {
-		compatible = "xlnx,zocl-versal";
-		status = "okay";
-		xlnx,pr-decoupler;
-		xlnx,pr-isolation-addr = <0x0 0xA4020000>;
-	};
+	
 };

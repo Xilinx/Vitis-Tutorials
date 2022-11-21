@@ -15,43 +15,44 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-COMMON_IMAGE_VERSAL ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
-SYSROOT_VERSAL ?= $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux
+#PLATFORM=/group/bcapps/sven/project/testfordfx/2022.1/Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
+COMMON_IMAGE ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
+SYSROOT ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux/
 
 
 PL_EXAMPLE_PATH=Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 AIE_EXAMPLE_PATH=Vitis_Accel_Examples/aie_kernels/aie_adder/
 
 .PHONY: all vadd aie_adder platforminfo clean ultraclean
-#all: platforminfo vadd aie_adder 
+#all: To support emulation
 all: platforminfo vadd aie_adder vadd_hw
+sd_card:platforminfo vadd_hw aie_adder_hw 
 
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	cd Vitis_Accel_Examples/ && git checkout 2022.1 && sed -i "s/vck190_base_dfx/dfx/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
+	cd Vitis_Accel_Examples/ && git checkout 2022.2 && sed -i "s/vck190_base_dfx/vck190_custom_dfx/g"  aie_kernels/aie_adder/makefile_versal_ps.mk
 # Modify Vitis_Accel_Examples to allow running vadd on DFX platforms
 	
 
 vadd: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT_VERSAL)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu PLATFORM=$(PLATFORM) EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT_VERSAL)
+	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 # vadd_hw is a place-holder for manual build and test on hardware
 # In this flow, vadd_hw and vadd are mutually exclusive. 
 # Please run `make clean` before 
 vadd_hw: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT_VERSAL)
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 vadd_hw_pack: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) sd_card TARGET=hw PLATFORM=$(PLATFORM) EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL)
+	$(MAKE) -C $(PL_EXAMPLE_PATH) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE)
 
 
 aie_adder: 
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT_VERSAL)
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 aie_adder_hw: 
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw DEVICE=$(PLATFORM) HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT_VERSAL)
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 platforminfo: platforminfo.txt
 
