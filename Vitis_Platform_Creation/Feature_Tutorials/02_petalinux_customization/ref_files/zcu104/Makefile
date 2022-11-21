@@ -21,6 +21,7 @@ PETALINUX_CONFIG=$(PETALINUX_DIR)/project-spec/configs/config
 PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
 XSA_PATH 	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202220_1/hw/
 XSA_NAME	?=hw
+IMAGE_DIR=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)/images/linux/
 .PHONY: help
 
 help:
@@ -28,8 +29,8 @@ help:
 	@echo "make all XSA_PATH=<path/to/base_platform/>  	## to generate Linux Image and SDK tool by using Petalinux with pre-exported XSA file or base paltform "
 	
 
-all: check-xsa petalinux_proj petalinux_build petalinux_build_sdk
-
+all: check-xsa petalinux_proj petalinux_build 
+sd_card:check-xsa petalinux_proj petalinux_build sdimg
 
 check-xsa:
 ifeq ($(wildcard $(XSA_PATH)/$(XSA_NAME).xsa),)
@@ -37,6 +38,9 @@ ifeq ($(wildcard $(XSA_PATH)/$(XSA_NAME).xsa),)
 	@make help
 	@echo "exit ....." && exit 1
 endif
+	mkdir hw -p && cp $(XSA_PATH)/$(XSA_NAME).xsa hw/
+#Extensible xsa dose not include the bit file. using  extnesible XSA to build the linux image would cause hung in boot stage.  So transfer the extensible XSA to a fixed XSA for building the Linux image and test it.
+	cd hw; vivado -mode batch -notrace -source ../convert_to_fixed_xsa.tcl
 
 
 update_dtsi:
@@ -75,19 +79,25 @@ update_rootfs_config:
 petalinux_proj:
 	mkdir -p $(ABS_BUILD_PATH);cd $(ABS_BUILD_PATH); petalinux-create -t project --template zynqMP --force -n $(PETALINUX_PROJ_NAME)
 	$(MAKE)  update_config
-	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=$(XSA_PATH)/$(XSA_NAME).xsa --silentconfig
+	petalinux-config -p $(PETALINUX_DIR) --get-hw-description=hw/xsa_file_for_petalinux.xsa --silentconfig
 	$(MAKE)  update_rootfs_config
 	$(MAKE)  update_dtsi
 	petalinux-config -p $(PETALINUX_DIR) --silentconfig
 
 petalinux_build:
 	petalinux-build -p $(PETALINUX_DIR)
-	cd $(PETALINUX_DIR) && petalinux-package --boot --u-boot
-
+	cd $(PETALINUX_DIR) && petalinux-package --fpga --boot --u-boot
 petalinux_build_sdk:
 	petalinux-build -p $(PETALINUX_DIR) --sdk
 	cd $(PETALINUX_DIR) && petalinux-package --sysroot
-
+sdimg:
+	mkdir -p sd_card 
+	cp $(IMAGE_DIR)/BOOT.BIN sd_card/
+	cp $(IMAGE_DIR)/boot.scr sd_card/
+	cp $(IMAGE_DIR)/system.dtb sd_card/
+	cp $(IMAGE_DIR)/Image sd_card/
+	cp run_app.sh sd_card/
+	$(XILINX_VITIS)/scripts/vitis/util/mkfsImage.sh -s sd_card -o sd_card.img -m 1 -e $(IMAGE_DIR)/rootfs.ext4
 clean:
-	$(RM) -rf $(ABS_BUILD_PATH) 
+	$(RM) -rf $(ABS_BUILD_PATH) hw* sd* -rf *.log _x vivado* 
 
