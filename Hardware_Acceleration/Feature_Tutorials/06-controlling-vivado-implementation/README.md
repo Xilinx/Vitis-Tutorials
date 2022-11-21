@@ -46,7 +46,7 @@ If necessary, it can be easily ported to other versions and platforms.
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, enter the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to the `Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation` directory, and then access `reference-files/run` directory.
+2. Navigate to the `Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation` directory, and then access `reference-files` directory.
 
 ### Set Up the Vitis Environment
 
@@ -61,7 +61,7 @@ If necessary, it can be easily ported to other versions and platforms.
 
 ## Controlling Vivado Synthesis and Implementation through the Vitis Compiler
 
->**NOTE:** In this tutorial, run all instructions from the `reference-files/run` directory.
+>**NOTE:** In this tutorial, run all instructions from the `reference-files` directory.
 
 The `–-vivado` switch is paired with properties or parameters to configure the Vivado tools. For instance, the `--vivado` switch  can configure optimization, placement, and timing, or set up emulation and compile options. In the command line flow, properties are specified as `--vivado.prop <object_type>.<object_name>.<prop_name>` where:
 
@@ -85,8 +85,8 @@ In this tutorial, the `-–vivado` command options are defined in the `design.cf
 1. Compile the kernel with the Vitis compiler and link it with the platform file to produce the device binary (`.xclbin`) using the following commands.
 
    ```bash
-   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo ../src/krnl_watermarking.cl
-   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo
+   v++ -t hw --config design.cfg -c -k apply_watermark -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo ../src/krnl_watermarking.cl --platform xilinx_u200_gen3x16_xdma_2_202110_1
+   v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin apply_watermark.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xo --platform xilinx_u200_gen3x16_xdma_2_202110_1
    ```
 
 2. Open the `design.cfg` file and get familiar with different options. The following list describes some of the command options.
@@ -123,7 +123,7 @@ For information on specific Vivado tool usage and optimization, refer to the *Vi
 
 You can run the Vivado tool in batch mode using a Tcl script or run it interactively. In this tutorial, you will run it interactively, and then source a Tcl script inside the tool to achieve your optimization. This will give you an opportunity to familiarize yourself with the Vivado IDE.
 
-1. From the `/reference-file/run` folder, launch the Vivado IDE.
+1. From the `/reference-file` folder, launch the Vivado IDE.
 
    ```bash
    vivado
