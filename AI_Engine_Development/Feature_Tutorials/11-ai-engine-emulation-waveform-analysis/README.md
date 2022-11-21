@@ -448,6 +448,23 @@ Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see
 
     This information is useful because it helps determine how long the kernel runs and can be used with the **Trace** to help determine if kernels are running optimally, or if there are stalls.
 
+9. You can analyze the AIE status and profile in HW emulation same as that of Hardware. The AIE status can be prior analyzed during HW emulation in Vitis Analyzer for debug purposes. 
+  The xrt.ini on PS should have the following entries and must be packaged in v++ package flow before launching emulation. 
+  
+```bash
+   aie_profile=true
+   aie_status=true
+```
+As a result, two files: aie_status_edge.json and aieshim_status_edge.json will be generated. These files can be copied back from embedded linux file system into the host machine and then loaded into Vitis Analyzer. 
+
+The AI Engine status is copied to the following files when the host program is running:
+
+* xrt.run_summary : Run summary that contains list of files information that can be used by Vitis Analyzer.
+* aie_status_edge.json : Status of AI Engine and AI Engine memory
+* aieshim_status_edge.json : AI Engine interface tiles status. 
+
+For more details, please see [Analyzing AI Engine Status in Hardware Emulation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Hardware-Emulation) 
+
 9. Close the Vitis analyzer.
 
 ## Summary
