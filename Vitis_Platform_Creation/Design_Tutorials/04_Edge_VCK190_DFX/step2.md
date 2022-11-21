@@ -30,25 +30,13 @@ The unique requirements from DFX platforms are from the device tree.
 
 ### Generating Device Tree
 
-We use the static XSA to generate the base device tree with device tree generator (DTG). The generated device tree (.dts and .dtsi) only includes IP information in the static region. If any IP in the dynamic region needs driver support, we need to add them to the device tree manually. AI Engine is an example that needs driver support. We will add its info to system-user.dtsi. ZOCL driver needs to know the dfx_decoupler IP address so that when doing DFX reconfiguration, XRT can turn on the decoupler for isolation before configuring the dynamic region and turn the isolation off after configuration. DTG creates the default ZOCL nodes in the pl.dtsi file, we will append ZOCL configurations for DFX in the system-user.dtsi file.
+We use the static XSA to generate the base device tree with device tree generator (DTG). The generated device tree (.dts and .dtsi) only includes IP information in the static region. If any IP in the dynamic region needs driver support, we need to add them to the device tree manually. AI Engine is an example that needs driver support. We need to add its info to system-user.dtsi. 
 
 > Note: Since currently only one DFX region is supported, ZOCL driver and device tree only supports one dfx_decoupler IP address.
 
 > Note: If you have multiple RM and they have different IP, you can enable these IP with device tree overlay. Device tree overlay is out of the scope of this tutorial.
 
-Generate the base device tree from the static XSA
-
-```
-createdts -hw <static XSA> \
-    -zocl\
-    -out . \
-    -platform-name vck190_custom_dt \
-    -git-branch xlnx_rel_v2022.1
-```
-
-The generated device tree files are located in build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp path.
-
-Create **system-user.dtsi** file in this directory and add the following contents to system-user.dtsi. 
+#### First add the following AIE info to **system-user.dtsi** file 
 
 ```
 &amba_pl {
@@ -84,36 +72,27 @@ Create **system-user.dtsi** file in this directory and add the following content
 		compatible = "fixed-clock";
 		phandle = <0x13>;
 	};
-	zyxclmm_drm {
-		compatible = "xlnx,zocl-versal";
-		status = "okay";
-		xlnx,pr-decoupler;
-		xlnx,pr-isolation-addr = <0x0 0xA4000000>;
-	};
 };
 ```
 
-Please check your DFX_Decoupler address in the block design and update it to `xlnx,pr-isolation-addr` in the device tree.
+A prepared [system-user.dtsi](ref_file/step2_sw/system-user.dtsi) file is ready for use. 
 
 If you updated the AI Engine clock frequency, please update the `clock-frequency` of `aie_core_ref_clk_0`.
-
-Include system-user.dtsi into system-top.dts
+  
+#### Generate the base device tree from the static XSA
 
 ```
-echo "#include \"system-user.dtsi\"" >> vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/system-top.dts
+createdts -hw <static XSA> \
+    -zocl\
+    -out . \
+    -platform-name vck190_custom_dt \
+    -git-branch xlnx_rel_v2022.2 \
+    -dtsi system-user.dtsi \
+    -board versal-vck190-reva-x-ebm-01-reva \
+    -compile
 ```
 
-Generate the final DTB.
-
-```bash
-cd step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/
-# preprocess the dts file because DTC command can not recognize the #include grammar
-gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o system.dts system-top.dts  
-# compile the dts into dtb
-dtc -I dts -O dtb -o system.dtb system.dts 
-```
-
-You can find the system.dtb file in step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/ directory.
+The generated device tree files are located in build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp path.You can find the system.dtb file in step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/ directory.
 
 
 
@@ -242,7 +221,7 @@ image {
 ```
 
 
-### Platform Packaging
+#### Platform Packaging
 
 We will use XSCT command line tool to create the Vitis DFX platform. 
 

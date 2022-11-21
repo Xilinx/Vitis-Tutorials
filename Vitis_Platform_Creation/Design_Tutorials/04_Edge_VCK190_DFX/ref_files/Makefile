@@ -26,7 +26,7 @@ XPFM=./step2_sw/build/pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NA
 
 .PHONY: all clean step1 step2 step3 
 all: step1 step2 step3
-
+sd_card:step1 step2 step3_hw
 step1: $(XSA)
 
 $(XSA):
@@ -44,7 +44,9 @@ $(XPFM): $(XSA)
 step3: $(XPFM)
 	echo "Step 3: Validating the platform"
 	$(MAKE) -C step3_validate all
-
+step3_hw: $(XPFM)
+	echo "Step 3: Validating the platform"
+	$(MAKE) -C step3_validate sd_card
 clean:
 	$(MAKE) -C step1_hw clean
 	$(MAKE) -C step2_sw clean

@@ -154,7 +154,7 @@ To verify the DFX platform functionality for PL kernels, we can do the following
 
 The user flow for configuring the XCLBIN to DFX platforms and flat platforms are identical.
 
-#### 1a. Create a Vector-Addition application
+#### Create a Vector-Addition application
 
 1. Launch Vitis
 
@@ -189,7 +189,9 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 
    - Select template **Vector Addition**. Click **Finish**.
 
-4. Build the vector addition application for hardware emulation
+4. Build the vector addition application for hardware emulation.
+
+   **Note**:Please omit this step, we are updating the code to support hardware emulation ASAP.
 
    - Select **vadd_system** project
    - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
@@ -202,7 +204,9 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
    - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
 
 
-#### 1b. Test the Application on Hardware Emulation 
+#### Test the Application on Hardware Emulation 
+
+**Note**:Please omit this step, we are updating the code to support hardware emulation ASAP.
 
 Validate the application with hardware emulation can first test the platform base functions such as boot initialization, PetaLinux configuration, basic acceleration feature, etc. DFX feature cannot be emulated in hw-emu. We will validate it in hardware next.
 
@@ -234,7 +238,7 @@ Validate the application with hardware emulation can first test the platform bas
 
 
 
-#### 1c. Test the Application on Hardware
+#### Test the Application on Hardware
 
 1. Copy `vadd_system/Hardware/package/sd_card.img` to local if you build the project on a remote server or virtual machine.
 
@@ -252,43 +256,91 @@ Validate the application with hardware emulation can first test the platform bas
 
 5. Launch the test application from UART console
 
-   ```
-   cd /mnt/sd-mmcblk0p1
-   ./vadd binary_container_1.xclbin
-   ```
+   <details>
 
-   > Note: Depends on the device tree version, the mount point of the SD card could be /mnt/sd-mmcblk1p1. Please try this path if /mnt/sd-mmcblk0p1 is not available on your system.
+   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
+
+     Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     cd /run/media/sd-mmcblk0p1
+     ./simple_vadd krnl_vadd.xclbin
+     ```
+
+   </details>
+
+   <details>
+   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+
+     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+
+     - Log into the system
+     
+     ```bash
+     petalinux login:petalinux
+     You are required to change your password immediately (administrator enforced).
+     New password:
+     Retype new password:
+     petalinux:~$ sudo su
+     We trust you have received the usual lecture from the local System
+     Administrator. It usually boils down to these three things:
+         #1) Respect the privacy of others.
+         #2) Think before you type.
+         #3) With great power comes great responsibility.
+     Password:
+     petalinux:/home/petalinux#
+     ```
+
+     - Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
+     petalinux:/home/petalinux# ./simple_vadd krnl_vadd.xclbin
+     ```
+   </details>  
+
 
 6. Expected print on UART console
 
 <details>
   <summary><b>Show Log</b></summary>
-
-  ```
-  root@petalinux:/mnt/sd-mmcblk0p1# ./vadd binary_container_1.xclbin
-  [   34.747622] [drm] Pid 770 opened device
-  [   34.751501] [drm] Pid 770 closed device
-  [   34.759710] [drm] Pid 770 opened device
-  [   34.763568] [drm] Pid 770 closed device
-  [   34.767554] [drm] Pid 770 opened device
-  Loading: 'binary_container_1.xclbin'
-  [   35.023095] [drm] get section AIE_METADATA err: -22
-  [   35.023119] [drm] zocl_xclbin_read_axlf 1ec78909-b5e7-4db2-9fe9-22fd362b09a4 ret: 0
-  [   35.029555] [drm] bitstream 1ec78909-b5e7-4db2-9fe9-22fd362b09a4 locked, ref=1
-  [   35.037397] [drm] No ERT scheduler on MPSoC, using KDS
-  [   35.049806] [drm] 9 non-zero interrupt-id CUs out of 10 CUs
-  [   35.049852] [drm] scheduler config ert(0)
-  [   35.055426] [drm]   cus(1)
-  [   35.059435] [drm]   slots(16)
-  [   35.062132] [drm]   num_cu_masks(1)
-  [   35.065095] [drm]   cu_shift(16)
-  [   35.068578] [drm]   cu_base(0xa4010000)
-  [   35.071799] [drm]   polling(0)
-  [   35.075658] [drm] bitstream 1ec78909-b5e7-4db2-9fe9-22fd362b09a4 unlocked, ref=0
-  TEST PASSED
-  [   35.079775] [drm] bitstream 1ec78909-b5e7-4db2-9fe9-22fd362b09a4 locked, ref=1
-  [   35.099312] [drm] bitstream 1ec78909-b5e7-4db2-9fe9-22fd362b09a4 unlocked, ref=0
-  [   35.116279] [drm] Pid 770 closed device
+```
+root@petalinux:/run/media/mmcblk0p1# ./vadd binary_container_1.xclbin
+EXE: /run/media/mmcblk0p1/simple_vadd
+[XRT] WARNING: The xrt.ini flag "opencl_summary" is deprecated and will be removed in a future release.  A summary file is generated when when any profiling is enabled, so please use the appropriate settings from "opencl_trace=true", "device_counter=true", and "device_trace=true."
+[XRT] WARNING: The xrt.ini flag "opencl_device_counter" is deprecated and will be removed in a future release.  Please use the equivalent flag "device_counter."
+INFO: Reading krnl_vadd.xclbin
+Loading: 'krnl_vadd.xclbin'
+[   74.394840] zocl-drm amba_pl@0:zyxclmm_drm: zocl_create_client: created KDS client for pid(577), ret: 0
+[   74.395731] zocl-drm amba_pl@0:zyxclmm_drm: zocl_destroy_client: client exits pid(577)
+[   74.401000] zocl-drm amba_pl@0:zyxclmm_drm: zocl_create_client: created KDS client for pid(577), ret: 0
+Trying to program device[0]: edge
+[   74.937477] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[   74.938038] [drm] found kind 8(IP_LAYOUT)
+[   74.938641] [drm] found kind 9(DEBUG_IP_LAYOUT)
+[   74.939375] [drm] skip kind 25(AIE_METADATA) return code: -22
+[   74.939688] [drm] found kind 7(CONNECTIVITY)
+[   74.940087] [drm] found kind 6(MEM_TOPOLOGY)
+[   74.940907] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[   74.948647] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+[   74.963753] cu_drv CU.2.auto: cu_probe: CU[0] created
+[   74.974174] cu_drv CU.2.auto:  ffff000803cbac10 xrt_cu_intr_thread: CU[0] start
+[   74.989334] [drm] zocl_xclbin_read_axlf f4f049d5-183a-e265-264d-ecfa34a51343 ret: 0
+[   75.037345] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 locked, ref=1
+[   75.038188] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+[   75.041054] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   75.042096] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 unlocked, ref=0
+[   75.094803] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 locked, ref=1
+[   75.095393] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+Device[0]: program successful!
+[   75.188269] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+[   75.192218] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0x0) shared(true)
+TEST PASSED
+[   78.347703] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   78.349191] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0x0)
+[   78.354584] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   78.355356] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 unlocked, ref=0
+[   78.462912] zocl-drm amba_pl@0:zyxclmm_drm: zocl_destroy_client: client exits pid(577)
   ```
 
 </details>
@@ -337,6 +389,8 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
 #### Test the Application on Hardware Emulation
 
+   **Note**:Please omit this step, we are updating the code to support thre hardware emulation ASAP.
+
 1. Launch Emulator for PS
 
    - Click menu Xilinx -> Start/Stop Emulator
@@ -374,12 +428,50 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
    > Note: Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
 
-4. Setup XRT runtime environment and launch test application from UART console
+4. Launch test application from UART console
 
-   ```
-   cd /mnt/sd-mmcblk0p1
-   ./plaie binary_container_1.xclbin
-   ```
+   <details>
+
+   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
+
+     Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     cd /run/media/sd-mmcblk0p1
+     ./plaie binary_container_1.xclbin
+     ```
+
+   </details>
+
+   <details>
+   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+
+     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+
+     - Log into the system
+     
+     ```bash
+     petalinux login:petalinux
+     You are required to change your password immediately (administrator enforced).
+     New password:
+     Retype new password:
+     petalinux:~$ sudo su
+     We trust you have received the usual lecture from the local System
+     Administrator. It usually boils down to these three things:
+         #1) Respect the privacy of others.
+         #2) Think before you type.
+         #3) With great power comes great responsibility.
+     Password:
+     petalinux:/home/petalinux#
+     ```
+
+     - Go to auto mounted FAT32 partition and run the application like below:
+
+     ```
+     petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
+     petalinux:/home/petalinux# ./plaie binary_container_1.xclbin
+     ```
+   </details> 
 
 5. Expected print on UART console
 
@@ -388,30 +480,60 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
    ```
    root@petalinux:/mnt/sd-mmcblk0p1# ./plaie binary_container_1.xclbin
-   [  381.642589] [drm] Pid 693 opened device
-   [  381.646455] [drm] Pid 693 closed device
-   [  381.654748] [drm] Pid 693 opened device
-   [  381.658589] [drm] Pid 693 closed device
-   [  381.662601] [drm] Pid 693 opened device
-   Loading: 'binary_container_1.xclbin'
-   [  381.928588] [drm] zocl_xclbin_read_axlf 8ff25a1d-3722-4718-bae4-e65ef3313a0f ret: 0
-   [  381.934195] [drm] bitstream 8ff25a1d-3722-4718-bae4-e65ef3313a0f locked, ref=1
-   [  381.941892] [drm] No ERT scheduler on MPSoC, using KDS
-   [  381.954244] [drm] Interrupt is not enabled for at least one kernel. Fall back to polling mode.
-   [  381.954419] [drm] 12 non-zero interrupt-id CUs out of 13 CUs
-   [  381.963051] [drm] CU ffffff02 is free-running.
-   [  381.968711] [drm] scheduler config ert(0)
-   [  381.973149] [drm]   cus(3)
-   [  381.977152] [drm]   slots(16)
-   [  381.979853] [drm]   num_cu_masks(1)
-   [  381.982813] [drm]   cu_shift(16)
-   [  381.986292] [drm]   cu_base(0xa4010000)
-   [  381.989515] [drm]   polling(1)
-   [  381.993375] [drm] bitstream 8ff25a1d-3722-4718-bae4-e65ef3313a0f unlocked, ref=0
+   Initializing ADF API...
+   [   39.786629] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(697), ret: 0
+   [   39.795569] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(697)
+   [   39.813998] zocl-drm axi:zyxclmm_drm: zocl_create_client: created KDS client for pid(697), ret: 0
+   [   40.245746] [drm] found kind 29(AIE_RESOURCES)
+   [   40.245765] [drm] found kind 8(IP_LAYOUT)
+   [   40.250535] [drm] found kind 9(DEBUG_IP_LAYOUT)
+   [   40.254738] [drm] found kind 25(AIE_METADATA)
+   [   40.259429] [drm] found kind 7(CONNECTIVITY)
+   [   40.263937] [drm] found kind 6(MEM_TOPOLOGY)
+   [   40.268417] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+   [   40.280809] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+   [   40.296964] cu_drv CU.2.auto: cu_probe: CU[0] created
+   [   40.302294] cu_drv CU.3.auto: cu_probe: CU[1] created
+   [   40.307630] cu_drv CU.4.auto: cu_probe: CU[2] created
+   [   40.312842] cu_drv CU.2.auto:  ffff000804e4ac10 xrt_cu_intr_thread: CU[0] start
+   [   40.320432] cu_drv CU.3.auto:  ffff00080271e810 xrt_cu_intr_thread: CU[1] start
+   [   40.321470] [drm] zocl_xclbin_read_axlf 8e1f87ed-725e-07da-c6b3-6786f6df2f1f ret: 0
+   [   40.327753] cu_drv CU.4.auto:  ffff000802696410 xrt_cu_intr_thread: CU[2] start
+   XAIEFAL: INFO: Resource group Avail is created.
+   XAIEFAL: INFO: Resource group Static is created.
+   XAIEFAL: INFO: Resource group Generic is created.
+   [   40.390527] [drm] bitstream 8e1f87ed-725e-07da-c6b3-6786f6df2f1f locked, ref=1
+   [   40.390547] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_add_context: Client pid(697) add context Domain(0) CU(0xffffffff) shared(true)
+   [   40.410331] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_del_context: Client pid(697) del context Domain(0) CU(0xffffffff)
+   Input memory virtual addr 0x0xffffb91ea000x
+   Input memory virtual addr 0x0xffffb91e9000x
+   in_bohdl0 in_bohdl1 sync[   40.421650] [drm] bitstream 8e1f87ed-725e-07da-c6b3-6786f6df2f1f unlocked, ref=0
+   started
+   in_bohdl0 in_bohdl1 sy[   40.429988] [drm] bitstream 8e1f87ed-725e-07da-c6b3-6786f6df2f1f locked, ref=1
+   nc done
+   Output memory virtual a[   40.439461] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_add_context: Client pid(697) add context Domain(0) CU(0xffffffff) shared(true)
+   ddr 0x0xffffb91e8000x
+   [   40.464816] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_add_context: Client pid(697) add context Domain(0) CU(0x1) shared(true)
+   run pl_mm2s_1
+   [   40.478710] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_add_context: Client pid(697) add context Domain(0) CU(0x0) shared(true)
+   run pl_mm2s_2
+   [   40.492018] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_add_context: Client pid(697) add context Domain(0) CU(0x2) shared(true)
+   run pl_s2mm
+   graph init. This does nothing be[   40.506280] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_del_context: Client pid(697) del context Domain(0) CU(0x1)
+   cause CDO in boot PDI already con[   40.519845] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_del_context: Client pid(697) del context Domain(0) CU(0x0)
+   figures AIE.
+   graph run
+   graph end[   40.533494] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_del_context: Client pid(697) del context Domain(0) CU(0xffffffff)
+
+   mm2s_1 completed with status(4[   40.547611] zocl-drm axi:zyxclmm_drm:  ffff00080085d410 kds_del_context: Client pid(697) del context Domain(0) CU(0x2)
+   )
+   mm2s_2 completed with status(4)
+   s2mm completed with status(4)
    TEST PASSED
-   [  381.998058] [drm] bitstream 8ff25a1d-3722-4718-bae4-e65ef3313a0f locked, ref=1
-   [  382.022624] [drm] bitstream 8ff25a1d-3722-4718-bae4-e65ef3313a0f unlocked, ref=0
-   [  382.045158] [drm] Pid 693 closed device
+   Releasing host Buffers...
+   Releasing remaining XRT objects...
+   [   40.561044] [drm] bitstream 8e1f87ed-725e-07da-c6b3-6786f6df2f1f unlocked, ref=0
+   [   40.578375] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(697)
    ```
 </details>
 

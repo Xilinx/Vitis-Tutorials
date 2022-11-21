@@ -25,13 +25,13 @@
 
 # Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2022.1***
+***Version: 2022.2***
 
 In this module, we will create a custom DFX platform to run acceleration applications for VCK190 evaluation board. 
 
 DFX means Dynamic Function eXchange. Platforms that support DFX feature allows user to reload acceleration kernels during runtime. 
 
-In Vitis 2022.1, user can define one reconfugurable partition (RP) region and create multiple reconfigurable modules (RM). The RP defines the boundary between reconfiguable region and static region. The RM defines the content to be reconfigured each time. The RP can include Programmable Logic and AI Engine resources. User can reconfigure the RM (rm1.xclbin, rm2.xclbin, etc.) during run time with XRT. The AI Engine needs to be fully reconfigured or not at all. Multi-parition AI Engine and PL DFX is not supported for now.
+User can define one reconfugurable partition (RP) region and create multiple reconfigurable modules (RM). The RP defines the boundary between reconfiguable region and static region. The RM defines the content to be reconfigured each time. The RP can include Programmable Logic and AI Engine resources. User can reconfigure the RM (rm1.xclbin, rm2.xclbin, etc.) during run time with XRT. The AI Engine needs to be fully reconfigured or not at all. Multi-parition AI Engine and PL DFX is not supported in this version.
 
 ![DFX Diagram](./images/dfx_rp_rm.svg)
 
@@ -41,9 +41,11 @@ In a general Vitis acceleration platform design, we start from building a base b
 
 ![Vitis DFX Platform Creation Steps Diagram](images/platform_creation_steps.svg)
 
-In this tutorial, we create the platform hardware design from scratch. The Vivado Versal extensible platform example for DFX will come in the future.
+In this tutorial, we will utilize the Vivado Versal DFX customizable example design to create the hardware design.
 
-To prepare the software components, we will import XSA into PetaLinux project and do some additional configurations. After building software and hardware components, we'll package the platform. 
+To prepare the software components, we will utilize common image released by Xilinx and `createdts` command to generate Device tree file.
+
+After the whole software and hardware components are ready, we'll package the platform. 
 
 In each step, we'll test the generated files to make sure they work as expected. A frequent test methodology can help to narrow down the root causes if any error occurs. At last, we'll run several test applications on this platform to test this customized platform.
 
@@ -76,9 +78,10 @@ Let's start with [Step 1](./step1.md).
 
 
 ## Changelog
-
+### 2022.2
+   - Versal DFX CED is utilized to create the hardware design
 ### 2022.1
-- New Tutorial
+   - New Tutorial
 
 
 <p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
