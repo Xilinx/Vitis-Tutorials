@@ -276,7 +276,7 @@ platform generate
 
 > Note: Please replace the file name and directory name in the script with your project file location.
 
-> Note: If you don't need to support hardware emulation, you can omit the option `-hw_emu` and its value for the command `platform create`.
+> Note: `-hw_emu` option is mandatory input in this version becasue of some limitations otherwise it will report error in `platforminfo` command and V++ link stage. It will be fixed in 2022.2 version.
 
 The `platform create` command needs the following input values:
 
