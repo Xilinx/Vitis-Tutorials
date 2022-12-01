@@ -372,7 +372,7 @@ This will include the XRT ini file which includes tracing parameters.
 
 
 [Detailed Description of All Vitis Compiler Switches](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
-[Details of Packaging the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging-the-System8)
+[Details of Packaging the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging-the-System)
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
