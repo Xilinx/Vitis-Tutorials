@@ -15,8 +15,8 @@
 # limitations under the License.
 
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
-export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
+export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.2 - Directory>
 
 # Optionally Setup XRT_ROOT, pointing to XRT RPMs,
 # if not set it will automatically be excluded from v++ packaging...
@@ -31,7 +31,7 @@ source $XILNX_TOOLS_LOCATION/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202210_1
+tgt_plat=xilinx_vck190_base_202220_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 echo ""
