@@ -132,11 +132,10 @@ When the elements of the Vitis software platform are installed, update the shell
 
 Edit `env_setup.sh` script with your file paths:
 ```bash
-export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
-
+export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
 source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
+export XLNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
 ```
 Then source the environment script:
 ```bash
