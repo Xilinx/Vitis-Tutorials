@@ -108,19 +108,15 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022.1/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://docs.xilinx.com/search/documents?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&virtual-field=title_only&content-lang=en-US)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2022.1](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401)
-
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202220_1` platform)
+* Install the [Vitis Software Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
-
-* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [Versal Common Image](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 </details>
 
