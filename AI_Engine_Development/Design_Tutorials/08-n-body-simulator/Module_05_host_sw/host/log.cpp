@@ -27,19 +27,18 @@ namespace Logger {
     else {
       ss << a; 
     }
-    
-    return ss.str(); 
+    return (ss.str()); 
   }
 
   std::string float2str(float a) {
     std::stringstream ss;
     ss << a;
-    return ss.str();
+    return (ss.str());
   }
 
   std::string int2float2str(int a) {
     float a_float = reinterpret_cast<float &>(a);
-    return float2str(a_float);
+    return (float2str(a_float));
   }
 
 
@@ -48,7 +47,7 @@ namespace Logger {
     obj.setLogLevel(userLogLevel); 
   }
   
-  void flog(Log::LogLevel userLogLevel, const std::string& msg){
+  void flog(Log::LogLevel userLogLevel, std::string msg){
     obj.writeLog(userLogLevel, msg);
   }
 
@@ -86,7 +85,7 @@ namespace Logger {
     Log::writeLog(LogLevel::INFO, msg);
   }
 
-  void Log::writeLog(LogLevel userLogLevel, const std::string& msg) {
+  void Log::writeLog(LogLevel userLogLevel, std::string msg) {
     if(userLogLevel <= m_logLevel) {
       std::string lvl;
       

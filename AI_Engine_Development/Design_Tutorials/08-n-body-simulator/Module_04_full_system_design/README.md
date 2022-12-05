@@ -18,7 +18,7 @@ or
 ```
 v++ -l                                     \
     -t hw                                  \
-    --platform xilinx_vck190_base_202110_1 \
+    --platform xilinx_vck190_base_202220_1 \
     --save-temps                           \
     -g                                     \
     --optimize 2                           \
@@ -27,14 +27,14 @@ v++ -l                                     \
     --clock.defaultFreqHz 300000000        \
     -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include              \
     -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include/hw           \
-    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202110_1               \
-    --report_dir ./build/reports/_build.hw.xilinx_vck190_base_202110_1/hpc  \
+    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202220_1               \
+    --report_dir ./build/reports/_build.hw.xilinx_vck190_base_202220_1/hpc  \
     --vivado.synth.jobs 8 --vivado.impl.jobs 8                              \
-    -o './build/build_dir.hw.xilinx_vck190_base_202110_1/hpc.xclbin'        \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202110_1/packet_sender.xo   \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202110_1/m2s_x2.xo          \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202110_1/packet_receiver.xo \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202110_1/s2m_x4.xo          \
+    -o './build/build_dir.hw.xilinx_vck190_base_202220_1/hpc.xclbin'        \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202220_1/packet_sender.xo   \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202220_1/m2s_x2.xo          \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202220_1/packet_receiver.xo \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202220_1/s2m_x4.xo          \
     ../Module_02_aie/build/libadf.a
 ```
 
@@ -75,4 +75,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
+<p align="center"> XD068 | &copy; Copyright 2022 Xilinx, Inc.</p>

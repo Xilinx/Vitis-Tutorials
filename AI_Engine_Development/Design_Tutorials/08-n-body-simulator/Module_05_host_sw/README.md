@@ -53,7 +53,7 @@ aarch64-linux-gnu-g++ ./build/aie_control_xrt.o \
 The same linking options were used to generate the `build/ps_app_animate.exe` executable.
 
 ## Host Software  
-After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/2021.1/html/xrt_native_apis.html).
+After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/2022.2/html/xrt_native_apis.html).
 
 This module compiles the following host applications and custom APIs:
 
@@ -104,7 +104,7 @@ The following is the general execution flow for the host applications.
 ## Next Steps
 After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module, [Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run).
 
-© Copyright 2021 Xilinx, Inc.
+© Copyright 2022 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -119,4 +119,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD068 | © Copyright 2021 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD068 | © Copyright 2022 Xilinx, Inc.</sup></p>

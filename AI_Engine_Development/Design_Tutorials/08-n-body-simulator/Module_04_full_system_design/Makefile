@@ -52,7 +52,7 @@ TARGET ?=hw
 # =========================================================
 # PL KERNELS DIR
 # =========================================================
-TEMP_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PFM)/_x_temp
+TEMP_DIR := $(PL_KERNELS_DIR)/build.$(TARGET)/_x_temp
 
 # =========================================================
 # V++ COMPILER FLAGS
@@ -65,12 +65,12 @@ VPP_FLAGS += --clock.defaultFreqHz 150000000
 # =========================================================
 # V++ LINKER FLAGS
 # =========================================================
-VPP_LDFLAGS := --vivado.synth.jobs 8 --vivado.impl.jobs 8
+VPP_LDFLAGS := --advanced.param compiler.userPostSysLinkOverlayTcl=$(XSA_DIR)/post_sys_link.tcl
 
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(XSA_DIR)/build.$(TARGET).$(PFM)
+BUILD_DIR := $(XSA_DIR)/build.$(TARGET)
 BUILD_REPORT_DIR := $(BUILD_DIR)/reports/_x
 
 # ################ TARGET: make pl_kernels ################

@@ -48,7 +48,7 @@ int main(int argc, char ** argv)
     throw std::runtime_error("No valid device handle found. Make sure using right xclOpen index.");
   auto xclbin = load_xclbin(dhdl, "a.xclbin");
   auto top = reinterpret_cast<const axlf*>(xclbin.data());
-  adf::registerXRT(dhdl, top->m_header.uuid);
+  //adf::registerXRT(dhdl, top->m_header.uuid);
   Logger::flog(LMESSAGE,"loaded a.xclbin ... ");
     
   int num_i = 32*4;
@@ -153,6 +153,10 @@ int main(int argc, char ** argv)
     for(int i=0; i<window_size_j; i++){
       *(host_in_j+i)=data_j[i];
     }
+
+    //Open AIE kernels handles
+    xrtGraphHandle nbody_graph_khdl = xrtGraphOpen(dhdl, top->m_header.uuid, "myGraph");
+    Logger::flog(LMESSAGE,"AIE graph kernel Opened ... ");
     
     // sync input memory
     xrtBOSync(in_i_bohdl, XCL_BO_SYNC_BO_TO_DEVICE , mem_size_i,/*OFFSET=*/ 0);
@@ -175,6 +179,17 @@ int main(int argc, char ** argv)
     
     //profile aie nbody 
     auto time_start = std::chrono::steady_clock::now();
+
+    //start AIE graph
+    int ret= xrtGraphReset(nbody_graph_khdl);
+    ret = xrtGraphRun(nbody_graph_khdl,1);
+    if (ret) {
+         throw std::runtime_error("Unable to run nbody graph");
+      }
+      else
+      {
+         Logger::flog(LMESSAGE,"nbody graph running...");
+      }
 
     // start output kernels run handles 
     xrtRunHandle packet_receiver_rhdl = xrtKernelRun(packet_receiver_khdl); 
@@ -257,6 +272,10 @@ int main(int argc, char ** argv)
 	}
       }
     }
+
+    //Closing AIE graph
+     xrtGraphClose(nbody_graph_khdl);
+    Logger::flog(LMESSAGE,"nbody AIE graph Kernel/Run Handles closed ...");
     
     //update data_i with new_i data
     NBodySimulator::updateNBodyFromPtr(host_new_i);

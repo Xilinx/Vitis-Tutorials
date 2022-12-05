@@ -37,16 +37,16 @@ Following is an example of how the `m2s_x2` kernel is compiled.
 ```
 v++ -c                                                                 \
     -t hw                                                              \
-    --platform xilinx_vck190_base_202110_1                             \
+    --platform xilinx_vck190_base_202220_1                             \
     --save-temps --optimize 2                                          \
     --hls.jobs 8 -I./xf_utils_hw/L1/include                            \
     -I./xf_utils_hw/L1/include/hw                                      \
     -I./kernel                                                         \
     -k m2s_x2                                                          \
     --hls.clock 300000000:m2s_x2                                       \
-    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202110_1          \
-    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202110_1 \
-    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202110_1/m2s_x2.xo'  \
+    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202220_1          \
+    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202220_1 \
+    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202220_1/m2s_x2.xo'  \
     ./kernel/m2s_x2.cpp                                                 
 ```
 The same compilation options are used to compile the `s2m_x4`, `packet_sender`, and `packet_receiver` kernels.
@@ -93,9 +93,9 @@ The `s2m_x4` kernel is generated from the `kernel/spec.json` specification. Revi
 
 * [Vitis Libraries Github Repo](https://github.com/Xilinx/Vitis_Libraries)
 
-* [Vitis Utilities Library Documentation](https://xilinx.github.io/Vitis_Libraries/utils/2021.1/index.html)
+* [Vitis Utilities Library Documentation](https://xilinx.github.io/Vitis_Libraries/utils/2022.2/index.html)
 
-* [Generating PL Data-Mover Kernels](https://xilinx.github.io/Vitis_Libraries/utils/2021.1/datamover/kernel_gen_guide.html)
+* [Generating PL Data-Mover Kernels](https://xilinx.github.io/Vitis_Libraries/utils/2022.2/datamover/kernel_gen_guide.html)
 
 * [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
 
@@ -116,4 +116,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
+<p align="center"> XD068 | &copy; Copyright 2022 Xilinx, Inc.</p>

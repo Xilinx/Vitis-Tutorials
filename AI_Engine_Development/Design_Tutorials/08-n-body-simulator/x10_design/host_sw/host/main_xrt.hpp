@@ -18,6 +18,7 @@
 #include <fstream>
 #include <chrono>
 #include <map>
+#include <cstring>
 
 #include "log.hpp" 
 #include "nbody.hpp" 

@@ -58,7 +58,8 @@ AIE_DIR := $(DESIGN_DIR)/aie
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 
-XFLIB_DIR_REL_PATH :=./Vitis_Libraries/utils
+#XFLIB_DIR_REL_PATH :=./Vitis_Libraries/utils
+XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 
 # =========================================================
@@ -90,7 +91,7 @@ s2m_x4_VPP_FLAGS := --hls.clock 150000000:s2m_x4
 # =========================================================
 # OUTPUT PRODUCTS
 # =========================================================
-BUILD_DIR := $(PL_KERNELS_DIR)/build.$(TARGET).$(PLATFORM)
+BUILD_DIR := $(PL_KERNELS_DIR)/build.$(TARGET)
 TEMP_DIR := $(BUILD_DIR)/_x_temp
 TEMP_REPORT_DIR := $(BUILD_DIR)/reports/_x
 
@@ -100,7 +101,7 @@ aie:
 
 # ################ TARGET: make all ################
 all: aie
-	$(MAKE) vitis_lib  
+	#$(MAKE) vitis_lib  
 	$(MAKE) pl_kernels
 
 # ################ TARGET: make vitis_libraries ################
@@ -111,7 +112,8 @@ Vitis_Libraries:
 	@echo "### ***** Vitis Libraries download done! *****"
 
 # ################ TARGET: make pre_build ################
-pre_build: vitis_lib _krnlgen
+pre_build: _krnlgen 
+#vitis_lib
 
 _krnlgen: $(XFLIB_DIR) $(CUR_DIR)/ksrc.mk $(CUR_DIR)/kernel/spec.json
 	@echo "### ***** Generating Data-Mover Source Code *.cpp Files ... *****"

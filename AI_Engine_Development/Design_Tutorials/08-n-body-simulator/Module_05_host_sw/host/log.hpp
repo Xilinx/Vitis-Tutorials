@@ -44,7 +44,7 @@ namespace Logger {
     std::string loglevel2str(LogLevel userLogLevel);     
     void setLogLevel(LogLevel userLogLevel);
     void setCoutLevel(LogLevel userLogLevel);
-    void writeLog(LogLevel userLogLevel, const std::string& msg);
+    void writeLog(LogLevel userLogLevel, std::string msg);
    
   };
 
@@ -53,5 +53,5 @@ namespace Logger {
   std::string float2str(float a);
   std::string int2float2str(int a);
   void set_level(Log::LogLevel userLogLevel, Log::LogLevel userCoutLevel);
-  void flog(Log::LogLevel userLogLevel, const std::string& msg);
+  void flog(Log::LogLevel userLogLevel, std::string msg);
 }
