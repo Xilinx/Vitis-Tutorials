@@ -86,7 +86,7 @@ update_boot:
 petalinux_create:
 	mkdir $(BUILD_DIR) -p; \
 	cd $(BUILD_DIR); \
-	petalinux-create -t project -s $(PATH_TO_BSP)/$(BSP) -n $(PETALINUX_DIR)
+	petalinux-create -t project -s $(BSP_DIR)/$(BSP) -n $(PETALINUX_DIR) # creates a petalinux project
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >>  $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 	@sed -i -E 's/.*CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME.+/CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME="petalinux-image-minimal"/' $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 

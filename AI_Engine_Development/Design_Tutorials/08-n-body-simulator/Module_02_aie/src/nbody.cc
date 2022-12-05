@@ -108,7 +108,9 @@ void nbody(
 				const v8float * restrict zj_v8  = (v8float *)(particles_j) + (2*NUM_J_VECTORS);
 
 				//for (int jj=0; jj<NUM_J_VECTORS; jj++)  {
-				for (int jj=0; jj<NUM_J_VECTORS; jj++) chess_loop_range(4,) chess_prepare_for_pipelining {
+				for (int jj=0; jj<NUM_J_VECTORS; jj++) chess_flatten_loop 
+               //chess_loop_range(4,) chess_prepare_for_pipelining 
+            {
 					const v8float rx = fpsub(*xj_v8, ::xset_w(0, ts_sf2_i) , POS_I_X , 0x00000000); xj_v8++;
 					const v8float ry = fpsub(*yj_v8, ::xset_w(0, ts_sf2_i) , POS_I_Y , 0x00000000); yj_v8++;
 					const v8float rz = fpsub(*zj_v8, ::xset_w(0, ts_sf2_i) , POS_I_Z , 0x00000000); zj_v8++;
@@ -125,7 +127,9 @@ void nbody(
 				const v8float *restrict dz = (v8float *)temp_z;
 				v8float *restrict dd = (v8float *)temp_d;
 				//for (int jj=0; jj<NUM_J_VECTORS; jj++)  {
-				for (int jj=0; jj<NUM_J_VECTORS; jj++) chess_loop_range(4,) chess_prepare_for_pipelining {
+				for (int jj=0; jj<NUM_J_VECTORS; jj++) chess_flatten_loop 
+               //chess_loop_range(4,) chess_prepare_for_pipelining 
+            {
 					v8float l2dist = fpmac(sf2,    ::xset_w(0, *dx), 0, 0x76543210, *dx, 0, 0x76543210); dx++; 
 					l2dist         = fpmac(l2dist, ::xset_w(0, *dy), 0, 0x76543210, *dy, 0, 0x76543210); dy++; 
 					l2dist         = fpmac(l2dist, ::xset_w(0, *dz), 0, 0x76543210, *dz, 0, 0x76543210); dz++; 

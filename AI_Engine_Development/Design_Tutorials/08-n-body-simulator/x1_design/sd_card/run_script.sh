@@ -1,4 +1,5 @@
-# Copyright 2021 Xilinx Inc.
+#!/bin/bash
+# © Copyright 2022 Xilinx, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,27 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.PHONY: help
+echo ""
+date
+echo ""
+SECONDS=0
 
-help::
-	@echo "Makefile Usage:"
-	@echo "  make all "
-	@echo "       Command to run make animation"
-	@echo ""
-	@echo "  make animation "
-	@echo "       Command to create *.gif of 300 timesteps"
-	@echo ""
-	@echo "  make clean "
-	@echo "      Command to remove the generated files."
-	@echo ""
+cd /mnt/sd-mmcblk0p1
+#export XILINX_XRT=/usr
+./ps_app.exe --timesteps 1
 
-all: clean animation
+return_code=$?
 
-animation:
-	mkdir -p build
-	python3 ../Module_01_python_sims/pylib/animate.py data/animation_data.txt 12800 build/animation.gif
+if [ $return_code -ne 0 ]; then
+        echo "ERROR: Embedded host run failed, RC=$return_code"
+else
+        echo "INFO: TEST PASSED, RC=0"
+fi
 
-clean:
-	rm -rf *~
-	rm -rf build
-	rm -rf data/*.txt
+duration=$SECONDS
+
+echo ""
+echo "$(($duration / 60)) minutes and $(($duration % 60)) seconds elapsed."
+echo ""
+date
+echo ""
+echo "INFO: Embedded host run completed."
+echo ""
+
+exit $return_code

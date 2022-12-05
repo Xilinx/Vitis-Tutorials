@@ -15,7 +15,7 @@
 help::
 	@echo "Makefile Usage:"
 	@echo "  make all TARGET=<hw_emu|hw>"
-	@echo "       Command runs make aie, make pl_kernels, make xclbin, make host, make sd_card for x100_design"
+	@echo "       Command runs make aie, make pl_kernels, make xsa, make host, make sd_card for x100_design"
 	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make aie"
@@ -25,8 +25,8 @@ help::
 	@echo "       Command to create PL HLS kernels *.xo"
 	@echo "       Default TARGET=hw"
 	@echo ""
-	@echo "  make xclbin TARGET=<hw_emu|hw>"
-	@echo "       Command to create XCLBIN" 
+	@echo "  make xsa TARGET=<hw_emu|hw>"
+	@echo "       Command to create XSA" 
 	@echo "       Default TARGET=hw"
 	@echo ""
 	@echo "  make host <hw_emu|hw>"
@@ -58,7 +58,7 @@ help::
 export TARGET :=hw
 
 # ################ TARGET: make all ################
-all: aie pl_kernels xclbin host sd_card
+all: aie pl_kernels xsa host sd_card
 
 # ################ TARGET: make aie ################
 .PHONY: aie
@@ -70,10 +70,10 @@ aie:
 pl_kernels: 
 	$(MAKE) all -C pl_kernels
 
-# ################ TARGET: make xclbin ################
-.PHONY: xclbin
-xclbin: 
-	$(MAKE) all -C xclbin
+# ################ TARGET: make xsa ################
+.PHONY: xsa
+xsa: 
+	$(MAKE) all -C xsa
 
 # ################ TARGET: make host ################
 host: 
@@ -96,7 +96,7 @@ clean:
 	$(MAKE) clean -C results
 	$(MAKE) clean -C sd_card
 	$(MAKE) clean -C host_sw
-	$(MAKE) clean -C xclbin
+	$(MAKE) clean -C xsa
 	$(MAKE) clean -C pl_kernels
 	$(MAKE) clean -C aie
 	rm -rf *~

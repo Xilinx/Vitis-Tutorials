@@ -33,19 +33,26 @@ int main(int argc, char ** argv)
   bool print_enable = ON;     
   int num_iter = 200; 
 
-  /*
+  
  for(int i=0; i<argc; i++) {
-    if (args[i] == "--profile") {
+    if (0 == strcmp(argv[i], "--profile")) {
       profile=ON;
     }
-    else if(args[i] == "--timesteps") {
-      //num_iter = stoi(args[i+1]);
+    if(0 == strcmp(argv[i], "--timesteps")) {
+      num_iter = atoi(argv[i+1]);
     }
-    else if(args[i] == "--print_enable" and args[i+1]=="OFF") {
+    if ( (0 == strcmp(argv[i], "--print_enable")) and (0 == strcmp(argv[i+1],"OFF")) ) {
       print_enable=OFF;
     }  
   }
-  */
+  
+  //set log level
+  if(print_enable==OFF) {
+    Logger::set_level(LMESSAGE,LNONE);
+  }
+  else{
+    Logger::set_level(LMESSAGE,LINFO);
+  }
 
   //////////////////////////////////////////
   // Open xclbin

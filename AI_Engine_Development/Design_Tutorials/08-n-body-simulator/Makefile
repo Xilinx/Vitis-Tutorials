@@ -64,6 +64,10 @@ all: aie pl_kernels xsa host sd_card
 aie: 
 	$(MAKE) all -C Module_02_aie
 
+# ################ TARGET: make aie ################
+aiesim: 
+	$(MAKE) sim -C Module_02_aie
+
 # ################ TARGET: make pl_kernels ################
 pl_kernels: 
 	$(MAKE) all -C Module_03_pl_kernels

@@ -44,6 +44,8 @@ HOST_SW_DIR := $(DESIGN_DIR)/Module_05_host_sw
 SD_CARD_DIR := $(DESIGN_DIR)/Module_06_sd_card_and_hw_run
 DATA_DIR := $(DESIGN_DIR)/data
 
+EMBEDDED_EXEC_SCRIPT := $(DESIGN_DIR)/Module_06_sd_card_and_hw_run/run_script.sh
+
 # =========================================================
 # TARGET SELECTION
 # TARGET=hw (default)
@@ -59,8 +61,8 @@ EMU_CMD := ./launch_hw_emu.sh
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET).$(PFM)
-XSA_OUTPUT_DIR := $(XSA_DIR)/build.$(TARGET).$(PFM)
+BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET)
+XSA_OUTPUT_DIR := $(XSA_DIR)/build.$(TARGET)
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)
 
 # =========================================================
@@ -96,10 +98,12 @@ $(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XSA_OUTPUT_DIR)/hpc.xsa 
 	cd $(BUILD_DIR); \
 	v++ -t $(TARGET) \
 	--platform $(PLATFORM) \
+	--package.defer_aie_run \
 	-p $(XSA_OUTPUT_DIR)/hpc.xsa $(AIE_APP_DIR)/build/libadf.a \
 	--package.out_dir $(EMBEDDED_PACKAGE_OUT) \
-	--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
-	--package.kernel_image $(EDGE_COMMON_SW)/Image \
+	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 \
+	--package.kernel_image $(COMMON_IMAGE_VERSAL)/Image \
+	--package.sd_file $(EMBEDDED_EXEC_SCRIPT) \
 	--package.boot_mode=sd \
 	--package.image_format=ext4 \
 	$(SD_FILES_WITH_PREFIX)
@@ -113,7 +117,8 @@ ifeq ($(findstring vck190, $(PFM)), vck190)
 	export XCL_EMULATION_MODE=$(TARGET)
 	xterm & 
 	cd $(EMBEDDED_PACKAGE_OUT) ;\
-	$(EMU_CMD)
+	$(EMU_CMD) ; \
+	-run-app $(EMBEDDED_EXEC_SCRIPT)
 endif
 endif
 

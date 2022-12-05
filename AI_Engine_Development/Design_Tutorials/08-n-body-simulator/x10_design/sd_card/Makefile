@@ -47,10 +47,12 @@ PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 DESIGN_DIR := $(PROJECT_DIR)/$(INST)_design
 
 AIE_APP_DIR := $(DESIGN_DIR)/aie
-XCLBIN_DIR := $(DESIGN_DIR)/xclbin
+XSA_DIR := $(DESIGN_DIR)/xsa
 HOST_SW_DIR := $(DESIGN_DIR)/host_sw
 SD_CARD_DIR := $(DESIGN_DIR)/sd_card
 DATA_DIR := $(DESIGN_DIR)/data
+
+EMBEDDED_EXEC_SCRIPT := $(DESIGN_DIR)/sd_card/run_script.sh
 
 # =========================================================
 # TARGET SELECTION
@@ -67,8 +69,8 @@ EMU_CMD := ./launch_hw_emu.sh
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
-BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET).$(PLATFORM)
-XCLBIN_OUTPUT_DIR := $(XCLBIN_DIR)/build.$(TARGET).$(PLATFORM)
+BUILD_DIR := $(SD_CARD_DIR)/build.$(TARGET)
+XSA_OUTPUT_DIR := $(XSA_DIR)/build.$(TARGET)
 EMBEDDED_PACKAGE_OUT := $(BUILD_DIR)
 
 # =========================================================
@@ -89,25 +91,26 @@ SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd
 host: 
 	$(MAKE) host -C $(HOST_SW_DIR)
 
-# ################ TARGET: make xclbin ################
-xclbin: 
-	$(MAKE) xclbin -C $(XCLBIN_DIR)
+# ################ TARGET: make xsa ################
+xsa: 
+	$(MAKE) xsa -C $(XSA_DIR)
 
 # ################ TARGET: make all ################
 all: sd_card
 
 # ################ TARGET: make sd_card ################
-sd_card: host xclbin $(EMBEDDED_PACKAGE_OUT)/sd_card.img
+sd_card: host xsa $(EMBEDDED_PACKAGE_OUT)/sd_card.img
 
-$(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XCLBIN_OUTPUT_DIR)/hpc.xclbin $(AIE_APP_DIR)/build/libadf.a
+$(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XSA_OUTPUT_DIR)/hpc.xsa $(AIE_APP_DIR)/build/libadf.a
 	mkdir -p $(BUILD_DIR); \
 	cd $(BUILD_DIR); \
 	v++ -t $(TARGET) \
 	--platform $(PLATFORM) \
-	-p $(XCLBIN_OUTPUT_DIR)/hpc.xclbin $(AIE_APP_DIR)/build/libadf.a \
+	-p $(XSA_OUTPUT_DIR)/hpc.xsa $(AIE_APP_DIR)/build/libadf.a \
 	--package.out_dir $(EMBEDDED_PACKAGE_OUT) \
-	--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
-	--package.kernel_image $(EDGE_COMMON_SW)/Image \
+	--package.rootfs $(SDKTARGETSYSROOT)/../../rootfs.ext4 \
+	--package.kernel_image $(SDKTARGETSYSROOT)/../../Image \
+	--package.sd_file $(EMBEDDED_EXEC_SCRIPT) \
 	--package.boot_mode=sd \
 	--package.image_format=ext4 \
 	$(SD_FILES_WITH_PREFIX)
@@ -121,7 +124,8 @@ ifeq ($(findstring vck190, $(PLATFORM)), vck190)
 	export XCL_EMULATION_MODE=$(TARGET)
 	xterm & 
 	cd $(EMBEDDED_PACKAGE_OUT) ;\
-	$(EMU_CMD)
+	$(EMU_CMD) ; \
+	-run-app $(EMBEDDED_EXEC_SCRIPT)
 endif
 endif
 

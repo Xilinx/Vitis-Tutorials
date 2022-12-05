@@ -20,8 +20,8 @@ or
 ```
 v++ -p                                                                            \
     -t hw                                                                         \
-    --platform xilinx_vck190_base_202110_1                                        \
-    ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202110_1/hpc.xclbin \
+    --platform xilinx_vck190_base_202220_1                                        \
+    ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202220_1/hpc.xclbin \
     ../Module_02_aie/build/libadf.a                                               \
     --package.out_dir ./build/package_hw                                          \
     --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4                                \
@@ -154,4 +154,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD068 | &copy; Copyright 2021 Xilinx, Inc.</p>
+<p align="center"> XD068 | &copy; Copyright 2022 Xilinx, Inc.</p>
