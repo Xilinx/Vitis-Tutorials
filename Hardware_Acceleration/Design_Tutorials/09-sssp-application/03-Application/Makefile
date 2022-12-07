@@ -51,6 +51,7 @@ ifeq ($(PLATFORM),)
 PLATFORM := xilinx_u50_gen3x16_xdma_5_202210_1
 endif
 
+
 # TARGET: set the build target, can be hw or hw_emu
 TARGET ?= hw
 
@@ -139,10 +140,10 @@ build: host xclbin emconfig
 
 run: build
 ifeq ($(TARGET), hw)
-	cd $(CUR_DIR) && unset XCL_EMULATION_MODE; ./shortpath $(HOST_ARGS);
+	cd $(CUR_DIR) && unset XCL_EMULATION_MODE && ./env.sh; ./shortpath $(HOST_ARGS);
 	
 else
-	cd $(CUR_DIR) && export XCL_EMULATION_MODE=$(TARGET); ./shortpath $(HOST_ARGS);
+	cd $(CUR_DIR) && export XCL_EMULATION_MODE=$(TARGET) && ./env.sh; ./shortpath $(HOST_ARGS);
 	
 endif
 
