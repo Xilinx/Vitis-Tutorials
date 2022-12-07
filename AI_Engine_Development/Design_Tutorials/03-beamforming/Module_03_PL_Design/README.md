@@ -278,7 +278,7 @@ Each uplink AI Engine graph has eight input data ports, 32 input coefficient por
 Remember, our system instantiates three uplink graphs, so the total number of ULBF PL kernels becomes: three ``ulbf_data``, 12 ``ulbf_coeffs``, and 12 ``ulbf_slaves``.
 
 ### References
-* [Vitis Application Acceleration Development Flow Documentation, Developing Applications, RTL Kernels](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/devrtlkernel.html#qnk1504034323350) - This is a reference on how to create your own custom RTL kernels. Please note that the PL kernels in this design do not completely adhere to the recommended guidelines.
+* [Vitis Application Acceleration Development Flow Documentation, Developing Applications, RTL Kernels](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/devrtlkernel.html#qnk1504034323350) - This is a reference on how to create your own custom RTL kernels. Please note that the PL kernels in this design do not completely adhere to the recommended guidelines.
 
 #### Support
 

@@ -228,7 +228,7 @@ This script uses the XSA from Module 04 and the custom Petalinux image to genera
 * [PetaLinux Tools Website](https://www.xilinx.com/products/design-tools/embedded-software/petalinux-sdk.html#tools)
 * PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144))
 * Bootgen User Guide ([UG1283](https://www.xilinx.com/search/support-keyword-search.html#q=ug1283))
-* Libmetal and OpenAMP ([UG1186](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug1186-zynq-openamp-gsg.pdf))
+* Libmetal and OpenAMP ([UG1186](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug1186-zynq-openamp-gsg.pdf))
 * [Versal Platform Creation Tutorial](https://gitenterprise.xilinx.com/swm/Versal_Platform_Creation/tree/master/Tutorial-VCK190_Custom)
 
 ### Support

@@ -54,21 +54,21 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
 
 
 ### *Tools*: Installing the Tools
 
 1. Obtain a license to enable beta devices in Xilinx tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
-3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
-4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf)).
+3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
+4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2022_2/ug1144-petalinux-tools-reference-guide.pdf)).
 5. Download the VCK190 PetaLinux 2022.2 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
 ](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
 To build and run the Beamforming tutorial, you will also need to have downloaded and installed the following tools:
 
-* [Vitis™ Unified Software Development Platform 2021.2](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/acceleration_installation.html#juk1557377661419)
+* [Vitis™ Unified Software Development Platform 2022.2](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html#juk1557377661419)
 * [The Xilinx RunTime (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 * [PetaLinux Tools](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 
@@ -245,4 +245,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"> XD016 | &copy; Copyright 2020–2021 Xilinx, Inc.</p
+<p align="center"> XD016 | &copy; Copyright 2022 Xilinx, Inc.</p

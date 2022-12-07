@@ -23,7 +23,7 @@ The individual commands are explained later on in this module.
 
 A top-level PS application running on the Cortex-A72 processor controls the AI Engine graph and the PL kernels. In Module 05, you created a PS host application for a bare-metal system. In this module, you will create a PS host application that runs on a Linux operating system (built in Module 07).
 
-Detailed descriptions of compiler flags, include directories, and linker flags are available in [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title7).
+Detailed descriptions of compiler flags, include directories, and linker flags are available in [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/integrate_ai_engine_application.html#ariaid-title7).
 
 Linux host applications use the Xilinx Runtime (XRT) API to control the PL and AI Engine kernels. In this tutorial, XRT is used to access the AI Engine graph and generic UIO drivers to access the PL kernels.  
 

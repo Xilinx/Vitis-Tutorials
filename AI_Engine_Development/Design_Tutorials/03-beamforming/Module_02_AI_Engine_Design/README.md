@@ -196,8 +196,8 @@ ULBF Output0: Throughput 8.6297e+08 Samples/s, i.e. 3.45188e+09 Bytes/s
 
 ## References
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_2/vitis_doc/yii1603912637443.html)
-* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2021.2%20English&amp;url=ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2022.2%20English&amp;url=ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
 * Versal ACAP AI Engine Intrinsics Documentation ([UG1078](https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;t=aiengine+intrinsics;d=index.html;)) (lists of all the intrinsic APIs and data types supported in the current release)
 * [AI Engine Documentation: Window and Streaming Data API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Window-and-Streaming-Data-API)
 * [AI Engine Documentation: Run Time Graph Control API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Run-Time-Graph-Control-API)

@@ -20,6 +20,11 @@ PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
 
 # =========================================================
+# BSP
+# =========================================================
+BSP := xilinx-vck190-v2022.2-final.bsp
+
+# =========================================================
 # XSA SELECTION
 # =========================================================
 XSA := $(MODULE_04_DIR)/build/rev1/hw/beamforming.rev1.hw.xsa
@@ -86,7 +91,7 @@ update_boot:
 petalinux_create:
 	mkdir $(BUILD_DIR) -p; \
 	cd $(BUILD_DIR); \
-	petalinux-create -t project -s $(BSP_DIR)/$(BSP) -n $(PETALINUX_DIR) # creates a petalinux project
+	petalinux-create -t project -s $(BSP_DIR)/$(BSP) -n $(PETALINUX_DIR)
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >>  $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 	@sed -i -E 's/.*CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME.+/CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME="petalinux-image-minimal"/' $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 
