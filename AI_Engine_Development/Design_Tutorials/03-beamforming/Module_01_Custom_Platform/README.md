@@ -379,13 +379,13 @@ Finally, software platform is generated with the `platform generate` command. Th
 
 ## References
 
-* [Creating Embedded Platforms in Vitis](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
+* [Creating Embedded Platforms in Vitis](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
 * [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 * [Vitis Tutorials: Platform Creation](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation)
 * [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.md)
-*  Vivado Design Suite Tcl Command Reference Guide ([UG835](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2021_1/ug835-vivado-tcl-commands.pdf))
-* [Xilinx Software Command-Line Tool (XSCT)](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/jed1590410655455.html)
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html)
+*  Vivado Design Suite Tcl Command Reference Guide ([UG835](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug835-vivado-tcl-commands.pdf))
+* [Xilinx Software Command-Line Tool (XSCT)](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Xilinx-Software-Command-Line-Tool)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
 * AI Engine Product Guide ([PG358](https://www.xilinx.com/support/documentation/ip_documentation/ai_engine/v2_0/pg358-versal-ai-engine.pdf))
 * [AXI Debug Hub IP](https://www.xilinx.com/products/intellectual-property/axi_dbg_hub.html#overview)
 * [Simulation Clock and Reset Generator IP](https://www.xilinx.com/products/intellectual-property/sim-rst-gen.html)

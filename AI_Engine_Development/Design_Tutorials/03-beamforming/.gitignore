@@ -43,5 +43,6 @@ Module_05_Baremetal_Host_Application/.Xil/
 Module_06_Running_the_Baremetal_System/build/
 
 Module_07_Petalinux/build/
-
+Module_08_Linux_SW_Application/build/
+Module_09_Running_the_Linux_System/build/
 .vscode/

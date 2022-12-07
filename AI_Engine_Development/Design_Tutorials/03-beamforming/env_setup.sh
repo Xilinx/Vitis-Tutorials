@@ -23,8 +23,8 @@ unset LD_LIBRARY_PATH
 export PLATFORM_REPO_PATHS=<PATH-TO-PLATFORMS-DIRECTORY>
 export XILINX_VITIS=<PATH-TO-VITIS-BUILD-DIRECTORY>/Vitis/2022.2
 export XILINX_VERSAL=<PATH TO xilinx-versal-common-v2022.2 - DIRECTORY>
-export PATH_TO_BSP=<PATH TO xilinx-petalinux-DIRECTORY>/2022.2_next/petalinux_regression_latest/bsp/release
-export BSP=xilinx-vck190-v2022.2-final.bsp
+export BSP_DIR=<PATH TO xilinx-petalinux-DIRECTORY>/2022.2_next/petalinux_regression_latest/bsp/release
+#export BSP=xilinx-vck190-v2022.2-final.bsp
 
 # Setup SDKTARGETSYSROOT and CXX...
 source $XILINX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
