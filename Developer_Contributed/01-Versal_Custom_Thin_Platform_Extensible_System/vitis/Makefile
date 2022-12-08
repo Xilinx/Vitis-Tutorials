@@ -18,12 +18,22 @@ ECHO              := @echo
 
 TARGET            ?= hw
 PLATFORM_CUSTOM   ?= vck190_thin
+PRE_BUILD         ?= false
 
-XPFM_EXPORT       := ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+XPFM_EXPORT       := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
 XPFM              := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
-LINUX_KERNEL      := ${XPFM_EXPORT}/sw/Image
-LINUX_ROOTFS      := ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
+ifeq (${PRE_BUILT}, false)
+LINUX_ABS_PATH    := $(abspath ${XPFM_EXPORT}/sw)
+LINUX_KERNEL      := ${LINUX_ABS_PATH}/Image
+LINUX_ROOTFS      := ${LINUX_ABS_PATH}/rootfs.cpio.gz.u-boot
+LINUX_ROOTFS_TYPE := fat32
+else
+LINUX_ABS_PATH    := $(abspath ${SDKTARGETSYSROOT}/../..)
+LINUX_KERNEL      := ${LINUX_ABS_PATH}/Image
+LINUX_ROOTFS      := ${LINUX_ABS_PATH}/rootfs.ext4
+LINUX_ROOTFS_TYPE := ext4
+endif
 
 IP_DIR            := ../ip
 XO                := $(wildcard ${IP_DIR}/xo_hw/*.xo)
@@ -34,7 +44,7 @@ XSA               := my.xsa
 PS_APPS_DIR       := ../ps_apps
 PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 
-SD_CARD           := ../package_output_${TARGET}
+SD_CARD           := $(abspath ../package_output_${TARGET})
 BUILD_DIR         := build_${TARGET}
 
 ILA_LTX           := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
@@ -71,7 +81,7 @@ ${BUILD_DIR}/${XSA}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
 		v++ --link --debug --save-temps \
 			--target ${TARGET} \
-			--platform ../${XPFM} \
+			--platform ${XPFM} \
 			$(addprefix --config ../, ${SYSTEM_CFG}) \
 			$(addprefix ../, ${XO}) \
 			../${GRAPH_O} \
@@ -82,12 +92,12 @@ ${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROO
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
-			--platform ../${XPFM} \
-			--package.out_dir ../${SD_CARD} \
+			--platform ${XPFM} \
+			--package.out_dir ${SD_CARD} \
 			--package.boot_mode=sd \
-			--package.image_format=fat32 \
-			--package.kernel_image=../${LINUX_KERNEL} \
-			--package.rootfs=../${LINUX_ROOTFS}  \
+			--package.image_format=${LINUX_ROOTFS_TYPE} \
+			--package.kernel_image=${LINUX_KERNEL} \
+			--package.rootfs=${LINUX_ROOTFS}  \
 			../${GRAPH_O} \
 			${XSA} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \
