@@ -116,6 +116,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
+        - REMARK: Can't be used when `export XPFM_LINUX_PRE_BUILDS := true`
       - `[project-root]/package_output_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
     - `export TARGET := hw_emu`: 
       - `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
