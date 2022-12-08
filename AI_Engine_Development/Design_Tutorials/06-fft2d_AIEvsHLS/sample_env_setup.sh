@@ -28,7 +28,7 @@ export DSPLIB_VITIS=<Path to Vitis Libraries - Directory>
 
 # Setup SDKTARGETSYSROOT and CXX...
 unset LD_LIBRARY_PATH
-source $XILINX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $XLNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 
 # Source XRT, VITIS, and Aietools...
 source $XILNX_TOOLS_LOCATION/settings64.sh
