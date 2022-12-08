@@ -55,6 +55,8 @@ ip/*/*.xml
 ip/aie/Work
 ip/aie/*.a
 ip/aie/*.soln
+ip/aie/*.csv
+ip/aie/*.db
 ip/xo_*
 ps_apps/exe
 vitis/build_*
