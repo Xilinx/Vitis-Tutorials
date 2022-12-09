@@ -31,8 +31,8 @@ VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "
 # TARGET = hw or hw_emu
 export TARGET                     := hw
 
-# XPFM_LINUX_PRE_BUILT = true (Use pre-builds) or false (Build xpfm and linux)
-export XPFM_LINUX_PRE_BUILT       := false
+# XPFM_LINUX_PRE_BUILDS = false (Build xpfm and linux) or true (Use pre-builds)
+export XPFM_LINUX_PRE_BUILDS      := false
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
@@ -137,7 +137,7 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: version_check ${BOARD_REPO} xsa linux xpfm ip ps_apps vitis
+all: version_check ${BOARD_REPO} xsa linux xpfm bif ip ps_apps vitis
 
 all_targets:
 	$(MAKE) all TARGET=hw
@@ -167,18 +167,18 @@ endif
 	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
 ${BOARD_REPO}:
-ifeq (${XPFM_LINUX_PRE_BUILT}, false)
+ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}
 endif
 
 xsa:
-ifeq (${XPFM_LINUX_PRE_BUILT}, false)
+ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 	$(MAKE) xsa -C platform
 endif
 
 linux:
-ifeq (${XPFM_LINUX_PRE_BUILT}, true)
-	make linux_pre_build
+ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+	$(MAKE) linux_pre_build
 else ifeq (${LINUX_BUILD_SKIP}, false)
 	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
 else
@@ -190,8 +190,8 @@ linux_pre_build: ./linux/sysroot
 	ln -s $(abspath ${SDKTARGETSYSROOT}/../..) ./linux/sysroot	
 
 xpfm:
-ifeq (${XPFM_LINUX_PRE_BUILT}, true)
-	make xpfm_pre_build
+ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+	$(MAKE) xpfm_pre_build
 else 
 	$(MAKE) xpfm -C platform
 endif
@@ -203,11 +203,11 @@ ${XPFM_EXPORT}:
 	mv    -f  ${XPFM_EXPORT}/xilinx_vck190_base_202220_1.xpfm  ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
 bif:
-ifeq (${XPFM_LINUX_PRE_BUILT}, true)
+ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 	$(MAKE)  ${XPFM_EXPORT}/sw/Image
 endif
 
-${XPFM_EXPORT}/sw/Image: 
+${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/* ${LINUX_SRC_DIR}/boot_custom.bif
 	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
 	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
 	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf

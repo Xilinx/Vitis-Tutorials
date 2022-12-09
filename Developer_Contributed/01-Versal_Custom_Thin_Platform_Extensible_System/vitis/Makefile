@@ -14,40 +14,40 @@
  # limitations under the License.
  #
 
-ECHO              := @echo
+ECHO                  := @echo
 
-TARGET            ?= hw
-PLATFORM_CUSTOM   ?= vck190_thin
-PRE_BUILD         ?= false
+TARGET                ?= hw
+PLATFORM_CUSTOM       ?= vck190_thin
+XPFM_LINUX_PRE_BUILDS ?= false
 
-XPFM_EXPORT       := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
-XPFM              := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+XPFM_EXPORT           := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
+XPFM                  := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
-ifeq (${PRE_BUILT}, false)
-LINUX_ABS_PATH    := $(abspath ${XPFM_EXPORT}/sw)
-LINUX_KERNEL      := ${LINUX_ABS_PATH}/Image
-LINUX_ROOTFS      := ${LINUX_ABS_PATH}/rootfs.cpio.gz.u-boot
-LINUX_ROOTFS_TYPE := fat32
+ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
+LINUX_ABS_PATH        := $(abspath ${XPFM_EXPORT}/sw)
+LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
+LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.cpio.gz.u-boot
+LINUX_ROOTFS_TYPE     := fat32
 else
-LINUX_ABS_PATH    := $(abspath ${SDKTARGETSYSROOT}/../..)
-LINUX_KERNEL      := ${LINUX_ABS_PATH}/Image
-LINUX_ROOTFS      := ${LINUX_ABS_PATH}/rootfs.ext4
-LINUX_ROOTFS_TYPE := ext4
+LINUX_ABS_PATH        := $(abspath ${SDKTARGETSYSROOT}/../..)
+LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
+LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.ext4
+LINUX_ROOTFS_TYPE     := ext4
 endif
 
-IP_DIR            := ../ip
-XO                := $(wildcard ${IP_DIR}/xo_hw/*.xo)
-GRAPH_O           := ${IP_DIR}/aie/libadf.a
-XCLBIN            := my.xclbin
-XSA               := my.xsa
+IP_DIR                := ../ip
+XO                    := $(wildcard ${IP_DIR}/xo_hw/*.xo)
+GRAPH_O               := ${IP_DIR}/aie/libadf.a
+XCLBIN                := my.xclbin
+XSA                   := my.xsa
 
-PS_APPS_DIR       := ../ps_apps
-PS_EXE            := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
+PS_APPS_DIR           := ../ps_apps
+PS_EXE                := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
 
-SD_CARD           := $(abspath ../package_output_${TARGET})
-BUILD_DIR         := build_${TARGET}
+SD_CARD               := $(abspath ../package_output_${TARGET})
+BUILD_DIR             := build_${TARGET}
 
-ILA_LTX           := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
+ILA_LTX               := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
 
 # Force ILA_EN=0 (Disabled) for TARGET=hw_emu
 ifeq (${TARGET}, hw_emu)
