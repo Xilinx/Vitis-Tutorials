@@ -55,10 +55,12 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 	cp $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4  $(SW_COMP)/
 
 #:DTB 
-#generate dtb file	
+#generate dtb file
+#echo command is to avoid the return error code caused by the createdts command warning	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.2 -board  zcu104-revc -dtsi system-user.dtsi -compile"
+	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" \
+	&& echo -e "\n***Device Tree generation Successful!\n" || echo -e "\n"
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(BOOT)/
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(SD_DIR)/
 

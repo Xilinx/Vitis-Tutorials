@@ -70,9 +70,11 @@ sw_comps:$(COMMON_IMAGE_VERSAL)/Image
 
 # target: dtb
 #generate the DTB file
+#echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -dtsi system-user.dtsi -git-branch xlnx_rel_v2022.2 -compile"
+	-xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -dtsi system-user.dtsi -git-branch xlnx_rel_v2022.2 -compile" \
+	&& echo -e "\n***Device Tree generation Successful!\n" || echo -e "\n"
 	cp $(DTB_LOCATION)/system.dtb  $(BOOT)/
 	
 # Target: sysroot
