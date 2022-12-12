@@ -33,9 +33,8 @@ private:
     dsplib::fir::sr_sym::fir_sr_sym_graph<T_DATA, T_COEF, N_FIR_TAPS, FIR_DOWNSHIFT, FIR_ROUND_MODE, FIR_WINDOW_SIZE, N_AIES_PER_FIR>  FIR_ARRAY[N_FIR_FILTERS];
 
 public:
-	port<input>  in;
-	port<output> out;
-
+	input_plio   in    = input_plio::create("DataIn", plio_128_bits, "input_impulse.txt");
+   output_plio  out  = output_plio::create("DataOut", plio_128_bits, "data/fir_output_impulse.txt");
 	// Constructor - with FIR graph class initialization
    FirGraph():  FIR_ARRAY {
       dsplib::fir::sr_sym::fir_sr_sym_graph<T_DATA, T_COEF, N_FIR_TAPS, FIR_DOWNSHIFT, FIR_ROUND_MODE, FIR_WINDOW_SIZE, N_AIES_PER_FIR> (FIR_TAP_COEFS)
@@ -71,13 +70,13 @@ public:
 	{
 		int ix;
 
-		connect<>(in, FIR_ARRAY[0].in);
+		connect<>(in.out[0], FIR_ARRAY[0].in[0]);
 		if (N_FIR_FILTERS > 1)  {
 			for (ix = 1; ix < N_FIR_FILTERS; ix++)  {
-				connect<>(FIR_ARRAY[ix-1].out, FIR_ARRAY[ix].in);
+				connect<>(FIR_ARRAY[ix-1].out[0], FIR_ARRAY[ix].in[0]);
 			}
 		}
-		connect<>(FIR_ARRAY[N_FIR_FILTERS-1].out, out);
+		connect<>(FIR_ARRAY[N_FIR_FILTERS-1].out[0], out.in[0]);
 
 	};
 };

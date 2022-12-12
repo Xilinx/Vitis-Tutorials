@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -110,7 +110,7 @@ The individual make steps to build the design with the options that applied to t
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202210_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202220_1`) and compiles them into their respective XO files.
 
 The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 
@@ -127,7 +127,7 @@ cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 v++ --target hw_emu					\
    --hls.pre_tcl ./directives/hls_pre.tcl		\
 	--hls.clock 500000000:fir_hls 			\
-	--platform xilinx_vck190_base_202210_1		\
+	--platform xilinx_vck190_base_202220_1		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
@@ -139,7 +139,7 @@ v++ --target hw_emu					\
 
 v++ --target hw_emu					\
 	--hls.clock 250000000:datamover 			\
-	--platform xilinx_vck190_base_202210_1		\
+	--platform xilinx_vck190_base_202220_1		\
 	--save-temps 					\
 	--temp_dir _x 					\
 	--verbose 					\
@@ -197,7 +197,7 @@ The expanded command is as follows:
 cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu
 
 v++ -l 						\
-	--platform xilinx_vck190_base_202210_1 		\
+	--platform xilinx_vck190_base_202220_1 		\
 	--include ../../../design/pl_src 		\
 	--save-temps 					\
 	--temp_dir _x 					\
@@ -310,7 +310,7 @@ Summary of the Switches used:
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-[XRT Documentation](https://xilinx.github.io/XRT/2022.1/html/index.html)
+[XRT Documentation](https://xilinx.github.io/XRT/2022.2/html/index.html)
 [Details of Host Application Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-for-Bare-metal-Systems)
 
 |Inputs Sources|Description|
@@ -347,7 +347,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/_x						\
-	-f xilinx_vck190_base_202210_1												\
+	-f xilinx_vck190_base_202220_1												\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 									\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4 						\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image 						\
@@ -413,12 +413,12 @@ cd ../build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2022_1:~#
+root@versal-rootfs-common-2022_2:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2022_1:~## xinit: giving up
+root@versal-rootfs-common-2022_2:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -496,7 +496,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2022_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2022_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
@@ -785,4 +785,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>

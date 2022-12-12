@@ -233,7 +233,7 @@ AIE_CONTROL_CPP := $(BUILD_TARGET_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 LIBADF_A := $(BUILD_TARGET_DIR)/libadf.a
 XSA      := vck190_aie_fir.$(TARGET).xsa
 APP_ELF  := fir_aie_xrt.elf
-APP_ELF_INF_RUN     := fir_aie_xrt_inf_run.elf
+#APP_ELF_INF_RUN     := fir_aie_xrt_inf_run.elf
 DATAMOVER_KERNEL_XO := $(DATAMOVER_KERNEL_NAME).$(TARGET)
 
 # =========================================================
@@ -343,13 +343,13 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA) $(LIBADF_A)
-PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)  
+#PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)  
 PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
@@ -514,19 +514,19 @@ $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 #	fir_aie_app_inf_run.o
 # 	fir_aie_xrt_inf_run.elf
 
-INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
-INF_RUN_GCC_FLAGS += -DITER_CNT=-1
-
-application_inf_run: graph $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-
-$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
-	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control_inf_run.o
-	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fir_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB)
-	$(CXX) $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/fir_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-	@echo ""
-	@echo "Host Application Infinite Run Compilation Complete..."
-	@echo "####################################"
-	@echo ""
+#INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
+#INF_RUN_GCC_FLAGS += -DITER_CNT=-1
+#
+#application_inf_run: graph $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+#
+#$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
+#	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control_inf_run.o
+#	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fir_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB)
+#	$(CXX) $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/fir_aie_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+#	@echo ""
+#	@echo "Host Application Infinite Run Compilation Complete..."
+#	@echo "####################################"
+#	@echo ""
 # =========================================================
 # Step 5. Package Generation 
 # =========================================================
@@ -538,7 +538,7 @@ $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
 # 	package/ directory
 # 	v++.package_summary
 # 	v++_package.log
-package:application application_inf_run xsa $(EMBEDDED_PACKAGE_OUT)
+package:application xsa $(EMBEDDED_PACKAGE_OUT)
 
 $(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
 	cd $(BUILD_TARGET_DIR);	\

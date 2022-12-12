@@ -22,6 +22,7 @@ export COMMON_IMAGE_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
 # if not set it will automatically be excluded from v++ packaging...
 #export XRT_ROOT=<Path to XRT RPMs - Directory>
 
+#Run the below command to setup environment and CXX
 source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 
 # Source XRT, VITIS, and Aietools...

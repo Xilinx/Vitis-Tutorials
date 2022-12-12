@@ -80,7 +80,7 @@ class datamover_class {
       xrtRunHandle     datamover_rhdl;
       uint32_t instance_errCnt;
       
-      void init(xrtDeviceHandle dhdl, const axlf *top) { //, char insts) {
+      void init(xrtDeviceHandle dhdl, const axlf *top, int16_t iterCnt) { //, char insts) {
          
          //std::string datamover_obj_str = "datamover:{datamover_" + to_string(insts) + "}";
          std::string datamover_obj_str = "datamover:{datamover_0}";
@@ -95,7 +95,7 @@ class datamover_class {
          datamover_rhdl = xrtRunOpen(datamover_khdl);
          
          int rval = xrtRunSetArg(datamover_rhdl, 2, INP_SIZE_128b);
-             rval = xrtRunSetArg(datamover_rhdl, 3, ITER_CNT);
+             rval = xrtRunSetArg(datamover_rhdl, 3, iterCnt);
             
          cout << "A72-Info: Initialized datamover kernel" << endl;
       }
@@ -201,148 +201,146 @@ int main(int argc, char** argv)  {
         cout << "A72-Info: ============================================================= " << endl;
         cout << endl; 
     #endif
-
-    if (argc < 2) {
-        cout << "A72-Error: Incorrect command line syntax " << endl;
-        cout << "A72-Info:  Usage: " << argv[0] << " <XCLBIN_File> " << endl << endl;
-        return EXIT_FAILURE;
+   if ((argc < 2) || (argc > 3)) {
+      cout << "A72-Error: Incorrect command line syntax " << endl;
+      cout << "A72-Info:  Usage: " << argv[0] << " <XCLBIN_File> " <<  " iteration count(optional)" << endl << endl;
+      return EXIT_FAILURE;
     }
 
-    // ============================================================================
-    // Step 2: Open XLCBIN
-    // ============================================================================
-    //   o) Open XCLBIN
-    // ============================================================================
+   // ============================================================================
+   // Step 2: Open XLCBIN
+   // ============================================================================
+   //   o) Open XCLBIN
+   // ============================================================================
 
-    else {
-       #ifdef ALL_MESSAGES
-          cout << "A72-Info: ============================================================= " << endl;
-          cout << "A72-Info: (Step 2) Open XLCBIN                                          " << endl;
-          cout << "A72-Info: ============================================================= " << endl;
-          cout << endl; 
-       #endif
-       //If argc is 2 it loads xclbin(Normal Flow)
-       //If argc is 3 and argv[2] is LOAD_XCLBIN ,it loads xclbin(To get POWER values)
-       if(argc==2 || (argc==3 && strcmp(argv[2],"LOAD_XCLBIN")==0)) {
+   else {
+      #ifdef ALL_MESSAGES
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << "A72-Info: (Step 2) Open XLCBIN                                          " << endl;
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << endl;
+      #endif
+      //If argc is 2 it loads xclbin(Normal Flow)
+      //If argc is 3 and argv[2] is LOAD_XCLBIN ,it loads xclbin(To get POWER values)
+      const char* xclbinFilename = argv[1];
+      int16_t iterCnt = 0;
 
-          const char* xclbinFilename = argv[1];
-          auto dhdl = xrtDeviceOpen(0);
-          auto xclbin = load_xclbin(dhdl, xclbinFilename);
-          auto top = reinterpret_cast<const axlf*>(xclbin.data());
-       }
-       
-       //If argc is 2 it runs design for finite iterations (Normal Flow)
-       //If argc is 3 and argv[2] is RUN_CODE ,it runs design for infinite iterations(To get POWER values)
-       if(argc==2 || (argc==3 && strcmp(argv[2],"RUN_CODE")==0)) {
-
-          const char* xclbinFilename = argv[1];
-          auto dhdl = xrtDeviceOpen(0);
-          auto xclbin = load_xclbin(dhdl, xclbinFilename);
-          auto top = reinterpret_cast<const axlf*>(xclbin.data());
+      if(argc == 3 ) {
+         std::string iter = argv[2];
+         iterCnt = stoi(iter);
+      }
+      else {
+         iterCnt = ITER_CNT;
+      }
+      printf("Iteration : %d...\n", iterCnt);
+      
+      auto dhdl = xrtDeviceOpen(0);
+      auto xclbin = load_xclbin(dhdl, xclbinFilename);
+      auto top = reinterpret_cast<const axlf*>(xclbin.data());
    
-          adf::registerXRT(dhdl, top->m_header.uuid);
+      adf::registerXRT(dhdl, top->m_header.uuid);
 
 
-          // ============================================================================
-          // Step 3: Create and Initialize Data Mover Kernels and FIR Chain Graph
-          // ============================================================================
-          //   o) Create Data Mover Kernel Handles (datamover, s2mm) and Initialize them
-          //   o) Create FIR Filter Graph Handle and Initialize it
-          //   o) Load input data into the datamover buffer
-          // ============================================================================
-          #ifdef ALL_MESSAGES
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << "A72-Info: (Step 3) Create and Initialize Data Mover Kernels             " << endl;
-              cout << "A72-Info:          and FIR Chain Graph                                  " << endl;
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << endl; 
-          #endif
-          
-          datamover_class  datamover_krnl;
-          datamover_krnl.init(dhdl, top);
-          
-          fir_chain_class fir_graph;
-          
-          fir_graph.init(dhdl, top);
-          
-          // ============================================================================
-          // Step 4: Run Data Mover Kernels and FIR Chain Graph
-          // ============================================================================
-          //   o) Invoke Run Methods
-          // ============================================================================
-          #ifdef ALL_MESSAGES
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << "A72-Info: (Step 4) Run Data Mover Kernels and FIR Chain Graph           " << endl;
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << endl; 
-          #endif
-          
-          errCode = fir_graph.run();
-          if (errCode != 0)  {
-              throw std::runtime_error("A72-Error: Error encountered running AIE FIR Chain graph");
-              return EXIT_FAILURE;
-          }
-          
-          datamover_krnl.run();
-          
-          
-          // ============================================================================
-          // Step 5: Wait for Data Mover Kernels to Complete
-          // ============================================================================
-          //   o) Invoke waitTo_complete for Data Mover Kernels
-          // ============================================================================
-          #ifdef ALL_MESSAGES
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << "A72-Info: (Step 5) Wait for Data Mover Kernels to Complete              " << endl;
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << endl; 
-          #endif
-          
-          datamover_krnl.waitTo_complete();
-          
-          
-          // ============================================================================
-          // Step 6: Verify Output Results
-          // ============================================================================
-          //     o) Check correctness of the output results with golden data
-          // ============================================================================
-          #ifdef ALL_MESSAGES
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << "A72-Info: (Step 6) Verify Output Results                                " << endl;
-              cout << "A72-Info: ============================================================= " << endl;
-              cout << endl; 
-          #endif
-          
-          datamover_krnl.golden_check(&errCnt);
-          
-          
-          // ============================================================================
-          // Step 7: Release Allocated Resources
-          // ============================================================================
-          #ifdef ALL_MESSAGES
-              cout << endl;
-              cout << "A72-Info: ============================================================= "   << endl;
-              cout << "A72-Info: (Step 7) Release Allocated Resources                          "   << endl;
-              cout << "A72-Info: ============================================================= "   << endl;
-              cout << endl; 
-          #endif
-          
-          //Closing PL-Handles
-          datamover_krnl.close();
-          
-          //Closing Graph
-          fir_graph.close();
-          
-          //Closing Device
-          cout << "A72-Info: Closing Device...\n";
-          xrtDeviceClose(dhdl);
-          
-          //Report Final Result
-          cout << endl << "A72-Info: DSP FIR TEST [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
-              " Taps] TEST " << ((errCnt > 1500) ? "FAILED" : "PASSED") << endl << endl;
-          
-          //Exit with result
-          return ((errCnt > 1500) ? EXIT_FAILURE :  EXIT_SUCCESS);
-       }
-    }
+     // ============================================================================
+     // Step 3: Create and Initialize Data Mover Kernels and FIR Chain Graph
+     // ============================================================================
+     //   o) Create Data Mover Kernel Handles (datamover, s2mm) and Initialize them
+     //   o) Create FIR Filter Graph Handle and Initialize it
+     //   o) Load input data into the datamover buffer
+     // ============================================================================
+     #ifdef ALL_MESSAGES
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << "A72-Info: (Step 3) Create and Initialize Data Mover Kernels             " << endl;
+         cout << "A72-Info:          and FIR Chain Graph                                  " << endl;
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << endl; 
+     #endif
+     
+     datamover_class  datamover_krnl;
+     datamover_krnl.init(dhdl, top, iterCnt);
+     
+     fir_chain_class fir_graph;
+     
+     fir_graph.init(dhdl, top);
+     
+     // ============================================================================
+     // Step 4: Run Data Mover Kernels and FIR Chain Graph
+     // ============================================================================
+     //   o) Invoke Run Methods
+     // ============================================================================
+     #ifdef ALL_MESSAGES
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << "A72-Info: (Step 4) Run Data Mover Kernels and FIR Chain Graph           " << endl;
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << endl; 
+     #endif
+     
+     errCode = fir_graph.run();
+     if (errCode != 0)  {
+         throw std::runtime_error("A72-Error: Error encountered running AIE FIR Chain graph");
+         return EXIT_FAILURE;
+     }
+     
+     datamover_krnl.run();
+     
+     
+     // ============================================================================
+     // Step 5: Wait for Data Mover Kernels to Complete
+     // ============================================================================
+     //   o) Invoke waitTo_complete for Data Mover Kernels
+     // ============================================================================
+     #ifdef ALL_MESSAGES
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << "A72-Info: (Step 5) Wait for Data Mover Kernels to Complete              " << endl;
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << endl; 
+     #endif
+     
+     datamover_krnl.waitTo_complete();
+     
+     
+     // ============================================================================
+     // Step 6: Verify Output Results
+     // ============================================================================
+     //     o) Check correctness of the output results with golden data
+     // ============================================================================
+     #ifdef ALL_MESSAGES
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << "A72-Info: (Step 6) Verify Output Results                                " << endl;
+         cout << "A72-Info: ============================================================= " << endl;
+         cout << endl; 
+     #endif
+     
+     datamover_krnl.golden_check(&errCnt);
+     
+     
+     // ============================================================================
+     // Step 7: Release Allocated Resources
+     // ============================================================================
+     #ifdef ALL_MESSAGES
+         cout << endl;
+         cout << "A72-Info: ============================================================= "   << endl;
+         cout << "A72-Info: (Step 7) Release Allocated Resources                          "   << endl;
+         cout << "A72-Info: ============================================================= "   << endl;
+         cout << endl; 
+     #endif
+     
+     //Closing PL-Handles
+     datamover_krnl.close();
+     
+     //Closing Graph
+     fir_graph.close();
+     
+     //Closing Device
+     cout << "A72-Info: Closing Device...\n";
+     xrtDeviceClose(dhdl);
+     
+     //Report Final Result
+     cout << endl << "A72-Info: AIE FIR TEST [" << N_FIR_FILTERS << " Filters; " << N_FIR_TAPS << 
+         " Taps] TEST " << ((errCnt > 1500) ? "FAILED" : "PASSED") << endl << endl;
+     
+     //Exit with result
+     return ((errCnt > 1500) ? EXIT_FAILURE :  EXIT_SUCCESS);
+  
+   }
 }
