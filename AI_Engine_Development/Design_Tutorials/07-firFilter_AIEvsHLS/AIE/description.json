@@ -43,19 +43,7 @@
         ],
         "category": "canary",
         "make_options" : [ 
-           "XLNX_VERSAL=${SYSROOT}/../../",
-           "XRT_ROOT=${SYSROOT}/../../../xrt",
            "EN_TRACE=1",
-           "SDKTARGETSYSROOT=${SYSROOT}",
-           "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
-           "CXX+=-mcpu=cortex-a72.cortex-a53",
-           "CXX+=-march=armv8-a+crc",
-           "CXX+=-fstack-protector-strong",
-           "CXX+=-D_FORTIFY_SOURCE=2",
-           "CXX+=-Wformat",
-           "CXX+=-Wformat-security",
-           "CXX+=-Werror=format-security",
-           "CXX+=--sysroot=${SYSROOT}",
            "LAUNCH_HW_EMU_EXEC=1"
            ],
         "custom_build_target": {

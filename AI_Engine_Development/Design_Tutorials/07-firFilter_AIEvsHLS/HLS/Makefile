@@ -208,7 +208,7 @@ FILTER_KERNEL_XO    := fir_hls.$(TARGET)
 DATAMOVER_KERNEL_XO := $(DATAMOVER_KERNEL_NAME).$(TARGET)
 XSA     := vck190_hls_fir.$(TARGET).xsa
 APP_ELF := fir_hls_xrt.elf
-APP_ELF_INF_RUN := fir_hls_xrt_inf_run.elf
+#APP_ELF_INF_RUN := fir_hls_xrt_inf_run.elf
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -272,39 +272,81 @@ endif
 
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
 
-ifeq ($(N_FIR_FILTERS),1)
+#ifeq ($(N_FIR_FILTERS),1)
+#   ifeq ($(N_FIR_TAPS),15)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+#      
+#   else ifeq ($(N_FIR_TAPS),64)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
+#      
+#   else ifeq ($(N_FIR_TAPS),129)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
+#      
+#   else ifeq ($(N_FIR_TAPS),240)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
+#      
+#   endif
+#else ifeq ($(N_FIR_FILTERS),10)
+#   ifeq ($(N_FIR_TAPS),15)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SSI_SpreadLogic_high}
+#
+#   else ifeq ($(N_FIR_TAPS),64)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
+#
+#   else ifeq ($(N_FIR_TAPS),129)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_ExploreSequential}
+#      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
+#
+#   else ifeq ($(N_FIR_TAPS),240)
+#      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_RefinePlacement}
+#      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
+#
+#   endif
+#endif
+
+ifeq ($(N_FIR_FILTERS),10)
    ifeq ($(N_FIR_TAPS),15)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
-      
+	   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+	     
    else ifeq ($(N_FIR_TAPS),64)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_HighUtilSLRs}
-      
-   else ifeq ($(N_FIR_TAPS),129)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
-      
-   else ifeq ($(N_FIR_TAPS),240)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_medium}
-      
-   endif
-else ifeq ($(N_FIR_FILTERS),10)
-   ifeq ($(N_FIR_TAPS),15)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SSI_SpreadLogic_high}
-      
-   else ifeq ($(N_FIR_TAPS),64)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
-      
-   else ifeq ($(N_FIR_TAPS),129)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_ExploreSequential}
-      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
-      
-   else ifeq ($(N_FIR_TAPS),240)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_RefinePlacement}
-      VPP_LINK_FLAGS += --xp param:compiler.worstNegativeSlack=-0.050
-      
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={ExploreWithRemap}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={EarlyBlockPlacement}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Default}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={Default}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={disabled} 
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={false} 
+   
+	else ifeq ($(N_FIR_TAPS),129)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore} 
+   
+	else ifeq ($(N_FIR_TAPS),240)
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={EarlyBlockPlacement}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={ExploreWithHoldFix}
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={Default}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={disabled} 
+		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={false} 
    endif
 endif
 
-#VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
+
+VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
 
 ## Enabling Multiple Strategies For Closing Timing...
 #VPP_LINK_FLAGS += --vivado.impl.strategies "ALL"
@@ -321,13 +363,13 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
-PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+#PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
@@ -422,20 +464,20 @@ $(BUILD_TARGET_DIR)/$(APP_ELF): $(APP_SRC_CPP)
 #	fir_hls_app_inf_run.o 
 # 	fir_hls_xrt_inf_run.elf
 
-INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
-INF_RUN_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
-
-application_inf_run: $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-
-$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(APP_SRC_CPP)
-	mkdir -p $(BUILD_TARGET_DIR); \
-	cd $(BUILD_TARGET_DIR); \
-	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB); \
-	$(CXX) fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-	@echo ""
-	@echo "Host Application Infinite Run Compilation Complete..."
-	@echo "#####################################"
-	@echo ""
+#INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
+#INF_RUN_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+#
+#application_inf_run: $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+#
+#$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(APP_SRC_CPP)
+#	mkdir -p $(BUILD_TARGET_DIR); \
+#	cd $(BUILD_TARGET_DIR); \
+#	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB); \
+#	$(CXX) fir_hls_app_inf_run.o $(GCC_LIB_INC) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
+#	@echo ""
+#	@echo "Host Application Infinite Run Compilation Complete..."
+#	@echo "#####################################"
+#	@echo ""
 
 # =========================================================
 # Step 4. Package Generation  
@@ -448,7 +490,7 @@ $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(APP_SRC_CPP)
 # 	package/ directory
 # 	v++.package_summary
 # 	v++_package.log 
-package: application application_inf_run xsa $(EMBEDDED_PACKAGE_OUT)
+package: application xsa $(EMBEDDED_PACKAGE_OUT)
 
 $(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
 	cd $(BUILD_TARGET_DIR);	\
@@ -573,18 +615,23 @@ cleanall: cleanall_blds cleanall_reports
 #####################################################################
 # Impl strategies script...
 # Strategies Repo with the impl Script Has to be provided...
-IMPL_STRATEGY_OPT := 1
-IMPL_STRATEGIES_TCL := $(STRATEGIES_REPO)/impl_strategies_explore.tcl
-run_impl_strategies: $(IMPL_STRATEGIES_TCL)
+BASE_OPTION       := 2
+IMPL_DEPTH_OPTION := 2
+PIPELINE_SIZE     := 500
+
+IMPL_STRATEGIES_TCL := $(STRATEGIES_REPO)/impl_strategies_explore_best3.tcl
+
+run_impl_strategies: $(IMPL_STRATEGIES_TCL) $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
 ifeq ($(TARGET),hw_emu)
 	@echo "This build target (run_impl_strategies) not valid when design target is hw_emu"
 
 else
+	cd $(BUILD_TARGET_DIR); \
 	vivado -mode tcl -source $(IMPL_STRATEGIES_TCL) \
-	$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(IMPL_STRATEGY_OPT)
-	#$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BUILD_TARGET_DIR) $(IMPL_STRATEGY_OPT)
+	_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BASE_OPTION) $(IMPL_DEPTH_OPTION) $(PIPELINE_SIZE)
 
 endif
 
 open_vivado_proj: $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
-	vivado $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	cd $(BUILD_TARGET_DIR); \
+	vivado _x/link/vivado/vpl/prj/prj.xpr

@@ -9,7 +9,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2022.1***
+***Version: Vitis 2022.2***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -122,15 +122,15 @@ Tools Documentation:
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2022.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2022.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2022.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/index.html)
+* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/index.html)
 
 * Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
@@ -173,7 +173,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the previous command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202210_1",
+"baseName": "xilinx_vck190_base_202220_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -210,7 +210,7 @@ Typically, one of the first steps of a design is deciding on an architecture/imp
 
 For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.
 
-For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L2/benchmark.html).
+For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/user_guide/L2/benchmark.html).
 
 For the filter sizes selected in this tutorial, the following AI Engine throughputs were obtained:
 
@@ -438,4 +438,4 @@ You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-<p align="center"><sup>XD061 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD061 | &copy; Copyright 2022 Xilinx, Inc.</sup></p>
