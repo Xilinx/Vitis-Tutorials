@@ -130,7 +130,7 @@ Near the end of the list of the Library Browser, you will find the **Xilinx Tool
 * HDL
 * HLS
 
-Click the **AI Engine** section. This reveals see four subsections:
+Click the **AI Engine** section. This reveals seven subsections:
 
 * DSP
 * Interfaces
@@ -141,7 +141,7 @@ Click the **AI Engine** section. This reveals see four subsections:
 * User-Defined functions
 
 6. Click the **DSP** sub-section. There are 2 sub-menu entries:
-- Stream IO : which contains filter implementations using streaming input and output:
+- Stream IO : which contains filter implementations using streaming input and output.
 - Window IO: which contains filter implementations using frame-based input and output.
 
 
@@ -150,13 +150,13 @@ Click the **AI Engine** section. This reveals see four subsections:
 ![missing image](Images/Image_007.png)
 
 
-7. Double-click the **AIE FIR HalfBand Decimator** block to open the GUI. Populate the GUI with the following parameters :
+7. Double-click the **FIR Halfband Decimator** block to open the GUI. Populate the GUI with the following parameters :
     * **Input/output data type**: cint16
     * **Filter coefficients data type**: int16
     * **Filter coefficients**: hb1_aie
     * **Input Window size (Number of samples)**: 2048
     * **Input sampling rate (MSPS)**: 800
-    * **Scale output down by 2^: Shift1
+    * **Scale output down by 2**: Shift1
     * **Rounding mode**: Floor
 
     Click on the **Advanced** tab and populate the Input Sampling rate with:
@@ -202,7 +202,7 @@ Notice that before the implementing the Decimation Filter the vector length was 
 
 | Parameter |HB1 |	HB2	| HB3	| Channel Filter |
 | :--- | :--- |  :--- | :--- | :--- |
-| Filter Block	| FIR HalfBand Decimator | FIR HalfBand Decimator	| FIR HalfBand Decimator	| FIR Symmetric Filter |
+| Filter Block	| FIR Halfband Decimator | FIR Halfband Decimator	| FIR Halfband Decimator	| FIR Symmetric Filter |
 | Input Output data type	| cint16	| cint16	| cint16	| cint16 |
 | Filter Coefficients Data Type	| int16	| int16	| int16	| int16 |
 | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
@@ -242,9 +242,9 @@ Now add a block coming from a standard templated C++ kernel which source is in t
 ![missing image](Images/Image_017.png)
 
 5. **Double-click** the block, a GUI will display. Populate it with the following data:
-* **Kernel header file**: ``aiecode_src / FreqShift.h``
+* **Kernel header file**: ``aiecode_src/FreqShift.h``
 * **Kernel function**: ``FreqShift``
-* **Kernel source file**: ``aiecode_src / FreqShift.cpp``
+* **Kernel source file**: ``aiecode_src/FreqShift.cpp``
 
 ![missing image](Images/Image_018.png)
 
@@ -275,15 +275,14 @@ All the simulations that occur in Simulink are the so-called 'Emulation-SW'. The
 In this stage you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Click the canvas and type ``model co``. Set the **Subsystem name** to `FIRchain`.
-3. Double-click the block **Model Composer Hub**, select the **AI Engine / Settings** target  and set the following parameters:
+2. Click the canvas and type ``model co``. Select the **Vitis Model Composer Hub** block.
+3. Double-click the block **Model Composer Hub**, select the **FIRchain** subsystem and set the following parameters on the **AIE Settings** tab:
     * Check **Create testbench**
     * Check **Run cycle approximate AIE Simulation after code generation**
     * Check **Plot AIE Simulation Output and Estimate Throughput**
     * Check **Collect Data for Vitis Analyzer**
 3. Click **Apply**
-4. Select the **Generate** tab:
-   * Click on **Generate**.
+4. Click **Generate**.
 
 The simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
 
@@ -363,11 +362,15 @@ Vitis Analyzer is then launched. From here you can see the **Graph View**, the *
 
 ![missing image](Images/Image_023.png)
 
-The Simulation Data Inspector opens-up and we can see the output frames and the estimate of the output throughput as shown below:
+The Simulation Data Inspector opens and shows the output of the AI Engine. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, we can use data cursors to select a specific time region over which to calculate throughput:
+
+1. Select the "Out1" signal from the list on the left. 
+2. Right-click on the plot and select "Data Cursors->Two". 
+3. Position the cursors at the beginning of the first and third signal frames, as shown below. 
 
 ![missing image](Images/Image_024.png)
 
-Here the estimated throughput is 44 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
+Here the estimated throughput is 28 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
 
 ## Stage 4: Increasing PLIO bitwidth and re-generate
 
@@ -381,13 +384,13 @@ Click **OK**. Place the block just after the input port, and a copy of this bloc
 
 ![missing image](Images/Image_025.png)
 
-Re-open the **Vitis Model Composer Hub** and click **Generate** to re-compile and re-simulate the design.
+Re-open the **Model Composer Hub** block and click **Generate** to re-compile and re-simulate the design.
 
-After the AI Engine simulation, the estimated throughput is 177 MSPS. This is computed from the following timestamped (green) output data:
+After the AI Engine simulation, the estimated throughput is 126 MSPS. This is computed from the following timestamped (green) output data, calculated for two full frame periods:
 
 ![missing image](Images/Image_026.png)
 
-Three frames are received but only two interframe idle time are taken into account. A more precise estimate woul be to count the 512 output samples in between the 2 red vertical line. This gives almost 125 MSPS which is  1/8th of the input sample rate (1 GSPS). This means that the design can support for sure the 800 MSPS that were specified in the design.
+This gives around 125 MSPS which is 1/8th of the input sample rate (1 GSPS). This means that the design can support the 800 MSPS that were specified in the design.
 
 ## Conclusion
 
