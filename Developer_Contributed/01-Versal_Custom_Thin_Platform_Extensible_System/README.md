@@ -58,6 +58,19 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
       - The build flow supports both TARGET's in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
       - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
+    - `XPFM_LINUX_PRE_BUILDS`:
+      - `export XPFM_LINUX_PRE_BUILDS := false` for building xpfm and linux (default).
+      - `export XPFM_LINUX_PRE_BUILDS := true` for using the xpfm and linux pre-builds.
+        - Be sure that the environment `PLATFORM_REPO_PATHS` is set and pointing to the `internal_platforms` of the used version.
+          - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`
+        - Download the `xilinx-versal-common-v2022.2_10141622.tar.gz` from the Xilinx Website and...
+          - Extract it
+          - cd xilinx-versal-common-v2022.2
+          - xilinx-versal-common-v2022.2 $ ./sdk.sh
+            - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
+          - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
+          - REMARK: The latter must be executed each time you start in a new terminal or when changing versions!
+      - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export XPFM_LINUX_PRE_BUILDS := true`.
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
@@ -72,8 +85,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
       - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}`
-        - Defaults to `/tmp/${USER}/2022.1/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/${USER}/2022.1/yocto` when `export LINUX_BUILD_TOOL := yocto`.
+        - Defaults to `/tmp/${USER}/2022.2/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/${USER}/2022.2/yocto` when `export LINUX_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
@@ -103,6 +116,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
+        - REMARK: Can't be used when `export XPFM_LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
       - `[project-root]/package_output_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
     - `export TARGET := hw_emu`: 
       - `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
@@ -267,7 +281,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 ## Testing
 ### Running on a VCK190
   1. Prerequisite: Build was executed with `export TARGET := hw`
-  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
+  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card (REMARK: Only when `export XPFM_LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
   3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
   4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
      - Usually you will see 3 serial ports in your device manager:
@@ -295,6 +309,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
 ### Execution & Results
 You will need to login with user `petalinux` and setup a new password (it's then also the `sudo` password):
+  - REMARK: It could be that if you used the `export XPFM_LINUX_PRE_BUILDS := true` that you get more messages displayed.
  ```
 vck190-versal login: petalinux
 You are required to change your password immediately (administrator enforced).
@@ -550,6 +565,14 @@ The following are links to Vitis related information referenced in this tutorial
 
 ## Revision History
 Click on each item below to see the detailed Revision History:
+
+ <details>
+  <summary> December 2022 </summary>
+  
+ - general:
+   - Adding the option to use the xpfm and linux pre-builds
+ 
+ </details>
 
  <details>
   <summary> June 2022 </summary>
