@@ -99,7 +99,7 @@ This information is hard-coded in this `user-host.cpp` application. However, the
 
 ## Transferring Data
 
-After creatng and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (`xclbin`). The data is transferred from the host computer to the Xilinx device and accelerator card where it is available for the kernel to use, as shown in the code example below: 
+After creating and filling the buffers with data from the host application, you must then sync the buffer to the Xilinx device to make the data accessible to the device binary (`xclbin`). The data is transferred from the host computer to the Xilinx device and accelerator card where it is available for the kernel to use, as shown in the code example below: 
 
 ```
     // Map the contents of the buffer object into host memory
@@ -144,7 +144,7 @@ For XRT managed kernels, running the kernel is a simple matter of creating a run
 
 However, in user-managed kernels XRT doesn't know how the kernel is started or stopped. That is in your hands. User-managed kernels offer a significant degree of flexibility and permit creative solutions to design problems because they are not constrained to the `ap_ctrl_hs` or `ap_ctrl_chain` control protocols. There is a lot of capability, but it is up to you to manage it. 
 
-You must first setup the kernel, by writing to the registers to pass associated buffer addresses for the various kernel arguments. Then you must trigger the kernel execution by setting a register value or enabling a signal bit, followig the control protocol designed by the user and implemented by the kernel.
+You must first setup the kernel, by writing to the registers to pass associated buffer addresses for the various kernel arguments. Then you must trigger the kernel execution by setting a register value or enabling a signal bit, following the control protocol designed by the user and implemented by the kernel.
 
 ```
     std::cout << "INFO: Setting IP Data" << std::endl;
