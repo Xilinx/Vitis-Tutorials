@@ -1,7 +1,7 @@
-diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/makefile_versal_ps.mk Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/makefile_versal_ps.mk
---- Vitis_Accel_Examples/cpp_kernels/simple_vadd/makefile_versal_ps.mk	2022-11-07 23:34:20.459319000 -0700
-+++ Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/makefile_versal_ps.mk	2022-11-07 23:35:36.957313000 -0700
-@@ -81,7 +81,7 @@
+diff -Naur Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/makefile_versal_ps.mk Vitis_Accel_Examples/cpp_kernels/simple_vadd/makefile_versal_ps.mk
+--- Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/makefile_versal_ps.mk	2022-12-18 21:16:20.109776000 -0700
++++ Vitis_Accel_Examples/cpp_kernels/simple_vadd/makefile_versal_ps.mk	2022-12-18 21:22:02.064766000 -0700
+@@ -83,7 +83,7 @@
  CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
  LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
  else
@@ -10,18 +10,18 @@ diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/makefile_versal_ps.mk Vi
  LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
  endif
  
-@@ -109,7 +109,7 @@
+@@ -111,7 +111,7 @@
  endif
  ############################## Setting up Kernel Variables ##############################
  # Kernel compiler global settings
--VPP_FLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps 
-+VPP_FLAGS += -t $(TARGET) --platform $(PLATFORM) --save-temps --config ../../../system.cfg
+-VPP_FLAGS += --save-temps 
++VPP_FLAGS += --save-temps --config ../../../system.cfg
  
  
  EXECUTABLE = ./simple_vadd
-diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/src/krnl_vadd.cpp
---- Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp	2022-11-07 23:34:20.464313000 -0700
-+++ Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/src/krnl_vadd.cpp	2022-11-07 20:47:38.053036000 -0700
+diff -Naur Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/src/krnl_vadd.cpp Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp
+--- Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/src/krnl_vadd.cpp	2022-12-18 21:16:20.113784000 -0700
++++ Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp	2022-12-18 21:26:53.423728000 -0700
 @@ -50,7 +50,8 @@
                                        |______________|-----> Output result to Global Memory
  
@@ -32,12 +32,12 @@ diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp Vitis_
  // Includes
  #include <stdint.h>
  #include <hls_stream.h>
-@@ -88,7 +89,16 @@
+@@ -88,7 +89,15 @@
          out[i] = out_stream.read();
      }
  }
+-
 +typedef ap_axis<15, 0, 0, 0> pkt;
- 
 +static void dss_process( int *wave, hls::stream<pkt> &s_in) {
 +   for (int i = 0; i < 1024; i++) 
 +   {
@@ -49,7 +49,7 @@ diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp Vitis_
  extern "C" {
  
  /*
-@@ -101,11 +111,13 @@
+@@ -101,11 +110,13 @@
          size (input)  --> Number of elements in vector
  */
  
@@ -65,16 +65,16 @@ diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/krnl_vadd.cpp Vitis_
      static hls::stream<uint32_t> in1_stream("input_stream_1");
      static hls::stream<uint32_t> in2_stream("input_stream_2");
      static hls::stream<uint32_t> out_stream("output_stream");
-@@ -116,5 +128,6 @@
+@@ -116,5 +127,6 @@
      load_input(in2, in2_stream, size);
      compute_add(in1_stream, in2_stream, out_stream, size);
      store_result(out, out_stream, size);
 +    dss_process(wave_out,dds_in);
  }
  }
-diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/vadd.cpp Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/src/vadd.cpp
---- Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/vadd.cpp	2022-11-07 23:34:20.465322000 -0700
-+++ Vitis_Accel_Examples_back/cpp_kernels/simple_vadd/src/vadd.cpp	2022-11-07 20:54:25.647047000 -0700
+diff -Naur Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/src/vadd.cpp Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/vadd.cpp
+--- Vitis_Accel_Examples_backup/cpp_kernels/simple_vadd/src/vadd.cpp	2022-12-18 21:16:20.115776000 -0700
++++ Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/vadd.cpp	2022-12-18 21:31:49.823693000 -0700
 @@ -25,7 +25,8 @@
  #include <fstream>
  #include <iostream>
@@ -124,20 +124,21 @@ diff -Naur Vitis_Accel_Examples/cpp_kernels/simple_vadd/src/vadd.cpp Vitis_Accel
              break;
          }
      }
+-
 +    FILE *fp_dout;
 +    fp_dout=fopen("wave_out.txt","w");
 + 
 +     for (int i = 0; i < 1024; i++) {
-+      fprintf(fp_dout,"%d\n",ptr_waveout[i]<<17);
++     fprintf(fp_dout,"%d\n",ptr_waveout[i]<<17);
 +     }
- 
++ 
 +    fclose(fp_dout);
      OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_a, ptr_a));
      OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_b, ptr_b));
      OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_result, ptr_result));
      OCL_CHECK(err, err = q.finish());
 -
-+     q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
++    q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
      std::cout << "TEST " << (match ? "FAILED" : "PASSED") << std::endl;
      return (match ? EXIT_FAILURE : EXIT_SUCCESS);
  }
