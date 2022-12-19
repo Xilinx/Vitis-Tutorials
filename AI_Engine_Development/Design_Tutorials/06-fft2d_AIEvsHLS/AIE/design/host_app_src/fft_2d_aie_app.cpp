@@ -305,11 +305,11 @@ int main(int argc, char ** argv)
    // to complete...
    //////////////////////////////////////////
    
-   for(int i = 0; i < FFT2D_INSTS; ++i)
-   {
-      printf("Waiting for datamover %d to complete...\n", i);
-      dmaHls[i].waitTo_complete();
-   }
+   //for(int i = 0; i < FFT2D_INSTS; ++i)
+   //{
+   //   printf("Waiting for datamover %d to complete...\n", i);
+   //   dmaHls[i].waitTo_complete();
+   //}
    
    //////////////////////////////////////////
    // Comparing each fft_2d output with

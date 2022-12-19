@@ -386,8 +386,8 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
