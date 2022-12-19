@@ -296,7 +296,7 @@ int main(int argc, char** argv)  {
          cout << endl; 
      #endif
      
-     datamover_krnl.waitTo_complete();
+     //datamover_krnl.waitTo_complete();
      
      
      // ============================================================================
