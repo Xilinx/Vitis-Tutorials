@@ -2,7 +2,7 @@
 
 ## About the AES Encryption Algorithm
 
-The AES algorithm is a commonly used symmetric-key encryption algorithm, meaning that the same key is used for both encrypting and decrypting the data. The input and output data blocks for the AES algorithm are 16-bytes blocks (128-bits). AES has three key length types: 128-bit, 192-bit, and 256-bit. Before AES encryption and encryption operation, a operation called key-expansion must be run when a key is given. The AES algorithm includes lots of bit-wise and byte-wise operations, so it is very suitable to be implemented with the hardware accelerator.
+The AES algorithm is a commonly used symmetric-key encryption algorithm, meaning that the same key is used for both encrypting and decrypting the data. The input and output data blocks for the AES algorithm are 16-bytes blocks (128-bits). AES has three key length types: 128-bit, 192-bit, and 256-bit. Before AES encryption and encryption operation, an operation called key-expansion must be run when a key is given. The AES algorithm includes lots of bit-wise and byte-wise operations, so it is very suitable to be implemented with the hardware accelerator.
 
 <div align="center">
 <img src="./images/aes_core.svg" alt="AES-ECB decryption" >
@@ -70,7 +70,7 @@ cd ~/aes
 make runsim
 ```
 
-The simulation is executed with 256 input words (128-bit) along with pre-defined KEY. You can modified the simulation options in the **~/aes/runsim_aes_xsim.sh** file. After simulation finishes, a waveform dump file called **work.tb_aes.wdb** is generated, in which you can view the interface waveform. The following image shows an example interface waveform.
+The simulation is executed with 256 input words (128-bit) along with pre-defined KEY. You can modify the simulation options in the **~/aes/runsim_aes_xsim.sh** file. After simulation finishes, a waveform dump file called **work.tb_aes.wdb** is generated, in which you can view the interface waveform. The following image shows an example interface waveform.
 
 <div align="center">
 <img src="./images/aes_waveform.png" alt="AES waveform" >
