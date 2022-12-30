@@ -71,10 +71,10 @@ In the `[project-root]` you can start the full build with `make all` or `make al
           - cd xilinx-versal-common-v2022.2
           - xilinx-versal-common-v2022.2 $ ./sdk.sh
             - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
-          - Make sure the Vivado/Vitis environment script is sourced first!
+          - Make sure the sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` is done first!
           - xilinx-versal-common-v2022.2 $ unset LD_LIBRARY_PATH
           - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
-          - REMARK: The latter 2 items must be executed each time you start in a new terminal or when changing versions!
+          - REMARK: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
       - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export XPFM_LINUX_PRE_BUILDS := true`.
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
