@@ -58,18 +58,23 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
       - The build flow supports both TARGET's in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
       - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
-    - `XPFM_LINUX_PRE_BUILDS`:
-      - `export XPFM_LINUX_PRE_BUILDS := false` for building xpfm and linux (default).
-      - `export XPFM_LINUX_PRE_BUILDS := true` for using the xpfm and linux pre-builds.
+    - `XPFM_PRE_BUILDS`:
+      - `export XPFM_PRE_BUILDS := false` for building xpfm (default).
+      - `export XPFM_PRE_BUILDS := true` for using the xpfm pre-builds.
         - Be sure that the environment `PLATFORM_REPO_PATHS` is set and pointing to the `internal_platforms` of the used version.
           - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`
+    - `LINUX_PRE_BUILDS`:
+      - `export LINUX_PRE_BUILDS := false` for building linux (default).
+      - `export LINUX_PRE_BUILDS := true` for using the linux pre-builds.
         - Download the `xilinx-versal-common-v2022.2_10141622.tar.gz` from the Xilinx Website and...
           - Extract it
           - cd xilinx-versal-common-v2022.2
           - xilinx-versal-common-v2022.2 $ ./sdk.sh
             - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
+          - Make sure the Vivado/Vitis environment script is sourced first!
+          - xilinx-versal-common-v2022.2 $ unset LD_LIBRARY_PATH
           - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
-          - REMARK: The latter must be executed each time you start in a new terminal or when changing versions!
+          - REMARK: The latter 2 items must be executed each time you start in a new terminal or when changing versions!
       - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export XPFM_LINUX_PRE_BUILDS := true`.
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
@@ -570,7 +575,7 @@ Click on each item below to see the detailed Revision History:
   <summary> December 2022 </summary>
   
  - general:
-   - Adding the option to use the xpfm and linux pre-builds
+   - Adding the option to use the xpfm and/or linux pre-builds
  
  </details>
 
