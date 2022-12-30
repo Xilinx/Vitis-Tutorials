@@ -14,9 +14,9 @@ The Versal VCK190 System Example Design full Makefile build-flow builds the whol
 ```
   1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
   2. board_repo:    Downloads the board files from the Xilinx GitHub 
-  3. xsa:           Building the thin platform xsa (only pre-synth)
-  4. linux:         Building linux and sysroot (with Petalinux or Yocto)
-  5. xpfm:          Building the Vitis Platform
+  3. xsa:           Building the thin platform xsa (only pre-synth) or using the pre-builds
+  4. linux:         Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
+  5. xpfm:          Building the Vitis Platform or using the pre-builds
   6. bif:           Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
   7. ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
   8. ps_apps:       Building all XRT-based PS applications
@@ -175,10 +175,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | hw/*                | The hardware platform Makefile and sources
 
- - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
- - After this step you could open the platform blockdesign in Vivado for review:
-   - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
- 
+ - `export XPFM_PRE_BUILDS := false` 
+   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
+   - After this step you could open the platform blockdesign in Vivado for review:
+     - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
+ - `export XPFM_PRE_BUILDS := true` 
+   - Setup the project to use the pre-build xsa
+   
 </details>
 <details>
   <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
@@ -203,9 +206,12 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The Yocto Makefile                                  
 | src/conf/auto.conf  | Yocto Build Configuration File
  
- - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
- - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
- 
+ - `export LINUX_PRE_BUILDS := false` 
+   - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
+   - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
+ - `export LINUX_PRE_BUILDS := true` 
+   - Sets up the project to use the Linux pre-builds
+   
 </details>
 <details>
   <summary> make xpfm -C platform </summary>
@@ -216,9 +222,12 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | sw/*                | The Vitis platform Makefile and sources
 
- - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
- - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
- 
+ - `export XPFM_PRE_BUILDS := false` 
+   - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
+   - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
+ - `export XPFM_PRE_BUILDS := true` 
+   - Setup the project to use the xpfm pre-builds
+   
 </details>
 <details>
   <summary> make bif </summary>
