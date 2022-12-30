@@ -18,19 +18,18 @@ ECHO                  := @echo
 
 TARGET                ?= hw
 PLATFORM_CUSTOM       ?= vck190_thin
-XPFM_LINUX_PRE_BUILDS ?= false
+LINUX_PRE_BUILDS      ?= false
 
 XPFM_EXPORT           := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
 XPFM                  := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 LINUX_ABS_PATH        := $(abspath ${XPFM_EXPORT}/sw)
 LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
+
+ifeq (${LINUX_PRE_BUILDS}, false)
 LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.cpio.gz.u-boot
 LINUX_ROOTFS_TYPE     := fat32
 else
-LINUX_ABS_PATH        := $(abspath ${SDKTARGETSYSROOT}/../..)
-LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
 LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.ext4
 LINUX_ROOTFS_TYPE     := ext4
 endif

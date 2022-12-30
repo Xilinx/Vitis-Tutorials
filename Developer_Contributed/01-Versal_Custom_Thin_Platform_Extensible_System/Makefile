@@ -31,8 +31,11 @@ VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "
 # TARGET = hw or hw_emu
 export TARGET                     := hw
 
-# XPFM_LINUX_PRE_BUILDS = false (Build xpfm and linux) or true (Use pre-builds)
-export XPFM_LINUX_PRE_BUILDS      := false
+# XPFM_PRE_BUILDS = false (Build xpfm) or true (Use xpfm pre-builds)
+export XPFM_PRE_BUILDS            := false
+
+# LINUX_PRE_BUILDS = false (Build linux) or true (Use linux pre-builds)
+export LINUX_PRE_BUILDS           := false
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
@@ -71,8 +74,16 @@ export LINUX_MACHINE              := vck190-versal
 
 LINUX_SRC_DIR                     := ./linux/src
 LINUX_BUILD_DIR                   := ./linux/${LINUX_MACHINE}
-LINUX_IMAGES                      := ${LINUX_BUILD_DIR}/images/linux
 
+ifeq (${LINUX_PRE_BUILDS}, false)
+  LINUX_IMAGES                    := ${LINUX_BUILD_DIR}/images/linux
+else
+  LINUX_IMAGES                    := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/sw/xilinx_vck190_base_202220_1/boot
+endif
+
+XSA_DIR                           := ./platform/hw/build
+XSA_FILE                          := ${XSA_DIR}/${PLATFORM_CUSTOM}.xsa
+XSA_PRE_BUILT                     := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/hw/hw.xsa
 XPFM_EXPORT                       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 XPFM_PRE_BUILT                    := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1
 BOARD_REPO                        := ./platform/hw/board_repo
@@ -167,17 +178,20 @@ endif
 	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
 ${BOARD_REPO}:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
+ifeq (${XPFM_PRE_BUILDS}, false)
 	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}
 endif
 
 xsa:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
+ifeq (${XPFM_PRE_BUILDS}, false)
 	$(MAKE) xsa -C platform
+else
+	mkdir -p  ${XSA_DIR}
+	ln    -s  ${XSA_PRE_BUILT} ${XSA_FILE}
 endif
 
 linux:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+ifeq (${LINUX_PRE_BUILDS}, true)
 	$(MAKE) linux_pre_build
 else ifeq (${LINUX_BUILD_SKIP}, false)
 	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
@@ -190,7 +204,7 @@ linux_pre_build: ./linux/sysroot
 	ln -s $(abspath ${SDKTARGETSYSROOT}/../..) ./linux/sysroot	
 
 xpfm:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+ifeq (${XPFM_PRE_BUILDS}, true)
 	$(MAKE) xpfm_pre_build
 else 
 	$(MAKE) xpfm -C platform
@@ -203,18 +217,21 @@ ${XPFM_EXPORT}:
 	mv    -f  ${XPFM_EXPORT}/xilinx_vck190_base_202220_1.xpfm  ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
 bif:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 	$(MAKE)  ${XPFM_EXPORT}/sw/Image
-endif
 
 ${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/* ${LINUX_SRC_DIR}/boot_custom.bif
 	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
 	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
 	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf
+ifeq (${LINUX_PRE_BUILDS}, false)
 	cp -f ${LINUX_IMAGES}/Image                  ${XPFM_EXPORT}/sw/Image
 	cp -f ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot  ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
 	cp -f ${LINUX_IMAGES}/boot.scr               ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image/boot.scr
 	cp -f ${LINUX_SRC_DIR}/boot_custom.bif       ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
+else
+	ln -s ${SDKTARGETSYSROOT}/../../Image        ${XPFM_EXPORT}/sw/Image
+	ln -s ${SDKTARGETSYSROOT}/../../rootfs.ext4  ${XPFM_EXPORT}/sw/rootfs.ext4
+endif
 
 ip:
 	$(MAKE) all -C ip
