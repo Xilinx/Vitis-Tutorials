@@ -18,19 +18,19 @@ ECHO                  := @echo
 
 TARGET                ?= hw
 PLATFORM_CUSTOM       ?= vck190_thin
-XPFM_LINUX_PRE_BUILDS ?= false
+LINUX_PRE_BUILDS      ?= false
 
 XPFM_EXPORT           := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
 XPFM                  := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
 
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
 LINUX_ABS_PATH        := $(abspath ${XPFM_EXPORT}/sw)
 LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
+LINUX_DTB             := ${LINUX_ABS_PATH}/system.dtb
+
+ifeq (${LINUX_PRE_BUILDS}, false)
 LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.cpio.gz.u-boot
 LINUX_ROOTFS_TYPE     := fat32
 else
-LINUX_ABS_PATH        := $(abspath ${SDKTARGETSYSROOT}/../..)
-LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
 LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.ext4
 LINUX_ROOTFS_TYPE     := ext4
 endif
@@ -88,7 +88,7 @@ ${BUILD_DIR}/${XSA}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 			--output ${XSA} \
 			|& tee vpp_link.log
 
-${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS}
+${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
