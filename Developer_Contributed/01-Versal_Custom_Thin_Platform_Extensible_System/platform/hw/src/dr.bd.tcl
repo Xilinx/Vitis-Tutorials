@@ -450,6 +450,7 @@ proc create_root_design { parentCell } {
     CONFIG.PRIM_SOURCE {No_buffer} \
     CONFIG.RESET_TYPE {ACTIVE_LOW} \
     CONFIG.USE_PHASE_ALIGNMENT {true} \
+    CONFIG.CE_TYPE {HARDSYNC} \
   ] $clk_wizard_0
 
 

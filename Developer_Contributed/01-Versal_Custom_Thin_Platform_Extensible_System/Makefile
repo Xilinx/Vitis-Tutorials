@@ -80,20 +80,25 @@ LINUX_DTB_DIR                     := ./linux/dtg/dts
 XSA_DIR                           := ./platform/hw/build
 XSA_FILE                          := ${XSA_DIR}/${PLATFORM_CUSTOM}.xsa
 XSA_PRE_BUILD                     := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}/hw/hw.xsa
+
 XPFM_EXPORT                       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+XPFM_EXPORT_SW                    := ${XPFM_EXPORT}/sw
 XPFM_PRE_BUILD                    := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}
+
 BOARD_REPO                        := ./platform/hw/board_repo
 
 ifeq (${LINUX_PRE_BUILDS}, false)
   LINUX_SRC_IMAGES                := ${LINUX_BUILD_DIR}/images/linux
 else
-  LINUX_SRC_IMAGES                := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}/sw/${PLATFORM_PRE_BUILD}/boot
+  LINUX_SRC_IMAGES                := ${SDKTARGETSYSROOT}/../..
 endif
 
 ifeq (${XPFM_PRE_BUILDS}, false)
-  BOOT_SRC_EXPORT                 := ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image/boot.scr
+  XPFM_EXPORT_BOOT                := ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot
+  XPFM_EXPORT_XRT_IMAGE           := ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image
 else
-  BOOT_SRC_EXPORT                 := ${XPFM_EXPORT}/sw/${PLATFORM_PRE_BUILD}/xrt/image/boot.scr
+  XPFM_EXPORT_BOOT                := ${XPFM_EXPORT}/sw/${PLATFORM_PRE_BUILD}/boot
+  XPFM_EXPORT_XRT_IMAGE           := ${XPFM_EXPORT}/sw/${PLATFORM_PRE_BUILD}/xrt/image
 endif
 
 ################################################################
@@ -169,6 +174,11 @@ endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VIVADO_VERSION)))
 	$(ECHO) "[ERROR] Vivado $(REQUIRED_VERSION) NOT found, please setup Vivado correctly!"; exit 1
 endif
+ifeq (${LINUX_PRE_BUILDS}, true)
+ifndef SDKTARGETSYSROOT
+	$(ECHO) "[ERROR] SDKTARGETSYSROOT NOT found, please setup SDKTARGETSYSROOT correctly!"; exit 1
+endif
+else
 ifeq (${LINUX_BUILD_TOOL}, petalinux)
 ifndef PETALINUX_VER
 	$(ECHO) "[ERROR] Petalinux NOT found, please setup Petalinux correctly!"; exit 1
@@ -177,11 +187,17 @@ ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VER)))
 	$(ECHO) "[ERROR] Petalinux $(REQUIRED_VERSION) NOT found, please setup Petalinux correctly!"; exit 1
 endif
 endif
+endif
 ifndef VITIS_VERSION
 	$(ECHO) "[ERROR] Vitis NOT found, please setup Vitis correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VITIS_VERSION)))
 	$(ECHO) "[ERROR] Vitis $(REQUIRED_VERSION) NOT found, please setup Vitis correctly!"; exit 1
+endif
+ifeq (${XPFM_PRE_BUILDS}, true)
+ifndef PLATFORM_REPO_PATHS
+	$(ECHO) "[ERROR] PLATFORM_REPO_PATHS NOT found, please setup PLATFORM_REPO_PATHS correctly!"; exit 1
+endif
 endif
 	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
@@ -234,36 +250,40 @@ ${XPFM_EXPORT}:
 	mkdir -p  ${XPFM_EXPORT}
 	cp    -rf ${XPFM_PRE_BUILD}/*                           ${XPFM_EXPORT}
 	mv    -f  ${XPFM_EXPORT}/${PLATFORM_PRE_BUILD}.xpfm     ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+	mv    -f  ${XPFM_EXPORT_BOOT}/*                         ${XPFM_EXPORT_SW}
+	rm    -rf ${XPFM_EXPORT_SW}/*.bif
 
 bif: 
+	$(MAKE) ${XPFM_EXPORT_BOOT}/linux.bif
 ifeq (${LINUX_PRE_BUILDS}, false)
-	$(MAKE) ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
+	$(MAKE) ${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot
 else 
-	$(MAKE) ${XPFM_EXPORT}/sw/rootfs.ext4
+	$(MAKE) ${XPFM_EXPORT_SW}/rootfs.ext4
 ifeq (${XPFM_PRE_BUILDS}, false)
-	$(MAKE) ${XPFM_EXPORT}/sw/system.dtb
+	$(MAKE) ${XPFM_EXPORT_SW}/system.dtb
 endif
 endif
 
-${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot: ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot ${LINUX_SRC_DIR}/boot_custom.bif ${LINUX_DTB_DIR}/system-top.dtb
-	cp -f ${LINUX_SRC_DIR}/boot_custom.bif                    ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
-	cp -f ${LINUX_SRC_IMAGES}/system.dtb                      ${XPFM_EXPORT}/sw/system.dtb
-	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf                      ${XPFM_EXPORT}/sw/u-boot.elf
-	cp -f ${LINUX_SRC_IMAGES}/bl31.elf                        ${XPFM_EXPORT}/sw/bl31.elf
-	cp -f ${LINUX_SRC_IMAGES}/Image                           ${XPFM_EXPORT}/sw/Image
-	cp -f ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot           ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
-	cp -f ${LINUX_SRC_IMAGES}/boot.scr                        ${BOOT_SRC_EXPORT}
+${XPFM_EXPORT_BOOT}/linux.bif: ${LINUX_SRC_DIR}/boot_custom.bif
+	cp -f ${LINUX_SRC_DIR}/boot_custom.bif           ${XPFM_EXPORT_BOOT}/linux.bif
 
-${XPFM_EXPORT}/sw/rootfs.ext4: ${SDKTARGETSYSROOT}/../../rootfs.ext4
-	cp -f ${SDKTARGETSYSROOT}/../../Image                     ${XPFM_EXPORT}/sw/Image
-	cp -f ${SDKTARGETSYSROOT}/../../rootfs.ext4               ${XPFM_EXPORT}/sw/rootfs.ext4
-	cp -f ${SDKTARGETSYSROOT}/../../boot.scr                  ${BOOT_SRC_EXPORT}
+${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot: ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot
+	cp -f ${LINUX_SRC_IMAGES}/system.dtb             ${XPFM_EXPORT_SW}/system.dtb
+	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf             ${XPFM_EXPORT_SW}/u-boot.elf
+	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
+	cp -f ${LINUX_SRC_IMAGES}/Image                  ${XPFM_EXPORT_SW}/Image
+	cp -f ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot  ${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot
+	cp -f ${LINUX_SRC_IMAGES}/boot.scr               ${XPFM_EXPORT_XRT_IMAGE}/boot.scr
 
-${XPFM_EXPORT}/sw/system.dtb: ${LINUX_SRC_DIR}/boot_custom.bif ${LINUX_DTB_DIR}/system-top.dtb
-	cp -f ${LINUX_SRC_DIR}/boot_custom.bif                    ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
-	cp -f ${LINUX_DTB_DIR}/system-top.dtb                     ${XPFM_EXPORT}/sw/system.dtb
-	cp -f ${SDKTARGETSYSROOT}/../../u-boot.elf                ${XPFM_EXPORT}/sw/u-boot.elf
-	cp -f ${SDKTARGETSYSROOT}/../../bl31.elf                  ${XPFM_EXPORT}/sw/bl31.elf
+${XPFM_EXPORT_SW}/rootfs.ext4: ${LINUX_SRC_IMAGES}/rootfs.ext4
+	cp -f ${LINUX_SRC_IMAGES}/Image                  ${XPFM_EXPORT_SW}/Image
+	cp -f ${LINUX_SRC_IMAGES}/rootfs.ext4            ${XPFM_EXPORT_SW}/rootfs.ext4
+	cp -f ${LINUX_SRC_IMAGES}/boot.scr               ${XPFM_EXPORT_XRT_IMAGE}/boot.scr
+
+${XPFM_EXPORT_SW}/system.dtb: ${LINUX_DTB_DIR}/system-top.dtb
+	cp -f ${LINUX_DTB_DIR}/system-top.dtb            ${XPFM_EXPORT_SW}/system.dtb
+	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf             ${XPFM_EXPORT_SW}/u-boot.elf
+	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
 
 ip:
 	$(MAKE) all -C ip
