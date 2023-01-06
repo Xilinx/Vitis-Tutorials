@@ -16,7 +16,7 @@ The Versal VCK190 System Example Design full Makefile build-flow builds the whol
   2.  board_repo:    Downloads the board files from the Xilinx GitHub 
   3.  xsa:           Building the thin platform xsa (only pre-synth) or using the pre-builds
   4.  linux:         Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
-  5.  linux:         Building the device-tree when xsa and xpfm is build and using the linux pre-builds
+  5.  dtg:           Building the device-tree when xsa and xpfm is build and using the linux pre-builds
   6.  xpfm:          Building the Vitis Platform or using the pre-builds
   7.  bif:           Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
   8.  ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
@@ -72,7 +72,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
           - cd xilinx-versal-common-v2022.2
           - xilinx-versal-common-v2022.2 $ ./sdk.sh
             - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
-          - Make sure the sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` is done first!
+          - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
           - xilinx-versal-common-v2022.2 $ unset LD_LIBRARY_PATH
           - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
           - REMARK: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
@@ -188,13 +188,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
   <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
 
-`[project-root]/linux` Directory/file structure:
-| Directory/file                                       | Description                                             
-| -----------------------------------------------------|-------------------------------------------------------------------------------------------
-| src/recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
-| src/recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
-| src/recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
-| src/boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
+`[project-root]/linux/src` Directory/file structure:
+| Directory/file                                   | Description                                             
+| -------------------------------------------------|-------------------------------------------------------------------------------------------
+| recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
+| recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
+| recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
+| boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
