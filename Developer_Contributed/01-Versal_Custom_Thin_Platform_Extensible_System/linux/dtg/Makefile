@@ -68,20 +68,25 @@ ${DTC}:
 	export PATH=$PATH:${DTC_PATH}
 
 build_xsct:
+	$(ECHO) "dtg/build_xsct: Currently errors out, but should be the prefered method"
 	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name vck190_thin -git-branch xlnx_rel_v2022.2 -dtsi ${DTSI_FILE} -compile"
 	cp ./vck190_thin/psv_cortexa72_0/device_tree_domain/bsp/system.dtb ${DTB_FILE}
 
 build_dts:
+	$(ECHO) "dtg/build_dts: Building the dts from the supplied xsa"
 	rm -rf ${DTS}
 	xsct -eval "source src/build_dts.tcl; build_dts $(XSA_FILE) ${DTS}"	
 
 include_board:
+	$(ECHO) "dtg/include_board: Currently not needed since included by the supplied xsa"
 	xsct -eval "source src/build_dts.tcl; include_board ${DTS}"
 
 include_dtsi:
+	$(ECHO) "dtg/include_dtsi: Adding custum specific parameters to the dts"
 	xsct -eval "source src/build_dts.tcl; include_dtsi ${DTSI_DIR} $(DTSI_FILE) ${DTS}"
 	
 build_dtb:
+	$(ECHO) "dtg/build_dtb: Building the dtb from the generated dts"
 	rm -rf ${DTB_FILE}
 	gcc -I ${DTS} -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o ${DTS_FILE}.tmp ${DTS_FILE}
 	dtc -I dts -O dtb -@ -o ${DTB_FILE} ${DTS_FILE}.tmp
