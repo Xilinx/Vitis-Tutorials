@@ -69,7 +69,7 @@ ${DTC}:
 
 build_xsct:
 	$(ECHO) "dtg/build_xsct: Currently errors out, but should be the prefered method"
-	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name vck190_thin -git-branch xlnx_rel_v2022.2 -dtsi ${DTSI_FILE} -compile"
+	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name vck190_thin -git-branch xlnx_rel_v2022.2 -dtsi ${DTSI_DIR}/${DTSI_FILE} -compile"
 	cp ./vck190_thin/psv_cortexa72_0/device_tree_domain/bsp/system.dtb ${DTB_FILE}
 
 build_dts:
