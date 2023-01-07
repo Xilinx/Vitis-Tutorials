@@ -50,18 +50,26 @@ Available predefined metrics:
 -->
 
 ### Step 1.3 to Run Application after Petalinux Boots up on Board
+
 ```bash
 cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 
 ### Step 1.4 Collect Profiling Files
+
 After the design run completes on the hardware, the generated profiling files and run_summary files need to be collected and ready to be examined.
+
 #### Step 1.4.1
+
 Make sure `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files are created on the SD card.
+
 #### Step 1.4.2
+
 Power off the board and take out the sd_card from board and plug in the sd card to host's sd card reader.
+
 #### Step 1.4.3
+
 Copy `aie_profile_edge_[core_metrics]_[memory_metrics]_[interface_metrics].csv`, `summary.csv` and `xrt.run_summary` files from SD card back to where the design is.
 
 ### Step 1.5 Launch Vitis Analyzer to Examine Profiling Files
@@ -125,48 +133,67 @@ The Vitis™ Analyzer GUI is launched, select **Profile Summary** then **AI Engi
 
 ### Step 4 Open Multiple Profiling Runs with Vitis Analyzer
 You can run the application as many times as you would like with your preferences. However, some of these metrics' sets are interconnected because some use group events and others use individual events. For example, the heat_map metric set contains a metric that groups all kinds of stall events in a single metric along with other metrics that group data transfer events (load/store, streams, cascade, etc.) and vector instructions. To get a better view of which stall type(s) are prevalent, re-run with the stalls metric set. To better understand execution, re-run with the execution metric set.
+
 ### Step 4.1 Generate First Profiling Data
 Apply `heat_map` for `core-metrics`, `conflicts` for `memory-metrics`, and `input_bandwidths` for `interface-metrics` to collect first profiling data.
+
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. `profile_0`.
+
 ### Step 4.2 Generate Second Profiling Data
+
 Apply `execution` for `core-metrics`, `dma_locks` for `memory-metrics`, and `output_bandwidths` for `interface-metrics` to collect second profiling data.
+
 Follow step 1.1 to 1.4 if using XRT flow or follow step 2.1 to 2.4 if using XSDB flow. Save profiling data to a directory ex. `profile_1`.
+
 ### Step 4.3 Open First Profiling Data
+
 Follow step 1.5 for the XRT flow, or follow step 2.5 for XSDB flow to open first profiling `run_summary` file with vitis_analyzer.
+
 ### Step 4.4 Open Second Profiling Data
+
 Click on **+** from GUI to browse and select second profiling `run_summary` file. Two runs of profiling data are combined.
-![alt text](images/pr_hw_perf_va_1.png">
+
+![Missing Image](images/pr_hw_perf_va_1.png)
 
 This example combines first run with `heat_map`, `conflicts`, and `input_bandwidths` metrics and second run with `execution`, `dma_locks` and `output_bandwidth` metrics.
 
 Click **%** to toggle between absolute and percentage values of collected design metrics.
-![alt text](images/pr_hw_perf_va_2.png">
+
+![Missing Image](images/pr_hw_perf_va_2.png)
 
 Click the column header to sort the data within those rows. Click once to display selected row data in ascending order. Click twice to display selected row data in descending order. Click three times to disable sorting function.
-![alt text](images/pr_hw_perf_va_4.png">
+
+![Missing Image](images/pr_hw_perf_va_4.png)
 
 
 ### Profiling Data Explanation
 An easy way to know the definition of profile data category by moving mouse cursor to column title. For example, `Active Time (ms)` is "Amount of time (in ms) AI Engine was active when it was enabled."
 
 #### AI Engine core profiling data
+
 1. `Active Time (ms)` = `Stall Time (ms)` + `Active Utilization Time (ms)`.
 2. Take tile(6,0) as an example, tile(6,0) is active for a period of 1.401 milliseconds, where 1.333 milliseconds is stalled and 0.069 milliseconds is actively executing instructions. During 0.069 milliseconds active period, 0.061 milliseconds is executing vector instructions. There are 0.008 milliseconds spent on other instructions such as load/store instructions.
 3. There are 76800 `Vector instructions`, 79303 `Load Instructions` and 1135 `Store Instructions` during `Active Utilization Time (ms)`.
+
 #### AI Engine memory profiling data
+
 1. `Memory Conflict Time (ms)` indicates memory access conflicts time runing AI Engine execution. Xilinx recommends rerunning `aiesimulator` with `-enable-memory-check` option to check design memory access conflicts.
 2. `Cumulative Memory Errors Time (ms)` indicates time taken due to ECC errors in any of the data memory banks as well as MM2S and S2MM DMAs.
+
 #### Interface profiling data
-Select `Profile Summary` then `Interface Channels`.
-![alt text](images/pr_hw_perf_va_3.png">
-1. `PLIO Bandwidth` displays the design ran with PLIO bandwidth in unit of MB/s. This info is a good indication the design is I/O bound or compute bound design and provides guidance to optimize design performance.
+
+1. Select `Profile Summary` then `Interface Channels`.
+
+![image missing](images/pr_hw_perf_va_3.png)
+
+2. `PLIO Bandwidth` displays the design ran with PLIO bandwidth in unit of MB/s. This info is a good indication the design is I/O bound or compute bound design and provides guidance to optimize design performance.
 
 ### Profiling Data Analysis
+
 1. From AI Engine core profiling data, tile(6,1), tile(6,3),... have much larger number of `Store Instructions`. An indication check tile source code if lowering number of `Store Instructions` can be done to improve performance.
 2. From AI Engine Memory profiling data, tile(6,1), tile(9,0),... have non-zero `Memory Conflict Time` value. Suggest running AIE simulator to check for memory access violations and clear those violations if any.
 3. From AI Engine Memory profiling data, tile(6,1), tile(6,3),... have longer `Cumulative DMA Lock Stalls Time`. This leads to check input/output PLIO area to see if PLIO frequency or PLIO width is implemented properly. Suggest using Integrated Logic Analyzer (ILA) to check PLIO input/output states during run time.
 4. From AI Engine Interface profiling data, the hardware profiling data shows design `PLIO Bandwidth`. Apply sorting function by click on `PLIO Bandwidth (MB/s)` to examine highest and lowest PLIO bandwidth.  The highest is 289.741 MB/s vs. lowest 254.709 MB/s is over 13% difference. This difference suggests that you check PLIO input/output implementation and use ILA checking PLIO input/output during run time.
-
 
 # Support
 
