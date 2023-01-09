@@ -37,7 +37,7 @@ void mm2s(
          firInp.data = 0x0;
       }
        
-      
+      firInp.keep =-1;
       strmOutToFIR.write(firInp);
    }
 }
