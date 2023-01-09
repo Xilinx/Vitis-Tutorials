@@ -12,15 +12,16 @@ This tutorial describes a Versal VCK190 System Example Design based on a thin cu
 ### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1. version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
-  2. board_repo:    Downloads the board files from the Xilinx GitHub 
-  3. xsa:           Building the thin platform xsa (only pre-synth)
-  4. linux:         Building linux and sysroot (with Petalinux or Yocto)
-  5. xpfm:          Building the Vitis Platform
-  6. bif:           Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
-  7. ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
-  8. ps_apps:       Building all XRT-based PS applications
-  9. vitis:         Linking all kernels in the thin platform and packaging all necessary boot/run files
+  1.  version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
+  2.  board_repo:    Downloads the board files from the Xilinx GitHub 
+  3.  xsa:           Building the thin platform xsa (only pre-synth) or using the pre-builds
+  4.  linux:         Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
+  5.  dtg:           Building the device-tree when xsa and xpfm is build and using the linux pre-builds
+  6.  xpfm:          Building the Vitis Platform or using the pre-builds
+  7.  bif:           Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
+  8.  ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
+  9.  ps_apps:       Building all XRT-based PS applications
+  10. vitis:         Linking all kernels in the thin platform and packaging all necessary boot/run files
 ```
 ### Build-flow Dependencies
 The following diagram explains the build-flow dependencies.
@@ -58,19 +59,25 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
       - The build flow supports both TARGET's in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
       - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
-    - `XPFM_LINUX_PRE_BUILDS`:
-      - `export XPFM_LINUX_PRE_BUILDS := false` for building xpfm and linux (default).
-      - `export XPFM_LINUX_PRE_BUILDS := true` for using the xpfm and linux pre-builds.
+    - `XPFM_PRE_BUILDS`:
+      - `export XPFM_PRE_BUILDS := false` for building xpfm (default).
+      - `export XPFM_PRE_BUILDS := true` for using the xpfm pre-builds.
         - Be sure that the environment `PLATFORM_REPO_PATHS` is set and pointing to the `internal_platforms` of the used version.
           - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`
+    - `LINUX_PRE_BUILDS`:
+      - `export LINUX_PRE_BUILDS := false` for building linux (default).
+      - `export LINUX_PRE_BUILDS := true` for using the linux pre-builds.
         - Download the `xilinx-versal-common-v2022.2_10141622.tar.gz` from the Xilinx Website and...
           - Extract it
           - cd xilinx-versal-common-v2022.2
           - xilinx-versal-common-v2022.2 $ ./sdk.sh
             - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
+          - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
+          - xilinx-versal-common-v2022.2 $ unset LD_LIBRARY_PATH
           - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
-          - REMARK: The latter must be executed each time you start in a new terminal or when changing versions!
-      - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export XPFM_LINUX_PRE_BUILDS := true`.
+          - REMARK: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
+      - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export LINUX_PRE_BUILDS := true`.
+      - REMARK: if `export XPFM_PRE_BUILDS := false` then a device-tree will be generated from the generated xsa. It could be - depending on the generated base platform (xsa) - that changes are needed in the `[project-root]/linux/dtg/src/system-user.dtsi` for a successfull build/boot. 
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
@@ -116,7 +123,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
-        - REMARK: Can't be used when `export XPFM_LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
+        - REMARK: Can't be used when `export LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
       - `[project-root]/package_output_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
     - `export TARGET := hw_emu`: 
       - `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
@@ -170,21 +177,24 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | hw/*                | The hardware platform Makefile and sources
 
- - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
- - After this step you could open the platform blockdesign in Vivado for review:
-   - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
- 
+ - `export XPFM_PRE_BUILDS := false` 
+   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
+   - After this step you could open the platform blockdesign in Vivado for review:
+     - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
+ - `export XPFM_PRE_BUILDS := true` 
+   - Setup the project to use the pre-build xsa
+   
 </details>
 <details>
   <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
 
-`[project-root]/linux` Directory/file structure:
-| Directory/file                                       | Description                                             
-| -----------------------------------------------------|-------------------------------------------------------------------------------------------
-| src/recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
-| src/recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
-| src/recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
-| src/boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
+`[project-root]/linux/src` Directory/file structure:
+| Directory/file                                   | Description                                             
+| -------------------------------------------------|-------------------------------------------------------------------------------------------
+| recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
+| recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
+| recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
+| boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
 | Directory/file      | Description                                             
@@ -198,9 +208,26 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The Yocto Makefile                                  
 | src/conf/auto.conf  | Yocto Build Configuration File
  
- - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
- - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
+ - `export LINUX_PRE_BUILDS := false` 
+   - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
+   - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
+ - `export LINUX_PRE_BUILDS := true` 
+   - Sets up the project to use the Linux pre-builds
+   
+</details>
+<details>
+  <summary> make all -C linux/dtg </summary>
+
+`[project-root]/linux/dtg` Directory/file structure:
+| Directory/file                                       | Description                                             
+| -----------------------------------------------------|-------------------------------------------------------------------------------------------
+| Makefile                                             | The device-tree generator Makefile              
+| src/build_dts.tcl                                    | XSCT-tcl-script used to build the device-tree out of a generated xsa              
+| src/system-user.dtsi                                 | Additional device-tree settings
  
+ - Only used when `export XPFM_PRE_BUILDS := false` and `export LINUX_PRE_BUILDS := true`
+   -  Builds the device-tree out of the generated xsa
+   
 </details>
 <details>
   <summary> make xpfm -C platform </summary>
@@ -211,9 +238,12 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Makefile            | The platform xsa/xpfm Makefile                                  
 | sw/*                | The Vitis platform Makefile and sources
 
- - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
- - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
- 
+ - `export XPFM_PRE_BUILDS := false` 
+   - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
+   - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
+ - `export XPFM_PRE_BUILDS := true` 
+   - Setup the project to use the xpfm pre-builds
+   
 </details>
 <details>
   <summary> make bif </summary>
@@ -281,7 +311,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 ## Testing
 ### Running on a VCK190
   1. Prerequisite: Build was executed with `export TARGET := hw`
-  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card (REMARK: Only when `export XPFM_LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
+  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card (REMARK: Only when `export LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
   3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
   4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
      - Usually you will see 3 serial ports in your device manager:
@@ -309,7 +339,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
 ### Execution & Results
 You will need to login with user `petalinux` and setup a new password (it's then also the `sudo` password):
-  - REMARK: It could be that if you used the `export XPFM_LINUX_PRE_BUILDS := true` that you get more messages displayed.
+  - REMARK: It could be that if you used the `export LINUX_PRE_BUILDS := true` that you get more messages displayed.
  ```
 vck190-versal login: petalinux
 You are required to change your password immediately (administrator enforced).
@@ -570,7 +600,7 @@ Click on each item below to see the detailed Revision History:
   <summary> December 2022 </summary>
   
  - general:
-   - Adding the option to use the xpfm and linux pre-builds
+   - Adding the option to use the xpfm and/or linux pre-builds
  
  </details>
 

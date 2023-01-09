@@ -59,6 +59,7 @@ ${PROJ_DIR}: ${XSA_DIR}/${XSA_FILE}
 	make update_build
 	make update_bootimage
 	make update_sysroot
+	make dump_dts
 
 create: 
 	cd ../ && petalinux-create -t project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
@@ -113,7 +114,7 @@ ifeq (${LINUX_BUILD_SOURCES}, local)
 	cd ${PROJ_DIR} && petalinux-config  --silentconfig
 endif
 
-dump-dts:
+dump_dts:
 	cd ${PROJ_DIR}/images/linux && dtc -I dtb -O dts -o dump.dts system.dtb
 
 clean:

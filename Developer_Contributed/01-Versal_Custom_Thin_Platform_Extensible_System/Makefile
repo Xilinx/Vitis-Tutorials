@@ -31,8 +31,11 @@ VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "
 # TARGET = hw or hw_emu
 export TARGET                     := hw
 
-# XPFM_LINUX_PRE_BUILDS = false (Build xpfm and linux) or true (Use pre-builds)
-export XPFM_LINUX_PRE_BUILDS      := false
+# XPFM_PRE_BUILDS = false (Build xpfm) or true (Use xpfm pre-builds)
+export XPFM_PRE_BUILDS            := false
+
+# LINUX_PRE_BUILDS = false (Build linux) or true (Use linux pre-builds)
+export LINUX_PRE_BUILDS           := false
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
@@ -67,15 +70,36 @@ export LINUX_ETH_CONFIG           := DHCP
 ################################################################
 export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
 export PLATFORM_CUSTOM            := vck190_thin
+export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202220_1
 export LINUX_MACHINE              := vck190-versal
 
 LINUX_SRC_DIR                     := ./linux/src
 LINUX_BUILD_DIR                   := ./linux/${LINUX_MACHINE}
-LINUX_IMAGES                      := ${LINUX_BUILD_DIR}/images/linux
+LINUX_DTB_DIR                     := ./linux/dtg/dts
+
+XSA_DIR                           := ./platform/hw/build
+XSA_FILE                          := ${XSA_DIR}/${PLATFORM_CUSTOM}.xsa
+XSA_PRE_BUILD                     := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}/hw/hw.xsa
 
 XPFM_EXPORT                       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
-XPFM_PRE_BUILT                    := ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1
+XPFM_EXPORT_SW                    := ${XPFM_EXPORT}/sw
+XPFM_PRE_BUILD                    := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}
+
 BOARD_REPO                        := ./platform/hw/board_repo
+
+ifeq (${LINUX_PRE_BUILDS}, false)
+  LINUX_SRC_IMAGES                := ${LINUX_BUILD_DIR}/images/linux
+else
+  LINUX_SRC_IMAGES                := ${SDKTARGETSYSROOT}/../..
+endif
+
+ifeq (${XPFM_PRE_BUILDS}, false)
+  XPFM_EXPORT_BOOT                := ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot
+  XPFM_EXPORT_XRT_IMAGE           := ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image
+else
+  XPFM_EXPORT_BOOT                := ${XPFM_EXPORT}/sw/${PLATFORM_PRE_BUILD}/boot
+  XPFM_EXPORT_XRT_IMAGE           := ${XPFM_EXPORT}/sw/${PLATFORM_PRE_BUILD}/xrt/image
+endif
 
 ################################################################
 # Variables needed to shorten he build process when TRYING out #
@@ -137,7 +161,7 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: version_check ${BOARD_REPO} xsa linux xpfm bif ip ps_apps vitis
+all: version_check ${BOARD_REPO} xsa linux dtg xpfm bif ip ps_apps vitis
 
 all_targets:
 	$(MAKE) all TARGET=hw
@@ -150,6 +174,11 @@ endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VIVADO_VERSION)))
 	$(ECHO) "[ERROR] Vivado $(REQUIRED_VERSION) NOT found, please setup Vivado correctly!"; exit 1
 endif
+ifeq (${LINUX_PRE_BUILDS}, true)
+ifndef SDKTARGETSYSROOT
+	$(ECHO) "[ERROR] SDKTARGETSYSROOT NOT found, please setup SDKTARGETSYSROOT correctly!"; exit 1
+endif
+else
 ifeq (${LINUX_BUILD_TOOL}, petalinux)
 ifndef PETALINUX_VER
 	$(ECHO) "[ERROR] Petalinux NOT found, please setup Petalinux correctly!"; exit 1
@@ -158,39 +187,59 @@ ifeq (,$(findstring $(REQUIRED_VERSION),$(PETALINUX_VER)))
 	$(ECHO) "[ERROR] Petalinux $(REQUIRED_VERSION) NOT found, please setup Petalinux correctly!"; exit 1
 endif
 endif
+endif
 ifndef VITIS_VERSION
 	$(ECHO) "[ERROR] Vitis NOT found, please setup Vitis correctly!"; exit 1
 endif
 ifeq (,$(findstring $(REQUIRED_VERSION),$(VITIS_VERSION)))
 	$(ECHO) "[ERROR] Vitis $(REQUIRED_VERSION) NOT found, please setup Vitis correctly!"; exit 1
 endif
+ifeq (${XPFM_PRE_BUILDS}, true)
+ifndef PLATFORM_REPO_PATHS
+	$(ECHO) "[ERROR] PLATFORM_REPO_PATHS NOT found, please setup PLATFORM_REPO_PATHS correctly!"; exit 1
+endif
+endif
 	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
 ${BOARD_REPO}:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
+ifeq (${XPFM_PRE_BUILDS}, false)
 	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}
 endif
 
 xsa:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
+ifeq (${XPFM_PRE_BUILDS}, true)
+	$(MAKE) xsa_pre_build
+else
 	$(MAKE) xsa -C platform
 endif
 
+xsa_pre_build: ${XSA_FILE}
+${XSA_FILE}:
+	mkdir -p  ${XSA_DIR}
+	ln    -s  ${XSA_PRE_BUILD} ${XSA_FILE}
+
 linux:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+ifeq (${LINUX_PRE_BUILDS}, true)
 	$(MAKE) linux_pre_build
 else ifeq (${LINUX_BUILD_SKIP}, false)
 	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
 else
-	touch ${LINUX_IMAGES}/*
+	touch ${LINUX_SRC_IMAGES}/*
 endif
 
 linux_pre_build: ./linux/sysroot
 ./linux/sysroot:
 	ln -s $(abspath ${SDKTARGETSYSROOT}/../..) ./linux/sysroot	
 
+dtg:
+ifeq (${XPFM_PRE_BUILDS}, false)
+ifeq (${LINUX_PRE_BUILDS}, true)
+	$(MAKE) all -C linux/dtg
+endif
+endif
+
 xpfm:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, true)
+ifeq (${XPFM_PRE_BUILDS}, true)
 	$(MAKE) xpfm_pre_build
 else 
 	$(MAKE) xpfm -C platform
@@ -199,22 +248,42 @@ endif
 xpfm_pre_build: ${XPFM_EXPORT}
 ${XPFM_EXPORT}:
 	mkdir -p  ${XPFM_EXPORT}
-	cp    -rf ${XPFM_PRE_BUILT}/*                              ${XPFM_EXPORT}
-	mv    -f  ${XPFM_EXPORT}/xilinx_vck190_base_202220_1.xpfm  ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+	cp    -rf ${XPFM_PRE_BUILD}/*                           ${XPFM_EXPORT}
+	mv    -f  ${XPFM_EXPORT}/${PLATFORM_PRE_BUILD}.xpfm     ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+	mv    -f  ${XPFM_EXPORT_BOOT}/*                         ${XPFM_EXPORT_SW}
+	rm    -rf ${XPFM_EXPORT_SW}/*.bif
 
-bif:
-ifeq (${XPFM_LINUX_PRE_BUILDS}, false)
-	$(MAKE)  ${XPFM_EXPORT}/sw/Image
+bif: 
+	$(MAKE) ${XPFM_EXPORT_BOOT}/linux.bif
+ifeq (${LINUX_PRE_BUILDS}, false)
+	$(MAKE) ${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot
+else 
+	$(MAKE) ${XPFM_EXPORT_SW}/rootfs.ext4
+ifeq (${XPFM_PRE_BUILDS}, false)
+	$(MAKE) ${XPFM_EXPORT_SW}/system.dtb
+endif
 endif
 
-${XPFM_EXPORT}/sw/Image: ${LINUX_IMAGES}/* ${LINUX_SRC_DIR}/boot_custom.bif
-	cp -f ${LINUX_IMAGES}/u-boot.elf             ${XPFM_EXPORT}/sw/u-boot.elf
-	cp -f ${LINUX_IMAGES}/system.dtb             ${XPFM_EXPORT}/sw/system.dtb
-	cp -f ${LINUX_IMAGES}/bl31.elf               ${XPFM_EXPORT}/sw/bl31.elf
-	cp -f ${LINUX_IMAGES}/Image                  ${XPFM_EXPORT}/sw/Image
-	cp -f ${LINUX_IMAGES}/rootfs.cpio.gz.u-boot  ${XPFM_EXPORT}/sw/rootfs.cpio.gz.u-boot
-	cp -f ${LINUX_IMAGES}/boot.scr               ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/xrt/image/boot.scr
-	cp -f ${LINUX_SRC_DIR}/boot_custom.bif       ${XPFM_EXPORT}/sw/${PLATFORM_CUSTOM}/boot/linux.bif
+${XPFM_EXPORT_BOOT}/linux.bif: ${LINUX_SRC_DIR}/boot_custom.bif
+	cp -f ${LINUX_SRC_DIR}/boot_custom.bif           ${XPFM_EXPORT_BOOT}/linux.bif
+
+${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot: ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot
+	cp -f ${LINUX_SRC_IMAGES}/system.dtb             ${XPFM_EXPORT_SW}/system.dtb
+	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf             ${XPFM_EXPORT_SW}/u-boot.elf
+	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
+	cp -f ${LINUX_SRC_IMAGES}/Image                  ${XPFM_EXPORT_SW}/Image
+	cp -f ${LINUX_SRC_IMAGES}/rootfs.cpio.gz.u-boot  ${XPFM_EXPORT_SW}/rootfs.cpio.gz.u-boot
+	cp -f ${LINUX_SRC_IMAGES}/boot.scr               ${XPFM_EXPORT_XRT_IMAGE}/boot.scr
+
+${XPFM_EXPORT_SW}/rootfs.ext4: ${LINUX_SRC_IMAGES}/rootfs.ext4
+	cp -f ${LINUX_SRC_IMAGES}/Image                  ${XPFM_EXPORT_SW}/Image
+	cp -f ${LINUX_SRC_IMAGES}/rootfs.ext4            ${XPFM_EXPORT_SW}/rootfs.ext4
+	cp -f ${LINUX_SRC_IMAGES}/boot.scr               ${XPFM_EXPORT_XRT_IMAGE}/boot.scr
+
+${XPFM_EXPORT_SW}/system.dtb: ${LINUX_DTB_DIR}/system-top.dtb
+	cp -f ${LINUX_DTB_DIR}/system-top.dtb            ${XPFM_EXPORT_SW}/system.dtb
+	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf             ${XPFM_EXPORT_SW}/u-boot.elf
+	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
 
 ip:
 	$(MAKE) all -C ip
@@ -237,6 +306,7 @@ ultraclean_vitis:
 clean:
 	$(MAKE) clean -C platform
 	$(MAKE) clean -C linux/${LINUX_BUILD_TOOL}
+	$(MAKE) clean -C linux/dtg
 	$(MAKE) clean_vitis
 	rm -rf ${BOARD_REPO}
 
