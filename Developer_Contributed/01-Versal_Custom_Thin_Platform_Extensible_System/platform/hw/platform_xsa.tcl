@@ -105,7 +105,7 @@ set_property platform.run.steps.phys_opt_design.tcl.post [get_files post_physopt
 ## ===================================================================================
 ## Add hardware emulation support
 ## ===================================================================================
-set_property PLATFORM.LINK_XP_SWITCHES_DEFAULT [list param:compiler.skipTimingCheckAndFrequencyScaling=true param:hw_emu.enableProfiling=false] [current_project]
+set_property PLATFORM.LINK_XP_SWITCHES_DEFAULT [list param:hw_emu.enableProfiling=false] [current_project]
 set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_0]
 set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_noc]
 set_property SELECTED_SIM_MODEL tlm [get_bd_cells /noc_ddr4]
