@@ -86,7 +86,7 @@ print-%  : ; @echo $* = $($*)
 #   hw_emu: Hardware Emulation
 #   hw    : Hardware Run
 # =========================================================
-TARGET := hw_emu
+TARGET := hw
 
 # =========================================================
 # Gemm Output matrix size can be set as:
@@ -139,6 +139,12 @@ VIVADO_BLD_REPORTS_DIR := $(VIVADO_REPORTS_REPO)/gemm_$(MAT_DIMS)
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
 
+
+
+PLATFORM := /proj/xbuilds/2022.2_released/internal_platforms/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
+
+
+
 # ==========================================================
 # Below are the names for Application executable,
 # kernel executables, and xclbin
@@ -187,7 +193,7 @@ VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/gemm.cfg
 VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.KEEP_EQUIVALENT_REGISTERS}={true}
-VPP_LINK_FLAGS += --to_step vpl.synth
+#VPP_LINK_FLAGS += --to_step vpl.synth
 #VPP_LINK_FLAGS += --from_step vpl.synth
 VPP_LINK_FLAGS += --xp vivado_prop:run.impl_1.STEPS.PLACE_DESIGN.TCL.PRE=$(CONSTRAINTS_REPO)/gemm_dsp58.tcl
 
@@ -198,8 +204,8 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4

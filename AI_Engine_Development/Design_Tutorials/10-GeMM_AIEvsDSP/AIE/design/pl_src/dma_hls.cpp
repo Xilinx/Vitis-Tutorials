@@ -32,7 +32,7 @@ void inp_A(
       
       qdma_axis<128, 0, 0, 0> A = ap_uint<128> \
       ("0x00010001000100010001000100010001",16);
-      
+      A.keep_all(); 
       strmOut_to_A0.write(A);
       strmOut_to_A1.write(A);
       strmOut_to_A2.write(A);
@@ -87,6 +87,7 @@ void inp_B(
       qdma_axis<128, 0, 0, 0> B= ap_uint<128> \
       ("0x00020002000200020002000200020002",16);
       
+      B.keep_all();
       strmOut_to_B0.write(B);
       strmOut_to_B1.write(B);
       strmOut_to_B2.write(B);
