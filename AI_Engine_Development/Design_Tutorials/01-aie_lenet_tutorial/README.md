@@ -55,7 +55,7 @@ After completing the tutorial, you should be able to:
   <summary>Tutorial Overview</summary>
 
 ## Tutorial Overview
-In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
+In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine tiles and PL resources including block RAM. A top-level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine tile to perform matrix multiplication. The output from the first AI Engine tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
 * `mm2s`: a memory-mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine Array.
 * `s2mm`: a stream to memory-mapped kernel to feed data from the AI Engine Array through NoC to DDR memory.
 
@@ -108,19 +108,19 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022.1/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022.2/vitis_doc/yii1603912637443.html)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2022.1](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401)
+* Install the [Vitis Software Platform 2022.2](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=igz1531201833632.html)
 
 * Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202220_1` platform)
 
 * Obtain licenses for AI Engine tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pjr1542153622642.html) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2022.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2022.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
 </details>
 
@@ -556,8 +556,8 @@ cd ../../;
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/acceleration_installation.html#vhc1571429852245) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=igz1531201833632.html) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=igz1531201833632.html) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4`: Linux file system and `fat32`: Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -775,7 +775,7 @@ The software design in the LeNet tutorial consists of the following sections:
   <summary>AI Engine Kernels and Graph Representation</summary>
 
 ### AI Engine Kernels and Graph Representation
-An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that targets the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review [AI Engine Kernel Programming Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/ciz1611769309578.html) for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++.
+An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that targets the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1079-ai-engine-kernel-coding&resourceid=rqd1569347808309.html) section in the AI Engine Documentation  for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++.
 The AI Engine compiler writes a summary of compilation results called `lenet.aiecompile_summary`. You can view the graph by running the following command:
 
 `vitis_analyzer build/Work/lenet.aiecompile_summary`
@@ -792,7 +792,7 @@ Note: Also defined in the AI Engine graph are the weights (`core<xx>lut.h`). The
   <summary>Data Flow Graph</summary>
 
 ### Data Flow Graph
-This section describes the overall data-flow graph specification of the LeNet design which is compiled by the AI Engine compiler. Refer to [AI Engine Programming Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/ai_engine_programming.html#mes1509388302139) for information on ADF graphs.
+This section describes the overall data-flow graph specification of the LeNet design which is compiled by the AI Engine compiler. Refer to [AI Engine Programming](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2022.2%20English&url=ug1079-ai-engine-kernel-coding) section in the AI Engine Documentation for information on ADF graphs.
 
 The overall graph definition of the design is contained in the `graph.cpp` file. The following steps describe the definition of the graph.
 
@@ -882,7 +882,7 @@ The `dma_hls` kernel is an IP which contains `dma_mm2s` and `dma_s2mm`. `dma_mm2
   <summary>PS Host Application</summary>
 
 ### PS Host Application
-The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/program_ps_host_application.html#ykt1590616160037) to understand the process to create a host application.
+The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine Documentation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1076-ai-engine-environment&resourceid=ykt1590616160037.html) to understand the process to create a host application.
 
 In addition to the PS host application (`main.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code.
 The AI Engine control code is used by the PS host application to do the following:
@@ -1022,7 +1022,7 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2022.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2022.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
 
 3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
 
@@ -1052,25 +1052,26 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-#### [Vitis Unified Software Development Platform 2022.1 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
+#### [Vitis Unified Software Development Platform 2022.2 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
 
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/irn1582730075765.html)
+* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
 
 ##### Revision History
 
+* Jan 2023 - Updated for 2022.2
 * May 2022 - Updated for 2022.1
 * Oct 2021 - Updated for 2021.2
 * July 2021 - Updated for 2021.1
 * Dec 2020 - Initial Release
 
 
-© Copyright 2020-2022 Xilinx, Inc.
+© Copyright 2020-2023 Xilinx, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -1084,4 +1085,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p align="center"><sup>XD015 | © Copyright 2022 Xilinx, Inc.</sup></p>
+<p align="center"><sup>XD015 | © Copyright 2023 Xilinx, Inc.</sup></p>
