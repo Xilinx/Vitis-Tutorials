@@ -337,7 +337,13 @@ VPP_LINK_FLAGS += --vivado.prop run.impl_1.STEPS.PLACE_DESIGN.TCL.PRE=$(DIRECTIV
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD=16
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.RETIMING=true
 
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.strategy=Performance_HighUtilSLRs
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Default}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={SSI_BalanceSLLs}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={Default}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={false}
 
 #VPP_LINK_FLAGS += --vivado.synth.jobs 8
 #VPP_LINK_FLAGS += --vivado.impl.jobs 8
@@ -349,8 +355,8 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
@@ -654,7 +660,7 @@ endif
 sd_card: package
 
 #Build the design and then run hardware emulation
-run: sd_card run_emu
+run: sd_card run_emu 
 
 #Same as "run" above, but include metrics generation and
 #vcd generation
@@ -697,16 +703,23 @@ cleanall: cleanall_blds cleanall_reports
 #####################################################################
 # Impl strategies script...
 # Strategies Repo with the impl Script Has to be provided...
-IMPL_STRATEGY_OPT := 1
-run_impl_strategies: $(STRATEGIES_REPO)/impl_strategies_explore_withProc.tcl
+BASE_OPTION       := 2
+IMPL_DEPTH_OPTION := 2
+PIPELINE_SIZE     := 500
+
+IMPL_STRATEGIES_TCL := $(STRATEGIES_REPO)/impl_strategies_explore_best3.tcl
+
+run_impl_strategies: $(IMPL_STRATEGIES_TCL) $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
 ifeq ($(TARGET),hw_emu)
 	@echo "This build target (run_impl_strategies) not valid when design target is hw_emu"
 
 else
-	vivado -mode tcl -source $(STRATEGIES_REPO)/impl_strategies_explore_withProc.tcl \
-	$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BUILD_TARGET_DIR) $(IMPL_STRATEGY_OPT)
+	cd $(BUILD_TARGET_DIR); \
+	vivado -mode tcl -source $(IMPL_STRATEGIES_TCL) \
+	_x/link/vivado/vpl/prj/prj.xpr -tclargs $(BASE_OPTION) $(IMPL_DEPTH_OPTION) $(PIPELINE_SIZE)
 
 endif
 
 open_vivado_proj: $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
-	vivado $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+	cd $(BUILD_TARGET_DIR); \
+	vivado _x/link/vivado/vpl/prj/prj.xpr

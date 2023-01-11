@@ -283,8 +283,8 @@ int main(int argc, char ** argv)
     gemm_obj.init(dhdl,top);
     gemm_obj.gemm_soft_reset_pulse();
     gemm_obj.test_gemm();
-    //while ( i < 2) {
-    while (1) {
+    while ( i < 2) {
+    //while (1) {
     gemm_obj.check_done();
     printf ("Read Perf Counter\n");
     gemm_obj.read_perf();
