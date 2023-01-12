@@ -21,7 +21,7 @@ This tutorial covers essential steps on migrating an existing application using 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* and *xilinx_u50_gen3x16_xdma_201920_3* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
+* 2022.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* and *xilinx_u50_gen3x16_xdma_5_202210_1* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
 
 >**IMPORTANT:**
 >
@@ -33,7 +33,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 ### Accessing the Tutorial Reference files
 
 1. Enter the command in a terminal: `git clone http://github.com/Xilinx/Vitis-Tutorials`.
-2. Navigate to `Hardware_Acceleration/Feature_Tutorials/04-using-hbm` directory, and then access the `reference-files` directory.
+2. Navigate to `Hardware_Acceleration/Feature_Tutorials/07-using-hbm` directory, and then access the `reference-files` directory.
 
 ### Generating all the xclbins
 
@@ -43,12 +43,12 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
     ifeq ($(memtype), DDR)
     PLATFORM :=xilinx_u200_gen3x16_xdma_2_202110_1
     else
-    PLATFORM :=xilinx_u50_gen3x16_xdma_201920_3
+    PLATFORM :=xilinx_u50_gen3x16_xdma_5_202210_1
     endif
     ```
 3. Run the following command to build three xclbins for module 2 (Migration from DDR to HBM). The expected time to build xclbins is about 7-8 hours or you can run these in parallel.
 
-    ``` cd 04-using-hbm/makefile;  make ddr_addSeq_build  hbm_addSeq_2Banks_build hbm_addSeq_overlap_build```
+    ``` cd 07-using-hbm/makefile;  make ddr_addSeq_build  hbm_addSeq_2Banks_build hbm_addSeq_overlap_build```
 
 4. Run the following command to build ten xclbins for module 3 (HBM Bandwidth Results). The expected time to build xclbins is about 5-6 hours since the following command will run parallel jobs by default
 
@@ -58,7 +58,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
     ```cd 04-using-hbm/makefile;  make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024 ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024;```
 
-Please refer to the ./makefile/Makefile for more information.
+Please refer to the [./makefile/Makefile](./makefile/Makefile) for more information.
 
 ## Tutorial Overview
 
@@ -88,7 +88,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD018</sup></br></p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2023 Xilinx</sup><br><sup>XD018</sup></br></p>
 
 
 

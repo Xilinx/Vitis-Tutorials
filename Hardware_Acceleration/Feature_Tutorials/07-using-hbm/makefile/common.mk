@@ -23,7 +23,6 @@ xclbin: ./$(builddir)/vadd_$(TARGET).xclbin
                 --profile.data all:all:all \
                 --profile.stall all:all:all \
 		--save-temps \
-		${RAMAFLAGS} \
 		--temp_dir ./$(builddir)/temp_dir \
 		--report_dir ./$(builddir)/report_dir \
 		--log_dir ./$(builddir)/log_dir \

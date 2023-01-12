@@ -144,16 +144,17 @@ Let's use the specific example of Row 13, the transaction size is 256 bytes and 
 
 ### Random Accesses with RAMA IP
 
-In this step, we are using the same topologies as the previous step, but now we are using RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.
+This step uses the same topologies as the previous step, but now we are using RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.
 
-The v++ linker requires a tcl file to connect the RAMA IP to the Axi Master ports. Refer to the file `./makefile/rama_post_sys_link.tcl` for more information
+The `HBM_connectivity.cfg` file that is generated from the Makefile adds the RAMA IP to the config file syntax as described at [Random Access and the RAMA IP](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Random-Access-and-the-RAMA-IP). The `HBM_connectivity.cfg` file will look like the following example:
 
-The Makefile creates the cfg-rama.ini file shown below and configures the v++ linking phase using `--config cfg-rama.ini` option.
-```
-[advanced]
-param=compiler.userPostSysLinkTcl=<Project>/makefile/rama_post_sys_link.tcl
-```
-
+ ```
+ [connectivity]
+sp=vadd_1.in1:HBM[0:31].1.RAMA
+sp=vadd_1.in2:HBM[0:31].4.RAMA
+sp=vadd_1.out:HBM[0:31].8.RAMA
+ ```
+ 
 To build all the xclbins, run the following target.
 
 `make build_with_rama`   # This command is already executed in the first module
@@ -196,7 +197,7 @@ The next ten rows with access to 512 MB and 1024MB respectively show a significa
 
 
 
-#### Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required memory access exceeds 256 MB (one HBM pseudo-channel)
+#### Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required random memory access exceeds 256 MB (one HBM pseudo-channel)
 
 
 
@@ -208,4 +209,4 @@ In this tutorial, you learned it's relatively easy to migrate a DDR-based applic
 
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2023 Xilinx</sup></p>

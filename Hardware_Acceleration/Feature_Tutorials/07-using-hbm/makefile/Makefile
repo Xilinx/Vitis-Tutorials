@@ -17,7 +17,7 @@ include mem_connectivity.mk
 ifeq ($(memtype), DDR)
 	PLATFORM ?=xilinx_u200_gen3x16_xdma_2_202110_1
 else
-	PLATFORM ?=xilinx_u50_gen3x16_xdma_201920_3
+	PLATFORM ?=xilinx_u50_gen3x16_xdma_5_202210_1
 endif
 
 addrndm := 0
@@ -28,22 +28,11 @@ dwords   := $(dsize)/32
 bl       := $(txSize)*8/$(dsize)
 buildxclbin := 0
 
-default_make_goal: help
-
 ifeq ($(rama),1)
-_rama := _rama
-CONFIG_RAMA_FILE=cfg-rama.ini
-RAMAFLAGS := --config $(CONFIG_RAMA_FILE)
-makeramacfg:
-	$(shell echo > $(CONFIG_RAMA_FILE))
-	$(shell echo [advanced] >> $(CONFIG_RAMA_FILE))
-	$(shell echo param=compiler.userPostSysLinkTcl=$(shell readlink -f rama_post_sys_link.tcl) >> $(CONFIG_RAMA_FILE))
-	@echo "$@ generated $(CONFIG_RAMA_FILE)"
-else
-makeramacfg:
+  _rama := _rama
 endif
 
-
+default_make_goal: help
 
 # Default Settings here ..
 HOST_SRC_CPP := $(SRCDIR)/host.cpp
@@ -66,7 +55,7 @@ SDCARD := sd_card
 
 include common.mk
 
-build: display_time makeramacfg host mem_config xo xclbin $(builddir)/$(EMCONFIG_FILE)
+build: display_time host mem_config xo xclbin $(builddir)/$(EMCONFIG_FILE)
 
 display_time:
 	@echo "# make command started $(shell date) #"
@@ -86,9 +75,9 @@ CFG:=$(builddir)/HBM_connectivity.cfg
 mem_config:
 	@echo  "Creating HBM configuration";
 	@echo [connectivity] > $(CFG)
-	@echo sp=vadd_1.in1:HBM[$(in_M0)] >> $(CFG)
-	@echo sp=vadd_1.in2:HBM[$(in_M1)] >> $(CFG)
-	@echo sp=vadd_1.out:HBM[$(out_M2)] >> $(CFG)
+	@echo sp=vadd_1.in1:$(in_M0) >> $(CFG)
+	@echo sp=vadd_1.in2:$(in_M1) >> $(CFG)
+	@echo sp=vadd_1.out:$(out_M2) >> $(CFG)
 endif
 ########################################################################################################
 
@@ -97,11 +86,11 @@ PREFIX_COMMAND=XCL_EMULATION_MODE=$(TARGET)
 endif
 
 ddr2hbm_builds: 
-	make ddr_addSeq_build  hbm_addSeq_2Banks_build hbm_addSeq_overlap_build
+	make ddr_addSeq_build hbm_addSeq_2Banks_build hbm_addSeq_overlap_build
 
 hbm_bw_builds:
 	make build_without_rama build_with_rama;
-#       OR
+#OR
 	#make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024;
 	#make ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024;
 

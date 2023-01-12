@@ -1,6 +1,9 @@
 {
     "daily": {
         "rama": {
+            "platform" : "xilinx_u50_gen3x16_xdma_5_202210_1"
+            "memtype" : "HBM", 
+            "banks" : "0_31",
             "krnl_loop": "64",
             "rama": "1"
         }
