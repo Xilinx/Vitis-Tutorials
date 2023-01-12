@@ -1,0 +1,17 @@
+-M
+arm-generic-fdt
+-display
+none
+-serial
+null
+-serial
+null
+-serial
+mon:stdio
+-sync-quantum
+"1000000000"
+-boot
+mode=5
+-net nic,netdev=eth0
+-netdev user,id=eth0,hostfwd=tcp::1114-:22
+-net nic

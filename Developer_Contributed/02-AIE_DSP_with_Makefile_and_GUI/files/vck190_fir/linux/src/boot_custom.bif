@@ -1,0 +1,11 @@
+/*
+// Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: MIT
+*/
+
+the_ROM_image:
+{
+        { load=0x1000,    file=<system.dtb> }
+        { load=0x8000000, file=<u-boot.elf> }
+        { core=a72-0, exception_level=el-3, trustzone, file=<bl31.elf> }
+}
