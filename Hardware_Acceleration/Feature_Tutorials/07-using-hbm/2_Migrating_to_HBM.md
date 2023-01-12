@@ -35,9 +35,7 @@ void vadd(
 
 For more information on the kernel source code, refer to  `<Project>/reference_files/kernel.cpp`
 
-The ports to DDR banks connectivity is established with the system port mapping option using the `--sp` switch. This switch allows the developer to map the kernel ports to specific global memory banks.
-
-For more information refer to Mapping Kernel Ports to Memory, refer to    <a href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration"> Vitis User Guide.</a>
+The ports to DDR banks connectivity is established with the system port mapping option using the `--sp` switch. This switch allows the developer to map the kernel ports to specific global memory banks. For more information refer to [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory) in the Vitis User Guide.
 
 The contents of the example connectivity file, DDR_connectivity.cfg are shown below. Makefile target will create this file automatically.
 
@@ -88,12 +86,9 @@ make run TARGET=hw memtype=DDR dsize=600 addrndm=0 krnl_loop=1 buildxclbin=0
 - buildxclbin=0 will not generate the new xclbin.
 - txSize is set to 64 by default. It's the size of transactions issued by kernel port while accessing memory.
 
-The make command will geneated build directory shown as ../build/DDR_Banks_d512_txSize64
+The preceding make command will create the build directory ```../build/DDR_Banks_d512_txSize64``` reflecting the memory type, data and transaction size.
 
-TARGET=hw_emu can also be used for running hardware emulation, but this will take significant time to run the application for a 600MB size buffer. For this reason, the application is run on hardware by using TARGET=hw
-
-
-The above commands to run the application on hardware show the following results
+The above commands to run the application on hardware show the following results:
 
 ```
 *** Running hw mode ***  Use Command Line to run application!
@@ -117,6 +112,8 @@ TEST PASSED
 ```
 
 The host is migrating 600MB of data to both DDR0 and DDR1. The kernel accesses this data using in1, in2 ports from DDR0 and DDR1, respectively. The vector addition is performed by kernel, and results are written to DDR2. These results from DDR2 are migrated back to the host. The next section goes over the steps required to migrate this DDR based application to HBM.
+
+*TIP: ```TARGET=hw_emu``` can also be used for running hardware emulation, but this will take significant time to run the application for a 600MB size buffer.*
 
 ## Migration to HBM
 
@@ -287,7 +284,7 @@ Start the next step: <a href="3_BW_Explorations.md"> HBM Bandwidth Results</a>
 <hr/>
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2023 Xilinx</sup></p>
 
 
 

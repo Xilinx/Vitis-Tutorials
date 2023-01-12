@@ -67,7 +67,7 @@ Start the next step: <a href="2_Migrating_to_HBM.md"> Migrate the application to
 <hr/>
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2020-2023 Xilinx</sup></p>
 
 
 
