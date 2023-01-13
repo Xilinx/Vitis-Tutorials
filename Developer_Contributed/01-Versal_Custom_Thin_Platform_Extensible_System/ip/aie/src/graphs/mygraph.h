@@ -19,6 +19,7 @@
 
 using namespace adf;
 
+#define STR_LEN 30
 /*
  * Adaptive dataflow graph to move data
  */
@@ -29,43 +30,42 @@ class mygraph : public graph {
     kernel  dmove_i[NUM];
 
   public:
-    port<input>   in[NUM];
-    port<output>  out[NUM];
+    input_plio   in[NUM];
+    output_plio  out[NUM];
+    char plio_in_name[NUM][STR_LEN];
+    char plio_out_name[NUM][STR_LEN];
+    char out_filename[NUM][STR_LEN];
 
 
     mygraph()
     {
+      // specify PLIO ports
+      for(int i=0; i<NUM; i++) {
+        sprintf(plio_in_name[i],"DataIn%d",i);
+        sprintf(plio_out_name[i],"DataOut%d",i);
+        sprintf(out_filename[i],"data/output%d.txt",i);
+        in[i]  = input_plio::create(plio_in_name[i], plio_64_bits, "data/input.txt", 500);
+        out[i] = output_plio::create(plio_out_name[i], plio_64_bits, out_filename[i], 500);
+      }
+
       // specify kernels
-      // Debug prints//printf("Template Win size = %d\n",IN_SIZE);
-      // Debug prints//printf("Template Win margin = %d\n",IN_MARGIN);
-      // datamover */ dmove_i[0]                   = kernel::create(datamover);
-      // datamover */ source(dmove_i[0])           = "kernels/datamover.cc";
-       /* non-for-loop */ dmove_i[0]                   = kernel::create(datamover_scalar);
-       /* non-for-loop */ source(dmove_i[0])           = "kernels/datamover_scalar.cc";
-       /* non-for-loop */ dmove_i[1]                   = kernel::create(datamover_vector_reg);
-       /* non-for-loop */ source(dmove_i[1])           = "kernels/datamover_vector_reg.cc";
-       /* non-for-loop */ dmove_i[2]                   = kernel::create(datamover_mul_one);
-       /* non-for-loop */ source(dmove_i[2])           = "kernels/datamover_mul_one.cc";
-       /* non-for-loop */ dmove_i[3]                   = kernel::create(stream_datamover);
-       /* non-for-loop */ source(dmove_i[3])           = "kernels/stream_datamover.cc";
+      dmove_i[0]                   = kernel::create(datamover_scalar);
+      source(dmove_i[0])           = "kernels/datamover_scalar.cc";
+      dmove_i[1]                   = kernel::create(datamover_vector_reg);
+      source(dmove_i[1])           = "kernels/datamover_vector_reg.cc";
+      dmove_i[2]                   = kernel::create(datamover_mul_one);
+      source(dmove_i[2])           = "kernels/datamover_mul_one.cc";
+      dmove_i[3]                   = kernel::create(stream_datamover);
+      source(dmove_i[3])           = "kernels/stream_datamover.cc";
       for (int i=0; i<NUM-1; i++){
-        // datamover */ dmove_i[i]                   = kernel::create(datamover);
-        // datamover */ source(dmove_i[i])           = "kernels/datamover.cc";
         runtime<ratio>(dmove_i[i])   = 0.82;
-        connect< stream, window<IN_SIZE, IN_MARGIN> > (in[i], dmove_i[i].in[0]);
+        connect< stream, window<IN_SIZE, IN_MARGIN> > (in[i].out[0], dmove_i[i].in[0]);
         // Connect output
-        connect< window<IN_SIZE> > (dmove_i[i].out[0], out[i]);
+        connect< window<IN_SIZE> > (dmove_i[i].out[0], out[i].in[0]);
       }
        runtime<ratio>(dmove_i[3])   = 0.82;
-       // skip, not needed in this case // initialization_function(dmove_i[3]) = "stream_datamover_init";
-       // use for loop// connect< stream, window<IN_SIZE, IN_MARGIN> > (in[0], dmove_i[0].in[0]);
-       // use for loop// connect< window<IN_SIZE> > (dmove_i[0].out[0], out[0]);
-       // use for loop// connect< stream, window<2*IN_SIZE, IN_MARGIN> > (in[1], dmove_i[1].in[0]);
-       // use for loop// connect< window<2*IN_SIZE> > (dmove_i[1].out[0], out[1]);
-       // use for loop// connect< stream, window<3*IN_SIZE, IN_MARGIN> > (in[2], dmove_i[2].in[0]);
-       // use for loop// connect< window<3*IN_SIZE> > (dmove_i[2].out[0], out[2]);
-       connect< stream > (in[3], dmove_i[3].in[0]);
-       connect< stream > (dmove_i[3].out[0], out[3]);
+       connect< stream > (in[3].out[0], dmove_i[3].in[0]);
+       connect< stream > (dmove_i[3].out[0], out[3].in[0]);
     }
 };
 
