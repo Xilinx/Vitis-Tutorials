@@ -357,11 +357,21 @@ The Vitis Tutorials take users through the design methodology and programming mo
                 </td>
             </tr>
             <tr>
-                <td colspan="2" height="24">
+                <td height="24">
                     <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README.md">Versal Custom Thin Platform
-                        Extensible System</a>
+                        Extensible System </a>
+                </td>
+                <td height="24">
+                    <a href="./Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI/README.md">DSP Design on AI Engine with GUI and Makefile Flows :new: </a>
                 </td>
             </tr>
+            <tr>
+                <td height="24">
+                    <a href="./Developer_Contributed/03-HLS_Code_Optimization/README.md">Vitis HLS Optimization Techniques on Embedded Boards :new: </a>
+                </td>
+                <td height="24">
+                </td>		    
+            </tr>		
         </tbody>
     </table>
 
