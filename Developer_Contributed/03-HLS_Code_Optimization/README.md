@@ -7,14 +7,14 @@ Author: Daniele Bagni, Xilinx Inc
 -->
 
 
-<div style="page-break-after: always;"></div>
-<table style="width:100%">
-  <tr>
-    <th width="100%" colspan="6"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1> Optimization Techniques for Vitis HLS and HW Acceleration on Embedded Boards</h1>
-</th>
-  </tr>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
+    </td>
+ </tr>
 </table>
-</div>
+
+# Optimization Techniques for Vitis HLS and HW Acceleration on Embedded Boards
 
 
 ***Version: Vitis 2022.1***
