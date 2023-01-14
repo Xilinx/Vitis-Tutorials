@@ -216,8 +216,7 @@ For this tutorial we provide a pre-made C++ "main" program to wrap around the ke
        vitis_hls -p cholesky_kernel &
        
 3. In the "Explorer" window left pane of the GUI, locate "Test Bench" under "Source".
-   Right-click -> "Add file...", select test_hls.cpp.
-   Repeat this operation for the two data files: matrix_input.dat and golden_result.dat in ./hls_tb/tb_data
+   Right-click -> "Add file...", select test_hls.cpp. Right-click again and use "Add folder...", select ./hls_tb/tb_data
 4. Now select "Project"-> "Run C simulation" in main menu.
    This runs a purely functional simulation called "Csim", none of what HLS synthesizes is involved.
 5. Select "Project"-> "Run C simulation"
