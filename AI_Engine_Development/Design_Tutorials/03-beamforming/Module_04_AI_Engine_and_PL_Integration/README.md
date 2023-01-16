@@ -26,7 +26,7 @@ The Vitis compiler linker step for this large design takes ~16 hours to complete
 Building the XCLBINs from scratch takes about 16 hours to complete. To create the Vitis compiler linker output from scratch, start the builds with the following commands:
 
 ```bash
-make xclbin_all
+make xsa_all
 ```
 or
 ```
