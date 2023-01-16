@@ -16,7 +16,7 @@
 
 ECHO              := @echo
 
-PLATFORM_CUSTOM   ?= vck190_thin
+PLATFORM_CUSTOM   := vck190_thin
 
 XPFM              := ../../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 
@@ -63,9 +63,6 @@ allx86       : clean x86compile x86sim
 ${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 	$(MAKE) clean
 	aiecompiler -target=hw --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
-
-x86compile:
-	aiecompiler --dataflow -v -include=$(COMM_INC) -include=$(COMM_SRC) -include=$(FILTERS_INC) -include=$(FILTERS_SRC) -include=$(RADIO_INC) -include=$(RADIO_SRC)  $(TEST_BENCH) $(OTHER_OPTS) --platform=$(XPFM) -Xchess="gain:cpp.define=USER_PARAMS" -workdir=$(WORK_DIR) --x86Sim |& tee $(LOG_FILE)
 
 sim:
 	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(LOG_FILE)
