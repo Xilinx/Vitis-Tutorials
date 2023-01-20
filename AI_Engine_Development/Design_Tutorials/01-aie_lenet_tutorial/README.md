@@ -1038,7 +1038,7 @@ A summary of resource utilization and power is given in the following table.
 
 The following documents provide supplemental information for this tutorial.
 
-#### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/yii1603912637443.html)
+#### [AI Engine Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
@@ -1052,7 +1052,7 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-#### [Vitis Unified Software Development Platform 2022.2 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
+#### [Vitis Unified Software Development Platform Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 The following are links to Vitis related information referenced in this tutorial:
 
