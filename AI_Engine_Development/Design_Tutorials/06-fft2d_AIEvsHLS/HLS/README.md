@@ -440,7 +440,6 @@ After the root prompt comes up, run the following commands to run the design:
 ```
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
-export XILINX_XRT=/usr
 ./fft_2d_hls_xrt.elf a.xclbin
 ```
 
@@ -518,9 +517,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 ```
 cd /mnt/sd-mmcblk0p1
-export XILINX_XRT=/usr
 ./init.sh
-
 ./fft_2d_hls_xrt.elf a.xclbin
 ```
 
@@ -1505,7 +1502,7 @@ trace_buffer_size=500M
 
 2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
-3. Open `xclbin.ex.run_summary` using `vitis_analyzer`: `vitis_analyzer xclbin.ex.run_summary`.
+3. Open `xrt.run_summary` using `vitis_analyzer`: `vitis_analyzer xrt.run_summary`.
 
 4. The snapshot of the timeline trace for the AI Engine 1024 x 2048 point 1-instance design run with `ITER_CNT=8` is shown in the following figure:
 

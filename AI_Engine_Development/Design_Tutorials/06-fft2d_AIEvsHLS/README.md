@@ -103,7 +103,9 @@ fft2d_AIEvsHLS
 |__AIE......................contains AI Engine implementation
 |    |Makefile....................with recipes for each step of the design compilation
 |    |images......................contains images used for AI Engine Design documentation
-|    |description.json............required for XOAH
+|    |description.json............required for internal regression
+|    |multi_params.json...........required for internal regression
+|    |sample_env_setup.sh.........required to setup Vitis environment variables and Libraries
 |    |build.......................created and contains subfolders from design build
 |    |design......................contains source and include files
 |    |       |aie_src....................contains all the aie source files
@@ -115,7 +117,9 @@ fft2d_AIEvsHLS
 |__HLS......................contains HLS implementation targeting PL and DSP Engines
 |    |Makefile....................with recipes for each step of the design compilation
 |    |images......................contains images used for DSP Design documentation
-|    |description.json............required for XOAH
+|    |description.json............required for internal regression
+|    |multi_params.json...........required for internal regression
+|    |sample_env_setup.sh.........required to setup Vitis environment variables and Libraries
 |    |build.......................created and contains subfolders from design build
 |    |design......................contains source and include files
 |    |       |pl_src.....................contains all the fft_2d and data mover source files
@@ -162,6 +166,10 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 * Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
+*  [DSP Library(DSPLIB) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
+
+* Download the [DSP Library] (https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
+
 </details>
 
 <details>
@@ -169,7 +177,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
@@ -227,7 +235,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202210_1",
+ "baseName": "xilinx_vck190_base_202220_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -283,7 +291,7 @@ Contains sections on how to develop AI Engine graphs, how to use the AI Engine c
 
 #### Vitis DSP Libraries
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) 
 
 #### Xilinx Runtime (XRT) Architecture
 
@@ -297,7 +305,7 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT Release Notes](https://docs.xilinx.com/r/en-US/ug1451-xrt-release-notes)
 
-#### Vitis Unified Software Development Platform 2022.1 Documentation
+#### Vitis Unified Software Development Platform 2022.2 Documentation (https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 Below are links to Vitis related information referenced in this tutorial:
 

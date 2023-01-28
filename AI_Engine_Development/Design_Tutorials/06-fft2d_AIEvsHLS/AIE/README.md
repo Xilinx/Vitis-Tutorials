@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+</table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2022.2 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)</h1>
    </td>
@@ -479,7 +479,6 @@ After the root prompt comes up, run the following commands to run the design:
 ```
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
-export XILINX_XRT=/usr
 ./fft_2d_aie_xrt.elf a.xclbin
 ```
 
@@ -558,9 +557,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 ```
 cd /mnt/sd-mmcblk0p1
-export XILINX_XRT=/usr
 ./init.sh
-
 ./fft_2d_aie_xrt.elf a.xclbin
 ```
 
@@ -782,7 +779,7 @@ The overall graph definition of the design is contained in the `graph.cpp` file.
 
 #### Defining the Graph Class
 
-Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/user_guide/L2/func-fft.html) for FFIT. A general specification is put in for the ADF namespace:
+Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) for FFIT. A general specification is put in for the ADF namespace:
 
 ```
 // FFTrows_graph FFT point size...
@@ -1246,9 +1243,9 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
 
    Refer to the [xrt.ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation for more information. 
 
-2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xclbin.run_summary` files back to your system.
+2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
-3. Open `xclbin.ex.run_summary` using `vitis_analyzer`: `vitis_analyzer xclbin.ex.run_summary`.
+3. Open `xrt.run_summary` using `vitis_analyzer`: `vitis_analyzer xrt.run_summary`.
 
 4. The snapshot of the timeline trace for the AI Engine 1024 x 2048 point 1-instance design run with `ITER_CNT=8` is shown in the following figure:
 
