@@ -7,4 +7,4 @@ VitisLibPipeline (libname: 'Vitis-Tutorials',
                   disable_standardization: "true",
                   allowed_modes:"sw_emu,hw_emu,hw",
                   yml:'2023.1/tutorial.yml', tql:'2023.1/tutorial.tql',
-                  TOOLVERSION: '2022.2_daily_latest')
+                  TOOLVERSION: '2023.1_daily_latest')
