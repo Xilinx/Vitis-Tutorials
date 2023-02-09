@@ -1,12 +1,12 @@
  {
-    "name": "Introduction",
-    "description": "Introduction",
+    "name": "10-get-moving-with-alveo",
+    "description": "10-get-moving-with-alveo",
     "flow": "vitis",
  
     "platform_allowlist": ["u200", "u250"],
  
     "testinfo": {
-        "test_name": "HW_Accel_Introduction",
+        "test_name": "HW_D_10-alveo-intro",
         "tasks": {
         "build": {
 		"pre_exec": "./env_setup_opencv.sh"
