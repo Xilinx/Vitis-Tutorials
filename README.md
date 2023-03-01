@@ -384,14 +384,26 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
             </tr>
             <tr>
                 <td colspan="2" height="48">
-                    Check out the tutorials that Vitis developers shared! We welcome your contribution, you may share end-to-end designs, tips and tricks, or designs and examples that can help Xilinx users.
+                    Check out tutorials that other developers shared! We welcome your contribution, you may share end-to-end designs, tips
+                    and tricks, or designs and examples that can help Xilinx users.
                 </td>
             </tr>
             <tr>
-                <td colspan="2" height="24">
-                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
+                <td height="24">
+                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform
+                        Extensible System </a>
+                </td>
+                <td height="24">
+                    <a href="./Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI">DSP Design on AI Engine with GUI and Makefile Flows </a>
                 </td>
             </tr>
+            <tr>
+                <td height="24">
+                    <a href="./Developer_Contributed/03-HLS_Code_Optimization">Vitis HLS Optimization Techniques on Embedded Boards </a>
+                </td>
+                <td height="24">
+                </td>		    
+            </tr>		
         </tbody>
     </table>
 
