@@ -27,8 +27,9 @@ TRAFFIC_GEN ?= CPP
 # File names and locations
 GRAPH := src/graph.cpp
 GRAPH_O := libadf.a
+PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python:${XILINX_VIVADO}/data/emulation/python/xtlm_ipc:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python
 
-
+LD_LIBRARY_PATH:=$(XILINX_VIVADO)/data/simmodels/xsim/2023.1/lnx64/6.2.0/ext/protobuf/:$(XILINX_VIVADO)/lib/lnx64.o/Default:$(XILINX_VIVADO)/lib/lnx64.o/:$(LD_LIBRARY_PATH)
 # Command-line options
 AIECC := aiecompiler
 
@@ -45,8 +46,8 @@ X86SIM := x86simulator --pkg-dir=./Work
 
 ifeq (${TRAFFIC_GEN}, PYTHON)
 #For Python External Traffic Generator
-AIESIM_ETG := $(AIESIM) & python3 ../TrafficGenerator/Python/xtg_aie.py
-X86SIM_ETG := $(X86SIM) & python3 ../TrafficGenerator/Python/xtg_aie.py
+AIESIM_ETG := $(AIESIM) & ${PYTHON_INSTALL}/python3 ../TrafficGenerator/Python/xtg_aie.py
+X86SIM_ETG := $(X86SIM) & ${PYTHON_INSTALL}/python3 ../TrafficGenerator/Python/xtg_aie.py
 else
 # For C++ Traffic Generator
 AIESIM_ETG := $(AIESIM) & ../TrafficGenerator/Cpp/chain

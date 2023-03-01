@@ -18,11 +18,14 @@ DEST_DIR ?= $(CURDIR)
 MK_PATH := $(abspath $(lastword Makefile))
 MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 DSPLIB_ROOT ?= ${MK_DIR}/Vitis_Libraries/dsp
-ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4
-IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/Image
+ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4
+IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
-BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
-PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
+BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
+PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python:${XILINX_VIVADO}/data/emulation/python/xtlm_ipc:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python
+
+#will update to empty once regression gets successful run
+PYTHON_INSTALL ?= /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin
 
 #DSP LIB Includes
 DSP_KERNEL_HDR         := $(DSPLIB_ROOT)/L1/include/aie
@@ -37,7 +40,20 @@ PROJECT_REPO	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 TARGET := hw_emu
 PFM := tutorial
 PLIO_WIDTH := 64
-EMU_CMD := ./launch_hw_emu.sh 
+EMU_CMD := ./launch_hw_emu.sh -run-app embedded_exec.sh 
+SHOW_PLOT ?= False
+
+ifeq ($(SHOW_PLOT),True)
+   TG_ARGS = 64 0 plot
+else
+    TG_ARGS = 64 0
+endif
+
+ifndef PYTHON_INSTALL
+$(error PYTHON_INSTALL is not set)
+else
+    PYTHONHOME ?= ${PYTHON_INSTALL}/..
+endif
 
 # File names and locations
 GRAPH := aie/graph.cpp
@@ -101,16 +117,16 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202120_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2022.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2023.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2022.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2023.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.1/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2022.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2023.1/environment-setup-aarch64-xilinx-linux)
 
 guard-DSPLIBROOT:
 	$(call check_defined, DSPLIB_ROOT, Please define DSPLIB ROOT)
@@ -185,7 +201,7 @@ run: all run_emu
 run_emu: 
 # $(PYTHON) sw/pysrc/run_traffic_gen.py ${PLIO_WIDTH} 1 &
 	cd ./sw/pysrc
-	python3 run_traffic_gen.py ${PLIO_WIDTH} 0 & 
+	${PYTHON_INSTALL}/python3 run_traffic_gen.py ${TG_ARGS} & 
 	cd ..
 	$(EMU_CMD)
 

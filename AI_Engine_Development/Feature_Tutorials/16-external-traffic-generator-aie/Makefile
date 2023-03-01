@@ -21,16 +21,25 @@
 # make TARGET=hw_emu EXTIO=false aie aiesim
 #   --> standard AIE simulation
 #
-# make TARGET=sw_emu EXTIO=true TRAFFIC_GEN=PYTHON aie aiesim
+# make TARGET=sw_emu EXTIO=true TRAFFIC_GEN=PYTHON PYTHON_INSTALL=<> aie aiesim
 #   -->  X86 simulation using a Python Traffic generator
+#
+# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=PYTHON PYTHON_INSTALL=<> aie aiesim
+#   -->  AIE simulation using a Python Traffic generator
 #
 # make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP aie traffic_gen aiesim
 #   -->  AIE simulation using a C++ Traffic generator
 #
-# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP aie kernels xclbin host package  traffic_gen run_emu
-#   -->  HW simulation using a C++ Traffic generator
+# make TARGET=sw_emu EXTIO=true TRAFFIC_GEN=CPP aie traffic_gen aiesim
+#   -->  X86 simulation using a C++ Traffic generator
+#
+# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=PYTHON PYTHON_INSTALL=<> clean aie xclbin host package run_emu
+#   -->  HW simulation using a PYTHON Traffic generator
+#   
+# make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP traffic_gen run_emu
+#   -->  Runs hw_emu with C++ external TG. Here, you take advantage of the already compiled xclbin and created package.
 
-export PFM_NAME := xilinx_vck190_base_202220_1
+export PFM_NAME := xilinx_vck190_base_202310_1
 
 # Makefile input options if not defined from top-level stage
 
@@ -48,7 +57,15 @@ EXTIO ?= true
 # PYTHON: A Python based traffic generator is used
 # CPP: A C++ traffic generator is used
 TRAFFIC_GEN ?= PYTHON
-
+#will update to empty once regression gets successful run
+PYTHON_INSTALL ?= /tools/batonroot/rodin/engkits/lnx64/python-3.6.5_metropolis/bin
+ifeq (${TRAFFIC_GEN}, PYTHON)
+ifndef PYTHON_INSTALL
+$(error PYTHON_INSTALL is not set)
+else
+    PYTHONHOME ?= ${PYTHON_INSTALL}/..
+endif
+endif
 # Full flows
 all_aiesim: aie traffic_gen aiesim
 all_run_emu:  aie kernels xclbin host package traffic_gen run_emu
@@ -56,16 +73,16 @@ all_run_emu:  aie kernels xclbin host package traffic_gen run_emu
 
 #Check environment setup
 ifndef ROOTFS
-  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/rootfs.ext4
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4
   export ROOTFS
 endif
 ifndef IMAGE
-  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2021.2/Image
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/Image
   export IMAGE
 endif
 
 SDKTARGETSYSROOT ?= ${SYSROOT}
-PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/
+PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python:${XILINX_VIVADO}/data/emulation/python/xtlm_ipc:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python
 
 
 # Makefile input options
@@ -189,10 +206,10 @@ endif
 endif
 
 aie:
-	make -C aie TARGET=$(TARGET) EXTIO=$(EXTIO) TRAFFIC_GEN=$(TRAFFIC_GEN) aie
+	make -C aie TARGET=$(TARGET) EXTIO=$(EXTIO) TRAFFIC_GEN=$(TRAFFIC_GEN) PYTHON_INSTALL=${PYTHON_INSTALL} aie
 
 aiesim:
-	make -C aie TARGET=$(TARGET) EXTIO=$(EXTIO) TRAFFIC_GEN=$(TRAFFIC_GEN) aiesim
+	make -C aie TARGET=$(TARGET) EXTIO=$(EXTIO) TRAFFIC_GEN=$(TRAFFIC_GEN) PYTHON_INSTALL=${PYTHON_INSTALL} aiesim
 
 #####################################################
 
@@ -234,7 +251,7 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 
 # Hardware Emulation
 
-HW_EMU := ./launch_hw_emu.sh
+HW_EMU := ./launch_hw_emu.sh -run-app run_hw_emu.sh -pid-file pid.txt
 #-aie-sim-options ../aiesimulator_output/aiesim_options.txt
 #-run-app run_hw_emu.sh
 SW_EMU := ./launch_sw_emu.sh
@@ -244,7 +261,7 @@ run_emu:
 ifeq (${TARGET}, hw_emu)
 ifeq (${EXTIO}, true)
 ifeq (${TRAFFIC_GEN}, PYTHON)
-	python3 TrafficGenerator/Python/xtg_aie.py  & cd sw; $(HW_EMU)
+	${PYTHON_INSTALL}/python3 TrafficGenerator/Python/xtg_aie.py  & cd sw; $(HW_EMU)
 	../check_op 2 ../data/s2mm_ref.txt ../DataOut1.txt
 else
 	TrafficGenerator/Cpp/chain  & cd sw; $(HW_EMU)
@@ -256,7 +273,7 @@ endif
 else
 ifeq (${EXTIO}, true)
 ifeq (${TRAFFIC_GEN}, PYTHON)
-	python3 TrafficGenerator/Python/xtg_aie.py  &	cd sw; $(SW_EMU)
+	${PYTHON_INSTALL}/python3 TrafficGenerator/Python/xtg_aie.py  &	cd sw; $(SW_EMU)
 	../check_op 2 ../data/s2mm_ref.txt ../DataOut1.txt
 else
 	TrafficGenerator/Cpp/chain  & cd sw; $(SW_EMU)

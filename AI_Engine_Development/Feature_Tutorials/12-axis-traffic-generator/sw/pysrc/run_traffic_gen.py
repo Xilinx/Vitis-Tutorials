@@ -111,7 +111,7 @@ class IQData():
         
         if (not self.supressplots):
             self.plot_results(self.input_cplx_data,aie_output)
-            input("Enter any key to end simulation")   
+            #input("Enter any key to end simulation")   
 
         self.rx_axis.disconnect()
         self.tx_axis.end_of_simulation()
@@ -189,9 +189,9 @@ class IQData():
         plt.plot( list(range(0,len(golden_iq_out))),np.abs(golden_iq_out),label ="Golden FFT - MAG",marker="+")
         plt.plot( list(range(0,len(aie_out)))      ,np.abs(aie_out_shft),label  ="AIE OUT - MAG")        
         
-
+        ###will show plot only when SHOW_PLOT is True
         plt.legend()
-        plt.show()    
+        if (len(sys.argv) == 4 and sys.argv[3] == "plot"): plt.show()	
     
 
 
