@@ -108,8 +108,7 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
 
-
-* [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview)
+* [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
 
@@ -683,6 +682,7 @@ cd /mnt/sd-mmcblk0p1
   <summary>LeNet Architecture and AI Engine/PL Function Partitioning</summary>
 
 ## LeNet Architecture and AI Engine/PL Function Partitioning
+
 The architecture of the LeNet design is shown in the following figure. The details of the individual layers and their implementation will be described in a later section. This design provides an illustration of the functional partitioning between the AI Engine and PL resources, as shown in the block diagram previously. The input rearrange, max pooling, and rearrange are scalar byte operations and interact with read/write memories to ensure sustained throughput. This set of operations are suitable for implementation in PL rather than in the AI Engine array. With appropriate data rearrangement, the computations in the convolutional layers are presented as matrix multiplications and they are optimized to be implemented in the AI Engine array.
 
 ![Image of LeNet Architecture](images/Lenet_architecture.PNG)
@@ -767,6 +767,7 @@ Notes:
 </details>
 
 ## Software Design Details
+
 The software design in the LeNet tutorial consists of the following sections:
 
 <details>
