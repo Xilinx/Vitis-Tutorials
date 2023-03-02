@@ -28,7 +28,7 @@ DTC_PATH                           := $(abspath ${DTC})
 
 DTS                                := dts
 
-XSA_FILE                           := $(wildcard ../../platform/hw/build/*.xsa)
+XSA_FILE                           := $(wildcard ../../vivado/build/xsa_platform/*.xsa)
 DTSI_DIR                           := ./src
 DTSI_FILE                          := system-user.dtsi
 DTS_FILE                           := ${DTS}/system-top.dts

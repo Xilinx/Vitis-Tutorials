@@ -16,9 +16,9 @@
 
 ECHO             := @echo
 
-SYSROOT          := ../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
 
-APP_NAME         := vadd_mm_ocl
+APP_NAME         := vadd_mm_cpp
 APP_EXE          := ../exe/${APP_NAME}.exe
 APP_SRC          := ./src/${APP_NAME}.cpp
 APP_SRC_DEP      := ./src/*
@@ -32,7 +32,7 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include/xrt \
 GCC_C_FLAGS      := -O -Wall -std=c++14 \
                     --sysroot=${SYSROOT}
 
-GCC_L_FLAGS      := -lxilinxopencl -lxrt_core -lxrt_coreutil \
+GCC_L_FLAGS      := -lxrt_core -lxrt_coreutil \
                     -L${SYSROOT}/usr/lib \
                     --sysroot=${SYSROOT}
 
@@ -41,7 +41,7 @@ GCC_L_FLAGS      := -lxilinxopencl -lxrt_core -lxrt_coreutil \
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
-	$(ECHO) "      Command to generate the vadd_ocl ps_app used in this design"
+	$(ECHO) "      Command to generate the vadd_cpp ps_app used in this design"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."

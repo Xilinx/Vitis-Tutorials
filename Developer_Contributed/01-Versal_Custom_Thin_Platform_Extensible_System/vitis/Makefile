@@ -1,4 +1,4 @@
- #
+#
  # Copyright 2021 Xilinx, Inc.
  #
  # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,10 +20,12 @@ TARGET                ?= hw
 PLATFORM_CUSTOM       ?= vck190_thin
 LINUX_PRE_BUILDS      ?= false
 
-XPFM_EXPORT           := $(abspath ../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
-XPFM                  := ${XPFM_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+XSA_PLATFORM          := ../vivado/build/xsa_platform/${PLATFORM_CUSTOM}.xsa
 
-LINUX_ABS_PATH        := $(abspath ${XPFM_EXPORT}/sw)
+XPFM_VIVADO_EXPORT    := $(abspath ../vitis/xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM})
+XPFM_VIVADO           := ${XPFM_VIVADO_EXPORT}/${PLATFORM_CUSTOM}.xpfm
+
+LINUX_ABS_PATH        := $(abspath ${XPFM_VIVADO_EXPORT}/sw)
 LINUX_KERNEL          := ${LINUX_ABS_PATH}/Image
 LINUX_DTB             := ${LINUX_ABS_PATH}/system.dtb
 
@@ -35,16 +37,16 @@ LINUX_ROOTFS          := ${LINUX_ABS_PATH}/rootfs.ext4
 LINUX_ROOTFS_TYPE     := ext4
 endif
 
-IP_DIR                := ../ip
+IP_DIR                := ./ip
 XO                    := $(wildcard ${IP_DIR}/xo_hw/*.xo)
 GRAPH_O               := ${IP_DIR}/aie/libadf.a
 XCLBIN                := my.xclbin
-XSA                   := my.xsa
+XSA                   := ${PLATFORM_CUSTOM}.xsa
 
-PS_APPS_DIR           := ../ps_apps
-PS_EXE                := $(wildcard ${PS_APPS_DIR}/exe/*.exe)
+PS_APPS_LINUX_DIR     := ../ps_apps/linux
+PS_LINUX_EXE          := $(wildcard ${PS_APPS_LINUX_DIR}/exe/*.exe)
 
-SD_CARD               := $(abspath ../package_output_${TARGET})
+SD_CARD_LINUX         := $(abspath ../package_linux_${TARGET})
 BUILD_DIR             := build_${TARGET}
 
 ILA_LTX               := ${BUILD_DIR}/_x/link/vivado/vpl/prj/probe_0.ltx
@@ -72,37 +74,39 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: ${BUILD_DIR} ${SD_CARD}
-
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
+
+link: ${BUILD_DIR} ${BUILD_DIR}/${XSA}
 
 ${BUILD_DIR}/${XSA}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
 		v++ --link --debug --save-temps \
 			--target ${TARGET} \
-			--platform ${XPFM} \
+			--platform ../${XSA_PLATFORM} \
 			$(addprefix --config ../, ${SYSTEM_CFG}) \
 			$(addprefix ../, ${XO}) \
 			../${GRAPH_O} \
 			--output ${XSA} \
 			|& tee vpp_link.log
 
-${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB}
+package_linux: ${SD_CARD_LINUX}
+
+${SD_CARD_LINUX}: ${BUILD_DIR}/${XSA} ${PS_LINUX_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
-			--platform ${XPFM} \
-			--package.out_dir ${SD_CARD} \
+			--platform ${XPFM_VIVADO} \
+			--package.out_dir ${SD_CARD_LINUX} \
 			--package.boot_mode=sd \
 			--package.image_format=${LINUX_ROOTFS_TYPE} \
 			--package.kernel_image=${LINUX_KERNEL} \
 			--package.rootfs=${LINUX_ROOTFS}  \
 			../${GRAPH_O} \
 			${XSA} \
-			$(addprefix --package.sd_file=../, ${PS_EXE}) \
+			$(addprefix --package.sd_file=../, ${PS_LINUX_EXE}) \
 			|& tee vpp_pack.log
-	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
+	echo ${PLATFORM_CUSTOM} > ${SD_CARD_LINUX}/sd_card/platform_desc.txt
 	make update_ila
 
 update_ila:
@@ -114,5 +118,4 @@ ifeq (${TARGET}, hw)
 endif
 
 clean:
-	rm -rf ${SD_CARD} ${BUILD_DIR}
-
+	rm -rf ${SD_CARD_LINUX} ${SD_CARD_BAREMETAL} ${BUILD_DIR}
