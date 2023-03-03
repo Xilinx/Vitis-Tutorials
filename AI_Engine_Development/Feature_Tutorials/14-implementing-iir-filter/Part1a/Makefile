@@ -11,7 +11,7 @@ AIE_DATA_DIR = ./data
 RM = rm -f
 RMDIR = rm -rf
 
-PLATFORM_VERSION = 202220_1
+PLATFORM_VERSION = 202310_1
 PLATFORM ?= $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_$(PLATFORM_VERSION)/xilinx_vck190_base_$(PLATFORM_VERSION).xpfm
 
 # AIE compiler settings

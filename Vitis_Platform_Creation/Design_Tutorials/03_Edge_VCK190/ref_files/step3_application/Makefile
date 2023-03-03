@@ -34,7 +34,7 @@ sd_card:vadd_hw aie_adder_hw
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	cd Vitis_Accel_Examples/ && git checkout 2022.2 && sed -i "s/vck190_dfx_hw := true/	vck190_dfx_hw := true/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
+	cd Vitis_Accel_Examples/ && git checkout 2023.1 && sed -i "s/vck190_dfx_hw := true/	vck190_dfx_hw := true/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
 
 $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM)  DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux

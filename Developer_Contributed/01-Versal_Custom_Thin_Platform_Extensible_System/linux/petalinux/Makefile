@@ -20,7 +20,7 @@ LINUX_MACHINE              ?= vck190-versal
 LINUX_ETH_CONFIG           ?= DHCP
 LINUX_BUILD_SOURCES        ?= network
 LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/plnx-workspace/downloads
-LINUX_LOCAL_SSTATE_DIR     ?= /tmp/plnx-workspace/sstate_aarch64_2022.2/aarch64
+LINUX_LOCAL_SSTATE_DIR     ?= /tmp/plnx-workspace/sstate_aarch64_2023.1/aarch64
 LINUX_TMP_DIR              ?= /tmp/${USER}/2022.1/petalinux
 
 CURR_DIR                   := $(shell pwd)

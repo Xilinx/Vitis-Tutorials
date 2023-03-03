@@ -29,7 +29,7 @@ DT_PATH=$(ABS_BUILD_PATH)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
 DTB_FILE=$(DT_PATH)/system.dtb
 BOOT_DIR=$(ABS_BUILD_PATH)/boot
 SD_DIR=$(ABS_BUILD_PATH)/sd_dir
-VERSION=2022.2
+VERSION=2023.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 
 SW_COMP_PATH=$(ABS_BUILD_PATH)/sw_comp

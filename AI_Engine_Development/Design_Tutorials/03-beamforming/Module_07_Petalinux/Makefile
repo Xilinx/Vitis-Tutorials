@@ -22,7 +22,7 @@ MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
 # =========================================================
 # BSP
 # =========================================================
-BSP := xilinx-vck190-v2022.2-final.bsp
+BSP := xilinx-vck190-v2023.1-final.bsp
 
 # =========================================================
 # XSA SELECTION

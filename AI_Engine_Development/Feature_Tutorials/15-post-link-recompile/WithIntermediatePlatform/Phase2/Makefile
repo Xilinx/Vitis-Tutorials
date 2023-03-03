@@ -12,13 +12,13 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-# ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/rootfs.ext4
-# IMAGE ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2022.2/Image
+# ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4
+# IMAGE ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/Image
 # SDKTARGETSYSROOT ?= ${SYSROOT}
 #
 # Makefile input options
 TARGET ?= hw_emu
-PFM_NAME ?= xilinx_vck190_base_202220_1
+PFM_NAME ?= xilinx_vck190_base_202310_1
 
 #Directories
 FILES_DIR ?= ../../Files
@@ -75,10 +75,10 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202220_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202310_1)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2022.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.1/environment-setup-aarch64-xilinx-linux)
 
 
 ########################################################

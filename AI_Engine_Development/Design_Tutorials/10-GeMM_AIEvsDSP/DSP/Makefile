@@ -141,7 +141,7 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 
 
-PLATFORM := /proj/xbuilds/2022.2_released/internal_platforms/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
+PLATFORM := /proj/xbuilds/2023.1_released/internal_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
 
 
 
