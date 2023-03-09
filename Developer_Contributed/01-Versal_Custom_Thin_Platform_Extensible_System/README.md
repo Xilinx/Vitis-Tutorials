@@ -12,16 +12,16 @@ This tutorial describes a Versal VCK190 System Example Design based on a thin cu
 ### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1.  version_check: Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
-  2.  board_repo:    Downloads the board files from the Xilinx GitHub 
-  3.  xsa:           Building the thin platform xsa (only pre-synth) or using the pre-builds
-  4.  linux:         Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
-  5.  dtg:           Building the device-tree when xsa and xpfm is build and using the linux pre-builds
-  6.  xpfm:          Building the Vitis Platform or using the pre-builds
-  7.  bif:           Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
-  8.  ip:            Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
-  9.  ps_apps:       Building all XRT-based PS applications
-  10. vitis:         Linking all kernels in the thin platform and packaging all necessary boot/run files
+  1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
+  2.  vivado_platform: Building the thin platform xsa (only pre-synth) or using the pre-builds
+  3.  vitis_platform:  Building the Vitis Platform or using the pre-builds
+  4.  linux:           Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
+  5.  dtg:             Building the device-tree when xsa and xpfm is build and using the linux pre-builds
+  6.  bif:             Some necessary Copying of linux image-files to the vitis platform for a correct Vitis packaging
+  7.  vitis_ip:        Building Ai Engine graph(s) towards libadf.a and compiling hls/rtl kernels to *.xo
+  9.  full_impl:       Linking all kernels and AIE in the thin platform and fully implement it
+  8.  ps_apps:         Building all XRT-based PS applications
+ 10.  package:         Packaging all necessary boot/run files
 ```
 ### Build-flow Dependencies
 The following diagram explains the build-flow dependencies.
@@ -42,7 +42,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - Exception: For building petalinux OFFLINE; you will need to download and extract some tar.gz files; which is explained more in detail below!
     - Exception: For building with Yocto-build; you will need to install Yocto; which is explained more in detail below!
   - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
-    - Example: After already done a full build before; you modify `[project-root]/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
+    - Example: After already done a full build before; you modify `[project-root]/vitis/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
     - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
     - Recommendation is to start `make all` or `make all_targets` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
     - REMARK: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
@@ -64,6 +64,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export XPFM_PRE_BUILDS := true` for using the xpfm pre-builds.
         - Be sure that the environment `PLATFORM_REPO_PATHS` is set and pointing to the `internal_platforms` of the used version.
           - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`
+        - REMARK: `export TARGET := hw_emu` is NOT supported and will error out. 
     - `LINUX_PRE_BUILDS`:
       - `export LINUX_PRE_BUILDS := false` for building linux (default).
       - `export LINUX_PRE_BUILDS := true` for using the linux pre-builds.
@@ -83,33 +84,33 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
       - REMARK: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
       - More information on how to setup and use the ILA can be found in the [Notes](#notes)
-    - `LINUX_BUILD_TOOL`:
-      - `export LINUX_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
-      - `export LINUX_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
+    - `SW_BUILD_TOOL`:
+      - `export SW_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
+      - `export SW_BUILD_TOOL := yocto` to use Yocto as linux build tool (change if needed).
     - `LINUX_YOCTO_ROOT`: 
-      - ONLY required to setup when `export LINUX_BUILD_TOOL := yocto`.
+      - ONLY required to setup when `export SW_BUILD_TOOL := yocto`.
       - Defaults to `export LINUX_YOCTO_ROOT := ${HOME}/bin` so please change to your local Yocto install directory. 
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
-      - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}`
-        - Defaults to `/tmp/${USER}/2022.2/petalinux` when `export LINUX_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/${USER}/2022.2/yocto` when `export LINUX_BUILD_TOOL := yocto`.
+      - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${SW_BUILD_TOOL}`
+        - Defaults to `/tmp/${USER}/2022.2/petalinux` when `export SW_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/${USER}/2022.2/yocto` when `export SW_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
     - `LINUX_BUILD_SOURCES`:
-      - **ONLY** supported for `export LINUX_BUILD_TOOL := petalinux`!
+      - **ONLY** supported for `export SW_BUILD_TOOL := petalinux`!
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
       - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALLY STORED** build-sources (change if needed).
       - Below described `LINUX_LOCAL_DOWNLOADS_DIR` AND `LINUX_LOCAL_SSTATE_DIR` **MUST** be setup!
       - REMARK: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
-      - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
+      - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
       - Change to the directory where you extracted the [downloads_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_LOCAL_SSTATE_DIR`:
-      - **ONLY** used when `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
+      - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2022.2/aarch64`.
       - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
@@ -122,11 +123,11 @@ In the `[project-root]` you can start the full build with `make all` or `make al
         - Please read ["Networking in QEMU"](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
   - End result: 
     - `export TARGET := hw`: 
-      - `[project-root]/package_output_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
+      - `[project-root]/package_linux_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
         - REMARK: Can't be used when `export LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
-      - `[project-root]/package_output_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
+      - `[project-root]/package_linux_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
     - `export TARGET := hw_emu`: 
-      - `[project-root]/package_output_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
+      - `[project-root]/package_linux_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
 ### Custom Thin Base Platform
 The GENERATED Custom Thin Base Platform BD:
@@ -159,41 +160,51 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux (Only when `export LINUX_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2022.2.
+ -  Checks if the Vivado, Petalinux (Only when `export SW_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2022.2.
  
 </details>
 <details>
- <summary> make platform/hw/board_repo </summary>
+ <summary> make vivado_platform </summary>
  
- - Downloads all board files from the Xilinx GitHub.
- 
-</details>
-<details>
- <summary> make xsa -C platform </summary>
- 
-`[project-root]/platform` Directory/file structure:
+`[project-root]/vivado` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
-| Makefile            | The platform xsa/xpfm Makefile                                  
-| hw/*                | The hardware platform Makefile and sources
+| Makefile            | The vivado platform Makefile                                  
+| src/*               | The vivado platform sources
 
  - `export XPFM_PRE_BUILDS := false` 
-   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/platform/hw/build/vck190_thin.xsa`.
+   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/vivado/build/xsa_platform/vck190_thin.xsa`.
    - After this step you could open the platform blockdesign in Vivado for review:
-     - `[project-root]/platform/hw/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
+     - `[project-root]/vivado/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
  - `export XPFM_PRE_BUILDS := true` 
    - Setup the project to use the pre-build xsa
    
 </details>
 <details>
-  <summary> make all -C linux/${LINUX_BUILD_TOOL} </summary>
+ <summary> make vitis_platform </summary>
+ 
+`[project-root]/vitis/platform` Directory/file structure:
+| Directory/file      | Description                                             
+| --------------------|--------------------------------------------------------------
+| Makefile            | The vitis platform Makefile                                  
+| src/*               | The vitis platform sources
+
+ - `export XPFM_PRE_BUILDS := false` 
+   - Builds the platform needed for ip and Vitis   -> `[project-root]/vitis/platform/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
+   - Builds the software platform needed for Vitis -> `[project-root]/vitis/platform/build/vck190_thin/export/vck190_thin/sw/*`
+ - `export XPFM_PRE_BUILDS := true` 
+   - Setup the project to use the xpfm pre-builds
+   
+</details>
+<details>
+  <summary> make linux </summary>
 
 `[project-root]/linux/src` Directory/file structure:
 | Directory/file                                   | Description                                             
 | -------------------------------------------------|-------------------------------------------------------------------------------------------
 | recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
 | recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
-| recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export LINUX_BUILD_TOOL := yocto`
+| recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export SW_BUILD_TOOL := yocto`
 | boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
  
  `[project-root]/linux/petalinux` Directory/file structure:
@@ -210,13 +221,13 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
  
  - `export LINUX_PRE_BUILDS := false` 
    - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
-   - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps` builds.
+   - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps/linux` builds.
  - `export LINUX_PRE_BUILDS := true` 
    - Sets up the project to use the Linux pre-builds
    
 </details>
 <details>
-  <summary> make all -C linux/dtg </summary>
+  <summary> make dtg </summary>
 
 `[project-root]/linux/dtg` Directory/file structure:
 | Directory/file                                       | Description                                             
@@ -230,31 +241,15 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
    
 </details>
 <details>
-  <summary> make xpfm -C platform </summary>
-
-`[project-root]/platform` Directory/file structure:
-| Directory/file      | Description                                             
-| --------------------|--------------------------------------------------------------
-| Makefile            | The platform xsa/xpfm Makefile                                  
-| sw/*                | The Vitis platform Makefile and sources
-
- - `export XPFM_PRE_BUILDS := false` 
-   - Builds the platform needed for ip and Vitis   -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
-   - Builds the software platform needed for Vitis -> `[project-root]/platform/sw/build/vck190_thin/export/vck190_thin/sw/*`
- - `export XPFM_PRE_BUILDS := true` 
-   - Setup the project to use the xpfm pre-builds
-   
-</details>
-<details>
   <summary> make bif </summary>
 
  - Some necessary Copying of linux image-files to the software platform for a correct Vitis packaging
  
 </details>
 <details>
-  <summary> make all -C ip </summary>
+  <summary> make vitis_ip </summary>
  
-`[project-root]/ip` Directory/file structure:
+`[project-root]/vitis/ip` Directory/file structure:
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The ip generic Makefile; it automatically searches for sub-projects to build                             
@@ -266,7 +261,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | mm2s_vadd_s/*       | XRT-controlled HLS memory-to-streaming kernel used with vadd_s Makefile and sources
 | s2mm_vadd_s/*       | XRT-controlled HLS streaming-to-memory kernel used with vadd_s Makefile and sources
 
- - Builds the output files needed for Vitis linker -> `[project-root]/ip/aie/libadf.a` and `[project-root]/ip/xo_hw/*.xo`
+ - Builds the output files needed for Vitis linker -> `[project-root]/vitis/ip/aie/libadf.a` and `[project-root]/vitis/ip/xo_hw/*.xo`
  - Kernel structure/flow:
     - vadd_mm is a memory mapped kernel
     - mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
@@ -274,22 +269,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
     
 </details>
 <details>
-  <summary> make all -C ps_apps </summary>
-
-`[project-root]/ps_apps` Directory/file structure:
-| Directory/file      | Description                                             
-| --------------------|---------------------------------------------------------
-| Makefile            | The ps_apps generic Makefile; it automatically searches for sub-projects to build
-| aie_dly_test/*      | PS XRT Application - using the native XRT API - Makefile and sources that measures the delay between counter-input and aie-output
-| vadd_mm_cpp/*       | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd_mm kernel
-| vadd_mm_ocl/*       | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd_mm kernel
-| vadd_s/*            | PS XRT Application - using the native XRT API - Makefile and sources that checks out the mm2s_vadd_s -> vadd_s -> s2mm_vadd_s kernels
-
- - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/exe/*.exe`
- 
-</details>
-<details>
-  <summary> make all -C vitis </summary>
+  <summary> make full_impl </summary>
 
 `[project-root]/vitis` Directory/file structure:
 | Directory/file      | Description                                             
@@ -299,19 +279,45 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | src/ila_0_bd.cfg    | ILA Vitis connection needed for Vitis linker when `export ILA_EN := 1`
 | src/ila_0_def.tcl   | ILA Vitis tcl needed for Vitis linker when `export ILA_EN := 1`
 
- - Runs the Vitis linker and packager
- - The output of the Vitis packager ends up in `[project-root]/package_output_${TARGET}`
- - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
+ - Runs the Vitis packager
+  - After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review:
    - `[project-root]/vitis/build_${TARGET}/_x/link/vivado/vpl/prj` $ vivado `prj.xpr`
  - Vitis will connect the memory-ports of the vadd_mm kernel to DDR4 as specified in the `[project-root]/vitis/src/system.cfg`
  - Vitis will connect the memory-ports of the mm2s_vadd_s, vadd_s and s2mm_vadd_s kernels to LPDDR4 as specified in the `[project-root]/vitis/src/system.cfg`
  
 </details>
+<details>
+  <summary> make ps_apps </summary>
+
+`[project-root]/ps_apps/linux` Directory/file structure:
+| Directory/file      | Description                                             
+| --------------------|---------------------------------------------------------
+| Makefile            | The ps_apps generic Makefile; it automatically searches for sub-projects to build
+| aie_dly_test/*      | PS XRT Application - using the native XRT API - Makefile and sources that measures the delay between counter-input and aie-output
+| vadd_mm_cpp/*       | PS XRT Application - using the native XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_mm_ocl/*       | PS XRT Application - using the opencl XRT API - Makefile and sources that checks out the vadd_mm kernel
+| vadd_s/*            | PS XRT Application - using the native XRT API - Makefile and sources that checks out the mm2s_vadd_s -> vadd_s -> s2mm_vadd_s kernels
+
+ - Builds the output files needed for vitis packager -> `[project-root]/ps_apps/linux/exe/*.exe`
+ 
+</details>
+<details>
+  <summary> make package </summary>
+
+`[project-root]/vitis` Directory/file structure:
+| Directory/file      | Description                                             
+| --------------------|---------------------------------------------------------
+| Makefile            | The Vitis generic Makefile for linker and packager
+
+ - Runs the Vitis packager
+ - The output of the Vitis packager ends up in `[project-root]/package_linux_${TARGET}`
+  
+</details>
 
 ## Testing
 ### Running on a VCK190
   1. Prerequisite: Build was executed with `export TARGET := hw`
-  2. Copy over the `[project-root]/package_output_hw/sd_card/*` to an SD-card (REMARK: Only when `export LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_output_hw/sd_card.img` on an SD-card.
+  2. Copy over the `[project-root]/package_linux_hw/sd_card/*` to an SD-card (REMARK: Only when `export LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_linux_hw/sd_card.img` on an SD-card.
   3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
   4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
      - Usually you will see 3 serial ports in your device manager:
@@ -332,7 +338,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 
 ### Running Hardware Emulation
   1. Prerequisite: Build was executed with `export TARGET := hw_emu`
-  2. Execute `[project-root]/package_output_hw_emu/`# `./launch_hw_emu.sh`
+  2. Execute `[project-root]/package_linux_hw_emu/`# `./launch_hw_emu.sh`
   3. The hardware emulation will start and boot-up the whole system and should give you the Linux login prompt.
      - This can take some time!
   4. Continue to "Execution & Results".
@@ -546,7 +552,7 @@ vck190-versal:/run/media/mmcblk0p1#
     - if you like to use ext4 rootfs instead: 
       - linux (Petalinux and Yocto) already generates it.
       - You will need to copy it to the Vitis platform in the `[project-root]/Makefile` in the `bif` section.
-      - The `v++ -package` command line in `[project-root]\vitis\Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
+      - The `v++ -package` command line in `[project-root]/vitis/Makefile` will need adaptations to be able to use ext4 rootfs instead of FAT-32.
   - `export ILA_EN := 1`
     - The ILA core connectivity is set up during v++ linking process loading the cfg file `[project-root]/vitis/src/ila_0_bd.cfg` and further configuration of ILA properties is managed in tcl file `[project-root]/vitis/src/ila_0_def.tcl`.
     - Using the configuration file `[project-root]/vitis/src/ila_0_bd.cfg` allows the designer to mark AXI port for debug nets to and from the AIE engine for analysis. 
@@ -561,13 +567,13 @@ vck190-versal:/run/media/mmcblk0p1#
   
 ## Design Considerations
   Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a AMD/Xilinx tools requirement!
-  - `[project-root]/ps_apps`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps/`.
-    - Vitis will automatically package them and they will end up in `[project-root]/package_output_${TARGET}`.
+  - `[project-root]/ps_apps/linux`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps/linux`.
+    - Vitis will automatically package them and they will end up in `[project-root]/package_linux_${TARGET}`.
     - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps/exe` dir.
-  - `[project-root]/ip`: Kernels can be added by just adding a sub-project in `[project-root]/ip`.
+  - `[project-root]/vitis/ip`: Kernels can be added by just adding a sub-project in `[project-root]/vitis/ip`.
     - **You will need to update the `[project-root]/vitis/src/system.cfg` file to setup the correct connections/clocks.**
-    - A `[kernel].xo` file **MUST** end up in the `[project-root]/ip/xo_hw` dir
-    - An extra aie graph **MUST** be added in the `[project-root]/ip/aie` dir, the `[project-root]/ip/aie/Makefile` will need adaptations.
+    - A `[kernel].xo` file **MUST** end up in the `[project-root]/vitis/ip/xo_hw` dir
+    - An extra aie graph **MUST** be added in the `[project-root]/vitis/ip/aie` dir, the `[project-root]/vitis/ip/aie/Makefile` will need adaptations.
 
 ## References
 The following documents provide supplemental information for this tutorial.
@@ -596,6 +602,14 @@ The following are links to Vitis related information referenced in this tutorial
 ## Revision History
 Click on each item below to see the detailed Revision History:
 
+ <details>
+  <summary> February 2023 </summary>
+  
+ - general:
+   - Changing dir structure for the upcoming baremetal ps_apps and vitis export flow
+ 
+ </details>
+ 
  <details>
   <summary> December 2022 </summary>
   
@@ -733,3 +747,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 <p align="center"><sup>XD106 | © Copyright 2022 Xilinx, Inc.</sup></p>
+
+ 

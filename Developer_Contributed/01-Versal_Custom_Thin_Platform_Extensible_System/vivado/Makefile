@@ -18,58 +18,52 @@
 DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 
 # =========================================================
-# TARGET SELECTION
-# =========================================================
-TARGET ?= hw
-
-# =========================================================
 # PLATFORM NAME
 # =========================================================
 PLATFORM_CUSTOM ?= vck190_thin
+PRE_SYNTH       := true
 
 # =========================================================
-# XSA SELECTION
+# XSA NAME
 # =========================================================
-#relative hardware (XSA) directory
-RELATIVE_XSA_DIR := ../hw/build/
-
-XSA_DIR	:= $(shell readlink -f $(RELATIVE_XSA_DIR))
-XSA := $(XSA_DIR)/$(PLATFORM_CUSTOM).xsa
+XSA_PLATFORM    := xsa_platform/${PLATFORM_CUSTOM}.xsa
 
 # =========================================================
-# SOURCE DIRECTORY
-# =========================================================
-SRC_DIR   := src
+# BUILD PRODUCTS
+# ========================================================
+BUILD_DIR := build
 
 # =========================================================
-# XPFM CREATION SCRIPT
+# SOURCE DIRECTORIES
 # =========================================================
-CREATE_XPFM_TCL := platform_sw.tcl
+SRC_DIR := src
+
+# =========================================================
+# XSA CREATION SCRIPT
+# =========================================================
+XSA_PLATFORM_TCL  := $(SRC_DIR)/xsa_platform_classic.tcl
+
+# =========================================================
+#  BOARD PART SELECTION (ES1/Production)
+# =========================================================
+ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
+  BOARD_LABEL:=vck190
+  BOARD_VER:=3.1
+else ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
+  BOARD_LABEL:=vck190_es
+  BOARD_VER:=1.3
+endif
 
 # =========================================================
 # DEPENDENCIES
 # =========================================================
-DEPS := $(CREATE_XPFM_TCL)
-DEPS += $(XSA)
-DEPS += $(SRC_DIR)/qemu/aie/pmc_args.txt
-DEPS += $(SRC_DIR)/qemu/aie/qemu_args.txt
-DEPS += $(SRC_DIR)/qemu/lnx/pmc_args.txt
-DEPS += $(SRC_DIR)/qemu/lnx/qemu_args.txt
+DEPS_PLATFORM   := $(XSA_PLATFORM_TCL)
 
-# =========================================================
-# BUILD PRODUCTS 
-# ========================================================
-BUILD_DIR := build
-XPFM := $(PLATFORM_CUSTOM).xpfm
+platform_classic: $(BUILD_DIR)/$(XSA_PLATFORM)
 
-xpfm: $(XSA) $(BUILD_DIR)/$(PLATFORM_CUSTOM)/export/$(PLATFORM_CUSTOM)/$(XPFM)
-
-$(XSA): 
-	$(MAKE) xsa -C ../hw
-
-$(BUILD_DIR)/$(PLATFORM_CUSTOM)/export/$(PLATFORM_CUSTOM)/$(XPFM): $(DEPS)
-	xsct -nodisp -sdx ./$(CREATE_XPFM_TCL) $(PLATFORM_CUSTOM) $(XSA) $(BUILD_DIR)
+$(BUILD_DIR)/$(XSA_PLATFORM): $(DEPS_PLATFORM)
+	vivado -mode batch -source $(XSA_PLATFORM_TCL) -tclargs $(PLATFORM_CUSTOM) $(DEVICE_NAME) $(PRE_SYNTH) $(BOARD_LABEL) $(BOARD_VER)
 
 clean:
-	rm -rf $(BUILD_DIR)/$(XPFM)
-	rm -rf $(BUILD_DIR) ./.Xil
+	rm -rf $(BUILD_DIR)
+	rm -rf .Xil vivado* .crash*

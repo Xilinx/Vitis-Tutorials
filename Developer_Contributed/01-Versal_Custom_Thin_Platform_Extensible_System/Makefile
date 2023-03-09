@@ -31,6 +31,9 @@ VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "
 # TARGET = hw or hw_emu
 export TARGET                     := hw
 
+# SW_BUILD_TOOL = petalinux or yocto
+export SW_BUILD_TOOL              := petalinux
+
 # XPFM_PRE_BUILDS = false (Build xpfm) or true (Use xpfm pre-builds)
 export XPFM_PRE_BUILDS            := false
 
@@ -40,26 +43,27 @@ export LINUX_PRE_BUILDS           := false
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
 
-# LINUX_BUILD_TOOL = petalinux or yocto
-export LINUX_BUILD_TOOL           := petalinux
+###########################################################
+# Linux/Yocto Variables that may be changed to your needs #
+###########################################################
 
 # LINUX_TMP_DIR = Any dir which is not NFS
-export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${LINUX_BUILD_TOOL}
+export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${SW_BUILD_TOOL}
 
 # LINUX_YOCTO_ROOT = Directory where yocto tools are installed
-# Used ONLY when LINUX_BUILD_TOOL := yocto!
+# Used ONLY when SW_BUILD_TOOL := yocto!
 export LINUX_YOCTO_ROOT           := ${HOME}/bin
 
 # LINUX_BUILD_SOURCE = network or local
-# Used ONLY when LINUX_BUILD_TOOL := petalinux!
+# Used ONLY when SW_BUILD_TOOL := petalinux!
 export LINUX_BUILD_SOURCES        := network
 
 # LINUX_DOWNLOADS_DIR = Absolute Path where "downloads" is located
-# Used ONLY when LINUX_BUILD_TOOL := petalinux and LINUX_BUILD_SOURCES := local
+# Used ONLY when SW_BUILD_TOOL := petalinux and LINUX_BUILD_SOURCES := local
 export LINUX_LOCAL_DOWNLOADS_DIR  := /tmp/plnx-workspace/downloads
 
 # LINUX_LOCAL_SSTATE_DIR = Absolute Path where "sstate-cache" is located
-# Used ONLY when LINUX_BUILD_TOOL := petalinux and LINUX_BUILD_SOURCES := local
+# Used ONLY when SW_BUILD_TOOL := petalinux and LINUX_BUILD_SOURCES := local
 export LINUX_LOCAL_SSTATE_DIR     := /tmp/plnx-workspace/sstate_aarch64_${REQUIRED_VERSION}/aarch64
 
 # LINUX_ETH_CONFIG = DHCP or STATIC
@@ -77,15 +81,13 @@ LINUX_SRC_DIR                     := ./linux/src
 LINUX_BUILD_DIR                   := ./linux/${LINUX_MACHINE}
 LINUX_DTB_DIR                     := ./linux/dtg/dts
 
-XSA_DIR                           := ./platform/hw/build
+XSA_DIR                           := ./vivado/build/xsa_platform
 XSA_FILE                          := ${XSA_DIR}/${PLATFORM_CUSTOM}.xsa
 XSA_PRE_BUILD                     := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}/hw/hw.xsa
 
-XPFM_EXPORT                       := ./platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
+XPFM_EXPORT                       := ./vitis/xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}
 XPFM_EXPORT_SW                    := ${XPFM_EXPORT}/sw
 XPFM_PRE_BUILD                    := ${PLATFORM_REPO_PATHS}/${PLATFORM_PRE_BUILD}
-
-BOARD_REPO                        := ./platform/hw/board_repo
 
 ifeq (${LINUX_PRE_BUILDS}, false)
   LINUX_SRC_IMAGES                := ${LINUX_BUILD_DIR}/images/linux
@@ -113,7 +115,7 @@ LINUX_BUILD_SKIP                  := false
 ##############
 # Build Flow #
 ##############
-.PHONY: clean help all version_check xsa linux petalinux yocto xpfm bif ip ps_apps vitis
+.PHONY: clean help all vivado vitis_platform vitis_ip vitis ps_apps linux
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -123,45 +125,49 @@ help::
 	$(ECHO) "  make version_check"
 	$(ECHO) "      checks out if the correct tools/versions are enabled"
 	$(ECHO) ""
-	$(ECHO) "  make ${BOARD_REPO}"
-	$(ECHO) "      clones the XilinxBoardStore for es1 and pre-production boards"
-	$(ECHO) ""
-	$(ECHO) "  make xsa"
+	$(ECHO) "  make vivado_platform"
 	$(ECHO) "      Builds a Vivado custom base HW platform using Pre-Synth flow"
 	$(ECHO) "      To run full implementation platform, override using environment variable"
 	$(ECHO) "      PRE_SYNTH = False"
 	$(ECHO) ""
+	$(ECHO) "  make vitis_platform"
+	$(ECHO) "      Builds the Vitis platform"
+	$(ECHO) "      * Depends on vivado_platform rule to be completed"
+	$(ECHO) ""
 	$(ECHO) "  make linux"
 	$(ECHO) "      Builds Linux related RootFS, U-boot, etc. using Petalinux or Yocto"
-	$(ECHO) "      * Requires xsa rule to be completed"
+	$(ECHO) "      * Depends on vivado_platform rule to be completed"
 	$(ECHO) ""
-	$(ECHO) "  make xpfm"
-	$(ECHO) "      Setups Vitis SW platform"
-	$(ECHO) "      * Requires xsa and petalinux rules to be completed"
+	$(ECHO) "  make dtg"
+	$(ECHO) "      Generates the devicetree when building the vivado platform and using the linux pre-builds"
+	$(ECHO) "      * Depends on vivado_platform rule to be completed"
 	$(ECHO) ""
 	$(ECHO) "  make bif"
 	$(ECHO) "      Copies Boot, devicetree and linux image to Vitis SW Platform"
-	$(ECHO) "      * Requires petalinux to be completed"
+	$(ECHO) "      * Depends on linux rule to be completed"
 	$(ECHO) ""
-	$(ECHO) "  make ip"
+	$(ECHO) "  make vitis_ip"
 	$(ECHO) "      Compile AIE, RTL and HLS kernels"
-	$(ECHO) "      * Note, HLS kernel requires all steps for Vitis SW Platform to be completed"
+	$(ECHO) "      * Depends on vitis_platform rule to be completed"
+	$(ECHO) ""
+	$(ECHO) "  make full_impl"
+	$(ECHO) "      Extends and links the HW Platform with AIE, RTL and HLS kernels using Vitis v++ linker"
+	$(ECHO) "      Synthesize and Implements the complete design"
+	$(ECHO) "      * Depends on vitis_ip rule to be completed"
 	$(ECHO) ""
 	$(ECHO) "  make ps_apps"
 	$(ECHO) "      Compile PS applications"
-	$(ECHO) "      * Requires all steps above"
+	$(ECHO) "      * Depends on linux and vitis_ip rule to be completed"
 	$(ECHO) ""
-	$(ECHO) "  make vitis"
-	$(ECHO) "      Extends and links the HW Platform with AIE, RTL and HLS kernels using Vitis v++"
-	$(ECHO) "      Synthesize and Implements the complete design"
-	$(ECHO) "      Packages the implemented design with the compiled PS apps"
+	$(ECHO) "  make package"
+	$(ECHO) "      Packages the implemented design with the builded linux & PS apps"
 	$(ECHO) "      Prepares and export SD card images"
-	$(ECHO) "      * Requires all steps above"
+	$(ECHO) "      * Depends on all previous rules to be completed"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all: version_check ${BOARD_REPO} xsa linux dtg xpfm bif ip ps_apps vitis
+all: version_check vivado_platform vitis_platform linux dtg bif vitis_ip full_impl ps_apps package
 
 all_targets:
 	$(MAKE) all TARGET=hw
@@ -179,7 +185,7 @@ ifndef SDKTARGETSYSROOT
 	$(ECHO) "[ERROR] SDKTARGETSYSROOT NOT found, please setup SDKTARGETSYSROOT correctly!"; exit 1
 endif
 else
-ifeq (${LINUX_BUILD_TOOL}, petalinux)
+ifeq (${SW_BUILD_TOOL}, petalinux)
 ifndef PETALINUX_VER
 	$(ECHO) "[ERROR] Petalinux NOT found, please setup Petalinux correctly!"; exit 1
 endif
@@ -198,19 +204,17 @@ ifeq (${XPFM_PRE_BUILDS}, true)
 ifndef PLATFORM_REPO_PATHS
 	$(ECHO) "[ERROR] PLATFORM_REPO_PATHS NOT found, please setup PLATFORM_REPO_PATHS correctly!"; exit 1
 endif
+ifeq (${TARGET}, hw_emu)
+	$(ECHO) "[ERROR] XPFM_PRE_BUILDS = true and TARGET = hw_emu is NOT supported!"; exit 1
+endif
 endif
 	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
 
-${BOARD_REPO}:
-ifeq (${XPFM_PRE_BUILDS}, false)
-	git clone https://github.com/Xilinx/XilinxBoardStore.git ${BOARD_REPO}
-endif
-
-xsa:
+vivado_platform:
 ifeq (${XPFM_PRE_BUILDS}, true)
 	$(MAKE) xsa_pre_build
 else
-	$(MAKE) xsa -C platform
+	$(MAKE) platform_classic -C vivado
 endif
 
 xsa_pre_build: ${XSA_FILE}
@@ -222,7 +226,7 @@ linux:
 ifeq (${LINUX_PRE_BUILDS}, true)
 	$(MAKE) linux_pre_build
 else ifeq (${LINUX_BUILD_SKIP}, false)
-	$(MAKE) all -C linux/${LINUX_BUILD_TOOL}
+	$(MAKE) all -C linux/${SW_BUILD_TOOL}
 else
 	touch ${LINUX_SRC_IMAGES}/*
 endif
@@ -238,14 +242,14 @@ ifeq (${LINUX_PRE_BUILDS}, true)
 endif
 endif
 
-xpfm:
+vitis_platform:
 ifeq (${XPFM_PRE_BUILDS}, true)
-	$(MAKE) xpfm_pre_build
+	$(MAKE) vitis_platform_pre_build
 else 
-	$(MAKE) xpfm -C platform
+	$(MAKE) platform -C vitis/xpfm_export
 endif
 
-xpfm_pre_build: ${XPFM_EXPORT}
+vitis_platform_pre_build: ${XPFM_EXPORT}
 ${XPFM_EXPORT}:
 	mkdir -p  ${XPFM_EXPORT}
 	cp    -rf ${XPFM_PRE_BUILD}/*                           ${XPFM_EXPORT}
@@ -285,18 +289,22 @@ ${XPFM_EXPORT_SW}/system.dtb: ${LINUX_DTB_DIR}/system-top.dtb
 	cp -f ${LINUX_SRC_IMAGES}/u-boot.elf             ${XPFM_EXPORT_SW}/u-boot.elf
 	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
 
-ip:
-	$(MAKE) all -C ip
+vitis_ip:
+	$(MAKE) all -C vitis/ip
 
 ps_apps:
-	$(MAKE) all -C ps_apps
+	$(MAKE) all -C ps_apps/linux
 
-vitis:
-	$(MAKE) all -C vitis
+full_impl:
+	$(MAKE) link -C vitis
+
+package:
+	$(MAKE) package_linux -C vitis
 
 clean_vitis:
-	$(MAKE) clean -C ip
-	$(MAKE) clean -C ps_apps
+	$(MAKE) clean -C vitis/xpfm_export
+	$(MAKE) clean -C vitis/ip
+	$(MAKE) clean -C ps_apps/linux
 	$(MAKE) clean -C vitis
 
 ultraclean_vitis:
@@ -304,11 +312,10 @@ ultraclean_vitis:
 	$(MAKE) clean_vitis TARGET=hw_emu
 
 clean:
-	$(MAKE) clean -C platform
-	$(MAKE) clean -C linux/${LINUX_BUILD_TOOL}
+	$(MAKE) clean -C vivado
+	$(MAKE) clean -C linux/${SW_BUILD_TOOL}
 	$(MAKE) clean -C linux/dtg
 	$(MAKE) clean_vitis
-	rm -rf ${BOARD_REPO}
 
 ultraclean:
 	$(MAKE) clean TARGET=hw

@@ -18,9 +18,9 @@ ECHO            := @echo
 
 PLATFORM_CUSTOM ?= vck190_thin
 
-XPFM            := ../../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+XPFM              := ../../xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 
-KERNEL          := mm2s_vadd_s
+KERNEL          := vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp
 XO              := ../xo_hw/${KERNEL}.xo
 
@@ -29,7 +29,7 @@ XO              := ../xo_hw/${KERNEL}.xo
 help::
 	$(ECHO) "Makefile Usage:"
 	$(ECHO) "  make all"
-	$(ECHO) "      Command to generate the hls-mm2s-kernel used in this design"
+	$(ECHO) "      Command to generate the hls-vadd-kernel used in this design"
 	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."

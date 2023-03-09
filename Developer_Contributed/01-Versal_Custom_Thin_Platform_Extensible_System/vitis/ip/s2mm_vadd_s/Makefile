@@ -18,7 +18,7 @@ ECHO            := @echo
 
 PLATFORM_CUSTOM ?= vck190_thin
 
-XPFM            := ../../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+XPFM              := ../../xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 
 KERNEL          := s2mm_vadd_s
 KERNEL_SRC      := ./src/${KERNEL}.cpp

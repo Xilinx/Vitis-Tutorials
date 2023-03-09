@@ -28,7 +28,7 @@ PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}
 META_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}-meta
 SYSROOT_DIR                := ${CURR_DIR}/../sysroot
 
-XSA_DIR                    := ${CURR_DIR}/../../platform/hw/build
+XSA_DIR                    := ${CURR_DIR}/../../vivado/build/xsa_platform
 XSA_FILE                   := $(shell basename ${XSA_DIR}/*.xsa)
 
 CFG                        := ./src/config
@@ -87,6 +87,19 @@ update_config:
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  ai-engine-driver
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  ai-engine-driver-dev
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  sysfsutils-dev
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --disable dropbear
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --disable packagegroup-core-ssh-dropbear
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --disable imagefeature-ssh-server-dropbear
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  dnf
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-ssh
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-sshd
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-sftp
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-sftp-server
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-scp
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-keygen
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  openssh-misc
+	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  imagefeature-ssh-server-openssh
 	cd ${PROJ_DIR} && petalinux-config  --silentconfig
 	cd ${PROJ_DIR} && petalinux-config -c rootfs --silentconfig
 ifeq (${LINUX_ETH_CONFIG}, STATIC)

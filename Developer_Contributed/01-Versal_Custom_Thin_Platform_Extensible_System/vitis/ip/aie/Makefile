@@ -18,7 +18,7 @@ ECHO              := @echo
 
 PLATFORM_CUSTOM   := vck190_thin
 
-XPFM              := ../../platform/sw/build/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
+XPFM              := ../../xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 
 AIE_WS            := .
 AIE_SRC           := ${AIE_WS}/src
@@ -32,7 +32,7 @@ TEST_BENCH        = ${AIE_SRC}/${MY_APP}.cpp
 SIM_OUTPUT        = ${AIE_WS}/aiesimulator_output
 WORK_DIR          = ${AIE_WS}/Work
 LOG_FILE          = ${AIE_WS}/log
-OTHER_OPTS        = --kernel-linting -Xchess="-std=c++17" -xlopt=2 --genArchive --pl-register-threshold=125 --log-level=5 --test-iterations=-1 --pl-axi-lite=false
+OTHER_OPTS        = --kernel-linting -Xchess="-std=c++17" -xlopt=2 --pl-register-threshold=125 --log-level=5
 #PL_FREQ           = --pl-freq=lte_0:153.6 --pl-freq=lte_1:153.6 --pl-freq=tx_chain0.pccfr_pl:307.2 --pl-freq=tx_chain0.wcfr_pl:307.2 --pl-freq=tx_chain0.dpd_out0:500.0
 PL_FREQ           = --pl-freq=500.0
 
@@ -62,7 +62,7 @@ allx86       : clean x86compile x86sim
 
 ${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 	$(MAKE) clean
-	aiecompiler -target=hw --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
+	aiecompiler -target=hw -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
 
 sim:
 	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(LOG_FILE)

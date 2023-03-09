@@ -18,73 +18,52 @@
 DEVICE_NAME ?= xcvc1902-vsva2197-2MP-e-S
 
 # =========================================================
+# TARGET SELECTION
+# =========================================================
+TARGET ?= hw
+
+# =========================================================
 # PLATFORM NAME
 # =========================================================
 PLATFORM_CUSTOM ?= vck190_thin
-PRE_SYNTH       :=true
 
 # =========================================================
-# XSA NAME
+# XSA SELECTION
 # =========================================================
-XSA := ${PLATFORM_CUSTOM}.xsa
+XSA_VIVADO := ../../vivado/build/xsa_platform/${PLATFORM_CUSTOM}.xsa
 
 # =========================================================
-# SOURCE DIRECTORIES
+# SOURCE DIRECTORY
 # =========================================================
-SRC_DIR := src
-QOR_SCRIPTS_DIR := $(SRC_DIR)/qor_scripts
+SRC_DIR   := src
 
 # =========================================================
-# XSA CREATION SCRIPT
+# XPFM CREATION SCRIPT
 # =========================================================
-CREATE_XSA_TCL := platform_xsa.tcl
-
-# =========================================================
-#  BOARD PART SELECTION (ES1/Production)
-# =========================================================
-ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
-  BOARD_LABEL:=vck190
-  BOARD_VER:=3.0
-else ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
-  BOARD_LABEL:=vck190_es
-  BOARD_VER:=1.3
-endif
+CREATE_XPFM_TCL := platform_sw.tcl
 
 # =========================================================
 # DEPENDENCIES
 # =========================================================
-DEPS := $(CREATE_XSA_TCL)
-# DEPS += pfm_decls.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/post_place.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/pre_place.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/post_route.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/post_physopt.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/prohibitCascBramAcrossRbrk.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/prohibitCascDspAcrossRbrk.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/prohibitCascUramAcrossRbrk.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/timing.xdc
-DEPS += $(QOR_SCRIPTS_DIR)/waive_BLI_AIE_timing_violations_postplace.tcl
-DEPS += $(QOR_SCRIPTS_DIR)/waive_BLI_AIE_timing_violations_preplace.tcl
-DEPS += $(SRC_DIR)/post_link_pfm_config.tcl
-DEPS += $(SRC_DIR)/dr.bd.tcl
-DEPS += $(SRC_DIR)/ddr4_dmc_3200_triplet_1.xdc
+DEPS := $(CREATE_XPFM_TCL)
+DEPS += $(SRC_DIR)/qemu/aie/pmc_args.txt
+DEPS += $(SRC_DIR)/qemu/aie/qemu_args.txt
+DEPS += $(SRC_DIR)/qemu/lnx/pmc_args.txt
+DEPS += $(SRC_DIR)/qemu/lnx/qemu_args.txt
 
 # =========================================================
-# BUILD PRODUCTS
+# BUILD PRODUCTS 
 # ========================================================
-BUILD_DIR := build
+XPFM := $(PLATFORM_CUSTOM).xpfm
 
-xsa: $(BUILD_DIR)/$(XSA)
+BUILD_DIR        := ./build
+BUILD_DIR_VIVADO := ${BUILD_DIR}/platform
 
-$(BUILD_DIR)/$(XSA): $(DEPS)
-	vivado -mode batch -source $(CREATE_XSA_TCL) -tclargs $(PLATFORM_CUSTOM) $(DEVICE_NAME) $(PRE_SYNTH) $(BOARD_LABEL) $(BOARD_VER)
+platform: $(BUILD_DIR_VIVADO)/$(PLATFORM_CUSTOM)/export/$(PLATFORM_CUSTOM)/$(XPFM)
 
-#	mv NOC_Power.xpe $(BUILD_DIR)/.
-#	mv vivado* $(BUILD_DIR)/.
+$(BUILD_DIR_VIVADO)/$(PLATFORM_CUSTOM)/export/$(PLATFORM_CUSTOM)/$(XPFM): $(DEPS) ${XSA_VIVADO}
+	xsct -nodisp -sdx ./$(CREATE_XPFM_TCL) $(PLATFORM_CUSTOM) $(XSA_VIVADO) $(BUILD_DIR_VIVADO)
 
 clean:
-	rm -rf $(BUILD_DIR)/$(XSA)
 	rm -rf $(BUILD_DIR)
-	rm -rf *.log *.jou .Xil
-
-
+	rm -rf ./.Xil

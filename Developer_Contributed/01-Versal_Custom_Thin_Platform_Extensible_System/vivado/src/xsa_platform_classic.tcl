@@ -29,7 +29,7 @@ namespace eval _tcl {
 variable script_folder
 set script_folder [_tcl::get_script_folder]
 
-set_param board.repoPaths ./board_repo/boards/Xilinx/vck190
+#set_param board.repoPaths ../board_repo/boards/Xilinx/vck190
 
 ## WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
 set PLATFORM_NAME [lindex $argv 0]
@@ -47,19 +47,21 @@ create_project -f ${PLATFORM_NAME} ${BUILD_DIR}/${PLATFORM_NAME}_vivado -part $D
 # set board part 
 set_property BOARD_PART xilinx.com:${BOARD_LABEL}:part0:${BOARD_VER} [current_project]
 
+set_property preferred_sim_model "tlm" [current_project]
+
 ## ===================================================================================
 ## Create Block Design
 ## ===================================================================================
 # pass arguments to tcl
 #set argv [list $PLATFORM_NAME $DEVICE_NAME]
 #set argc 2
-source src/dr.bd.tcl
+source ./src/dr.bd.tcl
 
 ## ===================================================================================
 ## Set Platform Properties (e.g. PFM.*)
 ## ===================================================================================
 # this is currently done in dr.bd.tcl #source pfm_decls.tcl
-source pfm_decls.tcl
+source ./src/pfm_decls.tcl
 
 ## ===================================================================================
 ## Add constraints to DDR4
@@ -82,34 +84,25 @@ update_compile_order -fileset sources_1
 ## ===================================================================================
 ## Apply timing constraints
 ## ===================================================================================
-add_files -fileset constrs_1 -norecurse src/qor_scripts/timing.xdc
+#add_files -fileset constrs_1 -norecurse src/qor_scripts/timing.xdc
 
 ## ===================================================================================
 ## Apply scripts to close timing
 ## ===================================================================================
-import_files -fileset utils_1 -norecurse src/qor_scripts/pre_place.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/post_place.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/post_route.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/post_physopt.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascDspAcrossRbrk.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascBramAcrossRbrk.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascUramAcrossRbrk.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/waive_BLI_AIE_timing_violations_postplace.tcl
-import_files -fileset utils_1 -norecurse src/qor_scripts/waive_BLI_AIE_timing_violations_preplace.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/pre_place.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/post_place.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/post_route.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/post_physopt.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascDspAcrossRbrk.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascBramAcrossRbrk.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/prohibitCascUramAcrossRbrk.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/waive_BLI_AIE_timing_violations_postplace.tcl
+#import_files -fileset utils_1 -norecurse src/qor_scripts/waive_BLI_AIE_timing_violations_preplace.tcl
 
-set_property platform.run.steps.place_design.tcl.pre [get_files pre_place.tcl] [current_project]
-set_property platform.run.steps.place_design.tcl.post [get_files post_place.tcl] [current_project]
-set_property platform.run.steps.route_design.tcl.post [get_files post_route.tcl] [current_project]
-set_property platform.run.steps.phys_opt_design.tcl.post [get_files post_physopt.tcl] [current_project]
-
-## ===================================================================================
-## Add hardware emulation support
-## ===================================================================================
-set_property PLATFORM.LINK_XP_SWITCHES_DEFAULT [list param:hw_emu.enableProfiling=false] [current_project]
-set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_0]
-set_property SELECTED_SIM_MODEL tlm [get_bd_cells /cips_noc]
-set_property SELECTED_SIM_MODEL tlm [get_bd_cells /noc_ddr4]
-set_property SELECTED_SIM_MODEL tlm [get_bd_cells /noc_lpddr4]
+#set_property platform.run.steps.place_design.tcl.pre [get_files pre_place.tcl] [current_project]
+#set_property platform.run.steps.place_design.tcl.post [get_files post_place.tcl] [current_project]
+#set_property platform.run.steps.route_design.tcl.post [get_files post_route.tcl] [current_project]
+#set_property platform.run.steps.phys_opt_design.tcl.post [get_files post_physopt.tcl] [current_project]
 
 ## ===================================================================================
 ## Set output type to hw_export
@@ -121,6 +114,16 @@ set_property platform.design_intent.external_host   "false"   [current_project]
 set_property platform.design_intent.embedded        "true"    [current_project]
 set_property platform.design_intent.datacenter      "false"   [current_project]
 set_property platform.extensible                    "true"    [current_project]
+
+## ===================================================================================
+## Add hardware emulation support
+## ===================================================================================
+set_property PLATFORM.LINK_XP_SWITCHES_DEFAULT [list param:hw_emu.enableProfiling=false] [current_project]
+#set_property SELECTED_SIM_MODEL tlm [get_bd_cells /Cips]
+#set_property SELECTED_SIM_MODEL tlm [get_bd_cells /CipsNoc]
+#set_property SELECTED_SIM_MODEL tlm [get_bd_cells /MemoryNoc]
+#set_property SELECTED_SIM_MODEL tlm [get_bd_cells /ExtensibleRegion/ControlNoc]
+#set_property SELECTED_SIM_MODEL tlm [get_bd_cells /ExtensibleRegion/DDR]
 
 ## ===================================================================================
 ## Wrap up Vivado Platform Project
@@ -146,8 +149,8 @@ if { $argc > 1} {
 #Pre_synth Platform Flow
 if {$pre_synth} {
   set_property platform.platform_state "pre_synth" [current_project]
-  write_hw_platform -force ${BUILD_DIR}/${PLATFORM_NAME}.xsa
-  validate_hw_platform ${BUILD_DIR}/${PLATFORM_NAME}.xsa
+  write_hw_platform -force ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
+  validate_hw_platform ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
 } else {
   set_property generate_synth_checkpoint true [get_files -norecurse *.bd]
   ## ===================================================================================
@@ -166,6 +169,7 @@ if {$pre_synth} {
   # Write the XSA for current design for use as a hardware platform
   # ===================================================================================
   open_run impl_1
-  write_hw_platform -unified -include_bit -force ${BUILD_DIR}/${PLATFORM_NAME}.xsa
-  validate_hw_platform ${BUILD_DIR}/${PLATFORM_NAME}.xsa
+  write_hw_platform -unified -include_bit -force ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
+  validate_hw_platform ${BUILD_DIR}/xsa_platform/${PLATFORM_NAME}.xsa
 }
+
