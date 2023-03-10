@@ -98,6 +98,7 @@ Utilize XSCT tool to execute one command to generate device tree files:
    -  `-platform-name`: Platform name
    -  `-git-branch`: device tree branch
    -  `-board`: board name of the device. You can check the board name at <DTG Repo>/device_tree/data/kernel_dtsi.
+   -  `-out`: specify the output directory
    -  `-zocl`: enable the zocl driver support
    -  `-dtsi`: Add user's device tree file support
    -  `-compile`: specify the option to compile the device tree
