@@ -1,0 +1,130 @@
+<ENTRY>
+{
+ "thisFile": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/binary_container_1.xclbin.package_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Tue Feb 28 09:55:38 2023",
+ "timestampMillis": "1677574538011",
+ "buildStep": {
+  "cmdId": "964da743-de2d-4ebe-8362-0a8e1fa9d33a",
+  "name": "v++",
+  "logFile": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/package.build/package/package.steps.log",
+  "commandLine": "/media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" --package --config package.cfg ../../mmult_system_hw_link/Hardware/binary_container_1.xclbin --platform /media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/base_platforms/xilinx_zcu102_base_202220_1/xilinx_zcu102_base_202220_1.xpfm --package.rootfs /home/danieleb/common/xilinx-zynqmp-common-v2022.2/rootfs.ext4 --package.kernel_image /home/danieleb/common/xilinx-zynqmp-common-v2022.2/Image -o binary_container_1.xclbin ",
+  "args": [
+   "--package",
+   "--config",
+   "package.cfg",
+   "../../mmult_system_hw_link/Hardware/binary_container_1.xclbin",
+   "--platform",
+   "/media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/base_platforms/xilinx_zcu102_base_202220_1/xilinx_zcu102_base_202220_1.xpfm",
+   "--package.rootfs",
+   "/home/danieleb/common/xilinx-zynqmp-common-v2022.2/rootfs.ext4",
+   "--package.kernel_image",
+   "/home/danieleb/common/xilinx-zynqmp-common-v2022.2/Image",
+   "-o",
+   "binary_container_1.xclbin"
+  ],
+  "iniFiles": [
+   {
+    "path": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/package.cfg",
+    "content": "#platform=/media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/base_platforms/xilinx_zcu102_base_202220_1/xilinx_zcu102_base_202220_1.xpfm\ntemp_dir=package.build\ntarget=hw\nsave-temps=1\n\n[package]\ndomain=xrt\n#kernel_image=/opt/xilinx/common/xilinx-zynqmp-common-v2022.2/Image\n#rootfs=/opt/xilinx/common/xilinx-zynqmp-common-v2022.2/rootfs.ext4\nout_dir=./package\nsd_file=../../mmult/Hardware/mmult\n"
+   }
+  ],
+  "cwd": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Feb 28 09:55:38 2023",
+ "timestampMillis": "1677574538020",
+ "status": {
+  "cmdId": "964da743-de2d-4ebe-8362-0a8e1fa9d33a",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Tue Feb 28 09:55:40 2023",
+ "timestampMillis": "1677574540993",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_zcu102_base_202220_1.xpfm",
+  "hardwareDsa": "hw.xsa",
+  "platformDirectory": "/media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/base_platforms/xilinx_zcu102_base_202220_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_PACKAGE",
+  "target": "TT_HW",
+  "binaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "binary_container_1",
+    "file": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/binary_container_1.xclbin",
+    "reports": [],
+    "uuid": ""
+   },
+   "kernels": []
+  },
+  "kernels": [],
+  "toolVersion": "Vitis V++ Compiler Release 2022.2.1. SW Build 3703708 on 2022-12-08-18:23:43",
+  "inputBinaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "binary_container_1",
+    "file": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system_hw_link/Hardware/binary_container_1.xclbin",
+    "reports": [],
+    "uuid": "a4d4af2d-0ead-494c-a4e8-e3305d749a6f"
+   },
+   "kernels": []
+  }
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Tue Feb 28 10:00:53 2023",
+ "timestampMillis": "1677574853300",
+ "status": {
+  "cmdId": "964da743-de2d-4ebe-8362-0a8e1fa9d33a",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Feb 28 10:00:53 2023",
+ "timestampMillis": "1677574853553",
+ "report": {
+  "path": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/package.build/reports/package/v++_package_binary_container_1_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Tue Feb 28 10:00:53 2023",
+ "timestampMillis": "1677574853559",
+ "report": {
+  "path": "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed/03-HLS_Code_Optimization/files/examples/9_matrix_mult_z/make-flow/zcu102/mmult_system/Hardware/package.build/v++_package_binary_container_1_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

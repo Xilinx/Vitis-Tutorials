@@ -1,0 +1,31 @@
+Mon Feb 27 18:51:21 2023: Running xcd server. This server was built by gradle.
+Mon Feb 27 18:51:21 2023: Server was asked to start on port: '41963'
+Mon Feb 27 18:51:21 2023: Server is using token UUID: 'a9aa439e-c03c-4cf5-91ff-10df704e1de2'
+Mon Feb 27 18:51:21 2023: SESSION_MGR: creating session with session uuid: '6d04a3e9-ade5-4ab9-8d63-1f78fcd2ec76' and name 'default'
+Mon Feb 27 18:51:21 2023: Attempting to start server on port '41963'
+Mon Feb 27 18:51:21 2023: XCD main fifo: created main fifo '/tmp/xcdmaina9aa439e-c03c-4cf5-91ff-10df704e1de2', fd read = 13
+Mon Feb 27 18:51:21 2023: Running Dispatch Server
+Mon Feb 27 18:51:21 2023: Version 2.2.0
+Mon Feb 27 18:51:30 2023: Dispatch Server: Accepted socket connection from client
+Mon Feb 27 18:51:30 2023: Starting Socket connection
+Mon Feb 27 18:51:30 2023: EXCHANGE_TOKEN received, server token: a9aa439e-c03c-4cf5-91ff-10df704e1de2, passed token: a9aa439e-c03c-4cf5-91ff-10df704e1de2
+Mon Feb 27 18:51:30 2023: DISPATCH_HANDLER: Adding handler from function makeHandler in library libxv_system_diagram
+Mon Feb 27 18:51:30 2023: SESSION_MGR: creating session with session uuid: '8731e1a7-14e6-4ade-a65a-80720ad52fcb' and name 'v++_package_binary_container_1'
+Mon Feb 27 18:51:30 2023: KERNEL_SVC: creating session with uuid: '8731e1a7-14e6-4ade-a65a-80720ad52fcb' and name 'v++_package_binary_container_1'
+Mon Feb 27 18:51:30 2023: GUIDANCE_SMGR: creating guidance session with uuid: '8731e1a7-14e6-4ade-a65a-80720ad52fcb' and name 'v++_package_binary_container_1'
+Mon Feb 27 18:51:30 2023: SYSTEM_DIAGRAM: creating session with uuid: '8731e1a7-14e6-4ade-a65a-80720ad52fcb' and name 'v++_package_binary_container_1'
+Mon Feb 27 18:55:35 2023: SESSION_MGR: closing session for UUID '8731e1a7-14e6-4ade-a65a-80720ad52fcb' with name 'v++_package_binary_container_1'
+Mon Feb 27 18:55:35 2023: KERNEL_SVC: closing session for UUID '8731e1a7-14e6-4ade-a65a-80720ad52fcb' with name 'v++_package_binary_container_1'
+Mon Feb 27 18:55:35 2023: GUIDANCE_SMGR: closing session for UUID '8731e1a7-14e6-4ade-a65a-80720ad52fcb' with name 'v++_package_binary_container_1'
+Mon Feb 27 18:55:35 2023: SYSTEM_DIAGRAM: closing session for UUID '8731e1a7-14e6-4ade-a65a-80720ad52fcb' with name 'v++_package_binary_container_1'
+Mon Feb 27 18:55:35 2023: STOP_SERVER received, server token: a9aa439e-c03c-4cf5-91ff-10df704e1de2, passed token: a9aa439e-c03c-4cf5-91ff-10df704e1de2
+Mon Feb 27 18:55:35 2023: Socket received request to stop server.
+Mon Feb 27 18:55:35 2023: Dispatch Server: do_await_stop
+Mon Feb 27 18:55:35 2023: Dispatch Server: stopping mainFifo_
+Mon Feb 27 18:55:35 2023: XCD main fifo: Stopping
+Mon Feb 27 18:55:35 2023: XCD main fifo: do_read error code: Operation canceled
+Mon Feb 27 18:55:35 2023: XCD main fifo: bytes_transferred: 0
+Mon Feb 27 18:55:35 2023: SERVER: destructor for server bound to port 41963
+Mon Feb 27 18:55:35 2023: XCD main fifo: Good unlink of /tmp/xcdmaina9aa439e-c03c-4cf5-91ff-10df704e1de2
+Mon Feb 27 18:55:35 2023: Server exiting with status 0.
+Mon Feb 27 18:55:35 2023: Closing log file.
