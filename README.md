@@ -125,26 +125,26 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization/README.md">Dataflow Debug and Optimization</a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization">Dataflow Debug and Optimization</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/README.md">RTL Systems Integration Example</a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration">RTL Systems Integration Example</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks/README.md">Using Multiple DDR Banks</a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks">Using Multiple DDR Banks</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/README.md">Traveling Salesperson Problem</a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson">Traveling Salesperson Problem</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu/README.md">Using Multiple Compute Units</a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu">Using Multiple Compute Units</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel/README.md">Bottom RTL Kernel Design Flow Example</a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel">Bottom RTL Kernel Design Flow Example</a>
             </td>
         </tr>
         <tr>
@@ -176,12 +176,12 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
                 <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application :new: </a>
+                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application </a>
             </td>
         </tr>
 	<tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API :new: </a>
+                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API </a>
             </td>
             <td>
                 <a href="./Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo">Get Moving with Alveo</a>
@@ -241,7 +241,7 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
                 <a href="./AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial">Versal System Design Clocking</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/03-beamforming/README.md">Beamforming Design</a>
+                <a href="./AI_Engine_Development/Design_Tutorials/03-beamforming">Beamforming Design</a>
             </td>
         </tr>
         <tr>
@@ -285,7 +285,7 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
                 <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
             <td>               
-                 <a href="./AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation :new:</a>
+                 <a href="./AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation </a>
             </td>
         </tr>
         <tr>
@@ -304,14 +304,14 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
                 <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines">Using RTL IP with AI Engines</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux :new:</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux </a>
             </td>
             <td>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation :new:</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation </a>
             </td>
             <td>
             </td>
@@ -368,7 +368,7 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
             </tr>
             <tr>
                 <td>
-                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial :new:</a>
+                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial </a>
                 </td>			            
 				<td height="24">
                 </td>
@@ -384,14 +384,26 @@ wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && 
             </tr>
             <tr>
                 <td colspan="2" height="48">
-                    Check out the tutorials that Vitis developers shared! We welcome your contribution, you may share end-to-end designs, tips and tricks, or designs and examples that can help Xilinx users.
+                    Check out tutorials that other developers shared! We welcome your contribution, you may share end-to-end designs, tips
+                    and tricks, or designs and examples that can help Xilinx users.
                 </td>
             </tr>
             <tr>
-                <td colspan="2" height="24">
-                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
+                <td height="24">
+                    <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform
+                        Extensible System </a>
+                </td>
+                <td height="24">
+                    <a href="./Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI">DSP Design on AI Engine with GUI and Makefile Flows :new:</a>
                 </td>
             </tr>
+            <tr>
+                <td height="24">
+                    <a href="./Developer_Contributed/03-HLS_Code_Optimization">Vitis HLS Optimization Techniques on Embedded Boards :new:</a>
+                </td>
+                <td height="24">
+                </td>		    
+            </tr>		
         </tbody>
     </table>
 
