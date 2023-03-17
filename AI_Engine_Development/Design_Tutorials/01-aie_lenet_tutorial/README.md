@@ -106,8 +106,6 @@ Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.
 
 Tools Documentation:
 
-* [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
-
 * [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022.2/vitis_doc/yii1603912637443.html)
 
 To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
