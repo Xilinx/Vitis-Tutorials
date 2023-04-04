@@ -2,7 +2,7 @@
     "name": "Developer_Contributed-03-HLS_Code_Optimization--matrix_mult",
     "description": "03-HLS_Code_Optimization--matrix_mult",
     "gui": "false",
-    "flow": "zynqmp",
+    "flow": "vitis",
 
     "platform_allowlist": [ "zcu102"],
     "platform_blocklist": [],
@@ -11,8 +11,6 @@
         "test_name": "CTB_03-HLS_zynqmp",
         "jobs": [
             {
-                "env": "",
-                "cmd": "",
                 "max_memory_MB": 65536
             }
         ],
@@ -21,12 +19,8 @@
             "vitis_hw_build"
         ],
 	"make_options": [
-	    "VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm'",
-	    "VITIS_SYSROOTS='${COMMON_IMAGE_ZYNQMP}/sysroots/cortexa72-cortexa53-xilinx-linux'",
-	    "SDKTARGETSYSROOT='${COMMON_IMAGE_ZYNQMP}/sysroots/cortexa72-cortexa53-xilinx-linux'",
-	    "KERNEL_IMAGE='${COMMON_IMAGE_ZYNQMP}/Image'",
-	    "ROOTFS='${COMMON_IMAGE_ZYNQMP}/rootfs.ext4'"
-	    ],
+		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm'"
+	],
         "custom_build_target": {
             "all": "all",
             "hw": "all"
@@ -35,7 +29,7 @@
 
         "tasks": {
            "build": {
-               "pre_exec": ["./env_setup_petalinux_zynqmp.sh"]
+               "pre_exec": ["./env_setup_zynqmp.sh"]
            }
         }
 
