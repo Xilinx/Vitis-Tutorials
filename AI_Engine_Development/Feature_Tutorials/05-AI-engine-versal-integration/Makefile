@@ -55,9 +55,9 @@ GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 			-I${XILINX_VITIS}/include
 
 ifeq ($(TARGET),sw_emu)
-	GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
+	GCC_LIB := -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
 else
-	GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
+	GCC_LIB := -lxaiengine -lxrt_core -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
 endif
 
 LDCLFLAGS := $(GCC_LIB)
@@ -136,7 +136,6 @@ xsa: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 # For sw emulation, hw emulation and hardware, compile the PS code and generate the host.exe. This is needed for creating the sd_card.
 host: guard-CXX guard-SDKTARGETSYSROOT 
 	cd ./sw 
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
 	@echo "COMPLETE: Host application created."
