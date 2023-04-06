@@ -39,6 +39,6 @@ ${XO}: ${IP_TCL} ${KERNEL_SRC}
 	vivado -mode batch -source $(IP_TCL) -tclargs $(KERNEL) $(DEVICE_NAME) $(XO)
 
 clean:
-	$(RM) -rf build .Xil
+	$(RM) -rf build .Xil .crashReporter
 	$(RM) -rf $(XO) vivado.* *.xml *.jou *.log
 

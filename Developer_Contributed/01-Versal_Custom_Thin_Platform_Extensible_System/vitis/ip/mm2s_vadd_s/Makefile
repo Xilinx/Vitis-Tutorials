@@ -46,5 +46,5 @@ ${XO}: ${KERNEL_SRC} ${XPFM}
 
 clean:
 	rm -f $(XO)* *.log
-	rm -rf .Xil _x/
+	rm -rf .Xil _x/ .crashReporter
 

@@ -30,9 +30,10 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include \
                     -I${SYSROOT}/usr/include/xrt \
                     -I${SYSROOT}/usr/include/xaiengine \
                     -I${XILINX_VITIS}/aietools/include \
-                    -I../../../vitis/ip/aie/src
+                    -I../../../vitis/ip/aie/src \
+                    -I../../../vitis/ip/aie/
 
-GCC_C_FLAGS      := -O -Wall -std=c++14 -DXAIE_DEBUG \
+GCC_C_FLAGS      := -O -Wall -std=c++17 -DXAIE_DEBUG \
                     -pthread \
                     --sysroot=${SYSROOT}
 
