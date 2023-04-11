@@ -1,5 +1,5 @@
 <!-- 
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,7 @@
 
 # Step 1: Create a hardware platform for customer's VCK190
 
-In this step, we will utilize Versal Extensible Embedded Part_Support Example Platform to create a hardware design for customer's vck190 board (as mentioned we will regard vck190 as a customer's board). As a part support design for Versal it has already added the CIPS, NOC, NOC DDR, AI engine and other platform required IPs and leaves the board level configurations, e.g. PS side peripherals, clock and DDR related parameters for user to configure due to different boards have different peripherals. After we config the PS side CIPS, DDR related parameters and other platform related properties, XSA file will be exported. At last we will do three tests to validate the output of this step.
-
+In this step, we will create a hardware design using Versal Extensible Embedded Part Support Example Platform for customer's vck190 board (as mentioned we will regard vck190 as a customer's board). As a part support design for Versal it has already added the CIPS, NOC, NOC DDR, AI engine and other platform required IPs. And  board level configurations are reserved, e.g. PS side peripherals, clock and DDR related parameters for user to configure due to different boards have different peripherals. After we config the PS side CIPS, DDR related parameters and other platform related properties, XSA file will be exported. 
 
 ### Create Vivado project 
 
@@ -56,7 +55,6 @@ In this step, we will utilize Versal Extensible Embedded Part_Support Example Pl
 
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
    - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
-   - Configure Memory Settings. By default, the example design will only enable DDR4. If you enable LPDDR4, it will enable both DDR4 and LPDDR4. In this example, we can keep the default setting.
    - Enable AIE or not. In this example, we can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.
@@ -66,7 +64,7 @@ In this step, we will utilize Versal Extensible Embedded Part_Support Example Pl
 
    ![Vivado Design Block Diagram](images/step1/vivado_design_diagram.PNG)
 
-   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram.  The instantiated `axi_smc_vip_hier` in purple color is a hierarchy in which smart connects and dummy IPs are packaged together for clear view and better understanding. However board level related configurations are not set as different board has different resources. Then we will config the CIPS PS part and DDR related parameters according to the board.
+   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram. However board level related configurations are not set as different board has different resources. Then we will config the CIPS PS part and DDR related parameters according to the board.
 
 ### Config the block
 
@@ -101,7 +99,7 @@ In this step, we will utilize Versal Extensible Embedded Part_Support Example Pl
 
    This step is to config the DDR related parameters.
 
-   - Double click the axi_noc_0 IP, Click **DDR Basic** tab, configure the following settings for this tab.
+   - Double click the noc_ddr4 IP, Click **DDR Basic** tab, configure the following settings for this tab.
 
    ![STEP0](./images/step1/vivado_project_noc0ddrbasic.PNG)
 
@@ -116,6 +114,30 @@ In this step, we will utilize Versal Extensible Embedded Part_Support Example Pl
    - As well, double click the external port `sys_clk0_0`,change the value of Frequency to **200**M HZ as we provide 200M HZ for DDR4 on vck190 board.
 
    Now we have configured the PS side peripherals and DDR related parameters. But the external DDR port connection is not set. Therefore the next we will add DDR constraint file to set the DDR PIN placement.
+
+3. Config the noc_lpddr4 IP
+   This step is to config the LPDDR4 related parameters.
+
+   - Double click the noc_lpddr4 IP, click the **General** tab, configure the following settings for this tab.
+  
+   ![STEP0](./images/step1/vivado_project_noc0lpddr4general.PNG)
+
+   - Click the **DDR Basic** tab, configure the following settings for this tab.
+
+   ![STEP0](./images/step1/vivado_project_noc0lpddr4basic.PNG)
+
+   - Click the **DDR Memory** tab, enable the **Flipped Pinout** option like the foolowing:
+
+   ![STEP0](./images/step1/vivado_project_noc0lpddr4memory.PNG)
+
+   - Click **ok** to confirm and exit the configuration.
+   - Click **Run Connection Automation**, slect all the interfaces, then click **ok**.
+
+   ![STEP0](./images/step1/vivado_project_noc0lpddr4automation.PNG)
+
+   - double click the external port `sys_clk0_1`,change the value of Frequency to **200.321**M HZ.
+
+   >Note: Please set the LPDDR memory parameters according to the LPDDR4 on your board
 
 ### Add constraint file
 
@@ -163,8 +185,7 @@ Now we have complete the hardware design. In the coming steps we will review the
 
 4. Review the Clock settings
 
-   - In Clock tab, clk_out1, clk_out2, clk_out3 from **clk_wizard_0** are enabled with id {0,1,2}, frequency {200MHz, 100MHz, 300MHz}.
-   - clk_out1 is the default clock. V++ linker will use this clock to connect the kernel if link configuration doesn't specify any clocks.
+   - In Clock tab, clk_out is the default clock. V++ linker will use this clock to connect the kernel if link configuration doesn't specify any clocks.
    - The Proc Sys Reset property is set to the synchronous reset signal associated with each clock.
 
    ![STEP1](./images/step1/vivado_platform_setup_clock.PNG)
@@ -206,8 +227,22 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
    Please check your design and connect them as needed: 
    /axi_intc_0/intr
    ```     
+2. Update the module wrapper file
 
-2. Select ***Generate Block Design*** from Flow Navigator, Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation. Then click **Generate**.
+   As we have changed the block design, the top module wrapper file should be updated.
+
+   - In **source** tab, right click **ext_platform_part_wrapper** file
+   - Slect **Remove file from project** and slect **also delete the project local file form disk** and click **ok**.
+   
+   ![STEP1](./images/step1/update_wrapper.PNG)
+
+   - right click **ext_platform_part.bd** in Design Sources group
+   - Select **Create HDL Wrapper...**
+   - Select **Let Vivado manage wrapper and auto-update**.
+   - Click **OK** to generate wrapper for block design.
+
+   
+3. Select ***Generate Block Design*** from Flow Navigator, Select **Synthesis Options** to **Global**. It will skip IP synthesis during generation. Then click **Generate**.
 
 4. Export hardware platform with the following scripts
 
@@ -248,166 +283,8 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
 
 ### Validation the output of step1
 
-   To run the following step, please make sure the project is a normal project. **This project is an extensible Vtis platform** should **NOT**  be selected during Vivado project creation. Go to **Flow Navigator -> Project Manager -> Settings**. Uncheck **This project is an extensible Vtis platform** if it's enabled.
+   Please refer to [Platform Validation Example](../..//Feature_Tutorials/03_platform_validation/)
 
-   ![Missing Images](./images/step1/vivado_project_property.PNG)
-
-#### Method1: Go through Implementation
-
-   As the hardware platform is created from part support example design, it's recommended to run through implementation and device image generation to find errors in early stage for the base bootable design. The platform doesn't need the implementation results, the implementation is used for design validation only. 
-
-<details>
-  <summary><b>Show Detailed Steps of Implementation</b></summary>
-
-
-1. Validate the Block Design
-
-   - Click ***Validate Design (F6)*** button in block diagram toolbar.
-
-2. Create HDL Wrapper
-
-   - In Sources tab, right click system.bd and select ***Create HDL Wrapper***. In the pop-up window, select ***Let Vivado Manage***.
-
-3. Select ***Run implementation*** from Flow Navigator, Click **OK** in **Launch Runs** setup dialog. 
-
-4. Generate Device Image (For Method2)
-
-   - Click ***Generate Device Image*** in Flow Navigator
-
-   - Click ***Yes*** if it pops up a message to say *No Implementation Results Available*.
-
-   ![missing image](./images/step1/vivado_no_imp_avail.png)
-
-   - Click ***OK*** for default options for Launch Runs dialogue.
-
-   It takes a while to generate block diagram and run through implementation.
-
-   PDI is generated in `custom_hardware_platform.runs/impl_1/`
-
-5. Export fixed XSA file (For Method3)
-
-   a) Click Menu ***File -> Export -> Export Hardware***. Click Next.
-
-   b) Select Output to ***Include Device Image***. Click Next.
-
-   c) Set output XSA file name as `xsa_for_petalinux` and the directory. Click Next.
-
-   d) Click Finish
-</details>
-
-#### Method2: Validate PDI on Hardware
-
-As the hardware platform is created from part support example design, it's recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly as well. This is not a required step for platform creation, but it can reduce issues you find in the last platform validation stage.
-
-<details>
-<summary><b>Show Detailed Steps of how to download the PDI file</b></summary>
-
-- Connect hardware server in XSCT
-
-   ```tcl
-   # If JTAG cable is connected locally
-   connect
-
-   # If JTAG cable is connected on another server, launch hw_server on that server then connect to that remote hardware server
-   connect -url TCP:<SERVER NAME or IP>:3121
-   ```
-
-- Download PDI in XSCT
-
-   ```tcl
-   device program <PDI file>
-   ```
-
-PDI program should download without errors. If any error occurs in XSCT console, please check block design settings.
-
-Here's the sample prints on UART console of VCK190 board
-
-
-<!--TODO: update for 2021.2 log -->
-<details>
-<summary><b>Show Log</b></summary>
-
-   ```
-   [8.716546]****************************************
-   [10.387178]Xilinx Versal Platform Loader and Manager
-   [15.181959]Release 2020.2   Nov 30 2020  -  07:20:11
-   [19.889662]Platform Version: v1.0 PMC: v1.0, PS: v1.0
-   [24.684093]BOOTMODE: 0, MULTIBOOT: 0x0
-   [28.172159]****************************************
-   [32.817343] 28.506881 ms for PrtnNum: 1, Size: 2224 Bytes
-   [37.939565]-------Loading Prtn No: 0x2
-   [41.975581] 0.531603 ms for PrtnNum: 2, Size: 48 Bytes
-   [46.307975]-------Loading Prtn No: 0x3
-   [153.848428] 104.031565 ms for PrtnNum: 3, Size: 57168 Bytes
-   [156.392071]-------Loading Prtn No: 0x4
-   [159.994956] 0.012506 ms for PrtnNum: 4, Size: 2512 Bytes
-   [165.110546]-------Loading Prtn No: 0x5
-   [168.715028] 0.014362 ms for PrtnNum: 5, Size: 3424 Bytes
-   [173.831756]-------Loading Prtn No: 0x6
-   [177.430206] 0.007693 ms for PrtnNum: 6, Size: 80 Bytes
-   [182.427400]+++++++Loading Image No: 0x2, Name: pl_cfi, Id: 0x18700000
-   [188.652918]-------Loading Prtn No: 0x7
-   [1564.072421] 1371.823162 ms for PrtnNum: 7, Size: 707472 Bytes
-   [1566.876806]-------Loading Prtn No: 0x8
-   [1956.351062] 385.792100 ms for PrtnNum: 8, Size: 365712 Bytes
-   [1959.102465]+++++++Loading Image No: 0x3, Name: fpd, Id: 0x0420C003
-   [1965.172668]-------Loading Prtn No: 0x9
-   [1969.287834] 0.436437 ms for PrtnNum: 9, Size: 992 Bytes
-   [1974.032078]***********Boot PDI Load: Done*************
-   [1979.057962]55080.597596 ms: ROM Time
-   [1982.528018]Total PLM Boot Time
-   ```
-</details>
-
-If the PDI can't load successfully, please check the CIPS configuration. 
-
-</details>
-
-#### Method3: Create PetaLinux Project and boot up the Linux system (optional)
-
-   If the custom platform is created from part support example design, it's recommended to test building the PetaLinux image and run on hardware before turning this project into a platform project. This is not a step required for platform creation, but it can reduce issues you find in the next step.
-
-   <details>
-  <summary><b>Show Detailed Steps of creating petalinux project and run Linux image</b></summary>
-   For a quick start, we'll update minimal PetaLinux project properties by using prepared device file. It helps to setup peripheral properties, such as Ethernet MAC phy address, etc. These settings are specific to each board. It needs BSP engineer to develop during board bring up phase.
-
-
-1. create a petalinux project
-
-   ```bash
-   petalinux-create -t project --template versal --force -n petalinux
-   cd petalinux
-   petalinux-config --get-hw-description=<path to `xsa_for_petalinux`> --silentconfig
-   ```
-
-   Here we name the PetaLinux project as petalinux. You can also use other project names.
-2. add the device tree
-
-   We prepared `ref_file/step2_pfm/system-user.dtsi` is a board level device tree file for this project. Please copy it to device tree bsp directory.
-
-   ```bash
-   cp -f system-user.dtsi petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
-   ```
-
-4. Build PetaLinux Image
-
-   ```
-   petalinux-build
-   petalinux-package --boot --u-boot
-   ```
-
-   Output ***BOOT.BIN***, ***boot.scr*** and ***image.ub*** are located in ***images/linux*** directory.
-
-5. Validate PetaLinux image on Board
-
-   - Copy ***BOOT.BIN***, ***image.ub*** and ***boot.scr*** from **build/petalinux/images/linux** directory to SD card (fat32 partition).
-
-   - Insert SD card to VCK190, set boot mode to SD boot (0001) and boot the board.
-
-   - Make sure that Linux can boot successfully. Login with username: petalinux,  set your own password.
-
-
-   </details>
 ### Fast Track
 
 Scripts are provided to re-create projects and generate outputs in each step. To use these scripts, please run the following steps.
@@ -458,4 +335,4 @@ Now we have a hardware design. Next we'll go to [step 2 create Vitis Platform wi
 
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>

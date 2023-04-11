@@ -115,20 +115,7 @@
 5. Launch the test application from UART console
 
    <details>
-
-   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
-
-     Go to auto mounted FAT32 partition and run the application like below:
-
-     ```
-     cd /run/media/sd-mmcblk0p1
-     ./simple_vadd krnl_vadd.xclbin
-     ```
-
-   </details>
-
-   <details>
-   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+   <summary><strong>Follow below steps to run the application</strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 
@@ -257,20 +244,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 4. Launch test application from UART console
 
    <details>
-
-   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
-
-     Go to auto mounted FAT32 partition and run the application like below:
-
-     ```
-     cd /run/media/sd-mmcblk0p1
-     ./plaie binary_container_1.xclbin
-     ```
-
-   </details>
-
-   <details>
-   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+   <summary><strong>Follow below steps to run the application</strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 
@@ -395,4 +369,4 @@ Congratulations now you've created a custom platform that PL acceleration kernel
 
 [In next chapter](./faq.md), we'll list some frequently encountered problems and frequently asked questions. Please take a look if you'd like to understand more of platform creation.
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>

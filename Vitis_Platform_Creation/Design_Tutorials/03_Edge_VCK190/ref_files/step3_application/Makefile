@@ -1,4 +1,4 @@
-# Copyright 2020 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ help:
 	@echo "Makefile usage"
 	@echo "make all 	## Generate and package application related files"
 
-all: vadd  vadd_hw aie_adder
+all: vadd  aie_adder
 sd_card:vadd_hw aie_adder_hw
 
 
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	cd Vitis_Accel_Examples/ && git checkout 2023.1 && sed -i "s/vck190_dfx_hw := true/	vck190_dfx_hw := true/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
+	cd Vitis_Accel_Examples/ && git checkout 2022.2 && sed -i "s/vck190_dfx_hw := true/	vck190_dfx_hw := true/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
 
 $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM)  DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
@@ -43,7 +43,7 @@ vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOTDIR)/
 	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 # vadd_hw is a place-holder for manual build and test on hardware
-vadd_hw: 
+vadd_hw: Vitis_Accel_Examples
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 aie_adder: Vitis_Accel_Examples
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean

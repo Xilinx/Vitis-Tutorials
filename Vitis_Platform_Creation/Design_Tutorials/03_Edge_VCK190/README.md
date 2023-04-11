@@ -1,5 +1,5 @@
 <!-- 
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2022.2***
+***Version: 2023.1***
 
 In this module, VCK190 board will be regarded as a customer's board. We will create a hardware design based on the Versal Extensible Part Support Example Design, use pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform for this customer's board. Last we will run several applications to test this platform. If you merely create a platform to validate your kernels. Then the [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) would be a quick choice for you.
 
@@ -83,5 +83,5 @@ Please navigate through these steps with the following table of contents links.
 
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>
 

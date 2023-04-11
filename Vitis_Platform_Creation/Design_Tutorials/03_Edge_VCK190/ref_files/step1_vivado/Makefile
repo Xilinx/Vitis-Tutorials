@@ -1,4 +1,4 @@
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ help:
 	@echo "make all 	## to generate hw platform and export XSA file"
 
 
-all: hw petalinuximage
+all: hw 
 sd_card :all
 #petalinuximage
 
@@ -34,13 +34,8 @@ hw:
 	mkdir -p $(ABS_HW_PATH)
 	cd $(ABS_HW_PATH); vivado -mode batch -notrace -source $(ABS_BD_TCL) -source 
 #Generate petalinux image for validation
-petalinuximage:
-	petalinux-create -t project --template versal --force -n petalinux
-	cd petalinux && petalinux-config --get-hw-description=../build/vivado/xsa_file_for_petalinux.xsa  --silentconfig 
-	cp -f ../step2_pfm/system-user.dtsi petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi 
-	cd petalinux &&  petalinux-build && petalinux-package --boot --u-boot
 
 clean:
-	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou petalinux petalinux.old
+	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou
 
 ultraclean: clean

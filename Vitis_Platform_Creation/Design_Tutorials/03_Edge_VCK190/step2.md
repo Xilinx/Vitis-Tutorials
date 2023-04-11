@@ -42,7 +42,7 @@ As most of the components are extracted from the common image package we will pr
    .
    ├── custom_hardware_platform
    ├── custom_vitis_platform
-   └── xilinx-versal-common-v2022.2.tar.gz
+   └── xilinx-versal-common-v2023.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -52,15 +52,15 @@ As most of the components are extracted from the common image package we will pr
    ```bash
    mkdir custom_vitis_platform
    cd custom_vitis_platform
-   tar xvf ../xilinx-versal-common-v2022.2.tar.gz -C .
+   tar xvf ../xilinx-versal-common-v2023.1.tar.gz -C .
    ```
 
-   you can see **xilinx-zynqmp-common-v2022.2** folder which contains some components located in **custom_vitis_platform** folder like the following.
+   you can see **xilinx-zynqmp-common-v2023.1** folder which contains some components located in **custom_vitis_platform** folder like the following.
    
    ```bash
    tree -L 2
    .
-   ├── xilinx-versal-common-v2022.2
+   ├── xilinx-versal-common-v2023.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -98,6 +98,7 @@ Utilize XSCT tool to execute one command to generate device tree files:
    -  `-platform-name`: Platform name
    -  `-git-branch`: device tree branch
    -  `-board`: board name of the device. You can check the board name at <DTG Repo>/device_tree/data/kernel_dtsi.
+   -  `-out`: Specify the output directory
    -  `-zocl`: enable the zocl driver support
    -  `-dtsi`: Add user's device tree file support
    -  `-compile`: specify the option to compile the device tree
@@ -133,12 +134,12 @@ After this step, all the components platform creation required is ready. Next we
    mkdir pfm/boot
    mkdir pfm/sd_dir
    mkdir pfm/sw_comp 
-   cp xilinx-versal-common-v2022.2/bl31.elf pfm/boot/
-   cpxilinx-versal-common-v2022.2/u-boot.elf pfm/boot/
+   cp xilinx-versal-common-v2023.1/bl31.elf pfm/boot/
+   cp xilinx-versal-common-v2023.1/u-boot.elf pfm/boot/
    cp mydevice/psv_cortexa72_0/device_tree_domain/bsp/system.dtb pfm/boot/
-   cp xilinx-versal-common-v2022.2/boot.scr pfm/sd_dir/
-   cp xilinx-versal-common-v2022.2/rootfs.ext4 pfm/sw_comp
-   cp xilinx-versal-common-v2022.2/Image pfm/sw_comp
+   cp xilinx-versal-common-v2023.1/boot.scr pfm/sd_dir/
+   cp xilinx-versal-common-v2023.1/rootfs.ext4 pfm/sw_comp
+   cp xilinx-versal-common-v2023.1/Image pfm/sw_comp
    ```
 
    > Note: Bl31.elf, u-boot.elf and system.dtb in boot DIR are the source of BOOT.BIN image. Boot.src in sd_dir is for u-boot initialization and will be packaged to FAT32 partition by V++ package tool. Image and rootfs.ext4 are Linux kernel and root file system which are not platform required and also will be packaged to SD.IMG by V++ tool in step3.
@@ -146,7 +147,7 @@ After this step, all the components platform creation required is ready. Next we
 2. Install the sysroot 
 
    - Go to <WorkSpace/custom_vitis_platform/> directory.
-   - Type  `sh xilinx-versal-common-v2022.2/sdk.sh -d . -y ` to install SDK tool, **.** means the current directory.  The `-d` option is to provide a full pathname to the output directory and `-y` option is to confirm that directory.
+   - Type  `sh xilinx-versal-common-v2023.1/sdk.sh -d . -y ` to install SDK tool, **.** means the current directory.  The `-d` option is to provide a full pathname to the output directory and `-y` option is to confirm that directory.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
 3. Create Vitis platform 
@@ -290,19 +291,19 @@ platforminfo custom_platform.xpfm
 Basic Platform Information
 ==========================
 Platform:           custom_platform
-File:               /group/bcapps/sven/project/03_Edge_vck190_backup/WorkSpace/customize/custom_vitis_platform/custom_platform/export/custom_platform/custom_platform.xpfm
+File:               /Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/ref_files/step2_pfm/custom_platform/export/custom_platform/custom_platform.xpfm
 Description:        
-custom_platform
+A custom board platform
     
 
 =====================================
 Hardware Platform (Shell) Information
 =====================================
-Vendor:                           xilinx
-Board:                            name
-Name:                             name
-Version:                          0.0
-Generated Version:                2022.2
+Vendor:                           xilinx.com
+Board:                            extensible_platform_base
+Name:                             extensible_platform_base
+Version:                          1.0
+Generated Version:                2023.1
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               1
@@ -316,18 +317,15 @@ Board Part:
 =================
 Clock Information
 =================
-  Default Clock Index: 1
-  Clock Index:         1
-    Frequency:         199.998000
-  Clock Index:         2
-    Frequency:         99.999000
-  Clock Index:         3
-    Frequency:         299.996999
+  Default Clock Index: 0
+  Clock Index:         0
+    Frequency:         156.250000
 
 ==================
 Memory Information
 ==================
   Bus SP Tag: DDR
+  Bus SP Tag: LPDDR
 
 =============================
 Software Platform Information
@@ -337,21 +335,21 @@ Default System Configuration:  custom_platform
 System Configurations:
   System Config Name:                      custom_platform
   System Config Description:               custom_platform
-  System Config Default Processor Group:   linux_domain
+  System Config Default Processor Group:   xrt
   System Config Default Boot Image:        standard
   System Config Is QEMU Supported:         1
   System Config Processor Groups:
-    Processor Group Name:      linux on psv_cortexa72
-    Processor Group CPU Type:  cortex-a72
-    Processor Group OS Name:   linux
-    Processor Group Name:      aie
+    Processor Group Name:      aiengine
     Processor Group CPU Type:  ai_engine
     Processor Group OS Name:   aie_runtime
+    Processor Group Name:      xrt
+    Processor Group CPU Type:  cortex-a72
+    Processor Group OS Name:   linux
   System Config Boot Images:
     Boot Image Name:           standard
     Boot Image Type:           
     Boot Image BIF:            custom_platform/boot/linux.bif
-    Boot Image Data:           custom_platform/linux_domain/image
+    Boot Image Data:           custom_platform/xrt/image
     Boot Image Boot Mode:      sd
     Boot Image RootFileSystem: 
     Boot Image Mount Path:     /mnt
@@ -359,8 +357,8 @@ System Configurations:
     Boot Image QEMU Args:      custom_platform/qemu/pmc_args.txt:custom_platform/qemu/qemu_args.txt
     Boot Image QEMU Boot:      
     Boot Image QEMU Dev Tree:  
-Supported Runtimes:
-Runtime: OpenCL
+   Supported Runtimes:
+  Runtime: OpenCL
 ```
 
 </details>
@@ -390,5 +388,5 @@ Scripts are provided to create the Vitis platform. To use these scripts, please 
 
 Next let's try to [build some applications on this platform and test them.](./step3.md)
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>
 
