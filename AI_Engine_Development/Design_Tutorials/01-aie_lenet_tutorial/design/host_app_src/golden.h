@@ -1,4 +1,4 @@
-/* (c) Copyright 2022 Xilinx, Inc.
+/* (c) Copyright 2023 Advanced Micro Devices, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

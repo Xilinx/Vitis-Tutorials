@@ -1,4 +1,4 @@
-// © Copyright 2021–2022 Xilinx, Inc.
+// © Copyright 2023 Advanced Micro Devices, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -50,10 +50,10 @@ class myGraph : public graph {
 
       myGraph() { 
          
-         in[0] = input_plio::create("prod_in1", plio_64_bits, "aiesim_data/data/0_1/matA_in_64plio.txt");
-         in[1] = input_plio::create("prod_in3", plio_64_bits, "aiesim_data/data/0_2/matA_in_64plio.txt");
-         in[2] = input_plio::create("prod_in5", plio_64_bits, "aiesim_data/data/0_3/matA_in_64plio.txt");
-         in[3] = input_plio::create("prod_in7", plio_64_bits, "aiesim_data/data/0_5/matA_in_64plio.txt");
+         in[0] = input_plio::create("prod_in1", plio_64_bits, "0_1/matA_in_64plio.txt");
+         in[1] = input_plio::create("prod_in3", plio_64_bits, "0_2/matA_in_64plio.txt");
+         in[2] = input_plio::create("prod_in5", plio_64_bits, "0_3/matA_in_64plio.txt");
+         in[3] = input_plio::create("prod_in7", plio_64_bits, "0_5/matA_in_64plio.txt");
          out[0] = output_plio::create("prod_out1", plio_64_bits, "output01.txt");
          out[1] = output_plio::create("prod_out2", plio_64_bits, "output02.txt");
          out[2] = output_plio::create("prod_out3", plio_64_bits, "output04.txt");

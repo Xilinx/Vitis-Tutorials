@@ -214,7 +214,7 @@ AIE_CONTROL_CPP := $(BUILD_TARGET_DIR)/$(WORK_DIR)/ps/c_rts/aie_control_xrt.cpp
 # AIE Compiler Global Settings and Include Libraries
 # =========================================================
 AIE_FLAGS := -include=$(AIE_SRC_REPO) 
-AIE_FLAGS += -include=$(AIE_SRC_REPO)/data 
+AIE_FLAGS += -include=$(AIE_SRC_REPO)/aiesim_data 
 AIE_FLAGS += --verbose 
 AIE_FLAGS += --Xpreproc="-DLENET_INSTS=$(LENET_INSTS)"
 AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
@@ -467,7 +467,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -no-reboot -timeout 4000 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -no-reboot | tee embedded_run.log
 
 endif
 else

@@ -72,13 +72,18 @@ In the design, there are two major PL kernels. The input pre-processing units, M
 ```
 lenet
 |____design......................contains AI Engine kernel, HLS kernel source files, and input data files
-|    |___aie_src
-|    |   |___data
-|    |___pl_src
-|___images......................contains images that appear in the README.md
-|___Makefile
-|___system.cfg...................configuration (.cfg) file
-|___xrt.ini
+|    |___aie_src.................contains all the aie source files
+|    |___pl_src..................contains all the data mover source files
+|    |___host_app_src............contains host application source files
+|    |___directives..............contains directives for various vitis compilation stages 
+|    |___exec_scripts............contains run commands
+|    |___profiling_configs.......contains xrt.ini file
+|    |___system_configs..........contains all system configuration files
+|    |___vivado_metrics_scripts..contains scripts to get vivado metric reports
+|____images......................contains images that appear in the README.md
+|____Makefile....................with recipes for each step of the design compilation
+|____description.json............for XOAH
+|____sample_env_setup.sh.........required to setup Vitis environment variables and Libraries
 ```
 
 </details>
@@ -112,7 +117,7 @@ To build and run the Lenet tutorial, you will need the following tools downloade
 
 * Install the [Vitis Software Platform 2023.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202220_1` platform)
+* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202310_1` platform)
 
 * Obtain licenses for AI Engine tools
 
@@ -128,17 +133,15 @@ To build and run the Lenet tutorial, you will need the following tools downloade
 ## Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.
 
-Edit `env_setup.sh` script with your file paths:
+Edit `sample_env_setup.sh` script with your file paths:
 ```bash
-export XILINX_XRT=<XRT-LOCATION>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 
 source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
 ```
 Then source the environment script:
 ```bash
-source env_setup.sh
+source sample_env_setup.sh
 ```  
 
 </details>
@@ -158,7 +161,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202220_1",
+"baseName": "xilinx_vck190_base_202310_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -217,7 +220,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202220_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
@@ -236,7 +239,7 @@ mkdir -p ./build/hw_emu
 cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_base_202220_1     \
+          --platform xilinx_vck190_base_202310_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -284,7 +287,7 @@ The following AI Engine compiler command compiles the AI Engine design graph:
 ```
 cd ./build;
 aiecompiler --include= ./design/aie_src \
-	    --include= ./design/aie_src/data   \
+	    --include= ./design/aie_src/aiesim_data   \
             --verbose                    \
             --log-level=5                \
             --test-iterations=100        \      
@@ -336,7 +339,7 @@ The expanded command is as follow:
 cd ./build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202220_1            \
+          --platform xilinx_vck190_base_202310_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -356,7 +359,7 @@ If EN_TRACE=1, the command is expanded as follow:
 cd ./build/hw;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202220_1            \
+          --platform xilinx_vck190_base_202310_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -460,7 +463,7 @@ aarch64-linux-gnu-g++   ./build/app_control.o			                \
                         -ladf_api_xrt                      		        \
                         -lxrt_coreutil                          		\
                         -std=c++14                          		        \
-			-o ../build/lenet_xrt.elf
+			-o ../build/lenet_aie_xrt.elf
 
 cd ../../;
 
@@ -480,14 +483,14 @@ The following is a description of the input sources compiled by the AI Engine co
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|design/aie_src/main.cpp|Source application file for the `lenet_xrt.elf` that will run on an A72 processor.|
+|design/aie_src/main.cpp|Source application file for the `lenet_aie_xrt.elf` that will run on an A72 processor.|
 |build/Work/ps/c_rts/aie_control_xrt.cpp|This is the AI Engine control code generated implementing the graph APIs for the LeNet graph.|
 
 The following is a description of the output objects that results from executing the AI Engine compiler command with the above inputs and options.
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|build/lenet_xrt.elf|The executable that will run on an A72 processor.|
+|build/lenet_aie_xrt.elf|The executable that will run on an A72 processor.|
 </details>
 
 <details>
@@ -513,9 +516,9 @@ v++	-p  							\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
-	--package.sd_dir ./design/aie_src/data	                \
+	--package.sd_dir ./design/aie_src/aiesim_data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
+	--package.sd_file ./build/lenet_aie_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
 	--package.defer_aie_run
 
 cd ../../;
@@ -540,9 +543,9 @@ v++	-p  							\
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
-	--package.sd_dir ./design/aie_src/data	                \
+	--package.sd_dir ./design/aie_src/aiesim_data	                \
 	--package.image_format=ext4				\
-	--package.sd_file ./build/lenet_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
+	--package.sd_file ./build/lenet_aie_xrt.elf ./build/hw_emu/vck190_aie_lenet.hw_emu.xsa ./build/libadf.a \
 	--package.defer_aie_run                                                                                \
         --package.sd_file $(MAKEFILES_REPO)/xrt.ini
 
@@ -566,8 +569,8 @@ cd ../../;
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4|The root filesystem file for Petalinux.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image|The pre-built Petalinux Image the processor boots from.|
-|design/aie_src/data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
-|build/hw_emu/lenet_xrt.elf|The PS host application executabled created in the `make application` step.|
+|design/aie_src/aiesim_data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
+|build/hw_emu/lenet_aie_xrt.elf|The PS host application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xsa|The XSA file created in the `make xsa` step.|
 |build/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
@@ -594,12 +597,12 @@ cd ./build/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt display:
 ```bash
-root@versal-rootfs-common-2023.1:~#
+root@versal-rootfs-common-2023_1:~#
 ```
 
 In some cases, the following error might display:
 ```
-root@versal-rootfs-common-2023.1:~## xinit: giving up
+root@versal-rootfs-common-2023_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -611,10 +614,10 @@ Enabling notebook extension jupyter-js-widgets/extension...
 After the root prompt displays, run the following commands to run the design:  
 ```
 cd /mnt/sd-mmcblk0p1
-./lenet_xrt.elf a.xclbin
+./lenet_aie_xrt.elf a.xclbin
 ```
 
-The `lenet_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this is shown, run the following keyboard command to exit the QEMU instance:
+The `lenet_aie_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this is shown, run the following keyboard command to exit the QEMU instance:
 
 ```
 #To exit QEMU Simulation
@@ -636,7 +639,7 @@ make package TARGET=hw
 ```
 These command create a `build/hw` folder with the kernels, `xsa`, and `package` for a hardware run.
 
-Now follow **Steps 1-9** to run the `lenet_xrt.elf` excutable on your VCK190 board:
+Now follow **Steps 1-9** to run the `lenet_aie_xrt.elf` excutable on your VCK190 board:
 
 **Step 1.** Ensure your board is powered off.
 
@@ -662,13 +665,13 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 
 ```
 cd /mnt/sd-mmcblk0p1
-./lenet_xrt.elf a.xclbin
+./lenet_aie_xrt.elf a.xclbin
 ```
 
 
@@ -796,62 +799,69 @@ This section describes the overall data-flow graph specification of the LeNet de
 
 The overall graph definition of the design is contained in the `graph.cpp` file. The following steps describe the definition of the graph.
 
+#### Include ADF Library
+```
+#pragma once
+
+#include "adf.h"
+using namespace adf;
+```
+
 #### Define the Graph Class
 Define the LeNet graph class by using the objects defined in the appropriate name space. It must include the Adaptive Data Flow (ADF) library. All user graphs are derived from the class graph, for example in this design:
 
-`class myGraph : public adf::graph`.
+`class myGraph : public graph`.
 
+#### Declare PLIO Ports
 Declare top level ports to the graph:
 
-`public:
-   adf::port<output> out[3];
-   adf::port<input> in[4];
-`
+```
+public:
+   output_plio out[3];
+   input_plio in[4];
+```
 #### Define the Graph Constructor
+Define graph constructor `myGraph()`
+
+Use `input_plio::create` function to create input and output plio ports, for example:
+
+`in[0] = input_plio::create("prod_in1", plio_64_bits, "0_1/matA_in_64plio.txt");`
+
 Use the `kernel::create` function to instantiate the C++ kernel objects, for example:
 
-`core01 = adf::kernel::create(core01_top);`
+`core01 = kernel::create(core01_top);`
+Use `source` function to source the kernel files and `runtime<ratio>` to provide kernel utilization.
+
+```
+source(core01) = "core01.cc";
+runtime<ratio>(core01) = 0.6;
+```
+The source file `core01.cc` contains the source code for core01. The ratio of the function run time compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
 
 #### Add Connectivity Information
 This is done by using the templated connect<> object. The connection can be window<> or stream. If a window connection is used, then window parameters must be specified.
 In this description, ports are referred to by indices. An example of the connection between the input port of the graph and input of an AI Engine kernel is as follows:
 
 ```
-adf::connect< adf::window<ROW_A * COL_A> > (in[0], core01.in[0]);
-single_buffer(in[0]);
+connect< adf::window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
 single_buffer(core01.in[0]);
 ```
 In this case, the parameters correspond to the matrix dimension. Single buffer is selected instead of ping-pong buffer to keep the design simple without an impact on performance.
 
 An example of connection of weights already loaded in AI Engine tile is:
 ```
-adf::connect<>(core01lut,core01);
+connect<>(core01lut,core01);
 ```
 Based on the datatype of `core01lut`, the API call is inferred as a look up table in the AI Engine tile.
 
-#### Set the Source File and Tile Use
-Set the source file and tile use for each of the kernels, for example:
-
-```
-adf::source(core01) = "core01.cc";
-adf::runtime<ratio>(core01) = 0.6;
-```
-
-The source file `core01.cc` contains the source code for core01. The ratio of the function run time compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
-
 #### LeNet Top level Application
-Define a top level application file (`graph.cpp` in this design) that contains an instance of the graph class and connect the graph to a simulation platform to provide file input and output, for example:
+Define a top level application file (`graph.cpp` in this design) that creates PLIOs, kernels and connect them together to define a dataflow, for example:
+
+The main program is the driver of the graph(graph.cpp). It contains an instance of the graph class and used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
 
 ```
-adf::PLIO *attr_i1 = new adf::PLIO("prod_in1", adf::plio_128_bits, "data/0_1/matA_in_128plio.txt");
-adf::simulation::platform<4,3> platform(attr_i1,attr_i2,attr_i3,attr_i4,attr_o1,attr_o2,attr_o3);`
-myGraph g;
-adf::connect<> net010(platform.src[0], g.in[0]);
-```
-
-The main program is the driver of the graph. It is used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
-
-```int main(int argc, char ** argv)
+   myGraph g;
+   int main(int argc, char ** argv)
    {
       g.init();
       g.run();
@@ -860,7 +870,6 @@ The main program is the driver of the graph. It is used to load, execute, and te
       return 0;
    }
 ```
-
 </details>
 
 <details>
@@ -903,9 +912,15 @@ Include the `graph.cpp` AI Engine application file. This file contains the insta
 ```
 
 #### 2. Check Command Line Argument
-The beginning of the A72 application is represented by the `main` function. It takes in one command line argument, an XCLBIN file.
+The beginning of the A72 application is represented by the `main` function. It takes in three command line argument, an elf file , XCLBIN file and iteration count.
 
-`int main(int argc, char** argv)`
+```
+int main(int argc, char** argv)
+if((argc < 2) || (argc > 3)) {
+      std::cout << "Usage: " << argv[0] <<" <xclbin>" << "iteration count(optional)" << std::endl;
+      return EXIT_FAILURE;
+   }
+```
 
 #### 3. Open XCLBIN and Create Data Mover Kernel Handles
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device. The steps are:
@@ -918,7 +933,7 @@ auto top = reinterpret_cast<const axlf*>(xclbin.data());
 
 * Create the data mover kernel
 
-`xrtKernelHandle dmahls_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "dma_hls");`
+`xrtKernelHandle dmahls_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "dma_hls:{dma_hls_0}");`
 
 #### 4. Allocate Buffers for Input Data and Results in Global Memory
 The A72 application allocates buffer objects (BO) to store input data and output results in global memory (DDR). For example:
@@ -939,10 +954,10 @@ Note there is no reading or updating of coefficients in the LeNet design.
 
 #### 6. Execute the Data Mover Kernels and Generate the Output Results
 * Open the PL kernels and obtain handles with the `xrtPLKernelOpen` function.
-* Create kernel handle to start `dma_hls` PL kernel using the `xrtRunOpen` function.
-* Set the `dma_hls` kernel arguments using the  `xrtRunSetArg` function.
-* Start the `dma_hls` kernels using the `xrtRunStart` function.
-* Wait for `dma_hls` execution to finish using the `xrtRunWait` function.
+* Create kernel handle to start `dma_hls_0` PL kernel using the `xrtRunOpen` function.
+* Set the `dma_hls_0` kernel arguments using the  `xrtRunSetArg` function.
+* Start the `dma_hls_0` kernels using the `xrtRunStart` function.
+* Wait for `dma_hls_0` execution to finish using the `xrtRunWait` function.
 * Close the run handles and close the opened kernel handles using `xrtRunClose` and `xrtKernelClose`.
 
 #### 7. Verify Output Results
@@ -966,9 +981,9 @@ trace_buffer_size=500M
 ```
 Transfer the .csv and \_summary files back to the design directory, for example:
 ```
-Scp -r *.csv *_summary <user>@10.10.71.101:<path>
+scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
-Then run the Vitis analyzer on the summary file, for example, `xrt.run_summary`
+Then run the Vitis analyzer on the summary file, for example, `vitis_analyzer xrt.run_summary &`
 
 The following is the snapshot of the time trace for the LeNet design run.
 
@@ -1027,13 +1042,13 @@ vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 
 3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
 
-![Image of Lenet XPE Util and Power Measurement](images/lenet_xpe_Pow_nUtil.PNG)
+![Image of Lenet XPE Util and Power Measurement](images/Lenet_xpe.PNG)
 
 A summary of resource utilization and power is given in the following table.
 
 | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | Dynamic Power<br/>(in mW) | 
-|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:-------------------------:|
-| 5                       | 12%         | 52                            | 3%           | 14               | 6%                | 1191                      |
+|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:-------------------------------:|
+| 5                       | 30%         | 52                            | 7%           | 14               | 7%                | 1343                            |
 
 ## References
 
