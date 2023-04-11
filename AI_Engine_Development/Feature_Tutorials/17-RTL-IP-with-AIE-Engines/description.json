@@ -26,7 +26,8 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu"
+            "vitis_hw_emu",
+            "vitis_hw_build"
         ],
         "category": "canary",
         "make_options": [
