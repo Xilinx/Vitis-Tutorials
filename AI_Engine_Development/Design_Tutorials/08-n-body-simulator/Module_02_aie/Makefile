@@ -95,7 +95,8 @@ $(BUILD_DIR)/libadf.a: $(DEPS)
 	-include="$(AIE_DIR)" 				\
 	-include="$(AIE_DIR)/src"			\
 	-include="$(DESIGN_DIR)/data" 			\
-	$(GRAPH_CPP)					\
+	--optimize-pktids=false                         \
+        $(GRAPH_CPP)					\
 	-workdir=$(WORK_DIR) | tee  $(BUILD_DIR)/aiecompiler_$(INST).log
 	@echo "### ***** AI Engine Graph Compilation done! ***** ###"
 

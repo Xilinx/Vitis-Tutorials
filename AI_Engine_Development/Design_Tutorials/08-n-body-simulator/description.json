@@ -33,7 +33,7 @@
                     "vitis_aie_x86sim": 50,
                     "vitis_hw_build": 470,
                     "vitis_hw_emu": 470,
-                    "vitis_hw_run": 30
+                    "vitis_hw_run": 60
                 }
             }
         ],
@@ -43,19 +43,6 @@
             "vitis_hw_run"
         ],
         "category": "canary",
-        "make_options": [
-           "PFM=xilinx_vck190_base_202220_1",
-           "XRT_ROOT=${SDKTARGETSYSROOT}/../../../xrt",
-           "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
-           "CXX+=-mcpu=cortex-a72.cortex-a53",
-           "CXX+=-march=armv8-a+crc",
-           "CXX+=-fstack-protector-strong",
-           "CXX+=-D_FORTIFY_SOURCE=2",
-           "CXX+=-Wformat",
-           "CXX+=-Wformat-security",
-           "CXX+=-Werror=format-security",
-           "CXX+=--sysroot=${SDKTARGETSYSROOT}"
-        ],
 	"custom_build_target":
         {
             "all": "build",

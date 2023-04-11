@@ -16,20 +16,20 @@ make all
 ```
 or, follow steps 1-3 as follows:
 
-### Step 1: Download the Vitis Utility Library
+### Step 1: Set the Vitis Utility Library path
 ```
-git clone https://github.com/Xilinx/Vitis_Libraries.git
-```
-*Note: Vitis Libraries require you to have the package python3-venv installed on your system.*
+XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
+XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 
-This will download the folder `Vitis_Libraries/utils`. You will be using its L2 Data-Mover generator tool.
+```
+This path will have the folder `utils` in it along with other libraries. You will be using its L2 Data-Mover generator tool.
 
 ### Step 2: Generate m2s_x2.cpp and s2m_x4.cpp Datamover kernels
 
 ```
-make -f ./ksrc.mk GENKERNEL=Vitis_Libraries/utils/L2/scripts/generate_kernels SPEC=./kernel/spec.json TOOLDIR=./_krnlgen
+make -f ./ksrc.mk GENKERNEL=$(XFLIB_DIR)/L2/scripts/generate_kernels SPEC=./kernel/spec.json TOOLDIR=./_krnlgen
 ```
-Here you use the L2 Data-Mover generator tool (Vitis_Libraries/utils/L2/scripts/generate_kernels). This tool uses the `kernel/spec.json` specification to write `kernel/m2s_x2.cpp` and `kernel/s2m_x4.cpp` HLS kernel source files.
+Here you use the L2 Data-Mover generator tool ($(XFLIB_DIR)/L2/scripts/generate_kernels). This tool uses the `kernel/spec.json` specification to write `kernel/m2s_x2.cpp` and `kernel/s2m_x4.cpp` HLS kernel source files.
 
 
 ### Step 3: Compile HLS PL Kernels
@@ -37,16 +37,16 @@ Following is an example of how the `m2s_x2` kernel is compiled.
 ```
 v++ -c                                                                 \
     -t hw                                                              \
-    --platform xilinx_vck190_base_202220_1                             \
+    --platform xilinx_vck190_base_202310_1                             \
     --save-temps --optimize 2                                          \
-    --hls.jobs 8 -I./xf_utils_hw/L1/include                            \
-    -I./xf_utils_hw/L1/include/hw                                      \
+    --hls.jobs 8 -I$(XFLIB_DIR)/L1/include                            \
+    -I$(XFLIB_DIR)/L1/include/hw                                      \
     -I./kernel                                                         \
     -k m2s_x2                                                          \
-    --hls.clock 300000000:m2s_x2                                       \
-    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202220_1          \
-    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202220_1 \
-    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202220_1/m2s_x2.xo'  \
+    --hls.clock 150000000:m2s_x2                                       \
+    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202310_1          \
+    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202310_1 \
+    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202310_1/m2s_x2.xo'  \
     ./kernel/m2s_x2.cpp                                                 
 ```
 The same compilation options are used to compile the `s2m_x4`, `packet_sender`, and `packet_receiver` kernels.
@@ -93,11 +93,11 @@ The `s2m_x4` kernel is generated from the `kernel/spec.json` specification. Revi
 
 * [Vitis Libraries Github Repo](https://github.com/Xilinx/Vitis_Libraries)
 
-* [Vitis Utilities Library Documentation](https://xilinx.github.io/Vitis_Libraries/utils/2022.2/index.html)
+* [Vitis Utilities Library Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/index.html)
 
-* [Generating PL Data-Mover Kernels](https://xilinx.github.io/Vitis_Libraries/utils/2022.2/datamover/kernel_gen_guide.html)
+* [Generating PL Data-Mover Kernels](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html)
 
-* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
+* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 
 ## Next Steps
 

@@ -93,12 +93,12 @@ run: build
 
 # ################ TARGET: make x1_design ################
 .PHONY: x1_design
-x10_design:
+x1_design:
 	$(MAKE) all -C x1_design
 
 # ################ TARGET: make x10_design ################
 .PHONY: x10_design
-x100_design:
+x10_design:
 	$(MAKE) all -C x10_design
 
 # ################ TARGET: make all_designs ################

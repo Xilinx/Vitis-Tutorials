@@ -14,39 +14,48 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILNX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.1
-export XILNX_VERSAL=<Path to xilinx-versal-common-v2022.1 - Directory>
+# =======================================================
+# Set Platform ,Vitis and Versal Image repo
+# =======================================================
+export PLATFORM_REPO_PATHS= <YOUR-2023.1-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2023.1-VITIS-DIRECTORY>/2023.1
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.1-DIRECTORY>
 
-# Optionally Setup XRT_ROOT, pointing to XRT RPMs,
-# if not set it will automatically be excluded from v++ packaging...
-#export XRT_ROOT=<Path to XRT RPMs - Directory>
+# ====================================================
+# Source Versal Image ,Vitis and Aietools
+# ====================================================
+# Run the below command to setup environment and CXX
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $XILINX_VITIS/settings64.sh
 
-# Setup SDKTARGETSYSROOT and CXX...
-source $XILNX_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
-
-# Source XRT, VITIS, and Aietools...
-source $XILNX_TOOLS_LOCATION/settings64.sh
+# ========================================================
+# Set DSP Library for Vitis
+# ========================================================
+export DSPLIB_VITIS=<Path to Vitis Libs - Directory>
 
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202220_1
+tgt_plat=xilinx_vck190_base_202310_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
+# ==========================================================
+# Validating Tool Installation
+# ==========================================================
 echo ""
 echo "Aiecompiler:"
 which aiecompiler
-
 echo ""
 echo "Vivado:"
 which vivado
-
 echo ""
 echo "Vitis:"
 which vitis
-
 echo ""
 echo "Vitis HLS:"
 which vitis_hls
+echo ""
+echo ""
+echo "DSPLIBS"
+echo "$DSPLIB_VITIS"
 echo ""

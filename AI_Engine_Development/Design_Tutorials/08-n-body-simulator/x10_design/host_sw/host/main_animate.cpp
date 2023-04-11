@@ -76,7 +76,7 @@ int main(int argc, char ** argv)
   int window_size_j = num_j_particles*4;
 
   int mem_size_i = window_size_i*NUM_CU*sizeof(int);
-  int mem_size_i_out = 32*7*NUM_CU*sizeof(int);
+  uint64_t mem_size_i_out = 32*7*NUM_CU*sizeof(int);
   int mem_size_j = window_size_j*sizeof(float);
   
   msg =  "==============================\n"; 

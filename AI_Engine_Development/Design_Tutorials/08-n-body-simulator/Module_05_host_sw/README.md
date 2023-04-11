@@ -10,22 +10,25 @@ or, follow steps 1 and 2 as follows:
 ## Step 1: Compile Host Software
 Following is an example of how to compile the `../Module_02_aie/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp` file.
 ```
-aarch64-linux-gnu-g++ -Wall -c -g \
-                      -fmessage-length=0
-                      -std=c++14 \
+XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
+XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
+
+$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -Wall -c -g \
+                      -fmessage-length=0  \
+                      -std=c++17 \
                       -Wno-unknown-pragmas
                       -Wno-unused-label
                       -Wno-int-to-pointer-cast
-                      --sysroot=$SYSROOT
-                      -I$SYSROOT/usr/include/xrt
-                      -I$SYSROOT/usr/include
+                      --sysroot=$(SDKTARGETSYSROOT)
+                      -I$(SDKTARGETSYSROOT)/usr/include/xrt
+                      -I$(SDKTARGETSYSROOT)/usr/include
                       -I./
                       -I../Module_02_aie
                       -I../Module_02_aie/src
                       -I$XILINX_VITIS/aietools/include
                       -I$XILINX_VITIS/include
-                      -I../Module_03_pl_kernels/Vitis_Libraries/utils/ext/xcl2
-                      -I../Module_03_pl_kernels/Vitis_Libraries/utils/L1/include
+                      -I$(XFLIB_DIR)/ext/xcl2
+                      -I$(XFLIB_DIR)/utils/L1/include
                       -o ./build/aie_control_xrt.o
                       ../Module_02_aie/build/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp
 ```
@@ -35,25 +38,25 @@ The same compilation options were used to compile the `host/nbody.cpp`, `host/lo
 Following is an example of how to link the `build/aie_control.o`, `build/nbody.o`, `build/log.o`, and `build/ps_app.o` into a `build/ps_app.exe` executable:
 
 ```
-aarch64-linux-gnu-g++ ./build/aie_control_xrt.o \
+$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ ./build/aie_control_xrt.o \
                       ./build/ps_app.o \
                       ./build/log.o \
                       ./build/nbody.o \
                       -lxaiengine -ladf_api_xrt -lxrt_core    \
                       -lxrt_coreutil -lgcc -lc -lxilinxopencl \
                       -lpthread -lrt -ldl -lcrypt -lstdc++    \
-                      -lOpenCL -std=c++14                     \
+                      -lOpenCL -std=c++17                     \
                       -Wno-unused-label -Wno-narrowing        \
                       -DVERBOSE                               \
-                      -L$SYSROOT/usr/lib                      \
-                      --sysroot=$SYSROOT                      \  
-                      -L$XILINX_VITIS/aietools/lib/aarch64.o  \
+                      -L$(SDKTARGETSYSROOT)/usr/lib                      \
+                      --sysroot=$(SDKTARGETSYSROOT)                      \  
+                      -L$(XILINX_VITIS)/aietools/lib/aarch64.o  \
                       -o ./build/ps_app.exe
 ```
 The same linking options were used to generate the `build/ps_app_animate.exe` executable.
 
 ## Host Software  
-After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/2022.2/html/xrt_native_apis.html).
+After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html).
 
 This module compiles the following host applications and custom APIs:
 
@@ -99,7 +102,8 @@ The following is the general execution flow for the host applications.
 
 * [XRT Github Repo](https://github.com/Xilinx/XRT)
 
-* [Vitis Host Application Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming)
+* [Vitis Developing Application Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Developing-Applications)
+* [Vitis Building-and-Running-the-Application Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application)
 
 ## Next Steps
 After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module, [Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run).

@@ -18,14 +18,15 @@ make all
 or
 
 ```
-v++ -p                                                                            \
-    -t hw                                                                         \
-    --platform xilinx_vck190_base_202220_1                                        \
-    ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202220_1/hpc.xclbin \
+v++ -t hw                                                                         \
+    --platform xilinx_vck190_base_202310_1                                        \
+    --package.defer_aie_run                                                       \
+    -p ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202310_1/hpc.xclbin \
     ../Module_02_aie/build/libadf.a                                               \
-    --package.out_dir ./build/package_hw                                          \
-    --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4                                \
-    --package.kernel_image $(EDGE_COMMON_SW)/Image                                \
+    --package.out_dir ./build                                                     \
+    --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4                           \
+    --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image                           \
+    --package.sd_file $(EMBEDDED_EXEC_SCRIPT)                                     \
     --package.boot_mode=sd                                                        \
     --package.image_format=ext4                                                   \
     --package.sd_file ../Module_05_host_sw/build/ps_app_animate.exe               \
@@ -134,7 +135,7 @@ scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data
 
 ## References
 
-* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command)
+* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 
 ## Next Steps
 

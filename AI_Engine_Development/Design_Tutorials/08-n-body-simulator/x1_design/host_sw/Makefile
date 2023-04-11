@@ -101,11 +101,11 @@ aie:
 	$(MAKE) aie -C $(AIE_DIR)
 
 # ################ TARGET: make all ################
-all: host
+all: aie host
 
 # ################ TARGET: make host ################
 .PHONY: host
-host: aie $(BUILD_DIR) $(BUILD_DIR)/ps_app.exe $(BUILD_DIR)/ps_app_animate.exe
+host: $(BUILD_DIR) $(BUILD_DIR)/ps_app.exe $(BUILD_DIR)/ps_app_animate.exe
 
 $(BUILD_DIR): 
 	mkdir -p $(BUILD_DIR);

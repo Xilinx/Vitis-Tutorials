@@ -9,7 +9,7 @@
 
 # N-Body Simulator
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -37,7 +37,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 
 * [Versal ACAP AI Engines for Dummies](https://support.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 ### *Tools*: Installing the Tools
 
@@ -55,16 +55,15 @@ When the elements of the Vitis software platform are installed, update the shell
 1. Edit the `sample_env_setup.sh` script with your file paths:
 
 ```bash
-export XILINX_XRT=/opt/xilinx/xrt
 export PLATFORM_REPO_PATHS=<user-path>
-export ROOTFS=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>/rootfs.ext4
-export IMAGE=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>/Image
-export EDGE_COMMON_SW=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>
+export COMMON_IMAGE_VERSAL=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>
+export XILINX_VITIS = <XILINX-INSTALL-LOCATION>/Vitis/<ver>
 export PLATFORM=xilinx_vck190_base_<ver> #or xilinx_vck190_es1_base_<ver> is using an ES1 board
+export DSPLIB_VITIS=<Path to Vitis Libs - Directory>
 
-source <XILINX-INSTALL-LOCATION>/Vitis/<ver>/settings64.sh
-source $XILINX_XRT/setup.sh
-source $PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v<ver>/environment-setup-cortexa72-cortexa53-xilinx-linux
+
+source $(XILINX_VITIS)/settings64.sh
+source $(COMMON_IMAGE_VERSAL)/environment-setup-cortexa72-cortexa53-xilinx-linux
 
 ```
 2. Source the environment script:
@@ -75,7 +74,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2022.2 version of the Xilinx tools.
+Ensure you are using the 2023.1 version of the Xilinx tools.
 
 ```bash
 which vitis
@@ -96,7 +95,7 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.004657468|
 
 ### PL Data-Mover Kernels
-Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://xilinx.github.io/Vitis_Libraries/utils/2022.2/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
+Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
 
 ## The N-Body Problem
 The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, we can calculate a particle's velocity and position (`x y z vx vy vz`) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).
