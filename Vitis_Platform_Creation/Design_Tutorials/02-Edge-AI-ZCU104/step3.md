@@ -1,5 +1,5 @@
 <!--
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,23 +39,24 @@ With Vitis environment setup by step2, **platforminfo** tool can report XPFM pla
 ```bash
 # Run in zcu104_software_platform directory
 platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
+
 ==========================
 Basic Platform Information
 ==========================
 Platform:           zcu104_custom
-File:               /group/bcapps/sven/project/workspace/zcu104_software_platform/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
+File:               /Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/ref_files/step2_pfm/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 Description:        
-zcu104_custom
+A custom platform ZCU104 platform
     
 
 =====================================
 Hardware Platform (Shell) Information
 =====================================
 Vendor:                           xilinx
-Board:                            name
-Name:                             name
+Board:                            ZCU104_Custom_Platform
+Name:                             ZCU104_Custom_Platform
 Version:                          0.0
-Generated Version:                2022.2
+Generated Version:                2023.1
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               0
@@ -95,18 +96,18 @@ Default System Configuration:  zcu104_custom
 System Configurations:
   System Config Name:                      zcu104_custom
   System Config Description:               zcu104_custom
-  System Config Default Processor Group:   linux_domain
+  System Config Default Processor Group:   xrt
   System Config Default Boot Image:        standard
   System Config Is QEMU Supported:         1
   System Config Processor Groups:
-    Processor Group Name:      linux on psu_cortexa53
+    Processor Group Name:      xrt
     Processor Group CPU Type:  cortex-a53
     Processor Group OS Name:   linux
   System Config Boot Images:
     Boot Image Name:           standard
     Boot Image Type:           
     Boot Image BIF:            zcu104_custom/boot/linux.bif
-    Boot Image Data:           zcu104_custom/linux_domain/image
+    Boot Image Data:           zcu104_custom/xrt/image
     Boot Image Boot Mode:      sd
     Boot Image RootFileSystem: 
     Boot Image Mount Path:     /mnt
@@ -114,7 +115,7 @@ System Configurations:
     Boot Image QEMU Args:      zcu104_custom/qemu/pmu_args.txt:zcu104_custom/qemu/qemu_args.txt
     Boot Image QEMU Boot:      
     Boot Image QEMU Dev Tree:  
-Supported Runtimes:
+    Supported Runtimes:
   Runtime: OpenCL
 ```
 
@@ -143,7 +144,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Click **add** button and choose the folder of `zcu104_custom` which is  located under `zcu104_software_platform` folder.
    - Select **zcu104_custom** as platform, click **next**.
    - Name the project **vadd**, click **next**.
-   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```zcu104_software_platform/xilinx-zynqmp-common-v2022.2/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in Step2). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_software_platform/pfm/sw_comp` directory, which are prepared in Step 2. click **next**.
+   - Set Domain to **linux on psu_cortexa53**, set **Sys_root path** to ```zcu104_software_platform/xilinx-zynqmp-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in Step2). Set the **Root FS** to rootfs.ext4 and **Kernel Image** to Image. These files are located in `zcu104_software_platform/pfm/sw_comp` directory, which are prepared in Step 2. click **next**.
    - Select **System Optimization Examples -> Vector Addition** and click **finish** to generate the application.
    - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
    - Select **vadd_system** in Explorer window and Click **Build** icon in toolbar.
@@ -156,34 +157,9 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    - Copy **zcu104_application_vitis/vadd_system/Hardware/package/sd_card.img** to local if Vitis is running on a remote server.
    - Write **sd_card.img** into SD Card with SD Card image writer applications like Etcher on Windows or dd on Linux.
    - Boot ZCU104 board with the SD card in SD boot mode.
-     
-     <details>
-
-     <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Downloads website</strong></summary>
-
-     - Go to auto mounted FAT32 partition
-
-     ```bash
-     cd /run/media/mmcblk0p1
-     ```
-
-     - Run vadd application
-
-     ```bash
-     ./simple_vadd krnl_vadd.xclbin
-     ```
-
-     - It should show program prints and XRT debug info.
-
-     ```
-     TEST PASSED
-     ```
-
-     </details>
 
      <details>
-
-     <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+     <summary><strong>Follow below steps to run the application</strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 
@@ -271,7 +247,7 @@ The command line flow has slight differences comparing to Vitis IDE flow.
 
 ### Test 3: Run a Vitis-AI Demo
 
-**Note**: Vitis AI for Vitis 2022.2 is not released. So we make this step gather up for the moment. We will update it to Vitis 2022.2 soon after Vitis AI for Vitis 2022.2 released.
+**Note**: Vitis AI for Vitis 2023.1 is not released. So we make this step gather up for the moment. We will update it to Vitis 2023.1 soon after Vitis AI for Vitis 2023.1 released.
 
 <details>
 <summary><strong>Vitis-AI Demo</strong></summary>
@@ -561,4 +537,4 @@ We have completed creating a custom platform from scratch and verifying it with 
 
 Please feel free to check more tutorials in this repository.
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>

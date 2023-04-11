@@ -1,4 +1,4 @@
-# Copyright 2020 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@ XSA=step1_vivado/build/vivado/zcu104_custom_platform_hw.xsa
 XPFM=step2_pfm/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 VERSION				?=2023.1
 COMMON_IMAGE_ZYNQMP 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
-
+TARGET=
 .PHONY: help
 
 help:
 	@echo "Makefile usage"
-	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/> 	## to generate platform with pre-built software components and do sw emulation with running vadd application to test this platform "
-	@echo "make sd_card COMMON_IMAGE_ZYNQMP=<path/to/common_image/> 	## to generate platform with pre-built software components and do hw test on board with running vadd application to test this platform "
+	@echo "make all  COMMON_IMAGE_ZYNQMP=<path/to/common_image/> 	## to generate platform with pre-built software components and do sw emulation with running vadd application to test this platform "
+	@echo "make sd_card  COMMON_IMAGE_ZYNQMP=<path/to/common_image/> 	## to generate platform with pre-built software components and do hw test on board with running vadd application to test this platform "
 
 all: check-common-image step1 step2  step3_hwemu_test
 
@@ -51,10 +51,10 @@ $(XPFM): $(XSA)
 
 # Step 3: Validate Design
 step3_hwemu_test: $(XPFM)
-	$(MAKE) -C step3_validate all
+	$(MAKE) all TARGET=hw_emu -C step3_validate
 
 step3_hw_test: $(XPFM)
-	$(MAKE) -C step3_validate sd_card
+	$(MAKE) sd_card TARGET=hw -C step3_validate 
 
 clean:
 	$(MAKE) -C step1_vivado clean

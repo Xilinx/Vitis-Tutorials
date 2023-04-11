@@ -1,4 +1,4 @@
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,6 +35,6 @@ hw:
 
 
 clean:
-	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
+	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou .Xil
 
 ultraclean: clean

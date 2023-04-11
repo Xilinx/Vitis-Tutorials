@@ -1,4 +1,4 @@
-# Copyright 2022 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ PLATFORM_NAME=zcu104_custom
 PLATFORM ?= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SW_COMP = $(ROOT_DIR)/../step2_pfm/sw_comp/
 SYSROOT=$(ROOT_DIR)/../step2_pfm/sysroot/
+TARGET ?=sw_emu 
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 
 VAI_DPU_TRD_PATH = Vitis-AI/dsa/DPU-TRD/prj/Vitis/
@@ -25,22 +26,21 @@ VAI_DPU_TRD_PATH = Vitis-AI/dsa/DPU-TRD/prj/Vitis/
 
 help:
 	@echo "Makefile usage"
-	@echo "make all 	## to build vadd application and run sw emulation on the platform created in former step"
-	@echo "make sd_card ## to build vadd application and run hw test on the platform created in former step"
+	@echo "make all TARGET=hw_emu/sw_emu	## to build vadd application and run hw/sw emulation on the platform created in former step"
+	@echo "make sd_card 					## to build vadd application and run hw test on the platform created in former step"
 
 all: platforminfo vadd 
 sd_card:vadd_hw
 
 Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2022.1
+	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2022.2
 
-$(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
+vadd: Vitis_Accel_Examples $(PLATFORM)
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=$(TARGET) PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=$(TARGET) PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
 
-vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
-
-vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(PLATFORM)
+vadd_hw: Vitis_Accel_Examples $(PLATFORM)
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 #Vitis AI 2.0 is under preparation. We will update it as soon as possible.
@@ -60,7 +60,6 @@ clean:
 	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
 	-$(MAKE) -C $(VAI_DPU_TRD_PATH) clean
 	-$(MAKE) -C platforminfo  clean
-	cd $(VAI_DPU_TRD_PATH); git reset --hard
 
 ultraclean:clean
 	rm -rf Vitis_Accel_Examples Vitis-AI

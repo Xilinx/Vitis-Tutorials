@@ -1,5 +1,5 @@
 <!--
-# Copyright 2020 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ As most of the components are extracted from the common image package we will pr
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    .
-   ├── xilinx-zynqmp-common-v2022.2.tar.gz
+   ├── xilinx-zynqmp-common-v2023.1.tar.gz
    ├── zcu104_appliation_vitis
    ├── zcu104_custom_platform
    └── zcu104_software_platform
@@ -55,14 +55,14 @@ As most of the components are extracted from the common image package we will pr
    ```bash
    mkdir zcu104_software_platform
    cd zcu104_software_platform
-   tar xvf ../xilinx-zynqmp-common-v2022.2.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2023.1.tar.gz -C .
    ```
 
-   you can see **xilinx-zynqmp-common-v2022.2** folder which contains some components located in **zcu104_software_platform** folder like the following.
+   you can see **xilinx-zynqmp-common-v2023.1** folder which contains some components located in **zcu104_software_platform** folder like the following.
 
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2022.2
+   ├── xilinx-zynqmp-common-v2023.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -231,20 +231,20 @@ After this step, all the components for platform creation are ready. Next we wil
    mkdir pfm/sw_comp 
    cp zcu104_platform_fsbl/zynqmp_fsbl/fsbl_a53.elf pfm/boot/fsbl.elf        #rename it to fsbl.elf in case of V++ can not find it by name 
    cp zcu104_platform_fsbl/zynqmp_pmufw/pmufw.elf pfm/boot/
-   cp xilinx-zynqmp-common-v2022.2/bl31.elf pfm/boot/
-   cp xilinx-zynqmp-common-v2022.2/u-boot.elf pfm/boot/
+   cp xilinx-zynqmp-common-v2023.1/bl31.elf pfm/boot/
+   cp xilinx-zynqmp-common-v2023.1/u-boot.elf pfm/boot/
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb  pfm/boot/
-   cp xilinx-zynqmp-common-v2022.2/boot.scr pfm/sd_dir/
+   cp xilinx-zynqmp-common-v2023.1/boot.scr pfm/sd_dir/
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb  pfm/sd_dir/
-   cp xilinx-zynqmp-common-v2022.2/rootfs.ext4 pfm/sw_comp
-   cp xilinx-zynqmp-common-v2022.2/Image pfm/sw_comp
+   cp xilinx-zynqmp-common-v2023.1/rootfs.ext4 pfm/sw_comp
+   cp xilinx-zynqmp-common-v2023.1/Image pfm/sw_comp
    ```
 
    > Note: fsbl_a53.elf, pmufw.elf, bl31.elf, u-boot.elf and system.dtb in boot DIR are the source of BOOT.BIN image. Boot.src and system.dtb in sd_dir are for u-boot initialization and Linux boot up and will be packaged to FAT32 partition by V++ package tool. Image and rootfs.ext4 are Linux kernel and root file system and also will be packaged to SD.IMG by V++ tool.
    
 2. Install the sysroot 
 
-   - Go to common image extracted directory <WorkSpace/zcu104_software_platform/xilinx-zynqmp-common-v2022.2/>
+   - Go to common image extracted directory <WorkSpace/zcu104_software_platform/xilinx-zynqmp-common-v2023.1/>
    - Type ./sdk.sh -d <Install Target Dir> to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory  **.** (This is an example. < . > means current Dir ) and confirm.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
@@ -318,5 +318,5 @@ Scripts are provided to create the Vitis platform. To use these scripts, please 
 
 Next let's try to [build some applications on this platform and test them.](./step3.md)
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>
 

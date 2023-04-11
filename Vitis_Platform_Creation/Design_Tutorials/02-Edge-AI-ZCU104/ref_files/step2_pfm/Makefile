@@ -1,4 +1,4 @@
-#Copyright 2022 Xilinx Inc.
+#Copyright 2023 Xilinx Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
-VERSION=2022.2
+VERSION=2023.1
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
@@ -59,8 +59,7 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 #echo command is to avoid the return error code caused by the createdts command warning	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	-xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" \
-	&& echo -e "\n***Device Tree generation Successful!\n" || echo -e "\n"
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2022.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(BOOT)/
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(SD_DIR)/
 
@@ -86,6 +85,6 @@ $(SYSROOT): $(COMMON_IMAGE_ZYNQMP)/sdk.sh
 	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_ZYNQMP)/sdk.sh -d  $(SYSROOT)/ -y
 
 clean:
-	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice
+	rm -rf  IDE.log $(PLATFORM_NAME) $(PLATFORM_NAME_FSBL) device-tree-xlnx  mydevice .Xil
 ultraclean:clean
 	rm -rf   $(SW_COMP) $(BOOT) $(SD_DIR)   $(SYSROOT)
