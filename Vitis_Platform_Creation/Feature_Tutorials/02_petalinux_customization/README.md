@@ -9,7 +9,7 @@
 
 ## PetaLinux Building and System Customization
 
-***Version: PetaLinux 2022.2***
+***Version: PetaLinux 2023.1***
 
 In this module we'd like to demonstrate platform software components customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
 
@@ -26,11 +26,11 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    ```
 
-2. Download the base platform and place it under `workspace`  folder. Then extract it.
+2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis tool, please omit this step as AMD Official platforms have already built into the vitis tool installation package.
 
    ```bash
-   unzip xilinx_zcu104_base_202220_1.zip #extract the base platform
-   cd xilinx_zcu104_base_202220_1
+   unzip xilinx_zcu104_base_202310_1.zip #extract the base platform
+   cd xilinx_zcu104_base_202310_1
    tree -L 2
    .
    ├── hw
@@ -38,10 +38,10 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    ├── hw_emu
    │   └── hw_emu.xsa
    ├── sw
-   │   ├── xilinx_zcu104_base_202220_1
-   │   └── xilinx_zcu104_base_202220_1.spfm
+   │   ├── xilinx_zcu104_base_202310_1
+   │   └── xilinx_zcu104_base_202310_1.spfm
    ├── version
-   └── xilinx_zcu104_base_202220_1.xpfm
+   └── xilinx_zcu104_base_202310_1.xpfm
    4 directories, 5 files
    ```
 
@@ -59,7 +59,7 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    petalinux-create --type project --template zynqMP --name zcu104_petalinux
    cd zcu104_petalinux
-   petalinux-config --get-hw-description=xilinx_zcu104_base_202220_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202220_1> directory. if you want to do emulation you can choose hw_emu.xsa 
+   petalinux-config --get-hw-description=xilinx_zcu104_base_202310_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202310_1> directory. if you want to do emulation you can choose hw_emu.xsa 
    ```
 
    > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as `zynqMP`. If your platform is using Versal chipset. Please set this option to `versal`.
@@ -84,69 +84,28 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 
 ### Customize Root File System, Kernel, Device Tree and U-boot
 
-1. Add user packages 
+1. Enable selected rootfs packages
 
-   - Append the CONFIG_x lines below to the **<your_petalinux_project_dir>/project-spec/meta-user/conf/user-rootfsconfig** file.
 
-   **Note: This step is not a must but it makes it easier to find and select all required packages in next step. If this step is skipped, please enable the required packages one by one in next step.**
+   In order to add all Vitis acceleration flow required packages we create an package group option. If this group option is selected the following Vitis acceleration flow required package will be automatically enabled.
 
-   Packages for base XRT support:
+   | Package Group                                       | Package Name                                                                    | Description                                                                                                                 |
+   | --------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+   | packagegroup-petalinux-vitis-acceleration-essential | xrt                                                                             | xrt is required for Vitis acceleration flow. The dependency packages such as ZOCL driver module will be added automatically |
+   | packagegroup-petalinux-vitis-acceleration-essential | dnf                                                                             | dnf is a package management tool                                                                                            |
+   | packagegroup-petalinux-vitis-acceleration-essential | e2fsprogs-resize2fs</br>parted</br>resize-part                                  | This set of tool can be used for ext4 partition resize                                                                      |
+   | packagegroup-petalinux-vitis-acceleration-essential | opencl-headers</br>packagegroup-petalinux-opencv</br>packagegroup-petalinux-x11 | These three packages are graph display related library                                                                      |
+   | packagegroup-petalinux-vitis-acceleration-essential | gdb</br>valgrind                                                                | debug related tools                                                                                                         |
 
-    ```
-   CONFIG_xrt
-    ```
-    - xrt is required for Vitis acceleration flow. The dependency packages such as ZOCL driver module will be added automatically.
-
-   Recommended Packages for easy system management
-
-    ```
-   CONFIG_dnf
-   CONFIG_e2fsprogs-resize2fs
-   CONFIG_parted
-   CONFIG_resize-part
-    ```
-    - dnf is for package package management
-    - parted, e2fsprogs-resize2fs and resize-part can be used for ext4 partition resize. We will use it to expand the ext4 partition to make full use of SD card size when running Vitis-AI test case .
-
-    *Packages for Vitis-AI dependencies support:*
-
-    ```
-   CONFIG_packagegroup-petalinux-vitisai
-    ```
-
-   *Optional Packages for natively building Vitis AI applications on target board:*
-
-    ```
-   CONFIG_packagegroup-petalinux-self-hosted
-   CONFIG_cmake
-   CONFIG_packagegroup-petalinux-vitisai-dev
-   CONFIG_xrt-dev
-   CONFIG_opencl-clhpp-dev
-   CONFIG_opencl-headers-dev
-   CONFIG_packagegroup-petalinux-opencv
-   CONFIG_packagegroup-petalinux-opencv-dev
-    ```
-
-    *Optional Packages for running Vitis-AI demo applications with GUI*
-
-    ```
-    CONFIG_mesa-megadriver
-    CONFIG_packagegroup-petalinux-x11
-    CONFIG_packagegroup-petalinux-v4lutils
-    CONFIG_packagegroup-petalinux-matchbox
-    ```
-
-2. Enable selected rootfs packages
+   Please follow the steps below to enable the package group for Vitis acceleration flow.
 
    - Run `petalinux-config -c rootfs` 
-   - Select **User Packages**
-   - select name of rootfs all the libraries listed above.
+   - Go to **Petalinux Package Groups** -> **packagegroup-petalinux-vitis-acceleration-essential** and enable **packagegroup-petalinux-vitis-acceleration-essential**.  Please also enable **packagegroup-petalinux-vitis-acceleration-essential-dev** which will enable the sysroot support.
 
    ![petalinux_rootfs.png](images/petalinux_rootfs.png)
 
-   Note: If step 1 is skipped, please find the corresponding package and enable them.
 
-3. Enable OpenSSH and disable dropbear (optional)
+2. Enable OpenSSH and disable dropbear (optional)
    
    Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed over ssh (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.*
 
@@ -161,14 +120,14 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    - Go to **console  -> network -> openssh** and enable **openssh**, **openssh-sftp-server**, **openssh-sshd**, **openssh-scp**. 
    - Go to root level by **Exit** four times.
 
-4. Enable Package Management
+3. Enable Package Management
 
    Package management feature can allow the board to install and upgrade software packages on the fly.
 
    - In rootfs config go to **Image Features** and enable **package-management** and **debug_tweaks** option 
    - Click **OK**, **Exit** twice and select **Yes** to save the changes.
 
-5. Disable CPU IDLE in kernel config (Recommended during debugging).
+4. Disable CPU IDLE in kernel config (Recommended during debugging).
 
    CPU IDLE would cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on host machine talks to the processor regularly. If it talks to a processor in IDLE status, the system will hang because of incomplete AXI transactions. So it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design has completed to save power in final products.
 
@@ -288,5 +247,5 @@ Scripts are provided to re-create PetaLinux project and generate outputs.
 
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p align="center"><sup>Copyright&copy; 2023 Xilinx</sup></p>
 
