@@ -137,8 +137,7 @@ If you need to do system customization, please take the following steps as refer
    source <Vitis_tool_install_dir>/settings64.sh
    cd kv260_vitis_platform
    xsct
-   setws .
-   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl \
+   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
    -platform-name mydevice -git-branch xlnx_rel_v2022.1 -overlay -compile
    ```
 
@@ -148,6 +147,7 @@ If you need to do system customization, please take the following steps as refer
    -  `-hw`: Hardware XSA file with path
    -  `-git-branch`: device tree branch
    -  `-zocl`: enable the zocl driver support
+   -  `-out`: specify the output directory
    -  `-overlay`: enable the device tree overlay support
    -  `-compile`: specify the option to compile the device tree to DTB file
 

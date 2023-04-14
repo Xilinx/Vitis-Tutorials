@@ -188,7 +188,7 @@ Besides uboot in common image does not have default environment variables. So up
 
    ```bash
    createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hw.xsa -zocl  -platform-name mydevice \
-    -git-branch xlnx_rel_v2022.2 -board  zcu104-revc  -dtsi system-user.dtsi -compile
+    -out . -git-branch xlnx_rel_v2022.2 -board  zcu104-revc  -dtsi system-user.dtsi -compile
    ```
    The `createdts` command needs the following input values:
 
@@ -197,6 +197,7 @@ Besides uboot in common image does not have default environment variables. So up
    -  `-git-branch`: device tree branch
    -  `-board`: board name of the device. You can check the board name at <DTG Repo>/device_tree/data/kernel_dtsi.
    -  `-zocl`: enable the zocl driver support
+   -  `-out`: specify the output directory
    -  `-dtsi`: Add user's device tree file support
    -  `-compile`: specify the option to compile the device tree
 
