@@ -79,3 +79,8 @@ The simulation is executed with 256 input words (128-bit) along with pre-defined
 ---
 
 Now that you have the necessary information about the Aes module, you can start to add the necessary AXI interfaces and IPs to make it a usable kernel for the Vitis flow. This is described in the next section: [RTL Kernel: krnl_aes](./krnl_aes.md).
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

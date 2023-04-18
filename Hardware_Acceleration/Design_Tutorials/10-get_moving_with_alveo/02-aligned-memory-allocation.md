@@ -114,4 +114,7 @@ Now we're getting somewhere!  Let's try using the OpenCL API to allocate memory 
 
 Read [**Example 3:** Memory Allocation with XRT](./03-xrt-memory-allocation.md)
 
-<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

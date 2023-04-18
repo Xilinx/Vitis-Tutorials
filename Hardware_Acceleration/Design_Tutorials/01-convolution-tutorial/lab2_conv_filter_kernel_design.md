@@ -16,7 +16,7 @@ This section discusses the design of a convolution filter in detail. It goes thr
 
 ### Top Level Structure of Kernel
 
-The top-level of the convolution filter is modeled using a dataflow process. The dataflow consists of four different functions as given below. For full implementation details please refer to source file  **"src/filter2d_hw.cpp"** in convolutional tutorial directory.
+The top-level of the convolution filter is modeled using a dataflow process. The dataflow consists of four different functions as given below. For full implementation details please refer to source file  `src/filter2d_hw.cpp` in convolutional tutorial directory.
 
 ```cpp
 void Filter2DKernel(
@@ -167,5 +167,9 @@ In this lab, you learned about:
 
 <p align="center"><b>
 Next Lab Module: <a href="./lab3_build_app_kernel.md">Building the 2-D convolutional Kernel and Host Application</a>
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
-</b></p>
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

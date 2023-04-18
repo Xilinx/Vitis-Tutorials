@@ -83,4 +83,7 @@ For example, a pipelined for-loop with 100 accesses and max_read_burst_length or
 
 You can now continue to [<b>module 3</b>](../module3_datatype/README.md) or run this version of the design to verify it behaves similarly to module 1.
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

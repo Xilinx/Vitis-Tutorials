@@ -119,3 +119,9 @@ We use the loop index and convert it in factorial base. Then we use a property o
 ## Next
 
 * [Run the C simulation](./csim.md)
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

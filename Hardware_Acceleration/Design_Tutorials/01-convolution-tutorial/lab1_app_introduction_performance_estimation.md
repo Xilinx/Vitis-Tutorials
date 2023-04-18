@@ -222,5 +222,11 @@ Given these performance numbers, architecture selection, and implementation deta
 
 <p align="center"><b>
 Next Lab Module: <a href="./lab2_conv_filter_kernel_design.md">Design and Analysis of Hardware Kernel Module for 2-D Video Convolution Filter</a>
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+
 </b></p>
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

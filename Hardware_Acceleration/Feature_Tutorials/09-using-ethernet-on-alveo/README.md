@@ -111,3 +111,7 @@ When *v++* linking finishes, we will get the XCLBIN file **top_level.xclbin**. Y
 
 To use GTY transceivers in Alveo card with Vitis flow is very simple and straightforward. You just need to handle it as ordinary RTL kernels with some extra configuration for GT transceivers specific signals. Vitis provides powerful and flexible capabilities to help the user to finish the integration efficiently.
 
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

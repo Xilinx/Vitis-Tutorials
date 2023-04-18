@@ -14,20 +14,13 @@
 This example introduces the AI Engine GMIO programming model. It includes three steps:
 
 - [AI Engine GMIO Programming Model](#ai-engine-gmio-programming-model)
-
-- [Step 1 - Synchronous GMIO Transfer](#step-1---synchronous-gmio-transfer)
-
-- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator)
-
-- [Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output](#step-2---asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output)
-
-- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator-1)
-
-- [Step 3 - Asynchronous GMIO Transfer and Hardware Flow](#step-3---asynchronous-gmio-transfer-and-hardware-flow)
-
-- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
-
-- [Conclusion](#conclusion)
+		- [Step 1 - Synchronous GMIO Transfer](#step-1---synchronous-gmio-transfer)
+			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator)
+		- [Step 2 - Asynchronous GMIO Transfer for Input and Synchronous GMIO Transfer for Output](#step-2---asynchronous-gmio-transfer-for-input-and-synchronous-gmio-transfer-for-output)
+			- [Run AI Engine compiler and AI Engine simulator](#run-ai-engine-compiler-and-ai-engine-simulator-1)
+		- [Step 3 - Asynchronous GMIO Transfer and Hardware Flow](#step-3---asynchronous-gmio-transfer-and-hardware-flow)
+			- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
+		- [Conclusion](#conclusion)
 
 The AI Engine simulator event trace is used to see how performance can be improved step by step. The last step introduces code to make GMIO work in hardware.
 
@@ -239,30 +232,7 @@ In this example, you learned about the following core concepts:
 
 Next, review [AIE GMIO Performance Profile](./perf_profile_aie_gmio.md).
 
-<br></br>
 
-Licensed under the Apache License, Version 2.0 (the "License");
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
-you may not use this file except in compliance with the License.
-
-You may obtain a copy of the License at
-
-
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-
-
-Unless required by applicable law or agreed to in writing, software
-
-distributed under the License is distributed on an "AS IS" BASIS,
-
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and
-
-limitations under the License.
-
-
-
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

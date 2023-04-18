@@ -346,7 +346,8 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 ### Execution & Results
 You will need to login with user `petalinux` and setup a new password (it's then also the `sudo` password):
   - REMARK: It could be that if you used the `export LINUX_PRE_BUILDS := true` that you get more messages displayed.
- ```
+
+```
 vck190-versal login: petalinux
 You are required to change your password immediately (administrator enforced).
 New password: 
@@ -364,12 +365,12 @@ Password:
 vck190-versal:/home/petalinux#
 vck190-versal:/home/petalinux# cd /run/media/mmcblk0p1/
 vck190-versal:/run/media/mmcblk0p1#
- ```
+```
  
 Execute the following after you went though the previous explained login-step so you reached the `/run/media/mmcblk0p1` directory:
   - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
-  ```
+```
 vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -543,7 +544,7 @@ PASSED:  my_graph.end()
 PASSED:  ./aie_dly_test.exe
 
 vck190-versal:/run/media/mmcblk0p1# 
-  ```
+```
 
 ## Notes
   - Simulation is **NOT** part and **NOT** demonstrated in this Tutorial!
@@ -733,17 +734,7 @@ Click on each item below to see the detailed Revision History:
  
  </details>
 
- 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-<p align="center"><sup>XD106 | © Copyright 2022 Xilinx, Inc.</sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

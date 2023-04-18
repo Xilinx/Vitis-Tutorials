@@ -333,6 +333,7 @@ v++ -l -t hw --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin
 
 Now that you ran your first example, proceed to [**Part 5**](./Part5.md) of this tutorial to learn how to visualize and profile your application with Vitis Analyzer.
 
- 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

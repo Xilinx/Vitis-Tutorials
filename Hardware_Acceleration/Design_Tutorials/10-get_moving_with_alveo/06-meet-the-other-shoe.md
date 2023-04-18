@@ -93,4 +93,7 @@ But despair not!  Now it’s time to look at something real.
 
 Read [**Example 7:** Image Resizing with Vitis Vision](./07-image-resizing-with-vitis-vision.md)
 
-<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

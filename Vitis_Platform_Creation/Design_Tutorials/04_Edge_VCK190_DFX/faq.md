@@ -1,20 +1,3 @@
-<!-- 
-# Copyright 2020 Xilinx Inc.
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
--->
-
-
 <table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
@@ -160,4 +143,8 @@ Solution:
 
 In the error message, it lists the BDC Aperture `0x800000000 [0x180000000]` on BDC interface `/VitisRegion/DDR_2` is not used by downstream NOC endpoint `/noc_ddr/MC0_2`. It's because that the noc_ddr only enables 2GB memory space. Please check that you followed the noc_ddr setup instructions to enable `DDR LOW 1` address region.
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

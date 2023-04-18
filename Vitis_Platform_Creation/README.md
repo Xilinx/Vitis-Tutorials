@@ -3,11 +3,8 @@
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
    </td>
  </tr>
- <tr>
- <td>
- </td>
- </tr>
 </table>
+
 
 ## Vitis Platform Creation Tutorials
 
@@ -80,4 +77,7 @@ These tutorials illustrate various platform features and how you can incorporate
  </tr>
  </table>
 
-<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

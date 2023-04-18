@@ -448,3 +448,9 @@ AES total decryption throughput = 392.901703 MB/s
 
 ---
 Now you have a Vitis RTL kernel file, `krnl_aes.xo`, with `ap_ctrl_hs` execution model. In the next session, you will learn about another RTL kernel, `krnl_cbc`, which supports `ap_ctrl_chain` model, and integrates these two kernel into a hardware overlay (XCLBIN) to form a complete AES-CBC acceleration application. This is described in the next section: [RTL Kernel: krnl_cbc](./krnl_cbc.md).
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

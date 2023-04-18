@@ -28,4 +28,8 @@ Here is a diagram of the functional blocks involved for a x86 server connected t
 
 In the next [**section**](../02-System_Setup/README.md), you'll learn how to prepare your environment to run the tutorial.
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

@@ -69,4 +69,8 @@ Application Timeline collects and displays host and kernel events on a common ti
 
 If you are looking for more details of Profiling and how to use *Vitis Analyzer*, check on [Profiling the Application](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/profilingapplication.html) from Vitis online documentation. 
 
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

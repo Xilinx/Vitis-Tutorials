@@ -75,3 +75,9 @@ As we see on the screenshot above, the result is 75662 (scaled integer) or 51.64
 ## Next
 
 * [Run the C synthesis](./csynth.md)
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

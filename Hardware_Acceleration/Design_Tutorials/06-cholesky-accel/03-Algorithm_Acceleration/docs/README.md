@@ -2,4 +2,8 @@ Visit the <code>cpu_src</code> and then move to the <code>module</code> prefixed
 
 Local <code>README.md</code> files provide instructions...
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

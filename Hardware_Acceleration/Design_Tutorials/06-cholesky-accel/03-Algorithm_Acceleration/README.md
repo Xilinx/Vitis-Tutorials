@@ -32,4 +32,8 @@ _Instructions in local readme files for each module_
   + Use Vitis HLS to confirm the new micro-architecture created by dataflow
   + Generate the binary (xclbin) to program the card and measure the actual performance
 
-<p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

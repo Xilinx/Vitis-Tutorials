@@ -47,3 +47,9 @@ During the export phase of the flow, Vitis HLS packages the results into a form 
 ## Next Step
 
 * [Code optimization with 4 parallel memory lookups](./code_opt.md)
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

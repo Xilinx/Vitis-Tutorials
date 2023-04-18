@@ -444,4 +444,6 @@ Vitis provides powerful profiling features which enable you to get a deeper view
  </details>
 
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

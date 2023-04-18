@@ -252,4 +252,7 @@ Some things to try to build on this experiment:
 
 Read [**Example 2:** Aligned Memory Allocation](./02-aligned-memory-allocation.md)
 
-<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -12,7 +12,8 @@ Some of the recent Xilinx Platforms have an XDMA feature to bypass the DMA opera
 - A platform can be designed even without an XDMA, such as the latest U50-NoDMA platform, providing a thin fixed logic with more available FPGA resources for the user logic or kernels. 
 - The data transfer burden can be freed from the host server. As a result, the host can spend time on other tasks that might even help in overall application performance. 
 
-For more details about the host memory access feature please refer https://xilinx.github.io/XRT/master/html/hm.html
+For more details about the host memory access feature, refer to `HM in XRT documentation <https://xilinx.github.io/XRT/master/html/hm.html>`_.
+
 
 
 ***********************************
@@ -319,19 +320,8 @@ In summary, you have reviewed the following takeaways in this tutorial
 - Comparing and understanding Profile and Application timeline
 - A host memory-based paradigm can help to eliminate the data transfer burden from the host. In some use cases this might help to boost overall application performance. 
 
+-----------------------------------------------------
 
+Copyright © 2020-2023 Advanced Micro Devices, Inc
 
-
----------------------------------
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Copyright 2020–2022 Xilinx
+`Terms and Conditions <https://www.amd.com/en/corporate/copyright>`_

@@ -328,4 +328,7 @@ void search(float* result,float* longitude,float* latitude,float* out,int size){
 
 Proceed to [**Section 2**](../02-Setup_Environment/README.md).
 
-<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

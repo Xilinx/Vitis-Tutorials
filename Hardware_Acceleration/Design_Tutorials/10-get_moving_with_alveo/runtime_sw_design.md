@@ -122,4 +122,7 @@ We will explore all of these topics in detail in the examples.
 
 Read [**Next Section**: Guided Software Examples](./guided_sw_examples.md)
 
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
