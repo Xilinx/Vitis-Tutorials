@@ -838,6 +838,10 @@ runtime<ratio>(core01) = 0.6;
 ```
 The source file `core01.cc` contains the source code for core01. The ratio of the function run time compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
 
+```
+source(core01) = "core01.cc";
+runtime<ratio>(core01) = 0.6;
+```
 #### Add Connectivity Information
 This is done by using the templated connect<> object. The connection can be window<> or stream. If a window connection is used, then window parameters must be specified.
 In this description, ports are referred to by indices. An example of the connection between the input port of the graph and input of an AI Engine kernel is as follows:
@@ -845,6 +849,7 @@ In this description, ports are referred to by indices. An example of the connect
 ```
 connect< adf::window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
 single_buffer(core01.in[0]);
+
 ```
 In this case, the parameters correspond to the matrix dimension. Single buffer is selected instead of ping-pong buffer to keep the design simple without an impact on performance.
 
@@ -987,17 +992,15 @@ Then run the Vitis analyzer on the summary file, for example, `vitis_analyzer xr
 
 The following is the snapshot of the time trace for the LeNet design run.
 
-![Image of Lenet design Timeline Trace](images/Lenet_Trace_2023_1.PNG)
+![Emulation result of Lenet design](images/Lenet_hw_emu_Processing_time.png)
 
 Throughput calculation is as follows:
 ```
-Difference in timeline (execution time) = 6.117ms
-Throughput = no of images / execution time
-          = 100 / 6.117ms
-          = 16,348 images/s
+Difference in timeline (processing time) = 1068.96 us
+Throughput = no of images / Processing time
+          = 100 / 1068.96 us
+          = 93,548.86 images/s
 
-The excution time reported by trace is with the data mover kernel running at 150MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
-Throughput = 16,348 images/s x (312.5 / 150 ) = 34,058 images/s
 ```
 
 ## Power Measurement Details
