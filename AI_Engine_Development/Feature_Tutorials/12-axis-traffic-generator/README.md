@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.2 Versal® AI Engine</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal® AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -37,12 +37,12 @@ The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully s
 
 This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial, complete the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2023.1/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2023.1` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ### Objectives
@@ -103,15 +103,15 @@ Tools Documentation:
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2022.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
-* Install the [Vitis Software Platform 2022.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
 * Obtain licenses for the AI Engine tools
 
-* Download and setup the [Xilinx DSP Library (DSPLib) 2022.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [Xilinx DSP Library (DSPLib) 2023.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
-* Download and setup the [VCK190 Vitis Platform for 2022.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
@@ -122,8 +122,9 @@ Create a script file named `env_setup_2022.sh` in your favorite text editor. Rep
 ```bash
 export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
+export PYTHON_INSTALL=<YOUR-PYTHON_INSTALL_PATH>
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2022.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2023.1/settings64.sh
 ```
 
 Then source the environment script:
@@ -133,7 +134,7 @@ source env_setup_2022.sh
 
 ## *Validation*: Confirming Tool Installation
 
-Ensure that you are using the 2022.2 version of Xilinx&reg; tools.
+Ensure that you are using the 2023.1 version of Xilinx&reg; tools.
 
 ```bash
 which vitis
@@ -431,7 +432,7 @@ After all the new AI Engine outputs are created, you can compile your host appli
     graph_top.end();
     ```
 
-   **Note:** [XRT](https://xilinx.github.io/XRT/2022.2/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
+   **Note:** [XRT](https://xilinx.github.io/XRT/2023.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
 
 2. Close the main.cpp, and run the command.
 
@@ -457,7 +458,7 @@ After packaging, everything is set to run emulation or hardware.
 1. To run emulation use the following command.
 
    ```bash
-   make run_emu
+   make run_emu SHOW_PLOT=True
    ```
 
    Or
@@ -493,7 +494,7 @@ After packaging, everything is set to run emulation or hardware.
 
    ```bash
    export PYTHONPATH="$XILINX_VIVADO/data/emulation/hw_em/lib/python:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:$XILINX_VIVADO/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:${PYTHONPATH}"
-   make run_tgen
+   make run_tgen SHOW_PLOT=True
    ```
 
    In the makefile run_tgen task simply executes the python script.

@@ -186,7 +186,8 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
-		--package.sd_file host.exe ../tutorial.xsa ../libadf.a
+		--package.sd_file host.exe \
+		../tutorial.xsa ../libadf.a
 	@echo "COMPLETE: hw_emu package created."
 
 ###################################################################################################
@@ -213,4 +214,4 @@ clean:
 	rm -rf sw/sd_card sw/sd_card.img
 	
 run_tgen:
-	python3 sw/pysrc/run_traffic_gen.py	${PLIO_WIDTH} 0
+	${PYTHON_INSTALL}/python3 sw/pysrc/run_traffic_gen.py ${TG_ARGS}
