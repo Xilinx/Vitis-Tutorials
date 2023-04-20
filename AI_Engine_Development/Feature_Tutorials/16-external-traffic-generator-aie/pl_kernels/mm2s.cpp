@@ -30,7 +30,7 @@ limitations under the License.
 
 extern "C" {
 
-void mm2s(ap_int<DATA_WIDTH>* mem, hls::stream<qdma_axis<DATA_WIDTH, 0, 0, 0>  >& s, int size) {
+void mm2s(ap_int<DATA_WIDTH>* mem, hls::stream<ap_axis<DATA_WIDTH, 0, 0, 0>  >& s, int size) {
 #pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
 
 #pragma HLS interface axis port=s
@@ -41,9 +41,8 @@ void mm2s(ap_int<DATA_WIDTH>* mem, hls::stream<qdma_axis<DATA_WIDTH, 0, 0, 0>  >
 
 	for(int i = 0; i < size; i++) {
 #pragma HLS PIPELINE II=1
-		qdma_axis<DATA_WIDTH, 0, 0, 0> x;
+		ap_axis<DATA_WIDTH, 0, 0, 0> x;
 		x.data = mem[i];
-		x.keep_all();
 		s.write(x);
 	}
 
