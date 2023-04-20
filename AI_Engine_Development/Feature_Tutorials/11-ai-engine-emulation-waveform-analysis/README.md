@@ -9,7 +9,7 @@
 
 # Versal Emulation Waveform Analysis
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -19,14 +19,14 @@ This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) wav
 
 It is strongly recommended to go through the **Versal Integration tutorial** and the **Versal System Design Clocking tutorial** before running this tutorial.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps.
 
 1. Source VITIS and XRT.
 2. Set the AIE License.
-3. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2022.2/sdk.sh`.
-4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
+3. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run `xilinx-versal-common-v2023.1/sdk.sh`.
+4. Set up your `ROOTFS`, and `IMAGE` to point to the `xilinx-versal-common-v2023.1` directory.
 5. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
 
 ## Objectives
@@ -96,7 +96,7 @@ In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
     ```bash
     make kernels
-    make xclbin
+    make xsa
     make host
     make package
     ```
@@ -415,11 +415,12 @@ Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see
 
     When the summary is open, you should see something similar to the following.
 
-    ![Vitis Analyzer Summary](./images/vitis_analyzer_summary.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/668aa096-f47a-4f04-97e8-95813ff46842)
+
 
 2. Here you can see various reports: **Summary**, **Trace**, **Profile**, **Graph**, **Array**. Click on **Trace** to open up the VCD data that was collected during hardware emulation.
 
-     ![Vitis Analyzer Trace](./images/vitis_analyzer_trace.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/d19e0a26-d00b-4d29-9a3e-f68233b65951)
 
     Here you can see the inner traces of the graph through a tile hierarchy. Selecting a net, tile, function, or any object in this view will cross-select to various views. This can help with identifying specific nets and functions.
 
@@ -428,23 +429,23 @@ Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see
 
     You should see a window like the following.
 
-    ![rtp search](./images/graph_buffers.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/03907ac4-8c70-4fde-8f68-f4dff4dc2b93)
 
 5. Select the three `coeffs` buffers, and click the **Trace** view again, and see that the lock signals are highlighted.
 
-    ![Selected RTP](./images/selected_rtp.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/a1dedcbc-8ed9-4eb0-85d7-64fd876effbe)
 
 6. If you scroll up you can see that the FIR filter kernel begins to process data soon after the RTP is read.
 
-    ![Vitis Analyzer FIR](./images/fir_filter.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/c3635fd9-ef3c-4d45-b69c-3de2b35a0b86)
 
 7. Open up the **Profile** report and see specific information about the kernel and the tile it is placed in.
 
-    ![Vitis Analyzer Profile](./images/vitis_analyzer_profile.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/ddd11a34-a85f-4ae6-8afd-57359b33aa8c)
 
 8. Click on **Total Function Time** and see the following:
 
-    ![Total Function Time](./images/profile_total_time.png)
+    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/d38810d5-ce7d-4cae-ae0c-4ac505906414)
 
     This information is useful because it helps determine how long the kernel runs and can be used with the **Trace** to help determine if kernels are running optimally, or if there are stalls.
 

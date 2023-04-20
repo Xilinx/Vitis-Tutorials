@@ -17,8 +17,7 @@ Developing an accelerated AI Engine design for the VCK190, can be done using the
 
 In this tutorial you will learn clocking concepts for the Vitis compiler and how to define clocking for ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure:
 
-![Design diagram](./images/event_noinfo.PNG)
-
+![image](https://media.gitenterprise.xilinx.com/user/1300/files/81f90d87-7777-4be9-8df7-f447a5237994)
 Pre-requisites for this tutorial are:
 
 * Familiarity with the `aiecompiler` flow
@@ -56,7 +55,7 @@ The ADF graph has connections to the PL through the PLIO interfaces. These inter
 **NOTE**: If you do not specify the `--pl-freq` it will be set to 1/4 the frequency of the AI Engine frequency.
 
 ```bash
-aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work
+aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work aie/graph.cpp
 ```
 
 or
@@ -76,21 +75,24 @@ make aie
 
 In this design you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph and these are specified when compiling the kernel, and when linking the design together.
 
-Run the following commands:
-    ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp \
-        --hls.clock 150000000:mm2s -o mm2s.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp \
-        --hls.clock 150000000:s2mm -o s2mm.xo --save-temps
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip \
-        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps
-    ```
+Run the following commands
 
-    Or this command:
+```bash
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp 
+        --hls.clock 150000000:mm2s -o mm2s.xo --save-temps \
+	
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp 
+        --hls.clock 150000000:s2mm -o s2mm.xo --save-temps \
+	
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip 
+        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps \ 
+```
 
-    ```bash
-    make kernels
-    ```
+or 
+
+```bash
+     make kernels
+```
 
 A brief explanation of the `v++` options:
 
