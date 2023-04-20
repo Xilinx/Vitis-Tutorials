@@ -58,8 +58,13 @@ hw: xclbin
 
 sw:
 	mkdir ./design_source/build
+ifeq ($(TARGET),hw_emu)
+	cd ./design_source/build; cmake -DCMAKE_CXX_FLAGS="-DHW_EMU_TEST" ..
+	CPPFLAGS += -D HW_EMU_TEST; export HW_EMU_TEST;	make -j -C ./design_source/build
+else
 	cd ./design_source/build; cmake ..
 	make -j -C ./design_source/build
+endif
 	emconfigutil --platform $(PLATFORM) --od ./design_source/build
 
 clean:

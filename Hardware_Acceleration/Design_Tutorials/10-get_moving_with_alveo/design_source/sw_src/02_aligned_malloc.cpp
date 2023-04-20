@@ -37,7 +37,14 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Xilinx OpenCL and XRT includes
 #include "xilinx_ocl_helper.hpp"
 
-#define BUFSIZE (1024 * 1024 * 6)
+#ifdef HW_EMU_TEST
+
+#define BUFSIZE 1024
+
+#else
+  #define BUFSIZE (1024 * 1024 * 6)
+#endif
+
 
 void vadd_sw(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t size)
 {

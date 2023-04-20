@@ -35,9 +35,13 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Xilinx OpenCL and XRT includes
 #include "xilinx_ocl_helper.hpp"
+#ifdef HW_EMU_TEST
 
-#define BUFSIZE (1024 * 1024 * 6)
+#define BUFSIZE 1024
 
+#else 
+  #define BUFSIZE (1024 * 1024 * 6)
+#endif
 void vadd_sw(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t size)
 {
     for (int i = 0; i < size; i++) {
@@ -69,7 +73,7 @@ int main(int argc, char *argv[])
 
     /// New code for example 01
     std::cout << "Running kernel test with malloc()ed buffers" << std::endl;
-
+auto runtime_start = std::chrono::high_resolution_clock::now();
     et.add("Allocating memory buffer");
     uint32_t *a = new uint32_t[BUFSIZE];
     uint32_t *b = new uint32_t[BUFSIZE];
@@ -129,13 +133,14 @@ int main(int argc, char *argv[])
     q.enqueueTask(krnl, NULL, &event_sp);
     et.add("Wait for kernel to complete");
     clWaitForEvents(1, (const cl_event *)&event_sp);
-
+auto runtime_end = std::chrono::high_resolution_clock::now();
     // Migrate memory back from device
     et.add("Read back computation results");
     q.enqueueMigrateMemObjects({c_from_device}, CL_MIGRATE_MEM_OBJECT_HOST, NULL, &event_sp);
     clWaitForEvents(1, (const cl_event *)&event_sp);
     et.finish();
-
+auto elapsed_incrRtl = std::chrono::duration<double>(runtime_end - runtime_start).count();
+std::cout << "read-incrRtl-write = " << elapsed_incrRtl << std::endl;
     // Verify the results
     bool verified = true;
     for (int i = 0; i < BUFSIZE; i++) {

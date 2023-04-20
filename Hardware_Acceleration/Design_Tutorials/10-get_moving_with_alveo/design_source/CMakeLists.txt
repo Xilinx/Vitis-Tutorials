@@ -50,9 +50,14 @@ target_link_libraries(00_load_kernels PRIVATE
   )
 
 # Simple malloc example
+if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
 add_executable(01_simple_malloc
   sw_src/01_simple_malloc.cpp)
-
+else ()
+add_executable(01_simple_malloc
+  sw_src/01_simple_malloc.cpp)
+endif()
 target_include_directories(01_simple_malloc PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/sw_src
   ${XRT_INCLUDE_DIRS}
@@ -69,8 +74,15 @@ target_link_libraries(01_simple_malloc PRIVATE
   )
 
 # Aligned malloc example
+if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
 add_executable(02_aligned_malloc
   sw_src/02_aligned_malloc.cpp)
+else ()
+add_executable(02_aligned_malloc
+  sw_src/02_aligned_malloc.cpp)
+endif()
+
 
 target_include_directories(02_aligned_malloc PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/sw_src
@@ -88,8 +100,16 @@ target_link_libraries(02_aligned_malloc PRIVATE
   )
 
 # OpenCL buffer map example
+
+if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
 add_executable(03_buffer_map
   sw_src/03_buffer_map.cpp)
+else ()
+add_executable(03_buffer_map
+  sw_src/03_buffer_map.cpp)
+endif()
+
 
 target_include_directories(03_buffer_map PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/sw_sr
@@ -107,8 +127,15 @@ target_link_libraries(03_buffer_map PRIVATE
   )
 
   # Wide VADD example
+
+ if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
 add_executable(04_wide_vadd
-sw_src/04_wide_vadd.cpp)
+  sw_src/04_wide_vadd.cpp)
+else ()
+add_executable(04_wide_vadd
+  sw_src/04_wide_vadd.cpp)
+endif() 
 
 target_include_directories(04_wide_vadd PRIVATE
 ${CMAKE_CURRENT_SOURCE_DIR}/sw_src
@@ -126,8 +153,16 @@ example_utils
 )
 
   # Wide VADD example (Pipelined)
-  add_executable(05_pipelined_vadd
+
+ if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
+add_executable(05_pipelined_vadd
   sw_src/05_pipelined_vadd.cpp)
+else ()
+add_executable(05_pipelined_vadd
+  sw_src/05_pipelined_vadd.cpp)
+endif()
+
 
   target_include_directories(05_pipelined_vadd PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/sw_src
@@ -146,8 +181,16 @@ example_utils
 
 # Wide VADD example (Pipelined)
 if (OpenMP_FOUND)
-  add_executable(06_wide_processor
+
+ if(DEFINED HW_EMU_TEST)
+add_definitions(-D HW_EMU_TEST)
+add_executable(06_wide_processor
   sw_src/06_wide_processor.cpp)
+else ()
+	add_executable(06_wide_processor
+  sw_src/06_wide_processor.cpp)
+endif()
+  
 
   target_include_directories(06_wide_processor PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/sw_src
