@@ -1,4 +1,4 @@
-#  (c) Copyright 2022 Xilinx, Inc.
+#  (c) Copyright 2023 Xilinx, Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -243,7 +243,8 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 		--package.boot_mode=sd \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
-		--package.sd_file host.exe  ../tutorial.xsa  ../aie/libadf.a \
+		--package.sd_file host.exe \
+		../tutorial.xsa  ../aie/libadf.a \
 		--package.sd_file ../addon_files/run_sw_emu.sh \
 		--package.sd_file ../addon_files/run_hw_emu.sh
 

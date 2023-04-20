@@ -9,7 +9,7 @@
 
 # Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -70,13 +70,13 @@ The external traffic generators use Python and require non-standard packages to 
     export PYTHONPATH=${XILINX_VIVADO}/data/emulation/hw_em/lib/python/:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python/:$XILINX_VIVADO/data/emulation/python/xtlm_ipc:${PYTHONPATH}
     ```
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2023.1/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2023.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2023.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
@@ -86,9 +86,9 @@ Before starting this tutorial, run the following steps.
 
 ```bash
 
-export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2022.2
+export XILINX_TOOLS_LOCATION=<Path to Vitis Build - Directory>/Vitis/2023.1
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORMS-DIRECTORY>
-export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2022.2 - Directory>
+export XILINX_VERSAL_SW=<Path to xilinx-versal-common-v2023.1 - Directory>
 export XILINX_XRT=/<user-path>/opt/xilinx/xrt
 export PYTHON3_LOCATION=<user-path>
 ```
@@ -101,6 +101,7 @@ export PYTHON3_LOCATION=<user-path>
 
 ```
 export PYTHON3_LOCATION=<user-path>
+export PYTHON_INSTALL=<YOUR_PYTHON_INSTALL_PATH>
 ```
 
 
