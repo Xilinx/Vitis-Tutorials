@@ -8,7 +8,7 @@
 </table>
 
 # Implementing an IIR Filter on the AI Engine
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This is a multi-part tutorial on how to implement an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI engine. 
 
@@ -31,7 +31,6 @@ Please use the [AI Engine, DSP IP and Tools](https://forums.xilinx.com/t5/AI-Eng
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

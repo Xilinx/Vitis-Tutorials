@@ -1,15 +1,7 @@
-/****************************************************************
-# Support
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD0xx | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-****************************************************************/
+/*********************************************************************
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+**********************************************************************/
 
 #ifndef __GRAPH_H__			// include guard to prevent multiple inclusion
 
@@ -30,11 +22,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			kernel section3;
 
 		public:
-			input_port in;		// input port for data to enter the kernel
+			input_plio in;		// input port for data to enter the kernel
 			input_port cmtx1;	// input port for SIMD matrix coefficients
 			input_port cmtx2;
 			input_port cmtx3;
-			output_port out;	// output port for data to leave the kernel
+			output_plio out;	// output port for data to leave the kernel
 
 			// constructor
 			the_graph() {
@@ -44,19 +36,37 @@ Unless required by applicable law or agreed to in writing, software distributed 
 				section2 = kernel::create(SecondOrderSection<2>);
 				section3 = kernel::create(SecondOrderSection<3>);
 
-				const unsigned num_bytes = 8 * sizeof(float);
+				// declare data widths and files for simulation
+				#ifndef RTP_SWITCH
+					in = input_plio::create(plio_32_bits, "data/input.dat");
+				#else
+					in = input_plio::create(plio_32_bits, "data/two_freqs.dat");
+				#endif // RTP_SWITCH
+				out = output_plio::create(plio_32_bits, "output.dat");
+
+				const unsigned num_samples = 8;
+
+				// declare buffer sizes
+				dimensions(section1.in[0]) = {num_samples};
+				dimensions(section1.out[0]) = {num_samples};
+
+				dimensions(section2.in[0]) = {num_samples};
+				dimensions(section2.out[0]) = {num_samples};
+
+				dimensions(section3.in[0]) = {num_samples};
+				dimensions(section3.out[0]) = {num_samples};
 
 				// establish connections
-				connect<window<num_bytes>> net0 (in, section1.in[0]);				// window size in bytes
+				connect(in.out[0], section1.in[0]);
 				connect<parameter>(cmtx1, adf::async(section1.in[1]));
 
-				connect<window<num_bytes>> net1 (section1.out[0], section2.in[0]);	// window size in bytes
+				connect(section1.out[0], section2.in[0]);
 				connect<parameter>(cmtx2, adf::async(section2.in[1]));
 
-				connect<window<num_bytes>> net2 (section2.out[0], section3.in[0]);	// window size in bytes
+				connect(section2.out[0], section3.in[0]);
 				connect<parameter>(cmtx3, adf::async(section3.in[1]));
 
-				connect<window<num_bytes>> net3 (section3.out[0], out);
+				connect(section3.out[0], out.in[0]);
 
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";

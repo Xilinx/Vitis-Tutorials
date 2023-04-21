@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2a
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Preliminaries
 
@@ -17,7 +17,7 @@ In Part 1a, we focused on vectorizing the calculation for a second order section
 
 ![Fig. 1](./images/eqn4.PNG "Equation 4")
 
-From Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), we can see that the floating-point vector processor can perform 8 multiply-accumulate operations on floating-point operands in 2 cycles, in E6 and E7. Note that the red dashed arrow in the figure indicates the feedback path for the accumulator. Thus, *ideally*, 12*2=24 cycles would be the minimum required to calculate 8 floating-point outputs. 
+From Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), we can see that the floating-point vector processor can perform 8 multiply-accumulate operations on floating-point operands in 2 cycles, in E6 and E7. Note that the red dashed arrow in the figure indicates the feedback path for the accumulator. Thus, *ideally*, 12*2=24 cycles would be the minimum required to calculate 8 floating-point outputs.
 
 ![Fig. 2](./images/vfp_pipeline.PNG "Vector Floating Point Pipeline")
 
@@ -35,31 +35,36 @@ As a first step, we use the kernel code shown below.
 ```C++
 template<unsigned id>
 void SecondOrderSection(
-    input_window<float> *idata,		// 8 input samples per iteration
-    output_window<float> *odata, 	// 8 output samples per iteration
-    const float (&C)[96]		// RTP port for coefficient matrix
+	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+    const float (&C)[96]	// RTP port for coefficient matrix
 ) {
-	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states on 1st call
 
-    Vector8f xreg_hi = window_readincr_v<8>(idata);		// fetch 8 input samples
+	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states
+
+	// input/output iterators
+	auto inIter = aie::begin_vector<8>(idata);
+	auto outIter = aie::begin_vector<8>(odata);
+
+	Vector8f xreg_hi = *inIter++;		// fetch input samples
 	Vector16f xreg = aie::concat(state_reg, xreg_hi);	// xreg[4]: ym2; xreg[5]: ym1; xreg[6]: xm2; xreg[7]: xm1; xreg[8:15]: x0:x7
 	Vector8f coeff;
-	VAcc8f acc = aie::zeros<accfloat, 8>(); // acc[] = 0
+	VAcc8f acc = aie::zeros<accfloat, 8>();
 
 	for (auto i = 0; i < 12; i++) {
-		coeff = aie::load_v<8>(&C[8 * i]);  // get a column 
-		float xval = xreg[i + 4];           // aie::mac() requires compile-time constant arguments
-		acc = aie::mac(acc, coeff, xval);   // acc[] += coeff[] * xval
-	}
+		coeff = aie::load_v<8>(&C[8 * i]);
+		float xval = xreg[i + 4];
+		acc = aie::mac(acc, coeff, xval);
+	} // end for (auto i = 0; i < 12; i++)
 
 	Vector8f yout = acc;	// transfer accumulator register to vector register to update states
 
 	// update states
-    	state_reg = xreg_hi;
+	state_reg = xreg_hi;
 	state_reg[4] = yout[6];
 	state_reg[5] = yout[7];
 
-	window_writeincr(odata, yout);  // write out 8 samples
+	*outIter++ = yout;
 
 } // end SecondOrderSection()
 ```
@@ -97,7 +102,7 @@ int main() {
 } // end main()
 
 ```
-The testbench 
+The testbench
 * initializes the graph
 * loads the filter coefficients
 * runs the graph 32 times
@@ -128,11 +133,11 @@ In the `Vitis Analyzer` window, click on `Profile` in the browser pane (leftmost
 
 ![Fig. 5](./images/va_fntime.PNG "Vitis Analyzer Total Function Time")
 
-Note that the kernel function, `SecondOrderSection<1>` was executed 32 times and ran for a total of 2,569 cycles. Each function call consumed 2,569/32 = 80.28 cycles. The minimum function time is 80 cycles and the maximum is 89 cycles. This implies that the first call consumed an additional 9 cycles (89 + 31 * 80 = 2,569).
+Note that the kernel function, `SecondOrderSection<1>` was executed 32 times and ran for a total of 2,313 cycles. Each function call consumed 2,313/32 = 72.28 cycles. The minimum function time is 72 cycles and the maximum is 81 cycles. This implies that the first call consumed an additional 9 cycles (81 + 31 * 72 = 2,313).
 
-Another item of interest is the top-level `main` function which calls `my_graph.run()`, which in turn, calls `SecondOrderSection<1>`. The `Total Function + Descendants Time (cycles)` column shows the number of cycles consumed by that function, including all other routines called within it. This includes setting up the heap and stack, initialization, actual processing, etc. For this implementation, 4,657 cycles were used to process 256 samples, or 4657/256 = 18.2 cycles/sample. Assuming that the AI engine runs with a 1GHz clock, the throughput is then 1e9 cycles/sec / 18.2 cycles/sample =  54.945Msamples/sec.
+Another item of interest is the top-level `main` function which calls `my_graph.run()`, which in turn, calls `SecondOrderSection<1>`. The `Total Function + Descendants Time (cycles)` column shows the number of cycles consumed by that function, including all other routines called within it. This includes setting up the heap and stack, initialization, actual processing, etc. For this implementation, 4,579 cycles were used to process 256 samples, or 4579/256 = 17.89 cycles/sample. Assuming that the AI engine runs with a 1GHz clock, the throughput is then 1e9 cycles/sec / 17.89 cycles/sample =  55.897 Msamples/sec.
 
-Note that the main processing occurs in `SecondOrderSection<1>`, which consumes 2,569 cycles. Thus, there are 4,657 - 2,569 = 2,088 unavoidable "overhead" cycles which are not used for sample processing.
+Note that the main processing occurs in `SecondOrderSection<1>`, which consumes 2,313 cycles. Thus, there are 4,579 - 2,313 = 2,266 unavoidable "overhead" cycles which are not used for sample processing.
 
 Click on `Profile Details` to view the generated assembly code.
 
@@ -142,7 +147,7 @@ Scroll down to where the `VFPMAC` assembler mnemonics become visible.
 
 ![Fig. 7](./images/vfpmac.PNG "VFPMAC mnemonics")
 
-From the kernel code, note that the statement: 
+From the kernel code, note that the statement:
 ```C++
 acc = aie::mac(acc, coeff, xval);   // acc[] += coeff[] * xval
 ```
@@ -152,18 +157,17 @@ generates the `VFPMAC` mnemonic (vector floating-point multiply-accumulate). Als
 
 ![Fig. 8](./images/vector_regs.PNG "Vector Registers")
 
-The `ya` register is composed of the 256-bit `wr[0:3]` registers. For this example, the `wr0` register is updated with the columns of the coefficient matrix using the `VLDA` (vector load A) mnemonic. The `VLDA` mnemonic transfers 8 floating-point values from data memory to a vector register. In this example, there is a 7 cycle latency from the `VLDA` mnemonic (loading data into `wr0`) to the time the data is used for computation with `VFPMAC`.
+The `ya` register is composed of the 256-bit `wr[0:3]` registers. For this example, the `wr0` register is updated with the columns of the coefficient matrix using the `VLDA` (vector load A) mnemonic. The `VLDA` mnemonic transfers 8 floating-point values from data memory to a vector register. In this example, there is a 7 to 8 cycle latency from the `VLDA` mnemonic (loading data into `wr0`) to the time the data is used for computation with `VFPMAC`.
 
 ## Conclusion
 
-We showed how to calculate a floating-point 8x12 matrix and 12x1 vector multiplication using a `for` loop and some high-level intrinsics (AI engine APIs) in 80 cycles. We also showed how to use Vitis Analyzer to view some statistics of the generated program (e.g. cycles consumed) as well as examine the generated assembler code.
+We showed how to calculate a floating-point 8x12 matrix and 12x1 vector multiplication using a `for` loop and the AI engine APIs in 73 cycles. We also showed how to use Vitis Analyzer to view some statistics of the generated program (e.g. cycles consumed) as well as examine the generated assembler code.
 
 In Part 2b, we will attempt to further optimize the program to achieve a multiply-accumulate operation on every cycle.
 
 # Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

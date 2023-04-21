@@ -1,15 +1,7 @@
-/****************************************************************
-# Support
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD0xx | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-****************************************************************/
+/*********************************************************************
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+**********************************************************************/
 
 //#define RTP_SWITCH		// comment out to check impulse response
 
@@ -29,20 +21,8 @@ using namespace std;
 
 using namespace adf;
 
-// the testbench requires a virtual platform for simulation
-#ifndef RTP_SWITCH
-	simulation::platform<1, 1> platform("data/input.dat", "output.dat");
-#else
-	simulation::platform<1, 1> platform("data/two_freqs.dat", "output.dat");
-#endif // RTP_SWITCH
-
-
 // specify the DFG
 the_graph my_graph;
-
-// define connections between virtual platform and the DFG
-connect<> net0 (platform.src[0], my_graph.in);
-connect<> net1 (my_graph.out, platform.sink[0]);
 
 const unsigned num_pts = 256;								// number of sample points in "input.dat"
 #ifndef RTP_SWITCH

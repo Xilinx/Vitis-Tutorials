@@ -1,3 +1,8 @@
+#=====================================================================
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+======================================================================#
+
 using PyPlot
 using DelimitedFiles
 
@@ -15,4 +20,3 @@ grid("on");
 title("AI Engine Output");
 xlabel("Sampling Index");
 ylabel("Amplitude");
-

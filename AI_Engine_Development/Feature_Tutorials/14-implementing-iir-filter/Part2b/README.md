@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2b
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Preliminaries
 
@@ -42,9 +42,9 @@ We start by using the AI Engine APIs.
 	#include <adf.h>			// Adaptive DataFlow header
 	#include <aie_api/aie.hpp>	// header files for high-level intrinsics
 
-	typedef aie::vector<float, 8> Vector8f;		// vector of 8 floating-point elements
-	typedef aie::vector<float, 16> Vector16f;	// vector of 8 floating-point elements
-	typedef aie::accum<accfloat, 8> VAcc8f;		// accumulator with 8 floating-point elements
+	using Vector8f = aie::vector<float, 8>;		// vector of 8 floating-point elements
+	using Vector16f = aie::vector<float, 16>;	// vector of 16 floating-point elements
+	using VAcc8f = aie::accum<accfloat, 8>;		// accumulator with 8 floating-point elements
 
 	define USE_API	// comment out to use low-level intrinsics
 
@@ -52,8 +52,8 @@ We start by using the AI Engine APIs.
 
 	template<unsigned id>
 	void SecondOrderSection(
-		input_window<float> *idata,
-		output_window<float> *odata,
+		adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+		adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
 		const float (&C_e)[48],		// run-time parameter: SIMD matrix of coefficients (even columns)
 		const float (&C_o)[48]		// run-time parameter: SIMD matrix of coefficients (odd columns)
 	);
@@ -69,46 +69,36 @@ We start by using the AI Engine APIs.
 
 template<unsigned id>
 void SecondOrderSection(
-	input_window<float> *idata,
-	output_window<float> *odata,
-	const float (&C_e)[48],			// run-time parameter: SIMD matrix of coefficients (even columns)
-	const float (&C_o)[48]			// run-time parameter: SIMD matrix of coefficients (odd columns)
-	) {
+	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+	const float (&C_e)[48],		// run-time parameter: SIMD matrix of coefficients (even columns)
+	const float (&C_o)[48]		// run-time parameter: SIMD matrix of coefficients (odd columns)
+) {
 	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states
-
-	for (auto i = 0; i < burst_cnt; i++)
-	//chess_prepare_for_pipelining
-	{
-		Vector8f xreg_hi = window_readincr_v<8>(idata);		// fetch input samples
+	// input/output iterators
+	auto inIter = aie::begin_vector<8>(idata);
+	auto outIter = aie::begin_vector<8>(odata);
+	for (auto i = 0; i < burst_cnt; i++) {
+		Vector8f xreg_hi = *inIter++;		// fetch input samples
 		Vector16f xreg = aie::concat(state_reg, xreg_hi);
-
+		auto ecoeff_iter = aie::begin_vector<8>(&C_e[0]);
+		auto ocoeff_iter = aie::begin_vector<8>(&C_o[0]);
 		VAcc8f acc_e = aie::zeros<accfloat, 8>();	// even accumulator
 		VAcc8f acc_o = aie::zeros<accfloat, 8>();	// odd accumulator
-
 		for (auto j = 0; j < 6; j++) {
-
-			Vector8f coeff_e = aie::load_v<8>(&C_e[8 * j]);		// even columns
-			float xreg_e = xreg[2 * j + 4];
-			acc_e = aie::mac(acc_e, xreg_e, coeff_e);
-
-			Vector8f coeff_o = aie::load_v<8>(&C_o[8 * j]);		// odd columns
-			float xreg_o = xreg[2 * j + 5];
-			acc_o = aie::mac(acc_o, xreg_o, coeff_o);
-
+			acc_e = aie::mac(acc_e, xreg.get(2 * j + 4), *ecoeff_iter++);	// even columns
+			acc_o = aie::mac(acc_o, xreg.get(2 * j + 5), *ocoeff_iter++);	// odd columns
 		} // end for (auto j = 0; j < 6; j ++)
-
 		acc_o = aie::add(acc_o, acc_e.to_vector());	// acc_o += acc_e
 		Vector8f yout = acc_o.to_vector();
-
 		// update states
 		state_reg = xreg_hi;
 		state_reg[4] = yout[6];
 		state_reg[5] = yout[7];
-		window_writeincr(odata, yout);
-
+		*outIter++ = yout;
 	} // end for (auto i = 0; i < burst_cnt; i++)
-
 } // end SecondOrderSection()
+
 ```
 Note the 2 loops in the function:
 ```C++
@@ -120,7 +110,7 @@ for (auto i = 0; i < burst_cnt; i++) {	// process more samples to reduce overhea
 }
 ```
 
-The outer `for` loop is added such that more samples can be processed during each function call, thereby reducing overhead and improving throughput.
+The outer `for` loop is added such that more samples can be processed during each function call, thereby reducing the ratio of function call cycles to processing cycles and improving throughput.
 
 ## Graph Code
 ```C++
@@ -154,15 +144,19 @@ The outer `for` loop is added such that more samples can be processed during eac
 				pl_in = input_plio::create("Input", plio_32_bits, "data/input.dat");
 				pl_out = output_plio::create("Output", plio_32_bits, "output.dat");
 
-				const unsigned num_bytes = 8 * sizeof(float) * burst_cnt;
+				const unsigned num_samples = 8 * burst_cnt;
+
+				// declare buffer sizes
+				dimensions(section1.in[0]) = {num_samples};
+				dimensions(section1.out[0]) = {num_samples};
 
 				// establish connections
 
 				connect<parameter>(cmtx_e, adf::async(section1.in[1]));
 				connect<parameter>(cmtx_o, adf::async(section1.in[2]));
 
-				connect<window<num_bytes>> (pl_in.out[0], section1.in[0]);				// window size in bytes
-				connect<window<num_bytes>> (section1.out[0], pl_out.in[0]);
+				connect(pl_in.out[0], section1.in[0]);
+				connect(section1.out[0], pl_out.in[0]);
 
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";
@@ -176,7 +170,6 @@ The outer `for` loop is added such that more samples can be processed during eac
 
 #endif // __GRAPH_H__
 ```
-Note that the graph uses the *enhanced programming model* (see UG1076 (v2021.2)) which eliminates the need for a global `simulation::platform` variable.
 
 ## Testbench Code
 ```C++
@@ -211,8 +204,8 @@ int main() {
 
 ## Analysis (using AI Engine API)
 ### Generated Code
-![Fig. 3](./images/hli_asm.PNG "HLI Assembler Code")
-In the generated assembly code, note that there are 13 `VFPMAC`s: 6 for each even and odd column, and another for summing the final accumulator results. Note that the `VFPMAC` instructions are not as tightly packed, i.e., some `VFPMAC`s have other instructions between them.
+![Fig. 3](./images/api_asm.PNG "API Assembler Code")
+In the generated assembly code, note that there are 13 `VFPMAC`s: 6 for each even and odd column, and another for summing the final accumulator results. Note that the `VFPMAC` instructions are not as tightly packed, i.e., some `VFPMAC`s have other instructions between them. Note also that there are 2 sections where the 13 `VFPMACs` occur, effectively halving the number of iterations in the outer loop.
 
 ### Throughput
 The `burst_cnt` variable determines the total number of samples processed during each function call. The inner loop processes 8 samples per iteration, so the total number of processed samples will be `burst_cnt` * 8.
@@ -230,8 +223,8 @@ The thoughput with a 1GHz clock for different values of `burst_cnt` are shown be
 |---------------------------|-------|-------|-------|-------|-------|-------|-------|
 |burst_cnt					|1		|8		|16		|32		|64		|128	|256	|
 |num_samples				|8		|64		|128	|256	|512	|1024	|2048	|
-|num_cycles (API)			|289	|799	|1508	|2925	|5761	|11431	|22772	|					
-|API Throughput (Msa/sec))	|27.68	|80.10	|84.88	|87.52	|88.87	|89.58	|89.94	|
+|num_cycles (API)			|187	|492	|940	|1836	|3628	|7212	|14379	|					
+|API Throughput (Msa/sec)	|42.78	|130.08	|136.17	|139.43	|141.12	|141.99	|142.43	|
 
 *clk_freq: 1GHz
 
@@ -244,59 +237,47 @@ We modify the kernel code to use low-level intrinsics (LLI).
 #include <aie_api/aie_adf.hpp>
 
 #include "kernel.hpp"
-
 template<unsigned id>
 void SecondOrderSection(
-	input_window_float *idata,
-	output_window_float *odata,iteration
-	const float (&C_e)[48],			// run-time parameter: SIMD matrix of coefficients (even columns)
-	const float (&C_o)[48]			// run-time parameter: SIMD matrix of coefficients (odd columns)
+	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+	const float (&C_e)[48],		// run-time parameter: SIMD matrix of coefficients (even columns)
+	const float (&C_o)[48]		// run-time parameter: SIMD matrix of coefficients (odd columns)
 ) {
-
 	static v8float state_reg = null_v8float();
-
+	// input/output iterators
+	auto inIter = aie::begin_vector<8>(idata);
+	auto outIter = aie::begin_vector<8>(odata);
 	for (auto i = 0; i < burst_cnt; i++) {
-
-		v8float xreg_hi = window_readincr_v8(idata);
+		v8float xreg_hi = *inIter++;
 		v16float xreg = concat(state_reg, xreg_hi);
-
 		v8float acc_e = null_v8float();
 		v8float acc_o = null_v8float();
-
 		v8float *ptr_coeff_e = (v8float *)(&C_e[0]);
 		v8float *ptr_coeff_o = (v8float *)(&C_o[0]);
-
 		for (auto j = 0; j < 6; j++)
 		chess_flatten_loop
 		{
-
-			v8float coeff_e = *ptr_coeff_e++;
-			acc_e = fpmac(acc_e, xreg, (2 * j + 4), 0, coeff_e, 0, 0x76543210);
-
-			v8float coeff_o = *ptr_coeff_o++;
-			acc_o = fpmac(acc_o, xreg, (2 * j + 5), 0, coeff_o, 0, 0x76543210);
-
+			acc_e = fpmac(acc_e, xreg, (2 * j + 4), 0, *ptr_coeff_e++, 0, 0x76543210);	// even columns
+			acc_o = fpmac(acc_o, xreg, (2 * j + 5), 0, *ptr_coeff_o++, 0, 0x76543210);	// odd columns
 		} // end for (auto j = 0; j < 6; j++)
-
 		acc_o = fpadd(acc_o, acc_e);
-		window_writeincr(odata, acc_o);
-
+		*outIter++ = acc_o;
 		// update states
 		state_reg = xreg_hi;
 		state_reg = upd_elem(state_reg, 4, ext_elem(acc_o, 6));
 		state_reg = upd_elem(state_reg, 5, ext_elem(acc_o, 7));
-
 	} // end for (auto i = 0; i < burst_cnt; i++)
-
 } // end SecondOrderSection()
+
 ```
 Note the use of the `chess_flatten_loop` pragma. This pragma unrolls the loop completely, eliminating the loop construct. Documentation on compiler pragmas may be found in the AI Engine Lounge.
 
-Note: In the code provided, selecting between API and LLI is performed by defining or commenting out `USE_API` on line 25 of `kernel.hpp`.
+Note: In the code provided, selecting between API and LLI is performed by defining or commenting out `USE_API` on line 17 of `kernel.hpp`.
 
 The generated assembly code is shown below.
 ![Fig. 4](./images/lli_asm.PNG "LLI Assembler Code")
-Note the "tighter" spacing between `VFPMAC`s. Also note that the `SecondOrderSection<1>` function has been "absorbed" into the main function, and the there are *two* unrolled matrix-vector multiplication loops, effectively halving the number of iterations of the outer loop.
+Note the tighter "spacing" between `VFPMAC`s. Also note that the `SecondOrderSection<1>` function has been "absorbed" into the main function, and the there are *two* unrolled matrix-vector multiplication loops, effectively halving the number of iterations of the outer loop.
 
 The measured throughput is shown below (see `lli_thruput.xlsx`).
 
@@ -305,13 +286,13 @@ The measured throughput is shown below (see `lli_thruput.xlsx`).
 |---------------------------|-------|-------|-------|-------|-------|-------|-------|
 |burst_cnt					|1		|8		|16		|32		|64		|128	|256	|
 |num_samples				|8		|64		|128	|256	|512	|1024	|2048	|
-|num_cycles (LLI)			|224	|464	|877	|1702	|3354	|6656	|13261	|					
-|LLI Throughput (Msa/sec))	|35.71	|137.93	|145.95	|150.41	|152.65	|153.85	|154.44	|
+|num_cycles (LLI)			|186	|250	|458	|874	|1706	|3370	|6698	|					
+|LLI Throughput (Msa/sec)	|43.01	|256.00	|279.48	|292.91	|300.12	|303.86	|305.76	|
 
 *clk_freq: 1GHz
 
 Comparing the API and LLI throughputs:
-![Fig. 5](./images/hli_vs_lli.PNG "API vs. LLI Throughput")
+![Fig. 5](./images/api_vs_lli.PNG "API vs. LLI Throughput")
 * LLI provides a better throughput than API for the same `burst_cnt`
 * The throughput "saturates" at around `burst_cnt` = 64
 
@@ -331,7 +312,6 @@ Can the throughput be improved even further?
 # Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

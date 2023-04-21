@@ -1,15 +1,7 @@
-/****************************************************************
-# Support
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD0xx | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-****************************************************************/
+/*********************************************************************
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+**********************************************************************/
 
 #ifndef __GRAPH_H__			// include guard to prevent multiple inclusion
 
@@ -28,9 +20,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			kernel section1;
 
 		public:
-			input_port in;		// input port for data to enter the kernel
+			input_plio in;		// input port for data to enter the kernel
 			input_port cmtx1;	// input port for SIMD matrix coefficients
-			output_port out;	// output port for data to leave the kernel
+			output_plio out;	// output port for data to leave the kernel
 
 			// constructor
 			the_graph() {
@@ -38,12 +30,18 @@ Unless required by applicable law or agreed to in writing, software distributed 
 				// associate the kernel with the function to be executed
 				section1 = kernel::create(SecondOrderSection<1>);
 
-				const unsigned num_bytes = 8 * sizeof(float);
+				// declare data widths and files for simulation
+				in = input_plio::create(plio_32_bits, "data/input.dat");
+				out = output_plio::create(plio_32_bits, "output.dat");
+
+				const unsigned num_samples = 8;
 
 				// establish connections
-				connect<window<num_bytes>> net0 (in, section1.in[0]);				// window size in bytes
+				connect(in.out[0], section1.in[0]);
+				dimensions(section1.in[0]) = {num_samples};
 				connect<parameter>(cmtx1, adf::async(section1.in[1]));
-				connect<window<num_bytes>> net1 (section1.out[0], out);
+				connect(section1.out[0], out.in[0]);
+				dimensions(section1.out[0]) = {num_samples};
 
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";

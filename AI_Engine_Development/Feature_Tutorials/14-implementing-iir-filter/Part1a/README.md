@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1a
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Preliminaries
 
@@ -139,7 +139,7 @@ We can use (4) to calculate 8 sequential outputs for 1 input signal using *one* 
 
 ## Kernel Code
 
-The kernel code (using high-level intrinsics (HLI)) for one second order stage is shown below.
+The kernel code (using the AI engine APIs) for one second order stage is shown below.
 
 `kernel.hpp`
 
@@ -149,17 +149,17 @@ The kernel code (using high-level intrinsics (HLI)) for one second order stage i
 	#define __KERNEL_HPP__
 
 	#include <adf.h>			// Adaptive DataFlow header
-	#include <aie_api/aie.hpp>	// header files for high-level intrinsics
+	#include <aie_api/aie.hpp>	// header files for AIE API
 
-	typedef aie::vector<float, 8> Vector8f;		// vector of 8 floating-point elements
-	typedef aie::vector<float, 16> Vector16f;	// vector of 16 floating-point elements
-	typedef aie::accum<accfloat, 8> VAcc8f;		// accumulator with 8 floating-point elements
+	using Vector8f = aie::vector<float, 8>;		// vector of 8 floating-point elements
+	using Vector16f = aie::vector<float, 16>;	// vector of 16 floating-point elements
+	using VAcc8f = aie::accum<accfloat, 8>;		// accumulator with 8 floating-point elements
 
 	template<unsigned id>
 	void SecondOrderSection(
-	    input_window<float> *idata,		// 8 input samples per iteration
-		output_window<float> *odata, 	// 8 output samples per iteration
-		const float (&C)[96]			// run-time parameter: SIMD matrix of coefficients
+		adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+		adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+		const float (&C)[96]	// run-time parameter: SIMD matrix of coefficients
 	);
 
 #endif // __KERNEL_HPP__
@@ -175,14 +175,18 @@ The kernel code (using high-level intrinsics (HLI)) for one second order stage i
 
 template<unsigned id>
 void SecondOrderSection(
-    input_window<float> *idata,		// 8 input samples per iteration
-	output_window<float> *odata, 	// 8 output samples per iteration
-	const float (&C)[96]			// SIMD matrix of coefficients
+	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+	const float (&C)[96]	// run-time parameter: SIMD matrix of coefficients
 ) {
 
 	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states
 
-	Vector8f xreg_hi = window_readincr_v<8>(idata);		// fetch input samples
+	// input/output iterators
+	auto inIter = aie::begin_vector<8>(idata);
+	auto outIter = aie::begin_vector<8>(odata);
+
+	Vector8f xreg_hi = *inIter++;		// fetch input samples
 	Vector16f xreg = aie::concat(state_reg, xreg_hi);	// xreg[4]: ym2; xreg[5]: ym1; xreg[6]: xm2; xreg[7]: xm1; xreg[8:15]: x0:x7
 	Vector8f coeff = aie::load_v<8>(&C[0]);
 	VAcc8f acc = aie::mul(coeff, xreg[4]);				// do 1st multiplication instead of zeroing
@@ -201,7 +205,7 @@ void SecondOrderSection(
 	state_reg[6] = xreg_hi[6];
 	state_reg[7] = xreg_hi[7];
 
-	window_writeincr(odata, yout);
+	*outIter++ = yout;
 
 } // end SecondOrderSection()
 
@@ -211,9 +215,10 @@ Notes:
 
 * The kernel code is compiled with a C++20-compliant compiler, while the rest of the code (i.e., `graph.hpp` and simulation testbench) is compiled with a C++14-compliant compiler. Since the kernel header will be included in `graph.hpp`, it cannot contain any C++20 constructs.
 * The template parameter `id` will be used to instantiate multiple instances of the `SecondOrderSection()` function.
-* The function will accept a "window" (i.e., a predetermined number of elements defined in `graph.hpp`) of input values and generate another "window" of output values.
+* The function accepts an input buffer containing a predetermined number of elements defined in `graph.hpp`, and generates an output buffer.
+*  The input and output use the `__restrict` keyword to facilitate compiler optimization (see [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview?tocId=OerrcATBJkz9SuXKjosb1w) for details).
 * The filter coefficients will be passed as a 1-D array via the `C` argument.
-* The filter states (`state_reg`) need to kept between function calls and thus are declared `static`.
+* The filter states (`state_reg`) need to be kept between function calls and thus are declared `static`.
 * Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* column of the the **C** matrix, and multiplies all the elements of that column with the *n<sup>th</sup> element* of the **x** vector, i.e., a vector scaling operation.
 
 ## Julia Script Notes
@@ -260,7 +265,7 @@ Notes:
   * `C1.h` - array of coefficients to be passed to the kernel
   * `input.dat` - unit sample function to be used as an input signal for the kernel
   * `impresponse.dat` - calculated impulse response for comparison with AI engine result
-* Copy `C1.h` to the `src` directory, and `input.dat` to the `data` directory of the AI engine project (note: this has already been done in the attached project archive)
+* Copy `C1.h` to the `src` directory, and `input.dat` as well as `impresponse.dat` to the `data` directory of the AI engine project
 
 ## Adaptive Dataflow Graph
 
@@ -285,9 +290,9 @@ The adaptive dataflow graph file looks something like this.
 			kernel section1;
 
 		public:
-			input_port in;		// input port for data to enter the kernel
+			input_plio in;		// input port for data to enter the kernel
 			input_port cmtx1;	// input port for SIMD matrix coefficients
-			output_port out;	// output port for data to leave the kernel
+			output_plio out;	// output port for data to leave the kernel
 
 			// constructor
 			the_graph() {
@@ -295,12 +300,18 @@ The adaptive dataflow graph file looks something like this.
 				// associate the kernel with the function to be executed
 				section1 = kernel::create(SecondOrderSection<1>);
 
-				const unsigned num_bytes = 8 * sizeof(float);
+				// declare data widths and files for simulation
+				in = input_plio::create(plio_32_bits, "data/input.dat");
+				out = output_plio::create(plio_32_bits, "output.dat");
+
+				const unsigned num_samples = 8;
 
 				// establish connections
-				connect<window<num_bytes>> net0 (in, section1.in[0]);				// window size in bytes
+				connect(in.out[0], section1.in[0]);
+				dimensions(section1.in[0]) = {num_samples};
 				connect<parameter>(cmtx1, adf::async(section1.in[1]));
-				connect<window<num_bytes>> net1 (section1.out[0], out);
+				connect(section1.out[0], out.in[0]);
+				dimensions(section1.out[0]) = {num_samples};
 
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";
@@ -318,9 +329,13 @@ The adaptive dataflow graph file looks something like this.
 Notes:
 
 * `section1 = kernel::create(SecondOrderSection<1>)` tells the tools that the AI engine kernel program will use the templated function `SecondOrderSection` with a template parameter of `1`.
-* `connect<window<num_bytes>> net0 (in, section1.in[0])` tells the tools that 8 floating-point elements (32 bytes) need to be available before the kernel can start executing. This also tells the tool to reserve 64 bytes (ping-pong buffer) of memory for the input data.
+* `[input|output]_plio` declare input or output ports *for simulation* located in the programmable logic (PL) portion of the device.
+* `[input|output]_plio::create()` declares the width of the data bus used in the PL as well as the associated input/output file used during simulation.
+* `connect(in.out[0], section1.in[0])` tells the tools that kernel input is connected to the `in` port.
+* `dimensions(section1.in[0])` declares the number of samples required to be collected before the kernel is executed.
 * `connect<parameter>(cmtx1, adf::async(section1.in[1]))` tells the tools that an *asynchronous* run-time parameter is required for the *first* execution of the kernel. Subsequent executions will use the *latest* run-time parameter available, i.e., if the asynchronous parameter is only sent *once*, then that parameter will be reused for the remaining life of the kernel.
-* `connect<window<num_bytes>> net1 (section1.out[0], out)` tells the tools that the kernel will place 8 floating-point elements (32 bytes) at its output. This also tells the tool to reserve 64 bytes (ping-pong buffer) of memory for the output data.
+* `connect(section1.out[0], out.in[0])` tells the tools that the kernel output is connected to the `out` port.
+* `dimensions(section1.out[0])` declares the number of samples the kernel will generate during each invocation.
 * `source(section1) = "kernel.cpp"` tells the tools where to find the source code for the kernel.
 * `runtime<ratio>(section1) = 1.0` tells the tools that only this kernel can be placed in the AI engine. At this time, the actual execution time is unknown.
 
@@ -338,15 +353,8 @@ The testbench code looks something like this.
 using namespace std;
 using namespace adf;
 
-// the testbench requires a virtual platform for simulation
-simulation::platform<1, 1> platform("data/input.dat", "output.dat");
-
 // specify the DFG
 the_graph my_graph;
-
-// define connections between virtual platform and the DFG
-connect<> net0 (platform.src[0], my_graph.in);
-connect<> net1 (my_graph.out, platform.sink[0]);
 
 const unsigned num_pts = 256;	// number of sample points in "input.dat"
 const unsigned num_iterations = num_pts/8;	// number of iterations to run
@@ -368,7 +376,6 @@ int main() {
 
 Notes:
 
-* `simulation::platform<1, 1> platform("data/input.dat", "output.dat")` tells the tools that the input to the kernel will come from the file `data/input.dat` and the output data should be written to the file `output.dat`.
 * `my_graph.update(my_graph.cmtx1, C1, 96)` sends the 96 coefficients for the filter to the kernel
 * `my_graph.run(num_iterations)` runs the kernel 256/8 = 32 times to allow comparison with the impulse response from the Julia script
 
@@ -377,7 +384,7 @@ Notes:
 * Copy the files in `src` and `dat` to your project. Set the `Top-Level File` to `src/tb.cpp`.
 * Since we are only interested in functional verification at this time, we use `Emulation-SW` to build and run the program.
 * If the program builds and runs without errors, the output should be in `Emulation-SW/x86simulator_output/output.dat`
-* Copy the generated `impresponse.dat` file to the `data` directory (note: this has already been done in the project archive)
+* Copy the generated `impresponse.dat` file to the `data` directory
 * We can use Julia to verify the kernel output
 
 ```
@@ -421,7 +428,6 @@ In Part 1b, we show the process of creating the adaptive dataflow graph for an a
 # Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

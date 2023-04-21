@@ -1,3 +1,8 @@
+#=====================================================================
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+======================================================================#
+
 using Printf
 using PyPlot
 using DelimitedFiles
@@ -24,5 +29,3 @@ ylabel("Error");
 
 @printf("eps(Float32) = %e\n", eps(Float32));
 @printf("maximum(abs.(err) = %e\n", maximum(abs.(err)));
-
-

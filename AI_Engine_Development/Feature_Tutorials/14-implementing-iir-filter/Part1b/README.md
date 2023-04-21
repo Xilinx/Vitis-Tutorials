@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1b
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Recap
 
@@ -34,7 +34,7 @@ else
     fp = 20.0e6         	# passband frequency
     coeff_file_suffix = "b" 	# 2nd set of coefficients
 end # if first_set
-    
+
 fs = 100.0e6            # sampling frequency
 p = 6                   # no. of poles
 rp = 0.1                # passband ripple (dB)
@@ -52,7 +52,7 @@ julia> cd("{specify_path_to_aie_iir_1b.jl}")
 julia> include("aie_iir_1b.jl")
 ```
 
-This will plot the filter characteristics and generate three coefficient files (C[1~3]a.h) as there are 6 poles in the filter.
+This will plot the filter characteristics and generate three coefficient files (C[1~3]a.h), as there are 6 poles in the filter.
 
 ![Fig. 1](./images/filt10.PNG "6<sup>th</sup> order elliptical LPF, BW=10MHz")
 
@@ -86,11 +86,11 @@ The modified ADF graph may look something like this:
 			kernel section3;
 
 		public:
-			input_port in;		// input port for data to enter the kernel
+			input_plio in;		// input port for data to enter the kernel
 			input_port cmtx1;	// input port for SIMD matrix coefficients
 			input_port cmtx2;
 			input_port cmtx3;
-			output_port out;	// output port for data to leave the kernel
+			output_plio out;	// output port for data to leave the kernel
 
 			// constructor
 			the_graph() {
@@ -100,19 +100,37 @@ The modified ADF graph may look something like this:
 				section2 = kernel::create(SecondOrderSection<2>);
 				section3 = kernel::create(SecondOrderSection<3>);
 
-				const unsigned num_bytes = 8 * sizeof(float);
+				// declare data widths and files for simulation
+				#ifndef RTP_SWITCH
+					in = input_plio::create(plio_32_bits, "data/input.dat");
+				#else
+					in = input_plio::create(plio_32_bits, "data/two_freqs.dat");
+				#endif // RTP_SWITCH
+				out = output_plio::create(plio_32_bits, "output.dat");
+
+				const unsigned num_samples = 8;
+
+				// declare buffer sizes
+				dimensions(section1.in[0]) = {num_samples};
+				dimensions(section1.out[0]) = {num_samples};
+
+				dimensions(section2.in[0]) = {num_samples};
+				dimensions(section2.out[0]) = {num_samples};
+
+				dimensions(section3.in[0]) = {num_samples};
+				dimensions(section3.out[0]) = {num_samples};
 
 				// establish connections
-				connect<window<num_bytes>> net0 (in, section1.in[0]);				// window size in bytes
+				connect(in.out[0], section1.in[0]);			
 				connect<parameter>(cmtx1, adf::async(section1.in[1]));
 
-				connect<window<num_bytes>> net1 (section1.out[0], section2.in[0]);	// window size in bytes
+				connect(section1.out[0], section2.in[0]);
 				connect<parameter>(cmtx2, adf::async(section2.in[1]));
 
-				connect<window<num_bytes>> net2 (section2.out[0], section3.in[0]);	// window size in bytes
+				connect(section2.out[0], section3.in[0]);
 				connect<parameter>(cmtx3, adf::async(section3.in[1]));
 
-				connect<window<num_bytes>> net3 (section3.out[0], out);
+				connect(section3.out[0], out.in[0]);
 
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";
@@ -163,20 +181,8 @@ The testbench may look something like this:
 using namespace std;
 using namespace adf;
 
-// the testbench requires a virtual platform for simulation
-#ifndef RTP_SWITCH
-	simulation::platform<1, 1> platform("data/input.dat", "output.dat");
-#else
-	simulation::platform<1, 1> platform("data/two_freqs.dat", "output.dat");
-#endif // RTP_SWITCH
-
-
 // specify the DFG
 the_graph my_graph;
-
-// define connections between virtual platform and the DFG
-connect<> net0 (platform.src[0], my_graph.in);
-connect<> net1 (my_graph.out, platform.sink[0]);
 
 const unsigned num_pts = 256;						// number of sample points in "input.dat"
 
@@ -276,7 +282,6 @@ In Part 1, we have focused only on functional verification using `Emulation-SW`.
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

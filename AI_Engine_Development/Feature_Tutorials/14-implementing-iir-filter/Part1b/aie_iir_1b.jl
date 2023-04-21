@@ -1,15 +1,7 @@
-#=
-# Support
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-<p align="center"><sup>XD0xx | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-=#
+#=====================================================================
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+======================================================================#
 
 # Ref: https://docs.juliadsp.org/latest/filters/#Filters-filter-design-and-filtering
 
@@ -22,7 +14,7 @@ using Printf
 
 # --- begin user parameters
 
-first_set = false;	# true: 1st set; false: 2nd set
+first_set = true;	# true: 1st set; false: 2nd set
 
 if first_set
     fp = 10.0e6         	# passband frequency
@@ -32,7 +24,7 @@ else
     fp = 20.0e6         # passband frequency
     coeff_file_suffix = "b" # 2nd set of coefficients
 end # if first_set
-    
+
 fs = 100.0e6            # sampling frequency
 p = 6                   # no. of poles
 rp = 0.1                # passband ripple (dB)
@@ -58,7 +50,7 @@ n = 0 : (N - 1) # sampling index
 if show_plots
     close("all")    # close previously open plot windows
     ws = w/pi * (fs/2)
-    fig1, ax1 = subplots() 
+    fig1, ax1 = subplots()
     ax1.plot(ws, 20*log10.(abs.(H)))
     ax1.grid("on")
     ax1.set_title("Original Filter's Frequency Response")
@@ -88,13 +80,13 @@ k = zeros(Double64, 8, 12)
 for w = 1 : num_sections
     a = Vector{Double64}(coefa(thesos.biquads[w]))
     b = Vector{Double64}(coefb(thesos.biquads[w]))
-    g[w] = sum(a)/sum(b)                            
+    g[w] = sum(a)/sum(b)
     if (w == num_sections)
         g[w] *= thesos.g/prod(g)    # adjust gain of last stage such that prod(g) = thesos.g
     end # if (w == num_sections)
 
     # a0 is *always* 1.0
-    a1 = a[2]   
+    a1 = a[2]
     a2 = (length(a) < 3) ? 0 : a[3] # handle odd number of poles
     b0 = b[1]
     b1 = b[2]
@@ -203,18 +195,10 @@ end # for w = 1 : num_sections
 if write_cmatrix
 
     copyright_str = """
-    /****************************************************************
-    # Support
-    GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-    # License   
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.    
-    You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-    Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-    <p align="center"><sup>XD0xx | &copy; Copyright 2021 Xilinx, Inc.</sup></p>
-    ****************************************************************/
+    /*********************************************************************
+    Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+    SPDX-License-Identifier: X11
+    **********************************************************************/
     """
 
     # write it out column-wise
@@ -324,9 +308,9 @@ for u = 1 : 8 : N
         xreg[6, v] = yreg[ 8, v]    # ym1
         xreg[7, v] = xreg[15, v]    # xm2
         xreg[8, v] = xreg[16, v]    # xm1
-        
+
     end # for v = 1 : num_sections
-    
+
 end # for u = 1 : 8 : n
 
 if show_plots
@@ -354,12 +338,10 @@ if write_impulse
     fid1 = open("input.dat", "w")
     impresp_fname = string("impresponse_", coeff_file_suffix, ".dat")
     fid2 = open(impresp_fname, "w")
-    for u = 1 : N 
+    for u = 1 : N
         @printf(fid1, "%f\n", in_data[u])
         @printf(fid2, "%+1.20e\n", impresp_ref[u])
-    end # for u = 1 : N    
+    end # for u = 1 : N
     close(fid1)
     close(fid2)
 end # if write_impulse
-
-

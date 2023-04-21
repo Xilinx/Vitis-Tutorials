@@ -1,15 +1,7 @@
-/****************************************************************
-# Support
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-# License
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-
-Copyright 2022 Xilinx, Inc.
-****************************************************************/
+/*********************************************************************
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+**********************************************************************/
 
 #include <aie_api/aie_adf.hpp>
 
@@ -24,9 +16,9 @@ Copyright 2022 Xilinx, Inc.
 
 template<unsigned id>
 void SecondOrderSection(
-    input_window<float> *idata,		// 8 input samples per iteration
-    output_window<float> *odata, 	// 8 output samples per iteration
-    const float (&C)[96]			// RTP port for coefficient matrix
+	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
+    const float (&C)[96]	// RTP port for coefficient matrix
 ) {
 
 	#ifdef KERNEL_DEBUG
@@ -35,7 +27,11 @@ void SecondOrderSection(
 
 	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states
 
-	Vector8f xreg_hi = window_readincr_v<8>(idata);		// fetch input samples
+	// input/output iterators
+	auto inIter = aie::begin_vector<8>(idata);
+	auto outIter = aie::begin_vector<8>(odata);
+
+	Vector8f xreg_hi = *inIter++;		// fetch input samples
 	Vector16f xreg = aie::concat(state_reg, xreg_hi);	// xreg[4]: ym2; xreg[5]: ym1; xreg[6]: xm2; xreg[7]: xm1; xreg[8:15]: x0:x7
 	Vector8f coeff;
 	VAcc8f acc = aie::zeros<accfloat, 8>();
@@ -59,9 +55,7 @@ void SecondOrderSection(
 	state_reg = xreg_hi;
 	state_reg[4] = yout[6];
 	state_reg[5] = yout[7];
-	//state_reg[6] = xreg_hi[6];
-	//state_reg[7] = xreg_hi[7];
 
-	window_writeincr(odata, yout);
+	*outIter++ = yout;
 
 } // end SecondOrderSection()

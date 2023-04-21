@@ -1,3 +1,8 @@
+########################################################################
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+########################################################################
+
 CURRENT_DIR = $(shell pwd)
 WKSPC_DIR = $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)
 
