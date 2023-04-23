@@ -1,5 +1,5 @@
 <!-- 
-# Copyright 2020 Xilinx Inc.
+# Copyright 2023 Xilinx Inc.
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,13 +24,13 @@
 
 # Versal Platform Creation Quick Start
 
-***Version: 2022.2***
+***Vitis New IDE 2023.1***, ***Vivado 2023.1***
 
 ***Board: VCK190***
 
 In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
 
-This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform. At last, leverage the Vector Addition example to validate this platform. 
+This time we will utilize Versal extensible platform from the CED example, using pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform with Vitis new IDE. At last, leverage the Vector Addition example to validate this platform. 
 
 This is a quick start for Versal platform creation. If you have queries about some steps or settings or want to create a platform for customer's board please refer to [Versal Custom Platform Creation Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/). Besides if you need to customize the Linux system image you can refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
 
@@ -63,8 +63,8 @@ This is a quick start for Versal platform creation. If you have queries about so
    ![CED Configuration](./images/vivado_ced_config.png)
 
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
-   - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
-   - Configure Memory Settings. By default, the example design will enable the on board DDR4 and LPDDR4. If you have additional on board memories, you can enable it. 
+   - Configure AXi master and Interrupt Settings. You can choose how many interrupt and AXI masters should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
+   - Enable the AI engine according to your requirement. In this example, we can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.
    - After a while, you will see the design example has been generated.
@@ -73,7 +73,7 @@ This is a quick start for Versal platform creation. If you have queries about so
 
    ![Vivado Design Block Diagram](images/vivado_design_diagram.png)
 
-   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. The instantiated `axi_smc_vip_hier` in purple color is a hierarchy in which smart connects and dummy IPs are packaged together for clear view and better understanding. 
+   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. 
    
 4. Generate Block Diagram
 
@@ -95,19 +95,21 @@ This is a quick start for Versal platform creation. If you have queries about so
 
    - Click **File -> Export -> Export Platform**. Alternative ways are: **Flow Navigator** window: **IP Integrator -> Export Platform**, or the **Export Platform** button on the bottom of **Platform Setup** tab.
    - Click **Next** on Export Hardware Platform page
-   - Select **Hardware**. If there are any IP that doesn't support simulation, we need to generate Hardware XSA and Hardware Emulation XSA separately. Click **Next**
+   - Select **Hardware and hardware emulation**.  Click **Next**
    - Select **Pre-synthesis**, because we're not making an DFX platform. Click **Next**
    - Input Name: **VCK190_Custom_Platform**, click Next
-   - Update file name to **vck190_custom_hw**, click Next.
+   - Update file Xsa file name to **vck190_custom**, click Next.
    - Review the summary. Click **Finish**.
-   - **vck190_custom_hw.xsa** file will be generated in Vivado project location directory.
+   - **vck190_custom.xsa** file will be generated in Vivado project location directory.
+
+   >Note: If there are any IP that doesn't support simulation, we need to generate Hardware XSA and Hardware Emulation XSA separately.
 
 ## Step 2: Create Vitis Platform
 
 1. Download Versal common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory and extract the common image.
 
    ```bash
-   tar xvf ../xilinx-versal-common-v2022.2.tar.gz .
+   tar xvf ../xilinx-versal-common-v2023.1.tar.gz .
    ```
 
 2. Create the device tree file
@@ -144,33 +146,32 @@ This is a quick start for Versal platform creation. If you have queries about so
       cd WorkSpace
       mkdir sd_dir
       mkdir boot
-      cp xilinx-versal-common-v2022.2/boot.scr sd_dir/
-      cp xilinx-versal-common-v2022.2/bl31.elf boot/
-      cp xilinx-versal-common-v2022.2/u-boot.elf boot/
+      cp xilinx-versal-common-v2023.1/boot.scr sd_dir/
+      cp xilinx-versal-common-v2023.1/bl31.elf boot/
+      cp xilinx-versal-common-v2023.1/u-boot.elf boot/
       cp mydevice/psv_cortexa72_0/device_tree_domain/bsp/system.dtb boot/
       ```
 
-   - install SDK tool by typing `sh xilinx-versal-common-v2022.2/sdk.sh -d xilinx-versal-common-v2022.2/ -y` in console. Option of -d is to specify the directory where to install. Option of -y means confirmation. So it will be installed in `xilinx-versal-common-v2022.2/` folder.
-   - Run Vitis by typing `vitis` in the console.
-   - In the Vitis IDE, select **File > New > Platform Project** to create a platform project.
-   - Enter the project name. For this example, type `vck190_custom`, click **Next**.
-   - In the Platform page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is located in `<Your Vivado Project Directory>/vck190_custom_hw.xsa`. Click **Next**.
-   - Set the **operating system** to **linux**.
-   - Set the processor to **psv_cortexa72**.
-   - Click **Finish**.
+   - install SDK tool by typing `sh xilinx-versal-common-v2023.1/sdk.sh -d xilinx-versal-common-v2023.1/ -y` in console. Option of -d is to specify the directory where to install. Option of -y means confirmation. So it will be installed in `xilinx-versal-common-v2023.1/` folder.
+   - Run Vitis by typing `vitis --new -w .` in the console. **-w** is to specify the workspace.
+   - In the Vitis IDE, select **File > New Component > Platform** to create a platform component.
+   - Enter the **Component name**. For this example, type `vck190_custom`, click **Next**.
+   - In the XSA selecting page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is located in `<Your Vivado Project Directory>/vck190_custom.xsa`. Click **Next**.
+   - Set the **operating system** to **linux** and set the processor to **psv_cortexa72**. Clcik **Next**.
+   - Review the summary and click **Finish**.
 
    ![Created Vitis Platform](images/created_vitis_platform.png)
 
-   - Click the **linux on psv_cortexa72** domain
-   - Update the **Display Name** to `xrt` by clicking the edit button on the right of this line and input the name. We'd like to indicate this is a Linux domain has XRT installed and is capable of running acceleration applications.
-   - Set **Bif file**: Click the drop down-button like the following diagram and select **Generate BIF**. The generated BIF file is generated in the resource directory.
+   - Click the **linux On psv_cortexa72** domain
+   - Update the **Display Name** to `xrt` by clicking the entry bar and inputting the name. We'd like to indicate this is a Linux domain has XRT installed and is capable of running acceleration applications.
+   - Set **Bif file**: Click the button like the following diagram and generate BIF file. The BIF file is generated in the resource directory.
   
       ![vitis_platform_config](images/vitis_platform_config.PNG)
 
    - **Boot Components Directory**: Browse to **boot** and click OK. Bootgen will look for boot components referred by BIF in this directory to generate BOOT.BIN
    - **FAT32 Partition Directory**: Browse to **sd_dir** and click OK. Files in this directory will be copied to FAT32 partition of SD card.
-   - **QEMU Data**: Browse to **step3_pfm/boot/** and click OK. Emulator will use boot components from this directory.
-   - Click **vck190_custom** project in the Vitis Explorer view, click the **Build** button to generate the platform.
+   - **QEMU Data**: Browse to **boot/** and click OK. Emulator will use boot components from this directory.
+   - In the **Flow** view window, click the drop-down button to select the component. In this case please select **vck190_custom** component, click the **Build** button to generate the platform.
    
    >Note: If there are additional QEMU settings, please update qemu_args.txt accordingly.
    
@@ -178,27 +179,31 @@ This is a quick start for Versal platform creation. If you have queries about so
 
 ## Step 3: Validate this Vitis PLatform
 
-   - Run Vitis by typing `vitis` in the console. (if you have launched Vitis, please omit this step)
-   - Select menu **File -> New -> Application Project**.
-   - Go through the welcome page and click **Next**.
-   - On Platform page, select **vck190_custom** platform in the platform list. Click **Next**.
+   - Run Vitis by typing `vitis --new -w .` in the console. (if you have launched Vitis, please omit this step)
+   - In the view, Click **Example** button and expand the **Installed Examples Repository** directory like the following:
 
-   - Set **Application project name** to **vadd**, target processor **psv_cortexa72_SMP**. Click **Next**.
-   
-     ![missing image](./images/vitis_create_vadd.png)
+   ![missing image](./images/vitis_examples.PNG)
 
-   - Input **Sysroot** path <xilinx-versal-common-v2022.2/sysroots/cortexa72-cortexa53-xilinx-linux>
-   - Input **RootFS** path <xilinx-versal-common-v2022.2/rootfs.ext4>
-   - Input **Kernel Image** path <xilinx-versal-common-v2022.2/Image>
-   -  Click **Next**. 
-   - Select template **Vector Addition**. Click **Finish**.
-   - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
-   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
+   - Select **Simple Vector Addition**, and click **Create application from template**.
+   - Input the **System project name**: `Vadd` and click **Next**.
+   - Select the platform we created in previous step. In this case it is `vck190_custom` platform.
+   - Input **Sysroot** path <xilinx-versal-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux>
+   - Input **RootFS** path <xilinx-versal-common-v2023.1/rootfs.ext4>
+   - Input **Kernel Image** path <xilinx-versal-common-v2023.1/Image> and click **Next**.
+   - Review the project summary and click **Finish**.
+
+   After several seconds the project will be created.
+   ![missing image](./images/vitis_create_vadd.png)
+
+   - Select Component **Vadd**. Click **Build all** under **Hardware**. A window will pop up prompting to choose which modules to compile. Please select all and click OK.
+
+   ![missing image](./images/vitis_system_component_select.PNG)
+
+   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in `vadd/build/hw/package/package/` directory.
 
 #### Run the Application on Hardware
 
-1. Copy `vadd_system/Hardware/package/sd_card.img` to local if you build the project on a remote server or virtual machine.
+1. Copy `vadd/build/hw/package/package/sd_card.img` to local if you build the project on a remote server or virtual machine.
 
 2. Program sd_card.img to SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
 
@@ -213,20 +218,7 @@ This is a quick start for Versal platform creation. If you have queries about so
 5. Launch the test application from UART console
 
    <details>
-
-   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Downloads website</strong></summary>
-
-     Go to auto mounted FAT32 partition and run the application like below:
-
-     ```
-     cd /run/media/sd-mmcblk0p1
-     ./simple_vadd krnl_vadd.xclbin
-     ```
-
-   </details>
-
-   <details>
-   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+   <summary><strong>Follow below steps to run the application</strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 
@@ -331,7 +323,6 @@ To use these scripts, please download Versal common image from [Xilinx website d
    ```bash
    make clean
    ```
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

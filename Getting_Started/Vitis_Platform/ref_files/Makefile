@@ -1,16 +1,8 @@
-# Copyright 2020 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
+
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 ABS_BUILD_PATH=$(ROOT_DIR)/build
@@ -19,7 +11,7 @@ BD_TCL=run.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 DTB_PLT_NAME=mydevice
 DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
-VERSION=2022.1
+VERSION=2023.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
@@ -28,6 +20,7 @@ SYSROOT=sysroot
 XSA_NAME=vck190_custom
 PLATFORM_NAME=vck190_custom
 PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+#PLATFORM ?=$(ROOT_DIR)/test/vck190_custom/export/vck190_custom/vck190_custom.xpfm
 SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
@@ -37,10 +30,10 @@ AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
 help:
 	@echo "Makefile usage"
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
-	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
+	@echo "make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
 all: check-common-image hw sw_comps dtb sysroot pfm vadd aie_adder
-sd_card:check-common-image sysroot pfm aie_adder_hw
+sd_card:check-common-image hw sw_comps dtb sysroot pfm vadd_hw aie_adder_hw
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -70,10 +63,9 @@ sw_comps:$(COMMON_IMAGE_VERSAL)/Image
 # target: dtb
 #generate the DTB file
 #echo command is to avoid the return error code caused by the createdts command warning
-dtb: $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa
+dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" \
-	&& echo -e "\n***Device Tree generation Successful!\n" || echo -e "\n"
+	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
 	cp $(DTB_LOCATION)/system.dtb  $(BOOT)/
 	
 # Target: sysroot
@@ -88,9 +80,7 @@ $(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
 # Input: vck190_custom.xsa in build/vivado directory
 pfm: $(ABS_HW_PATH) $(ROOT_DIR)/$(BOOT) $(ROOT_DIR)/$(SD_DIR)
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	xsct xsct_create_pfm.tcl $(PLATFORM_NAME) $(ABS_HW_PATH) $(ROOT_DIR)/$(BOOT) $(ROOT_DIR)/$(SD_DIR) && \
-	echo "Platform created:" && \
-	find . -name "*.xpfm"
+	vitisng -s platform_creation.py 
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
@@ -100,22 +90,22 @@ $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
-	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 # vadd_hw is a place-holder for manual build and test on hardware
-vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
+vadd_hw: Vitis_Accel_Examples $(SYSROOT)/
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder: 
+aie_adder: Vitis_Accel_Examples $(SYSROOT)/
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder_hw: 
+aie_adder_hw: Vitis_Accel_Examples $(SYSROOT)/
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(ROOT_DIR)/$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 clean:
-	$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
-	$(MAKE) -C $(PL_EXAMPLE_PATH) clean
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
+	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
+	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
+	-$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
 
-ultraclean:
-	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SW_COMP) $(BOOT) $(SD_DIR) $(SYSROOT) Vitis_Accel_Examples
+ultraclean:clean
+	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SW_COMP) $(BOOT) $(SD_DIR) $(SYSROOT) Vitis_Accel_Examples *journal.py __pycache__ logs ip_cache vitis_journal* 
 	

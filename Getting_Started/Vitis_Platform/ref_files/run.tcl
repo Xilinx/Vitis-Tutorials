@@ -1,16 +1,8 @@
-# Copyright 2020 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
+
 
 if { $argc != 1 } {
     puts "Please provide the board type with -tclargs: VCK190 or VCK190_ES1"
@@ -81,7 +73,7 @@ generate_target all [get_files ext_platform.bd]
 
 update_compile_order -fileset sources_1
 
-write_hw_platform -force ./vck190_custom_hw.xsa
-write_hw_platform -hw_emu -force ./vck190_custom_hwemu.xsa
+write_hw_platform -force ./vck190_custom.xsa
+
 
 
