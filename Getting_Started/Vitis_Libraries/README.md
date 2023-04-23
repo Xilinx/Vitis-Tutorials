@@ -8,7 +8,7 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This tutorial focuses on how to leverage the Vitis Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile and simulate on its own till instantiate it into top-level design.
 
@@ -19,7 +19,7 @@ Before playing with the libraries, you need to set up Vitis environment first. F
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2022.2/settings64.sh
+$ source <Vitis Tool Installation Path>/Vitis/2023.1/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
@@ -52,13 +52,13 @@ Vitis_Libraries/
 ├── data_compression/
 ├── database/
 ├── dsp/
-├── genomics/
 ├── graph/
 ├── hpc/
 ├── quantitative_finance/
 ├── security/
 ├── solver/
 ├── sparse/
+├── ultrasond/
 ├── utils/
 └── vision/
 ~~~
@@ -107,7 +107,7 @@ This library is written in C++ and it contains three levels of abstractions.
 
 ### Create and run a HLS project
 
-In this step, we are going to create a HLS project by using the files provided in the [1Dfix_impluse](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp/L1/examples/1Dfix_impluse) example of L1 Vitis dsp library. The source files and script file are all located under this folder. Here we assume you have cloned the Vitis Libraries into */home/project/Vitis_Libraries* directory.
+In this step, we are going to create a HLS project by using the files provided in the [1Dfix_impluse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impluse) example of L1 Vitis dsp library. The source files and script file are all located under this folder. Here we assume you have cloned the Vitis Libraries into */home/project/Vitis_Libraries* directory.
 
 1. Go into the `/home/project/Vitis_libraries/dsp/L1/examples/1Dfix_impluse` folder and run below command to create the HLS project.
 
@@ -229,7 +229,7 @@ vivado &
 
 Create a new project with default project name *project_1* and select the type as ***RTL Project*** with ***Do not specify sources at this time*** box checked. Select ***xcvu9p-flgc2104-2-e*** as the part of this project. You may select other parts as well.
 
-Now the project has been created. Let's add the source files into the project. Select `Add or create design sources` menu from `PROJECT MANAGER` > `Add Sources` and then click `Add Files` to add the ***fft_wrap.v*** which is located under ***src*** folder. Then select `Add or create simulation sources` menu and click `Add Files` to add the ***fft_tb.v*** into the project. Use the same procedure to add the ***datain.txt*** and ***dataref.txt*** files into the project as simulation sources as well.
+Now the project has been created. Let's add the source files into the project. Select `Add or create design sources` menu from `PROJECT MANAGER` > `Add Sources` and then click `Add Files` to add the ***fft_wrap.v*** which is located under ***src*** folder. Then select `Add or create simulation sources` menu and click `Add Files` to add the ***fft_tb.v*** into the project. Use the same procedure to add the ***datain.txt*** and ***dataref.txt*** files into the project as constraints.
 
 The ***fft_wrap.v*** simply instantiates the FFT IP which we just exported earlier. We need to set up the IP repo path in order to let Vivado find it. To do so, click `settings` from Flow Navigator panel and add the IP export folder to the repo path.
 

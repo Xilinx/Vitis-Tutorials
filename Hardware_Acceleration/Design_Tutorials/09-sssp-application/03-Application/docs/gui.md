@@ -16,15 +16,15 @@ Follow these steps to create a project with Vitis Libraries.
 
 1. After setting the workspace directory, choose **Create Application Project**.
 
-    ![proj diagram](../../images/createproject.png)
+    ![proj diagram](../../images/createproject_23.1.png)
 
 2. Select U50 as the platform and click **Next**.
 
-    ![system diagram](../../images/select_platform.png)
+    ![system diagram](../../images/select_platform_23.1.png)
 
 3. Create your application name and click **Next**.
 
-    ![application diagram](../../images/create_app.png)
+    ![application diagram](../../images/create_app_23.1.png)
 
 4. Choose the Vitis IDE libraries and download them.
 
@@ -34,7 +34,7 @@ Follow these steps to create a project with Vitis Libraries.
 
 5. After downloading the Vitis Libraries, choose the SSSP in Graph Lib.
 
-    ![graphlib diagram](../../images/selectgraphlib.png)
+    ![graphlib diagram](../../images/selectgraphlib_23.1.png)
 
 ## Build your Application
 
@@ -51,7 +51,7 @@ Follow these steps to create a project with Vitis Libraries.
 
 After building the project, click **Debug** into the main function.
 
-![debug diagram](../../images/debug.png)
+![debug diagram](../../images/debug_23.1.png)
 
 ## Next
 
