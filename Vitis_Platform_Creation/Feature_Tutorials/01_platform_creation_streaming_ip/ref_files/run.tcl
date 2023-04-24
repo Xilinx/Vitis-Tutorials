@@ -1,16 +1,7 @@
-# Copyright 2020 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*
 
 proc numberOfCPUs {} {
     # Windows puts it in an environment variable
@@ -77,20 +68,42 @@ set_property -dict [list CONFIG.PS_PMC_CONFIG { BOOT_MODE Custom  CLOCK_MODE Cus
 
 set_property -dict [list CONFIG.MC0_CONFIG_NUM {config17} CONFIG.MC1_CONFIG_NUM {config17} CONFIG.MC2_CONFIG_NUM {config17} CONFIG.MC3_CONFIG_NUM {config17} CONFIG.MC_INPUT_FREQUENCY0 {200.000} CONFIG.MC_INPUTCLK0_PERIOD {5000} CONFIG.MC_MEMORY_DEVICETYPE {UDIMMs} CONFIG.MC_MEMORY_SPEEDGRADE {DDR4-3200AA(22-22-22)} CONFIG.MC_TRCD {13750} CONFIG.MC_TRP {13750} CONFIG.MC_DDR4_2T {Disable} CONFIG.MC_CASLATENCY {22} CONFIG.MC_TRC {45750} CONFIG.MC_TRPMIN {13750} CONFIG.MC_CONFIG_NUM {config17} CONFIG.MC_F1_TRCD {13750} CONFIG.MC_F1_TRCDMIN {13750} CONFIG.MC_F1_LPDDR4_MR1 {0x000} CONFIG.MC_F1_LPDDR4_MR2 {0x000} CONFIG.MC_F1_LPDDR4_MR3 {0x000} CONFIG.MC_F1_LPDDR4_MR13 {0x000}] [get_bd_cells noc_ddr4]
 
-set_property -dict [list CONFIG.FREQ_HZ {200000000}] [get_bd_intf_ports sys_clk0_0]
 
+set_property -dict [list \
+  CONFIG.MC0_FLIPPED_PINOUT {true} \
+  CONFIG.MC1_FLIPPED_PINOUT {true} \
+  CONFIG.MC_INPUTCLK0_PERIOD {4992} \
+  CONFIG.MC_MEMORY_TIMEPERIOD0 {512} \
+  CONFIG.NUM_MC {2} \
+] [get_bd_cells noc_lpddr4]
+
+apply_bd_automation -rule xilinx.com:bd_rule:board -config { Manual_Source {Auto}}  [get_bd_intf_pins noc_lpddr4/CH0_LPDDR4_1]
+apply_bd_automation -rule xilinx.com:bd_rule:board -config { Manual_Source {Auto}}  [get_bd_intf_pins noc_lpddr4/CH1_LPDDR4_1]
+apply_bd_automation -rule xilinx.com:bd_rule:board -config { Manual_Source {Auto}}  [get_bd_intf_pins noc_lpddr4/sys_clk1]
+
+set_property -dict [list CONFIG.FREQ_HZ 200321000] [get_bd_intf_ports sys_clk0_1]
+set_property -dict [list CONFIG.FREQ_HZ {200000000}] [get_bd_intf_ports sys_clk0_0]
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:dds_compiler:6.0 dds_compiler_0
 
 set_property -dict [list CONFIG.DDS_Clock_Rate {300} CONFIG.Spurious_Free_Dynamic_Range {90} CONFIG.Output_Selection {Sine} CONFIG.Output_Frequency1 {10} CONFIG.Frequency_Resolution {0.4} CONFIG.Noise_Shaping {Auto} CONFIG.Phase_Width {30} CONFIG.Output_Width {15} CONFIG.Latency {8} CONFIG.PINC1 {1010001111010111000010100}] [get_bd_cells dds_compiler_0]
 set_property -dict [list CONFIG.Has_Phase_Out {false} CONFIG.M_DATA_Has_TUSER {Not_Required}] [get_bd_cells dds_compiler_0]
-connect_bd_net [get_bd_pins clk_wizard_0/clk_out3] [get_bd_pins dds_compiler_0/aclk]
+connect_bd_net [get_bd_pins clk_wizard_0/clk_out1] [get_bd_pins dds_compiler_0/aclk]
 
 set_property PFM.AXIS_PORT {M_AXIS_DATA {type "M_AXIS" sptag "AXIS" is_range "false"}} [get_bd_cells /dds_compiler_0]
 
+
+
+validate_bd_design
+
 add_files -fileset constrs_1 -norecurse ../../ddr.xdc
 import_files -fileset constrs_1 ../../ddr.xdc
-validate_bd_design
+
+remove_files ./project_1/project_1.srcs/sources_1/imports/hdl/ext_platform_part_wrapper.v
+file delete -force ./project_1/project_1.srcs/sources_1/imports/hdl/ext_platform_part_wrapper.v
+update_compile_order -fileset sources_1
+make_wrapper -files [get_files ./project_1/project_1.srcs/sources_1/bd/ext_platform_part/ext_platform_part.bd] -top
+add_files -norecurse ./project_1/project_1.gen/sources_1/bd/ext_platform_part/hdl/ext_platform_part_wrapper.v
 
 generate_target all [get_files ext_platform_part.bd]
 update_compile_order -fileset sources_1

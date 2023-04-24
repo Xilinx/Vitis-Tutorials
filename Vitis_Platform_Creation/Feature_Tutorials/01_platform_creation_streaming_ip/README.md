@@ -7,7 +7,7 @@
 
 # Versal Platform Creation with Custom IP
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
@@ -61,7 +61,7 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
     ![missing image](images/dds_freq.png)   
 
-5. Exit the configuration page and connect the `aclk` port to the `clk_out3` signal of clocking wizard.
+5. Exit the configuration page and connect the `aclk` port to the `clk_out1` signal of clocking wizard.
 
 6. Now the block design should look like the following:
 
@@ -115,7 +115,7 @@ static void dss_process( int *wave, hls::stream<pkt> &s_in) {
 4. Add two ports into the top level function. The `dds_in` port is an AXI4-Stream type and the `wave_out` port is an AXI-MM type.
 
 ```
-void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
+void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) 
 ```
 
 5. Declare the two ports added in step4 in the `krnl_vadd` function.
