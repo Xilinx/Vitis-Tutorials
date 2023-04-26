@@ -46,7 +46,7 @@ Review the `conn.cfg` file. It creates an instance of each PL kernel described p
 
 The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the ACAP device.
 
-![alt text](images/Design%20Implementation.png)
+![alt text](images/Nbody_Implemented_design.png)
 
 ## References
 

@@ -34,7 +34,7 @@ Following is a table comparing the executions times to simulate 12,800 particles
 |---|---|--|---|
 |Python NBody Simulator|x86 Linux Machine|O(N)|14.96|
 |C++ NBody Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|124.79|
-|AI Engine NBody Simulator|Versal AI Engine IP|O(N)|0.004657468|
+|AI Engine NBody Simulator|Versal AI Engine IP|O(N)|0.006819|
 
 As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation and a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. A vectorized C++ NBody Simulator O(N) implementation can be created with pthreads, but is left as an exercise for the user.
 

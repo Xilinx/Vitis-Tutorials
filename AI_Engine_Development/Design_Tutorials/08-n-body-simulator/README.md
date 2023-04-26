@@ -33,7 +33,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://support.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -92,7 +92,7 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |---|---|--|---|
 |Python N-Body Simulator|x86 Linux Machine|O(N)|14.96|
 |C++ N-Body Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|124.79|
-|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.004657468|
+|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.006819|
 
 ### PL Data-Mover Kernels
 Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  

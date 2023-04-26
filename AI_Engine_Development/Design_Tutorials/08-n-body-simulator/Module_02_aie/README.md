@@ -86,12 +86,12 @@ Review the `nbody_x4_100.cpp` file. It contains an instance of the `nbodySystem`
 ![alt text](images/x100_design.png)
 
 Below is the implementation of the 100 compute unit on all 400 AI Engine tiles viewed on the Vitis Analyzer tool.
-![alt text](images/aie_impl_1_cu_highlighted.PNG)
+![alt text](images/Nbody_aie_array_view.png)
 
 The red highlighted region encompasses four AI Engine tiles which contain a single compute unit.
 
 Following is the graph visualization of a single compute unit on the Vitis Analyzer tool.
-![alt text](images/aie_single_cu.PNG)
+![alt text](images/Nbody_aie_graph_view.png)
 
 ## Why Packet Switching?
 You might be curious about the need to implement the packet switching scheme 1:4/4:1. This was done to circumvent an AI Engine architecture limitation on the number of simultaneous input and output AXI-Streams allowed per AI Engine column. There are 50 AI Engine columns in the AI Engine array. Each column contains 8 AI Engine tiles. Each AI Engine column is allowed a maximum of 6 32-bit AXI-Stream inputs and 4 32-bit AXI-Stream outputs.
