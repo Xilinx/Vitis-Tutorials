@@ -7,7 +7,7 @@
  </tr>
 </table>
 
-# Versal® AI Engine LeNet Tutorial
+# Versal™ AI Engine LeNet Tutorial
 
 ***Version: Vitis 2023.1***
 
@@ -29,7 +29,7 @@
 
 ## Introduction
 
-The Xilinx® Versal ACAP is a fully software-programmable, heterogeneous compute platform that combines the Processor System (PS) (Scalar Engines that include the Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and AI Engines which belong in the Intelligent Engine category.
+The AMD Versal™ adaptive SoC is a fully software-programmable, heterogeneous compute platform that combines the Processor System (PS) (Scalar Engines that include the Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic blocks and memory) and AI Engines which belong in the Intelligent Engine category.
 
 This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.
 
@@ -89,7 +89,7 @@ lenet
 </details>
 
 ## Before You Begin
-Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from Xilinx website and ensure you have the correct licenses installed.
+Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the website and ensure you have the correct licenses installed.
 
 <details>
 
@@ -97,7 +97,7 @@ Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/cgi-bin/docs/ndoc?t=architecture-manuals;d=am009-versal-ai-engine.pdf)
+* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=am011-versal-acap-trm)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -113,11 +113,11 @@ Tools Documentation:
 
 * [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
-To build and run the Lenet tutorial, you will need the following tools downloaded/installed:
+To build and run the LeNet tutorial, you will need the following tools downloaded/installed:
 
 * Install the [Vitis Software Platform 2023.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
-* Obtain a license to enable Beta Devices in Xilinx tools (to use the `xilinx_vck190_base_202310_1` platform)
+* Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202310_1` platform)
 
 * Obtain licenses for AI Engine tools
 
@@ -189,7 +189,7 @@ At the end of this section, the design flow will generate a new directory (calle
 </details>
 
 ## Make Steps
-To run the following `make` steps (for example, `make kernels`, `make graph`, etc), you must be in the leNet tutorial folder.
+To run the following `make` steps (for example, `make kernels`, `make graph`, etc.), you must be in the leNet tutorial folder.
 <details>
 <summary>Build the Entire Design with a Single Command</summary>
 
@@ -325,7 +325,7 @@ The following is a description of the output objects that results from executing
 After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate both an XCLBIN and a new XSA file.
 
 ### Platform
-The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx) and the Vitis tool builds the hardware design and integrates the AI Engine and PL kernels into the design.
+The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by AMD) and the Vitis tool builds the hardware design and integrates the AI Engine and PL kernels into the design.
 
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
 
@@ -413,7 +413,7 @@ param=compiler.addOutputTypes=hw_export
 |--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler tell you the interfaces that need to be connected. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler should connect the port `s` of `mm2s` to the port `lte_0` of AI Engine port 0. The name of the AI Engine port is one that has been defined in `graph.cpp` PLIO instantiation.|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
-Note that the Vitis compiler calls Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado is dependent on what `-target` option is set on the the Vitis compiler command line.
+Note that the Vitis compiler calls Vivado™ IP integrator under the hood to build the design. The platform and kernels are input to the Vivado™ Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado is dependent on what `-target` option is set on the the Vitis compiler command line.
 
 Note that you can now view the Vivado project, which is located in the `build/[hw|hw_emu]/\_x/link/vivado/vpl/prj` directory.
 
@@ -629,7 +629,7 @@ Press CtrlA, let go of the keyboard, and then press x
 <details>
   <summary>TARGET=hw: Run on Hardware</summary>
 
-## TARGET=hw: Run on Hardware	  
+## Run on Hardware	  
 To run your design on hardware, re-run the following steps with TARGET=hw:
 
 ```
@@ -702,9 +702,9 @@ For this design, the components are added by the `v++ -l` step (make XCLBIN in t
 * `ai_engine_system` block which includes the data width converter and clock converter kernels
 * Any other necessary connections and interfaces
 
-To see a schematic view of the design with the extended platform (as shown in the following figure), open in the Vivado  `build/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr` folder.
+To see a schematic view of the design with the extended platform (as shown in the following figure), open in the Vivado  `build/lenet_x1/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr` folder.
 
-![Image of Lenet Block Schematic](images/Lenet_block_diagram_2022.PNG)
+![Image of Lenet Block Schematic](images/Lenet_block_diagram.PNG)
 
 </details>
 
@@ -780,11 +780,11 @@ An AI Engine kernel is a C/C++ program written using specialized intrinsic calls
 
 The AI Engine compiler writes a summary of compilation results called `lenet.aiecompile_summary`. You can view the graph by running the following command:
 
-`vitis_analyzer build/Work/lenet.aiecompile_summary`
+`vitis_analyzer build/lenet_x1/hw/Work/graph.aiecompile_summary`
 
 The following figure shows the graph representation of the AI Engine kernels. The five cores correspond to the description shown in the block diagram in the [Tutorial Overview](#tutorial-overview) section; core01 implements the first convolutional layer, core02 implements the second convolutional layer, core03 and 05 implement FC1 and ReLu, and core04 implements the FC2.
 
-![Image of LeNet AI Engine Graph](images/Lenet_graph.PNG)
+![Image of LeNet AI Engine Graph](images/Lenet_graph_view.PNG)
 
 Note: Also defined in the AI Engine graph are the weights (`core<xx>lut.h`). The weights are used in the matrix multiplication with the input matrix running in the AI Engine tiles. Whereas the input feature maps (IFMs) are streamed from the PL to the AI Engine, the weights are stored in the AI Engine tiles.
 
@@ -836,7 +836,7 @@ Use `source` function to source the kernel files and `runtime<ratio>` to provide
 source(core01) = "core01.cc";
 runtime<ratio>(core01) = 0.6;
 ```
-The source file `core01.cc` contains the source code for core01. The ratio of the function run time compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
+The source file `core01.cc` contains the source code for core01. The ratio of the function runtime compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
 
 ```
 source(core01) = "core01.cc";
@@ -847,7 +847,7 @@ This is done by using the templated connect<> object. The connection can be wind
 In this description, ports are referred to by indices. An example of the connection between the input port of the graph and input of an AI Engine kernel is as follows:
 
 ```
-connect< adf::window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
+connect< window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
 single_buffer(core01.in[0]);
 
 ```
@@ -859,7 +859,7 @@ connect<>(core01lut,core01);
 ```
 Based on the datatype of `core01lut`, the API call is inferred as a look up table in the AI Engine tile.
 
-#### LeNet Top level Application
+#### LeNet Top Level Application
 Define a top level application file (`graph.cpp` in this design) that creates PLIOs, kernels and connect them together to define a dataflow, for example:
 
 The main program is the driver of the graph(graph.cpp). It contains an instance of the graph class and used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
@@ -948,7 +948,7 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 ```
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
-### 5. Open Graph, Obtain Handle, and Execute Graph
+#### 5. Open Graph, Obtain Handle, and Execute Graph
 The following registration function was added in 2023.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
@@ -984,22 +984,40 @@ xrt_trace=true
 data_transfer_trace=fine
 trace_buffer_size=500M
 ```
+Then run the design with the steps in **Run on Hardware** in [Make Steps](#make-steps).
 Transfer the .csv and \_summary files back to the design directory, for example:
 ```
 scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
 Then run the Vitis analyzer on the summary file, for example, `vitis_analyzer xrt.run_summary &`
+The following is the snapshot of the time trace for the LeNet design run in hw.
+![HW result of Lenet design](images/Lenet_trace_2023.PNG)
 
-The following is the snapshot of the time trace for the LeNet design run.
+Throughput calculation is as follows:
+```
+Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
+					 = 2177 us
+Throughput = (no of images / processing time)
+
+Throughput (with 156.25 MHz) = 100 / 2177us
+		             = 45,935 images/s
+
+The processing time reported by trace is with the data mover kernel running at 156.250MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
+Throughput (scaled to 312.5 MHz),
+	  = 45,935 images/s x (312.5 / 156.25 ) 
+	  = 91,870 images/s
+```
+The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
 ![Emulation result of Lenet design](images/Lenet_hw_emu_Processing_time.png)
 
 Throughput calculation is as follows:
 ```
-Difference in timeline (processing time) = 1068.96 us
-Throughput = no of images / Processing time
-          = 100 / 1068.96 us
-          = 93,548.86 images/s
+Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
+					 = 1068.96 us
+Throughput = (no of images / Processing time)
+           = 100 / 1068.96 us
+           = 93,548.86 images/s
 
 ```
 
@@ -1069,7 +1087,7 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT Github Repo](https://github.com/Xilinx/XRT): Contains the XRT source code.
 
-* [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
+* [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls.
 
 #### [Vitis Unified Software Development Platform Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
@@ -1083,12 +1101,12 @@ The following are links to Vitis related information referenced in this tutorial
 
 ##### Revision History
 
+* Apr 2023 - Updated for 2023.1
 * Jan 2023 - Updated for 2022.2
 * May 2022 - Updated for 2022.1
 * Oct 2021 - Updated for 2021.2
 * July 2021 - Updated for 2021.1
 * Dec 2020 - Initial Release
-
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
