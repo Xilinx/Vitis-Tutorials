@@ -1,6 +1,26 @@
 # Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+
+#relative directory
+RELATIVE_PROJECT_DIR := ../
+
+#absolute directory 
+PROJECT_HWLINK_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+
+PROJECT_AIE_DIR= $(PROJECT_HWLINK_DIR)/../dsp_AIE
+PROJECT_PS_DIR = $(PROJECT_HWLINK_DIR)/../dsp_PS
+PROJECT_PL_DIR = $(PROJECT_HWLINK_DIR)/../dsp_PL
+
+show_dir:
+		-@echo from dsp_system_hw_link, RELATIVE PROJECT DIR is:  $(RELATIVE_PROJECT_DIR)
+		-@echo from dsp_system_hw_link, CURRENT  PROJECT DIR is:  $(PROJECT_HWLINK_DIR)
+		-@echo from dsp_system_hw_link, PS       PROJECT DIR is:  $(PROJECT_PS_DIR)
+		-@echo from dsp_system_hw_link, PL       PROJECT DIR is:  $(PROJECT_PL_DIR)
+		-@echo from dsp_system_hw_link, AIE      PROJECT DIR is:  $(PROJECT_AIE_DIR)
+
+
+
 BOARD=vck190
 
 
@@ -17,9 +37,9 @@ VPP_OPTS = --target hw
 BINARY_CONTAINERS += binary_container_1.xsa
 
 BUILD_SUBDIRS += binary_container_1.build
-BINARY_CONTAINER_1_OBJS += ../../dsp_PL/Hardware/build/mm2s.xo
-BINARY_CONTAINER_1_OBJS += ../../dsp_PL/Hardware/build/s2mm.xo
-BINARY_CONTAINER_1_OBJS += ../../dsp_AIE/Hardware/libadf.a
+BINARY_CONTAINER_1_OBJS += $(PROJECT_PL_DIR)/Hardware/build/mm2s.xo
+BINARY_CONTAINER_1_OBJS += $(PROJECT_PL_DIR)/Hardware/build/s2mm.xo
+BINARY_CONTAINER_1_OBJS += $(PROJECT_AIE_DIR)/Hardware/libadf.a
 
 ALL_MESSAGE_FILES = $(subst .xsa,.mdb,$(BINARY_CONTAINERS))
 
@@ -27,8 +47,8 @@ ALL_MESSAGE_FILES = $(subst .xsa,.mdb,$(BINARY_CONTAINERS))
 # primary build targets
 #
 
-.PHONY: all clean
-all: $(BINARY_CONTAINERS)
+.PHONY: all clean show_dir
+all: 	show_dir 	$(BINARY_CONTAINERS)
 
 
 clean:
@@ -37,11 +57,6 @@ clean:
 	-$(RMDIR) $(BUILD_SUBDIRS)
 	-$(RMDIR) .Xil .ipcache *.mdb *.log .crash*
 
-ifeq ($(MAKECMDGOALS),incremental)
-.PHONY: binary_container_1.xsa
-.PHONY: ../../dsplib_fir_PL/Hardware/build/mm2s.xo
-.PHONY: ../../dsplib_fir_PL/Hardware/build/s2mm.xo
-endif
 
 .PHONY: incremental
 incremental: all
@@ -53,6 +68,6 @@ nothing:
 # binary container: binary_container_1.xsa
 #
 
-binary_container_1.xsa: $(BINARY_CONTAINER_1_OBJS) binary_container_1-link.cfg ../system.cfg
-	-@echo $(VPP_LINKER) $(VPP_OPTS) --link --config ../system.cfg  --platform $(VITIS_PLATFORM_XPFM) --config binary_container_1-link.cfg -o"$@" $(BINARY_CONTAINER_1_OBJS) > binary_container_1.xsa.sh
-	$(VPP_LINKER) $(VPP_OPTS) --link --config ../system.cfg  --platform $(VITIS_PLATFORM_XPFM) --config binary_container_1-link.cfg -o"$@" $(BINARY_CONTAINER_1_OBJS)
+binary_container_1.xsa: $(BINARY_CONTAINER_1_OBJS) $(PROJECT_HWLINK_DIR)/Hardware/binary_container_1-link.cfg $(PROJECT_HWLINK_DIR)/system.cfg
+	-@echo $(VPP_LINKER) $(VPP_OPTS) --link --config $(PROJECT_HWLINK_DIR)/system.cfg  --platform $(VITIS_PLATFORM_XPFM) --config $(PROJECT_HWLINK_DIR)/Hardware/binary_container_1-link.cfg -o"$@" $(BINARY_CONTAINER_1_OBJS) > binary_container_1.xsa.sh
+	$(VPP_LINKER) $(VPP_OPTS) --link --config $(PROJECT_HWLINK_DIR)/system.cfg  --platform $(VITIS_PLATFORM_XPFM) --config  $(PROJECT_HWLINK_DIR)/Hardware/binary_container_1-link.cfg -o"$@" $(BINARY_CONTAINER_1_OBJS)

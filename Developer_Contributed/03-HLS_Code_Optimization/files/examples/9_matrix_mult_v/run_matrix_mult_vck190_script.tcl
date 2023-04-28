@@ -17,7 +17,7 @@ set_top standalone_mmult
 add_files src/mmult_accel.cpp
 add_files -tb src/mmult_test.cpp
 open_solution "solution1"   -flow_target vivado
-set_part {xczu9eg-ffvb1156-2-i}
+set_part {xcvc1902-vsva2197-2MP-e-S}
 create_clock -period 3.0 -name default
 #config_interface -m_axi_latency 0
 config_export -format ip_catalog -rtl vhdl
@@ -26,7 +26,7 @@ csim_design -clean
 csynth_design
 
 open_solution "solution2"    -flow_target vivado
-set_part {xczu9eg-ffvb1156-2-i}
+set_part {xcvc1902-vsva2197-2MP-e-S}
 create_clock -period 3.0 -name default
 #config_interface -m_axi_latency 0
 config_export -format ip_catalog -rtl vhdl
@@ -57,7 +57,7 @@ set_top HLS_accel
 add_files src/mmult_accel.cpp -cflags "-DDB_DEBUG"
 add_files -tb src/mmult_test.cpp -cflags "-DDB_DEBUG"
 open_solution "solution0"    -flow_target vivado
-set_part {xczu9eg-ffvb1156-2-i}
+set_part {xcvc1902-vsva2197-2MP-e-S}
 create_clock -period 3.0 -name default
 set_clock_uncertainty 0.5
 set_directive_inline "mmult_hw"

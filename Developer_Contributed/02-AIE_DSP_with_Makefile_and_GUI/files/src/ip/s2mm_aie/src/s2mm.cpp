@@ -8,7 +8,8 @@
 
 extern "C" {
 
-void s2mm(ap_int<32>* mem, hls::stream<qdma_axis<32, 0, 0, 0>  >& s, int size) {
+//void s2mm(ap_int<32>* mem, hls::stream<qdma_axis<32, 0, 0, 0>  >& s, int size) {
+void s2mm(ap_int<32>* mem, hls::stream<ap_axis<32, 0, 0, 0>  >& s, int size) {
 #pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
 
 #pragma HLS interface axis port=s
@@ -19,7 +20,8 @@ void s2mm(ap_int<32>* mem, hls::stream<qdma_axis<32, 0, 0, 0>  >& s, int size) {
 
 	for(int i = 0; i < size; i++) {
 #pragma HLS PIPELINE II=1
-		qdma_axis<32, 0, 0, 0> x = s.read();
+		//qdma_axis<32, 0, 0, 0> x = s.read();
+		ap_axis<32, 0, 0, 0> x = s.read();
 		mem[i] = x.data;
 	}
 

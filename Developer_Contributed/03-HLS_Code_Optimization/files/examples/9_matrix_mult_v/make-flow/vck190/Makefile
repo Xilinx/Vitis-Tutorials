@@ -3,11 +3,42 @@
 
 SHELL := /bin/bash
 
-PHONY  = help all clean
+PHONY  = help all clean show_dir
 PHONY += kernels hw_link system host vck190_build vck190_prepare
 .PHONY: $(PHONY)
 
-all:	vck190_prepare vck190_build
+
+
+#========================================================
+# Source directories
+# =========================================================
+RELATIVE_PROJECT_DIR := ./
+
+#absolute directory
+PROJECT_DIR	   := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+PROJECT_PS_DIR	   := $(PROJECT_DIR)/mmult
+PROJECT_PL_DIR     := $(PROJECT_PS_DIR)/mmult_kernels
+PROJECT_HWLINK_DIR := $(PROJECT_PS_DIR)/mmult_system_hw_link
+PROJECT_SYSTEM_DIR := $(PROJECT_PS_DIR)/mmult_system
+
+show_dir:
+		-@echo " "
+		-@echo " "
+		-@echo "from $(realpath .)"
+		-@echo "RELATIVE    PROJECT DIR is:  $(RELATIVE_PROJECT_DIR)"
+		-@echo "CURRENT     PROJECT DIR is:  $(PROJECT_DIR)"
+		-@echo "PL KERNELS  PROJECT DIR is:  $(PROJECT_PL_DIR)"
+		-@echo "PS ARM HOST PROJECT DIR is:  $(PROJECT_PS_DIR)"
+		-@echo "HW LINK     PROJECT DIR is:  $(PROJECT_HWLINK_DIR)"
+		-@echo "SYSTEM      PROJECT DIR is:  $(PROJECT_SYSTEM_DIR)"
+		-@echo " "
+		-@echo " "
+
+
+
+
+
+all:	show_dir vck190_prepare vck190_build
 
 vck190_build:
 		$(MAKE) kernels

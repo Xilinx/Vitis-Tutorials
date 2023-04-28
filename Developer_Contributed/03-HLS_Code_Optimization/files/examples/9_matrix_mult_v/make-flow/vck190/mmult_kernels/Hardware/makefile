@@ -1,17 +1,37 @@
 # Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+
+#relative directory
+RELATIVE_PROJECT_DIR := ../
+
+#absolute directory
+PROJECT_DIR	  := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+PROJECT_PL_DIR	  := $(PROJECT_DIR)
+PROJECT_PS_DIR     = $(PROJECT_PL_DIR)/../mmult
+PROJECT_SYSTEM_DIR = $(PROJECT_PL_DIR)/../mmult_system
+PROJECT_HWLINK_DIR = $(PROJECT_PL_DIR)/../mmult_system_hw_link
+
+show_dir:
+		-@echo " "
+		-@echo " "
+		-@echo "from $(realpath .)"
+		-@echo "RELATIVE    PROJECT DIR is:  $(RELATIVE_PROJECT_DIR)"
+		-@echo "CURRENT     PROJECT DIR is:  $(PROJECT_DIR)"
+		-@echo "PL KERNELS  PROJECT DIR is:  $(PROJECT_PL_DIR)"
+		-@echo "PS ARM HOST PROJECT DIR is:  $(PROJECT_PS_DIR)"
+		-@echo "HW LINK     PROJECT DIR is:  $(PROJECT_HWLINK_DIR)"
+		-@echo "SYSTEM      PROJECT DIR is:  $(PROJECT_SYSTEM_DIR)"
+		-@echo " "
+		-@echo " "
+
+
 BOARD=vck190
 
 # compiler tools
 VPP ?= ${XILINX_VITIS}/bin/v++
 RM = rm -f
 RMDIR = rm -rf
-
-#VITIS_PLATFORM = xilinx_$(BOARD)_base_202220_1
-#VITIS_PLATFORM_DIR = $(XILINX_VITIS)/base_platforms/xilinx_zcu102_base_202220_1
-#VITIS_PLATFORM_PATH = $(XILINX_VITIS)/base_platforms/$(VITIS_PLATFORM)/$(VITIS_PLATFORM).xpfm
-
 
 TARGET = hw
 VPP_OPTS = --target $(TARGET)
@@ -21,15 +41,13 @@ VPP_OPTS = --target $(TARGET)
 #
 
 
-BUILD_SUBDIRS += build
-HW_KERNEL_OBJS += build/HLS_accel.xo
-SRC_KERNEL_OBJS += build/HLS_accel.xo
-BUILD_SUBDIRS += build
-HW_KERNEL_OBJS += build/mm2s.xo
-SRC_KERNEL_OBJS += build/mm2s.xo
-BUILD_SUBDIRS += build
-HW_KERNEL_OBJS += build/s2mm.xo
-SRC_KERNEL_OBJS += build/s2mm.xo
+BUILD_SUBDIRS    = $(PROJECT_PL_DIR)/Hardware/build
+HW_KERNEL_OBJS  += $(PROJECT_PL_DIR)/Hardware/build/HLS_accel.xo
+SRC_KERNEL_OBJS += $(PROJECT_PL_DIR)/Hardware/build/HLS_accel.xo
+HW_KERNEL_OBJS  += $(PROJECT_PL_DIR)/Hardware/build/mm2s.xo
+SRC_KERNEL_OBJS += $(PROJECT_PL_DIR)/Hardware/build/mm2s.xo
+HW_KERNEL_OBJS  += $(PROJECT_PL_DIR)/Hardware/build/s2mm.xo
+SRC_KERNEL_OBJS += $(PROJECT_PL_DIR)/Hardware/build/s2mm.xo
 
 ALL_MESSAGE_FILES = $(subst .xo,.o,.mdb,$(SRC_KERNEL_OBJS))
 
@@ -38,7 +56,7 @@ ALL_MESSAGE_FILES = $(subst .xo,.o,.mdb,$(SRC_KERNEL_OBJS))
 #
 
 .PHONY: all clean
-all: $(HW_KERNEL_OBJS)
+all: show_dir	$(HW_KERNEL_OBJS)
 
 
 clean:
@@ -56,17 +74,17 @@ nothing:
 # Hw Kernels compile;
 #
 
-build/HLS_accel.xo: ../src/mmult_accel.cpp ../src/mmult.h HLS_accel-compile.cfg
+$(PROJECT_PL_DIR)/Hardware/build/HLS_accel.xo: $(PROJECT_PL_DIR)/src/mmult_accel.cpp $(PROJECT_PL_DIR)/src/mmult.h $(PROJECT_PL_DIR)/Hardware/HLS_accel-compile.cfg
 	-@mkdir -p $(@D)
 	-@$(RM) $@
-	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config HLS_accel-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"
+	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config $(PROJECT_PL_DIR)/Hardware/HLS_accel-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"
 
-build/mm2s.xo: ../src/mm2s.cpp mm2s-compile.cfg
+$(PROJECT_PL_DIR)/Hardware/build/mm2s.xo: $(PROJECT_PL_DIR)/src/mm2s.cpp $(PROJECT_PL_DIR)/Hardware/mm2s-compile.cfg
 	-@mkdir -p $(@D)
 	-@$(RM) $@
-	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config mm2s-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"
+	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config $(PROJECT_PL_DIR)/Hardware/mm2s-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"
 
-build/s2mm.xo: ../src/s2mm.cpp s2mm-compile.cfg
+$(PROJECT_PL_DIR)/Hardware/build/s2mm.xo: $(PROJECT_PL_DIR)/src/s2mm.cpp $(PROJECT_PL_DIR)/Hardware/s2mm-compile.cfg
 	-@mkdir -p $(@D)
 	-@$(RM) $@
-	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config s2mm-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"
+	$(VPP) $(VPP_OPTS) --compile -I"$(<D)" --config $(PROJECT_PL_DIR)/Hardware/s2mm-compile.cfg --platform $(VITIS_PLATFORM_XPFM) -o"$@" "$<"

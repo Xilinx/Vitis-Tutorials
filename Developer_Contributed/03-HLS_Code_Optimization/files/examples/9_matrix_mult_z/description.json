@@ -16,17 +16,17 @@
         ],
 
         "targets": [
-            "vitis_hw_build"
+          "vitis_hw_build",
+            "vitis_hw_run"
         ],
 	"make_options": [
 		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm'"
 	],
         "custom_build_target": {
             "all": "all",
-            "hw": "all"
+            "hw": "sd_card"
         },
-
-
+        "custom_board_target": "run_test",
         "tasks": {
            "build": {
                "pre_exec": ["./env_setup_zynqmp.sh"]

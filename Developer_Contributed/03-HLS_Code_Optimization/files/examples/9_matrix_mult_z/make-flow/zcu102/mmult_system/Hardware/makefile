@@ -2,6 +2,31 @@
 # SPDX-License-Identifier: MIT
 
 
+#relative directory
+RELATIVE_PROJECT_DIR := ../
+
+#absolute directory
+PROJECT_DIR	   := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+PROJECT_SYSTEM_DIR := $(PROJECT_DIR)
+PROJECT_PS_DIR     := $(PROJECT_SYSTEM_DIR)/../mmult
+PROJECT_PL_DIR     := $(PROJECT_SYSTEM_DIR)/../mmult_kernels
+PROJECT_HWLINK_DIR := $(PROJECT_SYSTEM_DIR)/../mmult_system_hw_link
+
+show_dir:
+		-@echo " "
+		-@echo " "
+		-@echo "from $(realpath .)"
+		-@echo "RELATIVE    PROJECT DIR is:  $(RELATIVE_PROJECT_DIR)"
+		-@echo "CURRENT     PROJECT DIR is:  $(PROJECT_DIR)"
+		-@echo "PL KERNELS  PROJECT DIR is:  $(PROJECT_PL_DIR)"
+		-@echo "PS ARM HOST PROJECT DIR is:  $(PROJECT_PS_DIR)"
+		-@echo "HW LINK     PROJECT DIR is:  $(PROJECT_HWLINK_DIR)"
+		-@echo "SYSTEM      PROJECT DIR is:  $(PROJECT_SYSTEM_DIR)"
+		-@echo " "
+		-@echo " "
+
+
+
 
 BOARD=zcu102
 
@@ -13,18 +38,16 @@ RM = rm -f
 RMDIR = rm -rf
 
 
-#XILINX_VITIS ?= /media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2
-
 VPP ?= ${XILINX_VITIS}/bin/v++
 
 
-
-
-#VITIS_PLATFORM = xilinx_zcu102_base_202220_1
-#VITIS_PLATFORM_DIR = /media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2/base_platforms/xilinx_zcu102_base_202220_1
-#VITIS_PLATFORM_PATH = $(VITIS_PLATFORM_DIR)/xilinx_zcu102_base_202220_1.xpfm
 KERNEL_IMAGE = $(COMMON_IMAGE_ZYNQMP)/Image
 ROOTFS = $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4
+
+SYS_XCLBIN = $(PROJECT_SYSTEM_DIR)/Hardware/binary_container_1.xclbin
+
+EMBEDDED_PACKAGE_OUT = $(PROJECT_SYSTEM_DIR)/Hardware/package
+EMBEDDED_EXEC_SCRIPT = $(PROJECT_SYSTEM_DIR)/Hardware/embedded_exec.sh
 
 
 #
@@ -36,16 +59,32 @@ ROOTFS = $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4
 # primary build targets
 #
 
+#package:
+#	-@echo Running Package Step for the System Project.
+#	-@echo $(VPP) --package --config package.cfg  ../../mmult_system_hw_link/Hardware/binary_container_1.xclbin  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o binary_container_1.xclbin
+#	$(VPP) --package --config package.cfg  ../../mmult_system_hw_link/Hardware/binary_container_1.xclbin  --platform $(VITIS_PLATFORM_XPFM)  --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o binary_container_1.xclbin
+
 package:
 	-@echo Running Package Step for the System Project.
-	-@echo $(VPP) --package --config package.cfg  ../../mmult_system_hw_link/Hardware/binary_container_1.xclbin  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o binary_container_1.xclbin
-	$(VPP) --package --config package.cfg  ../../mmult_system_hw_link/Hardware/binary_container_1.xclbin  --platform $(VITIS_PLATFORM_XPFM)  --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o binary_container_1.xclbin
+	#-@echo $(VPP) --package --config $(PROJECT_SYSTEM_DIR)/Hardware/package.cfg  $(PROJECT_HWLINK_DIR)/Hardware/binary_container_1.xclbin  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o $(SYS_XCLBIN)
+	$(VPP) --package --config $(PROJECT_SYSTEM_DIR)/Hardware/package.cfg \
+	$(PROJECT_HWLINK_DIR)/Hardware/binary_container_1.xclbin  \
+	--platform         $(VITIS_PLATFORM_XPFM) \
+	--package.rootfs=$(ROOTFS) \
+	--package.kernel_image=$(KERNEL_IMAGE) \
+	--package.sd_file  $(EMBEDDED_EXEC_SCRIPT) \
+	--package.sd_file  $(PROJECT_PS_DIR)/Hardware/mmult \
+	--package.out_dir  $(EMBEDDED_PACKAGE_OUT) \
+	--package.boot_mode=sd \
+	-o $(SYS_XCLBIN)
+
+
 
 clean:
-	$(RMDIR) ./package.build
-	${RMDIR} package
-	${RM} *.xclbin *.log *~
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT)
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build
+	${RM} *.xclbin *.log *~ $(SYS_XCLBIN)*
 
-.PHONY: all package clean
+.PHONY: all package clean show_dir
 
-all: package
+all: show_dir package

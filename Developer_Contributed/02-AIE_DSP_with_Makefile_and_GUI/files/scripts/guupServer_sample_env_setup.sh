@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:    27 Feb 20223
+# Date:   13 April 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR VCK190 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -15,7 +15,7 @@
 # set Platform, Vitis and Petalinux repo
 # =======================================================
 #ts 2022.2_daily_latest -petalinux petalinux-v2022.2_daily_latest
-ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
+#ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
 
 
 # =======================================================
@@ -29,19 +29,19 @@ BASE_NUM=202310_1
 
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
-export WRK_DIR=/group/xirguup/danieleb/ide2023.1/Vitis-Tutorials-2023.1/Developer_Contributed
+export WRK_DIR=/group/xirguup/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
 
 
 # =======================================================
 # to emulate SPRITE regression env in GUUP Servers
 # =======================================================
-cd ${WRK_DIR}/Vitis-Tutorials-Admin-2023.1_next
-source env_setup_petalinux_versal.sh
+cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2023.1_next
+source env_setup_versal.sh
 ##back to the wrk dir
 cd ${WRK_DIR}/${TUTORIAL}/files/
 
 
-==================================================================================
+#==================================================================================
 # Set Versal Common Image repo (OR eventually install it into /tmp)
 # This local foldr must not be a "NFS" hard disk drive, only "ext4" is supported
 # ==================================================================================
@@ -66,12 +66,15 @@ cd ${WRK_DIR}/${TUTORIAL}/files
 source ${WRK_DIR}/${TUTORIAL}/files/make-flow/local_var_setup.sh
 '
 
+
 # ========================================================
 # Set DSP Library for Vitis
 # ========================================================
+## already set in "env_setup.sh" but not yet available in EMEA servers
 #export DSPLIB_ROOT=<Path to 2023.1 DSP Libs - Directory>
 export DSPLIB_VITIS=/group/xirguup/danieleb/ide2022.2/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
+
 
 # =========================================================
 # Platform Selection...
@@ -127,3 +130,4 @@ echo "ROOTFS               "  ${ROOTFS}
 echo "VITIS_PLATFORM_XPFM  "  ${VITIS_PLATFORM_XPFM}
 echo "PLATFORM_REPO_PATHS  "  ${PLATFORM_REPO_PATHS}
 #echo "PATH " ${PATH}
+echo "DSPLIB_ROOT          "  ${DSPLIB_VITIS}/dsp

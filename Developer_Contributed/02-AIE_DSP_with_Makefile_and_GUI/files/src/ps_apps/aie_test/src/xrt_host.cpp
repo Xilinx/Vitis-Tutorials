@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
 
 //  my_graph.end();
 //  std::cout << STR_PASSED << "my_graph.end()" << std::endl;
-  
+
   out_0_run.wait();
   std::cout << STR_PASSED << "out_0_run.wait()" << std::endl;
 
@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
 
   // Verifying the results
   int error_cnt = 0;
-  std::cout << std::endl << STR_INFO << "Veryfing output data vs. golden ones " << std::endl << std::endl;  
+  std::cout << std::endl << STR_INFO << "Veryfing output data vs. golden ones " << std::endl << std::endl;
   for(int i = 0; i < (wSizeOut * 2) - 8; i++) {
     if(out_0_bo_mapped[8+i] != golden[i]) {
 	    printf("Error found @ %d, %d != %d\n", i, out_0_bo_mapped[i], golden[i]);
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  std::cout << std::endl << (error_cnt ? STR_FAILED : STR_PASSED) << argv[0] << std::endl << std::endl;
+  std::cout << std::endl << ((error_cnt>0) ? STR_FAILED : STR_PASSED) << argv[0] << std::endl << std::endl;
 
-  return (error_cnt ? EXIT_SUCCESS : EXIT_FAILURE);
+  return ((error_cnt>0) ? EXIT_FAILURE : EXIT_SUCCESS );
 }

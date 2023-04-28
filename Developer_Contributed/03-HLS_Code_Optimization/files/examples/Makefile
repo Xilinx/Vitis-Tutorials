@@ -46,9 +46,9 @@ help::
 
 vck190_clean:	mmult_vclean
 zcu102_clean:	vadd_zclean mmult_zclean
-clean:				hls_clean zcu102_clean
-#all:					mmult_zcu102 hls_kernels vadd_zcu102
-all:					hls_kernels2
+clean:		hls_clean zcu102_clean
+#all:		mmult_zcu102 hls_kernels vadd_zcu102
+all:		hls_kernels2
 #vadd_zcu102
 
 hls_clean:
@@ -71,9 +71,6 @@ hls_kernels:
 	$(MAKE) -C ./6_sqrt              kernels
 	$(MAKE) -C ./7_atan2             kernels
 	$(MAKE) -C ./8_vect_add          kernels
-	$(MAKE) -C ./6_sqrt              kernels
-	$(MAKE) -C ./7_atan2             kernels
-	$(MAKE) -C ./8_vect_add          kernels
 	$(MAKE) -C ./9_matrix_mult_z     kernels
 
 hls_kernels2:
@@ -92,8 +89,16 @@ mmult_zclean:
 mmult_zcu102:
 		$(MAKE) -C ./9_matrix_mult_z       zcu102_all
 
+show_dir_zcu102:
+		$(MAKE) -C ./9_matrix_mult_z       show_dir
+
 # REMEMBER THAT VCK190 NEEDS DIFFERENT ENV FROM ZCU102
 mmult_vclean:
 		$(MAKE) -C ./9_matrix_mult_v       vck190_clean
+
 mmult_vck190:
 		$(MAKE) -C ./9_matrix_mult_v       vck190_all
+
+show_dir_vck190:
+		$(MAKE) -C ./9_matrix_mult_v       show_dir
+

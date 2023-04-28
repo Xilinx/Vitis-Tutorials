@@ -1,6 +1,28 @@
 # Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+#relative directory
+RELATIVE_PROJECT_DIR := ../
+
+#absolute directory
+PROJECT_DIR	   := $(shell readlink -f $(RELATIVE_PROJECT_DIR))
+PROJECT_SYSTEM_DIR := $(PROJECT_DIR)
+PROJECT_PS_DIR     := $(PROJECT_SYSTEM_DIR)/../mmult
+PROJECT_PL_DIR     := $(PROJECT_SYSTEM_DIR)/../mmult_kernels
+PROJECT_HWLINK_DIR := $(PROJECT_SYSTEM_DIR)/../mmult_system_hw_link
+
+show_dir:
+		-@echo " "
+		-@echo " "
+		-@echo "from $(realpath .)"
+		-@echo "RELATIVE    PROJECT DIR is:  $(RELATIVE_PROJECT_DIR)"
+		-@echo "CURRENT     PROJECT DIR is:  $(PROJECT_DIR)"
+		-@echo "PL KERNELS  PROJECT DIR is:  $(PROJECT_PL_DIR)"
+		-@echo "PS ARM HOST PROJECT DIR is:  $(PROJECT_PS_DIR)"
+		-@echo "HW LINK     PROJECT DIR is:  $(PROJECT_HWLINK_DIR)"
+		-@echo "SYSTEM      PROJECT DIR is:  $(PROJECT_SYSTEM_DIR)"
+		-@echo " "
+		-@echo " "
 
 
 BOARD=vck190
@@ -13,17 +35,15 @@ RM = rm -f
 RMDIR = rm -rf
 
 
-#XILINX_VITIS ?= /media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2
-
 VPP ?= ${XILINX_VITIS}/bin/v++
 
-
-
-#VITIS_PLATFORM = xilinx_$(BOARD)_base_202220_1
-#VITIS_PLATFORM_DIR = $(XILINX_VITIS)/base_platforms/xilinx_zcu102_base_202220_1
-#VITIS_PLATFORM_PATH = $(XILINX_VITIS)/base_platforms/$(VITIS_PLATFORM)/$(VITIS_PLATFORM).xpfm
 KERNEL_IMAGE = $(COMMON_IMAGE_VERSAL)/Image
 ROOTFS = $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+
+SYS_XCLBIN = $(PROJECT_SYSTEM_DIR)/Hardware/binary_container_1.xclbin
+
+EMBEDDED_PACKAGE_OUT = $(PROJECT_SYSTEM_DIR)/Hardware/package
+EMBEDDED_EXEC_SCRIPT = $(PROJECT_SYSTEM_DIR)/Hardware/embedded_exec.sh
 
 #
 # variables
@@ -36,14 +56,22 @@ ROOTFS = $(COMMON_IMAGE_VERSAL)/rootfs.ext4
 
 package:
 	-@echo Running Package Step for the System Project.
-	-@echo $(VPP) --package --config package.cfg  ../../mmult_system_hw_link/Hardware/binary_container_1.xsa  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o binary_container_1.xclbin
-	$(VPP) --package --config package.cfg   ../../mmult_system_hw_link/Hardware/binary_container_1.xsa  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE)  -o binary_container_1.xclbin
+	-@echo $(VPP) --package --config $(PROJECT_SYSTEM_DIR)/Hardware/package.cfg  $(PROJECT_HWLINK_DIR)/Hardware/binary_container_1.xsa  --platform $(VITIS_PLATFORM_XPFM) --package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) -o $(SYS_XCLBIN)
+	$(VPP) --package --config $(PROJECT_SYSTEM_DIR)/Hardware/package.cfg \
+	$(PROJECT_HWLINK_DIR)/Hardware/binary_container_1.xsa  \
+	--platform $(VITIS_PLATFORM_XPFM) \
+	--package.rootfs $(ROOTFS) --package.kernel_image $(KERNEL_IMAGE) \
+	--package.sd_file $(EMBEDDED_EXEC_SCRIPT)					\
+	--package.boot_mode=sd                            \
+	-o $(SYS_XCLBIN)
 
 
 clean:
-	$(RMDIR) ./package.build
-	${RMDIR} package binary*
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT)
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build
+	${RM} $(SYS_XCLBIN)*
+	${RM} *.xclbin *.log *~
 
-.PHONY: all package clean
+.PHONY: all package clean show_dir
 
-all: package
+all: show_dir package

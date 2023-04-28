@@ -23,7 +23,7 @@ BASE_NUM=202220_1
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
 #export WRK_DIR=/media/danieleb/DATA/${RELEASE}/Vitis-Tutorials-${RELEASE}/Developer_Contributed
-export WRK_DIR=/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed
+export WRK_DIR=/media/danieleb/DATA/2023.1/Vitis-Tutorials_2023.1/Developer_Contributed
 
 
 # =======================================================

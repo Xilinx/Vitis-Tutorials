@@ -269,6 +269,6 @@ int main(int argc, char* argv[]) {
   free(matOp1);
 
   //close program
-  std::cout << std::endl << (error_cnt ? STR_FAILED : STR_PASSED) << argv[0] << std::endl << std::endl;
-  return (error_cnt ? EXIT_SUCCESS : EXIT_FAILURE);
+  std::cout << std::endl << ( (error_cnt>0) ? STR_FAILED : STR_PASSED) << argv[0] << std::endl << std::endl;
+  return ( (error_cnt>0) ? EXIT_FAILURE : EXIT_SUCCESS );
 }

@@ -25,10 +25,11 @@ then
    # clean everything
    make clean
    # clean file text formats
-   source ./scripts/dos2unix_all.sh
+   #source ./scripts/dos2unix_all.sh
 
    # set the environment
    #source ./scripts/desktop_sample_env_setup.sh
+   source ./scripts/guupServer_sample_env_setup.sh
 
    ##############################################################################
    # prepare folders for the GUI-based flow
@@ -52,7 +53,6 @@ then
    make all TARGET=hw
    # return to <*/files> folder
    cd ..
-
 
 else
     echo ${arg}
