@@ -14,7 +14,7 @@ help:
 	@echo  "  make clean "
 	@echo  "  Command to remove the generated hardware and software files "
 	@echo  ""
-
+OPENCV_LIBS := $(shell pkg-config --libs opencv)
 TARGET := hw
 #PLATFORM := xilinx_u250_gen3x16_xdma_4_1_202210_1
 LIB_PATH = ./design_source/hw_src/Vitis_Libraries
@@ -23,6 +23,7 @@ XCLBIN := ./design_source/hw_src/alveo_example.xclbin
 all: | xclbin sw
 run : all
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+ifeq ($(OPENCV_LIBS),)
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./00_load_kernels alveo_example.xclbin
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./01_simple_malloc alveo_example.xclbin
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./02_aligned_malloc alveo_example.xclbin
@@ -30,11 +31,19 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./04_wide_vadd alveo_example.xclbin
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./05_pipelined_vadd alveo_example.xclbin
 	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./06_wide_processor alveo_example.xclbin
-	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./07_opencv_resize ../test_data/fish.jpg
-	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./08_opencv_resize_blur ../test_data/fish.jpg
-
-
+else 
+	cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./00_load_kernels alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./01_simple_malloc alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./02_aligned_malloc alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./03_buffer_map alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./04_wide_vadd alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./05_pipelined_vadd alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./06_wide_processor alveo_example.xclbin
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./07_opencv_resize ../test_data/fish.jpg
+        cd ./design_source/build; XCL_EMULATION_MODE=$(TARGET) ./08_opencv_resize_blur ../test_data/fish.jpg
+endif
 else
+ifeq ($(OPENCV_LIBS),)
 	cd ./design_source/build; ./00_load_kernels alveo_example.xclbin
 	cd ./design_source/build; ./01_simple_malloc alveo_example.xclbin
 	cd ./design_source/build; ./02_aligned_malloc alveo_example.xclbin
@@ -42,8 +51,17 @@ else
 	cd ./design_source/build; ./04_wide_vadd alveo_example.xclbin
 	cd ./design_source/build; ./05_pipelined_vadd alveo_example.xclbin
 	cd ./design_source/build; ./06_wide_processor alveo_example.xclbin
-	cd ./design_source/build; ./07_opencv_resize ../test_data/fish.jpg
-	cd ./design_source/build; ./08_opencv_resize_blur ../test_data/fish.jpg
+else
+	cd ./design_source/build; ./00_load_kernels alveo_example.xclbin
+        cd ./design_source/build; ./01_simple_malloc alveo_example.xclbin
+        cd ./design_source/build; ./02_aligned_malloc alveo_example.xclbin
+        cd ./design_source/build; ./03_buffer_map alveo_example.xclbin
+        cd ./design_source/build; ./04_wide_vadd alveo_example.xclbin
+        cd ./design_source/build; ./05_pipelined_vadd alveo_example.xclbin
+        cd ./design_source/build; ./06_wide_processor alveo_example.xclbin
+        cd ./design_source/build; ./07_opencv_resize ../test_data/fish.jpg
+        cd ./design_source/build; ./08_opencv_resize_blur ../test_data/fish.jpg
+endif
 endif
 
 xclbin: $(LIB_PATH)
