@@ -22,103 +22,103 @@ We can verify hardware configuration (clocks, memory) and software configuration
    # Report Platform Info
    platforminfo vck190_custom_dfx.xpfm
    ==========================
-   Basic Platform Information
-   ==========================
-   Platform:           vck190_custom_dfx
-   File:               ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
-   Description:        
-   A custom VCK190 DFX platform
-      
+Basic Platform Information
+==========================
+Platform:           vck190_custom_dfx
+File:               Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
+Description:        
+A custom VCK190 DFX platform
+    
 
-   =====================================================
-   Reconfigurable Partition Platform (Shell) Information
-   =====================================================
-   Reconfigurable Partition:
-      id: 0
-      Hardware Platform:            ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw/vck190_custom_dfx_rp.xsa
-      Hardware Emulation Platform:  ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw_emu/vck190_custom_dfx_hw_emu.xsa
+=====================================================
+Reconfigurable Partition Platform (Shell) Information
+=====================================================
+  Reconfigurable Partition:
+    id: 0
+    Hardware Platform:            Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw/vck190_custom_dfx_rp.xsa
+    Hardware Emulation Platform:  Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/hw_emu/vck190_custom_dfx_hw_emu.xsa
 
-   =====================================
-   Hardware Platform (Shell) Information
-   =====================================
-   Vendor:                           xilinx.com
-   Board:                            VCK190_Custom_DFX
-   Name:                             VCK190_Custom_DFX
-   Version:                          1.0
-   Generated Version:                2022.1
-   Hardware:                         1
-   Software Emulation:               1
-   Hardware Emulation:               0
-   Hardware Emulation Platform:      0
-   FPGA Family:                      versal
-   FPGA Device:                      xcvc1902
-   Board Vendor:                     xilinx.com
-   Board Name:                       xilinx.com:vck190:3.0
-   Board Part:                       xcvc1902-vsva2197-2MP-e-S
+=====================================
+Hardware Platform (Shell) Information
+=====================================
+Vendor:                           xilinx.com
+Board:                            versal_extensible_dfx_platform_base
+Name:                             versal_extensible_dfx_platform_base
+Version:                          1.0
+Generated Version:                2023.1
+Hardware:                         1
+Software Emulation:               1
+Hardware Emulation:               0
+Hardware Emulation Platform:      0
+FPGA Family:                      versal
+FPGA Device:                      xcvc1902
+Board Vendor:                     xilinx.com
+Board Name:                       xilinx.com:vck190:3.2
+Board Part:                       xcvc1902-vsva2197-2MP-e-S
 
-   ==========
-   Design IDs
-   ==========
-   Design ID:             1516183707
-   Parent ID:             2344579852
-   Node ID:               2751377573
-   AIE Node ID:           2751377573
-   AIE PU ID:             1516183707
+==========
+Design IDs
+==========
+  Design ID:             3720683517
+  Parent ID:             4170761552
+  Node ID:               3684403989
 
-   =================
-   Clock Information
-   =================
-   Default Clock Index: 0
-   Clock Index:         0
-      Frequency:         100.000000
+=================
+Clock Information
+=================
+  Default Clock Index: 0
+  Clock Index:         0
+    Frequency:         156.250000
+  Clock Index:         1
+    Frequency:         104.166666
 
-   =====================
-   Resource Availability
-   =====================
-   =====
-   Total
-   =====
-      LUTs:  895771
-      FFs:   1794682
-      BRAMs: 967
+=====================
+Resource Availability
+=====================
+  =====
+  Total
+  =====
+    LUTs:  893687
+    FFs:   1790592
+    BRAMs: 967
 
-   ==================
-   Memory Information
-   ==================
-   Bus SP Tag: NOC
+==================
+Memory Information
+==================
+  Bus SP Tag: DDR
 
-   =============================
-   Software Platform Information
-   =============================
-   Number of Runtimes:            1
-   Default System Configuration:  vck190_custom_dfx
-   System Configurations:
-   System Config Name:                      vck190_custom_dfx
-   System Config Description:               vck190_custom_dfx
-   System Config Default Processor Group:   xrt
-   System Config Default Boot Image:        standard
-   System Config Is QEMU Supported:         1
-   System Config Processor Groups:
-      Processor Group Name:      aiengine
-      Processor Group CPU Type:  ai_engine
-      Processor Group OS Name:   aie_runtime
-      Processor Group Name:      xrt
-      Processor Group CPU Type:  cortex-a72
-      Processor Group OS Name:   linux
-   System Config Boot Images:
-      Boot Image Name:           standard
-      Boot Image Type:           
-      Boot Image BIF:            vck190_custom_dfx/boot/linux.bif
-      Boot Image Data:           vck190_custom_dfx/xrt/image
-      Boot Image Boot Mode:      sd
-      Boot Image RootFileSystem: 
-      Boot Image Mount Path:     /mnt
-      Boot Image Read Me:        vck190_custom_dfx/boot/generic.readme
-      Boot Image QEMU Args:      vck190_custom_dfx/qemu/pmc_args.txt:vck190_custom_dfx/qemu/qemu_args.txt
-      Boot Image QEMU Boot:      
-      Boot Image QEMU Dev Tree:  
+=============================
+Software Platform Information
+=============================
+Number of Runtimes:            1
+Default System Configuration:  vck190_custom_dfx
+System Configurations:
+  System Config Name:                      vck190_custom_dfx
+  System Config Description:               vck190_custom_dfx
+  System Config Default Processor Group:   xrt
+  System Config Default Boot Image:        standard
+  System Config Is QEMU Supported:         1
+  System Config Processor Groups:
+    Processor Group Name:      aiengine
+    Processor Group CPU Type:  ai_engine
+    Processor Group OS Name:   aie_runtime
+    Processor Group Name:      xrt
+    Processor Group CPU Type:  cortex-a72
+    Processor Group OS Name:   linux
+  System Config Boot Images:
+    Boot Image Name:           standard
+    Boot Image Type:           
+    Boot Image BIF:            vck190_custom_dfx/boot/linux.bif
+    Boot Image Data:           vck190_custom_dfx/xrt/image
+    Boot Image Boot Mode:      sd
+    Boot Image RootFileSystem: 
+    Boot Image Mount Path:     /mnt
+    Boot Image Read Me:        vck190_custom_dfx/boot/generic.readme
+    Boot Image QEMU Args:      vck190_custom_dfx/qemu/pmc_args.txt:vck190_custom_dfx/qemu/qemu_args.txt
+    Boot Image QEMU Boot:      
+    Boot Image QEMU Dev Tree:  
    Supported Runtimes:
-   Runtime: C/C++
+  Runtime: C/C++
 
   ```
 
@@ -133,7 +133,7 @@ To verify the DFX platform functionality for PL kernels, we can do the following
 
 1. Create an acceleration project with a PL kernel (e.g. Vector Addition). Test the design by on hw-emu and hw. In this step we boot with static region and configure the RM on hardware. The hw-emu cannot fully reflect the configuration process but it can help to find potential issues in early stage.
 2. Create an acceleration project with another PL kernel (e.g. Burst Read Write). Reboot the board; Test the design on hw-emu and hw. In this step we do the same as step 1 but verified another kernel working as expected.
-3. Reboot the board; test the reconfiguration function by configuring a PL kernel design (Vector Addtion in this case), following up by re-configuring a new PL kernel (Burst Read Write in thiscase) design without reboot and check its results. 
+3. Reboot the board; test the reconfiguration function by configuring a PL kernel design (Vector Addition in this case), following up by re-configuring a new PL kernel (Burst Read Write in this case) design without reboot and check its results. 
 
 The user flow for configuring the XCLBIN to DFX platforms and flat platforms are identical.
 
@@ -189,7 +189,7 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 
 #### Test the Application on Hardware Emulation 
 
-**Note**:Please omit this step, we are updating the code to support hardware emulation ASAP.
+**Note**:Please omit this step, we are going to update the code to support hardware emulation ASAP.
 
 Validate the application with hardware emulation can first test the platform base functions such as boot initialization, PetaLinux configuration, basic acceleration feature, etc. DFX feature cannot be emulated in hw-emu. We will validate it in hardware next.
 
@@ -240,20 +240,7 @@ Validate the application with hardware emulation can first test the platform bas
 5. Launch the test application from UART console
 
    <details>
-
-   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
-
-     Go to auto mounted FAT32 partition and run the application like below:
-
-     ```
-     cd /run/media/sd-mmcblk0p1
-     ./simple_vadd krnl_vadd.xclbin
-     ```
-
-   </details>
-
-   <details>
-   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+   <summary><strong>Follow below steps to run the application</strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 
@@ -372,7 +359,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 
 #### Test the Application on Hardware Emulation
 
-   **Note**:Please omit this step, we are updating the code to support thre hardware emulation ASAP.
+   **Note**:Please omit this step, we are going to update the code to support hardware emulation ASAP.
 
 1. Launch Emulator for PS
 
@@ -414,20 +401,7 @@ To verify the platform functionality, we will create a project with AIE + PL ker
 4. Launch test application from UART console
 
    <details>
-
-   <summary><strong>Follow below steps to run the application if you are using common image from Xilinx Download Center</strong></summary>
-
-     Go to auto mounted FAT32 partition and run the application like below:
-
-     ```
-     cd /run/media/sd-mmcblk0p1
-     ./plaie binary_container_1.xclbin
-     ```
-
-   </details>
-
-   <details>
-   <summary><strong>Follow below steps to run the application if you are using image from your Petalinux project</strong></summary>
+   <summary><strong>Follow below steps to run the application </strong></summary>
 
      You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
 

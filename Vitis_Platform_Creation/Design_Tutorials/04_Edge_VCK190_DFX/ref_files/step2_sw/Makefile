@@ -1,16 +1,7 @@
-# Copyright 2021 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
 
 # User editing area start
 XSA_NAME=vck190_custom_dfx
@@ -73,8 +64,7 @@ dtb: $(DTB_FILE)
 #echo command is to avoid the return error code caused by the createdts command warning
 $(DTB_FILE): $(STATIC_XSA) system-user.dtsi
 	$(info executing createdts to generate dts file)
-	-xsct -eval "createdts -hw $(STATIC_XSA) -out $(ABS_BUILD_PATH) -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.2 -board versal-vck190-reva-x-ebm-01-reva -dtsi system-user.dtsi -compile" \
-	&& echo -e "\n***Device Tree generation Successful!\n" || echo -e "\n"
+	xsct -eval "createdts -hw $(STATIC_XSA) -out $(ABS_BUILD_PATH) -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2022.2 -board versal-vck190-reva-x-ebm-01-reva -dtsi system-user.dtsi -compile" 
 	
 
 
@@ -124,8 +114,8 @@ pfm: $(STATIC_XSA) $(RP_XSA) $(SW_FILES) ${BOOT_IMAGE}
 		static_xsa_path "${STATIC_XSA}" \
 		rp_xsa_path "${RP_XSA}" \
 		boot_dir_path "${BOOT_DIR}" \
-		emu_xsa_path "${HW_EMU_XSA}" \
 		boot_bin "${BOOT_IMAGE}" \
+		emu_xsa_path "${HW_EMU_XSA}" \
 		sd_dir_path "${SD_DIR}" \
 		platform_out "${PLATFORM_OUT_PATH}"
 

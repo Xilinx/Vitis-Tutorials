@@ -65,7 +65,7 @@ We will create the hardware design in Vivado first and then explain the details 
   
    ![CED Configuration](./images/step1/vivado_ced_config.png)
 
-   - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view for the staic region. In this example, we can keep the default settings.
+   - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view for the static region. In this example, we can keep the default settings.
    - Configure Interrupt Settings. You can choose how many interrupt should this platform support. 63 interrupts mode will use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
    - Configure Memory Settings. By default, the example design will enable the on board DDR4. If you select the additional on board memories option, you will enable the LPDDR4 on board. 
    - Click **Next**.
@@ -79,7 +79,7 @@ We will create the hardware design in Vivado first and then explain the details 
 
    At this stage, the Vivado block automation has already created a top block design and a dynamic region block. It added the CIPS, added a Control, Interface & Processing System (shorten with CIPS in the future), AXI NOC block, dfx_decoupler and all supporting logic blocks to the top diagram and added AI engine, AXI NOC and clock in dynamic region (VitisRegion.bd) and also applied all board presets for the VCK190. Block generation and address aperture setting has also been done. 
 
-   The comming is to explain the sub-module in this CED DFX platform. The sub-module design methdology is applied to all the DFX design.
+   The coming is to explain the sub-module in this CED DFX platform. The sub-module design methodology is applied to all the DFX design.
    
 #### DFX Platform Design Submodule Explanation
 

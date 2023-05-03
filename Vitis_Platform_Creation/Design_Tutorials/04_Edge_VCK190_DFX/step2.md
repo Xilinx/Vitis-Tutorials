@@ -69,7 +69,7 @@ createdts -hw <static XSA> \
     -zocl\
     -out . \
     -platform-name vck190_custom_dt \
-    -git-branch xlnx_rel_v2022.2 \
+    -git-branch xlnx_rel_v2023.1 \
     -dtsi system-user.dtsi \
     -board versal-vck190-reva-x-ebm-01-reva \
     -compile
@@ -105,8 +105,8 @@ We would store all the necessary files for Vitis platform creation flow. Here we
 1. Download and extract Common Images for Versal
 
    - Visit the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) download page.
-   - On Version 2022.1 page, download the Versal common image to step2_sw/build/common.
-   - Extract the downloaded package with command `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2022.1_04191534.tar.gz` 
+   - On Version 2023.1 page, download the Versal common image to step2_sw/build/common.
+   - Extract the downloaded package with command `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2023.1.tar.gz` 
 
 2. Prepare the boot components. 
 
@@ -133,7 +133,7 @@ We would store all the necessary files for Vitis platform creation flow. Here we
 3. Prepare the **sd_dir** directory. Contents in this directory will be packaged to FAT32 partition of SD card image by v++ package tool.
 
    - Create sd_dir directory: `mkdir step2_sw/build/sd_dir`
-   - Copy **boot.scr** from common image diretory **step2_sw/build/common** to the **step2_sw/build/sd_dir** directory. It's a script for u-boot initialization. U-boot will read it from fat32 partition during boot process.
+   - Copy **boot.scr** from common image directory **step2_sw/build/common** to the **step2_sw/build/sd_dir** directory. It's a script for u-boot initialization. U-boot will read it from fat32 partition during boot process.
 
 4. Prepare Linux software components for application creation. Platform packaging can add them or exclude them. Due to the software component size, they are usually kept outside of platforms so that these components can be reused among multiple platforms with the same architecture. On the other side, keeping Linux software components in the platform can prevent mix and match different combinations when delivering the platform from one team to another. Here we keep the Linux software components standalone.
 
@@ -244,11 +244,10 @@ The `platform create` command needs the following input values:
 
 - `-name`: Platform name
 - `-hw`: Static Hardware XSA file location
-- `-rp`: The reconfigureable partition info with ID, XSA and hardware emulation XSA info. ID is reserved for multi-partition DFX. For now only one partition is supported. Please use `id 0`.
+- `-rp`: The reconfigurable partition info with ID, XSA and hardware emulation XSA info. ID is reserved for multi-partition DFX. For now only one partition is supported. Please use `id 0`.
 - `-out`: platform output path. In this example, we set output directory to **step2_sw/build/pfm**.
 - `-sd-dir`: the directory that contains the files to be included in the FAT32 partition of the SD card image.
 
-> Note: Hardware and hardware emulation XSA are both required by v++ link in 2022.1. In future releases you will be able to provide only one XSA if you only need to run one target build.
 
 The `domain` command will setup one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. The DFX platform Linux domain requires user to provide the boot.bin to boot the static region. It will use files in `./sd_dir` to form the FAT32 partition of the SD card image. We have stored required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
 

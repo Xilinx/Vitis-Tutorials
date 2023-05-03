@@ -8,19 +8,19 @@
 
 # Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2022.2***
+***Version: 2023.1***
 
 In this module, we will create a custom DFX platform to run acceleration applications for VCK190 evaluation board. 
 
 DFX means Dynamic Function eXchange. Platforms that support DFX feature allows user to reload acceleration kernels during runtime. 
 
-User can define one reconfugurable partition (RP) region and create multiple reconfigurable modules (RM). The RP defines the boundary between reconfiguable region and static region. The RM defines the content to be reconfigured each time. The RP can include Programmable Logic and AI Engine resources. User can reconfigure the RM (rm1.xclbin, rm2.xclbin, etc.) during run time with XRT. The AI Engine needs to be fully reconfigured or not at all. Multi-parition AI Engine and PL DFX is not supported in this version.
+User can define one reconfigurable partition (RP) region and create multiple reconfigurable modules (RM). The RP defines the boundary between reconfigurable region and static region. The RM defines the content to be reconfigured each time. The RP can include Programmable Logic and AI Engine resources. User can reconfigure the RM (rm1.xclbin, rm2.xclbin, etc.) during run time with XRT. The AI Engine needs to be fully reconfigured or not at all. Multi-partition AI Engine and PL DFX is not supported in this version.
 
 ![DFX Diagram](./images/dfx_rp_rm.svg)
 
 This tutorial assumes the readers understand the basics of Versal Custom Platform creation steps, e.g. creating Vivado design from Vivado Customizable Example Design template, setup software components with common images or PetaLinux, creating Vitis platforms, and creating basic acceleration applications for platform validation. This tutorial will focus on the differences between the DFX platforms and the normal flat platforms. 
 
-In a general Vitis acceleration platform design, we start from building a base bootable design, then add platform required components and properties to it. We need to validate each step before going to the next step to prevent error prograting. This workflow is described in the following diagram.
+In a general Vitis acceleration platform design, we start from building a base bootable design, then add platform required components and properties to it. We need to validate each step before going to the next step to prevent error propagating. This workflow is described in the following diagram.
 
 ![Vitis DFX Platform Creation Steps Diagram](images/platform_creation_steps.svg)
 
@@ -43,7 +43,7 @@ Please navigate through these steps with the following table of contents links.
 
 ## Requirements and assumptions
 
-This tutorial design uses VCK190 production board for demonstration. The methdology works for all boards.
+This tutorial design uses VCK190 production board for demonstration. The methodology works for all boards.
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux.
 
@@ -61,6 +61,8 @@ Let's start with [Step 1](./step1.md).
 
 
 ## Changelog
+### 2023.1
+   - Hardware emulation XSA file is no longer mandatory required to create a platform
 ### 2022.2
    - Versal DFX CED is utilized to create the hardware design
 ### 2022.1
