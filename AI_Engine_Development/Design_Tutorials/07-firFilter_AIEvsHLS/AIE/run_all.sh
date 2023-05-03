@@ -112,8 +112,8 @@ fir_filters_lst=("1" "10")
 ################################################
 if [ -z "$winSz" ]
 then
-   winSz=1
-   winSz_loopStart=1
+   winSz=3
+   winSz_loopStart=0
 
 elif [[ $winSz == "a" ]]
 then
@@ -136,7 +136,7 @@ winSz_lst=("64" "256" "1024" "2048")
 ################################################
 if [ -z "$aiesPerFir" ]
 then
-   aiesPerFir=0
+   aiesPerFir=2
    aiesPerFir_loopStart=0
 
 elif [[ $aiesPerFir == "a" ]]

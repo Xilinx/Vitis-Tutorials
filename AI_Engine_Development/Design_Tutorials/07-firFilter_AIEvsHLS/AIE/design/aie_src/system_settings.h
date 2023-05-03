@@ -1,3 +1,8 @@
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
+
 // FIR Coefficients Taps:  240 Impulse Response Area:  16383.0
 //
 #define N_FIR_FILTERS     1

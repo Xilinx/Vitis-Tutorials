@@ -33,13 +33,14 @@
                     "vitis_aie_x86sim": 50,
                     "vitis_hw_build": 500,
                     "vitis_hw_emu": 200,
-                    "vitis_hw_run": 60
+                    "vitis_hw_run": 90
                 }
             }
         ],
         "targets": [ 
             "vitis_hw_build",
-            "vitis_hw_run"
+            "vitis_hw_run",
+            "vitis_hw_emu"
         ],
         "category": "canary",
         "make_options" : [ 

@@ -1,25 +1,15 @@
 #!/bin/bash
 
-# © Copyright 2021–2022 Xilinx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
 
 # =======================================================
 # Set Platform ,Vitis and Versal Image repo
 # =======================================================
-export PLATFORM_REPO_PATHS= <YOUR-2022.2-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2022.2-VITIS-DIRECTORY>/2022.2
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2022.2-DIRECTORY>
+export PLATFORM_REPO_PATHS= <YOUR-2023.1-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2023.1-VITIS-DIRECTORY>/2023.1
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.1-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2023.1-DSP-LIBRARY>
 # ====================================================
 # Source Versal Image ,Vitis and Aietools
 # ====================================================
@@ -29,7 +19,7 @@ source $XILINX_VITIS/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202220_1
+tgt_plat=xilinx_vck190_base_202310_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 # ==========================================================
 # Validating Tool Installation

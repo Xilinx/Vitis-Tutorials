@@ -9,7 +9,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -75,20 +75,36 @@ The makefile based  build process can be directed to build different length chai
 ### Directory Structure
 ```
 filter_AIEvsHLS
-+-- AIE......................contains AI Engine implementation
-|   +-- build ...................created and contains subfolders from design build
-|   +-- design ..................contains source and include files
-|   |	+-- aie_src .................AI Engine source code
-|   |	+-- app_src .................A72 application source code
-|   |	+-- pl_src ..................PL (HLS) source code
-|   +--run_dir...................contains bootable image files to run HW flow
-+-- HLS......................contains HLS FIR implementation, targeting DSP Engines
-|   +-- build ......................created and contains subfolders from design build
-|   +-- design......................contains source and include files
-|   |	+-- app_src .................A72 application source code
-|   |	+-- pl_src ..................PL (HLS) source code
-|   +--run_dir...................contains bootable image files to run HW flow
-+-- report_dir...............contains the generated resource and power utilization reports for both AI Engine and DSP implementations
++-- AIE.................................contains AI Engine implementation
+|   +-- design .........................contains source and include files
+|   |	+-- aie_src ....................AI Engine source code
+|   |   +-- exec_files .................contains hw_emu launch script
+|   |   +-- host_app_src ...............A72 application source code
+|   |	+-- pl_src .....................PL (HLS) source code
+|   |   +-- profiling_configs ..........contains xrt.ini file
+|   |   +-- python_scripts .............contains script to generate co-efficients
+|   |   +-- system_configs..............contains all system configuration files
+|   |   +-- vivado_metrics_scripts......contains script for reporting utilisation and power from vivado
+|   +-- images .........................contains images of the design
+|   +-- Makefile .......................with recipes for each step of the design compilation
+|   +-- description.json................required for internal regression 
+|   +-- multi_params.json...............required for internal regression 
+|   +-- sample_env_setup.sh ............contains all environment variables
++-- HLS.................................contains HLS FIR implementation, targeting DSP Engines
+|   +-- design..........................contains source and include files
+|   |   +-- directives.................contains directives for various vitis compilation stages like hls.pre_tcl etc
+|   |   +-- exec_files .................contains hw_emu launch script
+|   |   +-- host_app_src ...............A72 application source code
+|   |	+-- pl_src .....................PL (HLS) source code
+|   |   +-- profiling_configs ..........contains xrt.ini file
+|   |   +-- python_scripts .............contains script to generate co-efficients
+|   |   +-- system_configs..............contains all system configuration files
+|   |   +-- vivado_metrics_scripts......contains script for reporting utilisation and power from vivado
+|   +-- images .........................contains images of the design
+|   +-- Makefile .......................with recipes for each step of the design compilation
+|   +-- description.json................required for internal regression 
+|   +-- multi_params.json...............required for internal regression 
+|   +-- sample_env_setup.sh ............contains all environment variables
 ```
 
 </details>
@@ -102,7 +118,7 @@ filter_AIEvsHLS
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -122,15 +138,15 @@ Tools Documentation:
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2022.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2023.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2022.2](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
 
-* [DSP Library (DSPLib) Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/index.html)
+* [DSP Library (DSPLib) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
 * Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
@@ -142,18 +158,20 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), yo
 ### Environment: Setting Up the Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system specific paths.
 
-Edit `env_setup.sh` script with your file paths:
+Edit `sample_env_setup.sh` script with your file paths:
 ```bash
-export XILINX_XRT=<XRT-LOCATION>
-export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
-export DSPLIB_ROOT=<PATH-TO-DSP-LIBRARY>
+export PLATFORM_REPO_PATHS= <YOUR-2023.1-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2023.1-VITIS-DIRECTORY>/2023.1
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.1-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2023.1-DSP-LIBRARY>
 
-source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
-source $XILINX_XRT/setup.sh
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $XILINX_VITIS/settings64.sh
+
 ```
 Then source the environment script:
 ```bash
-source env_setup.sh
+source sample_env_setup.sh
 ```  
 
 </details>
@@ -173,7 +191,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the previous command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202220_1",
+"baseName": "xilinx_vck190_base_202310_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -195,11 +213,11 @@ The Makefile and source files for the AI Engine and HLS implementations are in t
 
 
 ## Choosing between AI Engine and HLS Implementations
-The choice of which engine (AI or DSP) to use for implementing a specific function in your design or application is not always a simple one. This decision should be taken based on specific requirements of your application with respect to performance requirements and resources. There are some high-level guidelines which can help with architecting your design to a Xilinx Versal device with AI Engines. For example, small functions with modest amounts of computation will most likely be more efficient targeting the PL and DSP Engines. However, as the computational needs start to increase, moving those functions to the AI Engine will provide better efficiency.
+The choice of which engine (AI or DSP) to use for implementing a specific function in your design or application is not always a simple one. This decision should be taken based on specific requirements of your application with respect to performance requirements and resources. There are some high-level guidelines which can help with architecting your design to a Xilinx Versal device with AI Engines. For example, small functions with modest amounts of computation will most likely be more efficient targeting the PL and DSP Engines. However, as the computational FIR_AIE_64_TAPS_xpe_power.PNGneeds start to increase, moving those functions to the AI Engine will provide better efficiency.
 
 It is important not to take that decision in isolation at the function level, but to look at the problem in relation to the complete dataflow path. For instance, an inefficient function implemented in the AI Engine may offer better total efficiency when preceded and followed in the dataflow by large amounts of efficient compute functions. It is likely that it will offer overall better throughput and latency than moving the data to the PL for that specific function and back into the AI Engine array.
 
-For this discussion, computational efficiency is defined as the throughput (Msamples/sec) divided by power (W), and can only be used to compare designs that are identical from a functional standpoint. Given two identical designs with identical throughputs,for the purpose this tutorial, the one using less power is considered the better solution.
+For this discussion, computational efficiency is defined as the throughput (Mamples/sec) divided by power (W), and can only be used to compare designs that are identical from a functional standpoint. Given two identical designs with identical throughputs,for the purpose this tutorial, the one using less power is considered the better solution.
 
 Typically, one of the first steps of a design is deciding on an architecture/implementation to meet throughput and latency targets. This architecture/implementation choice generally determines the resources used and power consumed, which may also be required to meet specific targets.
 
@@ -210,16 +228,16 @@ Typically, one of the first steps of a design is deciding on an architecture/imp
 
 For DSP based design, the designer begins with an estimate of the system clock rate that the PL is capable of, and divides that by the desired filter throughput to determine how many clock cycles can be used to process a sample. By feeding this number into the FIR Compiler, the FIR is constructed with the minimum resources required to implement the design; the higher the clock cycles per sample, the fewer resources used.
 
-For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/user_guide/L2/benchmark.html).
+For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/benchmark.html).
 
 For the filter sizes selected in this tutorial, the following AI Engine throughputs were obtained:
 
 | Taps | Throughput     |
 |------|----------------|
-|   15 | 1165.01 MSPS(*)|
-|   64 | 323.497 MSPS   |
-|  129 | 207.621 MSPS   |
-|  240 | 130.269 MSPS   |
+|   15 | 1200    MSPS(*)|
+|   64 | 329.969 MSPS   |
+|  129 | 215.578 MSPS   |
+|  240 | 134.48  MSPS   |
 
 (*)Note: This result is I/O bound.
 
@@ -234,16 +252,16 @@ The previous table shows the achieved throughput using one AI Engine per FIR. It
 
 The AI Engine can reduce the overall requirement on the PL and DSPs in a design with a lot of vectorizable compute. For example, the following shows the required resources for the same 64-Tap FIR filter implemented in both AI Engine and PL with DSPs:
 
-| Impl | Filters | Taps | Param        | Throughput  | LUTS  | Flops | DSP   | AIE   |
-|------|---------|------|--------------|-------------|-------|-------|-------|-------|
-| AIE  |     1   |   64 | win=256      | 323.49 MSPS |   210 |   586 |     0 |     1 |
-| HLS  |     1   |   64 | ck_per_sam=1 | 496.82 MSPS |  1935 |  5705 |    64 |     0 |
-| AIE  |    10   |   64 | win=256      | 284.08 MSPS |   211 |   586 |     0 |    10 |
-| HLS  |    10   |   64 | ck_per_sam=1 | 474.57 MSPS | 11122 | 45860 |   640 |     0 |
-| AIE  |     1   |  240 | win=256      | 130.26 MSPS |   208 |   586 |     0 |     1 |
-| HLS  |     1   |  240 | ck_per_sam=4 | 124.80 MSPS |  2474 |  7336 |    60 |     0 |
-| AIE  |    10   |  240 | win=256      | 114.40 MSPS |   210 |   586 |     0 |    10 |
-| HLS  |    10   |  240 | ck_per_sam=4 | 123.24 MSPS | 16270 | 62212 |   600 |     0 |
+| Impl | Filters | Taps | Param        | Throughput    | LUTS  | Flops | DSP   | AIE   |
+|------|---------|------|--------------|---------------|-------|-------|-------|-------|
+| AIE  |     1   |   64 | win=256      | 329.969  MSPS |   192 |   568 |     0 |     1 |
+| HLS  |     1   |   64 | ck_per_sam=1 | 497.41   MSPS |  5685 |  1801 |    64 |     0 |
+| AIE  |    10   |   64 | win=256      | 329.635  MSPS |   190 |   568 |     0 |    10 |
+| HLS  |    10   |   64 | ck_per_sam=1 | 477.772  MSPS | 17102 | 45876 |   640 |     0 |
+| AIE  |     1   |  240 | win=256      | 134.48   MSPS |   191 |   568 |     0 |     1 |
+| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  2343 |  7345 |    60 |     0 |
+| AIE  |    10   |  240 | win=256      | 134.25   MSPS |   190 |   568 |     0 |    10 |
+| HLS  |    10   |  240 | ck_per_sam=4 | 123.48   MSPS | 16687 | 62212 |   600 |     0 |
 
 It is clear that the AI Engine implementation offers significant savings of PL resources, especially as the design size increases.
 
@@ -256,9 +274,15 @@ It is clear that the AI Engine implementation offers significant savings of PL r
 
 ### Power Utilization
 In general, smaller designs are more power efficient in the PL than in AI Engines, but the advantage switches over to AI Engines as the design becomes larger.
+This can be seen in the following dynamic power graph for 240-tap FIR chains with 1 and 10 FIR filters connected sequentially. In the case of the HLS or DSP implementation, the power slope is a straight line. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so we can see that the power utilization is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.In ten FIR filters in the chain, the power of the AI Engine implementation is using ~2.602 Watt less than that of the HLS and DSP based FIR filter chain.
+Below table shows power utilization of FIR AIE and HLS for 240-taps
 
-This can be seen in the following dynamic power graph for 240-tap FIR chains with 1, 5, and 10 FIR filters connected sequentially. In the case of the HLS or DSP implementation, the power slope is a straight line which would go through the origin. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so in a 5 filter chain, the power is similar  the HLS implementation, and the advantage starts to move towards the AI Engine implementations, and then at ten FIR filters in the chain, the power of the AI Engine implementation is using ~1 Watt less than that of the HLS and DSP based FIR filter chain.
-![Image of 240 Tap FIR filter dynamic power](images/fir_graph_240tap_power.png)
+| No of Filters | AIE FIR    |   HLS FIR    |
+|---------------|------------|--------------|
+|      1        |   0.774    |   0.474      |
+|      10       |   1.726    |   4.328      |
+
+![Image of 240 Tap FIR filter dynamic power](images/FIR_240Taps_POWER_v_NoOfFilters.png)
 
 (*)Note: DSP Refers to the HLS Implementation.
 
@@ -268,9 +292,16 @@ This can be seen in the following dynamic power graph for 240-tap FIR chains wit
 <summary>Computational Efficiency</summary>
 
 ### Computational Efficiency
-Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1, 5, and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.
+Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1 and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.
+Below table shows computational efficiency of FIR AIE and HLS for 240-taps
 
-![Image of 240 Tap FIR computational efficiency](images/fir_graph_240tap_efficiency.png)
+| No of Filter  |   AIE FIR  |   HLS FIR    |
+|---------------|------------|--------------|
+|      1        |   173.746  |   263.3838   |
+|      10       |  77.78099  |   28.5305    |
+
+
+![Image of 240 Tap FIR computational efficiency](images/FIR_240Taps_ComputationalEfficiency_v_NoOfFilters.png)
 
 (*)Note: DSP Refers to the HLS Implementation.
 
@@ -284,10 +315,33 @@ Computational efficiency is a very common and important metric for comparing two
 ### Assigning Multiple AI Engines per Filter
 For a HLS implementation, specifying the number of clocks per sample establishes the throughput and is the primary factor in determining how many resources are required, and the relationship is quite linear.
 
-For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter called cascade length (CASC_LEN), which can be used to assign multiple AI Engines to a particular filter kernel. This results in increased throughput, but the relationship is not linear. The following graphs show the results for a single 129 tap FIR filter, with CASC_LENs of 1,2, and 4.
-![Image of 129 Tap FIR filter metrics - Throughput vs Casc Length](images/fir_graph_129tap_throughput_vs_casc_len.png)
-![Image of 129 Tap FIR filter metrics - Power vs Casc Length](images/fir_graph_129tap_power_vs_casc_len.png)
-![Image of 129 Tap FIR filter metrics - Computational Efficiency vs Casc Length](images/fir_graph_129tap_computational_efficiency_vs_casc_len.png)
+For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter called cascade length (CASC_LEN), which can be used to assign multiple AI Engines to a particular filter kernel. This results in increased throughput, but the relationship is not linear. The following graphs and table shows the results for a single 129 tap FIR filter, with CASC_LENs of 1,2, and 4.
+
+| Cascade length | Throughput (MSPS)       |
+|----------------|-------------------------|
+|      1         |      215.578            | 
+|      2         |      309.599            | 
+|      4         |      387.054            | 
+
+
+![Image of 129 Tap FIR filter metrics - Throughput vs Casc Length](images/FIR_129Taps_Throughput_v_CascLen.png)
+
+| Cascade length | Dynamic power(mW)       |
+|----------------|-------------------------|
+|      1         |       0.769             |
+|      2         |       0.850             |
+|      4         |       1.020             |
+
+
+![Image of 129 Tap FIR filter metrics - Power vs Casc Length](images/FIR_129Taps_Power_v_CascLen.png)
+
+| CASCADE LENGTH |  Performance(MSPS/W)  |
+|----------------|-----------------------|
+|      1         |     280.3355          |
+|      2         |     364.2341          |
+|      4         |      387.054          |
+
+![Image of 129 Tap FIR filter metrics - Computational Efficiency vs Casc Length](images/FIR_129Taps_ComputationalEfficiency_v_CascLen.png)
 
 As can be seen, going from CASC_LEN =1 to CASC_LEN=2 produces a significant improvement in performance. Going from CASC_LEN=2 to CASC_LEN=4 increases performance even further, but offers diminishing returns. Given that power increases with increasing AI Engines, the resulting computation efficiency chart shows that adding more AI Engines can potentially decrease computational efficiency as seem in this case.
 
@@ -297,10 +351,10 @@ The following table provides some additional information on data on throughput f
 
 | Filters | Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) | Throughput (CASC_LEN=4) |
 |---------|------|-------------------------|-------------------------|-------------------------|
-|     1   |   15 | 1165.01 MSPS(*)         | Too small to cascade    | Too small to cascade    |
-|     1   |   64 | 323.497 MSPS            | 343.1 MSPS              | 441.7 MSPS              |
-|     1   |  129 | 207.621 MSPS            | 259.8 MSPS              | 330.2 MSPS              |
-|     1   |  240 | 130.269 MSPS            | 185.4 MSPS              | 248.5 MSPS              |
+|     1   |   15 | 1200 MSPS(*)            | 1199.707 MSPS           | Too small to cascade    |
+|     1   |   64 | 329.969 MSPS            | 419.959  MSPS           | 521.28 MSPS             |
+|     1   |  129 | 215.578 MSPS            | 309.599  MSPS           | 387.054 MSPS            |
+|     1   |  240 | 134.48 MSPS             | 222.216  MSPS           | 285.0052 MSPS           |
 
 (*)Note: this result is I/O bound.
 
@@ -318,12 +372,12 @@ The following is data for the AI Engine with one 64-tap FIR filter example for v
 
 | Impl | Filters | Taps | Window Size | Latency  | Execution Time  | Throughput   |
 |------|---------|------|-------------|----------|-----------------|--------------|
-| AIE  |     1   |   64 |       64    | 0.353 us | 64.963 us       | 252.205 MSPS |
-| AIE  |     1   |   64 |      256    | 1.020 us | 50.647 us       | 323.497 MSPS |
-| AIE  |     1   |   64 |     1024    | 3.783 us | 48.273 us       | 339.400 MSPS |
-| AIE  |     1   |   64 |     2048    | 7.453 us | 49.330 us       | 332.130 MSPS |
+| AIE  |     1   |   64 |       64    | 0.3633us | 64.71  us       | 253.19  MSPS |
+| AIE  |     1   |   64 |      256    | 1.020 us | 49.65333 us     | 329.969 MSPS |
+| AIE  |     1   |   64 |     1024    | 3.783 us | 44.496 us       | 368.21  MSPS |
+| AIE  |     1   |   64 |     2048    | 7.453 us | 41.88 us        | 391.21  MSPS |
 
-If, for example, our throughput requirements were 250 MSPS, a window size of 256 would satisfy that performance requirement with the least amount of latency.
+If, for example, our throughput requirements were 250 MSPS, a window size of 64 would satisfy that performance requirement with the least amount of latency.
 
 </details>
 
@@ -346,40 +400,40 @@ The utilization and power observations are shown in the following table.
 #### AIE
 |Filters|Taps| AI Engine Cores | Vector Load | Number Of Active Memory Banks | Memory R/W Rate | AI Engine Tiles | Interconnect Load | Power   | Performance (MSPS/Watt) |
 |-------|----|-----------------|-------------|-------------------------------|-----------------|-----------------|-------------------|---------|-------------------------|
-|     1 | 15 |        1        |     11%     |              14               |        2%       |        2        |         4%        | 701 mW  |         1661.94         |
-|     1 | 64 |        1        |     43%     |              14               |       11%       |        2        |         4%        | 770 mW  |         420.125         |
-|     1 |129 |        1        |     71%     |              14               |       15%       |        2        |         4%        | 818 mW  |          253.81         |
-|     1 |240 |        1        |     80%     |              14               |       16%       |        2        |         4%        | 834 mW  |          156.198        |
-|    10 | 15 |       10        |     11%     |             104               |        1%       |       20        |         4%        |1473 mW  |          714.531        |
-|    10 | 64 |       10        |     31%     |             104               |        9%       |       20        |         4%        |1917 mW  |          148.19         |
-|    10 |129 |       10        |     47%     |             104               |       13%       |       19        |         3%        |2180 mW  |          83.627         |
-|    10 |240 |       10        |     52%     |             104               |       14%       |       19        |         3%        |2263 mW  |           50.552        |
+|     1 | 15 |        1        |    7%       |              10               |        2%       |        2        |         6%        | 684 mW  |         1754.38         |
+|     1 | 64 |        1        |    30%      |              10               |       11%       |        2        |         6%        | 733 mW  |         450.162         |
+|     1 |129 |        1        |    50%      |              10               |       15%       |        2        |         6%        | 769 mW  |        280.3355         |
+|     1 |240 |        1        |    53%      |              10               |       16%       |        2        |         6%        | 774 mW  |          173.746        |
+|    10 | 15 |       10        |    7%       |              64               |        2%       |       12        |         4%        |1217 mW  |          985.549        |
+|    10 | 64 |       10        |    18%      |              64               |        9%       |       12        |         4%        |1453 mW  |          226.865        |
+|    10 |129 |       10        |    27%      |              64               |       12%       |       12        |         4%        |1622 mW  |         132.5490        |
+|    10 |240 |       10        |    33%      |              64               |       15%       |       12        |         4%        |1726 mW  |         77.78099        |
 
 #### HLS
 |Filters|Taps| LUTs  | FF (Regs) | DSPs | Dynamic Power | Performance (MSPS/Watt) |
 |-------|----|-------|-----------|------|---------------|-------------------------|
-|     1 | 15 |  1294 |    2515   |  16  |     160 mW    |         3114.43         |
-|     1 | 64 |  1935 |    5705   |  64  |     390 mW    |         1273.91         |
-|     1 |129 |  1943 |    4873   |  34  |     320 mW    |         390.16          |
-|     1 |240 |  2474 |    7336   |  60  |     500 mW    |         249.61          |
-|    10 | 15 |  4454 |   13644   | 160  |    1102 mW    |         442.97          |
-|    10 | 64 | 11122 |   45860   | 640  |    3357 mW    |         141.37          |
-|    10 |129 | 10774 |   37176   | 340  |    2619 mW    |         47.24           |
-|    10 |240 | 16270 |   62212   | 600  |    4366 mW    |         28.23           |
+|     1 | 15 |  1174 |    2492   |  16  |     150 mW    |         3324.593        |
+|     1 | 64 |  5685 |    1801   |  64  |     392 mW    |         1268.903        |
+|     1 |129 |  1807 |    4861   |  34  |     318 mW    |         392.72          |
+|     1 |240 |  2343 |    7345   |  60  |     474 mW    |         263.38          |
+|    10 | 15 |  4745 |   13616   | 160  |    1088 mW    |         450.15          |
+|    10 | 64 | 17102 |   45876   | 640  |    3398 mW    |         140.60          |
+|    10 |129 | 10976 |   37196   | 340  |    2205 mW    |          56.19          |
+|    10 |240 | 16687 |   62212   | 600  |    4328 mW    |         28.5305         |
 
 #### Power from XPE vs HW
 
 **AIE**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      3.281     |    3.146      |
-|    10 |240 |      3.286     |    3.858      |
+|    10 | 64 |      2.834     |    2.9899     |
+|    10 |240 |      2.844     |    3.1599     |
 
 **HLS**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      4.769     |    4.505      |
-|    10 |240 |      6.025     |    5.199      |
+|    10 | 64 |      4.559     |    3.728      |
+|    10 |240 |      5.73      |  4.82165      |
 
 </details>
 
@@ -388,33 +442,67 @@ The utilization and power observations are shown in the following table.
 
 ### Throughput and Latency Measurements
 To maintain consistency between the AI Engine and DSP implementation, the same flow to measure throughput is used to run the design in hardware and capture trace data in run time. Refer to the [Vitis Unified Software Development Platform documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation) for more information.
+
+
 To setup the flow to measure throughput, refer to the section "Run on Hardware" in the AI Engine and HLS implementation documentation, and run the application.
 
 After the application has been run, three files will be created:
 * device_trace_0.csv
 * hal_host_trace.csv
-* xclbin.run_summary
+* xrt.run_summary
 Transfer the .csv and _summary files back to the run_dir directory, for example:
 ```
-Scp -r *.csv *_summary <user>@10.10.71.101:<path>
+scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
-Then run vitis_analyzer, open the `xclbin.run_summary_file`, and select `Timeline Trace`:
+Then view the summary file with `vitis_analyzer xrt.run_summary` command and select `Timeline Trace`:
 
-A trace of the AI Engine implementation with N_FIR_FILTERS=5 and N_FIR_TAPS=64 is shown in the following figure:
-![Image of FIR filter AI Engine implementation 5 Filters 64 Taps Trace](images/fir_aie_5firs_64taps_trace.png)
+A trace of the AI Engine implementation with N_FIR_FILTERS=1 and N_FIR_TAPS=64 of TARGET=hw is shown in the following figure:
+![Image of FIR filter AI Engine implementation 1 Filters 64 Taps HW Trace](images/FIR_AIE_64_TAPS_hw.PNG)
 
-To measure throughput, the cursors are lined up with the start and end of the read (S2MM) stream (cursor times with ns resolution can be obtained by zooming in further):
+The time reported by trace is with the dat mover kernel running at 156.250MHz. Since the data mover kernel is running at 300MHz, we need to scale the time data.
+
+To measure throughput, the cursors are lined up with the start and end of the read (datamover_0.strmInpFromFIR) stream (cursor times with us resolution can be obtained by zooming in further):
 ```
-Data Transfer Interval = 16.196 us
+	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
+	
+	Processing time (with 156.250MHz) = 93.741us
+	Processing time (scaled to 300MHz)= (93.741 * (156.25/300)) us
+					  = 48.823us
 
-Throughput = Samples /(Data Transfer Interval)
-          = (512 x 8 Samples) / 16.196 us
-          = 252.901 Msamples / sec
+	Throughput = (Input Sample * Iterations) /(Processing time)
+          	   = (2048 x 8 ) / 48.823us
+         	   =  335 Msamples / sec
 ```
 
-To measure latency, the measurement is made from the start of the write (MM2S) stream to the start of the read (S2MM) stream:
+To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
 ```
-Latency = 1.264 us
+	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
+
+	Latency (with 156.250MHz)  = 2.010us
+	Latency (scaled to 300MHz) = (2.010 * (156.25/300)) us
+				   = 1.0468 us
+
+```
+
+A trace of the AI Engine implementation with N_FIR_FILTERS=1 and N_FIR_TAPS=64 of TARGET=hw_emu is shown in the following figure:
+![Image of FIR filter AI Engine implementation 1 Filters 64 Taps HW_EMU Trace](images/FIR_AIE_64_TAPS_hw_emu.PNG)
+
+
+To measure throughput, the cursors are lined up with the start and end of the read (datamover_0.strmInpFromFIR) stream (cursor times with us resolution can be obtained by zooming in further):
+```
+	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
+			= 49.6533 us
+
+	Throughput = (Input Sample * Iterations) /(Processing time)
+          	   = (2048 x 8 ) / 49.6533 us
+     	           = 329.967 Msamples / sec
+```
+## Latency calculation of 64 Taps, 1 Filter is below.
+
+To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
+```
+	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
+		= 1.020 us
 ```
 
 </details>
@@ -435,3 +523,4 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

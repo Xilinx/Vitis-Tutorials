@@ -1,18 +1,8 @@
-//------------------------------------------------------------------------------
-// © Copyright 2021–2022 Xilinx, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//------------------------------------------------------------------------------
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
+
 
 #pragma once
 
@@ -33,7 +23,7 @@ private:
     dsplib::fir::sr_sym::fir_sr_sym_graph<T_DATA, T_COEF, N_FIR_TAPS, FIR_DOWNSHIFT, FIR_ROUND_MODE, FIR_WINDOW_SIZE, N_AIES_PER_FIR>  FIR_ARRAY[N_FIR_FILTERS];
 
 public:
-	input_plio   in    = input_plio::create("DataIn", plio_128_bits, "input_impulse.txt");
+   input_plio   in    = input_plio::create("DataIn", plio_128_bits, "input_impulse.txt");
    output_plio  out  = output_plio::create("DataOut", plio_128_bits, "data/fir_output_impulse.txt");
 	// Constructor - with FIR graph class initialization
    FirGraph():  FIR_ARRAY {
