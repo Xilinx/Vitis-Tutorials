@@ -40,25 +40,12 @@ VPP_LINK_FLAGS := -l -t $(TARGET) --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRA
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 
 GCC_FLAGS := -Wall -c \
-	     -std=c++14 \
-	     -Wno-int-to-pointer-cast \
-	     --sysroot=${SDKTARGETSYSROOT}
-
-ifeq ($(TARGET),sw_emu)
-	GCC_FLAGS += -D__SYNCBO_ENABLE__ -D__PS_ENABLE_AIE__
-endif
+	     -std=c++17 
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
-			-I$(SDKTARGETSYSROOT)/usr/include \
-			-I./ -I../aie \
-			-I${XILINX_VITIS}/aietools/include \
-			-I${XILINX_VITIS}/include
+		-I$(SDKTARGETSYSROOT)/usr/include 
 
-ifeq ($(TARGET),sw_emu)
-	GCC_LIB := -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
-else
-	GCC_LIB := -lxaiengine -lxrt_core -lxrt_coreutil -L$(SDKTARGETSYSROOT)/usr/lib -L${XILINX_VITIS}/aietools/lib/aarch64.o --sysroot=${SDKTARGETSYSROOT}
-endif
+GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT}  
 
 LDCLFLAGS := $(GCC_LIB)
 
@@ -137,7 +124,7 @@ xsa: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 host: guard-CXX guard-SDKTARGETSYSROOT 
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
-	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe 
+	$(CXX) $(GCC_LIB) -std=c++17 -o host.exe host.o
 	@echo "COMPLETE: Host application created."
 ############################################################################################################################
 

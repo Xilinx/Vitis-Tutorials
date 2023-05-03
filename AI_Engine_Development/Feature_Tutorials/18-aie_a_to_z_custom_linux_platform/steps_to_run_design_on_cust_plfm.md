@@ -157,8 +157,10 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
 
 8. You can view the profiling and trace results of hardware emulation in Vitis™ Analyzer by running the following command:
 
+**Note**: The Trace **Compare** feature is not available in New Vitis IDE Analysis view. So, please use the classic Vitis Analyzer for this.
+
 ```bash
-vitis_analyzer sw/sim/behav_waveform/xlsxdefault.aierun_summary
+vitis_analyzer --classic sw/sim/behav_waveform/default.aierun_summary
 ```
 
 9. You can easily compare the results of the custom platform with the one generated using base platform. For example:
@@ -166,8 +168,6 @@ vitis_analyzer sw/sim/behav_waveform/xlsxdefault.aierun_summary
 * Select **File > Open Summary** to open the summary file generated for the base platform target. 
 * Once the summary file opens, click **Trace**  to open the VCD data which gives information about kernels, tiles and nets within the AI Engine. 
 * Click the **Compare** option as shown in the following figure.
-
-**Note**: The Trace **Compare** feature is not available in New Vitis IDE Analysis view. So, please use the classic Vitis Analyzer for this.
 
 ![hw_emu_trace_compare](./images/hw_emu_trace_comp1.PNG)
 

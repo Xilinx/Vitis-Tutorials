@@ -52,8 +52,8 @@ class clipped : public adf::graph {
       //Output PLIO object that specifies the file containing output data
       out = adf::output_plio::create("DataOut1",adf::plio_32_bits, "data/output.txt");
 
-      //Window connection between port 'in' and input port of the kernel
       //connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in.out[0], interpolator.in[0]);
+      //connection between buffer port 'in' and 'input port of the kernel
       connect(in.out[0], interpolator.in[0]);
 
       //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
@@ -63,11 +63,11 @@ class clipped : public adf::graph {
       //connect< stream>(clip.out[0], classify.in[0]);
       connect(clip.out[0], classify.in[0]);
       
-      //window connection between output port of the kernel and port 'out'
       //connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out.in[0]);
+      //connection between output buffer port of the kernel and port 'out'
       connect(classify.out[0], out.in[0]);
 
-      //Dimensions
+      //Dimensions - Specifying the size of the buffers
       dimensions(interpolator.in[0]) = {INTERPOLATOR27_INPUT_SAMPLES};
       dimensions(interpolator.out[0]) = {POLAR_CLIP_INPUT_SAMPLES};
       dimensions(classify.out[0]) = {CLASSIFIER_OUTPUT_SAMPLES};

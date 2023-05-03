@@ -36,14 +36,11 @@ VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
-	     -D__PS_ENABLE_AIE__ \
-	     -Wno-int-to-pointer-cast \
+	     -std=c++17 \
 	     -I${XILINX_XRT}/include
-GCC_INCLUDES := -I./ -I../aie \
-		-I${XILINX_VITIS}/aietools/include \
+GCC_INCLUDES := 
 
-GCC_LIB :=  -lxrt_coreutil -luuid -lrt -ldl -lcrypt\
-	    -L${XILINX_VITIS}/aietools/lib/lnx64.o \
+GCC_LIB :=  -lxrt_coreutil \
 	    -L${XILINX_XRT}/lib
 		   
 
