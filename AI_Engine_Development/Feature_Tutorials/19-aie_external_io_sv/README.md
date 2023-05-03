@@ -9,15 +9,13 @@
 
 # Using Verilog traffic generators in AIE simulation
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Table of Contents
 
 * [Introduction](#introduction)
 
 * [Objectives](#objectives)
-
-* [Before You Begin](#before-you-begin)
 
 * [Documentation](#documentation)
 
@@ -45,14 +43,17 @@ After completing this tutorial, you should be able to:
 
 * Use python based automation to generate vivado TCL scripts and aie instantiable module for your external testbench.
 
-* To learn about other traffic generators i.e C/Python based traffic generators in AIEsim/x86sim or HW Emulation/SW emulation flows. 
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html The common image package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis. 
 
-## Before You Begin 
+Before starting this tutorial run the following steps:
 
-1. Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
-2. You may refer [Vivado Design Suite User Guide: Logic Simulation (UG900)](https://docs.xilinx.com/r/en-US/ug900-vivado-logic-simulation/Simulating-with-Third-Party-Simulators) for third-party simulator setup.
-3. Obtain licenses for the AI Engine tools
-4. Go through the **Documentation** section below for more information on Installing the Tools, AI Engine flow and Traffic Generators.  
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/` 
+
+This tutorial targets VCK190 production board for 2023.1 version. 
+
 
 ## Documentation
 
@@ -129,6 +130,10 @@ The AIE wrapper stubs will be generated based on the external PLIO declarations 
 
 	```aiecompiler --aiearch=aie --platform=$(PLATFORM)  -v -log-level=3 --pl-freq=500 -include=./aie --dataflow --output=graph.json aie/graph.cpp```
 
+or
+
+	```make comppile PLATFORM=$PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm```
+
 2. Using this config file as argument to the ``gen_aie_wrapper.py`` script, you can autogenerate Verilog stub modules based on ext PLIO declared in ADF Graph. 
 
 ```bash 
@@ -136,6 +141,7 @@ python3 ${XILINX_VITIS}/data/emulation/scripts/gen_aie_wrapper.py -json Work/con
 ```
 
 * Tip: The python script is available in the Vitis install area as mentioned in above path. There are two modes for the script i.e. ```wrapper``` and ```vivado``` mode. By default, the script runs in vivado mode. If run with ```wrapper``` mode, it only generates ```aie_wrapper_ext_tb.v```. 
+* For x86simulation, user will have to manually write this wrapper as `scsim_config.json` is not available for x86sim flow. 
 
 The name of the instance stubs must be identical to the name of the corresponding external PLIOs in graph.h ("in_classifier" and "out_interpolator" as mentioned below) and these name of the instances in graph.h will be reflected in the generated ```aie_wrapper_ext_tb.v``` file. 
  
