@@ -9,7 +9,7 @@
 
 # Versal System Design Clocking
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -31,15 +31,16 @@ In the design the following clocking steps are used:
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
 For detailed information, see the Clocking the PL Kernels section [here](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
-**IMPORTANT**: Before beginning the tutorial, make sure to read and follow the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html The common image package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis. 
 
-Run the following steps before starting this tutorial:
+Before starting this tutorial run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2022.2` directory.
-3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/` 
 
-This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.
+This tutorial targets VCK190 production board for 2023.1 version. 
 
 ## Objectives
 
@@ -78,13 +79,13 @@ In this design you will use three kernels called: **MM2S**, **S2MM**, and **Pola
 Run the following commands
 
 ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp 
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp 
         --hls.clock 150000000:mm2s -o mm2s.xo --save-temps \
 	
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp 
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp 
         --hls.clock 150000000:s2mm -o s2mm.xo --save-temps \
 	
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip 
+    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip 
         ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps \ 
 ```
 
@@ -205,7 +206,7 @@ To run the design on hardware using an SD card, you need to package all the file
 1. Open the `Makefile` with your editor of choice, and familiarize yourself with the contents specific to the `package` task.
 2. In an easier to read command-line view, here is the command:
     ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm \
+    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm \
         --package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
