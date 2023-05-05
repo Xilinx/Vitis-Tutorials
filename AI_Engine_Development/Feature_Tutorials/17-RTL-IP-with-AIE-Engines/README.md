@@ -9,7 +9,7 @@
 
 # Using RTL IP with AI Engines
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -17,6 +17,20 @@ This tutorial demonstrates the following two features of the Vitis™ unified so
 
 1. Ability to reuse any AXI-based IP you have created as an RTL IP.
 2. The ability to control your platform, and convert your RTL IP to an RTL kernel allows for a more streamlined process for creating the design you need.
+
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
+
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html
+
+The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+Before starting this tutorial run the following steps:
+
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh.
+3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2023.1 directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
+
+This tutorial targets VCK190 production board for 2023.1 version.	
 
 ## Objectives
 
@@ -118,44 +132,29 @@ make kernels
 ## Step 3 - Interfacing ADF graph to Programmable Logic
 To set up the ADF graph to interface with the `polar_clip` RTL kernel and the `mm2s` and `s2mm` HLS kernels, you must add connections to PLIOs that represent the respective PL kernels.
 
-1. The following `graph.cpp` shows how to connect to the RTL kernel.
+1. The following `graph.h` shows how to connect to the RTL kernel.
 
     ```cpp
-    #include "graph.h"
+      adf::source(interpolator) = "kernels/interpolators/hb27_2i.cc";
+      adf::source(classify)    = "kernels/classifiers/classify.cc";
+      
+      //Input PLIO object that specifies the file containing input data
+      in = adf::input_plio::create("DataIn1", adf::plio_32_bits,"data/input.txt");
+      clip_out = adf::input_plio::create("clip_out", adf::plio_32_bits,"data/input2.txt");
+      
+      //Output PLIO object that specifies the file containing output data
+      out = adf::output_plio::create("DataOut1",adf::plio_32_bits, "data/output.txt");
+      clip_in = adf::output_plio::create("clip_in",adf::plio_32_bits, "data/output1.txt");
 
-    PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");
+      connect(in.out[0], interpolator.in[0]);
+      connect(interpolator.out[0], clip_in.in[0]);
+      connect(clip_out.out[0], classify.in[0]);
+      connect(classify.out[0],out.in[0]);
 
-    // RTL Kernel PLIO
-    PLIO *ai_to_pl = new PLIO("clip_in",adf::plio_32_bits, "data/output.txt");
-    PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input2.txt");
-
-    PLIO *out0 = new PLIO("DataOut1",adf::plio_32_bits, "data/output.txt");
-
-    // RTL Kernel Addition to the platform
-    simulation::platform<2,2> platform(in0, pl_to_ai, out0, ai_to_pl);
-
-    clipped clipgraph;
-
-    connect<> net0(platform.src[0], clipgraph.in);
-
-    // Additional nets to the RTL Kernel
-    connect<> net1(clipgraph.clip_in,platform.sink[0]);
-    connect<> net2(platform.src[1],clipgraph.clip_out);
-    connect<> net3(clipgraph.out, platform.sink[1]);
-
-    #ifdef __AIESIM__
-    int main(int argc, char ** argv) {
-        clipgraph.init();
-        clipgraph.run(4);
-        clipgraph.end();
-        return 0;
-    }
-    #endif
     ```
 
 2. Note the following:
-   * Two additional `PLIO` objects `ai_to_pl` and `pl_to_ai` are added. These are to hook up to the `polar_clip` RTL kernel.
-   * The `simulation::platform` object now has the two extra PLIO interfaces.
+   * Two additional `PLIO` objects `clip_in` and `clip_out` are added. These are to hook up to the `polar_clip` RTL kernel.
    * There are additional net objects to hook up the RTL kernel to the rest of the platform object.
 
 For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2022.1;d=programmable_logic_integration.html;a=rdd1604332009149).
@@ -204,21 +203,13 @@ Build the host application:
 
 ```bash
 aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
-    --sysroot=<path_to_sysroot/cortexa72-cortexa53-xilinx-linux> \
-    -I<path_to_sysroot/cortexa72-cortexa53-xilinx-linux/usr/include/xrt> \
-    -I<path_to_sysroot/cortexa72-cortexa53-xilinx-linux/usr/include> \
-    -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include \
-    -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
-aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
     --sysroot=<path_to_sysroot/cortexa72-cortexa53-xilinx-linux>  \
     -I<path_to_sysroot/cortexa72-cortexa53-xilinx-linux/usr/include/xrt> \
     -I<path_to_sysroot/cortexa72-cortexa53-xilinx-linux/usr/include> \
-    -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include \
     -o host.o host.cpp
-aarch64-linux-gnu-g++ *.o -ladf_api_xrt -lxrt_coreutil \
-    -L<path_to_sysroot/cortexa72-cortexa53-xilinx-linux/usr/lib> \
+aarch64-linux-gnu-g++ *.o -lxrt_coreutil \
     --sysroot=<path_to_sysroot/cortexa72-cortexa53-xilinx-linux> \
-    -L$XILINX_VITIS/aietools/lib/aarch64.o -std=c++14 -o host.exe
+    -std=c++14 -o host.exe
 
 or
 

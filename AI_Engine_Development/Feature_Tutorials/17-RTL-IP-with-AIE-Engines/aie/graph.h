@@ -31,35 +31,39 @@ class clipped : public graph {
    
   public:
     //kernel clip;
-    port<input> in;
-    port<output> clip_in;
-    port<output> out;
-    port<input> clip_out;
+    adf::input_plio in;
+    adf::output_plio clip_in;
+    adf::output_plio out;
+    adf::input_plio clip_out;
 
     clipped() {
       interpolator = kernel::create(fir_27t_sym_hb_2i);
-      //clip         = kernel::create(polar_clip);
       classify     = kernel::create(classifier);
 
-      //fabric<pl>(clip);
+      adf::source(interpolator) = "kernels/interpolators/hb27_2i.cc";
+      adf::source(classify)    = "kernels/classifiers/classify.cc";
+      
+      //Input PLIO object that specifies the file containing input data
+      in = adf::input_plio::create("DataIn1", adf::plio_32_bits,"data/input.txt");
+      clip_out = adf::input_plio::create("clip_out", adf::plio_32_bits,"data/input2.txt");
+      
+      //Output PLIO object that specifies the file containing output data
+      out = adf::output_plio::create("DataOut1",adf::plio_32_bits, "data/output.txt");
+      clip_in = adf::output_plio::create("clip_in",adf::plio_32_bits, "data/output1.txt");
 
-      connect< window<INTERPOLATOR27_INPUT_BLOCK_SIZE, INTERPOLATOR27_INPUT_MARGIN> >(in, interpolator.in[0]);
-      //connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip.in[0]);
-      connect< window<POLAR_CLIP_INPUT_BLOCK_SIZE>, stream >(interpolator.out[0], clip_in);
-      //connect< stream >(clip.out[0], classify.in[0]);
-      connect< stream >(clip_out, classify.in[0]);
-      connect< window<CLASSIFIER_OUTPUT_BLOCK_SIZE> >(classify.out[0], out);
+      connect(in.out[0], interpolator.in[0]);
+      connect(interpolator.out[0], clip_in.in[0]);
+      connect(clip_out.out[0], classify.in[0]);
+      connect(classify.out[0],out.in[0]);
 
+      dimensions(interpolator.in[0]) = {INTERPOLATOR27_INPUT_SAMPLES};
+      dimensions(interpolator.out[0]) = {INTERPOLATOR27_OUTPUT_SAMPLES};
+      dimensions(classify.out[0]) = {CLASSIFIER_OUTPUT_SAMPLES};
       std::vector<std::string> myheaders;
       myheaders.push_back("include.h");
 
       adf::headers(interpolator) = myheaders;
       adf::headers(classify) = myheaders;
-
-      source(interpolator) = "kernels/interpolators/hb27_2i.cc";
-      //source(clip)         = "polar_clip.cpp";
-      source(classify)    = "kernels/classifiers/classify.cc";
-
       runtime<ratio>(interpolator) = 0.8;
       runtime<ratio>(classify) = 0.8;
     };

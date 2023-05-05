@@ -56,15 +56,9 @@ GCC_FLAGS := -Wall -c \
 			 --sysroot=${SDKTARGETSYSROOT}
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
-				-I$(SDKTARGETSYSROOT)/usr/include \
-				-I./ -I../aie \
-				-I${XILINX_VITIS}/aietools/include \
-				-I${XILINX_VITIS}/include
+				-I$(SDKTARGETSYSROOT)/usr/include
 
-GCC_LIB := -ladf_api_xrt -lxrt_coreutil \
-		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
-		   --sysroot=${SDKTARGETSYSROOT}
+GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT}
 
 .ONESHELL:
 .PHONY: clean all kernels aie xclbin host package run_emu
@@ -107,7 +101,6 @@ xclbin: $(GRAPH_O) $(KERNEL_XO)
 # For hardware and hardware emulation, compile the PS code and generate the main.elf. This is needed for creating the PDI.
 host: guard-SYSROOT guard-CXX
 	cd ./sw
-	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../Work/ps/c_rts/aie_control_xrt.cpp
 	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
 	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ *.o $(GCC_LIB) -std=c++14 -o host.exe
 ############################################################################################################################
