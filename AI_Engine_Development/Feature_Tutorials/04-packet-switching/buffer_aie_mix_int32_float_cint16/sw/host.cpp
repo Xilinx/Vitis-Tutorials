@@ -47,8 +47,8 @@ int main(int argc, char* argv[]) {
 	xrtBufferHandle out_bo4 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
 	int *host_out1 = (int*)xrtBOMap(out_bo1);
 	int *host_out2 = (int*)xrtBOMap(out_bo2);
-	int *host_out3 = (int*)xrtBOMap(out_bo3);
-	int *host_out4 = (int*)xrtBOMap(out_bo4);
+	float *host_out3 = (float*)xrtBOMap(out_bo3);
+	std::complex<short> *host_out4 = (std::complex<short>*)xrtBOMap(out_bo4);
 	
 	// input memory
 	xrtBufferHandle in_bo1 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
@@ -57,17 +57,23 @@ int main(int argc, char* argv[]) {
 	xrtBufferHandle in_bo4 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
 	int *host_in1 = (int*)xrtBOMap(in_bo1);
 	int *host_in2 = (int*)xrtBOMap(in_bo2);
-	int *host_in3 = (int*)xrtBOMap(in_bo3);
-	int *host_in4 = (int*)xrtBOMap(in_bo4);
+	float *host_in3 = (float*)xrtBOMap(in_bo3);
+	std::complex<short> *host_in4 = (std::complex<short>*)xrtBOMap(in_bo4);
 
 	std::cout<<" memory allocation complete"<<std::endl;
 	// initialize input memory
 	for(int i=0;i<mem_size/sizeof(int);i++){
 		*(host_in1+i)=i;
 		*(host_in2+i)=2*i;
-		*(host_in3+i)=3*i;
-		*(host_in4+i)=4*i;
+		*(host_in3+i)=(float)3*i;
+		*(host_in4+i)=std::complex<short>(4*i,4*i);
 	}
+	
+	// sync input memory
+	xrtBOSync(in_bo1, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo2, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo3, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo4, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
 	
 	// start output kernels
 	xrtKernelHandle s2mm_k1 = xrtPLKernelOpen(dhdl, uuid, "s2mm:{s2mm_1}");
@@ -134,6 +140,12 @@ int main(int argc, char* argv[]) {
 	xrtRunWait(s2mm_r3);
 	xrtRunWait(s2mm_r4);
 	std::cout<<" s2mm wait complete"<<std::endl;
+	
+	// sync output memory
+	xrtBOSync(out_bo1, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo2, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo3, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo4, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
 
 	// post-processing data;
 	for(int i=0;i<mem_size/sizeof(int);i++){	
@@ -145,11 +157,11 @@ int main(int argc, char* argv[]) {
 			match=1;
 			std::cout<<"host_out2["<<i<<"]="<<host_out2[i]<<std::endl;
 		}
-		if(*(host_out3+i)!=*(host_in3+i)+3){
+		if(*(host_out3+i)<*(host_in3+i)+2.99f || *(host_out3+i)>*(host_in3+i)+3.01f){
 			match=1;
 			std::cout<<"host_out3["<<i<<"]="<<host_out3[i]<<std::endl;
 		}
-		if(*(host_out4+i)!=*(host_in4+i)+4){
+		if(*(host_out4+i)!=*(host_in4+i)+std::complex<short>(4,4)){
 			match=1;
 			std::cout<<"host_out4["<<i<<"]="<<host_out4[i]<<std::endl;
 		}

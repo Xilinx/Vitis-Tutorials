@@ -6,9 +6,10 @@ SPDX-License-Identifier: MIT
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
+
 extern "C" {
 
-void mm2s(ap_uint<32>* mem, hls::stream<ap_axiu<32, 0, 0, 0>  >& s, int size) {
+void s2mm(ap_uint<32>* mem, hls::stream<ap_axiu<32, 0, 0, 0>  >& s, int size) {
 #pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
 
 #pragma HLS interface axis port=s
@@ -19,11 +20,8 @@ void mm2s(ap_uint<32>* mem, hls::stream<ap_axiu<32, 0, 0, 0>  >& s, int size) {
 
 	for(int i = 0; i < size; i++) {
 #pragma HLS PIPELINE II=1
-		ap_axiu<32, 0, 0, 0> x;
-		x.data=mem[i];
-		x.keep=-1;
-		x.last=0;
-		s.write(x);
+		ap_axiu<32, 0, 0, 0> x = s.read();
+		mem[i] = x.data;
 	}
 
 }

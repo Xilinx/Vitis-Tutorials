@@ -11,10 +11,10 @@
 
 Packet Stream-based AI Engine kernels allow fine-grain control over how packets are generated and consumed in the kernels. This section explains how to code AI Engine kernels with packet stream interfaces (`input_pktstream` and `output_pktstream`). The connection in the graph is also described. 
 
-The PL side and PS side of this example is the same as [Window Based AI Engine Kernels](./window_based_aie_kernel.md). Refer to:
-* [Packet Format](./window_based_aie_kernel.md/#Packet-Format)
-* [Example PL Kernels for Packet Switching](./window_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
-* [Example PS code for Packet Switching](./window_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
+The PL side and PS side of this example is the same as [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md). Refer to:
+* [Packet Format](./buffer_based_aie_kernel.md/#Packet-Format)
+* [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
+* [Example PS code for Packet Switching](./buffer_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
 ### Packet Stream Interfaces and Operations
 Two stream types are provided to denote streaming data, consisting of packetized interleaving of several different streams. These types are listed in the following table.
@@ -142,7 +142,7 @@ The host code is self-checking. It checks the correctness of output data. If the
 ### Conclusion
 In this tutorial you learned about:
 
-* Building the window interface or packet stream interface to AI Engine kernels
+* Building the buffer interface or packet stream interface to AI Engine kernels
 * Constructing the packet switching graph
 * Writing PL kernels to perform packet switching
 

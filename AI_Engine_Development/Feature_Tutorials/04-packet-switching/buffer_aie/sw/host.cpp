@@ -69,6 +69,12 @@ int main(int argc, char* argv[]) {
 		*(host_in4+i)=4*i;
 	}
 	
+	// sync input memory
+	xrtBOSync(in_bo1, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo2, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo3, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(in_bo4, XCL_BO_SYNC_BO_TO_DEVICE , mem_size,/*OFFSET=*/ 0);
+	
 	// start output kernels
 	xrtKernelHandle s2mm_k1 = xrtPLKernelOpen(dhdl, uuid, "s2mm:{s2mm_1}");
 	xrtRunHandle s2mm_r1 = xrtRunOpen(s2mm_k1);
@@ -134,6 +140,12 @@ int main(int argc, char* argv[]) {
 	xrtRunWait(s2mm_r3);
 	xrtRunWait(s2mm_r4);
 	std::cout<<" s2mm wait complete"<<std::endl;
+
+	// sync output memory
+	xrtBOSync(out_bo1, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo2, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo3, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
+	xrtBOSync(out_bo4, XCL_BO_SYNC_BO_FROM_DEVICE , mem_size,/*OFFSET=*/ 0);
 
 	// post-processing data;
 	for(int i=0;i<mem_size/sizeof(int);i++){	

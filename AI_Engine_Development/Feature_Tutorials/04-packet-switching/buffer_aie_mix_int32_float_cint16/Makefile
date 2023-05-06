@@ -6,16 +6,14 @@ TARGET   = hw_emu
 PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
 XSA   = vck190_aie_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
+PACKET_JSON_REPORT = Work/reports/packet_switching_report.json
 LIBADF  = libadf.a
 AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
-
-ROOTFS:=${EDGE_COMMON_SW}/rootfs.ext4
-IMAGE:=${EDGE_COMMON_SW}/Image
-
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -53,8 +51,8 @@ guard-IMAGE:
 guard-CXX:
 	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
-guard-SYSROOT:
-	$(call check_defined, SYSROOT, Run: xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
 ###
 
@@ -70,15 +68,15 @@ aiesim: ${LIBADF}
 	${AIE_SIM_CMD}
 
 xsa: guard-PLATFORM_REPO_PATHS ${XSA}
-${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS} 
-	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF} \
+${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS}
+	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF}  \
 	       -t ${TARGET} ${VPP_FLAGS} -o $@
 
 kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
 	$(MAKE) -C pl_kernels/
 	
-host: guard-CXX guard-SYSROOT ${HOST_EXE}
+host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
 	$(MAKE) -C sw/
 
@@ -92,6 +90,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
 		--package.sd_dir data \
+		--package.sd_file ${PACKET_JSON_REPORT} \
 		--package.sd_file ${HOST_EXE} ${XSA} ${LIBADF} 
 
 run_hw_emu: launch_hw_emu.sh
