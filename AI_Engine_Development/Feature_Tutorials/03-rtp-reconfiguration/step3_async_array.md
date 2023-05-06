@@ -19,9 +19,9 @@ __Note:__ The default working directory in this step is "step3", unless specifie
 
 `aie/fir24_sym_param.h`gives a forward declaration of a 24-tap symmetric FIR filter:
 
-	void fir24_sym(input_window<cint16> * iwin, output_window<cint16> * owin,  const int32(&coeffs)[12]);
+	void fir24_sym(input_buffer<cint16,adf::extents<64>,adf::margin<24>> & iwin, output_buffer<cint16,adf::extents<64>> & owin,  const int32(&coeffs)[12]);
 	
-The filter has an input and output window which consumes and produces complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `aie/kernels/hb24.cc`.
+The filter has an input and output buffers which consume and produce complex samples. This filter differs from previous filters you have seen because the coefficients of the filter can be set as a kernel parameter and changed on each invocation. The implementation of the filter is in `aie/kernels/hb24.cc`.
 
 The filter coefficients are given in:
 
@@ -91,7 +91,7 @@ PL kernels need to be compiled into Xilinx object (`.xo`) files. Run the followi
 	
 The corresponding v++ -c command is:
 	
-	v++ -c --platform xilinx_vck190_base_202220_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
+	v++ -c --platform xilinx_vck190_base_202310_1 -k random_noise random_noise.cpp -o random_noise.xo --verbose --save-temps
 	
 The Makefile rule targets introduced in [Synchronous update of scalar RTP](./step1_sync_scalar.md) and [Asynchronous update of scalar RTP](./step2_async_scalar.md) still apply here. Details about tool options and host code in [Synchronous update of scalar RTP](./step1_sync_scalar.md) are similar. However, you can just choose to run following make command to launch HW emulation:
 
@@ -99,13 +99,9 @@ The Makefile rule targets introduced in [Synchronous update of scalar RTP](./ste
 	
 And in the Linux prompt, run the following commands:
 
-	mount /dev/mmcblk0p1 /mnt
-	cd /mnt
-	export XILINX_XRT=/usr
-	export XCL_EMULATION_MODE=hw_emu
 	./host.exe a.xclbin
 	
-To exit QEMU press Ctrl+A, x. 
+To exit QEMU press `Ctrl+A`, and then press `x`. 
 
 For hw mode, run following make command to generate an SD card package:
 	
@@ -115,7 +111,6 @@ And in hardware, after booting Linux from the SD card, run following commands in
 
 	mount /dev/mmcblk0p1 /mnt
 	cd /mnt
-	export XILINX_XRT=/usr
 	./host.exe a.xclbin
 	
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:

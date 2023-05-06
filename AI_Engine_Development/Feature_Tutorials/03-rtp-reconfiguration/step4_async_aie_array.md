@@ -44,7 +44,7 @@ Compile the AI Engine graph (`libadf.a`) using the AI Engine compiler:
 
 The corresponding AI Engine compiler command is:
 
-    aiecompiler -platform=xilinx_vck190_es1_base_202220_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+    aiecompiler -platform=xilinx_vck190_base_202310_1.xpfm -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
     
 After the AI Engine graph (`libadf.a`) has been generated, verify for correctness using the AI Engine simulator:
 
@@ -69,107 +69,66 @@ For information about the pragmas and protocols for Vitis HLS, refer to the Viti
 
 The Makefile rule targets introduced in [Synchronous update of Scalar RTP](./step1_sync_scalar.md), [Asynchronous Update of Scalar RTP](./step2_async_scalar.md), and [Asynchronous Update of Array RTP](./step3_async_array.md) still apply here. Details about tool options and host code in [Synchronous Update of Scalar RTP](./step1_sync_scalar.md) are similar. 
 
-In Linux mode, the following header files are required for the ADF and XRT APIs:
+In Linux mode, the following header files are required for the XRT APIs:
 	
-	#include "adf/adf_api/XRTConfig.h"
-	#include "experimental/xrt_kernel.h"
+	#include "xrt/xrt_kernel.h"
+	#include "xrt/xrt_graph.h"
+
+Notice that the XRT API was used to manage the PL kernels (`s2mm` and `random_noise`). The code in `sw/host.cpp` is as follows:
+
+	// Open xclbin
+	auto device = xrt::device(0); //device index=0
+	auto uuid = device.load_xclbin(xclbinFilename);
+
+	// s2mm & random_noise kernel handle
+	auto s2mm = xrt::kernel(device, uuid, "s2mm");
+	auto random_noise = xrt::kernel(device, uuid, "random_noise");
+
+	// output memory
+	auto out_bo = xrt::bo(device, output_size_in_bytes,s2mm.group_id(0));
+	auto host_out=out_bo.map<std::complex<short>*>();
+
+	//kernel run
+	auto s2mm_run = s2mm(out_bo, nullptr, OUTPUT_SIZE);//1st run for s2mm has started
+	auto random_noise_run = random_noise(nullptr, OUTPUT_SIZE);
+	......
+	// wait for s2mm done
+	auto state = s2mm_run.wait();
+	std::cout << "s2mm completed with status(" << state << ")\n";
 	
-Besides using the ADF API to control graph execution, you can also use the XRT API for graph control. In this host code, `__USE_ADF_API__` is used to switch between the ADF and XRT APIs. You can modify the Makefile in the `sw` directory to choose which API to use. 
-
-In `sw/host.cpp`, for the ADF API, the graph `update()` is used to update the RTP, and the graph `run()` is used to launch the AI Engine kernels. But the `adf` API calls the Xilinx Runtime (XRT) API underneath, and `adf::registerXRT()` is introduced to build the relationship between them. The code for RTP update and execution by the `adf` API is as follows:
-
-    // update graph parameters (RTP) & run
-    adf::registerXRT(dhdl, uuid);
-    int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
-    int wide_filter[12] = {-21, -249, 319, -78, -511, 977, -610, -844, 2574, -2754, -1066, 18539};
-    gr.update(gr.coefficients, narrow_filter, 12);//update AIE kernel RTP
-    gr.run(16);//start AIE kernel
-    gr.wait();
-    gr.update(gr.coefficients, wide_filter, 12);//Update AIE kernel RTP
-    gr.run(16);//start AIE kernel
-
-In `sw/host.cpp`, notice that `adf::registerXRT()` requires the device handle and UUID of the XCLBIN image. These can be obtained by the Xilinx Runtime (XRT) API:
-    
-    auto dhdl = xrtDeviceOpen(0);//device index=0
-    ret=xrtDeviceLoadXclbinFile(dhdl,xclbinFilename);
-    xuid_t uuid;
-    xrtDeviceGetXclbinUUID(dhdl, uuid);
-        
-Notice that the XRT API was used instead of the OpenCL API to manage the PL kernels (`s2mm` and `random_noise`). This execution model is similar to that introduced in [Asynchronous Update of Array RTP](./step3_async_array.md). The code in `sw/host.cpp` is as follows:
-
-    // Allocate output global memory and map to host memory
-    xrtBufferHandle out_bohdl = xrtBOAlloc(dhdl, output_size_in_bytes, 0, /*BANK=*/0);
-    std::complex<short> *host_out = (std::complex<short>*)xrtBOMap(out_bohdl);
-
-    // s2mm ip
-    xrtKernelHandle s2mm_khdl = xrtPLKernelOpen(dhdl, uuid, "s2mm"); // Open kernel handle
-    xrtRunHandle s2mm_rhdl = xrtRunOpen(s2mm_khdl); 
-    xrtRunSetArg(s2mm_rhdl, 0, out_bohdl); // set kernel arg
-    xrtRunSetArg(s2mm_rhdl, 2, OUTPUT_SIZE); // set kernel arg
-    xrtRunStart(s2mm_rhdl); //launch s2mm kernel
-
-    // random_noise ip
-    xrtKernelHandle random_noise_khdl = xrtPLKernelOpen(dhdl, uuid, "random_noise");
-    xrtRunHandle random_noise_rhdl = xrtRunOpen(random_noise_khdl);
-    xrtRunSetArg(random_noise_rhdl, 1, OUTPUT_SIZE);
-    xrtRunStart(random_noise_rhdl);
-    printf("run random_noise\n");
-
-    // update graph parameters (RTP) & run
-    ...
-    
-    // wait for s2mm done
-    auto state = xrtRunWait(s2mm_rhdl);
-	
-    // Transfer data from global memory in device back to host memory 
-    xrtBOSync(out_bohdl, XCL_BO_SYNC_BO_FROM_DEVICE , output_size_in_bytes,/*OFFSET=*/ 0);
-    
-    // Post-processing of data
-
-After post-processing the data, release the allocated objects:
-
-	gr.end();
-	xrtRunClose(s2mm_rhdl);
-    xrtKernelClose(s2mm_khdl);
-	xrtRunClose(random_noise_rhdl);
-    xrtKernelClose(random_noise_khdl);
-    xrtBOFree(out_bohdl);
-    xrtDeviceClose(dhdl);
+	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
 The XRT API version to control graph exectuion is as follows:
 
-	auto ghdl=xrtGraphOpen(dhdl,uuid,"gr");
+	int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};
+	int wide_filter[12] = {-21, -249, 319, -78, -511, 977, -610, -844, 2574, -2754, -1066, 18539};
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.update("gr.fir24.in[1]",narrow_filter);
+	ghdl.run(16);
+	ghdl.wait();
+	std::cout<<"Graph wait done"<<std::endl;
 	
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)narrow_filter,12*sizeof(int));
-	ret=xrtGraphRun(ghdl,16);
-	ret=xrtGraphWait(ghdl,0);
+	//second run
+	ghdl.update("gr.fir24.in[1]",wide_filter);
+	ghdl.run(16);
+	......
+	ghdl.end();
 
-	ret=xrtGraphUpdateRTP(ghdl,"gr.fir24.in[1]",(char*)wide_filter,12*sizeof(int));
-	ret=xrtGraphRun(ghdl,16);
-
-You can see that the XRT API to open, run, wait, and RTP update graph are: xrtGraphOpen(), xrtGraphRun(), xrtGraphWait(), xrtGraphUpdateRTP(). For more information about XRT APIs on graphs, see the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
+For more information about XRT APIs on graphs, see the *Versal ACAP AI Engine Programming Environment User Guide* (UG1076).
 
 Run the following `make` command to build the host exectuable file:
 
     make host
     
-Notice the following linker script links the libraries `adf_api_xrt` and `xrt_coreutil`. these are necessary for the `adf` API to work together with the XRT API.
-
-    ${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
-
 Run the following `make` command to build all necessary files and launch HW cosimulation:
 
     make run_hw_emu
         
 In the Linux prompt, run following commands:
 
-    mount /dev/mmcblk0p1 /mnt
-    cd /mnt
-    export XILINX_XRT=/usr
-    export XCL_EMULATION_MODE=hw_emu
     ./host.exe a.xclbin
         
-To exit QEMU press Ctrl+A, x
+To exit QEMU press `Ctrl+A`, and then press `x`
 
 For hw mode, run following `make` command to generate an SD card package:
 
@@ -179,7 +138,6 @@ In hardware, after booting Linux from the SD card, run following commands in the
 
     mount /dev/mmcblk0p1 /mnt
     cd /mnt
-    export XILINX_XRT=/usr
     ./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output matches the golden data, after the run is complete, it will print the following:

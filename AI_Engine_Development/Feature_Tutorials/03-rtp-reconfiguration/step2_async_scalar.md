@@ -95,19 +95,14 @@ After the package step, run hardware emulation using the following command:
 	
 In the Linux prompt, run following commands:
 
-	mount /dev/mmcblk0p1 /mnt
-	cd /mnt
-	export XILINX_XRT=/usr
-	export XCL_EMULATION_MODE=hw_emu
 	./host.exe a.xclbin
 
-To exit QEMU press Ctrl+A, x
+To exit QEMU press `Ctrl+A`, and then press `x`
 
 Alternatively, to run in hardware, after booting Linux from an SD card, run the following commands in the Linux prompt:
 
 	mount /dev/mmcblk0p1 /mnt
 	cd /mnt
-	export XILINX_XRT=/usr
 	./host.exe a.xclbin
 
 The host code is self-checking. It will check the output data against the golden data. If the output data matches the golden data after the run is complete, it will print the following:
