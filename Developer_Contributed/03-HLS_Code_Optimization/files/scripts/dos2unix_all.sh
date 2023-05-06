@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
-
 
 # Dos2Unix conversion just to avoid any trouble with file formats
 for file in $(find . -name "*.sh" );   do dos2unix ${file}; done

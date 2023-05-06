@@ -1,4 +1,4 @@
-% Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+% Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 % SPDX-License-Identifier: MIT
 
 %%
@@ -13,7 +13,7 @@ figure; imshow(I, []); title 'Input RGB Image'
 G = rgb2gray(I); % black and white image
 figure; imshow(G, []); title 'Input GRAY Image'
 
-%% add noise 
+%% add noise
 
 J = imnoise(G,'salt & pepper',0.08); % add noise
 figure; imshow(J, []); title 'Noisy Input Image'
@@ -36,17 +36,17 @@ imwrite(M5, 'm_golden_median5x5_1080p.bmp');
 imwrite(M7, 'm_golden_median7x7_1080p.bmp');
 
 
-% 
+%
 % %% MEDIAN 3x3
 % II3 = imread('c_out_median3x3_1080p.bmp', 'BMP');
 % dII3 = double(II3);
-% 
+%
 % RR3 = imread('m_golden_median3x3_1080p.bmp', 'BMP');
 % dRR3 = double(RR3);
-% 
+%
 % figure; imshow(II7); title 'C        output MEDIAN 3x3'
 % figure; imshow(RR7); title 'M GOLDEN output MEDIAN 3x3'
-% 
+%
 % diff_m7 = abs(dRR7 - dII7);
 % index_m7 = diff_m7 >0;
 % sum(index_m7(:))
@@ -55,18 +55,18 @@ imwrite(M7, 'm_golden_median7x7_1080p.bmp');
 % sum(index_m7(:))
 % figure; imshow(diff_m7,[]); title 'DIFF MEDIAN 7x7 C vs. MATLAB'
 % sum_abs_diff_m7 = sum(diff_m7(:))
-% 
-% 
+%
+%
 % %% MEDIAN 7x7
 % II7 = imread('c_out_median7x7_1080p.bmp', 'BMP');
 % dII7 = double(II7);
-% 
+%
 % RR7 = imread('m_golden_median7x7_1080p.bmp', 'BMP');
 % dRR7 = double(RR7);
-% 
+%
 % figure; imshow(II7); title 'C        output MEDIAN 7x7'
 % figure; imshow(RR7); title 'M GOLDEN output MEDIAN 7x7'
-% 
+%
 % diff_m7 = abs(dRR7 - dII7);
 % index_m7 = diff_m7 >0;
 % sum(index_m7(:))
@@ -75,17 +75,17 @@ imwrite(M7, 'm_golden_median7x7_1080p.bmp');
 % sum(index_m7(:))
 % figure; imshow(diff_m7,[]); title 'DIFF MEDIAN 7x7 C vs. MATLAB'
 % sum_abs_diff_m7 = sum(diff_m7(:))
-% 
+%
 % %% MEDIAN 5x5
 % II5 = imread('c_out_median5x5_1080p.bmp', 'BMP');
 % dII5 = double(II5);
-% 
+%
 % RR5 = imread('m_golden_median5x5_1080p.bmp', 'BMP');
 % dRR5 = double(RR5);
-% 
+%
 % figure; imshow(II5); title 'C        output MEDIAN 5x5'
 % figure; imshow(RR5); title 'M GOLDEN output MEDIAN 5x5'
-% 
+%
 % diff_m5 = abs(dRR5 - dII5);
 % index_m5 = diff_m5 >0;
 % sum(index_m5(:))
@@ -94,17 +94,17 @@ imwrite(M7, 'm_golden_median7x7_1080p.bmp');
 % sum(index_m5(:))
 % figure; imshow(diff_m5,[]); title 'DIFF MEDIAN 5x5 C vs. MATLAB'
 % sum_abs_diff_m5 = sum(diff_m5(:))
-% 
+%
 % %% MEDIAN 3x3
 % II3 = imread('c_out_median3x3_1080p.bmp', 'BMP');
 % dII3 = double(II3);
-% 
+%
 % RR3 = imread('m_golden_median3x3_1080p.bmp', 'BMP');
 % dRR3 = double(RR3);
-% 
+%
 % figure; imshow(II3); title 'C        output MEDIAN 3x3'
 % figure; imshow(RR3); title 'M GOLDEN output MEDIAN 3x3'
-% 
+%
 % diff_m3 = abs(dRR3 - dII3);
 % index_m3 = diff_m3 >0;
 % sum(index_m3(:))

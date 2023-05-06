@@ -1,6 +1,5 @@
-#
-# This file was created by a Xilinx tool. trust it.
-#
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
 
 # =========================================================
 # PROJECT and MODULE REPOS
@@ -8,7 +7,7 @@
 #relative directory
 RELATIVE_PROJECT_DIR := ../
 
-#absolute directory 
+#absolute directory
 PROJECT_AIE_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 show_dir:

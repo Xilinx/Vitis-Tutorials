@@ -1,10 +1,10 @@
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 #relative directory
 RELATIVE_PROJECT_DIR := ../
 
-#absolute directory 
+#absolute directory
 PROJECT_PL_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 show_dir:
@@ -44,7 +44,7 @@ all:		show_dir	$(HW_KERNEL_OBJS)
 clean:
 	-$(RM) $(SRC_KERNEL_OBJS) $(ALL_MESSAGE_FILES)
 	-$(RMDIR) $(BUILD_SUBDIRS)
-	-$(RMDIR) .Xil *.log .crash* 
+	-$(RMDIR) .Xil *.log .crash*
 
 .PHONY: incremental
 incremental: all

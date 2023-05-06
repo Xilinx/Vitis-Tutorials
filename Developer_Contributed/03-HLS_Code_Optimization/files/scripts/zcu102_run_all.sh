@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 # ZCU102
@@ -13,14 +13,15 @@ cd ${PWD}/examples
 make clean
 make hls_kernels
 
-
 # Vitis Acceleration designs
 cd ${PWD}/examples
+
 # vector add
 make vadd_zclean
 make vadd_zcu102
+
 # matrix mult
-make mmult_zclean
+#make mmult_zclean
 make mmult_zcu102
 
 # to finish

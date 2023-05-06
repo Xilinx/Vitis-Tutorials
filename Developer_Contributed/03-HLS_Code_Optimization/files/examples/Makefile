@@ -1,4 +1,4 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 SHELL := /bin/bash
@@ -101,4 +101,3 @@ mmult_vck190:
 
 show_dir_vck190:
 		$(MAKE) -C ./9_matrix_mult_v       show_dir
-

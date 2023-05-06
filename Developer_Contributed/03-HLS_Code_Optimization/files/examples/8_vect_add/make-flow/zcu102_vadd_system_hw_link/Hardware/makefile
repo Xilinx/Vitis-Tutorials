@@ -1,5 +1,6 @@
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
+
 
 # compiler tools
 #XILINX_VITIS ?= /media/danieleb/DATA/2022.2/tools/Xilinx/Vitis/2022.2

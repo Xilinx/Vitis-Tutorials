@@ -1,6 +1,7 @@
-// Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
-// SPDX-License-Identifier: MIT
-
+/*
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+*/
 
 #include <stdio.h>
 #include <stdlib.h>

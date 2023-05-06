@@ -1,4 +1,4 @@
-% Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+% Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 % SPDX-License-Identifier: MIT
 
 %%
@@ -36,9 +36,9 @@ f5=figure; imshow(eq_YCBCR, []); title(f5.CurrentAxes, 'MATLAB equalized YCBCR')
 eq_I = ycbcr2rgb(eq_YCBCR);
 f6=figure; imshow(eq_I, []); title(f6.CurrentAxes, 'MATLAB equalized YCBCR2RGB')
 
-%% Doing things manually 
+%% Doing things manually
 
-% Getting histogram 
+% Getting histogram
 fid = fopen("tmp_histogram.h", "w");
 for grey_level = 0:1:255
     images_histogram(grey_level + 1) = 0;
@@ -49,7 +49,7 @@ for grey_level = 0:1:255
             end
         end
     end
-    fprintf(fid, "%d,\n", uint32(images_histogram(grey_level + 1)) );      
+    fprintf(fid, "%d,\n", uint32(images_histogram(grey_level + 1)) );
 end
 fclose(fid);
 

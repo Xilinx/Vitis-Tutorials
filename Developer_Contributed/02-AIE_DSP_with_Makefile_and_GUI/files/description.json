@@ -18,9 +18,13 @@
             "vitis_hw_build",
             "vitis_hw_run"
         ],
-        "make_options": [],
+        "make_options": [
+          "EMBEDDED_PACKAGE_OUT=./package",
+          "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+        ],
         "custom_build_target": {
-            "all": "all"
+            "all": "all",
+            "hw": "sd_card"
         },
         "custom_board_target": "run_test",
         "tasks": {

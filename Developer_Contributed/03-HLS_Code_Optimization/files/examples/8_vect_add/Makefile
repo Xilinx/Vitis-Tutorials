@@ -1,4 +1,4 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 
@@ -20,5 +20,5 @@ zcu102_clean:
 #	mkdir -p ./make-flow/zcu102_vadd_system_hw_link/src
 
 kernels:	hls_kernels
-all:			zcu102_all hls_kernels 
+all:			zcu102_all hls_kernels
 clean:		hls_clean zcu102_clean

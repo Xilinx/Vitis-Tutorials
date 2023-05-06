@@ -1,7 +1,7 @@
-//Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
-//SPDX-License-Identifier: MIT
+// Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: MIT
 
-#pragma once 
+#pragma once
 
 short int cint16input[] = {
 //DB adding two input lines of zeros to reset the internal filter states

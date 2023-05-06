@@ -16,11 +16,13 @@
         ],
 
         "targets": [
-            "vitis_hw_build",
+          "vitis_hw_build",
             "vitis_hw_run"
         ],
 	"make_options": [
-		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm'"
+		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm'",
+    "EMBEDDED_PACKAGE_OUT=./package",
+    "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
 	],
         "custom_build_target": {
             "all": "all",

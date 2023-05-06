@@ -1,10 +1,10 @@
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 #relative directory
 RELATIVE_PROJECT_DIR := ../
 
-#absolute directory 
+#absolute directory
 PROJECT_PS_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 PROJECT_AIE_DIR= $(PROJECT_PS_DIR)/../dsp_AIE

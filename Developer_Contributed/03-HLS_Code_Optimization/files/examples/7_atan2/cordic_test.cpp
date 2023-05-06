@@ -1,5 +1,5 @@
 /*
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 */
 
@@ -33,7 +33,7 @@ int main(void)
 	}
 	fscanf(fp, "%*[^\n]\n"); //skip first  line
 	fscanf(fp, "%*[^\n]\n"); //skip second line
-	
+
 	fm = fopen("./test_data/check_res.m", "w");
 	if (fm == NULL) {
 		fprintf(stderr, "unable to open MATLAB ile\n");

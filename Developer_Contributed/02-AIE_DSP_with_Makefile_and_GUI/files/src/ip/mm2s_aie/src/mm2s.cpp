@@ -1,6 +1,5 @@
-//Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
-//SPDX-License-Identifier: MIT
-
+// Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: MIT
 
 #include <ap_int.h>
 #include <hls_stream.h>

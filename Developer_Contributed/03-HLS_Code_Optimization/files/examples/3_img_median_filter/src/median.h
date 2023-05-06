@@ -1,17 +1,7 @@
-/*******************************************************************************
-Vendor: Xilinx
-Associated Filename: median.h
-Purpose: Median algorithm header file for Vivado HLS
-Revision History: Settember 24, 2013 - initial release
-
-
-*******************************************************************************
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+/*
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
-
-*******************************************************************************/
-
-
+*/
 
 #ifndef _H_MEDIAN_H_
 #define _H_MEDIAN_H_

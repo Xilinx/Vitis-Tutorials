@@ -1,6 +1,5 @@
-// Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 // SPDX-License-Identifier: MIT
-
 
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
@@ -30,7 +29,7 @@ private:
 public:
 	port<input>  in;
 	port<output> out;
-	
+
 	// Constructor - with FIR graph class initialization
 	FirGraph():chan_FIR(FIR_TAP_COEFS)  {
 

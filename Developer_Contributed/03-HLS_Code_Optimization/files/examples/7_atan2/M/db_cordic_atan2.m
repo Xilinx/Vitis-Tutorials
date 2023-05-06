@@ -1,17 +1,5 @@
-% Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+% Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 % SPDX-License-Identifier: MIT
-
-%/*
-%  Gain=1.647;
-%  mode 1: rotation;  Rotates (x0,y0) by z0
-%    (xn,yn)=(cos(z0),sin(z0)) for (x0,y0)=(1,0)
-%    x[i+1] = x[i] - y[i] * d[i] * 2^(-1)
-%    y[i+1] = y[i] + x[i] * d[i] * 2^(-i)
-%    z[i+1] = z[i]        - d[i] * atan(2^(-i))
-%  mode 0: vectoring; Rotates (x0,y0) to X-axis
-%    (xn,zn)=(r,theta)
-%  -PI/2<z0<PI/2
-%*/
 
 %function [xn, yn, zn] = db_cordic (mode, x0, y0, z0, N)
 function [zn] = db_cordic (mode, x0, y0, z0, N)

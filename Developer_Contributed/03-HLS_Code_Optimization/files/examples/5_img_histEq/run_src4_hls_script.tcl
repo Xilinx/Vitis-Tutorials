@@ -1,5 +1,6 @@
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
+
 
 open_project vhls_hist_src4_prj
 set_top top_histogram_equaliz

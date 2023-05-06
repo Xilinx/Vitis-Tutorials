@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 # clean file text formatting
@@ -14,7 +14,7 @@
 source ${PWD}/scripts/guupServer_vck190_sample_env_setup.sh
 
 cd ${PWD}/examples
-make mmult_vclean
+#make mmult_vclean
 make mmult_vck190
 
 # to finish

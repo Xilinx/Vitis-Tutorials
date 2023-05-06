@@ -1,6 +1,5 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
-
 
 .PHONY: help all clean zcu102_vadd_clean zcu102_vadd_build zcu102_vadd_prepare
 

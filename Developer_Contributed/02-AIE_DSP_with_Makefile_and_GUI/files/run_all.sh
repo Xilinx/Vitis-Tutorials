@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 # DO NOT CHANGE THE ORDER OF THE FOLLOWING COMMANDS!
@@ -25,7 +25,7 @@ then
    # clean everything
    make clean
    # clean file text formats
-   #source ./scripts/dos2unix_all.sh
+   source ./scripts/dos2unix_all.sh
 
    # set the environment
    #source ./scripts/desktop_sample_env_setup.sh
@@ -53,6 +53,7 @@ then
    make all TARGET=hw
    # return to <*/files> folder
    cd ..
+
 
 else
     echo ${arg}
