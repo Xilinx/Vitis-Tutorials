@@ -9,7 +9,7 @@
 
 # AI Engine GMIO Programming Model
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This example introduces the AI Engine GMIO programming model. It includes three steps:
 
@@ -42,8 +42,8 @@ In this step, the synchronous GMIO transfer mode is introduced. Change the worki
 		gmioOut = adf::output_gmio::create("gmioOut",64,1000);
 		gmioIn = adf::input_gmio::create("gmioIn",64,1000);
 
-		adf::connect<adf::window<1024,32>>(gmioIn.out[0], k_m.in[0]);
-		adf::connect<adf::window<1024>>(k_m.out[0], gmioOut.in[0]);
+		adf::connect<>(gmioIn.out[0], k_m.in[0]);
+		adf::connect<>(k_m.out[0], gmioOut.in[0]);
 		adf::source(k_m) = "weighted_sum.cc";
 		adf::runtime<adf::ratio>(k_m)= 0.9;
 	  };
@@ -54,8 +54,8 @@ The GMIO ports `gmioIn` and `gmioOut`, are created and connected as follows:
 	gmioOut = adf::output_gmio::create("gmioOut",64,1000);
 	gmioIn = adf::input_gmio::create("gmioIn",64,1000);
 
-	adf::connect<adf::window<1024,32>>(gmioIn.out[0], k_m.in[0]);
-	adf::connect<adf::window<1024>>(k_m.out[0], gmioOut.in[0]);
+	adf::connect<>(gmioIn.out[0], k_m.in[0]);
+	adf::connect<>(k_m.out[0], gmioOut.in[0]);
 
 The GMIO instantiation `gmioIn` represents the DDR memory space to be read by the AI Engine and `gmioOut` represents the DDR memory space to be written by the AI Engine. The creator specifies the logical name of the GMIO, burst length (that can be 64,
 128, or 256 bytes) of the memory-mapped AXI4 transaction, and the required bandwidth in MB/s (here 1000 MB/s).
@@ -75,7 +75,7 @@ Inside the main function of `aie/graph.cpp`, two 256-element int32 arrays (1024 
     gr.run(ITERATION);
     gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
 
-The blocking transfer (`gmioIn.gm2aie`) has to be completed before `gr.run()` because the GMIO transfer is in synchronous mode here. But the window input of the graph (in PING-PONG manner by default) has only two buffers to store the received data. This means that at the maximum, two blocks of window input data can be transferred by GMIO blocking transfer. Otherwise, the `GMIO::gm2aie` will block the design. In this example program, `ITERATION` is set to one.
+The blocking transfer (`gmioIn.gm2aie`) has to be completed before `gr.run()` because the GMIO transfer is in synchronous mode here. But the buffer input of the graph (in PING-PONG manner by default) has only two buffers to store the received data. This means that at the maximum, two blocks of buffer input data can be transferred by GMIO blocking transfer. Otherwise, the `GMIO::gm2aie` will block the design. In this example program, `ITERATION` is set to one.
 
 Because `GMIO::aie2gm()` is working in synchronous mode, the output processing can be done just after it is completed.
 
@@ -140,7 +140,7 @@ Examine the code in main function `aie/graph.cpp`. This time `ITERATION` is four
 	...
 	//post-processing
 
-Although a non-blocking GMIO API is used to transfer the input data, there is no need for explicit synchronization between data transfer and kernel execution. The synchronization between input data transfer and kernel execution is guaranteed by the window buffer, meaning that every iteration of kernel execution will wait for the block of input data to be ready. The output data is synchronized using a blocking GMIO API. After the blocking API returns, the data is guaranteed to be available in DDR memory and the post-processing sequence can be safely started.
+Although a non-blocking GMIO API is used to transfer the input data, there is no need for explicit synchronization between data transfer and kernel execution. The synchronization between input data transfer and kernel execution is guaranteed by the buffer, meaning that every iteration of kernel execution will wait for the block of input data to be ready. The output data is synchronized using a blocking GMIO API. After the blocking API returns, the data is guaranteed to be available in DDR memory and the post-processing sequence can be safely started.
 
 #### Run AI Engine compiler and AI Engine simulator
 
