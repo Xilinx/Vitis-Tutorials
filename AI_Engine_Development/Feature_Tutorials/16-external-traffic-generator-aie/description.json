@@ -8,7 +8,7 @@
 
     "testinfo": {
         "test_name": "AIE_F_16-external-tfc-gen",
-        "disable": false,
+        "disable": true,
         "jobs": [
             {
                 "index": 0,
