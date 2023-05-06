@@ -1,5 +1,5 @@
 /**********
-© Copyright 2021 Xilinx, Inc.
+© Copyright 2020-2022 Xilinx, Inc.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -14,17 +14,10 @@ limitations under the License.
 #include <iostream>
 
 using namespace adf;
-PLIO *din = new PLIO("Datain0", plio_32_bits,  "data/input.txt");
-PLIO *dout = new PLIO("Dataout0", plio_32_bits,  "data/output.txt");
-simulation::platform<1,1> plat(din,dout);
 
 adaptive_graph gr;
 
-// send complex output samples to the output file
-connect<> netin(plat.src[0],gr.in);
-connect<> netout(gr.dataout, plat.sink[0]);
-
-#ifdef __AIESIM__
+#if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char **argv)
 {
   int narrow_filter[12] = {180, 89, -80, -391, -720, -834, -478, 505, 2063, 3896, 5535, 6504};

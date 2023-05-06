@@ -18,7 +18,8 @@ limitations under the License.
 #include <ap_int.h>
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
-    
+
+
 extern "C" {
 
 void mm2s(ap_int<32>* mem, hls::stream<ap_axis<32, 0, 0, 0>  >& s, int size) {
@@ -34,6 +35,7 @@ void mm2s(ap_int<32>* mem, hls::stream<ap_axis<32, 0, 0, 0>  >& s, int size) {
 #pragma HLS PIPELINE II=1
 		ap_axis<32, 0, 0, 0> x;
 		x.data = mem[i];
+		//x.keep_all();
 		s.write(x);
 	}
 

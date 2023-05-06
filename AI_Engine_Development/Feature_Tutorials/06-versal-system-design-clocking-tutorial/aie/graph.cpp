@@ -13,36 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 **********/
-
 #include "graph.h"
 
-PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");
+using namespace adf;
 
-// RTL Kernel PLIO
-PLIO *ai_to_pl = new PLIO("clip_in",adf::plio_32_bits, "data/output.txt"); 
-PLIO *pl_to_ai = new PLIO("clip_out", adf::plio_32_bits,"data/input.txt"); 
+clipped clipgraph; //A graph object 'clipgraph' is declared
 
-PLIO *out0 = new PLIO("DataOut1",adf::plio_32_bits, "data/output.txt");
-
-// RTL Kernel Addition to the platform
-simulation::platform<2,2> platform(in0, pl_to_ai, out0, ai_to_pl);
-//simulation::platform<1,1> platform(in0, out0);
-
-clipped clipgraph;
-
-connect<> net0(platform.src[0], clipgraph.in);
-//connect<> net1(clipgraph.out, platform.sink[0]);
-
-// Additional nets to the RTL Kernel
-connect<> net1(clipgraph.clip_in,platform.sink[1]);
-connect<> net2(platform.src[1],clipgraph.clip_out);
-connect<> net3(clipgraph.out, platform.sink[0]);
-
+//This main() function runs only for AIESIM and X86Sim targets. 
+//Emulation uses a different host code
 #if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char ** argv) {
-	clipgraph.init();
-    clipgraph.run(4); 
-    clipgraph.end();
+	clipgraph.init(); //Loads the graph to the AI Engine Array
+    clipgraph.run(4); //Starts the graph execution by enabling the processors.
+    clipgraph.end(); //Wait for 4 iterations to finish
     return 0;
 }
 #endif

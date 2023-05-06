@@ -59,12 +59,6 @@ The ADF graph has connections to the PL through the PLIO interfaces. These inter
 aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work aie/graph.cpp
 ```
 
-or
-
-```bash
-make aie
-```
-
 | Flag | Description |
 | ---- | ----------- |
 | --target | Target how the compiler will build the graph. Default is `hw` |
@@ -87,12 +81,6 @@ Run the following commands
 	
     v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip 
         ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps \ 
-```
-
-or 
-
-```bash
-     make kernels
 ```
 
 A brief explanation of the `v++` options:

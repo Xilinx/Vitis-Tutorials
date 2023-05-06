@@ -1,5 +1,5 @@
 /**********
-© Copyright 2021 Xilinx, Inc.
+© Copyright 2020-2022 Xilinx, Inc.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -14,8 +14,8 @@ limitations under the License.
 #define FIR24_SYM_H
 
 #include <adf.h>
-
-  void fir24_sym(input_window_cint16 * iwin, output_window_cint16 * owin,  const int32(&coeffs)[12], int32(&coeffs_readback)[12]);
+using namespace adf;
+  void fir24_sym(input_buffer<cint16,adf::extents<64>,adf::margin<24>> & iwin, output_buffer<cint16,adf::extents<64>> & owin,  const int32(&coeffs)[12], int32(&coeffs_readback)[12]);
 
 #endif
 
