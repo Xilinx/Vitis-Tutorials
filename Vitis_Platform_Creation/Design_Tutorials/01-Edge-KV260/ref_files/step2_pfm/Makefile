@@ -23,7 +23,7 @@ help:
 	@echo "make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>  	## Generate platform with pre-built software components"
 	
 
-all: check-common-image sw_comps dtb dtbo pfm_fsbl pfm 
+all: check-common-image sw_comps dtb dtbo pfm_fsbl pfm sysroot
 
 #target : check  whether the common image is ready 
 check-common-image:
