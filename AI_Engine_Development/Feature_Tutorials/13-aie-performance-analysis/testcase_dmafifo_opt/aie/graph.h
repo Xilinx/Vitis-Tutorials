@@ -1,15 +1,7 @@
-/**********
-© Copyright 2021-2022 Xilinx, Inc.
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-    http://www.apache.org/licenses/LICENSE-2.0
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-**********/
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
+*/
 #include <adf.h>
 
 #include "kernel.h"
@@ -38,9 +30,9 @@ public:
 		runtime<ratio>(k[0]) = 0.8;
 		runtime<ratio>(k[1]) = 0.8;
 
-		connect< window<4096> >net0(in.out[0], k[0].in[0]);
+		connect< >net0(in.out[0], k[0].in[0]);
 		connect< stream >net1(k[0].out[0], k[1].in[0]);
-		connect< window<4096> >net2(k[0].out[1], k[1].in[1]);
+		connect< >net2(k[0].out[1], k[1].in[1]);
 		connect< stream >net3(k[1].out[0], dataout.in[0]);
 		fifo_depth(net1)=1024;
     }

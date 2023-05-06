@@ -10,7 +10,7 @@
 
 # AI Engine Deadlock Analysis
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:
 
@@ -90,9 +90,7 @@ Vitis Analyzer can use the event trace from the AI Engine simulation to do stall
 
 If you are using Vitis Analyzer to do stall analysis, run the AI Engine simulator with `--online -wdb -ctf` options to generate event trace information in the background:
 
-	```
 	aiesimulator --pkg-dir=./Work --online -wdb -ctf
-	```
 
 **Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
 
@@ -100,17 +98,21 @@ In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls 
 
 ![Performance Metrics View](./images/a.PNG)
 
-Each tile shows percentages for each type of stall. From the metrics table, it can be seen that tile (24,0) has a large percentage of lock stall (99.161%), and tile (25,0) has a large percentage of stream stall (98.627%). These metrics indicate that the design is hanging, and that analysis is required.
+Each tile shows percentages for each type of stall. From the metrics table, it can be seen that tile (24,0) has a large percentage of lock stall (98.896%), and tile (25,0) has a large percentage of stream stall (98.380%). These metrics indicate that the design is hanging, and that analysis is required.
 
 In the Graph view of Vitis Analzyer, you can visualize the stalled path in the graph, which can give an indication of where the stall has happened in the design. By understanding the design behavior, it is also possible to estimate what the cause of the hang might be. 
 
-For example, as the following figure shows, in this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
+For example, select the stream stall in Trace view, and switch to Graph view. In this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
+
+![Stream stall in Trace View](./images/b_0.PNG)
 
 ![Stream stall in Graph View](./images/b.PNG)
 
-Switch to **Lock Stalls** in the Stalls view, and select the stall. The red path to kernel `k[1]` shows that it is trying to acquire the lock of the input buffer, but without success. The blue path shows that kernel `k[0]` is holding the lock of the buffer.
+Select the stall in **Lock Stalls** in Trace view, and switch to Graph view. The red path to kernel `k[1]` shows that it is trying to acquire the lock of the input buffer, but without success. The white path shows that kernel `k[0]` is holding the lock of the buffer.
 
-![Lock stall in Graph View](./images/c.PNG)
+![Lock stall in Trace View](./images/c_0.PNG)
+
+![Lock stall in Graph View](./images/c_0.PNG)
 
 From the above analysis, the cause of the hang is given. The direct resolution, without modifying kernel code, is to increase the FIFO size between the two kernels.
 
@@ -211,31 +213,31 @@ This section provides details of other methods of detecting and analyzing AI Eng
 - **Using `xbutil` to report graph running status:** The following command can be used to report graph running status:
 
 	```
-	xbutil examine -r aie -d 0000:00.0
+	xbutil examine -r aie -d 0
 	```
 	
 	The output of above command is as follows:
 
 		```
-		--------------------------
-		1/1 [0000:00:00.0] : edge
-		--------------------------
+		----------------------
+		[0000:00:00.0] : edge
+		----------------------
 		Aie
 		  Aie_Metadata
 		  GRAPH[ 0] Name      : gr
-		            Status    : idle
-		    SNo.  Core [C:R]          Iteration_Memory [C:R]        Iteration_Memory_Addresses    
-		    [ 0]   24:1                24:0                          8324                          
-		    [ 1]   25:1                24:0                          7012                          
+		            Status    : unknown
+		    SNo.  Core [C:R]          Iteration_Memory [C:R]        Iteration_Memory_Addresses
+		    [ 0]   24:0                24:0                          8324
+		    [ 1]   25:0                24:0                          7012
 		
 		Core [ 0]
 		    Column                : 24
-		    Row                   : 1
+		    Row                   : 0
 		    Core:
-		        Status                : east_lock_stall
-		        Program Counter       : 0x000001f0
+		        Status                : disabled, east_lock_stall
+		        Program Counter       : 0x000001ca
 		        Link Register         : 0x000000b0
-		        Stack Pointer         : 0x0003a100
+		        Stack Pointer         : 0x0003a0c0
 		    DMA:
 		        MM2S:
 		            Channel:
@@ -285,16 +287,16 @@ This section provides details of other methods of detecting and analyzing AI Eng
 		
 		    Events:
 		        core                  : 1, 2, 5, 22, 26, 28, 29, 31, 32, 35, 38, 39, 44, 73, 74, 78, 82, 86, 90, 94, 98, 102, 106, 114
-		        memory                : 1, 20, 21, 25, 33, 43, 44, 45, 46, 47, 48, 106, 113
+		        memory                : 1, 20, 21, 25, 33, 43, 44, 45, 46, 47, 48, 76, 78, 106, 113
 		
 		Core [ 1]
 		    Column                : 25
-		    Row                   : 1
+		    Row                   : 0
 		    Core:
-		        Status                : stream_stall_ms0
-		        Program Counter       : 0x000003f0
-		        Link Register         : 0x00000260
-		        Stack Pointer         : 0x00029c20
+		        Status                : disabled, stream_stall_ms0
+		        Program Counter       : 0x00000310
+		        Link Register         : 0x00000220
+		        Stack Pointer         : 0x00029ba0
 		    DMA:
 		        MM2S:
 		            Channel:
@@ -343,9 +345,9 @@ This section provides details of other methods of detecting and analyzing AI Eng
 		        15                    : released_for_write
 		
 		    Events:
-		        core                  : 1, 2, 5, 22, 24, 28, 29, 31, 32, 35, 38, 39, 41, 44, 73, 74, 75, 76, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 94, 95, 96, 98, 99, 100, 102, 103, 104, 106, 114
-		        memory                : 1
-				```
+		        core                  : 1, 2, 5, 22, 23, 24, 28, 29, 31, 32, 35, 38, 39, 41, 44, 73, 74, 75, 76, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 91, 92, 94, 95, 96, 98, 99, 100, 102, 103, 104, 106, 114
+		        memory                : 1		
+		```
 
 		
 	**Tip:** If a design hangs in Linux, press **Ctrl+Z** to suspend the design and run command.
@@ -362,9 +364,9 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	Find the absolute addresses for the kernels in the design. The status of the kernels can be read by running the following command:
 
-		root@versal-rootfs-common-2022.2:/run/media/mmcblk0p1# devmem 0x2000C872004
+		versal-rootfs-common-20231:/run/media/mmcblk0p1# devmem 0x2000C872004
 		0x00001000
-		root@versal-rootfs-common-2022.2:/run/media/mmcblk0p1# devmem 0x2000C072004 
+		versal-rootfs-common-20231:/run/media/mmcblk0p1# devmem 0x2000C072004 
 		0x00000200
 		```
 

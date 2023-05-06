@@ -10,7 +10,7 @@
 
 # AI Engine Performance and Deadlock Analysis Tutorial
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -18,19 +18,18 @@ This tutorial introduces you to performance analysis and optimization methods, a
 
 ## Before You Begin
 
-**IMPORTANT**: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the *Vitis Software Platform Release Notes* (v2022.2).
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html
 
-Before you begin this tutorial, run the following steps:
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your ROOTFS to point to `xilinx-versal-common-v2022.2/rootfs.ext4`. 
-3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based on where you downloaded the platform.
+Before starting this tutorial, run the following steps:
 
-This tutorial targets the VCK190 production board. The `PLATFORM` variable in the Makefile(s) is as follows:
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the /**Common Images Dir**/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you **must** run the /**Common Images Dir**/xilinx-versal-common-v2023.1/sdk.sh.
+3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /**Common Images Dir**/xilinx-versal-common-v2023.1 directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/base_platforms.
 
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm
-
+This tutorial targets VCK190 production board for 2023.1 version.
 
 ### Objectives
 
