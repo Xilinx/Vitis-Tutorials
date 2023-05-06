@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -17,7 +17,7 @@ In this step, we will create a Vitis platform running Linux operation system. Th
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    ├── kv260_hardware_platform
-   └── xilinx-zynqmp-common-v2022.1.tar.gz
+   └── xilinx-zynqmp-common-v2023.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -27,14 +27,14 @@ In this step, we will create a Vitis platform running Linux operation system. Th
    ```bash
    mkdir kv260_vitis_platform
    cd kv260_vitis_platform
-   tar xvf ../xilinx-zynqmp-common-v2022.1.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2023.1.tar.gz -C .
    ```
 
-   you can see **xilinx-zynqmp-common-v2022.1** folder which contains the components located in **kv260_vitis_platform** folder like the following.
+   you can see **xilinx-zynqmp-common-v2023.1** folder which contains the components located in **kv260_vitis_platform** folder like the following.
    
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2022.1
+   ├── xilinx-zynqmp-common-v2023.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -57,7 +57,7 @@ If you need to do system customization, please take the following steps as refer
 
 1. Check [Kria K26 SOM wiki](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM) and download the BSP package from the following link.
 
-     https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2022.1-final.bsp
+     https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2023.1-final.bsp
 
     Save it to **WorkSpace** directory.
 
@@ -79,18 +79,18 @@ If you need to do system customization, please take the following steps as refer
 4. Create PetaLinux with the Starter Kit SOM BSP and the XSA export from step 1.
 
     ```bash
-    petalinux-create --type project -s xilinx-kv260-starterkit-v2022.1-final.bsp
-    cd xilinx-kv260-starterkit-2022.1
+    petalinux-create --type project -s xilinx-kv260-starterkit-v2023.1-final.bsp
+    cd xilinx-kv260-starterkit-2023.1
     petalinux-config --get-hw-description=<vivado_design_dir> --silent  
     ```
 
 5. Add XRT to rootfs
 
-    KV260 PetaLinux BSP doesn't enable XRT because it installs XRT with overlay. To create sysroot for application developer cross compiling, we enable XRT in the rootfs.
+    KV260 PetaLinux BSP doesn't enable XRT because it installs XRT with overlay. To create sysroot for application developer cross compiling, we enable XRT in the rootfs. All the XRT required libraries are packaged into one group. 
 
     - Run `petalinux-config -c rootfs` to launch rootfs configuration window.
-    - Go to **Filesystem packages -> libs -> xrt**
-    - Enable `xrt`
+    - Go to **Petalinux Package Groups -> packagegroup-petalinux-vitis-acceleration-essential**
+    - Enable `packagegroup-petalinux-vitis-acceleration-essential` and `packagegroup-petalinux-vitis-acceleration-dbg`
     - Press Exit to exit configuration. Press Save to save the configuration.
 
 6. Build PetaLinux and generate SDK
@@ -122,14 +122,15 @@ If you need to do system customization, please take the following steps as refer
    source <Vitis_tool_install_dir>/settings64.sh
    cd kv260_vitis_platform
    xsct
-   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl \
-   -platform-name mydevice -git-branch xlnx_rel_v2022.1 -overlay -compile
+   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
+   -platform-name mydevice -git-branch xlnx_rel_v2023.1 -overlay -compile
    ```
 
    The `createdts` command has the following input values. Please specify them as you need.
 
    -  `-platform-name`: Platform name
    -  `-hw`: Hardware XSA file with path
+   -  `-out`: Specify the output directory
    -  `-git-branch`: device tree branch
    -  `-zocl`: enable the zocl driver support
    -  `-overlay`: enable the device tree overlay support
@@ -191,7 +192,7 @@ If you need to do system customization, please take the following steps as refer
 
 2. Install sysroot:
 
-   - Go to `<xilinx-zynqmp-common-v2022.1>` directory.
+   - Go to `<xilinx-zynqmp-common-v2023.1>` directory.
    - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. use the `-d` option to provide a full pathname to the output directory **kv260_vitis_platform** (This is an example ) and confirm.
    - Note: The environment variable **LD_LIBRARY_PATH** must not be set when running this command
 
@@ -200,7 +201,7 @@ If you need to do system customization, please take the following steps as refer
    ```bash
    - v260_hardware_platform             # Vivado Project Directory
    - kv260_vitis_platform               # Software components and vitis platform directory
-     - xilinx-zynqmp-common-v2022.1     # common image directory
+     - xilinx-zynqmp-common-v2023.1     # common image directory
      - device-tree-xlnx                 # device tree repo directory
      - mydevice                         # device tree source file directory
      - dtg_output                       # DTBO file directory

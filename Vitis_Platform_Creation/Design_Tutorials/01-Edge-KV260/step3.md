@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -29,28 +29,28 @@ platforminfo ./kv260_custom/export/kv260_custom/kv260_custom.xpfm
 Basic Platform Information
 ==========================
 Platform:           kv260_custom
-File:               /group/bcapps/sven/project/github/Vitis-Tutorials_419/Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260/ref_files/step2_petalinux/platform_repo/kv260_custom/export/kv260_custom/kv260_custom.xpfm
+File:               Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260/ref_files/step2_pfm/kv260_custom/export/kv260_custom/kv260_custom.xpfm
 Description:        
-A custom platform KV260 platform
+A custom platform ZCU104 platform
     
 
 =====================================
 Hardware Platform (Shell) Information
 =====================================
 Vendor:                           xilinx
-Board:                            kv260_hardware_platform
-Name:                             kv260_hardware_platform
+Board:                            kv260_hardware_Platform
+Name:                             kv260_hardware_Platform
 Version:                          0.0
-Generated Version:                2022.1
+Generated Version:                2023.1
 Hardware:                         1
 Software Emulation:               1
-Hardware Emulation:               0
+Hardware Emulation:               1
 Hardware Emulation Platform:      0
 FPGA Family:                      zynquplus
 FPGA Device:                      xck26
 Board Vendor:                     xilinx.com
-Board Name:                       xilinx.com:kv260_som:1.3
-Board Part:                       XCK26-SFVC784-2LV-C
+Board Name:                       xilinx.com:kv260_som:1.4
+Board Part:                       xck26-sfvc784-2LV-c
 
 =================
 Clock Information
@@ -61,13 +61,13 @@ Clock Information
   Clock Index:         1
     Frequency:         199.998000
   Clock Index:         2
-    Frequency:         299.997000
+    Frequency:         399.996000
 
 ==================
 Memory Information
 ==================
-  Bus SP Tag: HP!
   Bus SP Tag: HP0
+  Bus SP Tag: HP1
   Bus SP Tag: HP2
   Bus SP Tag: HP3
   Bus SP Tag: HPC0
@@ -133,7 +133,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
        - The output is `vadd` located in **vadd/Hardware/** directory. This  file is Compiled host application.
 
 
-  > Note: In this step we skip adding the Image and rootfs and only compile the host application and binary file. As a result we have to build host application and hw_link component seperately. Because Vitis V++ tool can not complete the packaging without the rootfs, Image and Boot components.
+  > Note: In this step we skip adding the Image and rootfs and only compile the host application and binary file. As a result we have to build host application and hw_link component separately. Because Vitis V++ tool can not complete the packaging without the rootfs, Image and Boot components.
 
   > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_vitis_platform/kv260_custom** directory.
 
@@ -187,17 +187,21 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     If the application required files are loaded successfully, the following log is expected:
 
     ```bash
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay0
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay1
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay2
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
-    xilinx-kv260-starterkit-20221 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
-    xilinx-kv260-starterkit-20221 kernel: irq-xilinx: mismatch in kind-of-intr param
-    xilinx-kv260-starterkit-20221 kernel: zocl-drm axi:zyxclmm_drm: IRQ index 32 not found
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay0
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay1
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking1
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/overlay2
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: irq-xilinx: mismatch in kind-of-intr param
+    Nov  8 06:07:35 xilinx-kv260-starterkit-20231 kernel: zocl-drm axi:zyxclmm_drm: error -ENXIO: IRQ index 32 not found
+    vadd: loaded to slot 0
     ```
 
 
@@ -218,6 +222,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     Loading: 'binary_container_1.bin'
     TEST PASSED
    ```
+
 
 > Note: If you get errors like "error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
 or directory", it's because XRT is not installed in KV260 default rootfs. Please run `sudo dnf install xrt` to install XRT.

@@ -1,16 +1,7 @@
-# Copyright 2020 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
@@ -37,8 +28,8 @@ Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
 
 # Quick command for generating vadd hw xclbin
-vadd_hw: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin
-
+vadd_hw: Vitis_Accel_Examples
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 # vadd_hw generates the files for running on hardware. User needs to pick the files required by KV260, rename thr file and transfer them to the board
 # Do not use the generated sd_card.img
 $(PL_EXAMPLE_PATH)/simple_vadd:   Vitis_Accel_Examples $(PLATFORM)  
@@ -53,7 +44,7 @@ vadd_hw_package: $(PL_EXAMPLE_PATH)/simple_vadd  $(PL_EXAMPLE_PATH)/shell.json
 	mkdir -p vadd
 	cp ../step2_pfm/dtbo_output/pl.dtbo vadd/
 	cp $(PL_EXAMPLE_PATH)/shell.json vadd/
-	cp $(PL_EXAMPLE_PATH)/build_dir.hw.$(PLATFORM_NAME)/krnl_vadd.xclbin vadd/krnl_vadd.bin
+	cp $(PL_EXAMPLE_PATH)/build_dir.hw.$(PLATFORM_NAME)/krnl_vadd.link.xclbin vadd/krnl_vadd.bin
 	cp $(PL_EXAMPLE_PATH)/simple_vadd vadd/
 	@echo "Please  copy vadd to /lib/firmware/xilinx/ on target board"
 	@echo "then use xmutil to load hardware."
