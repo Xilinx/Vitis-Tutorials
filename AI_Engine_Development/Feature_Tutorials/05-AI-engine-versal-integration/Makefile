@@ -42,10 +42,9 @@ VPP_FLAGS := $(VPP_LINK_FLAGS)
 GCC_FLAGS := -Wall -c \
 	     -std=c++17 
 
-GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
-		-I$(SDKTARGETSYSROOT)/usr/include 
+GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt 
 
-GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT}  
+GCC_LIB := -lxrt_coreutil  
 
 LDCLFLAGS := $(GCC_LIB)
 
