@@ -10,7 +10,7 @@
 
 ***Version: Vitis 2023.1***
 
-Design your application using the optimized Vitis&trade; accelerated libraries. Vitis libraries offer out-of-the-box acceleration with minimal to zero-code changes to your applications, accelerating your x86 host application code calling Vitis accelerated library APIs or developing accelerators on Xilinx platforms calling kernels in your code. You can work at an application level and focus your core competencies on solving problems by using the libraries in commonly-used programming languages and leveraging Xilinx platforms as an enabler in your application.
+Design your application using the optimized AMD Vitis&trade; accelerated libraries. Vitis libraries offer out-of-the-box acceleration with minimal to zero-code changes to your applications, accelerating your x86 host application code calling Vitis accelerated library APIs or developing accelerators on AMD platforms calling kernels in your code. You can work at an application level and focus your core competencies on solving problems by using the libraries in commonly-used programming languages and leveraging AMD platforms as an enabler in your application.
 
 ## Problem Description
 
@@ -42,7 +42,7 @@ This tutorial introduces an application developed by a Single Source Shortest Pa
 
 ![top block diagram](./images/block_diagram-top.svg)
 
-The Alveo&trade; Data Center accelerator card U50 is the target platform for this tutorial. The following tasks are described in this tutorial:
+The AMD Alveo&trade; Data Center accelerator card U50 is the target platform for this tutorial. The following tasks are described in this tutorial:
 
 * Using the Vitis Graph Library L2 design the Single Source Shortest Path kernel: ```krnls_sssp```
 * Designing other kernels with C++: ```krnls_wa```, ```krnls_search``` 
@@ -51,7 +51,7 @@ The Alveo&trade; Data Center accelerator card U50 is the target platform for thi
 * Preparing the dataset for running the application
 * Using Vitis hardware to run the application
 
-**Note**: This is not a detailed tools usage guideline, so only basic ideas and steps are shown. You will need to refer to other documents for details.
+**Note**: This is not a detailed tools usage guideline, so only basic ideas and steps are shown. Refer to other documents for details.
 
 
 ### Tutorial Structure

@@ -20,7 +20,7 @@ To proceed with this tutorial, set up the environment and the tools. Ensure that
 
 ## Setting up the Vitis&trade; Environment
 
-To be able to work with the libraries, you must set up the Vitis environment first. For instructions to set up the Vitis environment, refer to the [Vitis online documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform). Following are some example scripts to set up Vitis tools and XRT:
+To be able to work with the libraries, you must set up the AMD Vitis™ environment first. For instructions to set up the Vitis environment, refer to the [Vitis online documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform). Following are some example scripts to set up Vitis tools and XRT:
 
 ```
   $ source <Vitis Tool Installation Path>/Xilinx/Vitis/2023.1/settings64.sh

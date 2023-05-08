@@ -108,7 +108,7 @@ The Shortest Path test case is located in the ```Vitis_Libraries/graph/L2/test/s
 
 ## Designing other Kernels
 
-Once you have used the SSSP kernel with no changes, you can proceed towards developing other kernels. Data processing is available on the hardware to reduce the transmission between the host and the hardware. 
+Once you have used the SSSP kernel with no changes, proceed towards developing other kernels. Data processing is available on the hardware to reduce the transmission between the host and the hardware. 
 
 ### Using krnls_wa for Computing the weighted_average Weights
 

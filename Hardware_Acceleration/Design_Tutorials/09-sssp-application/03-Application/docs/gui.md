@@ -8,7 +8,7 @@
 
 # Part 4: Using the Vitis GUI to Create an Application
 
-The following flow demonstrates how to create an application with the Vitis GUI.
+The following flow demonstrates how to create an application with the AMD Vitis™ GUI.
 
 ## Create a Project with Vitis Libraries
 
