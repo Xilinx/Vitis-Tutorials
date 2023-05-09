@@ -91,8 +91,9 @@ Add the following option in the ***V++ command line options*** section to link y
 2. You can open the generated Vivado project in `<workspace>/simple_application_system_hw_link/Emulation-HW/binary_container_1.build/link/vivado/vpl/prj` to take a look at the compilation result.
 You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and connected them to the memory (NoC) and AI Engine IP.
 
-      ![missing image](images/211_vivado_prj.png)
-      ![missing image](images/211_vivado_prj2.png)
+      ![missing image](images/231_vivado_prj.jpg)
+
+      ![missing image](images/231_vivado_prj2.jpg)
 
 
 In the next step, you will create a PS bare-metal application and run the system with it.

@@ -23,7 +23,7 @@ This is in most ways a traditional Vivado design. You are building the platform,
 - Your design must have at least one clock that you will expose to Vitis for use with any kernels that it adds
 This clock must have an associated `proc_sys_reset` block.
 
-This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). 
+This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boards-and-kits/vck190.html).
 
 
 ### Step 1. Build Versal Extensible Embedded Platform Example Design in Vivado
@@ -36,15 +36,15 @@ This tutorial targets the VCK190 board (see https://www.xilinx.com/products/boar
 
 4. In the board selection page, select ***VCK190 Evaluation Platform***. If you are going to target other platform, you may select others. Click ***Next***.
 
-5. In the design preset page, make the following changes:
+5. In the design preset page, keep the default settings. Note that the AI Engine is enabled:
 
-      ![missing image](images/221_design_preset_config.png)
+      ![missing image](images/231_design_preset_config.jpg)
 
 6. Click ***Finish*** to complete the example design creation phase and this will open up the Vivado project with the template design you just created.
 You can open the block design to view the details of the platform design.
 By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you may use this as a baseline design and make further modifications on top of it.
 
-      ![missing image](images/211_block_design_complete.png)
+      ![missing image](images/231_block_design_complete.jpg)
 
 7. Click ***Generate Block Design*** from the Flow Navigator panel on the left, click ***Generate*** and wait for the process to complete.
 
@@ -61,7 +61,6 @@ By using the pre-built template, you can easily get a validated hardware design 
    c. On the fourth page, add the name of the platform.
 
       ![missing image](images/export_xsa_updated.PNG)
-      Here we name the board as "xd" because of software limitation.
 
    d. On the fourth page, set the name of the XSA and click ***Finish***.
 
