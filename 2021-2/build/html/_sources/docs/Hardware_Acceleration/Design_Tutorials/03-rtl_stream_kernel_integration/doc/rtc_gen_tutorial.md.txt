@@ -31,6 +31,8 @@ Thus we generalize the top level design specification for *rtc_gen* kernel as be
 <img src="./images/rtc_gen_block.png" alt="RTL Kernel" >
 </div>
 
+![RTL Kernel](./images/rtc_gen_block.png)
+
 <br/>
 
 ## Use RTL Kernel Wizard to Create Kernel Frame
@@ -48,9 +50,7 @@ vivado &
 
 We create a new RTL project named *rtc_gen_kernel* in the just created *vivado_project* directory. During the part selection page, select **Alveo U200 Data Center Accelerator Card*.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_1.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_1.png)
 
 <br/>
 
@@ -58,57 +58,43 @@ When the project is created, in the Flow Navigator, click the IP catalog command
 
 In the *General Settings* tab of the RTL Kernel Wizard, set the kernel name to **rtc_gen**, set the kernel vendor to **xilinx.com**, change the *has reset* option to value 1, refer to below snapshot.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_2.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_2.png)
 
 <br/>
 
 In the *Scalars* tab, configure the kernel arguments as our design specification. Refer to the **Control Register** table and below snapshot. Please note **read_addr** register is not considered scalar argument as AXI master pointer, so we don't need to configure it in this tab. We are using **uint** as argument type here, though all these bit might not be used.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_3.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_3.png)
 
 <br/>
 
 In the *Global Memory* tab, configure the AXI master interfaces parameters according to our design specification. Name the AXI master interface to **fontread_axi_m**, change the width to 4 bytes (32-bit), and set the relating argument name to **read_addr**. Refer to below snapshot.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_4.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_4.png)
 
 <br/>
 
 In the *Streaming interfaces* tab, set the number of AXI4-Sttream interfaces to 1, name it to **dataout_axis_m**, set the mode the **Master**, and set the width to 8 bytes (64-bit). Refer to below snapshot.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_5.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_5.png)
 
 <br/>
 
 Finally review the summary page of the wizard, and click *OK* button to generate the RTL kernel top level framework. 
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_6.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_6.png)
 
 <br/>
 
 For the next "Generate Output Products" pop-up window, just click *Skip* button close the window. Now you can see the *rtc_gen.xci* file in the *Design Sources* group of *Sources* view. Right click the *rtc_gen.xci* file, select *Open IP Example Design*.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_7.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_7.png)
 
 <br/>
 
 In the *Open IP Example Design* pop-up window directly click *OK* button, then another project named *rtc_gen_ex* will be created in *./vivado_project* directory and open automatically in another Vivado session. We will use project *rtc_gen_ex* as the major working project to finish the *rtc_gen* kernel development.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_8.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_8.png)
 
 <br/>
 
@@ -130,9 +116,7 @@ rtc_gen.v
 
 In the *Sources* view, *Hierarchy* tab, we can see the HDL file hierarchy. Now we have finished the kernel framework creation.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_9.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_9.png)
 
 <br/>
 
@@ -165,9 +149,7 @@ We will use following generated RTL files in our *rtc_gen* kernel:
 
 In addition to these five files, we could also refer to *rtc_gen_example_vadd.sv* for the connection of AXI read master. For AXI stream port, it is simple and we don't need the example for reference. For *rtc_gen* kernel, a Verilog file *rtc_gen_core.v* is created to finish the core function of the kernel. The function diagram of *rtc_gen_core* is shown in following diagram.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_10.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_10.png)
 
 <br/>
 
@@ -185,9 +167,7 @@ To make the core source code directory clean, we put all the necessary generated
 
 Now we remove all the existing Verilog/SystemVerilog source codes (except for thos in *IP* group) from the *rtc_gen_ex* project in Vivado, then add the files in *./rtc_gen/src* to the project (*rtc_gen_tb.sv* for *Simulation-Only Sources*, other files for *Design Sources*). Thus you can see the design hierarchy as below snapshot, and we finish the coding for kernel *rtc_gen*.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_11.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_11.png)
 
 <br/>
 
@@ -197,9 +177,7 @@ Now you can simulation the design and go through normal RTL design flow with sta
 
 After you confirm the design is OK, select *Generate RTL Kernel* from *Flow* Menu, then select *Sources-only kernel* in the pop-up window, click *OK* button to finish the *rtc_gen* RTL kernel creation.
 
-<div align="center">
-<img src="./images/rtl_kernel_wiz_12.png" alt="RTL Kernel" >
-</div>
+![RTL Kernel](./images/rtl_kernel_wiz_12.png)
 
 <br/>
 
