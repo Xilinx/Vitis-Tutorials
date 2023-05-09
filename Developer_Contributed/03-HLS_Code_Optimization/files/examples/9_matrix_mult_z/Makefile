@@ -64,13 +64,13 @@ hls_clean:
 	rm -rf *_prj *.log *~
 
 hls_kernels:
-	vitis_hls  $(PROJECT_DIR)/make-flow/zcu102/run_matrix_mult_script_zcu102.tcl
+	vitis_hls  ./run_matrix_mult_script_zcu102.tcl
 
 zcu102_all:
-	$(MAKE) -C $(PROJECT_DIR)/make-flow/zcu102 all
+	$(MAKE) -C ./make-flow/zcu102 all
 
 zcu102_clean:
-	$(MAKE) -C $(PROJECT_DIR)/make-flow/zcu102 clean
+	$(MAKE) -C ./make-flow/zcu102 clean
 
 run:		all
 sd_card:	all

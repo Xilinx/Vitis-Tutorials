@@ -21,8 +21,8 @@
         ],
 	"make_options": [
 		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_zcu102_base_202310_1/xilinx_zcu102_base_202310_1.xpfm'",
-    "EMBEDDED_PACKAGE_OUT=./package",
-    "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+		"EMBEDDED_PACKAGE_OUT=./make-flow/zcu102/mmult_system/Hardware/package",
+		"EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
 	],
         "custom_build_target": {
             "all": "all",

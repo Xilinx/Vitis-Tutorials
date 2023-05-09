@@ -73,8 +73,6 @@ package:
 	--package.rootfs=$(ROOTFS) \
 	--package.kernel_image=$(KERNEL_IMAGE) \
 	--package.sd_file  $(EMBEDDED_EXEC_SCRIPT) \
-	--package.sd_file  $(PROJECT_PS_DIR)/Hardware/mmult \
-	--package.out_dir  $(EMBEDDED_PACKAGE_OUT) \
 	--package.boot_mode=sd \
 	-o $(SYS_XCLBIN)
 

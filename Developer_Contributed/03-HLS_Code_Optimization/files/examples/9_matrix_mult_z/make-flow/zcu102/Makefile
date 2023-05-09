@@ -1,6 +1,14 @@
 # Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+SHELL := /bin/bash
+
+PHONY  = help kernels hw_link system host all clean show_dir
+PHONY += zcu102_build zcu102_prepare
+.PHONY: $(PHONY)
+
+
+
 #========================================================
 # Source directories
 # =========================================================
@@ -12,8 +20,6 @@ PROJECT_PS_DIR     := $(PROJECT_DIR)/mmult
 PROJECT_HWLINK_DIR := $(PROJECT_DIR)/mmult_system_hw_link
 PROJECT_SYSTEM_DIR := $(PROJECT_DIR)/mmult_system
 
-EMBEDDED_PACKAGE_OUT = $(PROJECT_SYSTEM_DIR)/Hardware/package
-EMBEDDED_EXEC_SCRIPT = $(PROJECT_SYSTEM_DIR)/Hardware/embedded_exec.sh
 
 show_dir:
 		-@echo " "
@@ -29,12 +35,6 @@ show_dir:
 		-@echo " "
 
 
-SHELL := /bin/bash
-
-PHONY  = help kernels hw_link system host all clean show_dir
-PHONY += zcu102_build zcu102_prepare
-.PHONY: $(PHONY)
-
 
 
 all:	zcu102_prepare zcu102_build show_dir
@@ -46,19 +46,20 @@ zcu102_build:
 	$(MAKE) host
 	$(MAKE) system
 
+
 clean:
-	$(MAKE) -C $(PROJECT_PL_DIR)/Hardware clean
-	$(MAKE) -C $(PROJECT_HWLINK_DIR)/Hardware clean
-	$(MAKE) -C $(PROJECT_SYSTEM_DIR)/Hardware clean
-	$(MAKE) -C $(PROJECT_PS_DIR)/Hardware clean
-	rm -rf  $(PROJECT_PS_DIR)/src
-	rm -rf  $(PROJECT_SYSTEM_DIR)/src
-	rm -rf  $(PROJECT_PL_DIR)/src
-	rm -rf  $(PROJECT_HWLINK_DIR)/src
-	rm -f   $(PROJECT_SYSTEM_DIR)/Hardware/*.log
-	rm -f   $(PROJECT_SYSTEM_DIR)/Hardware/*~
-	rm -rf  $(PROJECT_SYSTEM_DIR)/Hardware/.ipcache
-	rm -rf   $(PROJECT_HWLINK_DIR)/Hardware/.ipcache
+	$(MAKE) -C mmult_kernels/Hardware clean
+	$(MAKE) -C mmult_system_hw_link/Hardware clean
+	$(MAKE) -C mmult_system/Hardware clean
+	$(MAKE) -C mmult/Hardware clean
+	rm -rf ./mmult/src
+	rm -rf ./mmult_system/src
+	rm -rf ./mmult_kernels/src
+	rm -rf ./mmult_system_hw_link/src
+	rm -f  ./muult_system/Hardware/*.log
+	rm -f  ./mmult_system/Hardware/*~
+	rm -rf  ./mmult_system/Hardware/.ipcache
+	rm -rf  ./mmult_system_hw_link/Hardware/.ipcache
 
 
 zcu102_prepare:

@@ -19,7 +19,7 @@
             "vitis_hw_run"
         ],
         "make_options": [
-          "EMBEDDED_PACKAGE_OUT=./package",
+          "EMBEDDED_PACKAGE_OUT=./make-flow/dsp_system/Hardware/package",
           "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
         ],
         "custom_build_target": {
