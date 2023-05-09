@@ -11,7 +11,7 @@
 
 # Using Aurora IP in Alveo with Vitis Flow
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 
 ## Introduction
@@ -24,7 +24,7 @@ Following is the block diagram of Aurora 64B/66B communication channel.
 ![Aurora Channel](./images/aurora.png)
 
 For details on Aurora 64B/66B protocol please refer to [Aurora 64B/66B Protocol Specification](https://docs.xilinx.com/v/u/en-US/aurora_64b66b_protocol_spec_sp011).<br/>
-For details on Aurora 64B/66B IP please refer to [Aurora 64B/66B IP Product Guide](https://docs.xilinx.com/v/u/en-US/pg074-aurora-64b66b).
+For details on Aurora 64B/66B IP please refer to [Aurora 64B/66B IP Product Guide](https://docs.xilinx.com/r/en-US/pg074-aurora-64b66b).
 
 This tutorial will provide an example design and step-by-step instruction for integrating Aurora IP into Alveo accelerator cards with Vitis flow. The example design integrates a four-lane Aurora kernel with 10 Gbps lane rate (achieve total 40 Gbps throughput). The complete design steps in this tutorial includes: Aurora IP generation, reference RTL top module for Aurora IP, example test system integration, and example x86 host program. Following is the hardware block diagram of the example design.
 
@@ -40,11 +40,10 @@ There are three kernels in the hardware design:
 
 In the example design, host transfers block data into the on-board global memory, loads the data to Aurora core, and then stores the loopback data into on-board global memory for integrity check. To run the real hardware test of the design, you will need a 40 Gbps QSFP+ (0dB, 0W) loopback module inserted in the QSFP port of the Alveo cards. In case your Alveo card has two QSFP ports, please insert the module into QSFP 0. The loopback module looks like below photo.
 
-![Loopback](./images/loopback.jpg)
+<img src="./images/loopback.jpg" alt="Looback" width="30%" height="30%"/>
 
 The design supports Ubuntu 18.04/20.04 and Redhat/CentOS 7/8 systems and is supported with following XRT and target platform version:
 
-* XRT 2.14.354
 * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
 * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1
 * Alveo U280: xilinx_u280_gen3x16_xdma_1_202211_1
@@ -385,6 +384,13 @@ Data verification SUCCEED
 Xilinx Aurora protocol and IP provide a lightweight and easy-to-use high-performance point-to-point communication solution on Alveo accelerator card. With Vitis flow, the user can use Aurora IP on Alveo cards easily to implements high speed inter-card communication without the involvement of PCIe and host. This enables various and flexible distributed or pipelined hardware acceleration applications.
 
 ## Revision History
+
+<details>
+  <summary>2023.1</summary>
+
+  - Change to MIT license
+
+ </details>
 
 <details>
   <summary>2022.2</summary>
