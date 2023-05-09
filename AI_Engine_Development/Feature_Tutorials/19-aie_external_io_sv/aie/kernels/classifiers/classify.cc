@@ -1,19 +1,23 @@
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
+
 #include <adf.h>
 #include "../../include.h"
-
+#include <aie_api/aie.hpp>
 
 // Nobody would build a classifier this way.  It's just to show the
 // sample by sample processing
-
+using namespace adf;
 
 void classifier
 (
     input_stream_cint16 * input,
-    output_window_int32 * outputw
+    output_buffer<int32> & __restrict outputw
 ) {
     const unsigned output_samples =  CLASSIFIER_OUTPUT_SAMPLES ;
-
-   //printf("start of classifier kernel");
+    auto OutIter = aie::begin(outputw);
 
     for (unsigned l=0;l<CLASSIFIER_OUTPUT_SAMPLES;l++) {
     #ifdef __chess__
@@ -24,18 +28,17 @@ void classifier
     #else
       cint16 sample = readincr(input);
     #endif
-    //printf("real = %d, imag = %d\n", sample.real, sample.imag);
       if (sample.real >= 0) {
 	if (sample.imag > 0)
-	  window_writeincr(outputw,0);
+	   *OutIter++ = 0;
         else
-          window_writeincr(outputw,1);
+	   *OutIter++ = 1;
       }
       else {
 	if (sample.imag > 0)
-	  window_writeincr(outputw,2);
+	   *OutIter++ = 2;
         else
-          window_writeincr(outputw,3);
+	   *OutIter++ = 3;
       }
     }
 }
