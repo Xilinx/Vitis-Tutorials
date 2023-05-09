@@ -32,9 +32,7 @@ void alpha_mix(hls::stream<ap_axiu<64, 0, 0, 0>> &time_img_input,   // time imag
 
 Following is the sub-function and data flow diagram for *alpha_mix* kernel.
 
-<div align="center">
-<img src="./images/alpha_mix_flow.png" alt="alpha_mix flow" >
-</div>
+![alpha_mix flow](./images/alpha_mix_flow.png)
 
 In the diagram, the sub-functions filled with red are from Vitis Vision Library, and those with blue are hand-written. *xf::cv::Mat* is the counterpart for *cv::Mat* in OpenCV software library, it is very useful for handling image data. In the hardware implementation, if we want to handle the image with in-order pixel level (no need to randomly access the pixel data), we can use *#pragma HLS stream* to indicate the compiler to map the *xf::cv::Mat* object to array. This is the case for our *alpha_mix* kernel. Many functions in Vitis Vision Library support *xf::cv::Mat* as the input and output data. In the HLS C code, we can use for-loop to process data in *xf::cv::mat* stream easily, you can refer to the source code of sub-function *mixing* for alpha-mixing operation applied to the input and output *xf::cv::Mat* objects.
 

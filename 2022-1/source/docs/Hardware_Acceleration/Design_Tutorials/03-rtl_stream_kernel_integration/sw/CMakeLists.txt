@@ -15,7 +15,7 @@
 project(rtl_stream_ref)
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(XRT_INCLUDE_DIRS $ENV{XILINX_XRT}/include)
 set(XRT_LIBS xrt_coreutil)
 
