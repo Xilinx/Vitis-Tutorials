@@ -1,3 +1,8 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
+
 #pragma once
 
 #define HLS_NO_XIL_FPO_LIB

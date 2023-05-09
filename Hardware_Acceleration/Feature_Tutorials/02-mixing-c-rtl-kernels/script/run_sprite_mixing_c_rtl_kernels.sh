@@ -22,6 +22,6 @@ echo ~~~~~~~~~~~~~~~~~~~
 echo ~~ Run emulation
 echo ~~~~~~~~~~~~~~~~~~~
 setenv XCL_EMULATION_MODE sw_emu
-./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin
+./host krnl_vadd.sw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1.xclbin
 
 

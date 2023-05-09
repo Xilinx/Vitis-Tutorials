@@ -16,7 +16,7 @@ help:
 	@echo ""
 #######################################################################################
 TARGET := hw_emu
-DEVICE := xilinx_u200_gen3x16_xdma_2_202110_1
+DEVICE := xilinx_u250_gen3x16_xdma_4_1_202210_1
 LAB := run1
 EXECUTABLE := host
 XO := krnl_vadd.$(TARGET).$(DEVICE).xo

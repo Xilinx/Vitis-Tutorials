@@ -11,19 +11,10 @@
 </table>
 
 <!-- 
-# Copyright 2022 Xilinx Inc.
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#*/
 -->
 
 # 1. Creating a Vitis HLS Project
@@ -86,26 +77,12 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
       1. Specify the **Solution Name**, or use the default name. 
       2. Specify the **Period** for the clock as the default period of 10 ns.
       3. Leave the clock uncertainty blank. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Specifying-the-Clock-Frequency) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
-      4. Define the part for the project by selecting the **Browse (...)** command.
-
-            This opens the Device Selection dialog box (our device shows in the **Boards** category, see next step...).
-        ![Add Sources](./images/create_project-select_part.png)
-
-         The Device Selection dialog box lets you specify a Xilinx device for the project or a board containing one or more Xilinx devices.
-
-7. Make the following selections:
-    1. Select **Board** at the top of the dialog box.
-    2. In the Search field, enter `U200`. The selections are narrowed as you enter the search text.
-       1. Select **Alveo U200 Data Center Accelerator Card**.
-         1. Click **OK**.
-
-        You are back to the New vitis HLS Project dialog window.
-
-8. In the Solution Configuration dialog box, select the **Vitis Kernel Flow Target** from the dropdown menu.
+      4. For **Part Selection** accept the default value.
+      5. For **Flow Target** select the **Vitis Kernel Flow Target** from the dropdown menu.
 
    This enables the creation of a Vitis application acceleration hardware kernel (.xo) as an output for the project. For more information on how enabling the Vitis kernel flow configures the default behavior of the tool, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
 
-9. With your project settings now configured, click **Finish**.
+7. With your project settings now configured, click **Finish**.
     Vitis HLS opens the new project in the default view.
 
       ![Add Sources](./images/create_project-default_perspective.png)

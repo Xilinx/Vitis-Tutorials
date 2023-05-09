@@ -27,7 +27,7 @@
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2022.2 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2023.1 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -64,9 +64,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t sw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
+v++ -c -t sw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t sw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -157,9 +157,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t hw_emu --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+v++ -c -t hw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t hw_emu --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw_emu.sh
 ```
 
@@ -209,9 +209,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t hw --platform xilinx_zcu102_base_202220_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+v++ -c -t hw --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t hw --platform xilinx_zcu102_base_202310_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw.sh
 ```
 

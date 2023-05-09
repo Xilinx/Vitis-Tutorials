@@ -1,3 +1,7 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
 // This is a generated file. Use and modify at your own risk.
 ////////////////////////////////////////////////////////////////////////////////
 // default_nettype of none prevents implicit wire declaration.

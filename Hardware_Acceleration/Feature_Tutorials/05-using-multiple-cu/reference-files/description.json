@@ -3,7 +3,7 @@
     "description": "05-using-multiple-cu",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_F_05-use-mult-cu",

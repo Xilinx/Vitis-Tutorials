@@ -1,3 +1,8 @@
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
+
 extern "C" {
 	void vadd(
 	        const unsigned int *in1, // Read-Only Vector 1

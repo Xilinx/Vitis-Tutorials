@@ -23,11 +23,11 @@
 
 * Hardware - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. Refer to [System Hardware Target](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/System-Hardware-Target) for more information.
 
-## Building and Running on Alveo U200 Data-Center Accelerator Card
+## Building and Running on Alveo U250 Data-Center Accelerator Card
 
 ### Setting up the environment
 
-> IMPORTANT: This tutorial requires Vitis 2022.2 or later to run.
+> IMPORTANT: This tutorial requires Vitis 2023.1 or later to run.
 
 *NOTE: The instructions provided below assume that you are running in a bash shell.*
 
@@ -41,7 +41,7 @@
 * Then make sure the following environment variable is correctly set to point to your U200 platform installation directory.
 
   ```bash
-  export PLATFORM_REPO_PATHS=<path to the U200 platform install dir>
+  export PLATFORM_REPO_PATHS=<path to the U250 platform install dir>
   ```
 
 ### Targeting Software Emulation
@@ -49,7 +49,7 @@
 To build for software emulation, enter the following commands to setup the target build directory:
 
 ```bash
-cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/u250
 mkdir sw_emu
 cp xrt.ini sw_emu
 cd sw_emu
@@ -59,9 +59,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
-emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1
-v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
+emconfigutil --platform xilinx_u250_gen3x16_xdma_4_1_202210_1
+v++ -c -t sw_emu --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -104,7 +104,7 @@ INFO: Loading 'vadd.xclbin'
 TEST PASSED
 ```
 
-If you look at the directory contents for the `u200/sw_emu` directory you should see some of the following files that were created during this exercise:
+If you look at the directory contents for the `u250/sw_emu` directory you should see some of the following files that were created during this exercise:
 
 * **app.exe**: The compiled and linked host application
 * **emconfig.json**: The emulation platform created by emconfigutil
@@ -122,7 +122,7 @@ These files and reports are the results of the build and run process targeting t
 To build for hardware emulation, enter the following commands to setup the target build directory:
 
 ```bash
-cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/u250
 mkdir hw_emu
 cp xrt.ini hw_emu
 cd hw_emu
@@ -132,9 +132,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
-emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1
-v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
+emconfigutil --platform xilinx_u250_gen3x16_xdma_4_1_202210_1
+v++ -c -t hw_emu --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw_emu --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 Refer to *Targeting Software Emulation* for a brief explanation of these different commands. The only difference with the previous step is the `v++` target (`-t`) option which is changed from `sw_emu` to `hw_emu`. All other options remain the same.
@@ -146,14 +146,14 @@ export XCL_EMULATION_MODE=hw_emu
 ./app.exe
 ```
 
-When the run completes, you should see the TEST PASSED message indicating that the run completed successfully. You can list the contents of the u200/hw_emu folder to see the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
+When the run completes, you should see the TEST PASSED message indicating that the run completed successfully. You can list the contents of the u250/hw_emu folder to see the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
 ### Targeting Hardware
 
 To build for the hardware target, , enter the following commands to setup the target build directory:
 
 ```bash
-cd <Path to the cloned repo>/Getting_Started/Vitis/example/u200
+cd <Path to the cloned repo>/Getting_Started/Vitis/example/u250
 mkdir hw
 cp xrt.ini hw
 cd hw
@@ -163,8 +163,8 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 g++ -g -std=c++17 -Wall -O0 ../../src/host.cpp -o ./app.exe -I$XILINX_XRT/include/ -L$XILINX_XRT/lib -lxrt_coreutil -pthread
-v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -c -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t hw --platform xilinx_u250_gen3x16_xdma_4_1_202210_1 --config ../../src/u250.cfg ./vadd.xo -o ./vadd.xclbin
 ```
 
 To target Hardware, the `v++ -t` option is set to `hw` and the `emconfigutil` command is not needed, as you will be running on an actual hardware platform rather than an emulated platform. All other options remain identical.
@@ -179,9 +179,9 @@ After the build completes you can run the application on a system with the Alveo
 
 *NOTE: Make sure to run the program on a server where the Alveo card is installed. If you built the application on a different machine, you will need to source the /opt/xilinx/xrt/setup.sh script after connecting to the desired server and before running the above command.*
 
-You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the u200/hw folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
+You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the u250/hw folder you will see some of the files that were created during this build and run process. Refer to *Targeting Software Emulation* for a brief explanation of the different files.
 
-Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U200 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
+Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U250 card! There are additional [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tutorials) to work through to learn additional details of the Vitis tools, and [Vitis_Accel_Examples](https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1) to use for examples of host application and kernel coding.
 
 ## Next Step
 

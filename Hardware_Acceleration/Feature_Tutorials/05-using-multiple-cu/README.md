@@ -8,7 +8,7 @@
 
 # Using Multiple Compute Units
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -37,7 +37,7 @@ An OpenCV version of the host code is also provided in the source code directory
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.
+* 2023.1 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* platform.
 If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
@@ -125,7 +125,9 @@ Review the generated Timeline Trace report (`opencl_trace.csv`).
    vitis_analyzer xrt.run_summary
    ```
 
-   >**NOTE:** The run directory contains a file named `xrt.ini`. This file contains runtime options that generate additional reports such as the Profile Summary report and Timeline Trace.
+>**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+
+The run directory contains a file named `xrt.ini`. This file contains runtime options that generate additional reports such as the Profile Summary report and Timeline Trace.
 
    After the Vitis analyzer loads, click **Timeline Trace** located on the left side panel. The Application Timeline report collects and displays host and device events on a common timeline to help you understand and visualize the overall health and performance of your systems.
 

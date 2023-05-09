@@ -12,7 +12,7 @@
 
 # Vitis™ Getting Started Tutorial
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ![img](./images/vitis_101.png)
 
@@ -20,7 +20,7 @@ Welcome to the Vitis Getting Started tutorial. The Vitis tool provides a unified
 
 This tutorial is divided into two separate flows: the [Data Center Acceleration flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers), and the [Embedded System Design flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers). These two flows are similar in that host applications and accelerated kernels written for one flow can be used in the other flow, and the build processes are similar. However, while similar the flows are also different in that the build and runtime environments of Data Center accelerator cards and Embedded Processor platforms have different requirements that must be met.
 
-This tutorial provides instructions for building and running on both the Alveo U200 Data Center accelerator card, and the Zynq Ultrascale MPSoC ZCU102 platform. These instructions can be easily adapted to other Xilinx cards. 
+This tutorial provides instructions for building and running on both the Alveo U250 Data Center accelerator card, and the Zynq Ultrascale MPSoC ZCU102 platform. These instructions can be easily adapted to other Xilinx cards. 
 
 The two flows in this tutorial are both organized into 5 parts and are designed to walk you through all the key aspects of the Vitis flow.
 

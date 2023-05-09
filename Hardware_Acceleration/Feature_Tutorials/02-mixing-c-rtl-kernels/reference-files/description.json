@@ -3,7 +3,7 @@
     "description": "02-mixing-c-rtl-kernels",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_F_02-mix-c-rtl-krnl",

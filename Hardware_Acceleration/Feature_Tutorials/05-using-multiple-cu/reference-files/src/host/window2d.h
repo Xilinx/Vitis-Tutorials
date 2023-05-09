@@ -1,3 +1,8 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
+
 #pragma once
 
 template<unsigned KERNEL_H_SIZE, unsigned KERNEL_V_SIZE, typename T>

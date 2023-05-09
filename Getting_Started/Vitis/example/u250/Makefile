@@ -1,7 +1,7 @@
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
 
 TARGET := hw_emu
-PLATFORM ?= xilinx_u200_gen3x16_xdma_2_202110_1
+PLATFORM ?= xilinx_u250_gen3x16_xdma_4_1_202210_1
 SRCDIR := $(XF_PROJ_ROOT)/Getting_Started/Vitis/example/src
 BUILD_DIR := $(TARGET)
 CXXFLAGS += -g -std=c++17 -Wall -O0
@@ -27,11 +27,11 @@ $(BUILD_DIR)/app.exe:
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:
-	v++ -c -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u200.cfg -k vadd -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
+	v++ -c -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u250.cfg -k vadd -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
 
 xclbin: $(BUILD_DIR)/vadd.xclbin
 $(BUILD_DIR)/vadd.xclbin: $(BUILD_DIR)/vadd.xo
-	v++ -l -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u200.cfg $(BUILD_DIR)/vadd.xo -o $(BUILD_DIR)/vadd.xclbin
+	v++ -l -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u250.cfg $(BUILD_DIR)/vadd.xo -o $(BUILD_DIR)/vadd.xclbin
 
 emconfig: $(BUILD_DIR)/emconfig.json
 $(BUILD_DIR)/emconfig.json:

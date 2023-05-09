@@ -3,7 +3,7 @@
     "description": "04-mult-ddr-banks",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_F_04-mult-ddr-bnk",

@@ -8,7 +8,7 @@
 
 # Mixing C++ and RTL Kernels
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -32,7 +32,7 @@ The host code and C++ kernel code are supplied. The RTL code will be generated u
 This tutorial uses:
 
 - BASH Linux shell commands.
-- 2021.2 Vitis core development release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily extended to other versions and platforms.
+- 2021.2 Vitis core development release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -43,7 +43,7 @@ Before running any of the examples, ensure you have set up the Vitis core develo
 
   ```bash
     #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-    source /opt/Xilinx/Vitis/2022.2/settings64.sh
+    source /opt/Xilinx/Vitis/2023.1/settings64.sh
     #Setup runtime. XILINX_XRT will be set in this step
     source /opt/xilinx/xrt/setup.sh
   ```
@@ -136,16 +136,15 @@ During emulation, you gather application timeline data, consisting of host and d
 
   ```
   [Debug]
-  opencl_summary=true
   opencl_trace=true
-  data_transfer_trace=fine
+  device_trace=fine
   ```
 
 To run software emulation on the design, set the XCL_EMULATION_MODE environment variable and run the host application with the device binary:
 
    ```bash
    export XCL_EMULATION_MODE=sw_emu
-   ./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
+   ./host krnl_vadd.sw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1.xclbin
    ```
 
    When the application successfully completes, the following message is displayed in the Console window.
@@ -161,6 +160,8 @@ Review the Application Timeline generated during software emulation to visualize
    ```
    vitis_analyzer xclbin.run_summary
    ```
+
+>**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
 2. Click on the **Application Timeline** option on the left to bring up the Application Timeline.
 ![Image:Application Timeline 1](images/mixing-c-rtl-kernels_timeline_one_kernel_vitis.PNG)  
@@ -180,10 +181,10 @@ make all TARGET=sw_emu LAB=run1
 export XCL_EMULATION_MODE=sw_emu
 
 # Run software emulation
-./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
+./host krnl_vadd.sw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1.xclbin
 
 # View Application Timeline Trace in Vitis Analyzer
-vitis_analyzer xclbin.run_summary
+vitis_analyzer xrt.run_summary
    ```
 
 ## Building an Application with C++ and RTL-Based Kernels
@@ -204,7 +205,7 @@ You will generate the RTL-based kernel by quickly going through the RTL Kernel W
 2. Select **./mixing-c-rtl-kernels/workspace** as the workspace directory, and click **Launch**.
 3. From the `Welcome` screen select **Create Application Project** to open the `New Project` wizard.
 4. The first page displays a summary of the process. Click **Next** to proceed. 
-5. From the `Platform` page select the **xilinx_u200_gen3x16_xdma_2_202110_1** platform and click **Next**.
+5. From the `Platform` page select the **xilinx_u250_gen3x16_xdma_4_1_202210_1** platform and click **Next**.
 6. From the `Application Project Details` page, name your project `rtl_project` and click **Next**.
 7. Under SW Acceleration Templates, select **Empty Application**, and click **Finish**. This creates a Vitis IDE project.
 
@@ -298,13 +299,13 @@ With the RTL-based kernel added and host code updated, build the application, ta
 
    ```bash
    export XCL_EMULATION_MODE=hw_emu
-   ./host krnl_vadd.hw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
+   ./host krnl_vadd.hw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1.xclbin
    ```
 
 5. View the **Application Timeline** report in the Vitis analyzer.
 
    ```
-   vitis_analyzer xclbin.run_summary
+   vitis_analyzer xrt.run_summary
    ```
 
 6. Under **Device**>**Binary Container**, traverse along the timeline and zoom in.  
@@ -325,7 +326,7 @@ Because a CPP emulation file was packaged with the RTL Kernel (through the RTL W
 export XCL_EMULATION_MODE=sw_emu
 
 # Run software emulation
-./host krnl_vadd.sw_emu.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin
+./host krnl_vadd.sw_emu.xilinx_u250_gen3x16_xdma_4_1_202210_1.xclbin
 
 # Open Vitis analyzer and view the timeline waveform
 vitis_analyzer xrt.run_summary

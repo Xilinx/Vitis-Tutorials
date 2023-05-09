@@ -26,7 +26,7 @@ ABS_COMMON_REPO = $(shell readlink -f $(COMMON_REPO))
 HOST := user
 TARGET := hw_emu
 #TARGET := $(TARGETS)
-DEVICE := xilinx_u200_gen3x16_xdma_2_202110_1 
+DEVICE := xilinx_u250_gen3x16_xdma_4_1_202210_1 
 XCLBIN := ./xclbin
 XO := ./xo
 

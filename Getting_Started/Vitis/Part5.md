@@ -17,14 +17,14 @@ Now that you have successfully built and run the vector-add example, now you can
 
 The results will be different depending on the summary or report you open. The hardware run is fully accurate, hardware emulation is a cycle-approximate simulation, and software emulation should only be used for functional considerations. Also, since the U200 and ZCU102 cards have different characteristics, the results will be different between these two targets. View the results from the platform and build target that you want to analyze:
 
-* `u200/sw_emu`
-* `u200/hw_emu`
-* `u200/hw`
+* `u250/sw_emu`
+* `u250/hw_emu`
+* `u250/hw`
 * `zcu102/sw_emu`
 * `zcu102/hw_emu`
 * `zcu102/hw`
 
-For this lab you will be opening and viewing results from the `u200/hw_emu` build and run.
+For this lab you will be opening and viewing results from the `u250/hw_emu` build and run.
 
 ## Locating the Reports and Summaries
 
@@ -52,21 +52,18 @@ Use the following command to open the summary in Vitis Analyzer:
 vitis_analyzer ./vadd.xclbin.link_summary
 ```
 
-This opens the Vitis Analyzer tool and loads the various reports and displays the run summary. You can navigate to the various reports using the left pane of the Vitis Analyzer or by clicking on the links provided in the summary report.
+>**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
-* Open the System Diagram.
-  * The System Diagram is a graphical view of the contents of the Xilinx device. It shows the various hardware kernels, how they are connected to platform resources such a global memory banks. 
+* Open the Link Summary.
+  * The Link Smmary shows the v++ --link command and provides a System Estimate of performance. 
   * Notice the Estimated Resources information displayed next to the `vadd` kernel.
-  * Click on the "Settings" icon located in the top right corner of the diagram and check the "Show Interface Ports" box. Notice that the diagram now displays the mapping of kernel arguments to kernel ports and shows bandwidth information for each port.
-  * Click on each of the tabs (Compute Units, Kernels, Memories, Clocks) located at the bottom of the diagram and look at the information displayed in each of them.
-* Open the System Guidance report
   * The Guidance report flags issues and potential issues in your application and kernel, and provides actionable feedback on how to improve it.
   * This simple example is not fully optimized and Guidance reports several warnings. Inspect each of these warnings to learn more about optimization opportunities and design best practices.
   * What can you learn about the width of the kernel ports?
 
 The `link_summary` also includes the `compile_summary`. Take a look at the various elements of the `compile_summary` report by selecting them in the Vitis Analyzer tool. 
 
-Now open the `xrt.run_summary` by using the **File > Open Summary** command from the Vitis Analyzer main menu. 
+Now open the Run Summary. 
 
 * Open the Profile Summary report
   * The Profile Summary provides annotated details regarding the overall application performance. All data generated during the execution of the application is grouped into categories. 

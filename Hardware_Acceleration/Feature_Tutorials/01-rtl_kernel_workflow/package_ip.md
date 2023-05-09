@@ -35,8 +35,8 @@ The process described in this lab follows the Package IP flow as described in th
    1. Select **RTL Project**
    2. Enable the **Do not specify sources at this time** checkbox.
    3. Click **Next**.
-6. On the Default Part page select **Boards**, and enter `U200` in the Search field. 
-      1. Select **Alveo U200 Data Center Accelerator Card**, and click **Next** to proceed.
+6. On the Default Part page select **Boards**, and enter `U250` in the Search field. 
+      1. Select **Alveo U250 Data Center Accelerator Card**, and click **Next** to proceed.
 
       The New Project Summary page is displayed.
 7. Examine it for details of the project, and click **Finish** to create the project.

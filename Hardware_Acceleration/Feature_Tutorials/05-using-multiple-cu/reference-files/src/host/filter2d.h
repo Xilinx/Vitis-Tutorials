@@ -1,3 +1,8 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
+
 #pragma once
 
 #define FILTER2D_KERNEL_H_SIZE 	15

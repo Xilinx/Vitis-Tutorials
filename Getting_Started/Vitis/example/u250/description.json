@@ -3,10 +3,10 @@
     "description": "getting-started-with-vitis",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"], 
+    "platform_allowlist": ["u250"], 
  
     "testinfo": {
-        "test_name": "GS_vitis_u200",
+        "test_name": "GS_vitis_u250",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_alveo.sh"

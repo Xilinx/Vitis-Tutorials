@@ -3,7 +3,7 @@
     "description": "01-rtl_kernel_workflow",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_F_01-rtl-krnl-flow",
