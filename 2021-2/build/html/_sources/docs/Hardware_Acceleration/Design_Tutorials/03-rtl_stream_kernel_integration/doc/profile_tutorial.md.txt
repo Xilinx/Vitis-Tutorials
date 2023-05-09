@@ -21,9 +21,7 @@ vitis_analyzer rtc_alpha_hw.xclbin.run_summary
 
 Guidance includes message for reported violations, a brief suggested resolution, and a detailed resolution provided as a web link. The rules are generic rules based on an extensive set of reference designs, thus might not be applicable for every design. You need to understand the specific guidance rules and take appropriate action based on your specific algorithm and requirements.
 
-<div align="center">
-<img src="./images/hw_guidance.PNG" alt="Hardware Run Guidance" >
-</div>
+![Hardware Run Guidance](./images/hw_guidance.PNG)
 
 ## Platform and System Diagrams
 
@@ -31,9 +29,7 @@ The Platform and System Diagrams display a representation of the platform resour
 
 Please use upper right **Settings** button to display or hide Unused Memory, Interface Ports, Profile Info, and Resource info.
 
-<div align="center">
-<img src="./images/hw_sys_diagram.PNG" alt="Hardware System Diagram" >
-</div>
+![Hardware System Diagram](./images/hw_sys_diagram.PNG)
 
 ## Profile Summary
 
@@ -49,23 +45,17 @@ rtc_gen_test_$(TARGET).xclbin: $(XOS_RTC_GEN_TEST)
 	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_gen_test.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_GEN_TEST)
 ```
 
-<div align="center">
-<img src="./images/hw_profile_summary.PNG" alt="Profile Summary" >
-</div>
+![Profile Summary](./images/hw_profile_summary.PNG)
 
 Even without `--profile_kernel` option added while generating XCLBIN files, most of the profiling reports are still available, only few sections like the Kernel Data Transfers will show no data.
 
-<div align="center">
-<img src="./images/no_kernel_data.PNG" alt="No Kernel Data" >
-</div>
+![No Kernel Data](./images/no_kernel_data.PNG)
 
-##  Application Timeline
+## Application Timeline
 
-Application Timeline collects and displays host and kernel events on a common timeline, it helps to understand and visualize the overall health and performance of the systems. The graphical display makes it easy to discover issues regarding kernel synchronization and efficient concurrent execution. 
+Application Timeline collects and displays host and kernel events on a common timeline, it helps to understand and visualize the overall health and performance of the systems. The graphical display makes it easy to discover issues regarding kernel synchronization and efficient concurrent execution.
 
-<div align="center">
-<img src="./images/hw_timeline.PNG" alt="Application Timeline" >
-</div>
+![Application Timeline](./images/hw_timeline.PNG)
 
 If you are looking for more details of Profiling and how to use *Vitis Analyzer*, check on [Profiling the Application](https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/profilingapplication.html) from Vitis online documentation. 
 

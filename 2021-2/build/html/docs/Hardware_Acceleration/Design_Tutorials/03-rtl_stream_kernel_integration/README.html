@@ -127,7 +127,7 @@ function OptanonWrapper() { }
              
   <table class="sphinxhide">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -140,11 +140,13 @@ function OptanonWrapper() { }
 <p>This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.</p>
 <div align="center">
 <img src="./doc/images/alpha_mixing.jpg" alt="Alpha Mixing" >
-</div><p><br/><br/></p>
+</div><p><img alt="../../../../_images/03-rtl_stream_kernel_integration" src="../../../../_images/03-rtl_stream_kernel_integration" /></p>
+<p><br/><br/></p>
 <p>The hardware design includes three kernels: <em>rtc_gen</em>, <em>alpha_mix</em>, and <em>strm_dump</em>. These kernels are directly connected together using AXI stream link. The topology of the design is shown in the figure below.</p>
 <div align="center">
 <img src="./doc/images/topo.png" alt="Topology" >
-</div><p>The designs have been verified with following software/hardware environment and tool chain version:</p>
+</div><p><img alt="../../../../_images/03-rtl_stream_kernel_integration" src="../../../../_images/03-rtl_stream_kernel_integration" /></p>
+<p>The designs have been verified with following software/hardware environment and tool chain version:</p>
 <ul class="simple">
 <li><p>Operating System</p>
 <ul>
@@ -197,10 +199,8 @@ function OptanonWrapper() { }
 <h2>RTL Kernel: rtc_gen (XO)<a class="headerlink" href="#rtl-kernel-rtc-gen-xo" title="Permalink to this heading">¶</a></h2>
 <p><em>rtc_gen</em> is the real-time clock digit image generation kernel written in Verilog HDL. <em>rtc_gen</em> has an internal always-run real-time-clock driven by AXI bus clock with a clock divider. The time value can be set by host via kernel arguments. The kernel will firstly load the font image library for digits 0-9 from global memory to on-chip buffer, then output the real-time-clock digit image through AXI stream port. The user can also read out the time value from the internal always-run time counter.</p>
 <p>The character size in the font library is 240 (height) by 160 (width) pixels, and the font library includes 11 characters, i.e. digits 0-9 and colon. Refer to the image below for the font library contents.</p>
-<div align="center">
-<img src="./doc/images/font_lib.png" alt="Font Library" >
-</div>
-<br/><br/><p>Each pixel in the font library is represented with 4-bit, which is actually the opacity value for each pixel. When output through AXI stream port, the 4-bit opacity value will be expanded to 8-bit by left shifting 4-bit then add 15 (i.e., expand 0xB to 0xBF). The opacity value will be used by the downstream alpha-mixing kernel to generate time digit with color setting. The font image data size for single chracter is:</p>
+<p><img alt="Font Library" src="../../../../_images/font_lib.png" /></p>
+<p>Each pixel in the font library is represented with 4-bit, which is actually the opacity value for each pixel. When output through AXI stream port, the 4-bit opacity value will be expanded to 8-bit by left shifting 4-bit then add 15 (i.e., expand 0xB to 0xBF). The opacity value will be used by the downstream alpha-mixing kernel to generate time digit with color setting. The font image data size for single chracter is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">240</span> <span class="n">x</span> <span class="mi">160</span> <span class="n">x</span> <span class="mi">4</span> <span class="o">=</span> <span class="mi">153</span><span class="p">,</span><span class="mi">600</span> <span class="n">bits</span> <span class="o">=</span> <span class="mi">19</span><span class="p">,</span><span class="mi">200</span> <span class="nb">bytes</span>
 </pre></div>
 </div>
@@ -209,18 +209,16 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p><em>rtc_gen</em> support two time format: one is with centi-second, namely HOUR:MIN:SEC:CENTISEC, including 11 characters; the other is without centi-second, namely HOUR:MIN:SEC, including 8 chracters. The time format is set in kernel arguments. Refer to the figures below for examples of the two output time format.</p>
-<div align="center">
-<img src="./doc/images/time_format.png" alt="Time Format" >
-</div><p>The <em>rtc_gen</em> kernel has three bus interfaces:</p>
+<p><img alt="Time Format" src="../../../../_images/time_format.png" /></p>
+<p>The <em>rtc_gen</em> kernel has three bus interfaces:</p>
 <ul class="simple">
 <li><p>AXI-Lite slave interface for kernel argument and control</p></li>
 <li><p>AXI-Lite master interface for font library data loading</p></li>
 <li><p>AXI stream master interface for clock digit image output</p></li>
 </ul>
 <p>The kernel is composed of three blocks: <em>rtc_gen_axi_read_master</em> for AXI master based font library reading, <em>rtc_gen_control_s_axi</em> for AXI slave based kernel arguments and control, and <em>rtc_gen_core</em> for core kernel function and AXI stream output. <em>rtc_gen_axi_read_master</em> is a standard block generated by Vitis/Vivado RTL Kernel Wizard. <em>rtc_gen_control_s_axi</em> is also a generated block, but we need to make some modifications to it to add time value read-out function.</p>
-<div align="center">
-<img src="./doc/images/rtc_gen_block.png" alt="rtc_gen Block" >
-</div><p>When triggered by the host, the kernel will read time value from internel real-time-clock, and output a frame of time image corresponding to the time value.</p>
+<p><img alt="rtc_gen Block" src="../../../../_images/rtc_gen_block.png" /></p>
+<p>When triggered by the host, the kernel will read time value from internel real-time-clock, and output a frame of time image corresponding to the time value.</p>
 <p>Following table summarizes the arguments used by <em>rtc_gen</em> kernel.</p>
 <table border="1" class="docutils">
 <thead>
@@ -287,9 +285,8 @@ function OptanonWrapper() { }
 <li><p>Load the background image from global memory, then execute alpha mixing with the clock digit image</p></li>
 <li><p>Send out the mixed image via AXI stream port</p></li>
 </ul>
-<div align="center">
-<img src="./doc/images/alpha_flow.png" alt="alpha_mix flow" >
-</div><p>The <em>alpha_mix</em> kernel has four bus interfaces:</p>
+<p><img alt="alpha_mix flow" src="../../../../_images/alpha_flow.png" /></p>
+<p>The <em>alpha_mix</em> kernel has four bus interfaces:</p>
 <ul class="simple">
 <li><p>AXI-Lite slave interface for control</p></li>
 <li><p>AXI-Lite master interface for background image loading</p></li>
@@ -393,9 +390,8 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table><p>You could refer to below figure for the meaning of some kernel arguments.</p>
-<div align="center">
-<img src="./doc/images/alpha_arg.png" alt="alpha_mix kernel arguments" >
-</div><p>Please read <a class="reference internal" href="doc/alpha_mix_tutorial.html"><span class="doc">ALPHA_MIX HLS C Kernel Creation</span></a> for more details of the HLS C kernel <em>alpha_mix</em>.</p>
+<p><img alt="alpha_mix kernel arguments" src="../../../../_images/alpha_arg.png" /></p>
+<p>Please read <a class="reference internal" href="doc/alpha_mix_tutorial.html"><span class="doc">ALPHA_MIX HLS C Kernel Creation</span></a> for more details of the HLS C kernel <em>alpha_mix</em>.</p>
 </div>
 <div class="section" id="hls-c-kernel-strm-dump-xo">
 <h2>HLS C Kernel: strm_dump (XO)<a class="headerlink" href="#hls-c-kernel-strm-dump-xo" title="Permalink to this heading">¶</a></h2>
@@ -436,15 +432,13 @@ function OptanonWrapper() { }
 <div class="section" id="rtc-gen-test-hw-xclbin-rtc-gen-test-hw-emu-xclbin">
 <h3>rtc_gen_test_hw.xclbin / rtc_gen_test_hw_emu.xclbin<a class="headerlink" href="#rtc-gen-test-hw-xclbin-rtc-gen-test-hw-emu-xclbin" title="Permalink to this heading">¶</a></h3>
 <p>This is a simple test system for <em>rtc_gen</em> kernel, which integrates two kernels: <em>rtc_gen</em> and <em>strm_dump</em>, which are connected together using AXI stream bus. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.</p>
-<div align="center">
-<img src="./doc/images/rtc_gen_test_diagram.png" alt="rtc_gen_test Diagram" >
-</div></div>
+<p><img alt="rtc_gen_test Diagram" src="../../../../_images/rtc_gen_test_diagram.png" /></p>
+</div>
 <div class="section" id="rtc-alpha-hw-xclbin-rtc-alpha-hw-emu-xclbin">
 <h3>rtc_alpha_hw.xclbin / rtc_alpha_hw_emu.xclbin<a class="headerlink" href="#rtc-alpha-hw-xclbin-rtc-alpha-hw-emu-xclbin" title="Permalink to this heading">¶</a></h3>
 <p>This is the fully implemented system, which integrated all the three kernels: <em>rtc_gen</em>, <em>alpha_mix</em> and <em>strm_dump</em>, which are connected together via AXI stream bus. Please note the function of the kernel <em>strm_dump</em> is very easy to be merged into <em>alpha_mix</em> kernel. We separated the <em>strm_dump</em> kernel here just to demonstrate the kernel-to-kernel AXI stream connection functionality. Refer to the following connection diagram on U50 platform. According to the different building target (hw or hw_emu), two XCLBIN files will be generated.</p>
-<div align="center">
-<img src="./doc/images/rtc_alpha_diagram.png" alt="rtc_alpha Diagram" >
-</div></div>
+<p><img alt="rtc_alpha Diagram" src="../../../../_images/rtc_alpha_diagram.png" /></p>
+</div>
 </div>
 <div class="section" id="test-program">
 <h2>Test Program<a class="headerlink" href="#test-program" title="Permalink to this heading">¶</a></h2>
