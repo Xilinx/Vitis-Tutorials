@@ -8,7 +8,7 @@
 
 # Using HBM
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -21,7 +21,7 @@ This tutorial covers essential steps on migrating an existing application using 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.2 Vitis core development kit release and the *xilinx_u200_xdma_201830_2* and *xilinx_u50_gen3x16_xdma_5_202210_1* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
+* 2023.1 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* and *xilinx_u50_gen3x16_xdma_5_202210_1* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have a Xilinx® Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
 
 >**IMPORTANT:**
 >
@@ -41,7 +41,7 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 2. Update the `PLATFORM` variable in the `makefile/Makefile` as shown below with the platform intended to be used.
     ```
     ifeq ($(memtype), DDR)
-    PLATFORM :=xilinx_u200_gen3x16_xdma_2_202110_1
+    PLATFORM :=xilinx_u250_gen3x16_xdma_4_1_202210_1
     else
     PLATFORM :=xilinx_u50_gen3x16_xdma_5_202210_1
     endif
@@ -52,11 +52,11 @@ Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 4. Run the following command to build ten xclbins for module 3 (HBM Bandwidth Results). The expected time to build xclbins is about 5-6 hours since the following command will run parallel jobs by default
 
-    ``` cd 04-using-hbm/makefile;  make build_without_rama build_with_rama```
+    ``` cd 07-using-hbm/makefile;  make build_without_rama build_with_rama```
 
     If your machine doesn't have enough resources to run multiple build jobs in parallel, you can always run these serially using the following commands but it may take about several hours.
 
-    ```cd 04-using-hbm/makefile;  make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024 ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024;```
+    ```cd 07-using-hbm/makefile;  make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024 ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024;```
 
 Please refer to the [./makefile/Makefile](./makefile/Makefile) for more information.
 

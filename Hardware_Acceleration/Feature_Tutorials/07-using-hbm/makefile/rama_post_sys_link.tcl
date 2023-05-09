@@ -1,3 +1,8 @@
+#/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#*/
+
 puts "########################"
 puts "########################"
 puts "######################## have used ./rama_post_sys_link.tcl #####################"

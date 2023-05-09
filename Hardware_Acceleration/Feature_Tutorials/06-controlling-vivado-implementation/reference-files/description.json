@@ -3,7 +3,7 @@
     "description": "06-controlling-vivado-implementation",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_F_06-ctrl-vivado-impl",
