@@ -1,16 +1,6 @@
-#  (c) Copyright 2023 Xilinx, Inc.
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
+
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
 
 
 # Examples of make calls
@@ -135,15 +125,11 @@ endif
 
 GCC_INCLUDES := -I$(SDKTARGETSYSROOT)/usr/include/xrt \
 				-I$(SDKTARGETSYSROOT)/usr/include \
-				-I./ -I../aie/src  \
-				-I${XILINX_VITIS}/aietools/include \
 				-I${XILINX_VITIS}/include
 
-#-I${DSP_INC}				-I${DSP_KERNEL_HDR}				-I${DSP_KERNEL_SRC}				-I${DSP_GRAPH_SRC}
 
-GCC_LIB := -lxaiengine -ladf_api_xrt -lxrt_coreutil \
+GCC_LIB :=  -lxrt_coreutil \
 		   -L$(SDKTARGETSYSROOT)/usr/lib \
-		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
 		   --sysroot=${SDKTARGETSYSROOT}
 
 LDCLFLAGS := $(GCC_LIB)
@@ -190,13 +176,9 @@ guard-SDKTARGETSYSROOT:
 kernels:
 ifeq (${EXTIO}, true)
 	cp -rf $(KERNEL_XO) pl_kernels
-	# make kernels_etg
 else
 	make -C pl_kernels BASE_PLATFORM=$(BASE_PLATFORM) TARGET=$(TARGET) all
 endif
-
-# .PHONY: kernels_etg
-# kernels_etg: $(KERNEL_XO)
 
 traffic_gen:
 ifeq (${EXTIO}, true)
@@ -225,7 +207,6 @@ xclbin: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 # For hardware and hardware emulation, compile the PS code and generate the host.exe. This is needed for creating the sd_card.
 host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o ../aie/Work/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
 
@@ -253,10 +234,7 @@ package: guard-PLATFORM_REPO_PATHS guard-IMAGE guard-ROOTFS
 # Hardware Emulation
 
 HW_EMU := ./launch_hw_emu.sh -run-app run_hw_emu.sh -pid-file pid.txt
-#-aie-sim-options ../aiesimulator_output/aiesim_options.txt
-#-run-app run_hw_emu.sh
 SW_EMU := ./launch_sw_emu.sh
-#-run-app run_sw_emu.sh
 
 run_emu:
 ifeq (${TARGET}, hw_emu)

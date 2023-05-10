@@ -335,4 +335,13 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
+<<<<<<< HEAD
+You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0]( http://www.apache.org/licenses/LICENSE-2.0 )
+
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+<p align="center"><sup>XD136 | &copy; Copyright 2023 Xilinx, Inc.</sup></p>
+=======
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+>>>>>>> bca8c85e9316eeb62a23b5b3d47ae40698e20ab3
