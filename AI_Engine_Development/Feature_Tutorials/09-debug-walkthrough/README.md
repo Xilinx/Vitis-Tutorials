@@ -9,7 +9,7 @@
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -22,16 +22,19 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into register contents view, variable values view, breakpoints view, and hence necessitates a GUI. The Vitis™ integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes (v2022.2)* for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
 
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html
+
+The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you download the platform.
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh.
+3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2023.1 directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
 
-This tutorial targets VCK190 production board, PLATFORM variable in the Makefile(s) is:
+This tutorial targets VCK190 production board ,PLATFORM variable in the Makefile(s) is:
 `PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202220_1/xilinx_vck190_base_202220_1.xpfm`
 
 ## Example Design: Beamformer
