@@ -9,21 +9,21 @@
 
 # Using Floating-Point in the AI Engine
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
 The purpose of this set of examples is to understand floating-point vector computations within the AI Engine.
 
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-2.html)
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+Before starting this tutorial run the following steps:
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
-
-Before starting this tutorial run the following steps.
-
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to`$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_dfx_202210_1/xilinx_vck190_base_dfx_202220_1.xpfm`
+This tutorial targets VCK190 production board for 2023.1 version.
 
 
 
@@ -71,7 +71,7 @@ In this pipeline one can see that the selection and shuffling units (PMXL, PMC) 
 
 ## Floating-point intrinsics
 
-There is a limited set of intrinsics with which a multitude of operations can be performed. All of them return either a `v8float` or  `v4cfloat`, 256-bit vectors.
+There is a limited set of intrinsics with which a multitude of operations can be performed. All of them return either a `vector<float,8>` or  `vector<cfloat,4>`, 256-bit vectors.
 
 The basic addition, subtraction, and negation functions are as follows:
 
@@ -111,7 +111,7 @@ In all the subsequent intrinsics, the input vector(s) go through a data shufflin
 
 Let us take the `fpmul` function:
 
-_v8float_ **fpmul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpmul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
 - **xbuf, xstart, xoffs**: first buffer and shuffling parameters
 - **zbuf, zstart, zoffs**: second buffer and shuffling parameters
@@ -121,7 +121,7 @@ _v8float_ **fpmul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoff
 
 For example:
 
-_v8float_ **ret** = **fpmul**(**xbuf**,**2**,**0x210FEDCB**,**zbuf**,**7**,**0x76543210**)
+_vector<float,8>_ **ret** = **fpmul**(**xbuf**,**2**,**0x210FEDCB**,**zbuf**,**7**,**0x76543210**)
 
 ```
 for (i = 0 ; i < 8 ; i++)
@@ -146,9 +146,9 @@ All values in hexadecimal:
 
 ##### fpneg
 
-Output is the opposite of its input. Input can be either `float` or `cfloat` forming a 512-bit or a 1024-bit buffer (`v32float, v16float, v16cfloat, v8cfloat`). The output is a 256-bit buffer as all the floating-point operators (`v8float, v4cfloat`).
+Output is the opposite of its input. Input can be either `float` or `cfloat` forming a 512-bit or a 1024-bit buffer (`vector<float,32>, vector<cfloat,16>, vector<cfloat,16>, vector<cfloat,8>`). The output is a 256-bit buffer as all the floating-point operators (`vector<float,8>, vector<cfloat,4>`).
 
-_v8float_ 	**fpneg** (_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**)
+_vector<float,8>_ 	**fpneg** (_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**)
 
 ```
 for (i = 0 ; i < 8 ; i++)
@@ -169,7 +169,7 @@ It takes only real floating-point input vectors.
 
 Output is the sum (the subtraction) of the input buffers.
 
-_v8float_ 	**fpadd** (_v8float_ **acc**, _v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**)
+_vector<float,8>_ 	**fpadd** (_vector<float,8>_ **acc**, _vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**)
 
 | Parameter | Comment |
 | ---: | :--- |
@@ -186,8 +186,8 @@ for (i = 0 ; i < 8 ; i++)
 ```
 
 Allowed datatypes:
-- **acc**: `v8float, v4cfloat`
-- **xbuf**: `v32float, v16float, v16cfloat, v8cfloat`
+- **acc**: `vector<float,8>, vector<cfloat,4>`
+- **xbuf**: `vector<float,32>, vector<float,16>, vector<cfloat,16>, vector<cfloat,8>`
 
 ##### fpadd_abs, fpsub_abs
 
@@ -205,9 +205,9 @@ for (i = 0 ; i < 8 ; i++)
 
 #### fpmul
 
-The simple floating-point multiplier comes in many different flavors mixing or not `float` and `cfloat` vector data types. When two `cfloat` are involved, the intrinsic results in two microcode instructions that must be scheduled. The first buffer can be either 512 or 1024-bit long (`v32float, v16float, v16cfloat, v8cfloat`), the second buffer is always 256-bit long (`v8float, v4cfloat`). Any combination is allowed.
+The simple floating-point multiplier comes in many different flavors mixing or not `float` and `cfloat` vector data types. When two `cfloat` are involved, the intrinsic results in two microcode instructions that must be scheduled. The first buffer can be either 512 or 1024-bit long (`vector<float,32>, vector<float,16>, vector<cfloat,16>, vector<cfloat,8>`), the second buffer is always 256-bit long (`vector<float,8>, vector<cfloat,4>`). Any combination is allowed.
 
-_v8float_ **fpmul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpmul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
 Returns the multiplication result.
 
@@ -231,7 +231,7 @@ for (i = 0 ; i < 8 ; i++)
 
 Only for real arguments. Signature is identical to `fpmul`:
 
-_v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpabs_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
  It returns the absolute value of the product:
  ```
@@ -243,7 +243,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
 
  Signature is identical to `fpmul`:
 
- _v8float_ **fpneg_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+ _vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
   It returns the opposite value of the product:
   ```
@@ -255,7 +255,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
 
   Only for real arguments. Signature is identical to `fpmul`:
 
-  _v8float_ **fpneg_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+  _vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
    It returns the opposite value of the product:
    ```
@@ -268,7 +268,7 @@ _v8float_ **fpabs_mul**(_v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **
 
 For all these functions there is one more argument compared to the `fpmul` function. This is the previous value of the accumulator.
 
-_v8float_ **fpmac**(_v8float_ **acc**, _v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpmac**(_vector<float,8>_ **acc**, _vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
 - **fpmac** : multiply operands and add to the accumulator
 - **fpmsc** : multiply operands and subtract from the accumulator
@@ -279,9 +279,9 @@ _v8float_ **fpmac**(_v8float_ **acc**, _v32float_ **xbuf**, _int_ **xstart**, _u
 
 #### fpmul_conf, fpmac_conf
 
-These functions are fully configurable `fpmul` and `fpmac`  functions. The output can be considered to always have eight values because each part of the complex float is treated differently A `v4cfloat` will have the loop interating over real0 - complex0 - real1 - complex1 ... This capability is introduced to allow flexibility and implement operations on conjugates.
+These functions are fully configurable `fpmul` and `fpmac`  functions. The output can be considered to always have eight values because each part of the complex float is treated differently A `vector<cfloat,4>` will have the loop interating over real0 - complex0 - real1 - complex1 ... This capability is introduced to allow flexibility and implement operations on conjugates.
 
-_v8float_ **fpmac_conf**(_v8float_ **acc**, _v32float_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _v8float_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**, _bool_ **ones**, _bool_ **abs**, _unsigned int_ **addmode**, _unsigned int_ **addmask**, _unsigned int_ **cmpmode**, _unsigned int &_ **cmp**)
+_vector<float,8>_ **fpmac_conf**(_vector<float,8>_ **acc**, _vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**, _bool_ **ones**, _bool_ **abs**, _unsigned int_ **addmode**, _unsigned int_ **addmask**, _unsigned int_ **cmpmode**, _unsigned int &_ **cmp**)
 
 Returns the multiplication result.
 
@@ -316,10 +316,11 @@ As there is no post-add lane reduction hardware in the floating-point pipeline o
 The floating-point accumulator has a latency of two clock cycles, so two `fpmac` instructions using the same accumulator cannot be used back to back, but only every other cycle. Code can be optimized by using two accumulators, used in turn, that get added at the end to get the final result.
 
 - Navigate to the `FIRFilter` directory.
-- Type `make all` in the console and wait for completion of the three following stages:
+- Type `make allaie` in the console and wait for completion of the three following stages:
   1. `aie`
   2. `aiesim`
-  3. `aieviz`
+  3. `aiecmp`
+  4. `aieviz`
 
 The last stage is opening `vitis_analyzer` that will allow you to visualize the graph of the design and the simulation process timeline.
 
@@ -375,7 +376,20 @@ In this design you learned:
 - How to use `fpmul_conf` and `fpmac_conf` intrinsics.
 
 
+## License
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+___
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+The MIT License (MIT)
+
+Copyright (c) 2023 Advanced Micro Devices, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+<p align="center"><sup>XD021 | &copy; Copyright 2020–2023 AMD, Inc.</sup></p>

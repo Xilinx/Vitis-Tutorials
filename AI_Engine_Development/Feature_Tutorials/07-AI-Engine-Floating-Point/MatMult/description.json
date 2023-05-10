@@ -20,7 +20,7 @@
         ],
         "custom_build_target":
         {
-            "all": "run"
+            "all": "run_nocmp"
         },
         "tasks": {
             "build": {

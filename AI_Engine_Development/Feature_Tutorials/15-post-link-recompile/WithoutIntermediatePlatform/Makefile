@@ -1,16 +1,9 @@
-#  (c) Copyright 2021–2022 Xilinx, Inc.
 #
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
+
+
 
 
 # Makefile input options
@@ -106,11 +99,18 @@ guard-SDKTARGETSYSROOT:
 aie: $(GRAPH_O)
 
 aiesim: $(GRAPH_O)
+	rm -f $(DATA_DIR)/DataOut1.txt
 	aiesimulator --pkg-dir=./Work
 	make check_aiesim
 
+aiesim2: $(GRAPH_O)
+	rm -f $(DATA_DIR)/DataOut1.txt
+	aiesimulator --pkg-dir=./Work2
+	make check_aiesim
+
 check_aiesim:
-	../check_op 1 $(DATA_DIR)/s2mm_ref.txt aiesimulator_output/data/DataOut1.txt
+	../check_op 1 $(DATA_DIR)/s2mm_ref.txt $(DATA_DIR)/DataOut1.txt
+	../check_op 1 $(DATA_DIR)/polar_clip_in_reim_ref.txt $(DATA_DIR)/polar_clip_in.txt
 
 $(GRAPH_O): $(GRAPH)
 	$(AIECC) $(AIE_FLAGS) -workdir=./Work $(GRAPH)

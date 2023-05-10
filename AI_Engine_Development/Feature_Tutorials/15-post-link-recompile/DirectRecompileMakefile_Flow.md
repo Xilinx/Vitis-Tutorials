@@ -43,8 +43,6 @@ Phase 1 is completed in the following stages:
 
 There are also optional stages to simulate the AI Engine application using the `aiesim` target and `run_emu` to launch hardware emulation that includes all the PL kernels.
 
-The platform directory, `$PLATFORM_REPO_PATHS`, is initialized in  `env_setup.h`. It should contain the platform `xilinx_vck190_base_202220_1`.
-
 In the terminal, type `make clean phase1`. All the required stages (`kernels`, `aie`, and `link`) will be run in the terminal as well as in hardware emulation (`package` and `run_emu`).
 
 Check the placement of the AI Engine kernels using Vitis Analyzer and opening the `graph.aiecompile_summary` file.
@@ -72,7 +70,7 @@ TEST PASSED
 Releasing remaining XRT objects...
 [59674.355157] [drm] bitstream 8ae06494-3226-bda4-94c7-906e136725ad unlocked, ref=0
 [59674.452197] zocl-drm axi:zyxclmm_drm: zocl_destroy_client: client exits pid(2424)
-root@versal-rootfs-common-20222:/run/media/mmcblk0p1#
+root@versal-rootfs-common-20231:/run/media/mmcblk0p1#
 ```
 
 You can get out of QEMU by hitting **Ctrl** + **a x**.
@@ -149,6 +147,20 @@ cd /run/media/mmcblk0p1
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+## License
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+___
+
+The MIT License (MIT)
+
+Copyright (c) 2023 Advanced Micro Devices, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+<p align="center"><sup>XD039 | &copy; Copyright 2021–2023 Xilinx, Inc.</sup></p>

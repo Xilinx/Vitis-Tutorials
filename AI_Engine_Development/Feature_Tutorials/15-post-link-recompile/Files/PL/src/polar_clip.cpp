@@ -1,18 +1,8 @@
-/**********
-© Copyright 2022 Xilinx, Inc.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-**********/
 
 
 #include <ap_int.h>
@@ -21,7 +11,7 @@ limitations under the License.
 
 #define POLAR_CLIP_INPUT_SAMPLES 1024
 #define PLIOWIDTH 32
-typedef qdma_axis<PLIOWIDTH, 0, 0, 0> pliopkt;
+typedef ap_axis<PLIOWIDTH, 0, 0, 0> pliopkt;
 
 #define CFR_THRESHOLD (11626)
 #define SIGN(x) (x>0 ? 0.5 : -0.5)

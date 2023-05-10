@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filters: Implementation on the AI Engine
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 
 ## Introduction
@@ -27,23 +27,19 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 Before beginning this tutorial you should be familiar with Versal ACAP architecture and more specifically on the AI Engine array processor and interconnect architecture.
 
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html)
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+Before starting this tutorial run the following steps:
 
-Software requirements include:
-* [Vitis](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+1. Goto the directory where you have unzipped the Versal Common Image package
+2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to`$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_dfx_202310_1/xilinx_vck190_base_dfx_202310_1.xpfm`
+This tutorial targets VCK190 production board for 2023.1 version.
+
+Data generation for this tutorial requires Python:
 * [Python 3](https://www.python.org/downloads/)
-* You also have the possibility to test these architectures on the AI Engine using MATLAB Simulink toolset.
-  - [Mathworks](https://www.mathworks.com/) to install **MATLAB** version R2021a or R2021b.
-  - **Vitis Model Composer** that is available with the usual install of **Vitis**.
-
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
-
-Before starting this tutorial run the following steps.
-
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2022.2/Image`.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
-
+    * Packages: math, shutils, functools, matplotlib, numpy, random
 
 ### Accessing the Tutorial Reference Files
 
@@ -243,6 +239,20 @@ This utility has been created to view the template arguments that were used for 
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+## License
+
+___
+
+The MIT License (MIT)
+
+Copyright (c) 2023 Advanced Micro Devices, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>

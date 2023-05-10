@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Super Sampling Rate FIR Filter
 
@@ -289,30 +289,18 @@ Total Throughput -->    3808.48 Msps
 
 This architecture achieves very close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
 
-# Vitis Model Composer implementation
+## License
 
-In the directory _vitis_model_composer_ launch Vitis Model Composer with the comman **model_composer**. There are 2 designs in this directory:
-* _SingleStreamSSR.slx_
-* _SingleStreamSSRwithPL.slx_
+___
 
-The first one is the 4 phases SSR built in the AI Engine array using the AIE blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time the signal is sent through a spectrumscope to verify the output spectrum.
+The MIT License (MIT)
 
-![SSR4_VMC](../Images/SSR4_VMC.jpg)
+Copyright (c) 2023 Advanced Micro Devices, Inc.
 
-The second design contains the previous design but, to show what would be a real hardware implementation,the input and the output of the AI Engine array are a Programmable logic design created with the HDL blockset:
-* **Input**:
-    - The 32-bit 4 Gsps input sample rate is divided into 8 branches @500MHz to feed the PL as for a standard ADC.
-    - These 8x 32-bit branches are recombined into 4x 64-bit phases and sent into FIFOs.
-    - Actually there are 2 FIFOs per phase which contains exactly the same data to feed 2 branches that will be consumed on the AI Engine array side at different instants. Two consecutive rows of the array being oriented in opposite ways in hardware, even and odd rows do not consume the data at the same timestamps due to the fact that the latency since the first block of the cascade chains are different.
-* **Output**:
-  - The FIFOs are there to resynchronize the various branches in order to get a clean, well ordered output signal
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-Before and after the PL we have the same source signal and sinks (scope and spectrumscope) to verify the functionality of the AI Engine+PL design.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-![SSR4WithPL](../Images/SSR4WithPL.jpg)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
-
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>

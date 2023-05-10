@@ -1,36 +1,79 @@
 #
-# Copyright 2020–2022 Xilinx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
 #
 
 
-all:
-	make -C Emulation-AIE all
+TARGET   = hw_emu
+HOST_EXE = host.exe
 
-run:
-	make -C Emulation-AIE aie aiesim
+PFM_NAME := xilinx_vck190_base_202310_1
+PFM_NAME := $(strip $(PFM_NAME))
+PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 
-aie:
-	make -C Emulation-AIE aie
+AIEDIR = aie
+SRCDIR = aie/src
 
-aiesim:
-	make -C Emulation-AIE aiesim
+GRAPH    = $(SRCDIR)/graph.cpp
+LIBADF  = $(AIEDIR)/libadf.a
+WORKDIR = $(AIEDIR)/Work
+
+AIE_CMPL_CMD = aiecompiler -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADF)
+X86_CMPL_CMD = aiecompiler --target=x86sim -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM)  --output-archive=$(LIBADF)
+
+AIE_SIM_CMD = aiesimulator --pkg-dir=$(WORKDIR) --dump-vcd $(AIEDIR)/foo --output-dir=$(AIEDIR)/aiesimulator_output
+X86_SIM_CMD = x86simulator --pkg-dir=$(WORKDIR) --output-dir=$(AIEDIR)/x86simulator_output
+
+allaie: clean aie aiesim aiecmp aieviz
+
+allx86: clean x86 x86sim
+
+run: clean aie aiesim aiecmp
+
+run_nocmp: clean aie aiesim
+
+aie: ${LIBADF}
+${LIBADF}: $(SRCDIR)/*.cpp  $(SRCDIR)/*.h  $(SRCDIR)/aie_kernels/*.cpp
+	${AIE_CMPL_CMD}
+
+x86:
+	${X86_CMPL_CMD}
+
+aiesim: ${LIBADF}
+	${AIE_SIM_CMD}
+
+x86sim:
+	${X86_SIM_CMD}
+
+aiecmp:
+	grep -v T aie/aiesimulator_output/float_output.txt > aie/aiesimulator_output/NoStamps_float_output.txt
+	grep -v T aie/aiesimulator_output/cfloat_output.txt > aie/aiesimulator_output/NoStamps_cfloat_output.txt
+	grep -v T aie/aiesimulator_output/cfloat_conf_output.txt > aie/aiesimulator_output/NoStamps_cfloat_conf_output.txt
+	grep -v T aie/aiesimulator_output/cfloat_conj_output.txt > aie/aiesimulator_output/NoStamps_cfloat_conj_output.txt
+	CompareOutput.py aie/data/ref_outputc_float.txt aie/aiesimulator_output/NoStamps_float_output.txt
+	CompareOutput.py aie/data/ref_outputc_cfloat.txt aie/aiesimulator_output/NoStamps_cfloat_output.txt
+	CompareOutput.py aie/data/ref_outputc_cfloat.txt aie/aiesimulator_output/NoStamps_cfloat_conf_output.txt
+	CompareOutput.py aie/data/ref_outputcc_cfloat.txt aie/aiesimulator_output/NoStamps_cfloat_conj_output.txt
+
+x86cmp:
+	CompareOutput.py aie/data/ref_outputc_float.txt aie/x86simulator_output/float_output.txt
+	CompareOutput.py aie/data/ref_outputc_cfloat.txt aie/x86simulator_output/cfloat_output.txt
+	CompareOutput.py aie/data/ref_outputc_cfloat.txt aie/x86simulator_output/cfloat_conf_output.txt
+	CompareOutput.py aie/data/ref_outputcc_cfloat.txt aie/x86simulator_output/cfloat_conj_output.txt
 
 aieviz:
-	make -C Emulation-AIE aieviz
+	vitis_analyzer vitis_analyzer aie/aiesimulator_output/default.aierun_summary
 
-clean:
-	make -C Emulation-AIE clean
+clean: aieclean
 
-.PHONY: all clean aie aiesim aieviz
+aieclean:
+	rm -rf *.log *.csv *.db $(LIBADF) $(WORKDIR) $(AIEDIR)/aiesimulator_output $(AIEDIR)/x86simulator_output
+	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs
+
+
+
+
+otherclean:
+	rm -rf _x ${LIBADF} $(WORKDIR) .Xil vitis_analyzer* foo.vcd *.log pl_sample*
+	rm -rf  vitis_design_wrapper*
+	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp *.txt

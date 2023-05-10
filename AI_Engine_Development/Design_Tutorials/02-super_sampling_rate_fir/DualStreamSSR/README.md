@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -306,16 +306,21 @@ Total Throughput -->   15960.30 Msps
 
 Which is almost the expected maximum.
 
-# Vitis Model Composer Implementation
 
-In the `vitis_model_composer` directory, launch Vitis Model Composer with the `model_composer` command. There is currently one design in this directory, `DualStreamSSR.slx`.
+## License
 
-This is an 8-phase SSR built in the AI Engine array using the AI Engine blockset of Vitis Model Composer. The design is fed from pure Simulink blocks and the result is diplayed in a scope to verify that the difference with the pure floating-point Simulink implementation is not too high. At the same time, the signal is sent through a spectrumscope to verify the output spectrum.
+___
 
-![SSR8_VMC](../Images/SSR8_VMC.jpg)
+The MIT License (MIT)
+
+Copyright (c) 2023 Advanced Micro Devices, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
-
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>
