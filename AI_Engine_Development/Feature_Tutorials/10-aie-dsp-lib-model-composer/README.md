@@ -9,11 +9,11 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
-The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for Xilinx devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
+The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for AMD devices, integrating RTL/HLS blocks for the Programmable Logic, as well as AI Engine blocks for the AI Engine array.
 Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).
 
 
@@ -23,9 +23,9 @@ Install the tools:
 
 * Get and install [MATLAB and Simulink 2021a or 2021b](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
   - Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [Xilinx Vitis 2022.2](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2023.1](https://www.xilinx.com/support/download.html).
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
 
 
 
@@ -125,10 +125,11 @@ Now when you double-lick this bock you will open the initialization matlab funct
 
 ![missing image](Images/Image_006.png)
 
-Near the end of the list of the Library Browser, you will find the **Xilinx Toolbox**. This contains three sub-libraries:
+In the list of libraries, you will find the **AMD Toolbox**. This contains four sub-libraries:
 * AI Engine
 * HDL
 * HLS
+* Utilities
 
 Click the **AI Engine** section. This reveals seven subsections:
 
@@ -141,26 +142,21 @@ Click the **AI Engine** section. This reveals seven subsections:
 * User-Defined functions
 
 6. Click the **DSP** sub-section. There are 2 sub-menu entries:
+- Buffer IO: which contains filter implementations using frame-based input and output.
 - Stream IO : which contains filter implementations using streaming input and output.
-- Window IO: which contains filter implementations using frame-based input and output.
 
-
-7. Click the **Window IO** sub-section and place the **FIR Halfband Decimator** block in the canvas as shown in the following figure.
+7. Click the **Buffer IO** sub-section and place the **FIR Halfband Decimator** block in the canvas as shown in the following figure.
 
 ![missing image](Images/Image_007.png)
 
 
-7. Double-click the **FIR Halfband Decimator** block to open the GUI. Populate the GUI with the following parameters :
+8. Double-click the **FIR Halfband Decimator** block to open the GUI. Populate the GUI with the following parameters :
     * **Input/output data type**: cint16
     * **Filter coefficients data type**: int16
     * **Filter coefficients**: hb1_aie
     * **Input Window size (Number of samples)**: 2048
-    * **Input sampling rate (MSPS)**: 800
     * **Scale output down by 2**: Shift1
     * **Rounding mode**: Floor
-
-    Click on the **Advanced** tab and populate the Input Sampling rate with:
-    * **Input sampling rate (MSPS)**: 800
 
     Click **Apply** and **OK**.
 
@@ -168,25 +164,25 @@ Click the **AI Engine** section. This reveals seven subsections:
 
 Now create a data source to feed this filter.
 
-8. Create the following two blocks by clicking the canvas and typing the beginning of the name of the block. Then enter the given parameters:
+9. Create the following two blocks by clicking the canvas and typing the beginning of the name of the block. Then enter the given parameters:
 
 | Name to Type | Block Name to Select | Parameters |
 | :--- | :--- | :--- |
 | random   | Random Source  |  Source Type: Uniform <br> Minimum: -30000  <br> Maximum: 30000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex|
 | cast  | Cast  | Output data type: int16  |
 
-9. Cascade the three blocks: **Random Source**, **Cast**, **AIE FIR Filter**.
+10. Cascade the three blocks: **Random Source**, **Cast**, **AIE FIR Filter**.
 
-10. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink blocks. **Open** the file **ReferenceChain.slx**. Copy the block **HB1** over to your design.
-11. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**) to create the following design:
+11. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink blocks. **Open** the file **ReferenceChain.slx**. Copy the block **HB1** over to your design.
+12. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**) to create the following design:
 
 ![missing image](Images/Image_009.png)
 
-12. Ensure that the parameter **Output Size** of the block **To Fixed Size** is set to 1024.
+13. Ensure that the parameter **Output Size** of the block **To Fixed Size** is set to 1024.
 
-13. Set the **Stop Time** to ``5000`` and run the design. The FIR filter is compiled and the design is run. The scope should show a completely null difference.
+14. Set the **Stop Time** to ``5000`` and run the design. The FIR filter is compiled and the design is run. The scope should show a completely null difference.
 
-14. To gain more information about the signals traveling through the wires, update the following display parameters:
+15. To gain more information about the signals traveling through the wires, update the following display parameters:
     * Right-click the canvas and select **Other Displays --> Signals and Ports --> Signal Dimensions**.
     * Right-click the canvas and select **Other Displays --> Signals and Ports --> Port Data Types**.
     * Right-click the canvas and select **Sample Time Display --> all**.
@@ -197,7 +193,7 @@ After updating the design with **CTRL-D**, the display should look as follows:
 
 Notice that before the implementing the Decimation Filter the vector length was ``2048``, but after implementation this was reduced to ``1024``.
 
-15. Update the design with the other three filters using the following parameters:
+16. Update the design with the other three filters using the following parameters:
 
 
 | Parameter |HB1 |	HB2	| HB3	| Channel Filter |
@@ -208,23 +204,21 @@ Notice that before the implementing the Decimation Filter the vector length was 
 | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
 | Filter Length	| N/A | N/A	| N/A | length(cfi) |
 | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
-| Input sampling rate (MSPS)	| 800	| 400	| 200	| 100 |
-| Specify Number of Cascade Stage   | Uncheck  |  Uncheck | Uncheck  | Uncheck  |
 | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
 | Rounding mode	floor	| floor	| floor	| floor | floor |
 
-16. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should look like as follows:
+17. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should look like as follows:
 
 ![missing image](Images/Image_011.png)
 
-17. Run the design. The added filters are compiled and the design is run through the 5000 samples. The difference between the output should still be 0.
+18. Run the design. The added filters are compiled and the design is run through the 5000 samples. The difference between the output should still be 0.
 
 
 ## Stage 2: Further Analysis of the Design
 
 When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink the spectrum can be easily displayed using a spectrum scope.
 
-1. Right-click the canvas and type ``spectrum``.
+1. Left-click the canvas and type ``spectrum``.
 2. Connect the spectrum scope at the output of the last filter (the Channel Filter):
 3. Set the Stop Time of the simulation to **inf**.
 
@@ -264,7 +258,7 @@ Now add a block coming from a standard templated C++ kernel which source is in t
 
 Developing an AI Engine graph in Model Composer is relatively straightforward. What you have learned here is that you can easily place a spectrum scope within the design at the output of a design, but actually it could be placed anywhere in between two blocks without modifying anything in the kernels and the graph. Furthermore, Simulink has a lot of specific blocksets that can be used to generate test vectors, create a reference model, and compare the signals at any point in the design.
 
-If you want to save some data in a workspace variable for some more complex analysis. This can be done using the **Variable Size Signal** to Workspace block within the **Xilinx Toolbox --> AI Engine --> Tools  blockset**:
+If you want to save some data in a workspace variable for some more complex analysis. This can be done using the **Variable Size Signal** to Workspace block within the **AMD Toolbox --> AI Engine --> Tools  blockset**:
 
 ![missing image](Images/Image_015.png)
 
@@ -370,11 +364,11 @@ The Simulation Data Inspector opens and shows the output of the AI Engine. The A
 
 ![missing image](Images/Image_024.png)
 
-Here the estimated throughput is 28 MSPS instead of the expected 100 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 800 MSPS that were expected in the graph. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
+Here the estimated throughput is 28 MSPS instead of the expected 125 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 1000 MSPS that were expected in the design. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
 
 ## Stage 4: Increasing PLIO bitwidth and re-generate
 
-Solving this problem is fairly easy. Navigate inside the **FIRchain** sub-system. Get the **PLIO** block from **Xilinx Toolbox / AI Engine / Interface** or just type **plio** in the canvas. Double-click on the new block and specify:
+Solving this problem is fairly easy. Navigate inside the **FIRchain** sub-system. Get the **PLIO** block from **AMD Toolbox / AI Engine / Interface** or just type **plio** in the canvas. Double-click on the new block and specify:
 
 - **PLIO width (bits)**: 128
 - Check **Specify PLIO frequency**
@@ -390,7 +384,7 @@ After the AI Engine simulation, the estimated throughput is 126 MSPS. This is co
 
 ![missing image](Images/Image_026.png)
 
-This gives around 125 MSPS which is 1/8th of the input sample rate (1 GSPS). This means that the design can support the 800 MSPS that were specified in the design.
+This gives around 125 MSPS which is 1/8th of the input sample rate (1 GSPS). This means that the design meets specification.
 
 ## Conclusion
 
