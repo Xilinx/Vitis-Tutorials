@@ -9,9 +9,9 @@
 
 # Introduction: Packaging and Running the System  
 
-After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the Versal® device. This requires the use of the Vitis™ compiler ``--package`` command. For Versal ACAPs, the programmable device image (PDI) file is used to boot and program the hardware device.
+After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the AMD Versal™ device. This requires the use of the AMD Vitis™ compiler ``--package`` command. For Versal adaptive SOCs, the programmable device image (PDI) file is used to boot and program the hardware device.
 
-In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/integrate_ai_engine_application.html#ariaid-title8) for more details on this packaging process.
+In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging) for more details on this packaging process.
 
 ## Building the Design: Hardware Emulation
 
@@ -40,7 +40,7 @@ v++ -p                                                                          
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 ```
 
-Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.defer_aie_run`` options (Module 06). This bare-metal application is loaded and launched at boot time and these options are not required. In Modules 08 and 09, you will compile the Linux host application and package; these options will be required at this point because the Linux host application launches and controls the graph.
+Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.defer_aie_run`` options (Module 06). This bare-metal application is loaded and launched at boot time and these options are not required. In Modules 08 and 09, you will compile the Linux host application and package. These options are required at this point because the Linux host application launches and controls the graph.
 
 ### Dependencies
 
@@ -58,7 +58,7 @@ Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.d
 
 ## Running the System: Hardware Emulation
 
-Running the system depends on the build target. The process of running the hardware emulation build is different from that of running the hardware build. For hardware emulation, the ``--package`` command generates the ``launch_hw_emu.sh`` script. This script is used to launch the emulation environment. Hardware emulation runs the AI Engine simulator for the graph application, the Vivado® logic simulator (XSIM) for the PL kernels, and QEMU for the PS host application.  
+Running the system depends on the build target. The process of running the hardware emulation build is different from that of running the hardware build. For hardware emulation, the ``--package`` command generates the ``launch_hw_emu.sh`` script. This script is used to launch the emulation environment. Hardware emulation runs the AI Engine simulator for the graph application, the AMD Vivado™ logic simulator (XSIM) for the PL kernels, and QEMU for the PS host application.  
 
 Use the following command to launch hardware emulation from the command line.
 
@@ -68,10 +68,9 @@ make run_emu
 or
 ```
 cd build/hw_emu_main_partial/hw_emu_main_partial.package
-export XILINX_XRT/usr
 ./launch_hw_emu.sh
 ```
-This step takes several hours to complete. You can open a new shell and continue with the next section while hardware emulation completes.  
+You can open a new shell and continue with the next section while hardware emulation completes.  
 
 To exit QEMU simulation, press **Ctrl+A**, let go of the keyboard, and then press **x**.
 
@@ -112,14 +111,14 @@ v++ -p                                                                          
 
 ## Running the System: Hardware
 
-For the hardware build, the ``–-package`` command creates an ``sd_card.img`` file which contains the contents of the ``sd_card/`` folder.  The next step is to copy the ``sd_card.img`` file onto an SD card, which will become the boot device of your system.
+For the hardware build, the ``–-package`` command creates an ``sd_card.img`` file, which contains the contents of the ``sd_card/`` folder.  The next step is to copy the ``sd_card.img`` file onto an SD card, which becomes the boot device of your system.
 
 Perform the following steps to run the `hw_main_full_ps.elf` excutable on your VCK190 board.
 
-1. Ensure your board is powered off.
+1. Ensure that your board is powered off.
 2. Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file an SD card.
 3. Plug the flashed SD card into the top slot of the VCK190 board.
-4. Set the switch SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON
+4. Set the switch SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON.
 5. Connect your computer to the VCK190 board using the included USB cable.
 6. Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
 ```
@@ -141,13 +140,14 @@ Transmit delay: 0 msec/char 0 msec/line
 [DLBF+ULBF] - ***** TEST PASSED *****
  ***** END TEST *****
 ```
+NB: HW_emu  run will take long hours to run which makes software collapse , hw run can be successfully done.
 
 ## References
 
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Packaging](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging)
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Running the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)
 * [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Deploying the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Deploying-the-System)
-* [Vitis Compiler Command Options](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-General-Options)
+* [Vitis Compiler Command Options](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-General-Options)
 
 ### Support
 

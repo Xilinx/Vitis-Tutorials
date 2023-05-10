@@ -9,11 +9,11 @@
 
 # Introduction
 
-In Module 05, you created a standalone software platform and compiled a bare-metal PS host application. In this module, you will build a PetaLinux software platform. In Module 08, you will compile the Linux PS host application. PetaLinux is an embedded Linux software development kit (SDK) targeting FPGA-based system on-a-chip (SoC) designs. PetaLinux tools offer everything necessary to customize, build, and deploy embedded Linux solutions on Xilinx processing systems. The PetaLinux tool offers a full Linux distribution building system which includes the Linux OS as well as a complete configuration, build, and deploy environment for Xilinx silicon.
+In Module 05, you created a standalone software platform and compiled a bare-metal PS host application. In this module, you will build a PetaLinux software platform. In Module 08, you will compile the Linux PS host application. PetaLinux is an embedded Linux software development kit (SDK) targeting FPGA-based system on-a-chip (SoC) designs. PetaLinux tools offer everything necessary to customize, build, and deploy embedded Linux solutions on AMD processing systems. The PetaLinux tool offers a full Linux distribution building system which includes the Linux OS as well as a complete configuration, build, and deploy environment for AMD silicon.
 
 ### Differences between Bare Metal and PetaLinux
 
-In the bare-metal application, you had to access the registers of your PL kernels by computing the physical memory addresses. These memory addresses can change between builds and software releases. With the PetaLinux software platform, it is possible to bind general UIO drivers for each PL kernel instance. Instead of accessing specific physical addresses as you did in bare metal, you can use these UIO drivers which access the physical addresses for you.
+In the bare-metal application, you accessed the registers of your PL kernels by computing the physical memory addresses. These memory addresses can change between builds and software releases. With the PetaLinux software platform, it is possible to bind general UIO drivers for each PL kernel instance. Instead of accessing specific physical addresses as you did in bare metal, use these UIO drivers which access the physical addresses for you.
 
 Creating a PetaLinux application allows you to take advantage of a variety of other features such as security, multi-threading, and multi-processing.
 
@@ -29,16 +29,16 @@ The rest of this module explains the individual commands in the Makefile that we
 
 ## Building the PetaLinux Software Platform
 
-Creation of the PetaLinux software platform can be broken down into the following phases: create PetaLinux, config PetaLinux, build PetaLinux, and build a Versal custom PetaLinux platform. The `make petalinux` step performs all these steps with one command.
+Creation of the PetaLinux software platform can be broken down into the following phases: create PetaLinux, config PetaLinux, build PetaLinux, and build an AMD Versal™ custom PetaLinux platform. The `make petalinux` step performs all these steps with one command.
 
 ### Create PetaLinux: Creating the PetaLinux Project with a BSP
 
-First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you are using a VCK190 board, you will need the ``xilinx-vck190-v2022.2-final.bsp`` package.
+First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you use a VCK190 board, the ``xilinx-vck190-v2023.1-final.bsp`` package is required.
 
 ```
 mkdir -p build;
 cd build;
-petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2022.2-final.bsp -n vck190_linux
+petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2023.1-final.bsp -n vck190_linux
 ```
 
 These commands create a new PetaLinux project directory structure under `build/vck190_linux`.
@@ -73,9 +73,9 @@ Lastly, the `config` file specifies the machine name as follows:
 CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"
 ```
 
-Next, add user packages by appending the CONFIG\_\* lines to the `build/vck190_linux/project-spec/configs/rootfs_config` file. By default, most config options are set to "is not set". Update the following config options to ``=y``:  
+Next, add user packages by appending the CONFIG\_\* lines to the `build/vck190_linux/project-spec/configs/rootfs_config` file. By default, most config options are set to "is not set." Update the following config options to ``=y``:  
 
-- **Packages for base XRT support:** This is required for the Vitis application acceleration development flow. It includes XRT and ZOCL.   
+- **Packages for base XRT support:** This is required for the AMD Vitis™ application acceleration development flow. It includes XRT and ZOCL.   
 
 ```
 CONFIG_packagegroup-petalinux-xrt=y
@@ -124,7 +124,7 @@ The DTSI file is provided for you. Copy the ``uio-system-user.dtsi`` file to the
 cp uio-system-user.dtsi build/vck190_petalinux/project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi
 ```
 
-This is a user-modifiable PetaLinux device tree configuration file. Open the ``uio-system-user.dtsi``. You will see that this file creates a ``generic-uio`` driver for each PL kernel instance (``dlbf_data_00``, ``dlbf_data_01``, ``dblf_coeff_00``, ... etc). With this device tree configuration, you can communicate to the memory addresses of the PL kernels through these UIO drivers without actually knowing the physical addresses.  
+This is a user-modifiable PetaLinux device tree configuration file. Open the ``uio-system-user.dtsi``. This file creates a ``generic-uio`` driver for each PL kernel instance (``dlbf_data_00``, ``dlbf_data_01``, ``dblf_coeff_00``, and so on). With this device tree configuration, communicate to the memory addresses of the PL kernels through these UIO drivers without actually knowing the physical addresses.  
 
 ### Config Petalinux: Customizing Kernel Configuration
 
@@ -137,7 +137,7 @@ CONFIG_FPGA=y
 CONFIG_FPGA_MGR_VERSAL_FPGA=y
 CONFIG_XILINX_INTC=y
 ```
-These configuration settings enable device drivers for general purpose GPIO IP, I2C IP, FPGA Manager, and Xilinx Interrupt Controller. These drivers are _not_ used in the Linux PS host application.
+These configuration settings enable device drivers for general purpose GPIO IP, I2C IP, FPGA Manager, and Interrupt Controller. These drivers are _not_ used in the Linux PS host application.
 
 ### Config Petalinux: Clean-Up
 
@@ -155,7 +155,7 @@ Build the PetaLinux system image with the following command:
 petalinux-build -p build/vck190_linux
 ```
 
-This step generates a device tree DTB file, platform loader and manager firmware (PLM), processing system management firmware (PSM), Arm™ trusted firmware (ATF), U-Boot, the Linux kernel, a root file system image, and the boot script for a Versal® ACAP. Finally, it generates the necessary boot images. The compilation progress shows on the console when executing this command.  
+This step generates a device tree DTB file, platform loader and manager firmware (PLM), processing system management firmware (PSM), Arm™ trusted firmware (ATF), U-Boot, the Linux kernel, a root file system image, and the boot script for an AMD Versal™ adaptive SoC. Finally, it generates the necessary boot images. The compilation progress shows on the console when executing this command.  
 
 When the build finishes, the generated U-Boot and Linux images are stored in the ``build/vck190_petalinux/images/linux`` directory.
 
@@ -202,13 +202,13 @@ Now that we have our customized PetaLinux image, the next step is to create a Ve
 
 * ``build/image/boot.src`` - U-Boot configuration file
 
-First, add the BIF file (``linux.bif``) to the ``build/vck190_linux/images/linux`` directory. We have provided one for you to copy. When you open the ``linux.bif`` file, you will notice that the file names should match the contents of the boot directory. They are the source for creating the ``BOOT.BIN``.
+First, add the BIF file (``linux.bif``) to the ``build/vck190_linux/images/linux`` directory. We have provided one for you to copy. When you open the ``linux.bif`` file, the file names should match the contents of the boot directory. They are the source for creating the ``BOOT.BIN``.
 
 ```
 cp linux.bif build/vck190_linux/images/linux/linux.bif
 ```
 
-Next, prepare the image directory. The contents of this directory will be packaged to FAT32 partition by the ``v++ --package`` tool. Copy the `boot.src` script for U-Boot initialization into the image directory.
+Next, prepare the image directory. The contents of this directory are packaged to FAT32 partition by the ``v++ --package`` tool. Copy the `boot.src` script for U-Boot initialization into the image directory.
 
 ```
 mkdir build/image
@@ -226,10 +226,10 @@ This script uses the XSA from Module 04 and the custom Petalinux image to genera
 ## References
 
 * [PetaLinux Tools Website](https://www.xilinx.com/products/design-tools/embedded-software/petalinux-sdk.html#tools)
-* PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144))
-* Bootgen User Guide ([UG1283](https://www.xilinx.com/search/support-keyword-search.html#q=ug1283))
-* Libmetal and OpenAMP ([UG1186](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug1186-zynq-openamp-gsg.pdf))
-* [Versal Platform Creation Tutorial](https://gitenterprise.xilinx.com/swm/Versal_Platform_Creation/tree/master/Tutorial-VCK190_Custom)
+* [PetaLinux Tools Documentation](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144)
+* [Bootgen User Guide](https://www.xilinx.com/search/support-keyword-search.html#q=ug1283)
+* [Libmetal and OpenAMP](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug1186-zynq-openamp-gsg.pdf)
+* [Versal Platform Creation Tutorial](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Vitis-Platform-Creation/Custom-Platform-Creation-Tutorial-on-Versal)
 
 ### Support
 

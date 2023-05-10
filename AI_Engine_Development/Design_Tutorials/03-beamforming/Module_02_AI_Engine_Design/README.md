@@ -32,7 +32,7 @@ aiecompiler -v                      \
 |Switch|Description|
 |  ---  |  ---  |
 |-v | Verbose output. |
-|--pl-freq=400| Sets the PLIO interface to the AI Engine to 400 MHz. All the AXI4-Stream interfaces from the PL kernels to the AI Engine will operate at this frequency. |
+|--pl-freq=400| Sets the PLIO interface to the AI Engine to 400 MHz. All the AXI4-Stream interfaces from the PL kernels to the AI Engine operate at this frequency. |
 |-include=\<dir\> | Includes the src directory, the src/kernels directory, and the src/inc directory.|
 |--platform=\<platform\>.xpfm| The custom platform created in Module 01.|
 |-workdir=Work| Specifies the Work directory name.|
@@ -80,7 +80,7 @@ All three beamforming kernel types start by loading the input data and input coe
 
 ### Cascading Chain Subgraph
 
-The subgraph `bfCascadingChain` is used to create a cascading chain of beamforming kernels. Review the graph definition in the `src/inc/subsys.h`. It is a templated subgraph with parameters `xoff`, `yoff`, and `len`. The `xoff` and `yoff` parameters define the coordinate of the leftmost AI Engine. The `len` parameter specifies the length of the cascading chain (`len-2` = the number of middle kernels in a chain). The port arrays `din[len]` and `cin[len]` are the data input and coefficient input ports. The size of these arrays is determined by the `len` parameter (so, we need one data input port and one coefficient input port for each kernel in the cascade chain). Additionally, there is one output port `out` for the final output in the last kernel. 
+The subgraph `bfCascadingChain` is used to create a cascading chain of beamforming kernels. Review the graph definition in the `src/inc/subsys.h`. It is a templated subgraph with parameters `xoff`, `yoff`, and `len`. The `xoff` and `yoff` parameters define the coordinate of the leftmost AI Engine. The `len` parameter specifies the length of the cascading chain (`len-2` = the number of middle kernels in a chain). The port arrays `din[len]` and `cin[len]` are the data input and coefficient input ports. The size of these arrays is determined by the `len` parameter (so we need one data input port and one coefficient input port for each kernel in the cascade chain). Additionally, there is one output port `out` for the final output in the last kernel. 
 
 You can create subgraphs that contains multiple cascading chains where each chain can be customized to contain any number of beamforming kernels.
 ![Multiple cascading chains in a subgraph](images/cascading_chains.PNG)
@@ -157,7 +157,7 @@ The window sizes of the coefficient, data, and output ports are as follows:
 
 ### AI Engine Application Data Files
 
-Lastly, you need to send the actual input data to the beamforming kernels and receive the output data from the beamforming kernels. This is accomplished through the PLIOs instantiated in the AI Engine application. Each PLIO specifies a 64-bit PL interface with an associated input or output data file. This means each row in the data files can store two (32-bit) complex data samples. An AI Engine kernel that is expecting a cint16 with a 64-bit PLIO needs a data file organized as four columns per row, where each column represents a 16-bit real or imaginary value.
+Lastly, send the actual input data to the beamforming kernels and receive the output data from the beamforming kernels. This is accomplished through the PLIOs instantiated in the AI Engine application. Each PLIO specifies a 64-bit PL interface with an associated input or output data file. This means each row in the data files can store two (32-bit) complex data samples. An AI Engine kernel that is expecting a cint16 with a 64-bit PLIO needs a data file organized as four columns per row, where each column represents a 16-bit real or imaginary value.
 
 ```
 <16-bit real> <16-bit imaginary> <16-bit real> <16-bit imaginary>
@@ -179,15 +179,13 @@ The ``aiesimulator`` executes the AI Engine application where the AI Engine grap
 
 ### Run-Time Event API for Performance Profiling
 
-Additionally, in the AI Engine application, the `event::start_profiling` and `event::read_profiling` API calls are specified. These calls configure the AI Engine to count the accumulated number of clock cycles. Because we know how much data is coming out of the AI Engine (``OUT_DATA_WINSZ``), and using this API gets us the number of clock cycles its takes to receive all the output data, we can calculate the port throughput (bytes per second). This calculation is done in the AI Engine application and printed to the console during simulation. Note that the longer the data is simulated, the higher the throughput accuracy. Currently the number of iterations is chosen as 20.
+Additionally, in the AI Engine application, the `event::start_profiling` and `event::read_profiling` API calls are specified. These calls configure the AI Engine to count the accumulated number of clock cycles. Because we know how much data is coming out of the AI Engine (``OUT_DATA_WINSZ``), and using this API gets us the number of clock cycles its takes to receive all the output data, we can calculate the port throughput (bytes per second). This calculation is done in the AI Engine application and printed to the console during simulation. Note that the longer the data is simulated, the higher the throughput accuracy. Currently, the number of iterations is chosen as 20.
 
 Open the `build/aiesim.log` file to view the following throughput calculations for two of the output PLIOs:
 
 ```
-...
-DLBF Output0: Throughput 8.57765e+08 Samples/s, i.e. 3.43106e+09 Bytes/s
-ULBF Output0: Throughput 8.6297e+08 Samples/s, i.e. 3.45188e+09 Bytes/s
-...
+DLBF Output0: Throughput 6.64906e+08 Samples/s, i.e. 2.65963e+09 Bytes/s
+ULBF Output0: Throughput 6.66927e+08 Samples/s, i.e. 2.66771e+09 Bytes/s
 ```
 
 ## Conclusion
@@ -196,16 +194,17 @@ ULBF Output0: Throughput 8.6297e+08 Samples/s, i.e. 3.45188e+09 Bytes/s
 
 ## References
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
-* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2022.2%20English&amp;url=ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
-* Versal ACAP AI Engine Intrinsics Documentation ([UG1078](https://www.xilinx.com/cgi-bin/docs/rdoc?v=latest;t=aiengine+intrinsics;d=index.html;)) (lists of all the intrinsic APIs and data types supported in the current release)
-* [AI Engine Documentation: Window and Streaming Data API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Window-and-Streaming-Data-API)
-* [AI Engine Documentation: Run Time Graph Control API](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Run-Time-Graph-Control-API)
-* [AI Engine Documentation: Using A Virtual Platform](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Using-a-Virtual-Platform)
-* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Adaptive-Data-Flow-Graph-Specification-Reference)
+* [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Overview)
+* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
+* [AI Engine Kernel and Graph Programming Guide](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Intrinsics) (lists of all the intrinsic APIs and data types supported in the current release)
+* [AI Engine Documentation: Window and Streaming Data API](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Window-and-Streaming-Data-API)
+* [AI Engine Documentation: Run Time Graph Control API](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Run-Time-Graph-Control-API)
+* [AI Engine Kernel and Graph Programming Guide](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Graph-Programming-Model)
+* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Adaptive-Data-Flow-Graph-Specification-Reference)
 * [XAPP1352 Beamforming Implementation on AI Engine](https://www.xilinx.com/search/support-keyword-search.html#q=xapp1352)
 * [AI Engine System C Simulator](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator)
 * [AI Engine Profiling Graph Throughput](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Profiling-Graph-Throughput)
+* [Vivado Design Suite User Guide: Implementation](https://docs.xilinx.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support
 

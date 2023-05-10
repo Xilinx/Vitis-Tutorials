@@ -9,7 +9,7 @@
 
 # Building the Design
 
-Create the custom platform by running the `make` step as follows. This creates a Vivado® project from the `vck_190_v1_0_xsa.tcl` provided and the Vitis™ bare-metal embedded project from the `vck190_v1_0_pfm.tcl` provided:
+Create the custom platform by running the `make` step as follows. This creates an AMD Vivado™ project from the `vck_190_v1_0_xsa.tcl` provided and the AMD Vitis™ bare-metal embedded project from the `vck190_v1_0_pfm.tcl` provided:
 
 ```bash
 make platform
@@ -28,8 +28,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 
 |Switch|Description|
 |  ---  |  ---  |
-|-mode batch -source vck190_v1_0_xsa.tcl| The Vivado Design Suite Tcl shell opens, runs the specified Tcl script, and exits when the script completes.|
-|-tclargs xcvc1902-vsva2197-2MP-e-S|The -tclargs option allows you to pass arguments for the Tcl script you are running. The vck190_v1_0_xsa.tcl requires you to specify the device-package name.|
+|-mode batch -source vck190_v1_0_xsa.tcl| The AMD Vivado Design Suite™ Tcl shell opens, runs the specified Tcl script, and exits when the script completes.|
+|-tclargs xcvc1902-vsva2197-2MP-e-S|The -tclargs option enables you to pass arguments for the Tcl script you are running. The vck190_v1_0_xsa.tcl requires you to specify the device-package name.|
 |-nodisp|No display|
 |-sdx ||
 |./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build | Tcl script that takes in three arguments: platform name, XSA file, and output path.|
@@ -49,7 +49,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 |sw/vck190_v1_0_pfm.tcl|Creates a new platform by importing an XSA. Creates and configures an aiengine, xrt, and standalone domain in the platform.|
 |sw/src/qemu/aie/pmc_args.txt|File with all pmcqemu args listed. This is used to start pmcqemu.|
 |sw/src/qemu/aie/qemu_args.txt|File with all PS QEMU args listed. This is used to start PS QEMU.|
-|sw/src/boot/|Directory which has all the files listed in file names provided as part of the qemu-args and pmuqemu-args options. It is the directory to generate components after the Linux image build.|
+|sw/src/boot/|Directory that has all the files listed in file names provided as part of the qemu-args and pmuqemu-args options. It is the directory to generate components after the Linux image build.|
 |sw/src/a72/xrt/image|For domains with Linux as the OS, use pre-built Linux images from this directory when creating the PetaLinux project. This option is valid only for Linux domains.|
 |sw/src/a72/xrt/linux.bif|BIF file used to create boot image for Linux boot.|
 |sw/src/qemu/lnx/pmc_args.txt|File with all pmcqemu args listed. This is used to start pmcqemu.|
@@ -60,7 +60,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 |Filename|Description|
 |  ---  |  ---  |
 |hw/build/NOC_Power.xpe| Power estimates generated from the Vivado command.|
-|hw/build/vck190_v1_0.xsa|Hardware platform exported from platform Vivado project. Also known as hardware specification file.|
+|hw/build/vck190_v1_0.xsa|Hardware platform exported from platform Vivado project. Also known as the hardware specification file.|
 |hw/build/vck190_v1_0_vivado/|Platform Vivado project folder.|
 |hw/build/vivado.log| Vivado log. |
 |hw/build/vivado.jou| Vivado journal. |
@@ -68,7 +68,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 
 ## Introduction: What is a Custom Vitis Embedded Platform?
 
-A platform is the starting point of any Vitis design. Vitis applications are built on top of the platforms. Xilinx provides pre-built base platforms at the [Xilinx download center](https://www.xilinx.com/support/download.html). The source code of these base platforms is available through the [Xilinx GitHub site](https://github.com/Xilinx/Vitis_Embedded_Platform_Source).
+A platform is the starting point of any Vitis design. Vitis applications are built on top of the platforms. AMD provides pre-built base platforms at the [Xilinx download center](https://www.xilinx.com/support/download.html). The source code of these base platforms is available through the [Xilinx GitHub site](https://github.com/Xilinx/Vitis_Embedded_Platform_Source).
 
 In this beamforming tutorial, a custom Vitis embedded platform is created from scratch. An embedded platform includes a hardware platform and a software platform.
 
@@ -86,7 +86,7 @@ vivado -mode batch -source vck190_v1_0_xsa.tcl -tclargs xcvc1902-vsva2197-2MP-e-
 
 The software platform is the environment that runs the software to control the kernels for acceleration applications. It includes the domain setup and boot components setup. The software platform in the beamforming tutorial has three domains: an AI Engine domain, a Linux domain, and a bare-metal (standalone) domain. The components to builds the AI Engine and Linux domains are provided in the `sw_comp` folder.
 
-The software platforms and final XPFM platform file are generated by the Xilinx® Software Command-line Tool (XSCT) command. The XSCT tool is an interactive and scriptable command-line interface to the Vitis IDE.
+The software platforms and final XPFM platform file are generated by the Xilinx Software Command-line Tool (XSCT) command. The XSCT tool is an interactive and scriptable command-line interface to the Vitis IDE.
 
 ```
 xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl ../hw/vck190_v1_0.xsa build
@@ -102,11 +102,11 @@ The first thing this `vck_190_v1_0_xsa.tcl` script does is call the `create_proj
 
 #### Create Block Design
 
-The `vck_190_v1_0_xsa.tcl` script then calls the `dr.bd.tcl` script, which generates the platform block design. Open the block design in the Vivado project located at `hw/build/vck190_v1_0_vivado/vck190_v1_0.xpr`. You will notice that there are five major components to the hardware platform: the AI Engine, CIPS, NoC (Network-on-Chip), Clocking Wizard IP, Clock Reset IPs, 16 AXI4-LITE SmartConnect interfaces, and a top-level AXI4-Lite SmartConnect (called ``ctrl_sm``).
+The `vck_190_v1_0_xsa.tcl` script then calls the `dr.bd.tcl` script, which generates the platform block design. Open the block design in the Vivado project located at `hw/build/vck190_v1_0_vivado/vck190_v1_0.xpr`. Note that there are five major components to the hardware platform: the AI Engine, CIPS, NoC (Network-on-Chip), Clocking Wizard IP, Clock Reset IPs, 16 AXI4-LITE SmartConnect interfaces, and a top-level AXI4-Lite SmartConnect (called ``ctrl_sm``).
 
-![Platform Block Design](images/Module_01_Custom_Platform_block_design.png)
+![Platform Block Design](images/Beamforming_custom_BlockDiagram_2023_1.PNG)
 
-Open the `dr.bd.tcl` file and review the comments. After the `Setup and Error Checking` commands, you will notice that the main function of this file is called `create_root_design`.
+Open the `dr.bd.tcl` file and review the comments. After the `Setup and Error Checking` commands, note that the main function of this file is called `create_root_design`.
 
 #### Port Instantiation
 
@@ -114,7 +114,7 @@ The first thing the `create_root_design` function does is to create two block de
 
 #### AI Engine
 
-Next, the `dr.bd.tcl` file creates an instance of the AI Engine and sets its properties. Note how most of the ports are empty (`{}`). Here, you have just instantiated the AI Engine interfaces in the platform. Later on, the Vitis linker step will connect the AI Engine to the PL kernels. At this step, the AI Engine `S00_AXI` slave interface configuration category is set to NoC.
+Next, the `dr.bd.tcl` file creates an instance of the AI Engine and sets its properties. Note how most of the ports are empty (`{}`). Here, you have just instantiated the AI Engine interfaces in the platform. Later on, the Vitis linker step connects the AI Engine to the PL kernels. At this step, the AI Engine `S00_AXI` slave interface configuration category is set to NoC.
 
 #### AXI Debug Hub IP and Simulation Clock and Reset Generator IP
 
@@ -122,15 +122,15 @@ The AXI Debug Hub IP and the Simulation Clock and Reset Generator IP are then in
 
 #### AXI SmartConnects
 
-The `dr.bd.tcl` creates an instance of an AXI SmartConnect IP called `ctrl_sm`. This is the top-level AXI SmartConnect which is configured to have one clock, 16 master interfaces, and one slave interface. After this, 16 additional AXI SmartConnect IPs are instantiated. These will be connected to the 16 master interfaces in the `ctrl_sm` later on in the script.
+The `dr.bd.tcl` creates an instance of an AXI SmartConnect IP called `ctrl_sm`. This is the top-level AXI SmartConnect which is configured to have one clock, 16 master interfaces, and one slave interface. After this, 16 additional AXI SmartConnect IPs are instantiated. These are connected to the 16 master interfaces in the `ctrl_sm` later on in the script.
 
 #### AXI Verification IPs
 
-Next, 16 instances of the AXI Verification IP are created, and their properties are set. Later on in the script, the 16 AXI SmartConnect IPs will be connected to the 16 AXI Verification IPs.
+Next, 16 instances of the AXI Verification IP are created, and their properties are set. Later on in the script, the 16 AXI SmartConnect IPs are connected to the 16 AXI Verification IPs.
 
 #### Clock Infrastructure
 
-Seven instances of the Processor Reset System IP and an instance of the Clocking Wizard are created. The Clocking Wizard is configured to generate seven output clocks (that is to say, `CLOCKOUT_REQUESTED_OUT_FREQUENCY`= 100 MHz, 250 MHz, 500 MHz, 400 MHz, 450 MHz, 250 MHz). It is best practice to also instantiate a Process Reset System IP is for each output clock to ensure proper clocking. Having too many clocks tied to the same reset can result in adverse affects such as cross-clock domain issues.
+Seven instances of the Processor Reset System IP and an instance of the Clocking Wizard are created. The Clocking Wizard is configured to generate seven output clocks (for example, `CLOCKOUT_REQUESTED_OUT_FREQUENCY`= 100 MHz, 250 MHz, 500 MHz, 400 MHz, 450 MHz, 250 MHz). It is recommended to also instantiate a Process Reset System IP is for each output clock to ensure proper clocking. Several clocks tied to the same reset can result in adverse affects such as cross-clock domain issues.
 
 #### CIPS
 
@@ -242,7 +242,7 @@ After making the connections between the blocks, assign memory addresses in CIPS
 
 #### Set Platform Attributes
 
-Set the platform properites of the Vivado design (i.e. properties PFM.\*). First, set the `PFM_NAME` to the current block design. Next, add the control and memory hardware interfaces using the `PFM.AXI_PORT` function.
+Set the platform properites of the Vivado design (that is, properties PFM.\*). First, set the `PFM_NAME` to the current block design. Next, add the control and memory hardware interfaces using the `PFM.AXI_PORT` function.
 
 #### Control Interfaces Requirements
 
@@ -284,9 +284,9 @@ Large platforms often require Tcl commands before and after these design impleme
 
 The next part of the `vck_190_v1_0_xsa.tcl` script sets the `place_design`, `route_design`, and `phys_opt_design` pre- and post- Tcl hooks to specific scripts that help close timing during implementation.
 
-The `pre_place.tcl` script calls the `prohibitCascBramAcrossRbrk.tcl`, `prohibitCascUramAcrossRbrk.tcl`, and `prohibitCascDspAcrossRbrk.tcl` scripts which prohibit the cascading the BRAM, URAM, and DSP resources. It also calls the `waive_BLI_AIE_timing_violations_preplace.tcl` script which allows the timing violations between the BLI registers and AI Engine before placements.
+The `pre_place.tcl` script calls the `prohibitCascBramAcrossRbrk.tcl`, `prohibitCascUramAcrossRbrk.tcl`, and `prohibitCascDspAcrossRbrk.tcl` scripts which prohibit the cascading the BRAM, URAM, and DSP resources. It also calls the `waive_BLI_AIE_timing_violations_preplace.tcl` script, which allows the timing violations between the BLI registers and AI Engine before placements.
 
-The `post_place.tcl` script calls the `waive_BLI_AIE_timing_violations_postplace.tcl` which allows timing violations between the BLI register and the AI Engine after placement.
+The `post_place.tcl` script calls the `waive_BLI_AIE_timing_violations_postplace.tcl`, which allows timing violations between the BLI register and the AI Engine after placement.
 
 The `post_route.tcl` and the `post_physopts.tcl` scripts are empty because this beamforming tutorial does not require Tcl commands after routing and physical optimization. These scripts are provided for you to add commands if you wish to modify this tutorial.
 
@@ -308,7 +308,7 @@ Lastly, the `vck_190_v1_0_xsa.tcl` script generates the files necessary to suppo
 
 ### Software Platform
 
-After creating the hardware platform (XSA) with the AI Engine IP through Vivado, import this XSA into the Vitis environment and create the software platform. You will then add the aie_runtime, Linux, and standalone (bare-metal) domains into the software platform. The domains are configured with prebuilt Petalinux software components. Review Steps 2 and 3 of the [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.md) if you want to learn how to create the Petalinux software components from scratch.  
+After creating the hardware platform (XSA) with the AI Engine IP through Vivado, import this XSA into the Vitis environment and create the software platform. Then add the aie_runtime, Linux, and standalone (bare-metal) domains into the software platform. The domains are configured with prebuilt Petalinux software components. Review Steps 2 and 3 of the [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/2023.1/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md) if you want to learn how to create the Petalinux software components from scratch.  
 
 Certain software components distributed with this tutorial are licensed under open source licenses, such as the GPL and BSD, source files for these materials are located at the following locations:
 
@@ -316,7 +316,7 @@ Certain software components distributed with this tutorial are licensed under op
 * sw/src/boot/u-boot.elf is built from the [u-boot-xlnx repository](https://github.com/Xilinx/u-boot-xlnx)
 
 
-The software platform is through the TCL script located `sw/vck_190_v1_0_pfm.tcl`. In this section you will review important aspects of the `vck_190_v1_0_pfm.tcl` script used to generate the Vitis project. Open this script, review the comments, follow the notes in the next sections of this module.
+The software platform is through the TCL script located `sw/vck_190_v1_0_pfm.tcl`. In this section, review important aspects of the `vck_190_v1_0_pfm.tcl` script used to generate the Vitis project. Open this script, review the comments, follow the notes in the next sections of this module.
 
 #### Platform Create
 
@@ -348,11 +348,11 @@ Next, the `vck_190_v1_0_pfm.tcl` script creates a Linux domain and selects `linu
 
 ##### BIF File
 
-The BIF file describes the boot components and their properties for Bootgen to generate the boot.bin file. A BIF file must be provided here so that the application build process can package the boot image.
+The BIF file describes the boot components and their properties for Bootgen to generate the ``boot.bin`` file. A BIF file must be provided here so that the application build process can package the boot image.
 
 ##### Boot Directory
 
-The boot directory includes all the files described in the BIF file that must also be provided. The contents of the image directory will be copied in the FAT32 partition of the final SD card image. In the beamforming example, the boot directory contains the bl31.elf, and u-boot.elf, and system.dtb files generated by PetaLinux. Later on, Vitis compiler (``v++``) looks for files in the boot directory and replaces the placeholders with real file names and paths. It then calls Bootgen to generate the boot.bin file.
+The boot directory includes all the files described in the BIF file that must also be provided. The contents of the image directory are copied in the FAT32 partition of the final SD card image. In the beamforming example, the boot directory contains the bl31.elf, and u-boot.elf, and system.dtb files generated by PetaLinux. Later on, Vitis compiler (``v++``) looks for files in the boot directory and replaces the placeholders with real file names and paths. It then calls Bootgen to generate the ``boot.bin`` file.
 
 ```tcl
 ### Create the Linux domain
@@ -375,26 +375,27 @@ domain create -name standalone_domain -os standalone -proc psv_cortexa72_0
 
 #### Generate Platform
 
-Finally, software platform is generated with the `platform generate` command. The final generated custom platform can be found in `build/output/vck190_v1_0/export/vck190_v1_0/vck190_v1_0.xpfm`. This is the platform that will be used in later modules and that the Vitis tool will build on top of.
+Finally, software platform is generated with the `platform generate` command. The final generated custom platform can be found in `build/output/vck190_v1_0/export/vck190_v1_0/vck190_v1_0.xpfm`. This is the platform that is used in later modules and that the Vitis tool builds on top of it.
 
 ## References
 
-* [Creating Embedded Platforms in Vitis](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/create_embedded_platforms.html#rjs1596051748503)
+* [Creating Embedded Platforms in Vitis](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Embedded-Platforms-in-Vitis)
 * [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 * [Vitis Tutorials: Platform Creation](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation)
-* [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.md)
-*  Vivado Design Suite Tcl Command Reference Guide ([UG835](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug835-vivado-tcl-commands.pdf))
+* [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md)
+* [Vivado Design Suite Tcl Command Reference](https://docs.xilinx.com/access/sources/dita/map?url=ug835-vivado-tcl-commands&ft:locale=en-US
+)
 * [Xilinx Software Command-Line Tool (XSCT)](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Xilinx-Software-Command-Line-Tool)
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
-* AI Engine Product Guide ([PG358](https://www.xilinx.com/support/documentation/ip_documentation/ai_engine/v2_0/pg358-versal-ai-engine.pdf))
+* [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Overview)
+* [AI Engine Product Guide](https://docs.xilinx.com/access/sources/dita/map?url=pg358-versal-ai-engine&ft:locale=en-US)
 * [AXI Debug Hub IP](https://www.xilinx.com/products/intellectual-property/axi_dbg_hub.html#overview)
 * [Simulation Clock and Reset Generator IP](https://www.xilinx.com/products/intellectual-property/sim-rst-gen.html)
 * [AXI SmartConnect IP](https://www.xilinx.com/products/intellectual-property/smartconnect.html)
 * [AXI Verification IP](https://www.xilinx.com/products/intellectual-property/axi-vip.html)
 * [Clocking Wizard IP](https://www.xilinx.com/products/intellectual-property/clocking_wizard.html)
 * [Processor Reset System Module IP](https://www.xilinx.com/products/intellectual-property/proc_sys_reset.html)
-* CIPS Product Guide ([PG352](https://www.xilinx.com/support/documentation/ip_documentation/versal_cips/v2_1/pg352-cips.pdf))
-* Versal ACAP Programmable Network on Chip and Integrated Memory Controller Product Guide ([PG313](https://www.xilinx.com/support/documentation/ip_documentation/axi_noc/v1_0/pg313-network-on-chip.pdf))
+* [CIPS Product Guide](https://docs.xilinx.com/access/sources/dita/map?url=pg352-cips&ft:locale=en-US)
+* [Versal ACAP Programmable Network on Chip and Integrated Memory Controller Product Guide](https://docs.xilinx.com/access/sources/dita/map?url=pg313-network-on-chip&ft:locale=en-US)
 
 ### Support
 

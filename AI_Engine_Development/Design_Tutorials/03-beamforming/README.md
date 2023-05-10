@@ -9,21 +9,21 @@
 
 # Beamforming Tutorial
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
-The Versal® adaptive compute acceleration platform (ACAP) is a fully software programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm™ processors), programmable logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
+The AMD Versal™ adaptive compute acceleration platform (Adaptive SoC) is a fully software programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm™ processors), programmable logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines, which belong in the Intelligent Engine category.
 
 This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.
 
-The tutorial has been divided into modules. It takes you through creating a custom embedded platform, a bare-metal host application, and a custom PetaLinux-based Linux host application, as well as hardware emulation and hardware build flows in the context of a complete Versal ACAP system integration. Each module uses a Makefile to build the relevant aspect of the design.
+The tutorial has been divided into modules. It explains creating a custom embedded platform, a bare-metal host application, and a custom PetaLinux-based Linux host application, as well as hardware emulation and hardware build flows in the context of a complete Versal adaptive SoC system integration. Each module uses a Makefile to build the relevant aspect of the design.
 
 ### Tutorial Overview
 
 This beamforming tutorial is a system-level design that uses the AI Engine, PL, and PS resources. This design showcases the following features:
 
-* A high utilization of PL and AI Engine resources which require advanced timing closure techniques
+* A high utilization of PL and AI Engine resources, which require advanced timing closure techniques
 * Custom platform creation
 * An AI Engine graph that implements matrix multiplication functions for uplink and downlink beamforming
 * RTL kernels that interface with the AI Engine and operate at 400 MHz
@@ -39,36 +39,36 @@ To fully grasp the design, it is assumed that you have the following knowledge a
 
 * Ability to read Tcl scripts
 * Ability to read C++ based source code to understand the AI Engine kernels and host application source code (bare metal and Linux)
-* Ability to read Verilog RTL to understand the Vivado® projects created for the RTL PL kernels
-* A base bootable design (that is to say, you have brought up your board, and have a working hardware and board through a simple Vivado design)
+* Ability to read Verilog RTL to understand the AMD Vivado™ projects created for the RTL PL kernels
+* A base bootable design (for example, you have brought up your board, and have a working hardware and board through a simple Vivado design)
 
 ## Before You Begin
 
-This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available through early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, get in touch with your Xilinx sales contact.
+This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available through early access. If you have already purchased this board, download the necessary files from the lounge and ensure that you have the correct licenses installed. If you do not have a board and ES license, get in touch with your AMD sales contact.
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/yii1603912637443.html)
+* [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Overview)
 
 
 ### *Tools*: Installing the Tools
 
-1. Obtain a license to enable beta devices in Xilinx tools (to use the VCK190 platform).
+1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
-3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html#dhg1543555360045__ae364401) (XRT).
-4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2022_2/ug1144-petalinux-tools-reference-guide.pdf)).
-5. Download the VCK190 PetaLinux 2022.2 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
+3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
+4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.xilinx.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
+5. Download the VCK190 PetaLinux 2023.1 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
 ](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
-To build and run the Beamforming tutorial, you will also need to have downloaded and installed the following tools:
+To build and run the Beamforming tutorial, download and install the following tools:
 
-* [Vitis™ Unified Software Development Platform 2022.2](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html#juk1557377661419)
+* [Vitis™ Unified Software Development Platform 2023.1](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 * [The Xilinx RunTime (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 * [PetaLinux Tools](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 
@@ -76,12 +76,12 @@ To build and run the Beamforming tutorial, you will also need to have downloaded
 
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the necessary environment variables to your system specific paths.
 
-1. Edit the `env_setup.sh` script with your file paths:
+1. Edit the `sample_env_setup.sh` script with your file paths:
 
 ```bash
-export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2022.2-final.bsp)
+export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2023.1-final.bsp)
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2022.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2023.1/settings64.sh
 source <path-to-installed-PetaLinux>/settings.sh
 ```
 2. Source the environment script in bash shell:
@@ -95,12 +95,12 @@ echo $SHELL
 Source the environment script
 
 ```bash
-source env_setup.sh
+source sample_env_setup.sh
 ```  
 
 ### *Validation*: Confirming Tool Installation
 
-Make sure you are using the 2022.2 version of the Xilinx tools.
+Make sure you are using the 2023.1 version of the Xilinx tools.
 
 ```bash
 which vitis
@@ -109,7 +109,7 @@ which aiecompiler
 
 ### *Other Tutorials*: Learn Basic V++ and AI Engine Concepts
 
-If you are a novice user, review the following tutorials to understand the basic Vitis compiler concepts and how to  build simple AI Engine designs:
+If you are a novice user, review the following tutorials to understand the basic AMD Vitis™ compiler concepts and how to  build simple AI Engine designs:
 
 * [XD002: AI Engine Versal Integration for Hardware Emulation and Hardware](https://github.com/Xilinx/Vitis-In-Depth-Tutorial/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration)
 
@@ -146,7 +146,7 @@ The module shows when to create a custom platform rather than a base platform. I
 
 This module shows RTL designers how to:
 
-  * Map data storage and data capture functions to Custom RTL PL kernels which will connect to the AI Engine and custom platform.
+  * Map data storage and data capture functions to Custom RTL PL kernels, which will connect to the AI Engine and custom platform.
   * Design PL kernels with the beamforming PL source RTL as an example.
   * Package RTL PL kernels in to XO files.
 
@@ -203,7 +203,7 @@ This module shows developers how to:
 
 ### Beamforming Introduction
 
-This tutorial shows efficient implementation of beamforming functionality on AI Engine arrays in the Xilinx Versal AI Engine devices. The design methodology is applicable to many use cases needing high throughput matrix multiplication, such as 5G wireless communication. The following figure shows an example illustration of how matrix multiplication is used in the beamforming of an orthogonal frequency division multiplex (OFDM) system with four layers and six antennas.
+This tutorial shows efficient implementation of beamforming functionality on AI Engine arrays in the AMD Versal AI Engine devices. The design methodology is applicable to many use cases that need high throughput matrix multiplication, such as 5G wireless communication. The following figure shows an example illustration of how matrix multiplication is used in the beamforming of an orthogonal frequency division multiplex (OFDM) system with four layers and six antennas.
 
 ![Beamforming General Image](images/Beamforming_introduction.png)
 

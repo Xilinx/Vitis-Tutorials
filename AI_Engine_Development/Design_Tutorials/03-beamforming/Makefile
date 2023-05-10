@@ -1,17 +1,7 @@
 
-# Copyright 2022 Xilinx Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+
 
 # ---------------------------------
 # Target all: Generate the Vitis platform and verify it including base bootable design
@@ -27,7 +17,7 @@ PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 BUILD_DIR 	:= $(PROJECT_DIR)/build
 
 EMBEDDED_PACKAGE_OUT = $(PROJECT_DIR)/Module_09_Running_the_Linux_System/build/package_$(TARGET)
-EMBEDDED_EXEC_SCRIPT = run_script_beamforming.sh
+EMBEDDED_EXEC_SCRIPT = $(PROJECT_DIR)/Module_09_Running_the_Linux_System/embedded_exec.sh
 PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
 SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))

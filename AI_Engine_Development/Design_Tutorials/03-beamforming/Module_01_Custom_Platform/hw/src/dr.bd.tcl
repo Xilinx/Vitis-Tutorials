@@ -1,7 +1,8 @@
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
 
 ################################################################
 # This is a generated script based on design: vck190_v1_0
-#
 # Though there are limitations about the generated script,
 # the main purpose of this utility is to make learning
 # IP Integrator Tcl commands easier.
@@ -20,7 +21,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2022.1
+set scripts_vivado_version 2023.1
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
