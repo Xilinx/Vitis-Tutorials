@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#
+
 proc build_dts {xsa dts} {
 	hsi::open_hw_design $xsa
 	hsi::set_repo_path ./

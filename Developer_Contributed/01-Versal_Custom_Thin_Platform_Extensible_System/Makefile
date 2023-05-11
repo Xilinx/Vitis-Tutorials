@@ -1,24 +1,14 @@
- #
- # Copyright 2021 Xilinx, Inc.
- #
- # Licensed under the Apache License, Version 2.0 (the "License");
- # you may not use this file except in compliance with the License.
- # You may obtain a copy of the License at
- #
- #     http://www.apache.org/licenses/LICENSE-2.0
- #
- # Unless required by applicable law or agreed to in writing, software
- # distributed under the License is distributed on an "AS IS" BASIS,
- # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- # See the License for the specific language governing permissions and
- # limitations under the License.
- #
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+#
+
 # Top-level Makefile -- Calls sub-makefiles
 
 ECHO                               = @echo
 
 ################################################################################
-# Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
+# Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
 REQUIRED_VERSION                   = 2023.1
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
@@ -209,7 +199,7 @@ ifeq (${TARGET}, hw_emu)
 	$(ECHO) "[ERROR] XPFM_PRE_BUILDS = true and TARGET = hw_emu is NOT supported!"; exit 1
 endif
 endif
-	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
+	$(ECHO) "AMD TOOLS & VERSION CHECK SUCCESSFUL"
 
 vivado_platform:
 ifeq (${XPFM_PRE_BUILDS}, true)

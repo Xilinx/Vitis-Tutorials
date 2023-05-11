@@ -609,6 +609,17 @@ The following are links to Vitis related information referenced in this tutorial
 Click on each item below to see the detailed Revision History:
 
  <details>
+  <summary> May 2023 </summary>
+  
+ - AI Engine:
+   - Replaced kernels and graphs to use AIE API and C++ Object Oriented Style with templates
+ - HLS:
+   - Replaced qdma_axis type with ap_axis type
+ 
+ </details>
+ 
+
+ <details>
   <summary> February 2023 </summary>
   
  - general:

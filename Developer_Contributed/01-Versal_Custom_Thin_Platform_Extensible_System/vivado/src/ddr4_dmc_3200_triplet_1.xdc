@@ -1,16 +1,7 @@
-# © Copyright 2020 Xilinx, Inc.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
  set_property PACKAGE_PIN AF47     [get_ports "CH0_DDR4_0_0_dqs_t[4]"] ;# Bank 700 VCCO - VCC1V2_DDR4 - IO_L0P_XCC_N0P0_M0P0_700
  set_property PACKAGE_PIN AF46     [get_ports "CH0_DDR4_0_0_dqs_c[4]"] ;# Bank 700 VCCO - VCC1V2_DDR4 - IO_L0N_XCC_N0P1_M0P1_700
