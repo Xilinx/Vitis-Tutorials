@@ -1,3 +1,7 @@
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
+#*/
 open_hw_platform hw.xsa
 set_property platform.extensible false [current_project]
 
