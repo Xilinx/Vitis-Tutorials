@@ -16,7 +16,7 @@ This tutorial demonstrates a flexible kernel linking process to increase the num
 
 ## Tutorial Overview
 
-By default, the Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.  
+By default, the AMD Vitis™ core development kit creates one CU for each kernel. A host program can use the same kernel multiple times for different sets of data. In these cases, it is useful to generate multiple CUs of the kernel to let those CUs run concurrently and improve the performance of the overall system.  
 
 For more information, see [Creating Multiple Instances of a Kernel](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
@@ -28,9 +28,9 @@ During this tutorial, you will:
 3. Alter the kernel linking process to create multiple CUs of the same kernel.
 4. Re-run the hardware emulation and confirm the parallel execution of the CUs.
 
-This tutorial uses an image filter example to demonstrate the multiple CU feature. To keep this tutorial design simple the host application uses random data for the pixel instead of a real image. By default, these three kernels run sequentially, using the same hardware resources because the FPGA only contains a single CU of the kernel. This tutorial demonstrates how to increase the number of CU, and then executing the kernel runs in parallel.
+This tutorial uses an image filter example to demonstrate the multiple CU feature. To keep this tutorial design simple, the host application uses random data for the pixel instead of a real image. By default, these three kernels run sequentially, using the same hardware resources because the FPGA only contains a single CU of the kernel. This tutorial demonstrates how to increase the number of CU, and then executing the kernel runs in parallel.
 
-An OpenCV version of the host code is also provided in the source code directory `src/host/host_opencv.cpp`, however instruction to use the OpenCV version of the host code is not provided in this tutorial. The OpenCV version of the host-code can be used after installing OpenCV library and make necessary changes related to OpenCV settings in the `Makefile`. 
+An OpenCV version of the host code is also provided in the source code directory `src/host/host_opencv.cpp`. However, the instructions to use the OpenCV version of the host code is not provided in this tutorial. The OpenCV version of the host-code can be used after installing OpenCV library and make necessary changes related to OpenCV settings in the `Makefile`. 
 
 ## Before You Begin
 
@@ -44,7 +44,7 @@ If necessary, it can be easily extended to other versions and platforms.
 >
 >* Before to running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration
 Development flow of the Vitis Unified Software Platform Documentation (UG1416).
->* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
+>* If you run applications on the AMD Alveo™ Data Center accelerator cards, ensure that the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
 
@@ -68,7 +68,7 @@ Run hardware emulation with the following command.
    make run TARGET=hw_emu
    ```
 
-For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-aware, view of kernel activity. This target is useful for testing the functionality of the logic that will run in the FPGA and for getting initial performance estimates.
+For hardware emulation (`hw_emu`), the kernel code is compiled into a hardware model, which is run in a hardware simulator, while the rest of the system uses a C simulator. Building and running takes longer but provides a detailed, cycle-aware, view of kernel activity. This target is useful for testing the functionality of the logic that runs in the FPGA and for getting initial performance estimates.
 
 >**NOTE:** For instructions on how to build the host software and hardware, refer to the [Vitis Getting Started](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started) tutorial.
 
@@ -125,7 +125,7 @@ Review the generated Timeline Trace report (`opencl_trace.csv`).
    vitis_analyzer xrt.run_summary
    ```
 
->**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+>**NOTE:** In the 2023.1 release, this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). Navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
 The run directory contains a file named `xrt.ini`. This file contains runtime options that generate additional reports such as the Profile Summary report and Timeline Trace.
 
@@ -137,7 +137,7 @@ The run directory contains a file named `xrt.ini`. This file contains runtime op
 
 ### Improve the Host Code for Concurrent Kernel Enqueuing
 
-1. Edit the `src/host/host.cpp` host file to change line 73. You will change this line to declare the command queue as an _out-of-order_ command queue.  
+1. Edit the `src/host/host.cpp` host file to change line 73. Change this line to declare the command queue as an _out-of-order_ command queue.  
 
    Code before the change:
    ```
@@ -155,13 +155,13 @@ The run directory contains a file named `xrt.ini`. This file contains runtime op
 
    However, though the host scheduled all these executions concurrently, second and third execution requests are delayed as there is only one CU on the FPGA (the FPGA still executes the kernels sequentially).  
 ![Sequential kernels](./images/sequential_kernels_2.JPG)  
-In the next step, you will increase the number of CU on the FPGA to allow three host kernel executions concurrently.
+In the next step, increase the number of CU on the FPGA to allow three host kernel executions concurrently.
 
 ### Increasing the Number of CUs
 
 Now, build the kernel xclbin again by altering the link step to generate three CUs of the same kernel.
 
-Open the `link.cfg` file, and change the `nk` setting.
+Open the `link.cfg` file and change the `nk` setting.
 
 ```
 nk = Filter2DKernel:3

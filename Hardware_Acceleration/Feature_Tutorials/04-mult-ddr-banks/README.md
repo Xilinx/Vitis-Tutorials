@@ -13,17 +13,17 @@
 
 ## Introduction
 
-By default, in the Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, you can use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.
+By default, in the AMD Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.
 
-The System Port mapping option using the `v++` command allows the designer to map kernel ports to specific global memory banks, such as DDR, HBM or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.
+The System Port mapping option using the `v++` command allows the designer to map kernel ports to specific global memory banks, such as DDR, HBM, or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.
 
 ## Tutorial Overview
 
 This tutorial uses a simple example of vector addition. It shows the `vadd` kernel reading data from `in1` and `in2` and producing the result, `out`.
 
-In this tutorial, you implement the vector addition application using three DDR banks.
+In this tutorial, implement the vector addition application using three DDR banks.
 
-Because the default behavior of the Vitis core development kit is to use a single DDR bank for data exchange between kernels and global memory, all data access through ports `in1`, `in2`, and `out` will be done through the default DDR bank for the platform.
+Because the default behavior of the Vitis core development kit is to use a single DDR bank for data exchange between kernels and global memory, all data access through ports `in1`, `in2`, and `out` is done through the default DDR bank for the platform.
 
 ![missing image](./images/mult-ddr-banks_fig_01.png)
 
@@ -48,8 +48,8 @@ The labs in this tutorial use:
 
 >**IMPORTANT:**
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
->* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
+> * Before running any of the examples, make sure that you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* If you run applications on AMD Alveo™ Data Center accelerator cards, ensure that the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
 
@@ -99,7 +99,7 @@ Note: This tutorial showcases only hw_emu flow. If the user wants to run HW flow
    INFO: [CFGEN 83-2226] Inferring mapping for argument vadd_1.out to DDR[1]
    ```
 
-   This confirms the mapping is automatically inferred by the Vitis core development kit for each of the kernel arguments in the absence of explicit [connectivity] options being specified.
+   This confirms that the mapping is automatically inferred by the Vitis core development kit for each of the kernel arguments in the absence of explicit [connectivity] options being specified.
 
 3. Run HW-Emulation by executing the makefile with the `run` option.
 
@@ -125,7 +125,7 @@ Now, you will explore how the data transfers can be split across the following:
 
 ## Set v++ Linker Options
 
-You will instruct the `v++` Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `sp` option to map kernel ports or kernel arguments.
+Instruct the `v++` Kernel Linker to connect the kernel arguments to the corresponding banks. Use the `sp` option to map kernel ports or kernel arguments.
 
 * **Kernel args**:
 
@@ -217,7 +217,7 @@ vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
    ```bash
    vitis_analyzer xrt.run_summary
    ```
- >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+ >**NOTE:** In the 2023.1 release, this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
 You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
 
