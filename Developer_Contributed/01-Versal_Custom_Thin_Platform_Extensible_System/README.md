@@ -5,8 +5,13 @@
  </tr>
 </table>
 
+
 # Versal Custom Thin Platform Extensible System
-This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2022.2.
+
+***Version: Vitis 2023.1***
+
+This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.1.
+
 
 ## Getting Started
 ### Build-flow

@@ -32,13 +32,19 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <tr>
  <td align="center"><a href="./03-beamforming/">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
- </tr> <tr>
+ </tr> 
+ <td align="center"><a href="./04-Polyphase-Channelizer/">Polyphase Channelizer</a></td>
+ <td>This tutorial demonstrates an implementation of a system-level design (ie. Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.</td>
+ </tr> 
+ <tr>
  <td align="center"><a href="./06-fft2d_AIEvsHLS/">2D-FFT</a></td>
  <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
- </tr><tr>
+ </tr>
+ <tr>
  <td align="center"><a href="./07-firFilter_AIEvsHLS/">FIR Filter</a></td>
  <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
- </tr> <tr>
+ </tr> 
+ <tr>
  <td align="center"><a href="./08-n-body-simulator/">N-Body Simulator</a></td>
  <td>It is a system-level design that uses the AI Engine, PL, and PS resources to showcase the following features:<li>A Python model of an N-Body Simulator run on x86 machine
    <li>A scalable AI Engine design that can utilize up to 400 AI Engine tiles

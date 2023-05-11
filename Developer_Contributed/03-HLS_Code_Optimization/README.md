@@ -16,7 +16,7 @@ Author: Daniele Bagni, Xilinx Inc
 
 # Optimization Techniques for Vitis HLS and HW Acceleration on Embedded Boards
 
-- Version: Vitis 2023.1
+***Version: Vitis 2023.1***
 - Target boards: ZCU102 and VCK190
 - Last update: 04 May 2023
 

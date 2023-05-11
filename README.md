@@ -53,10 +53,10 @@ Alternatively, you can also download repository contents as a ZIP file. The down
 To download a ZIP file of a specific branch, do one of the following:
 
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
-- From a terminal, execute the following command. The following uses the 2022.2 branch as an example.
+- From a terminal, execute the following command. The following uses the 2023.1 branch as an example.
 
   ```
-  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2022.2.zip && unzip 2022.2.zip 
+  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2023.1.zip && unzip 2023.1.zip 
   ```
 
 ## Release Notes
@@ -317,6 +317,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux</a>
             </td>
             <td>
+                 <a href="./AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer :new: </a>
             </td>
         </tr>
         <tr>
@@ -404,12 +405,12 @@ To download a ZIP file of a specific branch, do one of the following:
                         Extensible System</a>
                 </td>
                 <td height="24">
-                    <a href="./Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI">:new:DSP Design on AI Engine with GUI and Makefile Flows</a>
+                    <a href="./Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI">DSP Design on AI Engine with GUI and Makefile Flows</a>
                 </td>
             </tr>
             <tr>
                 <td height="24">
-                    <a href="./Developer_Contributed/03-HLS_Code_Optimization">:new:Vitis HLS Optimization Techniques on Embedded Boards</a>
+                    <a href="./Developer_Contributed/03-HLS_Code_Optimization">Vitis HLS Optimization Techniques on Embedded Boards</a>
                 </td>
                 <td height="24">
                 </td>

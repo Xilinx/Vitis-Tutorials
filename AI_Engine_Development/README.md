@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -20,13 +20,13 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 ## Environment Settings
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *[Vitis Software Platform Release Notes](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2022.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wlk1553469789555.html)* (v2022.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *[Vitis Software Platform Release Notes](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes)* (v2023.1) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to setup environment ( **NOT** apply to tutorials that do not use the VCK190 base platform ):
 
-1. Set up your platform by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2022.2/sdk.sh`.
-2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2022.2/rootfs.ext4`.
-3. Set up your `IMAGE` to point to `xilinx-versal-common-v2022.2/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2023.1/sdk.sh`.
+2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2023.1/rootfs.ext4`.
+3. Set up your `IMAGE` to point to `xilinx-versal-common-v2023.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Feature Tutorials
@@ -365,7 +365,8 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td>Yes</td>
  <td> </td>
  <td> </td>
- </tr> <tr>
+ </tr>
+ <tr>
  <td align="center"><a href="./Design_Tutorials/01-aie_lenet_tutorial/">LeNet Tutorial</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -410,6 +411,21 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td> </td>
  <td>Yes</td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/04-Polyphase-Channelizer/">Polyphase Channelizer</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/06-fft2d_AIEvsHLS/">2D-FFT</a></td>
  <td>Base</td>

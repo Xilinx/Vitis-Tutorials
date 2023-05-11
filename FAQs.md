@@ -8,11 +8,10 @@
 
 # Frequently Asked Questions
 
-- [Frequently Asked Questions](#frequently-asked-questions)
-  - [How are the tutorials organized?](#how-are-the-tutorials-organized)
-  - [What is the release schedule of Vitis-Tutorials?](#what-is-the-release-schedule-of-vitis-tutorials)
-  - [What is the Git branching strategy?](#what-is-the-git-branching-strategy)
-  - [How do I contribute to Vitis-Tutorials?](#how-do-i-contribute-to-vitis-tutorials)
+- [How are the tutorials organized?](#how-are-the-tutorials-organized)
+- [What is the release schedule of Vitis-Tutorials?](#what-is-the-release-schedule-of-vitis-tutorials)
+- [What is the Git branching strategy?](#what-is-the-git-branching-strategy)
+- [How do I contribute to Vitis-Tutorials?](#how-do-i-contribute-to-vitis-tutorials)
 
 ## How are the tutorials organized?
 
@@ -22,7 +21,7 @@ Tutorials are organized into five topics, and each topic contains two sections: 
 - [AI Engine Development](./AI_Engine_Development): Learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 - [Hardware Acceleration](./Hardware_Acceleration): Learn how to use the Vitis to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL.
 - [Vitis Platform Creation](./Vitis_Platform_Creation): Learn how to develop a Vitis platform for your own board, or customize the platform on Xilinx demo boards.
-- [Developer Contributed](./Developer_Contributed): Developer contributed tutorials from inside and outside Xilinx.
+- [Developer Contributed](./Developer_Contributed): Developer contributed Vitis tutorials from inside and outside AMD.
 
 ## What is the release schedule of Vitis-Tutorials?
 

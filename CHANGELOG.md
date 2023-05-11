@@ -1,5 +1,19 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.1 (May 22th, 2023)
+### New Tutorials 
+- AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer/
+
+### Tutorial Updates
+- Updated description and screenshots for integrated Vitis Analyzer view in Vitis Unified IDE
+- Update License to MIT, as well as legal attribution in code. 
+
+### EoU Improvements
+- Some of the tutorials have been restructured to improve user experience.
+
+<details open>
+    <summary>2022.2 Release</summary>
+
 ## 2022.2 (Nov 2nd, 2022)
 ### New Tutorials 
 - Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ 
@@ -15,7 +29,9 @@
 - New Introduction page of Vitis_Platform_Creation and Hardware_Acceleration to make searching for tutorials with specific flows easier and help users choose the proper tutorials for their needs.
 - Some of the tutorials have been restructured to improve user experience.
 
-<details open>
+</details>
+
+<details close>
     <summary>2022.1 Release</summary>
 
 ## 2022.1_update (Sep 15th, 2022)

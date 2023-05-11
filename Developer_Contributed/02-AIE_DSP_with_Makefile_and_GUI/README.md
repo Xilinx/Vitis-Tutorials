@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 
 # DSP Design on AI Engine Technology with GUI and Makefile Flows
 
-- Version: Vitis 2023.1 
+***Version: Vitis 2023.1***
 - Board: VCK190
 - Last update: 04 May 2023
 
