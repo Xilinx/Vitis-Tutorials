@@ -8,19 +8,13 @@
 
 ## Overview
 
-You didn’t think you were getting out of here quite so fast, did you?   As I said at the beginning: _vadd
-will never beat the processor_.  It’s too simple; if you don’t have to transfer data and you can burn through
-local cache, the CPU will always win in the end, assuming you haven’t hauled your uncle’s dusty 386 Turbo out
-of the basement to run this test.
+You did not think you were getting out of here quite so fast, did you?  As I said at the beginning: `_vadd` will never beat the processor. It is too simple; if you do not have to transfer data and you can burn through local cache, the CPU will always win in the end.
 
-The results from the previous session look good - on paper.  I get it, I’m in marketing.  I want to call it a
-day.  But I seem to recall also having a degree with the word “engineering” on it gathering dust somewhere,
-so - as a fellow engineer - let me break it to you.
+The results from the previous session look good — on paper.
 
 ## Key Code
 
-For simple algorithms, an accelerator just won’t win.  Let’s use OpenMP to parallelize the processor loop.
-We include the header omp.h, and then apply an OpenMP pragma to the CPU code as in listing 3.19.
+For simple algorithms, an accelerator just will not win. Use OpenMP® to parallelize the processor loop. We include the header `omp.h`, and then apply an OpenMP pragma to the CPU code as in listing 3.19.
 
 ```cpp
 void vadd_sw(uint32_t* a, uint32_t *b, uint32_t* c, uint32_t size)
@@ -32,13 +26,11 @@ void vadd_sw(uint32_t* a, uint32_t *b, uint32_t* c, uint32_t size)
 }
 ```
 
-And that’s it.  There are some command line flags to pass to GCC, but CMake will take care of those (assuming
-you have OpenMP installed), so we can directly build and run.  The code for this example is otherwise
-identical to the code from Example 5.
+And that is it. There are some command line flags to pass to GCC, but CMake will take care of those (assumingyou have OpenMP installed), so we can directly build and run. The code for this example is otherwise identical to the code from Example 5.
 
 ## Running the Application
 
-With the XRT initialized, run the application by running the following command from the build directory:
+With the Xilinx Runtime (XRT) initialized, run the application by running the following command from the build directory:
 
 `./06_wide_processor alveo_examples`
 
@@ -60,7 +52,7 @@ Loading: ’./alveo_examples.xclbin’
 OCL-mapped contiguous buffer example complete!
 
 --------------- Key execution times ---------------
-OpenCL Initialization:              253.898 ms
+OpenCL™ Initialization:              253.898 ms
 Allocate contiguous OpenCL buffers: 907.183 ms
 Map buffers to userspace pointers:  0.307 ms
 Populating buffer inputs:           1188.315 ms
@@ -75,8 +67,7 @@ Wait for kernel to complete :       618.231 ms
 | Hardware VADD (Total) | 692.172 ms  | 618.231 ms |    −73.94 ms    |
 | &Delta;Alveo&rarr;CPU | −503.402 ms | 461.005 ms |   964.407 ms    |
 
-The accelerator runtime fluctuation is primarily a result of running these tests in a virtualized cloud
-environment, but that’s not the point of the exercise.
+The accelerator runtime fluctuation is primarily a result of running these tests in a virtualized cloud environment, but that is not the point of the exercise.
 
 ## Extra Exercises
 
@@ -87,12 +78,11 @@ Some things to try to build on this experiment:
 
 ## Key Takeaways
 
-- I’ve said it before and I’ll say it again: simple O(N) will never win.
+- I have said it before and I will say it again: simple O(N) will never win.
 
-But despair not!  Now it’s time to look at something real.
+But despair not!  Now it is time to look at something real.
 
 Read [**Example 7:** Image Resizing with Vitis Vision](./07-image-resizing-with-vitis-vision.md)
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

@@ -8,17 +8,11 @@
 
 ## Overview
 
-Ensuring that our allocated memory is aligned to page boundaries gave us a significant improvement over our
-initial configuration.  There is another workflow we can use with OpenCL, though, which is to have OpenCL and
-XRT allocate the buffers and then map them to userspace pointers for use by the application.  Let's
-experiment with that and see the effect it has on our timing.
+Ensuring that our allocated memory is aligned to page boundaries gave us a significant improvement over our initial configuration. There is another workflow we can use with OpenCL™, though, which is to have OpenCL and Xilinx Runtime (XRT) allocate the buffers and then map them to userspace pointers for use by the application. Experiment with that and see the effect it has on our timing.
 
 ## Key Code
 
-Conceptually this is a small change, but unlike Example 2 this example is a bit more involved in terms of the
-required code changes.  This is mostly because instead of using standard userspace memory allocation,
-we're going to ask the OpenCL runtime to allocate buffers for us.  Once we have the buffers, we then need to
-map them into userspace so that we can access the data they contain.
+Conceptually, this is a small change, but unlike Example 2, this example is a bit more involved in terms of the required code changes. This is mostly because instead of using standard userspace memory allocation, we are going to ask the OpenCL runtime to allocate buffers for us. When we have the buffers, we then need to map them into userspace so that we can access the data they contain.
 
 For our allocation, we change from the previous example's code to the following:
 
@@ -50,17 +44,11 @@ cl::Buffer d_buf(context,
                  NULL);
 ```
 
-In this case we're allocating our OpenCL buffer objects significantly earlier in the program, and we also
-don't have userspace pointers yet.  We can still, though, pass these buffer objects to enqueue
-`MigrateMemObjects()` and other OpenCL functions.  The backing storage is allocated at this point, we just
-don't have a userspace pointer to it.
+In this case, we are allocating our OpenCL buffer objects significantly earlier in the program, and we also do not have userspace pointers yet. We can still, though, pass these buffer objects to enqueue `MigrateMemObjects()` and other OpenCL functions. The backing storage is allocated at this point, we just do not have a userspace pointer to it.
 
-The call to the `cl::Buffer` constructor looks very similar to what we had before.  In fact, only two things
-have changed: we pass in the flag `CL_MEM_ALLOC_HOST_PTR` instead of `CL_MEM_USE_HOST_PTR` to tell the
-runtime that we want to allocate a buffer instead of using an existing buffer.  We also no longer need to
-pass in a pointer to the user buffer (since we're allocating a new one), so we pass `NULL` instead.
+The call to the `cl::Buffer` constructor looks very similar to what we had before.  In fact, only two things have changed: we pass in the flag `CL_MEM_ALLOC_HOST_PTR` instead of `CL_MEM_USE_HOST_PTR` to tell the runtime that we want to allocate a buffer instead of using an existing buffer. We also no longer need to pass in a pointer to the user buffer (since we are allocating a new one), so we pass `NULL` instead.
 
-We then need to map our OpenCL buffers to the userspace pointers to `a`, `b`, and `d` that we'll use immediately in software.  There's no need to map a pointer to `c` at this time, we can do that later when we need to read from that buffer after kernel execution.  We do this as follows:
+We then need to map our OpenCL buffers to the userspace pointers to `a`, `b`, and `d` that we will use immediately in software. There is no need to map a pointer to `c` at this time, we can do that later when we need to read from that buffer after kernel execution. We do this as follows:
 
 ```cpp
 uint32_t*a = (uint32_t*)q.enqueueMapBuffer(a_buf,
@@ -81,16 +69,9 @@ uint32_t*d = (uint32_t*)q.enqueueMapBuffer(d_buf,
                                            BUFSIZE*sizeof(uint32_t));
 ```
 
-Once we perform the mapping, we can use the userspace pointers as normal to access the buffer contents.One
-thing to note, though, is that the OpenCL runtime does do reference counting of the opened buffers, so we
-need a corresponding call to `enqueueUnmapMemObject()` for each buffer that we map.
+Once we perform the mapping, we can use the userspace pointers as normal to access the buffer contents. One thing to note, though, is that the OpenCL runtime does do reference counting of the opened buffers, so we need a corresponding call to `enqueueUnmapMemObject()` for each buffer that we map.
 
-The execution flow through the kernel is the same, but we see something new when the time comes to migrate
-the input buffer back into the device. Rather than manually enqueueing a migration, we can instead just map
-the buffer.  The OpenCL runtime will recognize that the buffer contents are currently resident in the Alveo
-Data Center accelerator card global memory and will take care of migrating the buffer back to the host for
-us.  This is a coding style choice you must make, but fundamentally the code below is sufficient to migrate
-`c` back to the host memory.
+The execution flow through the kernel is the same, but we see something new when the time comes to migrate the input buffer back into the device. Rather than manually enqueueing a migration, we can instead just map the buffer. The OpenCL runtime will recognize that the buffer contents are currently resident in the AMD Alveo™ Data Center accelerator card global memory and will take care of migrating the buffer back to the host for us. This is a coding style choice you must make, but fundamentally the code below is sufficient to migrate `c` back to the host memory.
 
 ```cpp
 uint32_t*c = (uint32_t*)q.enqueueMapBuffer(c_buf,
@@ -100,9 +81,7 @@ uint32_t*c = (uint32_t*)q.enqueueMapBuffer(c_buf,
                                            BUFSIZE * sizeof(uint32_t));
 ```
 
-Finally, as we mentioned earlier you need to unmap the memory objects so that they can be destroyed cleanly
-by the runtime.  We do this at the end of the program instead of using `free()` on the buffers as before.
-This must be done before the command queue is finished.
+Finally, as we mentioned earlier, you need to unmap the memory objects, so that they can be destroyed cleanly by the runtime. We do this at the end of the program instead of using `free()` on the buffers as before. This must be done before the command queue is finished.
 
 ```cpp
 q.enqueueUnmapMemObject(a_buf, a);
@@ -114,11 +93,11 @@ q.finish();
 
 To summarize the key workflow for this use model, we need to:
 
-1.  **Allocate** our buffers using the CL_MEM_ALLOC_HOST_PTR flag.
-2.  **Map** our input buffers to userspace pointers to populate them.
-3. Run the kernel as usual.
-4.  **Map** the output buffer(s) to migrate them back to host memory.
-5.  **Unmap** all of our buffers once we're done using them so they can be destroyed properly.
+1. **Allocate** our buffers using the CL_MEM_ALLOC_HOST_PTR flag.
+2. **Map** our input buffers to userspace pointers to populate them.
+3. **Run** the kernel as usual.
+4. **Map** the output buffer(s) to migrate them back to host memory.
+5. **Unmap** all of our buffers once we're done using them so they can be destroyed properly.
 
 ## Running the Application
 
@@ -126,7 +105,7 @@ With the XRT initialized, run the application by running the following command f
 
 `./03_buffer_map alveo_examples`
 
-The program will output a message similar to this:
+The program will output a message similar to the following:
 
 ```
 -- Example 3: Allocate and Map Contiguous Buffers --
@@ -147,14 +126,13 @@ OpenCL Initialization:              247.460 ms
 Allocate contiguous OpenCL buffers: 30.365 ms
 Map buffers to userspace pointers:  0.222 ms
 Populating buffer inputs:           22.527 ms
-Software VADD run :                 24.852 ms
-Memory object migration enqueue :   6.739 ms
+Software VADD run:                 24.852 ms
+Memory object migration enqueue:   6.739 ms
 Set kernel arguments:               0.014 ms
 OCL Enqueue task:                   0.102 ms
-Wait for kernel to complete :       92.068 ms
-Read back computation results :     2.243 ms
+Wait for kernel to complete:       92.068 ms
+Read back computation results:     2.243 ms
 ```
-
 
 | Operation                             |  Example 2  |  Example 3   | &Delta;2&rarr;3 |
 | ------------------------------------- | :---------: | :----------: | :-------------: |
@@ -170,43 +148,30 @@ Read back computation results :     2.243 ms
 | &Delta;Alveo&rarr;CPU                 | -330.889 ms | -323.996 ms  |    -6.893 ms    |
 | &Delta;FPGA&rarr;CPU (algorithm only) | -74.269 ms  |  -76.536 ms  |        -        |
 
+You might have expected a speedup here, but we see that rather than speeding up any particular operation;
+instead, we have shifted the latencies in the system around. Effectively we have paid our taxes from a different bank account, but at the end of the day, we cannot escape them. On embedded systems with a unified memory map for the processor and the kernels, we would see significant differences here, but on server-class CPUs, we do not.
 
-You may have expected a speedup here, but we see that rather than speeding up any particular operation,
-instead we've shifted the latencies in the system around.  Effectively we've paid our taxes from a different
-bank account, but at the end of the day we can't escape them.  On embedded systems with a unified memory map
-for the processor and the kernels we would see significant differences here, but on server-class CPUs we
-don't.
+One thing to think about is that although pre-allocating the buffers in this way took longer, you do not generally want to allocate buffers in your application's critical path. By using this mechanism, the runtime use of your buffers is much faster.
 
-One thing to think about is that although pre-allocating the buffers in this way took longer, you don't
-generally want to allocate buffers in your application's critical path.  By using this mechanism, the runtime
-use of your buffers is much faster.
+You might even wonder why it is faster for the CPU to access this memory. While we have not discussed it to this point, allocating memory via this API pins the virtual addresses to physical memory. This makes it more efficient for both the CPU and the DMA to access it. As with all things in engineering, though, this comes at a price — allocation time is higher and you run the risk of fragmenting the available memory if you allocate many small buffers.
 
-You may even wonder why it's faster for the CPU to access this memory.  While we haven't discussed it to this
-point, allocating memory via this API pins the virtual addresses to physical memory.  This makes it more
-efficient for both the CPU and the DMA to access it.  As with all things in engineering, though, this comes
-at a price - allocation time is higher and you run the risk of fragmenting the available memory if you
-allocate many small buffers.
-
-In general, buffers should be allocated outside the critical path of your application and this method shifts the burden away from your high-performance sections if used correctly.
+In general, buffers should be allocated outside the critical path of your application, and this method shifts the burden away from your high-performance sections if used correctly.
 
 ## Extra Exercises
 
 Some things to try to build on this experiment:
 
-- Once again, vary the size of the buffers allocated.  Do the relationships that you derived in the previous
+- Once again, vary the size of the buffers allocated. Do the relationships that you derived in the previous
   example still hold true?
 - Experiment with other sequences for allocating memory and enqueuing transfers.
 - What happens if you modify the input buffer and run the kernel a second time?
 
 ## Key Takeaways
 
-- Using the OpenCL and XRT APIs can lead to localized performance boosts, although fundamentally there's no
-  escaping your taxes.
-- Our long pole is becoming our kernel runtime, though, and we can easily speed that up.  Let's take a look
-  at that in our next few examples.
+- Using the OpenCL and XRT APIs can lead to localized performance boosts, although fundamentally there is no escaping your taxes.
+- Our long pole is becoming our kernel runtime, though, and we can easily speed that up. Take a look at that in our next few examples.
 
 Read [**Example 4:** Parallelizing the Data Path](./04-parallelizing-the-data-path.md)
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
