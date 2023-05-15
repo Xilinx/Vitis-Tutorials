@@ -224,7 +224,7 @@ The RTL Kernel source files have now been created.
 
 #### The Vivado Design Suite Project
 
-At this point, the AMD Vivado Design Suite™ opens a project automatically with the generated RTL code corresponding to the default `A = A + 1` function.  You can navigate to review the source files or even run RTL simulation.  However, for this tutorial, do not modify the default RTL Kernel and will only package into an object file (`.xo`).
+At this point, the AMD Vivado™ Design Suite opens a project automatically with the generated RTL code corresponding to the default `A = A + 1` function.  You can navigate to review the source files or even run RTL simulation.  However, for this tutorial, do not modify the default RTL Kernel and will only package into an object file (`.xo`).
 
 1. In Flow Navigator, click **Generate RTL Kernel**.  
 ![Generate RTL Kernel](images/mixing-c-rtl-kernels_flow_navigator.png)  

@@ -28,7 +28,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 
 |Switch|Description|
 |  ---  |  ---  |
-|-mode batch -source vck190_v1_0_xsa.tcl| The AMD Vivado Design Suite™ Tcl shell opens, runs the specified Tcl script, and exits when the script completes.|
+|-mode batch -source vck190_v1_0_xsa.tcl| The AMD Vivado™ Design Suite Tcl shell opens, runs the specified Tcl script, and exits when the script completes.|
 |-tclargs xcvc1902-vsva2197-2MP-e-S|The -tclargs option enables you to pass arguments for the Tcl script you are running. The vck190_v1_0_xsa.tcl requires you to specify the device-package name.|
 |-nodisp|No display|
 |-sdx ||
