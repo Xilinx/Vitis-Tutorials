@@ -1,21 +1,23 @@
-build: dataflow deadlock
+build: opt1 opt2
 
-dataflow: dataflow/vitis_hls.log
+opt1:
+        vitis_hls hls.tcl
+        @echo "********************"
+        @echo "Finished opt1"
+        @echo "********************"
 
-dataflow/vitis_hls.log:
-	cd dataflow ; vitis_hls script.tcl
-
-deadlock: deadlock/vitis_hls.log
-
-deadlock/vitis_hls.log: 
-	cd deadlock ; vitis_hls script.tcl
+opt2: 
+        vitis_hls hls_opt.tcl
+        @echo "********************"
+        @echo "Finished opt2"
+        @echo "********************"
 
 .PHONY: run
 run: build
-	@echo "Finished build and run"
+        @echo "Finished build and run"
 
 check:
-	@echo "Finished check"
+        @echo "Finished check"
 
 all: build
 
@@ -23,5 +25,5 @@ all: build
 # -----------------------------------------------------------------------------
 #
 clean:
-	rm -rf dataflow/*~ deadlock/*~ dataflow/*.log deadlock/*.log dataflow/proj deadlock/proj
+        rm -rf proj*
 #

@@ -11,7 +11,7 @@
 
 # Bottom-up RTL Kernel Flow with Vitis for Acceleration
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 RTL design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a time consuming and error-prone process. The Xilinx&reg; Vitis&trade; unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included Vivado&reg; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-FPGA communication, DMA, and other supporting tasks.
 
@@ -46,8 +46,7 @@ The designs have been verified with the following software/hardware environment 
   * Perl package installed for Verilog simulation (**required**)
   * OpenSSL library installed for hardware output validate (**required**)
   * GCC 7
-* Vitis: 2022.2
-* XRT: 2.14.354
+* Vitis: 2023.1
 * Hardware and Platform for your Alveo card (you need both the deployment and development platforms):
   * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
   * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1
@@ -147,33 +146,6 @@ The directory structure and brief explanations of the design repository are as f
 │
 └── README.md
 ```
-
-## Revision History
-
-<details>
-  <summary> 2022.2 </summary>
-
- - Add support for latest U280 platform
- - xrt.ini updated to avoid warning
-
-</details>
-
-<details>
-  <summary> 2022.1 </summary>
-
- - Update Vitis target platform support
- - remove Vivado clock routing XDC
-
-</details>
-
-<details>
-  <summary>2020.2</summary>
-
-  - Initial release
-
- </details>
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

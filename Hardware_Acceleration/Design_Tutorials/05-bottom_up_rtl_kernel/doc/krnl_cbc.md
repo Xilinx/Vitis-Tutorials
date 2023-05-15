@@ -234,7 +234,7 @@ Before starting, ensure that you source the setup scripts in XRT and Vitis insta
 
 ```shell
 source /opt/xilinx/xrt/setup.sh
-source /tools/Xilinx/Vitis/2020.2/settings64.sh
+source /tools/Xilinx/Vitis/2023.1/settings64.sh
 ```
 
 ### Tutorial Steps
@@ -373,9 +373,8 @@ The `~/krnl_cbc/xrt.ini` file is used to control the XRT emulation options, as s
   3 user_pre_sim_script=/home/workspace/bottom_up_rtl_kernel/krnl_cbc/xsim.tcl
   4
   5 [Debug]
-  6 profile=true
-  7 timeline_trace=true
-  8 data_transfer_trace=coarse
+  6 timeline_trace=true
+  7 device_trace=coarse
 ~~~
 
 

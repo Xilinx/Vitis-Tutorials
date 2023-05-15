@@ -8,23 +8,13 @@
 
 <!--
 /*
- * Copyright 2021-2022 Xilinx, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at:
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */ -->
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/ -->
  
 # The Traveling Salesperson Problem
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -48,7 +38,7 @@ The execution could take over a minute for 13 cities depending on your CPU, and 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
+* 2023.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform. If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**  
 >
@@ -60,7 +50,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2022.2/settings64.sh
+source <Vitis_install_path>/Vitis/2023.1/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
@@ -96,17 +86,6 @@ Complete this lab in the following order:
 * [Run the RTL/C cosimulation](./cosim.md)
 * [Export the design and evaluate performance in Vivado](./export.md)
 * [Improved performance with 4 parallel distance lookups](./code_opt.md)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

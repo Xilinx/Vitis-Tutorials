@@ -297,6 +297,8 @@ The trace information generated during the application run can be controlled by 
   vitis_analyzer ./build/fpgabinary.xclbin.run_summary
   ```
 
+>**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+>
 2. After the Vitis Analyzer tool opens, select **Profile Summary** from the left-side menu, and then select **Compute Unit Utilization** from the window displayed on the right-hand side. 
    
     The report will display stats about the measured performance of the compute units. You have built the `.xclbin` with three compute units, so the display will appear as shown below:

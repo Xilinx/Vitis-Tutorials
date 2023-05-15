@@ -25,16 +25,6 @@ Guidance includes message for reported violations, a brief suggested resolution,
 <img src="./images/hw_guidance.PNG" alt="Hardware Run Guidance" >
 </div>
 
-## Platform and System Diagrams
-
-The Platform and System Diagrams display a representation of the platform resources and the kernel code integrated onto the platform. The System Diagram shows memory banks or PLRAMs used by the XCLBIN, how the function arguments of CUs are connected to AXI4 interfaces. It includes profile data from the run, and the resource information from the bottom table can also be displayed in a box next to each kernel or CU in the System Diagram. 
-
-Please use upper right **Settings** button to display or hide Unused Memory, Interface Ports, Profile Info, and Resource info.
-
-<div align="center">
-<img src="./images/hw_sys_diagram.PNG" alt="Hardware System Diagram" >
-</div>
-
 ## Profile Summary
 
 Enabling profile data capturing for traffic between the kernels and host consumes additional resources and may impact performance, so we cleared those elements out of the sources as we delivered the pre-built XCLBIN files with this tutorial. 

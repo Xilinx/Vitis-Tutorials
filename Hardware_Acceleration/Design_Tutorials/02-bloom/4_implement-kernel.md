@@ -125,6 +125,7 @@ Now that you have the top-level function, `runOnfpga` updated with the proper da
 
     - `#pragma HLS PIPELINE II=1` is added to initiate the burst DDR accesses and read the Bloom filter coefficients every cycle.
     - The expected latency is about 16,000 cycles because the `bloom_filter_size` is fixed to 16,000. You should confirm this after you run HLS Synthesis.
+
 2. Within the `compute_hash_flags` function, the `for` loop is rearchitected as nested for the loop to compute 4 words in parallel. 
 
     ```cpp
@@ -188,13 +189,17 @@ Now, build the kernel using the Vitis compiler. The Vitis compiler will call the
     vitis_analyzer ../build/single_buffer/kernel_4/hw_emu/runOnfpga_hw_emu.xclbin.link_summary
     ```
 
-     ![missing image](./images/4_Kernel_4_link.PNG)
+ >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the link summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+
+Select the System Estimate report to open it. 
+
+  ![missing image](./images/4_Kernel_4_link.PNG)
 
     - The `compute_hash_flags` latency reported is 875,011 cycles. This is based on total of 35,000,000 words, computed with 4 words in parallel. This loop has 875,000 iterations and including the `MurmurHash2` latency, the total latency of 875,011 cycles is optimal.
     - The `compute_hash_flags_dataflow` function has `dataflow` enabled in the Pipeline column. This function is important to review and indicates that the task-level parallelism is enabled and expected to have overlap across the sub-functions in the `compute_hash_flags_dataflow` function.
     - The latency reported for `read_bloom_filter` function is 16,385 for reading the Bloom filter coefficients from the DDR using the `bloom_filter maxi` port. This loop is iterated over 16,000 cycles reading 32-bits data of from the Bloom filter coefficients.
 
-3. The HLS reports confirm that the latency of the function meets your target. You still need to ensure the functionality is correct when communicating with the host. In the next section, you will walk through the initial host code and run the software and hardware emulation.
+The reports confirm that the latency of the function meets your target. You still need to ensure the functionality is correct when communicating with the host. In the next section, you will walk through the initial host code and run the software and hardware emulation.
 
 ### Review the Initial Host Code
 
@@ -233,7 +238,8 @@ The output of the accelerator is as follows:
     cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer TARGET=hw_emu 
     ```
 
-    - The commands show that the SIMULATION is PASSED. This ensures that the generated hardware is functionally correct. However, you have not run the hardware on the FPGA. .
+    - The command should conclude with 'Verification: Pass'. This ensures that the generated hardware is functionally correct. However, you have not yet run the hardware on the FPGA.
+
   
    > **NOTE**: This tutorial is provided with `xclbin` files in the `$LAB_WORK_DIR/xclbin_save` directory. The `SOLUTION=1` option can be added to the make target for using these `xclbin` files for `hw` runs. These `xclbin` files were generated for Alveo U200 cards only. You must generate new `xclbin` files for every platform used in this tutorial.
 

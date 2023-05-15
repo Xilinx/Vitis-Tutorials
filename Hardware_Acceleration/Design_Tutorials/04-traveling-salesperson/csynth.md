@@ -41,14 +41,13 @@ Before running synthesis open the `tsp.h` file and set the number to 13 (`N=13`)
 
 To run HLS synthesis from the GUI:  
 Use the same shortcut as we used for C simulation earlier and select 'Run C Synthesis' or...  
-Via the main menu, `Project` -> `Run C Synthesis` - > `C Synthesis`
+Via the main menu, `Solution` -> `Run C Synthesis` - > `Active Solution`
 
 Once synthesis has completed, the main window shows "Performance and Resource Estimates":  
 (collapse the "General Information" and "Timing Estimates" sections by clicking on their title to make more room if necessary)   
 <img src="./images/synthesis.png" alt="synthesis" title="synthesis" width="800" height="150">  
 This "Performance and Resource Estimates" section shows a table in which we see the main function `tsp` and the main loops and since we gave them a label in the source code it's easy to know which they are.  
-- The full latency for the `tsp` function is 479,001,957 (close to half a billion clock cycles) mainly contributed by `loop_compute`
-- That latency of 479,001,600 is exactly factorial 12 (12!) which corresponds to the the scenario with 13 cities (N=13) given that the first city (the route starting point) is fixed, so the permutations are applied on the 12 remaining cities.
+
 
 ## Next
 

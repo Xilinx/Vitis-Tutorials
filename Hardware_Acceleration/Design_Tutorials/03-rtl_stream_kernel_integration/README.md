@@ -11,7 +11,7 @@
 
 # Mixed Kernels Design Tutorial with AXI Stream and Vitis
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This tutorial demonstrate the design flow for an example mixed kernels hardware design, which includes both RTL kernel and HLS C kernel, as well as Vitis Vision Library. The design generates a real-time clock image, resizes it, then alpha-mix it with an input image in global memory, finally output the result image to global memory. AXI stream interface is used for the kernel-to-kernel connection.
 
@@ -27,19 +27,6 @@ The hardware design includes three kernels: *rtc_gen*, *alpha_mix*, and *strm_du
 <img src="./doc/images/topo.png" alt="Topology" >
 </div>
 
-The designs have been verified with following software/hardware environment and tool chain version:
-* Operating System
-  * Redhat/CentOS 7.4 - 7.9
-  * Ubuntu 18.04/20.04
-  * OpenCV libraries required
-* Vitis: 2022.2
-* XRT: 2.14.354
-* Hardware and Platform (need both the deployment and development platforms)
-  * Alveo U200 - xilinx_u200_gen3x16_xdma_2_202110_1
-  * Alveo U250 - xilinx_u250_gen3x16_xdma_4_1_202210_1
-  * Alveo U50  - xilinx_u50_gen3x16_xdma_5_202210_1
-  * Alveo U55C - xilinx_u55c_gen3x16_xdma_3_202210_1
-  * Alveo U280 - xilinx_u280_gen3x16_xdma_1_202211_1
 
 **Additional Requirements for RedHat/CentOS 7**
 The host program is using XRT Native API, which need higher version of GCC. If you are using RedHat/CentOS 7, the default installed GCC version is 4.x.x. You must use the  following command to install and switch to GCC 7 before compiling the host program.
@@ -234,7 +221,7 @@ Before going through the following steps, don't forget to source XRT and Vitis s
 
 ~~~
 source /opt/xilinx/xrt/setup.sh
-source /opt/xilinx/Vitis/2022.2/settings64.sh
+source /opt/xilinx/Vitis/2023.1/settings64.sh
 ~~~
 
 The two test programs need to display images. So if you are using remote server, please use VNC desktop, or ssh connection with X11 forwarding along with local X11 server.
@@ -418,30 +405,6 @@ You could make modification to following *#define* section at the beginning of *
 * Step 6: try Vitis profiling function with **rtc_gen_test** and **rtc_alpha_tb** program.
 
 Vitis provides powerful profiling features which enable you to get a deeper view into the performance, bandwidth usage, design bottleneck, etc. Please read [Profiling the Application](./doc/profile_tutorial.md) for more details. 
-
-## Revision History
-
-<details>
-  <summary> 2022.2 </summary>
-
-  - Add u280 latest platform support option in Makefile and script
-
-</details>
-
-<details>
-  <summary> 2022.1 </summary>
-
- - Update Vitis target platform support
- - In host program, use XRT Native API to replace original OpenCL API.
-
-</details>
-
-<details>
-  <summary>2020.1</summary>
-
-  - Initial release
-
- </details>
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
