@@ -13,54 +13,48 @@ In this section, you will observe achievable bandwidth using one HBM master port
 - The topology, for example, M0 to single PC0 directly across the switch or M0 to a group PC0-1 or M0 to a group PC0-3.
 - The number of bytes in the transaction vary from 64 bytes to 1024 bytes,
 - Addressing used: sequential/linear accesses or random accesses,
-- Use of the Random Access Memory Attachment (RAMA) IP to achieve better results.The RAMA IP is specifically designed to assist HBM-based designs with non-ideal
-traffic masters and use cases. For more information, refer to <a href="https://www.xilinx.com/support/documentation/ip_documentation/rama/v1_1/pg310-rama.pdf"> RAMA LogiCORE IP Product Guide</a>
-
-
+- Use of the Random Access Memory Attachment (RAMA) IP to achieve better results.The RAMA IP is specifically designed to assist HBM-based designs with non-ideal traffic masters and use cases. For more information, refer to the <a href="https://www.xilinx.com/support/documentation/ip_documentation/rama/v1_1/pg310-rama.pdf"> RAMA LogiCORE IP Product Guide</a>.
 
 This section, via the above different configurations analyze enough data so that the developers will understand and make better decisions for their designs.
 
-If your application is memory bound, it's always beneficial to access 64-bytes of data whether it's DDR or HBM. For this project, datawidth is set to 512 bits by default using `dwidth` variable in Makefile. You can experiment with smaller data width by changing this variable. Additionally, performance measured is based on M_AXI interface memory performance read-only and write performance is not measured in this section. The measured bandwidth is using C++ std::chrono to record the time just before kernel enqueues and just after the queue finish command. The bandwidth is reported in GB/s achieved.
+If your application is memory bound, it is always beneficial to access 64-bytes of data whether it is DDR or HBM. For this project, datawidth is set to 512 bits by default using the `dwidth` variable in Makefile. You can experiment with smaller data width by changing this variable. Additionally, performance measured is based on M_AXI interface memory performance read-only and write performance is not measured in this section. The measured bandwidth is using C++ std::chrono to record the time just before kernel enqueues and just after the queue finish command. The bandwidth is reported in GB/s achieved.
 
-The kernel ports in1,in2, and out are connected to all the HBM channels. In this scenario, each kernel port will have access to all the HBM channels. The application should implement this connectivity only if the application requires accessing all the channels. HBM memory subsystem will attempt to give the kernel the best access to all the memories connected to, say, kernel port in1 to M11 or M12 of the HBM subsystem. The application will experience extra latency to access the Psuedo channels on the extremes, say PC0 or PC31, from the middle master M12. Due to this, the application may require more outstanding transaction settings on AXI interfaces connected to kernel ports.
+The kernel ports `in1`, `in2`, and `out` are connected to all the HBM channels. In this scenario, each kernel port will have access to all the HBM channels. The application should implement this connectivity only if the application requires accessing all the channels. HBM memory subsystem will attempt to give the kernel the best access to all the memories connected to, say, kernel port `in1`to M11 or M12 of the HBM subsystem. The application will experience extra latency to access the Psuedo channels on the extremes, say PC0 or PC31, from the middle master M12. Due to this, the application may require more outstanding transaction settings on AXI interfaces connected to kernel ports.
 
 In this module, all the kernel ports are connected to all the Psudeo channels for simplicity.
 
-Let's start with Bandwidth experiments using sequential accesses first.
+Start with Bandwidth experiments using sequential accesses first.
 
 ### Sequential Accesses
 
-In this step, first, you will build the xclbin that can support transaction size of, say 64 bytes, 128 bytes, 256 bytes,512 bytes, 1024 bytes. Next, you can explore achievable bandwidth accessing a single Pseudo channel of HBM (256MB), two Psuedo channels (512MB), and four Psuedo channels (1024MB)
+In this step, first, you will build the xclbin that can support transaction size of, say 64 bytes, 128 bytes, 256 bytes, 512 bytes, and 1024 bytes. Next, you can explore achievable bandwidth accessing a single Pseudo channel of HBM (256 MB), two Psuedo channels (512 MB), and four Psuedo channels (1024 MB).
 
-
-Here is an example of building the application using following target for Master 0 accessing PC0 as shown below. (Don't run this command)
+Here is an example of building the application using following target for Master 0 accessing PC0 as shown below( Do not run this command).
 
 `make build TARGET=hw memtype=HBM banks=0_31 dsize=256 addrndm=0  txSize=64 buildxclbin=1`
 
 The project provides the following flexibility to run an application using arguments, as shown below.
 
-- dsize=256 will access only a single Pseudo channel, because the datasize on the host size is 256 MB
-- txSize=64 will queue each command equivalent of 64 bytes from kernel port. Since each transfer is 64 bytes, this will be equivalent to a Burst length of 1. txSize=128 will be identical to Burst Length of 2, and so on.
-- banks0_31 configures kernel's AXI master ports connect to all the banks. During the build, Makefile will create the HBM_connectivity.cfg file in the respective build directory. Refer to `mem_connectivity.mk` for more information.  You can also create your custom connectivity by updating in_M0, in_M1, and out_M2 variables
-- addrndm=0 will ensure the address generated is sequential when the kernel is run. As seen previously, this is an argument to the kernel passed down from the host code.
+- dsize=256: Accesses only a single Pseudo channel, because the datasize on the host size is 256 MB.
+- txSize=64: Queues each command equivalent of 64 bytes from kernel port. Since each transfer is 64 bytes, this will be equivalent to a Burst length of 1. txSize=128 will be identical to Burst Length of 2, and so on.
+- banks0_31: Configures the kernel's AXI master ports connect to all the banks. During the build, Makefile will create the `HBM_connectivity.cfg` file in the respective build directory. Refer to `mem_connectivity.mk` for more information. You can also create your custom connectivity by updating in_M0, in_M1, and out_M2 variables.
+- addrndm=0: Ensures the address generated is sequential when the kernel is run. As seen previously, this is an argument to the kernel passed down from the host code.
 
+The above build command will create the xclbin under `<Project>/build/HBM_addSeq_allBanks_d512_txSize64`.
 
-The above build command will create the xclbin under <Project>/build/HBM_addSeq_allBanks_d512_txSize64
-
-You can run the following command to generate the builds for txSize of 64,128,256,512,1024 bytes.
+You can run the following command to generate the builds for txSize of 64, 128, 256, 512, and 1024 bytes.
 
 `make build_without_rama`    # This command is already executed in the first module
 
-- If the machine doesn't have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below
+- If the machine does not have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below.
 
     `make noramajob-64 noramajob-128 noramajob-256 noramajob-512 noramajob-1024`
 
-
-To run the application with the above build created for txSize of 64,128,256,512,1024 bytes AND accessing 1,2,4 Pseudo channels (using dsize argument)
+To run the application with the above build created for txSize of 64, 128, 256, 512, and 1024 bytes AND accessing 1, 2, and 4 Pseudo channels (using dsize argument).
 
 `make all_hbm_seq_run`
 
-The above target will generate the output file `<Project>/makefile/Run_SequentialAddress.perf` file with the following data
+The above target will generate the output file `<Project>/makefile/Run_SequentialAddress.perf` file with the following data.
 
 ```
 Addr Pattern   Total Size(MB) Transaction Size(B) Throughput Achieved(GB/s)
@@ -82,23 +76,21 @@ Sequential     1024 (M0->PC0_3)          128                    13.1435
 Sequential     1024 (M0->PC0_3)          256                    13.1506
 Sequential     1024 (M0->PC0_3)          512                    13.1539
 Sequential     1024 (M0->PC0_3)          1024                   13.1454
-
 ```
 
 This use case shows the maximum results when using one kernel master, M0 to access HBM. The table above shows the measured bandwidth in GB/s achieved.
 
-The top 5 rows show the point to point accesses, ie, 256 MB accesses, with the Transaction size variation. The bandwidth is consistent around 13 GB/s.
+The top five rows show the point to point accesses, i.e., 256 MB accesses, with the Transaction size variation. The bandwidth is consistent around 13 GB/s.
 
-The next ten rows show a grouping of 2 pseudo channels and 4 pseudo channels, ie, 512 MB and 1024 MB, respectively, and the bandwidth is constant.
+The next ten rows show a grouping of two pseudo channels and four pseudo channels, i.e., 512 MB and 1024 MB, respectively, and the bandwidth is constant.
 
 #### Conclusion: The bandwidth achieved for sequential accesses is mostly independent of the topology and is constant at about 13 GB/s.
 
-
 ### Random Accesses
 
-We are using the same topologies as the previous step but using an addressing scheme using random addresses within the selected range.
+You are using the same topologies as the previous step, but using an addressing scheme using random addresses within the selected range.
 
-To run all the variations like in the previous step, You can also use the following Makefile target to run the application. There is no need to rebuild the xclbins again.
+To run all the variations like in the previous step, you can also use the following Makefile target to run the application. There is no need to rebuild the xclbins again.
 
 `make all_hbm_rnd_run`
 
@@ -124,27 +116,21 @@ Random         1024 (M0->PC0_3)          128                    1.07469
 Random         1024 (M0->PC0_3)          256                    1.99473
 Random         1024 (M0->PC0_3)          512                    3.49935
 Random         1024 (M0->PC0_3)          1024                   5.5307
-
 ```
 
-The top 5 rows show the point to point accesses, ie 256 MB accesses, with a Transaction size variation. The bandwidth drops compared to the top 5 rows in the previous step when the address pattern was sequential. You can still experience decent bandwidth for larger transaction sizes, though.
+The top five rows show the point to point accesses, ie 256 MB accesses, with a Transaction size variation. The bandwidth drops compared to the top five rows in the previous step when the address pattern was sequential. You can still experience decent bandwidth for larger transaction sizes, though.
 
-The bandwidth drops compared to the top 5 rows from 13GB/s using the sequential accesses at the previous step. You can still experience better bandwidth for larger transaction sizes than 64 bytes though, this is simply explained because when accessing 128 bytes or more, then, only the first access is random the next accesses in the transaction are sequential, so the memory is better utilized, efficiency-wise.
+The bandwidth drops compared to the top five rows from 13 GB/s using the sequential accesses at the previous step. You can still experience better bandwidth for larger transaction sizes than 64 bytes though, this is simply explained because when accessing 128 bytes or more, then, only the first access is random the next accesses in the transaction are sequential, so the memory is better utilized, efficiency-wise.
 
-When the master is addressing 2 or 4 PCs to access a larger range, the bandwidth will drop significantly. So it's important to observe that a single M_AXI connected to 1 PC will provide better bandwidth than connected to multiple PCs.
+When the master is addressing two or four PCs to access a larger range, the bandwidth will drop significantly. So it is important to observe that a single `M_AXI` connected to one PC will provide better bandwidth than connected to multiple PCs.
 
+Use the specific example of Row 13; the transaction size is 256 bytes and using a 1 GB of randomly accessed data — i.e., utilizing PC0-3. You can see the performance is ~2 GB/s. If this was a real design need, it would be advantageous to change the microarchitecture of said design to use four `M_AXI` to access four individual PC in an exclusive manner. This means that the kernel code would have to check the index/address it wished to access and then exclusively use one of the pointer arguments (translating to one of the four `M_AXI`) to make this memory access. As you might have already understood the access range is now 256 MB per pointer/`M_AXI`, which basically means that you fall back to a use case where you have one master accessing one PC, and this is exactly the situation in Row 3. As a result, this would provide 12+ GB/s of bandwidth using four interfaces but with only one utilized at a time. You could try to further improve the situation by making two parallel accesses using those four `M_AXI`, but this means that the part of the design providing the indexes/addresses need to provide two in parallel, which might be a challenge too.
 
-Let's use the specific example of Row 13, the transaction size is 256 bytes and using a 1 GB of randomly accessed data - i.e. utilizing PC0-3. We can see the performance is ~2 GB/s. If this was a real design need, it would be advantageous to change the microarchitecture of said design to use 4 M_AXI to access 4 individual PC in an exclusive manner. This means that the kernel code would have to check the index/address it wished to access and then exclusively use one of the pointer arguments (translating to one of the 4 M_AXI) to make this memory access. As you might have already understood the access range is now 256 MB per pointer/M_AXI, which basically means that we fall back to a use case where we have one master accessing one PC, and this is exactly the situation in Row 3. As a result, this would provide 12+ GB/s of bandwidth using 4 interfaces but with only one utilized at a time. You could try to further improve the situation by making 2 parallel accesses using those 4 M_AXI but this means that the part of the design providing the indexes/addresses need to provide 2 in parallel, which might be a challenge too.
-
-
-
-#### Conclusion: The bandwith is higher when accessing a single Pseudo Channel over 256 MB data (or less) compared to accessing multiple Pseudo Channels.
-
-
+#### Conclusion: The bandwith is higher when accessing a single Pseudo Channel over 256 MB data (or less) compared to accessing multiple Pseudo Channels
 
 ### Random Accesses with RAMA IP
 
-This step uses the same topologies as the previous step, but now we are using RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.
+This step uses the same topologies as the previous step, but now you are using the RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.
 
 The `HBM_connectivity.cfg` file that is generated from the Makefile adds the RAMA IP to the config file syntax as described at [Random Access and the RAMA IP](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Random-Access-and-the-RAMA-IP). The `HBM_connectivity.cfg` file will look like the following example:
 
@@ -154,18 +140,18 @@ sp=vadd_1.in1:HBM[0:31].1.RAMA
 sp=vadd_1.in2:HBM[0:31].4.RAMA
 sp=vadd_1.out:HBM[0:31].8.RAMA
  ```
- 
+
 To build all the xclbins, run the following target.
 
 `make build_with_rama`   # This command is already executed in the first module
 
-- If the machine doesn't have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below
+- If the machine does not have enough resources to launch six jobs in parallel, you can run the above command one by one, as shown below.
 
     `make ramajob-64 ramajob-128 ramajob-256 ramajob-512 ramajob-1024 -j6`
 
-To run all the variations like in the previous step, You can also use the following Makefile target to build and run the application.
+To run all the variations like in the previous step, you can also use the following Makefile target to build and run the application.
 
-    `make all_hbm_rnd_rama_run`
+`make all_hbm_rnd_rama_run`
 
 The above target will generate the output file `<Project>/makefile/Run_RandomAddressRAMA.perf` file with the following data.
 
@@ -189,26 +175,20 @@ Random         1024 (M0->PC0_3)          128                    9.5997
 Random         1024 (M0->PC0_3)          256                    12.7994
 Random         1024 (M0->PC0_3)          512                    13.7546
 Random         1024 (M0->PC0_3)          1024                   14.0694
-
 ```
 
-The top 5 rows show the point to point accesses, i.e. 256 MB accesses, with a transaction size variation. The bandwidth achieved is very similar to the previous step without RAMA IP.
-The next ten rows with access to 512 MB and 1024MB respectively show a significant increase in achieved bandwidth compared to the previous step when configuration didn't utilised  RAMA IP.
+The top five rows show the point to point accesses, i.e., 256 MB accesses, with a transaction size variation. The bandwidth achieved is very similar to the previous step without the RAMA IP.
+The next ten rows with access to 512 MB and 1024 MB respectively show a significant increase in achieved bandwidth compared to the previous step when configuration did not utilize the RAMA IP.
 
-
-
-#### Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required random memory access exceeds 256 MB (one HBM pseudo-channel)
-
-
+#### Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required random memory access exceeds 256 MB (one HBM pseudo-channel).
 
 # Summary
 
 Congratulations! You have completed the tutorial.
 
-In this tutorial, you learned it's relatively easy to migrate a DDR-based application to HBM based application using v++ flow. You also experimented with how the HBM based application throughput varies based on the address patterns and the overall memory being accessed by the kernel.
+In this tutorial, you learned it is relatively easy to migrate a DDR-based application to HBM based application using `v++` flow. You also experimented with how the HBM-based application throughput varies based on the address patterns and the overall memory being accessed by the kernel.
 
 <p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p>
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

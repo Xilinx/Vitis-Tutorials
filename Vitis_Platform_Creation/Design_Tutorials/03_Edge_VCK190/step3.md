@@ -6,13 +6,13 @@
  </tr>
 </table>
 
-# Step 3: Run application on the Platform
+# Step 3: Run Application on the Platform
 
-### Application1: Run a PL acceleration application
+## Application 1: Run a PL Acceleration Application
 
- We will create an acceleration application with PL kernel running on the platform we created in step2.
+ You will create an acceleration application with PL kernel running on the platform created in step 2.
 
-1. Create a application folder and launch Vitis
+1. Create a application folder, and launch Vitis.
 
    ```
    cd WorkSpace
@@ -20,127 +20,125 @@
    cd custom_application
    vitis -workspace ./ &
    ```
-   
+
    Close the welcome tab after Vitis launches.
 
-2. Add custom platform
+2. Add the custom platform.
 
-   - Select menu **Xilinx -> Add custom platform...**
-   - Click **add** button
-   - Select the directory that [step2](./step2.md) generates. For example `custom_vitis_platform/custom_platform`
-   - Click **OK**
+   - Select menu **Xilinx -> Add custom platform...**.
+   - Click **Add** button.
+   - Select the directory that [step2](./step2.md) generates. For example `custom_vitis_platform/custom_platform`.
+   - Click **OK**.
 
-3. Create vector addition application on the custom platform
+3. Create a vector addition application on the custom platform.
 
    - Select menu **File -> New -> Application Project**.
-   - Go through the welcome page and click **Next**.
+   - Go through the welcome page, and click **Next**.
    - On Platform page, select **custom_platform** platform in the platform list. Click **Next**.
 
    - Set **Application project name** to **vadd**, target processor **psv_cortexa72_SMP**. Click **Next**.
-   
+
      ![missing image](./images/step3/vitis_create_vadd.png)
 
-   - Input **Sysroot** path <custom_vitis_platform/sysroots/cortexa72-cortexa53-xilinx-linux>, as you created by running sdk.sh in step2.
-   - Input **RootFS** path <custom_vitis_platform/pfm/sw_comp/rootfs.ext4>
-   - Input **Kernel Image** path <custom_vitis_platform/pfm/sw_comp/Image>. These components were prepared in [step 2](./step2.md). Click **Next**. 
+   - Input **Sysroot** path `<custom_vitis_platform/sysroots/cortexa72-cortexa53-xilinx-linux>`, as you created by running `sdk.sh` in step 2.
+   - Input **RootFS** path `<custom_vitis_platform/pfm/sw_comp/rootfs.ext4>`
+   - Input **Kernel Image** path `<custom_vitis_platform/pfm/sw_comp/Image>`. These components were prepared in [step 2](./step2.md). Click **Next**.
 
-   - Select template **Vector Addition**. Click **Finish**.
+   - Select the template **Vector Addition**. Click **Finish**.
 
-4. (Optional) Build the vector addition application for hardware emulation
+4. (Optional) Build the vector addition application for hardware emulation.
 
-   - Select **vadd_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the build icon.
-   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+   - Select the **vadd_system** project.
+   - Click the drop down of the **Build** hammer icon on toolbar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW**, and click the build icon.
+   - If it pops-up a dialog to ask whether to clean the project, select **Don't clean**.
 
-5. Build the vector addition application for hardware
+5. Build the vector addition application for hardware.
 
-   - Select **vadd_system** project
+   - Select the **vadd_system** project.
    - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the build icon.
-   - It takes some time to build hardware. Finally Vitis will generate **sd_card.img** in vadd_system/Hardware/package directory.
+   - It takes some time to build hardware. Finally, Vitis will generate **sd_card.img** in `vadd_system/Hardware/package` directory.
 
+### (Optional) Test the Application on Hardware Emulation
 
-#### (Optional) Test the Application on Hardware Emulation
-1. Launch Emulator for PS
+1. Launch the Emulator for PS.
 
-   - Click menu **Xilinx -> Start/Stop Emulator**
-   - Select Project: **vadd_system**, Configuration: **Emulation-HW**
+   - Click menu **Xilinx -> Start/Stop Emulator**.
+   - Select Project: **vadd_system**, Configuration: **Emulation-HW**.
 
-   ![Launch Emulator for Vadd Project](./images/step3/vitis_emulation_vadd.png)
- 
-   - Click **Start**
-   - There will be prints on Emulation Console. 
+      ![Launch Emulator for Vadd Project](./images/step3/vitis_emulation_vadd.png)
+
+   - Click **Start**.
+   - There will be prints on Emulation Console.
    - Wait for it to boot Linux. The wait window will disappear after it detects Linux boot successfully.
 
-2. Launch PL emulation
+2. Launch PL emulation.
 
-   - Right click **vadd_system**, select **Run as -> Run Configurations**
-   - Select **vadd_system-Default**
-   - Change **Build Configuration** to **Emulation-HW**
-   - Click Run
-   - Check run result
+   - Right click **vadd_system**, select **Run as -> Run Configurations**.
+   - Select **vadd_system-Default**.
+   - Change **Build Configuration** to **Emulation-HW**.
+   - Click **Run**.
+   - Check run result.
 
-   ![Vitis Emulation Vadd Result](./images/step3//vitis_emulation_vadd_result.png)
+      ![Vitis Emulation Vadd Result](./images/step3//vitis_emulation_vadd_result.png)
 
-3. Stop the Emulator
+3. Stop the Emulator.
 
-   - Click menu **Xilinx -> Start/Stop Emulator**
-   - Click **Stop** button
-
-
+   - Click menu **Xilinx -> Start/Stop Emulator**.
+   - Click the **Stop** button.
 
 #### Test the Application on Hardware
 
 1. Copy `vadd_system/Hardware/package/sd_card.img` to local if you build the project on a remote server or virtual machine.
 
-2. Program sd_card.img to SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
+2. Program the `sd_card.img` to a SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
 
-   > Note: The programmed SD card has two partitions. FAT32 partition with boot components; EXT4 partition with Linux root file system. Windows system by default cannot see the contents of EXT4 partition.
+   > **NOTE:** The programmed SD card has two partitions. The FAT32 partition with boot components and the EXT4 partition with Linux root file system. By default, the Windows system cannot see the contents of EXT4 partition.
 
-   > Note: Please eject the SD card properly from the system after programming it.
+   > **NOTE:** Eject the SD card properly from the system after programming it.
 
-3. Insert the SD card and boot the VCK190 board with SD boot mode (SW1[4:1] = "1110": OFF, OFF, OFF, ON) and power on.
+3. Insert the SD card, and boot the VCK190 board with SD boot mode (SW1[4:1] = "1110": OFF, OFF, OFF, ON) and power on.
 
-   > Note: Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
+   > **NOTE:** Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
 
-4. Connect to UART console
+4. Connect to UART console.
 
-5. Launch the test application from UART console
+5. Launch the test application from UART console.
 
    <details>
-   <summary><strong>Follow below steps to run the application</strong></summary>
+   <summary><strong>Use the following steps to run the application</strong></summary>
 
-     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+     You will need to log in with user `petalinux` first and set up a new password (it is then also the sudo password):
 
      - Log into the system
-     
-     ```bash
-     petalinux login:petalinux
-     You are required to change your password immediately (administrator enforced).
-     New password:
-     Retype new password:
-     petalinux:~$ sudo su
-     We trust you have received the usual lecture from the local System
-     Administrator. It usually boils down to these three things:
-         #1) Respect the privacy of others.
-         #2) Think before you type.
-         #3) With great power comes great responsibility.
-     Password:
-     petalinux:/home/petalinux#
-     ```
 
-     - Go to auto mounted FAT32 partition and run the application like below:
+         ```bash
+         petalinux login:petalinux
+         You are required to change your password immediately (administrator enforced).
+         New password:
+         Retype new password:
+         petalinux:~$ sudo su
+         We trust you have received the usual lecture from the local System
+         Administrator. It usually boils down to these three things:
+               #1) Respect the privacy of others.
+               #2) Think before you type.
+               #3) With great power comes great responsibility.
+         Password:
+         petalinux:/home/petalinux#
+         ```
 
-     ```
-     petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
-     petalinux:/home/petalinux# ./simple_vadd krnl_vadd.xclbin
-     ```
+     - Go to auto mounted FAT32 partition and run the application as:
+
+         ```
+         petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
+         petalinux:/home/petalinux# ./simple_vadd krnl_vadd.xclbin
+         ```
    </details>  
-
 
 6. Expected print on UART console
 
 <details>
   <summary><b>Show Log</b></summary>
+
 ```
 root@petalinux:/run/media/mmcblk0p1# ./vadd binary_container_1.xclbin
 EXE: /run/media/mmcblk0p1/simple_vadd
@@ -182,90 +180,87 @@ TEST PASSED
 
 </details>
 
-**Note**: the `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turning down the system dmesg reporting level.
+>**NOTE**: The `[   35.116279] [drm]` messages are print from XRT for debugging purpose. It only shows up on UART. It will now print on ssh. This debugging message can be turned off by turning down the system dmesg reporting level.
 
 ```
 echo "4" > /proc/sys/kernel/printk
 ```
 
+### Application 2: Run an AIE + PL Acceleration Application Project
 
-### Application2: Run an AIE + PL acceleration application project
+To verify the platform functionality, you will create a project with AIE + PL kernel and PS application, and run it on this custom-VCK190 board.
 
-To verify the platform functionality, we will create a project with AIE + PL kernel and PS application and run it on this custom-VCK190 board.
-
-1. Create vector addition application on the custom platform
+1. Create vector addition application on the custom platform.
 
    - Select menu **File -> New -> Application Project**.
-   - Go through the welcome page and click **Next**.
+   - Go through the welcome page, and click **Next**.
    - On Platform page, select **custom_platform** in the platform list. Click **Next**.
    - Set application name **plaie**, target processor **psv_cortexa72_SMP**. Click **Next**.
    - Input Sysroot path, RootFS path and Kernel Image. Click **Next**.
    - Select template **AI Engine System Design Examples -> AI Engine, PL and PS System Design**. Click **Finish**.
 
-2. Build the vector addition application for hardware
+2. Build the vector addition application for hardware.
 
-   - Select **plaie_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click build icon.
+   - Select **plaie_system** project.
+   - Click the drop down of the **Build** hammer icon on tool bar, and select **Hardware**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Hardware** and click the **Build** icon.
 
-3. (Optional) Build the vector addition application for hardware emulation
+3. (Optional) Build the vector addition application for hardware emulation.
 
-   - Select **plaie_system** project
-   - Click the drop down of **Build** hammer icon on tool bar, select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click build icon.
-   - If it pops-up a dialogue to ask whether to clean the project, select **Don't clean**.
+   - Select **plaie_system** project.
+   - Click the drop down of the **Build** hammer icon on tool bar, and  select **Emulation-HW**. Alternatively, this step can be done by selecting **Active Build Configuration** to **Emulation HW** and click the **Build** icon.
+   - If a dialog displays to ask whether to clean the project, select **Don't clean**.
 
-4. After a successful build, **sd_card.img** is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_aie_debug` directory. They include all files in sd_card directory in the first FAT32 partition and contents of rootfs.ext4 in second EXT4 partition. The differences are the **sd_card.img** in **package_aie_debug** directory has a package parameter `enable_aie_debug=1`. It's used for debugging. The one in **package** can work for free running.
+4. After a successful build, `sd_card.img` is generated in `plaie_system/Hardware/package` and `plaie_system/Hardware/package_aie_debug` directory. They include all files in `sd_card` directory in the first FAT32 partition and contents of `rootfs.ext4` in second EXT4 partition. The differences are the `sd_card.img` in `package_aie_debug` directory has a package parameter `enable_aie_debug=1`. It is used for debugging. The one in **package** can work for free running.
 
+### Test the Application on Hardware
 
+1. Copy the `sd_card.img` from `plaie_system/Hardware/package` directory to local, if the project is run on a server or virtual machine.
 
-#### Test the Application on Hardware
+   > **NOTE:** Vitis will generate images with aie_debug enabled and disabled. The image with aie_debug disabled will run freely; the image with aie_debug enabled will halt AI Engine and wait for the debugger to connect to it.
 
-1. Copy the **sd_card.img** from `plaie_system/Hardware/package` directory to local, if the project is run on a server or virtual machine.
+2. Program `sd_card.img` to the SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
 
-   > Note: Vitis will generate images with aie_debug enabled and disabled. The image with aie_debug disabled will run freely; The image with aie_debug enabled will halt AI Engine and wait for the debugger to connect to it.
+   > **NOTE:** The programmed SD card has two partitions: the FAT32 partition with boot components and the EXT4 partition with Linux root file system. By default, the Windows system cannot see the contents of EXT4 partition.
 
-2. Program **sd_card.img** to the SD card. Refer to [AR#73711](https://www.xilinx.com/support/answers/73711.html) for detailed steps.
+   > **NOTE:** Eject the SD card properly from the system after programming it.
 
-   > Note: The programmed SD card has two partitions. FAT32 partition with boot components; EXT4 partition with Linux root file system. Windows system by default cannot see the contents of EXT4 partition.
+3. Insert the SD card, and boot the VCK190 board with SD boot mode (SW1[4:1] = "1110": OFF, OFF, OFF, ON) and power on.
 
-   > Note: Please eject the SD card properly from the system after programming it.
+   > **NOTE:** Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
 
-3. Insert the SD card and boot the VCK190 board with SD boot mode (SW1[4:1] = "1110": OFF, OFF, OFF, ON) and power on.
-
-   > Note: Refer to [VCK190 Evaluation Board User Guide](https://www.xilinx.com/support/documentation/boards_and_kits/vck190/ug1366-vck190-eval-bd.pdf) for details about boot mode.
-
-4. Launch test application from UART console
+4. Launch test application from the UART console.
 
    <details>
-   <summary><strong>Follow below steps to run the application</strong></summary>
+   <summary><strong>Use the following steps to run the application</strong></summary>
 
-     You will need to login with user `petalinux` first and setup a new password (it's then also the sudo password):
+     You will need to login with user `petalinux` first, and set up a new password (it is then also the sudo password):
 
-     - Log into the system
-     
-     ```bash
-     petalinux login:petalinux
-     You are required to change your password immediately (administrator enforced).
-     New password:
-     Retype new password:
-     petalinux:~$ sudo su
-     We trust you have received the usual lecture from the local System
-     Administrator. It usually boils down to these three things:
-         #1) Respect the privacy of others.
-         #2) Think before you type.
-         #3) With great power comes great responsibility.
-     Password:
-     petalinux:/home/petalinux#
-     ```
+     - Log into the system.
 
-     - Go to auto mounted FAT32 partition and run the application like below:
+         ```bash
+         petalinux login:petalinux
+         You are required to change your password immediately (administrator enforced).
+         New password:
+         Retype new password:
+         petalinux:~$ sudo su
+         We trust you have received the usual lecture from the local System
+         Administrator. It usually boils down to these three things:
+               #1) Respect the privacy of others.
+               #2) Think before you type.
+               #3) With great power comes great responsibility.
+         Password:
+         petalinux:/home/petalinux#
+         ```
 
-     ```
-     petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
-     petalinux:/home/petalinux# ./plaie binary_container_1.xclbin
-     ```
+     - Go to the auto mounted FAT32 partition and run the application :
+
+         ```
+         petalinux:/home/petalinux# cd /run/media/sd-mmcblk0p1
+         petalinux:/home/petalinux# ./plaie binary_container_1.xclbin
+         ```
    </details> 
 
-5. Expected print on UART console
+5. Expected print on UART console.
 
 <details>
   <summary><b>Show Log</b></summary>

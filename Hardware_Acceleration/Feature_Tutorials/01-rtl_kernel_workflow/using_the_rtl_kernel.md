@@ -8,62 +8,60 @@
 
 # Using the RTL Kernel in a Vitis IDE Project
 
-1. Change directory to the tutorial folder: `cd ./01-rtl_kernel_workflow/reference_files`
+1. Change directory to the tutorial folder: `cd ./01-rtl_kernel_workflow/reference_files`.
 
-1. Create a new workspace folder called `work1`
+2. Create a new workspace folder called `work1`.
 
+3. Launch the Vitis IDE, by entering the following command:
 
-2. Launch the Vitis IDE, by entering the following command: 
+   ```
+   vitis -workspace work1
+   ```
 
-```
-vitis -workspace work1
-```
+4. The Vitis IDE opens. Select **File > New > Application Project**
 
-3. The Vitis IDE opens. Select **File > New > Application Project**
+   The New Vitis Application Project window opens.  
 
-The New Vitis Application Project window opens.  
+   ![New Application Project](images/rtl_kernel-new_application_project.png)
 
-![New Application Project](images/rtl_kernel-new_application_project.png)
+5. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
 
-4. The New Application Project wizard is displayed, with the overview page showing a brief overview of the process. Click **Next**.
+6. The Plaform page is displayed. Select `xilinx_u250_gen3x16_xdma_4_1_202210_1`, and then click **Next** to proceed.
 
-5. The Plaform page is displayed. Select `xilinx_u250_gen3x16_xdma_4_1_202210_1`, and then click **Next** to proceed.
+   ![Platform page](images/rtl_kernel-platform_page.png)
 
-![Platform page](images/rtl_kernel-platform_page.png)
-
-6. The Application Project Details page is displayed. Make the following selections:  
+7. The Application Project Details page is displayed. Make the following selections:  
 
    1. Enter a project name, such as `kernelTest`.  
    2. Create New System Project is enabled, and the System project name is generated from the project name. You can edit it if needed.
-   3. The Processor is selected automatically from the platform you selected. 
+   3. The Processor is selected automatically from the platform you selected.
    4. Click **Next** to proceed.  
 
-![New Application Project](images/rtl_kernel-details_page.png)
+      ![New Application Project](images/rtl_kernel-details_page.png)
 
-7.  The Templates page opens, showing application templates you can use to start your project. Select the **Empty Application (XRT Native API)** and click **Finish** to create your Vitis application project.  
+8. The Templates page opens, showing application templates you can use to start your project. Select the **Empty Application (XRT Native API)**, and click **Finish** to create your Vitis application project.  
 
-The new project wizard closes and opens the Vitis IDE with your new project loaded.
+      The new project wizard closes and opens the Vitis IDE with your new project loaded.
 
-![Default Perspective](images/rtl_kernel-default_perspective.png)
+   ![Default Perspective](images/rtl_kernel-default_perspective.png)
 
 ## Add the Hardware Kernel (`.xo`)
 
-You must add the recently generated user-managed RTL kernel (`Vadd_A_B.xo`) and host code (`user-host.cpp`) into the project. 
+You must add the recently generated user-managed RTL kernel (`Vadd_A_B.xo`) and host code (`user-host.cpp`) into the project.
 
-1. Select the `kernelTest_kernels` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo` folder and select the `Vadd_A_B.xo` kernel file to add to the project as shown below. Click **Finish** to close the dialog box and add the kernel. 
+1. Select the `kernelTest_kernels` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo` folder and select the `Vadd_A_B.xo` kernel file to add to the project as shown below. Click **Finish** to close the dialog box and add the kernel.
 
-![Add RTL Kernel](images/add_rtl_kernel.png)
+   ![Add RTL Kernel](images/add_rtl_kernel.png)
 
-2. Select and open the `kernelTest_kernels.prj` project file in the **Hardware Kernel Project Settings** view, and select the **Add Hardware Function** command. Select the  `Vadd_A_B.xo` folder and select the `Vadd_A_B` kernel as shown in the image below. Click **OK** to close the dialog box and add the hardware function to the project. 
+2. Select and open the `kernelTest_kernels.prj` project file in the **Hardware Kernel Project Settings** view, and select the **Add Hardware Function** command. Select the  `Vadd_A_B.xo` folder and select the `Vadd_A_B` kernel as shown in the image below. Click **OK** to close the dialog box and add the hardware function to the project.
 
-![Add RTL Kernel](images/add_rtl_kernel-hw-function.png) 
+   ![Add RTL Kernel](images/add_rtl_kernel-hw-function.png)
 
-2. Select the `kernelTest` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `src/host` folder and select the `user-managed.cpp` file to add to the project as shown below. Click **Finish** to close the dialog box and add the host code. 
+3. Select the `kernelTest` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `src/host` folder and select the `user-managed.cpp` file to add to the project as shown below. Click **Finish** to close the dialog box and add the host code.
 
->**TIP:** There is also an xrt-host file that can be used to connect to an `ap_ctrl_hs` version of the RTL kernel. 
+      >**TIP:** There is also an xrt-host file that can be used to connect to an `ap_ctrl_hs` version of the RTL kernel.
 
-![Add RTL Kernel](images/add_rtl_kernel-host.png) 
-
+      ![Add RTL Kernel](images/add_rtl_kernel-host.png)
 
 ## Build the Project
 
@@ -73,33 +71,33 @@ With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.x
    - Verifying the functionality of the logic that will go into the FPGA.
    - Retrieving the initial performance estimates of the accelerator and host application.
 
-  Note that the RTL kernel does not support software emulation. 
+    >**NOTE:** The RTL kernel does not support software emulation.
 
->**IMPORTANT:** You can add a C-model for software emulation to XRT-managed kernels as explained at [Adding C-Models to RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-C-Models-to-RTL-Kernels). However, this is not supported for user-managed kernels. 
+   >**IMPORTANT:** You can add a C-model for software emulation to XRT-managed kernels as explained at [Adding C-Models to RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-C-Models-to-RTL-Kernels). However, this is not supported for user-managed kernels.
 
-1. In the Assistant view, select the top-level system project `kernelTest_system` and click the **Build** command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration. 
+2. In the Assistant view, select the top-level system project `kernelTest_system` and click the **Build** command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration.
 
    The different elements of the Vitis application project are built: the processor code (`host.cpp`), the HW link project to link the RTL kernel (.xo) to the target platform, and the top-level system project to package the design.
 
     >**TIP**: Because the RTL kernel is imported as an `.xo` file, the kernel does not need to be compiled.  
 
-2. In the Assistant view, select the **Run** button, and select **Run Configurations**.
+3. In the Assistant view, select the **Run** button, and select **Run Configurations**.
 
-3. Select the `System Project Debug` configuration and click the **New launch configuration** command ![Launch Config](./images/icon-new-launch-config.png) to create a new configuration for the run. 
+4. Select the `System Project Debug` configuration and click the **New launch configuration** command ![Launch Config](./images/icon-new-launch-config.png) to create a new configuration for the run.
 
-   The `SystemDebugger_kernelTest_system` configuration is created. 
-   
+   The `SystemDebugger_kernelTest_system` configuration is created.
+
    The host program takes the `xclbin` file as an input argument, which you must provide in the Program Arguments list.
-   
-4. Select **Edit** next to `Program Arguments`. 
 
-   The Vitis IDE can automatically search and include the `xclbin` file when the **Automatically update arguments** is enabled. 
+5. Select **Edit** next to `Program Arguments`.
 
-5. Click **OK** to add the arguments. 
+   The Vitis IDE can automatically search and include the `xclbin` file when the **Automatically update arguments** is enabled.
 
-6. In the `Run Configurations` dialog box click **Apply** and then click **Run** to run the configuration, and then verify the results.
+6. Click **OK** to add the arguments.
 
-The Console window in the Vitis IDE displays **TEST PASSED**. You have built and run the application using your user-managed RTL kernel. 
+7. In the `Run Configurations` dialog box click **Apply** and then click **Run** to run the configuration, and then verify the results.
+
+The Console window in the Vitis IDE displays **TEST PASSED**. You have built and run the application using your user-managed RTL kernel.
 
 ### (Optional) Build and Run the Hardware on the Target Platform
 
@@ -117,11 +115,12 @@ There is a Makefile included in the `01-rtl_kernel_workflow/reference-files` fol
 ```
 
 The Makefile will:
-1. Build a Vivado project to package the RTL design IP, and package a user-managed kernel (`.xo`)
-2. Use the Vitis compiler (`v++`) to link the kernel to the target platform and generate the `.xlcbin' file
-3. Compile the XRT native API host application `./src/host/user-host.cpp`
-4. If necessary generate the emulation platform and setup the emulation environment
-5. Run the application and kernel
+
+1. Build an AMD Vivado™ project to package the RTL design IP, and package a user-managed kernel (`.xo`).
+2. Use the Vitis compiler (`v++`) to link the kernel to the target platform and generate the `.xlcbin` file.
+3. Compile the XRT native API host application `./src/host/user-host.cpp`.
+4. If necessary generate the emulation platform and setup the emulation environment.
+5. Run the application and kernel.
 
 >**TIP:** You can use the Makefile `-n` option to generate the command lines without running the commands: `make run TARGET=hw_emu HOST=user -n`
 

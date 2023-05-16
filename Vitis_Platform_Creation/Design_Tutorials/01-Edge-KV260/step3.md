@@ -9,14 +9,14 @@
 # Step 3: Test the Platform
 
 - [Step 3: Test the Platform](#step-3-test-the-platform)
-    - [Test 1: Read Platform Info](#test-1-read-platform-info)
-    - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
-    - [Congratulations](#congratulations)
-    - [Fast Track](#fast-track)
+  - [Test 1: Read Platform Info](#test-1-read-platform-info)
+  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+  - [Congratulations](#congratulations)
+  - [Fast Track](#fast-track)
 
-### Test 1: Read Platform Info
+## Test 1: Read Platform Info
 
-With Vitis environment setup, **platforminfo** tool can report XPFM platform information.
+With the Vitis environment setup, the **platforminfo** tool can report XPFM platform information.
 
 <details>
 
@@ -106,46 +106,43 @@ Supported Runtimes:
 
 </details>
 
-We can verify clock information and memory information are set as expected.
+You can verify clock information and memory information are set as expected.
 
 ### Test 2: Run Vector Addition Application
 
-Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface and interrupt setting in platform are working properly.
+Vector addition is the simplest acceleration PL kernel. Vitis can create this application automatically. Running this test can check the AXI control bus, memory interface, and interrupt setting in platform are working properly.
 
-1. Creating Vector Addition Application
+1. Create a Vector Addition Application.
 
-   - Go to WorkSpace, create a application directory by typing `mkdir kv260_vitis_application`, then go to the application directory by typing `cd kv260_vitis_application` in the console.
-   - launch Vitis by typing `vitis &` in the console.
+   - Go to workSpace, and create a application directory by typing `mkdir kv260_vitis_application`. Then, go to the application directory by typing `cd kv260_vitis_application` in the console.
+   - Launch Vitis by typing `vitis &` in the console.
    - Select **File -> New -> Application Project**.
-   - Click **Next**
+   - Click **Next**.
    - Select **kv260_custom** as platform, click **Next**.
    - Name the project **vadd**, click **Next**.
-   - Set Domain to **linux on psu_cortexa53**, 
-   - Set **Sys_root path** to ```<full_pathname_to_kv260_vitis_platform>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in step2).
+   - Set Domain to **linux on psu_cortexa53**.
+   - Set **Sys_root path** to ```<full_pathname_to_kv260_vitis_platform>/sysroots/cortexa72-cortexa53-xilinx-linux```(as you created by running **sdk.sh** in step 2).
    - Click **Next**.
-   - Select **Acceleration templates with PL and AIE accelerators -> Vector Addition** and click **Finish** to generate the application.
-   - In the Explorer window double click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
-   - build the project
-     - In the Explorer window double click **vadd_system_hw_link** to expand the directory hierarchy, then slect the **vadd_system_hw_link.prj** and click **Build** icon in toolbar.
-     - In the Explorer window double click **vadd_kernels** to expand the directory hierarchy, then slect the **vadd_kernels.prj** and click **Build** icon in toolbar.
-       - The output is `binary_container_1.xclbin` located in **vadd_system_hw_link/Hardware/** directory. This binary file is the acceleration binary container for XRT configuration and includes system.bit and metadata that describes the kernels
-     - In the Explorer window double click **vadd** to expand the directory hierarchy, then slect the **vadd.prj** and click **Build** icon in toolbar.
-       - The output is `vadd` located in **vadd/Hardware/** directory. This  file is Compiled host application.
+   - Select **Acceleration templates with PL and AIE accelerators -> Vector Addition**, and click **Finish** to generate the application.
+   - In the Explorer window, double-click the **vadd.prj** file to open it, change the **Active Build configuration** from **Emulation-SW** to **Hardware**.
+   - Build the project.
+     - In the Explorer window, double-click **vadd_system_hw_link** to expand the directory hierarchy, then slect the **vadd_system_hw_link.prj**, and click **Build** icon in toolbar.
+     - In the Explorer window, double-click **vadd_kernels** to expand the directory hierarchy, then select the **vadd_kernels.prj**, and click **Build** icon in toolbar.
+       - The output is `binary_container_1.xclbin` located in **vadd_system_hw_link/Hardware/** directory. This binary file is the acceleration binary container for XRT configuration and includes `system.bit` and metadata that describes the kernels.
+     - In the Explorer window, double-click **vadd** to expand the directory hierarchy, then slect the **vadd.prj**, and click **Build** icon in toolbar.
+       - The output is `vadd` located in **vadd/Hardware/** directory. This file is the compiled host application.
 
+    > **NOTE:** In this step, you skip adding the image and rootfs and only compile the host application and binary file. As a result, you have to build host application and hw_link component separately. Because the Vitis V++ tool can not complete the packaging without the rootfs, Image ,and Boot components.
 
-  > Note: In this step we skip adding the Image and rootfs and only compile the host application and binary file. As a result we have to build host application and hw_link component separately. Because Vitis V++ tool can not complete the packaging without the rootfs, Image and Boot components.
+    > **NOTE:** If you cannot see the **kv260_custom** platform we created, you can add it to platform list of New Project Wizard by selecting the add button, and point to **kv260_vitis_platform/kv260_custom** directory.
 
-  > Note: If you cannot see the **kv260_custom** platform we created, we can add it to platform list of New Project Wizard by selecting the add button and point to **kv260_vitis_platform/kv260_custom** directory.
+    > **NOTE** KV260 Platform does not support emulation.
 
-  > Note: KV260 Platform doesn't support emulation.
+2. Prepare the files to be transferred to the board.
 
-  
+   The AMD Kria™ SOM uses `xmutil` to load applications dynamically. The load process includes downloading binary file and loading device tree overlay. `xmutil` requires the application files to be stored in `/lib/firmware/xilinx` directory.
 
-2. Prepare the files to be transferred to the board
-
-   Kria SOM uses `xmutil` to load applications dynamically. The load process includes downloading binary file and loading device tree overlay. `xmutil` requires the application files to be stored in `/lib/firmware/xilinx` directory.
-
-   The files related to this application need to have specified extensions. They are `dtbo`, `bin` and `json`. Therefore the final content in the directory on the board would look like this.
+   The files related to this application need to have specified extensions. They are `dtbo`, `bin`, and `json`. Therefore, the final content in the directory on the board would look like the following.
 
    ```bash
    # On target board
@@ -155,7 +152,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
    shell.json                    #Description file
    ```
 
-   The `dtbo` file is prepared in step2 in `dtg_output` folder. `Binary_container_1.bin` can be renamed from `binary_container_1.xclbin`. For `shell.json`, you can copy it from other applications or create one with the following contents.
+   The `dtbo` file is prepared in step 2 in the `dtg_output` folder. `Binary_container_1.bin` can be renamed from `binary_container_1.xclbin`. For `shell.json`, you can copy it from other applications or create one with the following contents.
 
     ```json
     {
@@ -164,7 +161,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     }
     ```
 
-3. Transfer the files to the board
+3. Transfer the files to the board.
 
     Make sure the Ethernet cable of SOM Starter Kit is connected. Use SCP or SFTP to upload the files from host to target board.
 
@@ -172,7 +169,8 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     # Running on host machine
     scp pl.dtbo binary_container_1.bin shell.json vadd petalinux@<SOM Starter Kit IP>:/home/petalinux
     ```
-4. Load the hardware
+
+4. Load the hardware.
 
     ```bash
     # Running on target board
@@ -204,10 +202,9 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     vadd: loaded to slot 0
     ```
 
+5. Running vector addition application on the board.
 
-5. Running Vector Addition Application on the Board
-
-   - Run vadd application
+   - Run vadd application.
 
    ```bash
    chmod +x ./vadd
@@ -223,27 +220,23 @@ Vector addition is the simplest acceleration PL kernel. Vitis can create this ap
     TEST PASSED
    ```
 
-
-> Note: If you get errors like "error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
-or directory", it's because XRT is not installed in KV260 default rootfs. Please run `sudo dnf install xrt` to install XRT.
-
+> **NOTE:** If you get errors like "error while loading shared libraries: libxilinxopencl.so.2: cannot open shared object file: No such file
+or directory", it is because XRT is not installed in KV260 default rootfs. Run `sudo dnf install xrt` to install XRT.
 
 ### Congratulations
 
-We have completed creating a custom platform from scratch and verifying it with a simple vadd application.
+You have completed creating a custom platform from scratch and verifying it with a simple vadd application.
 
-Please feel free to check more tutorials in this repository.
+Feel free to check more tutorials in this repository.
 
 ### Fast Track
 
 If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>` in [ref_files](./ref_files) directory to generate the reference design and compare with your design. COMMON_IMAGE_ZYNQMP is a flag to specify the common image path. Please download common image from [Xilinx website download page](https://www.xilinx.com/support/download.html) and give the path to the flag.
 
-
 The command line flow has slight differences comparing to Vitis IDE flow.
-- The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd.xclbin`.
 
+- The vector addition application is called `vadd` and `binary_container_1.xclbin` in Vitis IDE flow. The generated files in command line flow are called `simple_vadd` and `krnl_vadd.xclbin`.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-

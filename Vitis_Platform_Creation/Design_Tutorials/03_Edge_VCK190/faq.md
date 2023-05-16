@@ -10,35 +10,34 @@
 
 ### Why can't my platform boot on hardware?
 
-The Versal platform has various boot stages. We need to isolate the failing stage to find more details of trouble shooting.
+The AMD Versal™ adaptive SoC platform has various boot stages. You need to isolate the failing stage to find more details of trouble shooting.
 
-- For ***Xilinx Versal Platform Loader and Manager*** stage issues, it loads PDI file and initialize each components. Please check the Vivado settings if this step halts or report errors.
-- If the boot hangs at U-boot stage, please check the device tree configuration. If SD card circuit doesn't support high speed, please add no-1-8-v for SD controller node. U-boot will look for boot.scr and system.dtb on the fat32 partition of SD card if it's in SD boot mode. Please make sure these two files are available.
+- For ***Xilinx Versal Platform Loader and Manager*** stage issues, it loads PDI file and initialize each components. Check the the AMD Vivado™ Design Sutie settings if this step halts or report errors.
+- If the boot hangs at the U-boot stage, check the device tree configuration. If SD card circuit does not support high-speed, add no-1-8-v for the SD controller node. U-boot will look for `boot.scr` and `system.dtb` on the fat32 partition of SD card if it is in the SD boot mode. Make sure these two files are available.
 
 ### Why can't my platform boot on hardware emulation?
 
-Please make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.
+Make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.
 
 ### Why can't my platform support hardware emulation?
 
-Please select hardware emulation when you export the XSA file.
+Select hardware emulation when you export the XSA file.
 
-### PLM IPI issue
+### PLM IPI Issue
 
-If you encounter PLM IPI issue please check whether you add any peripheral which are not enabled in CPIS PS side.
+If you encounter a PLM IPI issue, check whether you add any peripherals which are not enabled in the CPIS PS side.
 
 ### When is the AIE app and PL kernel being programmed?
 
-Since the platform we create is not a DFX platform, PL kernels are implemented and packaged with platform all the times. They are included in BOOT.BIN. They are downloaded to hardware during boot time.
+Because the platform you create is not a DFX platform, PL kernels are implemented and packaged with platform all the times. They are included in `BOOT.BIN`. They are downloaded to hardware during boot time.
 
-When host application is launched, it reads the kernel metadata from xclbin file to understand the kernel topology and parameters. This step won't configure PL bit stream.
+When the host application is launched, it reads the kernel metadata from xclbin file to understand the kernel topology and parameters. This step will not configure PL bitstream.
 
 AI Engine has two run methods: configure during boot or load graph in host application.
 
+### Why does my AIE system application hang?
 
-### Why my AIE system application hangs?
-
-If you test the platform with PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the **sd_card.img** in **package_aie_debug** directory rather than **package** directory. The application in package directory is used for debugging. It will stop after loading and wait for debugger to connect to it. 
+If you test the platform with the PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the **sd_card.img** in **package_aie_debug** directory rather than **package** directory. The application in the package directory is used for debugging. It will stop after loading and wait for debugger to connect to it.
 
 ```
 [   52.262013] [drm] Pid 715 opened device
@@ -85,12 +84,8 @@ Loading: 'binary_container_1.xclbin'
 [   66.983019] [drm] addr 0xa4010000, status 0x1
 [   66.987375] [drm] bitstream fbc72c83-5ab0-43f2-97aa-60c7672e835a unlocked, ref=0
 [   66.991728] [drm] Pid 715 closed device
-
 ```
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-
