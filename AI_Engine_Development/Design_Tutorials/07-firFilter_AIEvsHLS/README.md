@@ -254,12 +254,12 @@ The AI Engine can reduce the overall requirement on the PL and DSPs in a design 
 
 | Impl | Filters | Taps | Param        | Throughput    | LUTS  | Flops | DSP   | AIE   |
 |------|---------|------|--------------|---------------|-------|-------|-------|-------|
-| AIE  |     1   |   64 | win=256      | 329.969  MSPS |   192 |   568 |     0 |     1 |
-| HLS  |     1   |   64 | ck_per_sam=1 | 497.41   MSPS |  5685 |  1801 |    64 |     0 |
+| AIE  |     1   |   64 | win=256      | 329.969  MSPS |   191 |   568 |     0 |     1 |
+| HLS  |     1   |   64 | ck_per_sam=1 | 497.41   MSPS |  5700 |  1794 |    64 |     0 |
 | AIE  |    10   |   64 | win=256      | 329.635  MSPS |   190 |   568 |     0 |    10 |
-| HLS  |    10   |   64 | ck_per_sam=1 | 477.772  MSPS | 17102 | 45876 |   640 |     0 |
+| HLS  |    10   |   64 | ck_per_sam=1 | 477.772  MSPS | 17089 | 45820 |   640 |     0 |
 | AIE  |     1   |  240 | win=256      | 134.48   MSPS |   191 |   568 |     0 |     1 |
-| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  2343 |  7345 |    60 |     0 |
+| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  2357 |  7360 |    60 |     0 |
 | AIE  |    10   |  240 | win=256      | 134.25   MSPS |   190 |   568 |     0 |    10 |
 | HLS  |    10   |  240 | ck_per_sam=4 | 123.48   MSPS | 16687 | 62212 |   600 |     0 |
 
@@ -335,11 +335,16 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 
 ![Image of 129 Tap FIR filter metrics - Power vs Casc Length](images/FIR_129Taps_Power_v_CascLen.png)
 
+
+
 | CASCADE LENGTH |  Performance(MSPS/W)  |
 |----------------|-----------------------|
 |      1         |     280.3355          |
 |      2         |     364.2341          |
 |      4         |      387.054          |
+
+
+
 
 ![Image of 129 Tap FIR filter metrics - Computational Efficiency vs Casc Length](images/FIR_129Taps_ComputationalEfficiency_v_CascLen.png)
 
@@ -412,13 +417,13 @@ The utilization and power observations are shown in the following table.
 #### HLS
 |Filters|Taps| LUTs  | FF (Regs) | DSPs | Dynamic Power | Performance (MSPS/Watt) |
 |-------|----|-------|-----------|------|---------------|-------------------------|
-|     1 | 15 |  1174 |    2492   |  16  |     150 mW    |         3324.593        |
-|     1 | 64 |  5685 |    1801   |  64  |     392 mW    |         1268.903        |
-|     1 |129 |  1807 |    4861   |  34  |     318 mW    |         392.72          |
-|     1 |240 |  2343 |    7345   |  60  |     474 mW    |         263.38          |
-|    10 | 15 |  4745 |   13616   | 160  |    1088 mW    |         450.15          |
-|    10 | 64 | 17102 |   45876   | 640  |    3398 mW    |         140.60          |
-|    10 |129 | 10976 |   37196   | 340  |    2205 mW    |          56.19          |
+|     1 | 15 |  1157 |    2501   |  16  |     150 mW    |         3324.593        |
+|     1 | 64 |  5700 |    1794   |  64  |     392 mW    |         1268.903        |
+|     1 |129 |  1806 |    4862   |  34  |     318 mW    |         392.72          |
+|     1 |240 |  2357 |    7360   |  60  |     474 mW    |         263.38          |
+|    10 | 15 |  4700 |   13600   | 160  |    1088 mW    |         450.15          |
+|    10 | 64 | 17089 |   45820   | 640  |    3398 mW    |         140.60          |
+|    10 |129 | 10959 |   37174   | 340  |    2205 mW    |          56.19          |
 |    10 |240 | 16687 |   62212   | 600  |    4328 mW    |         28.5305         |
 
 #### Power from XPE vs HW
@@ -426,14 +431,14 @@ The utilization and power observations are shown in the following table.
 **AIE**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      2.834     |    2.9899     |
-|    10 |240 |      2.844     |    3.1599     |
+|    10 | 64 |      2.834     |    2.93307    |
+|    10 |240 |      2.844     |    3.30939    |
 
 **HLS**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      4.559     |    3.728      |
-|    10 |240 |      5.73      |  4.82165      |
+|    10 | 64 |      4.559     |    3.6611     |
+|    10 |240 |      5.73      |   4.64931     |
 
 </details>
 
@@ -453,6 +458,7 @@ After the application has been run, three files will be created:
 Transfer the .csv and _summary files back to the run_dir directory, for example:
 ```
 scp -r *.csv *_summary <user>@10.10.71.101:<path>
+
 ```
 Then view the summary file with `vitis_analyzer xrt.run_summary` command and select `Timeline Trace`:
 
@@ -482,6 +488,8 @@ To measure latency, the measurement is made from the start of the write (datamov
 	Latency (scaled to 300MHz) = (2.010 * (156.25/300)) us
 				   = 1.0468 us
 
+
+
 ```
 
 A trace of the AI Engine implementation with N_FIR_FILTERS=1 and N_FIR_TAPS=64 of TARGET=hw_emu is shown in the following figure:
@@ -496,6 +504,7 @@ To measure throughput, the cursors are lined up with the start and end of the re
 	Throughput = (Input Sample * Iterations) /(Processing time)
           	   = (2048 x 8 ) / 49.6533 us
      	           = 329.967 Msamples / sec
+
 ```
 ## Latency calculation of 64 Taps, 1 Filter is below.
 
