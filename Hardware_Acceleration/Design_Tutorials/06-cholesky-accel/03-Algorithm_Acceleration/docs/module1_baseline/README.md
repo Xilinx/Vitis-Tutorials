@@ -86,22 +86,22 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 
 Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
 
+In the 2023.1 release the `vitis_analyzer` command opens the Analysis view of the new Vitis Unified IDE and loads the specified summary files as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
 
    1. Open a terminal and setup Vitis
-   2. Run: <code>vitis_analyzer &</code>
-   3. File menu -> Open Summary...
-   4. Browse to <code>./build</code>
-   5. Select cholesky_kernel_hw_emu_xclbin_<b>run</b>_summary (prefixed with the blue "play" pictogram)
-   6. Navigate around by yourself watch this 45 seconds [looping gif](../images/analyzer_anim.gif) to see how to go around in Vitis Analyzer.
+   2. Change directory to <code>./build</code> 
+   3. Run: <code>vitis_analyzer xrt.run_summary</code>
+   4. Navigate around in Vitis Analyzer.
 
       Make sure to check:
       1. Profile summary
       2. Guidance reports - indicates area of improvement
-      3. Application timeline - more information just below
+      3. Timeline Trace- more information just below
 
-The application timeline has the following structure:
+The Timeline has the following structure:
 
 * *Host*
 
@@ -145,7 +145,7 @@ The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "
    4. Vitis HLS now shows the high-level synthesis report
    5. In the GUI expand the **Synthesis Summary Report** window
    6. Expand the loops and function in the **Performance & Resources** section
-   7. Right click on the **II violation** as shown in this clip to locate it in the code: [**50s HLS looping GIF**](../images/HLS_anim.gif)
+   7. Right click on the **II violation** and select **Goto Source**
 
    Note: you can restore the original Vitis HLS window layout via the "Window" menu -> "Reset Perspective".
 
@@ -154,8 +154,6 @@ The C++ kernels destined implemented onto the device LUTs and flops (a.k.a the "
    We see an II violation of 8 for two loops in this function.
    One of them looks like this:
    ```cpp
-   // Loop only takes one element every 8 clock cycles!!!
-   // We expected one every cycle (II of 1)
    for (int k = 0; k < j; k++)
    {
        tmp += dataA[j][k] * dataA[j][k];
@@ -199,32 +197,6 @@ Notice that:
 <code> N(18N+N(18N+residual1)+residual2) = 18N<sup>3</sup> + (18+residual1)N<sup>2</sup> + residual2.N </code>
 
 So essentially the algorithm latency goes by the cube of N, the size of the matrix.
-
-#### Adding a C++ testbench for the kernel
-
-For this tutorial we provide a pre-made C++ "main" program to wrap around the kernel and simulate in the Vitis HLS environment.
-
-**Instructions:**
-1. In a terminal, from the <code>docs</code> directory:
-
-       cp -r ./hls_tb ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel
-       cp ./module1_baseline/src/cholesky_kernel.hpp ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel/hls_tb
-       
-2. If the Vitis HLS GUI was closed, open it again:
-
-       cd ./module1_baseline/build/cholesky_kernel_hw_emu/cholesky_kernel
-       vitis_hls -p cholesky_kernel &
-       
-3. In the "Explorer" window left pane of the GUI, locate "Test Bench" under "Source".
-   Right-click -> "Add file...", select test_hls.cpp.
-   Repeat this operation for the two data files: matrix_input.dat and golden_result.dat in ./hls_tb/tb_data
-4. Now select "Project"-> "Run C simulation" in main menu.
-   This runs a purely functional simulation called "Csim", none of what HLS synthesizes is involved.
-5. Select "Project"-> "Run C simulation"
-6. Select "Solution" -> "Run C Synthesis" -> "Active Solution"
-7. Run "Solution" -> "Run C/RTL Cosimulation".  In the popup window select Okay.
-
-The Vitis HLS Cosimulation runs a cycle accurate RTL simulation which shows the actual latency in clock cycles.  In the test bench the matrix is a 16x16.
 
 </details>
 

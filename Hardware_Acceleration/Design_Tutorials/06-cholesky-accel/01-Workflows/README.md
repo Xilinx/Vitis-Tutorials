@@ -19,7 +19,7 @@ The API calls, processed by Xilinx runtime (XRT), manage process transactions be
 In a typical application, the host first transfers data to be operated on by the kernel from host memory into global memory. The kernel subsequently operates on the data, storing results back to the global memory. Upon kernel completion, the host transfers the results back into the host memory. Data transfers between the host and global memory introduce latency, which can be costly to the overall application. To achieve acceleration in a real system, the benefits achieved by the hardware acceleration kernels must outweigh the added latency of these data transfers.
 
 In the Vitis™ core development flow helps manage, configure, build and run a host application and hardware accelerated kernels.
-- The host application is developed in C/C++ with OpenCL™ API calls
+- The host application is developed in C/C++ with native XRT API or OpenCL™ API calls
 - The hardware kernels can be developed in C/C++, OpenCL C, or RTL.
 
 Here is a diagram of the functional blocks involved for a x86 server connected to an Alveo acceleration card:

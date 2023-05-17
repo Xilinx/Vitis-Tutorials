@@ -8,7 +8,7 @@
 
 # Host Code Optimization
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Introduction
 
@@ -22,7 +22,6 @@ This tutorial concentrates on performance tuning of the host code associated wit
 ## Tutorial Overview
 
 In this tutorial, you operate on a simple, single, generic C++ kernel implementation. This allows you to eliminate any aspects of the kernel code modifications, topological optimizations, and implementation choices from the analysis of host code implementations.
->**NOTE:** The host code optimization techniques shown in this tutorial are limited to aspects for optimizing the accelerator integration. Additional common techniques, which allow for the usage of multiple CPU cores or memory management on the host code, are not part of this discussion. For more information, refer to [Profiling, Optimizing, and Debugging the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 The following sections focus on the following specific host code optimization concerns:
 
@@ -35,12 +34,10 @@ The following sections focus on the following specific host code optimization co
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2022.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.  
+* 2023.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.  
 If necessary, it can be easily ported to other versions and platforms.
 
->**IMPORTANT:**  
->
-> * Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>**IMPORTANT:** Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
@@ -182,10 +179,12 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    After the run completes, open the Application Timeline using the Vitis analyzer, then select the Application Timeline located in left side panel.
 
    ```
-   vitis_analyzer runPipeline/pass.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin.run_summary
+   vitis_analyzer pipeline/xrt.run_summary
    ```
 
-   The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
+ >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+
+  The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
 
    * OpenCL API Calls
    * Data Transfer
@@ -214,7 +213,7 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
 
    ```
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=pipeline
-   vitis_analyzer pipeline/pass.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin.run_summary
+   vitis_analyzer pipeline/xrt.run_summary
    ```
 
    If you zoom in on the Application Timeline, and click any kernel enqueue, you should see results similar to the following figure.
@@ -272,7 +271,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
 
    ```
-   vitis_analyzer sync/pass.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin.run_summary
+   vitis_analyzer sync/xrt.run_summary
    ```
    
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
@@ -303,7 +302,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 
    ```
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=sync
-   vitis_analyzer sync/pass.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin.run_summary
+   vitis_analyzer sync/xrt.run_summary
    ```
 
    If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
@@ -355,7 +354,7 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
 3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
 
    ```
-   vitis_analyzer buf/pass.hw.xilinx_u200_gen3x16_xdma_2_202110_1.xclbin.run_summary
+   vitis_analyzer buf/xrt.run_summary
    ```
     Examine the tmeline to review the operation. 
 
@@ -390,7 +389,7 @@ In general, there are many ways to implement your host code and improve performa
 
 ## Next Steps
 
-For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling, Optimizing, and Debugging the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-the-Application) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

@@ -1,3 +1,8 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
+
 #include <ap_int.h>
 #include <hls_stream.h>
 #include <assert.h>

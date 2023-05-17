@@ -9,7 +9,7 @@
 
 ### Vitis Hardware Acceleration on Cholesky Algorithm
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 This tutorial is divided in 3 sections.
 

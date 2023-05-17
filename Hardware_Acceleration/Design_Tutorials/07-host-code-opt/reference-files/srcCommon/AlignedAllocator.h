@@ -1,3 +1,8 @@
+/*
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+*/
+
 #ifndef __ALIGNEDALLOCATOR_H__
 #define __ALIGNEDALLOCATOR_H__
 
