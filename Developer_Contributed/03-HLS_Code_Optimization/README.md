@@ -56,20 +56,20 @@ Author: Daniele Bagni, Xilinx Inc
 
 ## Introduction
 
-This tutorial explains how to properly optimize C/C++ code, suitable for DSP designs and algorithms, in order to get the maximum performance in term of **lowest latency with maximum throughput** with the Vitis HLS design flow.
+This tutorial explains how to properly optimize C/C++ code suitable for DSP designs and algorithms to get the maximum performance in terms of **lowest latency with maximum throughput** with the AMD  Vitis HLS&trade; design flow.
 
-You will also see how to create an embedded system running on either [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) or [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) embedded boards which includes one of the IP cores (acknowledged as "kernel") designed with Vitis HLS, by applying the so called [Vitis Acceleration Flow](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0088-vitis-acceleration.html) with either makefile- or GUI-based flow.
+You will also see how to create an embedded system running on either [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) or [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) embedded board, which includes one of the IP cores (acknowledged as "kernel") designed with Vitis HLS, by applying the so called [Vitis Acceleration Flow](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0088-vitis-acceleration.html) with either makefile- or GUI-based flow.
 
 Within a "simplified" HLS terminology:
 
-- **latency** is the amount of clock cycles estimated by the Vitis HLS scheduler among the first input and the last output of a certain function,
-- **Initialization_Interval** (shortly **II**) is the amount of clock cycles between two events (either two subsequent calls to the same function or two following iterations in the same loop) and it is intimately related to the **throughput**, which is given by **Estimated_Clock_Frequency/Initialization_Interval**
+- **Latency** is the amount of clock cycles estimated by the Vitis HLS scheduler among the first input and the last output of a certain function.
+- **Initialization_Interval** (shortly **II**) is the amount of clock cycles between two events (either two subsequent calls to the same function or two following iterations in the same loop) and it is intimately related to the **throughput**, which is given by **Estimated_Clock_Frequency/Initialization_Interval**.
 
-In some cases, the maximum performance can be obtained just with Vitis HLS compiler directives without touching the code, in other cases this can require also some code change to "help" the compiler doing a better job. There is not a single solution that fits for all the possible applications, each application is a world in itself, but the examples here illustrated cover a large variety of cases seen in a lot of years of activity all around the world, as the most representative to illustrate "good" coding style for HLS.
+In some cases, the maximum performance can be obtained just with Vitis HLS compiler directives without touching the code. In other cases, this might also require some code change to "help" the compiler do a better job. There is not a single solution that fits for all possible applications as each application is a world in itself. But the examples illustrated here cover a large variety of cases seen in recent years across the globe, as the most representative to illustrate "good" coding style for HLS.
 
-In the following of this document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it into a certain working directory ``${WRK_DIR}`` (for example, in my case: ``export WRK_DIR=/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed``).
+In the following document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it in a certain working directory ``${WRK_DIR}`` (for example, in this case, ``export WRK_DIR=/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed``).
 
-Here is illustrated the organization of the folders tree of this tutorial:
+The organization of the folders tree of this tutorial is illustrated here:
 
 ```
 ${WRK_DIR}
@@ -101,7 +101,7 @@ ${WRK_DIR}
 ```
 
 The shell script named [run_all.sh](files/run_all.sh) contains the commands to launch the Vitis HLS flow on all the applications placed in the [examples](files/examples) folder.
-Once you have properly setup the environment, according to what described in the next section, you can run that script with the command:
+Once you have setup the environment properly, according to what is described in the next section, you can run the script with the command:
 
 ```shell
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
@@ -111,30 +111,30 @@ source ./run_all.sh
 
 Note that the Vitis HLS flow adopted in this tutorial is composed of three major steps:
 
-- functional C Simulation (known as **csim** in HLS terminology),
-- Synthesis from C/C++ to RTL (known as **syn**),
-- cycle accurate C/RTL Simulation (known as **sim**).
+- Functional C Simulation (known as **csim** in HLS terminology)
+- Synthesis from C/C++ to RTL (known as **syn**)
+- Cycle accurate C/RTL Simulation (known as **sim**)
 
-The fourth step, named Implementation (known as **imp**) will be applied transparently by the Vitis Acceleration flow described in section [10 Two Examples with Vitis Acceleration Flow Running on HW](#10-two-examples-with-vitis-acceleration-flow-running-on-hw), by applying either makefile-based flow or Vitis GUI-based flow.
+The fourth step, known as Implementation (known as **imp**), is applied transparently by the Vitis Acceleration flow as described in section [10 Two Examples with Vitis Acceleration Flow Running on HW](#10-two-examples-with-vitis-acceleration-flow-running-on-hw), by applying either makefile-based flow or Vitis GUI-based flow.
 
 ### Warnings
 
 1. Everything shown in this project used an Ubuntu 18.04 Desktop with related Vitis 2023.1 release (with or without updates).
 
-2. It is recommended to write the SD-card that boots the VCK190 board with the Windows OS utility called [Win32 Disk Imager 1.0](https://sourceforge.net/projects/win32diskimager/).
+2. It is recommended to write the SD card that boots the VCK190 board with the Windows OS utility called [Win32 Disk Imager 1.0](https://sourceforge.net/projects/win32diskimager/).
 
-3. Some figures are screenshots related to earlier release of Vitis and there might be few differences, although very minimal, with the current one.
+3. Some figures are screenshots related to the earlier release of Vitis and there might be a few differences, although minimal, with the current one.
 
-4. It is recommended that you set correctly the environment before running any script, as described in details in next subsection. The ``*_sample_env_seytup.sh`` [scripts](files/scripts) contain a template to be adapted by the user, based on the AMD/Xilinx desktop settings adopted in developing this tutorial.  
+4. It is recommended that you set up the environment correctly before running any script, as described in details in the next subsection. The ``*_sample_env_seytup.sh`` [scripts](files/scripts) contain a template to be adopted by the user, based on the AMD/Xilinx desktop settings adopted to develop this tutorial.  
 
 5. The [run_all.sh](files/run_all.sh) must always be launched **only after** all the variables of previous script have been set at least once, and **only from** the [files](files) folder, which has to be your current directory.
 
-6. Read carefully and entirely this README.md document before launching any script or Makefile.
+6. Read the entire README.md document carefully before launching any script or Makefile.
 
 ### Dos-to-Unix Conversion
 
-In case you might get some strange errors during the execution of the scripts, you have to pre-process -just once- all the``*.sh``, ``*.cpp``, ``*.h`` files with the [dos2unix](http://archive.ubuntu.com/ubuntu/pool/universe/d/dos2unix/dos2unix_6.0.4.orig.tar.gz) utility.
-In that case run the following commands from your Ubuntu host PC:
+In case you experience some unexpected errors during the execution of the scripts, once pre-process all the``*.sh``, ``*.cpp``, ``*.h`` files with the [dos2unix](http://archive.ubuntu.com/ubuntu/pool/universe/d/dos2unix/dos2unix_6.0.4.orig.tar.gz) utility.
+In that case, run the following commands from your Ubuntu host PC:
 
 ```bash
 #sudo apt-get install dos2unix
@@ -153,19 +153,19 @@ for file in $(find . -name "*akefile" ); do dos2unix ${file}; done
 
 You need the following archives, in particular:
 
-- from [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area take the **2023.1 Vitis Installer** (it makes the Vitis install process much easier) and the **2023.1 Vitis Update**;
+- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2023.1 Vitis Installer** (it makes the Vitis install process easy) and the **2023.1 Vitis Update**.
 
-- from [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) are take the **Common Images for Embedded Vitis Platforms 2023.1**;
+- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2023.1**.
 
-- from [Petalinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area take the **2023.1 Petalinux Tools Installer**;
+- From [Petalinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2023.1 Petalinux Tools Installer**.
 
-- go to the bottom of [Petalinux 2023.1 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.1_PetaLinux_Package_List.xlsx** file which contains all the packages needed by Petalinux into your Ubuntu OS computer (you have to install all of them before installing Petalinux);
+- Go to the bottom of [Petalinux 2023.1 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.1_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
 
-- go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials);
+- Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials).
 
-- go to the [Alveo Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.1 and Ubuntu 18.04 OS and then  take the **Xilinx Run Time (XRT)** archive;
+- Go to the [Alveo Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.1 and Ubuntu 18.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
 
-At the end you should have the following files:
+At the end, you should have the following files:
 
 ```text
 Xilinx_Unified_2023.1_*_Lin64.bin
@@ -176,17 +176,17 @@ Vitis-Tutorials-2023.1.zip
 xrt_202310.*_18.04-amd64-xrt.deb
 ```
 
-First, install the basic version of Vitis 2023.1 via its installer ``Xilinx_Unified_2023.1_*_Lin64.bin``, then its update ``Xilinx_Vivado_Vitis_Update_2023.1_*.tar.gz``.
-Everything must be placed in the  ``/tools/Xilinx/`` folder.
+First, install the basic version of Vitis 2023.1 via its installer ``Xilinx_Unified_2023.1_*_Lin64.bin``, and then its update ``Xilinx_Vivado_Vitis_Update_2023.1_*.tar.gz``.
+Everything is placed in the  ``/tools/Xilinx/`` folder.
 
 ### 0.2 Sudo or not Sudo?
 
-You **might** need ``sudo`` privilege to install the tools on these folders, primarily ``/tools`` and ``/opt``, unless you do not change accordingly the ownership and group of those folders.
+You **might** need ``sudo`` privilege to install the tools on these folders, primarily ``/tools`` and ``/opt``, unless you change the ownership and group of those folders accordingly.
 
-In fact, if you created the ``/tools`` directory as super-user (or ``root``, or with ``sudo``), whatever you wish to write/install there can be done only by the ``root`` super-user.
-This is basic Linux OS behavior. But nobody prevents you to change the group and owner so that you -as normal user – can do what you like there too, as if you were in your ``$HOME`` directory.
+In fact, if you created the ``/tools`` directory as a super-user (or ``root``, or with ``sudo``), whatever you wish to write/install there can only be done by the ``root`` super-user.
+This is a basic Linux OS behavior. However, you can change the group and owner so that you can do what you like as a normal user, the way you do it in your ``$HOME`` directory.
 
-So, if you run the following commands (and you must need ``sudo``):
+So, if you run the following commands (and you  need ``sudo``):
 
 ```shell
 sudo su
@@ -200,13 +200,12 @@ chgrp  -R you_user_name  /opt
 exit
 ```
 
-then you can install all the above tools and archives without ``sudo`` privilege, just as a normal user.
+then you can install  the above tools and archives without ``sudo`` privilege, just as a normal user.
 This means installation with user rights works as well: some people in some forums mentioned that this is not possible, but perhaps they do not know these Linux OS concepts.
 
-As a last crosscheck, if you installed the tools as normal user, you will see the hidden folder ``.Xilinx`` inside your ``$HOME`` directory, otherwise if you installed them as super-user, you should see
-the hidden folder ``.Xilinx`` inside your ``/root`` directory.
+As a last cross-check, if you installed the tools as normal user, you should see the hidden folder ``.Xilinx`` inside your ``$HOME`` directory. If you installed them as a super-user, you should see the hidden folder ``.Xilinx`` inside your ``/root`` directory.
 
-In case of install done with the ``sudo`` privilege, there seems to be only a small issue with one line in the ``installLibs.sh`` script:
+In case of installation done with the ``sudo`` privilege, there seems to be only a small issue with one line in the ``installLibs.sh`` script:
 
 ```shell
 su - $user -c "touch $logFile; chmod 777 $logFile"
