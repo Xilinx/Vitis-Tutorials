@@ -7,9 +7,9 @@
  </tr>
 </table>
 
-# Buffer Based AI Engine Kernels with Mixed Data Types
+# Buffer-based AI Engine Kernels with Mixed Data Types
 
-This example is similar to the previous [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engine Simulator](#Prepare-Data-for-AI-Engine-Simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#PS-Application-and-HW-Emulation-Flows).
+This example is similar to the previous [Buffer-based AI Engine Kernels](./buffer_based_aie_kernel.md) example, except that one AI Engine kernel has floating point interfaces and one AI Engine kernel has `cint16` interfaces. It will focus on the difference with the previous example. One difference is that because the input and output data are in integer format for the AI Engine simulator, it has to convert data between `float`/`cint16` and integer data types. See [Prepare Data for AI Engine Simulator](#prepare-data-for-ai-engine-simulator). Another difference is that the PS code has to take care of the input and output data types. See [PS Application and HW Emulation Flows](#ps-application-and-hw-emulation-flows).
 
 The following topics are already covered in [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md).
 
@@ -18,20 +18,23 @@ The following topics are already covered in [Buffer Based AI Engine Kernels](./b
 * [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
 * [Example PS code for Packet Switching](./buffer_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
 
-### Prepare Data for AI Engine Simulator
+## Prepare Data for AI Engine Simulator
 
-Change the working directory to `buffer_aie_mix_int32_float_cint16`. The graph code for this example is the same as the [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces. 
+Change the working directory to `buffer_aie_mix_int32_float_cint16`. The graph code for this example is the same as the [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md) example. The AI Engine kernel `core[2]` (`aie/aie_core3.cpp`) has floating point interfaces, and the AI Engine kernel `core[3]` (`aie/aie_core4.cpp`) has `cint16` interfaces.
 
-When preparing the data for the AI Engnine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown in the following code.
+When preparing the data for the AI Engine simulator, all values should be in 32-bit integer format. The conversion is similar to the `reinterpret_cast` operation in C++. It is done manually in any language. For example, when you want to feed float data `1.0f`, `2.0f`,..., into the AI Engine kernel, the integer format can be generated in C as shown in the following code.
 
+```cpp
     //input data for float
     for(int i=0;i<16;i++){
       float tmp=i;
       printf("%d\n",*(int*)&tmp);
     }
+```
 
 Then the data in the input file (`data/input.txt`) for float, `1.0f`,`2.0f`,...,`16.0f`, should be as follows.
 
+```
     0
     1065353216
     1073741824
@@ -48,9 +51,11 @@ Then the data in the input file (`data/input.txt`) for float, `1.0f`,`2.0f`,...,
     1095761920
     1096810496
     1097859072
+```
 
 Similarly, type `cint16` should be converted to integer type. For example, for `cint16` data, {0,0},{4,4},{8,8},..., the integer format can be generated in C as shown in the following code.
 
+```cpp
     //input data for cint16
     for(int i=0;i<16;i++){
       int tmp=i*4;
@@ -58,9 +63,11 @@ Similarly, type `cint16` should be converted to integer type. For example, for `
       tmp+=i*4;
       printf("%d\n",tmp);
     }
+```
 
 Then the data in the input file (`data/input.txt`) for `cint16` data, {0,0},{4,4},{8,8},...,{60,60}, should be as follows.
 
+```
     0
     262148
     524296
@@ -77,18 +84,23 @@ Then the data in the input file (`data/input.txt`) for `cint16` data, {0,0},{4,4
     3407924
     3670072
     3932220
+```
 
-Take a look at the input file `data/input.txt` to see how input data is organized. 
+Take a look at the input file `data/input.txt` to see how input data is organized.
 
-Run the following make command to run the AI Engine compiler and simulator.
+Run the following `make` command to run the AI Engine compiler and simulator.
 
-    make aiesim
-    
+```
+make aiesim
+```
+
 The output data is in `aiesimulator_output/data/output.txt`. Similarly, the output data can be converted from integer to `float` or `cint16` to be human-readable.
 
 ### PS Application and HW Emulation Flows
+
 The difference in the PS application from [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md) is that the input buffers and output buffers for different data types should be modified accordingly. Take a look at the code in `sw/host.cpp`. Note how `float` and complex type (for `cint16`) is used in the code.
 
+```cpp
     // output memory
     xrtBufferHandle out_bo3 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
     xrtBufferHandle out_bo4 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
@@ -100,41 +112,53 @@ The difference in the PS application from [Buffer Based AI Engine Kernels](./buf
     xrtBufferHandle in_bo4 = xrtBOAlloc(dhdl, mem_size, 0, /*BANK=*/0);
     float *host_in3 = (float*)xrtBOMap(in_bo3);
     std::complex<short> *host_in4 = (std::complex<short>*)xrtBOMap(in_bo4);
+```
 
-Correspondingly, the pre-processing and post-processing of this data has been changed. 
+Correspondingly, the pre-processing and post-processing of this data has been changed.
 
-Run HW emulation with the following make command (it builds the HW system and host application).
+1. Run HW emulation with the following ``make` command to build the HW system and host application.
 
-    make run_hw_emu
-    
-Hint: If the keyboard is accidentally hit and stops the system booting automatically, type boot at the **Versal>** prompt to resume the system booting.
+   ```
+   make run_hw_emu
+   ```
 
-After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
+   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the ``Versal>`` prompt to resume the system booting.
 
+2. After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
+
+   ```bash
     mount /dev/mmcblk0p1 /mnt
     cd /mnt
     export XILINX_XRT=/usr
     export XCL_EMULATION_MODE=hw_emu
     ./host.exe a.xclbin
-    
-To exit QEMU press Ctrl+A, x
+    ```
 
-To run in hardware, first build the system and application using the following make command.
+    To exit QEMU press Ctrl+A, x.
 
-    make package TARGET=hw
-    
-After Linux has booted, run the following commands at the Linux prompt.
+3. To run in hardware, first build the system and application using the following `make` command.
 
+   ```
+   make package TARGET=hw
+   ```
+
+4. After Linux has booted, run the following commands at the Linux prompt.
+
+   ```bash
     mount /dev/mmcblk0p1 /mnt
     cd /mnt
     export XILINX_XRT=/usr
     ./host.exe a.xclbin
-    
+    ```
+
 The host code is self-checking. It will check the correctness of output data. If the output data is correct, after the run has completed, it will print:
 
+```
     TEST PASSED
+```
 
-### Conclusion
+## Conclusion
+
 In this step, you learned about the following concepts.
 
 * Preparing `float` and `cint16` data types for the AI Engine simulator.
@@ -142,11 +166,9 @@ In this step, you learned about the following concepts.
 
 Next, review [Packet Stream Based AI Engine Kernels](./pktstream_based_aie_kernel.md).
 
+### Support
 
-#### Support
-
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

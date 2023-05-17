@@ -15,18 +15,18 @@
 
 This tutorial is designed to demonstrate how the runtime parameters (RTP) can be changed during execution to modify the behavior of AI Engine kernels. Both scalar and array parameters are supported.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2023.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using Vitis tools.
 
 Before starting this tutorial, run the following steps:
 
-1. Goto the directory where you have unzipped the Versal Common Image package
-2. In a Bash shell run the /**Common Images Dir**/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you **must** run the /**Common Images Dir**/xilinx-versal-common-v2023.1/sdk.sh.
-3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /**Common Images Dir**/xilinx-versal-common-v2023.1 directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/base_platforms.
+1. Go to the directory where you have unzipped the Versal Common Image package.
+2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh``.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2023.1`` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This tutorial targets VCK190 production board for 2023.1 version.
+This tutorial targets the VCK190 production board for the 2023.1 version.
 
 ## Objectives
 
@@ -35,7 +35,7 @@ After completing this tutorial, you will be able to:
 * Specify a scalar or array parameter as part of a kernel function signature.
 * Connect a parameterized kernel into a graph, exposing the parameter for runtime updates.
 * Simulate a graph containing runtime parameters with AI Engine simulator (aiesimulator).
-* Build an system with AI Engine kernels and PL kernels, plus PS code to control their execution.
+* Build a system with AI Engine kernels and PL kernels, plus PS code to control their execution.
 * Use XRT API to control graph execution and RTP operations.
 * Use XRT API to control PL kernel execution.
 * Verify the system by HW co-simulation and running in hardware.
@@ -46,22 +46,19 @@ After completing this tutorial, you will be able to:
 
 **Step 2**: Mark the runtime parameter for asynchronous updates and observe the effect this has on a simulation. See details in [Asynchronous Update of Scalar RTP](./step2_async_scalar.md).
 
-**Step 3**: Design a filter and change the array of filter coefficients at runtime, observing a change in the filter behavior. See details in [Asynchronous Update of Array RTP](./step3_async_array.md).
+**Step 3**: Design a filter, change the array of filter coefficients at runtime, and observe a change in the filter behavior. See details in [Asynchronous Update of Array RTP](./step3_async_array.md).
 
-**Step 4**: Demonstrate how to control graph execution by XRT API. See details in [Asynchronous Update of Array RTP for AI Engine Kernel](./step4_async_aie_array.md).
+**Step 4**: Control graph execution using the XRT API. See details in [Asynchronous Update of Array RTP for AI Engine Kernel](./step4_async_aie_array.md).
 
-**Step 5**: Update the AI Engine kernel with an asynchronous RTP `inout` port. Demonstrate how to use the XRT API to control graph execution and RTP reads. See details in [Asynchronous Array RTP Update and Read for AI Engine Kernel](./step5_async_array_update_read.md).
+**Step 5**: Update the AI Engine kernel with an asynchronous RTP ``inout`` port and learn how to use the XRT API to control graph execution and RTP reads. See details in [Asynchronous Array RTP Update and Read for AI Engine Kernel](./step5_async_array_update_read.md).
 
-__Note:__ In this tutorial, a Makefile is provided. If make commands exist, you just need to run them. Detailed commands are also shown to better illustrate the concepts. You can run these commands manually.
+>**Note:** In this tutorial, a Makefile is provided. If `make` commands exist, you can run them. Detailed commands are also shown to better illustrate the concepts. You can run these commands manually.
 
-__Hint:__ In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is highly recommended to start from the beginning and progress to completion.
-
-==========
+>**Hint:** In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is highly recommended to start from the beginning and progress to completion.
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
