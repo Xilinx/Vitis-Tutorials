@@ -47,7 +47,7 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2022.2  -overlay -compile"
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2023.1  -overlay -compile"
 	cp $(DT_PATH)/system.dtb $(BOOT)/
 	cp $(DT_PATH)/system.dtb $(SD_DIR)/
 

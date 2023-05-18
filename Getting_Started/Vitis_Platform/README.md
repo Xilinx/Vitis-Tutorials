@@ -110,7 +110,7 @@ This is a quick start for Versal platform creation. If you have queries about so
 
    ```bash
    createdts -hw <full path>/vck190_custom_hw.xsa -out . -zocl \
-   -platform-name mydevice -git-branch xlnx_rel_v2022.2 -board versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile   
+   -platform-name mydevice -git-branch xlnx_rel_v2023.1 -board versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile   
    ```
 
    Notice that `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa`. Besides, the following information would show in XSCT console. Ignore the following warning and that means you succeed to get system.dtb file, which is located in `mydevice/psv_cortexa72_0/device_tree_domain/bsp/`.

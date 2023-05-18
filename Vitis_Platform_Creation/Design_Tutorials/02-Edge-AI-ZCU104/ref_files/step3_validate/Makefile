@@ -24,7 +24,7 @@ all: platforminfo vadd
 sd_card:vadd_hw
 
 Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git -b 2022.2
+	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
 
 vadd: Vitis_Accel_Examples $(PLATFORM)
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=$(TARGET) PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux

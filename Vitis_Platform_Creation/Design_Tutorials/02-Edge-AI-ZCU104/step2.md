@@ -180,7 +180,7 @@ Besides uboot in common image does not have default environment variables. So up
 
    ```bash
    createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hw.xsa -zocl  -platform-name mydevice \
-    -git-branch xlnx_rel_v2022.2 -board  zcu104-revc  -dtsi system-user.dtsi -compile
+    -git-branch xlnx_rel_v2023.1 -board  zcu104-revc  -dtsi system-user.dtsi -compile
    ```
    The `createdts` command needs the following input values:
 

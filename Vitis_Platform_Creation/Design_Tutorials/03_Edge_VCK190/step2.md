@@ -81,7 +81,7 @@ Utilize XSCT tool to execute one command to generate device tree files:
 
    ```bash
    createdts -hw ../custom_hardware_platform/custom_hardware_platform.xsa -zocl  -out .  \
-   -platform-name mydevice  -git-branch xlnx_rel_v2022.2  -dtsi system-user.dtsi -compile
+   -platform-name mydevice  -git-branch xlnx_rel_v2023.1  -dtsi system-user.dtsi -compile
    ```
 
    The `createdts` command has the following main input options:

@@ -22,7 +22,7 @@ sd_card:platforminfo vadd_hw aie_adder_hw
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	cd Vitis_Accel_Examples/ && git checkout 2022.2 && sed -i "s/vck190_base_dfx/vck190_custom_dfx/g"  aie_kernels/aie_adder/makefile_versal_ps.mk
+	cd Vitis_Accel_Examples/  && sed -i "s/vck190_base_dfx/vck190_custom_dfx/g"  aie_kernels/aie_adder/makefile_versal_ps.mk
 # Modify Vitis_Accel_Examples to allow running vadd on DFX platforms
 	
 
