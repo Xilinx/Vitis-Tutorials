@@ -26,7 +26,7 @@ This example introduces the Trace view to show how kernels with buffers and stre
     make aie
     ```
 
-2. Open the compile result in Vitis Analyzer. It can be found in the following directory:
+2. Open the compile result in an AMD Vitis&trade; Analyzer. It is found in the following directory:
 
     ```
     vitis_analyzer Work/graph.aiecompile_summary
@@ -36,7 +36,7 @@ This example introduces the Trace view to show how kernels with buffers and stre
 
     ![Graph View](./images/figure1.PNG)
 
-There are two kernels, `aie_dest1` and `aie_dest2`, in the design. These two kernels are connected through a stream connection and a buffer connection (ping-pong buffers `buf1` and `buf1d`). The stream connection contains two stream switch FIFOs: `Fifo0(24,0)` and `Fifo1(24,0)`. These hardened FIFOs are in the stream switch of AI Engine array tile 24_0. These FIFOs are inserted to prevent deadlock in the design (see [AI Engine Hang Analysis](./aie_hang_analysis.md)). 
+There are two kernels, `aie_dest1` and `aie_dest2` in the design. These two kernels are connected through a stream connection and a buffer connection (ping-pong buffers `buf1` and `buf1d`). The stream connection contains two stream switch FIFOs, `Fifo0(24,0)` and `Fifo1(24,0)`. These hardened FIFOs are in the stream switch of AI Engine array tile 24_0. These FIFOs are inserted to prevent deadlock in the design (see [AI Engine Hang Analysis](./aie_hang_analysis.md)). 
 
 The input from the PL is connected to the ping-pong buffers `buf0` and `buf0d`, which are read by kernel `aie_dest1`. The output of kernel `aie_dest2` is connected to the PL through a stream connection.
 
@@ -84,7 +84,7 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
 ## Graph Execution Model
 
-1. Use the following command to run AI Engine simulator:
+1. Use the following command to run an AI Engine simulator:
   
     ```
     make aiesim
@@ -115,7 +115,7 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
     **4a:** After `aie_dest1` acquires the locks of its input buffer (`buf0`) and output buffer (`buf1`), it starts. If any lock cannot be acquired, it will run into lock stall.
 
-    **4b:** After tile 24_0 DMA s2mm channel 0 BD 1 (`s2mm.CH0.BD1.lock1`) completes, it switches back to DMA s2mm channel 0 BD 0 (`s2mm.CH0.BD1.lock0`). At first, `buf0` is still read by `aie_dest1` (`read lock allocated`), so it sticks at `DMA lock req` in red. After the read lock of the buffer is released, it can acquire lock and start data transfer from PL.
+    **4b:** After tile 24_0 DMA s2mm channel 0 BD 1 (`s2mm.CH0.BD1.lock1`) completes, it switches back to DMA s2mm channel 0 BD 0 (`s2mm.CH0.BD1.lock0`). At first, `buf0` is still read by `aie_dest1` (`read lock allocated`), so it sticks at `DMA lock req` in red. After the read lock of the buffer is released, it acquires the lock and starts data transfer from PL.
 
     **5:** After `aie_dest1` completes, it releases the output buffer (`buf1`). The kernel `aie_dest2` acquires the lock of `buf1` (`read lock allocated`). 
 
@@ -131,7 +131,7 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
     **9:** After the lock of `buf1d` is acquired, `aie_dest2` starts.
 
-    **Note:** The stream interface does not need to acquire lock; it has inherent backward and forward pressure for data synchronization. Every lock acquire and release event has some cycles of overhead. 
+    **Note:** The stream interface does not need to acquire lock; it has inherent an backward and forward pressure for data synchronization. Every lock acquires and releases event has some cycles of overhead. 
 
 ## Graph Performance Measurement
 
@@ -154,9 +154,9 @@ There are multiple ways to measure performance:
         Total bytes = 128 * 100 = 12800 bytes
         Throughput = 12800/(10236800*1e-6) = 1250.3 MB/s
         
-    This method does _not_ measure the latency of the first kernel execution to produce the output data: make sure that the graph runs a number large enough that this overhead can be neglected. 
+    This method does _not_ measure the latency of the first kernel execution to produce the output data. Make sure that the graph runs a number large enough that this overhead can be neglected. 
 
-2. Xilinx provides event APIs for performance profiling purposes. These APIs use performance counters in shim tiles to do profiling. The following enumeration usages are introduced in this tutorial:
+2. AMD provides event APIs for performance profiling purposes. These APIs use performance counters in shim tiles to do profiling. The following enumeration usages are introduced in this tutorial:
 
     - **event::io_stream_start_to_bytes_transferred_cycles:** This records the start of a running event with a performance counter, and records the event that a specific amount of data is transferred with another performance counter. The return number with this enumeration is therefore the total cycles required to receive that amount of data. The profiled stream should be stopped after this amount of data has been transferred.
     
@@ -197,9 +197,9 @@ There are multiple ways to measure performance:
 
     Kernel `aie_dest1` takes 8068 cycles for 100 iterations. The `main` function takes 4664 cycles for 100 iterations of the graph. This is around 47 cycles of overhead for each iteration of the graph. This overhead includes the lock acquires of the buffers and the overhead of API calls.
 
-    The performance of `aie_dest1` is bounded by the stream interface throughput. The theoretical limit is up to 4 bytes a cycle (5 GB/s), and there are 128 bytes of input for one run. This means that it at least has 32 cycles for the main loop, although in actuality it takes 80 cycles. This indicates that the loop is not well pipelined.
+    The performance of `aie_dest1` is bounded by the stream interface throughput. The theoretical limit is up to 4 bytes a cycle (5 GB/s), and there are 128 bytes of input for one run. This means that it at least has 32 cycles for the main loop, although it takes 80 cycles. This indicates that the loop is not well-pipelined.
 
-4. You can check performance-related events to see if they match expectations. For example, check the event `PL_TO_SHIM` to see if the PL can send data at the best achievable performance for a single stream interface. Look for the `PL_TO_SHIM` event in **Trace** view in Vitis Analyzer:
+4. Check performance-related events to see if they match expectations. For example, check the event `PL_TO_SHIM` to see if the PL can send data at the best achievable performance for a single stream interface. Look for the `PL_TO_SHIM` event in **Trace** view in Vitis Analyzer:
 
     ![PL_TO_SHIM](./images/figure4.PNG)
 
@@ -236,7 +236,7 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
 
     **Note:** When the FIFO depth is large, the DMA FIFO is used. _Do not_ set the FIFO depth to larger than (_or equal to_) 8192 for a single DMA FIFO.
 
-- The kernel is not well pipelined. As well as increasing the loop count to deal with more data, more instructions should be added in the loop body and a `__restrict` keyword should be added to the ports to make the tool schedule instructions more freely. The optimized code for `aie_dest1` is as follows:
+- The kernel is not well-pipelined. As well as increasing the loop count to deal with more data, more instructions should be added in the loop body and a `__restrict` keyword should be added to the ports to make the tool schedule instructions more freely. The optimized code for `aie_dest1` is as follows:
 
     ```
 	using namespace adf;
@@ -268,7 +268,7 @@ After making these optimizations, run the following command:
     ```
     
     
-It can be seen that the design performance can be increased from around 828 MB/s to around 3748 MB/s. This is approaching the theoretical limit of the design (4 GB/s). 
+It can be seen that the design performance can be increased from around 828 MBps to around 3748 MBps. This is approaching the theoretical limit of the design (4 GBps). 
 
 Next, run the design in hardware emulation:
 
@@ -307,7 +307,7 @@ The performance in hardware is similar:
 
 ### Conclusion
 
-This example has shown a number of different ways to do performance analysis and profiling. Some optimization skills have also been introduced. In the next section, take a look at how deadlocks might occur, and how to analyze them: see [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
+This example has shown a number of different ways to do performance analysis and profiling. Some optimization skills have also been introduced. In the next section, take a look at how deadlocks might occur, and how to analyze them. See [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
 
 #### Support
 

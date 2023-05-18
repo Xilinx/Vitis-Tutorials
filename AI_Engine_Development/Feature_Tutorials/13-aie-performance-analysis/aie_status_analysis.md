@@ -12,9 +12,9 @@
 
 ***Version: Vitis 2023.1***
 
-This tutorial shows you how to output a summary of the AI Engine status for further analysis in Vitis Analyzer. The main methods to output AI Engine status are as follows:
+This tutorial shows you how to output a summary of the AI Engine status for further analysis in an AMD Vitis&trade; Analyzer. The main methods to output AI Engine status are as follows:
 
-- **Automated and periodic AI Engine status output:** After initial setup in `xrt.ini`, this method requires minimal user intervention, because the tool outputs the status at specified time intervals.
+- **Automated and periodic AI Engine status output:** After initial setup in `xrt.ini`, this method requires minimal user intervention because the tool outputs the status at specified time intervals.
 
 - **Manual output the AI Engine status:** This method requires that you run a command each time you want a status output report.
 

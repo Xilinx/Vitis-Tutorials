@@ -18,14 +18,14 @@ This tutorial introduces you to performance analysis and optimization methods, a
 
 ## Before You Begin
 
-**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html
+**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the AMD Vitis&trade; 2023.1 software.  The Vitis release includes all the embedded base platforms, including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html
 
-The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal&trade; board for embedded design development using Vitis.
 
 Before starting this tutorial, run the following steps:
 
-1. Goto the directory where you have unzipped the Versal Common Image package
-2. In a Bash shell run the /**Common Images Dir**/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you **must** run the /**Common Images Dir**/xilinx-versal-common-v2023.1/sdk.sh.
+1. Go to the directory where you have unzipped the Versal Common Image package.
+2. In a Bash shell, run the /**Common Images Dir**/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you **must** run the /**Common Images Dir**/xilinx-versal-common-v2023.1/sdk.sh.
 3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /**Common Images Dir**/xilinx-versal-common-v2023.1 directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/base_platforms.
 

@@ -14,7 +14,7 @@
 
 This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:
 
-1. Using `event` in Vitis Analyzer to analyze design hangs.
+1. Using `event` in AMD Vitis&trade; Analyzer to analyze design hangs.
 
 2. Using waveforms in hardware emulation to check AI Engine input and output activities.
 
@@ -46,8 +46,8 @@ The example is similar to the one used in [AI Engine Execution and Measurement](
 
 When the design stalls, `graph::wait()` and `graph::end()` hang. It needs to interrupt graph execution by:
 
-* Using `graph::wait(CYCLE_NUMBER)`: specifying the number of cycles to wait for the API to return (if the graph does not return after `CYCLE_NUMBER` cycles, this API still returns immediately).
-* Using `graph::end(CYCLE_NUMBER)`: specifying the number of cycles to wait for the graph to be ended (if the graph does not return after `CYCLE_NUMBER` cycles, this API still ends the graph immediately).
+* Using `graph::wait(CYCLE_NUMBER)`: Specifying the number of cycles to wait for the API to return (if the graph does not return after `CYCLE_NUMBER` cycles, this API still returns immediately).
+* Using `graph::end(CYCLE_NUMBER)`: Specifying the number of cycles to wait for the graph to be ended (if the graph does not return after `CYCLE_NUMBER` cycles, this API still ends the graph immediately).
 * Using the `--simulation-cycle-timeout CYCLE_NUMBER` option for `aiesimulator`.
 
 The `CYCLE_NUMBER` should be large enough for AI Engine simulator to record all the stall events, or for hardware to run into hang status. 
@@ -100,7 +100,7 @@ In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls 
 
 Each tile shows percentages for each type of stall. From the metrics table, it can be seen that tile (24,0) has a large percentage of lock stall (98.896%), and tile (25,0) has a large percentage of stream stall (98.380%). These metrics indicate that the design is hanging, and that analysis is required.
 
-In the Graph view of Vitis Analzyer, you can visualize the stalled path in the graph, which can give an indication of where the stall has happened in the design. By understanding the design behavior, it is also possible to estimate what the cause of the hang might be. 
+In the Graph view of Vitis Analzyer, you can visualize the stalled path in the graph, which gives an indication of where the stall has happened in the design. By understanding the design behavior, it is also possible to estimate the cause of the hang. 
 
 For example, select the stream stall in Trace view, and switch to Graph view. In this design, kernel `k[0]` hangs in stream stall. The full destination port is `gr.k[1]/in`, which means that the destination kernel `k[1]` is not receiving data from the stream. 
 
@@ -352,7 +352,7 @@ This section provides details of other methods of detecting and analyzing AI Eng
 		
 	**Tip:** If a design hangs in Linux, press **Ctrl+Z** to suspend the design and run command.
 
-	It is seen that `core[0]` (tile_24_1, `aie_dest2`)  is in the status `east_lock_stall`, and `core[1]` (tile_25_1, `aie_dest1`) is in the status `stream_stall_ms0`. That is to say, `aie_dest1` is trying to write to the consumer `aie_dest2`, while `aie_dest2` is still trying to acquire lock to start.
+	It is seen that `core[0]` (tile_24_1, `aie_dest2`)  is in the status `east_lock_stall`, and `core[1]` (tile_25_1, `aie_dest1`) is in the status `stream_stall_ms0`. That is, `aie_dest1` is trying to write to the consumer `aie_dest2`, while `aie_dest2` is still trying to acquire lock to start.
 
 	**Tip:** Cross-probe between **Graph** and **Array** view in Vitis Analyzer to understand kernels, buffers, and the locations of ports. 
 `
