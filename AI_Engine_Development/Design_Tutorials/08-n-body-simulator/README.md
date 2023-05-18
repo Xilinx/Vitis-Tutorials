@@ -91,8 +91,8 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |Name|Hardware|Algorithm Complexity|Average Execution Time to Simulate 12,800 Particles for 1 Timestep (seconds)|
 |---|---|--|---|
 |Python N-Body Simulator|x86 Linux Machine|O(N)|14.96|
-|C++ N-Body Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|124.79|
-|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.006819|
+|C++ N-Body Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|123.299|
+|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.007|
 
 ### PL Data-Mover Kernels
 Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  

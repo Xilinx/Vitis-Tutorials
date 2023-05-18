@@ -9,3 +9,4 @@ build*/
 *.jou
 *.log
 upd_bldVer.sh
+logs/

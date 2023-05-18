@@ -43,7 +43,7 @@ PFM := xilinx_vck190_base_202310_1
 all: pre_build vitis_hls
 
 # ################ TARGET: make pre_build ################
-pre_build: get_xflib _krnlgen
+pre_build: _krnlgen
 
 _krnlgen: $(XFLIB_DIR)
 	make -f $(CUR_DIR)/../ksrc.mk GENKERNEL=$(XFLIB_DIR)/L2/scripts/generate_kernels SPEC=$(CUR_DIR)/spec.json TOOLDIR=$(CUR_DIR)/../_krnlgen
