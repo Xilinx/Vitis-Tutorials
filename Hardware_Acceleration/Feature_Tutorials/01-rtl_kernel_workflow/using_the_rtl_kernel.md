@@ -49,15 +49,15 @@
 
 You must add the recently generated user-managed RTL kernel (`Vadd_A_B.xo`) and host code (`user-host.cpp`) into the project.
 
-1. Select the `kernelTest_kernels` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo` folder and select the `Vadd_A_B.xo` kernel file to add to the project as shown below. Click **Finish** to close the dialog box and add the kernel.
+1. Select the `kernelTest_kernels` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo` folder, and select the `Vadd_A_B.xo` kernel file to add to the project as shown below. Click **Finish** to close the dialog box, and add the kernel.
 
    ![Add RTL Kernel](images/add_rtl_kernel.png)
 
-2. Select and open the `kernelTest_kernels.prj` project file in the **Hardware Kernel Project Settings** view, and select the **Add Hardware Function** command. Select the  `Vadd_A_B.xo` folder and select the `Vadd_A_B` kernel as shown in the image below. Click **OK** to close the dialog box and add the hardware function to the project.
+2. Select and open the `kernelTest_kernels.prj` project file in the **Hardware Kernel Project Settings** view, and select the **Add Hardware Function** command. Select the  `Vadd_A_B.xo` folder and select the `Vadd_A_B` kernel as shown in the image below. Click **OK** to close the dialog box, and add the hardware function to the project.
 
    ![Add RTL Kernel](images/add_rtl_kernel-hw-function.png)
 
-3. Select the `kernelTest` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the  `src/host` folder and select the `user-managed.cpp` file to add to the project as shown below. Click **Finish** to close the dialog box and add the host code.
+3. Select the `kernelTest` project in the **Explorer** view, and right-click and select the **Import Sources** command. Browse to the `src/host` folder, and select the `user-managed.cpp` file to add to the project as shown below. Click **Finish** to close the dialog box and add the host code.
 
       >**TIP:** There is also an xrt-host file that can be used to connect to an `ap_ctrl_hs` version of the RTL kernel.
 
@@ -77,7 +77,7 @@ With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.x
 
 2. In the Assistant view, select the top-level system project `kernelTest_system` and click the **Build** command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration.
 
-   The different elements of the Vitis application project are built: the processor code (`host.cpp`), the HW link project to link the RTL kernel (.xo) to the target platform, and the top-level system project to package the design.
+   The different elements of the Vitis application project are built: the processor code (`host.cpp`), the HW link project to link the RTL kernel (.`xo`) to the target platform, and the top-level system project to package the design.
 
     >**TIP**: Because the RTL kernel is imported as an `.xo` file, the kernel does not need to be compiled.  
 
@@ -111,7 +111,7 @@ In the system configuration, the kernel code is implemented onto the FPGA, resul
 There is a Makefile included in the `01-rtl_kernel_workflow/reference-files` folder. You can use this file to make the following targets:
 
 ```
-   make run TARGET=<hw_emu | hw> HOST=user
+make run TARGET=<hw_emu | hw> HOST=user
 ```
 
 The Makefile will:

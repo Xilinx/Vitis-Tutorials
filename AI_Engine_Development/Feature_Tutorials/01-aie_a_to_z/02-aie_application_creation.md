@@ -9,101 +9,100 @@
 
 # Introduction - AI Engine Development
 
-In this section of the tutorial, you will learn how to create a new AI Engine application project from a template and run through the ***Emulation-AIE*** process.
+In this section of the tutorial, you will learn how to create a new AI Engine application project from a template, and run through the ***Emulation-AIE*** process.
 
-### Step 1. Create a new AI Engine Application Project
+## Step 1: Create a new AI Engine Application Project
 
 1. Open the Vitis IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
 
-2. On the Welcome Page, click on ***Create Application Project*** or click ***File → New →  Application Project***.
+2. On the Welcome Page, click **Create Application Project**, or click **File → New →  Application Project**.
 
 3. On the platform page, select the platform you want to use:
-* If you have created the platform following step 1, select ***base_pfm_vck190*** platform you just created. If you do not use the same workspace from last step, click on ***Add*** and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
-* If you have skipped step 1, select the VCK190 base platform which can be downloaded from Xilinx.com
->**Note**: Make sure to read and follow the Vitis Software Platform Release Notes (v2023.1) for setting up software and installing the VCK190 base platform.
 
-4. Set the application name as ***simple_application*** and select ***ai_engine*** for the processor.
+      * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
+      * If you have skipped step 1, select the VCK190 base platform which can be downloaded from xilinx.com.
+
+      >**NOTE:** Make sure to read, and follow the Vitis Software Platform Release Notes (v2023.1) for setting up software and installing the VCK190 base platform.
+
+4. Set the application name as **simple_application**, and select **ai_engine** for the processor.
 
       ![missing image](images/aie_app_pg1.png)
 
-5. Keep the default setting for the next page and click ***Next***.
+5. Keep the default setting for the next page, and click **Next**.
 
-6. In the Template page, select the ***Simple*** template. Click ***Finish*** to create the application project.
+6. In the Template page, select the **Simple** template. Click **Finish** to create the application project.
 
       ![missing image](images/aie_app_pg2.png)
 
->**Note**: In the description of the template it says that the template works only for AI Engine Emulation and SW (x86) simulation. In the following steps you will learn how to make it work on hardware.  
+      >**NOTE:** In the description of the template, it says that the template works only for AI Engine Emulation and software (x86) simulation. In the following steps, you will learn how to make it work on hardware.  
 
 7. The template imports two folders:
 
-* `src` contains the sources for the kernels and the graph.
-* `data` contains the data for the simulation input (`input.txt`) and the golden reference for the output (`golden.txt`).
+      * `src` contains the sources for the kernels and the graph.
+      * `data` contains the data for the simulation input (`input.txt`) and the golden reference for the output (`golden.txt`).
 
-    ![missing image](images/aie_app_folder.png)
+      ![missing image](images/aie_app_folder.png)
 
-8. Open the file `project.h` to see the graph.
-You can see that the graph (simpleGraph) has one input and one output and implements two kernels with the same function. The output of the first kernel feeds the second one.
+8. Open the file `project.h` to see the graph. You can see that the graph (simpleGraph) has one input and one output and implements two kernels with the same function. The output of the first kernel feeds the second one.
 
-```
-first = kernel::create(simple);
-second = kernel::create(simple);
-connect< window<128> > net0 (in.out[0], first.in[0]);
-connect< window<128> > net1 (first.out[0], second.in[0]);
-connect< window<128> > net2 (second.out[0], out.in[0]);
-```
+      ```
+      first = kernel::create(simple);
+      second = kernel::create(simple);
+      connect< window<128> > net0 (in.out[0], first.in[0]);
+      connect< window<128> > net1 (first.out[0], second.in[0]);
+      connect< window<128> > net2 (second.out[0], out.in[0]);
+      ```
 
-This is the representation of the graph.
+      This is the representation of the graph.
 
-  ![missing image](images/aie_app_graph.png)
+      ![missing image](images/aie_app_graph.png)
 
 9. Open the file `kernels/kernels.cc` to see what function will be implemented in the kernels.
 You can see that this is a simple operation which is doing the sum of the real and imaginary parts of the input to create the real part of the output and the subtraction the real and imaginary part of the input to create the imaginary part of the output.
-```
-void simple(input_window_cint16 * in, output_window_cint16 * out) {
-  cint16 c1, c2;
-  for (unsigned i=0; i<NUM_SAMPLES; i++) {
-    window_readincr(in, c1);
-    c2.real = c1.real+c1.imag;
-    c2.imag = c1.real-c1.imag;
-    window_writeincr(out, c2);
-  }
-}
-```
 
-### Step 2. Build the Project and Run Through Emulation-AIE
+      ```
+      void simple(input_window_cint16 * in, output_window_cint16 * out) {
+      cint16 c1, c2;
+      for (unsigned i=0; i<NUM_SAMPLES; i++) {
+      window_readincr(in, c1);
+      c2.real = c1.real+c1.imag;
+      c2.imag = c1.real-c1.imag;
+      window_writeincr(out, c2);
+      }
+      }
+      ```
 
-1. Click on the arrow next to the hammer icon and make sure that ***Emulation-AIE*** is selected.
+### Step 2: Build the Project and Run Through Emulation-AIE
 
-2. Click on the hammer icon to build the project.
+1. Click the arrow next to the hammer icon, and make sure that **Emulation-AIE** is selected.
 
-3. To run System C simulation (called ***Emulation-AIE***), right-click on the ***simple_application*** project and select ***Run as*** -> ***Launch AIE Emulator*** from the pop-up menu.
+2. Click the hammer icon to build the project.
 
-4. You should see the simulation running successfully in the console.
-The output data is written to the file `Emulation-AIE/aiesimulator_output/data/output.txt`. You can compare the file `output.txt` with the `golden.txt` file. The output data should match the golden value.
+3. To run System C simulation (called ***Emulation-AIE***), right-click the **simple_application** project, and select **Run as** -> **Launch AIE Emulator** from the pop up menu.
+
+4. You should see the simulation running successfully in the console. The output data is written to the file `Emulation-AIE/aiesimulator_output/data/output.txt`. You can compare the file `output.txt` with the `golden.txt` file. The output data should match the golden value.
 
       ![missing image](images/aie_app_emu.png)
 
-5. Select the files `simple/data/golden.txt` and `simple/Emulation-AIE/aiesimulator_output/data/output.txt` and right-click on one of them and then click ***Compare With > Each Other After Transformation***.
+5. Select the files `simple/data/golden.txt` and `simple/Emulation-AIE/aiesimulator_output/data/output.txt`, right-click one of them, and then click **Compare With > Each Other After Transformation**.
 
       ![missing image](images/aie_app_comp.png)
 
-6. Then click on the left-most icons on the right (Pre-defined Filters).
+6. Then, click the leftmost icons on the right (Pre-defined Filters).
 
       ![missing image](images/aie_app_comp_2.png)
 
-7. Select ***Remove timestamp*** and click ***OK***.
+7. Select **Remove timestamp**, and click **OK**.
 
       ![missing image](images/aie_app_comp_3.png)  
 
-8. You can see that a grep command will be executed to remove the timestamps from the output file. Click ***OK***.
+8. You can see that a grep command will be executed to remove the timestamps from the output file. Click **OK**.
 
       ![missing image](images/aie_app_comp_4.png)  
 
-A pop-up window should appear saying that the two files match which means that the graph is behaving as expected. You can move forward and integrate the graph in the full system.
-
+A pop up window should display that the two files match which means that the graph is behaving as expected. You can move forward and integrate the graph in the full system.
 
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

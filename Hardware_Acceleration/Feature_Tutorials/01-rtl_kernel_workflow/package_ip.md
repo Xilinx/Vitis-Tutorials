@@ -32,7 +32,7 @@ The process described in this lab follows the Package IP flow as described in th
    2. Enable the **Create project subdirectory** checkbox.
    3. Click **Next**.
 6. On the Project Type page, make the following selections:  
-   1. Select **RTL Project**
+   1. Select **RTL Project**.
    2. Enable the **Do not specify sources at this time** checkbox.
    3. Click **Next**.
 7. On the Default Part page select **Boards**, and enter `U250` in the Search field.
@@ -109,7 +109,7 @@ With the files added to your project, you can package the IP for use as a kernel
    set_property vitis_drc {ctrl_protocol user_managed} [ipx::current_core]
    ```
 
->**TIP**: Notice that the **Ports and Interfaces** tab now shows a DRC error because you have enabled the **Package for Vitis** checkbox. The error indicates that the Vitis compatible IP must have a defined register on the AXI-Lite interface (s_axilite), or at least one AXI-streaming (AXIS) interface. In this case you will be adding registers to the `s_axi_control` interface.
+>**TIP**: Notice that the **Ports and Interfaces** tab now shows a DRC error because you have enabled the **Package for Vitis** checkbox. The error indicates that the Vitis compatible IP must have a defined register on the AXI-Lite interface (`s_axilite`), or at least one AXI-streaming (AXIS) interface. In this case, you will be adding registers to the `s_axi_control` interface.
 
 ## Edit Ports and Interfaces
 
@@ -140,23 +140,23 @@ B | Pointer argument | 0x024 | 64
    >**TIP:** You will need to add the registers listed in the table above. You can also use the following Tcl commands in the Vivado Tcl Console to add the needed registers:
 
    ```
-      ipx::add_register CTRL [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register scalar00 [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register A [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ipx::add_register B [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
-      ```
+   ipx::add_register CTRL [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
+   ipx::add_register scalar00 [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
+   ipx::add_register A [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
+   ipx::add_register B [ipx::get_address_blocks reg0 -of_objects [ipx::get_memory_maps s_axi_control -of_objects [ipx::current_core]]]
+   ```
 
    After adding the registers to the Addressing and Memory window (as shown in the following figure), you will need to add the descriptions, offset, and size to the registers.
 
     ![missing image](images/address-memory-win.png)
 
-4. For each register, click in the **Description** field of the register and enter the description from the table above.
+4. For each register, click in the **Description** field of the register, and enter the description from the table above.
 5. Click in the **Address Offset** field and enter the offset.
-6. Click in the **Size** field and enter the field.
+6. Click in the **Size** field, and enter the field.
 
    >**IMPORTANT:** Description is optional, but Offset and Size are required.
 
-   After completing the addition of the various registers and their attributes in accordance with the table above, you must also associate an M_AXI interface with each of the pointer arguments.
+   After completing the addition of the various registers and their attributes in accordance with the table above, you must also associate an `M_AXI` interface with each of the pointer arguments.
 
 7. Select register `A` in the Registers table, and right-click and select **Add Register Parameter**.
    1. In the Add Register Parameter dialog box, add the ASSOCIATED_BUSIF parameter, and click **OK**.  
@@ -175,7 +175,7 @@ B | Pointer argument | 0x024 | 64
 
 2. Look in the **After Packaging** section of the Review and Package window. If you see that an archive will not be generated, then you should enable the archive by selecting **Edit packaging settings**. This displays the Settings dialog box with the IP Package section displayed.
 
-   - Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**.  You should see the **Review and Package** window change to reflect that an archive will now be created.
+   - Under the After Packaging section of the dialog box, enable **Create archive of IP** as shown below, and click **OK**. You should see the **Review and Package** window change to reflect that an archive will now be created.
 
       ![Enable Archive](./images/enable_archive_settings.png)  
 
@@ -191,8 +191,8 @@ With **Package for Vitis** enabled, the tool automatically runs the `package_xo`
 
    Where:
 
-- **package_xo**: Command name to create a compiled object file (.xo) from the Vivado IP.
-- -**xo_path**: Path and name of the xo file
+- **package_xo**: Command name to create a compiled object file (`.xo`) from the Vivado IP.
+- -**xo_path**: Path and name of the xo file.
 - -**kernel_name**: Name of the kernel to create, and should match the RTL module name.
 - -**ip_directory**: Path to look for the packaged Vivado IP.
 - -**ctrl_protocol**: Specifies the control protocol the kernel implements.
