@@ -1,8 +1,8 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Versal™ Adaptive SoC AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See AMD Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -85,7 +85,7 @@ Review the `nbody_x4_100.cpp` file. It contains an instance of the `nbodySystem`
 
 ![alt text](images/x100_design.png)
 
-Below is the implementation of the 100 compute unit on all 400 AI Engine tiles viewed on the Vitis Analyzer tool.
+Below is the implementation of the 100 compute unit on all 400 AI Engine tiles viewed on the AMD Vitis Analyzer tool.
 ![alt text](images/Nbody_aie_array_view.png)
 
 The red highlighted region encompasses four AI Engine tiles which contain a single compute unit.
@@ -126,7 +126,7 @@ make sim
 
 * [Packet Switching AI Engine Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching)
 
-* [AI Engine Documentation - Explicit Packet Switching](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Explicit-Packet-Switching)
+* [AI Engine Documentation - Explicit Packet Switching](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Explicit-Packet-Switching)
 
 * [Compiling an AI Engine Graph Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Compiling-an-AI-Engine-Graph-Application)
 

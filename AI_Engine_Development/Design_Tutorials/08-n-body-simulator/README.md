@@ -1,8 +1,8 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Versal™ Adaptive SoC AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See AMD Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -20,7 +20,7 @@ This tutorial is an implementation of an N-Body Simulator in the AI Engine. It i
 * AI Engine packet switching
 * AI Engine single-precision floating point calculations
 * AI Engine 1:400 broadcast streams
-* Codeless PL HLS datamover kernels from the Vitis™ Utility Library
+* Codeless PL HLS datamover kernels from the AMD Vitis™ Utility Library
 * PL HLS packet switching kernels
 * PS Host Application that validates the data coming out of the AI Engine design
 * C++ model of an N-Body Simulator
@@ -29,28 +29,26 @@ This tutorial is an implementation of an N-Body Simulator in the AI Engine. It i
 
 ## Before You Begin
 
-This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/boards-and-kits/vck190.html) (Production or ES). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board, get in touch with your Xilinx sales contact.
+This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/boards-and-kits/vck190.html) (Production or ES). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board, get in touch with your AMD sales contact.
 
 ### *Documentation*: Explore AI Engine Architecture
 
 * [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
-* [Versal ACAP AI Engines for Dummies](https://support.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
-
 * [AI Engine Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 ### *Tools*: Installing the Tools
 
-1. Obtain a license to enable beta devices in Xilinx tools (to use the VCK190 platform).
+1. Obtain a license to enable beta devices in AMD™ tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * Vitis Software Platform
-      * Xilinx Runtime and Platforms (XRT)
-      * Embedded Platform VCK190 Base or VCK190 ES1 Base (from lounge, ask your Xilinx sales contact)
+      * AMD Vitis Software Platform
+      * Xilinx® Runtime and Platforms (XRT)
+      * Embedded Platform VCK190 Base or VCK190 ES1 Base (from lounge, ask your AMD sales contact)
 
 ### *Environment*: Setting Up Your Shell Environment
-When the elements of the Vitis software platform are installed, update the shell environment script. Set the necessary environment variables to your system specific paths for xrt, platform location, and Xilinx tools.
+When the elements of the Vitis software platform are installed, update the shell environment script. Set the necessary environment variables to your system specific paths for xrt, platform location, and AMD tools.
 
 1. Edit the `sample_env_setup.sh` script with your file paths:
 
@@ -74,7 +72,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2023.1 version of the Xilinx tools.
+Ensure you are using the 2023.1 version of the AMD tools.
 
 ```bash
 which vitis
@@ -85,7 +83,7 @@ which aiecompiler
 ### HPC Applications
 The goal of this tutorial is to create a general-purpose floating point accelerator for HPC applications. This tutorial demonstrates a x24,800 performance improvement using the AI Engine accelerator over the naive C++ implementation on the A72 embedded Arm® processor.
 
-#### A similar accelerator example was implemented on the UltraScale+™-based Ultra96 device using only PL resources [here](https://www.hackster.io/rajeev-patwari-ultra96-2019/ultra96-fpga-accelerated-parallel-n-particle-gravity-sim-87f45e).
+#### A similar accelerator example was implemented on the AMD UltraScale+™-based Ultra96 device using only PL resources [here](https://www.hackster.io/rajeev-patwari-ultra96-2019/ultra96-fpga-accelerated-parallel-n-particle-gravity-sim-87f45e).
 
 
 |Name|Hardware|Algorithm Complexity|Average Execution Time to Simulate 12,800 Particles for 1 Timestep (seconds)|
@@ -95,7 +93,7 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.007|
 
 ### PL Data-Mover Kernels
-Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
+Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [AMD Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
 
 ## The N-Body Problem
 The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, we can calculate a particle's velocity and position (`x y z vx vy vz`) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).
@@ -157,7 +155,7 @@ This algorithm can be vectorized, hence reducing the complexity to O(N). In our 
 Source: [GRAPE-6: Massively-Parallel Special-Purpose Computer for Astrophysical Particle Simulations](https://academic.oup.com/pasj/article/55/6/1163/2056223)
 
 ### System Design Overview
-The N-Body Simulator is implemented on an `XCVC1902 Versal ACAP` device on the VCK190 board. It consists of PL HLS datamover kernels from the Vitis Utility Library (`m2s_x2` and `s2m_x4`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
+The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` device on the VCK190 board. It consists of PL HLS datamover kernels from the AMD Vitis Utility Library (`m2s_x2` and `s2m_x4`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
 
 ![alt text](images/System_diagram.PNG)
 
@@ -194,13 +192,13 @@ This module presents the final 400 tile AI Engine design:
 ### Module 03 - PL Kernels
 This modules presents the PL HLS kernels:
 
-* Create datamover PL HLS kernels from Vitis Utility Library
+* Create datamover PL HLS kernels from AMD Vitis Utility Library
 * Create and simulate packet switching PL HLS kernels
 
 [Read more...](Module_03_pl_kernels)
 
 ### Module 04 - Full System Design
-This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado solution.
+This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado™ solution.
 
 [Read more...](Module_04_xclbin)
 
@@ -238,10 +236,10 @@ This tutorial contains 3 AI Engine designs:
 Modules_01-07 builds walks through building the final 100 Compute Unit design. The intermediate designs (x1_design and x10_design) are also provided if you want to build an N-Body Simulator with shorter build times or run hardware emulation within a reasonable amount of time.  
 
 ## Build Flows
-This tutorial has two build flows you can choose from depending on your comfort level with Xilinx design processes.  
+This tutorial has two build flows you can choose from depending on your comfort level with AMD design processes.  
 
 ### For more advanced users
-For those who are already familiar with the creating AI Engine designs and Vitis projects, you may just want to build the entire design with a single command. You can do this by running the following command from the top-level folder:
+For those who are already familiar with the creating AI Engine designs and AMD Vitis projects, you may just want to build the entire design with a single command. You can do this by running the following command from the top-level folder:
 
 *Estimated Time: 6 hours*
 

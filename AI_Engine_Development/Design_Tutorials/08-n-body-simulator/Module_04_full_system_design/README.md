@@ -1,8 +1,8 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Versal™ Adaptive SoC AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See AMD Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -38,13 +38,13 @@ v++ -l                                     \
 
 ## Full System Design
 
-The Vitis Linker (`v++ -l`) is used to link multiple kernel objects (XO), together with the hardware platform XSA file, to produce the device binary XCLBIN file.
+The AMD Vitis Linker (`v++ -l`) is used to link multiple kernel objects (XO), together with the hardware platform XSA file, to produce the device binary XCLBIN file.
 
-Review the `conn.cfg` file. It creates an instance of each PL kernel described previously and provides the connection scheme between them and the AI Engine graph. At the end of the file, there are vivado options specified to close timing and run the design at 300 MHz.
+Review the `conn.cfg` file. It creates an instance of each PL kernel described previously and provides the connection scheme between them and the AI Engine graph. At the end of the file, there are Vivado™ tool options specified to close timing and run the design at 300 MHz.
 
 ## Design Implementation
 
-The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the ACAP device.
+The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the adaptive SoC device.
 
 ![alt text](images/Nbody_Implemented_design.png)
 

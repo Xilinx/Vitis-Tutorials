@@ -1,3 +1,12 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Versal™ Adaptive SoC AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See AMD Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Building the Design
 
 *Estimated time: less than 1 minute*
@@ -56,7 +65,7 @@ $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ ./build/
 The same linking options were used to generate the `build/ps_app_animate.exe` executable.
 
 ## Host Software  
-After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html).
+After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the AMD Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html).
 
 This module compiles the following host applications and custom APIs:
 

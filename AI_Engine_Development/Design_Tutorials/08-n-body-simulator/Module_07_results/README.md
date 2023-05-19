@@ -1,8 +1,8 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal® ACAP AI Engine Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Versal™ Adaptive SoC AI Engine Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See AMD Vitis™ AI Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -21,7 +21,7 @@ make animation
 
 The following is a GIF created from the `data/animation_data_golden.txt` file. You should get a similar GIF from your own data.
 
-### 12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 Timesteps
+ The image below shows 12,800 particles simulated on a 400 tile AI Engine accelerator for 300 timesteps.
 
 ![alt text](images/animation.gif)
 
@@ -79,11 +79,11 @@ cd x1_design
 make all TARGET=<hw|hw_emu>
 ```
 
-128 particles simulated for 300 timesteps
+The image below shows 128 particles simulated for 300 timesteps.
 
 ![alt text](../x1_design/results/images/animation.gif)
 
-#### Building the x10_design (simulates 1,280 particles)
+### Building the x10_design (simulates 1,280 particles)
 
 *Estimated time: 1 hour*
 
@@ -92,7 +92,7 @@ cd x10_design
 make all TARGET=<hw|hw_emu>
 ```
 
-1,280 particles simulated for 300 timesteps
+The image below shows 1,280 particles simulated for 300 timesteps.
 
 ![alt text](../x10_design/results/images/animation.gif)
 
