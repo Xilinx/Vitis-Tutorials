@@ -39,7 +39,7 @@
 ////////////////////////////////////////////////////////
 // FFT_2D Datatype related Macros
 // datatypes can be, cint16 (Default) or cfloat...
-#if FFT_2D_DT == cint16
+#if FFT_2D_DT == 0 
 
    // Input data type...
    #define FFT_2D_TT_DATA cint16
@@ -51,7 +51,7 @@
    // FFTcols_graph I/O WINDOW BUFF SIZE IN BYTES...
    #define FFT_COL_WINDOW_BUFF_SIZE (FFT_COL_TP_WINDOW_VSIZE * 4)
    
-#elif FFT_2D_DT == cfloat
+#elif FFT_2D_DT == 1
 
    // Input data type...
    #define FFT_2D_TT_DATA cfloat
