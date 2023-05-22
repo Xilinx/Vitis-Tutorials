@@ -62,9 +62,9 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
-4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.xilinx.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
-5. Download the VCK190 PetaLinux 2023.1 BSP from the [Versal AI Core Series VCK190 HeadStart Early Access Site
-](https://www.xilinx.com/member/vck190_headstart.html#docs).
+4. Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+5. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.xilinx.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
+6. Download the [VCK190 PetaLinux 2023.1 BSP](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) from the Versal AI Core Series VCK190 HeadStart Early Access Site.
 
 To build and run the Beamforming tutorial, download and install the following tools:
 
