@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -25,7 +25,7 @@ As described in [AI Engine A-to-Z Flow for Linux](README.md), two steps (tutoria
 
 After you complete these prerequisite tutorials, you are ready to run AI Engine graph integration and validation using a custom Linux platform. 
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
 
 
 ## Setting up the environment
@@ -46,7 +46,7 @@ First, set up the environment for integrating the subsystem with the custom plat
 
  ## Re-compiling ADF graph
  
-After making the necessary environment changes, you can now re-compile the ADF graph targeting the custom platform using the command below:
+After making the necessary environment changes, re-compile the ADF graph targeting the custom platform using the command below:
 
  ```bash
  make aie TARGET=hw
@@ -76,7 +76,7 @@ v++ -c --platform $PLATFORM_REPO_PATHS/vck190_custom.xpfm --save-temps -g -k mm2
 
 Next, rrun the Hardware Emulation targeting the custom platform as follows:
 
-1. Link AI Engine & PL kernels with platform:
+1. Link AI Engine & PL kernels with platform.
 
    ```bash
    make xsa TARGET=hw_emu
@@ -88,7 +88,7 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
    v++ -l --platform $PLATFORM_REPO_PATHS/vck190_custom.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsad
    ```
 
-2. Compile the A72 Host Application:
+2. Compile the A72 Host Application.
 
    ```bash
    make host
@@ -105,7 +105,7 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
    cd ..
    ```
 
-3. Package the Design
+3. Package the Design.
 
    ```bash
    make package TARGET=hw_emu
@@ -126,7 +126,7 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
    cd ..
    ```
 
-4. Run Hardware Emulation
+4. Run Hardware Emulation.
 
    ```bash
    make run_emu TARGET=hw_emu
@@ -139,7 +139,7 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
    ./launch_hw_emu.sh -aie-sim-options ../aiesimulator_output/aiesim_options.txt -add-env AIE_COMPILER_WORKDIR=../Work
    ```
 
-5. Execute the following command when the emulated Linux prompt finally appears:
+5. Execute the following command when the emulated Linux prompt finally appears.
 
    ```bash
    cd /run/media/*1
@@ -147,7 +147,7 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
    dmesg -n 4 && echo "Hide DRM messages..."
    ```
 
-6. Run the design using the following command:
+6. Run the design using the following command.
 
    ```bash
    ./host.exe a.xclbin
@@ -155,9 +155,9 @@ Next, rrun the Hardware Emulation targeting the custom platform as follows:
 
 7. You should see an output displaying TEST PASSED. When this is shown, run the keyboard command: `Ctrl+A x` to end the QEMU instance.
 
-8. You can view the profiling and trace results of hardware emulation in Vitis™ Analyzer by running the following command:
+8. You can view the profiling and trace results of hardware emulation in an AMD Vitis™ Analyzer by running the following command:
 
-**Note**: The Trace **Compare** feature is not available in New Vitis IDE Analysis view. So, please use the classic Vitis Analyzer for this.
+**Note**: The Trace **Compare** feature is not available in the New Vitis IDE Analysis view. So, use the classic Vitis Analyzer for this.
 
 ```bash
 vitis_analyzer --classic sw/sim/behav_waveform/default.aierun_summary
@@ -171,7 +171,7 @@ vitis_analyzer --classic sw/sim/behav_waveform/default.aierun_summary
 
 ![hw_emu_trace_compare](./images/hw_emu_trace_comp1.PNG)
 
-* From the drop down, you can select the trace output of other summary file as highlighted below. 
+* From the drop down, select the trace output of other summary file as highlighted below. 
 
 ![hw_emu_trace_compare2](./images/hw_emu_trace_comp2.PNG)
 
@@ -179,7 +179,7 @@ vitis_analyzer --classic sw/sim/behav_waveform/default.aierun_summary
 
 You can easily build for hardware by following the steps below.
 
-**Note**: Because you already compiled the AI Engine graph and PL kernels for hardware emulation in the previous step, you do not need to re-compile them again for targeting the hardware. However, you need to re-link and re-package for hardware run.
+**Note**: Because you already compiled the AI Engine graph and PL kernels for hardware emulation in the previous step, you do not need to re-compile them again for targeting the hardware. However, re-link and re-package for hardware run.
 
 1. Link AI Engine and PL kernels with the platform:
 

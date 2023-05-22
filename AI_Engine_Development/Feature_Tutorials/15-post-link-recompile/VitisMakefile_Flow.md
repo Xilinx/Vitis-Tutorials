@@ -30,7 +30,7 @@ cd WithIntermediatePlatform
 
 ## Phase 1: Creating a Fixed Platform from an AI Engine Application and PL Kernels
 
-This lab uses the same files as the [Vitis IDE flow](VitisIDE_Flow.md), but all the operations are completed within a terminal.
+This lab uses the same files as the [AMD Vitis&trade; IDE flow](VitisIDE_Flow.md), but all the operations are completed within a terminal.
 
 1. To complete phase 1, change directory: `cd Phase1`.
 
@@ -81,7 +81,7 @@ You can get out of QEMU by hitting **Ctrl** + **a x**.
 
 Phase 2 contains the following stages:
 
- 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case it uses the new platform constraints.
+ 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case, it uses the new platform constraints.
 
  2. `host`: Compile the PS application.
 
@@ -107,12 +107,12 @@ The second stage, `make host`, is straightforward and you can see that the first
 
 The third stage, `make package2`, has various outputs. Among them is a file named `launch_hw_emu.sh`, which is used to run the hardware emulation in the last stage.
 
-The fourth and final stage, `make run_emu`, starts the hardware emulation that will also verify the correctness of the output.
+The fourth and final stage, `make run_emu`, starts the hardware emulation that also verifies the correctness of the output.
 
 
 ## Perform On-Board Testing
 
-1. To perform on-board testing, the same stages can be replicated but with a different target:
+1. To perform an on-board testing, the same stages can be replicated but with a different target:
 
 - For phase 1, type `make TARGET=hw clean phase1`.
 - For phase 2, type `make TARGET=hw phase2`.

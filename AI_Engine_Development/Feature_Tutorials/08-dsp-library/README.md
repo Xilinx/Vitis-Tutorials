@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -13,13 +13,13 @@
 
 ## Introduction
 
-The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines which belong in the Intelligent Engine category.
+The AMD Versal&trade; adaptive SoC is a fully software-programmable, heterogeneous compute platform that combines the processing system (PS) (Scalar Engines that include Arm® processors), Programmable Logic (PL) (Adaptable Engines that include the programmable logic), and AI Engines that belong to the Intelligent Engine category.
 
 This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up the software and installing the VCK190 base platform.
 
-Before starting this tutorial run the following steps.
+Before starting this tutorial, run the following steps.
 
 1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2023.1/sdk.sh`.
 2. Set up your ROOTFS to point to the `xilinx-versal-common-v2023.1/rootfs.ext4`.
@@ -43,7 +43,7 @@ Before starting this tutorial run the following steps.
 
 After completing the tutorial, you should be able to:
 
-* Build signal processing datapath using the Vitis™ application acceleration development flow
+* Build signal processing datapath using the AMD Vitis™ application acceleration development flow
 * Evaluate the performance and resource utilization metrics of a design
 * Adjust filter parameters to meet system performance requirements
 
@@ -61,10 +61,10 @@ This tutorial shows how to construct a simple two-stage decimation filter. This 
 
 Part 1 of this tutorial will:
 
-* Shows a basic Makefile for AI Engine and X86 compilation, simulation and visualization.
-* Link in the DSPLib functions
+* Shows a basic Makefile for AI Engine and X86 compilation, simulation, and visualization.
+* Link in the DSPLib functions.
 * Create a simple graph containing a parameterized DSPLib FIR filter.
-* Compile and simulate the design
+* Compile and simulate the design.
 * Evaluate the results.
 
 
@@ -85,7 +85,7 @@ fir_graph.h  system_settings.h  test.cpp
 
 The `system_settings.h` files is a standard header file that defines the constants used in this project. It includes the header file "<adf.h>". This is the Adaptive Data Flow (ADF) header file, which provides the classes used for specifying graphs. It also includes the FIR Filter kernel's header file, `fir_sr_sym_graph.hpp`.
 
-The design itself it implemented in `fir_graph.h`. A graph is used to define elements and the connections between them that make up the design. We will go over some of the key aspects of this file.
+The design itself is implemented in `fir_graph.h`. A graph is used to define elements and the connections between them that make up the design. Some of the key aspects of this file are mentioned below.
 
 ```C++
 using namespace adf
@@ -124,9 +124,9 @@ These statements connect our graph's input and outputs to the FIR filter's input
 ```C++
 		location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
 ```
-This statement specifies a location attribute for the filter kernel. It specifies the X/Y location of the AI Engine tile within the AI Engine array in which to place the kernel. Location placements for kernels are optional, but shown here to illustrate how physical constraints can be incorporated into the source code. The results of this statement will be seen later when viewing the compilation results.
+This statement specifies a location attribute for the filter kernel. It specifies the X/Y location of the AI Engine tile within the AI Engine array in which to place the kernel. Location placements for kernels are optional, but shown here to illustrate how physical constraints can be incorporated into the source code. The results of this statement are seen later when viewing the compilation results.
 
-There is a second graph that will instanciate this `FIRGraph` and connect it to the PLIO elements which are points at which data can be moved onto and off of the AI Engine array:
+There is a second graph that instantiates this `FIRGraph` and connects it to the PLIO elements, which are points at which data can be moved onto and off of the AI Engine array:
 
 ```C++
 class TopGraph : public graph
@@ -161,9 +161,9 @@ int main(void) {
 
 ### Compile the application
 
-The `Makefile` is very simple. It allows the user to compile for 2 different targets `x86` and `hw`, visualize the compiler output in `vitis_analyzer`, run an AI Engine or X86 simulation and visualize also the output in `vitis_analyzer`.
+The `Makefile` is simple. It allows the user to compile for two different targets `x86` and `hw`, visualizes the compiler output in `vitis_analyzer`, runs an AI Engine or X86 simulation, and visualizes also the output in `vitis_analyzer`.
 
-Currently the `Makefile` does not specifies where the DSP Lib includes are located. The first step of this tutorial will consist in adding the following lines, on line 27:
+Currently, the `Makefile` does not specify where the DSP Lib includes are located. The first step of this tutorial consists of adding the following lines, on line 27:
 ```Makefile
 #########  Add DSP include files location   #########
 DSP_FLAGS := --include=$(DSPLIB_ROOT)/L1/src/aie
@@ -171,19 +171,19 @@ DSP_FLAGS += --include=$(DSPLIB_ROOT)/L1/include/aie
 DSP_FLAGS += --include=$(DSPLIB_ROOT)/L2/include/aie
 ```
 
-You type `make aie` to run the following command:
+Type `make aie` to run the following command:
 ```BASH
 aiecompiler -target=hw $(AIE_FLAGS) $(DSP_FLAGS) $(AIE_GRAPH_FILES)
 ```
 
 This compiles the design and maps it to the AI Engine Tiles.
 
-Visualizing the compilation results is performed by typing `make compviz` which runs the following command:
+Visualizing the compilation results is performed by typing `make compviz`, which runs the following command:
 ```BASH
 	vitis_analyzer $(AIE_OUT_DIR)/test.aiecompile_summary
 ```
 
-After `vitis_analyzer` opens, it will display the Summary page, which provides a brief summary of the project.
+After `vitis_analyzer` opens, it displays the Summary page, which provides a brief summary of the project.
 
 
 ![Vitis Analyzer Summary](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Summary.png)
@@ -192,23 +192,23 @@ Selecting **Graph** on the navigation bar shows a diagram of the filter implemen
 
 ![Vitis Analyzer Graph](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Graph.png)
 
-Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_filter.h`. Clicking on the components on the diagram will take you to the appropriate tab below which provides a description of the element. Conversely you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels) and click on a component to see where it is located on the array.
+Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping-pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_filter.h`. Clicking on the components on the diagram takes you to the appropriate tab below, which provides a description of the element. Conversely, you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels) and click on a component to see where it is located on the array.
 
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Array.png)
 
 You can select the other entries on the navigation bar to see additional implementation details.
 
-When you are done examining the design, click **File -> Close Window**
+When you are done examining the design, click **File -> Close Window**.
 
 ### Running the Design through Simulation
 
-We can now run the simulation for this AI Engine application. In order to get a runtime trace of this simulation we need to specify it to the simulator. Add the following flag (`--dump-vcd=sim`) in the command belonging to the `aiesim` rule:
+You can now run the simulation for this AI Engine application. To get a runtime trace of this simulation, specify it to the simulator. Add the following flag (`--dump-vcd=sim`) in the command belonging to the `aiesim` rule:
 ```MAKEFILE
 aiesim:
 	aiesimulator --pkg-dir=$(AIE_OUT_DIR) --dump-vcd=sim
 ```
 
-Type `make aiesim` to run the AI Engine simulation, and it will automatically generate the trace of this simulation stored in the file **sim.vcd**.
+Type `make aiesim` to run the AI Engine simulation, and it automatically generates the trace of this simulation stored in the file **sim.vcd**.
 
 
 
@@ -216,28 +216,28 @@ Type `make aiesim` to run the AI Engine simulation, and it will automatically ge
 
 Type `make aieviz` to visualize the output of the simulation in `vitis_analyzer`.
 
-Selecting **Trace** on the navigation bar shows the simulation trace. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, etc.
+Selecting **Trace** on the navigation bar shows the simulation trace. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, and so on.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Trace.png)
 
-When you are done examining the design, click **File -> Close Window**
+When you are done examining the design, click **File -> Close Window**.
 
 ## Part 2: Creating a Multi Kernel Graph
 
 Part 2 of this tutorial will:
 
 * demonstrate how to connect together filters to create a filter chain.
-* show how to identify areas for optimization within the chain
+* show how to identify areas for optimization within the chain.
 
 
 
 ### Changes to the Filter Graph from Part 1
 
-For Part 2, we have cascaded a halfband filter after the FIR filter that was in the design in part 1.
+For Part 2, a halfband filter is cascaded after the FIR filter that was in the design in part 1.
 
-In the `system_settings.h` file, constants for the halfband filter have been added, as well as the kernel's header file, `fir_interpolate_hb_graph.hpp`.
+In the `system_settings.h` file, constants for the halfband filter as well as the kernel's header file have been added, `fir_interpolate_hb_graph.hpp`.
 
-In the file `fir_graph.h`, the notable changes are the following:
+In the file `fir_graph.h`, the following are the notable changes:
 
 The constants for the second filter have been added:
 ```
@@ -272,7 +272,7 @@ Type `make aiesim` to run the simulation and save the trace.
 
 Type `make aieviz` to start `vitis_analyzer`.
 
-Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. In this version of the graph, we can now see the two kernels, each implemented in the own AI Engine tile.
+Selecting **Graph** on the navigation bar shows a diagram of the filter implementation. In this version of the graph, you can now see the two kernels, each implemented in the own AI Engine tile.
 
 ![Vitis Analyzer Graph](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Graph.png)
 
@@ -284,19 +284,19 @@ Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the 
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Trace.png)
 
-In part 3, we are going to use filter parameters to attempt to increase the performance of the chan_FIR filter, to increase overall performance of the chain.
+In part 3, you are going to use filter parameters to attempt to increase the performance of the chan_FIR filter and the chain.
 
 ## Part 3: Optimizing Filter Performance
 
 Part 3 of this tutorial will:
 
-* demonstrate how to use the CASC_LEN parameter to increase filter performance.
+* demonstrate how to use the CASC_LEN parameter to increase the filter performance.
 
 
 
 ### Changes to the Filter Graph from Part 1
 
-For Part 3, we are going to increase the performance of the design by adjusting the TP_CASC_LEN parameter on the chan_FIR filter.
+For Part 3, you are going to increase the performance of the design by adjusting the TP_CASC_LEN parameter on the chan_FIR filter.
 
 In `system_settings.h`, the following parameter has been changed:
 ```

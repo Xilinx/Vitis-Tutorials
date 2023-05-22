@@ -43,11 +43,11 @@ Phase 1 is completed in the following stages:
 
 There are also optional stages to simulate the AI Engine application using the `aiesim` target and `run_emu` to launch hardware emulation that includes all the PL kernels.
 
-In the terminal, type `make clean phase1`. All the required stages (`kernels`, `aie`, and `link`) will be run in the terminal as well as in hardware emulation (`package` and `run_emu`).
+In the terminal, type `make clean phase1`. All the required stages (`kernels`, `aie`, and `link`) are run in the terminal as well as in hardware emulation (`package` and `run_emu`).
 
-Check the placement of the AI Engine kernels using Vitis Analyzer and opening the `graph.aiecompile_summary` file.
+Check the placement of the AI Engine kernels using an AMD Vitis&trade; Analyzer and opening the `graph.aiecompile_summary` file.
 
-**Note:** The hardware emulation does not launch automatically. You have to launch it manually:
+**Note:** The hardware emulation does not launch automatically. Launch it manually:
 
 
 
@@ -113,7 +113,7 @@ AI Engine compilation in phase 1 generates numerous files in the `Work` director
 
 Phase 2 contains the following stages:
 
- 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case it uses the new interface constraints. The kernel itself has not changed but a kernel location constraint has been added to the graph so that you can see a big difference in the kernel placement. Check this new placement using Vitis Analyzer on the compile summary.
+ 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case, it uses new interface constraints. The kernel itself has not changed but a kernel location constraint has been added to the graph so that you can see a big difference in the kernel placement. Check this new placement using Vitis Analyzer on the compile summary.
 
  2. `package2`: Create the PDI to load onto the device (`hw_emu`).
 
@@ -128,7 +128,7 @@ Run `make phase2` to go over all steps. Simulation is done in the same way as in
 - For phase 1, type `make TARGET=hw clean phase1`.
 - For phase 2, type `make TARGET=hw phase2`.
 
-2. When the two phases are completed, there will be a `sd_card.img` file in the directory. Use a standard SD card imager with this file to initialize an SD card.
+2. When the two phases are completed, there will be an `sd_card.img` file in the directory. Use a standard SD card imager with this file to initialize an SD card.
 
 3. Place the SD card in the top SD card slot of your board.
 
