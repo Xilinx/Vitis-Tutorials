@@ -7,19 +7,19 @@
 
 # Step 2: Create the Software Components and the Vitis DFX Platform
 
-The software components of a Vitis extensible platform are identical no matter whether the platform supports DFX or not. Please refer to VCK190 Custom Platform Tutorial for details about preparing software components from common image or build them from scratch.
+The software components of an AMD Vitis™ extensible platform are identical no matter whether the platform supports DFX or not. Refer to VCK190 Custom Platform Tutorial for details about preparing software components from common image or build them from scratch.
 
 The unique requirements from DFX platforms are from the device tree.
 
-### Generating Device Tree
+## Generating Device Tree
 
-We use the static XSA to generate the base device tree with device tree generator (DTG). The generated device tree (.dts and .dtsi) only includes IP information in the static region. If any IP in the dynamic region needs driver support, we need to add them to the device tree manually. AI Engine is an example that needs driver support. We need to add its info to system-user.dtsi. 
+Use the static XSA to generate the base device tree with device tree generator (DTG). The generated device tree (.dts and .dtsi) only includes IP information in the static region. If any IP in the dynamic region needs driver support, you should add them to the device tree manually. AI Engine is an example that needs driver support. Add its information to ``system-user.dtsi``.
 
-> Note: Since currently only one DFX region is supported, ZOCL driver and device tree only supports one dfx_decoupler IP address.
+>**Note:** Only one DFX region is supported at the moment; therefore, the ZOCL driver and device tree only supports one dfx_decoupler IP address.
 
-> Note: If you have multiple RM and they have different IP, you can enable these IP with device tree overlay. Device tree overlay is out of the scope of this tutorial.
+>**Note:** If you have multiple RM and they have different IPs, you can enable these IP with device tree overlay. Device tree overlay is out of the scope of this tutorial.
 
-#### First add the following AIE info to **system-user.dtsi** file 
+### Add AI Engine Information to the ``system-user.dtsi`` File
 
 ```
 &amba_pl {
@@ -58,13 +58,13 @@ We use the static XSA to generate the base device tree with device tree generato
 };
 ```
 
-A prepared [system-user.dtsi](ref_file/step2_sw/system-user.dtsi) file is ready for use. 
+A prepared [system-user.dtsi](ref_file/step2_sw/system-user.dtsi) file is ready for use.
 
 If you updated the AI Engine clock frequency, please update the `clock-frequency` of `aie_core_ref_clk_0`.
   
-#### Generate the base device tree from the static XSA
+### Generate the Base Device Tree from the Static XSA
 
-```
+```bash
 createdts -hw <static XSA> \
     -zocl\
     -out . \
@@ -75,21 +75,19 @@ createdts -hw <static XSA> \
     -compile
 ```
 
-The generated device tree files are located in build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp path.You can find the system.dtb file in step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/ directory.
-
-
+The generated device tree files are located in ``build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp`` path. You can find the ``system.dtb`` file in ``step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/`` directory.
 
 ### Creating the Vitis Platform
 
 The Vitis platform creation workflow for DFX platforms is almost identical to the flat platform with the following exceptions
 
-1. The platform creation can only be down with XSCT. Vitis IDE doesn't support to create DFX platforms.
-2. When creating the DFX platform, both static XSA and RP XSA are required. Static XSA will be used to create boot.bin. RP XSA will be used to link acceleration kernels.
+- The platform creation can only be created with XSCT. Vitis IDE does not support to create DFX platforms.
 
+- When creating the DFX platform, both static XSA and RP XSA are required. Static XSA will be used to create ``boot.bin``. RP XSA is used to link acceleration kernels.
 
-#### Prepare for Platform Packaging
+### Prepare for Platform Packaging
 
-User should prepare the following components before creating the platform.
+You should prepare the following components before creating the platform.
 
 | Component                                     | Conventional Path or Filename                         | Description                                                   |
 | --------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------- |
@@ -97,43 +95,42 @@ User should prepare the following components before creating the platform.
 | Boot components in FAT32 partition of SD Card | sd_dir/boot.scr                                        | U-boot configuration file to store in FAT32 partition of SD card                                    |
 | Linux Software Components         | sw_comp/Image</br>sw_comp/rootfs.ext4</br>sw_comp/sysroots | Linux components for application creation and Linux booting. They can be packaged into platform or stay standalone and be linked during application creation process. |
 
-In this tutorial, we will use the Linux software components provided by the Common Images.
+This tutorial uses the Linux software components provided by the Common Images. You can store all the necessary files for Vitis platform creation flow in the ``step2_sw/build/pfm`` directory.
 
-We would store all the necessary files for Vitis platform creation flow. Here we call it **step2_sw/build/pfm** directory. 
-
-
-1. Download and extract Common Images for Versal
+1. Download and extract the Common Images for AMD Versal™ devices.
 
    - Visit the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) download page.
-   - On Version 2023.1 page, download the Versal common image to step2_sw/build/common.
-   - Extract the downloaded package with command `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2023.1.tar.gz` 
+   - Download the Versal common image to `step2_sw/build/common` from the 2023.1 page.
+   - Extract the downloaded package using the `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2023.1.tar.gz` command.
 
-2. Prepare the boot components. 
+2. Prepare the boot components.
 
-   From the table above, we know that the boot components include the following items:
+   From the table above, you know that the boot components include the following items:
 
-   - bl31.elf
-   - u-boot.elf
-   - system.dtb
+   - ``bl31.elf``
+   - ``u-boot.elf``
+   - ``system.dtb``
 
    Follow these steps to copy them to boot directory.
 
-   - Create directory for boot components `mkdir step2_sw/build/boot`
-   - Copy boot components from common image directory
+   - Create directory for boot components `mkdir step2_sw/build/boot`.
+   - Copy boot components from common image directory.
+
      ```bash
      cp step2_sw/build/common/bl31.elf step2_sw/build/boot
      cp step2_sw/build/common/u-boot.elf step2_sw/build/boot
      ```
-   - Copy device tree
+
+   - Copy device tree.
+
      ```bash
      cp step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/system.dtb step2_sw/build/boot
      ```
 
+3. Prepare the ``sd_dir`` directory. Contents in this directory will be packaged to FAT32 partition of SD card image by v++ package tool.
 
-3. Prepare the **sd_dir** directory. Contents in this directory will be packaged to FAT32 partition of SD card image by v++ package tool.
-
-   - Create sd_dir directory: `mkdir step2_sw/build/sd_dir`
-   - Copy **boot.scr** from common image directory **step2_sw/build/common** to the **step2_sw/build/sd_dir** directory. It's a script for u-boot initialization. U-boot will read it from fat32 partition during boot process.
+   1. Create the ``sd_dir`` directory: `mkdir step2_sw/build/sd_dir`
+   2. Copy ``boot.scr`` from the common image directory ``step2_sw/build/common`` to the ``step2_sw/build/sd_dir`` directory. It is a script for U-Boot initialization. U-boot will read it from FAT32 partition during boot process.
 
 4. Prepare Linux software components for application creation. Platform packaging can add them or exclude them. Due to the software component size, they are usually kept outside of platforms so that these components can be reused among multiple platforms with the same architecture. On the other side, keeping Linux software components in the platform can prevent mix and match different combinations when delivering the platform from one team to another. Here we keep the Linux software components standalone.
 
@@ -171,24 +168,25 @@ tree -L 3 --charset ascii
 |   `-- version-cortexa72-cortexa53-xilinx-linux
 ```
 
-> Note: If you run the fast track script, the boot directory only has linux.bif file because the platform creation script xsct_create_pfm.tcl uses `<petalinux_project>/images/linux` directory as boot directory for components of the BIF file. To make the GUI flow easier, we copy these components to boot directory for preparation.
+>**Note:** If you run the fast track script, the boot directory only has ``linux.bif`` file because the platform creation script `xsct_create_pfm.tcl` uses the `<petalinux_project>/images/linux` directory as boot directory for components of the BIF file. To make the GUI flow easier, copy these components to the boot directory for preparation.
 
+### Generating Static Boot Image
 
-#### Generating Static Boot Image
+A DFX platform can boot the static region during power on. The static boot image can include static region PDI for hardware configuration, Arm® Trusted Firmware `bl31.elf`, `u-boot.elf`, and device tree for U-Boot.
 
-A DFX platform boot the static region during power on. The static boot image can include static region PDI for hardware configuration, ARM Trusted Firmware bl31.elf, u-boot.elf and device tree for u-boot.
+When creating a DFX platform, static `boot.bin` is required. You generate this boot image before creating the platform.
 
-When creating a DFX platform, static boot.bin is required. We generate this boot image before creating the platform.
-
-Static PDI is included in the static region XSA. We can use XSCT command `openhw $(XSA_NAME)_static.xsa` to extract the XSA and find the PDI.
+Static PDI is included in the static region XSA. You can use the XSCT command `openhw $(XSA_NAME)_static.xsa` to extract the XSA and find the PDI.
 
 Run bootgen command to create the boot.bin.
-```
+
+```bash
 bootgen -arch versal -image bootgen.bif -o boot.bin;
 ```
 
-The bootgen.bif should contain the following information.
-```
+The `bootgen.`bif` should contain the following information.
+
+```bash
 the_ROM_image:
 {
 image {
@@ -203,14 +201,13 @@ image {
 }
 ```
 
+### Platform Packaging
 
-#### Platform Packaging
+Use XSCT command line tool to create the Vitis DFX platform.
 
-We will use XSCT command line tool to create the Vitis DFX platform. 
+>**Note:** Vitis IDE support for creating Vitis DFX platforms will be added in the future.
 
-> Note: Vitis IDE support for creating Vitis DFX platforms will be added in the future.
-
-Create a tcl file with XSCT commands. 
+Create a tcl file with XSCT commands.
 
 ```Tcl
 # Create a platform project
@@ -236,47 +233,39 @@ platform write
 platform generate
 ```
 
-> Note: Please replace the file name and directory name in the script with your project file location.
-
-> Note: If you don't need to support hardware emulation, you can omit the option `-hw_emu` and its value for the command `platform create`.
+>**Note:** Replace the file name and directory name in the script with your project file location. If you do not need to support hardware emulation, you can omit the option `-hw_emu` and its value for the command `platform create`.
 
 The `platform create` command needs the following input values:
 
 - `-name`: Platform name
 - `-hw`: Static Hardware XSA file location
 - `-rp`: The reconfigurable partition info with ID, XSA and hardware emulation XSA info. ID is reserved for multi-partition DFX. For now only one partition is supported. Please use `id 0`.
-- `-out`: platform output path. In this example, we set output directory to **step2_sw/build/pfm**.
-- `-sd-dir`: the directory that contains the files to be included in the FAT32 partition of the SD card image.
+- `-out`: Platform output path. In this example, we set output directory to ``step2_sw/build/pfm``.
+- `-sd-dir`: The directory that contains the files to be included in the FAT32 partition of the SD card image.
 
+The `domain` command will set up one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. The DFX platform Linux domain requires you to provide the `boot.bin` to boot the static region. It will use files in the `./sd_dir` directory to form the FAT32 partition of the SD card image. You have stored the required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
 
-The `domain` command will setup one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. The DFX platform Linux domain requires user to provide the boot.bin to boot the static region. It will use files in `./sd_dir` to form the FAT32 partition of the SD card image. We have stored required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
+You can pass the values to the script directly by replacing the variable with the actual value, or define them in the header of the Tcl script, or pass the value to XSCT when calling this script.
 
-You can pass the values to the script directly by replacing the variable with the actual value, or define them in the header of the tcl script, or pass the value to XSCT when calling this script. 
-
-Here's an example of calling XSCT if you hard code all contents in xsct_create_pfm.tcl.
+Here is an example of calling XSCT if you hard code all contents in `xsct_create_pfm.tcl`.
 
 ```bash
 xsct xsct_create_pfm.tcl
 ```
 
-To support better generalization, the example [Makefile](./ref_files/step2_sw/Makefile) and [xsct_create_pfm.tcl](./ref_files/step2_sw/xsct_create_pfm.tcl) in ref_files directory use variables to represent the file names and directory location. Please refer to them if you would like to get more programmability in your scripts.
-
-
-
+To support better generalization, the example [Makefile](./ref_files/step2_sw/Makefile) and [xsct_create_pfm.tcl](./ref_files/step2_sw/xsct_create_pfm.tcl) in the `ref_files` directory uses variables to represent the file names and directory location. Refer to them if you would like to get more programmability in your scripts.
 
 ### Next Step
 
-Next let's move to [step 3 to try to build some applications on this platform and test them.](./step3.md)
-
-
+Next, move to [step 3 to try to build some applications on this platform and test them.](./step3.md)
 
 ### Fast Track
 
-Scripts are provided to generate the device tree and generating the platform. To use these scripts, please run the following steps.
+Scripts are provided to generate the device tree and generating the platform. To use these scripts, run the following steps.
 
-1. Run build
+1. Run build:
 
-   ```
+   ```bash
    # cd to the step directory, e.g.
    cd step2_sw
    make
@@ -284,14 +273,12 @@ Scripts are provided to generate the device tree and generating the platform. To
 
    The created platform is located in the `step2_sw/build/pfm/vck190_custom_dfx/export` directory.
 
-2. To clean the generated files, please run
+2. To clean the generated files, run:
 
    ```bash
    make clean
    ```
 
-
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-

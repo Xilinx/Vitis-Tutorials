@@ -126,12 +126,13 @@ Trying to program device[0]: edge
 
 Solution:
 
-This error can happen when XRT tries to access kernel register but it's not accessible. When visiting non-existing address in AXI, the Linux system will report such SError. The path for accessing the kernel register goes across the DFX boundary. It's an error prone place. We can check the following possible reasons.
+This error can happen when XRT tries to access kernel register but it is not accessible. When visiting a non-existing address in AXI, the Linux system will report an SError. The path for accessing the kernel register goes across the DFX boundary. The following reasons can cause this error:
 
-1. Aperture setup of the PL_CTRL_S_AXI interface. Make sure the APERTURE and HDL_ATTRIBUTE.LOCKED properties are applied to the PL_CTRL_AXI_S interface. If it's incorrect, v++ link will assign incorrect address to kernels.
-2. PL_CTRL_S_AXI interface width. Make sure the PL_CTRL_AXI_S interface is freezed after doing validation because the validation step calculates the bus width. You can check the with by right click the VitisRegion.bd, select Generate Output Products. If you select "Do not launch", Vivado will generate the wrapper and skip IP synthesis. Check VitisRegion.v. If the PL_CTRL_S_AXI_araddr is defined as a bus like `input [43:0]PL_CTRL_S_AXI_araddr`, it's correct. If it's `input PL_CTRL_S_AXI_araddr`, it's incorrect. 
+- Aperture setup of the PL_CTRL_S_AXI interface. Make sure the APERTURE and HDL_ATTRIBUTE.LOCKED properties are applied to the PL_CTRL_AXI_S interface. If it is incorrect, the v++ link will assign incorrect address to kernels.
 
-### ERROR: [BD 41-2666] NoC BDC Aperture Error: Dead-end aperture.
+- PL_CTRL_S_AXI interface width. Make sure the PL_CTRL_AXI_S interface is freezed after doing validation because the validation step calculates the bus width. You can check the with by right click the VitisRegion.bd, select Generate Output Products. If you select "Do not launch", Vivado will generate the wrapper and skip IP synthesis. Check VitisRegion.v. If the PL_CTRL_S_AXI_araddr is defined as a bus like `input [43:0]PL_CTRL_S_AXI_araddr`, it is correct. If it is `input PL_CTRL_S_AXI_araddr`, it is incorrect.
+
+### ERROR: [BD 41-2666] NoC BDC Aperture Error: Dead-end Aperture
 
 Issue: When running Generate Block Design in step 1, Vivado reports the following error message:
 
@@ -141,10 +142,8 @@ ERROR: [BD 41-2666] NoC BDC Aperture Error: Dead-end aperture. BDC Aperture 0x80
 
 Solution:
 
-In the error message, it lists the BDC Aperture `0x800000000 [0x180000000]` on BDC interface `/VitisRegion/DDR_2` is not used by downstream NOC endpoint `/noc_ddr/MC0_2`. It's because that the noc_ddr only enables 2GB memory space. Please check that you followed the noc_ddr setup instructions to enable `DDR LOW 1` address region.
-
+The error message shows that the BDC Aperture `0x800000000 [0x180000000]` on the BDC interface `/VitisRegion/DDR_2` is not used by downstream NOC endpoint `/noc_ddr/MC0_2`. It is because the noc_ddr only enables 2 GB memory space. Check that you followed the noc_ddr setup instructions to enable `DDR LOW 1` address region.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-
