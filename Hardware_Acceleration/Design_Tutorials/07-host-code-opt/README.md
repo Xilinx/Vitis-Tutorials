@@ -12,7 +12,7 @@
 
 ## Introduction
 
-This tutorial concentrates on performance tuning of the host code associated with an FPGA accelerated application. Host code optimization is only one aspect of performance optimization, which includes the following disciplines:
+This tutorial concentrates on performance tuning of the host code associated with a field programmable gate array (FPGA) accelerated application. Host code optimization is only one aspect of performance optimization, which includes the following disciplines:
 
 * Host program optimization
 * Kernel code optimization
@@ -38,7 +38,8 @@ This tutorial uses:
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:** Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
->* If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
+>
+>* If you run applications on the AMD Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Accessing the Tutorial Reference Files
 
@@ -52,8 +53,7 @@ In this example, the kernel is created solely for host code optimization. It is 
 
 The C++ kernel has one input and one output port. These ports are 512-bits wide to optimally use the AXI bandwidth. The number of elements consumed by kernel per execution is configurable through the `numInputs` parameter. Similarly, the `processDelay` parameter can be used to alter the latency of the kernel. The algorithm increments the input value by the value for `ProcessDelay`. However, this increment is implemented by a loop executing `processDelay` times incrementing the input value by one each time. Because this loop is present within the kernel implementation, each iteration will end up requiring a constant amount of cycles, which can be multiplied by the `processDelay` number.
 
-The kernel is also designed to enable AXI burst transfers. The kernel contains a read and a write process, executed in parallel with the actual kernel algorithm (`exec`) towards the end of the process.
-The read and the write process initiates the AXI transactions in a simple loop and writes the received values into internal FIFOs or reads from internal FIFOs and writes to the AXI outputs. The Vitis compiler implements these blocks as concurrent parallel processes, because the DATAFLOW pragma was set on the surrounding `pass_dataflow` function.
+The kernel is also designed to enable AXI burst transfers. The kernel contains a read and a write process, executed in parallel with the actual kernel algorithm (`exec`) towards the end of the process. The read and the write process initiates the AXI transactions in a simple loop and writes the received values into internal FIFOs or reads from internal FIFOs and writes to the AXI outputs. The Vitis compiler implements these blocks as concurrent parallel processes, because the DATAFLOW pragma was set on the surrounding `pass_dataflow` function.
 
 ## Building the Device Binary (xclbin)
 
@@ -91,7 +91,7 @@ The following three classes are provided through header files in the common sour
   The class provides accessory functions to the queue, context, and kernel required for the generation of buffers and the scheduling of tasks on the accelerator. The class also automatically releases the allocated OpenCL API objects when the ApiHandle destructor is called.
 
 * `srcCommon/Task.h`: An object of class `Task` represents a single instance of the workload to be executed on the accelerator. Whenever an object of this class is constructed, the input and output vectors are allocated and initialized based on the buffer size to be transferred per task invocation. Similarly, the destructor will de-allocate any object generated during the task execution.
-  >**NOTE:** This encapsulation of a single workload for the invocation of a module allows this class to _also_ contain an output validator function (`outputOk`).
+  >**NOTE:** This encapsulation of a single workload for the invocation of a module allows this class to ***also*** contain an output validator function (`outputOk`).
 
    The constructor for this class contains two parameters:
   * `bufferSize`: Determines how many 512-bit values are transferred when this task is executed.
@@ -108,9 +108,9 @@ The following three classes are provided through header files in the common sour
 
   None of the code in any of these header files is modified during this tutorial. All key concepts will be shown in different `host.cpp` files, as found in:
 
- * `src/pipeline_host.cpp`
- * `src/sync_host.cpp`
- * `src/buf_host.cpp`
+  * `src/pipeline_host.cpp`
+  * `src/sync_host.cpp`
+  * `src/buf_host.cpp`
 
   However, the main function in the `host.cpp` file follows a specific structure described in the following section.
 
@@ -161,9 +161,10 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
 
 2. You are now ready to run the application.
 
-   The runtime data is generated by the host program due to settings specified in the `xrt.ini` file, as described in [Enabling Profiling in Your Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Enabling-Profiling-in-Your-Application). This file is found at `./reference-files/auxFiles/xrt.ini`, and is copied to the `runPipeline` directory by the `make run` command. 
-   
+   The runtime data is generated by the host program due to settings specified in the `xrt.ini` file, as described in [Enabling Profiling in Your Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Enabling-Profiling-in-Your-Application). This file is found at `./reference-files/auxFiles/xrt.ini`, and is copied to the `runPipeline` directory by the `make run` command.
+
    The `xrt.ini` file contains the following settings:
+
    ```
    [Debug]
    opencl_trace=true
@@ -182,22 +183,22 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    vitis_analyzer pipeline/xrt.run_summary
    ```
 
- >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+   >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
-  The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
+   The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
 
    * OpenCL API Calls
    * Data Transfer
    * Kernel Enqueues
 
 3. Zoom in on the section illustrating the actual accelerator execution, and select one of the kernel enqueue blocks on `Row 0` to see an image similar to the following figure.
-![](images/OrderedQueue_vitis.PNG)
+   ![Ordered Queue](images/OrderedQueue_vitis.PNG)
 
    The blue arrows identify dependencies, and you can see that every Write/Execute/Read task execution has a dependency on the previous Write/Execute/Read operation set. This effectively serializes the execution. In this case, the dependency is created by using an ordered queue. 
-   
-4. Open the file `src/pipeline_host.cpp` in a text editor. 
-   
-   In the **Common Parameters** section as shown at line 27 of the `pipeline_host.cpp`, the `oooQueue` parameter is set to `false`.
+
+4. Open the file `src/pipeline_host.cpp` in a text editor.
+
+   In the **Common Parameters** section, as shown at line 27 of the `pipeline_host.cpp`, the `oooQueue` parameter is set to `false`.
 
    ```cpp
     bool         oooQueue                 = false;
@@ -209,7 +210,7 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
     bool         oooQueue                 = true;
    ```
 
-5. Recompile the application, rerun the program, and review the run_summary in Vitis analyze: 
+5. Recompile the application, rerun the program, and review the run_summary in the Vitis analyzer:
 
    ```
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=pipeline
@@ -217,13 +218,13 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    ```
 
    If you zoom in on the Application Timeline, and click any kernel enqueue, you should see results similar to the following figure.
-![](images/OutOfOrderQueue_vitis.PNG)
+![Out-of-Order Queue](images/OutOfOrderQueue_vitis.PNG)
 
    If you select other pass kernel enqueues, you will see that all 10 are now showing dependencies only within the Write/Execute/Read group. This allows the read and write operations to overlap with the execution, and you are effectively pipelining the software write, execute, and read. This can considerably improve the overall performance because the communication overhead is occurring concurrently with the execution of the accelerator.
 
 ### Lab 2: Kernel and Host Code Synchronization
 
-For this step, look at the source code in `src/sync_host.cpp` and examine the execution loop (line 55). This is the same code used in the previous section of this tutorial.
+For this step, look at the source code in `src/sync_host.cpp`, and examine the execution loop (line 55). This is the same code used in the previous section of this tutorial.
 
 ```cpp
   // -- Execution -----------------------------------------------------------
@@ -268,16 +269,16 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=sync
    ```
 
-3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
+3. After the run completes, open the Application Timeline using the Vitis analyzer, then click the Application Timeline located on left side panel.
 
    ```
    vitis_analyzer sync/xrt.run_summary
    ```
-   
-   If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
-![](images/clFinish_vitis.PNG)
 
-   In the figure, the key elements are the red box named `clFinish` and the large gap between the kernel that enqueues every three invocations of the accelerator.
+   If you zoom in on the Application Timeline, an image is displayed similar to the following figure.
+![clFinish Vitis](images/clFinish_vitis.PNG)
+
+   In the figure, the key elements are the red box named `clFinish`, and the large gap between the kernel that enqueues every three invocations of the accelerator.
 
    The call to `clFinish` creates a synchronization point on the complete OpenCL command queue. This implies that all commands enqueued onto the given queue will have to be completed before `clFinish` returns control to the host program. As a result, all activities, including the buffer communication, need to be completed before the next set of three accelerator invocations can resume. This is effectively a barrier synchronization.
 
@@ -298,7 +299,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
      clFinish(api.getQueue());
    ```
 
-5. Recompile the application, rerun the program, and review the run_summary in Vitis analyze:
+5. Recompile the application, rerun the program, and review the run_summary in the Vitis analyzer:
 
    ```
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=sync
@@ -334,9 +335,9 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 
 ### Lab 3: OpenCL API Buffer Size
 
-In the final section of this tutorial, you will investigate how the buffer size impacts the total performance. In this section you will focus on the host code in `src/buf_host.cpp`. 
+In the final section of this tutorial, you will investigate how the buffer size impacts the total performance. In this section, you will focus on the host code in `src/buf_host.cpp`.
 
-The execution loop is the same as it was at the end of the prior section. However, in the `src/buf_host.cpp` file the number of tasks to be processed has increased to 100. The goal of this change is to get 100 accelerator calls to transfer 100 buffers and read 100 buffers. This enables the tool to get a more accurate average throughput estimate per transfer.
+The execution loop is the same as it was at the end of the prior section. However, in the `src/buf_host.cpp` file, the number of tasks to be processed has increased to 100. The goal of this change is to get 100 accelerator calls to transfer 100 buffers and read 100 buffers. This enables the tool to get a more accurate average throughput estimate per transfer.
 
 A second command line option (`SIZE=`) has also been added to specify the buffer size for a specific run. The actual buffer size transferred during a single write or read is determined by calculating to the power of the specified argument (`pow(2, argument)`) multiplied by 512-bits.
 
@@ -347,23 +348,24 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
    ```
 
    The argument `SIZE` is used as a second argument to the host executable.
-   >**NOTE**: If `SIZE` is not specified it defaults to `SIZE=14`. 
-   
+   >**NOTE**: If `SIZE` is not specified it defaults to `SIZE=14`.
+
    This allows the code to execute the implementation with different buffer sizes and measure throughput by monitoring the total compute time. This number is calculated in the test bench and reported through the FPGA Throughput output.
 
-3. After the run completes, open the Application Timeline using the Vitis analyzer, then  click the Application Timeline located at left side panel.
+2. After the run completes, open the Application Timeline using the Vitis analyzer, then click the Application Timeline located at left side panel.
 
    ```
    vitis_analyzer buf/xrt.run_summary
    ```
-    Examine the tmeline to review the operation. 
 
-4. To ease the sweeping of different buffer sizes, an additional makefile target was created, wich can be run using the following command.
+    Examine the tmeline to review the operation.
+
+3. To ease the sweeping of different buffer sizes, an additional makefile target was created, which can be run using the following command.
 
    ```
    make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 bufRunSweep
    ```
-   >**NOTE**: The sweeping script (`auxFiles/run.py`) requires a Python installation, which is available in most systems. 
+   >**NOTE**: The sweeping script (`auxFiles/run.py`) requires a Python installation, which is available in most systems.
    
    Executing the sweep will run and record the FPGA throughput for buffer SIZE arguments from 8 to 19. The measured throughput values are recorded together with the actual number of bytes per transfer in the `buf/results.csv` file, which is printed at the end of the makefile execution.
 
@@ -389,7 +391,7 @@ In general, there are many ways to implement your host code and improve performa
 
 ## Next Steps
 
-For more information about tools and processes you can use to analyze the application performance in general, refer to the [Profiling the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-the-Application) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+For more information about tools and processes, you can use to analyze the application performance in general, refer to the [Profiling the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-the-Application) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

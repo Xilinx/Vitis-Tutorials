@@ -11,65 +11,74 @@
 
 The following showcase the features:
 
-[Source Code Debug on Hardware](#Source-code-debug-on-hardware)
+[Source Code Debug on Hardware](#source-code-debug-on-hardware)
 <!--
 [Command-line project debug with Vitis IDE](#Command-line-project-debug-with-Vitis-IDE)
 -->
-[Limitations of Source Code Debug on Hardware](#Limitations-of-source-code-debug-on-hardware)
-
+[Limitations of Source Code Debug on Hardware](#limitations-of-source-code-debug-on-hardware)
 
 ## Source Code Debug on Hardware
 
-### Step 1. Setup Connection to the Hardware Board
-#### Step 1.1. Target Connection Setup
-##### Run hardware server from computer that connects to target board
-Launch hw_server from the computer that has JTAG connection to the VCK190 board.
+### Step 1: Set Up the Connection to the Hardware Board
+
+#### Step 1.1: Target the Connection Setup
+
+##### Run the Hardware Server from the Computer that Connects to the Target Board
+
+Launch the hw_server from the computer that has the JTAG connection to the VCK190 board.
 ![alt text](images/hw_ta_hw.png)
 
-#### Step 1.2. Vitis IDE Setup
-Create debug target connection from Vitis™ IDE.
+#### Step 1.2: Vitis IDE Setup
+
+Create the debug target connection from Vitis IDE.
 
 ![alt text](images/hw_ta_con.png)
 ![alt text](images/hw_ta_con1.png)
 
-#### Step 1.3. Target Connection Verification
+#### Step 1.3: Target Connection Verification
+
 ![alt text](images/hw_ta_test.png)
 ![alt text](images/hw_ta_test1.png)
 ![alt text](images/hw_ta_test2.png)
 
-### Step 2. Debug Project in Vitis IDE
-#### Step 2.1. Target Preparation
-* Make sure that sd_card is burned with expected binaries.
-* Plug-in sd_card into SD card slot and power up the board.
-* After board boots up, click on **Debug** to launch debugger.
+### Step 2: Debug the Project in the Vitis IDE
 
-![alt text](images/hw_ta_sd.png">
+#### Step 2.1: Target Preparation
+
+* Make sure that the SD card is burned with the expected binaries.
+* Plug in the SD card into the SD card slot, and power up the board.
+* After board boots up, click **Debug** to launch the debugger.
+
+![alt text](images/hw_ta_sd.png)
 
 **Note:** The `sd_card.img` at `Hardware/package/sd_card.img` is the file for regular use. `sd_card.img` at `Hardware/package_aie_debug` is for debug run on board.
 
-#### Step 2.2. Launch debugger
+#### Step 2.2: Launch  the Debugger
+
 Launch PS application with `xclbin` (or PS application expected variables), so it is ready to be debugged.
 
 ![alt text](images/hw_ta_run2.png)
 
-After PS application is running and waiting to be debugged, launch Vitis IDE debugger.
+After the PS application is running and waiting to be debugged, launch the Vitis IDE debugger.
 
-![alt text](images/hw_ta_run.png">
+![alt text](images/hw_ta_run.png)
 
-The Debugger launches, where you can expect to see AI Engine cores, and 
-- the source code window that allows debug (step-into, step-through, step-return)
-- the variables view 
-- the breakpoint view
-- the register view 
+The Debugger launches, where you can expect to see the AI Engine cores and:
+
+* The Source Code window that allows debug (step-into, step-through, step-return)
+* The Variables view
+* The Breakpoint view
+* The Register view
+
 The application is ready to be debugged.
 
-![alt text](images/hw_ta_run1.png">
+![alt text](images/hw_ta_run1.png)
 
-From Vitis IDE, the application is being debugged during run time.
+From the Vitis IDE, the application is being debugged during run time.
 
 ![alt text](images/hw_ta_run3.png)
 
-From Vitis IDE, click **resume** for all AI Engine cores, and final “TEST PASSED” is displayed.
+From the Vitis IDE, click **resume** for all AI Engine cores, and a final `TEST PASSED` message is displayed.
 ![alt text](images/hw_ta_run4.png)
 
 <!--
@@ -124,17 +133,17 @@ vitis -debug -h
 ![alt text](images/aie_cl_run.png">
 -->
 
-## Limitations of Source Code Debug on Hardware
-1. There are maximum four breakpoints available for each tile. One of these four breakpoints is assigned to first line of main() by default and can be cleared and then assigned to other lines during debug.
-2. Due to compiler, `-O0` option is not supported, non-sequential execution when stepping through source code is expected.
-3. If an individual kernel is highlighted, select resume button to continue execution until next breakpoint or blocked to wait for I/O. If the beamformer design is highlighted, select resume button to resume all kernels execution until meet each kernel's breakpoint or blocked  waiting for each kernel's I/O operation.
-4. Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values. Limitations from <a href="Debug2_ai.md">AI Engine debug with AIE emulator</a> applies.
+## Limitations of the Source Code Debug on Hardware
+
+1. There are maximum four breakpoints available for each tile. One of these four breakpoints is assigned to first line of `main()` by default and can be cleared and then assigned to other lines during debug.
+2. Because the compiler, `-O0` option is not supported, non-sequential execution when stepping through source code is expected.
+3. If an individual kernel is highlighted, select the resume button to continue execution until the next breakpoint or blocked to wait for I/O. If the beamformer design is highlighted, select the resume button to resume all kernels execution until meet each kernel's breakpoint or blocked waiting for each kernel's I/O operation.
+4. Because of the compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values. Limitations from [AI Engine debug with AIE emulator](./Debug2_ai.md) applies.
 5. `printf()` is not supported in hardware debug.
 
 # Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
-
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

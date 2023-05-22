@@ -11,15 +11,17 @@
 
 ## Overview
 
-In this tutorial you will learn how to:
+In this tutorial, you will learn how to:
 
-* Add profiling APIs in graph and PS code to calculate design performance.
-* Generate VCD file to view design information.
-* Cross check between calculated performance with profiling APIs and vitis_analyzer trace view.
-* Use profiling features to inspect design.
+* Add profiling APIs in the graph and PS code to calculate design performance.
+* Generate a VCD file to view the design information.
+* Cross check between the calculated performance with the profiling APIs and vitis_analyzer trace view.
+* Use the profiling features to the inspect design.
 
 ## Profiling APIs
-Start profiling API,
+
+Start the profiling API:
+
 ```bash
 /// Start profiling and acquire resources needed for profiling. Should be called after graph::init().
 /// @param io Plarform PLIO or GMIO object.
@@ -28,37 +30,42 @@ Start profiling API,
 /// @return Return event::handle to be used by read_profiling and stop_profiling. Return event::invalid_handle for error conditions or unsupported use cases.
 static handle start_profiling(IoAttr& io, io_profiling_option option, uint32 value = 0);
 ```
-Read profiling API,
+
+Read the profiling API:
+
 ```bash
 /// Read profiling.
 /// @param h event::handle returned from start_profiling.
 /// @return Profiling value.
 static long long read_profiling(handle h);
 ```
-Stop profiling API,
+
+Stop the profiling API:
+
 ```bash
 /// Stop profiling and release resources needed for profiling.
 /// @param h event::handle returned from start_profiling.
 static void stop_profiling(handle h);
 ```
 
+[1. Profiling APIs with the AI Engine Simulator](#1-profiling-apis-with-the-ai-engine-simulator)
 
-[1. Profiling APIs with AI Engine Simulator](#1-Profiling-APIs-with-AI-Engine-Simulator)
+[2. Profiling APIs with the HW Emulator](#2-profiling-apis-with-the-hw-emulator)
 
-[2. Profiling APIs with HW Emulator](#2-Profiling-APIs-with-HW-Emulator)
+[3. Profiling APIs on the Hardware](#3-profiling-apis-on-the-hardware)
 
-[3. Profiling APIs on HW](#3-Profiling-APIs-on-HW)
+[4. Cross Check the I/O Performance Values with VCD](#4-cross-check-the-io-performance-values-with-vcd)
 
-[4. Cross Check I/O Performance values with VCD](#4-Cross-Check-I/O-Performance-values-with-VCD)
+## 1: Profiling APIs with the AI Engine Simulator
 
+### Step 1.1: Download the Project
 
-## 1. Profiling APIs with AI Engine Simulator
+Clone the project source from the git repository, and unzip the zip file.
 
-### Step 1.1 Download the Project
-Clone the project source from git repository and unzip the zip file.
+### Step 1.2: Prepare the Profiling APIs Applied Graph Code
 
-### Step 1.2 Prepare Profiling APIs applied graph code
-Use this tutorial's graph.cpp.profile_api that contains AI Engine profiling APIs.
+Use this tutorial's `graph.cpp.profile_api` that contains AI Engine profiling APIs.
+
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/aie
 cp graph.cpp.profile_api graph.cpp
@@ -67,24 +74,26 @@ cp Makefile.emu Makefile
 make libadf.a
 ```
 
-### Step 1.3 Run AI Engine Simulator
+### Step 1.3: Run the AI Engine Simulator
+
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --profile
 ```
 
-### Step 1.4 Expected Result
-![alt text](images/pr_aie_perf.png)
+### Step 1.4: Expected Result
 
+![alt text](images/pr_aie_perf.png)
 
 ```bash
 vitis_analyzer ./aiesimulator_output/default.aierun_summary
 ```
 
-## 2. Profiling APIs with HW Emulator
+## 2. Profiling APIs with the HW Emulator
 
-### Step 2.1 Prepare profiling APIs applied host code and Makefile
-After step 1.1 completed.
-Use this tutorial's host.cpp.profile_api that contains AI Engine profiling APIs and Makefile for HW Emulation.
+### Step 2.1: Prepare the Profiling APIs Applied Host Code and Makefile
+
+After Step 1.1 completed, use this tutorial's `host.cpp.profile_api` that contains the AI Engine profiling APIs and Makefile for HW Emulation.
+
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/sw
 cp host.cpp.profile_api host.cpp
@@ -92,92 +101,117 @@ cd ..
 cp Makefile.emu Makefile
 ```
 
-### Step 2.2 Build the Design
+### Step 2.2: Build the Design
+
 ```bash
 make
 ```
 
-### Step 2.3 Run Hardware Emulator
+### Step 2.3: Run the Hardware Emulator
+
 ```bash
 ./launch_hw_emu.sh
 ```
 
-### Step 2.4 Run Application
+### Step 2.4: Run the Application
+
 After Petalinux boots up.
+
 ```bash
 cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
+
 ![alt text](images/pr_hw_emu_perf.png)
 
+## 3: Profiling APIs on the Hardware
 
-## 3. Profiling APIs on HW
-### Step 3.1 Prepare HW Makefile
-After step 1.1 completed.
-Use this tutorial's Makefile for Hardware.
+### Step 3.1: Prepare the Hardware Makefile
+
+After Step 1.1 completed, use this tutorial's Makefile for Hardware.
+
 ```bash
 cd ${DOWNLOAD_PATH}/AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough
 cp Makefile.profile_hw Makefile
 make
 ```
 
-### Step 3.2 Flash SD card
-Flash generated `sd_card.img` to SD card.
+### Step 3.2: Flash the SD ard
 
-### Step 3.3 Boots up VCK190 board
-Plug in flashed completed SD card to vck190 board's sd slot.
-Power up the vck190 board.
+Flash the generated `sd_card.img` to the SD card.
 
-### Step 3.4 Run the Application
-After vck190 board boots up and ready to accepts commands with Linux prompt, issue these commands from terminal.
+### Step 3.3: Boots Up the VCK190 Board
+
+Plug in the flashed completed SD card to the VCK190 board's SD slot. Power up the VCK190 board.
+
+### Step 3.4: Run the Application
+
+After the VCK190 board boots up and is ready to accept commands with Linux prompt, issue these commands from the terminal.
+
 ```bash
 cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 
-### Step 3.5 Expected result
+### Step 3.5: Expected Result
+
 ![alt text](images/pr_hw_perf.png)
 
-**Note**: Due to slower memory access, hardware and hardware emulation performance values are not optimized and less than AI Engine simulation.
+>**NOTE:** Because of slower memory access, hardware and hardware emulation performance values are not optimized and less than AI Engine simulation.
 
+## 4: Cross Check the I/O Performance Values with VCD
 
-## 4. Cross Check I/O Performance values with VCD
-### Step 4.1 VCD generation
-Command to generate AI Engine simulation VCD file.
+### Step 4.1: VCD Generation
+
+Use the following command to generate the AI Engine simulation VCD file.
+
 ```bash
 aiesimulator --pkg-dir=./Work --i=. --dump-vcd=foo
 ```
-Command to generate hardware emulation VCD file.
+
+Use the following command to generate the hardware emulation VCD file.
+
 ```bash
 ./launch_hw_emu.sh -add-env AIE_COMPILER_WORKDIR=${PROJECT_FULL_PATH}/Work -aie-sim-options ${PROJECT_FULL_PATH}/aiesim_options.txt
 ```
-Where `aiesim_options.txt` content is
+
+Where `aiesim_options.txt` content is:
+
 ```bash
 AIE_DUMP_VCD=foo
 ```
-Follow step 2.4 to run application.
 
-### Step 4.2 Launch Vitis Analyzer to view trace
-To launch Vitis™ Analyzer for AI Engine simulation run.
+Follow Step 2.4 to run the application.
+
+### Step 4.2: Launch Vitis Analyzer to View Trace
+
+To launch Vitis Analyzer for AI Engine simulation run:
+
 ```bash
 vitis_analyzer ./aiesimulator_output/default.aierun_summary
 ```
-To launch Vitis Analyzer for hardware emulation run.
+
+To launch Vitis Analyzer for hardware emulation run:
+
 ```bash
 vitis_analyzer ./sim/behav_waveform/xsim/default.aierun_summary
 ```
 
-For hardware event trace steps that are available at [AI Engine Debug with Event Trace](./Debug4_et.md)
+The hardware event trace steps are available at [AI Engine Debug with Event Trace](./Debug4_et.md)
 
-### Step 4.3 Locate profiled interface
-After `default.aierun_summary` file is opened with Vitis Analyzer, select **Graph** view, locate the output file `data/ublf_out0.txt` that associated with `ulbfo0` output_plio object from `graph.h`.
+### Step 4.3: Locate the Profiled Interface
+
+After the `default.aierun_summary` file is opened with Vitis Analyzer, select the **Graph** view, and  locate the output file `data/ublf_out0.txt` that is associated with the `ulbfo0` output_plio object from `graph.h`.
+
 ```bash
 for(unsigned k=0;k<4; k++) {
     ulout[k]=output_plio::create("ulbfo"+std::to_string(k), plio_64_bits, "data/ulbf_out"+std::to_string(k)+".txt");
     connect<>(ulbf.out[k], ulout[k].in[0]);
 }
 ```
-This outpt_plio object is configured using profile API for output performance measurement. This can be found from `host.cpp`.
+
+This outpt_plio object is configured using the profile API for output performance measurement. This can be found in `host.cpp`.
+
 ```bash
     event::handle handle1 = event::start_profiling(dut.ulout[0],  event::io_stream_start_to_bytes_transferred_cycles, OUT_LEN*sizeof(cint16)*2);
 ...
@@ -194,35 +228,37 @@ This outpt_plio object is configured using profile API for output performance me
         printf("cycle_count1 is ZERO!\n");
     }
 ```
+
 ![alt text](images/pr_aie_perf_tile.png)
-Select the tile links to the output file by moving cursor on top of the tile.
+Select the tile links to the output file by moving the cursor on top of the tile.
 
-### Step 4.4 Locate tile
-Switch to `Trace` view, Locate tile(21,0).
+### Step 4.4: Locate Tile
 
-### Step 4.5 Use tool to measure execution time
-To measure execution time with tool, move marker to beginning of kernel execution from an iteration. Add second marker and move the second marker to beginning of another iteration. This method is same to measure execution time for AI Engine Simulation, hardware emulation or on Hardware.
+Switch to the `Trace` view, and locate tile(21,0).
+
+### Step 4.5: Use the Tool to Measure the Execution Time
+
+To measure the execution time with the tool, move the marker to the beginning of kernel execution from an iteration. Add the second marker, and move the second marker to the beginning of another iteration. This method is the same to measure the execution time for AI Engine Simulation, hardware emulation, or on hardware.
 
 ![alt text](images/pr_aie_perf_vcd.png)
 
-### Step 4.6 Performance Calculation
-Above example indicates 9.400 microseconds (us) is used for 10 iterations execution time. Each iteration execution time is 0.94 us or 940 nanoseconds (ns) in average.
+### Step 4.6: Performance Calculation
 
-Per output file `ulbf_out0.txt`, 38400 lines for 100 iterations. Each iteration processes and outputs 384 lines. Each line has 2 cint16 samples.
+The above example indicates 9.400 microseconds (us) is used for 10 iterations execution time. Each iteration execution time is 0.94 us or 940 nanoseconds (ns) in average.
+
+Per the output file `ulbf_out0.txt`, 38400 lines for 100 iterations. Each iteration processes and outputs 384 lines. Each line has two cint16 samples.
 
 Performance calculation:
 
-1,000,000,000(AI engine frequency in HZ) / 940(clock cycles each iteration) x 384(lines each iteration) x 2(samples per line) = 817,021,276.59(samples/second). This number is close to profiling API reported, 818,527,715.90 samples/s.
-
-
+1,000,000,000(AI engine frequency in HZ) / 940(clock cycles each iteration) x 384(lines each iteration) x 2(samples per line) = 817,021,276.59(samples/second). This number is close to the profiling API reported, 818,527,715.90 samples/s.
 
 ## Limitations
-Due to limited AIE performance counters, calling AI Engine profiling APIs may return errors. Host code is required to check profiling APIs' return code to ensure correctness of profiling APIs.
+
+Because of the limited AIE performance counters, calling the AI Engine profiling APIs can return errors. Host code is required to check profiling APIs' return code to ensure correctness of profiling APIs.
 
 # Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
-
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
