@@ -97,7 +97,7 @@ Note: This tutorial targets the VCK190 Production board (see https://www.xilinx.
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=am011-versal-acap-trm)
+* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -123,7 +123,7 @@ To build and run the LeNet tutorial, you will need the following tools downloade
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 </details>
 
@@ -984,8 +984,7 @@ xrt_trace=true
 data_transfer_trace=fine
 trace_buffer_size=500M
 ```
-Then run the design with the steps in **Run on Hardware** in [Make Steps](#make-steps).
-Transfer the .csv and \_summary files back to the design directory, for example:
+Then run the design with the steps in **Run on Hardware** in [Make Steps](#make-steps).Transfer the .csv and \_summary files back to the design directory, for example:
 ```
 scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
@@ -1110,4 +1109,5 @@ The following are links to Vitis related information referenced in this tutorial
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
