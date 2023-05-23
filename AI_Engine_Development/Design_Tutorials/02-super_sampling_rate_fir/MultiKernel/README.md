@@ -11,28 +11,28 @@
 
 ***Version: Vitis 2023.1***
 
-In this second part of the tutorial you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
+In this second part of the tutorial, you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
 
 Navigate to the `MultiKernel` directory to continue.
 
 ## Designing the Kernel
 
-As in the Single-kernel tutorial, this design will use streaming input and output but the performances must be improved. Limitations can come from two sources:
+As in the Single-kernel tutorial, this design will use the streaming input and output but the performances must be improved. The limitations can come from two sources:
 
 - Limit on the bandwidth side
 - Limit in the compute performance side
 
-In the single-kernel section of the tutorial the maximum throughput was 225 Msps, which shows that the streams are starved due to a limitation of the compute performance. The data type `cint16` is 32-bit wide and the maximum bandwidth of the AXI-Stream connection array is 1x `cint16` per clock cycle on a single stream. In the single-kernel part, four of them were read in four clock cycles, but the computation was taking 16 clock cycles for the 32 taps. For the optimal trade-off, the computation should take only four clock cycles for each of the four input samples read from the stream. In four clock cycles, eight taps can be processed, the complete filtering operation should be split onto four AI Engines.
+In the single-kernel section of the tutorial, the maximum throughput was 225 Msps, which shows that the streams are starved due to a limitation of the compute performance. The data type `cint16` is 32-bit wide and the maximum bandwidth of the AXI-Stream connection array is 1x `cint16` per clock cycle on a single stream. In the single-kernel part, four of them were read in four clock cycles, but the computation was taking 16 clock cycles for the 32 taps. For the optimal trade-off, the computation should take only four clock cycles for each of the four input samples read from the stream. In four clock cycles, eight taps can be processed, the complete filtering operation should be split onto four AI Engines.
 
 The Single-Kernel Filter can be represented by this convolution:
 
 ![missing image](../Images/FourKernelDivision_1.jpg)
 
-After subdivision into four Kernels, each one on a different AI Engine, the filter can be represented by four smaller filters in parallel running on the same data stream, except that for some of these kernels the beginning of the stream is discarded:
+After subdivision into four Kernels, each one on a different AI Engine, the filter can be represented by four smaller filters in parallel running on the same data stream, except that for some of these kernels, the beginning of the stream is discarded:
 
 ![missing image](../Images/FourKernelDivision_2.jpg)
 
-The four AI Engines each perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of `mac` operations. For computations being performed on four lanes, the accumulator vector is `v4cacc48`, which is a 384 bit vector that can be sent to the next AI Engine in the chain in one clock cycle.
+The four AI Engines  perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of `mac` operations. For computations being performed on four lanes, the accumulator vector is `v4cacc48`, which is a 384-bit vector that can be sent to the next AI Engine in the chain in one clock cycle.
 
 ![missing image](../Images/FourKernels.jpg)
 
@@ -80,11 +80,11 @@ public:
 
 ### Data and Coefficients Management and Operation Scheduling
 
-The difference between the single-kernel case and this case is that the tap array contains eight elements and that the delay line is only 16 element deep. In the previous section you saw that there were only two `mul4` and `mac4` intrinsics for cint16 x cint16 operations.
+The difference between the single-kernel case and this case is that the tap array contains eight elements and that the delay line is only 16 element deep. In the previous section, you saw that there were only two `mul4` and `mac4` intrinsics for cint16 x cint16 operations.
 
 ![missing image](../Images/Mul4Intrinsics.jpg)
 
-More interestingly is the one that uses a `v16cint16` for the data register. Filter output compute for an eight tap filter on four lanes in parallel requires (8+3 = 11) data in the buffer. The delay-line should contain at least eight samples as the seven previous samples will be needed for the computation of the first output.
+More interestingly is the one that uses a `v16cint16` for the data register. Filter output compute for an eight tap filter on four lanes in parallel requires (8+3 = 11) data in the buffer. The delay-line should contain at least eight samples as the seven previous samples are needed for the computation of the first output.
 
 The following image gives an idea of data update scheduling and how it is interleaved with `mul4`/`mac4` operations (only the first eight outputs).
 
@@ -182,14 +182,14 @@ for(int i=0;i<NChunks;i++)
     }
 ```
 
-To shorten the place time by a few seconds, you can constrain the core location. A single one is necessary because all the others will be constrained by the **cascade** connection:
+To shorten the place time by a few seconds, constrain the core location. A single one is necessary because all the others are constrained by the **cascade** connection:
 
 ```C++
 // Constraints: location of the first kernel in the cascade
 location<kernel>(k[0]) = tile(25,0);
 ```
 
-All the kernels need to discard a specific number of elements. This will be handled by the initialization function as this must be done beforehand and only once:
+All the kernels need to discard a specific number of elements. This is handled by the initialization function as this must be done beforehand and only once:
 
 ```C++
 // Discard first elements of the stream, depending on position in the cascade
@@ -212,7 +212,7 @@ for(int i=0;i<NChunks;i++)
     connect<stream>(in[i],k[i].in[0]);
 ```
 
-The initialization function is very simple. It simply reads data from the input stream. Because there is no argument, the raw API for stream access must be used:
+The initialization function is  simple. It simply reads data from the input stream. Because there is no argument, the raw API for stream access must be used:
 
 ```C++
 template<int Delay>
@@ -228,7 +228,7 @@ void SingleStream::FIRinit()
 ## Compilation and Analysis
 
 
-Navigate to the `MultiKernel` directory. In the `Makefile` three methods are defined:
+Navigate to the `MultiKernel` directory. In the `Makefile`, three methods are defined:
 
 - `aie`
   - Compiles the graph and the kernels
@@ -237,18 +237,18 @@ Navigate to the `MultiKernel` directory. In the `Makefile` three methods are def
 - `aieviz`
   - Runs `vitis_analyzer` on the output summary
 
-Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instantiation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
+Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instantiation of kernels. In `graph.cpp`, the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 
 To have the simulation running, input data must be generated. There are 2 possibilities:
 
-1. Just type `make data`
+1. Just type `make data`.
 2. Change directory to `data` and type `GenerateStreams`. The following parameters should be set for this example:
 
 ![missing image](../Images/GenerateSingleStream.jpg)
 
 Click **Generate** then **Exit**. The generated file `PhaseIn_0.txt` should contain mainly 0's, with a few 1's and 10's.
 
-Type `make all` and wait for `vitis_analyzer` GUI to display. The Vitis analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.
+Type `make all` and wait for `vitis_analyzer` GUI to display. The AMD Vitis&trade; analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case, the graph is  simple (a single kernel) and the implementation is on a single AI Engine.
 
 Click **Graph** to visualize the graph of the application:
 
@@ -260,9 +260,9 @@ Click **Array** to visualize where the kernel has been placed, and how it is fed
 
 ![missing image](../Images/Array4Kernels.jpg)
 
-In this view the cascade streams connecting neighboring AI Engines are key to the performance of this graph.
+In this view, the cascade streams connecting neighboring AI Engines are key to the performance of this graph.
 
-Finally click **Trace** to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:
+Finally, click **Trace** to look at how the entire simulation went through. This might be useful to track where your AI Engine stalls if the performance is not as expected:
 
 ![missing image](../Images/Timeline4Kernels.jpg)
 
@@ -272,7 +272,7 @@ Now the output of the filter can be displayed. The input being a set of Dirac im
 
 The top graph reflects the outputs where the abscissa is the time at which this output occured. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.
 
-The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput Output_0.txt`:
+The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
 Output_0.txt -->   951.67 Msps
@@ -283,7 +283,7 @@ Output_0.txt -->   951.67 Msps
 Total Throughput -->     951.67 Msps
 ```
 
-This architecture achieves very close to 1 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.
+This architecture achieves close to 1 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.
 
 
 ## License
@@ -303,4 +303,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2023 Advanced Micro Device, Inc</sup><br><sup>XD020</sup></br></p>

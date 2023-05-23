@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -11,13 +11,13 @@
 
 ***Version: Vitis 2023.1***
 
-In this first part of the tutorial you will use a basic filtering application and analyze the performance that can be achieved.
+In this first part of the tutorial, you will use a basic filtering application and analyze the performance that can be achieved.
 
 Navigate to the `SingleKernel` directory to continue.
 
 ## Filter Description
 
-Throughout this tutorial you will use and reuse the same filter with complex coefficients. This filter has 32 coefficients (or taps) and has no symmetry characteristics.
+Throughout this tutorial, you will use and reuse the same filter with complex coefficients. This filter has 32 coefficients (or taps) and no symmetry characteristics.
 
 ```
 {   -82,  -253},{     0,  -204},{    11,   -35},{  -198,   273},
@@ -36,25 +36,25 @@ Throughout this tutorial you will use and reuse the same filter with complex coe
 ![missing image](../Images/ImpulseResponse.jpg)
 >>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
-The output of this filter will have a much higher amplitude than the input. A scaling factor of `2^15` should be applied to get back to normalized data. On debugging phase, when only impulses are given to the filter, the scaling factor can be reduced to `1` so that we can verify that the output looks like the impulse response of the filter.
+The output of this filter will have a much higher amplitude than the input. A scaling factor of `2^15` should be applied to get back to the normalized data. On debugging phase, when only impulses are given to the filter, the scaling factor can be reduced to `1` so that we can verify that the output looks like the impulse response of the filter.
 
 ## Designing the Kernel
 
 Before building a kernel to implement FIR filtering, consider the following:
 
-- What kind of interface will I use?
-- How many coefficients do I have?
+- What kind of interface will you use?
+- How many coefficients do you have?
   - How will it influence the size of the data register and coefficient register?
-  - How many lanes can I use in my intrinsics?
-- When will I schedule data reading and writing?
+  - How many lanes can you use in my intrinsics?
+- When will you schedule data reading and writing?
 
 ### Interfaces
 
-There are two types of interfaces: windows and streams. The bandwidth of the memory (where windows are stored) access is much higher than the streams: 2x32 GB/s vs. 2x4 GB/s. Even if the memory bandwidth from the processor is very high, they must be filled in either by another AI Engine (bandwidth 32 GB/s) or streams (2x4GB/s). Either way, somewhere in the cascade  of kernels the origin of the data will be outside of the AI Engine array (PL, DDR, ...) implying a stream source.
+There are two types of interfaces: windows and streams. The bandwidth of the memory (where windows are stored) access is much higher than the streams: 2x32 GBps vs. 2x4 GBps. Even if the memory bandwidth from the processor is high, they must be filled in either by another AI Engine (bandwidth 32 GBps) or streams (2x4GBps). Either way, somewhere in the cascade  of kernels. the origin of the data will be outside of the AI Engine array (PL, DDR, ...) implying a stream source.
 
-Window interfaces are used in a 'ping-pong' manner to allow for continuous data transfer while maintaining continuous processing. When multiple kernels are mapped to the same AI Engine and they communicate through windows, these windows use a single buffer because the kernels do not run at the same time. Ping-pong buffering means that the data are processed only when the buffer is completely filled in, incurring a minimum latency of the duration of this buffer filling. When an AI Engine kernel uses window interfaces, it must acquire a lock to gain access ownership to this memory. Lock acquisition and release takes a minimum of seven cycles per lock, which reduces the time allowed for processing.
+Window interfaces are used in a 'ping-pong' manner to allow for continuous data transfer while maintaining continuous processing. When multiple kernels are mapped to the same AI Engine and they communicate through windows, these windows use a single buffer because the kernels do not run at the same time. Ping-pong buffering means that the data is processed only when the buffer is completely filled in, incurring a minimum latency of the duration of this buffer filling. When an AI Engine kernel uses window interfaces, it must acquire a lock to gain access ownership to this memory. Lock acquisition and release takes a minimum of seven cycles per lock, which reduces the time allowed for processing.
 
-As a rule of thumb, 750 Msps is the maximum sample rate for which window interfaces are a viable solution. When the kernel processing duration is just a fraction of the time it takes to fill in the input window, this is reflected by a **utilization ratio** much below 1 and multiple kernels can be mapped onto a single AI Engine.
+As a rule of thumb, 750 Msps is the maximum sample rate for which window interfaces are a viable solution. When the kernel processing duration is just a fraction of the time it takes to fill in the input window, this is reflected by a **utilization ratio** of below 1 and multiple kernels can be mapped onto a single AI Engine.
 
 In this tutorial, the goal is to achieve the maximum performance filter implementation, leading to a streaming interface at the input and the output.
 
@@ -62,17 +62,17 @@ In this tutorial, the goal is to achieve the maximum performance filter implemen
 
 The data register is limited to 1024 bits (`v32cint16`) and the coefficient register maximum bitwidth is 512 bits (`v16cint16`). Having a streaming interface (single stream to start with), four `cint16` can be read in one instruction, but it takes four clock cycles to be able to perform the same operation again. Reading four samples at a time allows the use of `mul4` and `mac4` intrinsics.
 
-Not all intrinics exist for the AI Engine. Only two intrinsics will handle four lanes for complex 16 bits x complex 16 bits:
+Not all intrinics exist for the AI Engine. Only two intrinsics handle four lanes for complex 16 bits x complex 16 bits:
 
 ![missing image](../Images/Mul4Intrinsics.jpg)
 
-In this tutorial finite length loops (by default 512 input/ouput samples) are assumed for ease of debugging. This number of iterations can be increased as desired up to infinite loops (`while(1) { ...}`). Between two calls of the kernel, the status of the delay-line of the filter needs to be maintained. This delay-line must be at least 31 samples for a 32-tap filter. 32 samples fit in a Y register that's why we will use a `v32cint16` variable to keep this delay-line. At the beginning of the kernel call this delay-line will be loaded from the memory, and at the end it will be stored there. For the coefficients there is no option: it will be `v8cint16`.
+In this tutorial, finite length loops (by default 512 input/ouput samples) are assumed for ease of debugging. This number of iterations can be increased as desired up to infinite loops (`while(1) { ...}`). Between two calls of the kernel, the status of the delay-line of the filter needs to be maintained. This delay-line must be at least 31 samples for a 32-tap filter. 32 samples fit in a Y register and that is why why we use a `v32cint16` variable to keep this delay-line. At the beginning of the kernel call, this delay-line is loaded from the memory, and at the end it is stored there. For the coefficients, there is no option; it will be `v8cint16`.
 
 A `mul4` operating on `cint16` x `cint16` can perform eight operations in one clock cycle, leading to two operations per lane.
 
 ### Coefficients and Data Update Scheduling
 
-Before the first iteration the delay-line, the status is read to update the Y register. It will contain all the necessary previous data: `{ d(-32), d(-31), ... , d(-2), d(-1)}`. The first output will be the result of the following operation:
+Before the first iteration of the delay-line, the status is read to update the Y register. It contains all the necessary previous data: `{ d(-32), d(-31), ... , d(-2), d(-1)}`. The first output is the result of the following operation:
 
 `y(0) = d(-31).c(0) + d(-30).c(1) + ... + d(-1).c(30) + d(0).c(31)`
 
@@ -84,9 +84,9 @@ This image represents the following equation:
 
 ![missing image](../Images/FirstMul4Operation_eq.jpg)
 
-Following this first `mul4` operation 15 `mac4` operations should be used to finih the computation of `{y(0), y(1), y(2), y(3)}`.
+Following this first `mul4` operation 15 `mac4` operations should be used to finish the computation of `{y(0), y(1), y(2), y(3)}`.
 
-Use darker and darker green to represent the next three `mac4` operations
+Use darker and darker green to represent the next three `mac4` operations.
 
 ![missing image](../Images/FourFirstMul4Operations.jpg)
 
@@ -98,11 +98,11 @@ The next block of four `mac4` operations will wrap around and reuse the begining
 
 ![missing image](../Images/LastFourMac4Operations.jpg)
 
-Now that the computation of `{y(0), y(1), y(2), y(3)}` has been completed, the next four outputs `{y(4), y(5), y(6), y(7)}` have to be computed. As can be seen in the previous image, the next computation must start with index 5 in the data register. As in the previous set of output samples, the data register will be updated just before the group of four `mac4`:
+Now that the computation of `{y(0), y(1), y(2), y(3)}` has been completed, the next four outputs `{y(4), y(5), y(6), y(7)}` have to be computed. As can be seen in the previous image, the next computation must start with index 5 in the data register. As in the previous set of output samples, the data register is updated just before the group of four `mac4`:
 
 ![missing image](../Images/SecondSetOfOutputs.jpg)
 
-In order to have a regular inner loop, 32 output samples (eight groups of four) will be computed in the inner loop.
+To have a regular inner loop, 32 output samples (eight groups of four) are computed in the inner loop.
 
 Now take a look at the related C code to implement all these operations. The program takes advantage of the templatization of the function and of the inclusion of the state in the class itself:
 
@@ -136,7 +136,7 @@ public:
 }
 ```
 
-The taps will be provided during instantiation of the class. The constructor initializes the internal array and sets the delay line to zero. In the template, two arguments define the number of iterations of the inner loop and the shifting value that will be applied to the accumulator before sending the calculated y-values to the output stream.
+The taps are provided during the instantiation of the class. The constructor initializes the internal array and sets the delay line to zero. In the template, two arguments define the number of iterations of the inner loop and the shifting value that is applied to the accumulator before sending the calculated y-values to the output stream.
 
 
 Function, declaration, and variable initialization are as follows:
@@ -193,7 +193,7 @@ The function `filter` has two stream arguments: `sin` and `sout` for stream-in a
         ...
 ```
 
-These four blocks have to be written eight times with different parameters to compute the 32 output samples. In the code that is published, two macros are defined to make this exercise a little easier:
+These four blocks have to be written eight times with different parameters to compute the 32 output samples. In the published code, two macros are defined to make this exercise a little easier:
 
 ```C++
 #define MULMAC(N) \
@@ -223,18 +223,18 @@ Navigate to the `SingleKernel` directory. In the `Makefile`, three methods are d
 - `aieviz`
   - Runs `vitis_analyzer` on the output summary
 
-Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp` the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
+Have a look at the source code (kernel and graph) to familiarize yourself with the C++ instanciation of kernels. In `graph.cpp`, the PL AI Engine connections are declared using 64-bit interfaces running at 500 MHz, allowing for maximum bandwidth on the AI Engine array AXI-Stream network.
 
 To have the simulation running, input data must be generated. There are 2 possibilities:
 
-1. Just type `make data`
+1. Just type `make data`.
 2. Change directory to `data` and type `GenerateStreamsGUI`. The following parameters should be set for this example:
 
 ![missing image](../Images/GenerateSingleStream.jpg)
 
 Click on **Generate** then on **Exit**. The generated file `PhaseIn_0.txt` should contain mainly 0's, with a few 1's and 10's.
 
-Type `make all` and wait for `vitis_analyzer` GUI to display. The Vitis analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.
+Type `make all` and wait for `vitis_analyzer` GUI to display. The AMD Vitis&trade; analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case the graph is very simple (a single kernel) and the implementation is on a single AI Engine.
 
 Click **Graph** to visualize the graph of the application:
 
@@ -244,17 +244,17 @@ Click **Array** to visualize where the kernel has been placed, and how it is fed
 
 ![missing image](../Images/ArraySingleKernel.jpg)
 
-Finally click on **Trace** to look how the entire simulation went through. This may be useful to track where your AI Engine stalls if performance is not as expected:
+Finally, click on **Trace** to look how the entire simulation went through. This may be useful to track where your AI Engine stalls if the performance is not as expected:
 
 ![missing image](../Images/TimelineSingleKernel.jpg)
 
-As explained earlier, the directory `Utils` contains a number of utilities that will help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
+As explained earlier, the directory `Utils` contains a number of utilities that help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `Emulation-AIE/aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
 
 ![missing image](../Images/GraphOutputSingleKernel.jpg)
 
 The top graph reflects the outputs where the abscissa is at the time at which this output occurred. It is much easier to look at the bottom graph where the samples are displayed one after the other. The filter impulse can be easily recognized on this sub-graph. The file `out.txt` contains three columns: (timestamp, real part, and imaginary part) of the output samples.
 
-The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`) type `StreamThroughput Output_0.txt`:
+The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
 Output_0.txt -->   225.40 Msps
@@ -264,7 +264,7 @@ Output_0.txt -->   225.40 Msps
 Total Throughput -->     225.40 Msps
 ```
 
-Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 250 Msps which is in line with what was achieved.
+Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 250 Msps, which is in line with what was achieved.
 
 
 
@@ -284,4 +284,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-<p align="center"><sup>Copyright&copy; 2020–2022 Xilinx</sup><br><sup>XD020</sup></br></p>
+<p align="center"><sup>Copyright&copy; 2020–2023 Advanced Micro Devices, Inc</sup><br><sup>XD020</sup></br></p>
