@@ -1,3 +1,8 @@
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
+
 // DSP_data_controller has a mux that works on DSP clk - mux select works on DSP clk
 // 2:1 mux. It takes two inputs (two rows/columns of submatrix data) and one output goes to FIXGEMM
 // DSP_data_controller also takes outputs from FIXGEMM on 2 consecutive DSP cycles and gives one op on PL clk

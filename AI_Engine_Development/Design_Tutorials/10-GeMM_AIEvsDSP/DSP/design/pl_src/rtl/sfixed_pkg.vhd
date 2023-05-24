@@ -1,3 +1,6 @@
+--Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+--SPDX-License-Identifier: X11
+
 /* Use for Sythesis with Vivado 2020.2 and later */
 library IEEE;
 --version of fixed_pkg with no saturation, rounding or warning messages

@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2022.2 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
     </td>
  </tr>
 </table>
@@ -65,25 +65,30 @@ SYSTEM_CONFIGS_REPO    := $(DESIGN_REPO)/system_configs
 PROFILING_CONFIGS_REPO := $(DESIGN_REPO)/profiling_configs
 EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
 VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+DIRECTIVES_REPO        := $(DESIGN_REPO)/directives
+
 
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
 GEMM_BLD_DIR     := $(BASE_BLD_DIR)/gemm_$(MAT_DIMS)
 INSTS_BLD_DIR    := $(GEMM_BLD_DIR)/x$(GEMM_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
-VIVADO_REPORTS_REPO := $(PROJECT_REPO)/vivado_reports_dir
-BLD_VIVADO_REPORTS_DIR := $(VIVADO_REPORTS_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
+REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+BLD_REPORTS_DIR := $(REPORTS_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
 
-VCD_XPE_REPO := $(PROJECT_REPO)/vcd_xpe_dir
-BLD_VCD_XPE_DIR := $(VCD_XPE_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
+XPE_REPO := $(PROJECT_REPO)/xpe_dir
+BLD_XPE_DIR := $(XPE_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)/$(TARGET)
 VCD_FILE_NAME := gemm_$(MAT_DIMS)_x$(GEMM_INSTS)
 BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
-XPE_FILE := $(BLD_VCD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
+XPE_FILE := $(BLD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
 
 WORK_DIR := Work
+AIE_SIM_IO_BASE_DIR := $(AIE_SRC_REPO)/aiesim_data
+AIE_SIM_IO_DIR := $(AIE_SIM_IO_BASE_DIR)/gemm_$(MAT_DIMS)_ioFiles
+
 ```
 
 </details>
@@ -104,7 +109,7 @@ or
 make run TARGET=hw ITER_CNT=16 EN_TRACE=1 GEMM_SIZE=64 (hardware, 16 iterations, , matrix dimentions 64 for Mat A, B and C and enable trace profiling )
 ```
 
-This command runs the `make kernels`,`make graph`,`make xclbin`,`make application`,`make package`, and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to the individual make steps listed below.
+This command runs the `make kernels`,`make graph`,`make xsa`,`make application`,`make package`, and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to the individual make steps listed below.
 
 The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual directory: `$(BUILD_TARGET_DIR)/`. Each `make` step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case.
 
@@ -115,7 +120,7 @@ The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual d
 
 ### make kernels: Compiling PL Kernels
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202220_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
 
 ```
 make kernels
@@ -132,7 +137,7 @@ $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo:
 		$(DATAMOVER_KERNEL_SRC) -o $@
 ```
 
-See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -193,13 +198,21 @@ AIE_FLAGS += --test-iterations=2
 AIE_FLAGS += --pl-freq=$(PL_FREQ)
 AIE_FLAGS += --dataflow
 
-AIE_FLAGS += --heapsize=7000
-AIE_FLAGS += --Xchess="main:bridge.llibs=softfloat m"
+AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+
+AIE_FLAGS += --Xmapper=BufferOptLevel9
+AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
+
+
 AIE_FLAGS += --workdir=$(WORK_DIR)
+
+AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
+AIE_SIM_FLAGS += -i=$(AIE_SIM_IO_DIR)
+
 ...
 graph: $(LIBADF_A)
 
-$(LIBADF_A): $(GRAPH_SRC_CPP)
+$(LIBADF_A):  $(AIE_SRC_REPO)/graph.*
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
 	aiecompiler $(AIE_FLAGS) $(GRAPH_SRC_CPP) 2>&1 | tee -a aiecompiler.log
@@ -232,21 +245,21 @@ The following is a description of the output objects that results from executing
 </details>
 
 <details>
-<summary>make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> 
+<summary>make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> 
 
-### make xclbin: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
+### make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 
-After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XCLBIN file. 
+After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XSA file. 
 
 The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by Xilinx, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design. The command to run this step is shown in the following example (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
 
 ```
-make xclbin
+make xsa
 ``` 
 
-The command alongwith the options used is as follows:
+The command along with the options used is as follows:
 
 ```
 ...
@@ -261,41 +274,29 @@ VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 
 ### If Profiling for Performance Measurement is enabled..
 ifeq ($(EN_TRACE),1)
-   ifeq ($(GEMM_INSTS),1)
+   ifeq ($(TARGET),hw)
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
-   
+      VPP_LINK_FLAGS += --profile.trace_memory DDR
+      
    endif
-   
-   VPP_LINK_FLAGS += --profile.trace_memory DDR
-   
 endif
+
 
 VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/x$(GEMM_INSTS).cfg
 VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 
-VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
-#VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.STEPS.PLACE_DESIGN.TCL.PRE=$(DIRECTIVES_REPO)/prohibit_select_bli_bels_for_hold.tcl
 
-ifeq ($(GEMM_SIZE),64)
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD=16
 
-else ifeq ($(GEMM_SIZE),512)
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Area_Explore}
 
-else ifeq ($(GEMM_SIZE),1024)
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_high}
-   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-
-endif
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
 ...
-xclbin: $(BUILD_TARGET_DIR)/$(XCLBIN)
+xsa:  kernels graph $(BUILD_TARGET_DIR)/$(XSA)
 
-$(BUILD_TARGET_DIR)/$(XCLBIN): kernels $(LIBADF_A)
+$(BUILD_TARGET_DIR)/$(XSA):$(KERNEL_XOS) $(SYSTEM_CONFIGS_REPO)/*
 	cd $(BUILD_TARGET_DIR);	\
-	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ \
-		    $(KERNEL_XOS) $(LIBADF_A)
+	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ $(KERNEL_XOS) $(LIBADF_A)
 ```
 See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Device-Binary) for a detailed description of Vitis linking options.
 
@@ -307,8 +308,8 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |--verbose|Display verbose/debug information.|
 |--config <config_file>|Specifies a configuration file containing V++ switches.|
 |--output \| -o|Specifies the name of the output file generated by the V++ command. In this design the outputs of the DMA HLS kernels and the PL kernels interfacing with the AI Engine are in XO files.|
-|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
-|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/vitiscommandcompiler.html#lpy1600804966354) for detailed profiling options.|
+|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
+|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
 
 The information to tell the linker how to connect the AI Engine and PL kernels together is described in a configuration file, `system_configs/x$(GEMM_INSTS).cfg`. The file describes the overall connection scheme of the system.
 
@@ -317,49 +318,64 @@ The information to tell the linker how to connect the AI Engine and PL kernels t
 nk=dma_hls:1:dma_hls_0
 
 #Connections For GEMM Insts 0...
-stream_connect=dma_hls_0.strmOut_to_A0:ai_engine_0.DataIn0
-stream_connect=dma_hls_0.strmOut_to_A1:ai_engine_0.DataIn1
-stream_connect=dma_hls_0.strmOut_to_A2:ai_engine_0.DataIn2
-stream_connect=dma_hls_0.strmOut_to_A3:ai_engine_0.DataIn3
-stream_connect=dma_hls_0.strmOut_to_A4:ai_engine_0.DataIn4
-stream_connect=dma_hls_0.strmOut_to_A5:ai_engine_0.DataIn5
-stream_connect=dma_hls_0.strmOut_to_A6:ai_engine_0.DataIn6
-stream_connect=dma_hls_0.strmOut_to_A7:ai_engine_0.DataIn7
-stream_connect=dma_hls_0.strmOut_to_A8:ai_engine_0.DataIn8
-stream_connect=dma_hls_0.strmOut_to_A9:ai_engine_0.DataIn9
-stream_connect=dma_hls_0.strmOut_to_A10:ai_engine_0.DataIn10
-stream_connect=dma_hls_0.strmOut_to_A11:ai_engine_0.DataIn11
-stream_connect=dma_hls_0.strmOut_to_A12:ai_engine_0.DataIn12
-stream_connect=dma_hls_0.strmOut_to_A13:ai_engine_0.DataIn13
-stream_connect=dma_hls_0.strmOut_to_A14:ai_engine_0.DataIn14
-stream_connect=dma_hls_0.strmOut_to_A15:ai_engine_0.DataIn15
-stream_connect=dma_hls_0.strmOut_to_B0:ai_engine_0.DataIn16
-stream_connect=dma_hls_0.strmOut_to_B1:ai_engine_0.DataIn17
-stream_connect=dma_hls_0.strmOut_to_B2:ai_engine_0.DataIn18
-stream_connect=dma_hls_0.strmOut_to_B3:ai_engine_0.DataIn19
-stream_connect=dma_hls_0.strmOut_to_B4:ai_engine_0.DataIn20
-stream_connect=dma_hls_0.strmOut_to_B5:ai_engine_0.DataIn21
-stream_connect=dma_hls_0.strmOut_to_B6:ai_engine_0.DataIn22
-stream_connect=dma_hls_0.strmOut_to_B7:ai_engine_0.DataIn23
-stream_connect=dma_hls_0.strmOut_to_B8:ai_engine_0.DataIn24
-stream_connect=dma_hls_0.strmOut_to_B9:ai_engine_0.DataIn25
-stream_connect=dma_hls_0.strmOut_to_B10:ai_engine_0.DataIn26
-stream_connect=dma_hls_0.strmOut_to_B11:ai_engine_0.DataIn27
-stream_connect=dma_hls_0.strmOut_to_B12:ai_engine_0.DataIn28
-stream_connect=dma_hls_0.strmOut_to_B13:ai_engine_0.DataIn29
-stream_connect=dma_hls_0.strmOut_to_B14:ai_engine_0.DataIn30
-stream_connect=dma_hls_0.strmOut_to_B15:ai_engine_0.DataIn31
-stream_connect=ai_engine_0.DataOut0:dma_hls_0.strmInp_from_C0
-stream_connect=ai_engine_0.DataOut1:dma_hls_0.strmInp_from_C1
-stream_connect=ai_engine_0.DataOut2:dma_hls_0.strmInp_from_C2
-stream_connect=ai_engine_0.DataOut3:dma_hls_0.strmInp_from_C3
+stream_connect=dma_hls_0.strmOut_to_A0:ai_engine_0.DataInA0_CASC0
+stream_connect=dma_hls_0.strmOut_to_A1:ai_engine_0.DataInA0_CASC1
+stream_connect=dma_hls_0.strmOut_to_A2:ai_engine_0.DataInA0_CASC2
+stream_connect=dma_hls_0.strmOut_to_A3:ai_engine_0.DataInA0_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B0:ai_engine_0.DataInB0_CASC0
+stream_connect=dma_hls_0.strmOut_to_B1:ai_engine_0.DataInB0_CASC1
+stream_connect=dma_hls_0.strmOut_to_B2:ai_engine_0.DataInB0_CASC2
+stream_connect=dma_hls_0.strmOut_to_B3:ai_engine_0.DataInB0_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B4:ai_engine_0.DataInB1_CASC0
+stream_connect=dma_hls_0.strmOut_to_B5:ai_engine_0.DataInB1_CASC1
+stream_connect=dma_hls_0.strmOut_to_B6:ai_engine_0.DataInB1_CASC2
+stream_connect=dma_hls_0.strmOut_to_B7:ai_engine_0.DataInB1_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B8:ai_engine_0.DataInB2_CASC0
+stream_connect=dma_hls_0.strmOut_to_B9:ai_engine_0.DataInB2_CASC1
+stream_connect=dma_hls_0.strmOut_to_B10:ai_engine_0.DataInB2_CASC2
+stream_connect=dma_hls_0.strmOut_to_B11:ai_engine_0.DataInB2_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B12:ai_engine_0.DataInB3_CASC0
+stream_connect=dma_hls_0.strmOut_to_B13:ai_engine_0.DataInB3_CASC1
+stream_connect=dma_hls_0.strmOut_to_B14:ai_engine_0.DataInB3_CASC2
+stream_connect=dma_hls_0.strmOut_to_B15:ai_engine_0.DataInB3_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B16:ai_engine_0.DataInB4_CASC0
+stream_connect=dma_hls_0.strmOut_to_B17:ai_engine_0.DataInB4_CASC1
+stream_connect=dma_hls_0.strmOut_to_B18:ai_engine_0.DataInB4_CASC2
+stream_connect=dma_hls_0.strmOut_to_B19:ai_engine_0.DataInB4_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B20:ai_engine_0.DataInB5_CASC0
+stream_connect=dma_hls_0.strmOut_to_B21:ai_engine_0.DataInB5_CASC1
+stream_connect=dma_hls_0.strmOut_to_B22:ai_engine_0.DataInB5_CASC2
+stream_connect=dma_hls_0.strmOut_to_B23:ai_engine_0.DataInB5_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B24:ai_engine_0.DataInB6_CASC0
+stream_connect=dma_hls_0.strmOut_to_B25:ai_engine_0.DataInB6_CASC1
+stream_connect=dma_hls_0.strmOut_to_B26:ai_engine_0.DataInB6_CASC2
+stream_connect=dma_hls_0.strmOut_to_B27:ai_engine_0.DataInB6_CASC3
+
+stream_connect=dma_hls_0.strmOut_to_B28:ai_engine_0.DataInB7_CASC0
+stream_connect=dma_hls_0.strmOut_to_B29:ai_engine_0.DataInB7_CASC1
+stream_connect=dma_hls_0.strmOut_to_B30:ai_engine_0.DataInB7_CASC2
+stream_connect=dma_hls_0.strmOut_to_B31:ai_engine_0.DataInB7_CASC3
+
+stream_connect=ai_engine_0.DataOutC0:dma_hls_0.strmInp_from_C0
+stream_connect=ai_engine_0.DataOutC1:dma_hls_0.strmInp_from_C1
+stream_connect=ai_engine_0.DataOutC2:dma_hls_0.strmInp_from_C2
+stream_connect=ai_engine_0.DataOutC3:dma_hls_0.strmInp_from_C3
+stream_connect=ai_engine_0.DataOutC4:dma_hls_0.strmInp_from_C4
+stream_connect=ai_engine_0.DataOutC5:dma_hls_0.strmInp_from_C5
+stream_connect=ai_engine_0.DataOutC6:dma_hls_0.strmInp_from_C6
+stream_connect=ai_engine_0.DataOutC7:dma_hls_0.strmInp_from_C7
 
 [advanced]
-## Disable Profiling in hw_emu so that it is faster...
+# Disable Profiling in hw_emu so that it is faster...
 param=hw_emu.enableProfiling=false
 
-## Export the xsa of the design..
-param=compiler.addOutputTypes=hw_export
 ```
 
 See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file.
@@ -389,14 +405,19 @@ make application
 or
 
 ```
-application: $(LIBADF_A)
+application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
+
+REG_GCC_FLAGS := $(GCC_FLAGS)
+REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+
+$(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
-	$(CXX) $(GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(GCC_INC_LIB) $(GCC_LIB)
+	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(AIE_CONTROL_CPP) -o $(BUILD_TARGET_DIR)/app_control.o
+	$(CXX) $(REG_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(GCC_INC_LIB) $(GCC_LIB)
 	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
 ```
 
-See [this page](https://xilinx.github.io/XRT/2022.2/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Host-Programming) for details of host application programming.
+See [this page](https://xilinx.github.io/XRT/master/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) for details of host application programming.
 
 
 |Switch|Description|
@@ -447,21 +468,24 @@ PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
 PKG_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 PKG_FLAGS += -f $(PLATFORM)
-PKG_FLAGS += --package.rootfs $(XLNX_VERSAL)/rootfs.ext4
-PKG_FLAGS += --package.kernel_image $(XLNX_VERSAL)/Image
+PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
+PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
-PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XCLBIN) $(LIBADF_A)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA) $(LIBADF_A)
+PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN) 
 PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
-### If Profiling for Performance Measurement is enabled..
+## If Profiling for Performance Measurement is enabled..
 ifeq ($(EN_TRACE),1)
-   PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
-
+   ifeq ($(TARGET),hw)
+      PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
+   
+   endif
 endif
 
-### If XRT_ROOT is set...
+## If XRT_ROOT is set...
 ifdef XRT_ROOT
    PKG_FLAGS += --package.sd_dir $(XRT_ROOT)
 
@@ -469,21 +493,22 @@ endif
 
 PKG_FLAGS += --package.defer_aie_run
 ...
-package:
+package: application application_inf_run xsa $(EMBEDDED_PACKAGE_OUT)
+
+$(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA) $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 	rm -rf $(EMBEDDED_PACKAGE_OUT)
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -p $(PKG_FLAGS)
-	cp -rf $(BUILD_TARGET_DIR)/package $(BUILD_TARGET_DIR)/package_backup
 ```
 
-See [this page](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/packagesystem1.html#cwq1586366344968) for more details about packaging the system.
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/package-Options) for more details about packaging the system.
 
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/acceleration_installation.html) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd>. Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies the \<ext4\|fat32\> output image file format. `ext4` is the Linux file system and `fat32` is the Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card` directory.|
@@ -495,7 +520,7 @@ See [this page](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/packages
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4|The root filesystem file for PetaLinux.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image|The pre-built PetaLinux image that the processor boots from.|
 |$(BUILD_TARGET_DIR)/gemm_aie_xrt.elf|The PS host application executable created in the `make application` step.|
-|$(BUILD_TARGET_DIR)/vck190_aie_gemm.hw_emu.xclbin|The XCLBIN file created in the `make xclbin` step.|
+|$(BUILD_TARGET_DIR)/vck190_aie_gemm.hw_emu.xsa|The XCLBIN file created in the `make xsa` step.|
 |$(BUILD_TARGET_DIR)/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
 The output of the Vitis compiler package step is the package directory that contains the contents to run hardware emulation. 
@@ -525,14 +550,14 @@ Hardware Emulation Goto:
 $(BUILD_TARGET_DIR)/package
 
 and do:
-./launch_hw_emu.sh or ./launch_hw_emu.sh -g (for waveform viewer)...
+./launch_hw_emu.sh or ./launch_hw_emu.sh -g (for waveform viewer) or ./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) (to check results without opening waveform viewer) ...
 
 ```
 
 When hardware emulation is launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
 
 ```bash
-root@versal-rootfs-common-2022.2:~#
+root@versal-rootfs-common-2023_1:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -540,7 +565,6 @@ After the root prompt comes up, run the following commands to run the design:
 ```
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
-export XILINX_XRT=/usr
 ./gemm_aie_xrt.elf a.xclbin
 ```
 
@@ -574,10 +598,10 @@ The following figure shows a waveform view of the gemm_32x32x32 - 1x design.
 To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps specified above).
 
 ```
-make kernels xclbin package TARGET=hw 
+make kernels xsa package TARGET=hw 
 ```
 
-These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XCLBIN, and `package` for a hardware run. 
+These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run. 
 
 Run the following step to set up the execution file, generated images, and base images (`$(BUILD_TARGET_DIR)/package/sd_card` and `$(BUILD_TARGET_DIR)/package/sd_card.img`).
 
@@ -585,7 +609,7 @@ Run the following step to set up the execution file, generated images, and base 
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XCLBIN, and `package` for a hardware run. Follow steps 1-9 to run the `gemm_aie_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `gemm_aie_xrt.elf` executable on your VCK190 board. 
 
 **Step 1.** Ensure your board is powered off. 
 
@@ -611,13 +635,12 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2022_2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
 ```
 cd /mnt/sd-mmcblk0p1
-export XILINX_XRT=/usr
 
 ./gemm_aie_xrt.elf a.xclbin
 ```
@@ -648,7 +671,7 @@ The data mover is a PL-based data generator and checker. It generates constant m
 
 ### Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XCLBIN](#make-xclbin-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
 
 
 * `libadf.a`
@@ -821,6 +844,10 @@ The following figure shows the data mover dataflow view.
 
 ![Image of Datamover Dataflow View](images/dma_hls_dataflow_view.PNG)
 
+The following figure shows the data mover functional call graph view.
+
+![Image of Datamover Functional call graph View](images/dma_hls_functional_call_graph_view.PNG)
+
 #### Streaming Interface Data Width
 
 The streaming interface data width is kept at 128 bits to reduce read/write overhead while processing data.
@@ -853,17 +880,17 @@ The overall graph definition of the design is contained in the `graph.cpp` file.
 
 #### Defining the Graph Class
 
-Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/user_guide/L2/dsp-lib-func.html#matrix-multiply) for GeMM. A general specification is put in for the ADF namespace:
+Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/dsp-lib-func.html#matrix-multiply) for GeMM. A general specification is put in for the ADF namespace:
 
 ```
  class GeMM: public adf::graph
    {
       public:
-         std::vector<input_plio> matA_inp;
-         std::vector<input_plio> matB_inp;
-         std::vector<output_plio> matC_out;
+         input_plio matA_inp[CASC_LN];
+         input_plio matB_inp[(SPLIT * CASC_LN)];
+         output_plio matC_out[SPLIT];
          
-         GeMM(): matA_inp(CASC_LN), matB_inp(SPLIT * CASC_LN), matC_out(SPLIT) {
+         GeMM(): {
             // GeMM Graph Declarations...
             xf::dsp::aie::blas::matrix_mult::matrix_mult_graph<int16, int16, DIM_A, DIM_AB, DIM_B, 0, 0, \
                ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE, WINDOW_SIZE, CASC_LN> mmult[SPLIT];
@@ -961,60 +988,60 @@ The `dma_hls` kernel write and reads data to AXI4-Stream interfaces.
 
 ##### Top Function Declaration
 
-The `dma_hls` kernel takes the following arguments:
+The `dma_hls` kernel takes the following arguments which was declared in `dma_hls.h`:
 
 ```
 int dma_hls(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B4,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B5,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B6,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B7,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B8,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B9,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B10,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B11,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B12,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B13,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B14,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B15,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B16,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B17,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B18,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B19,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B20,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B21,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B22,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B23,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B24,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B25,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B26,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B27,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B28,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B29,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B30,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B31,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C4,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C5,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C6,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C7,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B7,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B8,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B9,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B10,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B11,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B12,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B13,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B14,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B15,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B16,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B17,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B18,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B19,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B20,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B21,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B22,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B23,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B24,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B25,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B26,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B27,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B28,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B29,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B30,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B31,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C7,
    ap_int<32> matSz_A, ap_int<32> matSz_B, ap_int<32> matSz_C
-   )
+   );
 ```
 
 - `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit size from 1-1024. In this design, the bit size is set to 128.
-- `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
+- `hls::stream<ap_axiu<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
 
 ##### Top Function Definition
 
@@ -1022,50 +1049,50 @@ Use the `dataflow` pragma for concurrently scheduling the three functions `inp_A
 
 ```
 int dma_hls(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_A3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B4,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B5,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B6,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B7,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B8,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B9,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B10,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B11,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B12,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B13,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B14,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B15,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B16,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B17,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B18,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B19,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B20,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B21,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B22,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B23,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B24,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B25,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B26,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B27,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B28,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B29,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B30,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_B31,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C0,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C1,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C2,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C3,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C4,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C5,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C6,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_C7,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B7,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B8,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B9,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B10,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B11,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B12,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B13,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B14,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B15,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B16,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B17,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B18,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B19,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B20,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B21,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B22,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B23,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B24,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B25,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B26,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B27,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B28,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B29,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B30,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B31,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C0,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C1,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C2,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C7,
    ap_int<32> matSz_A, ap_int<32> matSz_B, ap_int<32> matSz_C
    )
 {
@@ -1295,7 +1322,7 @@ For all applications, designers must work to predefined specifications and build
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2022.2 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.1 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1316,7 +1343,8 @@ VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
 REPORTS_REPO := $(PROJECT_REPO)/reports_dir
 BLD_REPORTS_DIR := $(REPORTS_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
 ...
-report_metrics:
+report_metrics: xsa $(BLD_REPORTS_DIR)
+
 ifeq ($(TARGET),hw_emu)
 	@echo "This build target (report-metrics) not valid when design target is hw_emu"
 
@@ -1335,34 +1363,33 @@ The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to
 1. Run `make vcd` (recipe expanded below) to create the `graph.xpe` file under `$(BUILD_TARGET_DIR)/aiesim_xpe/`:
 
 ```
-vcd: $(VCD_FILE) vcd_util_n_power
-
-vcd_util_n_power: $(VCD_FILE)
+vcd: graph $(XPE_FILE)
+$(XPE_FILE): $(BLD_TGT_VCD_FILE)
 	cd $(BUILD_TARGET_DIR); \
-	vcdanalyze --vcd x$(GEMM_INSTS).vcd --xpe
+	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
 
-$(VCD_FILE): $(LIBADF_A)
+
+$(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator --pkg-dir $(WORK_DIR)/ --dump-vcd x$(GEMM_INSTS) 2>&1 | tee -a vcd.log
+	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2022.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2023.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
 
-3. Follow the steps below to load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization (step 5 and 6 in the below images) for the gemm_1024x1024x1024 design:
+3. Follow the steps below to load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization (step 5 and 6 in the below images) for the gemm_32x32x32 design:
 
-![Image of GeMM AIE XPE Intro 1kx1kx1k](images/gemm_aie_xpe_intro_step1_2and3_1kx1kx1k.PNG)
-![Image of GeMM AIE XPE Util and Power Measurement 1kx1kx1k](images/gemm_aie_xpe_Pow_nUtil_step4_5and6_1kx1kx1k.PNG)
+![Image of GeMM AIE XPE Util and Power Measurement 1kx1kx1k](images/gemm_aie_xpe_32x32x32.PNG)
 
 A summary of resource utilization and power for all variations is given in the following table.
 
 | GeMM Configuration | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) |
 |:------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
-|        32x32x32    | 32                      |  0%         | 352                           | 0%           | 81                     | 8%                | 13966     | 3756      |   3708                    |
-|        64x64x64    | 32                      |  3%         | 352                           | 1%           | 81                     | 8%                | 13964     | 3836      |   3843                    |
-|     128x128x128    | 32                      |  17%        | 352                           | 3%           | 91                     | 8%                | 13964     | 3748      |   4822                    |
-|     256x256x256    | 32                      |  60%        | 352                           | 7%           | 89                     | 8%                | 13964     | 3752      |   6959                    |
-|     512x512x512    | 32                      |  89%        | 608                           | 5%           | 113                    | 7%                | 13964     | 3823      |   8961                    |
-|  1024x1024x1024    |  32                     | 18%         | 608                           | 1%           | 144                    | 7%                | 16308     | 4561      |  6177                     |
+|        32x32x32    |         32              |    3%       |         352                   |     1%       |           119          |         8%        |  15940    |   3695    |          4880             |
+|        64x64x64    |         32              |   18%       |         352                   |     4%       |           119          |         8%        |  15944    |   3739    |          5680             |
+|     128x128x128    |         32              |   48%       |         352                   |     7%       |           119          |         8%        |  15940    |   3695    |          7204             |
+|     256x256x256    |         32              |   89%       |         352                   |     10%      |           101          |         9%        |  15954    |   3737    |          8768             |
+|     512x512x512    |         32              |   97%       |         608                   |     6%       |           131          |         8%        |  15940    |   3695    |          9824             |
+|  1024x1024x1024    |         32              |   95%       |         608                   |     6%       |           144          |         7%        |  15940    |   3680    |         10132             |
 
 </details>
 
@@ -1384,13 +1411,38 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
 
    Refer to the [xrt.ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation for more information. 
 
-2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xclbin.run_summary` files back to your system.
+2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
-3. Open `xclbin.ex.run_summary` using `vitis_analyzer`: `vitis_analyzer xclbin.ex.run_summary`.
+3. Open `xrt.run_summary` using `vitis_analyzer`: `vitis_analyzer xrt.run_summary`.
 
 4. The snapshot of the timeline trace for the AI Engine run with `ITER_CNT=1` is shown in the following figure:
 
 ![Image of GeMM AI Engine implementation Timeline Trace 32x32x32](images/gemm_aie_trace_32x32x32.PNG)
+
+The time reported by trace is with the dma_hls kernel running at 156.250MHz. Since the dma_hls kernel is running at 312.5 MHz, we need to scale the time data.
+
+```
+Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
+
+Processing Time (with 156.250MHZ)    =  31.974 us
+Processing Time (scaled to 312.5MHZ) =  (31.974 * (156.25/312.5)) us
+                                     =   15.987   us
+
+
+Latency = (Start of  processing of Stream input A & B )- (Start of  processing Timestamp of Stream output C)
+
+Latency (with 156.250MHz)  = 0.327us
+Latency (scaled to 312.5MHz) = (0.327 * (156.25/312.5)) us
+				   = 0.1635 us
+
+
+Throughput = (Samples transferred) / processing time
+           = ( (ROWS x COLS) x Iterations ) / processing time
+           = (32 x 32) x 16 / 15.987us
+           = 1024.8326 MSamples/s
+           = 1024.8326 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 2049.665 MB/s
+```
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces.
 
@@ -1398,37 +1450,35 @@ The throughput and latency calculations for the GeMM 32x32x32 design based on th
 ![Image of GeMM AIE HW_EMU Run Waveform View For 32x32x32 Design](images/gemm_aie_hw_emu_waveform_view_32x32x32.PNG)
 
 ```
-Execution Time:
-   = Difference between end of output C and beginning of sending of input A & B
-   = (End of Execution Timestamp of Stream output C) -
-     (Start of Execution Timestamp of Stream input stream A & B)
-   = 0.656us
+Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
+                = 5.7536s
 
 Latency:
    = Difference between beginning of sending of input A & B  and receiving of output C
-   = (Start of Execution Timestamp of Stream input A & B -
-     (Start of Execution Timestamp of Stream output C
-   = 0.53us
+   = (Start of  processing of Stream input A & B -
+     (Start of  processing Timestamp of Stream output C
+   = 0.118401us
 
-Throughput = (Samples transferred) / execution time
-           = (ROWS x COLS) / execution time
-           = (32 x 32) x 16 / 15.99us
-           = 1024.64 MSamples/s
-           = 1024.64 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 2049.2808 MB/s
+Throughput = (Samples transferred) / processing time
+           = ( (ROWS x COLS) x Iterations ) / processing time
+           = (32 x 32) x 16 / 5.7536us
+           = 2847.608454 MSamples/s
+           = 2847.608454 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 5695.216908 MB/s
 ```
 
 A summary of throughput and latency for all variations is shown in the following table.
 
 | GeMM Configuration | Data Transfer Size | Latency<br/>(in μs) | Throughput<br/>(in MSPS)  | TOPs  | Matrices/s<br/>(in 10^6/s)|
 |:------------------:|:------------------:|:-------------------:|:-------------------------:|:-----:|:-------------------------:|
-|        32x32x32    |         1024       |        0.192        |           1024.625        | 0.066 |         1.0006            |    
-|        64x64x64    |         4096       |        0.336        |           2842.963        | 0.364 |         0.6940            |
-|     128x128x128    |        16384       |        0.816        |           4464.682        | 1.143 |         0.2725            |
-|     256x256x256    |        65536       |        3.024        |           4429.044        | 2.268 |         0.0675            |
-|     512x512x512    |       262144       |        17.568       |           2426.443        | 2.485 |         0.0092            |
-|  1024x1024x1024    |      1048576       |        11.424       |           1208.236        | 2.474 |         0.0011            |
+|        32x32x32    |         1024       |        0.118401     |           2847.608        | 0.065 |         2.7808            |    
+|        64x64x64    |         4096       |        0.2816       |           4433.860        | 0.329 |         1.0824            |
+|     128x128x128    |        16384       |        0.777        |           5445.360        | 1.092 |         0.3323            |
+|     256x256x256    |        65536       |        2.944        |           4607.683        | 2.216 |         0.0703            |
+|     512x512x512    |       262144       |        17.385601    |           2452.809        | 2.414 |         0.0093            |
+|  1024x1024x1024    |      1048576       |        11.251201    |           1222.072        | 2.406 |         0.0011            |
 
+*Note:	Tabulated based on hw_emu
 </details>
 
 <details>
@@ -1440,20 +1490,20 @@ TOPs per Watt is represented as TOPs/Power in Watts. The following example shows
 
 ```
 TOPs per Watt = TOPs / Power(Watt)
-              = (0.066 / 3.708) MSPS/Watt
-              = 0.0177 TOPs/Watt
+              = (0.065 / 4.880) MSPS/Watt
+              = 0.0134 TOPs/Watt
 ```
 
 A summary of TOPs per Watt for all variations is shown in the following table below.
 
 | GeMM Configuration | TOPs per Watt |
 |:------------------:|:-------------:|
-|        32x32x32    |     0.0177    |
-|        64x64x64    |     0.0947    |
-|     128x128x128    |     0.2370    |
-|     256x256x256    |     0.3259    |
-|     512x512x512    |     0.2773    |
-|  1024x1024x1024    |     0.4005    |
+|        32x32x32    |     0.0134    |
+|        64x64x64    |     0.0580    |
+|     128x128x128    |     0.1515    |
+|     256x256x256    |     0.2527    |
+|     512x512x512    |     0.24573   |
+|  1024x1024x1024    |     0.23747   |
 
 </details>
 
@@ -1466,12 +1516,12 @@ A consolidated summary of observations for all the point sizes and all the corre
 
 | GeMM Configuration | Perf<br/>(in MSPS) | Latency<br/>(in μs) | TOPs  | No. of Compute Cores | Vector Load | No. of Active Mem Banks | Mem R/W Rate | Active AIE Tiles | Dynamic Power<br/>(in mW) | TOPs per Watt |
 |:------------------:|:------------------:|:-------------------:|:-----:|:--------------------:|:-----------:|:-----------------------:|:------------:|:----------------:|:-------------------------:|:-------------:|
-|        32x32x32    |        1024.625    |        0.192        | 0.066 | 32                   |  0%         | 352                     | 0%           | 81               |   3708                    |     0.0177    |
-|        64x64x64    |        2842.963    |        0.336        | 0.364 | 32                   |  3%         | 352                     | 1%           | 81               |   3843                    |     0.0947    |
-|     128x128x128    |        4464.682    |        0.816        | 1.143 | 32                   |  17%        | 352                     | 3%           | 91               |   4822                    |     0.2370    |
-|     256x256x256    |        4429.044    |        3.024        | 2.268 | 32                   |  60%        | 352                     | 7%           | 89               |   6959                    |     0.3259    |
-|     512x512x512    |        2426.443    |        17.568       | 2.485 | 32                   |  89%        | 608                     | 5%           | 113              |   8961                    |     0.2773    |
-|  1024x1024x1024    |        1208.236    |        11.424       | 2.474 | 32                   |  18%        | 608                     | 1%           | 144              |  6177                     |     0.4005    |
+|        32x32x32    |        2847.608    |        0.1184       | 0.066 | 32                   |  3%         | 352                     | 1%           | 119              |   4880                    |     0.0134    |
+|        64x64x64    |        4433.860    |        0.2816       | 0.329 | 32                   |  18%        | 352                     | 4%           | 119              |   5680                    |     0.0580    |
+|     128x128x128    |        5445.360    |        0.777        | 1.091 | 32                   |  48%        | 352                     | 7%           | 119              |   7204                    |     0.1515    |
+|     256x256x256    |        4607.683    |        2.944        | 2.216 | 32                   |  89%        | 352                     | 10%          | 101              |   8768                    |     0.2527    |
+|     512x512x512    |        2452.809    |        17.385601    | 2.414 | 32                   |  97%        | 608                     | 6%           | 131              |   9824                    |     0.2457    |
+|  1024x1024x1024    |        1222.071    |        11.2512      | 2.406 | 32                   |  95%        | 608                     | 6%           | 144              |  10132                    |     0.2374    |
 
 From these observations it can be seen that with the increase in the Matrix Dimensions the TOPs per Watt increases till 256x256x256 then starts to decrease, even though the TOPs increases continously till 1024x1024x1024 but after 256x256x256 the power increases disproportionately leading to reduced per Watt performance. User may find an a much tighter placement solution which may reduce the power consumption further and lead to a more favourable performance, as indicated by the low Vector Load.
 

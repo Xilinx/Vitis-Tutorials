@@ -1,3 +1,6 @@
+--Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+--SPDX-License-Identifier: X11
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.ALL;

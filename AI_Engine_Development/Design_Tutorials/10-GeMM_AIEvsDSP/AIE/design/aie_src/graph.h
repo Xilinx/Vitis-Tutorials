@@ -1,16 +1,8 @@
-// © Copyright 2021 Xilinx, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
+
 
 #ifndef _GRAPH_H_
 #define _GRAPH_H_
@@ -61,11 +53,11 @@
    class GeMM: public adf::graph
    {
       public:
-         std::vector<input_plio> matA_inp;
-         std::vector<input_plio> matB_inp;
-         std::vector<output_plio> matC_out;
+         input_plio matA_inp[CASC_LN];
+         input_plio matB_inp[(SPLIT * CASC_LN)];
+         output_plio matC_out[SPLIT];
          
-         GeMM(): matA_inp(CASC_LN), matB_inp(SPLIT * CASC_LN), matC_out(SPLIT) {
+         GeMM() {
             // GeMM Graph Declarations...
             xf::dsp::aie::blas::matrix_mult::matrix_mult_graph<int16, int16, DIM_A, DIM_AB, DIM_B, 0, 0, \
                ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE, WINDOW_SIZE, CASC_LN> mmult[SPLIT];

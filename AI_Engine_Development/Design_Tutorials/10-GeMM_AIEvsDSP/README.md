@@ -9,7 +9,7 @@
 
 ##Versal GeMM Implementation Using Vitis Acceleration Library and DSP58 Tutorial
 
-***Version: Vitis 2022.2***
+***Version: Vitis 2023.1***
 
 ## Table of Contents
 
@@ -132,7 +132,7 @@ GeMM_AIEvsDSP
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
-* [AM009 AI Engine Architecture Manual](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)
+* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -155,7 +155,7 @@ To build and run the GeMM tutorial (AI Engine and HLS implementations), perform 
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
 
-* Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
+* Download and set up the [VCK190 Vitis Platform]( https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 </details>
 
@@ -164,7 +164,7 @@ To build and run the GeMM tutorial (AI Engine and HLS implementations), perform 
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2022.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your Xilinx sales contact.
 
@@ -193,8 +193,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2022.2` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2022.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2022.2/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2023.1` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2023.1/sdk.sh` script.
 5. `DSPLIB_VITIS` is the path to the downloaded Vitis Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically be excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -222,7 +222,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202220_1",
+ "baseName": "xilinx_vck190_base_202310_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -248,11 +248,10 @@ The following table shows a comparison between a 1024 x 1024 x1024 GeMM design i
 
 | Design Target | TOPS<br/> | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | TOPS per Watt<br/>(in TOPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 2.474     | 11.424                  | 32               | 18%             | 608 /<br/>1%                         | 144              | 16308 /<br/> 4561        |0       | 0    | 6177                      |  0.4005                          |    
+| AIE           | 2.406     | 11.251                  | 32               | 95%             | 608 /<br/>6%                         | 144              | 15940 /<br/> 3680        |0       | 0    | 10132                      |  0.237                         |    
 | DSP           | 1.499     |   1398.106              | NA               | NA              | NA                                   | NA               | 80480 /<br/> 25231       | 64     | 1024  | 4765.4                   | 0.186                            |
 
-It is important to understand that those 36 AI Engines are not all required for the GeMM compute: 32 AI Engines/vector cores are required for computation, and 36 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 36 AI Engine tiles is 18%. This means that they can be further loaded to further increase performance if a different configuration is used (different core overlay).
-The 32 core overlay maybe increased to increase the performance further in terms of throughput.
+It is important to understand that those 144 AI Engines tiles are not all required for the GeMM compute: 32 AI Engines/vector cores are required for computation, and 112 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 112 AI Engine tiles is 95%.
 
 Measurement:
 1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and Vivado (report utilization under implementation for FFs and CLB LUTs). For the HLS design, resource utilization is measured using Vivado.
@@ -269,7 +268,7 @@ Contains sections on how to develop AI Engine graphs, how to use the AI Engine c
 
 #### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2022.2/) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) 
 
 #### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 
@@ -281,13 +280,13 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug1451-xrt-release-notes.pdf)
+* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2023_1/ug1451-xrt-release-notes.pdf)
 
-#### [Vitis Unified Software Development Platform 2022.2 Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/index.html)
+#### [Vitis Unified Software Development Platform 2023.1 Documentation](https://www.xilinx.com/html_docs/xilinx2023_1/vitis_doc/index.html)
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2022_2/vitis_doc/kme1569523964461.html)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
