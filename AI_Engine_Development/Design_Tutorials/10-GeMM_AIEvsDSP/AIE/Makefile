@@ -1,3 +1,4 @@
+
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: X11
 
@@ -325,6 +326,7 @@ VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 VPP_LINK_FLAGS += --vivado.prop run.impl_1.STEPS.PLACE_DESIGN.TCL.PRE=$(DIRECTIVES_REPO)/prohibit_select_bli_bels_for_hold.tcl
 
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD=16
+VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.RETIMING=true
 #VPP_LINK_FLAGS += --advanced.param "compiler.worstNegativeSlack=-1.0"
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
@@ -337,7 +339,7 @@ VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_
 ######################################################################################
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Explore} 
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExplorePostRoutePhysOpt}
+
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExploreWithRemap}
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_WLBlockPlacement}
 #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_EarlyBlockPlacement}
