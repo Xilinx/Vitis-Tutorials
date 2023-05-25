@@ -6,7 +6,6 @@
  </tr>
 </table>
 
-
 # Data Movement Between the Host and Kernel
 
 In the previous step, you implemented a sequential execution of the written words from the host, computing hash functions on the FPGA, and reading flags by the host.
@@ -16,12 +15,12 @@ The compute does not start until the entire input is read into the FPGA, and sim
 In this lab, you will work with an:
 
 - Overlap of host data transfer and compute on the FPGA with split buffers (two buffers)
-  - Split the documents and send them to the FPGA in two iterations. 
+  - Split the documents and send them to the FPGA in two iterations.
   - The kernel can start the compute as soon as the data for the corresponding iteration is transferred to the FPGA.
 - Overlap of host data transfer and compute with multiple buffers
   - Explore how the application performance is affected based on splitting the documents and into 2, 4, 8, 16, 32, 64, and 128 chunks.
-- Overlap data transfer from host, compute on FPGA and profile score on the CPU
-  - Enables the host to start profile scores as soon as the flags are received. 
+- Overlap data transfer from host, compute on FPGA and profile score on the CPU.
+  - Enables the host to start profile scores as soon as the flags are received.
 
 ## Overlap of Host Data Transfer and Compute with Split Buffers
 
@@ -117,9 +116,9 @@ Navigate to `$LAB_WORK_DIR/reference_files`, and with a file editor, open `run_s
         krnlWait.push_back(krnlDone);
         q.enqueueMigrateMemObjects({subbuf_inh_flags[0]}, CL_MIGRATE_MEM_OBJECT_HOST, &krnlWait, &flagDone);
         flagWait.push_back(flagDone);
-      ```    
+      ```
 
-5. During the second iteration, the kernel arguments are set, the commands to write the input buffer with second set of words to the FPGA, execute the kernel, and read the results back to the host, are enqueued. 
+5. During the second iteration, the kernel arguments are set, the commands to write the input buffer with second set of words to the FPGA, execute the kernel, and read the results back to the host, are enqueued.
 
     ```cpp
       //  Set Kernel Arguments, Read, Enqueue Kernel and Write for second iteration
@@ -167,7 +166,7 @@ Verification: PASS
 
 ## Review Profile Report and Timeline Trace for the Bloom8x Kernel
   
-1. Run the following commands to view the Timeline Trace report with Bloom8x kernel.
+1. Run the following commands to view the Timeline Trace report with the Bloom8x kernel.
 
     ``` 
     vitis_analyzer $LAB_WORK_DIR/build/split_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary 
@@ -178,8 +177,8 @@ Verification: PASS
    ![missing image](./images/double_buffer_timeline_trace.PNG)
 
     - The Timeline Trace confirms that you achieved the execution schedule you expected.
-      * There is an overlap of the read and compute with write operations between the first and second iterations. 
-      * The execution time of the first kernel run and the first data read are effectively "hidden" behind the write data transfer from host. This results in a faster overall run.
+      - There is an overlap of the read and compute with write operations between the first and second iterations.
+      - The execution time of the first kernel run and the first data read are effectively "hidden" behind the write data transfer from host. This results in a faster overall run.
 
 3. From the Profile Report, *Host Data Transfer: Host Transfer* shows that the "data transfer" from the host CPU consumes more than the "Kernel Compute Time".
       - The Host to Global Memory WRITE Transfer takes about 178 ms, which is higher compared to using a single buffer.
@@ -209,7 +208,7 @@ Executed Software-Only version     |   3133.5186 ms
 Verification: PASS
 ```
 
-You can see that if the documents are split into two buffers, the overall application execution time using the Bloom8x kernel and Bloom16x kernel are very close. As expected, using the Bloom16x kernel rather than the Bloom8x kernel has no benefit.
+You can see that if the documents are split into two buffers, and the overall application execution time using the Bloom8x kernel and Bloom16x kernel are very close. As expected, using the Bloom16x kernel rather than the Bloom8x kernel has no benefit.
 
 While developing your own application, these attributes can be explored to make trade-offs and pick the optimal kernel implementation optimized for resources/performance.
 
@@ -276,7 +275,7 @@ Open `run_generic_buffer.cpp` in `$LAB_WORK_DIR/reference_files` with a file edi
       ```
 
 1. The kernel arguments are set, and the kernel is enqueued to load the Bloom filter coefficients.
- 
+
     ```cpp
       // Set Kernel arguments and load the Bloom filter coefficients in the kernel
       cl::Event buffDone, krnlDone;
@@ -291,7 +290,7 @@ Open `run_generic_buffer.cpp` in `$LAB_WORK_DIR/reference_files` with a file edi
     ```
 
 1. For each iteration, kernel arguments are set, and the commands to write the input buffer to the FPGA, execute the kernel, and read the results back to the host, are enqueued.
-      
+
     ```cpp
       // Set Kernel arguments. Read, Enqueue Kernel and Write for each iteration
       for (int i=0; i<num_iter; i++)
@@ -377,25 +376,25 @@ In this step, you will explore the Bloom8x kernel with 100,000 documents split i
       vitis_analyzer $LAB_WORK_DIR/build/generic_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary
       ```
 
-1. Zoom in to display the Timeline Trace report.
+ 1. Zoom in to display the Timeline Trace report.
 
     ![missing image](./images/generic_buffer_timeline_trace.PNG)
 
-- As you can see from the report, the input buffer is split into eight sub buffers, and there are overlaps between read, compute, and write for all iterations. The total computation is divided in eight iterations, but seven of them are occur simultaneously with data transfers; therefore, only the last compute counts towards the total FPGA execution time. This is indicated by the two arrows on timeline trace
+    - As you can see from the report, the input buffer is split into eight sub buffers, and there are overlaps between read, compute, and write for all iterations. The total computation is divided in eight iterations, but seven of them are occur simultaneously with data transfers; therefore, only the last compute counts towards the total FPGA execution time. This is indicated by the two arrows on timeline trace.
 
-- You can also see that after splitting the input data into multiple buffers, the total execution time on the FPGA improved from the previous steps, allowing additional overlap between the data transfer and compute.
+    - You can also see that after splitting the input data into multiple buffers, the total execution time on the FPGA improved from the previous steps, allowing additional overlap between the data transfer and compute.
 
-For your application, the most optimized configuration is:
+    For your application, the most optimized configuration is:
 
-- Bloom8x kernel with the words split in 8 sub-buffers (`ITER=8`).
+    - Bloom8x kernel with the words split in 8 sub-buffers (`ITER=8`).
 
 ## Overlap Between the Host CPU and FPGA
 
 In the previous steps, you looked at optimizing the execution time of the FPGA by overlapping the data transfer from the host to FPGA and compute on the FPGA. After the FPGA compute is complete, the CPU computes the document scores based on the output from the FPGA. Until now, the FPGA processing and CPU post-processing executed sequentially.
 
-If you look at the previous Timeline Trace reports, you can see red segments on the very first row that shows the OpenCL API Calls made by the host application. This indicates that the host is waiting, staying idle while the FPGA computes the hash and flags. In this step, you will overlap the FPGA processing with the CPU post-processing.
+If you look at the previous Timeline Trace reports, you can see red segments on the very first row that shows the OpenCL™ API Calls made by the host application. This indicates that the host is waiting, staying idle while the FPGA computes the hash and flags. In this step, you will overlap the FPGA processing with the CPU post-processing.
 
-Because the total compute is split into multiple iterations, you can start post-processing on the host CPU after the corresponding iteration is complete, allowing the overlap between the CPU and FPGA processing. The performance increases because the CPU is also processing in parallel with the FPGA, which reduces the execution time. 
+Because the total compute is split into multiple iterations, you can start post-processing on the host CPU after the corresponding iteration is complete, allowing the overlap between the CPU and FPGA processing. The performance increases because the CPU is also processing in parallel with the FPGA, which reduces the execution time.
 
 ### Host Code Modifications
 
@@ -414,7 +413,7 @@ Because the total compute is split into multiple iterations, you can start post-
       unsigned int  iter = 0;
     ```
 
-4. Block the host only if the hash function of the words are still not computed by FPGA, thereby allowing overlap between the CPU and FPGA processing.
+2. Block the host only if the hash function of the words are still not computed by FPGA, thereby allowing overlap between the CPU and FPGA processing.
 
     ```cpp
       for(unsigned int doc=0, n=0; doc<total_num_docs;doc++)
@@ -484,7 +483,7 @@ The following output displays.
    ![missing image](./images/sw_overlap_timeline_trace.PNG)
 
     - As shown in *OpenCL API Calls* of the *Host* section, the red segments are shorter (indicated by red squares) in width which indicates that the processing time of the host CPU is now overlapping with the FPGA processing, which improved the overall application execution time. In the previous steps, the host remained completely idle until the FPGA finished all its processing.
-    - *Data Transfer -> Write* of the Host section seems to have no gap. Kernel compute time of each invocation is smaller than the Host transfer. 
+    - *Data Transfer -> Write* of the Host section seems to have no gap. Kernel compute time of each invocation is smaller than the Host transfer.
     - Each Kernel compute and writing flags to DDR are overlapped with the next Host->
     Device transfer.
 
@@ -495,11 +494,11 @@ The following output displays.
 
     ![missing image](./images/sw_overlap_stalls.PNG)
 
-3. *Host Data Transfer: Host Transfer* Host to Global Memory WRITE Transfer takes about 207.5 ms and Host to Global Memory READ Transfer takes about 36.4 ms
+3. *Host Data Transfer: Host Transfer* Host to Global Memory WRITE Transfer takes about 207.5 ms and Host to Global Memory READ Transfer takes about 36.4 ms.
 
    ![missing image](./images/sw_overlap_profile_host.PNG)
 
- * *Kernels & Compute Unit: Compute Unit Utilization* section shows that CU Utilization is about 71%. This is an important measure representing how much time CU was active over the Device execution time. 
+- *Kernels & Compute Unit: Compute Unit Utilization* section shows that CU Utilization is about 71%. This is an important measure representing how much time CU was active over the device execution time.
 
     ![missing image](./images/sw_overlap_profile_CU_util.PNG)
 
@@ -517,8 +516,6 @@ The host and kernel are trying to access the same DDR bank at the same time whic
 
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p>
 
-
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-

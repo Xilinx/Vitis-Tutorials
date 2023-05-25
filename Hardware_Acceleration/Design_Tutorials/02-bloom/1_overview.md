@@ -29,7 +29,7 @@ The following figure shows a Bloom filter example representing the set `{x, y, z
 In this tutorial, each document consists of an array of words where: each word is a 32-bit unsigned integer comprised of a 24-bit word ID and an 8-bit integer representing the frequency. The search array consists of words of interest to the user, and represents a smaller set of 24-bit word IDs, where each word ID has a weight associated with it, determining the importance of the word.
 
 1. Navigate to `Hardware_Acceleration/Design_Tutorials/02-bloom` directory.
-2. Go to the `cpu_src` directory, open the `main.cpp` file, and look at line 63. 
+2. Go to the `cpu_src` directory, open the `main.cpp` file, and look at line 63.
   
     The Bloom filter application is 64 KB, which is implemented as `1L<<bloom_size` where `bloom_size` is defined as 14 in the header file `sizes.h` (calculated as `(2^14)*4B = 64 KB`).
 
@@ -38,7 +38,6 @@ In this tutorial, each document consists of an array of words where: each word i
 ## Next Steps
 
 In the next step, you will [experience the acceleration potential](./2_experience-acceleration.md) before creating and optimizing a kernel.
-
 
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p>
 

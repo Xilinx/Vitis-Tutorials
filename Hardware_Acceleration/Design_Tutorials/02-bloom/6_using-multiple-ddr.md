@@ -6,34 +6,32 @@
  </tr>
 </table>
 
-
 # Using Multiple DDR Banks
 
-In the previous step, you noticed the overlap of the host data transfer documents sent to FPGA were also split into multiple buffers. Flags from the FPGA were also sent to the host immediately; this overlaps the compute profile score on the CPU with the "Compute FPGA" which further improves the application execution time.
+In the previous step, you noticed the overlap of the host data transfer documents sent to the FPGA were also split into multiple buffers. Flags from the FPGA were also sent to the host immediately; this overlaps the compute profile score on the CPU with the "Compute FPGA" which further improves the application execution time.
 
-You also observed memory contention because the host and kernel both accessed the same bank at the same time.
-In this section, you configure multiple DDR banks to improve the kernel performance.
+You also observed memory contention because the host and kernel both accessed the same bank at the same time. In this section, you configure multiple DDR banks to improve the kernel performance.
 
-Alveo cards have multiple DDR banks, and you can use multiple banks in ping-pong fashion to minimize the contention.
+AMD Alveo™ cards have multiple DDR banks, and you can use multiple banks in ping-pong fashion to minimize the contention.
 
-* The host is writing words to DDR bank 1 and DDR bank 2 alternatively. 
-* When the host is writing words to DDR bank1, the kernel is reading flags from DDR bank2. 
-* When host is writing documents to DDR bank2, the kernel is reading flags from DDR bank1. 
+* The host is writing words to DDR bank 1 and DDR bank 2 alternatively.
+* When the host is writing words to DDR bank 1, the kernel is reading flags from DDR bank 2.
+* When host is writing documents to DDR bank 2, the kernel is reading flags from DDR bank 1.
 
-The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). In this case the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity. 
+The kernel will read from DDR bank 1 and bank 2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). In this case, the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity.
 
     ```
     [connectivity]
     sp=runOnfpga_1.input_words:DDR[1:2] 
     ```
-   - The `-sp` option instructs the `v++` linker that `input_words` is connected to both DDR banks 1 and 2. You will need to rebuild the kernel because connectivity is now changed.
 
+* The `-sp` option instructs the `v++` linker that `input_words` is connected to both DDR banks 1 and 2. You will need to rebuild the kernel because connectivity is now changed.
 
 ## Code Modifications
 
 1. Navigate to `$LAB_WORK_DIR/reference_files`, and with a file editor, open `run_sw_overlap_multiDDR.cpp`.
 
-3. From the host code, you will need to send the words to both DDR banks alternatively. The DDR bank assignment in the host code is supported by a Xilinx vendor extension to the OpenCL API. Two Xilinx extension pointer objects (`cl_mem_ext_ptr_t`) are created, `buffer_words_ext[0]` and `buffer_words_ext[1]`. The`flags` will determine which DDR bank the buffer will be send to, so that kernel can access it.
+2. From the host code, you will need to send the words to both DDR banks alternatively. The DDR bank assignment in the host code is supported by a AMD vendor extension to the OpenCL™ API. Two AMD extension pointer objects (`cl_mem_ext_ptr_t`) are created, `buffer_words_ext[0]` and `buffer_words_ext[1]`. The`flags` will determine which DDR bank the buffer will be send to, so that kernel can access it.
 
    ```cpp
     cl_mem_ext_ptr_t buffer_words_ext[2];
@@ -46,9 +44,9 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
     buffer_words_ext[1].obj   = input_doc_words;
    ```  
 
-4. Next two buffers, `buffer_doc_words[0]` and `buffer_doc_words[1]` are created in `DDR[1]` and `DDR[2]` as follows.
+3. The next two buffers, `buffer_doc_words[0]` and `buffer_doc_words[1]`, are created in `DDR[1]` and `DDR[2]` as follows.
 
-    ```cpp 
+    ```cpp
     buffer_doc_words[0] = cl::Buffer(context, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, total_size*sizeof(uint), &buffer_words_ext[0]);
     buffer_doc_words[1] = cl::Buffer(context, CL_MEM_EXT_PTR_XILINX | CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY, total_size*sizeof(uint), &buffer_words_ext[1]);
     buffer_inh_flags    = cl::Buffer(context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY, total_size*sizeof(char),output_inh_flags);
@@ -80,11 +78,9 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
     }
     ```
 
-5. The kernel argument, input word is set to array of sub-buffers created from `buffer_doc_words[0]` and `buffer_doc_words[1]` alternatively; hence, data is sent to DDR bank 1 and 2 alternatively in each kernel execution. 
+4. The kernel argument, input word is set to the array of sub-buffers created from `buffer_doc_words[0]` and `buffer_doc_words[1]` alternatively; hence, data is sent to DDR bank 1 and 2 alternatively in each kernel execution.
 
-
-
-    ```cpp 
+    ```cpp
     for (int i=0; i<num_iter; i++)
     {
       cl::Event buffDone, krnlDone, flagDone;
@@ -137,21 +133,21 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
 
     ![missing image](./images/multiDDR_timeline_trace_1.PNG)
 
-    - The Timeline Trace confirms that the host is writing to the DDR in a ping-pong fashion. You can hover your mouse over Data Transfer-> Write transactions and observe that the host is writing to bank1, bank2, bank1, bank2, alternatively.
+    * The Timeline Trace confirms that the host is writing to the DDR in a ping-pong fashion. You can hover your mouse over Data Transfer-> Write transactions and observe that the host is writing to bank1, bank2, bank1, bank2, alternatively.
     The kernel is always writing to same DDR bank1 as flags size is relatively small.
-    - In the previous lab, without usage of multiple banks the kernel cannot read the next set of words from the DDR until the host has read flags written by the kernel in the previous enqueue. In this lab, you can observe that both of these accesses can be carried out in parallel because these accesses are for different DDR banks. 
+    * In the previous lab, without usage of multiple banks, the kernel cannot read the next set of words from the DDR until the host has read flags written by the kernel in the previous enqueue. In this lab, you can observe that both of these accesses can be carried out in parallel because these accesses are for different DDR banks.
 
-    This results in an improved FPGA compute that includes the transfer from the host, device compute and sending flag data back to the host.
+    This results in an improved FPGA compute that includes the transfer from the host, device compute, and sending flag data back to the host.
 
 3. Review the Profile report and note the following observations:
 
-    *  *Data Transfer: Host to Global Memory* section indicates:
-        - Host to Global Memory WRITE Transfer takes about 145.7 ms which is less than 207 ms.
-        - Host to Global Memory READ Transfer takes about 37.9 ms.
+    * *Data Transfer: Host to Global Memory* section indicates:
+        * Host to Global Memory WRITE Transfer takes about 145.7 ms which is less than 207 ms.
+        * Host to Global Memory READ Transfer takes about 37.9 ms.
 
           ![missing image](./images/multiDDR_profile_host.PNG)
 
-   * *Kernels & Compute Unit: Compute Unit Utilization* section shows that the CU Utilization has also increased to 89.5% from 71% in previous lab.
+   * The *Kernels & Compute Unit: Compute Unit Utilization* section shows that the CU Utilization has also increased to 89.5% from 71% in previous lab.
 
       ![missing image](./images/multiDDR_profile_CU_util.PNG)
 
@@ -159,7 +155,7 @@ The kernel will read from DDR bank1 and bank2 alternatively and its `maxi` port 
 
       ![missing image](./images/multiDDR_stalls.PNG)
 
-Compared to the previous step using only one DDR, there is no overall application gain. The FPGA compute performance improves, but the bottleneck is processing the "Compute Score", which is limited by CPU Performance. If the CPU can process faster, you can get the better performance.  
+Compared to the previous step using only one DDR, there is no overall application gain. The FPGA compute performance improves, but the bottleneck is processing the "Compute Score", which is limited by the CPU Performance. If the CPU can process faster, you can get the better performance.  
 
 Based on the results, the throughput of the application is 1399MB/426 ms = approximately 3.27 GBs. You now have approximately 7.2x (=3058 ms/426 ms) the performance results compared to the software-only version.
 
@@ -169,13 +165,9 @@ Congratulations! You have successfully completed the tutorial.
 
 In this tutorial, you learned that optimizing how the host application interacts with the accelerator makes a significant difference. A native initial implementation delivered a 4x performance improvement over the reference software implementation. By leveraging data-parallelism, the overlapping data transfers, compute, and the overlapping CPU processing with FPGA processing, using multiple DDR banks, the application performance was increased by another 1.8x, achieving a total of 7.2x acceleration.
 
-
 ---------------------------------------
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Start of Tutorial</a></b></p>
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-

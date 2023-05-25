@@ -13,7 +13,7 @@
 
 ***Version: Vitis 2023.1***
 
-Register transfer level (RTL) design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a time consuming and error-prone process. The Vitis&trade; unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included the AMD Vivado&reg; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-field programmable gate array (FPGA) communication, direct memory access (DMA), and other supporting tasks.
+Register transfer level (RTL) design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a time consuming and error-prone process. The Vitis unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included the AMD Vivado&trade; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-field programmable gate array (FPGA) communication, direct memory access (DMA), and other supporting tasks.
 
 ## About This Tutorial
 
@@ -27,7 +27,7 @@ The AMD Alveo&trade; Data Center accelerator cards are the target platform for t
 
 * Packing RTL design to Vitis-compliant RTL kernel with the command line interface
 * Using mixed-mode clock manager (MMCM)/ phase-locked loop (PLL) in the RTL kernel
-* Using the AMD Vivado&trade; XSIM to simulate the design
+* Using the Vivado XSIM to simulate the design
 * Using AMD AXI VIP to verify the RTL design with AXI interface
 * Using three RTL kernel control modes with XRT: ```ap_ctrl_none```, ```ap_ctrl_hs```, and ```ap_ctrl_chain```.
 * Host programming for the RTL kernel with the XRT Native API
@@ -55,7 +55,7 @@ The designs have been verified with the following software/hardware environment 
 
 ### Additional Requirements for RedHat/CentOS
 
-If you are using RedHat/CentOS 7, the default installed GNU compiler collection(GCC) version is 4.x.x. You must use the following command to install and switch to GCC 7 before compiling the host program.
+If you are using RedHat/CentOS 7, the default installed GNU compiler collection (GCC) version is 4.x.x. You must use the following command to install and switch to GCC 7 before compiling the host program.
 
 ```shell
 sudo yum install centos-release-scl

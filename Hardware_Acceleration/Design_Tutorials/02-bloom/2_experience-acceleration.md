@@ -41,14 +41,13 @@ In this lab, you will experience the acceleration potential by running the appli
       Execution COMPLETE
       ```
   
-3. Run the application on the FPGA.
-     For the purposes of this lab, the FPGA accelerator is implemented with an 8x parallelization factor.
+3. Run the application on the FPGA. For the purposes of this lab, the FPGA accelerator is implemented with an 8x parallelization factor.
 
-   *  Eight input words are processed in parallel, producing eight output flags in parallel during each clock cycle. 
+   * Eight input words are processed in parallel, producing eight output flags in parallel during each clock cycle.
 
       To run the optimized application on the FPGA, run the following `make` command.
 
-         ``` bash
+      ``` bash
          make run_fpga SOLUTION=1
          ```
 
@@ -68,7 +67,7 @@ In this lab, you will experience the acceleration potential by running the appli
 
          Throughput = Total data/Total time = 1.39 GB/427.1341ms = 3.25 GB/s
 
-         By efficiently leveraging FPGA acceleration, the throughput of the application increases by a factor of 7. 
+         By efficiently leveraging FPGA acceleration, the throughput of the application increases by a factor of 7.
 
 ## Next Steps
 
@@ -76,7 +75,6 @@ In this step, you observed the acceleration that can be achieved using an FPGA. 
 
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="docs/README.md">Return to Start of Tutorial</a></b></p>
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
