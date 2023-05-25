@@ -1,12 +1,22 @@
 # Vitis-Tutorials ChangeLog
 
-## 2023.1 (May 22th, 2023)
+## 2023.1 (May 24th, 2023)
 ### New Tutorials 
 - AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer/
 
 ### Tutorial Updates
-- Updated description and screenshots for integrated Vitis Analyzer view in Vitis Unified IDE
-- Update License to MIT, as well as legal attribution in code. 
+- Updated the description and included screenshots to guide users on analyzing design performance using the Analysis view in Vitis Unified IDE. This replaces the deprecated Vitis Analyzer.
+    - AI_Engine_Development/Feature_Tutorials/13-aie-performance-analysis/
+    - AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter/
+    - Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial/
+    - Hardware_Acceleration/Design_Tutorials/02-bloom/
+    - Hardware_Acceleration/Design_Tutorials/06-cholesky-accel/
+    - Hardware_Acceleration/Design_Tutorials/07-host-code-opt/
+    - Hardware_Acceleration/Feature_Tutorials/02-mixing-c-rtl-kernels/
+    - Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks/
+- Provided an updated description and screenshots to help users leverage the new Vitis Unified IDE for design development.
+    - Getting_Started/Vitis_Platform/
+- Update license to MIT, as well as legal attribution in code. 
 
 ### EoU Improvements
 - Some of the tutorials have been restructured to improve user experience.
@@ -14,11 +24,16 @@
 <details open>
     <summary>2022.2 Release</summary>
 
+## 2022.2_update (Mar 1st, 2023)
+### New Tutorials 
+- Developer_Contributed/02-AIE_DSP_with_Makefile_and_GUI/
+- Developer_Contributed/03-HLS_Code_Optimization/   
+    
 ## 2022.2 (Nov 2nd, 2022)
 ### New Tutorials 
 - Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ 
 - AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP/
-- AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv
+- AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv/
 
 ### Tutorial Updates
 - Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo/
