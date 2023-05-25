@@ -1,16 +1,5 @@
-# © Copyright 2021–2022 Xilinx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
 
 %.PHONY: help
 help::
@@ -52,7 +41,7 @@ help::
 	@echo  "  Command to run and get vivado utilisation and power reports."
 	@echo  "  Works only for TARGET=hw"
 	@echo  ""
-	@echo  "  make clean_tgt"
+	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
@@ -101,8 +90,19 @@ TARGET := hw_emu
 ######################################
 # FFT 2D Datatype can be,
 # cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
 ######################################
-FFT_2D_DT := cint16
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
+
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -143,9 +143,9 @@ FFT_2D_VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${FFT_2D_PL_FREQ} * $(HZ_U
 
 # =========================================================
 # Iteration Count:
-# 8(default)
+# 16(default)
 # =========================================================
-ITER_CNT := 8
+ITER_CNT := 16
 
 # =========================================================
 # Profiling/Trace and Datamover type Switches...
@@ -179,13 +179,13 @@ EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
 VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
 
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT)_dsns
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
 REPORTS_REPO := $(PROJECT_REPO)/reports_dir
-BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
@@ -313,14 +313,22 @@ VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/x$(FFT_2D_INSTS).cfg
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
 
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={SSI_BalanceSLRs}
+ifeq ($(FFT_2D_DT),1)
+   ifeq ($((FFT_2D_PT)),128)
+      ifeq ($(FFT_2D_INSTS),10)
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_2}
+      else
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+         VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={SSI_BalanceSLRs}
+      endif
+   endif 
+endif       
 
 VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
 
@@ -548,7 +556,7 @@ endif
 # Primary Build Targets
 # ==> sd_card
 # ==> run
-# ==> clean_tgt
+# ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
 # ==> clean_fft2d_dt
@@ -568,7 +576,7 @@ run: sd_card run_emu
 all: run report_metrics 
 
 #Clean generated files
-clean_tgt:
+clean_target:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 

@@ -187,6 +187,12 @@ mem["10"]="120000"
 for dt in ${dt_lst[*]}
 do
    #echo $dt
+   if [[ $dt == "cint16" ]]
+   then
+       dt_index=0
+   else
+      dt_index=1
+   fi
    for pt in ${pt_lst[*]}
    do
       #echo $pt
@@ -196,7 +202,7 @@ do
          for tgt in ${tgt_lst[*]}
          do
             #echo $tgt
-            mk_targets="${arg_lst[mk]} EN_TRACE=${arg_lst[en_trace]} TARGET=$tgt FFT_2D_PT=$pt ITER_CNT=${arg_lst[iters]} PL_FREQ=${arg_lst[freq]} FFT_2D_INSTS=$insts FFT_2D_DT=$dt"
+            mk_targets="${arg_lst[mk]} EN_TRACE=${arg_lst[en_trace]} TARGET=$tgt FFT_2D_PT=$pt ITER_CNT=${arg_lst[iters]} PL_FREQ=${arg_lst[freq]} FFT_2D_INSTS=$insts FFT_2D_DT=$dt_index"
             #echo $mk_targets
             
             echo "##########################################################################################################" | tee -a fft2d_build.log

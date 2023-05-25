@@ -1,16 +1,5 @@
-# © Copyright 2021–2022 Xilinx, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: X11
 
 %.PHONY: help
 help::
@@ -64,7 +53,7 @@ help::
 	@echo  "  Command to run and get vivado utilisation and power reports."
 	@echo  "  Works only for TARGET=hw"
 	@echo  ""
-	@echo  "  make clean_tgt"
+	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
@@ -119,8 +108,20 @@ TARGET := hw_emu
 ######################################
 # FFT 2D Datatype can be,
 # cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
 ######################################
-FFT_2D_DT := cint16
+
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
+
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -148,7 +149,7 @@ FFT_2D_INSTS := 1
 # PL Frequency in Mhz:
 #   250Mhz(default)
 # =========================================================
-PL_FREQ := 250
+PL_FREQ := 312.5
 HZ_UNIT := 1000000
 VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * $(HZ_UNIT)" | bc`)
 
@@ -191,16 +192,16 @@ EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
 VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
 
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT)_dsns
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
 REPORTS_REPO := $(PROJECT_REPO)/reports_dir
-BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
 
 XPE_REPO := $(PROJECT_REPO)/xpe_dir
-BLD_XPE_DIR := $(XPE_REPO)/$(FFT_2D_DT)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/$(TARGET)
+BLD_XPE_DIR := $(XPE_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/$(TARGET)
 VCD_FILE_NAME := $(FFT_2D_DT)_fft2d_$(MAT_ROWS)x$(MAT_COLS)_x$(FFT_2D_INSTS)
 BLD_TGT_VCD_FILE := $(BUILD_TARGET_DIR)/$(VCD_FILE_NAME).vcd
 XPE_FILE := $(BLD_XPE_DIR)/graph_$(VCD_FILE_NAME).xpe
@@ -282,7 +283,7 @@ AIE_FLAGS += --workdir=$(WORK_DIR)
 #-i - Alias of --input-dir=<dir> option
 #-o - Alias of --output-dir=<dir> option
 AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
-AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
+AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
 
 # =========================================================
 # Application Compiler and Linker Flags
@@ -372,12 +373,7 @@ VPP_LINK_FLAGS += --config $(SYSTEM_CONFIGS_REPO)/x$(FFT_2D_INSTS).cfg
 #VPP_LINK_FLAGS += --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true
 
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
-#VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
-
 VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
-
-#VPP_LINK_FLAGS += --vivado.synth.jobs 32
-#VPP_LINK_FLAGS += --vivado.impl.jobs 32
 
 # =========================================================
 # Packaging Flags
@@ -635,7 +631,7 @@ endif
 # ==> sd_card
 # ==> run
 # ==> all
-# ==> clean_tgt
+# ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
 # ==> clean_fft2d_dt
@@ -657,7 +653,7 @@ run: sd_card run_emu
 all: run report_metrics vcd 
 
 #Clean generated files
-clean_tgt:
+clean_target:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 

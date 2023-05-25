@@ -1,16 +1,7 @@
-// © Copyright 2021–2022 Xilinx, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
 
 #include "fft_2d.h"
 
@@ -77,16 +68,16 @@ void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
 
    void fftCol(
          bool direction,
-         cmpxDataIn   in[MAT_ROWS],
-         cmpxDataOut out[MAT_ROWS],
+         cmpxDataIn   cols_in[MAT_ROWS],
+         cmpxDataOut cols_out[MAT_ROWS],
          bool* ovflo)
 
 #else // cfloat datatype
 
    void fftCol(
          bool direction,
-         cmpxDataIn   in[MAT_ROWS],
-         cmpxDataOut out[MAT_ROWS])
+         cmpxDataIn   cols_in[MAT_ROWS],
+         cmpxDataOut cols_out[MAT_ROWS])
 
 #endif
 {
@@ -108,7 +99,7 @@ void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
    //hls::fft<configCol>(inp_fft, out_fft, &fft_status, &fft_config);
    //copyCol_out(out_fft, out);
    
-   hls::fft<configCol>(in, out, &fft_status, &fft_config);
+   hls::fft<configCol>(cols_in, cols_out, &fft_status, &fft_config);
    
    #if FFT_2D_DT == 0 // cint16 datatype
       fftCol_status(&fft_status, ovflo);
@@ -182,16 +173,16 @@ void copyRow_out(cmpxDataOut out_fft[MAT_COLS],
 
    void fftRow(
          bool direction,
-         cmpxDataIn   in[MAT_COLS],
-         cmpxDataOut out[MAT_COLS],
+         cmpxDataIn   rows_in[MAT_COLS],
+         cmpxDataOut rows_out[MAT_COLS],
          bool* ovflo)
 
 #else // cfloat datatype
 
    void fftRow(
          bool direction,
-         cmpxDataIn   in[MAT_COLS],
-         cmpxDataOut out[MAT_COLS])
+         cmpxDataIn   rows_in[MAT_COLS],
+         cmpxDataOut rows_out[MAT_COLS])
 
 #endif
 {
@@ -213,15 +204,15 @@ void copyRow_out(cmpxDataOut out_fft[MAT_COLS],
    //hls::fft<configRow>(inp_fft, out_fft, &fft_status, &fft_config);
    //copyRow_out(out_fft, out);
    
-   hls::fft<configRow>(in, out, &fft_status, &fft_config);
+   hls::fft<configRow>(rows_in, rows_out, &fft_status, &fft_config);
    
    #if FFT_2D_DT == 0 // cint16 datatype
       fftRow_status(&fft_status, ovflo);
    #endif
 }
 
-void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-                cmpxDataIn in[MAT_COLS]
+void readIn_row(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+                cmpxDataIn rows_in[MAT_COLS]
                )
 {
    #if FFT_2D_DT == 0 // cint16 datatype
@@ -229,26 +220,26 @@ void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=16 max=512
          
-         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
-         qdma.keep_all();
+         ap_axiu<128, 0, 0, 0> ap = strm_inp.read();
+         ap.keep=-1;
          
          cmpxDataIn tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 15,   0);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 31,  16);
-         in[j] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 15,   0);
+         tmp_in.imag().range(15, 0) = ap.data.range( 31,  16);
+         rows_in[j] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 47,  32);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 63,  48);
-         in[j + 1] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 47,  32);
+         tmp_in.imag().range(15, 0) = ap.data.range( 63,  48);
+         rows_in[j + 1] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 79,  64);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 95,  80);
-         in[j + 2] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 79,  64);
+         tmp_in.imag().range(15, 0) = ap.data.range( 95,  80);
+         rows_in[j + 2] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range(111,  96);
-         tmp_in.imag().range(15, 0) = qdma.data.range(127, 112);
-         in[j + 3] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range(111,  96);
+         tmp_in.imag().range(15, 0) = ap.data.range(127, 112);
+         rows_in[j + 3] = tmp_in;
       }
    
    #else // cfloat datatype
@@ -256,59 +247,59 @@ void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=32 max=1024
          
-         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
-         qdma.keep_all();
+         ap_axiu<128, 0, 0, 0> ap = strm_inp.read();
+         ap.keep=-1;
          
          cmpxDataIn tmp_in;
          AXI_DATA rowInp;
          
-         rowInp.data[0] = qdma.data.range( 63,  0);
-         rowInp.data[1] = qdma.data.range(127, 64);
+         rowInp.data[0] = ap.data.range( 63,  0);
+         rowInp.data[1] = ap.data.range(127, 64);
          
          tmp_in.real(rowInp.fl_data[0]);
          tmp_in.imag(rowInp.fl_data[1]);
-         in[j] = tmp_in;
+         rows_in[j] = tmp_in;
          
          tmp_in.real(rowInp.fl_data[2]);
          tmp_in.imag(rowInp.fl_data[3]);
-         in[j + 1] = tmp_in;
+         rows_in[j + 1] = tmp_in;
       }
    
    #endif
 }
 
-void writeOut_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
-                  cmpxDataOut out[MAT_COLS]
+void writeOut_row(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out,
+                  cmpxDataOut rows_out[MAT_COLS]
                  )
 {
    #if FFT_2D_DT == 0 // cint16 datatype
       LOOP_FFT_ROW_WRITE_OUT:for(int j = 0; j < MAT_COLS; j += 4) {
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=16 max=512
-         qdma_axis<128, 0, 0, 0> qdma;
+         ap_axiu<128, 0, 0, 0> ap;
          
          cmpxDataOut tmp;
-         tmp = out[j];
+         tmp = rows_out[j];
 
-         qdma.data.range( 15,   0) = real(tmp).range(15, 0);
-         qdma.data.range( 31,  16) = imag(tmp).range(15, 0);
+         ap.data.range( 15,   0) = real(tmp).range(15, 0);
+         ap.data.range( 31,  16) = imag(tmp).range(15, 0);
 
-         tmp = out[j+1];
+         tmp = rows_out[j+1];
 
-         qdma.data.range( 47,  32) = real(tmp).range(15, 0);
-         qdma.data.range( 63,  48) = imag(tmp).range(15, 0);
+         ap.data.range( 47,  32) = real(tmp).range(15, 0);
+         ap.data.range( 63,  48) = imag(tmp).range(15, 0);
 
-         tmp = out[j+2];
+         tmp = rows_out[j+2];
 
-         qdma.data.range( 79,  64) = real(tmp).range(15, 0);
-         qdma.data.range( 95,  80) = imag(tmp).range(15, 0);
+         ap.data.range( 79,  64) = real(tmp).range(15, 0);
+         ap.data.range( 95,  80) = imag(tmp).range(15, 0);
 
-         tmp = out[j+3];
+         tmp = rows_out[j+3];
 
-         qdma.data.range(111,  96) = real(tmp).range(15, 0);
-         qdma.data.range(127, 112) = imag(tmp).range(15, 0);
+         ap.data.range(111,  96) = real(tmp).range(15, 0);
+         ap.data.range(127, 112) = imag(tmp).range(15, 0);
          
-         strm_out.write(qdma);
+         strm_out.write(ap);
       }
    
    #else // cfloat datatype
@@ -316,28 +307,28 @@ void writeOut_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=32 max=1024
          
-         qdma_axis<128, 0, 0, 0> qdma;
+         ap_axiu<128, 0, 0, 0> ap;
          
          AXI_DATA rowOut;
          cmpxDataOut tmp;
-         tmp = out[j];
+         tmp = rows_out[j];
          rowOut.fl_data[0] = real(tmp);
          rowOut.fl_data[1] = imag(tmp);
-         tmp = out[j+1];
+         tmp = rows_out[j+1];
          rowOut.fl_data[2] = real(tmp);
          rowOut.fl_data[3] = imag(tmp);
 
-         qdma.data.range( 63,  0) = rowOut.data[0];
-         qdma.data.range(127, 64) = rowOut.data[1];
+         ap.data.range( 63,  0) = rowOut.data[0];
+         ap.data.range(127, 64) = rowOut.data[1];
          
-         strm_out.write(qdma);
+         strm_out.write(ap);
       }
    #endif
 }
 
 void fft_rows(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out
      )
 {
    LOOP_FFT_ROWS:for(int i = 0; i < MAT_ROWS; ++i) {
@@ -345,21 +336,21 @@ void fft_rows(
       #pragma HLS loop_tripcount min=32 max=1024
       
       #if FFT_2D_DT == 0 // cint16 datatype
-         cmpxDataIn in[MAT_COLS];
-         #pragma HLS STREAM variable=in depth=1024
+         cmpxDataIn rows_in[MAT_COLS];
+         #pragma HLS STREAM variable=rows_in depth=1024
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=4 dim=1
          
-         cmpxDataOut out[MAT_COLS];
-         #pragma HLS STREAM variable=out depth=1024
+         cmpxDataOut rows_out[MAT_COLS];
+         #pragma HLS STREAM variable=rows_out depth=1024
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=4 dim=1
       
       #else // cfloat datatype
-         cmpxDataIn in[MAT_COLS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=in depth=512
+         cmpxDataIn rows_in[MAT_COLS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=rows_in depth=512
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=2 dim=1
          
-         cmpxDataOut out[MAT_COLS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=out depth=512
+         cmpxDataOut rows_out[MAT_COLS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=rows_out depth=512
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=2 dim=1
       
       #endif
@@ -370,22 +361,22 @@ void fft_rows(
          bool ovfloStub;
       #endif
       
-      readIn_row(strm_inp, in);
+      readIn_row(strm_inp, rows_in);
       
       #if FFT_2D_DT == 0 // cint16 datatype
-         fftRow(directionStub, in, out, &ovfloStub);
+         fftRow(directionStub, rows_in, rows_out, &ovfloStub);
       
       #else // cfloat datatype
-         fftRow(directionStub, in, out);
+         fftRow(directionStub, rows_in, rows_out);
       
       #endif
       
-      writeOut_row(strm_out, out);
+      writeOut_row(strm_out, rows_out);
    }
 }
 
-void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-                cmpxDataIn in[MAT_ROWS]
+void readIn_col(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+                cmpxDataIn cols_in[MAT_ROWS]
                )
 {
    #if FFT_2D_DT == 0 // cint16 datatype
@@ -393,26 +384,26 @@ void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=8 max=256
          
-         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
-         qdma.keep_all();
+         ap_axiu<128, 0, 0, 0> ap = strm_inp.read();
+         ap.keep=-1;
          
          cmpxDataIn tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 15,   0);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 31,  16);
-         in[j] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 15,   0);
+         tmp_in.imag().range(15, 0) = ap.data.range( 31,  16);
+         cols_in[j] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 47,  32);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 63,  48);
-         in[j + 1] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 47,  32);
+         tmp_in.imag().range(15, 0) = ap.data.range( 63,  48);
+         cols_in[j + 1] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range( 79,  64);
-         tmp_in.imag().range(15, 0) = qdma.data.range( 95,  80);
-         in[j + 2] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range( 79,  64);
+         tmp_in.imag().range(15, 0) = ap.data.range( 95,  80);
+         cols_in[j + 2] = tmp_in;
          
-         tmp_in.real().range(15, 0) = qdma.data.range(111,  96);
-         tmp_in.imag().range(15, 0) = qdma.data.range(127, 112);
-         in[j + 3] = tmp_in;
+         tmp_in.real().range(15, 0) = ap.data.range(111,  96);
+         tmp_in.imag().range(15, 0) = ap.data.range(127, 112);
+         cols_in[j + 3] = tmp_in;
       }
    
    #else // cfloat datatype
@@ -420,29 +411,29 @@ void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=16 max=512
          
-         qdma_axis<128, 0, 0, 0> qdma = strm_inp.read();
-         qdma.keep_all();
+         ap_axiu<128, 0, 0, 0> ap = strm_inp.read();
+         ap.keep=-1;
          
          cmpxDataIn tmp_in;
          AXI_DATA colInp;
          
-         colInp.data[0] = qdma.data.range( 63,  0);
-         colInp.data[1] = qdma.data.range(127, 64);
+         colInp.data[0] = ap.data.range( 63,  0);
+         colInp.data[1] = ap.data.range(127, 64);
          
          tmp_in.real(colInp.fl_data[0]);
          tmp_in.imag(colInp.fl_data[1]);
-         in[j] = tmp_in;
+         cols_in[j] = tmp_in;
          
          tmp_in.real(colInp.fl_data[2]);
          tmp_in.imag(colInp.fl_data[3]);
-         in[j + 1] = tmp_in;
+         cols_in[j + 1] = tmp_in;
       }
    
    #endif
 }
 
-void writeOut_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
-                  cmpxDataOut out[MAT_ROWS]
+void writeOut_col(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out,
+                  cmpxDataOut cols_out[MAT_ROWS]
                  )
 {
    #if FFT_2D_DT == 0 // cint16 datatype
@@ -450,26 +441,26 @@ void writeOut_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=16 max=512
          
-         qdma_axis<128, 0, 0, 0> qdma;
+         ap_axiu<128, 0, 0, 0> ap;
          cmpxDataOut tmp;
-         tmp = out[j];
+         tmp = cols_out[j];
 
-         qdma.data.range( 15,   0) = real(tmp).range(15, 0);
-         qdma.data.range( 31,  16) = imag(tmp).range(15, 0);
-         tmp = out[j+1];
+         ap.data.range( 15,   0) = real(tmp).range(15, 0);
+         ap.data.range( 31,  16) = imag(tmp).range(15, 0);
+         tmp = cols_out[j+1];
 
-         qdma.data.range( 47,  32) = real(tmp).range(15, 0);
-         qdma.data.range( 63,  48) = imag(tmp).range(15, 0);
-         tmp = out[j+2];
+         ap.data.range( 47,  32) = real(tmp).range(15, 0);
+         ap.data.range( 63,  48) = imag(tmp).range(15, 0);
+         tmp = cols_out[j+2];
 
-         qdma.data.range( 79,  64) = real(tmp).range(15, 0);
-         qdma.data.range( 95,  80) = imag(tmp).range(15, 0);
-         tmp = out[j+3];
+         ap.data.range( 79,  64) = real(tmp).range(15, 0);
+         ap.data.range( 95,  80) = imag(tmp).range(15, 0);
+         tmp = cols_out[j+3];
 
-         qdma.data.range(111,  96) = real(tmp).range(15, 0);
-         qdma.data.range(127, 112) = imag(tmp).range(15, 0);
+         ap.data.range(111,  96) = real(tmp).range(15, 0);
+         ap.data.range(127, 112) = imag(tmp).range(15, 0);
          
-         strm_out.write(qdma);
+         strm_out.write(ap);
       }
    
    #else // cfloat datatype
@@ -477,28 +468,28 @@ void writeOut_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
          #pragma HLS PIPELINE II=1
          #pragma HLS loop_tripcount min=32 max=1024
          
-         qdma_axis<128, 0, 0, 0> qdma;
+         ap_axiu<128, 0, 0, 0> ap;
          
          AXI_DATA colOut;
          cmpxDataOut tmp;
-         tmp = out[j];
+         tmp = cols_out[j];
          colOut.fl_data[0] = real(tmp);
          colOut.fl_data[1] = imag(tmp);
-         tmp = out[j+1];
+         tmp = cols_out[j+1];
          colOut.fl_data[2] = real(tmp);
          colOut.fl_data[3] = imag(tmp);
 
-         qdma.data.range( 63,  0) = colOut.data[0];
-         qdma.data.range(127, 64) = colOut.data[1];
+         ap.data.range( 63,  0) = colOut.data[0];
+         ap.data.range(127, 64) = colOut.data[1];
          
-         strm_out.write(qdma);
+         strm_out.write(ap);
       }
    #endif
 }
 
 void fft_cols(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out
      )
 {
    LOOP_FFT_COLS:for(int i = 0; i < MAT_COLS; ++i) {
@@ -506,22 +497,22 @@ void fft_cols(
       #pragma HLS loop_tripcount min=64 max=2048
       
       #if FFT_2D_DT == 0 // cint16 datatype
-         cmpxDataIn in[MAT_ROWS];
+         cmpxDataIn cols_in[MAT_ROWS];
          //#pragma HLS STREAM variable=in depth=1024
-         #pragma HLS STREAM variable=in depth=32
+         #pragma HLS STREAM variable=cols_in depth=32
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=4 dim=1
          
-         cmpxDataOut out[MAT_ROWS];
-         #pragma HLS STREAM variable=out depth=32
+         cmpxDataOut cols_out[MAT_ROWS];
+         #pragma HLS STREAM variable=cols_out depth=32
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=4 dim=1
       
       #else // cfloat datatype
-         cmpxDataIn in[MAT_ROWS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=in depth=16
+         cmpxDataIn cols_in[MAT_ROWS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=cols_in depth=16
          //#pragma HLS ARRAY_RESHAPE variable=in cyclic factor=2 dim=1
          
-         cmpxDataOut out[MAT_ROWS] __attribute__((no_ctor));
-         #pragma HLS STREAM variable=out depth=16
+         cmpxDataOut cols_out[MAT_ROWS] __attribute__((no_ctor));
+         #pragma HLS STREAM variable=cols_out depth=16
          //#pragma HLS ARRAY_RESHAPE variable=out cyclic factor=2 dim=1
       
       #endif
@@ -532,25 +523,25 @@ void fft_cols(
          bool ovfloStub;
       #endif
       
-      readIn_col(strm_inp, in);
+      readIn_col(strm_inp, cols_in);
       
       #if FFT_2D_DT == 0 // cint16 datatype
-         fftCol(directionStub, in, out, &ovfloStub);
+         fftCol(directionStub, cols_in, cols_out, &ovfloStub);
       
       #else // cfloat datatype
-         fftCol(directionStub, in, out);
+         fftCol(directionStub, cols_in, cols_out);
       
       #endif
       
-      writeOut_col(strm_out, out);
+      writeOut_col(strm_out, cols_out);
    }
 }
 
 void fft_2d(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_inp,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_out,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_inp,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out//,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTrows_inp,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTrows_out,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTcols_inp,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTcols_out//,
       //uint32_t iterCnt
      )
 {

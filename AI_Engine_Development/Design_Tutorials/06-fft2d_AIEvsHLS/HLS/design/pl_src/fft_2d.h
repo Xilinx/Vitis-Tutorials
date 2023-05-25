@@ -1,16 +1,7 @@
-// © Copyright 2021–2022 Xilinx, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
 
 #pragma once
 
@@ -140,30 +131,30 @@ void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
 
    void fftRow(
          bool direction,
-         cmpxDataIn   in[MAT_COLS],
-         cmpxDataOut out[MAT_COLS],
+         cmpxDataIn   rows_in[MAT_COLS],
+         cmpxDataOut rows_out[MAT_COLS],
          bool* ovflo);
 
 #else // cfloat datatype
 
    void fftRow(
          bool direction,
-         cmpxDataIn   in[MAT_COLS],
-         cmpxDataOut out[MAT_COLS]);
+         cmpxDataIn   rows_in[MAT_COLS],
+         cmpxDataOut rows_out[MAT_COLS]);
 
 #endif
 
-void readIn_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-                cmpxDataIn in[MAT_COLS]
+void readIn_row(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+                cmpxDataIn rows_in[MAT_COLS]
                );
 
-void writeOut_row(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
-                  cmpxDataOut out[MAT_COLS]
+void writeOut_row(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out,
+                  cmpxDataOut rows_out[MAT_COLS]
                  );
 
 void fft_rows(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out
    );
 
 void fftCol_init(
@@ -183,36 +174,36 @@ void copyCol_out(cmpxDataOut out_fft[MAT_ROWS],
 
    void fftCol(
          bool direction,
-         cmpxDataIn   in[MAT_ROWS],
-         cmpxDataOut out[MAT_ROWS],
+         cmpxDataIn   cols_in[MAT_ROWS],
+         cmpxDataOut cols_out[MAT_ROWS],
          bool* ovflo);
 
 #else // cfloat datatype
 
    void fftCol(
          bool direction,
-         cmpxDataIn   in[MAT_ROWS],
-         cmpxDataOut out[MAT_ROWS]);
+         cmpxDataIn   cols_in[MAT_ROWS],
+         cmpxDataOut cols_out[MAT_ROWS]);
 
 #endif
 
-void readIn_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-                cmpxDataIn in[MAT_ROWS]
+void readIn_col(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+                cmpxDataIn cols_in[MAT_ROWS]
                );
 
-void writeOut_col(hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out,
-                  cmpxDataOut out[MAT_ROWS]
+void writeOut_col(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out,
+                  cmpxDataOut cols_out[MAT_ROWS]
                  );
 
 void fft_cols(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strm_inp,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strm_out
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strm_inp,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out
    );
 
 void fft_2d(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_inp,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTrows_out,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_inp,
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmFFTcols_out//,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTrows_inp,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTrows_out,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTcols_inp,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmFFTcols_out//,
    //uint32_t iterCnt
    );

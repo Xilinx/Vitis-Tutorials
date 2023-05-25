@@ -1,16 +1,7 @@
-// © Copyright 2021–2022 Xilinx, Inc.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: X11
+*/
 
 #include "dma_hls.h"
 
@@ -43,7 +34,7 @@
 // Input to Rowise FFT...
 ////////////////////////////////////////////////////////////
 void mm2s0(
-   hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
    ap_uint<25> matSz, ap_int<16> iterCnt
   )
 {
@@ -61,7 +52,7 @@ void mm2s0(
          
          #endif
          
-         qdma_axis<128, 0, 0, 0> fftRow_inp;
+         ap_axiu<128, 0, 0, 0> fftRow_inp;
          
          if(i == 0)
          {
@@ -72,10 +63,9 @@ void mm2s0(
             fftRow_inp.data = 0;
          }
           
-         fftRow_inp.keep_all();
+         fftRow_inp.keep=-1;
          strmOut_to_rowiseFFT.write(fftRow_inp);
       }
-      
       // If iterCnt is -1 keeping running the design infinitely...
       if(iterCnt == -2) {
          iterCnt = -1;
@@ -83,15 +73,16 @@ void mm2s0(
       else {
          continue;
       }
+      
+      }
    }
-}
 
 ////////////////////////////////////////////////////////////
 // Datamover From Rowise FFT output to Colwise FFT Input...
 ////////////////////////////////////////////////////////////
 void dmaHls_rowsToCols(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
       ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
       ap_uint<25> &stg0_errCnt, ap_uint<128> goldenVal,
       ap_int<16> iterCnt
@@ -111,7 +102,7 @@ void dmaHls_rowsToCols(
          
          #endif
          
-         qdma_axis<128, 0, 0, 0> fftRow_out = strmInp_from_rowiseFFT.read();
+         ap_axiu<128, 0, 0, 0> fftRow_out = strmInp_from_rowiseFFT.read();
          
          // First row in the matrix should be all 1s and remaining 0s...
          if(i < cols)
@@ -139,7 +130,7 @@ void dmaHls_rowsToCols(
          #endif
 
          
-         qdma_axis<128, 0, 0, 0> fftCol_inp;
+         ap_axiu<128, 0, 0, 0> fftCol_inp;
 
          if(i == idx)
          {
@@ -151,10 +142,9 @@ void dmaHls_rowsToCols(
             fftCol_inp.data = 0;
          }
       
-         fftCol_inp.keep_all();
+         fftCol_inp.keep=-1;
          strmOut_to_colwiseFFT.write(fftCol_inp);
       }
-      
       // If iterCnt is -1 keeping running the design infinitely...
       if(iterCnt == -2) {
          iterCnt = -1;
@@ -162,14 +152,14 @@ void dmaHls_rowsToCols(
       else {
          continue;
       }
-   }
+    }  
 }
 
 ////////////////////////////////////////////////////////////
 // Output from Colwise FFT...
 ////////////////////////////////////////////////////////////
 void s2mm1(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
       ap_uint<25> matSz, ap_uint<25> &stg1_errCnt, ap_uint<128> goldenVal,
       ap_int<16> iterCnt
      )
@@ -188,7 +178,7 @@ void s2mm1(
          
          #endif
 
-         qdma_axis<128, 0, 0, 0> fftCol_out = strmInp_from_colwiseFFT.read();
+         ap_axiu<128, 0, 0, 0> fftCol_out = strmInp_from_colwiseFFT.read();
          
          // All Values should 1...
          if(fftCol_out.data != goldenVal)
@@ -196,7 +186,6 @@ void s2mm1(
             ++stg1_errCnt;
          }
       }
-      
       // If iterCnt is -1 keeping running the design infinitely...
       if(iterCnt == -2) {
          iterCnt = -1;
@@ -204,6 +193,7 @@ void s2mm1(
       else {
          continue;
       }
+      
    }
 }
 
@@ -214,10 +204,10 @@ void s2mm1(
 // without any NoC/DDR bandwidth bottlenecks...
 ////////////////////////////////////////////////////////////
 int dma_hls(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
       ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
       ap_int<16> iterCnt
      )
