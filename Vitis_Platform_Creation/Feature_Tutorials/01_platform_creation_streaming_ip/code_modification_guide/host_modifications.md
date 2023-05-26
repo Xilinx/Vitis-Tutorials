@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-Here it lists the changes required for the vadd host application for this tutorial. Please mind that this is just one example and there are also other ways to implement the same functions.
+This tutorial lists the changes required for the vadd host application for this tutorial. Note that this is only one example and there are also other ways to implement the same functions.
 
 #### 1. Include necessary file headers.
 

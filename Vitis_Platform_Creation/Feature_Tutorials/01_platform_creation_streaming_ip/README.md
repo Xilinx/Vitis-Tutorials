@@ -9,7 +9,7 @@
 
 ***Version: Vitis 2023.1***
 
-In this tutorial, you will learn how to add custom IPs into a Versal® ACAP platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
+This tutorial explains how to add custom IPs into a Versal™ adaptive SoC platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). Therefore, for each step, there is a pointer to the corresponding part of that tutorial, as required.
 
 This tutorial targets the Versal board. 
 
@@ -26,14 +26,14 @@ The tutorial is structured as follows:
 
 ### Step 1: Create a Hardware Platform
 
-In this tutorial, you will use the prebuilt example design for Versal to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.
+In this tutorial, you use the prebuilt example design for Versal to build the hardware platform. This method saves time instead of manually creating the IP integrator block design.
 
-Follow the instructions in [Versal platform creation tutorial-Step1](../../Design_Tutorials/03_Edge_VCK190/step1.md). You can skip the optional steps.
+Follow the instructions in [Versal platform creation tutorial-Step1](../../Design_Tutorials/03_Edge_VCK190/step1.md). You may skip the optional steps.
 
 
 ### Step 2: Add Custom IP into the Block Design
 
-In this step, you will add a DDS compiler IP into the platform design that you created in the last step. The DDS compiler IP is provided in the Xilinx IP catalog in the Vivado® Design Suite. To see details about this IP, see the product guide, [PG141](https://www.xilinx.com/support/documentation/ip_documentation/dds_compiler/v6_0/pg141-dds-compiler.pdf). Because it is a publicly available IP, it supports simulation inherently. If you want to add your own IP cores, you must provide simulation models to support simulation.
+In this step, you add a DDS compiler IP into the platform design that you created in the last step. The DDS compiler IP is provided in the AMD IP catalog in the Vivado Design Suite. For more details, see [PG141](https://www.xilinx.com/support/documentation/ip_documentation/dds_compiler/v6_0/pg141-dds-compiler.pdf). Because it is a publicly available IP, it supports simulation inherently. If you want to add your own IP cores, you must provide simulation models to support simulation.
 
 1. Reopen the system block design that was created in last step if you have already closed it.
 
@@ -61,31 +61,31 @@ In this step, you will add a DDS compiler IP into the platform design that you c
 
     ![missing image](images/dds_freq.png)   
 
-5. Exit the configuration page and connect the `aclk` port to the `clk_out1` signal of clocking wizard.
+4. Exit the configuration page and connect the `aclk` port to the `clk_out1` signal of clocking wizard.
 
-6. Now the block design should look like the following:
+5. Now the block design should look like the following:
 
   ![missing image](images/212_ipi_fully_connection_dds.png)
 
-7. Open up platform setup window and enable the M_AXIS_DATA port. Set the SP Tag to `AXIS` - this will be used by the Vitis™ linker to connect to the accelerator.
+6. Open up platform setup window and enable the M_AXIS_DATA port. Set the SP Tag to `AXIS` - this will be used by the Vitis™ linker to connect to the accelerator.
 
   ![missing image](images/dds_if.png)  
 
-8. Regenerate the block design output products.
+7. Regenerate the block design output products.
 
-9. Export the hardware platform. In the platform type selection page, choose **Hardware and hardware emulation** to run emulation with this platform.
+8. Export the hardware platform. In the platform type selection page, choose **Hardware and hardware emulation** to run emulation with this platform.
 
 
 ### Step 3: Package the Platform in the Vitis Software Platform
 
-In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in [Versal platform creation tutorial-Step2](../../Design_Tutorials/03_Edge_VCK190/step2.md).
+In this step, you pack the hardware XSA with software components in the Vitis IDE. Follow the instructions in [Versal platform creation tutorial-Step2](../../Design_Tutorials/03_Edge_VCK190/step2.md).
 
 
 ### Step 4: Test the Platform
 
-In this step, you will build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions in [Versal platform creation tutorial-Step3](../../Design_Tutorials/03_Edge_VCK190/step3.md), but we will make some modifications.
+In this step, you build a simple `vadd` application and run hardware emulation to test the platform. Follow the instructions in [Versal platform creation tutorial-Step3](../../Design_Tutorials/03_Edge_VCK190/step3.md) along with the following modifications.
 
-You just need to run Application1 on that page. After creating the `vadd` system project, make the following changes.
+You need to run Application1 on the above page. After creating the `vadd` system project, make the following changes.
 
 1. Open up the `krnl_vadd.cpp` file under the `src` folder of the `vadd_kernels` project. Add the following header files at the beginning of this file. These are used to support the AXIS data type and HLS stream data type.
 
@@ -99,7 +99,7 @@ You just need to run Application1 on that page. After creating the `vadd` system
 typedef ap_axis<15, 0, 0, 0> pkt;
 ```
 
-3. In this design, the data from the DDS IP is not processed. It is just passed to the DDR. To do that, add a function, similar to the following:
+3. In this design, the data from the DDS IP is not processed. It is only passed on to the DDR. To do that, add a function similar to the following:
 
 ```
 static void dss_process( int *wave, hls::stream<pkt> &s_in) {
@@ -143,7 +143,7 @@ Now the kernel code modification is complete. Save your work and close the file.
 stream_connect = AXIS:krnl_vadd_1.dds_in
 ```
 
-This command indicates the connections between two AXI4-Stream ports. The name before the colon must be the master interface while the latter is the name of the slave interface. In this design, the AXIS sptag from platform represents the AXI master side therefore we put it at the front. Here you just need to specify the `sptag` that was defined during platform creation and the Vitis linker detects it automatically.
+This command indicates the connections between two AXI4-Stream ports. The name before the colon must be the master interface while the latter is the name of the slave interface. In this design, the AXIS sptag from platform represents the AXI master side therefore we put it in the front. Here you just need to specify the `sptag` that was defined during platform creation and the Vitis linker detects it automatically.
 
 The `system_cfg` file is put under the `vadd_system_hw_link` project. You can choose other locations but just make sure that you point to it correctly in the binary container settings.
 
@@ -207,7 +207,7 @@ Specify the config file in binary container settings:
 
 7. Now run emulation on the modified `vadd` application. Follow the instructions in [Versal platform creation tutorial-Step3 Emulation](../../Design_Tutorials/03_Edge_VCK190/step3.md#optional-test-the-application-on-hardware-emulation).
 
-8. After 'Test Passed' appears in the console window, copy over the generated `wave_out.txt` file from the QEMU target. First, launch the XSCT console window from `Xilinx` menu if you have not already done so.
+8. After the 'Test Passed' pop-up appears in the console window, copy the generated `wave_out.txt` file from the QEMU target. First, launch the XSCT console window from `AMD` menu if you have not already done so.
 
   Connect to the `tcf` target using the following command:
 
@@ -227,7 +227,7 @@ Specify the config file in binary container settings:
 
 ## Fast Track
 
-Scripts are provided to re-create the project.  For the moment, this script only supports running emulation. 
+Scripts are provided to re-create the project. For the moment, this script only supports running emulation. 
 
 1. Run build
 

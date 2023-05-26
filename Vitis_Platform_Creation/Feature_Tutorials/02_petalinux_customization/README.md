@@ -11,7 +11,7 @@
 
 ***Version: PetaLinux 2023.1***
 
-In this module we'd like to demonstrate platform software components customization. We'll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.
+This module demonstrates platform software components customization. Use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained and you can pick your desired customization.
 
 Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.
 
@@ -26,7 +26,7 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    ```
 
-2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis tool, please omit this step as AMD Official platforms have already built into the vitis tool installation package.
+2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis™ tool, omit this step as AMD Official platforms have already built into the vitis tool installation package.
 
    ```bash
    unzip xilinx_zcu104_base_202310_1.zip #extract the base platform
@@ -59,17 +59,17 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    petalinux-create --type project --template zynqMP --name zcu104_petalinux
    cd zcu104_petalinux
-   petalinux-config --get-hw-description=xilinx_zcu104_base_202310_1/hw/hw.xsa  # After you extract the base platform you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202310_1> directory. if you want to do emulation you can choose hw_emu.xsa 
+   petalinux-config --get-hw-description=xilinx_zcu104_base_202310_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202310_1> directory. If you want to do emulation you can choose hw_emu.xsa 
    ```
 
-   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as `zynqMP`. If your platform is using Versal chipset. Please set this option to `versal`.
+   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP™ series chip. Therefore, we specify this option as `zynqMP`. If your platform is using Versal™ chipset, set this option to `versal`.
 
-   > Note: If user are customizing Linux image for VCK190 board, Please ensure the XSA file is exported from a normal project (not a Vitis extensible project ) and includes the device image.
+   > Note: If the user is customizing Linux image for VCK190 board, ensure the XSA file is exported from a normal project (not a Vitis extensible project) and includes the device image.
 
-   > Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it's recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation separately.
+   > Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, providing either of them to PetaLinux is acceptable. When simplifying the hardware design for hardware emulation, it is recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two designs have different addressable peripherals, you will need to create two sets of device trees for hardware running and hardware emulation, separately.
 
 
-3. A petalinux-config menu would be launched, Set to use ZCU104 device tree in this configuration window.
+3. A petalinux-config menu is launched. Set it to use ZCU104 device tree in the configuration window.
 
    - Select **DTG Settings->MACHINE_NAME**
    - Modify it to ```zcu104-revc```. 
@@ -77,9 +77,9 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 
    Note: 
    
-     - If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. You can check the [ug1144 document](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf) for corresponding machine name.
-     - If you're using a custom board, you would need to configure the associated settings (e.g. the PHY information DTS node) in **system-user.dtsi** manually.
-     - Device tree is a generic technology in embedded Linux. Please search Google for more information.
+     - If you are using an AMD development board, it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. You can check the [UG1144 document](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf) for the corresponding machine name.
+     - If you are using a custom board, you would need to configure the associated settings (e.g. the PHY information DTS node) in **system-user.dtsi** manually.
+     - Device tree is a generic technology in embedded Linux. Search on Google for more information.
 
 
 ### Customize Root File System, Kernel, Device Tree and U-boot
@@ -87,7 +87,7 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 1. Enable selected rootfs packages
 
 
-   In order to add all Vitis acceleration flow required packages we create an package group option. If this group option is selected the following Vitis acceleration flow required package will be automatically enabled.
+   In order to add all Vitis acceleration flow required packages, we create a package group option. If this group option is selected, the following Vitis acceleration flow required package is automatically enabled.
 
    | Package Group                                       | Package Name                                                                    | Description                                                                                                                 |
    | --------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -97,39 +97,39 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    | packagegroup-petalinux-vitis-acceleration-essential | opencl-headers</br>packagegroup-petalinux-opencv</br>packagegroup-petalinux-x11 | These three packages are graph display related library                                                                      |
    | packagegroup-petalinux-vitis-acceleration-essential | gdb</br>valgrind                                                                | debug related tools                                                                                                         |
 
-   Please follow the steps below to enable the package group for Vitis acceleration flow.
+   Follow the steps below to enable the package group for Vitis acceleration flow.
 
    - Run `petalinux-config -c rootfs` 
-   - Go to **Petalinux Package Groups** -> **packagegroup-petalinux-vitis-acceleration-essential** and enable **packagegroup-petalinux-vitis-acceleration-essential**.  Please also enable **packagegroup-petalinux-vitis-acceleration-essential-dev** which will enable the sysroot support.
+   - Go to **Petalinux Package Groups** -> **packagegroup-petalinux-vitis-acceleration-essential** and enable **packagegroup-petalinux-vitis-acceleration-essential**.  Also enable **packagegroup-petalinux-vitis-acceleration-essential-dev** that enables the sysroot support.
 
    ![petalinux_rootfs.png](images/petalinux_rootfs.png)
 
 
 2. Enable OpenSSH and disable dropbear (optional)
    
-   Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed over ssh (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.*
+   Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve four times faster data transmission speed over ssh (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.
 
-   - Still in the RootFS configuration window, go to root directory by select **Exit** once.
+   - In the RootFS configuration window, go to the root directory by selecting  **Exit** once.
    - Go to **Image Features**.
    - Disable **ssh-server-dropbear** and enable **ssh-server-openssh** and click Exit.
    
    ![ssh_settings.png](images/ssh_settings.png)
 
    - Go to **Filesystem Packages-> misc->packagegroup-core-ssh-dropbear** and disable **packagegroup-core-ssh-dropbear**. 
-   - Go to **Filesystem Packages** level by Exit twice.
+   - Go to **Filesystem Packages** level by clicking **Exit** twice.
    - Go to **console  -> network -> openssh** and enable **openssh**, **openssh-sftp-server**, **openssh-sshd**, **openssh-scp**. 
-   - Go to root level by **Exit** four times.
+   - Go to root level by clicking on **Exit** four times.
 
 3. Enable Package Management
 
    Package management feature can allow the board to install and upgrade software packages on the fly.
 
-   - In rootfs config go to **Image Features** and enable **package-management** and **debug_tweaks** option 
-   - Click **OK**, **Exit** twice and select **Yes** to save the changes.
+   - In rootfs config, go to **Image Features** and enable **package-management** and **debug_tweaks** option. 
+   - Click on **OK**, **Exit** twice and select **Yes** to save the changes.
 
-4. Disable CPU IDLE in kernel config (Recommended during debugging).
+4. Disable CPU IDLE in kernel config (recommended during debugging).
 
-   CPU IDLE would cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on host machine talks to the processor regularly. If it talks to a processor in IDLE status, the system will hang because of incomplete AXI transactions. So it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design has completed to save power in final products.
+   CPU IDLE can cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on the host machine talks to the processor regularly. If it talks to a processor in IDLE status, the system will hang because of incomplete AXI transactions. Hence, it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design is completed to save power in the final products.
 
    - Launch kernel config: `petalinux-config -c kernel`
    - Ensure the following items are **TURNED OFF** by entering 'n' in the [ ] menu selection:
@@ -140,15 +140,15 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 
 ### Update the Device tree
 
-Device tree describes the hardware components of the system. Xilinx device tree generator (DTG) can generate the device tree according to hardware configurations from XSA file. User needs to add customization settings in system-user.dtsi for PetaLinux to consume if there are any settings not available in XSA, for example, any driver nodes that don't have a corresponding hardware, or if user need to override any DTG auto-generated configurations. 
+Device tree describes the hardware components of the system. AMD device tree generator (DTG) can generate the device tree according to hardware configurations from an XSA file. You needs to add customization settings in system-user.dtsi for PetaLinux to consume. For example, unavailable settings in XSA, any driver nodes that don't have a corresponding hardware, or customising settings if the user needs to override any DTG auto-generated configurations. 
 
-ZOCL driver module has no associated hardware, but it's required by XRT and Vitis acceleration flow. It requires a device tree node to describe the interrupt signal relationship. In previous Vitis and PetaLinux versions, users need to add ZOCL device tree node manually. From 2021.1, PetaLinux can add ZOCL device tree node automatically if the XSA is a Vitis extensible platform project.
+ZOCL driver module has no associated hardware, but it is required by XRT and Vitis acceleration flow. It requires a device tree node to describe the interrupt signal relationship. In previous Vitis and PetaLinux versions, you had to add ZOCL device tree node manually. From 2021.1, PetaLinux can add ZOCL device tree node automatically if the XSA is a Vitis extensible platform project.
 
 Device Tree Generator (DTG) also overrides the interrupt controller (axi_intc_0) input numbers parameter from 0 to 32 because in the platform XSA the interrupt controller inputs have not been connected but they will be connected after v++ links the acceleration kernels.
 
 You can review the PetaLinux generated device tree in **project-spec/components/device-tree/device-tree/pl.dtsi** file.
 
-You can also add your custom device tree modifications to **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**. In this example, we setup sdhci1 to low speed mode.
+You can also add your custom device tree modifications to **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**. For example this is how you setup sdhci1 to low speed mode.
 
 ```
 &sdhci1 {
@@ -157,7 +157,7 @@ You can also add your custom device tree modifications to **project-spec/meta-us
 };
 ```
 
-   - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It's not a part of Vitis acceleration platform requirements. 
+   - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104 and is not a part of Vitis acceleration platform requirements. 
 
    **Note**: an example file [zcu104/system-user.dtsi](ref_files/zcu104/system-user.dtsi) is provided for zcu104 board and [vck190/system-user.dtsi](ref_files/vck190/system-user.dtsi) for VCK190 board.
 
@@ -165,9 +165,9 @@ You can also add your custom device tree modifications to **project-spec/meta-us
 
 ### Add EXT4 rootfs support 
 
-It's recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It can't retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximum usage of available DDR memory, we'll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.
+It is recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It cannot retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which reduces usable DDR memory. To retain the changes in the root file system and to enable maximum usage of available DDR memory, use EXT4 format for rootfs in the second partition while keeping the first partition FAT32 to store the boot files.
 
-Vitis-AI applications will install additional software packages. If user would like to run Vitis-AI applications, please use EXT4 rootfs. If in any case initramfs would be used, please add all Vitis-AI dependencies to initramfs.
+Vitis-AI applications installs additional software packages. To run Vitis-AI applications, use EXT4 rootfs. If in any case, initramfs are used, add all Vitis-AI dependencies to initramfs.
 
 1. Let PetaLinux generate EXT4 rootfs
 
@@ -182,7 +182,7 @@ Vitis-AI applications will install additional software packages. If user would l
 <!--TODO: CMA change is needed. Other changes are not.-->
 2. Let Linux use EXT4 rootfs during boot
 
-   The setting of which rootfs to use during boot is controlled by **bootargs**. We would change bootargs settings to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.
+   The setting of rootfs to use during boot is controlled by **bootargs**. Change the bootargs settings to allow Linux to boot from EXT4 partition. There are various ways to update bootargs and you can choose either of the methods mentioned below.
    
    Method A: PetaLinux config
 
@@ -204,8 +204,8 @@ Vitis-AI applications will install additional software packages. If user would l
    Note:
   
    - **root=/dev/mmcblk0p2** means to use second partition of SD card, which is the EXT4 partition.
-   - Please note that we also set these options in bootargs:
-     - **clk_ignore_unused**: it tells Linux kernel don't turn off clocks if this clock is not used. It's useful clocks that only drives PL kernels because PL kernels are not represented in device tree.
+   - Note that we also set these options in bootargs:
+     - **clk_ignore_unused**: Commands Linux kernel to avoid turning off clocks if this clock is not used. Only useful clocks drives PL kernels because PL kernels are not represented in device tree.
      - **cma=512M**: CMA is used to exchange data between PS and PL kernel. The size for CMA is determined by PL kernel requirements. Vitis-AI/DPU needs at least 512MB CMA.
 
 ### Build PetaLinux Images
@@ -216,7 +216,7 @@ Vitis-AI applications will install additional software packages. If user would l
    petalinux-build
    ```
 
-   The PetaLinux image files will be generated in <PetaLinux Project>/images/linux directory.
+   The PetaLinux image files are generated in <PetaLinux Project>/images/linux directory.
 
 2. Create a sysroot self-installer for the target Linux system
 
@@ -224,7 +224,7 @@ Vitis-AI applications will install additional software packages. If user would l
    petalinux-build --sdk
    ```
 
-   The generated sysroot package **sdk.sh** will be located in <PetaLinux Project>/images/linux directory. You can extract it when you need.
+   The generated sysroot package **sdk.sh** is located in <PetaLinux Project>/images/linux directory and you can extract it when you need.
 
 
 ### Fast Track
@@ -239,7 +239,7 @@ Scripts are provided to re-create PetaLinux project and generate outputs.
    make all XSA_PATH=<path/to/base_platform/> # to specify the XSA file path 
    ```
 
-2. To clean the generated files, please run
+2. To clean the generated files, run the command
 
    ```bash
    make clean

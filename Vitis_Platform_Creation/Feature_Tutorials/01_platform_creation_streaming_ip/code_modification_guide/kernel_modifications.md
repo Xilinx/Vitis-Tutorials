@@ -5,11 +5,11 @@
  </tr>
 </table>
 
-Here it lists the changes required for the vadd kernel for this tutorial. Please mind that this is just one example and there are also other ways to implement the same functions.
+This tutorial lists the changes required for the vadd kernel. Note that this is only one example and there are also other ways to implement the same functions.
 
 #### 1. Include necessary file headers.
 
-Add following 'include' commands at the beginning of the file, just before the 'define' command.
+Add following 'include' commands at the beginning of the file, right before the 'define' command.
 
 ***OLD***:
 ```
@@ -25,7 +25,7 @@ Add following 'include' commands at the beginning of the file, just before the '
 ```
 
 #### 2. Define the AXI stream data type and add the dds process function
-This function simply read the data into the kernel and then send it out through another port. 
+This function simply read the data into the kernel and then sends it out through another port. 
 
 Define a new 'pkt' type before the kernel function definition.
 
