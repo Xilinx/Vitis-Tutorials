@@ -10,14 +10,14 @@
 
 ***Version: Vitis 2023.1***
 
-This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.1.
+This tutorial describes an AMD Versal™ VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.1.
 
 
 ## Getting Started
 ### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2022.2
+  1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2023.1
   2.  vivado_platform: Building the thin platform xsa (only pre-synth) or using the pre-builds
   3.  vitis_platform:  Building the Vitis Platform or using the pre-builds
   4.  linux:           Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
@@ -34,23 +34,23 @@ The following diagram explains the build-flow dependencies.
 **Notes:**
  - The diagram should be read from right to left.
  - The diagram is for illustration only. The actual build-flow is more sequential.
-<img src="./documentation/readme_files/Design_dependencies.svg">
+![](./documentation/readme_files/Design_dependencies.svg)
  
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` or `make all_targets` **after** taking following prerequisites into account:
-  - **Before starting the build, please correctly setup the 2022.2 version of Vivado, Vitis and Petalinux/Yocto**
+  - **Before starting the build, please correctly setup the 2023.1 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
-      - REMARK: The Yocto Tool setup is not verified!
-      - REMARK: The Petalinux Tool and Version check is skipped when targetting Yocto!
+      - **Note**: The Yocto Tool setup is not verified!
+      - **Note**: The Petalinux Tool and Version check is skipped when targetting Yocto!
   - Everything is in the GitHub repository; no extra files are needed. 
-    - Although some are downloaded from GitHub; but that's handled by the Makefiles.
-    - Exception: For building petalinux OFFLINE; you will need to download and extract some tar.gz files; which is explained more in detail below!
-    - Exception: For building with Yocto-build; you will need to install Yocto; which is explained more in detail below!
-  - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what's needed to be rebuild. 
-    - Example: After already done a full build before; you modify `[project-root]/vitis/ip/vadd_s/src/vadd_s.cpp` then if you run `make all` from the `[project-root]` it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link` and the `v++ --package`.
-    - This to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
+    - Although some are downloaded from GitHub; but that is handled by the Makefiles.
+    - Exception: For building petalinux OFFLINE, you will need to download and extract some `tar.gz` files. This is explained in more detail below.
+    - Exception: For building with Yocto-build, you will need to install Yocto. This is explained in more detail below.
+  - All dependencies in every `Makefile` are setup in such a way that if you need to rebuild after a certain modification; then it **ONLY** rebuilds what is needed to be rebuild. 
+    - Example: After already done a full build before, modify `[project-root]/vitis/ip/vadd_s/src/vadd_s.cpp`. Then, if you run `make all` from the `[project-root]`, it will **ONLY** rerun the `v++ --compile` (for the vadd_s), the `v++ --link`, and the `v++ --package`.
+    - This is to showcase that **NO** full rebuild is required after every (small) modification once you builded before the platform and did not modify the platform.
     - Recommendation is to start `make all` or `make all_targets` always from the `[project-root]`, but of course you can run `make all` in every sub-module if for example you want to check if a sub-module is building correctly.
-    - REMARK: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
+    - **Note**: You could remove the `${GRAPH_O}` dependency for the `v++ --link` step in the `[project-root]/vitis/Makefile`; but **ONLY** when you **FIX** your AIE I/O ports in **Vitis/Vivado** and do **NOT** do modifications anymore on the AIE I/O port definitions!
   - `[project-root]/Makefile` main `make` options:
       - `make all` to build everything for the specified `TARGET`.
       - `make clean` to clean everything for the specified `TARGET`.
@@ -62,32 +62,32 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `TARGET`:
       - `export TARGET := hw` for targetting a VCK190 board (default).
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
-      - The build flow supports both TARGET's in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
+      - The build flow supports both TARGETs in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
       - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
     - `XPFM_PRE_BUILDS`:
       - `export XPFM_PRE_BUILDS := false` for building xpfm (default).
       - `export XPFM_PRE_BUILDS := true` for using the xpfm pre-builds.
         - Be sure that the environment `PLATFORM_REPO_PATHS` is set and pointing to the `internal_platforms` of the used version.
-          - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`
-        - REMARK: `export TARGET := hw_emu` is NOT supported and will error out. 
+          - This should be set by sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh`.
+        - **Note**: `export TARGET := hw_emu` is NOT supported and will error out. 
     - `LINUX_PRE_BUILDS`:
       - `export LINUX_PRE_BUILDS := false` for building linux (default).
       - `export LINUX_PRE_BUILDS := true` for using the linux pre-builds.
-        - Download the `xilinx-versal-common-v2022.2_10141622.tar.gz` from the Xilinx Website and...
+        - Download the `xilinx-versal-common-v2023.1_10141622.tar.gz` from the Xilinx® Website and...
           - Extract it
-          - cd xilinx-versal-common-v2022.2
-          - xilinx-versal-common-v2022.2 $ ./sdk.sh
-            - Enter target directory for SDK (default: /opt/petalinux/2022.2): `.`
+          - `cd xilinx-versal-common-v2023.1`
+          - `xilinx-versal-common-v2023.1 $ ./sdk.sh`
+            - Enter target directory for SDK (default: `/opt/petalinux/2023.1`)
           - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
-          - xilinx-versal-common-v2022.2 $ unset LD_LIBRARY_PATH
-          - xilinx-versal-common-v2022.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux
-          - REMARK: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
-      - REMARK: Following `LINUX_X_Y` exports are ignored and do not need setup when `export LINUX_PRE_BUILDS := true`.
-      - REMARK: if `export XPFM_PRE_BUILDS := false` then a device-tree will be generated from the generated xsa. It could be - depending on the generated base platform (xsa) - that changes are needed in the `[project-root]/linux/dtg/src/system-user.dtsi` for a successfull build/boot. 
+          - `xilinx-versal-common-v2023.1 $ unset LD_LIBRARY_PATH`
+          - `xilinx-versal-common-v2023.1 $ source environment-setup-cortexa72-cortexa53-xilinx-linux`
+          - **Note**: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
+      - **Note**: Following `LINUX_X_Y` exports are ignored and do not need setup when `export LINUX_PRE_BUILDS := true`.
+      - **Note**: If `export XPFM_PRE_BUILDS := false` then a device-tree will be generated from the generated xsa. It could be - depending on the generated base platform (xsa) - that changes are needed in the `[project-root]/linux/dtg/src/system-user.dtsi` for a successfull build/boot. 
     - `ILA_EN`:
       - `export ILA_EN := 0` for disabling the ILA (default).
       - `export ILA_EN := 1` for enabling the ILA (change if needed).
-      - REMARK: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
+      - **Note**: When building **vitis** with `export TARGET := hw_emu` ILA_EN will be forced to `ILA_EN = 0` (ILA Disabled) in the `[project-root]/vitis/Makefile`. There is **NO** issue to first build everything with `export TARGET := hw` and `export ILA_EN := 1` and afterwards ONLY rebuild vitis with `export TARGET := hw_emu`! **NO** need for a full rebuild in that respect!
       - More information on how to setup and use the ILA can be found in the [Notes](#notes)
     - `SW_BUILD_TOOL`:
       - `export SW_BUILD_TOOL := petalinux` to use Petalinux as linux build tool (default).
@@ -98,8 +98,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
       - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${SW_BUILD_TOOL}`
-        - Defaults to `/tmp/${USER}/2022.2/petalinux` when `export SW_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/${USER}/2022.2/yocto` when `export SW_BUILD_TOOL := yocto`.
+        - Defaults to `/tmp/${USER}/2023.1/petalinux` when `export SW_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/${USER}/2023.1/yocto` when `export SW_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
@@ -108,35 +108,35 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `export LINUX_BUILD_SOURCES := network` for using online network build-sources (default).
       - `export LINUX_BUILD_SOURCES := local` for using offline **LOCALLY STORED** build-sources (change if needed).
       - Below described `LINUX_LOCAL_DOWNLOADS_DIR` AND `LINUX_LOCAL_SSTATE_DIR` **MUST** be setup!
-      - REMARK: First petalinux sysroot build needs online build-sources! But it's handled by the Makefiles.
+      - **Note:** First petalinux sysroot build needs online build-sources! But it is handled by the Makefiles.
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
       - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
-      - Change to the directory where you extracted the [downloads_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Change to the directory where you extracted the [downloads_2023.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_LOCAL_SSTATE_DIR`:
       - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
-      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2022.2/aarch64`.
-      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2022.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2023.1/aarch64`.
+      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2023.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
       - `export LINUX_ETH_CONFIG := STATIC` for Ethernet Static Configuration (change if needed).
         - Please setup your required Ethernet Static Configuration in `[project-root]/linux/src/recipes-bsp/init-ifupdown/interfaces`.
-      - REMARKS: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
+      - **Note**: When you like to have Ethernet connectivity (ssh/scp/...) during hardware emulation `export TARGET := hw_emu`:
         - The recommendation is to use `export LINUX_ETH_CONFIG := DHCP`.
         - Please read ["Networking in QEMU"](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862912682/Networking+in+QEMU#NetworkinginQEMU-SSHintoQEMU) carefully.
   - End result: 
     - `export TARGET := hw`: 
       - `[project-root]/package_linux_hw/sd_card/*` can be used to copy to a FAT-32 SD-card (partition)
-        - REMARK: Can't be used when `export LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
+        - **Note**: This cannot be used when `export LINUX_PRE_BUILDS := true` (due to only ext4 rootfs available)
       - `[project-root]/package_linux_hw/sd_card.img` can be used to be put on an SD-card with a Windows tool like `Win32 Disk Imager` 
     - `export TARGET := hw_emu`: 
       - `[project-root]/package_linux_hw_emu/launch_hw_emu.sh` can be used to launch the hardware emulation.
 
 ### Custom Thin Base Platform
 The GENERATED Custom Thin Base Platform BD:
-<img src="./documentation/readme_files/base_platform_bd.png">
+![](./documentation/readme_files/base_platform_bd.png)
 
 It exposes 5 clocks that can be used in the `[project-root]/vitis/src/system.cfg`:
 
@@ -165,7 +165,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux (Only when `export SW_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2022.2.
+ -  Checks if the Vivado, Petalinux (Only when `export SW_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2023.1.
  
 </details>
 <details>
@@ -322,7 +322,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 ## Testing
 ### Running on a VCK190
   1. Prerequisite: Build was executed with `export TARGET := hw`
-  2. Copy over the `[project-root]/package_linux_hw/sd_card/*` to an SD-card (REMARK: Only when `export LINUX_PRE_BUILDS := false`) or put the `[project-root]/package_linux_hw/sd_card.img` on an SD-card.
+  2. Copy over the `[project-root]/package_linux_hw/sd_card/*` to an SD-card (**Note**: Only when `export LINUX_PRE_BUILDS := false`), or put the `[project-root]/package_linux_hw/sd_card.img` on an SD-card.
   3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
   4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
      - Usually you will see 3 serial ports in your device manager:
@@ -349,8 +349,8 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
   4. Continue to "Execution & Results".
 
 ### Execution & Results
-You will need to login with user `petalinux` and setup a new password (it's then also the `sudo` password):
-  - REMARK: It could be that if you used the `export LINUX_PRE_BUILDS := true` that you get more messages displayed.
+You will need to login with user `petalinux` and setup a new password (it is then also the `sudo` password):
+  - **Note**: It could be that if you used the `export LINUX_PRE_BUILDS := true` that you get more messages displayed.
 
 ```
 vck190-versal login: petalinux
@@ -572,7 +572,7 @@ vck190-versal:/run/media/mmcblk0p1#
   - `root` password is the one you have setup when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
   
 ## Design Considerations
-  Note: The **MUST**'s in below explanations are due to how the generic Makefiles are setup, and is **NOT** a AMD/Xilinx tools requirement!
+  Note: The **MUST**s in below explanations are due to how the generic Makefiles are setup, and is **NOT** an AMD tools requirement!
   - `[project-root]/ps_apps/linux`: PS applications can easily be added by adding a sub-project for each in `[project-root]/ps_apps/linux`.
     - Vitis will automatically package them and they will end up in `[project-root]/package_linux_${TARGET}`.
     - The `[PS Application].exe` (extension **MUST** be .exe) **MUST** end up in the `[project-root]/ps_apps/exe` dir.
@@ -584,10 +584,10 @@ vck190-versal:/run/media/mmcblk0p1#
 ## References
 The following documents provide supplemental information for this tutorial.
 
-### [AI Engine Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/yii1603912637443.html)
+### [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
-### [AMD/Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+### [Xilinx® Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 The following are links to the XRT information used by this tutorial: 
 
 * [XRT Documentation](https://xilinx.github.io/XRT/master/html/index.html): Explains general XRT API calls used in the PS Host Application. 
@@ -596,14 +596,14 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2022.2 Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/index.html)
+### [Vitis Unified Software Development Platform 2023.1 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/kme1569523964461.html)
+* [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://www.xilinx.com/html_docs/xilinx2022_1/vitis_doc/irn1582730075765.html)
+* [Vitis High-Level Synthesis User Guide (UG1399)](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
 
 ## Revision History
 Click on each item below to see the detailed Revision History:
@@ -709,7 +709,7 @@ Click on each item below to see the detailed Revision History:
     - Added `${GRAPH_O}` as dependency for the vitis linker, since you need to perform extra steps to be able to remove this dependency
     - Added `${LINUX_IMAGE}` and `${LINUX_ROOTFS}` as dependencies for the vitis packager; and those are now taken from the software platform
   - general:
-    - Improved dependencies in almost all `Makefile`s to **ONLY** rebuild what's needed to be rebuild after a modification
+    - Improved dependencies in almost all `Makefile`s to **ONLY** rebuild what is needed to be rebuild after a modification
     - Added following `[project-root]/Makefile` commands:
       - `make clean_vitis` to clean everything (ip, ps_apps, vitis) after the (fixed) platform for the specified `TARGET`.
       - `make all_targets` to build everything for **ALL** `TARGETS`.
@@ -722,7 +722,7 @@ Click on each item below to see the detailed Revision History:
 </details>
 
 <details>
-  <summary> Februari 2022 </summary>
+  <summary> February 2022 </summary>
 
  - petalinux:
     - Added the option LINUX_ETH_CONFIG to setup static Ethernet Configuration

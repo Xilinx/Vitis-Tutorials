@@ -39,13 +39,13 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 
 ### *Tools*: Installing the Tools
 
-1. Obtain a license to enable beta devices in AMD™ tools (to use the VCK190 platform).
+1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * AMD Vitis Software Platform
-      * Xilinx® Runtime and Platforms (XRT)
-      * Embedded Platform VCK190 Base or VCK190 ES1 Base (from lounge, ask your AMD sales contact)
+      * [Vitis™ Unified Software Development Platform 2023.1](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+      * [Xilinx® Runtime and Platforms (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
+      * [Embedded Platform VCK190 Base or VCK190 ES1 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 ### *Environment*: Setting Up Your Shell Environment
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the necessary environment variables to your system specific paths for xrt, platform location, and AMD tools.

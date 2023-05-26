@@ -97,7 +97,7 @@ The image below shows 1,280 particles simulated for 300 timesteps.
 ![alt text](../x10_design/results/images/animation.gif)
 
 
-#### Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
