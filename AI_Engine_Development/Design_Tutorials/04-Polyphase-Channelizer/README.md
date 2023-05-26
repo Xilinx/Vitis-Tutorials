@@ -58,6 +58,7 @@ The following figure shows a block diagram of the polyphase channelizer. The fol
 * The Polyphase Filter implements a parallel bank of M filters across the columns of the M x K circular buffer. Each filter employs K = 8 coefficients taken from an M-phase  decomposition of the channelizer prototype filter. The filter produces a single vector of M output samples.
 * The Cyclic Shift Buffer removes frequency-dependent phase shifts from the downstream Inverse Discrete Fourier Transform (IDFT) outputs using a memoryless and periodically time-varying circular shift of its inputs. A finite state machine (FSM) manages the sequence of input permutations across each input block. The number of states depends on the specific oversampling ratio factors P and Q and number of channels M.
 * The Inverse Fast Fourier Transform (IFFT) performs an IDFT operation on its input vector of M samples to produce a transformed vector of output samples. In the channelizer context, the IDFT performs a parallel bank of M frequency down-conversion operations. Each IDFT output represents a separate down-converted channel of bandwidth Fs / M sampled at a rate of Fs / M * P / Q samples per second.
+* The output buffer prepares the output channel samples for consumption by downstream processing. It is not included in this reference design.
 
 ![figure1](images/channelizer-block-diagram.png)
 
@@ -108,11 +109,11 @@ The AI Engine supports 16 MAC/cycle with "cint16" data and "int16" coefficients.
 
 The cyclic shift performs no computations but simply introduces memoryless permutations in each input M-vector. No buffering occurs between inputs. The block simply performs a "cyclic shift" of each input M-vector. The shift amount varies according to an eight-stage FSM in this design. This block fits poorly to the AI Engine array as its stream routing is more restrictive than PL for introducing permutations, and there is no compute require to warrant it. This function is a natural fit for a "PL Data Mover" and can be implemented easily using Vitis HLS.
 
-### DFT
+### IDFT
 
 The IDFT or IFFT must perform an M=16 point transform at the input sample rate Fs. Given the design adopts SSR = 8, it follows a complete transform must be performed once every M / SSR = 16/8 = 2 cycles. This is a very high throughput rate given the M=16 transform involves either four stages of Radix-2 butterflies (32 total) or two stages of Radix-4 butterflies (eight total). This is challenging to achieve at a sustained rate of two cycles per transform given the overhead of butterfly addressing required for FFT solutions.
 
-In this case, a direct "matrix multiplication" approach to computing the IDFT directly provides a workable solution. For the "cint16" data types adopted in this design, the AI Engine is capable of performing a single [1x2] x [2x4] vector-matrix product "OP" per cycle. The DFT for M=16 requires a [1x16] x [16x16] vector-matrix product, equivalent to 32 such OPs. It follows that 16 AI engine tiles are required to implement the DFT matrix product in two cycles.
+In this case, a direct "matrix multiplication" approach to computing the IDFT directly provides a workable solution. For the "cint16" data types adopted in this design, the AI Engine is capable of performing a single [1x2] x [2x4] vector-matrix product "OP" per cycle. The IDFT for M=16 requires a [1x16] x [16x16] vector-matrix product, equivalent to 32 such OPs. It follows that 16 AI engine tiles are required to implement the IDFT matrix product in two cycles.
 
 To support this 100% efficient compute bound, each tile must use two input streams and compute one OP every cycle without stalling. The final output tiles must deliver four samples every two cycles to meet the desired throughput. More design details are given below.
 
@@ -124,12 +125,12 @@ The following figure shows a hardware diagram of the final polyphase channelizer
 * The Input Permute block introduces the "serpentine shift" required by the Circular Buffer plus any "card dealing" permutations as dictated by the periodic logical-to-physical channel pattern to drive the AI Engine filterbank with proper data to establish fixed state history patterns in the array. This block is implemented in PL using HLS at 312.5 MHz.
 * The Filterbank is implemented as an AI Engine sub-graph using the design approach detailed below. The design uses eight tiles and has eight I/O AXI streams. The AI Engine array is clocked at 1.25 GHz.
 * The Output Permute block removes the "card dealing" permutation applied for the filterbank processing so its output ordering has been restored prior to addition of the cyclic shift. This block is implemented in PL using HLS at 312.5 MHz.
-* The DFT is implemented as an AI Engine sub-graph using the design approach detailed below. The design uses 16 tiles and has eight I/O AXI streams.
+* The IDFT is implemented as an AI Engine sub-graph using the design approach detailed below. The design uses 16 tiles and has eight I/O AXI streams.
 * The DMA Stream Sink block uses a block RAM buffer to capture the channelizer output samples and return them to DDR memory. The block is implemented in PL using HLS at 312.5 MHz.
 
    ![figure4](images/channelizer-hw-diagram.png)
 
-The following figure shows the physical layout of the AI Engine array for the polyphase channelizer design. The overall design requires 24 tiles. The DFT uses 4 x 4 = 16 tiles and the Filterbank uses 4 x 2 = 8 tiles. A total of 22 tiles are used for buffering. The design uses 32 PLIO in total, 16 for input and 16 for output.
+The following figure shows the physical layout of the AI Engine array for the polyphase channelizer design. The overall design requires 24 tiles. The IDFT uses 4 x 4 = 16 tiles and the Filterbank uses 4 x 2 = 8 tiles. A total of 22 tiles are used for buffering. The design uses 32 PLIO in total, 16 for input and 16 for output.
 
 ![figure5](images/channelizer-aie-array.png)
 
@@ -147,7 +148,7 @@ From the compute gaps in the following figure and the fact that each AI Engine t
 
 ## Discrete Fourier Transform Design
 
-The following figure shows a diagram of how the "vector x matrix" multiplication form of the DFT is vectorized and mapped to the AI Engine array of 4 x 4 = 16 tiles. The figure shows two consecutive DFT transforms, one above the other. Recall each full transform is performed over two cycles. The operation of the design is outlined as follows:
+The following figure shows a diagram of how the "vector x matrix" multiplication form of the IDFT is vectorized and mapped to the AI Engine array of 4 x 4 = 16 tiles. The figure shows two consecutive IDFT transforms, one above the other. Recall each full transform is performed over two cycles. The operation of the design is outlined as follows:
 
 * The design consists of a four x four array of tiles. Each tile performs two [1x2] x [2x4] operations over two cycles. Each row of tiles passes its computed outputs to the tile below in the same column using the cascade stream.
 * Four samples are input on each of two input streams for each tile. The same data is broadcast to each tile in the row. For example, the orange input samples are broadcast to all tiles in the orange row, whereas the purple input samples are broadcast to all tiles in the purple row.
@@ -161,7 +162,7 @@ The following figure shows a diagram of how the "vector x matrix" multiplication
 
 The polyphase channelizer design can be built easly from the command line.
 
-### Setup & SDK Initialization
+### Setup & Initialization
 
 The first step is to set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Versal platforms corresponding to your tool release. This edit should be done in the ```channelizer/Makefile``` file.
 
@@ -177,12 +178,11 @@ export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
 # Set SysRoot, RootFS and Image
 export VITIS_SYSROOTS   = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
-export SDKTARGETSYSROOT = ${VITIS_SYSROOTS}
 export KERNEL_IMAGE     = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
 export XLNX_VERSAL      = ${COMMON_IMAGE_VERSAL}
 export PLATFORM         = ${VITIS_PLATFORM_XPFM}
-export SYSROOT          = ${SDKTARGETSYSROOT}
+export SYSROOT          = ${VITIS_SYSROOT}
 ```
 
 ### Hardware Emulation

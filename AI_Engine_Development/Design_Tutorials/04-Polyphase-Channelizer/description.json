@@ -37,7 +37,6 @@
         "custom_build_target": {
             "all": "all"
         },
-
         "customer_board_target": "run_test",
         "tasks": {
             "board" : {
@@ -47,6 +46,5 @@
                "pre_exec": ["./env_setup_versal.sh"]
            }
         }
-
     }
 }
