@@ -64,7 +64,7 @@ gr.end();
 
 ## Run Hardware Cosimulation and Hardware Flow
 
-For the PL kernel (`random_noise`) , an additional parameter `size` has been added, which is different from the free-running kernel in [previous step](https://gitenterprise.xilinx.com/brucey/AIE_RTP_tutorials/blob/master/step3_async_array.md). A loop is also added in the kernel to iterate `size` times. The code in `pl_kernels/random_noise.cpp` is as follows:
+For the PL kernel (`random_noise`) , an additional parameter `size` has been added, which is different from the free-running kernel in [previous step](./step3_async_array.md). A loop is also added in the kernel to iterate `size` times. The code in `pl_kernels/random_noise.cpp` is as follows:
 
 ```cpp
 extern "C" void random_noise(hls::stream<std::complex<short> > & out, int size) {
