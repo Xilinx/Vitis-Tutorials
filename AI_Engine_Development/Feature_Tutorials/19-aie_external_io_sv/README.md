@@ -257,7 +257,7 @@ Once you finish to analyze the traffic from PL to AIE and AIE to PL, the AIE sim
 
 ## Section 5: More on Traffic Generators
 
-This tutorial talks about Verilog/SV based traffic generators and users can also try C-based/Python based traffic generators with AIE. For more details, refer the tutorial [16-external-traffic-generator-aie](https://gitenterprise.xilinx.com/swm/Vitis-Tutorials/tree/2022.2_next/AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie).
+This tutorial talks about Verilog/SV based traffic generators and users can also try C-based/Python based traffic generators with AIE. For more details, please refer the tutorial [16-external-traffic-generator-aie](../16-external-traffic-generator-aie)
 
 You can also integrate traffic generators with AIE flows i.e., AIEsim/x86sim or emulation flows i.e., SW emulation or HW emulation. For more details, refer [Adding-Traffic-Generators-to-Your-Design](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-Traffic-Generators-to-Your-Design).
 
