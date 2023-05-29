@@ -15,8 +15,9 @@ SPDX-License-Identifier: MIT
 # DSP Design on AI Engine Technology with GUI and Makefile Flows
 
 ***Version: Vitis 2023.1***
+
 - Board: VCK190
-- Last update: 04 May 2023
+- Last update: 26 May 2023
 
 ## Table of Contents
 
@@ -196,7 +197,7 @@ $ ls -l /opt/xilinx/common/
 drwxr-xr-x 3 root  root  4096 gen 29 15:01 xilinx-versal-common-v2023.1
 ```
 
-Then, you have to execute the following commands to build the sdk folders, as a normal user, according to what is discussed in the previous subsection:
+Then, you have to execute the following commands as a normal user, according to what is discussed in the previous subsection:
 
 ```shell
 cd /opt/xilinx/common/xilinx-versal-common-v2023.1/
@@ -243,10 +244,10 @@ $ ~/Downloads/petalinux-v2023.1-10141622-installer.run -d /tools/Xilinx/PetaLinu
 
 INFO: Installing PetaLinux...
 INFO: Checking PetaLinux installer integrity...
-INFO: Installing PetaLinux SDK to "/tools/Xilinx/PetaLinux/2023.1/."
+INFO: Installing PetaLinux to "/tools/Xilinx/PetaLinux/2023.1/."
 INFO: Installing buildtools in /tools/Xilinx/PetaLinux/2023.1/./components/yocto/buildtools
 INFO: Installing buildtools-extended in /petalinux_2023.1/./components/yocto/buildtools_extended
-INFO: PetaLinux SDK has been installed to /tools/Xilinx/PetaLinux/2023.1/.
+INFO: PetaLinux has been installed to /tools/Xilinx/PetaLinux/2023.1/.
 ```
 
 To set ``petalinux`` into your terminal, you need the following command:
@@ -588,7 +589,7 @@ thin-plat/
 therefore you should have to do manually the following changes:
 
 1. Add your AI Engine graph and kernels code into the ``vitis/ip/aie`` folder and adapt the related ``vitis/ip/aie/Makefile`` to your case.
-1. Add your HLS kernels code into the ``vitis/ip`` folder, one HLS kernel in each subfolder, for example, ``vitis/ip/mm2s_aie`` and ``vitis/ip/s2mm_aie``. Then check or adapt the related ``vitis/ip/mm2s_aie/Makefile`` and ``vitis/ip/s2mm_aie/Makefile``. 
+1. Add your HLS kernels code into the ``vitis/ip`` folder, one HLS kernel in each subfolder, for example, ``vitis/ip/mm2s_aie`` and ``vitis/ip/s2mm_aie``. Then check or adapt the related ``vitis/ip/mm2s_aie/Makefile`` and ``vitis/ip/s2mm_aie/Makefile``.
 1. Add your PS code into the ``ps_apps/linux`` folder. For example, ``ps_apps/linux/aie_test``. Then check or adapt the related ``ps_apps/linux/aie_test/Makefile``.
 1. Adapt the ``vitis/src/system.cfg`` configuration file for the Vitis Linker according to your connectivity (in this specific case, it is the same as the original Thin Platform repository, so no changes at all).
 1. Do not modify the ``vitis/ip/Makefiles`` because it orchestrates all the Makefiles of the various subfolders. The remaining ones are managed "automatically" by the other Makefiles of the Thin Platform project.

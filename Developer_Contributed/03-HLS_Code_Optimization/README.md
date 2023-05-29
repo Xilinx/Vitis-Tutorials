@@ -18,7 +18,7 @@ Author: Daniele Bagni, Xilinx Inc
 
 ***Version: Vitis 2023.1***
 - Target boards: ZCU102 and VCK190
-- Last update: 04 May 2023
+- Last update: 26 May 2023
 
 ## Table of Contents
 
@@ -26,9 +26,9 @@ Author: Daniele Bagni, Xilinx Inc
 
 [0 Project Setup](#0-project-setup)
 
-[1 Fixed point FIR Filter](#1-fixed-point-fir-filter)
+[1 Fixed Point FIR Filter](#1-fixed-point-fir-filter)
 
-[2 Floating point FIR Filter](#2-floating-point-fir-filter)
+[2 Floating Point FIR Filter](#2-floating-point-fir-filter)
 
 [3 Median Filter for Image Processing](#3-median-filter-for-image-processing)
 
@@ -225,7 +225,7 @@ In conclusion, either the installation is done with root privileges (``sudo``), 
 
 Install the two archives ``xilinx-*-common-v2023.1_*.tar.gz`` in the ``/opt/xilinx/common/`` folder.
 
-Then execute the following commands to build the ``sdk`` folders as a normal user, according to what discussed is in the previous sub-section:
+Then execute the following commands as a normal user, according to what discussed is in the previous sub-section:
 
 ```shell
 cd /opt/xilinx/common/xilinx-versal-common-v2023.1/
@@ -275,10 +275,10 @@ $ ~/Downloads/petalinux-v2023.1-*-installer.run  -d /petalinux_2023.1
 
 INFO: Installing PetaLinux...
 INFO: Checking PetaLinux installer integrity...
-INFO: Installing PetaLinux SDK to "/petalinux_2023.1/."
+INFO: Installing PetaLinux to "/petalinux_2023.1/."
 INFO: Installing buildtools in /petalinux_2023.1/./components/yocto/buildtools
 INFO: Installing buildtools-extended in /petalinux_2023.1/./components/yocto/buildtools_extended
-INFO: PetaLinux SDK has been installed to /petalinux_2023.1/.
+INFO: PetaLinux has been installed to /petalinux_2023.1/.
 ```
 
 To set ``petalinux`` into your terminal, you need the following command:

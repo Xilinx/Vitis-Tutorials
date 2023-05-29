@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:   13 April 20223
+# Date:   26 May 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR ZCU102 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -28,7 +28,9 @@ BOARD=zcu102
 BASE_NUM=202310_1
 #BASE_NUM=202220_1
 
-export WRK_DIR=/group/xirguup/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
+export GUUP_DIR=<SET-YOUR-GUUP-DIR-HERE>
+
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
 
 export TUTORIAL=03-HLS_Code_Optimization
 

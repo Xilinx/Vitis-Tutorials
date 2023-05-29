@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:   13 April 20223
+# Date:   26 May 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR VCK190 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -29,7 +29,9 @@ BASE_NUM=202310_1
 
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
-export WRK_DIR=/group/xirguup/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
+export GUUP_DIR=<PUT-YOUR-GUUP-DIR-HERE>
+
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
 
 
 # =======================================================

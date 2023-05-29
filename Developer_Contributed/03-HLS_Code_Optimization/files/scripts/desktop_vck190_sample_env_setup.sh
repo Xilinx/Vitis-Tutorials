@@ -4,40 +4,12 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:    27 Feb 20223
+# Date:   26 May 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS AN EXAMPLE FOR VERSAL ENV SETUP on A LINUX DESKTOP
 ######################################################################################
 
-
-# =======================================================
-# Setup 2023.1 Vitis / Petalinux env. in GUUP Servers
-# =======================================================
-##ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
-
-: '
-# ==========================================================
-# Validating Tool Installation
-# ==========================================================
-echo ""
-echo "Aiecompiler:"
-which aiecompiler
-echo ""
-echo "Vivado:"
-which vivado
-echo ""
-echo "Vitis:"
-which vitis
-echo ""
-echo "Vitis HLS:"
-which vitis_hls
-echo ""
-echo ""
-echo "PETALINUX"
-echo "$PETALINUX"
-echo ""
-'
 
 # =======================================================
 # global variables for this tutorial

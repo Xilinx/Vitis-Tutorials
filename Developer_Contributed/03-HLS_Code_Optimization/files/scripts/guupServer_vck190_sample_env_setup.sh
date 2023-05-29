@@ -29,7 +29,9 @@ BOARD=vck190
 BASE_NUM=202310_1
 #BASE_NUM=202220_1
 
-export WRK_DIR=/group/xirguup/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
+export GUUP_DIR=<SET-YOUR-GUUP-DIR-HERE>
+
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
 
 export TUTORIAL=03-HLS_Code_Optimization
 

@@ -4,40 +4,13 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:    27 Feb 20223
+# Date:   26 May 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS AN EXAMPLE FOR ZCU102 ENV SETUP on A LINUX DESKTOP
 ######################################################################################
 
 
-# =======================================================
-# Setup 2023.1 Vitis / Petalinux env. in GUUP Servers
-# =======================================================
-##ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
-
-: '
-# ==========================================================
-# Validating Tool Installation
-# ==========================================================
-echo ""
-echo "Aiecompiler:"
-which aiecompiler
-echo ""
-echo "Vivado:"
-which vivado
-echo ""
-echo "Vitis:"
-which vitis
-echo ""
-echo "Vitis HLS:"
-which vitis_hls
-echo ""
-echo ""
-echo "PETALINUX"
-echo "$PETALINUX"
-echo ""
-'
 
 # =======================================================
 # global variables for this tutorial
@@ -88,7 +61,7 @@ mkdir -p ${COMMON_IMAGE_ZYNQMP}
 ##ZYNQMP_COMMON_2023v1=${PETALINUX}/../../bsp/internal/xilinx-zynqmp-common-v${RELEASE}/ #only for GUUP
 ZYNQMP_COMMON_2023v1=/opt/xilinx/common/xilinx-zynqmp-common-v${RELEASE}
 cd ${ZYNQMP_COMMON_2023v1}
-## install Versal SDK on $HOME/common
+## install ZYNQMP SDK on $HOME/common
 ./sdk.sh -y -p -d ${COMMON_IMAGE_ZYNQMP}
 #copy the other files
 cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${COMMON_IMAGE_ZYNQMP}
