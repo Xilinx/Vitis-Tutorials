@@ -158,7 +158,7 @@ Review the Application Timeline generated during software emulation to visualize
 1. To view the Application Timeline, use the Vitis analyzer by running the following command from within the `run1` directory.
 
    ```
-   vitis_analyzer xclbin.run_summary
+   vitis_analyzer xrt.run_summary
    ```
 
 >**NOTE:** In the 2023.1 release, this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
@@ -211,7 +211,7 @@ Generate the RTL-based kernel by quickly going through the RTL Kernel Wizard ste
 
 Next, generate an RTL-based kernel from within the Vitis IDE.
 
-1. Select the menu command **Xilinx > Launch RTL Kernel Wizard > rtl_project_kernels**.  This opens the RTL Kernel Wizard Welcome page.
+1. Select the menu command **Vitis > Launch RTL Kernel Wizard > rtl_project_kernels**.  This opens the RTL Kernel Wizard Welcome page.
 2. The first page is a summary of the process. Review it and click **Next**.
 3. In the General Settings dialog box, keep all the default settings, and click **Next**.
 4. In the Scalars dialog box, set the number of scalar arguments to `0`, and click **Next**.

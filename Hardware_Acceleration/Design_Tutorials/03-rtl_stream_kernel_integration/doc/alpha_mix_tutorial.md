@@ -1,26 +1,15 @@
-<table class="sphinxhide" width="100%">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
- </tr>
-</table>
-
 # ALPHA_MIX HLS C Kernel Creation
 
-According to the design specification, the *alpha_mix* kernel will include the following functions:
+According to the design specification, the *alpha_mix* kernel will include following functions:
 
-* Receive monochrome (one channel 8-bit depth) digital clock images via the AXI4-Stream slave interface
-* Read the background image from the global memory via the AXI master interface
-* Resize the digital clock image to the designated scale
+* Receive monochrome (one channel 8-bit depth) digital clock images via AXI Stream slave interface
+* Read the background image from global memory via AXI master interface
+* Resize the digital clock image to designated scale
 * Color the clock digit characters as well as the background layer for the clock images
-* Mix the clock digit, clock background layer, and the background image with opacity setting
-* Output the mixed image via the AXI4-Stream master interface
+* Mix the clock digit, clock background layer and the background image with opacity setting
+* Output the mixed image via AXI Stream master interface
 
-The following code block is the top-level function declaration for *alpha_mix* kernel. You can see that: the hardware AXI stream port (master or slave) is represented by the *hls::stream* data type; the hardware AXI master port (read or write) is represented by the *ap_uint* (actually array pointer) data type; those kernel arguments are represented by the normal *int* data type, which will be grouped up to map to an AXI slave interface.
+Following code block is the top level function declaration for *alpha_mix* kernel. You can see that: the hardware AXI stream port (master or slave) is represented by *hls::stream* data type; the hardware AXI master port (read or write) is represented by *ap_uint* (actually array pointer) data type; those kernel arguments are represented by normal *int* data type, which will be grouped up to map to an AXI slave interface.
 
 ~~~c++
 void alpha_mix(hls::stream<ap_axiu<64, 0, 0, 0>> &time_img_input,   // time image input
@@ -40,13 +29,16 @@ void alpha_mix(hls::stream<ap_axiu<64, 0, 0, 0>> &time_img_input,   // time imag
 )
 ~~~
 
-The following is the sub-function and data flow diagram for the *alpha_mix* kernel.
 
-![alpha_mix flow](alpha_mix flow)
+Following is the sub-function and data flow diagram for *alpha_mix* kernel.
 
-In the diagram, the sub-functions filled with red are from the Vitis Vision Library, and those with blue are handwritten. *xf::cv::Mat* is the counterpart for *cv::Mat* in the OpenCV software library; it is very useful for handling image data. In the hardware implementation, if you want to handle the image with in-order pixel level (no need to randomly access the pixel data), you can use the *#pragma HLS stream* to indicate the compiler to map the *xf::cv::Mat* object to the array. This is the case for your *alpha_mix* kernel. Many functions in Vitis Vision Library support *xf::cv::Mat* as the input and output data. In the HLS C code, you can use the for-loop to process data in the *xf::cv::mat* stream easily; you can refer to the source code of sub-function *mixing* for the alpha-mixing operation applied to the input and output *xf::cv::Mat* objects.
+<div align="center">
+<img src="./images/alpha_mix_flow.png" alt="alpha_mix flow" >
+</div>
 
-Use Vitis *v++* command to compile the HLS C source code to the kernel file (xo). For example, use the following command to compile *alpha_mix.c* to the hardware kernel with a *xilinx_u50_gen3x16_xdma_201920_3* platform.
+In the diagram, the sub-functions filled with red are from Vitis Vision Library, and those with blue are hand-written. *xf::cv::Mat* is the counterpart for *cv::Mat* in OpenCV software library, it is very useful for handling image data. In the hardware implementation, if we want to handle the image with in-order pixel level (no need to randomly access the pixel data), we can use *#pragma HLS stream* to indicate the compiler to map the *xf::cv::Mat* object to array. This is the case for our *alpha_mix* kernel. Many functions in Vitis Vision Library support *xf::cv::Mat* as the input and output data. In the HLS C code, we can use for-loop to process data in *xf::cv::mat* stream easily, you can refer to the source code of sub-function *mixing* for alpha-mixing operation applied to the input and output *xf::cv::Mat* objects.
+
+We use Vitis *v++* command to compile the HLS C source code to kernel file (xo). For example, use following command to compile *alpha_mix.c* to hardware kernel with *xilinx_u50_gen3x16_xdma_201920_3* platform.
 
 ~~~
 v++ --platform xilinx_u50_gen3x16_xdma_201920_3                                                     \
@@ -59,6 +51,9 @@ v++ --platform xilinx_u50_gen3x16_xdma_201920_3                                 
     alpha_mix.c
 ~~~
 
+Return to [Top-Level of Tutorial](../README.md)
+
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+

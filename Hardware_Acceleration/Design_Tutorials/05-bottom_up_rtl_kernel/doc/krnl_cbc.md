@@ -1,27 +1,16 @@
-<table class="sphinxhide" width="100%">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Development Flow Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
- </tr>
-</table>
-
 # RTL Kernel: krnl_cbc
 
 ## Introduction
 
 This part of the tutorial introduces another RTL kernel, `krnl_cbc`.
 
-This kernel has AXI master interfaces to access input/output data in on-board global memory, and to transmit/receive the data via AXI4-Stream master/slave ports. This kernel is connected with the `krnl_aes` kernel via AXI4-Stream ports in the Vitis v++ linking stage to implement the complete AES processing function. AES-ECB and AES-CBC modes are supported by `krnl_cbc`.
+This kernel has AXI master interfaces to access input/output data in on-board global memory, and to transmit/receive the data via AXI-Stream master/slave ports. This kernel is connected with the `krnl_aes` kernel via AXI-Stream ports in the Vitis v++ linking stage to implement the complete AES processing function. AES-ECB and AES-CBC modes are supported by `krnl_cbc`.
 
-Again, you will use command line Tcl scripts to finish all the steps without GUI support, except for waveform viewing. The `krnl_cbc` kernel has four internal processing pipes, matching the four AES engines in `krnl_aes`, which are transparent to you. The `ap_ctrl_chain` execution model is supported by `krnl_cbc`, and you can fully utilize the hardware parallel acceleration capability without insight knowledge about the number of the internal engines. Note that it is actually not so efficient to realize the connection between the AES core engines and CBC control units with external AXI-Stream link. They are implemented in this way to show the Vitis capability and design flow.
+Again, you will use command line Tcl scripts to finish all the steps without GUI support, except for waveform viewing. The `krnl_cbc` kernel has four internal processing pipes, matching the four AES engines in `krnl_aes`, which are transparent to the user. The `ap_ctrl_chain` execution model is supported by `krnl_cbc`, and the user can fully utilize the hardware parallel acceleration capability without insight knowledge about the number of the internal engines. Note that it is actually not so efficient to realize the connection between the AES core engines and CBC control units with external AXI-Stream link. They are implemented in this way to show the Vitis capability and design flow.
 
 ## Kernel Feature
 
-Refer to the following block diagram of the `krnl_cbc` kernel. It has four identical CBC engines, which receive input data from AXI read master via engine control unit. They then send the data to and receive output data from the `krnl_aes` kernel via the AXI4-Stream port, and send the result to AXI write master via the `engine control` unit.
+Refer to the following block diagram of the `krnl_cbc` kernel. It has four identical CBC engines, which receive input data from AXI read master via engine control unit. They then send the data to and receive output data from the `krnl_aes` kernel via the AXI-Stream port, and send the result to AXI write master via the `engine control` unit.
 
 An AXI control slave module is used to set the necessary kernel arguments. The `krnl_cbc` kernel finishes the task with input/output grouped words stored in global memory. Each internal engine will handle one words group at one time. Consecutive input groups are assigned to different internal CBC engines in round-robin fashion by `engine control` module. The `krnl_cbc` kernel uses a single kernel clock for all internal modules.
 
@@ -37,7 +26,7 @@ For `input sync`, at clock edge **a** and **b**, `ap_start` is validated and dea
 
 For `output sync`, at clock edge **c** and **d**, `ap_done` is confirmed and de-asserted by the  `ap_continue` signal, meaning the completion of one kernel job. When the XRT scheduler detects the `ap_done` signal has been asserted, XRT asserts `ap_continue`. Generally, this should be implemented as a self-clear signal, so that it only keeps one cycle.
 
-From the waveform, you can see that before the `ap_done` signal was asserted, the kernel uses the  `ap_ready` signal to tell XRT that it can accept new input data. This scheme acts as back-pressure on the `input sync` stage to enable the task pipeline to fully utilize the hardware capability. In the above example waveform, XRT writes `ap_start` bit and `ap_continue` bit twice each in the AXI control slave register.
+From the waveform, you can see that before the `ap_done` signal was asserted, the kernel uses the  `ap_ready` signal to tell the XRT that it can accept new input data. This scheme acts as back-pressure on the `input sync` stage to enable the task pipeline to fully utilize the hardware capability. In the above example waveform, XRT writes `ap_start` bit and `ap_continue` bit twice each in the AXI control slave register.
 
 The following table lists all the control register and kernel arguments included in AXI slave port. There is no interrupt support in this kernel.
 
@@ -67,13 +56,13 @@ These IPs are generated by a Tcl script called `~/krnl_cbc/gen_ip.tcl`.
 
 ## Packing the Design into Vivado IP and Vitis Kernel
 
-One key step for the RTL kernel design for Vitis is to package the RTL design into a Vitis kernel file (XO file). You can utilize the RTL Kernel Wizard in the GUI to help to create the Vitis kernel. You can also use the IP Packager in the AMD Vivado™ Design Suite to package the design into Vivado IP, and then generate the XO file. Vivado also provides a command line flow for Vitis kernel generation, which finishes the same jobs as the GUI version.
+One key step for the RTL kernel design for Vitis is to package the RTL design into a Vitis kernel file (XO file). You can utilize the RTL Kernel Wizard in the GUI to help to create the Vitis kernel. You can also use the IP Packager in Vivado to package the design into Vivado IP, and then generate the XO file. Vivado also provides a command line flow for Vitis kernel generation, which finishes the same jobs as the GUI version.
 
 In this tutorial, like in the `krnl_aes` kernel case, you will use the Vivado Tcl command to finish the `krnl_cbc` IP packaging and XO file generation in batch mode. The complete kernel generation script for this design is in `~/krnl_cbc/pack_kernel.tcl`. The main steps are summarized below; refer to the details in the script.
 
->**NOTE:** Each step in the script has a counterpart tool in the GUI. Refer to [RTL Kernels](https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/devrtlkernel.html) for GUI version IP packaging tool usage.
+>**NOTE:** Each step in the script has a counterpart tool in the GUI. Refer to [Packaging RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) for more information.
 
-### 1: Create the Vivado Project and Add Design Sources
+### 1: Create the Vivado project and add design sources
 
 First, you must create a Vivado project containing the source files. The script use the Tcl commands `create_project`, `add_files` and `update_compiler_order` to finish this step. For `krnl_cbc`, only RTL source code files are required to be added to the newly created project.
 
@@ -132,9 +121,9 @@ set_property size           {32}                [ipx::get_registers CBC_MODE  -o
 
 The following are included in the above example case:
 
-* `CBC_MODE` is the kernel argument name.
-* "cbc mode" is the register description.
-* "0x050" is the address offset the the register.
+* `CBC_MODE` is the kernel argument name
+* "cbc mode" is the register description
+* "0x050" is the address offset the the register
 * "32" is the data width of the register (all scalar kernel arguments should be 32-bit width).
 
 You can see in the provided Tcl script that all the registers defined in the previous table are added and defined accordingly. Two special kernel arguments here are `SRC_ADDR` and `DEST_ADDR`; these are for AXI master address pointer and are all 64-bit width. You will associate them with the AXI master ports in the next step.
@@ -175,7 +164,7 @@ package_xo -force -xo_path ../krnl_cbc.xo -kernel_name krnl_cbc -ctrl_protocol a
 
 Note that in the above `package_xo` command usage, you let the tool to generate the kernel description XML file automatically, and therefore you do not need to manually create it.
 
-#### Manually Creating the Kernel XML File
+##### Manually Creating the Kernel XML File
 
 If you have an existing Vitis-compatible Vivado IP and need to generate the XO file from it, you could also manually create the kernel XML file, and designate it in the command as follows:
 
@@ -187,7 +176,7 @@ In this case, the kernel execution model is specified in the XML file with `hwCo
 
 ## Testbench
 
-AMD provides a simple SystemVerilog testbench for the `krnl_cbc` module with AMD AXI VIPs. The testbench sources are in the `~/krnl_cbc/tbench` directory. The `krnl_aes` module is instantiated in this testbench to connect with `krnl_cbc` via AXI4-Stream link. Two AXI slave VIPs are used in memory mode, and two AXI master VIPs are used to configure the arguments and control the kernel execution.
+AMD provides a simple SystemVerilog testbench for the `krnl_cbc` module with AMD AXI VIPs. The testbench sources are in the `~/krnl_cbc/tbench` directory. The `krnl_aes` module is instantiated in this testbench to connect with `krnl_cbc` via AXI-Stream link. Two AXI slave VIPs are used in memory mode, and two AXI master VIPs are used to configure the arguments and control the kernel execution.
 
 For `krnl_aes`, the AXI master VIP emulates the `ap_ctrl_hs` protocol for AES key expansion operation. For `krnl_cbc`, the AXI master VIP emulates the `ap_ctrl_chain` protocol for consecutive task pushing. In the testbench, the input and output data are divided into groups including a number of words. Both `input sync` and `output sync` are emulated in the testbench. For more details, refer to the ``tb_krnl_cbc.sv`` file.
 
@@ -213,7 +202,7 @@ For `ap_ctrl_chain` execution model, the host program uses multi-threading techn
 
 This tutorial uses files in the `~/krnl_cbc` directory.
 
-All steps except for host program execution in this tutorial are finished by the GNU Make. This example design supports four AMD Alveo™ cards (U200, U250, U50, U280), and you must make the necessary adjustments to the `~/krnl_cbc/Makefile` for each card by uncommenting the line matching your Alveo card.
+All steps except for host program execution in this tutorial are finished by the GNU Make. This example design supports four Alveo cards (U200, U250, U50, U280), and you must make the necessary adjustments to the `~/krnl_cbc/Makefile` for each card by uncommenting the line matching your Alveo card.
 
 ```makefile
  41 # PART setting: uncomment the line matching your Alveo card
@@ -252,7 +241,7 @@ make gen_ip
 
 This starts Vivado in batch mode and calls ``~/krnl_cbc/gen_ip.tcl`` to generate all needed design and verification IPs.
 
-#### 2: Run the Standalone Simulation
+#### 2. Run the Standalone Simulation
 
 ~~~
 make runsim
@@ -264,7 +253,7 @@ The following figure shows the control signal waveform of `krnl_cbc`. You can se
 
 ![krnl_cbc waveform](./images/krnl_cbc_sim.png)
 
-#### 3: Package the Vivado IP and Generate the Vitis Kernel File
+#### 3. Package the Vivado IP and Generate the Vitis Kernel File
 
 ```
 make pack_kernel
@@ -272,7 +261,7 @@ make pack_kernel
 
 This starts Vivado in batch mode and calls ``~/krnl_cbc/pack_kernel.tcl`` to package the RTL sources into Vivado IP. It then generates the Vitis kernel file, ``~/krnl_cbc/krnl_cbc.xo``.
 
-#### 4: Build the Kernel Testing System Overlay Files
+#### 4. Build the Kernel Testing System Overlay Files
 
 ##### For a Hardware Target
 
@@ -294,7 +283,7 @@ make build_hw TARGET=hw_emu
 
 This builds the total system overlay files, ``~/krnl_cbc/krnl_cbc_test_hw_emu.xclbin``.
 
-#### 5: Compile Host Program
+#### 5. Compile Host Program
 
 ```
 make build_sw
@@ -322,7 +311,7 @@ In this example, if your target card is U50, you can find the device ID is 2. Yo
  32 #define DEVICE_ID   2
 ```
 
-#### 6: Run Hardware Emulation
+#### 6. Run Hardware Emulation
 
 When the XCLBIN file for hardware emulation ``~/krnl_cbc/krnl_cbc_test_hw_emu.xclbin`` is generated, you can run hardware emulation to verify the kernel in the platform environment for debug or details profiling purpose. You also use different option to compare the different behaviors between `ap_ctrl_hs` and `ap_ctrl_chain` modes.
 
@@ -338,7 +327,7 @@ Then, use the following command to run the program with words-per-groups as 64 a
 ./host_krnl_cbc_test -w 64 -g 4
 ```
 
-In the generated `wdb` waveform database, you can select the AXI4-Stream slave ports of `krnl_cbc` to reflect the work status of the kernel. You can also add `emu_wrapper.emu_i.krnl_aes_1.inst.krnl_aes_axi_ctrl_slave_inst.status[3:0]` signals to the waveform window to get the status of the AES engines in `krnl_aes`.
+In the generated `wdb` waveform database, you can select the AXI-Stream slave ports of `krnl_cbc` to reflect the work status of the kernel. You can also add `emu_wrapper.emu_i.krnl_aes_1.inst.krnl_aes_axi_ctrl_slave_inst.status[3:0]` signals to the waveform window to get the status of the AES engines in `krnl_aes`.
 
 The waveform snapshot is as follows. You can see that the four AES engines are working in parallel to process the four consecutive input data groups.
 
@@ -372,7 +361,7 @@ The `~/krnl_cbc/xrt.ini` file is used to control the XRT emulation options, as s
   7 device_trace=coarse
 ~~~
 
-#### 7: Run the Host Program in Hardware Mode
+#### 7. Run the Host Program in Hardware Mode
 
 If you have tried hardware emulation in the previous step, you must first run the following command to disable the `hw_emu` mode:
 
