@@ -24,7 +24,7 @@
 	
 ### Design Build
 
-In this section, you will build and run the Matrix Multiplication design using the DSP58 Engines in Versal device. You will compile the design and integrate it into a larger system design (including the PS host application).
+In this section, you learn to build and run the Matrix Multiplication design using the DSP58 Engines in Versal device. You will compile the design and integrate it into a larger system design (including the PS host application).
 
 The Makefile used to build the design takes 2 user inputs from command line. These are -
 TARGET (hw/hw_emu)
@@ -245,9 +245,9 @@ prop=run.impl_1.STEPS.PHYS_OPT_DESIGN.is_enabled=true - This option enables phys
 prop=run.impl_1.STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE=AggressiveExplore - This option sets value of physical optimization directive
 prop=run.impl_1.STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE=AggressiveExplore - This option sets value of route design directive
 
-The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
+The Vitis™ compiler calls the Vivado™ IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
 
-You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now generated the XCLBIN file, `$(BUILD_TARGET_DIR)/gemm.hw_emu.xclbin`, that will be used to execute your design on the platform.
+You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now generated the XCLBIN file, `$(BUILD_TARGET_DIR)/gemm.hw_emu.xclbin`, that is used to execute your design on the platform.
 
 </details>
 
@@ -279,6 +279,7 @@ aarch64-xilinx-linux-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack
    $(BUILD_TARGET_DIR)/gemm_top_app.o -L$(SDKTARGETSYSROOT)/usr/lib -lxrt_coreutil \
    -o $(BUILD_TARGET_DIR)/gemm_dsp_xrt.elf
 ```
+
 
 See [this page](https://xilinx.github.io/XRT/master/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) for details of host application programming.
 
@@ -393,7 +394,7 @@ and do:
 ./launch_hw_emu.sh or ./launch_hw_emu.sh -g (for waveform viewer)...
 
 ```
-When hardware emulation is launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
+When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
 
 ```bash
 root@versal-rootfs-common-2023.1:~#
@@ -511,26 +512,26 @@ After Matrix A elements are shifted into cascade chain, last row of matrix B is 
 
 First Row of output matrix is calculated as follows - 
 
-Bottom most DSP calculates A[0,31] * B[31,0] and sends the output to upper DSP via PCOUT cascade port. On 2nd clock upper DSP starts receiving B[30,0], B[30,1], … B[30,31] (i.e Row 30 of Matrix B).
-So,on 2nd clock, 2nd DSP calculates A[0,30] * B [30,0] + PCOUT = A[0,30] * B[30,0] + A[0,31] * B[31,0], and sends it up to the 3rd DSP. 3rd DSP starts receiving Matrix B Column 29 on 3rd clock, computes 
+Bottom most DSP calculates A[0,31] *B[31,0] and sends the output to upper DSP via PCOUT cascade port. On 2nd clock upper DSP starts receiving B[30,0], B[30,1], … B[30,31] (i.e Row 30 of Matrix B).
+So,on 2nd clock, 2nd DSP calculates A[0,30]* B [30,0] + PCOUT = A[0,30] *B[30,0] + A[0,31]* B[31,0], and sends it up to the 3rd DSP. 3rd DSP starts receiving Matrix B Column 29 on 3rd clock, computes 
 3rd MAC operation and send up to 4th DSP. Thus after 32nd clock, top DSP has generated Row 0 Column 0 element of the output matrix.
 
 On 2nd clock, bottom DSP receives B[31,1] and it calculates A[0,31] * B[31,1] which is the beginning of the MAC operation for Row 0 Column 1 element of output matrix. Row 0, Column 1 calculations traverse 
 upwards in a similar way, and on 33rd clock, top DSP generates Row  0 Column 1 element of the output matrix. 
 
-Similarly for next 30 clocks, (i.e clock 34 to 63) top DSP of first cascade chain generates other 30 elements of Row 0 of the output matrix
+Similarly for next 30 clocks, (that is, clock 34 to 63) top DSP of first cascade chain generates other 30 elements of Row 0 of the output matrix
 
 Other rows of output matrix are calculated as follows - 
 
-B[31,0], B[31,1], … B[31,31] elements, i.e Row 31 of Matrix B is shifted to next DSP chain every clock. Hence Start of driving Matrix A Rows to subsequent DSP chains is also started with one clock delay.
+B[31,0], B[31,1], … B[31,31] elements, that is row 31 of Matrix B is shifted to next DSP chain every clock. Hence Start of driving Matrix A Rows to subsequent DSP chains is also started with one clock delay.
 So bottom DSP of 2nd cascade chain starts on 2nd clock and it computes A[1,31] * B[31,0], which is beginning of the MAC operation for Row 1 Column 0 element of output matrix. Thus 2nd cascade chain is 1 
 clock delayed wrt first cascade chain and it generates its 32 outputs from clock 33 to 64. These outputs are Row 1 of the output matrix. Each subsequenct cascade chain is one clock delayed wrt previous 
-chain, and thus the last cascade chain generates Row 31 outputs on clock 63 to 94
+chain, and thus the last cascade chain generates Row 31 outputs on clock 63 to 94.
 
 #### 32x32 Matrix Multiplication Latency
 
 For the first 32 clocks, Matrix A Row 0 is loaded into first cascade chain. Over next 32 clocks, First cascade chain calculates first row of output matrix, and for next 32 clocks, other rows of
-output matrix are generated. However after 64 clocks, first DSP cascade chain can receive first row data for next 32x32 matrix. 
+output matrix are generated. However after 64 clocks, first DSP cascade chain can receive first row data for next 32x32 matrix.
 
 Larger matrices are broken down into smaller 32x32 matrices. For example, 1Kx1Kx1K Matrices are represented as follows, where each box is 32x32 matrix –
 
@@ -543,22 +544,22 @@ Output matrix is -
 #### Data Flow for larger matrices 
 
 Matrix A00 is first multiplied with Matrix B00, which is the basic 32x32 matrix multiplication. Over the first 96 clocks, each DSP chain produces 32 outputs, thus total 1K outputs are generated which are the partial sums for the final output. These partial sums are written to 64 partial sum BRAMs.
-After 64 clocks, first cascade chain is done with A00 * B00 submatrix, and it then starts performing A00 * B01 to calculate partial sums for the
-next column of the output matrix. Likewise over next 32 clocks, other DSP cascade chains will also complete A00 * B00 matrix multiplication and
-move to A00 * B01 submatrix multiplication. This way Matrix A00 is multiplied with Matrix B00, B01, B02 … B0,31.
+After 64 clocks, first cascade chain is done with A00 *B00 submatrix, and it then starts performing A00* B01 to calculate partial sums for the
+next column of the output matrix. Likewise over next 32 clocks, other DSP cascade chains will also complete A00 *B00 matrix multiplication and
+move to A00* B01 submatrix multiplication. This way Matrix A00 is multiplied with Matrix B00, B01, B02 … B0,31.
 
-This completes A00 submatrix multiplications. Next we will read A01 submatrix of Matrix A, and it gets multiplied with submatrices of Matrix B. The 
+This completes A00 submatrix multiplications. Next, we read A01 submatrix of Matrix A, and it gets multiplied with submatrices of Matrix B. The 
 partial sums are added to the partial sums previous generated, and stored back. Thus we will keep moving along the first row of Matirx A and 
 multiply that submatrix with submatrices of Matirx B. This will continue for 32 iterations, and in the 32nd iteration, data is written to Output 
 BRAM instead of partial Sum BRAM. This completes computation of the first row of the output matrix.
 
-Then we will move to the next row of Matrix A and all these steps are repeated. After 32 such iterations, 1Kx1Kx1K matrix multiplication will be completed
+Then we will move to the next row of Matrix A and all these steps are repeated. After 32 such iterations, 1Kx1Kx1K matrix multiplication will be completed.
 
 #### Matrix Calculation Latency for large matrices
 
 32x32 matrix calculation requires 96 clocks. However first cascade chain in the DSP58 array is done with its computation after 64 clocks, and it 
 can start receiving data for next submatrix. Thus for 32 clocks, there is overlap of previous and new submatrix calculations. So the total
-number of clocks required for large matix multiplication is 64 * No. of Sbumatrices + 32
+number of clocks required for large matix multiplication is 64 * No. of Sbumatrices + 32.
 
 In this design, DSP clock is operating at 750MHz (1.33ns). 
 
@@ -574,10 +575,10 @@ The following figure shows block diagram of the design.
 ### PL Kernel Details
 
 GeMM DSP RTL design can be divided into 2 main parts -
- First one is the core matrix mutliplication functionality, gemm_top module is the top level module which implements this functionality
- Second part involves data mover logic for writing Matrix A and B data and to read the matrix output from host application. This is implemented in ps_slave module
+ First one is the core matrix mutliplication functionality, gemm_top module is the top level module that implements this functionality.
+ Second part involves data mover logic for writing Matrix A and B data and to read the matrix output from host application. This is implemented in ps_slave module.
 
- In this design, core DSP logic operates at 750MHz while rest of the logic operates at 375MHz. There is synchronizer module to handle synchronization of signals going across these 2 clock domains
+ In this design, core DSP logic operates at 750MHz while rest of the logic operates at 375 MHz. There is synchronizer module to handle synchronization of signals going across these 2 clock domains
 
  gemm_large_ocm \
  |-gemm_top \
@@ -585,6 +586,7 @@ GeMM DSP RTL design can be divided into 2 main parts -
  |-synchronizer
 
  Underneath gemm_top module, following modules are instantiated -
+
  1. FIXGEMM_WRAPPER - This module implements the systolic array of 1K DSP58 Engines
  2. row_uram - These are the URAMs which store Matrix A data. Entire 1Kx1K matrix A is stored in URAMs
  3. col_uram - These are the URAMs which store Matrix B data. Entire 1Kx1K matrix B is stored in URAMs
@@ -605,9 +607,9 @@ GeMM DSP RTL design can be divided into 2 main parts -
 The base platform contains the control interface and processing system (CIPS), NoC,and the interfaces among them.
  The Vitis compiler linker step builds on top of the base platform by adding the PL kernels. To add the various 
 functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). In the design, the components are added by the Vitis 
-compiler `-l` step 
+compiler `-l` step. 
 
-(see [make xsa](#make-xsa-using-the-vitis-tools-to-link-hls-kernels-with-the-platform)) and include the following:
+(See [make xsa](#make-xsa-using-the-vitis-tools-to-link-hls-kernels-with-the-platform)) and include the following:
 
 * `gemm_large_ocm` DSP kernel (`gemm_large_ocm.xo`)
 * Connections interfaces are defined in the system configuration file
@@ -633,13 +635,14 @@ The `gemm_large_ocm` kernel operates at 800 MHz
 
 #### Timing Closure
 
+
 For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xsa` step above. These strategies are required because timing is not met for default implementation settings. Routing Congestion limits operating frequency to 800MHz. 
 
 For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://docs.xilinx.com/r/en-US/ug904-vivado-implementation)
 
 ### Data Flow
 
-Host ps_app writes Matrix A and B data and enables DUT. It then polls for Done signal from DUT. When DUT is done, Host app reads Output URAM and compares the URAM read data with golden data. Golden input Matrix data for Matrix A and B, and golden expected data are stored in arrays which are read by host app
+Host ps_app writes Matrix A and B data and enables DUT. It then polls for Done signal from DUT. When DUT is done, Host app reads Output URAM and compares the URAM read data with golden data. Golden input Matrix data for Matrix A and B, and golden expected data are stored in arrays which are read by host app.
 
 #### Top Function
 
@@ -693,13 +696,13 @@ The PS host application (`main.cpp`) is cross-compiled to get the executable. Fl
 int main(int argc, char** argv)
 ```
 #### Sub-Function Details
-test_gemm - This function programs matrix A and B URAMs from the array data and sets other control registers and then enables the gemm kernel
+test_gemm - This function programs matrix A and B URAMs from the array data and sets other control registers and then enables the gemm kernel.
 
 check_done - This function polls for Done signal to be set from DUT.
 
-read_perf - This function reads the performance counter value counted by the DUT. Gemm kernel counts the number of clocks required for matrix multiplication operation. Note - this count does not include time required for input and output data movement 
+read_perf - This function reads the performance counter value counted by the DUT. Gemm kernel counts the number of clocks required for matrix multiplication operation. Note - this count does not include time required for input and output data movement.
 
-golden_check - This function compares data from Output URAM with the golden data. It maintains error counter which is used to decide if test passed or failed
+golden_check - This function compares data from Output URAM with the golden data. It maintains error counter which is used to decide if test passed or failed.
 
 gemm_soft_reset_pulse - This function generates soft reset to DUT. 
 
@@ -839,7 +842,7 @@ The registers, CLB LUT, BRAM, URAM and DSP Engine utilization information can be
 
 1. Open the Vivado project: ``$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr``.
 2. **Open Implemented Design** then click **Report Utilization**. 
-3. In the Utilization tab (shown in the following figure) select **gemm_large_ocm_0** and view the resource utilization 
+3. In the Utilization tab (shown in the following figure) select **gemm_large_ocm_0** and view the resource utilization.
 
 ** Or **
 
@@ -917,7 +920,7 @@ Start to Done. This counts the number of clocks for which DUT is active.
 
 For 32x32x32 configuration- In this design 2 32x32x32 matrix multiplications are done. 
 For each matrix, 64K MAC operations are performed, giving
-total 64K * 2 = 128K MACs
+total 64K * 2 = 128K MACs.
 If performance counter reaches value X, that means at operating frequency of 375MHz (period of 2.66ns), total time taken
 by DUT = 2.66 x X ns
 Thus TOPS = 128K MACs / (2.66 x X) ns 
@@ -933,7 +936,7 @@ Summary of Throughput & Latency for all Variations:
 Latency of the design is given by the perf counter value read from DUT. Perf counter measures the time
 taken by the DUT for matrix multiplication in terms of number of clocks. 
 
-Latency for various matrix sizes is as shown in the below table
+Latency for various matrix sizes is as shown in the below table.
 
 ```
 +--------------------+--------------------+-----------------+------------------+---------------+
@@ -957,7 +960,7 @@ NB:In hw_emu, due to simulation problem expected data and read data will be off 
 
 ### TOPs per Watt
 
-TOPS and power utilization for DSP based martix multiplication is more or less independent of matrix size. TOPS is 1.49 and TOPs per Watt is 0.28 to 0.31 in this design 
+TOPS and power utilization for DSP based martix multiplication is more or less independent of matrix size. TOPS is 1.49 and TOPs per Watt is 0.28 to 0.31 in this design.
 
 ```
 +--------------------+---------+

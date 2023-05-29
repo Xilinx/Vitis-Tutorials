@@ -24,9 +24,9 @@
 
 ### Design Build
 
-In this section, you will build and run the GeMM design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow. 
+In this section, you build and run the GeMM design using the AI Engine implementation. You compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow. 
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(gemm_$(MAT_DIMS)/` (for example, `gemm_32x32x32/`) depending on the Mat A and Mat B Dimensions and the number of instances `x$(GEMM_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds, targeted to `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
+At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(gemm_$(MAT_DIMS)/` (for example, `gemm_32x32x32/`) depending on the Mat A and Mat B dimensions and the number of instances `x$(GEMM_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds, targeted to `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
 
 </details>
 
@@ -41,7 +41,7 @@ To run the following `make` steps (that is, `make kernels`, `make graph`, and so
 
 `GEMM_INSTS:` This is set to `1` by default and is not allowed to be changed right.
 
-`GEMM_SIZE`: Matrix Dimensions Involved. `32` means Mat A(input matrix 1), B(input matrix 2) and C(output matrix) are square matrices of dimension `32`. Permissible values are `32`, `64`, `128`, `256`, `512`, and `1024`.
+`GEMM_SIZE`: Matrix Dimensions Involved. `32` means Mat A (input matrix 1), B (input matrix 2) and C (output matrix) are square matrices of dimension `32`. Permissible values are `32`, `64`, `128`, `256`, `512`, and `1024`.
 
 `ITER_CNT:` The number of iterations the design is run. The default is `1`.
 
@@ -119,6 +119,7 @@ The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual d
 <summary>make kernels: Compiling PL Kernels</summary> 
 
 ### make kernels: Compiling PL Kernels
+
 
 In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
 
@@ -251,7 +252,7 @@ The following is a description of the output objects that results from executing
 
 After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XSA file. 
 
-The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by Xilinx, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.
+The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by AMD, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design. The command to run this step is shown in the following example (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
 
@@ -386,7 +387,7 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler tells you the interfaces that need to be connected. `dma_hls_0.strmOut_to_A0:ai_engine_0.DataIn0` means that the Vitis compiler should connect the port `strmOut_to_A0` of the `dma_hls` PL kernel to the shim channel of the AI Engine with the logical name `DataIn0`, defined in `$(AIE_SRC_REPO)/graph.cpp` as part of the PLIO instantiation.|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
-The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
+The Vitis compiler calls the Vivado™ IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
 
 You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XCLBIN file that will be used to execute your design on the platform.
 
@@ -417,7 +418,9 @@ $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
 ```
 
+
 See [this page](https://xilinx.github.io/XRT/master/html/index.html) for XRT documentation. See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) for details of host application programming.
+
 
 
 |Switch|Description|
@@ -554,10 +557,12 @@ and do:
 
 ```
 
-When hardware emulation is launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
+When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
 
 ```bash
+
 root@versal-rootfs-common-2023_1:~#
+
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -582,7 +587,7 @@ cd $(BUILD_TARGET_DIR)/package
 ./launch_hw_emu.sh -g
 ```
 
-The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Go back to the terminal and wait for the Linux prompt to show up. In the XSIM Waveform Viewer, you will see the signals you added to the waveform adjusting over the execution of the design. When this is done, hit the pause button and close the window to end the emulation.
+The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Go back to the terminal and wait for the Linux prompt to show up. In the XSIM Waveform Viewer, you see the signals you added to the waveform adjusting over the execution of the design. When this is done, hit the pause button and close the window to end the emulation.
 
 The following figure shows a waveform view of the gemm_32x32x32 - 1x design.
 
@@ -686,7 +691,7 @@ To see a schematic view of the design with the extended platform as shown in the
 
 ![Image of GeMM AIE Vivado BD GeMM 32x32x32](images/gemm_aie_vivado_bd_32x32x32.PNG)
 
-In this design, the GeMM computation happens in multiple stages, the input is split and broadcast to multiple cores, the number of rows in Mat A and the number of columns in Mat B is split into several blocks, based on the cascade length etc., and then each block in Mat A is multiplied with the corresponding block in Mat B, which generates blocks of outputs, which finally propagated for to the final output.
+In this design, the GeMM computation happens in multiple stages. The input is split and broadcast to multiple cores, the number of rows in Mat A and the number of columns in Mat B is split into several blocks, based on the cascade length and so on, and then each block in Mat A is multiplied with the corresponding block in Mat B, which generates blocks of outputs, which finally propagated for to the final output.
 
 The datamover kernel provides the parallel inputs required by the GeMM AIE graph, and finally, the data coming out of the AI Engines is streamed to a PL kernel where it is checked against the expected constant pattern. If there is a mismatch, it is recorded in the variable `errCnt`, which is read in the host app to determine whether the test has passed or failed.
 
@@ -746,7 +751,7 @@ for(int i = 0; i < 8; i++) {
 
 ##### Window Streaming Buffer Config
 
-The `graph.h` graph performs GeMM with graph window streaming buffer size as `WINDOW_SIZE`, which fixed to matrix dimension.
+The `graph.h` graph performs GeMM with graph window streaming buffer size as `WINDOW_SIZE`, which is fixed to matrix dimension.
 ```
 ...
 #if GEMM_SIZE < 1024
@@ -880,7 +885,9 @@ The overall graph definition of the design is contained in the `graph.cpp` file.
 
 #### Defining the Graph Class
 
+
 Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/dsp-lib-func.html#matrix-multiply) for GeMM. A general specification is put in for the ADF namespace:
+
 
 ```
  class GeMM: public adf::graph
