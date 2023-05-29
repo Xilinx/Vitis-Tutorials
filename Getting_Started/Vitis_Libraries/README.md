@@ -50,10 +50,12 @@ Vitis_Libraries/
 ├── codec/
 ├── data_analytics/
 ├── data_compression/
+├── data_mover/
 ├── database/
 ├── dsp/
 ├── graph/
 ├── hpc/
+├── motor_control/
 ├── quantitative_finance/
 ├── security/
 ├── solver/

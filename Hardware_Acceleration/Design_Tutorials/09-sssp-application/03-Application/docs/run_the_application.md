@@ -15,14 +15,19 @@ XRT uses various parameters to control the execution flow, debug, profiling, and
 Following is an ``.ini`` file is for your reference.
 
 ```
-  [Debug]
-  profile=true 
-  opencl_trace=true
-  device_trace=true
-  device_counter=true
+#Start of Debug group 
+[Debug] 
+native_xrt_trace = true
+device_trace = fine
 
-  [Emulation]
-  debug_mode=gui  
+#Start of Runtime group 
+[Runtime] 
+runtime_log = console
+
+#Emulation group
+[Emulation] 
+debug_mode = batch
+
 ```
 
 Place the [xrt. ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) file in the executable directory.

@@ -5,7 +5,7 @@
     "flow": "vitis",
     
     "platform_allowlist": [ "u50" ],
-    "platform_blacklist": [],
+    "platform_blocklist": [],
     
     
     "testinfo": {
