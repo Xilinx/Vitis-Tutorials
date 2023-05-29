@@ -419,11 +419,11 @@ Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see
 
     When the summary is open, you should see something similar to the following.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/668aa096-f47a-4f04-97e8-95813ff46842)
+    ![VA_overview](./images/va_overview.png)
 
 2. Here you can see various reports: **Summary**, **Trace**, **Profile**, **Graph**, **Array**. Click on **Trace** to open up the VCD data that was collected during hardware emulation.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/d19e0a26-d00b-4d29-9a3e-f68233b65951)
+    ![VA_overview_1](./images/va_overview_1.png)
 
     You can see the inner traces of the graph through a tile hierarchy. Selecting a net, tile, function, or any object in this view will cross-select to various views. This can help with identifying specific nets and functions.
 
@@ -432,23 +432,23 @@ Using the XSIM Waveform GUI to view waveforms is powerful in allowing you to see
 
     You should see a window like the following.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/03907ac4-8c70-4fde-8f68-f4dff4dc2b93)
+    ![VA_rtp_buffers](./images/va_rtp_buffers.png)
 
 5. Select the three `coeffs` buffers, and click the **Trace** view again. See that the lock signals are highlighted.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/a1dedcbc-8ed9-4eb0-85d7-64fd876effbe)
+    ![VA_trace](./images/va_trace.png)
 
 6. If you scroll up, you can see that the FIR filter kernel begins to process data soon after the RTP is read.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/c3635fd9-ef3c-4d45-b69c-3de2b35a0b86)
+    ![VA_trace_rtp](./images/va_trace_rtp.png)
 
 7. Open up the **Profile** report, and see specific information about the kernel and the tile it is placed in.
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/ddd11a34-a85f-4ae6-8afd-57359b33aa8c)
+    ![VA_profile](./images/va_profile.png)
 
 8. Click on **Total Function Time**, and see the following:
 
-    ![image](https://media.gitenterprise.xilinx.com/user/1300/files/d38810d5-ce7d-4cae-ae0c-4ac505906414)
+    ![VA_func_time](./images/va_func_time.png)
 
     This information is useful because it helps determine how long the kernel runs and can be used with the **Trace** to help determine if kernels are running optimally, or if there are stalls.
 

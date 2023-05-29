@@ -17,7 +17,7 @@ Developing an accelerated AI Engine design for the VCK190 can be done using the 
 
 In this tutorial, you will learn clocking concepts for the Vitis compiler and how to define clocking for an ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure:
 
-![image](https://media.gitenterprise.xilinx.com/user/1300/files/81f90d87-7777-4be9-8df7-f447a5237994)
+![Design](./images/design.png)
 Prerequisites for this tutorial are:
 
 * Familiarity with the `aiecompiler` flow.

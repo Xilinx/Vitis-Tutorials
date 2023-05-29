@@ -4,7 +4,7 @@
 # */
 
 #Set the required variables
-set vitis_install "/proj/xbuilds/2022.1_released/installs/lin64/Vitis/2022.1"
+set vitis_install "${XILINX_VITIS}"
 set aie_work_dir "${PROJECT_PATH}/Work"
 set hw_server_host "${HOST NAME/IP}"
 set app_name "aie"

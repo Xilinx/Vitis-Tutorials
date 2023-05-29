@@ -113,19 +113,7 @@
         "PROJECT/data/golden.txt",
         "PROJECT/data/input.txt"
     ],
-    "v++": {
-        "linker": {
-                    "cflags": [
-                        "--config PROJECT/system.cfg"
-                    ]
-                },
-        "package": {
-                    "cflags": [
-                        "--package.defer_aie_run"
-                    ]
-                }
-     },
-     "containers": [
+   "containers": [
         {
             "accelerators": [
                 {
@@ -148,12 +136,6 @@
     "launch": [
         {
             "name": "generic launch for all flows"
-        }
-    ],
-    "contributors": [
-        {
-            "url": "http://www.xilinx.com", 
-            "group": "Xilinx"
         }
     ]
 }
