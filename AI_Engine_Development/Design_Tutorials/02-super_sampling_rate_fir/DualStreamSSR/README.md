@@ -262,7 +262,8 @@ Click **Array** to visualize where the kernel has been placed, and how it is fed
 
 ![missing image](../Images/Array8Phases.png)
 
-In this vie, the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
+
+In this view, the cascade streams connecting neighboring AI Engines are key to the performance of this graph. With the four location constraints that were added, the placer had only one solution for the kernel placement: this square. The router had an easy job to feed all these kernels by simply using the south-north AXI-Stream. The path back to the PL from the extremities also uses only the vertical AXI-Streams.
 
 Finally, click **Trace** to look at how the entire simulation went through. This may be useful to track where your AI Engine stalls if the performance is not as expected:
 
