@@ -6,7 +6,6 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-#PLATFORM=/group/bcapps/sven/project/testfordfx/2022.1/Vitis-Tutorials/Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX/ref_files/step2_sw/build/pfm/vck190_custom_dfx/export/vck190_custom_dfx/vck190_custom_dfx.xpfm
 COMMON_IMAGE ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
 SYSROOT ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux/
 

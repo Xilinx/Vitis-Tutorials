@@ -45,6 +45,5 @@
             "all": "all",
             "hw" : "sd_card"
         }
-    },
-    "OS_JSON":"/proj/dsv/xbot/Jenkins/configuration/vitis_tutorial_edge_os.json"
+    }
 }
