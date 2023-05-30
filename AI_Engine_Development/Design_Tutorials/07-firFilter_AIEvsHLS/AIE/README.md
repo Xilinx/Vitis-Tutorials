@@ -26,7 +26,10 @@
 ### Design Build
 In this section, you will build and run the FIR filter design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow.
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, fir_aie_1firs_15taps) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
+At the end of this section, the design flow generates a new directory (called `build/`). Underneath are sub-directories named `fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps` (for example, `fir_aie_1firs_15taps`) depending on value of `N_FIR_FILTERS` and `N_FIR_TAPS` chosen in the build. Each sub-directory contains the `Work/`, `hw_emu/`, and `hw/` subfolders. 
+- `Work/` subfolder is an output from the AI Engine compiler. 
+- `hw_emu/` subfolder contains the build for hardware emulation. 
+- `hw/` subfolder contains the build for the hardware run on a VCK190 board.   
 
 </details>
 
@@ -34,12 +37,12 @@ At the end of this section, the design flow will generate a new directory (calle
 <summary>Make Steps</summary>
 
 ### Make Steps
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
+To run the following `make` steps (for example, `make kernels`, `make graph`, and so on), navigate to the `AIE/` folder.
 ```bash
-cd Makefiles
+cd AIE
 ```
 
-The following options can be specified in the make steps. See the make steps for instructions on how to apply them.
+The following options can be specified in the make step. See the make steps for instructions on how to apply them.
 
 * TARGET: It can be set to "hw" or "hw_emu" to build the design in hardware or hardware emulation flow. Default is "hw_emu"
 
@@ -101,22 +104,24 @@ AIESIM_INPUT_FILE := $(AIESIM_DATA_DIR)/input_impulse.txt
 <summary>Build the Entire Design with a Single Command</summary>
 
 ### Build the Entire Design with a Single Command
-If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:
+If you are already familiar with the AI Engine and Vitis accelerated kernel compilation flows, you can build the entire design with one command:
 
-```bash
+```
+bash
 make run (default hardware emulation, 1 filter 15 taps, no trace enabled)
 ```
 or
-```bash
+```
+bash
 make run TARGET=hw N_FIR_FILTERS=1 N_FIR_TAPS=15 EN_TRACE=1   (hardware, 1 FIR filters, each with 15 taps, enable tracing)
 ```
 
-This command will run the `make kernels`,`make graph`,`make xsa`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board), depending on the `TARGET` you specify. The default `TARGET` without specification is hw_emu. The settings also apply to the following individual make steps.
+This command runs the `make kernels`,`make graph`,`make xsa`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board), depending on the specified `TARGET`. The default `TARGET` without specification is `hw_emu`. The settings also applies to the following individual make steps.
 
 **Note**
 
-1) The generated files for a particular build are placed under individual directory: build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps
-2) See the specification in each of the following make steps for options used and location of input and output files.
+1. The generated files for a particular build are placed under individual directory: `build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps`
+2. See the specification in each of the following make steps for options used and location of input and output files.
 
 </details>
 
@@ -126,7 +131,7 @@ The individual make steps to build the design with the options applied to them a
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler uses any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and compiles them into their respective XO files.
 
 The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 
@@ -158,14 +163,14 @@ Summary of the switches used:
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--hls.clock | Specifies a frequency in Hz at which the listed kernel(s) should be compiled by Vitis HLS. |
-|--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
+|--platform \| -f|Specifies the name of a supported acceleration platform as specified by the `$PLATFORM_REPO_PATHS` environment variable or the full path to the platform XPFM file.|
 |--save-temps \| -s|Directs the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermediate files to.|
 |--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
 |--verbose|Display verbose/debug information.|
 | -g | Generates code for debugging the kernel during software emulation. Using this option adds features to facilitate debugging the kernel as it is compiled. |
 |--compile \| -c|Required for compilation to generate XO files from kernel source files.|
 |--kernel \<arg\>\|-k \<arg\>|Compile only the specified kernel from the input file. Only one -k option is allowed per Vitis compiler command.|
-|--output \| -o|Specifies the name of the output file generated by the `v++` command. The compilation process output name must end with the XO file suffix.|
+|--output \| -o|Specifies the name of the output file generated by the `v++` command. Ensure that the compilation process output name ends with the XO file suffix.|
 
 [Detailed Description of All Vitis Compiler Switches](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 
@@ -184,7 +189,7 @@ Summary of the switches used:
 
 ### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
 
-An adaptive data flow (ADF) graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives.
+An adaptive data flow (ADF) graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives).
 * The AI Engine ADF C++ graph of the design contains AI Engine kernels.
 * All interconnects between kernels are defined in the C++ graph
 * All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object.
@@ -251,7 +256,7 @@ Summary of the switches used:
 ### make xsa: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 After the AI Engine graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file.
 
-The Vitis tools allow you to integrate the AI Engine graph and HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the AI Engine and PL kernels into the design).
+The Vitis tools allow you to integrate the AI Engine graph and HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by AMD and the Vitis tools build the hardware design and integrate the AI Engine and PL kernels into the design).
 
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
 
@@ -280,7 +285,7 @@ v++ 	-l 						\
 
 ```
 
-If EN_TRACE is enabled, the following `v++` flags are also set
+If EN_TRACE is enabled, ensure that the following `v++` flags are also set
 ```
 	--profile.trace_memory DDR			\
   	--profile.data datamover:datamover_0:all \
@@ -288,7 +293,7 @@ If EN_TRACE is enabled, the following `v++` flags are also set
 	--profile.data ai_engine_0.DataOut
 
 ```
-This will capture trace data for the ports specified.
+This flag captures the trace data for the ports specified.
 
 Summary of the switches used:
 
@@ -416,7 +421,7 @@ Summary of the switches used:
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |Work/ps/c_rts/aie_control_xrt.cpp|This is the AI Engine control code generated implementing the FIR Filter graph APIs.|
-|fir_aie_app.cpp|Host processor application source code file that will run on an A72 processor.|
+|fir_aie_app.cpp|Host processor application source code file runs on an A72 processor.|
 
 |Intermediate Objects|Description|
 |  ---  |  ---  |
@@ -426,7 +431,7 @@ Summary of the switches used:
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|fir_aie_xrt.elf|The executable that will run on an A72 processor.|
+|fir_aie_xrt.elf|The executable runs on an A72 processor.|
 
 </details>
 
@@ -462,11 +467,11 @@ v++	-p  							\
 			  build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/libadf.a 				\
 	--package.defer_aie_run
 ```
-If EN_TRACE is enabled, the following `v++` flags are also set
+If `EN_TRACE` is enabled, the following `v++` flags are also set
 ```
 	--package.sd_file ./xrt.ini
 ```
-This will include the XRT ini file which includes tracing parameters.
+This includes the XRT ini file which includes tracing parameters.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -516,7 +521,7 @@ or
 cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/package
 ./launch_hw_emu.sh 
 ```
-When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
+When launched, the QEMU simulator loads. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt comes up.
 ```bash
 root@versal-rootfs-common-2023_1:~#
 ```
@@ -553,7 +558,7 @@ cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/
 ```
 The XSIM Waveform Viewer is launched. Drag and drop the signals into the Viewer and click Play to start the emulation. Go back to the terminal and wait for the Linux prompt to show up.
 
-In the XSIM Waveform Viewer, you will see the signals you added to the waveform adjusting over the execution of the design. Once done, hit the pause button and close the window to end the emulation.
+In the XSIM Waveform Viewer, the signals you added to the waveform adjusting over the execution of the design. Once done, hit the pause button and close the window to end the emulation.
 
 </details>
 
@@ -577,7 +582,7 @@ make build TARGET=hw
 
 These commands create a `build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw` folder with the kernels, `xsa`, and `package` for a hardware run.
 
-Running the following command will copy the boot image (`build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw/package/sd_card.img`) to the run_dir folder (`run_dir/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps`):
+Running the following command copies the boot image (`build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw/package/sd_card.img`) to the run_dir folder (`run_dir/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps`):
 ```
 make run_emu TARGET=hw
 ```
@@ -624,7 +629,7 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 <summary>FIR Filter AI Engine Implementation architecture and  AI Engine/PL Function Partitioning</summary>
 
 ### FIR Filter AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and HLS & DSPs in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels are 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and HLS & DSPs in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels are 128-bit wide and runs at 300 MHz, thereby providing a transfer rate of up to 1.2 Gsamples/sec.
 
 ![Image of FIR Filter AIE implementation architecture](images/FIR_AIE_block_diagram.png)
 
@@ -661,7 +666,7 @@ The PL-based data mover consists of DATAMOVER kernels. It moves a data pattern i
 Some additional details regarding the data mover kernels include:
 
 **DATAMOVER**
-* The data width is 128 bits.
+* The data width is 128-bit.
 * The frequency is 300 MHz.
 
 </details>
@@ -757,9 +762,9 @@ int main(void) {
 
 #endif
 ```
-Refer to the [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US) for details.
+For more details, refer to the [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US) for details.
 
-Note that for running on hardware (hw) or hardware emulation (hw_emu), the main() function is not required. In this case, it is only necessary to create an instance of the platform and graph, and the PS Host application code will control it via XRT calls. (See PS Host Application in the following section)
+Note that for running on the hardware (hw) or hardware emulation (hw_emu), the main() function is not required. In this case, it is only necessary to create an instance of the platform and graph, and the PS Host application code controls it through XRT calls. (See PS Host Application in the following section)
 
 
 </details>
@@ -810,7 +815,7 @@ Within the PS host application, three classes are defined (two for the PL kernel
 The main sections of the PS host application code is described in the following subsections:
 
 #### Include graph.cpp
-Include the `fir_aie_graph.cpp` AI Engine application file. This file contains the instantiation of the AI Engine FIR FilterChain data flow graph object, and is required so the application code understands the structure of the graph.
+Includes the `fir_aie_graph.cpp` AI Engine application file. This file contains the instantiation of the AI Engine FIR FilterChain data flow graph object, and is required so that the application code understands the structure of the graph.
 ```
 #include fir_aie_graph.cpp
 ```
@@ -819,7 +824,7 @@ Include the `fir_aie_graph.cpp` AI Engine application file. This file contains t
 This function is responsible for loading the XCLBIN file into the device.
 
 #### Datamover Class
-This class provides the following methods for controlling/monitoring this kernel:
+This class provides the following methods for controlling/monitoring the kernel:
 * init(): opens the kernel, and sets the kernel parameters (location of the buffer object, and its length).
 * run(): starts execution of the datamover kernel
 * waitTo_complete(): waits for the datamover kernel to finish

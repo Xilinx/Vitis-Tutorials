@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>2023.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -32,9 +32,9 @@ At the end of this section, the design flow will generate a new directory (calle
 <summary>Make Steps</summary>
 
 ### Make Steps
-To run the following `make` steps (e.g. `make kernels`, `make graph`, etc), you must be in the `Makefiles/` folder.
+To run the following `make` steps (for example, `make kernels`, `make graph`, and so on), you must be in the `HLS/` folder.
 ```bash
-cd Makefiles
+cd HLS
 ```
 
 The following options can be specified in the make steps. See the make steps for instructions how to apply them.
@@ -85,7 +85,7 @@ EMBEDDED_EXEC_SCRIPT := run_script.sh
 <summary>Build the Entire Design with a Single Command</summary>
 
 ### Build the Entire Design with a Single Command
-If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:
+If you are already familiar with the AI Engine and Vitis accelerated kernel compilation flows, you can build the entire design with one command:
 
 ```bash
 make run (default hardware emulation, 1 filter 15 taps, no trace enabled)
@@ -95,12 +95,12 @@ or
 make run TARGET=hw N_FIR_FILTERS=1 N_FIR_TAPS=15 EN_TRACE=1   (hardware, 1 FIR filters, each with 15 taps, enable tracing)
 ```
 
-This command will run the `make kernels`,`make xsa`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The default `TARGET` without specification is hw_emu. The settings also apply to the following individual make steps.
+This command runs the `make kernels`,`make xsa`,`make application`,`make package` and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The default `TARGET` without specification is hw_emu. The settings also apply to the following individual make steps.
 
 **Note**
 
-1) The generated files for a particular build are placed under individual directory: build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs
-2) See the specification in each make step for options used and location of input and output files.
+1. The generated files for a particular build are placed under individual directory: `build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs`
+2. See the specification in each make step for options used and location of input and output files.
 
 </details>
 
@@ -188,7 +188,7 @@ Summary of the switches used:
 ### make xsa: Use Vitis Tools to Link HLS Kernels with the Platform
 After the PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file.
 
-The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the PL kernels into the design).
+The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by AMD and the Vitis tools build the hardware design and integrate the PL kernels into the design).
 
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
 
@@ -232,7 +232,7 @@ By enabling EN_TRACE=1 timing violation occurs for 10 filters,tolerance of WNS=-
 --xp param:compiler.worstNegativeSlack=-0.050
 ```
 
-This will capture trace data for the ports specified.
+This captures the trace data for the ports specified.
 
 Summary of the Switches used:
 
@@ -393,7 +393,7 @@ The output of the V++ Package step is the package directory that contains the co
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/package|The hardware emulation package that contains the boot file, hardware emulation launch script, the PLM and PMC boot files, the PMC and QEMU command argument specification files, and the Vivado® tools simulation folder.|
+|$(BUILD_TARGET_DIR)/package|The hardware emulation package that contains the boot file, hardware emulation launch script, the PLM and PMC boot files, the PMC and QEMU command argument specification files, and the Vivado tools simulation folder.|
 
 </details>
 
@@ -512,7 +512,7 @@ After execution completes and the testcase passes data integrity check, 'TEST PA
 
 ### FIR Filter HLS Implementation Architecture
 
-The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and the data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel is AXI4-Stream. The data width of both the kernels is 128 bits, and they run at 250 MHz, providing a transfer rate of up to 1.2 GSPS.
+The following figure shows a high level block diagram of the design. The test harness consists of the compute kernel and the data mover kernel. This setup is maintained in the two implementations (using HLS/DSP engines in this section of the tutorial and AI Engine in the other). In this setup, the interface between the data mover kernel and FIR filter kernel is AXI4-Stream. The data width of both the kernels is 128-bit, and they run at 250 MHz, providing a transfer rate of up to 1.2 GSPS.
 
 ![Image of FIR Filter HLS implementation architecture](images/fir_hls_block_diagram.png)
 
@@ -527,7 +527,7 @@ The design in this tutorial starts with a base platform containing the control i
 * data mover kernel (`datamover.[hw|hw_emu].xo`)
 * connections interfaces defined in system configuration file (system.cfg)
 
-To see a schematic view of the design with the extended platform as shown in the following figure, open in Vivado tools:
+To see a schematic view of the design with the extended platform as shown in the following figure, open in the Vivado tool:
 
 `build/fir_hls_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 
@@ -551,7 +551,7 @@ The PL-based data mover consists of DATAMOVER kernels. It moves a data pattern i
 Some additional details regarding the data mover kernels include:
 
 **DATAMOVER**
-* The data width is 128 bits.
+* The data width is 128-bit.
 * The frequency is 300 MHz.
 
 </details>
