@@ -13,7 +13,7 @@
 
 ## Introduction
 
-Versal™ adaptive compute acceleration platforms (ACAPs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. In a bottom-up approach, each part of system is simulated independently before being integrated in a more complete simulation. An heterogeneous device as the Versal ACAP authorizes dataflows to go through a diversity of engines for completion.
+Versal™ adaptive compute acceleration platforms (adaptive SoC) combine scalar engines, adaptable engines, and intelligent engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. In a bottom-up approach, each part of the system is simulated independently before being integrated in a more complete simulation. An heterogeneous device as the Versal adaptive SoC authorizes dataflows to go through a diversity of engines for completion.
 
 This tutorial develops a case in which the dataflow goes back and forth multiple times between the programmable logic (PL) and the AI Engine array. Some PL blocks are only source or destination kernels, whereas others are processing kernels within the dataflow. This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator (`x86simulator`), AI Engine simulator (`aiesimulator`), and in hardware emulation (`hw_emu`).
 
@@ -31,7 +31,7 @@ After completing the tutorial, you will be able to do the following:
 
 ### Before You Begin
 
-This tutorial uses Python. In addition to having the Xilinx tools installed, you also need a valid installation of Python 3.
+This tutorial uses Python. In addition to AMD tools, you also need a valid installation of Python 3.
 
 #### Python Environment Setup
 
@@ -141,8 +141,8 @@ When using external traffic generators, communication with the simulator is achi
 To use external traffic generators for any kind of simulation, you need to make modifications to the graph code, specifically the `graph.h` file. This file contains the PLIO constructors, which are used to connect the graph to the programmable logic.
 
 1. Navigate to `aie/src` and open `graph.h`.
-2. Notice that the `#ifdef EXTERNAL_IO` is used and the lines of code under it do not have the data file in the PLIO constructors. This is needed for the external traffic generator to work properly, because the data file (seen on lines 85 to 88) take precedence.
-3. Take note of the names (first argument) of the PLIO constructors. These will be used to hook up the external traffic generators.
+2. Notice that the `#ifdef EXTERNAL_IO` is used and the lines of code under it do not have the data file in the PLIO constructors. This is needed for the external traffic generator to work properly, because the data file takes precedence.
+3. Take a note of the names (first argument) of the PLIO constructors. These will be used to hook up the external traffic generators.
 4. Close `graph.h`.
 
 **Note**: Code guarding this is optional. It is used in this instance to show the changes needed. These modifications are simple. Remove the filenames of the test vectors, and the simulator (AI Engine or x86) automatically takes responsibility for creating ports to connect Unix sockets.
@@ -163,7 +163,7 @@ sc=polar_clip.sout:ai_engine_0.clip_out
 sc=ai_engine_0.DataOut1:s2mm.s
 ```
 
-To work with external traffic generators in hardware emulation, introduce hooks in the PL. For that purpose, Xilinx provides a complete set of XO files with various bitwidths in `$XILINX_VITIS/data/emulation/XO/`:
+To work with external traffic generators in hardware emulation, introduce hooks in the PL. For that purpose, AMD provides a complete set of XO files with various bitwidths in `$XILINX_VITIS/data/emulation/XO/`:
 
 - `sim_ipc_axis_master_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
 - `sim_ipc_axis_slave_NNN.xo` with `NNN` in 8, 16, 32, 64, 128, 256, 512
@@ -207,7 +207,7 @@ The script contains a class `ExternalTraffic` that contains functions that commu
 ##### Instantiating the XTLM Utilies
 
 1. Navigate to `TrafficGenerator/Python` and open the file `xtg_aie.py`.
-2. Scroll to lines 155-159. This is where you instantiate the master/slave utilities for communicating with the simulator. To allow for direct connections to be made between the functions that will be generating the data and the simulator, the name of the utility being instantiated is the same as the name used in the following files:
+2. Scroll to lines 155-159. This is where you instantiate the master/slave utilities for communicating with the simulator. To allow for direct connections to be made between the functions that generates the data and the simulator, the name of the utility being instantiated is the same as the name used in the following files:
 
    - `system_etg.cfg` for hardware emulation
    - `graph.h` with the PLIO constructors for AI Engine simulation
@@ -263,7 +263,7 @@ The `run` method is called for the three instances, which creates a thread with 
   - `m_thread_1 = std::thread(&polar_clip::out_data_handler, this);`
 
 
-The `data_handler` method calls the send/receive data functions (defined in the implementation class) and then uses the transaction method implemented in the sockets to communicate in between the threads. The class `mm2s` reads data from an array initialized in `input.h`, and `s2mm` writes the data in the file `DataOut1.txt`. The     `polar_clip` is different. It reads and writes to a different socket, and in the middle it processes the data using the core processing function of the HLS IP of `polar_clip`.
+The `data_handler` method calls the send/receive data functions (defined in the implementation class) and then uses the transaction method implemented in the sockets to communicate in between the threads. The class `mm2s` reads data from an array initialized in `input.h`, and `s2mm` writes the data in the file `DataOut1.txt`. The `polar_clip` is different. It reads and writes to a different socket, and in the middle it processes the data using the core processing function of the HLS IP of `polar_clip`.
 
 ### Step 4: Testing the Functionalities
 
@@ -324,7 +324,7 @@ The advantages of using external traffic generators are as follows:
 
 - You can use Python script and design between `aiesimulator` and `hw_emu`.
 - You can use discrete standalone input files, or use data generated within the Python script.
-- You do not need to write PL kernels to communicate with the AI Engine (only reference specific Simulator IPC IPs provided by Xilinx for hardware emulation).
+- You do not need to write PL kernels to communicate with the AI Engine (only reference specific Simulator IPC IPs provided by AMD for hardware emulation).
 - You can mimic the flow of a PL kernel that is needed by the AI Engine (for example, `polar_clip`).
 
 

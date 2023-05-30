@@ -22,7 +22,7 @@ This tutorial demonstrates the following two features of the Vitis™ unified so
 
 https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html
 
-The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal™ board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
 1. Goto the directory where you have unzipped the Versal Common Image package
@@ -30,7 +30,7 @@ Before starting this tutorial run the following steps:
 3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2023.1 directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
 
-This tutorial targets VCK190 production board for 2023.1 version.	
+This tutorial targets VCK190 production board for 2023.1 version.
 
 ## Objectives
 
@@ -68,7 +68,7 @@ The design that will be used is shown in the following figure:
 |S2MM|HLS|Stream to Memory Map HLS kernel to feed output result data from AI Engine classifier kernel to DDR via the PL DMA.|
 
 
-## Step 1 - Creating custom RTL kernels with the Vivado® Design Suite
+## Step 1 - Creating custom RTL kernels with the Vivado Design Suite
 
 Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
 
@@ -113,7 +113,7 @@ Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
     make polar_clip.xo
     ```
 
-## Step 2 - Creating HLS kernels with Vitis® compiler
+## Step 2 - Creating HLS kernels with Vitis compiler
 The `mm2s` and `s2mm` kernels are HLS-based and use the Vitis compiler to compile them into XO files. 
 
 To build these kernels run the following commands:
