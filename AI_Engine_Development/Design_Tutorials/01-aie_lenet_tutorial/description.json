@@ -39,7 +39,7 @@
         ],
         "targets": [ 
             "vitis_hw_build",
-            "vitis_run",
+            "vitis_hw_run",
             "vitis_hw_emu"
         ],
         "category": "canary",
