@@ -133,7 +133,7 @@ The AIE wrapper stubs will be generated based on the external PLIO declarations 
     or
 
     ```
-    make comppile PLATFORM=$PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
+    make compile PLATFORM=$PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm
     ```
 
 2. Using this config file as argument to the ``gen_aie_wrapper.py`` script, you can autogenerate Verilog stub modules based on ext PLIO declared in ADF Graph.
