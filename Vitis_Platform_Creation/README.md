@@ -18,10 +18,11 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
 
 <table style="width:100%">
  <tr>
-  <th width="25%" align="center"><b>Tutorial</b></td>
-  <th width="10%" align="center"><b>Device Family</b></td>
-  <th width="10%" align="center"><b>Board</b></td>
-  <th width="10%" align="center"><b>Platform Type</b></td>
+  <th width="21%" align="center"><b>Tutorial</b></td>
+  <th width="8%" align="center"><b>Device Family</b></td>
+  <th width="8%" align="center"><b>Board</b></td>
+  <th width="6%" align="center"><b>Platform Type</b></td>
+  <th width="12%" align="center"><b>IDE Flow</b></td>
   <th width="45%" align="center"><b>Design Target</b></td>
  </tr>
 
@@ -30,6 +31,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>Flat</td>
+  <td>Vivado<br>Vitis Unified IDE</td>
   <td><b>Highlights</b>: simplest Vitis Platform creation and usage flow. 
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design tempalte to quick start.  </li>
@@ -45,6 +47,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>Flat</td>
+  <td>Vivado<br>Vitis IDE</td>
   <td><b>Highlights</b>: Platform design flow for custom boards. 
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design (device part based) to create the hardware and do further customizations. </li>
@@ -60,8 +63,9 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>DFX</td>
+  <td>Vivado<br>Vitis IDE</td>
   <td>
-  <b>Highlights</b>: Design flow for Vitis DFX (Dynamic Function eXchange) Platform. 
+    <b>Highlights</b>: Design flow for Vitis DFX (Dynamic Function eXchange) Platform. 
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design for DFX platform and doing further customizations. </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
@@ -75,6 +79,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>ZYNQ UltraScale+ MPSoC</td>
   <td>ZCU104</td>
   <td>Flat</td>
+  <td>Vivado<br>Vitis IDE</td>
   <td>
     <b>Highlights</b>: Creating a Vitis platform for Zynq UltraScale+ MPSoC from scratch. 
       <ul>
@@ -91,6 +96,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>ZYNQ UltraScale+ MPSoC</td>
   <td>KV260</td>
   <td>Flat</td>
+  <td>Vivado<br>Vitis IDE</td>
   <td>
       <b>Highlights</b>: Kria SOM Platform creation and usage flow 
       <ul>
@@ -108,10 +114,11 @@ These tutorials illustrate various platform features and how you can incorporate
 
 <table style="width:100%">
  <tr>
-  <th width="25%" align="center"><b>Tutorial</b></td>
-  <th width="10%" align="center"><b>Device Family</b></td>
-  <th width="10%" align="center"><b>Board</b></td>
-  <th width="10%" align="center"><b>Platform Type</b></td>
+  <th width="21%" align="center"><b>Tutorial</b></td>
+  <th width="8%" align="center"><b>Device Family</b></td>
+  <th width="8%" align="center"><b>Board</b></td>
+  <th width="6%" align="center"><b>Platform Type</b></td>
+  <th width="12%" align="center"><b>IDE Flow</b></td>
   <th width="45%" align="center"><b>Design Target</b></td>
  </tr>
  <tr>
@@ -119,6 +126,7 @@ These tutorials illustrate various platform features and how you can incorporate
   <td>Generic but using Versal AI Core as example</td>
   <td>VCK190</td>
   <td>Flat</td>
+  <td>Vivado<br>Vitis IDE</td>
   <td>
       <b>Highlights</b>: 
       <ul>
@@ -132,6 +140,7 @@ These tutorials illustrate various platform features and how you can incorporate
  <td>ZYNQ UltraScale+ MPSoC and Versal AI Core</td>
  <td>ZCU104 and VCK190</td>
  <td>Flat</td>
+ <td>Vivado<br>Vitis IDE</td>
  <td>
   <b>Highlights</b>: Customize the software components with PetaLinux
  </td>

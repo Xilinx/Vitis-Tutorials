@@ -66,7 +66,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
  <td>Custom</td>
  <td>Baremetal</td>
- <td>Yes</td>
+ <td>Vivado<br>Vitis IDE</td>
  <td> </td>
  <td>MM2S / S2MM</td>
  <td> </td>
@@ -186,7 +186,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Yes</td>
+ <td>Vitis IDE</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -201,7 +201,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Yes</td>
+ <td>Simulink</td>
  <td>DSPLib</td>
  <td>MM2S / S2MM</td>
  <td>Yes</td>
@@ -261,12 +261,12 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AIE</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Yes</td>
+ <td>Vitis IDE</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
  <td>Yes</td>
- <td>Yes</td>
+ <td></td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -320,7 +320,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/19-aie_external_io_sv/">Using Verilog Traffic Generators in AIE Simulation</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Yes</td>
+ <td>Vivado</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>

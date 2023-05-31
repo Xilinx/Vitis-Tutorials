@@ -37,7 +37,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>Native</td>
  <td> </td>
  <td>RTL kernel</td>
- <td>Yes</td>
+ <td>Vivado<br>Vitis IDE</td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/02-mixing-c-rtl-kernels/">Mixing C and RTL</a></td>
@@ -55,7 +55,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>HLS</td>
  <td> </td>
  <td>HLS design and analysis</td>
- <td>Yes</td>
+ <td>Vitis HLS<br>XSim</td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/04-mult-ddr-banks/">Using Multiple DDR Banks</a></td>
@@ -141,7 +141,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>OpenCL</td>
  <td>Vision</td>
  <td>Performance analysis and optimization</td>
- <td>Yes</td>
+ <td>Vitis HLS</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials//02-bloom/">Bloom Filter Example</a></td>
@@ -168,7 +168,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>HLS</td>
  <td> </td>
  <td>HLS design and analysis</td>
- <td>Yes</td>
+ <td>Vitis HLS</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/05-bottom_up_rtl_kernel/">Bottom RTL Kernel Design Flow Example</a></td>
@@ -177,7 +177,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>Native</td>
  <td> </td>
  <td>RTL kernel</td>
- <td>Yes</td>
+ <td></td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/06-cholesky-accel/">Choleskey Algorithm Acceleration</a></td>
@@ -213,7 +213,7 @@ These tutorials target different boards including Alveo™ Data Center accelerat
  <td>OpenCL</td>
  <td>Graph</td>
  <td>Vitis Library</td>
- <td>Yes</td>
+ <td>Vitis IDE</td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/10-get_moving_with_alveo/">Get Moving with Alveo</a></td>
