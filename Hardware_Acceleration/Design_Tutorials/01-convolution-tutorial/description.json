@@ -9,10 +9,10 @@
         "test_name": "HW_D_01-convolution",
         "tasks": {
         "build": {
-                   "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"
+                   "pre_exec": "./env_setup_opencv.sh"
         },
         "board": {
-                   "pre_exec": "/proj/xtools/dsv/projects/sdx_libs/cpp_libs/opencv/set_opencv_os.sh"
+                   "pre_exec": "./env_setup_opencv.sh"
          }
      },
      "jobs": [

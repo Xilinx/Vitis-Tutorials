@@ -1,13 +1,13 @@
  {
     "name": "04-traveling-salesperson",
     "description": "04-traveling-salesperson",
-    "flow": "hls",
- 
+    "flow": "vitis",
+  
     "platform_allowlist": ["u200"],
- 
+    "platform_blocklist": [],
     "testinfo": {
        "test_name": "HW_D_04-travel-sales",
-       "disable": 1,
+       "disable": false,
        "jobs": [
             {
                 "max_memory_MB": 32768,

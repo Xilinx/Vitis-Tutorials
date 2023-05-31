@@ -1,7 +1,7 @@
 {
     "name": "03-dataflow_debug_and_optimization",
     "description": "03-dataflow_debug_and_optimization",
-    "flow": "hls",
+    "flow": "vitis",
  
     "platform_allowlist": ["u200"],
  

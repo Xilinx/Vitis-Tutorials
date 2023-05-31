@@ -1,5 +1,5 @@
 {
-  "name": "Developer_Contributed-03-HLS_Code_Optimization--matrix_mult",
+  "name": "Developer_Contributed-03-HLS_Code_Optimization--matrix_mult_v",
   "description": "03-HLS_Code_Optimization--matrix_mult",
     "gui": "false",
     "flow": "versal",
@@ -31,7 +31,7 @@
         "custom_board_target": "run_test",
         "tasks": {
            "build": {
-               "pre_exec": ["./env_setup_versal.sh"]
+               "pre_exec": "./env_setup_versal.sh"
            }
         }
 

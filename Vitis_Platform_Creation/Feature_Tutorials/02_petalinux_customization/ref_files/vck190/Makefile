@@ -10,7 +10,6 @@ ABS_SW_PATH=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)
 PETALINUX_DIR=$(ABS_SW_PATH)
 PETALINUX_CONFIG=$(PETALINUX_DIR)/project-spec/configs/config
 PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
-#XSA_PATH 	?=/group/bcapps/sven/project/github/Vitis-Tutorials_419/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/ref_files/step1_vivado/build/vivado/
 #XSA_NAME	?=xsa_file_for_petalinux
 PDI_DIR		=pdi_dir
 #PDI_PATH	=$(ROOT_DIR)/$(PDI_DIR)

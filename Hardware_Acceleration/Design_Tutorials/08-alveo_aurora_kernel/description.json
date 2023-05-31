@@ -5,7 +5,7 @@
     "flow": "vitis",
 
     "platform_allowlist": [ "u200"],
-    "platform_blacklist": [],
+    "platform_blocklist": [],
      
     "testinfo": {
         "test_name": "HW_D_08-alveo-aurora",
