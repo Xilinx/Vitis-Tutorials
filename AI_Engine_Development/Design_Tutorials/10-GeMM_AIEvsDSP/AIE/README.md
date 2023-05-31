@@ -658,7 +658,7 @@ cd /mnt/sd-mmcblk0p1
 
 ### GeMM AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
 
-The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 250 MHz.
+The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 312.5 MHz.
 
 The data mover is a PL-based data generator and checker. It generates constant matrices as inputs and checks the output of the gemm core for its output.
 
@@ -695,7 +695,7 @@ In this design, the GeMM computation happens in multiple stages. The input is sp
 
 The datamover kernel provides the parallel inputs required by the GeMM AIE graph, and finally, the data coming out of the AI Engines is streamed to a PL kernel where it is checked against the expected constant pattern. If there is a mismatch, it is recorded in the variable `errCnt`, which is read in the host app to determine whether the test has passed or failed.
 
-The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface are both operating at 250 MHz.
+The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface are both operating at 312.5 MHz.
 
 </details>
 
@@ -711,7 +711,7 @@ The top-level AI Engine graph, `graph.cpp`, contains two sub-graphs: `aiesynth_g
 The PL-based data mover consists of the `dma_hls` kernel, which generates constant Inputs for Mat A and B and checks the output of GeMM graph for the expected constant pattern.
 
 * It internally comprises four loops (`inp_A`, `inp_B`, and `out_C`), with all concurrently scheduled.
-* The data width is 128 bits at both the AXI4-stream I/O sides, running at 250 MHz.
+* The data width is 128 bits at both the AXI4-stream I/O sides, running at 312.5 MHz.
 
 </details>
 
