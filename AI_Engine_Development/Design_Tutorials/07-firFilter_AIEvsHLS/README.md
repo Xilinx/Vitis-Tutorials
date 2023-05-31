@@ -118,7 +118,7 @@ filter_AIEvsHLS
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
-* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm)
+* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -143,7 +143,7 @@ To build and run the FIR filter tutorial (AI Engine and DSP implementations), in
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/member/vck190_headstart.html#docs)
+* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 * [DSP Library (DSPLib) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
