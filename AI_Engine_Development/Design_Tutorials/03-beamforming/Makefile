@@ -22,7 +22,6 @@ PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
 SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
-#PERL ?= /tools/xgs/perl/5.8.5/bin/perl
 
 RESULT_VAL ?= 
 RUN_LEVEL ?= 7
@@ -32,9 +31,9 @@ sd_card: all
 
 
 ifeq (${TEST}, SPRITE)
-all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8 step8b
+all: step0 step1 step2 step3 step3b step4 step4b step5 step5a step5b step6 step7 step8 step8b
 else
-all: step0 step1 step2 step3 step3b step4 step4b step5 step6 step7 step8 step8b
+all: step0 step1 step2 step3 step3b step4 step4b step5 step5a step5b step6 step7 step8 step8b
 endif
 
 
@@ -62,6 +61,10 @@ step4b:
 
 step5:
 	$(MAKE) -C Module_06_Running_the_Baremetal_System package TARGET=hw_emu MAIN=main_partial
+step5a:
+	$(MAKE) -C Module_06_Running_the_Baremetal_System package TARGET=hw MAIN=main_partial
+step5b:
+	$(MAKE) -C Module_06_Running_the_Baremetal_System package TARGET=hw MAIN=main_full
 
 SHELL := /bin/bash
 step6:

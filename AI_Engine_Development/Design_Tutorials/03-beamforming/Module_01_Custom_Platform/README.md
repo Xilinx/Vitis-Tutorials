@@ -385,7 +385,7 @@ Finally, software platform is generated with the `platform generate` command. Th
 * [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md)
 * [Vivado Design Suite Tcl Command Reference](https://docs.xilinx.com/access/sources/dita/map?url=ug835-vivado-tcl-commands&ft:locale=en-US
 )
-* [Xilinx Software Command-Line Tool (XSCT)](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Xilinx-Software-Command-Line-Tool)
+* [Software Command-Line Tool (XSCT)](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Software-Command-Line-Tool)
 * [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Overview)
 * [AI Engine Product Guide](https://docs.xilinx.com/access/sources/dita/map?url=pg358-versal-ai-engine&ft:locale=en-US)
 * [AXI Debug Hub IP](https://www.xilinx.com/products/intellectual-property/axi_dbg_hub.html#overview)

@@ -48,7 +48,7 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm)
+* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
