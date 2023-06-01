@@ -13,23 +13,24 @@
 
 ## Preliminaries
 
-In Part 2a, we examined the generated assembler code and found that there is a `NOP` (no operation) between the `VFPMAC` (vector floating-point multiply-accumulate) mnemonics. This `NOP` is unavoidable as a floating-point accumulation requires 2 cycles (see Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)).
+In Part 2a, we examined the generated assembler code and found a `NOP` (no operation) between the `VFPMAC` (vector floating-point multiply-accumulate) mnemonics. This `NOP` is unavoidable as a floating-point accumulation requires two cycles (see Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)).
 
-There are 2 possible solutions to "squeeze out" the `NOPs` to allow a floating-point multiply-accumulate on each cycle.
-* split the matrix-vector multiplication into 2 separate multiply-accumulate operations such that a floating-point accumulation can be performed on each cycle
-* use fixed-point (which uses one cycle for accumulation)
+Two possible solutions exist to "squeeze out" the `NOPs` to allow a floating-point multiply-accumulate on each cycle.
 
-We will focus on splitting the floating-point matrix-vector multiplication in this section.
+* Split the matrix-vector multiplication into two separate multiply-accumulate operations to perform a floating-point accumulation on each cycle.
+* Use fixed-point (which uses one cycle for accumulation).
 
-Note that instead of the "traditional" method of multiplying each row of the matrix by the column vector, we are effectively scaling each *column* of the matrix by the corresponding element in the vector with the multiply-accumulate API.
+We focus on splitting the floating-point matrix-vector multiplication in this section.
+
+***Note:*** Instead of the "traditional" method of multiplying each row of the matrix by the column vector, we effectively scale each *column* of the matrix by the corresponding element in the vector with the multiply-accumulate API.
 
 ![Fig. 1](./images/eqn5.PNG "Equation 5")
 
-Thus, splitting the vector additions into even and odd parts will allow us to perform independent multiply-accumulate operations:
+Thus, splitting the vector additions into even and odd parts allow us to perform independent multiply-accumulate operations:
 
 ![Fig. 2](./images/eqn6.PNG "Equation 6")
 
-Also note that the AI engine has 2 load units. The Julia program `aie_iir_2b.jl` has been modified to split the matrix into even and odd columns and generate two separate header files.
+Also, the AI Engine has two load units. The Julia program `aie_iir_2b.jl` is modified to split the matrix into even and odd columns and generate two separate header files.
 
 We start by using the AI Engine APIs.
 
@@ -100,7 +101,7 @@ void SecondOrderSection(
 } // end SecondOrderSection()
 
 ```
-Note the 2 loops in the function:
+Note the two loops in the function:
 ```C++
 for (auto i = 0; i < burst_cnt; i++) {	// process more samples to reduce overhead
 	...
@@ -205,18 +206,19 @@ int main() {
 ## Analysis (using AI Engine API)
 ### Generated Code
 ![Fig. 3](./images/api_asm.PNG "API Assembler Code")
-In the generated assembly code, note that there are 13 `VFPMAC`s: 6 for each even and odd column, and another for summing the final accumulator results. Note that the `VFPMAC` instructions are not as tightly packed, i.e., some `VFPMAC`s have other instructions between them. Note also that there are 2 sections where the 13 `VFPMACs` occur, effectively halving the number of iterations in the outer loop.
+There are 13 `VFPMAC`s in the generated assembly code: six for each even and odd column and another for summing the final accumulator results. The `VFPMAC` instructions are not as tightly packed. That is, some `VFPMAC`s have other instructions between them. There are two sections where the 13 `VFPMACs` occur, effectively halving the number of iterations in the outer loop.
 
 ### Throughput
-The `burst_cnt` variable determines the total number of samples processed during each function call. The inner loop processes 8 samples per iteration, so the total number of processed samples will be `burst_cnt` * 8.
+The `burst_cnt` variable determines the number of samples processed during each function call. The inner loop processes eight samples per iteration, so the total number of processed samples is `burst_cnt` * 8.
 
 The throughput is obtained as follows (see `api_thruput.xlsx`):
-* build and run the design
-* open `aiesimulator_output/default.aierun_summary`
-* Get the `Total Function + Descendants Time (cycles)` for the `main` function (`num_cycles`)
-* Throughput = `clk_freq` * (`burst_cnt` * 8)/num_cycles
 
-The thoughput with a 1GHz clock for different values of `burst_cnt` are shown below.
+* Build and run the design.
+* Open `aiesimulator_output/default.aierun_summary`.
+* Get the `Total Function + Descendants Time (cycles)` for the `main` function (`num_cycles`).
+* Throughput = `clk_freq` *(`burst_cnt`* 8)/num_cycles.
+
+The throughput with a 1 GHz clock for different values of `burst_cnt` are as follows:
 
 <b>IIR Throughput (with API)</b>
 |                           |       |       |       |       |       |       |     |
@@ -226,9 +228,9 @@ The thoughput with a 1GHz clock for different values of `burst_cnt` are shown be
 |num_cycles (API)			|187	|492	|940	|1836	|3628	|7212	|14379	|					
 |API Throughput (Msa/sec)	|42.78	|130.08	|136.17	|139.43	|141.12	|141.99	|142.43	|
 
-*clk_freq: 1GHz
+*clk_freq: 1 GHz
 
-The AI Engine APIs are a header-only implementation which act as a "buffer" between the user and the low-level intrinsics (LLI) to increase the level of abstraction. Is it possible that the API adds some overhead?
+The AI Engine APIs are a header-only implementation that acts as a "buffer" between the user and the low-level intrinsics (LLI) to increase the level of abstraction.
 
 We modify the kernel code to use low-level intrinsics (LLI).
 
@@ -271,15 +273,16 @@ void SecondOrderSection(
 } // end SecondOrderSection()
 
 ```
-Note the use of the `chess_flatten_loop` pragma. This pragma unrolls the loop completely, eliminating the loop construct. Documentation on compiler pragmas may be found in the AI Engine Lounge.
+***Note:***
 
-Note: In the code provided, selecting between API and LLI is performed by defining or commenting out `USE_API` on line 17 of `kernel.hpp`.
+* The use of the `chess_flatten_loop` pragma. This pragma unrolls the loop completely, eliminating the loop construct. Documentation on compiler pragmas can be found in the AI Engine Lounge.
+* In the code provided, selecting between API and LLI is performed by defining or commenting out `USE_API` on line 17 of `kernel.hpp`.
 
-The generated assembly code is shown below.
+The generated assembly code is as follows:
 ![Fig. 4](./images/lli_asm.PNG "LLI Assembler Code")
-Note the tighter "spacing" between `VFPMAC`s. Also note that the `SecondOrderSection<1>` function has been "absorbed" into the main function, and the there are *two* unrolled matrix-vector multiplication loops, effectively halving the number of iterations of the outer loop.
+Note the tighter "spacing" between `VFPMAC`s. Also, the `SecondOrderSection<1>` function is "absorbed" into the main function, and there are *two* unrolled matrix-vector multiplication loops, effectively halving the number of iterations of the outer loop.
 
-The measured throughput is shown below (see `lli_thruput.xlsx`).
+The measured throughput is as follows (see `lli_thruput.xlsx`):
 
 <b>IIR Throughput (with LLI)</b>
 |                           |       |       |       |       |       |       |     |
@@ -291,23 +294,26 @@ The measured throughput is shown below (see `lli_thruput.xlsx`).
 
 *clk_freq: 1GHz
 
-Comparing the API and LLI throughputs:
+Comparing the API and LLI throughput:
 ![Fig. 5](./images/api_vs_lli.PNG "API vs. LLI Throughput")
-* LLI provides a better throughput than API for the same `burst_cnt`
-* The throughput "saturates" at around `burst_cnt` = 64
+
+* LLI provides a better throughput than API for the same `burst_cnt`.
+* The throughput "saturates" at around `burst_cnt` = 64.
 
 ## Conclusions
-The AI Engine API is intended to improve productivity by increasing the level of abstraction, relative to the low-level intrinsics.
+The AI Engine API is intended to improve productivity by increasing the level of abstraction relative to the low-level intrinsics.
 ![Fig. 6](./images/api_vs_lli_table.PNG "API vs LLI Table")
-We recommend using the AI Engine API, and only use low-level intrinsics to squeeze out more performance to meet target specifications.
+We recommend using the AI Engine API and only low-level intrinsics to achieve more performance to meet target specifications.
 
 Throughput may be improved using the following techniques:
-* Reduce function call ovehead by processing as many samples within the function as possible
-* For floating-point accumulation, use 2 accumulators with low-level intrinsics
+
+* Reduce function call overhead by processing as many samples within the function as possible.
+* For floating-point accumulation, use two accumulators with low-level intrinsics.
 
 Can the throughput be improved even further?
-* Floating-point allows 8 MACs per cycle. Using 32-bit fixed-point coefficients with 16-bit data allows 16 MACs per cycle, potentially doubling the throughput. 16-bit fixed-point coefficients with 16-bit data allows 32 MACs per cycle, potentially quadrupling the throughput. 16-bit fixed-point coefficients with 8-bit data allows 64 MACs per cycle, potentially improving the throughput by 8x.
-* Assuming that we stick with a floating-point implementation, doubling the number of processed samples *and* the number of AI engines (i.e., 2 AI engines, each processing 8 samples from a 16-sample window) *may* double the throughput. 
+
+* Floating-point allows 8 MACs per cycle. Using 32-bit fixed-point coefficients with 16-bit data allow 16 MACs per cycle, potentially doubling the throughput. 16-bit fixed-point coefficients with 16-bit data allow 32 MACs per cycle, potentially quadrupling the throughput. 16-bit fixed-point coefficients with 8-bit data allow 64 MACs per cycle, potentially improving the throughput by 8x.
+* Assuming that we stick with a floating-point implementation, doubling the number of processed samples *and* the number of AI Engines (That is, two AI Engines, each processing eight samples from a 16-sample window) *may* double the throughput.
 
 # Support
 

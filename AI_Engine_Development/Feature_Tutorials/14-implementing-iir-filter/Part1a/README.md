@@ -13,21 +13,23 @@
 
 ## Preliminaries
 
-We use the [transposed direct form II](https://www.dsprelated.com/freebooks/filters/Transposed_Direct_Forms.html) (TDF2) of an IIR filter for [numerical robustness](https://www.dsprelated.com/freebooks/filters/Numerical_Robustness_TDF_II.html) and focus on implementing a [biquad](https://en.wikipedia.org/wiki/Digital_biquad_filter) section to allow cascading multiple sections to form higher order IIR filters.
+We use the [transposed direct form II](https://www.dsprelated.com/freebooks/filters/Transposed_Direct_Forms.html) (TDF2) of an IIR filter for [numerical robustness](https://www.dsprelated.com/freebooks/filters/Numerical_Robustness_TDF_II.html) and focus on implementing a [biquad](https://en.wikipedia.org/wiki/Digital_biquad_filter) section to allow cascading multiple sections to form higher-order IIR filters.
 
-The block diagram for a TDF2 [IIR biquad filter](https://www.dsprelated.com/showarticle/1137.php) is shown below
+The block diagram for a TDF2 [IIR biquad filter](https://www.dsprelated.com/showarticle/1137.php) is as follows:
 
 ![Fig. 1](./images/iir_biquad.png "IIR Biquad Filter Block Diagram")
 
-and has the following difference equation:
+TDF2 [IIR biquad filter](https://www.dsprelated.com/showarticle/1137.php) has the following difference equation:
 
 ![Eqn. 1](./images/eqn1.PNG "Eqn. 1")
 
-Starting with the *first* 8 input samples (i.e., *x*[0], *x*[1],…, *x*[7]), the four previous states will be initialized to *x*[-1] = *x*[-2] = *y*[-1] = *y*[-2] = 0. Thus, the corresponding 8 outputs can be expressed as:
+Starting with the *first* eight input samples (that is, *x*[0], *x*[1],…, *x*[7]), the four previous states are initialized to *x*[-1] = *x*[-2] = *y*[-1] = *y*[-2] = 0. Thus, the corresponding eight outputs can be expressed as:
 
 ![Eqn. 2](./images/eqn2.PNG "Eqn. 2")
 
-This system of equations may be solved sequentially or in parallel. To fully utilize the SIMD capabilities of the vector processor, we need to parallelize this system of equations [[2](https://raphlinus.github.io/audio/2019/02/14/parallel-iir.html)]. Note that we can express all the outputs in terms of the current inputs and the four previous states. For example, substituting the expression for *y*[*n* + 0] to solve for *y*[*n* + 1] in terms of the current inputs (*x*[*n*]~*x*[*n* + 1]) and the four states (*x*[*n*-1], *x*[*n*-2], *y*[*n*-1] and *y*[*n*-2]):
+This system of equations may be solved sequentially or in parallel. To fully utilize the SIMD capabilities of the vector processor, we need to parallelize this system of equations [[2](https://raphlinus.github.io/audio/2019/02/14/parallel-iir.html)].
+
+***Note*** We can express all the outputs in terms of the current inputs and the four previous states. For example, substituting the expression for *y*[*n* + 0] to solve for *y*[*n* + 1] in terms of the current inputs (*x*[*n*]~*x*[*n* + 1]) and the four states (*x*[*n*-1], *x*[*n*-2], *y*[*n*-1] and *y*[*n*-2]):
 
 ![Eqn. 3](./images/eqn3.PNG "Eqn. 3")
 
@@ -117,15 +119,16 @@ Ky7_x7 = b0*K;
 *************************************
 ```
 
-Note that the matrix of constants **C** in (4) has 8 rows and 12 columns.
+
+***Note*** The matrix of constants **C** in (4) has eight rows and 12 columns.
 
 `aie_iir_1a.jl` is a Julia script included in this tutorial which:
 
-* defines the filter characteristics
-* breaks down the filter into second order sections
-* generates the SIMD coefficients for each stage using the [Double64](https://juliamath.github.io/DoubleFloats.jl/stable/) datatype
+* Defines the filter characteristics.
+* Breaks down the filter into second-order sections.
+* Generates the SIMD coefficients for each stage using the [Double64](https://juliamath.github.io/DoubleFloats.jl/stable/) datatype.
 
-The vector processor on the AI engine can perform 8 multiply-accumulate operations on [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) variables in *one cycle*. If there were 8 *independent* inputs to be processed simultaneously by 8 *independent* IIR biquad filters, then the kernel code would be straightforward, and from (1), those signals would be processed with an *ideal* latency of 5 cycles:
+The vector processor on the AI Engine can perform eight multiply-accumulate operations on [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) variables in *one cycle*. If there were eight *independent* inputs to be processed simultaneously by eight *independent* IIR biquad filters, then the kernel code would be straightforward, and from (1), those signals would be processed with an *ideal* latency of five cycles:
 
 * cycle 1: y<sub>i</sub>[n]  = *K* * *b*<sub>0</sub> * *x*<sub>i</sub>[*n*]
 * cycle 2: y<sub>i</sub>[n] += *K* * *b*<sub>1</sub> * *x*<sub>i</sub>[*n*-1]
@@ -133,13 +136,13 @@ The vector processor on the AI engine can perform 8 multiply-accumulate operatio
 * cycle 4: y<sub>i</sub>[n] +=      *-a*<sub>1</sub> * *y*<sub>i</sub>[*n*-1]
 * cycle 5: y<sub>i</sub>[n] +=      *-a*<sub>2</sub> * *y*<sub>i</sub>[*n*-2]
 
-An actual implementation would require populating the registers with data; performing the calculation; going through the pipeline; updating the internal states; extracting the data, etc.; thereby incurring more than 5 cycles for latency.
+An actual implementation would require populating the registers with data; performing the calculation; going through the pipeline; updating the internal states; extracting the data, and so on, thereby incurring more than five cycles for latency.
 
-We can use (4) to calculate 8 sequential outputs for 1 input signal using *one* AI engine core. One way to visualize the calculation is to process one column of the matrix of constants **C** at every clock cycle. Since **C** has 12 columns, it would *ideally* take 12 cycles to generate 8 outputs.
+We can use (4) to calculate eight sequential outputs for one input signal using *one* AI Engine core. One way to visualize the calculation is to process one column of the matrix of constants **C** at every clock cycle. Since **C** has 12 columns, it would *ideally* take 12 cycles to generate eight outputs.
 
 ## Kernel Code
 
-The kernel code (using the AI engine APIs) for one second order stage is shown below.
+The kernel code (using the AI Engine APIs) for one second-order stage is as follows:
 
 `kernel.hpp`
 
@@ -211,21 +214,21 @@ void SecondOrderSection(
 
 ```
 
-Notes:
+***Notes:***
 
-* The kernel code is compiled with a C++20-compliant compiler, while the rest of the code (i.e., `graph.hpp` and simulation testbench) is compiled with a C++14-compliant compiler. Since the kernel header will be included in `graph.hpp`, it cannot contain any C++20 constructs.
-* The template parameter `id` will be used to instantiate multiple instances of the `SecondOrderSection()` function.
+* The kernel code is compiled with a C++20-compliant compiler, while the rest of the code (`graph.hpp` and simulation testbench) is compiled with a C++14-compliant compiler. Since the kernel header is included in `graph.hpp`, it cannot contain any C++20 constructs.
+* The template parameter `id` is used to instantiate multiple instances of the `SecondOrderSection()` function.
 * The function accepts an input buffer containing a predetermined number of elements defined in `graph.hpp`, and generates an output buffer.
-*  The input and output use the `__restrict` keyword to facilitate compiler optimization (see [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview?tocId=OerrcATBJkz9SuXKjosb1w) for details).
-* The filter coefficients will be passed as a 1-D array via the `C` argument.
+* The input and output use the `__restrict` keyword to facilitate compiler optimization (see [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview?tocId=OerrcATBJkz9SuXKjosb1w) for details).
+* The filter coefficients are passed as a 1-D array via the `C` argument.
 * The filter states (`state_reg`) need to be kept between function calls and thus are declared `static`.
-* Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* column of the the **C** matrix, and multiplies all the elements of that column with the *n<sup>th</sup> element* of the **x** vector, i.e., a vector scaling operation.
+* Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* column of the **C** matrix and multiplies all the elements of that column with the *n<sup>th</sup> element* of the **x** vector, that is, a vector scaling operation.
 
 ## Julia Script Notes
 
-To check the functionality of the kernel code, we use use `aie_iir_1a.jl` to generate the coefficients for *one* second order section, as well as the impulse response. The script will also generate a [unit sample function](https://en.wikipedia.org/wiki/Kronecker_delta) as an input to the kernel.
+To check the functionality of the kernel code, we use `aie_iir_1a.jl` to generate the coefficients for *one* second-order section, and the impulse response. The script also generates a [unit sample function](https://en.wikipedia.org/wiki/Kronecker_delta) as an input to the kernel.
 
-Some of the user-settable parameters in the Julia script are shown below.
+Some of the user-settable parameters in the Julia script are as follows:
 
 ```julia
 # --- begin user parameters
@@ -243,29 +246,29 @@ write_impulse = true    # write impulse response?
 # --- end user parameters
 ```
 
-To run the script, start Julia, then run the following commands at the prompt.
+To run the script, start Julia, and run the following commands at the prompt.
 
 ```
 julia> cd("path_to_aie_iir_1a.jl")
 julia> include("aie_iir_1a.jl")
 ```
 
-Notes:
+***Notes:***
 
 * Replace `path_to_aie_iir_1a.jl` with the actual path to the `aie_iir_1a.jl` script.
-* The path must be enclosed in double-quotes.
+* The path must be enclosed in double quotes.
 * The initial startup may seem slow as it loads several packages.
-* This will generate 5 plots:
-  * original filter's frequency response
-  * original filter's impulse response
-  * SOS frequency response
-  * SOS impulse response
-  * impulse response error
-* The following files will also be generated:
-  * `C1.h` - array of coefficients to be passed to the kernel
-  * `input.dat` - unit sample function to be used as an input signal for the kernel
-  * `impresponse.dat` - calculated impulse response for comparison with AI engine result
-* Copy `C1.h` to the `src` directory, and `input.dat` as well as `impresponse.dat` to the `data` directory of the AI engine project
+* This generates five plots:
+  * original filter's frequency response.
+  * original filter's impulse response.
+  * SOS frequency response.
+  * SOS impulse response.
+  * impulse response error.
+* The following files are also generated:
+  * `C1.h` - an array of coefficients to be passed to the kernel.
+  * `input.dat` - unit sample function to be used as an input signal for the kernel.
+  * `impresponse.dat` - calculated impulse response for comparison with AI Engine result.
+* Copy `C1.h` to the `src` directory and `input.dat` and `impresponse.dat` to the `data` directory of the AI Engine project.
 
 ## Adaptive Dataflow Graph
 
@@ -316,7 +319,7 @@ The adaptive dataflow graph file looks something like this.
 				// specify which source code file contains the kernel function
 				source(section1) = "kernel.cpp";
 
-				// !!! temporary value: assumes this kernel dominates the AI engine tile !!!
+				// !!! temporary value: assumes this kernel dominates the AI Engine tile !!!
 				runtime<ratio>(section1) = 1.0;
 
 			} // end the_graph()
@@ -326,18 +329,18 @@ The adaptive dataflow graph file looks something like this.
 #endif // __GRAPH_H__
 ```
 
-Notes:
+***Notes:***
 
-* `section1 = kernel::create(SecondOrderSection<1>)` tells the tools that the AI engine kernel program will use the templated function `SecondOrderSection` with a template parameter of `1`.
+* `section1 = kernel::create(SecondOrderSection<1>)` tells the tools that the AI Engine kernel program uses the templated function `SecondOrderSection` with a template parameter of `1`.
 * `[input|output]_plio` declare input or output ports *for simulation* located in the programmable logic (PL) portion of the device.
-* `[input|output]_plio::create()` declares the width of the data bus used in the PL as well as the associated input/output file used during simulation.
+* `[input|output]_plio::create()` declares the width of the data bus used in the PL and the associated input/output file used during the simulation.
 * `connect(in.out[0], section1.in[0])` tells the tools that kernel input is connected to the `in` port.
-* `dimensions(section1.in[0])` declares the number of samples required to be collected before the kernel is executed.
-* `connect<parameter>(cmtx1, adf::async(section1.in[1]))` tells the tools that an *asynchronous* run-time parameter is required for the *first* execution of the kernel. Subsequent executions will use the *latest* run-time parameter available, i.e., if the asynchronous parameter is only sent *once*, then that parameter will be reused for the remaining life of the kernel.
+* `dimensions(section1.in[0])` declares the number of samples required to be collected before the executing the kernel.
+* `connect<parameter>(cmtx1, adf::async(section1.in[1]))` tells the tools that an *asynchronous* run-time parameter is required for the *first* execution of the kernel. Subsequent executions use the *latest* runtime parameter available, that is if the asynchronous parameter is only sent *once*, then that parameter is/ reused for the remaining life of the kernel.
 * `connect(section1.out[0], out.in[0])` tells the tools that the kernel output is connected to the `out` port.
-* `dimensions(section1.out[0])` declares the number of samples the kernel will generate during each invocation.
+* `dimensions(section1.out[0])` declares the number of samples the kernel generates during each invocation.
 * `source(section1) = "kernel.cpp"` tells the tools where to find the source code for the kernel.
-* `runtime<ratio>(section1) = 1.0` tells the tools that only this kernel can be placed in the AI engine. At this time, the actual execution time is unknown.
+* `runtime<ratio>(section1) = 1.0` tells the tools that only this kernel can be placed in the AI Engine. At this time, the actual execution time is unknown.
 
 ## Testbench Code
 
@@ -362,7 +365,7 @@ const unsigned num_iterations = num_pts/8;	// number of iterations to run
 // main simulation program
 int main() {
 
-	my_graph.init();				// load the DFG into the AI engine array, establish     connectivity, etc.
+	my_graph.init();				// load the DFG into the AI Engine array, establish     connectivity, etc.
 
 	my_graph.update(my_graph.cmtx1, C1, 96);
 	my_graph.run(num_iterations);	// run the DFG for the specified number of iterations
@@ -374,18 +377,18 @@ int main() {
 } // end main()
 ```
 
-Notes:
+***Notes:***
 
-* `my_graph.update(my_graph.cmtx1, C1, 96)` sends the 96 coefficients for the filter to the kernel
-* `my_graph.run(num_iterations)` runs the kernel 256/8 = 32 times to allow comparison with the impulse response from the Julia script
+* `my_graph.update(my_graph.cmtx1, C1, 96)` sends the 96 coefficients for the filter to the kernel.
+* `my_graph.run(num_iterations)` runs the kernel 256/8 = 32 times to allow comparison with the impulse response from the Julia script.
 
 ## Build and Run the Program
 
 * Copy the files in `src` and `dat` to your project. Set the `Top-Level File` to `src/tb.cpp`.
-* Since we are only interested in functional verification at this time, we use `Emulation-SW` to build and run the program.
-* If the program builds and runs without errors, the output should be in `Emulation-SW/x86simulator_output/output.dat`
-* Copy the generated `impresponse.dat` file to the `data` directory
-* We can use Julia to verify the kernel output
+* Since we are only interested in functional verification now, we use `Emulation-SW` to build and run the program.
+* If the program builds and runs without errors, the output should be `Emulation-SW/x86simulator_output/output.dat`.
+* Copy the generated `impresponse.dat` file to the `data` directory.
+* We can use Julia to verify the kernel output.
 
 ```
 julia> using PyPlot
@@ -404,20 +407,20 @@ julia> maximum(abs.(err))
 1.0517072768223557e-8
 ```
 
-The resulting Julia plot of the impulse response error is shown below.
+The resulting Julia plot of the impulse response error is as follows:
 ![Fig. 2](./images/impresp_error.PNG "Impulse Response Error")
 
 You may also try modifying and running `check.jl`.
 
-Since the maximum of the absolute error is less than the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) for [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) (`Float32` in Julia), we can conclude that the kernel code is working as expected.
+Since the maximum absolute error is less than the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) for [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) (`Float32` in Julia), we can conclude that the kernel code is working as expected.
 
-The complete design is included in the `data` and `src` directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building a Vitis design from scratch.
+The complete design is included in the `data` and `src` directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building an AMD Vitis&trade; design from scratch.
 
 ## Conclusion
 
-We provided a Julia script which generates the required coefficients for a second order section of an IIR filter and kernel code to implement it. We used `Emulation-SW` to verify the functionality of the design. The AI engine kernel code implementation shows negligible difference compared to the original filter.
+We used `Emulation-SW` to verify the functionality of the design. We provided a Julia script that generates the required coefficients for a second-order section of an IIR filter and kernel code to implement it. The AI Engine kernel code implementation shows negligible differences from the original filter.
 
-In Part 1b, we show the process of creating the adaptive dataflow graph for an arbitrary number of cascaded second order sections.
+In Part 1b, we show the process of creating the adaptive dataflow graph for an arbitrary number of cascaded second-order sections.
 
 ## References
 

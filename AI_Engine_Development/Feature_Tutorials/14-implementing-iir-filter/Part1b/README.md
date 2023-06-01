@@ -13,15 +13,15 @@
 
 ## Recap
 
-In Part 1a, we showed the process of calculating 8 outputs of a second order section of an IIR filter *in parallel* using the AI engine.
+In Part 1a, we calculated eight outputs of a second-order section of an IIR filter *in parallel* using the AI Engine.
 
-In this section, we will show how to modify the ADF graph and the testbench for a 6<sup>th</sup> order elliptical lowpass filter.
+This section shows how to modify the ADF graph and the testbench for a sixth-order elliptical lowpass filter.
 
 ## Julia Script
 
 `aie_iir_1b.jl` is a [Julia](https://julialang.org/) script which can design and generate the required SIMD coefficients for an arbitrary IIR filter.
 
-In its pristine state, the user parameters are as shown below:
+In its pristine state, the user parameters are as follows:
 
 ```Julia
 first_set = true;	# true: 1st set; false: 2nd set
@@ -52,17 +52,17 @@ julia> cd("{specify_path_to_aie_iir_1b.jl}")
 julia> include("aie_iir_1b.jl")
 ```
 
-This will plot the filter characteristics and generate three coefficient files (C[1~3]a.h), as there are 6 poles in the filter.
+This plots the filter characteristics and generates three coefficient files (C[1~3]a.h), as there are six poles in the filter.
 
 ![Fig. 1](./images/filt10.PNG "6<sup>th</sup> order elliptical LPF, BW=10MHz")
 
-The kernel code will remain the same, but the ADF graph and testbench must be slightly modified to accommodate the additional sections.
+The kernel code remains the same, but the ADF graph and testbench must be slightly modified to accommodate the additional sections.
 
 Move the generated `*.dat` files into the `data` directory and the generated `*.h` files (coefficient files) into the `src` directory.
 
 ## Adaptive Dataflow (ADF) Graph
 
-The modified ADF graph may look something like this:
+The modified ADF graph looks like this:
 
 `graph.hpp`
 
@@ -137,7 +137,7 @@ The modified ADF graph may look something like this:
 				source(section2) = "kernel.cpp";
 				source(section3) = "kernel.cpp";
 
-				// !!! temporary value: assumes this kernel dominates the AI engine tile !!!
+				// !!! temporary value: assumes this kernel dominates the AI Engine tile !!!
 				runtime<ratio>(section1) = 1.0;
 				runtime<ratio>(section2) = 1.0;
 				runtime<ratio>(section3) = 1.0;
@@ -149,13 +149,13 @@ The modified ADF graph may look something like this:
 #endif // __GRAPH_H__
 ```
 
-Notes:
+***Notes:***
 
-* 2 additional kernels (sections) have been added.
-* 2 additional `input_port` declarations for the coefficients of the new sections have been added.
-* 2 additional `kernel::create()` statements have been added.
-* The [network topology](https://en.wikipedia.org/wiki/Network_topology) has been modified such that the 3 sections are cascaded.
-* Additional `source()` and `runtime<ratio>()` statements have been added.
+* Two additional kernels (sections) are added.
+* Two additional `input_port` declarations for the coefficients of the new sections are added.
+* Two additional `kernel::create()` statements are added.
+* The [network topology](https://en.wikipedia.org/wiki/Network_topology) are modified such that the three sections are cascaded.
+* Additional `source()` and `runtime<ratio>()` statements are added.
 
 ## Testbench Code
 
@@ -195,7 +195,7 @@ const unsigned num_pts = 256;						// number of sample points in "input.dat"
 // main simulation program
 int main() {
 
-	my_graph.init();	// load the DFG into the AI engine array, establish connectivity, etc.
+	my_graph.init();	// load the DFG into the AI Engine array, establish connectivity, etc.
 
 	my_graph.update(my_graph.cmtx1, C1a, 96);
 	my_graph.update(my_graph.cmtx2, C2a, 96);
@@ -224,34 +224,34 @@ int main() {
 } // end main()
 ```
 
-Notes:
+***Notes:***
 
-* With `#define RTP_SWITCH` commented out, only one set of coefficients will be loaded and we can check the impulse response as before.
+* With `#define RTP_SWITCH` commented out, only one set of coefficients is loaded and we can check the impulse response as before.
 * An additional set of coefficients is included for the other sections.
 * Additional `my_graph.update()` statements are added for the other sections.
 
 ## Building and Running the Design
 
-We will use `Emulation-SW` to verify the functionality of the design. Similar to Part1a, we may use Julia to calculate the maximum value of the absolute error between the reference and the generated impulse response (run `check1.jl`). The impulse response error for this 3 stage design is shown below.
+We use `Emulation-SW` to verify the functionality of the design. Similar to Part1a, we can use Julia to calculate the maximum value of the absolute error between the reference and the generated impulse response (run `check1.jl`). The impulse response error for this three-stage design is as follows:
 
 ![Fig. 2](./images/impresp_error.PNG "Impulse Response Error")
 
 ## Changing Coefficients During Runtime
 
-We set `first_set` to `false` in `aie_iir_1b.jl` as shown below to generate another set of coefficients for an LPF with a passband of 20MHz.
+We set `first_set` to `false` in `aie_iir_1b.jl` as follows to generate another set of coefficients for an LPF with a passband of 20 MHz.
 
 ```Julia
 first_set = false;	# true: 1st set; false: 2nd set
 ...
 ```
 
-The frequency response with a 20MHz passband is shown below.
+The frequency response with a 20MHz passband is as follows:
 
 ![Fig. 3](./images/filt20.PNG "6th order elliptical LPF, BW=20MHz")
 
 Move the generated `*.h` (coefficient files) to `src` and `impresponse_b.dat` to `data`.
 
-We will use `two_freqs.jl` to generate an input signal (`two_freqs.dat`) with two frequencies (f1 = 2MHz, f2 = 18MHz) to test the functionality of coefficient switching. The time and frequency domain plots of the signal are shown below.
+We use `two_freqs.jl` to generate an input signal (`two_freqs.dat`) with two frequencies (f1 = 2 MHz, f2 = 18 MHz) to test the functionality of coefficient switching. The time and frequency domain plots of the signal are as follows:
 
 ![Fig. 4](./images/two_freqs.PNG "Input Signal with Two Frequency Components")
 
@@ -259,25 +259,25 @@ Move the generated `two_freqs.dat` to `data`.
 
 In the testbench (`tb.cpp`), we *uncomment* `#define RTP_SWITCH` to include the second set of coefficients.
 
-Note that a `wait()` statement is *required* to allow the specified number of iterations to complete before loading the new set of coefficients.
+***Note:*** A `wait()` statement is *required* to allow the specified number of iterations to complete before loading the new set of coefficients.
 
-The output of the AI engines is shown below (use `check2.jl`).
+The output of the AI Engines is as follows (use `check2.jl`):
 
 ![Fig. 5](./images/switched_output.PNG "AI Engine Output with Coefficient Switching")
 
-The first half of the plot used coefficients for a 10MHz filter, thus only the noisy 2MHz component passed and the 18MHz component was significantly attenuated.
+The first half of the plot used coefficients for a 10 MHz filter. Thus, only the noisy 2 MHz component passed and the 18 MHz component was significantly attenuated.
 
-In the second half, the coefficients are for a 20MHz filter, thus, both 2MHz and 18MHz components are seen at the output.
+In the second half, the coefficients are for a 20 MHz filter. Thus, both 2 MHz and 18 MHz components are seen at the output.
 
-The complete design is included in the `data` and `src` directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building a Vitis design from scratch.
+The complete design is included in the `data` and `src` directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building an AMD Vitis™ design from scratch.
 
 ## Conclusion
 
-We showed how a 6<sup>th</sup> order IIR filter composed of 3 second order sections may be cascaded in the ADF graph.
+We showed how a sixth-order IIR filter composed of three second-order sections is cascaded in the ADF graph.
 
-We also showed how it is possible to change coefficients at runtime using asynchronous run-time parameters.
+We also showed how changing coefficients at runtime using asynchronous runtime parameters is possible.
 
-In Part 1, we have focused only on functional verification using `Emulation-SW`. In upcoming installments, we will analyze the design and optimize it for throughput.
+In Part 1, we focused only on functional verification using `Emulation-SW`. We will analyze the design and optimize it for throughput in upcoming installments.
 
 ### Support
 

@@ -7,7 +7,7 @@
  </tr>
 </table>
 
-#2023.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
+# 2023.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
 # AI Engine Implementation 
 
@@ -28,9 +28,9 @@
 
 ### Design Build
 
-In this section, you will build and run the 2D-FFT design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow. 
+In this section, you build and run the 2D-FFT design using the AI Engine implementation. You compile and integrate the AI Engine design into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow) for the general flow.
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/` (for example, `cint16_dsns/fft2d_1024x2048/x1/`) depending on the datatype `${FFT_2D_DT}`, value of matrix dimensions `${MAT_ROWS}`, `${MAT_COLS}` and the number of instances `$(FFT_2D_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds, targeted to `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
+At the end of this section, the design flow generates a new directory (called `build/`). Underneath are sub-directories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/` (for example, `cint16_dsns/fft2d_1024x2048/x1/`) depending on the datatype `${FFT_2D_DT}`, value of matrix dimensions `${MAT_ROWS}`, `${MAT_COLS}` and the number of instances `$(FFT_2D_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable, and the builds, targeted to `hw` or `hw_emu`, respectively. The `hw_emu/` subfolder contains the build for the hardware emulation. The `hw/` subfolder contains the build for hardware running on a VCK190 board.
 
 </details>
 
@@ -41,7 +41,7 @@ At the end of this section, the design flow will generate a new directory (calle
 
 To run the following `make` steps (that is, `make kernels`, `make graph`, and so on), you must be in the `AIE/` folder. The options that can be specified in the `make` steps are as follows.
 
-`TARGET:` This can be set to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow respectively. The default option is `hw_emu`.
+`TARGET:` This can be set to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow, respectively. The default option is `hw_emu`.
 
 `FFT_2D_INSTS:` This can be set to 1, 5, or 10 to build the design with the number of kernel instances. The default is `1`.
 
@@ -49,11 +49,11 @@ To run the following `make` steps (that is, `make kernels`, `make graph`, and so
 
 `FFT_2D_PT`: FFT 2D point. Permissible values are `64`, `128`, `256`, `512`, and `2048`.
 
-`FFT_2D_DT`: FFT 2D Datatype. Permissible values are `0` and `1`, for cint16 and cfloat datatypes.
+`FFT_2D_DT`: FFT 2D Datatype. Permissible values are `0` and `1` for cint16 and cfloat datatypes.
 
-`MAT_ROWS x MAT_COLS:` Dimensions of the matrix (number of rows in the input matrix x number of cols in the input matrix). Automatically configured as `FFT_2D_PT/2, FFT_2D_PT`. Permissible values are `32x64`, `64x128`, `128x256`, `256x512`, and `1024x2048`. The default is `1024x2048`.
+`MAT_ROWS x MAT_COLS:` Dimensions of the matrix (number of rows in the input matrix x number of cols in the input matrix). Permissible values are `32x64`, `64x128`, `128x256`, `256x512`, and `1024x2048`. The default is `1024x2048`. Automatically configured as `FFT_2D_PT/2, FFT_2D_PT`.
 
-`EN_TRACE:` Flag to enable trace profiling. `0` is disabled and `1` is enabled. The default is `0` (disabled).
+`EN_TRACE:` Flag to enable trace profiling. The default is `0` (disabled). `0` is disabled, and `1` is enabled.
 
 The Makefile uses the following directory references:
 
@@ -96,7 +96,7 @@ WORK_DIR         := Work
 
 ### Build the Entire Design with a Single Command
 
-If you are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design for each case of `FFT_2D_INSTS` with one command: 
+If you are already familiar with the AI Engine and AMD Vitis&trade; kernel compilation flows, you can build the entire design for each case of `FFT_2D_INSTS` with one command:
 
 ```bash
 make run (default hardware emulation, cint16 datatype, 1 instance, iterations=8, matrix dimentions rows=1024 and columns=2048, no trace-profiling )
@@ -107,9 +107,9 @@ or
 make run TARGET=hw FFT_2D_DT=0 FFT_2D_INSTS=5 ITER_CNT=16 EN_TRACE=1 FFT_2D_PT=64 (hardware, cint16 datatype, 5 instances, 16 iterations, enable trace profiling, matrix dimentions rows=32 and columns=64 )
 ```
 
-This command runs the `make kernels`,`make graph`,`make xsa`,`make application`,`make package`, and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to the individual make steps listed below.
+This command runs the `make kernels`, ` make graph`, `make xsa`,`make an application`, `make package`, and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to the individual make steps listed below.
 
-The generated files for each `FFT_2D_INSTS` are placed under an individual directory: `$(BUILD_TARGET_DIR)/`. Each `make` step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case.
+Each `make` step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case. The generated files for each `FFT_2D_INSTS` are placed under an individual directory: `$(BUILD_TARGET_DIR)/`.
 
 </details>
 
@@ -118,7 +118,7 @@ The generated files for each `FFT_2D_INSTS` are placed under an individual direc
 
 ### make kernels: Compiling PL Kernels
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`). 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graphs and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`).
 
 ```
 make kernels
@@ -136,7 +136,7 @@ v++ --target hw_emu --hls.clock 312500000:dma_hls --platform xilinx_vck190_base_
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
-See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -160,15 +160,15 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 </details>
 
 <details>
-<summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary> 
+<summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary>
 
 ### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
 
-An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives). 
+An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected to platform ports or ports on Vitis kernels through Vitis compiler connectivity directives).
 
-* The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels. 
+* The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels.
 * All interconnects between kernels are defined in the C++ graph
-* All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. 
+* All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object.
 
 To compile the graph using the Makefile flow type (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
@@ -176,7 +176,7 @@ To compile the graph using the Makefile flow type (default `FFT_2D_DT=0`, `TARGE
 make graph
 ```
 
-The following AI Engine compiler command compiles the AI Engine design graph: 
+The following AI Engine compiler command compiles the AI Engine design graph:
 
 ```
 cd $(BUILD_TARGET_DIR); \
@@ -196,7 +196,7 @@ aiecompiler -include=$(AIE_SRC_REPO) -include=<DSPLIB_ROOT>/L1/include/aie \
 
 See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) for full AI Engine programming environment documentation.
 
-The following table provides a summary of the switches used. 
+The following table provides a summary of the switches used.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -221,13 +221,13 @@ The following is a description of the output objects that results from executing
 </details>
 
 <details>
-<summary>make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> 
+<summary>make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary>
 
 ### make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 
-After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XSA file. 
+After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate aN XSA file.
 
-The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by Xilinx, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.
+The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the hardware designer provides the platform chosen. Alternatively, you can use one of the many extensible base platforms provided by AMD and the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels.
  
 To test this feature in this tutorial, use the base VCK190 platform to build the design. The command to run this step is shown in the following example (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
@@ -235,7 +235,7 @@ To test this feature in this tutorial, use the base VCK190 platform to build the
 make xsa
 ``` 
 
-The expanded command is as follows: 
+The expanded command is as follows:
 
 ```
 cd $(BUILD_TARGET_DIR);	\
@@ -301,9 +301,9 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceler
 |--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler tells you the interfaces that need to be connected. `dma_hls_0.strmOut_to_rowiseFFT:ai_engine_0.DataIn0` means that the Vitis compiler should connect the port `strmOut_to_rowiseFFT` of the `dma_hls` PL kernel to the shim channel of the AI Engine with the logical name `DataIn0`, defined in `$(AIE_SRC_REPO)/graph.cpp` as part of the PLIO instantiation.|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XSA file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
-The Vitis compiler calls the Vivado® IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
+The Vitis compiler calls the AMD Vivado&trade; IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
 
-You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XSA file that will be used to execute your design on the platform.
+You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now generated the XSA file that will be used to execute your design on the platform.
 
 </details>
 
@@ -383,7 +383,7 @@ The following is a description of the output objects that results from executing
 
 ### make package: Packaging the Design
 
-With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
+With the AI Engine outputs created, and the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and device configurations. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
 
 The command to run this step is as follows (default `TARGET=hw_emu`, `EN_TRACE=0`, `FFT_2D_DT=0`, `FFT_2D_INSTS=1`, and `FFT_2D_PT=2048`):
 
@@ -440,7 +440,7 @@ See [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Pac
 |$(BUILD_TARGET_DIR)/vck190_aie_fft_2d.hw_emu.xsa|The XSA file created in the `make xsa` step.|
 |$(BUILD_TARGET_DIR)/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
-The output of the Vitis compiler package step is the package directory that contains the contents to run hardware emulation. 
+The Vitis compiler package step output is the package directory containing the contents to run hardware emulation.
 
 |Output Objects|Description|
 |  ---  |  ---  |
@@ -471,7 +471,7 @@ and do:
 
 ```
 
-When hardware emulation is launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
+When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
 
 ```bash
 root@versal-rootfs-common-2023.1:~#
@@ -485,11 +485,11 @@ cd /mnt
 ./fft_2d_aie_xrt.elf a.xclbin
 ```
 
-The `fft_2d_aie_xrt.elf` executes. After a few minutes, you should see the output with `TEST PASSED` on the console. When this is shown, run the following keyboard command to exit the QEMU instance: 
+The `fft_2d_aie_xrt.elf` executes. After a few minutes, you should see the output with `TEST PASSED` on the console. When this is shown, run the following keyboard command to exit the QEMU instance:
 
 ```
 #To exit QEMU Simulation
-Press CtrlA, let go of the keyboard, and then press x 
+Press Ctrl+A, let go of the keyboard, and then press x 
 ```
 
 To run with waveform, do the following:
@@ -499,7 +499,7 @@ cd $(BUILD_TARGET_DIR)/package
 ./launch_hw_emu.sh -g
 ```
 
-The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Go back to the terminal and wait for the Linux prompt to show up. In the XSIM Waveform Viewer, you will see the signals you added to the waveform adjusting over the execution of the design. When this is done, hit the pause button and close the window to end the emulation.
+The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Return to the terminal and wait for the Linux prompt to appear. In the XSIM Waveform Viewer, you see the signals you added to the waveform adjusting over the execution of the design. When done, hit the pause button and close the window to end the emulation.
 
 The following figure shows a waveform view of the 32x64 - 1x design.
 
@@ -512,7 +512,7 @@ The following figure shows a waveform view of the 32x64 - 1x design.
 
 ### Running on Hardware
 
-To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps specified above).
+To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps previously specified).
 
 ```
 make kernels TARGET=hw
@@ -520,7 +520,7 @@ make xsa TARGET=hw
 make package TARGET=hw 
 ```
 
-These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run. 
+These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run.
 
 Run the following step to set up the execution file, generated images, and base images (`$(BUILD_TARGET_DIR)/package/sd_card` and `$(BUILD_TARGET_DIR)/package/sd_card.img`).
 
@@ -528,19 +528,19 @@ Run the following step to set up the execution file, generated images, and base 
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_aie_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_aie_xrt.elf` executable on your VCK190 board.
 
-**Step 1.** Ensure your board is powered off. 
+**Step 1.** Ensure your board is powered off.
 
-**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card. 
+**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card.
 
-**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board. 
+**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board.
 
 **Step 4.** Set the switch (`SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON`).
 
-**Step 5.** Connect your computer to the VCK190 board using the USB cable included with the board. 
+**Step 5.** Connect your computer to the VCK190 board using the USB cable included with the board.
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following: 
+**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
 
 ```
 Port: <COMMXX>
@@ -554,9 +554,9 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
 
-**Step 9.** Run the following commands in the TeraTerm terminal: 
+**Step 9.** Run the following commands in the TeraTerm terminal:
 
 ```
 cd /mnt/sd-mmcblk0p1
@@ -572,9 +572,9 @@ cd /mnt/sd-mmcblk0p1
 
 ### 2D-FFT AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
 
-The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 312.5 MHz.
+The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface run at 312.5 MHz.
 
-The data mover is a PL-based data generator and checker. It generates impulse input and checks the output of the row-wise FFT core for its response. It then generates the transposed pattern of the row-wise FFT output and feeds that to the col-wise FFT core and checks its output.
+The data mover is a PL-based data generator and checker. It generates impulse input and checks the output of the row-wise FFT core for its response. It then generates the transposed pattern of the row-wise FFT output, feeds that to the col-wise FFT core, and checks its output.
 
 ![Image of 2D-FFT AIE Implementation Architecture](images/fft_2d_aie_block_diagram.PNG)
 
@@ -585,14 +585,14 @@ The data mover is a PL-based data generator and checker. It generates impulse in
 
 ### Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform. The graph I/Os is connected to the platform ports or ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
 
 
 * `libadf.a`
 * Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
 * Connection interfaces defined in the system configuration file
 
-To see a schematic view of the design with the extended platform as shown in the following figure, open the following in Vivado:
+To see a schematic view of the design with the extended platform, as shown in the following figure, open the following in Vivado:
 
 ```
 `build/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
@@ -600,9 +600,9 @@ To see a schematic view of the design with the extended platform as shown in the
 
 ![Image of 2D-FFT AIE 1x Vivado BD](images/fft_2d_aie_1x_vivado_bd.PNG)
 
-In this design, the 2D FFT computation happens in two stages: the first compute is across the row vectors and the second stage is performed across the column vectors.The input data is accessed linearly and streamed to the AI Engines which perform `MAT_COLS( default 2048 )` point FFT. The data coming out of the AI Engines is streamed to a PL kernel where it is checked against the expected pattern (the first row should be 1 and the remaining should be 0). If there is a mismatch, it is recorded in the variable `stage0_errCnt`. The transposed pattern of the output of the row vectors is then linearly streamed into another AI Engine which performs `MAT_ROWS( default 1024 )` point FFT. The output is streamed into a data mover kernel again and is checked against the expected pattern (all values should be 1). If there is a mismatch, it is stored in the variable `stage1_errCnt`. Finally, the sum of `stage0_errCnt` and `stage1_errCnt` is returned from the kernel, which is read in the host app to determine whether the test has passed or failed.
+In this design, the 2D FFT computation happens in two stages: the first computation is across the row vectors, and the second is performed across the column vectors. The input data is accessed linearly and streamed to the AI Engines, which perform `MAT_COLS( default 2048 )` point FFT. The data from the AI Engines is streamed to a PL kernel, where it is checked against the expected pattern (the first row should be one, and the remaining should be 0). If there is a mismatch, it is recorded in the variable `stage0_errCnt`. The transposed pattern of the output of the row vectors is then linearly streamed into another AI Engine, which performs `MAT_ROWS( default 1024 )` point FFT. The output is streamed into a data mover kernel again and is checked against the expected pattern (all values should be 1). If there is a mismatch, it is stored in the variable `stage1_errCnt`. Finally, the sum of `stage0_errCnt` and `stage1_errCnt` is returned from the kernel, which is read in the host app to determine whether the test has passed or failed.
 
-The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface are both operating at 312.5 MHz. Unlike the HLS/DSP implementation, there is no clock domain crossing in the PL region in this design.
+The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface operate at 312.5 MHz. Unlike the HLS/DSP implementation, this design has no clock domain crossing in the PL region.
 
 </details>
 
@@ -651,9 +651,10 @@ runtime<ratio>(*FFTcol_gr.getKernels()) = 0.6;
 
 ##### Window Streaming Buffer Config
 
-The `FFTrows_graph` graph performs `MAT_COLS` point FFT and runs for `MAT_ROWS` number of iterations. For the `FFTcols_graph` graph, increase the `TP_WINDOW_VSIZE` to `MAT_COLS` instead of `MAT_ROWS` and it does `MAT_ROWS` point FFT, but runs for `MAT_ROWS` number of iterations instead of `MAT_COLS`. This reduces the ping-pong overhead which improves the overall throughput. 
+The `FFTrows_graph` graph performs the `MAT_COLS` point FFT and runs for the `MAT_ROWS` number of iterations. For the `FFTcols_graph` graph, increase the `TP_WINDOW_VSIZE` to `MAT_COLS` instead of `MAT_ROWS,` and it does `MAT_ROWS` point FFT, but runs for `MAT_ROWS` number of iterations instead of `MAT_COLS`. This reduces the ping-pong overhead, which improves the overall throughput. 
 
-Large windows may result in mapper errors due to excessive memory usage. The increased `TP_WINDOW_VSIZE` reduces ping-pong overhead, but increases the utilization of AIE cores and thereby the power consumption. In this design due to rows to cols ratio being 1:2 the `TP_WINDOW_VSIZE` of both graphs are also in the same ratio. Which gives an additional increase in throughput with minimal increase in utilization.
+Large windows may result in mapper errors due to excessive memory usage. The increased `TP_WINDOW_VSIZE` reduces ping-pong overhead but increases the utilization of AIE cores and, thereby, the power consumption. In this design, due to the rows to cols ratio being 1:2, the `TP_WINDOW_VSIZE` of both graphs are also in the same ratio, which gives an additional increase in throughput with minimal increase in utilization.
+
 ```
 ...
 // TP_WINDOW_VSIZE for FFTrows_graph...
@@ -702,7 +703,7 @@ Large windows may result in mapper errors due to excessive memory usage. The inc
 
 ##### Data Generation/Checking and Sequencing
 
-The data mover comprises four loops: `mm2s0`, `s2mm0`, `mm2s1`, and `s2mm1`. The `s2mm0` and `mm2s1` functions are wrapped into a single function, `dmaHls_rowsToCols`. Within that the execution sequence, `s2mm0` is followed by `mm2s1`. The `s2mm0` and `s2mm1` functions check the output of the row-wise and col-wise FFT respectively against the expected golden output.
+The data mover comprises four loops: `mm2s0`, `s2mm0`, `mm2s1`, and `s2mm1`. The `s2mm0` and `mm2s1` functions are wrapped into a single function, `dmaHls_rowsToCols`. Within that, the execution sequence, `s2mm0` is followed by `mm2s1`. The `s2mm0` and `s2mm1` functions check the row-wise and col-wise FFT output, respectively, against the expected golden output.
 
 ##### Concurrent Scheduling
 
@@ -751,11 +752,11 @@ The following figure shows the data mover functional call graph view.
 
 #### Streaming Interface Data Width
 
-The streaming interface data width is kept at 128 bits to reduce read/write overhead while processing data.
+The streaming interface data width is kept at 128-bits to reduce read/write overhead while processing data.
 
 #### Frequency Selection
 
-AI Engine kernels are configured for `cint16 / 4bytes` and the streaming interface is at `128bit / 16bytes`. The frequency of the AI Engine array is 1.25 GHz and the data mover is kept at 312.5 MHz, maintaining a 1:4 ratio.
+AI Engine kernels are configured for `cint16 / 4bytes`, and the streaming interface is at `128bit / 16bytes`. The frequency of the AI Engine array is 1.25 GHz, and the data mover is kept at 312.5 MHz, maintaining a 1:4 ratio.
 
 </details>
 
@@ -764,11 +765,11 @@ AI Engine kernels are configured for `cint16 / 4bytes` and the streaming interfa
 
 ### AI Engine Kernels and Graph Representation
 
-An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
+An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each AI Engines used in the design. These kernels can be stitched together as AI Engine graphs written in C++. In this design, the AI Engine compiler summarizes compilation results. Review the [AI Engine Kernel Programming](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. You can view the graph by running the following command:
 
 `vitis_analyzer $(BUILD_TARGET_DIR)/Work/graph.aiecompile_summary`
 
-The following figures show the graph representation of the AI Engine kernels (default FFT 2048 point and FFT 1024 point, `FFT_2D_INSTS=1`). In addition to the compute units, there are also the twiddle factor LUTs (`fft_lut_tw*`) and temporary buffers for FFT stages (`fft_2048/1024_tmp*`).
+The following figures show the graph representation of the AI Engine kernels (default FFT 2048 point and FFT 1024 point, `FFT_2D_INSTS=1`). In addition to the compute units, there are the twiddle factor LUTs (`fft_lut_tw*`) and temporary buffers for FFT stages (`fft_2048/1024_tmp*`).
 
 ![Image of 2D-FFT AI Engine 2K point Graph](images/fft_2d_aie_fft_rows_graph_for_2kpt_1x.PNG)
 ![Image of 2D-FFT AI Engine 1K point Graph](images/fft_2d_aie_fft_cols_graph_for_1kpt_1x.PNG)
@@ -780,13 +781,13 @@ The following figures show the graph representation of the AI Engine kernels (de
 
 ### Adaptive Data Flow (ADF) Graph
 
-This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine which is compiled by the AI Engine compiler.
+This section describes the overall data flow graph specification of the 2D-FFT design using AI Engine, compiled by the AI Engine compiler.
 
-The overall graph definition of the design is contained in the `graph.cpp` file. The top-level graph contains two sub-graphs, `FFTrows_graph` and `FFTcols_graph`, each with a `FFT_2D_INSTS` number of objects. The following describes the definition of the sub-graphs (the `FFTrows_graph` is used as illustration).
+The overall graph definition of the design is contained in the `graph.cpp` file. The top-level graph contains two sub-graphs, `FFTrows_graph` and `FFTcols_graph`, each with an `FFT_2D_INSTS` number of objects. The following describes the definition of the sub-graphs (the `FFTrows_graph` is used as an illustration).
 
 #### Defining the Graph Class
 
-Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) for FFIT. A general specification is put in for the ADF namespace:
+Define the graph classes using objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) for FFIT. A general specification is put in for the ADF namespace:
 
 ```
 // FFTrows_graph FFT point size...
@@ -796,7 +797,7 @@ Define the graph classes by using the objects defined in the appropriate name sp
 
 // 1 (FFT) or 0 (IFFT)...
 #define FFT_2D_TP_FFT_NIFFT 1
-// 0 Bit Shift before output, will have to change based on input...
+// 0 Bit Shift before output, change based on input...
 #define FFT_2D_TP_SHIFT 0
 // FFT divided over 1 FFT Kernel...
 #define FFT_2D_TP_CASC_LEN 1
@@ -911,7 +912,7 @@ The `main` function is called under the guard bounds of `\_\_AIESIM\_\_` as show
 
 ### PL Data Mover Kernel
 
-In addition to the kernels operating in the AI Engine array, this design specifies a data mover kernel to run in the PL region of the device (written in HLS C++). The data mover kernel is brought into the design during the Vitis kernel compilation, which is further replicated based on the `FFT_2D_INSTS` value. The software design of the data mover kernel is described in the following sections. 
+In addition to the kernels operating in the AI Engine array, this design specifies a data mover kernel to run in the PL region of the device (written in HLS C++). The data mover kernel is brought into the design during the Vitis kernel compilation, which is further replicated based on the `FFT_2D_INSTS` value. The software design of the data mover kernel is described in the following sections.
 
 #### dma_hls (dma_hls.cpp)
 
@@ -994,14 +995,14 @@ int dma_hls(
 }
 ```
 
-The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in the kernel is provided in the following table.
+The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in the kernel is provided in the following table:
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In an RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
 |#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the config_compile -pipeline_style command, but can be overridden in the PIPELINE pragma or directive. For more information, see [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
-|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) for more information.|
-|#pragma HLS loop_tripcount|When manually applied to a loop, specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount) for more information.|
+|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and the overall throughput of the design. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) for more information.|
+|#pragma HLS loop_tripcount|When manually applied to a loop, it specifies the total number of iterations a loop performs. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only and does not impact the synthesis results. See [this page](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount) for more information.|
  
 </details>
 
@@ -1010,9 +1011,9 @@ The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code
 
 ### PS Host Application
 
-The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation to understand the process to create a host application.
+The 2D-FFT AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation to understand the process of creating a host application.
 
-In addition to the PS host application (`fft_2d_aie_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following purposes:
+In addition to the PS host application (`fft_2d_aie_app.cpp`), the AI Engine control code must also be compiled. The AI Engine compiler generates this control code (`aie_control_xrt.cpp`) when compiling the AI Engine design graph and kernel code. The PS host application uses the AI Engine control code for the following purposes:
 
 * Controlling the initial loading of the AI Engine kernels.
 * Running the graph for several iterations, updating the runtime parameters associated with the graph, exiting, and resetting the AI Engine tiles.
@@ -1091,15 +1092,15 @@ int main(int argc, char** argv)
 4. Open the graph, obtain the handle, and execute the graph: 
 
    * The A72 processor opens and obtains its handle using the ` xrtGraphOpen` function.
-   * The A72 processor resets the graph using the `xrtGraphReset` function and runs the graph execution using the `xrtGraphRun` function for both the 2K point and 1K point sub-graphs.
+   * The A72 processor resets the graph using the `xrtGraphReset` function and runs the graph execution using the `xrtGraphRun` function for the 2K point and 1K point sub-graphs.
 
 5. Execute the data mover kernels and generate the output results:
 
    * Set the `dma_hls` kernel arguments using the `xrtRunSetArg` function.
    * Start the `dma_hls` kernels using the `xrtRunStart` function.
-   * Wait for `dma_hls` execution to finish using the `xrtRunWait` runction.
+   * Wait for `dma_hls` execution to finish using the `xrtRunWait` function.
 
-6. Verify the output results by reading the `ap_return` in `$(BUILD_TARGET_DIR)/_x/dma_hls.$(TARGET)/dma_hls/dma_hls/ip/drivers/dma_hls_v1_0/src/xdma_hls_hw.h` using the `xrtKernelRegister` API, as shown below:
+6. Verify the output results by reading the `ap_return` in `$(BUILD_TARGET_DIR)/_x/dma_hls.$(TARGET)/dma_hls/dma_hls/ip/drivers/dma_hls_v1_0/src/xdma_hls_hw.h` using the `xrtKernelRegister` API, as follows:
 
    ```
    void golden_check(uint32_t *errCnt)
@@ -1123,26 +1124,26 @@ int main(int argc, char** argv)
 
 ## Performance Details
 
-For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.
+For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements for their available resources, latency, throughput, performance, and power. This section outlines how to measure those characteristics for the AI Engine implementation in this tutorial.
 
 <details>
 <summary>Resource Utilization and Power</summary> 
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.1 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for AMD Versal&trade; (2023.1 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
 1. Open the Vivado project: ``$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr``.
 
-2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for the 32 x 64 point, 1-instance, and cint16 design:
+2. Go to **Open Implemented Design**, click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for the 32 x 64 point, 1-instance, and cint16 design:
 
 ![Image of 2D-FFT AIE Utilization](images/fft_2d_aie_vivado_resources.PNG)
 
 ** Or **
 
-1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+1. Do `make report_metrics TARGET=hw`, (recipe expanded as follows), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
 
 ```
 report_metrics:
@@ -1158,7 +1159,7 @@ else
 endif
 ```
 
-The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
+The vcdanalyze tool generates a `graph.xpe` file, which can be input to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
 
 1. Run `make vcd` (recipe expanded below) to create the `graph.xpe` file under `$(BUILD_TARGET_DIR)/aiesim_xpe/`:
 
@@ -1235,7 +1236,7 @@ A summary of resource utilization and power for all variations is given in the f
 
 #### Throughput and Latency
 
-Throughput is measured in mega-samples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the row-wise FFT kernel and the first sample from the col-wise FFT kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using Vitis analyzer. The steps to measure throughput and latency are listed below:
+Throughput is measured in mega-samples transferred per second (MSPS). It is measured by viewing the runtime-generated trace texts using the Vitis analyzer. Latency is defined as the time between the first sample being sent by the data mover into the row-wise FFT kernel and the first sample from the col-wise FFT kernel being received by the data mover. The steps to measure throughput and latency are listed below:
 
 1. Compile the design using `EN_TRACE=1`. It automatically includes a `xrt.ini` file while packaging, which comprises the following:
 
@@ -1246,7 +1247,7 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
    trace_buffer_size=500M
    ```
 
-   Refer to the [xrt.ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation for more information. 
+   For more information, refer to the [xrt.ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation.  
 
 2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
@@ -1258,7 +1259,7 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces. For higher instance designs only, `strmInp_from_colwiseFFT` is profiled.
 
-The throughput and latency calculations for the 32 x 64 point, 1-instance and cint16 design based on the `hw` run is as follows:
+The throughput and latency calculations for the 32 x 64 point, 1-instance, and cint16 design based on the `hw` run is as follows:
 
 ```
 Processing Time = (End of Processing Timestamp of Stream `strmInp_from_colwiseFFT`) - (Start of Processing Timestamp of Stream `strmInp_from_colwiseFFT`)
@@ -1282,7 +1283,7 @@ Throughput = (Samples transferred) / processing time
            = 255.021 x 4 MB/s (As each sample is 4bytes)
            = 1020.085 MB/s
 ```
-The throughput and latency calculations for the 32 x 64 point, 1-instance and cint16 design based on the `hw_emu` run is shown below alongwith the snapshot of the timeline trace of hw emulationis as follows:
+The throughput and latency calculations for the 32 x 64 point, 1-instance, and cint16 design based on the `hw_emu` run are as follows, along with the snapshot of the timeline trace of hw emulation as follows:
 ![Image of 2D-FFT AI Engine implementation 32x64 hw_emu](images/fft_2d_aie_hw_emu_waveform_view_32x64_x1.PNG)
 ```
 Processing Time
@@ -1304,7 +1305,6 @@ Throughput = (Samples transferred) / processing time
            = 250.83 x 4 MB/s (As each sample is 4bytes)
            = 1003.306 MB/s
 ```
-
 
 A summary of throughput and latency for all variations is shown in the following table.
 
@@ -1360,7 +1360,6 @@ Performance per Watt = Throughput(MSPS) / Power(Watt)
                      = (250.829  / 0.840) MSPS/Watt
                      = 298.606 MSPS/Watt
 ```
-
 
 A summary of performance per Watt for all variations is shown in the following table.
 
@@ -1450,9 +1449,9 @@ A consolidated summary of observations for all the point sizes and all the corre
 | 512 point<br/>(256 x 512)<br/> - x10    |  1950.775                           |   713.74                   | 20                   | 81%         | 260                        | 17%          | 11360    |  3654    |    5411                   |  360.5203259                                 |
 | 2048 point<br/>(1024 x 2048)<br/> - x10 |  1746.537                           |   12861.968                | 20                   | 88%         | 520                        | 9%           | 11360    |  3654    |    6606                   |  264.3864672                                 |
 
-From these observations it can be seen that with the increase in the FFT point size, the window buffer size used in the AI Engines increases, and with that the throughput increases as well. By increasing the `TP_WINDOW_VSIZE` parameter in the FFT AI Engine graph, the throughput can be further increased, especially for the lower point sizes, but the AI Engine mapper/router could encounter issues due to the higher memory requirement.
+These observations show that with the increase in the FFT point size, the window buffer size used in the AI Engines increases, and with that, the throughput increases. Increasing the `TP_WINDOW_VSIZE` parameter in the FFT AI Engine graph can further increase the throughput, especially for the lower point sizes. Still, the AI Engine mapper/router could encounter issues due to the higher memory requirement.
 
-Furthermore, the FFT point sizes increase, the power does _not_ increase proportionately, so the performance per Watt maintains an increasing trend in the beginning and saturates towards the end.
+Furthermore, the FFT point sizes increase and the power does _not_ increase proportionately, so the performance per Watt maintains an increasing trend initially and saturates towards the end.
 
 </details>
 
