@@ -70,7 +70,6 @@ update_compile_order -fileset sources_1
 ## Apply platform specific post-link tcl commands.
 ## Note: This design does not have have any post-link tcl commands.
 ## ===================================================================================
-# Deprecated syntax, still neede ?? #set_property dsa.post_sys_link_tcl_hook src/post_link_pfm_config.tcl [current_project]
 
 ## ===================================================================================
 ## Apply timing constraints
@@ -123,7 +122,6 @@ update_compile_order
 assign_bd_address
 regenerate_bd_layout
 validate_bd_design
-# Deprecated syntax, still neede ?? #set_param dsa.includeMEContent true
 import_files
 
 ## ===================================================================================

@@ -77,7 +77,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
           - Extract it
           - `cd xilinx-versal-common-v2023.1`
           - `xilinx-versal-common-v2023.1 $ ./sdk.sh`
-            - Enter target directory for SDK (default: `/opt/petalinux/2023.1`)
+            - Enter target directory for Petalinux tools (default: `/opt/petalinux/2023.1`)
           - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
           - `xilinx-versal-common-v2023.1 $ unset LD_LIBRARY_PATH`
           - `xilinx-versal-common-v2023.1 $ source environment-setup-cortexa72-cortexa53-xilinx-linux`
