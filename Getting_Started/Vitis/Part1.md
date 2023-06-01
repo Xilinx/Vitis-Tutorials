@@ -25,7 +25,8 @@ The Vitis unified software platform provides a framework for developing and deli
 
 A Vitis accelerated application consists of two distinct components: a software program and an FPGA binary containing hardware accelerated kernels.
 
-* The software program is written in C/C++ and runs on a conventional CPU. The software program uses user-space APIs implemented by the XRT to interact with the acceleration kernel in the FPGA device.
+
+* The software program is written in C/C++ and runs on a conventional CPU. The software program uses user-space APIs implemented by the AMD Runtime library (XRT) to interact with the acceleration kernel in the FPGA device.
 
 * The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the FPGA device. The kernels are integrated with the Vitis hardware platform using standard AXI interfaces.
 
@@ -35,7 +36,9 @@ Vitis accelerated applications can execute on either data center or embedded acc
 
 * On data center platforms, the software program runs on an x86 server, and the kernels run in the FPGA on a PCIe®-attached acceleration card.
 
-* On embedded platforms, the software program runs on an Arm processor of an AMD MPSoC device, and the kernels run within the same device.
+* On data-center platforms, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.
+
+* On embedded platforms, the software program runs on an ARM processor of a AMD MPSoC device and the kernels run within the same device. 
 
 Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
 
@@ -52,7 +55,11 @@ There are multiple ways by which the software program can interact with the hard
 
 The Vitis build process follows a standard compilation and linking process for both the host program and the kernel code:
 
-* The host program is built using the GNU C++ compiler (g++) for data-center applications or the GNU C++ Arm cross-compiler for AMD MPSoC devices.
+* The host program is built using the GNU C++ compiler (g++) for data-center applications or the GNU C++ Arm cross-compiler for AMD MPSoC devices. 
+
+* The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a AMD object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results. 
+
+![img](./images/part1_build_flow.png)
 
 * The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a Xilinx object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.
 

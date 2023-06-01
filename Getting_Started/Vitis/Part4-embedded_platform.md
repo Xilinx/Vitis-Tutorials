@@ -13,7 +13,7 @@
 
 ## Part 4: Build and Run the Embedded Processor Application
 
- In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers), and includes the following image flow diagram. From the image you can see the G++ cross-compiler  for building the host application for the Arm® processor, and the use of the Vitis compiler (`v++`) for building the Xilinx device binary (`xclbin`). These are the steps you will be working through in this lab.
+ In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
 ![img](./images/embedded_processor_flow.png)
 
@@ -47,6 +47,7 @@
   ```
 
 >**NOTE:** The ZYNQMP common image file can be downloaded from the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) page, and contains the Sysroot, Rootfs, and boot Image for AMD Zynq™ MPSoC devices.
+
 
 ### Targeting Software Emulation
 
@@ -100,7 +101,7 @@ Building for software emulation is quick and should not take more than a few min
 ./package/launch_sw_emu.sh -forward-port 1440 22
 ```
 
-This command will launch software emulation, start the AMD Quick Emulation (QEMU) environment and initiate the boot sequence. Refer to [launch_emulator Utility](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/launch_emulator-Utility) for more information.
+This command will launch software emulation, start the Quick Emulation (QEMU) environment and initiate the boot sequence. Refer to [launch_emulator Utility](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/launch_emulator-Utility) for more information. 
 
 >**IMPORTANT**: You must use the `-forward-port` option as shown above in order to later retrieve files from the QEMU environment as described in [Running Emulation on an Embedded Processor Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Running-Emulation-on-an-Embedded-Processor-Platform).
 

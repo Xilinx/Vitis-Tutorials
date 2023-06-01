@@ -19,7 +19,7 @@
 
 # 1. Creating a Vitis HLS Project
 
-The Vitis HLS tool lets you specify C/C++ code for synthesis into Vitis core development kit kernels (`.xo`) or RTL IP for implementation in the PL region of Xilinx devices. The first step in creating a new project is identifying the C/C++ source code for synthesis.
+The Vitis HLS tool lets you specify C/C++ code for synthesis into Vitis core development kit kernels (`.xo`) or RTL IP for implementation in the PL region of AMD devices. The first step in creating a new project is identifying the C/C++ source code for synthesis.
 
 In this tutorial, you are working with a simple discrete cosine transform (DCT) algorithm that processes an input matrix of values, applies fixed coefficients, and returns a matrix of modified values. In the `reference_files/src` folder, the `dct.cpp` contains the top-level DCT function.
 
@@ -48,7 +48,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
    1. Select **Add Files** to specify source files for the project.
       1. Navigate to the **./reference-files/src** folder location, and select **dct.cpp**.
    2. In the Top Function field at the top of the New Project wizard, select the **Browse...** button to open the Select Top Function dialog box, as shown below. 
-       1. Select the **dct (dct.cpp)** function and click **OK**.
+      1. Select the **dct (dct.cpp)** function and click **OK**.
 
             ![Select Top Function](./images/create_project-select_top_function.png)
 
@@ -64,12 +64,12 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
    1. Navigate to the `./reference-files/src` folder, and select **dct_test.cpp, in.dat** and **out.golden.dat**. 
       * `dct_test.cpp` is a test bench for the design that iterates through the kernel multiple times. 
       * `in.dat` provides the input values to be processed by the kernel. 
-       * `out.golden.dat` provides known output results to use for comparing the output of the dct function against.
+      * `out.golden.dat` provides known output results to use for comparing the output of the dct function against.
    2. Click **Next>**.
 
       The Solution Configuration page of the New Project wizard is opened as shown below.
 
-      The Solution Configuration creates and defines a solution which is a specific build configuration that the tool uses to build against. The solution includes definitions for the clock period, and clock uncertainty, and specifies a platform, with a Xilinx device, to build against. The solution provides you a framework for building your RTL code, and testing different optimizations by using different directives (possibly in different solutions).
+      The Solution Configuration creates and defines a solution which is a specific build configuration that the tool uses to build against. The solution includes definitions for the clock period, and clock uncertainty, and specifies a platform, with an AMD device, to build against. The solution provides you a framework for building your RTL code, and testing different optimizations by using different directives (possibly in different solutions).
 
       ![Add Sources](./images/create_project-solution_config.png)
 
@@ -89,7 +89,7 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
 
 ## Conclusion
 
-You created the DCT project, targeted your Xilinx device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running Simulation, Synthesis and Analyzing Results](./synth_and_analysis.md).
+You created the DCT project, targeted your AMD device or board, and configured the solution characteristics. You are ready to move to the next lab, [Running Simulation, Synthesis and Analyzing Results](./synth_and_analysis.md).
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>

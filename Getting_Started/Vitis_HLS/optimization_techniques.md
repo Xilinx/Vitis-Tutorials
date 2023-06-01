@@ -17,7 +17,7 @@ This lab discusses various optimization techniques that you can use to reconcile
 
 ## Configure the Pipeline Loops Threshold
 
-1. In the Explorer view, right-click the project solution, or `solution1`, and select **Solution Settings**. 
+1. In the Explorer view, right-click the project solution, or `solution1`, and sele ct **Solution Settings**. 
     This opens the Solution Settings dialog box.
 
 2. Select the **General** setting, and expand the **config_compile** setting as shown in the following figure.
@@ -26,9 +26,9 @@ This lab discusses various optimization techniques that you can use to reconcile
 
 3. In the **Configuration Settings** dialog box edit `pipeline_loops` to specify  `6`. The default setting is 64.
 
-5. Click **OK**  to add the `config_compile` command to limit the automatic loop pipelining as specified.
+4. Click **OK**  to add the `config_compile` command to limit the automatic loop pipelining as specified.
 
-6. From the toolbar, click **C Synthesis**  to rerun the synthesis command and display the results.
+5. From the toolbar, click **C Synthesis**  to rerun the synthesis command and display the results.
 
     This configuration might be an acceptable response to II violations when the loops are not in the critical path of the design, or they represent a small problem relative to some larger problems that must be resolved. In other words, not all violations need to be resolved, and in some cases, not all violations can be resolved. They are simply artifacts of performance.
 
@@ -69,11 +69,11 @@ In the last section, the **config_compile** command is a tool configuration comm
 5. In the II field, enter `4`. This defines an acceptable level of performance, and can eliminate II violations.
 
 6. Click **OK** to apply the directive.
-The `HLS PIPELINE II=4` is added to the Directive view.
+    The `HLS PIPELINE II=4` is added to the Directive view.
 
 7. Click **C Synthesis** to rerun synthesis.
 
-    Notice the Interval column for the `dct_2d` function meets the specified II requirement, however the overall results for the `dct` function are not meeting timing.
+    Notice the Interval column for the `dct_2d` function meets the specified II requirement, however, the overall results for the `dct` function are not meeting timing.
 
     ![Pipeline Defined II](./images/pipeline-defined-ii.png)
 
@@ -89,7 +89,7 @@ The specific problem of reading or writing to memory can possibly be addressed b
 
  ![BIND_STORAGE](./images/bind_storage_pragma.png)
 
-1. Select the **dct.cpp** tab to make the Code Editor active.
+1. Select the **dct.cpp** tab to activate the Code Editor.
 
 2. In the Directives view, right-click on the `col_inbuf` variable in the `dct_2d` function, and select **Insert Directive**. 
 
@@ -131,9 +131,9 @@ However, ARRAY_PARTITION also requires more memory instances or registers, and s
     1. For Directive,  select **ARRAY_PARTITION**. 
     2. For Destination, select **Directive File**. 
     3. In  Options, the variable you previously selected should be listed. 
-    1.Leave the dimension set to 1, the default value. 
-    1. Specify a factor of **8**.
-    2. Select **cyclic** for the type.
+    4. Leave the dimension set to 1, the default value. 
+    5. Specify a factor of **8**.
+    6. Select **cyclic** for the type.
 4. Click **OK** to close the form, and apply the directive. 
 
 5. Repeat the steps above for the `buf_2d_out` variable. 

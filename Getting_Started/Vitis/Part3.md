@@ -62,7 +62,7 @@ The source code for the host program is written in C/C++ and uses the native XRT
 
 There are four main steps in the source code for this simple example.
 
-* **Step 1:** The runtime environment is initialized. In this section, the host detects the attached Xilinx device, loads the FPGA binary (.xclbin file) from file and programs it into the first AMD device it found. Then, the kernel object is created. All Vitis applications will have code very similar to the one in this section.
+* **Step 1:** The runtime environment is initialized. In this section, the host detects the attached AMD device, loads the FPGA binary (.xclbin file) from file and programs it into the first AMD device it found. Then the kernel object is created. All Vitis applications will have code very similar to the one in this section.
 
 * **Step 2:** The application creates the three buffers needed to share data with the kernel: one for each input and one for the output. On data-center platforms.
 
@@ -83,7 +83,8 @@ There are four main steps in the source code for this simple example.
 
 >**NOTE:** A common alternative is for the application to explicitly allocate host memory, and reuse the corresponding pointers when creating the buffers. The approach used in this example was chosen because it is the most portable and efficient across both data center and embedded platforms.
 
-* **Step 3:** The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to device memory, the execution of the kernel, and lastly, the transfer of the results back to host memory. These operations are enqueued in the command queue declared in Step 1. It is important to keep in mind that these three function calls are non-blocking. The commands are put in the queue and the XRT is responsible for submitting them to the device. Because the queue used in the host code in this example is an ordered queue, these commands are guaranteed to execute in the specified order. However, the queue could also be an out-of-order queue in which the non-blocking calls would be executed when ready, rather than in order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion.
+* **Step 3:** The host program sets the arguments of the kernel, then schedules three operations: the transfers of the two input vectors to device memory, the execution of the kernel, and lastly the transfer of the results back to host memory. These operations are enqueued in the command queue declared in Step 1. It is important to keep in mind that these three function calls are non-blocking. The commands are put in the queue and the AMD Runtime is responsible for submitting them to the device. Because the queue used in the host code in this example is an ordered queue, these commands are guaranteed to execute in the specified order. However, the queue could also be an out-of-order queue in which the non-blocking calls would be executed when ready, rather than in order. The call to `q.finish()` is necessary to wait until all enqueued commands run to completion. 
+
 
   ```cpp
       // Synchronize buffer content with device side

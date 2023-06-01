@@ -23,7 +23,7 @@
 
 ## Introduction
 
-Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of Xilinx devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
+Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of AMD devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
 
 > **TIP:** Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool. 
 
@@ -39,7 +39,7 @@ The labs in this tutorial use:
 >**IMPORTANT:**  
 >
 > * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
->* If you run applications on the Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions To complete installation, follow the instructions on the [Alveo Product Documentation tab](https://www.xilinx.com/products/boards-and-kits/alveo.html).
+>* If you run applications on the AMD Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions To complete installation, follow the instructions on the [Alveo Product Documentation tab](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Setup the environment to run Vitis
 
@@ -64,7 +64,7 @@ export PLATFORM_REPO_PATHS=<path to platforms>
 export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
 ```
 
-For more information see [Xilinx AR 73698](https://www.xilinx.com/support/answers/73698.html).
+For more information see [AMD AR 73698](https://www.xilinx.com/support/answers/73698.html).
 
 ### Accessing the Tutorial Reference Files
 

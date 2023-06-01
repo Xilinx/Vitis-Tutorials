@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+   <table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
 
@@ -15,7 +15,7 @@
 
 In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [set_directive_dataflow](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/set_directive_dataflow) in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).
 
-The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible.
+The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code,  on top of the loop-level parallelism where possible.
 
 #### Create a New Solution
 
@@ -57,7 +57,7 @@ As described in [Creating Additional Solutions](https://docs.xilinx.com/r/en-US/
 
     ![Synthesis Report](./images/synthesis-compare_results.png)
 
-   You can see from the comparison results, the interval for the DATAFLOW solution is about 65% of first solution results. This is the primary advantage of the task-level parallelism provided by the DATAFLOW optimization. The other thing you can see is the increased utilization estimates for FF and LUTs in the design. These are just estimates, and you need to run Vivado synthesis and/or the implementation flow to get more accurate details on the resources used.
+   You can see from the comparison results, the interval for the DATAFLOW solution is about 65% of first solution results. This is the primary advantage of the task-level parallelism provided by the DATAFLOW optimization. The other thing you can see is the increased utilization estimates for FF and LUTs in the design. These are just estimates, and you will need to run Vivado synthesis and/or the implementation flow to get more accurate details on the resources used.
 
    The following figure shows the Synthesis Summary report for the DATAFLOW solution.
 
@@ -87,7 +87,7 @@ Vitis HLS also provides a Dataflow Graph viewer as one of the features in the An
 
    The Dataflow Viewer enables the following throughput analysis options:
 
-      * The graph shows the overall topology of the DATAFLOW region and shows what type of channels (FIFO/PIPO) were inferred for communication between the tasks in the DATAFLOW region. Analyzing each channel and process can be useful to resolve issues such as deadlock or poor throughput because of bad FIFO sizing. 
+      * The graph shows the overall topology of the DATAFLOW region and shows what type of channels (FIFO/PIPO) were inferred for communication between the tasks in the DATAFLOW region. Analyzing each channel and process can be useful to resolve issues such as deadlock or poor throughput due to bad FIFO sizing. 
       * The co-simulation data helps with the FIFO sizing problem by tracking the maximum size of the FIFO during the course of the simulation and thereby giving the user a good reference point on how to size the FIFOs. In addition, when running cosimulation, automatic deadlock detection can highlight the processes and channels involved in the deadlock allowing the user to quickly narrow the focus and fix the issue. 
       * In addition to FIFO sizing, the data reported after cosimulation also provides, on a per process and channel basis, the time spent stalling either waiting for input or blocked from writing output. The graph helps the user understand such issues and manage how the channels are sized to accommodate slow producers versus fast consumers and/or vice-versa. In addition, the graph is useful in understanding how reading from the input in the middle of a DATAFLOW region can impact performance. This is a fairly common scenario where performance can be impacted.  
 
@@ -99,7 +99,7 @@ Now that you have your optimized design, you can transfer the directives from a 
 
 2. Scroll through the Directives view, right-click any directives you see, and select the **Modify Directive**. This displays the Vitis HLS Directive Editor.
 
-3. In the Directive Editor, change the Destination to **Source File**, and click **OK**. This changes the directive to a pragma written to the source code files, which you can see displayed in the `dct.cpp` source file. 
+3. In the Directive Editor, change the Destination to **Source File**, and click **OK**. This changes the directive to a pragma written to the source code files, which you can view displayed in the `dct.cpp` source file. 
 
    When you change the `ARRAY_PARTITION` directive for the `col_inbuf` variable, the tool will return a **Warning** indicating that it cannot find the `col_inbuf` variable, and will insert the pragma at the first line of the function. Select **OK** to insert the pragma as indicated. 
 
@@ -127,7 +127,7 @@ In this tutorial:
 
 These are the elements of building and accelerating applications and functions using the Vitis and Vitis HLS tools. You can mix the Vitis HLS kernels with RTL kernel objects (`.xo`) and uncompiled C/C++ kernel code (`.c`/`.cpp`) in the Vitis application project to create more complex accelerated applications. 
 
-You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you want. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.  
+You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you prefer. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.  
 
 </br>
 <hr/>

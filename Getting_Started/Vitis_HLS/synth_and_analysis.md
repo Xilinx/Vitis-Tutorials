@@ -4,7 +4,7 @@
 
    </td>
  </tr>
- <tr>
+ <tr> 
  <td>
  </td>
  </tr>
@@ -56,8 +56,8 @@ With the source code and testbench added to the project, you can now run the C s
       >**NOTE**: Because this path is derived by running the testbench, this path is specific to your test.
 
    * Allows you to see where the memory reads/writes are in the control flow graph. This allows you to get a sense for memory port contention issues. 
-       * If memory accesses are on different branches, then these accesses would be considered mutually exclusive (and therefore no conflict can occur). 
-      * If however, the memory accesses are on the same branch, then loop II violations can occur because of multiple memory accesses in the same sequential portion of the code. 
+       * If memory accesses are on different branches, then these accesses would be considered mutually exclusive (and therefore, no conflict can occur). 
+       * If however, the memory accesses are on the same branch, then loop II violations can occur because of multiple memory accesses in the same sequential portion of the code. 
 
 ## Run C Synthesis
 

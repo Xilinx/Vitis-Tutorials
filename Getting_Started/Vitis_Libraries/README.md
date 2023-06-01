@@ -29,7 +29,7 @@ $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
 Now clone the Vitis Libraries into local path.
 
-The Vitis Library is open source on Xilinx GitHub: https://github.com/Xilinx/Vitis_Libraries. 
+The Vitis Library is open source on AMD GitHub: https://github.com/Xilinx/Vitis_Libraries. 
 
 Assuming that you are using $/home/project$ as working directory, then use following command to clone the Vitis Library repository into the working directory:
 
