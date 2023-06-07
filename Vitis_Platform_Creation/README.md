@@ -167,14 +167,15 @@ These tutorials illustrate various platform features and how you can incorporate
 
 ### Abbreviation
 
-**HPFM**  : Hardware Platform 
-**SPFM**  :
-**XPFM**  :
-**XSA**   : Xilinx Shell Archive
-**DFX**   ：Dynamic Functional Exchange
-**SOM**   : System On Module
-**DTB**   : Device Tree Binary
-**DTBO**  : Device Tree Binary Overlay
+- **HPFM**  : Hardware Platform 
+- **SPFM**  :
+- **XPFM**  :
+- **XSA**   : Xilinx Shell Archive
+- **DFX**   ：Dynamic Functional Exchange
+- **SOM**   : System On Module
+- **DTB**   : Device Tree Binary
+- **DTBO**  : Device Tree Binary Overlay
+
 
 
 
