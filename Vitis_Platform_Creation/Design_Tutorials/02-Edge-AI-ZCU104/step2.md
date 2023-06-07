@@ -167,6 +167,8 @@ The device tree describes the hardware components of the system. The `createdts`
 
 Besides U-Boot, the common image does not have default environment variables. So you must update the `bootargs` manually. A pre-prepared [system-user.dtsi](./ref_files/step2_pfm/system-user.dtsi) file which adds pre-defined `bootargs` is located in the `step2_pfm` directory. Copy the `system-user.dtsi` file to the `zcu104_software_platform` directory and follow these steps to generate the DTB file.
 
+>Note: Device tree knowledge is a common know-how. Please refer to [Device Tree WIKI page](https://en.wikipedia.org/wiki/Devicetree#Linux) for more information if you are not familiar with it.
+
 1. First, go to `zcu104_software_platform` directory and launch `XSCT` tool.
 
    ```bash
