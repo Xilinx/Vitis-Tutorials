@@ -10,7 +10,7 @@
 
 Before going to platform creation, Let's have the a concept of platform first.
 
-![image](XPFM.svg)
+![image](XPFM.PNG)
 
 Briefly speaking, platform is a package which contains the HPFM（XSA）file and SPFM (software components). When you specify the XSA file and software components IDE tool will package them together and generate platform XPFM file.
 
