@@ -6,7 +6,9 @@
 </table>
 
 
-## What is a Platform
+## Vitis Platform Creation Tutorials
+
+### What is a Platform
 
 Before going to platform creation, Let's have the a concept of platform first.
 
@@ -22,7 +24,7 @@ Briefly speaking, platform is a package which contains the HPFM（XSA）file and
 - For SOM series, please refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260)
 - For PetaLinux customization, please refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization)
 
-## Vitis Platform Creation Tutorials
+### Platform Creation Tutorials
 
 The tutorials under the Vitis Platform Creation category help you learn how to develop an extnsible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
 
@@ -30,7 +32,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
 - The **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop the platform.
 
 
-### Design Tutorials
+#### Design Tutorials
 
 <table style="width:100%">
  <tr>
@@ -124,7 +126,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
  </tr>
 </table>
 
-### Feature Tutorials
+#### Feature Tutorials
 
 These tutorials illustrate various platform features and how you can incorporate them into your own custom platforms.
 
@@ -163,7 +165,7 @@ These tutorials illustrate various platform features and how you can incorporate
  </tr>
  </table>
 
-## Abbreviation
+### Abbreviation
 
 **HPFM**  : Hardware Platform 
 **SPFM**  :
