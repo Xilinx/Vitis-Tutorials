@@ -248,7 +248,7 @@ When a component comes with multiple types of simulation models, selecting a Sys
       ```
 ## Modify the IP address in address editor (Optional)
 
-   >Note: This step is optional for platform creation. Please refer to it according to your requirement.
+   >Note: This step is not mandatory for platform creation. Please refer to it according to your requirement.
 
    If users need to modify the IP address in some cases please go through following steps.
    1. Check the location address space of your IP 
