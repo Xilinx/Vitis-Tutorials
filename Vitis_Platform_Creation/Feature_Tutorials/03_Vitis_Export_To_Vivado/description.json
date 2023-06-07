@@ -1,0 +1,41 @@
+{
+    "name": "Vitis_Export_to_Vivado",
+    "description": "Vitis Export to Vivado Flow",
+    "flow": "versal",
+
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [ ],
+
+    "testinfo": {
+        "test_name": "PFM_F_03_vitis_to_vivado",
+        "disable": true,
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_build": 500
+                    }
+            }
+        ],
+        "targets": [
+            "vitis_hw_build"
+            ],
+        "category": "canary",
+        "make_options": [
+           "SYSROOT=${SYSROOT}",
+            "SDKTARGETSYSROOT=${SYSROOT}",
+            "ROOTFS=${COMMON_IMAGE_VERSAL}/rootfs.ext4",
+            "IMAGE=${COMMON_IMAGE_VERSAL}/Image"
+         ],
+        "custom_build_target":
+        {
+            "all": "all"
+        },
+
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+        }
+    }
+}
