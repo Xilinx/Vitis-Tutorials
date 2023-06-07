@@ -299,6 +299,7 @@ GCC_LIB += -lxrt_coreutil
 # ========================================================
 
 #VPP_LINK_FLAGS += --advanced.param "compiler.worstNegativeSlack=-1.0"
+VPP_FLAGS := --platform $(PLATFORM)
 VPP_FLAGS += --save-temps
 VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose
