@@ -6,6 +6,22 @@
 </table>
 
 
+## What is a Platform
+
+Before going to platform creation, Let's have the a concept of platform first.
+
+![image](XPFM.svg)
+
+Briefly speaking, platform is a package which contains the HPFM（XSA）file and SPFM (software components). When you specify the XSA file and software components IDE tool will package them together and generate platform XPFM file.
+
+**Platform Creation Example Quick Access**
+
+- For ZYNQMP device family, please refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
+- For Versal device family, please refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
+- For DFX platform, please refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
+- For SOM series, please refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260)
+- For PetaLinux customization, please refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization)
+
 ## Vitis Platform Creation Tutorials
 
 The tutorials under the Vitis Platform Creation category help you learn how to develop an extnsible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
@@ -146,6 +162,18 @@ These tutorials illustrate various platform features and how you can incorporate
  </td>
  </tr>
  </table>
+
+## Abbreviation
+
+**HPFM**  : Hardware Platform 
+**SPFM**  :
+**XPFM**  :
+**XSA**   : Xilinx Shell Archive
+**DFX**   ：Dynamic Functional Exchange
+**SOM**   : System On Module
+**DTB**   : Device Tree Binary
+**DTBO**  : Device Tree Binary Overlay
+
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
