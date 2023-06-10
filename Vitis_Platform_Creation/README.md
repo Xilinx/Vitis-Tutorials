@@ -18,7 +18,7 @@ Briefly speaking, platform is a package which contains the HPFM（XSA）file and
 
 **Platform Creation Example Quick Access**
 
-- For first time experience of platform, please refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform)
+- For first experience of platform, please refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform)
 - For **ZYNQMP** device family, please refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
 - For **Versal** device family, please refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
 - For **DFX** platform, please refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
