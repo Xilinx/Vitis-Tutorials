@@ -66,7 +66,7 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
  <td>Custom</td>
  <td>Baremetal</td>
- <td>Vivado<br>Vitis IDE</td>
+ <td>Vivado &<br>Vitis IDE</td>
  <td> </td>
  <td>MM2S / S2MM</td>
  <td> </td>
@@ -126,8 +126,8 @@ Run the following steps to setup environment ( **NOT** apply to tutorials that d
  <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AIE Versal Integration</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td> </td>
- <td> </td>
+ <td>CLI / Vitis Unified IDE</td>
+ <td></td>
  <td>MM2S / S2MM</td>
  <td>Yes</td>
  <td>Yes</td>
