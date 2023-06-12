@@ -31,7 +31,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>Flat</td>
-  <td>Vivado<br>Vitis Unified IDE</td>
+  <td>Vivado &<br>Vitis Unified IDE</td>
   <td><b>Highlights</b>: simplest Vitis Platform creation and usage flow. 
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design tempalte to quick start.  </li>
@@ -47,7 +47,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>Flat</td>
-  <td>Vivado<br>Vitis IDE</td>
+  <td>Vivado &<br>Vitis IDE</td>
   <td><b>Highlights</b>: Platform design flow for custom boards. 
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design (device part based) to create the hardware and do further customizations. </li>
@@ -63,7 +63,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Versal AI Core</td>
   <td>VCK190</td>
   <td>DFX</td>
-  <td>Vivado<br>Vitis IDE</td>
+  <td>Vivado &<br>Vitis IDE</td>
   <td>
     <b>Highlights</b>: Design flow for Vitis DFX (Dynamic Function eXchange) Platform. 
       <ul>
@@ -79,7 +79,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>ZYNQ UltraScale+ MPSoC</td>
   <td>ZCU104</td>
   <td>Flat</td>
-  <td>Vivado<br>Vitis IDE</td>
+  <td>Vivado &<br>Vitis IDE</td>
   <td>
     <b>Highlights</b>: Creating a Vitis platform for Zynq UltraScale+ MPSoC from scratch. 
       <ul>
@@ -96,7 +96,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>ZYNQ UltraScale+ MPSoC</td>
   <td>KV260</td>
   <td>Flat</td>
-  <td>Vivado<br>Vitis IDE</td>
+  <td>Vivado &<br>Vitis IDE</td>
   <td>
       <b>Highlights</b>: Kria SOM Platform creation and usage flow 
       <ul>
@@ -126,7 +126,7 @@ These tutorials illustrate various platform features and how you can incorporate
   <td>Generic but using Versal AI Core as example</td>
   <td>VCK190</td>
   <td>Flat</td>
-  <td>Vivado<br>Vitis IDE</td>
+  <td>Vivado &<br>Vitis IDE</td>
   <td>
       <b>Highlights</b>: 
       <ul>
@@ -135,17 +135,37 @@ These tutorials illustrate various platform features and how you can incorporate
       </ul>
   </td>
  </tr>
+
   <tr>
- <td align="center"><a href="./Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
- <td>ZYNQ UltraScale+ MPSoC and Versal AI Core</td>
- <td>ZCU104 and VCK190</td>
- <td>Flat</td>
- <td>Vivado<br>Vitis IDE</td>
- <td>
-  <b>Highlights</b>: Customize the software components with PetaLinux
- </td>
- </tr>
- </table>
+    <td align="center"><a href="./Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
+    <td>ZYNQ UltraScale+ MPSoC and Versal AI Core</td>
+    <td>ZCU104 and VCK190</td>
+    <td>Flat</td>
+    <td>Vivado &<br>Vitis IDE</td>
+    <td>
+      <b>Highlights</b>: Customize the software components with PetaLinux
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center"><a href="./Feature_Tutorials/03_Vitis_Export_To_Vivado/">Hardware Design Fast Iteration with Vitis Export to Vivado</a></td>
+    <td>Versal AI Core</td>
+    <td>VCK190</td>
+    <td>Block Design Container</td>
+    <td>Vivado &<br>Vitis IDE</td>
+    <td>
+      <b>Highlights</b>:
+      <ul>
+        <li>Skipping creating the platform before v++ linking</li>
+        <li>Using Vivado to do design implementation and timing closure</li>
+        <li>Fast iteration for hardware design</li>
+      </ul>
+    </td>
+  </tr>
+
+
+
+</table>
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

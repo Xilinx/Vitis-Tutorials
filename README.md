@@ -374,6 +374,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260">Custom Platform Creation on KV260</a>
                 </td>
                 <td height="24">
+                    <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado">Hardware Design Fast Iteration with Vitis Export to Vivado  :new: </a>
                 </td>
             </tr>
             <tr>
