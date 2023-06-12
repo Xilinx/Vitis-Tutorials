@@ -27,7 +27,10 @@ Vitis High-Level Synthesis (HLS) is a key part of the Vitis application accelera
 
 > **TIP:** Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool. 
 
-In this tutorial, you will work through the Vitis HLS tool GUI to build, analyze, and optimize a hardware kernel. You are working through the Vitis kernel flow in the Vitis tool. For more information, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview) in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).
+This tutorial contains two flows that you can work through: 
+* The Vitis HLS tool GUI flow to build, analyze, and optimize a hardware kernel. For more information, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview).
+* The new Vitis unified IDE flow which includes the bottom-up development of HLS designs as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1553](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide)).
+
 
 ### Before You Begin
 
@@ -73,12 +76,10 @@ For more information see [AMD AR 73698](https://www.xilinx.com/support/answers/7
 
 ## Next Steps
 
-Complete the labs in the following order:
- 
-* [Creating a Vitis HLS Project](./new_project.md)
-* [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md)
-* [Using Optimization Techniques](./optimization_techniques.md)
-* [Reviewing the DATAFLOW Optimization](./dataflow_design.md)
+This tutorials presents two different tool flows for users of high-level synthesis. The first is the new Vitis unified IDE for creating an HLS component; the second is the existing Vitis HLS tool. You can choose your path by selecting one of the following:
+
+1.  [Using the new Vitis unified IDE](./unified_ide_project.md)
+2.  [Using the classic Vitis HLS GUI](./new_project.md)
 
 <!--
 
