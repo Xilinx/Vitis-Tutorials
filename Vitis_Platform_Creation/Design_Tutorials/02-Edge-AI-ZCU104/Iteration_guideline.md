@@ -5,9 +5,11 @@
     </td>
  </tr>
 </table>
-# Iteration Guidelines
 
-When using Vitis flow to create platform and develop acceleration applications, iteration step should obey from the following steps.
+## Iteration Guidelines
+
+When using Vitis flow to create platform and develop acceleration applications, iteration could be divided into two cases: hardware updates and software update. Iteration steps should obey from the following steps.
+
 1. Hardware updates
 
     - Reexport the **XSA** file if you update the Hardware design in [Step1](step1.md)
