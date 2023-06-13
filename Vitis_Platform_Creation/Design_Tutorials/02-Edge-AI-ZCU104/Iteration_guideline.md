@@ -25,7 +25,7 @@ When using Vitis flow to create platform and develop acceleration applications, 
     - Clean the Application and rebuild the Application in [Step3](step3.md)
 
 
-When using Vitis export to Vivado flow to develop acceleration, please follow [Vitis Export to Vivdao](../../Feature_Tutorials/03_Vitis_Export_To_Vivado) to do iteration.
+When using Vitis export to Vivado flow to develop acceleration application, please follow [Vitis Export to Vivdao](../../Feature_Tutorials/03_Vitis_Export_To_Vivado) to do iteration.
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
