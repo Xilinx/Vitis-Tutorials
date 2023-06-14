@@ -13,7 +13,7 @@
 
 ## Part 2: Installation and Configuration
 
-To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the AMD Runtime library (XRT) and the platform files specific to the acceleration card used in your project.
+To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the Xilinx Runtime library (XRT) and the platform files specific to the acceleration card used in your project.
 
 ### Step 1: Review the Installation Requirements
 
@@ -31,7 +31,7 @@ After downloading the Vitis, XRT and platform packages, install them in the foll
 
 1. [Install the Vitis Software Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-the-Vitis-Software-Platform)
 
-2. [Install the AMD Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
+2. [Install the Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 
 >**NOTE:** Installing XRT is not required when targeting Arm®-based embedded platforms. The Vitis compiler has its own copy of xclbinutil for hardware generation; and for software compilation, you can use the XRT from the sysroot on the Embedded Processor platform.
 
@@ -41,7 +41,7 @@ After downloading the Vitis, XRT and platform packages, install them in the foll
 
 AMD provides base platforms for the Alveo U200, U250, U50 and U280 data-center acceleration cards. Before installing a platform, you need to download the following packages:
 
-1. AMD Runtime (XRT)
+1. Xilinx Runtime (XRT)
 
 2. Deployment Target Platform
 
