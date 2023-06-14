@@ -127,7 +127,7 @@ Now run the executable to generate data to create the particle animation in the 
 ./ps_app_animate.exe --timesteps 300
 ```
 
-Copy the `animation_data.txt` from the board to the `Module_07_results/data/` folder if you want to create an animation out of it.
+Create `data` directory in `Module_07_results/`. Copy the `animation_data.txt` from the board to the `Module_07_results/data/` folder if you want to create an animation out of it.
 
 ```
 scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data/.

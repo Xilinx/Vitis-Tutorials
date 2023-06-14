@@ -19,7 +19,7 @@ make animation
 
 ## Results
 
-The following is a GIF created from the `data/animation_data_golden.txt` file. You should get a similar GIF from your own data.
+The following is a GIF created from the [animation_data_golden.zip](https://www.xilinx.com/bin/public/openDownload?filename=animation_data_golden.zip) file. You should get a similar GIF from your own data.
 
  The image below shows 12,800 particles simulated on a 400 tile AI Engine accelerator for 300 timesteps.
 
