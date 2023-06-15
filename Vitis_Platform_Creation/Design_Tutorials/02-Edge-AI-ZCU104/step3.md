@@ -505,6 +505,8 @@ The XRT prints can be eliminated by running `echo 6 > /proc/sys/kernel/printk` b
 
 </details>
 
+</details>
+
 ## Known Issues
 
 The default setting of PMIC (irps5401) on ZCU104 cannot afford to have the DPU running on heavy loading. It may crash. Refer to [DPU TRD Known issues](https://github.com/Xilinx/Vitis-AI/blob/master/dsa/DPU-TRD/prj/Vitis/README.md#553-known-issues) for more information. (Ref: [issue 101](https://github.com/Xilinx/Vitis-Tutorials/issues/101)).
@@ -517,7 +519,7 @@ Feel free to check more tutorials in this repository.
 
 ## Next Steps
 
-If user need to do iteration for your project, You could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
+If user need to do iteration for your project, you could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
