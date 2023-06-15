@@ -50,6 +50,7 @@ The following sections will introduce the platform creation steps. Each section 
 
 - [Iteration Guidelines](./Iteration_guideline.md)</br>
             Iteration steps and guidelines
+            
 ***Start from [step 1: Create the Hardware Platform](./step1.md).***
 
 ## Change Log
