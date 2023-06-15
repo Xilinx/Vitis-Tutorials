@@ -35,6 +35,7 @@ Navigate through this tutorial using the following table of contents links.
 - [Step 1: Hardware Settings for Vitis Platform](./step1.md)
 - [Step 2: Create the Software Components and Generate Platform](./step2.md)
 - [Step 3: Test the Platform](./step3.md)
+- [Iteration Guidelines](./Iteration_guideline.md)
 - [Frequently Asked Questions](faq.md)
 
 ## Requirements and Assumptions
