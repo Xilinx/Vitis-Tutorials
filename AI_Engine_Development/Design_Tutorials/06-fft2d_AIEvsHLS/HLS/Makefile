@@ -52,7 +52,7 @@ help::
 	@echo  "  Command to run and get vivado utilisation and power reports."
 	@echo  "  Works only for TARGET=hw"
 	@echo  ""
-	@echo  "  make clean_tgt"
+	@echo  "  make clean_target"
 	@echo  "  Command to remove the generated files for a specific target"
 	@echo  ""
 	@echo  "  make clean_insts"
@@ -101,8 +101,18 @@ TARGET := hw_emu
 ######################################
 # FFT 2D Datatype can be,
 # cint16 (Default) or cfloat...
+# 0=cint16(Default)
+# 1=cfloat
 ######################################
-FFT_2D_DT := cint16
+FFT_2D_DT := 0
+
+ifeq ($(FFT_2D_DT),0)
+   FFT_2D_DT_DIR_VAL := cint16
+
+else
+   FFT_2D_DT_DIR_VAL := cfloat
+
+endif
 
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
@@ -179,13 +189,13 @@ EXEC_SCRIPTS_REPO      := $(DESIGN_REPO)/exec_scripts
 VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
 
 BASE_BLD_DIR     := $(PROJECT_REPO)/build
-FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT)_dsns
+FFT_2D_DT_DIR    := $(BASE_BLD_DIR)/$(FFT_2D_DT_DIR_VAL)_dsns
 FFTPT_BLD_DIR    := $(FFT_2D_DT_DIR)/fft2d_$(MAT_ROWS)x$(MAT_COLS)
 INSTS_BLD_DIR    := $(FFTPT_BLD_DIR)/x$(FFT_2D_INSTS)
 BUILD_TARGET_DIR := $(INSTS_BLD_DIR)/$(TARGET)
 
 REPORTS_REPO := $(PROJECT_REPO)/reports_dir
-BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
+BLD_REPORTS_DIR := $(REPORTS_REPO)/$(FFT_2D_DT_DIR_VAL)_dsns/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)
 
 EMBEDDED_PACKAGE_OUT := $(BUILD_TARGET_DIR)/package
 EMBEDDED_EXEC_SCRIPT := run_script.sh
@@ -548,7 +558,7 @@ endif
 # Primary Build Targets
 # ==> sd_card
 # ==> run
-# ==> clean_tgt
+# ==> clean_target
 # ==> clean_insts
 # ==> clean_fftpt
 # ==> clean_fft2d_dt
@@ -568,7 +578,7 @@ run: sd_card run_emu
 all: run report_metrics 
 
 #Clean generated files
-clean_tgt:
+clean_target:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
 

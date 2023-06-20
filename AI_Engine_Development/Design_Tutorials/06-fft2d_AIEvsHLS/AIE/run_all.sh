@@ -11,7 +11,7 @@ arg_lst[tgt]="all"
 arg_lst[dt]="all"
 arg_lst[pt]="all"
 arg_lst[insts]="all"
-arg_lst[freq]="250"
+arg_lst[freq]="312.5"
 arg_lst[en_trace]="1"
 arg_lst[iters]="16"
 

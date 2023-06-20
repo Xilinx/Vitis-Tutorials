@@ -35,7 +35,7 @@
 // to be given as by 4 for cint16
 // since 4 samples of cint16 are passed 
 /////////////////////////////////////////////////
-#if FFT_2D_DT == cint16
+#if FFT_2D_DT == 0 
    #define MAT_SIZE_128b (MAT_SIZE / 4)
    #define MAT_ROWS_128b (MAT_ROWS / 4)
    #define MAT_COLS_128b (MAT_COLS / 4)
@@ -45,7 +45,7 @@
 // since 2 samples of cfloat are passed 
 /////////////////////////////////////////////////
 
-#elif FFT_2D_DT == cfloat
+#elif FFT_2D_DT ==  1
    #define MAT_SIZE_128b (MAT_SIZE / 2)
    #define MAT_ROWS_128b (MAT_ROWS / 2)
    #define MAT_COLS_128b (MAT_COLS / 2)
