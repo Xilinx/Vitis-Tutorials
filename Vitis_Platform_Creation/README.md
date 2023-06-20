@@ -8,13 +8,32 @@
 
 ## Vitis Platform Creation Tutorials
 
+### What is a Platform
+
+Before going to platform creation, Let's get an initial idea of platform.
+
+![image](XPFM.PNG)
+
+Briefly speaking, platform is a package which contains the HPFM（XSA）file and SPFM (software components). When you input the XSA file and software components, Vitis IDE tool will package them together and generate platform XPFM file. where the XSA file is designed and exported from Vivado tool. Software components is prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux if needed. 
+
+**Platform Creation Example Quick Access**
+
+- For first experience of platform, please refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform)
+- For **ZYNQMP** device family, please refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
+- For **Versal** device family, please refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
+- For **DFX** platform, please refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
+- For **SOM** series, please refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260)
+- For **PetaLinux** customization, please refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization)
+
+### Platform Creation Tutorials
+
 The tutorials under the Vitis Platform Creation category help you learn how to develop an extnsible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
 
 - The **[Design Tutorials](./Design_Tutorials/)** showcase end-to-end workflow for creating the Vitis extensible platforms from scratch for different device families and boards.
 - The **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop the platform.
 
 
-### Design Tutorials
+#### Design Tutorials
 
 <table style="width:100%">
  <tr>
@@ -108,7 +127,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
  </tr>
 </table>
 
-### Feature Tutorials
+#### Feature Tutorials
 
 These tutorials illustrate various platform features and how you can incorporate them into your own custom platforms.
 
@@ -166,6 +185,16 @@ These tutorials illustrate various platform features and how you can incorporate
 
 
 </table>
+
+### Abbreviation
+
+- **XSA**   : Vivado exported archive file that contains hardware information required for Vitis and PetaLinux
+- **DFX**   ：Dynamic Functional Exchange
+- **SOM**   : System On Module
+- **DTB**   : Device Tree Binary
+- **DTBO**  : Device Tree Binary Overlay
+
+
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

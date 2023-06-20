@@ -246,7 +246,25 @@ When a component comes with multiple types of simulation models, selecting a Sys
       ```tcl
       set_property SELECTED_SIM_MODEL tlm [get_bd_cells /zynq_ultra_ps_e_0]
       ```
+## Modify the IP address in address editor (Optional)
 
+   >Note: This step is not mandatory for platform creation. Please refer to it according to your requirement.
+
+   If users need to modify the IP address in some cases please go through following steps.
+   1. Check the location address space of your IP 
+   2. Go to address editor by clicking **Window**-> **Address editor** to open it.
+
+   Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
+
+   - As the interrupt controller is connected with **M_AXI_HPM0_LPD** domain, we need check LPD domain supported address space. Please check the [ZYNQMP Technical Reference Manual](https://docs.xilinx.com/r/en-US/ug1085-zynq-ultrascale-trm/PL-AXI-Interface). You could find following address range. That means the IP connected to LPD domain could be placed in 0x8000_0000-0x9FFF_FFFF address space. But conflict is not allowed.
+
+      ![Platform Setup - AXI Ports](images/LPD.PNG)
+
+   - Go to address editor, modify the interrupt controller IP base address according to your requirement.
+
+      ![Platform Setup - AXI Ports](images/address.PNG)
+      
+   >Note: The modified base address should be in the LPD address space and the high address should also be in the LPD address space.
 ## Export Hardware XSA
 
 1. Validate the block design. by clicking the **Validate Design** button in the block design diagram window.
