@@ -497,6 +497,10 @@ To verify the platform functionality, you will create a project with an AI Engin
 
 Congratulations now you have created a custom platform that the PL acceleration kernel and AI Engine applications can work on it.
 
+### Next Steps
+
+If user need to do iteration for your project, you could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
+
 ## What's Next
 
 [The next chapter](./faq.md) will list some frequently encountered problems and frequently asked questions.

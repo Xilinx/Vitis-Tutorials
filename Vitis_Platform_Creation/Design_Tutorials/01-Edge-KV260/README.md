@@ -65,6 +65,8 @@ The platform creation steps are introduced in the following pages. Each page des
 - [Step 1: Create the Vivado Hardware Design and Generate XSA](./step1.md)
 - [Step 2: Create the Vitis Platform](./step2.md)
 - [Step 3: Test the Platform](./step3.md)
+- [Iteration Guidelines](./Iteration_guideline.md)
+           
 
 ***Start from [Step 1: Vivado Design](./step1.md).***
 

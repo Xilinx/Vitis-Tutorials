@@ -354,6 +354,11 @@ Vitis runs PS emulation in QEMU, PL and AIE emulation in XSIM. They can communic
 
 Congratulations now you've created a custom platform that PL acceleration kernel and AIE applications can work on it.
 
+### Next Steps
+
+If user need to do iteration for your project, you could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
+
+
 [In next chapter](./faq.md), we'll list some frequently encountered problems and frequently asked questions. Please take a look if you'd like to understand more of platform creation.
 
 
