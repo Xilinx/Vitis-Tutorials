@@ -9,6 +9,7 @@ SPDX-License-Identifier: X11
 #include <fstream>
 #include <bitset>
 #include <unistd.h>
+#include <thread>
 
 // Please use 'xbutil list' command to get the device id of the target alveo card if multiple
 //   cards are installed in the system.
@@ -176,9 +177,13 @@ int main(int argc, char *argv[]) {
    
     std::cout << "Begin data loopback transfer" << std::endl;
 
+    run_strm_dump.start();
+
+    // Give the strm_dump kernel enough time to start
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
     gettimeofday(&start_time, NULL);
     
-    run_strm_dump.start();
     run_strm_issue.start();
     run_strm_issue.wait();
     run_strm_dump.wait();
