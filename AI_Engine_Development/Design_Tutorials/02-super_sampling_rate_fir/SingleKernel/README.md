@@ -30,11 +30,7 @@ Throughout this tutorial, you will use and reuse the same filter with complex co
 {  -273,  -198},{    22,    30},{    63,   194},{     0,   266}
 ```
 
-<<<<<<< HEAD
 ![ImpulseResponse](../Images/ImpulseResponse.jpg)
-=======
-![missing image](../Images/ImpulseResponse.jpg)
->>>>>>> d8d61191... Updated headers and footers, fixed image references (#33)
 
 The output of this filter will have a much higher amplitude than the input. A scaling factor of `2^15` should be applied to get back to the normalized data. On debugging phase, when only impulses are given to the filter, the scaling factor can be reduced to `1` so that we can verify that the output looks like the impulse response of the filter.
 

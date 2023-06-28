@@ -449,7 +449,7 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td>
-                <a href="http://xilinx.github.io/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
+                <a href="https://github.com/xilinx/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
             </td>
             <td>
                 Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare-metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.
