@@ -16,6 +16,7 @@ AI Engine Development: Feature Tutorials
 
    Incorporation Stream Interfaces <./01_platform_creation_streaming_ip/README>
    PetaLinux Building and System Customization <./02_petalinux_customization/README>
+   Hardware Design Fast Iteration with Vitis Export to Vivado <./03_Vitis_Export_To_Vivado/README>
 
 
 
@@ -32,3 +33,8 @@ AI Engine Development: Feature Tutorials
 
    * - :doc:`PetaLinux Building and System Customization <./02_petalinux_customization/README>`
      - This tutorial demonstrates how you can customize a PetaLinux project to work for Vitis acceleration applications.
+
+   * - :doc:`Hardware Design Fast Iteration with Vitis Export to Vivado <./03_Vitis_Export_To_Vivado/README>`
+     - The Vitis export to Vivado is the new feature release in the Vivado 2023.1 / Vitis 2023.1 suite that enables bi-directional hardware hand-offs between the Vitis tools and the Vivado design suite, which improves developer productivity.
+
+

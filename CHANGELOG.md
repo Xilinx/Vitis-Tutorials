@@ -1,5 +1,14 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.1_update (Jun. 12, 2023)
+### New Tutorials 
+- Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado
+
+### Tutorial Updates
+- Provided an updated description and screenshots to help users leverage the new Vitis Unified IDE for design development.
+    - Getting_Started/Vitis_HLS/
+    - AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration/
+
 ## 2023.1 (May 24th, 2023)
 ### New Tutorials 
 - AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer/

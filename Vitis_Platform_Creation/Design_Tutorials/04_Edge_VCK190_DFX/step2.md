@@ -77,6 +77,8 @@ createdts -hw <static XSA> \
 
 The generated device tree files are located in ``build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp`` path. You can find the ``system.dtb`` file in ``step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/`` directory.
 
+> **NOTE**: Device tree knowledge is a common know-how. Please refer to [AMD Device tree WIKI page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421121/Device+Trees) or [Device Tree WIKI page](https://en.wikipedia.org/wiki/Devicetree#Linux) for more information if you are not familiar with it.
+
 ### Creating the Vitis Platform
 
 The Vitis platform creation workflow for DFX platforms is almost identical to the flat platform with the following exceptions

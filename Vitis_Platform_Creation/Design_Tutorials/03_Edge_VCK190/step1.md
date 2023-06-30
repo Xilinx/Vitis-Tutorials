@@ -147,6 +147,25 @@ In this step, you will create a hardware design using the AMD Versal™ Adaptive
 
 Now you have completed the hardware design. In the coming steps, you will review the platform-related property settings.
 
+### Modify the IP address in address editor (Optional)
+
+   >Note: This step is not mandatory for platform creation. Please refer to it according to your requirement.
+
+   If users need to modify the IP address please go through following steps.
+   1. Check the location address space of your IP 
+   2. Go to address editor by clicking **Window**-> **Address editor** to open it.
+
+   Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
+
+   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
+
+      ![Platform Setup - AXI Ports](images/step1/FPD.PNG)
+
+   - Go to address editor, modify the interrupt controller IP base address according to your requirement. Following is just an example.
+
+      ![Platform Setup - AXI Ports](images/step1/versal_address.PNG)
+      
+   >Note: The modified base address should be in the LPD address space and the high address should also be in the LPD address space.
 ### Review the Versal Extensible Platform Example Part_base Platform Setup
 
 1. (Optional) Export block diagram Tcl to cross check the Tcl commands, or recreate design in the future.

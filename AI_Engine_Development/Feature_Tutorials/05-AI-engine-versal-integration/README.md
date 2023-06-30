@@ -43,6 +43,9 @@ After completing this tutorial, you should be able to:
 * Create a configuration file that describes system connections and use it during the link stage.
 * Create a software application that runs Linux.
 * Package the design to run on software emulation, hardware emulation, and an easy-to-boot SD card image to run on hardware.
+* Become familiar with the new Vitis unified IDE
+
+This tutorial contains two flows that you can work through: the Vitis classic command line flow incorporating the aiecompiler, aiesimulator, and v++ command, and the new Vitis unified IDE flow which demonstrates the use of the new tool available in preview mode in the 2023.1 release as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1553](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide)). The classic command-line flow is documented in the following text. The new Vitis unified IDE flow can be found [here](./unified-ide.md).
 
 ## Tutorial Overview
 

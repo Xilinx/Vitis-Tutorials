@@ -374,6 +374,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260">Custom Platform Creation on KV260</a>
                 </td>
                 <td height="24">
+                    <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado">Hardware Design Fast Iteration with Vitis Export to Vivado  :new: </a>
                 </td>
             </tr>
             <tr>
@@ -448,7 +449,7 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td>
-                <a href="http://xilinx.github.io/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
+                <a href="https://github.com/xilinx/Embedded-Design-Tutorials">Embedded Design Tutorials</a>
             </td>
             <td>
                 Learn how to build and use embedded operating systems and drivers on Xilinx Adaptive SoCs and the MicroBlaze™ soft processor. These tutorials cover open-source operating systems and bare-metal drivers available from Xilinx, compilers, debuggers, and profiling tools for traditional SoC software development.

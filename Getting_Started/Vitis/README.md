@@ -18,7 +18,12 @@
 
 Welcome to the Vitis Getting Started tutorial. The Vitis tool provides a unified flow for developing FPGA accelerated application targeted to either Data Center accelerator cards or Embedded Processor platforms. If you are looking to learn more about the Vitis application acceleration development flow in order to get started with FPGA acceleration, you have come to the right place.
 
-This tutorial is divided into two separate flows: the [Data Center Acceleration flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers), and the [Embedded System Design flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers). These two flows are similar in that host applications and accelerated kernels written for one flow can be used in the other flow, and the build processes are similar. However, while similar the flows are also different in that the build and runtime environments of Data Center accelerator cards and Embedded Processor platforms have different requirements that must be met.
+This tutorial is divided into three separate flows: 
+* The [Embedded System Design flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers)
+* The [Data Center Acceleration flow](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers)
+* The [Vitis unified IDE flow](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide)
+
+These flows use the same host applications and accelerated kernel source code, but have differences in the build and implementation of the systems. Use the Embedded System design flow if you are working with an AMD Adaptive SoC device such as AMD Versal™, or Data Center Acceleration if you are working with an AMD Alveo™ accelerator card, and use the Vitis unified IDE flow if you are interested in working with the latest version of the Vitis tools. 
 
 This tutorial provides instructions for building and running on both the Alveo U250 Data Center accelerator card, and the AMD Zynq™ Ultrascale™ MPSoC ZCU102 platform. These instructions can be easily adapted to other AMD cards.
 
@@ -30,13 +35,13 @@ The two flows in this tutorial are both organized into five parts and are design
 
 * **Part 3** explains the source code of vector-add example used in the rest of the tutorial.
 
-* **Part 4** describes the Data Center flow and the Embedded Platform flow. Each flow includes the commands required to compile, link, and run the example on your acceleration card.
+* **Part 4** has three parts that describe the Embedded System flow and the Data Center acceleration flow as command line flows, and presents the new Vitis unified IDE. Each flow includes the commands required to compile, link, and run the example design.
 
-* **Part 5** gives an overview of Vitis Analyzer and shows how to open and analyze reports.
+* **Part 5** gives an overview of the Analysis view and shows how to open and analyze reports.
 
 ## Part 1 : Essential Concepts
 
-The Vitis unified software platform provides a framework for developing and delivering FPGA accelerated applications using standard programming languages like C and C++. The Vitis flow offers all of the features of a standard software development environment, including:
+The Vitis unified software platform provides a framework for developing and delivering Adaptive SoC and FPGA accelerated applications using standard programming languages like C and C++. The Vitis flow offers all of the features of a standard software development environment, including:
 
 * Compiler or cross-compiler for host applications running on x86 or Arm® processors
 * Cross-compilers for building the FPGA binary

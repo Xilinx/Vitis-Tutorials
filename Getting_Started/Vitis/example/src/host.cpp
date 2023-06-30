@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     boOut.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
     // Validate results
-    if (std::memcmp(bo2_map, bufReference, DATA_SIZE))
+    if (std::memcmp(bo2_map, bufReference, vector_size_bytes))
         throw std::runtime_error("Value read back does not match reference");
 
     std::cout << "TEST PASSED\n";

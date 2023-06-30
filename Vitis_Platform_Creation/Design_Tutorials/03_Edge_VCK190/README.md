@@ -41,6 +41,7 @@ Navigate through these steps with the following table of contents links.
 - [Step 1: Create a Hardware Design](./step1.md)
 - [Step 2: Create a Vitis Platform](./step2.md)
 - [Step 3: Run Applications on the Vitis Platform](./step3.md)
+- [Iteration Guidelines](./Iteration_guideline.md)
 - [Frequently Asked Questions](faq.md)
 
 ## Reference
