@@ -244,11 +244,11 @@ GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/lib
 GCC_INC_FLAGS += -I$(AIE_SRC_REPO)
 GCC_INC_FLAGS += -I$(HOST_APP_SRC_REPO)
-
+GCC_INC_FLAGS += -I${XILINX_XRT}/include
 GCC_INC_LIB := -L$(SDKTARGETSYSROOT)/usr/lib 
 GCC_INC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o 
 GCC_INC_LIB += -L$(XILINX_VITIS)/aietools/lib/lnx64.o
-
+GCC_INC_LIB += -L${XILINX_XRT}/lib
 GCC_INC_LIB += -ladf_api_xrt 
 GCC_INC_LIB += -lxrt_coreutil 
 
