@@ -15,9 +15,9 @@ SPDX-License-Identifier: MIT
 
 #include "graph.cpp"
 
-#include "xrt/experimental/xrt_aie.h"
-#include "xrt/experimental/xrt_kernel.h"
-#include "xrt/experimental/xrt_bo.h"
+#include "experimental/xrt_aie.h"
+#include "experimental/xrt_kernel.h"
+#include "experimental/xrt_bo.h"
 
 #include "adf/adf_api/XRTConfig.h"
 
