@@ -1,0 +1,38 @@
+
+{
+    "name": "Vitis_Platform_Creation-Feature_Tutorials-04_platform_validation",
+    "description": "Hardware design validation for AI engine",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "PFM_F_04_Platform_validation_aie",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "custom_build_target":
+        {
+            "all": "all",
+            "hw" : "sd_card"
+        }
+        }
+    }
+
