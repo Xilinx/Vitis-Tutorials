@@ -47,7 +47,7 @@ $(builddir)/$(EMCONFIG_FILE):
 	emconfigutil --nd 1  --platform $(PLATFORM) --od $(builddir)
 
 clean:
-	rm -rf temp_dir log_dir ../build/hbm*/.log ../build/hbm*/*summary ../build/*.info report_dir *log host vadd* *.csv *summary .run .Xil vitis* *jou xilinx*
+	rm -rf temp_dir log_dir ./build/hbm*/.log ./build/hbm*/*summary ./build/*.info report_dir *log host vadd* *.csv *summary .run .Xil vitis* *jou xilinx*
 
 cleanall:
-	rm -rf ../build 
+	rm -rf ./build 
