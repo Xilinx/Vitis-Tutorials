@@ -382,6 +382,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
                 </td>
                 <td height="24">
+                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation  :new: </a>
                 </td>
             </tr>
         </tbody>

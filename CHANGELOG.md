@@ -1,8 +1,19 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.1_update (Jul. 27, 2023)
+### New Tutorials 
+- Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation/
+### Tutorial Updates
+- Revamping the AI Engine debug walkthrough tutorial by using a smaller design for fast iteration and adding more features. 
+    - AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough/
+### EoU Improvements
+- Rewrite the README pages to help users locate tutorials and get help
+    - AI_Engine_Development/README
+    - Vitis_Platform_Creation/README
+
 ## 2023.1_update (Jun. 12, 2023)
 ### New Tutorials 
-- Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado
+- Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
 
 ### Tutorial Updates
 - Provided an updated description and screenshots to help users leverage the new Vitis Unified IDE for design development.
