@@ -182,6 +182,21 @@ These tutorials illustrate various platform features and how you can incorporate
     </td>
   </tr>
 
+<tr>
+    <td align="center"><a href="./Feature_Tutorials/04_platform_validation/">Hardware Design Validation</a></td>
+    <td>Versal AI Core</td>
+    <td>VCK190</td>
+    <td>Flat & Block Design Container</td>
+    <td>Vivado &<br>Vitis IDE</td>
+    <td>
+      <b>Highlights</b>:
+      <ul>
+        <li>Link kernel with XSA directly</li>
+        <li>Validation against hardware platform interfaces</li>
+        <li>Validate the hardware design with bare-metal application</li>
+      </ul>
+    </td>
+  </tr>
 
 
 </table>
