@@ -36,8 +36,6 @@ Vitis accelerated applications can execute on either data center or embedded acc
 
 * On data center platforms, the software program runs on an x86 server, and the kernels run in the FPGA on a PCIe®-attached acceleration card.
 
-* On data-center platforms, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe-attached acceleration card.
-
 * On embedded platforms, the software program runs on an ARM processor of a AMD MPSoC device and the kernels run within the same device. 
 
 Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user’s source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
@@ -60,10 +58,6 @@ The Vitis build process follows a standard compilation and linking process for b
 * The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a AMD object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results. 
 
 ![img](./images/part1_build_flow.png)
-
-* The FPGA binary is built using the Vitis compiler. First the kernels are compiled into a Xilinx object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the FPGA binary (.xclbin) file. The Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.
-
-  ![img](./images/part1_build_flow.png)
 
 ## Understanding Vitis Build Targets
 
