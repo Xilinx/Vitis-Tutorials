@@ -7,7 +7,7 @@
 DO_COSIM        := true
 ECHO            := @echo
 
-PLATFORM_USE    := xilinx_vck190_base_202310_1
+PLATFORM_USE    := xilinx_vck190_base_202320_1
 XPFM            := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 KERNEL          := m16_ssr8_cyclic_shift_wrapper

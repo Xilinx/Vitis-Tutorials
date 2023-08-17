@@ -38,7 +38,7 @@ XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 # =========================================================
 # PLATFORM SELECTION
 # =========================================================
-PLATFORM ?=xilinx_vck190_base_202310_1
+PLATFORM ?=xilinx_vck190_base_202320_1
 
 all: pre_build vitis_hls
 

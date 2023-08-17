@@ -29,7 +29,7 @@
 # make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=CPP traffic_gen run_emu
 #   -->  Runs hw_emu with C++ external TG. Here, you take advantage of the already compiled xclbin and created package.
 
-export PFM_NAME := xilinx_vck190_base_202310_1
+export PFM_NAME := xilinx_vck190_base_202320_1
 
 # Makefile input options if not defined from top-level stage
 
@@ -63,11 +63,11 @@ all_run_emu:  aie kernels xclbin host package traffic_gen run_emu
 
 #Check environment setup
 ifndef ROOTFS
-  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4
   export ROOTFS
 endif
 ifndef IMAGE
-  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.1/Image
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/Image
   export IMAGE
 endif
 

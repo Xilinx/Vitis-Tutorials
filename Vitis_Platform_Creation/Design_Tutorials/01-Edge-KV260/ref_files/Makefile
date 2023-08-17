@@ -3,7 +3,7 @@
 #SPDX-License-Identifier: X11
 #*/
 
-VERSION				?=2023.1
+VERSION				?=2023.2
 COMMON_IMAGE_ZYNQMP 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 
 .PHONY: help

@@ -19,7 +19,7 @@ GRAPH := src/graph.cpp
 GRAPH_O := libadf.a
 PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python:${XILINX_VIVADO}/data/emulation/python/xtlm_ipc:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python
 
-LD_LIBRARY_PATH:=$(XILINX_VIVADO)/data/simmodels/xsim/2023.1/lnx64/9.3.0/ext/protobuf/:$(XILINX_VIVADO)/lib/lnx64.o/Default:$(XILINX_VIVADO)/lib/lnx64.o/:$(LD_LIBRARY_PATH)
+LD_LIBRARY_PATH:=$(XILINX_VIVADO)/data/simmodels/xsim/2023.2/lnx64/9.3.0/ext/protobuf/:$(XILINX_VIVADO)/lib/lnx64.o/Default:$(XILINX_VIVADO)/lib/lnx64.o/:$(LD_LIBRARY_PATH)
 # Command-line options
 AIECC := aiecompiler
 

@@ -31,7 +31,7 @@ SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd
 # global variables for this tutorial
 # =======================================================
 #RELEASE=2022.2
-RELEASE=2023.1
+RELEASE=2023.2
 BOARD=vck190
 BASE_NUM=202310_1
 #BASE_NUM=202220_1
