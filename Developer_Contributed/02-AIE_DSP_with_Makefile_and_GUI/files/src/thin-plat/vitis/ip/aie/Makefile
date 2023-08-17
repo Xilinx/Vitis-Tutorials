@@ -58,7 +58,7 @@ allx86       : clean x86compile x86sim
 #${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 ${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/*
 	$(MAKE) clean
-	aiecompiler -target=hw --dataflow -v --use-phy-shim=${FLAG} ${DSPLIB_INCLUDES} -include=${AIE_SRC} -include=${AIE_GRAPHS} ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
+	aiecompiler -target=hw -v --use-phy-shim=${FLAG} ${DSPLIB_INCLUDES} -include=${AIE_SRC} -include=${AIE_GRAPHS} ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
 	#aiecompiler -target=hw --dataflow -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} ${DSPLIB_INCLUDES}  -include=${AIE_KERNELS} -include=${AIE_SRC} -include=${AIE_GRAPHS} ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
 
 sim:
