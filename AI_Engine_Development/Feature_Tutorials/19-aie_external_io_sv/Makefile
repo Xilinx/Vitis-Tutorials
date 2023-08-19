@@ -6,7 +6,7 @@
 SIMULATOR := xsim
 
 compile:
-	aiecompiler --aiearch=aie --platform=$(PLATFORM)  -v -log-level=3 --pl-freq=500 -include=./aie --dataflow --output=graph.json aie/graph.cpp
+	aiecompiler --aiearch=aie --platform=$(PLATFORM)  -v -log-level=3 --pl-freq=500 -include=./aie  --output=graph.json aie/graph.cpp
 
 run:
 	aiesimulator --pkg-dir Work --profile

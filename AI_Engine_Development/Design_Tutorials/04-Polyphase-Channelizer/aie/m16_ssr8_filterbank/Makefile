@@ -24,7 +24,7 @@ ALL_INCLUDE       := -include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := --dataflow -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} ${PL_FREQ}
+AIE_FLAGS         :=  -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} ${PL_FREQ}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

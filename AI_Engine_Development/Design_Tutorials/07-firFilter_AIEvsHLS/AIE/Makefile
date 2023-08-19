@@ -248,7 +248,7 @@ AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
 AIE_FLAGS += --log-level=5
 AIE_FLAGS += --pl-freq=$(PL_FREQ)
 AIE_FLAGS += --verbose
-AIE_FLAGS += --dataflow
+#AIE_FLAGS += --dataflow
 
 # Aiesimulator flags
 #-i - Alias of --input-dir=<dir> option

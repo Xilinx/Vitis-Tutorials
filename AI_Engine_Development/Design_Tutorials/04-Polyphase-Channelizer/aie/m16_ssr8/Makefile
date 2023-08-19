@@ -34,7 +34,7 @@ ALL_INCLUDE       := -include=${PWD} -include=../m16_ssr8_filterbank -include=..
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := --dataflow -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} \
+AIE_FLAGS         :=  -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} \
 			${PL_FREQ}
 
 ifeq (${DO_GRAPH_SIM},true)
