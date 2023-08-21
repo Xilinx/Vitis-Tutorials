@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
 PLATFORM_NAME_FSBL=zcu104_custom_fsbl
-VERSION=2023.1
+VERSION=2023.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 BOOT=boot
 SD_DIR=sd_dir
@@ -50,7 +50,7 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 #echo command is to avoid the return error code caused by the createdts command warning	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2023.1 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2023.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(BOOT)/
 	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb $(SD_DIR)/
 

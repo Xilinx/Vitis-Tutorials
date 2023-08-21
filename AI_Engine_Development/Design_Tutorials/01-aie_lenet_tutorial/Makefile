@@ -212,7 +212,7 @@ AIE_FLAGS += --platform=$(PLATFORM)
 AIE_FLAGS += --log-level=5 
 #AIE_FLAGS += --test-iterations=100 
 AIE_FLAGS += --pl-freq=500
-AIE_FLAGS += --dataflow 
+#AIE_FLAGS += --dataflow 
 
 AIE_FLAGS += --heapsize=2048 
 AIE_FLAGS += --workdir=$(WORK_DIR)

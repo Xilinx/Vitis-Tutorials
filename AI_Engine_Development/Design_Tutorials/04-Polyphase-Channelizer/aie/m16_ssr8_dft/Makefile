@@ -10,7 +10,7 @@ MY_APP            := m16_ssr8_dft_app
 SOURCES           := m16_ssr8_dft_graph.h dft_1xN_widget_graph.h dft_1xN_widget.h dft_1xN_widget.cpp \
 			twiddle_m16_ssr8_dft.h
 
-PLATFORM_USE      := xilinx_vck190_base_202310_1
+PLATFORM_USE      := xilinx_vck190_base_202320_1
 PL_FREQ           := --pl-freq=625
 
 PLATFORM          := --platform=${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
@@ -25,7 +25,7 @@ ALL_INCLUDE       := -include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := --dataflow -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} ${PL_FREQ}
+AIE_FLAGS         :=  -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} ${PL_FREQ}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

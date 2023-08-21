@@ -24,7 +24,7 @@ WORK_DIR          = ${AIE_WS}/Work
 LOG_FILE          = ${AIE_WS}/aiecompiler.log
 SIM_LOG_FILE      = ${AIE_WS}/aiesimulator.log
 AIE_OPTS          := -target=${TARGET}
-AIE_OPTS          += --dataflow
+#AIE_OPTS          += --dataflow
 AIE_OPTS          += -v
 AIE_OPTS          += --use-phy-shim=true
 AIE_OPTS          += --platform=${XPFM}

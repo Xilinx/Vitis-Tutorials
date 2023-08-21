@@ -15,29 +15,29 @@
 # set Platform, Vitis and Petalinux repo
 # =======================================================
 #ts 2022.2_daily_latest -petalinux petalinux-v2022.2_daily_latest
-#ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
+#ts 2023.2_daily_latest -petalinux petalinux-v2023.2_daily_latest
 
 
 # =======================================================
 # global variables for this tutorial
 # =======================================================
 #RELEASE=2022.2
-RELEASE=2023.1
+RELEASE=2023.2
 BOARD=vck190
-BASE_NUM=202310_1
+BASE_NUM=202320_1
 #BASE_NUM=202220_1
 
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
 export GUUP_DIR=<PUT-YOUR-GUUP-DIR-HERE>
 
-export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.1/Vitis-Tutorials_2023.1_next/Developer_Contributed
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.2/Vitis-Tutorials_2023.2_next/Developer_Contributed
 
 
 # =======================================================
 # to emulate SPRITE regression env in GUUP Servers
 # =======================================================
-cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2023.1_next
+cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2023.2_next
 source env_setup_versal.sh
 ##back to the wrk dir
 cd ${WRK_DIR}/${TUTORIAL}/files/
@@ -53,13 +53,13 @@ mkdir -p /tmp/danieleb
 export TMPDIR=/tmp/danieleb
 
 # PETALINUX and VERSAL COMMON IMAGE
-export COMMON_IMAGE_VERSAL=${HOME}/common/xilinx-versal-common-v2023.1
+export COMMON_IMAGE_VERSAL=${HOME}/common/xilinx-versal-common-v2023.2
 
 : ' # do it only once
 # clean versal folder content
 rm -rf ${COMMON_IMAGE_VERSAL}
 # install SDK
-export VERSAL_COMMON_2023v1=$PETALINUX/../../bsp/internal/xilinx-versal-common-v2023.1/
+export VERSAL_COMMON_2023v1=$PETALINUX/../../bsp/internal/xilinx-versal-common-v2023.2/
 cd ${VERSAL_COMMON_2023v1}
 bash ./sdk.sh -y -p -d ${COMMON_IMAGE_VERSAL}
 cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${COMMON_IMAGE_VERSAL}/
@@ -73,7 +73,7 @@ source ${WRK_DIR}/${TUTORIAL}/files/make-flow/local_var_setup.sh
 # Set DSP Library for Vitis
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
-#export DSPLIB_ROOT=<Path to 2023.1 DSP Libs - Directory>
+#export DSPLIB_ROOT=<Path to 2023.2 DSP Libs - Directory>
 export DSPLIB_VITIS=/group/xirguup/danieleb/ide2022.2/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 

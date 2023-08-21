@@ -10,10 +10,10 @@
 
 unset LD_LIBRARY_PATH
 export PLATFORM_REPO_PATH=<PATH-TO-PLATFORMS-DIRECTORY>
-export XILINX_VITIS=<PATH-TO-VITIS-BUILD-DIRECTORY>/Vitis/2023.1
-export COMMON_IMAGE_VERSAL=<PATH TO xilinx-versal-common-v2023.1 - DIRECTORY>
+export XILINX_VITIS=<PATH-TO-VITIS-BUILD-DIRECTORY>/Vitis/2023.2
+export COMMON_IMAGE_VERSAL=<PATH TO xilinx-versal-common-v2023.2 - DIRECTORY>
 export BSP_DIR=<PATH TO xilinx-petalinux-DIRECTORY>/bsp/release
-export BSP=xilinx-vck190-v2023.1-final.bsp
+export BSP=xilinx-vck190-v2023.2-final.bsp
 
 # Setup SDKTARGETSYSROOT and CXX...
 source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
@@ -22,12 +22,12 @@ source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 source $XILINX_VITIS/settings64.sh
 
 #To source petalinux: 
-source <PATH TO petalinux-v2023.1-final>/settings.sh
+source <PATH TO petalinux-v2023.2-final>/settings.sh
 
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202310_1
+tgt_plat=xilinx_vck190_base_202320_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 echo ""

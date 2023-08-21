@@ -8,9 +8,9 @@ ECHO                               = @echo
 
 export TARGET                      = hw_emu
 
-RELEASE=2023.1
+RELEASE=2023.2
 BOARD=vck190
-BASE_NUM=202310_1
+BASE_NUM=202320_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}

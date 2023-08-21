@@ -9,7 +9,7 @@ ECHO                               = @echo
 ################################################################################
 # Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2023.1
+REQUIRED_VERSION                   = 2023.2
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
 #REQUIRED_VERSION                   = 2022.2
 #VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "Vivado ")
@@ -67,7 +67,7 @@ export LINUX_ETH_CONFIG           := DHCP
 ################################################################
 export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
 export PLATFORM_CUSTOM            := vck190_thin
-export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202310_1
+export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202320_1
 #export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202220_1
 export LINUX_MACHINE              := vck190-versal
 

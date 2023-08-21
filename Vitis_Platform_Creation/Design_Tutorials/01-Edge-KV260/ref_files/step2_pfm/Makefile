@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
 PLATFORM_NAME_FSBL=kv260_custom_fsbl
 XSA_NAME=kv260_hardware_platform
-VERSION=2023.1
+VERSION=2023.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DT_PLAT_NAME=mydeivice
 DT_PATH=$(ROOT_DIR)/$(DT_PLAT_NAME)/psu_cortexa53_0/device_tree_domain/bsp
@@ -47,7 +47,7 @@ sw_comps:$(COMMON_IMAGE_ZYNQMP)/Image
 
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2023.1  -overlay -compile"
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2023.2  -overlay -compile"
 	cp $(DT_PATH)/system.dtb $(BOOT)/
 	cp $(DT_PATH)/system.dtb $(SD_DIR)/
 

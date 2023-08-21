@@ -243,7 +243,7 @@ AIE_FLAGS += --platform=$(PLATFORM)
 AIE_FLAGS += --log-level=5
 #AIE_FLAGS += --test-iterations=2
 AIE_FLAGS += --pl-freq=$(PL_FREQ)
-AIE_FLAGS += --dataflow
+#AIE_FLAGS += --dataflow
 
 # Constraints for same shim solution for all variations
 # aids in timeing closure of the design...

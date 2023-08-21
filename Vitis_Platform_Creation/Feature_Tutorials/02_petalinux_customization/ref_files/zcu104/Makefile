@@ -10,7 +10,7 @@ ABS_SW_PATH=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)
 PETALINUX_DIR=$(ABS_SW_PATH)
 PETALINUX_CONFIG=$(PETALINUX_DIR)/project-spec/configs/config
 PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
-XSA	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202310_1/hw/hw.xsa
+XSA	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202320_1/hw/hw.xsa
 
 IMAGE_DIR=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)/images/linux/
 .PHONY: help

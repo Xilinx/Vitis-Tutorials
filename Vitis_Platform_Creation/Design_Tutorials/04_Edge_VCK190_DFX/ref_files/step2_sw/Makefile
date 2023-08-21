@@ -20,7 +20,7 @@ DT_PATH=$(ABS_BUILD_PATH)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
 DTB_FILE=$(DT_PATH)/system.dtb
 BOOT_DIR=$(ABS_BUILD_PATH)/boot
 SD_DIR=$(ABS_BUILD_PATH)/sd_dir
-VERSION=2023.1
+VERSION=2023.2
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 
 SW_COMP_PATH=$(ABS_BUILD_PATH)/sw_comp
@@ -64,7 +64,7 @@ dtb: $(DTB_FILE)
 #echo command is to avoid the return error code caused by the createdts command warning
 $(DTB_FILE): $(STATIC_XSA) system-user.dtsi
 	$(info executing createdts to generate dts file)
-	xsct -eval "createdts -hw $(STATIC_XSA) -out $(ABS_BUILD_PATH) -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.1 -board versal-vck190-reva-x-ebm-01-reva -dtsi system-user.dtsi -compile" 
+	xsct -eval "createdts -hw $(STATIC_XSA) -out $(ABS_BUILD_PATH) -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -board versal-vck190-reva-x-ebm-01-reva -dtsi system-user.dtsi -compile" 
 	
 
 
