@@ -4,23 +4,24 @@
 #
 
 
+PFM_NAME ?= xilinx_vck190_base_202310_1
 
 all:
 	make data
-	make -C Emulation-AIE all
+	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) all
 
 run:
 	make data
 	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aie aiesim
 
 aie:
-	make -C Emulation-AIE aie
+	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aie
 
 aiesim:
-	make -C Emulation-AIE aiesim
+	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aiesim
 
 aieviz:
-	make -C Emulation-AIE aieviz
+	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aieviz
 
 clean:
 	rm data/*

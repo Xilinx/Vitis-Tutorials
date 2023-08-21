@@ -1,22 +1,27 @@
-#
+#!/usr/bin/env python3
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
-#!/bin/bash
-
-# Saves arguments in 2 environment variables that can be read by Python
-export NArgs=$BASH_ARGC
-export Args=$*
-
-python - <<END
 import os
+import subprocess
+import sys
+
 from ProcessAIEOutputLib import *
 
-NArgs = int(os.environ['NArgs'])
-ArgsChain = os.environ['Args']
-Args = ArgsChain.split()
+# gets variable from parameters
+NArgs = len(sys.argv)-1
+Args = sys.argv
+Args[0] = 'ls'
 
-ComputeThroughput(Args)
+if (NArgs<1): # No argument !!
+  exit
 
-END
+Args1 = subprocess.check_output(' '.join(Args),shell=True,text=True)
+Args1 = Args1.split()
+NArgs = len(Args1)
+
+print(Args1)
+
+if(NArgs>=1):
+    ComputeThroughput(Args1)

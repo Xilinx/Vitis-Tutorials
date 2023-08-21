@@ -1,13 +1,9 @@
-#
+#!/usr/bin/env python3
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
-echo " "
-echo "Stream Content Generation"
-echo " "
 
-python - <<END
 
 import os
 
@@ -17,6 +13,9 @@ from tkinter import *
 from GenerationLib import *
 from functools import partial
 
+print("\n--------------------------------------------------\n")
+print("Stream Content Generation\n")
+print("--------------------------------------------------\n\n\n")
 
 
 # Generates interface
@@ -112,6 +111,3 @@ but2.grid(row=10,column=3,columnspan=3)
 
 
 F.mainloop()
-
-
-END

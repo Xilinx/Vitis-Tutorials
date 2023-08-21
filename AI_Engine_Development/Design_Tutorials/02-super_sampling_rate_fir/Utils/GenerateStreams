@@ -1,34 +1,26 @@
-#
+#!/usr/bin/env python3
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
-#!/bin/bash
-
-echo " "
-echo "Stream Content Generation"
-echo " "
-
-# Saves arguments in 2 environment variables that can be read vy Python
-export NArgs=$BASH_ARGC
-export Args=$*
-
-python - <<END
 
 import os
+import sys
 
 from math import floor
 from shutil import copyfile
 from GenerationLib import *
 from functools import partial
 
-# gets variable from environment variable
-NArgs = int(os.environ['NArgs'])
-ArgsChain = os.environ['Args']
-Args = ArgsChain.split()
+print("\n--------------------------------------------------\n")
+print("Stream Content Generation\n")
+print("--------------------------------------------------\n\n\n")
+
+NArgs = len(sys.argv)
+Args = sys.argv
 
 # No argument
-if (NArgs<1):
+if (NArgs<2):
 	print("\n================================================================================================\n")
 	print("Usage:\nGenerateStreams DataType PLIO_Width NPhases NStreams NSamples NFrames SequenceType Basename")
 	print("\tDatatype: cint16, int16, int32")
@@ -41,15 +33,13 @@ if (NArgs<1):
 	print("\tBasename: file name that will prepend phase and stream index")
 	print("\n================================================================================================\n")
 else:
-	dtval = Args[0]
-	pliow = int(Args[1])
-	NPhases = int(Args[2])
-	NStreams = int(Args[3])
-	NSamples = int(Args[4])
-	NFrames = int(Args[5])
-	SeqType = Args[6]
-	Basename = Args[7]
+	dtval = Args[1]
+	pliow = int(Args[2])
+	NPhases = int(Args[3])
+	NStreams = int(Args[4])
+	NSamples = int(Args[5])
+	NFrames = int(Args[6])
+	SeqType = Args[7]
+	Basename = Args[8]
 
 	GenerateTestVector(dtval,pliow,NPhases,NStreams,NSamples,NFrames,SeqType,Basename)
-
-END
