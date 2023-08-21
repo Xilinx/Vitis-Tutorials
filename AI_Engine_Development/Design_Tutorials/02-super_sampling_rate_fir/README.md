@@ -39,7 +39,7 @@ This tutorial targets VCK190 production board for 2023.1 version.
 
 Data generation for this tutorial requires Python:
 * [Python 3](https://www.python.org/downloads/)
-    * Packages: math, shutils, functools, matplotlib, numpy, random
+    * Packages: math, shutils, functools, matplotlib, numpy, random, subprocess
 
 ### Accessing the Tutorial Reference Files
 
