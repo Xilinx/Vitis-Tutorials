@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: X11
 #
 
-PFM_NAME ?= xilinx_vck190_base_202310_1
+PFM_NAME ?= xilinx_vck190_base_202320_1
 
 all:
 	make data
