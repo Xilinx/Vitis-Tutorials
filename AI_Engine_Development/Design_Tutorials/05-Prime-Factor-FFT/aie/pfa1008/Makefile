@@ -21,7 +21,7 @@ DFT16_SOURCE      := dft16_graph.h dft16_compute.h dft16_compute.cpp dft16_combi
 MY_SOURCES        := ${MY_APP}.cpp pfa1008_graph.h ${DFT7_SOURCE:%=../dft7w/%} ${DFT9_SOURCE:%=../dft9w/%} \
                      ${DFT16_SOURCE:%=../dft16/%}
 
-PLATFORM_USE	  := xilinx_vck190_base_202310_1
+PLATFORM_USE	  := xilinx_vck190_base_202320_1
 PLATFORM          := -platform=${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 PL_FREQ           := --pl-freq=625
