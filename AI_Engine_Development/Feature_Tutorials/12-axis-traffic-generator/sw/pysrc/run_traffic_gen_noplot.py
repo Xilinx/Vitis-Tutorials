@@ -40,24 +40,25 @@ class IQData():
 
     
     def rx_from_aie(self):        
-        payload = self.out0_util.sample_transaction()
-        print("Rx Payload1(pasteable)= ")
+        for i in range(0,256):
+            payload = self.out0_util.sample_transaction()
+            print("Rx Payload1(pasteable)= ")
  
         #this magic makes sure the first byte isnt interpreted 
         #as an ASCII encoding character and just prints the value
         #print(''.join(r'\x'+hex(letter)[2:] for letter in payload.data))
-        print(payload.data)
+            print(payload.data)
         #print(payload.tkeep)
 
-        print("Rx payload len=")
-        print(len(payload.data))
+            print("Rx payload len=")
+            print(len(payload.data))
         
         #formatString = "<"+str(len(payload.data)//2)+"h"
         #rxData = struct.unpack(formatString, payload.data)
         #print("Rx payload finished")
         
-        cvec = self.convert_bytes_to_numpy(payload.data)
-        self.child_conn0.send(cvec)
+            cvec = self.convert_bytes_to_numpy(payload.data)
+            self.child_conn0.send(cvec)
         print("Rx payload tx to parent")
 
         

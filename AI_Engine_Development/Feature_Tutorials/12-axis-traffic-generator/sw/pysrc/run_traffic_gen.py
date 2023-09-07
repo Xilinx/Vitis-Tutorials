@@ -35,12 +35,13 @@ class IQData():
         self.convert_bytes_to_numpy(t1)
     
     def rx_from_aie(self):        
-        payload = self.rx_axis.sample_transaction()
-        #This call blocks until the AIE passes some data to the AXI SIM IPC SLAVE
-           
-        cvec = self.convert_bytes_to_numpy(payload.data)
-        self.child_conn0.send(cvec)
-        print("Received AIE Output. Sending to parent thread for processing")
+        for i in range(0, 256):
+            payload = self.rx_axis.sample_transaction()
+            #This call blocks until the AIE passes some data to the AXI SIM IPC SLAVE
+               
+            cvec = self.convert_bytes_to_numpy(payload.data)
+            self.child_conn0.send(cvec)
+            print("Received AIE Output. Sending to parent thread for processing")
 
         
     def tx_to_aie(self,iq_data_as_bytes,test):
