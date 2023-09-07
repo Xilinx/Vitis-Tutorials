@@ -1,7 +1,3 @@
-#
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
-#
 
 ################################################################
 # This is a generated script based on design: ext_platform
@@ -24,12 +20,18 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2023.1
+set scripts_vivado_version 2023.2
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
    puts ""
-   catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+   if { [string compare $scripts_vivado_version $current_vivado_version] > 0 } {
+      catch {common::send_gid_msg -ssname BD::TCL -id 2042 -severity "ERROR" " This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Sourcing the script failed since it was created with a future version of Vivado."}
+
+   } else {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+
+   }
 
    return 1
 }
@@ -48,13 +50,13 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project project_1 myproj -part xcvc1902-vsva2197-2MP-e-S
-   set_property BOARD_PART xilinx.com:vck190:part0:3.0 [current_project]
+   set_property BOARD_PART xilinx.com:vck190:part0:3.2 [current_project]
 }
 
 
 # CHANGE DESIGN NAME HERE
 variable design_name
-set design_name ${PLATFORM_NAME}
+set design_name vck190_thin
 
 # If you do not already have an existing IP Integrator design open,
 # you can create a design using the following command:
@@ -115,10 +117,13 @@ if { ${design_name} eq "" } {
 }
 
   # Add USER_COMMENTS on $design_name
-  set_property USER_COMMENTS.comment0 "An Example Versal Extensible Embedded Platform
-Note:
-BD has VIPs on the accelerator SmartConnect IPs because IPI platform can't handle export with no slaves on SmartConnect IP.
-Hence VIPs are there to have at least one slave on a smart connect" [get_bd_designs $design_name]
+  set_property USER_COMMENTS.comment0 "\t \t ======================= >>>>>>>>> An Example Versal Extensible Embedded Platform <<<<<<<<< =======================
+			\t Note:
+			\t --> Board preset applied to CIPS and memory controller settings
+			\t --> AI Engine control path is connected to CIPS
+			\t --> V++ will connect AI Engine data path automatically
+			\t --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
+			\t --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
 
 common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
 
@@ -134,13 +139,13 @@ set bCheckIPsPassed 1
 set bCheckIPs 1
 if { $bCheckIPs == 1 } {
    set list_check_ips "\ 
-xilinx.com:ip:versal_cips:3.3\
-xilinx.com:ip:ai_engine:2.0\
+xilinx.com:ip:versal_cips:3.4\
 xilinx.com:ip:axi_intc:4.1\
-xilinx.com:ip:axi_noc:1.0\
 xilinx.com:ip:clk_wizard:1.0\
-xilinx.com:ip:smartconnect:1.0\
+xilinx.com:ip:axi_noc:1.0\
 xilinx.com:ip:proc_sys_reset:5.0\
+xilinx.com:ip:smartconnect:1.0\
+xilinx.com:ip:ai_engine:2.0\
 "
 
    set list_ips_missing ""
@@ -204,14 +209,6 @@ proc create_root_design { parentCell } {
 
 
   # Create interface ports
-  set ch0_lpddr4_c0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch0_lpddr4_c0 ]
-
-  set ch0_lpddr4_c1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch0_lpddr4_c1 ]
-
-  set ch1_lpddr4_c0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch1_lpddr4_c0 ]
-
-  set ch1_lpddr4_c1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch1_lpddr4_c1 ]
-
   set ddr4_dimm1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:ddr4_rtl:1.0 ddr4_dimm1 ]
 
   set ddr4_dimm1_sma_clk [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 ddr4_dimm1_sma_clk ]
@@ -219,10 +216,18 @@ proc create_root_design { parentCell } {
    CONFIG.FREQ_HZ {200000000} \
    ] $ddr4_dimm1_sma_clk
 
+  set ch0_lpddr4_c0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch0_lpddr4_c0 ]
+
+  set ch1_lpddr4_c0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch1_lpddr4_c0 ]
+
   set lpddr4_sma_clk1 [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 lpddr4_sma_clk1 ]
   set_property -dict [ list \
    CONFIG.FREQ_HZ {200321000} \
    ] $lpddr4_sma_clk1
+
+  set ch0_lpddr4_c1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch0_lpddr4_c1 ]
+
+  set ch1_lpddr4_c1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:lpddr4_rtl:1.0 ch1_lpddr4_c1 ]
 
   set lpddr4_sma_clk2 [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:diff_clock_rtl:1.0 lpddr4_sma_clk2 ]
   set_property -dict [ list \
@@ -233,7 +238,7 @@ proc create_root_design { parentCell } {
   # Create ports
 
   # Create instance: CIPS_0, and set properties
-  set CIPS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.3 CIPS_0 ]
+  set CIPS_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips:3.4 CIPS_0 ]
   set_property -dict [list \
     CONFIG.CLOCK_MODE {Custom} \
     CONFIG.DDR_MEMORY_MODE {Custom} \
@@ -288,8 +293,11 @@ proc create_root_design { parentCell } {
       PS_MIO7 {{AUX_IO 0} {DIRECTION in} {DRIVE_STRENGTH 8mA} {OUTPUT_DATA default} {PULL disable} {SCHMITT 0} {SLEW slow} {USAGE Reserved}} \
       PS_MIO9 {{AUX_IO 0} {DIRECTION in} {DRIVE_STRENGTH 8mA} {OUTPUT_DATA default} {PULL disable} {SCHMITT 0} {SLEW slow} {USAGE Reserved}} \
       PS_NUM_FABRIC_RESETS {1} \
+      PS_PCIE_EP_RESET1_IO {PMC_MIO 38} \
+      PS_PCIE_EP_RESET2_IO {PMC_MIO 39} \
       PS_PCIE_RESET {{ENABLE 1}} \
       PS_PL_CONNECTIVITY_MODE {Custom} \
+      PS_TTC0_PERIPHERAL_ENABLE {1} \
       PS_UART0_PERIPHERAL {{ENABLE 1} {IO {PMC_MIO 42 .. 43}}} \
       PS_USB3_PERIPHERAL {{ENABLE 1} {IO {PMC_MIO 13 .. 25}}} \
       PS_USE_FPD_AXI_NOC0 {1} \
@@ -306,33 +314,32 @@ proc create_root_design { parentCell } {
   ] $CIPS_0
 
 
-  # Create instance: ai_engine_0, and set properties
-  set ai_engine_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:ai_engine:2.0 ai_engine_0 ]
-  set_property -dict [list \
-    CONFIG.AIE_CORE_REF_CTRL_FREQMHZ {1000} \
-    CONFIG.CLK_NAMES {} \
-    CONFIG.NAME_MI_AXI {} \
-    CONFIG.NAME_MI_AXIS {} \
-    CONFIG.NAME_SI_AXI {S00_AXI,} \
-    CONFIG.NAME_SI_AXIS {} \
-    CONFIG.NUM_CLKS {0} \
-    CONFIG.NUM_MI_AXI {0} \
-    CONFIG.NUM_MI_AXIS {0} \
-    CONFIG.NUM_SI_AXI {1} \
-    CONFIG.NUM_SI_AXIS {0} \
-  ] $ai_engine_0
-
-
-  set_property -dict [ list \
-   CONFIG.CATEGORY {NOC} \
- ] [get_bd_intf_pins /ai_engine_0/S00_AXI]
-
   # Create instance: axi_intc_0, and set properties
   set axi_intc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_intc:4.1 axi_intc_0 ]
   set_property -dict [list \
     CONFIG.C_ASYNC_INTR {0xFFFFFFFF} \
     CONFIG.C_IRQ_CONNECTION {1} \
   ] $axi_intc_0
+
+
+  # Create instance: clk_wizard_0, and set properties
+  set clk_wizard_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0 ]
+  set_property -dict [list \
+    CONFIG.CE_TYPE {HARDSYNC} \
+    CONFIG.CLKOUT_DRIVES {MBUFGCE,BUFG,BUFG,BUFG,BUFG,BUFG,BUFG} \
+    CONFIG.CLKOUT_DYN_PS {None,None,None,None,None,None,None} \
+    CONFIG.CLKOUT_GROUPING {Auto,Auto,Auto,Auto,Auto,Auto,Auto} \
+    CONFIG.CLKOUT_MATCHED_ROUTING {false,false,false,false,false,false,false} \
+    CONFIG.CLKOUT_PORT {clk_out1,clk_out2,clk_out3,clk_out4,clk_out5,clk_out6,clk_out7} \
+    CONFIG.CLKOUT_REQUESTED_DUTY_CYCLE {50.000,50.000,50.000,50.000,50.000,50.000,50.000} \
+    CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {500,333.33333,300.000,100.000,100.000,100.000,100.000} \
+    CONFIG.CLKOUT_REQUESTED_PHASE {0.000,0.000,0.000,0.000,0.000,0.000,0.000} \
+    CONFIG.CLKOUT_USED {true,true,false,false,false,false,false} \
+    CONFIG.JITTER_SEL {Min_O_Jitter} \
+    CONFIG.PRIM_SOURCE {No_buffer} \
+    CONFIG.RESET_TYPE {ACTIVE_LOW} \
+    CONFIG.USE_PHASE_ALIGNMENT {true} \
+  ] $clk_wizard_0
 
 
   # Create instance: cips_noc, and set properties
@@ -353,48 +360,56 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
  ] [get_bd_intf_pins /cips_noc/S00_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
  ] [get_bd_intf_pins /cips_noc/S01_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
  ] [get_bd_intf_pins /cips_noc/S02_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_cci} \
  ] [get_bd_intf_pins /cips_noc/S03_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_nci} \
  ] [get_bd_intf_pins /cips_noc/S04_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_nci} \
  ] [get_bd_intf_pins /cips_noc/S05_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_rpu} \
  ] [get_bd_intf_pins /cips_noc/S06_AXI]
 
   set_property -dict [ list \
    CONFIG.CONNECTIONS {M01_INI { read_bw {128} write_bw {128}} M00_AXI { read_bw {5} write_bw {5} read_avg_burst {4} write_avg_burst {4}} M00_INI { read_bw {128} write_bw {128}} } \
    CONFIG.DEST_IDS {M00_AXI:0x0} \
+   CONFIG.NOC_PARAMS {} \
    CONFIG.CATEGORY {ps_pmc} \
  ] [get_bd_intf_pins /cips_noc/S07_AXI]
 
@@ -438,35 +453,6 @@ proc create_root_design { parentCell } {
    CONFIG.ASSOCIATED_BUSIF {M00_AXI} \
  ] [get_bd_pins /cips_noc/aclk9]
 
-  # Create instance: clk_wizard_0, and set properties
-  set clk_wizard_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0 ]
-  set_property -dict [list \
-    CONFIG.CLKOUT_DRIVES {MBUFGCE,BUFG,BUFG,BUFG,BUFG,BUFG,BUFG} \
-    CONFIG.CLKOUT_DYN_PS {None,None,None,None,None,None,None} \
-    CONFIG.CLKOUT_GROUPING {Auto,Auto,Auto,Auto,Auto,Auto,Auto} \
-    CONFIG.CLKOUT_MATCHED_ROUTING {false,false,false,false,false,false,false} \
-    CONFIG.CLKOUT_PORT {clk_out1,clk_out2,clk_out3,clk_out4,clk_out5,clk_out6,clk_out7} \
-    CONFIG.CLKOUT_REQUESTED_DUTY_CYCLE {50.000,50.000,50.000,50.000,50.000,50.000,50.000} \
-    CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {500.000,333.33333,300.000,100.000,100.000,100.000,100.000} \
-    CONFIG.CLKOUT_REQUESTED_PHASE {0.000,0.000,0.000,0.000,0.000,0.000,0.000} \
-    CONFIG.CLKOUT_USED {true,true,false,false,false,false,false} \
-    CONFIG.JITTER_SEL {Min_O_Jitter} \
-    CONFIG.PRIM_SOURCE {No_buffer} \
-    CONFIG.RESET_TYPE {ACTIVE_LOW} \
-    CONFIG.USE_PHASE_ALIGNMENT {true} \
-    CONFIG.CE_TYPE {HARDSYNC} \
-  ] $clk_wizard_0
-
-
-  # Create instance: icn_ctrl, and set properties
-  set icn_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 icn_ctrl ]
-  set_property -dict [list \
-    CONFIG.NUM_CLKS {1} \
-    CONFIG.NUM_MI {1} \
-    CONFIG.NUM_SI {1} \
-  ] $icn_ctrl
-
-
   # Create instance: noc_ddr4, and set properties
   set noc_ddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_ddr4 ]
   set_property -dict [list \
@@ -499,6 +485,38 @@ proc create_root_design { parentCell } {
   set_property -dict [ list \
    CONFIG.CONNECTIONS {MC_0 { read_bw {128} write_bw {128} read_avg_burst {4} write_avg_burst {4}} } \
  ] [get_bd_intf_pins /noc_ddr4/S00_INI]
+
+  # Create instance: proc_sys_reset_0, and set properties
+  set proc_sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0 ]
+
+  # Create instance: icn_ctrl, and set properties
+  set icn_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 icn_ctrl ]
+  set_property -dict [list \
+    CONFIG.NUM_CLKS {1} \
+    CONFIG.NUM_MI {1} \
+    CONFIG.NUM_SI {1} \
+  ] $icn_ctrl
+
+
+  # Create instance: ai_engine_0, and set properties
+  set ai_engine_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:ai_engine:2.0 ai_engine_0 ]
+  set_property -dict [list \
+    CONFIG.CLK_NAMES {} \
+    CONFIG.NAME_MI_AXI {} \
+    CONFIG.NAME_MI_AXIS {} \
+    CONFIG.NAME_SI_AXI {S00_AXI,} \
+    CONFIG.NAME_SI_AXIS {} \
+    CONFIG.NUM_CLKS {0} \
+    CONFIG.NUM_MI_AXI {0} \
+    CONFIG.NUM_MI_AXIS {0} \
+    CONFIG.NUM_SI_AXI {1} \
+    CONFIG.NUM_SI_AXIS {0} \
+  ] $ai_engine_0
+
+
+  set_property -dict [ list \
+   CONFIG.CATEGORY {NOC} \
+ ] [get_bd_intf_pins /ai_engine_0/S00_AXI]
 
   # Create instance: noc_lpddr4, and set properties
   set noc_lpddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_lpddr4 ]
@@ -679,9 +697,6 @@ proc create_root_design { parentCell } {
    CONFIG.CONNECTIONS {MC_0 { read_bw {1720} write_bw {1720} read_avg_burst {4} write_avg_burst {4}} } \
  ] [get_bd_intf_pins /noc_lpddr4/S00_INI]
 
-  # Create instance: proc_sys_reset_0, and set properties
-  set proc_sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0 ]
-
   # Create interface connections
   connect_bd_intf_net -intf_net CIPS_0_FPD_AXI_NOC_0 [get_bd_intf_pins CIPS_0/FPD_AXI_NOC_0] [get_bd_intf_pins cips_noc/S04_AXI]
   connect_bd_intf_net -intf_net CIPS_0_FPD_AXI_NOC_1 [get_bd_intf_pins CIPS_0/FPD_AXI_NOC_1] [get_bd_intf_pins cips_noc/S05_AXI]
@@ -692,7 +707,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net CIPS_0_LPD_AXI_NOC_0 [get_bd_intf_pins CIPS_0/LPD_AXI_NOC_0] [get_bd_intf_pins cips_noc/S06_AXI]
   connect_bd_intf_net -intf_net CIPS_0_M_AXI_GP0 [get_bd_intf_pins CIPS_0/M_AXI_FPD] [get_bd_intf_pins icn_ctrl/S00_AXI]
   connect_bd_intf_net -intf_net CIPS_0_PMC_NOC_AXI_0 [get_bd_intf_pins CIPS_0/PMC_NOC_AXI_0] [get_bd_intf_pins cips_noc/S07_AXI]
-  connect_bd_intf_net -intf_net cips_noc_M00_AXI [get_bd_intf_pins ai_engine_0/S00_AXI] [get_bd_intf_pins cips_noc/M00_AXI]
+  connect_bd_intf_net -intf_net cips_noc_M00_AXI [get_bd_intf_pins cips_noc/M00_AXI] [get_bd_intf_pins ai_engine_0/S00_AXI]
   connect_bd_intf_net -intf_net cips_noc_M00_INI [get_bd_intf_pins cips_noc/M00_INI] [get_bd_intf_pins noc_ddr4/S00_INI]
   connect_bd_intf_net -intf_net cips_noc_M01_INI [get_bd_intf_pins cips_noc/M01_INI] [get_bd_intf_pins noc_lpddr4/S00_INI]
   connect_bd_intf_net -intf_net ddr4_dimm1_sma_clk_1 [get_bd_intf_ports ddr4_dimm1_sma_clk] [get_bd_intf_pins noc_ddr4/sys_clk0]
@@ -714,13 +729,13 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CIPS_0_fpd_cci_noc_axi3_clk [get_bd_pins CIPS_0/fpd_cci_noc_axi3_clk] [get_bd_pins cips_noc/aclk4]
   connect_bd_net -net CIPS_0_lpd_axi_noc_clk [get_bd_pins CIPS_0/lpd_axi_noc_clk] [get_bd_pins cips_noc/aclk7]
   connect_bd_net -net CIPS_0_pl_clk0 [get_bd_pins CIPS_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
-  connect_bd_net -net CIPS_0_pl_resetn1 [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins proc_sys_reset_0/ext_reset_in]
+  connect_bd_net -net CIPS_0_pl_resetn1 [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins clk_wizard_0/resetn]
   connect_bd_net -net CIPS_0_pmc_axi_noc_axi0_clk [get_bd_pins CIPS_0/pmc_axi_noc_axi0_clk] [get_bd_pins cips_noc/aclk8]
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins cips_noc/aclk9]
-  connect_bd_net -net axi_intc_0_irq [get_bd_pins CIPS_0/pl_ps_irq0] [get_bd_pins axi_intc_0/irq]
-  connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins cips_noc/aclk0] [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins icn_ctrl/aclk] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
-  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins icn_ctrl/aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+  connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins CIPS_0/pl_ps_irq0]
+  connect_bd_net -net clk_wizard_0_clk_out1 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0] [get_bd_pins icn_ctrl/aclk]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
+  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins icn_ctrl/aresetn]
 
   # Create address segments
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_0] [get_bd_addr_segs noc_ddr4/S00_INI/C0_DDR_LOW0] -force
@@ -757,6 +772,8 @@ proc create_root_design { parentCell } {
 
   # Restore current instance
   current_bd_instance $oldCurInst
+
+  # Create PFM attributes
 
   validate_bd_design
   save_bd_design

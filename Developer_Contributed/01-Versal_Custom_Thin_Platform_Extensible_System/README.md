@@ -8,16 +8,16 @@
 
 # Versal Custom Thin Platform Extensible System
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
-This tutorial describes an AMD Versal™ VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.1.
+This tutorial describes an AMD Versal™ VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.2.
 
 
 ## Getting Started
 ### Build-flow
 The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
-  1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2023.1
+  1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2023.2
   2.  vivado_platform: Building the thin platform xsa (only pre-synth) or using the pre-builds
   3.  vitis_platform:  Building the Vitis Platform or using the pre-builds
   4.  linux:           Building linux and sysroot (with Petalinux or Yocto) or using the pre-builds
@@ -38,7 +38,7 @@ The following diagram explains the build-flow dependencies.
  
 ### Build & Prerequisites
 In the `[project-root]` you can start the full build with `make all` or `make all_targets` **after** taking following prerequisites into account:
-  - **Before starting the build, please correctly setup the 2023.1 version of Vivado, Vitis and Petalinux/Yocto**
+  - **Before starting the build, please correctly setup the 2023.2 version of Vivado, Vitis and Petalinux/Yocto**
     - If the tools are not setup correctly the build will stop with an ERROR message telling you what is not correctly setup!
       - **Note**: The Yocto Tool setup is not verified!
       - **Note**: The Petalinux Tool and Version check is skipped when targetting Yocto!
@@ -73,14 +73,14 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_PRE_BUILDS`:
       - `export LINUX_PRE_BUILDS := false` for building linux (default).
       - `export LINUX_PRE_BUILDS := true` for using the linux pre-builds.
-        - Download the `xilinx-versal-common-v2023.1_10141622.tar.gz` from the Xilinx® Website and...
+        - Download the `xilinx-versal-common-v2023.2_10141622.tar.gz` from the Xilinx® Website and...
           - Extract it
-          - `cd xilinx-versal-common-v2023.1`
-          - `xilinx-versal-common-v2023.1 $ ./sdk.sh`
-            - Enter target directory for Petalinux tools (default: `/opt/petalinux/2023.1`)
+          - `cd xilinx-versal-common-v2023.2`
+          - `xilinx-versal-common-v2023.2 $ ./sdk.sh`
+            - Enter target directory for Petalinux tools (default: `/opt/petalinux/2023.2`)
           - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
-          - `xilinx-versal-common-v2023.1 $ unset LD_LIBRARY_PATH`
-          - `xilinx-versal-common-v2023.1 $ source environment-setup-cortexa72-cortexa53-xilinx-linux`
+          - `xilinx-versal-common-v2023.2 $ unset LD_LIBRARY_PATH`
+          - `xilinx-versal-common-v2023.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux`
           - **Note**: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
       - **Note**: Following `LINUX_X_Y` exports are ignored and do not need setup when `export LINUX_PRE_BUILDS := true`.
       - **Note**: If `export XPFM_PRE_BUILDS := false` then a device-tree will be generated from the generated xsa. It could be - depending on the generated base platform (xsa) - that changes are needed in the `[project-root]/linux/dtg/src/system-user.dtsi` for a successfull build/boot. 
@@ -98,8 +98,8 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - More information on how to install/setup and build Yocto can be found [here](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/18841862/Install+and+Build+with+Xilinx+Yocto).
     - `LINUX_TMP_DIR`:
       - Defaults to `export LINUX_TMP_DIR := /tmp/${USER}/${REQUIRED_VERSION}/${SW_BUILD_TOOL}`
-        - Defaults to `/tmp/${USER}/2023.1/petalinux` when `export SW_BUILD_TOOL := petalinux`.
-        - Defaults to `/tmp/${USER}/2023.1/yocto` when `export SW_BUILD_TOOL := yocto`.
+        - Defaults to `/tmp/${USER}/2023.2/petalinux` when `export SW_BUILD_TOOL := petalinux`.
+        - Defaults to `/tmp/${USER}/2023.2/yocto` when `export SW_BUILD_TOOL := yocto`.
       - So if you want to place it somewhere else; please replace it with your required location. 
       - Be aware that `LINUX_TMP_DIR` may **NOT** be located on an NFS mounted drive!
       - If your [project-root] is **NOT** on an NFS mounted drive; you can easily add it in your project with for example `export LINUX_TMP_DIR := $(shell pwd)/linux/tmp` 
@@ -112,12 +112,12 @@ In the `[project-root]` you can start the full build with `make all` or `make al
     - `LINUX_LOCAL_DOWNLOADS_DIR`:
       - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
       - Defaults to `export LINUX_LOCAL_DOWNLOADS_DIR := /tmp/plnx-workspace/downloads`.
-      - Change to the directory where you extracted the [downloads_2023.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Change to the directory where you extracted the [downloads_2023.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_LOCAL_SSTATE_DIR`:
       - **ONLY** used when `export SW_BUILD_TOOL := petalinux` and `export LINUX_BUILD_SOURCES := local`!
-      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2023.1/aarch64`.
-      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2023.1.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
+      - Defaults to `export LINUX_LOCAL_SSTATE_DIR := /tmp/plnx-workspace/sstate_aarch64_2023.2/aarch64`.
+      - Change to the **WRITABLE** directory where you extracted the [sstate_aarch64_2023.2.tar.gz](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html).
       - This can be shared amoungst different users.
     - `LINUX_ETH_CONFIG`:
       - `export LINUX_ETH_CONFIG := DHCP` for Ethernet DHCP Configuration (default).
@@ -165,7 +165,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 <details>
  <summary> make version_check </summary>
  
- -  Checks if the Vivado, Petalinux (Only when `export SW_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2023.1.
+ -  Checks if the Vivado, Petalinux (Only when `export SW_BUILD_TOOL := petalinux`) and Vitis tools are setup and if the versions are 2023.2.
  
 </details>
 <details>
@@ -596,7 +596,7 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2023.1 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+### [Vitis Unified Software Development Platform 2023.2 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 The following are links to Vitis related information referenced in this tutorial:
 
 * [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
@@ -609,7 +609,13 @@ The following are links to Vitis related information referenced in this tutorial
 Click on each item below to see the detailed Revision History:
 
  <details>
-  <summary> May 2023 </summary>
+  <summary> September 2023 </summary>
+  
+ - Upgrading to 2023.2:
+ 
+ </details>
+
+ <summary> May 2023 </summary>
   
  - AI Engine:
    - Replaced kernels and graphs to use AIE API and C++ Object Oriented Style with templates
