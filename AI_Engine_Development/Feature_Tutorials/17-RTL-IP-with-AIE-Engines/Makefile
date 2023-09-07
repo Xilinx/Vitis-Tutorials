@@ -25,10 +25,10 @@ IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/Image
 
 # Command-line options
 VPP := v++
-AIECC := aiecompiler
+AIECC := v++ --mode aie -c 
 
-AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS_AIETOOLS)/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  -workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+AIE_INCLUDE_FLAGS := --include="$(XILINX_VITIS_AIETOOLS)/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  --work_dir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
 
 VPP_XO_FLAGS := -c --platform $(PLATFORM) -g --save-temps
 VPP_LINK_FLAGS := -l --platform $(PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
