@@ -9,7 +9,7 @@
 
 ## PetaLinux Building and System Customization
 
-***Version: PetaLinux 2023.1***
+***Version: PetaLinux 2023.2***
 
 This module demonstrates platform software components customization. Use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained and you can pick your desired customization.
 
@@ -29,8 +29,8 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis™ tool, omit this step as AMD Official platforms have already built into the vitis tool installation package.
 
    ```bash
-   unzip xilinx_zcu104_base_202310_1.zip #extract the base platform
-   cd xilinx_zcu104_base_202310_1
+   unzip xilinx_zcu104_base_202320_1.zip #extract the base platform
+   cd xilinx_zcu104_base_202320_1
    tree -L 2
    .
    ├── hw
@@ -38,10 +38,10 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    ├── hw_emu
    │   └── hw_emu.xsa
    ├── sw
-   │   ├── xilinx_zcu104_base_202310_1
-   │   └── xilinx_zcu104_base_202310_1.spfm
+   │   ├── xilinx_zcu104_base_202320_1
+   │   └── xilinx_zcu104_base_202320_1.spfm
    ├── version
-   └── xilinx_zcu104_base_202310_1.xpfm
+   └── xilinx_zcu104_base_202320_1.xpfm
    4 directories, 5 files
    ```
 
@@ -59,7 +59,7 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    petalinux-create --type project --template zynqMP --name zcu104_petalinux
    cd zcu104_petalinux
-   petalinux-config --get-hw-description=xilinx_zcu104_base_202310_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202310_1> directory. If you want to do emulation you can choose hw_emu.xsa 
+   petalinux-config --get-hw-description=xilinx_zcu104_base_202320_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202320_1> directory. If you want to do emulation you can choose hw_emu.xsa 
    ```
 
    > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP™ series chip. Therefore, we specify this option as `zynqMP`. If your platform is using Versal™ chipset, set this option to `versal`.
