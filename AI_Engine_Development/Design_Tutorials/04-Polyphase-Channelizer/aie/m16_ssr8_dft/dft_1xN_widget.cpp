@@ -32,7 +32,7 @@ dft_1xN_input<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::dft_1xN_input( TT_COEFF (&coeff0_i
 template<class TT_DATA,class TT_COEFF,class TT_ACC,unsigned NSAMP>
 void dft_1xN_input<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::run_input( input_stream<TT_DATA>* __restrict sig0_i,
                                                               input_stream<TT_DATA>* __restrict sig1_i,
-                                                              output_stream<TT_ACC>* __restrict acc_o )
+                                                              output_cascade<TT_ACC>* __restrict acc_o )
 
 {
   // Iterator to access DFT coefficients:
@@ -94,8 +94,8 @@ dft_1xN_middle<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::dft_1xN_middle( TT_COEFF (&coeff0
 template<class TT_DATA,class TT_COEFF,class TT_ACC,unsigned NSAMP>
 void dft_1xN_middle<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::run_middle( input_stream<TT_DATA>* __restrict sig0_i,
                                                                 input_stream<TT_DATA>* __restrict sig1_i,
-                                                                input_stream<TT_ACC>* __restrict acc_i,
-                                                                output_stream<TT_ACC>* __restrict acc_o  )
+                                                                input_cascade<TT_ACC>* __restrict acc_i,
+                                                                output_cascade<TT_ACC>* __restrict acc_o  )
 {
   // Iterator to access DFT coefficients:
   auto it0 = aie::cbegin_vector_circular<8,8,aie_dm_resource::a>( coeff0 );
@@ -159,7 +159,7 @@ dft_1xN_output<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::dft_1xN_output( TT_COEFF (&coeff0
 template<class TT_DATA,class TT_COEFF,class TT_ACC,unsigned NSAMP>
 void dft_1xN_output<TT_DATA,TT_COEFF,TT_ACC,NSAMP>::run_output( input_stream<TT_DATA>* __restrict sig0_i,
                                                                 input_stream<TT_DATA>* __restrict sig1_i,
-                                                                input_stream<TT_ACC>* __restrict acc_i,
+                                                                input_cascade<TT_ACC>* __restrict acc_i,
                                                                 output_stream<TT_DATA>* __restrict sig0_o,
                                                                 output_stream<TT_DATA>* __restrict sig1_o )
 {

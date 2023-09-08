@@ -33,7 +33,7 @@ public:
   // Run:
   void run_input( input_stream<TT_DATA>* __restrict sig0_i,
                   input_stream<TT_DATA>* __restrict sig1_i,
-                  output_stream<TT_ACC>* __restrict acc_o );
+                  output_cascade<TT_ACC>* __restrict acc_o );
 
   static void registerKernelClass( void )
   {
@@ -63,8 +63,8 @@ public:
   // Run:
   void run_middle( input_stream<TT_DATA>* __restrict sig0_i,
                    input_stream<TT_DATA>* __restrict sig1_i,
-                   input_stream<TT_ACC>*  __restrict acc_i,
-                   output_stream<TT_ACC>* __restrict acc_o );
+                   input_cascade<TT_ACC>*  __restrict acc_i,
+                   output_cascade<TT_ACC>* __restrict acc_o );
 
   static void registerKernelClass( void )
   {
@@ -95,7 +95,7 @@ public:
   // Run:
   void run_output( input_stream<TT_DATA>*  __restrict sig0_i,
                    input_stream<TT_DATA>*  __restrict sig1_i,
-                   input_stream<TT_ACC>*   __restrict acc_i,
+                   input_cascade<TT_ACC>*   __restrict acc_i,
                    output_stream<TT_DATA>* __restrict sig0_o,
                    output_stream<TT_DATA>* __restrict sig1_o );
 

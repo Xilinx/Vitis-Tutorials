@@ -19,22 +19,22 @@ SOURCES	          := ../m16_ssr8_filterbank/m16_ssr8_filterbank_graph.h \
 		     m16_ssr8_graph.h
 
 PLATFORM_USE      := xilinx_vck190_base_202320_1
-PL_FREQ           := --pl-freq=625.0
+PL_FREQ           := --aie.pl-freq=625.0
 
 PLATFORM          := --platform="${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm"
 
 LOG_FILE          := log
 
-MAP_OPT           := -Xmapper=BufferOptLevel9
-OTHER_OPTS        := -Xchess="-std=c++17" -xlopt=1 --log-level=5
-CHECK_FIFO        := --evaluate-fifo-depth -Xrouter=disablePathBalancing
-AIE_SIM_ONLY      := --Xpreproc="-DAIE_SIM_ONLY"
+MAP_OPT           := --aie.Xmapper=BufferOptLevel9
+OTHER_OPTS        := --aie.Xchess="-std=c++17" --aie.xlopt=1 --aie.log-level=5
+CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
+AIE_SIM_ONLY      := --aie.Xpreproc="-DAIE_SIM_ONLY"
 
-ALL_INCLUDE       := -include=${PWD} -include=../m16_ssr8_filterbank -include=../m16_ssr8_dft
+ALL_INCLUDE       := --include=${PWD} --include=../m16_ssr8_filterbank --include=../m16_ssr8_dft
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  -v ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} \
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} \
 			${PL_FREQ}
 
 ifeq (${DO_GRAPH_SIM},true)
@@ -54,10 +54,10 @@ help:
 all: 	${AIE_OUTPUT}
 
 ${AIE_OUTPUT}:	${MY_APP}.cpp ${SOURCES}
-	aiecompiler --target=hw ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
+	v++ -c --mode aie --target=hw ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
 
 x86compile:
-	aiecompiler --target=x86sim ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
+	v++ -c --mode aie --target=x86sim ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
 
 sim:
 	aiesimulator 2>&1 | tee -a ${LOG_FILE}
@@ -66,25 +66,25 @@ x86sim:
 	x86simulator 2>&1 | tee -a ${LOG_FILE}
 
 profile:
-	aiesimulator --profile --online -wdb -ctf 2>&1 | tee -a ${LOG_FILE}
+	aiesimulator --profile --online -wdb -text 2>&1 | tee -a ${LOG_FILE}
 
 throughput:
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_0.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_1.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_2.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_3.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_4.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_5.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_6.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/fir_o_7.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_0.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_1.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_2.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_3.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_4.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_5.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_6.txt --iscomplex
-	@../../../tools/python/throughput.py aiesimulator_output/data/dft_o_7.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_0.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_1.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_2.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_3.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_4.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_5.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_6.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/fir_o_7.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_0.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_1.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_2.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_3.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_4.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_5.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_6.txt --iscomplex
+	@../common/throughput.py aiesimulator_output/data/dft_o_7.txt --iscomplex
 
 clean:
 	rm -rf Work Work* ${WORK_DIR} libadf.a
@@ -93,6 +93,6 @@ clean:
 	rm -rf x86simulator_output
 	rm -rf log log* ${LOG_FILE}
 	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
-	rm -rf vitis_analyzer* pl_sample_counts* vck190_thin_wrapper*
+	rm -rf vitis_analyzer* pl_sample_counts* vck190_thin_wrapper* trdata.aiesim
 	rm -rf temp ISS_RPC_SERVER_PORT
 	rm -rf system*.* vitis_design_wrapper* .crashReporter* .AIE_SIM_CMD_LINE_OPTIONS
