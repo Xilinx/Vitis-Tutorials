@@ -27,7 +27,11 @@ $(BUILD_DIR)/app.exe:
 
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:
+ifeq ($(TARGET),sw_emu)
 	v++ -c -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/u250.cfg -k vadd -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
+else
+	v++ -c --mode hls --platform $(PLATFORM) --config $(SRCDIR)/u250_hls.cfg --work_dir $(BUILD_DIR)
+endif
 
 xclbin: $(BUILD_DIR)/vadd.xclbin
 $(BUILD_DIR)/vadd.xclbin: $(BUILD_DIR)/vadd.xo
