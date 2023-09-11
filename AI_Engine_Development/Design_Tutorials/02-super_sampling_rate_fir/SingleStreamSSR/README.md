@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Super Sampling Rate FIR Filter
 
@@ -19,19 +19,19 @@ Navigate to the `SingleStreamSSR` directory to continue.
 
 ## Super Sampling Rate and Polyphase
 
-When the input sampling Rate is above the clock frequency of the processor (Super Sampling Rate), samples must be acquired in parallel. For a 2 Gsps input sample rate, you can specify that the filter should receive two samples at a 1 GHz rate, which can be seen as two data streams (Polyphase decomposition), each one at 1 Gsps. Because the AI Engine array AXI-Stream network is limited to 1 GHz (slowest speed grade), the high sampling rate input (above 1 Gsps) is to be decomposed into multiple phases to be processed.
+When the input sampling Rate is above the clock frequency of the processor (Super Sampling Rate), samples must be acquired in parallel. For a 2.5 Gsps input sample rate, you can specify that the filter should receive two samples at a 1.25 GHz rate, which can be seen as two data streams (Polyphase decomposition), each one at 1.25 Gsps. Because the AI Engine array AXI-Stream network is limited to 1.25 GHz (VCK190 device speed grade), the high sampling rate input (above 1.25 Gsps) is to be decomposed into multiple phases to be processed.
 
-As a first example, suppose there is a 2 Gsps data stream to be processed, it can be split into two phases to be routed to the AI Engine array:
+As a first example, suppose there is a 2.5 Gsps data stream to be processed, it can be split into two phases to be routed to the AI Engine array:
 
 ![PolyphaseOrder2](../Images/PolyphaseOrder2.jpg)
 
-A 5 Gsps data stream must be split into 5 phases:
+A 6.26 Gsps data stream must be split into 5 phases:
 
 ![PolyphaseOrder5](../Images/PolyphaseOrder5.jpg)
 
-## Organize Computation for a 2 Gsps Data Stream in 2 Phases
+## Organize Computation for a 2.5 Gsps Data Stream in 2 Phases
 
-For a single-rate filter, a 2 Gsps input sample rate also means a 2 Gsps output sample rate. Because the input stream is separated into two (even, odd) streams, the output stream must be split the same way.
+For a single-rate filter, a 2.5 Gsps input sample rate also means a 2.5 Gsps output sample rate. Because the input stream is separated into two (even, odd) streams, the output stream must be split the same way.
 
 Take a look at how **y0** is computed:
 
@@ -61,7 +61,7 @@ In this case, the phases of the data and coefficients should be mixed:
 
 There is a further difference between the two. In the odd output case, they (even data, odd coefficients) should discard one data at the beginning of the stream.
 
-In the previous section, the balance between data transfer and compute performance of the AI Engine was obtained for a 1 Gsps data stream going through an eight tap filter. The balance is identical here. As we have eight different filters, we can process 4x 1 Gsps streams in parallel.
+In the previous section, the balance between data transfer and compute performance of the AI Engine was obtained for a 1.25 Gsps data stream going through an eight tap filter. The balance is identical here. As we have eight different filters, we can process 4x 1.25 Gsps streams in parallel.
 
 The data stream and the coefficients must be split into four phases and then recombined. In the following figures, the various colors correspond to a different phase for the data (blue) and the coefficients(red):
 - Output phase 0, will be split and recombined as follows:
@@ -276,31 +276,23 @@ The top graph reflects the real part of the output. The bottom graph this is the
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput output_*`:
 
 ```
-output_0.txt -->   954.33 Msps
-output_1.txt -->   949.91 Msps
-output_2.txt -->   954.33 Msps
-output_3.txt -->   949.91 Msps
+output_0.txt -->  1181.90 Msps
+output_1.txt -->  1186.28 Msps
+output_2.txt -->  1181.90 Msps
+output_3.txt -->  1184.09 Msps
 
 -----------------------
 
 
-Total Throughput -->    3808.48 Msps
+Total Throughput -->    4734.18 Msps
 ```
 
-This architecture achieves close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
+This architecture achieves close to 5 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
 
-## License
+## Support
 
-___
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-The MIT License (MIT)
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
-Copyright (c) 2023 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-<p align="center"><sup>Copyright&copy; 2020–2023 Advanced Micro Devices, Inc </sup><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 
@@ -144,9 +144,9 @@ public:
 	{
 		for(int i=0;i<4;i++)
 		{
-            in[i] = input_plio::create("Phase "+std::to_string(i),plio_64_bits,"data/PhaseIn_"+std::to_string(i)+".txt",500);
+            in[i] = input_plio::create("Phase "+std::to_string(i),plio_64_bits,"data/PhaseIn_"+std::to_string(i)+".txt",625);
 			connect<> (in[i].out[0],G1.in[i]);
-            out[i] = output_plio::create("64 bits out "+std::to_string(i),plio_64_bits,"data/output_"+std::to_string(i)+".txt",500);
+            out[i] = output_plio::create("64 bits out "+std::to_string(i),plio_64_bits,"data/output_"+std::to_string(i)+".txt",625);
 			connect<> (G1.out[i],out[i].in[0]);
 		}
 

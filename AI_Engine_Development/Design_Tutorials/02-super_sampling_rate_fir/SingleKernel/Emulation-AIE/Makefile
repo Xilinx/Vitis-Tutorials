@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
+# SPDX-License-Identifier: MIT
 #
 
 
@@ -20,7 +20,7 @@ RM = rm -f
 RMDIR = rm -rf
 SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
 DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
-# PLATFORM ?=$(PFM_NAME)
+PLATFORM ?= $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 # AIE compiler settings
 AIE_FLAGS = -v -include="${XILINX_VITIS}/aietools/include" -include="${XILINX_HLS}/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=${PLATFORM} -workdir=$(AIE_OUT_DIR)

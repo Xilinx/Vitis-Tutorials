@@ -9,7 +9,7 @@
 
 # Single-Kernel FIR Filter Implementation
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 In this first part of the tutorial, you will use a basic filtering application and analyze the performance that can be achieved.
 
@@ -46,11 +46,11 @@ Before building a kernel to implement FIR filtering, consider the following:
 
 ### Interfaces
 
-There are two types of interfaces: windows and streams. The bandwidth of the memory (where windows are stored) access is much higher than the streams: 2x32 GBps vs. 2x4 GBps. Even if the memory bandwidth from the processor is high, they must be filled in either by another AI Engine (bandwidth 32 GBps) or streams (2x4GBps). Either way, somewhere in the cascade  of kernels. the origin of the data will be outside of the AI Engine array (PL, DDR, ...) implying a stream source.
+There are two types of interfaces: windows and streams. The bandwidth of the memory (where windows are stored) access is much higher than the streams: 2x40 GBps vs. 2x5 GBps (@1.25 GHz). Even if the memory bandwidth from the processor is high, they must be filled in either by another AI Engine (bandwidth 40 GBps) or streams (2x5GBps). Either way, somewhere in the cascade  of kernels. the origin of the data will be outside of the AI Engine array (PL, DDR, ...) implying a stream source.
 
 Window interfaces are used in a 'ping-pong' manner to allow for continuous data transfer while maintaining continuous processing. When multiple kernels are mapped to the same AI Engine and they communicate through windows, these windows use a single buffer because the kernels do not run at the same time. Ping-pong buffering means that the data is processed only when the buffer is completely filled in, incurring a minimum latency of the duration of this buffer filling. When an AI Engine kernel uses window interfaces, it must acquire a lock to gain access ownership to this memory. Lock acquisition and release takes a minimum of seven cycles per lock, which reduces the time allowed for processing.
 
-As a rule of thumb, 750 Msps is the maximum sample rate for which window interfaces are a viable solution. When the kernel processing duration is just a fraction of the time it takes to fill in the input window, this is reflected by a **utilization ratio** of below 1 and multiple kernels can be mapped onto a single AI Engine.
+As a rule of thumb, 900 Msps (@1.25GHz) is the maximum sample rate for which window interfaces are a viable solution. When the kernel processing duration is just a fraction of the time it takes to fill in the input window, this is reflected by a **utilization ratio** of below 1 and multiple kernels can be mapped onto a single AI Engine.
 
 In this tutorial, the goal is to achieve the maximum performance filter implementation, leading to a streaming interface at the input and the output.
 
@@ -253,31 +253,22 @@ The top graph reflects the outputs where the abscissa is at the time at which th
 The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   225.40 Msps
+Output_0.txt -->   293.33 Msps
 
 -----------------------
 
-Total Throughput -->     225.40 Msps
+
+Total Throughput -->     293.33 Msps
 ```
 
-Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 250 Msps, which is in line with what was achieved.
+Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 312.5 Msps, which is in line with what was achieved.
 
 
 
-## License
+## Support
 
-___
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-The MIT License (MIT)
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
-Copyright (c) 2023 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-<p align="center"><sup>Copyright&copy; 2020–2023 Advanced Micro Devices, Inc</sup><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

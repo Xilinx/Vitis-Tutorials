@@ -1,7 +1,8 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
+
 
 #pragma once
 
@@ -166,11 +167,11 @@ std::vector<cint16> taps8p[8] = { PHASE(0,8), PHASE(1,8), PHASE(2,8), PHASE(3,8)
 			{
 				for(int i=0;i<8;i++)
 				{
-          plin[2*i]   = input_plio::create("PhaseIn_"+std::to_string(i)+"_0",plio_64_bits,"data/PhaseIn_"+std::to_string(i)+"_0.txt",500);
-          plin[2*i+1] = input_plio::create("PhaseIn_"+std::to_string(i)+"_1",plio_64_bits,"data/PhaseIn_"+std::to_string(i)+"_1.txt",500);
+          plin[2*i]   = input_plio::create("PhaseIn_"+std::to_string(i)+"_0",plio_64_bits,"data/PhaseIn_"+std::to_string(i)+"_0.txt",625);
+          plin[2*i+1] = input_plio::create("PhaseIn_"+std::to_string(i)+"_1",plio_64_bits,"data/PhaseIn_"+std::to_string(i)+"_1.txt",625);
 
-          plout[2*i]   = output_plio::create("PhaseOut_"+std::to_string(i)+"_0",plio_64_bits,"data/PhaseOut_"+std::to_string(i)+"_0.txt",500);
-          plout[2*i+1] = output_plio::create("PhaseOut_"+std::to_string(i)+"_1",plio_64_bits,"data/PhaseOut_"+std::to_string(i)+"_1.txt",500);
+          plout[2*i]   = output_plio::create("PhaseOut_"+std::to_string(i)+"_0",plio_64_bits,"data/PhaseOut_"+std::to_string(i)+"_0.txt",625);
+          plout[2*i+1] = output_plio::create("PhaseOut_"+std::to_string(i)+"_1",plio_64_bits,"data/PhaseOut_"+std::to_string(i)+"_1.txt",625);
 
           connect<> (plin[2*i].out[0],G1.in[2*i]);
           connect<> (plin[2*i+1].out[0],G1.in[2*i+1]);

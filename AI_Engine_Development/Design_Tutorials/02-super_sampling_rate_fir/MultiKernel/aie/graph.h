@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 
@@ -107,12 +107,12 @@ std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
         {
             for(int i=0;i<4;i++)
             {
-                in[i] = input_plio::create("Stream for block " + std::to_string(i), plio_64_bits,"data/PhaseIn_"+std::to_string(0)+".txt", 500);
+                in[i] = input_plio::create("Stream for block " + std::to_string(i), plio_64_bits,"data/PhaseIn_"+std::to_string(0)+".txt", 625);
                 connect<> (in[i].out[0],G1.in[i]);
 
             }
 
-            out = output_plio::create("64 bits output 0", plio_64_bits,"data/Output_0.txt", 500);
+            out = output_plio::create("64 bits output 0", plio_64_bits,"data/Output_0.txt", 625);
             connect<> (G1.out,out.in[0]);
 
         }

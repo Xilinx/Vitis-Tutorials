@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -17,16 +17,16 @@ Navigate to the `DualStreamSSR` directory to continue.
 
 ## Dual-Stream Input Impact
 
-The last two sections (Multi-kernel and Single-Stream SSR) showed that when a single input stream is used, the balance between stream bandwidth and compute performance for `cint16 x cint16` is obtained for an 8-tap filter implementation in an AI Engine. This can be easily computed. For the slowest speed grade of the AMD Versal&trade; AI core, the entire AI Engine array (processors, AXI-Stream connections, memory modules, and so on) is clocked at 1 GHz. The input stream can transfer 32 bits per clock and a `cint16` variable is 32-bit wide; hence, a rate of 1 Gsps (Giga samples per second). The processor by itself is capable of eight `cint16xcint16` operations per clock cycle. The result is that the processor can perform 8-tap filter processing per clock cycle.
+The last two sections (Multi-kernel and Single-Stream SSR) showed that when a single input stream is used, the balance between stream bandwidth and compute performance for `cint16 x cint16` is obtained for an 8-tap filter implementation in an AI Engine. This can be easily computed. For the device on the VCK190 speed grade of the AMD Versal&trade; AI core, the entire AI Engine array (processors, AXI-Stream connections, memory modules, and so on) is clocked at 1.25 GHz. The input stream can transfer 32 bits per clock and a `cint16` variable is 32-bit wide; hence, a rate of 1.25 Gsps (Giga samples per second). The processor by itself is capable of eight `cint16xcint16` operations per clock cycle. The result is that the processor can perform 8-tap filter processing per clock cycle.
 
-If the two input streams are used in an efficient way, the input sample rate can increase to 2 Gsps (1 Gsps per stream). As the processor performance does not change, it is able to process only four taps per clock cycle at the input sample rate.
+If the two input streams are used in an efficient way, the input sample rate can increase to 2.5 Gsps (1.25 Gsps per stream). As the processor performance does not change, it is able to process only four taps per clock cycle at the input sample rate.
 
-This means that in the case of a single-stream implementation, the filter length should be a multiple of eight to have the maximum performance extracted from the AI Engine array. In the case of a dual-stream implementation, the filter length should be a multiple of four to achieve this maximum performance. This lower granularity allows more freedom in the filter length. Take a 12 tap filter as an example, with an input sample rate at 2 Gsps.
+This means that in the case of a single-stream implementation, the filter length should be a multiple of eight to have the maximum performance extracted from the AI Engine array. In the case of a dual-stream implementation, the filter length should be a multiple of four to achieve this maximum performance. This lower granularity allows more freedom in the filter length. Take a 12 tap filter as an example, with an input sample rate at 2.5 Gsps.
 
-1. Single-stream implementation: The input sample rate (2 Gsps) requires that the coefficients and the input data are split into two phases (1 Gsps each). Having two phases, this implementation requires four kernels (2 x 2) to be used in a grid. 12 taps divided into two phases results in six taps per phase. Each kernel will handle six taps, but the maximum performance is eight taps. Single-stream input data will use four AI Engines at 75 percent of their maximum performance.
-2. Dual-stream implementation: In this case, it is much simpler. The input interface can handle a 2 Gsps input data sampling rate, but can process only four taps per kernel. This implementation will require three kernels (3 kernels x 4 taps = 12 taps) running at 100 percent of their compute performance.
+1. Single-stream implementation: The input sample rate (2.5 Gsps) requires that the coefficients and the input data are split into two phases (1.25 Gsps each). Having two phases, this implementation requires four kernels (2 x 2) to be used in a grid. 12 taps divided into two phases results in six taps per phase. Each kernel will handle six taps, but the maximum performance is eight taps. Single-stream input data will use four AI Engines at 75 percent of their maximum performance.
+2. Dual-stream implementation: In this case, it is much simpler. The input interface can handle a 2.5 Gsps input data sampling rate, but can process only four taps per kernel. This implementation will require three kernels (3 kernels x 4 taps = 12 taps) running at 100 percent of their compute performance.
 
-A major impact is the way the data is provided to the AI Engine. The AI Engine alternatively reads four samples on both the streams (or eight samples at the same time). The resulting stream should be equivalent to a 2 Gsps data stream. Suppose we have the following 2 Gsps data stream: `d0, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19, ...`
+A major impact is the way the data is provided to the AI Engine. The AI Engine alternatively reads four samples on both the streams (or eight samples at the same time). The resulting stream should be equivalent to a 2.5 Gsps data stream. Suppose we have the following 2.5 Gsps data stream: `d0, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19, ...`
 
 The AI Engine read sequence should be:
 
@@ -51,7 +51,7 @@ On top of this, if the coefficient phase is longer than four, four elements need
 
 ## Designing the Graph
 
-With the input data rate being 2 Gsps on each AI Engine and the filter with 32 taps, the data stream and coefficient can be split into eight phases as each AI Engine is capable of 4-tap filter processing. This leads to 2 Gsps x 8 Phases = 16 Gsps input sample rate. You will now design the maximum performance for the filter.
+With the input data rate being 2.5 Gsps on each AI Engine and the filter with 32 taps, the data stream and coefficient can be split into eight phases as each AI Engine is capable of 4-tap filter processing. This leads to 2.5 Gsps x 8 Phases = 20 Gsps input sample rate. You will now design the maximum performance for the filter.
 
 The same recommendations as in the previous section will apply:
 
@@ -276,52 +276,42 @@ The top graph reflects the real part of the output, the bottom graph this is the
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput PhaseOut_*`:
 
 ```
-output_0_0.txt -->   896.67 Msps
-output_0_1.txt -->   896.67 Msps
-output_1_0.txt -->   891.99 Msps
-output_1_1.txt -->   893.54 Msps
-output_2_0.txt -->   896.67 Msps
-output_2_1.txt -->   896.67 Msps
-output_3_0.txt -->   891.99 Msps
-output_3_1.txt -->   893.54 Msps
-output_4_0.txt -->   898.25 Msps
-output_4_1.txt -->   896.67 Msps
-output_5_0.txt -->   891.99 Msps
-output_5_1.txt -->   893.54 Msps
-output_6_0.txt -->   898.25 Msps
-output_6_1.txt -->   896.67 Msps
-output_7_0.txt -->   891.99 Msps
-output_7_1.txt -->   893.54 Msps
+PhaseOut_0_0.txt -->  1174.31 Msps
+PhaseOut_0_1.txt -->  1170.02 Msps
+PhaseOut_1_0.txt -->  1178.64 Msps
+PhaseOut_1_1.txt -->  1172.16 Msps
+PhaseOut_2_0.txt -->  1174.31 Msps
+PhaseOut_2_1.txt -->  1170.02 Msps
+PhaseOut_3_0.txt -->  1178.64 Msps
+PhaseOut_3_1.txt -->  1172.16 Msps
+PhaseOut_4_0.txt -->  1174.31 Msps
+PhaseOut_4_1.txt -->  1170.02 Msps
+PhaseOut_5_0.txt -->  1178.64 Msps
+PhaseOut_5_1.txt -->  1172.16 Msps
+PhaseOut_6_0.txt -->  1174.31 Msps
+PhaseOut_6_1.txt -->  1170.02 Msps
+PhaseOut_7_0.txt -->  1178.64 Msps
+PhaseOut_7_1.txt -->  1172.16 Msps
 
 -----------------------
 
 
-Total Throughput -->   14318.64 Msps
+Total Throughput -->   18780.51 Msps
 ```
 
-This architecture achieves slightly over 14 Gsps performance. It is less than the maximum expected (16 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length, the performance obtained is:
+This architecture achieves almost 19 Gsps performance. It is less than the maximum expected (20 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length, the performance obtained is:
 
 ```
-Total Throughput -->   15960.30 Msps
+Total Throughput -->   19950.30 Msps
 ```
 
 which is almost the expected maximum.
 
 
-## License
+## Support
 
-___
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-The MIT License (MIT)
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
-Copyright (c) 2023 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
-<p align="center"><sup>Copyright&copy; 2020–2023 Advanced Micro Devices, Inc</sup><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
