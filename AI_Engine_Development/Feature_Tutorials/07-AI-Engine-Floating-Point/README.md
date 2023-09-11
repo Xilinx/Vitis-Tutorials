@@ -9,21 +9,21 @@
 
 # Using Floating-Point in the AI Engine
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
 The purpose of this set of examples is to understand floating-point vector computations within the AI Engine.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2023.1 software. The AMD Vitis&trade; release includes all the embedded base platforms, including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2022-2.html).
-The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal&trade; board for embedded design development using Vitis.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2023.2 software.  The AMD Vitis&trade; release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html).
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial, run the following steps:
 
-1. Go to the directory where you have unzipped the Versal Common Image. package
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_dfx_202210_1/xilinx_vck190_base_dfx_202220_1.xpfm`
-This tutorial targets VCK190 production board for 2023.1 version.
+1. Go to the directory where you have unzipped the Versal Common Image package.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/`.
+This tutorial targets the VCK190 production board for 2023.2 version.
 
 
 
@@ -376,20 +376,21 @@ In this design you learned:
 - How to use `fpmul_conf` and `fpmac_conf` intrinsics.
 
 
+
+
 ## License
 
 ___
 
-The MIT License (MIT)
+ The MIT License (MIT)
 
-Copyright (c) 2023 Advanced Micro Devices, Inc.
+ Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+ SPDX-License-Identifier: MIT
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+## Support
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD021</sup></br></p>
 
-
-
-<p align="center"><sup>XD021 | &copy; Copyright 2020–2023 AMD, Inc.</sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
