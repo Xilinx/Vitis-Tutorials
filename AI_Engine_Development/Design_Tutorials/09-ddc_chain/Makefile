@@ -6,7 +6,7 @@
 #            Makefile used for ME compilation and simulation
 #           Set COMMSLIB_ROOT to the absolute path to commslib
 # #########################################################################
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202310_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
@@ -16,7 +16,7 @@ export SDKTARGETSYSROOT = ${VITIS_SYSROOTS}
 export KERNEL_IMAGE     = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
 export XLNX_VERSAL      = ${COMMON_IMAGE_VERSAL}
-export PLATFORM         = --platform=${VITIS_PLATFORM_XPFM}
+export PLATFORM         = ${VITIS_PLATFORM_XPFM}
 export SYSROOT          = ${SDKTARGETSYSROOT}
 
 LOCAL_INC          := src
@@ -28,7 +28,7 @@ LOG_FILE           = log
 OTHER_OPTS         = --pl-freq=400 -Xchess="-std=c++17"  --xlopt=0 --test-iterations=100
 TARGET            ?= hw
 ALL_INCLUDE       := -include=${PWD} -include=$(LOCAL_INC) -include=$(LOCAL_SRC) -include=$(LOCAL_LIB)
-AIE_FLAGS         := --dataflow -v ${ALL_INCLUDE} ${TEST_BENCH} ${OTHER_OPTS} ${PLATFORM}
+AIE_FLAGS         := -v ${ALL_INCLUDE} ${TEST_BENCH} ${OTHER_OPTS} --platform=${PLATFORM}
 
 .PHONY: clean help compile sim get_tp check_op
 
