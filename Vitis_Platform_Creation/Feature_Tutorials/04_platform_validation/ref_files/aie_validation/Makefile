@@ -26,7 +26,7 @@ VPP_FLAGS = --save-temps --verbose --config ${VPP_SPEC} --config /proj/xtcRepo/d
 
 .PHONY: clean
 
-all: ${FIXED_XSA} ${HOST_EXE} build run
+all: ${FIXED_XSA} ${HOST_EXE} build 
 
 ${LIBADF}: ${GRAPH}
 	${AIE_CMPL_CMD}

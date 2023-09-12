@@ -23,7 +23,7 @@ VPP_FLAGS = --save-temps --verbose --config ${VPP_SPEC} --config /proj/xtcRepo/d
 
 .PHONY: clean
 
-all: fixed_xsa fixed_platform baremetal_elf package run
+all: fixed_xsa fixed_platform baremetal_elf package 
 
 check-xsa:
 ifeq ($(wildcard $(EXTENSIBLE_XSA)),)

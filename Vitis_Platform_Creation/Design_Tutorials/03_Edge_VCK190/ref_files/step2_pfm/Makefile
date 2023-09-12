@@ -53,7 +53,7 @@ sw_comps:$(COMMON_IMAGE_VERSAL)/Image
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
 	@echo "execute createdts to generate dts file"
-	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -dtsi system-user.dtsi -compile"
+	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.1 -dtsi system-user.dtsi -compile"
 	cp $(DTB_LOCATION)/system.dtb  $(BOOT)/
 	
 # Target: sysroot
