@@ -29,7 +29,7 @@ VPP := v++
 AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 --pl-freq=100 -workdir=./Work 
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --platform $(BASE_PLATFORM) --xlopt=0 --pl-freq=100 -workdir=./Work 
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa

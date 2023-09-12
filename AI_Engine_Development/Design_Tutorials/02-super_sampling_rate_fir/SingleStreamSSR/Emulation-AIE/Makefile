@@ -20,10 +20,10 @@ RM = rm -f
 RMDIR = rm -rf
 SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
 DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
-PLATFORM ?=$(PFM_NAME)
+PLATFORM ?= $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 # AIE compiler settings
-AIE_FLAGS = -v -include="${XILINX_VITIS}/aietools/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform ${PLATFORM_REPO_PATHS}/${PLATFORM}/${PLATFORM}.xpfm -workdir=$(AIE_OUT_DIR)
+AIE_FLAGS = -v -include="${XILINX_VITIS}/aietools/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=$(PLATFORM) -workdir=$(AIE_OUT_DIR)
 
 AIE_FLAGS += --Xrouter=dmaFIFOsInFreeBankOnly
 

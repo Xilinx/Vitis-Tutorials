@@ -48,6 +48,7 @@ AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE}/src" -include="${AIE}/data" -include="${AIE}/src/aie_kernels"
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
+AIE_FLAGS += --platform $(BASE_PLATFORM)
 AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g

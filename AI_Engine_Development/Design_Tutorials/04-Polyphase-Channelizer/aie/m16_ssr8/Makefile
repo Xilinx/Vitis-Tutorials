@@ -21,7 +21,7 @@ SOURCES	          := ../m16_ssr8_filterbank/m16_ssr8_filterbank_graph.h \
 PLATFORM_USE      := xilinx_vck190_base_202320_1
 PL_FREQ           := --aie.pl-freq=625.0
 
-PLATFORM          := --platform="${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm"
+PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 LOG_FILE          := log
 
@@ -34,8 +34,7 @@ ALL_INCLUDE       := --include=${PWD} --include=../m16_ssr8_filterbank --include
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} \
-			${PL_FREQ}
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
 
 ifeq (${DO_GRAPH_SIM},true)
 	AIE_FLAGS := ${AIE_FLAGS} ${AIE_SIM_ONLY}

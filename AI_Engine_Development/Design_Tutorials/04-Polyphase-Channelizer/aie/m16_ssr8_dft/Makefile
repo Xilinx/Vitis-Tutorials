@@ -13,7 +13,7 @@ SOURCES           := m16_ssr8_dft_graph.h dft_1xN_widget_graph.h dft_1xN_widget.
 PLATFORM_USE      := xilinx_vck190_base_202320_1
 PL_FREQ           := --aie.pl-freq=625
 
-PLATFORM          := --platform=${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 LOG_FILE          := log
 
@@ -25,7 +25,7 @@ ALL_INCLUDE       := --include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PLATFORM} ${PL_FREQ}
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

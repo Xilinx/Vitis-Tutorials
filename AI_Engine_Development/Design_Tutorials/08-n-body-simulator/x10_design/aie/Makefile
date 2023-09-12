@@ -80,6 +80,7 @@ $(BUILD_DIR)/libadf.a: $(DEPS)
 	@mkdir -p $(BUILD_DIR);				\
 	cd $(BUILD_DIR);				\
 	aiecompiler -v  --target=hw			\
+	--platform $(PLATFORM)			\
 	--stacksize=2000				\
 	-include="$(XILINX_VITIS)/aietools/include" 	\
 	-include="$(AIE_DIR)" 				\
