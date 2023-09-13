@@ -6,8 +6,8 @@
 #
 open_project -reset proj
 set_top tsp
-add_files ../code/tsp.cpp
-add_files -tb ../code/tsp_TB.cpp
+add_files ./code/tsp.cpp
+add_files -tb ./code/tsp_TB.cpp
 
 # Solution commands
 #
