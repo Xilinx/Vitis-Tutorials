@@ -10,7 +10,7 @@
 
 # Post-Link Recompile of an AI Engine Application
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 
 ## Introduction
@@ -29,15 +29,16 @@ In the second case, you use the `.xsa` file generated during the link stage as t
 This tutorial details all the steps to perform hardware emulation (`hw_emu`), but it also supports the hardware implementation flow by changing the compilation target.
 
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2023.1 software.  The AMD Vitis&trade; release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html).
+**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2023.2 software.  The AMD Vitis&trade; release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html).
 The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
-3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_dfx_202310_1/xilinx_vck190_base_dfx_202320_1.xpfm`.
-This tutorial targets the VCK190 production board for 2023.1 version.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/`.
+
+This tutorial targets the VCK190 production board for 2023.2 version.
 
 The sub-directory `Files` contains all the source files necessary for this tutorial.
 
@@ -60,25 +61,19 @@ This tutorial shows you how to modify an AI Engine application after the platfor
 
 Completing this tutorial should give you the confidence to develop AI Engine designs based on a hardware/software platform, knowing that you can modify the AI Engine part and the processing system control application. The only limitation is that the hardware connection between the AI Engine array and the programmable logic (PL) must be kept fixed.
 
-### Support
-
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
 ## License
 
 ___
 
-The MIT License (MIT)
+ The MIT License (MIT)
 
-Copyright (c) 2023 Advanced Micro Devices, Inc.
+ Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+ SPDX-License-Identifier: MIT
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+## Support
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD039</sup></br></p>
 
-
-
-<p align="center"><sup>XD039 | &copy; Copyright 2021–2023 Xilinx, Inc.</sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

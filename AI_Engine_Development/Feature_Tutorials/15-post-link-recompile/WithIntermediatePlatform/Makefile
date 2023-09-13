@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
+# SPDX-License-Identifier: MIT
 #
 
 
@@ -14,9 +14,13 @@ TARGET ?= hw_emu
 
 FILES_DIR := $(PWD)/../Files
 
-all_phases:
+phase1:
 	make FILES_DIR=$(FILES_DIR) -C Phase1 phase1
+
+phase2:
 	make FILES_DIR=$(FILES_DIR) -C Phase2 phase2
+
+all_phases: phase1 phase2
 
 clean:
 	make -C Phase1 clean

@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
+# SPDX-License-Identifier: MIT
 #
 
 
@@ -48,7 +48,6 @@ AIECC := aiecompiler
 
 AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE}/src" -include="${AIE}/data" -include="${AIE}/src/aie_kernels"
 AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
-AIE_FLAGS += --platform $(BASE_PLATFORM)
 AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
@@ -56,10 +55,10 @@ VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TA
 
 
 .ONESHELL:
-.PHONY: clean all kernels aie aie2 link package package2 run_emu disp
+.PHONY: clean all kernels aie link host package aie2 package2 run_emu disp
 
 
-all: clean kernels aie link aie2 host package2  run_emu
+all: clean kernels aie link host aie2 package2  run_emu
 phase1: kernels aie link host package run_emu
 phase2: aie2 package2 run_emu
 
@@ -114,7 +113,7 @@ check_aiesim:
 	../check_op 1 $(DATA_DIR)/polar_clip_in_reim_ref.txt $(DATA_DIR)/polar_clip_in.txt
 
 $(GRAPH_O): $(GRAPH)
-	$(AIECC) $(AIE_FLAGS) -workdir=./Work $(GRAPH)
+	$(AIECC) $(AIE_FLAGS) --platform=$(BASE_PLATFORM) -workdir=./Work $(GRAPH)
 	@echo "COMPLETE: libadf.a created."
 
 aie2: $(GRAPH2_O)
@@ -124,7 +123,7 @@ aiesim2: $(GRAPH2_O)
 	make check_aiesim
 
 $(GRAPH2_O): $(GRAPH2)
-	$(AIECC) $(AIE_FLAGS)  --output-archive=$(GRAPH2_O) --workdir=./Work2 --constraints=$(CONSTRAINTS)/AI_interface.aiecst $(GRAPH2)
+	$(AIECC) $(AIE_FLAGS)  --platform=$(XSA) --output-archive=$(GRAPH2_O) --workdir=./Work2 --constraints=$(CONSTRAINTS)/AI_interface.aiecst $(GRAPH2)
 	@echo "COMPLETE: libadf2.a created."
 
 ########################################################
@@ -224,3 +223,4 @@ clean:
 	rm -rf aiesimulator_output pl_sample*
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
+	rm -rf *.json *.pdi drivers extracted .crashReporter

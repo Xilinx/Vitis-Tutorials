@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
+# SPDX-License-Identifier: MIT
 #
 
 
@@ -175,3 +175,4 @@ clean:
 	rm -rf aiesimulator_output pl_sample*
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
+	rm -rf .crashReporter
