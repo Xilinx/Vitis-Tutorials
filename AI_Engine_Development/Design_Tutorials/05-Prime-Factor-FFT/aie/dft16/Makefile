@@ -21,7 +21,7 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${DSPLIB_OPTS} -platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${DSPLIB_OPTS} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -77,6 +77,9 @@ trace:
 throughput:
 	@../../scripts/throughput.py aiesimulator_output/data/sig_o_0.txt --iscomplex
 	@../../scripts/throughput.py aiesimulator_output/data/sig_o_1.txt --iscomplex
+
+loop_II:
+	@../../scripts/get_loop_II.py Work/aie
 
 regression:
 	matlab -batch regression
