@@ -303,10 +303,10 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie">Python and C++ External Traffic Generators for AIE Simulation and Emulation</a>
+                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie">Python and C++ External Traffic Generators</a>
             </td>
             <td>
-                 <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
+                 <a href="./AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer </a>
             </td>
         </tr>
         <tr>
@@ -317,7 +317,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer :new: </a>
+                 <a href="./AI_Engine_Development/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT :new: </a>
             </td>
         </tr>
         <tr>
@@ -325,8 +325,19 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation</a>
             </td>
             <td>
+                 <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
             </td>
             <td>
+                 <a href="./AI_Engine_Development/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain :new: </a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+            </td>
+            <td>
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation :new: </a>
             </td>
         </tr>
     </tbody>

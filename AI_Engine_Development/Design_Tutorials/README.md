@@ -36,13 +36,17 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./04-Polyphase-Channelizer/">Polyphase Channelizer</a></td>
  <td>This tutorial demonstrates an implementation of a system-level design (ie. Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.</td>
  </tr> 
+ </tr> 
+ <td align="center"><a href="./05-Prime-Factor-FFT/">Prime Factor FFT-1008</a></td>
+ <td>This Versal system example implements a 1008-pt FFT using the Prime Factor Algorithm. The design uses both AI Engine and PL kernels working cooperatively. AI Engine elements are hand-coded using AIE API. PL elements are implemented using Vitis HLS. System integration in Vitis is managed using the new v++ Unified Command Line flow. </td>
+ </tr> 
  <tr>
  <td align="center"><a href="./06-fft2d_AIEvsHLS/">2D-FFT</a></td>
  <td>This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines. </td>
  </tr>
  <tr>
  <td align="center"><a href="./07-firFilter_AIEvsHLS/">FIR Filter</a></td>
- <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
+ <td>This tutorial designs a PFA-1008 transform in Versal using both AI Engine and PL elements working cooperatively.</td>
  </tr> 
  <tr>
  <td align="center"><a href="./08-n-body-simulator/">N-Body Simulator</a></td>
@@ -59,10 +63,18 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
    <li>Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
  </tr>
  <tr>
+ <td align="center"><a href="./09-ddc_chain/">Digital Down-conversion Chain</a></td>
+ <td>This tutorial demonstrates the steps to upgrade a 32-branch digital down-conversion chain (XAPP1351) to the latest recommended tools and coding practice, including conversion of most AI Engine Intrinsics to APIs. The upgraded AIE API version achieves the same throughput performance as the original code base, while being easier to read and maintain.</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./10-GeMM_AIEvsDSP/">Versal GeMM Implementation</a></td>
  <td>This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with RTL using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.</td>
  </tr>
-</table>
+ <tr>
+ <td align="center"><a href="./11-Bilinear_Interpolation/">Bilinear Interpolation</a></td>
+ <td>This tutorial demonstrates how the bilinear interpolation algorithm may be efficiently implemented using AI Engines. It also provides guidance for customizing the design to function with varying image resolutions, and to take advantage of multicore processing on the AI Engine array to achieve desired throughput.</td>
+ </tr>
+ </table>
 
 
 

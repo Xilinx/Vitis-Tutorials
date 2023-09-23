@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.1_update (Sep. 21, 2023)
+### New Tutorials 
+- AI_Engine_Development/Design_Tutorials/05-Prime-Factor-FFT/
+- AI_Engine_Development/Design_Tutorials/09-ddc_chain/
+- AI_Engine_Development/Design_Tutorials/11-Bilinear_Interpolation/
+
 ## 2023.1_update (Jul. 27, 2023)
 ### New Tutorials 
 - Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation/
