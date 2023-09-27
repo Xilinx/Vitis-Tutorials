@@ -16,7 +16,7 @@ set OUTPUT platform_repo
 
 set SRC ./src/
 
-platform create -name $platform_name -desc " A platform targetting VCK190 for demonstration purpose with a Linux, AI Engine and a Standalone domain" -hw $xsa -out $output_path -no-boot-bsp
+platform create -name $platform_name -desc " A platform for demonstration purpose with a Linux, AI Engine and a Standalone domain" -hw $xsa -out $output_path -no-boot-bsp
 domain create -name aiengine -os aie_runtime -proc {ai_engine}
 domain config -pmcqemu-args $SRC/qemu/aie/pmc_args.txt
 domain config -qemu-args $SRC/qemu/aie/qemu_args.txt

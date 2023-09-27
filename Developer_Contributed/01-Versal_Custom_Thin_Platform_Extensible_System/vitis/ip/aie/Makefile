@@ -5,7 +5,8 @@
 
 ECHO              := @echo
 
-PLATFORM_CUSTOM   := vck190_thin
+BOARD_NAME        ?= vck190
+PLATFORM_CUSTOM   := ${BOARD_NAME}_thin
 
 XPFM              := ../../xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 TARGET            ?= hw
@@ -26,7 +27,7 @@ SIM_LOG_FILE      = ${AIE_WS}/aiesimulator.log
 AIE_OPTS          := -target=${TARGET}
 #AIE_OPTS          += --dataflow
 AIE_OPTS          += -v
-AIE_OPTS          += --use-phy-shim=true
+#AIE_OPTS          += --use-phy-shim=true
 AIE_OPTS          += --platform=${XPFM}
 AIE_OPTS          +=  --workdir=${WORK_DIR}
 AIE_OPTS          +=  --constraints=${CONSTRAINT_FILE}

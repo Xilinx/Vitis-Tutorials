@@ -33,12 +33,15 @@ export LINUX_PRE_BUILDS           := false
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
 
+# BOARD_NAME = vck190 or vek280 or vek280_es1
+export BOARD_NAME                 := vck190
+
 ###########################################################
 # Linux/Yocto Variables that may be changed to your needs #
 ###########################################################
 
 # LINUX_TMP_DIR = Any dir which is not NFS
-export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${SW_BUILD_TOOL}
+export LINUX_TMP_DIR              := /tmp/${USER}/${REQUIRED_VERSION}/${BOARD_NAME}/${SW_BUILD_TOOL}
 
 # LINUX_YOCTO_ROOT = Directory where yocto tools are installed
 # Used ONLY when SW_BUILD_TOOL := yocto!
@@ -62,10 +65,19 @@ export LINUX_ETH_CONFIG           := DHCP
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
+export PLATFORM_CUSTOM            := ${BOARD_NAME}_thin
+export LINUX_MACHINE              := ${BOARD_NAME}-versal
+
+ifeq (${BOARD_NAME}, vck190)
 export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
-export PLATFORM_CUSTOM            := vck190_thin
 export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202320_1
-export LINUX_MACHINE              := vck190-versal
+else ifeq (${BOARD_NAME}, vek280)
+export DEVICE_NAME                := xcve2802-vsvh1760-2MP-e-S
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+else
+export DEVICE_NAME                := xcve2802-vsvh1760-2MP-e-S-es1
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+endif
 
 LINUX_SRC_DIR                     := ./linux/src
 LINUX_BUILD_DIR                   := ./linux/${LINUX_MACHINE}

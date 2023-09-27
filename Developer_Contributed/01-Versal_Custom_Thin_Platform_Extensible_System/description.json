@@ -3,7 +3,7 @@
     "description": "01-Versal_Custom_Thin_Platform_Extensible_System",
     "gui": "false",
     "flow": "versal",
-    "platform_allowlist": [ "vck190"],
+    "platform_allowlist": ["vck190", "vek280"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "CTB_01-Thin-PFM",
@@ -20,7 +20,7 @@
             "vitis_hw_build"
         ],
         "custom_build_target": {
-            "all" : "all"
+            "all": "all"
         },        
         "category": "canary",
         "make_options": [

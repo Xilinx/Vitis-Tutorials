@@ -15,12 +15,12 @@ my_stream_dm<TT_DATA>::my_stream_dm()
 {
   // Drop samples before starting kernel to start fill fifos.
   // This is usually needed when using broadcast to several kernels.
-  int const smpl_drop = 4;
-  for (int i = 0; i < smpl_drop; i++)
-  {
-    // Drop only on stream port 0
-    get_ss(0);
-  }
+  //int const smpl_drop = 4;
+  //for (int i = 0; i < smpl_drop; i++)
+  //{
+  //  // Drop only on stream port 0
+  //  get_ss(0);
+  //}
 }
 // Run:
 template <typename TT_DATA>

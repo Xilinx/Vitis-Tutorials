@@ -23,14 +23,15 @@ set script_folder [_tcl::get_script_folder]
 #set_param board.repoPaths ../board_repo/boards/Xilinx/vck190
 
 ## WORKAROUND - Hardcode platform and device name as tcl arguments is not passed properly to Vitis
-set PLATFORM_NAME [lindex $argv 0]
-set PLATFORM_TYPE vck190_custom
+set BOARD_NAME    [lindex $argv 0]
+set PLATFORM_NAME [lindex $argv 1]
+set PLATFORM_TYPE ${PLATFORM_NAME}_custom
 set VER "1.0"
 puts "Creating HW Platform project for : \"$PLATFORM_NAME\""
-set DEVICE_NAME [lindex $argv 1]
+set DEVICE_NAME [lindex $argv 2]
 puts "Using : \"$DEVICE_NAME\""
-set BOARD_LABEL [lindex $argv 3]
-set BOARD_VER [lindex $argv 4]
+set BOARD_LABEL [lindex $argv 4]
+set BOARD_VER [lindex $argv 5]
 set BUILD_DIR build
 
 create_project -f ${PLATFORM_NAME} ${BUILD_DIR}/${PLATFORM_NAME}_vivado -part $DEVICE_NAME
@@ -46,13 +47,12 @@ set_property preferred_sim_model "tlm" [current_project]
 # pass arguments to tcl
 #set argv [list $PLATFORM_NAME $DEVICE_NAME]
 #set argc 2
-source ./src/dr.bd.tcl
+source ./${BOARD_NAME}/dr.bd.tcl
 
 ## ===================================================================================
 ## Set Platform Properties (e.g. PFM.*)
 ## ===================================================================================
-# this is currently done in dr.bd.tcl #source pfm_decls.tcl
-source ./src/pfm_decls.tcl
+#source ./${BOARD_NAME}/pfm_decls.tcl
 
 ## ===================================================================================
 ## Add constraints to DDR4
@@ -133,7 +133,7 @@ variable pre_synth
 set pre_synth ""
 
 if { $argc > 1} {
-  set pre_synth [lindex $argv 2]
+  set pre_synth [lindex $argv 3]
 }
 #Pre_synth Platform Flow
 if {$pre_synth} {

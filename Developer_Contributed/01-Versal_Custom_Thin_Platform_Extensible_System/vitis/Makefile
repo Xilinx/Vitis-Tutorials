@@ -6,7 +6,8 @@
 ECHO                  := @echo
 
 TARGET                ?= hw
-PLATFORM_CUSTOM       ?= vck190_thin
+BOARD_NAME            ?= vck190
+PLATFORM_CUSTOM       ?= ${BOARD_NAME}_thin
 LINUX_PRE_BUILDS      ?= false
 
 XSA_PLATFORM          := ../vivado/build/xsa_platform/${PLATFORM_CUSTOM}.xsa

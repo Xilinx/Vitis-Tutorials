@@ -10,12 +10,12 @@
 
 ***Version: Vitis 2023.2***
 
-This tutorial describes an AMD Versal™ VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.2.
+This tutorial describes an AMD Versal™ VCK190/VEK280(+es1) System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2023.2.
 
 
 ## Getting Started
 ### Build-flow
-The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:
+The Versal VCK190/VEK280/VEK280(+es1) System Example Design full Makefile build-flow builds the whole project in the following order:
 ```
   1.  version_check:   Checks if the Vivado, Petalinux and Vitis tools are setup and if the versions are 2023.2
   2.  vivado_platform: Building the thin platform xsa (only pre-synth) or using the pre-builds
@@ -59,8 +59,12 @@ In the `[project-root]` you can start the full build with `make all` or `make al
       - `make ultraclean` to clean everything for **ALL** `TARGETS`.
       - `make ultraclean_vitis` to clean everything (ip, ps_apps, vitis) after the (fixed) platform for **ALL** `TARGETS`.
   - `[project-root]/Makefile` export options to be changed if needed:
+    - `BOARD_NAME`:
+      - `export BOARD_NAME := vck190` for targetting a VCK190 board (default).
+      - `export BOARD_NAME := vek280` for targetting a VEK280 board.
+      - `export BOARD_NAME := vek280_es1` for targetting a VEK280_ES1 board.
     - `TARGET`:
-      - `export TARGET := hw` for targetting a VCK190 board (default).
+      - `export TARGET := hw` for targetting a board (default).
       - `export TARGET := hw_emu` for targetting hardware emulation (change if needed).
       - The build flow supports both TARGETs in the same `[project-root]`; if you need both results at once, you can do `make all_targets` from the `[project-root]`!
       - Some generated directories are depending on the `TARGET` selection and are further shown as `[dir]_${TARGET}`.
@@ -175,12 +179,14 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | Directory/file      | Description                                             
 | --------------------|--------------------------------------------------------------
 | Makefile            | The vivado platform Makefile                                  
-| src/*               | The vivado platform sources
+| vck190/*            | The vivado platform sources for the VCK190
+| vek280/*            | The vivado platform sources for the VEK280
+| vek280_es1/*        | The vivado platform sources for the VEK280_ES1
 
  - `export XPFM_PRE_BUILDS := false` 
-   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/vivado/build/xsa_platform/vck190_thin.xsa`.
+   - Builds the output file needed for Petalinux/Yocto and Vitis software platform creation -> `[project-root]/vivado/build/xsa_platform/${BOARD_NAME}_thin.xsa`.
    - After this step you could open the platform blockdesign in Vivado for review:
-     - `[project-root]/vivado/build/vck190_thin_vivado` $ vivado `vck190_thin.xpr`
+     - `[project-root]/vivado/build/${BOARD_NAME}_thin_vivado` $ vivado `${BOARD_NAME}_thin.xpr`
  - `export XPFM_PRE_BUILDS := true` 
    - Setup the project to use the pre-build xsa
    
@@ -195,8 +201,8 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | src/*               | The vitis platform sources
 
  - `export XPFM_PRE_BUILDS := false` 
-   - Builds the platform needed for ip and Vitis   -> `[project-root]/vitis/platform/build/vck190_thin/export/vck190_thin/vck190_thin.xpfm` 
-   - Builds the software platform needed for Vitis -> `[project-root]/vitis/platform/build/vck190_thin/export/vck190_thin/sw/*`
+   - Builds the platform needed for ip and Vitis   -> `[project-root]/vitis/platform/build/${BOARD_NAME}_thin/export/${BOARD_NAME}_thin/${BOARD_NAME}_thin.xpfm` 
+   - Builds the software platform needed for Vitis -> `[project-root]/vitis/platform/build/${BOARD_NAME}_thin/export/${BOARD_NAME}_thin/sw/*`
  - `export XPFM_PRE_BUILDS := true` 
    - Setup the project to use the xpfm pre-builds
    
@@ -207,7 +213,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 `[project-root]/linux/src` Directory/file structure:
 | Directory/file                                   | Description                                             
 | -------------------------------------------------|-------------------------------------------------------------------------------------------
-| recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190              
+| recipes-bsp/device-tree/*                        | Linux-recipe and files needed for some device-tree changes needed for VCK190/VEK280(+es1)              
 | recipes-bsp/init-ifupdown/*                      | Linux-recipe and configuration file that needs to be setup for builds with `export LINUX_ETH_CONFIG := STATIC`
 | recipes-core/base-files/*                        | Linux-recipe needed to automount mmcblk0p1 for builds with `export SW_BUILD_TOOL := yocto`
 | boot_custom.bif                                  | Bif file with \<placeholders\> needed to have the Vitis packager generating a correct BOOT.BIN
@@ -225,7 +231,7 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 | src/conf/auto.conf  | Yocto Build Configuration File
  
  - `export LINUX_PRE_BUILDS := false` 
-   - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/vck190-versal/images/linux`.
+   - Builds all required linux (Petalinux or Yocto) images which end up in `[project-root]/linux/${BOARD_NAME}-versal/images/linux`.
    - It also builds a `sysroot` which ends up in `[project-root]/linux/sysroot`; needed for `[project-root]/ps_apps/linux` builds.
  - `export LINUX_PRE_BUILDS := true` 
    - Sets up the project to use the Linux pre-builds
@@ -320,15 +326,15 @@ Each step is sequential (in the order listed - by the `[project-root]/Makefile`)
 </details>
 
 ## Testing
-### Running on a VCK190
+### Running on a board
   1. Prerequisite: Build was executed with `export TARGET := hw`
   2. Copy over the `[project-root]/package_linux_hw/sd_card/*` to an SD-card (**Note**: Only when `export LINUX_PRE_BUILDS := false`), or put the `[project-root]/package_linux_hw/sd_card.img` on an SD-card.
-  3. Put the SD-card in the VCK190 Versal SD-card slot (VCK190 top SD-card slot closest to the bracket).
-  4. Connect the included USB-cable between the VCK190 (Middle bottom of the bracket) and a computer:
+  3. Put the SD-card in the board's Versal SD-card slot (board's top SD-card slot closest to the bracket).
+  4. Connect the included USB-cable between the board (Middle bottom of the bracket) and a computer:
      - Usually you will see 3 serial ports in your device manager:
        - One for the ZU04 system controller device.
        - Two for Versal; however only one of the Versal serial ports are in use.
-       - To see the serial ports, the VCK190 does not need to be powered-ON, the physical USB connection should be enough!
+       - To see the serial ports, the board does not need to be powered-ON, the physical USB connection should be enough!
      - Connect to the serial port(s) by using a terminal emulator like Putty (Windows) with the following settings:
        - 115200 baud
        - 8 data bits
@@ -368,15 +374,15 @@ Administrator. It usually boils down to these three things:
 
 Password: 
 vck190-versal:/home/petalinux#
-vck190-versal:/home/petalinux# cd /run/media/mmcblk0p1/
-vck190-versal:/run/media/mmcblk0p1#
+vck190-versal:/home/petalinux# cd /run/media/BOOT-mmcblk0p1/
+vck190-versal:/run/media/BOOT-mmcblk0p1#
 ```
  
-Execute the following after you went though the previous explained login-step so you reached the `/run/media/mmcblk0p1` directory:
+Execute the following after you went though the previous explained login-step so you reached the `/run/media/BOOT-mmcblk0p1` directory:
   - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
 ```
-vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
+vck190-versal:/run/media/BOOT-mmcblk0p1# ./vadd_mm_cpp.exe a.xclbin 
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -394,7 +400,7 @@ PASSED:  my_vadd_output.sync(XCL_BO_SYNC_BO_FROM_DEVICE, VADD_BYTE_SIZE, 0)
 
 PASSED:  ./vadd_mm_cpp.exe
 
-vck190-versal:/run/media/mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
+vck190-versal:/run/media/BOOT-mmcblk0p1# ./vadd_mm_ocl.exe a.xclbin 
 Loading: 'a.xclbin'
 XAIEFAL: INFO: Resource group Avail is created.
 XAIEFAL: INFO: Resource group Static is created.
@@ -402,7 +408,7 @@ XAIEFAL: INFO: Resource group Generic is created.
 
 PASSED:  ./vadd_mm_ocl.exe
 
-vck190-versal:/run/media/mmcblk0p1# ./vadd_s.exe a.xclbin 
+vck190-versal:/run/media/BOOT-mmcblk0p1# ./vadd_s.exe a.xclbin 
 INFO:    samples = 256
 INFO:    bsize   = 512
 PASSED:  auto my_device = xrt::device(0)
@@ -433,7 +439,7 @@ PASSED:  out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
 
 PASSED:  ./vadd_s.exe
 
-vck190-versal:/run/media/mmcblk0p1# ./aie_dly_test.exe a.xclbin 
+vck190-versal:/run/media/BOOT-mmcblk0p1# ./aie_dly_test.exe a.xclbin 
 Initializing ADF API...
 PASSED:  auto my_device = xrt::device(0)
 XAIEFAL: INFO: Resource group Avail is created.
@@ -548,7 +554,7 @@ PASSED:  my_graph.end()
 
 PASSED:  ./aie_dly_test.exe
 
-vck190-versal:/run/media/mmcblk0p1# 
+vck190-versal:/run/media/BOOT-mmcblk0p1# 
 ```
 
 ## Notes
@@ -569,7 +575,7 @@ vck190-versal:/run/media/mmcblk0p1#
       - Vivado: `Close`
       - `[project-root]/vitis` $ make update_ila
     - A quick use case would be to validate the values of subtractor registers. After the probing file is loaded and the ILA is armed, rerunning `./aie_dly_test.exe a.xclbin` will trigger the ILA capturing the signal values that should match those in the console.
-  - `root` password is the one you have setup when using ssh/scp/... towards the VCK190 `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
+  - `root` password is the one you have setup when using ssh/scp/... towards the board `export TARGET := hw` or hardware emulation `export TARGET := hw_emu`.
   
 ## Design Considerations
   Note: The **MUST**s in below explanations are due to how the generic Makefiles are setup, and is **NOT** an AMD tools requirement!
@@ -611,7 +617,8 @@ Click on each item below to see the detailed Revision History:
  <details>
   <summary> September 2023 </summary>
   
- - Upgrading to 2023.2:
+ - Upgrading to 2023.2
+ - Integrating VEK280/VEK280_es1 option
  
  </details>
 
@@ -681,8 +688,8 @@ Click on each item below to see the detailed Revision History:
     - Moved `[project-root]/petalinux/src/boot_custom.bif` to `[project-root]/linux/src/boot_custom.bif`
     - Moved `[project-root]/petalinux/src/device-tree` to `[project-root]/linux/src/recipes-bsp/device-tree`
     - Moved `[project-root]/petalinux/init-ifupdown` to `[project-root]/linux/src/recipes-bsp/init-ifupdown`
-    - Linux build for `export LINUX_BUILD_TOOL := petalinux` ends up in `[project-root]/linux/vck190-versal`
-    - Linux build for `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/vck190-versal` and `[project-root]/linux/vck190-versal-meta`
+    - Linux build for `export LINUX_BUILD_TOOL := petalinux` ends up in `[project-root]/linux/${BOARD_NAME}-versal`
+    - Linux build for `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/${BOARD_NAME}-versal` and `[project-root]/linux/${BOARD_NAME}-versal-meta`
     - Sysroot build for `export LINUX_BUILD_TOOL := petalinux` and `export LINUX_BUILD_TOOL := yocto` ends up in `[project-root]/linux/sysroot`
     - Updated `[project-root]/linux/src/device-tree/files/system-user.dtsi` for proper Ethernet PHY configuration
     - Added support for offline petalinux-build (Excluding sysroot build!) with:
@@ -693,7 +700,7 @@ Click on each item below to see the detailed Revision History:
     - Updated `[project-root]/platform/sw/src/qemu/lnx/qemu_args.txt` for adding Ethernet connectivity support (ssh/scp/...) for hardware emulation `export TARGET := hw_emu`
     - Removed linux generated images dependencies; since **NOT** required
   - bif:
-    - Added `[project-root]/linux/vck190-versal/images/linux/Image` and `[project-root]/linux/vck190-versal/images/linux/rootfs.cpio.gz.u-boot` copy to the software platform to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
+    - Added `[project-root]/linux/${BOARD_NAME}-versal/images/linux/Image` and `[project-root]/linux/${BOARD_NAME}-versal/images/linux/rootfs.cpio.gz.u-boot` copy to the software platform to keep proper naming when `export LINUX_BUILD_TOOL := yocto`
     - Added some dependencies so its only executed when needed
   - ip:
     - Added vadd streaming kernels: mm2s_vadd_s -> vadd_s -> s2mm_vadd_s
