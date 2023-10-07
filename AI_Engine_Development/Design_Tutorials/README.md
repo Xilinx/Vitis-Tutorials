@@ -46,7 +46,7 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  </tr>
  <tr>
  <td align="center"><a href="./07-firFilter_AIEvsHLS/">FIR Filter</a></td>
- <td>This tutorial designs a PFA-1008 transform in Versal using both AI Engine and PL elements working cooperatively.</td>
+ <td>This tutorial demonstrates the implementations of a system-level design (FIR Filter) using AI Engines and HLS with DSP Engines in the Versal device plus PL including LUTs, flip-flops (FFs), and block RAMs.</td>
  </tr> 
  <tr>
  <td align="center"><a href="./08-n-body-simulator/">N-Body Simulator</a></td>
