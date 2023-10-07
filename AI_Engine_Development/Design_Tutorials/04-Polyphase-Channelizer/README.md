@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # Polyphase Channelizer
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 
@@ -26,6 +26,7 @@ Author: Mark Rollins
 6. [Polyphase Filterbank Design](#polyphase-filterbank-design)
 7. [Discrete Fourier Transform Design](#discrete-fourier-transform-design)
 8. [Build and Run Design](#build-and-run-design)
+9. [Estimating Power Using the Power Design Manager](#estimating-power-using-the-power-design-manager)
 
 [References](#references)
 
@@ -35,8 +36,7 @@ Author: Mark Rollins
 
 ## Introduction
 
-The polyphase channelizer [[1]] down-converts simultaneously a set of frequency-division multiplexed (FDM) channels carried in a single data stream using an
-efficient approach based on digital signal processing. Channelizer use is ubiquitous in many wireless communications systems. Channelizer sampling rates increase steadily as the capabilities of RF-DAC and RF-ADC technology advances, making them challenging to implement in high-speed reconfigurable devices, such as field programmable gate arrays (FPGAs). This tutorial implements a high-speed channelizer design using a combination of AI Engine and programmable logic (PL) resources in AMD Versal™ adaptive SoC devices.
+The polyphase channelizer [[1]] down-converts simultaneously a set of frequency-division multiplexed (FDM) channels carried in a single data stream using an efficient approach based on digital signal processing. Channelizer use is ubiquitous in many wireless communications systems. Channelizer sampling rates increase steadily as the capabilities of RF-DAC and RF-ADC technology advances, making them challenging to implement in high-speed reconfigurable devices, such as field programmable gate arrays (FPGAs). This tutorial implements a high-speed channelizer design using a combination of AI Engine and programmable logic (PL) resources in AMD Versal™ adaptive SoC devices.
 
 ## Channelizer Requirements
 
@@ -87,7 +87,7 @@ Channelizers today can operate at sampling rates between 10 and 20 GSPS. With ty
 * Hardware design is further simplified when the input sampling rate Fs contains a factor of Q=7 matching its output oversampling factor P/Q = 8/7 because the output sampling rate is then an integral number of clock cycles.
 * AI Engine supports clock rates ranging from Fc = 1.0 GHz to 1.3 GHz depending on speed grade. It follows SSR = Fs/Fc ranges from 10/1.3 to 20/1.0.
 
-A suitable clocking strategy can be identified based on these considerations. This tutorial targets a nominal Fs = 10 GSPS with SSR = 8 for an AI Engine nominal clock rate of Fc = 1.25 GHz. This performance may be met with a "-2M" speed grade device, the specific clock rates chosen as appropriate to satify the Q=7 divisibility requirement.
+A suitable clocking strategy can be identified based on these considerations. This tutorial targets a nominal Fs = 10 GSPS with SSR = 8 for an AI Engine nominal clock rate of Fc = 1.25 GHz. This performance may be met with a "-2M" speed grade device, the specific clock rates chosen as appropriate to satisfy the Q=7 divisibility requirement.
 
 ### Circular Buffer
 
@@ -160,7 +160,7 @@ The following figure shows a diagram of how the "vector x matrix" multiplication
 
 ## Build and Run Design
 
-The polyphase channelizer design can be built easly from the command line.
+The polyphase channelizer design can be built easily from the command line.
 
 ### Setup & Initialization
 
@@ -218,6 +218,122 @@ The channelizer design can be built for the VCK190 board using the Makefile as f
 ```
 
 The build process will generate the SD card image in the ```channelizer/package/sd_card``` folder.
+
+## Estimating Power Using the Power Design Manager
+
+The Power Design Manager (PDM) is the new, next-generation power estimation platform designed to bring accurate and consistent power estimation capabilities to the largest Versal and AMD Kria™ SOM products. It is the preferred power estimation tool for the Versal product family. More information can be found on the [Power Design Manager (PDM)](https://www.xilinx.com/products/design-tools/power-design-manager.html) product page and in the Power Design Manager User Guide [(UG1556)](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1556-power-design-manager).
+
+The PDM has three modes to estimate power:
+
+* **Manual Estimation Flow:** All device and design parameters including device part, design resources (AI Engine, PL and AI Engine), clocks, toggle rate, etc. are input manually into the GUI.
+* **Import Compilation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after compiling the design.
+* **Import Simulation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after simulating the design.
+
+This example uses the **Import Compilation Flow** mode to perform a Vectorless Power Analysis as defined in the Vivado Design Suite User Guide: Power Analysis and Optimization [(UG907)](https://docs.xilinx.com/r/en-US/ug907-vivado-power-analysis-optimization/Vectorless-Power-Analysis). This estimate is refined by running a simulation of the AI Engine portion of the design and updating the initial estimate.
+
+### Step 1: Building the Design for VCK190 and Executing Power Targets
+
+```shell
+[shell]% make all power TARGET=hw
+```
+
+This performs the following tasks:
+
+* Compiles the design targeting vck190.
+* Runs the `vivado_xpe` Makefile target under `vitis/final` which opens the compiled design in Vivado and runs `report_power`. The output of this step is `system_power.xpe` which is located in the `vitis/final/build_hw/_x/link/vivado/vpl/prj` folder.
+* Runs the `vitis_xpe` Makefile target under `aie/m16_ssr8` which simulates the AI Engine portion of the design and produces a refined power estimate. The output of this step is `m16_ssr8_app.xpe` which is located in the `aie/m16_ssr8/aiesim_xpe/` folder.
+
+### Step 2: Creating a New Project
+
+1. Launch the PDM.
+2. Select **New Project** from the Start menu. The New Project dialog box opens.
+
+   ![figure9](images/pdm-launch.png)
+3. In the New Project dialog box, type a name for your project.
+4. In **Project location**, specify a directory where the project files will be stored.
+5. Check the **Create project subdirectory** checkbox.
+6. Select the **Import XPE file** checkbox and provide the path to ``system_power.xpe``.
+7. Click **Next**, then click **Finish**.
+
+   ![figure10](images/pdm-new-project.png)
+
+The following screen is displayed.
+
+![figure11](images/pdm-import-compile-flow-result.png)
+
+### Step 3: Refining the AI Engine Power Estimate Using Simulated Design and Switching Activities
+
+In the Import XPE wizard, provide the path to the .xpe file you want to import and click **OK**.
+
+![figure12](images/pdm-import-simulation-xpe.png)
+
+The following screen is displayed.
+
+![figure13](images/pdm-import-simulation-flow-result.png)
+
+The following table shows a comparison between power estimates in compilation versus simulation flows in the PDM.
+
+<table>
+  <tr>
+    <td>Component</td>
+    <td>Static (W)</td>
+    <td>Dynamic (W)</td>
+    <td>Total (W)</td>
+    <td>Static (W)</td>
+    <td>Dynamic (W)</td>
+    <td>Total (W)</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="3">Import Compilation Flow</td>
+    <td colspan="3">Import Simulation Flow</td>
+  </tr>
+  <tr>
+    <td>PL</td>
+    <td>7.5</td>
+    <td>2.8</td>
+    <td>10.3</td>
+    <td>7.5</td>
+    <td>2.8</td>
+    <td>10.3</td>
+  </tr>
+  <tr>
+    <td>AI Engine</td>
+    <td>4.8</td>
+    <td>4.3</td>
+    <td>9.1</td>
+    <td>4.8</td>
+    <td>4.2</td>
+    <td>9.0</td>
+  </tr>
+  <tr>
+    <td>PS+PMC</td>
+    <td>0.2</td>
+    <td>1.3</td>
+    <td>1.5</td>
+    <td>0.2</td>
+    <td>1.3</td>
+    <td>1.5</td>
+  </tr>
+  <tr>
+    <td>Everything else (NoC, DDRMC, GTY, etc)</td>
+    <td>1.0</td>
+    <td>8.1</td>
+    <td>9.1</td>
+    <td>1.0</td>
+    <td>8.1</td>
+    <td>9.1</td>
+  </tr>
+  <tr>
+    <td>Total (W)</td>
+    <td>13.5</td>
+    <td>16.4</td>
+    <td>29.9</td>
+    <td>13.5</td>
+    <td>16.3</td>
+    <td>29.8</td>
+  </tr>
+</table>
 
 ## References
 

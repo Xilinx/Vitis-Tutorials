@@ -36,6 +36,9 @@ AIE_OUTPUT        := libadf.a
 
 AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
 
+XPE_FILE_NAME     := ${MY_APP}.xpe
+VCD_FILE_NAME     := ${MY_APP}
+
 ifeq (${DO_GRAPH_SIM},true)
 	AIE_FLAGS := ${AIE_FLAGS} ${AIE_SIM_ONLY}
 endif
@@ -85,13 +88,22 @@ throughput:
 	@../common/throughput.py aiesimulator_output/data/dft_o_6.txt --iscomplex
 	@../common/throughput.py aiesimulator_output/data/dft_o_7.txt --iscomplex
 
+vitis_xpe: ${VCD_FILE_NAME}.vcd
+
+${VCD_FILE_NAME}.vcd:
+	@echo "Generating m16_ssr8_app.xpe for PDM"
+	@v++ -c --mode aie --target=hw ${AIE_FLAGS} ${AIE_SIM_ONLY} 2>&1 | tee ${LOG_FILE}
+	@aiesimulator --pkg-dir Work --profile --dump-vcd ${VCD_FILE_NAME} 2>&1 | tee -a vcd.log
+	@vcdanalyze --vcd ${VCD_FILE_NAME}.vcd --xpe
+
 clean:
 	rm -rf Work Work* ${WORK_DIR} libadf.a
 	rm -rf .Xil
 	rm -rf aiesimulator_output aiesimulator.log
 	rm -rf x86simulator_output
 	rm -rf log log* ${LOG_FILE}
-	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
+	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json *.jou *.ir
 	rm -rf vitis_analyzer* pl_sample_counts* vck190_thin_wrapper* trdata.aiesim
 	rm -rf temp ISS_RPC_SERVER_PORT
 	rm -rf system*.* vitis_design_wrapper* .crashReporter* .AIE_SIM_CMD_LINE_OPTIONS
+	rm -rf aiesim_xpe .Pdm

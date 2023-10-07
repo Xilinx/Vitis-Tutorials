@@ -51,6 +51,10 @@ channelizer:
 	$(MAKE) all -C ps_apps/hw_emu
 	$(MAKE) all -C vitis/final
 
+power:
+	$(MAKE) vivado_xpe -C vitis/final
+	$(MAKE) vitis_xpe -C aie/m16_ssr8
+
 clean:
 	$(MAKE) clean -C aie/m16_ssr8
 	$(MAKE) clean -C aie/m16_ssr8_dft

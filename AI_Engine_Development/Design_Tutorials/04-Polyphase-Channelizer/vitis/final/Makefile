@@ -70,6 +70,9 @@ ${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS} $
 			2>&1 | tee vpp_pack.log
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
+vivado_xpe:
+	find . -type f | grep "prj.xpr"| xargs dirname | xargs -I '{}' sh -c  'cd {} && vivado -source $(CURDIR)/power_script.tcl -mode batch prj.xpr'
+
 clean:
-	rm -rf ${SD_CARD} ${BUILD_DIR}
+	rm -rf ${SD_CARD} ${BUILD_DIR} .Pdm .crashReporter *.jou *.log *.str
 
