@@ -205,7 +205,7 @@ To download a ZIP file of a specific branch, do one of the following:
     <tbody>
         <tr>
             <td colspan="3" height="24" align="center">
-                <strong> <a href="./AI_Engine_Development">AI Engine Development</a></strong>
+                <strong> <a href="./AI_Engine_Development/AIE/">AI Engine Development on AIE</a></strong>
             </td>
         </tr>
         <tr>
@@ -223,112 +223,112 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/02-using-gmio">Using GMIO with AIE</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio">Using GMIO with AIE</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/01-aie_lenet_tutorial">LeNet Tutorial</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/01-aie_lenet_tutorial">LeNet Tutorial</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/03-rtp-reconfiguration">Runtime Parameter Reconfiguration</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/03-rtp-reconfiguration">Runtime Parameter Reconfiguration</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/04-packet-switching">Packet Switching</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/04-packet-switching">Packet Switching</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir">Super Sampling Rate FIR Filters</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/02-super_sampling_rate_fir">Super Sampling Rate FIR Filters</a>
             </td>
         </tr>
         <tr>
             <td height="24"> 
-                <a href="./AI_Engine_Development/Feature_Tutorials/01-aie_a_to_z">A to Z Bare-metal Flow</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/01-aie_a_to_z">A to Z Bare-metal Flow</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/06-versal-system-design-clocking-tutorial">Versal System Design Clocking</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/06-versal-system-design-clocking-tutorial">Versal System Design Clocking</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/03-beamforming">Beamforming Design</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/03-beamforming">Beamforming Design</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/07-AI-Engine-Floating-Point">Using Floating-Point in the AI Engine</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/07-AI-Engine-Floating-Point">Using Floating-Point in the AI Engine</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/08-dsp-library">DSP Library Tutorial</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/08-dsp-library">DSP Library Tutorial</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/06-fft2d_AIEvsHLS">2D-FFT</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/09-debug-walkthrough">Debug Walkthrough Tutorial</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/09-debug-walkthrough">Debug Walkthrough Tutorial</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/10-aie-dsp-lib-model-composer">AIE DSP Library and Model Composer</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/10-aie-dsp-lib-model-composer">AIE DSP Library and Model Composer</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/07-firFilter_AIEvsHLS">FIR Filter</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis">Versal Emulation Waveform Analysis</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/11-ai-engine-emulation-waveform-analysis">Versal Emulation Waveform Analysis</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/12-axis-traffic-generator">AXIS External Traffic Generator</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/12-axis-traffic-generator">AXIS External Traffic Generator</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/08-n-body-simulator">N-Body Simulator</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/13-aie-performance-analysis">AIE Performance and Deadlock Analysis</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/13-aie-performance-analysis">AIE Performance and Deadlock Analysis</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/14-implementing-iir-filter">Implementing an IIR Filter on the AIE</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation</a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/10-GeMM_AIEvsDSP">Versal GeMM Implementation</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/15-post-link-recompile">Post-Link Recompile of an AI Engine Application</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/16-external-traffic-generator-aie">Python and C++ External Traffic Generators</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/16-external-traffic-generator-aie">Python and C++ External Traffic Generators</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/04-Polyphase-Channelizer">Polyphase Channelizer </a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/17-RTL-IP-with-AIE-Engines">Using RTL IP with AI Engines</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/17-RTL-IP-with-AIE-Engines">Using RTL IP with AI Engines</a>
             </td>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT :new: </a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/19-aie_external_io_sv">Using Verilog Traffic Generators in AIE Simulation</a>
             </td>
             <td>
                  <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain :new: </a>
             </td>
         </tr>
         <tr>
@@ -337,7 +337,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation :new: </a>
             </td>
         </tr>
     </tbody>
@@ -385,7 +385,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260">Custom Platform Creation on KV260</a>
                 </td>
                 <td height="24">
-                    <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado">Hardware Design Fast Iteration with Vitis Export to Vivado  :new: </a>
+                    <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado">Hardware Design Fast Iteration with Vitis Export to Vivado</a>
                 </td>
             </tr>
             <tr>
@@ -393,7 +393,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
                 </td>
                 <td height="24">
-                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation  :new: </a>
+                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation</a>
                 </td>
             </tr>
         </tbody>
