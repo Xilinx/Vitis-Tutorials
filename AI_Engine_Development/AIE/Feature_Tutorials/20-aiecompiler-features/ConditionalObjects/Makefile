@@ -1,0 +1,68 @@
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+
+TARGET   = hw_emu
+HOST_EXE = host.exe
+
+CASE ?= 1
+ARCH ?= 1
+
+ifeq ($(ARCH),1)
+PFM_NAME := xilinx_vck190_base_202320_1
+$(info "ARCH set for AI Engine Architecture   (ARCH = $(ARCH))")
+else ifeq ($(ARCH),2)
+PFM_NAME := xilinx_vek280_es1_base_202320_1
+$(info "ARCH set for AI Engine ML Architecture   (ARCH = $(ARCH))")
+else
+$(error "ARCH should be either 1 for AI Engine or 2 for AI Engine ML   (ARCH = $(ARCH))")
+endif
+
+PFM_NAME := $(strip $(PFM_NAME))
+PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
+
+GRAPH    = src_$(CASE)/graph.cpp
+LIBADF  = libadf_$(CASE).a
+AIE_CMPL_CMD = aiecompiler -include="./src_$(CASE)" -workdir=./Work_$(CASE) ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADF)
+AIE_SIM_CMD = aiesimulator --pkg-dir=./Work_$(CASE) --dump-vcd foo
+
+all: clean data aie aieviz
+
+
+.PHONY: data help _help
+
+data:
+	mkdir -p data
+	CreateLinearData.py int16 32 2048 > data/input.txt
+
+
+aie: ${LIBADF}
+${LIBADF}: src_$(CASE)/*
+	${AIE_CMPL_CMD}
+
+aiesim: ${LIBADF}
+	${AIE_SIM_CMD}
+
+aieviz: $(LIBADF)
+	vitis_analyzer ./Work_$(CASE)/graph.aiecompile_summary
+
+help:
+	make -s _help
+
+_help:
+	echo -e "\n\n===========================================\n"
+	echo "Targeted Architectures:"
+	echo "ARCH=1: AI Engine (default)"
+	echo "ARCH=2: AI Engine ML"
+	echo " "
+	echo "Example list:"
+	echo "CASE=1: conditional Cascade port  (default)"
+	echo "CASE=2: conditional array of SubGraphs"
+	echo "CASE=3: conditional sequential SubGraph"
+	echo "CASE=4: conditional RTP ports"
+	echo -e "\n===========================================\n"
+
+
+clean:
+	rm -rf _x libadf*.a Work_* .Xil vitis_analyzer* foo.vcd *.log pl_sample* aiesimulator_output
+	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp
+	rm -rf data logs
