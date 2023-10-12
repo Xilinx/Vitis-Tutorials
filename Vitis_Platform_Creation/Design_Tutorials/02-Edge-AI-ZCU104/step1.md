@@ -306,7 +306,7 @@ When a component comes with multiple types of simulation models, selecting a Sys
 
    In this step, export XSA for hardware design and hardware emulation separately. These XSA files are used in step 2.
 
-   >**Note:** Vivado 2023.1 can still export XSA with both hardware and hardware emulation info. This feature will be deprecated in the future. In most real designs, due to the complexity of the design, some peripherals cannot be emulated, or does not need to emulate at a cycle accurate level. It is a common practice to provide a simplified hardware design for hardware emulation to reduce the emulation runtime.
+   >**Note:** Vivado 2023.2 can still export XSA with both hardware and hardware emulation info. This feature will be deprecated in the future. In most real designs, due to the complexity of the design, some peripherals cannot be emulated, or does not need to emulate at a cycle accurate level. It is a common practice to provide a simplified hardware design for hardware emulation to reduce the emulation runtime.
 
    1. Click **File -> Export -> Export Platform** to launch the **Export Hardware Platform** wizard. This wizard can also be launched by **Export Platform** button in **Flow Navigator** or **Platform Setup** window.
    2. Click **Next** in the first information page.

@@ -8,11 +8,10 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2023.1 and Vivado 2023.1***
+***Version: Vitis 2023.2 and Vivado 2023.2***
 
->**Note**: AMD Vitis™ AI for Vitis 2023.1 is not available for the moment. Vitis AI applications will be updated soon after Vitis AI for Vitis 2023.1 is released.
 
-In this module, you will create a custom Vitis embedded platform for ZCU104 capable of running ***Vitis acceleration applications***, including ***Vitis AI applications***. Of course, general ***embedded software application*** can also run on this platform. The structure of this example system is shown in the following figure.
+In this module, you will create a custom Vitis embedded platform for ZCU104 capable of running ***Vitis acceleration applications***. Additionally, this platform is versatile enough to support general **embedded software applications**. The diagram below illustrates the structure of this example system.
 
 ![missing image](./images/structure.svg)
 
@@ -33,9 +32,7 @@ The platform should be able to run the following applications:
 
 Vadd application requires 1x clock, 1x interrupt, 1x M_AXI for kernel control, and 1x S_AXI for memory access.
 
-Because Vitis AI applications integrate DPU as RTL kernel, they require two clocks: `clk` and `clk2x`. You can set them at 200 MHz and 400 MHz clocks for easy timing closure. One interrupt is required, and because the DPU is a memory-hungry IP, the platform must provide multiple AXI HP interfaces.
-
-On the software side, the platform should provide XRT and ZOCL packages. The host application can use the XRT OpenCL API to control the kernel. The Vitis AI software framework can control the DPU with XRT. ZOCL is the kernel module that communicates with acceleration kernels. It needs a device tree node and other Vitis AI dependencies, so these should be added. The common image provided by AMD is loaded with these features. Besides these common features, you can also add GCC compilers for application native compilation and mesa-mega driver for Vitis AI demo applications. Additionally, you can replace the dropbear with openssh so that the network speed can be faster.
+On the software side, the platform should provide XRT and ZOCL packages. The host application can use the XRT OpenCL API to control the kernel. ZOCL is the kernel module that communicates with acceleration kernels. It needs a device tree node, so it should be added. The common image provided by AMD is loaded with these features. Besides these common features, you can also add GCC compilers for application native compilation. Additionally, you can replace the dropbear with openssh so that the network speed can be faster.
 
 ## Step-by-Step Tutorial
 
@@ -54,7 +51,8 @@ The following sections will introduce the platform creation steps. Each section 
 ***Start from [step 1: Create the Hardware Platform](./step1.md).***
 
 ## Change Log
-
+### 2023.2
+- Vitis Unified IDE becomes the default IDE.
 ### 2022.2
 
 - `createdts` add user's device tree file support
@@ -74,7 +72,7 @@ The following sections will introduce the platform creation steps. Each section 
   - [Platform Creation General Rules](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Embedded-Platforms-in-Vitis)
   - [Setting up the Vitis environment](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.1/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.1/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Vitis AI Github Repository](https://github.com/Xilinx/Vitis-AI)
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

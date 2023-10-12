@@ -10,10 +10,10 @@
         "test_name": "PFM_D_02-ZCU104",
         "tasks": {
             "build": {
-                "pre_exec": "./env_setup_zynqmp.sh"
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
             },
             "board": {
-                "pre_exec": "./env_setup_zynqmp.sh"
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
             }
          },
         "jobs": [
