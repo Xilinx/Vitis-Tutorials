@@ -10,8 +10,8 @@ function show_usage()
     @printf("\nUsage:\n");
     @printf("  \$ julia check.jl {mode}\n\n");
     @printf("where {mode} may be:\n\n");
-    @printf("  sw: check Emulation-SW results\n");
-    @printf("  aie: check Emulation-AIE results\n\n");
+    @printf("  sw: check x86 simulation results\n");
+    @printf("  aie: check AIE simulation results\n\n");
 end # show_usage()
 
 @printf("\nComparing reference and calculated impulse responses...\n\n");
@@ -36,17 +36,17 @@ ref_file = ws_dir * "data/impresponse.dat";	# impulse response from Julia
 
 if (mode == "aie")
 
-    cp_cmd = `cp Emulation-AIE/aiesimulator_output/output.dat Emulation-AIE/aiesimulator_output/output.dat.mod`;
-    sed_cmd = `sed -i '/T/d' Emulation-AIE/aiesimulator_output/output.dat.mod`; # remove lines which begin with "T"
+    cp_cmd = `cp build/hw/aiesimulator_output/output.dat Emulation-AIE/aiesimulator_output/output.dat.mod`;
+    sed_cmd = `sed -i '/T/d' build/hw/aiesimulator_output/output.dat.mod`; # remove lines which begin with "T"
 
     run(cp_cmd);
     run(sed_cmd);
 
-    dut_file = ws_dir * "Emulation-AIE/aiesimulator_output/output.dat.mod";	# impulse response from AI engine simulation
+    dut_file = ws_dir * "build/hw/aiesimulator_output/output.dat.mod";	# impulse response from AI engine simulation
 
 else
 
-    dut_file = ws_dir * "Emulation-Sw/x86simulator_output/output.dat";  # impulse response from SW simulation
+    dut_file = ws_dir * "build/x86sim/x86simulator_output/output.dat";  # impulse response from SW simulation
 
 end
 

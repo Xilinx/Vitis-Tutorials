@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2a
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Preliminaries
 
@@ -114,13 +114,9 @@ The testbench
 
 ## Analysis
 
-We begin by setting the `Active build configuration` to `Emulation-AIE` and building the design with the default optimization level (xlopt = 1). After a successful build, right-click `aie_iir_2a [aiengine]` and select `Run As` -> `Launch AIE Emulator`. After a successful simulation, we can now enable profiling. Right-click `aie_iir_2a [aiengine]`, select `Run Configurations...`, and click `Generate Profile` in the `Run Configurations` window.
-
-***Note:*** It may be necessary to increase the height of the `Run Configurations` window to see the `Generate Profile` section.
+We begin by opening the `launch.json` file under `Settings` in the `Vitis Components` pane. Select `Part2a_aiesim_1` to view the AIE Simulator parameters and check the box for `Enable Profile`. Build, then run the simulation.
 
 ![Fig. 3](./images/enable_profiling.PNG "Enable Profiling")
-
-Click the `Run` button to re-run with profiling enabled.
 
 After the simulation completes, the "goodness" of the result can be checked by running:
 ```bash
@@ -128,21 +124,19 @@ $ julia check.jl aie
 ```
 The result is "good" when the `maximum(abs.(err))` is less than `eps(Float32)`.
 
-To view the profiler result, in the `Explorer` pane, expand `Emulation-AIE` and `aiesimulator_output`.
+To view the profiler result, in the `FLOW` pane, under `AIE SIMULATOR / HARDWARE`, expand `REPORTS` (below the `Debug` icon) and click on `Profile`.
 
-![Fig. 4](./images/default.aierun_summary.PNG "default.aierun_summary")
+![Fig. 4](./images/profile_selection.PNG "Profile Selection")
 
-Double-click `default.aierun_summary` to open the report in `Vitis Analyzer`.
+In the `AIE SIMULATION` pane, click on `Total Function Time` to show the number of cycles consumed by each function.
 
-In the `Vitis Analyzer` window, click `Profile` in the browser pane (leftmost pane), then `Total Function Time` to show the number of cycles consumed by each function.
-
-![Fig. 5](./images/va_fntime.PNG "Vitis Analyzer Total Function Time")
+![Fig. 5](./images/va_fntime.PNG "Total Function Time")
 
 ***Note:*** The kernel function, `SecondOrderSection<1>` was executed 32 times and ran for 2,313 cycles. Each function call consumed 2,313/32 = 72.28 cycles. The minimum function time is 72 cycles and the maximum is 81 cycles. This implies that the first call consumed nine more cycles (81 + 31 * 72 = 2,313).
 
-Another item of interest is the top-level `main` function which calls `my_graph.run()`, which calls `SecondOrderSection<1>`. The `Total Function + Descendants Time (cycles)` column shows the number of cycles consumed by that function, including all other routines called within it. This includes setting up the heap and stack, initialization, actual processing, etc. For this implementation, 4,579 cycles were used to process 256 samples, or 4579/256 = 17.89 cycles/sample. Assuming that the AI Engine runs with a 1 GHz clock, the throughput is 1e9 cycles/sec / 17.89 cycles/sample =  55.897 Msamples/sec.
+Another item of interest is the top-level `main` function which calls `my_graph.run()`, which calls `SecondOrderSection<1>`. The `Total Function + Descendants Time (cycles)` column shows the number of cycles consumed by that function, including all other routines called within it. This includes setting up the heap and stack, initialization, actual processing, etc. For this implementation, 4,579 cycles were used to process 256 samples, or 4579/256 = 17.89 cycles/sample. Assuming that the AI Engine runs with a 1 GHz clock, the throughput would be 1e9 cycles/sec / 17.89 cycles/sample =  55.897 Msamples/sec.
 
-***Note:*** The main processing occurs in `SecondOrderSection<1>`, which consumes 2,313 cycles. Thus, 4,579 - 2,313 = 2,266 unavoidable "overhead" cycles are not used for sample processing.
+***Note:*** The main processing occurs in `SecondOrderSection<1>`, which consumes 2,313 cycles. Thus, 4,579 - 2,313 = 2,266 "overhead" cycles are not used for sample processing.
 
 Click `Profile Details` to view the generated assembly code.
 
@@ -162,13 +156,13 @@ acc = aie::mac(acc, coeff, xval);   // acc[] += coeff[] * xval
 
 ![Fig. 8](./images/vector_regs.PNG "Vector Registers")
 
-The `ya` register comprises the 256-bit `wr[0:3]` registers. For this example, the `wr0` register is updated with the columns of the coefficient matrix using the `VLDA` (vector load A) mnemonic. The `VLDA` mnemonic transfers eight floating-point values from data memory to a vector register. In this example, there is a seven to eight-cycle latency from the `VLDA` mnemonic (loading data into `wr0`) to the time the data is used for computation with `VFPMAC`.
+The `ya` register is comprised of the four 256-bit `wr[0:3]` registers. For this example, the `wr0` register is updated with the columns of the coefficient matrix using the `VLDA` (vector load A) mnemonic. The `VLDA` mnemonic transfers eight floating-point values from data memory to a vector register. In this example, there is a seven to eight-cycle latency from the `VLDA` mnemonic (loading data into `wr0`) to the time the data is used for computation with `VFPMAC`.
 
 ## Conclusion
 
-We showed how to calculate a floating-point 8x12 matrix and 12x1 vector multiplication using a `for` loop and the AI Engine APIs in 73 cycles. We also showed how to use AMD Vitis™ Analyzer to view some statistics of the generated program (for example, cycles consumed) and examine the generated assembler code.
+We showed how to calculate a floating-point 8x12 matrix and 12x1 vector multiplication using a `for` loop and the AI Engine APIs in 73 cycles. We also showed how to view some statistics of the generated program (for example, cycles consumed) and examine the generated assembler code.
 
-In Part 2b, we aoptimize the program further to achieve a multiply-accumulate operation on every cycle.
+In Part 2b, we optimize the program further to achieve a multiply-accumulate operation on every cycle.
 
 # Support
 

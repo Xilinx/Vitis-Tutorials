@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1a
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Preliminaries
 
@@ -406,11 +406,16 @@ julia> eps(Float32)
 julia> maximum(abs.(err))
 1.0517072768223557e-8
 ```
+You may also try modifying and running `check.jl`.
+```bash
+$ julia
+julia> include("check.jl")
+# type Ctrl-D to exit Julia
+```
 
-The resulting Julia plot of the impulse response error is as follows:
+The resulting Julia plot of the impulse response error should look something like that shown below:
 ![Fig. 2](./images/impresp_error.PNG "Impulse Response Error")
 
-You may also try modifying and running `check.jl`.
 
 Since the maximum absolute error is less than the [machine epsilon](https://en.wikipedia.org/wiki/Machine_epsilon) for [binary32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format) (`Float32` in Julia), we can conclude that the kernel code is working as expected.
 

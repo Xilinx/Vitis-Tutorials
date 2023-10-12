@@ -15,12 +15,7 @@
 
 In Part 2a, we examined the generated assembler code and found a `NOP` (no operation) between the `VFPMAC` (vector floating-point multiply-accumulate) mnemonics. This `NOP` is unavoidable as a floating-point accumulation requires two cycles (see Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)).
 
-Two possible solutions exist to "squeeze out" the `NOPs` to allow a floating-point multiply-accumulate on each cycle.
-
-* Split the matrix-vector multiplication into two separate multiply-accumulate operations to perform a floating-point accumulation on each cycle.
-* Use fixed-point (which uses one cycle for accumulation).
-
-We focus on splitting the floating-point matrix-vector multiplication in this section.
+We can split the matrix-vector multiplication into two separate multiply-accumulate operations to perform a floating-point accumulation on each cycle.
 
 ***Note:*** Instead of the "traditional" method of multiplying each row of the matrix by the column vector, we effectively scale each *column* of the matrix by the corresponding element in the vector with the multiply-accumulate API.
 

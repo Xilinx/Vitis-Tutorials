@@ -28,4 +28,4 @@ xlabel("Sampling Index");
 ylabel("Error");
 
 @printf("eps(Float32) = %e\n", eps(Float32));
-@printf("maximum(abs.(err) = %e\n", maximum(abs.(err)));
+@printf("maximum(abs.(err)) = %e\n", maximum(abs.(err)));

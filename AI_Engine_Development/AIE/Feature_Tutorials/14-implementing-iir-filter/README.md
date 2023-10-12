@@ -8,7 +8,7 @@
 </table>
 
 # Implementing an IIR Filter on the AI Engine
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 This is a multi-part tutorial on implementing an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.
 
