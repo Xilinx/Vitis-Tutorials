@@ -36,61 +36,88 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 * The `mm2s` kernel reads data from memory and inputs it to the AI Engine array.
 * The `s2mm` kernel receives output data from the AI Engine array and writes it to memory.
 
-1. Open the Vitis IDE, and select the same workspace as the AI Engine application project. Right-click the **simple_application_system** project, and select **Add Hw Kernel Project**.
+1. In the Vitis Unified IDE click ***File > New Component > HLS***
 
-2. Name the project **hw-kernels**, and click **Finish** to create the project.
+2. Name the first component **mm2s** and click ***Next***.
 
-3. Right-click the **hw-kernels** project, and click **import sources**. Browse into the ```src``` folder, and select the ```mm2s.cpp``` and ```s2mm.cpp``` files.
+3. In the **Configuration File** page, keep the default settings (**Empty File**) and click ***Next***
 
-4. In the **hw-kernels.prj** page, click the lightning icon (**Add HW function**) icon, and select both functions (`mm2s` and `s2mm`) as hardware functions.
+4. In the **Add Source Files** page, add the file **mm2s.cpp** from the src folder
 
-      ![missing image](images/hw_kernels.png)
+      ![missing image](images/232_mm2s_comp.jpg)
+
+5. In the same page, set the mm2s function as the top function (click ***Browse*** and select ***mm2s***)
+
+      ![missing image](images/232_mm2s_comp2.jpg)
+
+      ![missing image](images/232_mm2s_comp3.jpg)
+
+6. In the **Select Platform** Page:
+* If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created.
+* If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002320_1) which is part of the Vitis installation.
+
+ Click ***Next***
+
+7. In the **Edit Settings** page select ***Vitis Kernel Flow Target*** under **flow_target** and ***Generate a Vitis XO*** under **package.output_format** and click ***Next***
+
+      ![missing image](images/232_mm2s_comp4.jpg)
+
+8. Click ***Finish***
+
+9. Repeat steps 1 to 8 to create another HLS component called **s2mm** with the **s2mm.cpp** source file
 
 ## Step 3: Configure the Hardware Linking Project
 
 Now that you have imported the kernels, you need to tell the Vitis linker how to connect everything together.
 
-1. In the **simple_application_system_hw_link.prj** page, enable **Export hardware (XSA)**.
+1. Create a new System Project component by clicking ***File > New Component > System Project***
 
-      ![missing image](images/hw_link_cfg1.png)
+2. Call this system component **simple_aie_application_system_project** and click ***Next***
 
-2. Now you need to tell the Vitis compiler about the connectivity of the system. This step is done using a configuration file. Create a `connectivity.cfg` file with a text editor, and add the following lines.
+3. In the **Select Platform** Page:
+* If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created.
+* If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002320_1) which is part of the Vitis installation.
+
+4. Skip the **Embedded Component Paths** page (click ***Next***). This page is used for system running Linux. Our system will be Baremetal.
+
+5. Click ***Finish***
+
+6. Open the settings file called **vitis-sys.json** under **simple_aie_application_system_project > Settings** and click on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***HLS*** and select the ***mm2s*** and ***s2mm*** components.
+
+      ![missing image](images/232_sys_proj.jpg)
+
+7.  Click again on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***HLS*** and select the ***mm2s*** and ***s2mm*** components.
+
+8. Now you need to tell the Vitis compiler about the connectivity of the system. This step is done using a configuration file. Still in the settings file **vitis-sys.json**, under **Hardware Link Settings** expend **binary_container_1** and click on ***hw_link/binary_container_1-link.cfg***
+
+      ![missing image](images/232_cfg_file.jpg)
+
+In **binary_container_1-link.cfg** change the view to **Source editor** and add the following lines under **[connectivity]**
 
       ```
-      [connectivity]
       stream_connect=mm2s_1.s:ai_engine_0.mygraph_in
       stream_connect=ai_engine_0.mygraph_out:s2mm_1.s
       ```
+![missing image](images/232_cfg_file1.jpg)
 
-      Note that as per the [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2021.1;d=yii1603912637443.html), the naming convention for the compute units (or kernel instances) are `<kernel>_#`, where `#` indicates the CU instance. Thus, the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`. The `stream_connect` option is defined as `<compute_unit_name>.<kernel_interface_name>:<compute_unit_name>.<kernel_interface_name>`. For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `mygraph_in` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP you need the following option: `stream_connect=mm2s_1.s:ai_engine_0.mygraph_in`.
+Note that as per the [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/connectivity-Options), the naming convention for the compute units (or kernel instances) are `<kernel>_#`, where `#` indicates the CU instance. Thus, the CU names built corresponding to the kernels `mm2s` and `s2mm` in your project are respectively `mm2s_1` and `s2mm_1`. The `stream_connect` option is defined as `<compute_unit_name>.<kernel_interface_name>:<compute_unit_name>.<kernel_interface_name>`. For example, to connect the AXI4-Stream interface of the `mm2s_1` (compute unit name) called `s` (kernel interface name) to the `mygraph_in` (interface name) input of the graph in the `ai_engine_0` (compute unit name) IP you need the following option: `stream_connect=mm2s_1.s:ai_engine_0.mygraph_in`.
 
-3. Right-click the **simple_application_system_hw_link**, and click **import sources**. Select the `connectivity.cfg` file created, and add it to the **simple_application_system_hw_link** folder.
+9. In the **binary_container_1-link.cfg** page, change back the view to **Settings Forms** and enable **Export hardware (XSA)**.
 
-      ![missing image](images/221_hw_link_cfg2.png)
-
-4. In the **simple_application_system_hw_link.prj** page, right-click the binary container, and click **Edit v++ options**.
-
-      ![missing image](images/hw_link_cfg3.png)
-
-      Add the following option in the ***V++ command line options*** section to link your configuration file:
-
-      ```
-      --config ../connectivity.cfg
-      ```
-
-      ![missing image](images/221_hw_link_cfg4.png)
+      ![missing image](images/232_cfg_file2.jpg)
 
 ## Step 4. Build the System
 
-1. Select the **simple_application_system** project, and click the hammer icon to build it. The compilation process takes some time to finish. The underlying AI Engine application project, hardware kernel project, and hardware linking project are compiled one after another. The system should build successfully with no error.
+1. In the flow navigator, make sure **simple_aie_application_system_project** is selected and click on ***Build Binary Container*** under **HARDWARE > LINK - binary_container_1**. Click ***OK*** when asked to build the HLS components (mm2s and s2mm)
+The compilation process takes some time to finish. The underlying AI Engine application project, hardware kernel project, and hardware linking project are compiled one after another. The system should build successfully with no error.
 
-      ![missing image](images/system_build.png)
+      ![missing image](images/232_system_build.jpg)
 
-2. You can open the generated the AMD Vivado™ project in `<workspace>/simple_application_system_hw_link/Emulation-HW/binary_container_1.build/link/vivado/vpl/prj` to take a look at the compilation result. You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and connected them to the memory (NOC) and AI Engine IP.
+2. You can open the generated the AMD Vivado™ project in `<workspace>/simple_aie_application_system_project/build/hw/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/prj.xpr` to take a look at the compilation result. You can see that the Vitis compiler added the two HLS IP (`mm2s` and `s2mm`) and connected them to the memory (NOC) and AI Engine IP.
 
-      ![missing image](images/231_vivado_prj.jpg)
+      ![missing image](images/232_vivado_prj.jpg)
 
-      ![missing image](images/231_vivado_prj2.jpg)
+      ![missing image](images/232_vivado_prj2.jpg)
 
 In the next step, you will create a processing system (PS) bare-metal application, and run the system with it.
 

@@ -1,7 +1,33 @@
+
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
-*/
+
+ * Copyright 2020 Xilinx, Inc.
+
+ *
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+
+ * you may not use this file except in compliance with the License.
+
+ * You may obtain a copy of the License at
+
+ *
+
+ *     http://www.apache.org/licenses/LICENSE-2.0
+
+ *
+
+ * Unless required by applicable law or agreed to in writing, software
+
+ * distributed under the License is distributed on an "AS IS" BASIS,
+
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+ * See the License for the specific language governing permissions and
+
+ * limitations under the License.
+
+ */
 
 /*
  * main.cpp : AI Engine A-to-Z Application
@@ -17,11 +43,13 @@ SPDX-License-Identifier: X11
 #include "xil_io.h"
 #include "sleep.h"
 
+#include "xparameters.h"
+
 #include "project.cpp"
 
 
-#define MM2S_BASE XPAR_XMM2S_0_S_AXI_CONTROL_BASEADDR
-#define S2MM_BASE XPAR_XS2MM_0_S_AXI_CONTROL_BASEADDR
+#define MM2S_BASE XPAR_XMM2S_0_BASEADDR
+#define S2MM_BASE XPAR_XS2MM_0_BASEADDR
 
 #define MEM_OFFSET 0x10
 #define SIZE_OFFSET 0x1C

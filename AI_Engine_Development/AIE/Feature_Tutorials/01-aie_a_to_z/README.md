@@ -9,9 +9,9 @@
 
 # A to Z Bare-metal Flow
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
-This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2023.1 Vitis unified software platform.
+This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2023.2 Vitis unified software platform.
 
 >**NOTE**: This tutorial has been written for multiple versions of the tools. Each version available can be found in the specific Github branch. The recommendation is to use the latest version available.
 

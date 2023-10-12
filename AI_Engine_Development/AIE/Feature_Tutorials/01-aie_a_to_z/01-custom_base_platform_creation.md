@@ -27,31 +27,33 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
 ### Step 1: Build the AMD Versal™ Extensible Embedded Platform Example Design in Vivado
 
-1. Launch Vivado IDE, and select **Open Example Project** from the Welcome window. You can also do it by clicking **File*** from the menu, and select **Project*** and then **Open Example***.
+1. Launch Vivado IDE, and select ***Open Example Project*** from the Welcome window. You can also do it by clicking ***File*** from the menu, and select ***Project*** and then ***Open Example***.
 
-2. Click **Next*** to skip the first page of the wizard. In the template selection page, select the **Versal Extensible Embedded Platform** template. Click **Next***.
+2. Click ***Next*** to skip the first page of the wizard. In the template selection page, select the ***Versal Extensible Embedded Platform*** template. Click ***Next***.
 
-3. Name this project as **custom_pfm_vck190** and click **Next**.
+3. Name this project as ***custom_pfm_vck190*** and click ***Next***.
 
-4. In the board selection page, select **VCK190 Evaluation Platform**. If you are going to target other platform, you can select others. Click **Next**.
+4. In the board selection page, select ***VCK190 Evaluation Platform***. If you are going to target other platform, you can select others. Click ***Next***.
 
 5. In the design preset page, keep the default settings. Note that the AI Engine is enabled:
 
       ![missing image](images/231_design_preset_config.jpg)
 
-6. Click **Finish** to complete the example design creation phase, and this will open up the Vivado project with the template design you just created. You can open the block design to view the details of the platform design. By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you can use this as a baseline design and make further modifications on top of it.
+6. Click ***Finish*** to complete the example design creation phase, and this will open up the Vivado project with the template design you just created. You can open the block design to view the details of the platform design. By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you can use this as a baseline design and make further modifications on top of it.
 
       ![missing image](images/231_block_design_complete.jpg)
 
-7. Click **Generate Block Design** from the Flow Navigator panel on the left, click **Generate**, and wait for the process to complete.
+7. Click ***Generate Block Design*** from the Flow Navigator panel on the left, click ***Generate***, and wait for the process to complete.
 
-8. Click **File** from the menu, and select **Export Platform**.
+>**NOTE**: A critical warning is displayed by Vivado when generating the Block Design. This is due to the fact that the Interrupt Controller IP has an unconnected input. This can be ignored as this input will be connected automatically by Vitis later in the flow.
 
-   a. On the second page, select **Hardware and hardware emulation** as the platform type.
+8. Click ***File*** from the menu, and select ***Export*** > ***Export Platform***.
+
+   a. On the second page, select ***Hardware and hardware emulation*** as the platform type.
 
       ![missing image](images/221_export_xsa_pg1.png)
 
-   b. On the third page select **Pre-synthesis**.
+   b. On the third page select ***Pre-synthesis***.
 
       ![missing image](images/export_xsa_pg2.png)
 
@@ -59,7 +61,7 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
       ![missing image](images/export_xsa_updated.PNG)
 
-   d. On the fourth page, set the name of the XSA, and click **Finish**.
+   d. On the fourth page, set the name of the XSA, and click ***Finish***.
 
       ![missing image](images/export_xsa_pg4.png)
 
@@ -67,25 +69,29 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
 ### Step 2: Build the Platform in the Vitis Software Platform
 
-1. Open the Vitis IDE, and select a workspace.
+1. Open the Vitis Unified IDE, and select a workspace.
 
-2. On the Welcome Page, select **Create Platform Project**, or select **File → New →  Platform Project ...**.
+2. On the Welcome Page, select ***Create Platform Component***, or select ***File → New Component →  Platform***.
 
-3. Set the platform project name to **base_pfm_vck190** and click **Next**.
+3. Set the platform component name to ***base_pfm_vck190*** and click ***Next***.
 
-      ![missing image](images/211_create_platform_pg1.png)
+      ![missing image](images/232_create_platform_pg1.jpg)
 
-4. Use the XSA-generated in the previous step, and set the Operating System to  **aie_runtime** and the Processor to **ai_engine**. Click **Finish** to create the platform project.
+4. Select ***Hardware Design*** and use the XSA generated during the previous step and click ***Next***
 
-      ![missing image](images/create_platform_pg2.png)
+     ![missing image](images/232_create_platform_pg2.jpg)
 
-5. Then build the platform by clicking on the hammer icon.
+5. Set the Operating System to  ***aie_runtime*** and the Processor to ***ai_engine*** and click ***Next***. Then click ***Finish*** to create the platform component.
 
-      ![missing image](images/build_platform.png)
+      ![missing image](images/232_create_platform_pg2.jpg)
 
-      >**NOTE**: If you modify the XSA file later, first right-click the platform project and select ***Update Hardware Specification***, and then rebuild the platform project.
+6. Then build the platform by clicking on ***Build*** In the flow navigator with the base_pfm_vck190 component selected.
 
-6. The generated platform can be found in `base_pfm_vck190/export`.
+      ![missing image](images/232_build_platform.jpg)
+
+      >**NOTE**: If you modify the XSA file later, go to vitis-comp.json located in the Settings folder of the platform component and click ***switch xsa***
+
+7. The generated platform can be found in `base_pfm_vck190/export`.
 
 In this step, you created the platform starting with building the hardware platform in the Vivado Design Suite. Then, you built the platform in the Vitis software platform, based on the exported XSA file.
 

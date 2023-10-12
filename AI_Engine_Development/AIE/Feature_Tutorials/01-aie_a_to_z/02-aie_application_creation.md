@@ -13,94 +13,88 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
 ## Step 1: Create a new AI Engine Application Project
 
-1. Open the Vitis IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
+1. Open the Vitis Unified IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
 
-2. On the Welcome Page, click **Create Application Project**, or click **File → New →  Application Project**.
+2. Click on ***View > Examples*** to view the application examples installed with Vitis
 
-3. On the platform page, select the platform you want to use:
+3. Under **AI Engine Examples > Installed AI Engine Examples** select the ***Simple*** example
 
-      * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
-      * If you have skipped step 1, select the VCK190 base platform which can be downloaded from xilinx.com.
+      ![missing image](images/232_aie_simple_ex.jpg)
 
-      >**NOTE:** Make sure to read, and follow the Vitis Software Platform Release Notes (v2023.1) for setting up software and installing the VCK190 base platform.
+4. Click ***Create AI Engine Component from Template***
 
-4. Set the application name as **simple_application**, and select **ai_engine** for the processor.
-
-      ![missing image](images/aie_app_pg1.png)
-
-5. Keep the default setting for the next page, and click **Next**.
-
-6. In the Template page, select the **Simple** template. Click **Finish** to create the application project.
-
-      ![missing image](images/aie_app_pg2.png)
+      ![missing image](images/232_aie_simple_ex2.jpg)
 
       >**NOTE:** In the description of the template, it says that the template works only for AI Engine Emulation and software (x86) simulation. In the following steps, you will learn how to make it work on hardware.  
 
-7. The template imports two folders:
+5. Set the component name as ***simple_aie_application*** and click ***Next***
+
+      ![missing image](images/232_aie_app_pg1.jpg)
+
+6. On the platform page, select the platform you want to use:
+
+      * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
+      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002320_1) which is part of the Vitis installation.
+
+      >**NOTE 1:** Make sure to read, and follow the Vitis Software Platform Release Notes (v2023.1) for setting up software and installing the VCK190 base platform.
+
+      ![missing image](images/232_aie_app_pg2.jpg)
+
+        >**NOTE 2:** In the Vitis Unified IDE you can also select the device directly (xcvc1902) and link the platform later in the flow
+
+7. Click ***Finish***.
+
+8. The template imports two folders:
 
       * `src` contains the sources for the kernels and the graph.
       * `data` contains the data for the simulation input (`input.txt`) and the golden reference for the output (`golden.txt`).
 
-      ![missing image](images/aie_app_folder.png)
+      ![missing image](images/232_aie_app_folder.jpg)
 
-8. Open the file `project.h` to see the graph. You can see that the graph (simpleGraph) has one input and one output and implements two kernels with the same function. The output of the first kernel feeds the second one.
+9. Open the file `project.h` to see the graph. You can see that the graph (simpleGraph) has one input and one output and implements two kernels with the same function. The output of the first kernel feeds the second one.
 
       ```
       first = kernel::create(simple);
       second = kernel::create(simple);
-      connect< window<128> > net0 (in.out[0], first.in[0]);
-      connect< window<128> > net1 (first.out[0], second.in[0]);
-      connect< window<128> > net2 (second.out[0], out.in[0]);
+      adf::connect(in.out[0], first.in[0]);
+      connect(first.out[0], second.in[0]);
+      connect(second.out[0], out.in[0]);
       ```
 
       This is the representation of the graph.
 
       ![missing image](images/aie_app_graph.png)
 
-9. Open the file `kernels/kernels.cc` to see what function will be implemented in the kernels.
+10. Open the file `kernels/kernels.cc` to see what function will be implemented in the kernels.
 You can see that this is a simple operation which is doing the sum of the real and imaginary parts of the input to create the real part of the output and the subtraction the real and imaginary part of the input to create the imaginary part of the output.
 
       ```
-      void simple(input_window_cint16 * in, output_window_cint16 * out) {
-      cint16 c1, c2;
-      for (unsigned i=0; i<NUM_SAMPLES; i++) {
-      window_readincr(in, c1);
-      c2.real = c1.real+c1.imag;
-      c2.imag = c1.real-c1.imag;
-      window_writeincr(out, c2);
-      }
+      void simple(adf::input_buffer<cint16> & in, adf::output_buffer<cint16> & out) {
+        cint16 c1, c2;
+        cint16* inItr = in.data();
+        cint16* outItr = out.data();
+        for (unsigned i=0; i<NUM_SAMPLES; i++) {
+          c1 = *inItr++;
+          c2.real = c1.real+c1.imag;
+          c2.imag = c1.real-c1.imag;
+          *outItr++ = c2;
+        }
       }
       ```
 
 ### Step 2: Build the Project and Run Through Emulation-AIE
 
-1. Click the arrow next to the hammer icon, and make sure that **Emulation-AIE** is selected.
+1. In the flow navigator, make sure the **simple_aie_application** component is selected and click on ***Build*** under **AIE SIMULATOR / HARDWARE**
 
-2. Click the hammer icon to build the project.
+      ![missing image](images/232_aie_app_build.jpg)
 
-3. To run System C simulation (called ***Emulation-AIE***), right-click the **simple_application** project, and select **Run as** -> **Launch AIE Emulator** from the pop up menu.
+2. To run the System C simulation (called **Emulation-AIE** or **AIE SIMULATOR**),  in the Flow navigator, make sure the **simple_aie_application** component is selected and click on ***Run*** under **AIE SIMULATOR / HARDWARE**
 
-4. You should see the simulation running successfully in the console. The output data is written to the file `Emulation-AIE/aiesimulator_output/data/output.txt`. You can compare the file `output.txt` with the `golden.txt` file. The output data should match the golden value.
+    ![missing image](images/232_aie_app_run_aiesim.jpg)
 
-      ![missing image](images/aie_app_emu.png)
+3. You should see the simulation running successfully in the console. The output data is written to the file `build/aiesimulator_output/data/output.txt`. You can compare the file `output.txt` with the `golden.txt` file. The output data should match the golden value.
 
-5. Select the files `simple/data/golden.txt` and `simple/Emulation-AIE/aiesimulator_output/data/output.txt`, right-click one of them, and then click **Compare With > Each Other After Transformation**.
-
-      ![missing image](images/aie_app_comp.png)
-
-6. Then, click the leftmost icons on the right (Pre-defined Filters).
-
-      ![missing image](images/aie_app_comp_2.png)
-
-7. Select **Remove timestamp**, and click **OK**.
-
-      ![missing image](images/aie_app_comp_3.png)  
-
-8. You can see that a grep command will be executed to remove the timestamps from the output file. Click **OK**.
-
-      ![missing image](images/aie_app_comp_4.png)  
-
-A pop up window should display that the two files match which means that the graph is behaving as expected. You can move forward and integrate the graph in the full system.
+      ![missing image](images/232_aie_app_emu.jpg)
 
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
 
