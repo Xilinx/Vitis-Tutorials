@@ -9,7 +9,7 @@
 
 # DSP Library Tutorial
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -17,13 +17,13 @@ The AMD Versal&trade; adaptive SoC is a fully software-programmable, heterogeneo
 
 This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up the software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up the software and installing the VCK190 base platform.
 
 Before starting this tutorial, run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2023.1/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2023.1/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2023.1/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2023.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2023.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2023.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 
@@ -73,9 +73,9 @@ Part 1 of this tutorial will:
 
 To begin this tutorial, go to the **part 1** directory:
 
-    ```bash
-    cd part_1
-    ```
+```
+cd part_1
+```
 
 List the files available in `aie/src`:
 ```
@@ -116,13 +116,13 @@ The filter's template parameters and their meanings can be found in UG1295.
 Specifies the input and output ports for this graph.
 
 ```C++
-		connect<>(in, chan_FIR.in[0]);
-		connect<>(chan_FIR.out[0], out);
+	connect<>(in, chan_FIR.in[0]);
+	connect<>(chan_FIR.out[0], out);
 ```
 These statements connect our graph's input and outputs to the FIR filter's input and outputs, respectively.
 
 ```C++
-		location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
+	location<kernel>(chan_FIR.m_firKernels[0]) = tile(18,0);
 ```
 This statement specifies a location attribute for the filter kernel. It specifies the X/Y location of the AI Engine tile within the AI Engine array in which to place the kernel. Location placements for kernels are optional, but shown here to illustrate how physical constraints can be incorporated into the source code. The results of this statement are seen later when viewing the compilation results.
 
@@ -192,7 +192,7 @@ Selecting **Graph** on the navigation bar shows a diagram of the filter implemen
 
 ![Vitis Analyzer Graph](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Graph.png)
 
-Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping-pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_filter.h`. Clicking on the components on the diagram takes you to the appropriate tab below, which provides a description of the element. Conversely, you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels) and click on a component to see where it is located on the array.
+Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping-pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_graph.h`. Clicking on the components on the diagram takes you to the appropriate tab below, which provides a description of the element. Conversely, you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels) and click on a component to see where it is located on the array.
 
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Array.png)
 
@@ -254,8 +254,8 @@ The second (halfband) filter has been instantiated:
 
 Also, the output of the channel FIR filter is now cascaded into the halfband filter, whose output is now connected to the graph's output:
 ```
-		connect<>(chan_FIR.out[0], hb_FIR.in[0]);
-		connect<>(hb_FIR.out[0], out);
+	connect<>(chan_FIR.out[0], hb_FIR.in[0]);
+	connect<>(hb_FIR.out[0], out);
 ```
 
 The class `TopGraph` and testbench file, `test.cpp`, are unchanged.
@@ -283,6 +283,8 @@ Selecting the **Array** option on the navigation bar shows the physical implemen
 Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the chan_FIR kernel) spending most of its time running kernel code, while tile (19,0) (hb_FIR) spends significant time being idle in _main. chan_FIR is the bottleneck in this datapath, which is not surprising because it has many more taps to compute.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Trace.png)
+
+When you are done examining the design, click **File -> Close Window**.
 
 In part 3, you are going to use filter parameters to attempt to increase the performance of the chan_FIR filter and the chain.
 
