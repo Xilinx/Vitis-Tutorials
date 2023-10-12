@@ -3,7 +3,7 @@
     "description": "10-get-moving-with-alveo",
     "flow": "vitis",
  
-    "platform_allowlist": ["u200", "u250"],
+    "platform_allowlist": ["u250"],
  
     "testinfo": {
         "test_name": "HW_D_10-alveo-intro",
