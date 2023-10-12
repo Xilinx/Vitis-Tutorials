@@ -8,11 +8,12 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2023.1***
+***Version: 2023.2***
 
-In this module, the VCK190 board will be regarded as a customer's board. You will create a hardware design based on the AMD Versal™ Adaptive SoC Extensible Part Support Example Design, using a pre-built Linux common image and `createdts` command to generate software components.Then, you create an embedded Versal acceleration platform for this customer's board. Finally, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) would be a quick choice for you.
+In this module, we treat the VCK190 board as if it were a custom solution tailored to our customer's specific needs. Our approach involves leveraging the AMD Versal™ Adaptive SoC Extensible Part Support Example Design and harnessing the power of a pre-built Linux common image, along with the createdts command, to generate essential software components. These components are then used to construct a dedicated embedded Versal acceleration platform designed exclusively for our customer's board. As the final step, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md) would be a quick choice for you.
 
-For your reference, this example system total structure is similar to the following.
+
+For your reference, the overall structure of this example system closely resembles the following:
 
 ![Vitis Platform structure](images/structure.svg)
 
@@ -24,11 +25,10 @@ In a general Vitis acceleration platform design, the Vitis platform and applicat
 4. Create applications in Vitis against the platform. Vitis generates a host application, xclbin, and `sd_card.img`.
 5. Write `sd_card.img` to a SD card or update host application and xclbin to an existing SD card.
 
-In this module, you will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. Compared with the Versal Extensible Design, which is used in [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md), the part support design leaves the board level configurations, e.g., processing system (PS) side peripherals and double data rate (DD) related parameters for you to do configuration.
+In this module, you will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. In contrast to the Versal Extensible Design, which is used in [Vitis Platform Quick Start](../../../Getting_Started/Vitis_Platform/README.md), the part support design takes a slightly different approach. Specifically, it empowers you to handle board-level configurations independently. This includes configuring processing system (PS) side peripherals and fine-tuning parameters related to double data rate (DDR) as needed. This flexibility ensures that you have full control over the configuration process to meet the unique requirements of your application.
 
-To prepare the software components, you will utilize common image released by AMD and `createdts` command to generate the device tree file.
 
-After the whole software and hardware components are ready, you will package the platform.
+To prepare the software components, you will utilize common image released by AMD and `createdts` command to generate the device tree file. After the whole software and hardware components are ready, you will package the platform.
 
 In each step, you will validate the generated files to make sure they work as expected. A frequent test methodology can help to narrow down the root causes if any error occurs. Lastly, you will run several test applications on this platform to test this platform.
 

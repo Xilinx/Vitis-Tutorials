@@ -7,7 +7,8 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 
 PLATFORM_NAME=custom_platform
 PLATFORM = $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-SW_COMP = $(ROOT_DIR)/../step2_pfm/sw_comp
+VERSION=2023.2
+COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOTDIR=$(ROOT_DIR)/../step2_pfm/sysroot
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
@@ -28,20 +29,20 @@ Vitis_Accel_Examples:
 	cd Vitis_Accel_Examples/  && sed -i "s/vck190_dfx_hw := true/	vck190_dfx_hw := true/g" cpp_kernels/simple_vadd/makefile_versal_ps.mk
 
 $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM)  DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM)  DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOTDIR)/
-	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) test TARGET=hw_emu DEVICE=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 # vadd_hw is a place-holder for manual build and test on hardware
 vadd_hw: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 aie_adder: Vitis_Accel_Examples
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64  EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 aie_adder_hw: Vitis_Accel_Examples
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64  EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64  EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 clean:
 	$(MAKE) -C $(PL_EXAMPLE_PATH) clean

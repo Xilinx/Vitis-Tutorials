@@ -104,7 +104,7 @@ In this step, you will create a hardware design using the AMD Versal™ Adaptive
 
       >**NOTE:** Set the DDR memory parameters according to the DDR on your board.
 
-   - Also, double-click the external port `sys_clk0_0`, and change the value of Frequency to **200**M HZ beacuse the 200M HZ is provided for DDR4 on a VCK190 board.
+   - Also, double-click the external port `sys_clk0_0`, and change the value of Frequency to **200**M HZ because the 200M HZ is provided for DDR4 on a VCK190 board.
 
       Now you have configured the PS side peripherals and DDR-related parameters. But the external DDR port connection is not set. Therefore, you will add the DDR constraint file to set the DDR PIN placement.
 
