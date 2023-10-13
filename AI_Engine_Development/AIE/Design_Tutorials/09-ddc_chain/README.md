@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 
 # Digital Down-conversion Chain: Converting from Intrinsics to API
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents <!-- omit from toc -->
 
@@ -33,6 +33,7 @@ SPDX-License-Identifier: MIT
     - [Setup and Initialization](#setup-and-initialization)
     - [x86 Functional Simulation](#x86-functional-simulation)
     - [Hardware Simulation](#hardware-simulation)
+  - [Summary](#summary)
   - [Support](#support)
   - [License](#license)
 
@@ -60,18 +61,18 @@ You can find the design description in the [Digital Down-conversion Chain Implem
 
 >**Note:** Simply loading the latest version of the tools and compiling the design is not possible because the baseline Makefile has deprecated compiler options.
 
-![image](https://media.gitenterprise.xilinx.com/user/3728/files/49f4ec55-1bc8-4851-b2e2-1fb702c1610b)
+![figure1](images/Makefile_differences.png)
 
 Important changes to the Makefile are listed below:
 
 - Upgrade part speed grade xcvc1902-vsva2197-1LP-e-S-es1 (previously specified by ``--device``) to xcvc1902-vsva2197-2MP-e-S (specified by ``--platform``). As can be seen in the following table (referenced from Versal AI Core Series Data Sheet: DC
 and AC Switching Characteristics [(DS957)](https://www.xilinx.com/support/documents/data_sheets/ds957-versal-ai-core.pdf)), this increases the AI Engine clock frequency from 1 GHz to 1.25 GHz.
 
-  ![image](https://media.gitenterprise.xilinx.com/user/3728/files/5e9f3f19-cca3-4b5e-9909-e672e7b56b5a)
+  ![figure2](images/ds957_table74.png)
 
   Recompiling and simulating the design with this change causes the throughput to increase by around 17-25%.
 
-- Enable multi-thread aiesimulator using ``--mt-model`` which improves the simulation speed. Actual improvement will depend on number of cores on the workstation, design topology, VCD trace on/off, among other factors.
+- Upgrade to use v++ unified compiler command.
 
 - Add support for x86 compilation and simulation.
 
@@ -81,15 +82,15 @@ and AC Switching Characteristics [(DS957)](https://www.xilinx.com/support/docume
 
 Functionality included in the `init()` function is migrated to the new kernel C++ class constructor. The main kernel function wrapper is migrated to a new class `run()` member function.
 
-![functions to classes 1](https://media.gitenterprise.xilinx.com/user/3728/files/e6d6367b-fd21-4415-911d-1b51d14ed927)
+![figure3](images/functions_to_classes_1.png)
 
 Create a header file for the class. You are required to write the `static void registerKernelClass()` method in the header file. Inside the `registerKernelClass()` method, call the `REGISTER_FUNCTION` macro. This macro is used to register the class run method to be executed on the AI Engine core to perform the kernel functionality.
 
-![functions to classes 2](https://media.gitenterprise.xilinx.com/user/3728/files/5ca11c0b-9f28-4b2a-af79-dacf54474476)
+![figure4](images/functions_to_classes_2.png)
 
 When creating the kernel in the upper graph or subgraph, use `kernel::create_object` instead of `kernel::create`. Remove ``initialization_function`` as it is now part of class constructor.
 
-![functions to classes 3](https://media.gitenterprise.xilinx.com/user/3728/files/43930b6e-c717-437c-98c2-a228a896d8dc)
+![figure5](images/functions_to_classes_3.png)
 
 ### Migrating from Windows to Buffers
 
@@ -97,31 +98,31 @@ Windows I/O connections between kernels will be deprecated in the 2023.2 release
 
 1. Make the changes shown in the following figure in the ``kernel.cc`` file:
 
-   ![image](https://media.gitenterprise.xilinx.com/user/3728/files/a8a539ff-95f7-4fe1-948f-077706331337)
+   ![figure6](images/windows_to_buffers_1.png)
 
 2. If the design uses classes, upgrade the associated header file.
 
-   ![image](https://media.gitenterprise.xilinx.com/user/3728/files/b8814eb4-156c-40a7-a4d7-afe2d36487e0)
+   ![figure7](images/windows_to_buffers_2.png)
 
 3. In the graph file, modify the connection type and specify dimension. Note division by 4 to convert from bytes to samples.
 
-   ![image](https://media.gitenterprise.xilinx.com/user/3728/files/fbc7263f-63ea-49ed-85ad-9112affb404f)
+   ![figure8](images/windows_to_buffers_3.png)
 
 ### Replacing Intrinsics with APIs
 
 The following example shows a side-by-side comparison of intrinsic-based code compared to API-based code. Both are functionally equivalent and produce the same final hardware usage and throughput.
 
-![image](https://media.gitenterprise.xilinx.com/user/3728/files/50dd1168-539d-474b-b81a-5ba188235d8b)
+![figure9](images/intrinsics_to_API.png)
 
 ### Relocating Global Variables to Kernel Class Data Members
 
-![image](https://media.gitenterprise.xilinx.com/user/3728/files/489d52c6-3588-4704-a14d-0b0ddf02a7bc)
+![figure10](images/handling_global_variables.png)
 
 ### Handling State Variables to Enable x86sim
 
 Move the state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as shown below. More information can be found in the in Memory Model section of the AI Engine Tools and Flows User Guide [(UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Memory-Model).
 
-![image](https://media.gitenterprise.xilinx.com/user/3728/files/d1c35466-28b6-4562-806d-f24f1cd9b49d)
+![figure11](images/handling_state_variables_x86sim.png)
 
 ### Updating Older Pragmas
 
@@ -131,13 +132,13 @@ Update `chess_alignof` to `alignas`. This is highlighted in the previous figure.
 
 x86 compilation and functionally correct simulation is enabled using the following actions:
 
-- Modifying the Makefile to include TARGET=x86sim capability.
+- Modifying the Makefile to include target=x86sim capability.
 
-  ![image](https://media.gitenterprise.xilinx.com/user/3728/files/6d48f81b-e518-4a1b-b00c-7a911585b1c6)
+  ![figure12](images/support_x86sim.png)
 
-- Relocating global variables to kernel class data members, as highlighted in a [previous step](https://gitenterprise.xilinx.com/faisale/designs/edit/master/xapp1351-ddc-ai-engine-api/README.md#relocation-of-global-variables-to-kernel-class-data-members).
+- Relocating global variables to kernel class data members, as highlighted in a [previous step](#relocating-global-variables-to-kernel-class-data-members).
 
-- Moving state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as highlighted in a [previous step](https://gitenterprise.xilinx.com/faisale/designs/edit/master/xapp1351-ddc-ai-engine-api/README.md#handling-of-state-variables-to-enable-x86sim).
+- Moving state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as highlighted in a [previous step](#handling-state-variables-to-enable-x86sim).
 
 ## Building and Running the Design
 
@@ -148,7 +149,7 @@ The 32-branch digital down-conversion design can be built using the command line
 The first step is to set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Versal platforms corresponding to your tool release. This edit should be done in the ```09-ddc_chain/Makefile``` file.
 
 ```shell
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202310_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
@@ -168,16 +169,10 @@ The DDC design can be built and simulated targeting x86sim to functionally verif
 
 ```shell
 [shell]% cd <path-to-09-ddc_chain-dir>
-[shell]% make all TARGET=x86sim
+[shell]% make x86all
 ```
 
-To analyze simulation results, use this command:
-
-```shell
-[shell]% make check_op
-```
-
-This displays the number of simulation samples mismatch compared to expected outputs.
+The number of simulation samples mismatch compared to expected outputs is displayed. 
 
 ### Hardware Simulation
 
@@ -185,16 +180,26 @@ The DDC design can be built and simulated by targeting hardware using the Makefi
 
 ```shell
 [shell]% cd <path-to-09-ddc_chain-dir>
-[shell]% make all TARGET=hw
+[shell]% make all
 ```
 
-To analyze simulation results, use this command:
+The number of simulation samples mismatch compared to expected outputs is displayed. 
+Achieved throughput for all branches against minimum requirement is also displayed.
 
-```shell
-[shell]% make get_tp check_op
-```
+## Summary
 
-This displays the achieved throughput for all branches against minimum requirement. It also displays the number of simulation samples mismatch compared to expected outputs.
+In this tutorial, we highlight steps that an AI Engine designer can take to upgrade their design to use APIs instead of intrinsics.
+The upgraded AIE API version achieves the same throughput performance as the original code base, while being easier to read and maintain.
+
+Table below summarizes key parameters for the older design (ran on newer version of the tools) and compares it to upgraded design.
+
+||Original|Upgraded|
+|---|---|---|
+|Support x86sim | No | Yes |
+| Intrinsics vs API | Intrinsics | Mostly APIs |
+| Windows vs Buffers | Windows | Buffers |
+| Functionally correct | Yes | Yes |
+| Throughput (MSPS)| ~247/224 | ~247/224 |
 
 ## Support
 

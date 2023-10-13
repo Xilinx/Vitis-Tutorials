@@ -25,54 +25,46 @@ LOCAL_LIB          := src/inc
 TEMP_FILE          := t.txt
 TEST_BENCH         = src/ddc_chain.cpp
 LOG_FILE           = log
-OTHER_OPTS         = --pl-freq=400 -Xchess="-std=c++17"  --xlopt=0 --test-iterations=100
-TARGET            ?= hw
-ALL_INCLUDE       := -include=${PWD} -include=$(LOCAL_INC) -include=$(LOCAL_SRC) -include=$(LOCAL_LIB)
-AIE_FLAGS         := -v ${ALL_INCLUDE} ${TEST_BENCH} ${OTHER_OPTS} --platform=${PLATFORM}
+OTHER_OPTS         = --aie.pl-freq=400 --aie.Xchess="-std=c++17" --aie.xlopt=0
+ALL_INCLUDE       := --include=${PWD} --include=$(LOCAL_INC) --include=$(LOCAL_SRC) --include=$(LOCAL_LIB)
+AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${TEST_BENCH} ${OTHER_OPTS} --platform=${PLATFORM}
 
-.PHONY: clean help compile sim get_tp check_op
+.PHONY: clean help compile x86compile sim x86sim get_tp check_op
 
 help::
 	@echo "Makefile Usage:"
 	@echo "  make all"
-	@echo "      Command to generate everything for this design"
+	@echo "      Command to compile and simulate the design with --target=hw"
+	@echo ""
+	@echo "  make x86all"
+	@echo "      Command to compile and simulate the design with --target=x86sim"
 	@echo ""
 	@echo "  make gen_vectors"
 	@echo "      Generates IO data needed to simulate the design"
 	@echo ""
-	@echo "  make compile"
-	@echo "      Run AIE compiler and build the design"
-	@echo ""
-	@echo "  make sim"
-	@echo "      Run AIE simulator"
-	@echo ""
-	@echo "  make get_tp"
-	@echo "      Get throughput of design based on simulations"
-	@echo ""
-	@echo "  make check_op"
-	@echo "      Check correctness of simulation output against golden data"
-	@echo ""
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all          : clean compile sim
+all             : clean compile sim check_op get_tp
+
+x86all          : clean x86compile x86sim check_op
 
 gen_vectors:
 	cd m && matlab -nodisplay -nojvm -r "batch; quit"
 
 compile:
-	aiecompiler --target=${TARGET} ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
+	v++ --compile --target=hw --mode aie ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
+
+x86compile:
+	v++ --compile --target=x86sim --mode aie ${AIE_FLAGS} 2>&1 | tee ${LOG_FILE}
 
 sim:
-ifeq ($(TARGET),hw)
-	aiesimulator --mt-model -i=data0 -o=simulator_output/data0 2>&1 | tee -a ${LOG_FILE}
-	aiesimulator --mt-model -i=data1 -o=simulator_output/data1 2>&1 | tee -a ${LOG_FILE}
-else ifeq ($(TARGET),x86sim)
+	aiesimulator -i=data0 -o=simulator_output/data0 2>&1 | tee -a ${LOG_FILE}
+	aiesimulator -i=data1 -o=simulator_output/data1 2>&1 | tee -a ${LOG_FILE}
+
+x86sim:
 	x86simulator -i=data0 -o=simulator_output/data0 2>&1 | tee -a ${LOG_FILE}
 	x86simulator -i=data1 -o=simulator_output/data1 2>&1 | tee -a ${LOG_FILE}
-else
-	@echo "Simulation for target ${TARGET} not supported"
-endif
 
 get_tp:
 	@for z in 0 1 ; do \
