@@ -13,9 +13,8 @@
 
 using namespace adf;
 
-alignas(32) std::vector<std::vector<float>> xbufdm(NCORE, std::vector<float>(4*PXLPERGRP));
-alignas(32) std::vector<std::vector<float>> ybufdm(NCORE, std::vector<float>(4*PXLPERGRP));
-alignas(32) std::vector<std::vector<float>> zbufdm(NCORE, std::vector<float>(4*PXLPERGRP));
+alignas(32) std::vector<std::vector<float>> lgbufdm(NCORE, std::vector<float>(8*PXLPERGRP));
+alignas(32) std::vector<std::vector<float>> smbufdm(NCORE, std::vector<float>(4*PXLPERGRP));
 
 class bilinear_graph : public adf::graph {
 private:
@@ -35,7 +34,7 @@ public:
       iplio[i] = input_plio::create(iplio_name, plio_64_bits, iplio_file, 625.0);
       oplio[i] = output_plio::create(oplio_name, plio_64_bits, oplio_file, 625.0);
 
-      bli_krnl[i] = kernel::create_object<bilinear_kernel>(xbufdm[i], ybufdm[i], zbufdm[i]);
+      bli_krnl[i] = kernel::create_object<bilinear_kernel>(lgbufdm[i], smbufdm[i]);
 
       connect(iplio[i].out[0], bli_krnl[i].in[0]);
       connect(bli_krnl[i].out[0], oplio[i].in[0]);

@@ -15,24 +15,20 @@ using namespace adf;
 class bilinear_kernel
 {
 private:
-	alignas(aie::vector_ldst_align_v<float,8>) const float xacc_init[8] = {1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0};
-	alignas(aie::vector_ldst_align_v<float,8>) const float xmul_init[8]  = {-1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0};
-	alignas(aie::vector_ldst_align_v<float,8>) const float yacc_init[8] = {1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-	alignas(aie::vector_ldst_align_v<float,8>) const float ymul_init[8] = {-1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0};
+	alignas(aie::vector_ldst_align_v<float,8>) const float acc_init[8] = {1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0};
+	alignas(aie::vector_ldst_align_v<float,8>) const float mul_init[8]  = {-1.0, -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0};
 
-	alignas(32) float (&xbuf)[4*PXLPERGRP];
-	alignas(32) float (&ybuf)[4*PXLPERGRP];
-	alignas(32) float (&zbuf)[4*PXLPERGRP];
+	alignas(32) float (&lgbuf)[8*PXLPERGRP];
+	alignas(32) float (&smbuf)[4*PXLPERGRP];
 
 public:
-	bilinear_kernel(float (&xbuf_i)[4*PXLPERGRP], float (&ybuf_i)[4*PXLPERGRP], float (&zbuf_i)[4*PXLPERGRP]) 
-	                : xbuf(xbuf_i), ybuf(ybuf_i), zbuf(zbuf_i) {}
+	bilinear_kernel(float (&lgbuf_i)[8*PXLPERGRP], float (&smbuf_i)[4*PXLPERGRP]) 
+	                : lgbuf(lgbuf_i), smbuf(smbuf_i) {}
 	void interp(adf::input_buffer<int32, extents<BUFFER_SIZE_IN>>& in, adf::output_buffer<int32, extents<BUFFER_SIZE_OUT>>& out);
 	static void registerKernelClass()
 	{
 		REGISTER_FUNCTION(bilinear_kernel::interp);
-		REGISTER_PARAMETER(xbuf);
-		REGISTER_PARAMETER(ybuf);
-		REGISTER_PARAMETER(zbuf);
+		REGISTER_PARAMETER(lgbuf);
+		REGISTER_PARAMETER(smbuf);
 	}
 };

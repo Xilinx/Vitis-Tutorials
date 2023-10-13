@@ -14,7 +14,7 @@ Author: Richard Buz
 
 # Bilinear Interpolation
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 
@@ -249,112 +249,106 @@ Figure 7 shows the floating-point vector unit of an AI Engine, where it may be o
 
 In order to take advantage of software pipelining, kernel code is created to take advantage of VLIW instructions that perform simultaneous vector multiply, load, and store operations. Each invocation of the kernel processes 256 pixels using a sequence of four code loops.
 
-The first loop uses the $x_{frac}$ values from the input vector to construct a set of weight vectors and stores them in intermediate memory.
+The first loop uses the $x_{frac}$ and $y_{frac}$ values from the input vector to construct a set of weight vectors and stores them in intermediate memory.
 
 ```cpp
-// iterators for I/O
-auto pIn = aie::begin_vector<16>(in);
-auto pOut = aie::begin_vector<4>(out);
+// iterator for input buffer with vector length 8
+auto pIn8 = aie::begin_vector<8>(in);
 
-// iterator for x vector memory
-auto pXbuf = aie::begin_restrict_vector<8>(xbuf);
+// iterator for large work buffer with vector length 8
+auto pLbuf8 = aie::begin_restrict_vector<8>(lgbuf);     
+		
+// get constant data vectors used to compute x,y vectors
+aie::vector<float,8> mi = aie::load_v<8>(mul_init);
+aie::vector<float,8> ai = aie::load_v<8>(acc_init);
 
-// get constant data vectors to compute x vector
-aie::vector<float,8> xm = aie::load_v<8>(xmul_init);
-aie::vector<float,8> xa = aie::load_v<8>(xacc_init);
-
-for (unsigned i = 0; i < (PXLPERGRP/2); i++)
+for (unsigned i = 0; i < PXLPERGRP; i++)
 	chess_prepare_for_pipelining
-	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
+	chess_loop_range(PXLPERGRP,PXLPERGRP)
 {
-	// get two pixels worth of data from input
-	auto vin = (*pIn++).cast_to<float>();
+	// get data for a single pixel from input
+	auto vin = (*pIn8++).cast_to<float>();
 
-	// compute and store x vector
-	*pXbuf++ = fpmac(xa,vin,0,0xCCCC4444,xm,0,0x76543210);
+	// compute and store x,y vectors
+	*pLbuf8++ = fpmac(ai,vin,0,0x55554444,mi,0,0x76543210);
 }
 
-pIn -= (PXLPERGRP/2);             // reset input iterator for next loop
-pXbuf -= (PXLPERGRP/2);           // reset xbuf iterator for next loop
+pLbuf8 -= PXLPERGRP;           // reset iterator for next loop
 ```
 
-The second loop constructs weight vectors from $y_{frac}$ in the exact same manner and stores them in intermediate memory.
+The second loop multiplies together weight vectors derived from $x_{frac}$ and $y_{frac}$ in the previous loop, and stores products in intermediate memory.
 
 ```cpp
-// iterator for y vector memory
-auto pYbuf = aie::begin_restrict_vector<8>(ybuf);    
-
-// get constant data vectors to compute y vector
-aie::vector<float,8> ym = aie::load_v<8>(ymul_init);
-aie::vector<float,8> ya = aie::load_v<8>(yacc_init);
+// iterators for small work buffer with vector length 8 and large work 
+// buffer with vector length 16
+auto pSbuf8 = aie::begin_restrict_vector<8>(smbuf);     
+auto pLbuf16 = aie::begin_restrict_vector<16>(lgbuf);     
 
 for (unsigned i = 0; i < (PXLPERGRP/2); i++)
 	chess_prepare_for_pipelining
 	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
 {
-	// get two pixels worth of data from input
-	auto vin = (*pIn++).cast_to<float>();
+	// get two pixels worth of data from large buffer
+	auto xyin = *pLbuf16++;
 
-	// compute and store y vector
-	*pYbuf++ = fpmac(ya,vin,0,0xDDDD5555,ym,0,0x76543210);
+	// compute and store xy product vector
+	*pSbuf8++ = fpmul(xyin,0,0xBA983210,0,0xFEDC7654);
 }
 
-pIn -= (PXLPERGRP/2);             // reset input iterator for next loop
-pYbuf -= (PXLPERGRP/2);           // reset ybuf iterator for next loop
+pSbuf8 -= (PXLPERGRP/2);       // reset iterator for next loop
 ```
 
-The third loop retrieves the $x_{frac}$ and $y_{frac}$ based weight vectors from memory and multiplies them with pixel values from the input vector. The final product is written to memory.
+The third loop retrieves vector products derived from $x_{frac}$ and $y_{frac}$ computed in the previous loop and multiplies them with pixel values from the input vector. This final vector product is written to memory.
 
 ```cpp
-// iterator for z vector memory
-auto pZbuf = aie::begin_restrict_vector<8>(zbuf);    
-
-aie::vector<float,8> xv;          // x vector
-aie::vector<float,8> yv;          // y vector
-aie::vector<float,8> xy;          // xy product vector
+// iterator for input buffer with vector length 16
+auto pIn16 = aie::begin_vector<16>(in);
 
 for (unsigned i = 0; i < (PXLPERGRP/2); i++)
 	chess_prepare_for_pipelining
 	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
 {
-	// retrieve x and y vectors and multiply them
-	xv = *pXbuf++;
-	yv = *pYbuf++;
-	xy = fpmul(xv,yv);
+	// retrieve xy products
+	auto xy = *pSbuf8++;
 
 	// get two pixels worth of data from input
-	auto vin = (*pIn++).cast_to<float>();
+	auto vin = (*pIn16++).cast_to<float>();
 
 	// compute and store weighted pixel values
-	*pZbuf++ = fpmul(vin,0,0xBA983210,xy,0,0x76543210);
+	*pLbuf8++ = fpmul(vin,0,0xBA983210,xy,0,0x76543210);
 }
 
-pIn -= (PXLPERGRP/2);             // reset input iterator for next loop
-pZbuf -= (PXLPERGRP/2);           // reset zbuf iterator for next loop
+pIn16 -= (PXLPERGRP/2);        // reset input iterator for next loop
+pLbuf8 -= (PXLPERGRP/2);       // reset iterator for next loop
 ```
 
 The final loop retrieves vector products, adds elements together to get interpolated pixel values, and inserts them into the output buffer along with pixel indexes.
 
 ```cpp
+// iterator for output buffer
+auto pOut = aie::begin_vector<4>(out);
+
 // compute interpolated pixel values and insert into output along with pixel index
-aie::vector<float,4> vout;        // output vector
-aie::vector<float,8> pxlp;        // vector of pixel products to be summed
+aie::vector<float,4> vout;     // output vector
+aie::vector<float,8> red_sum;  // vector for computing summation of terms
 
 for (unsigned i = 0; i < (PXLPERGRP/2); i++)
 	chess_prepare_for_pipelining
 	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
 {
 	// get output pixel index from input
-	auto vin = (*pIn++).cast_to<float>();
+	auto vin = (*pIn16++).cast_to<float>();
 
-	// get x*y*p products to sum
-	pxlp = *pZbuf++;
+	// get x*y*p products and compute sum of terms
+	auto pxlp = *pLbuf8++;
+	red_sum = fpadd(pxlp,pxlp,0,0x67452301);
+	red_sum = fpadd(red_sum,red_sum,0,0x54761032);
 
         // assign values to output
 	vout[0] = vin[6];
 	vout[2] = vin[14];
-	vout[1] = aie::reduce_add(pxlp.extract<4>(0));
-	vout[3] = aie::reduce_add(pxlp.extract<4>(1));
+	vout[1] = red_sum[0];
+	vout[3] = red_sum[4];
 
 	// send to output buffer
 	*pOut++ = vout.cast_to<int32>();
@@ -387,7 +381,7 @@ The first command compiles graph code for simulation on an x86 processor, the se
 
 ### Running AI Engine Simulation
 
-To perform the AI Engine emulation using the SystemC simulator, enter the following sequence of commands:
+To perform AI Engine emulation using the SystemC simulator, enter the following sequence of commands:
 
 ```bash
 $ make aiecom
@@ -413,7 +407,7 @@ Vitis Analyzer is an essential tool for accessing information on compilation, si
 $ make analyze
 ```
 
-The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in Figure 8. This simple example shows the kernel, ping pong buffers on input and output ports, and three buffers for holding intermediate results.
+The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in Figure 8. This simple example shows the kernel, ping pong buffers on input and output ports, and two buffers for holding intermediate results.
 
 ![figure8](images/va_graph.png)
 
@@ -425,7 +419,7 @@ The Array view displays how the AI Engine graph is mapped to the AI Engine array
 
 *Figure 9 - Vitis Analyzer Array View*
 
-Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 4027 cycles to process 256 pixels of data. For lowest speed Versal devices, this would translate to a peak processing rate of ~63.6 MP/s. Highest speed devices would have a peak processing rate of ~79.5 MP/s.
+Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 2251 cycles to process 256 pixels of data. For lowest speed Versal devices, this would translate to a peak processing rate of ~113.7 MP/s. Highest speed devices would have a peak processing rate of ~142.1 MP/s.
 
 ![figure10](images/va_profile.png)
 
@@ -462,13 +456,13 @@ is to invoke MATLAB and run
 
 ### Specifying a Test Image and Output Resolution
 
-The ``image_transform`` function uses file ``../images/epyc.jpg`` as a test image by default. A different file named ``image_file`` may be specified by invoking in MATLAB. Default output resolution in pixels is 1024 $\times$ 1024.
+The ``image_transform`` function uses file ``../images/epyc.jpg`` as a test image by default. A different file named ``image_file`` may be specified when invoking the function in MATLAB. 
 
 ```bash
 >> image_transform('image_file')
 ```
 
-A different resolution of $x_{res} \times y_{res}$ may be specified by invoking
+Default output resolution in pixels is 1024 $\times$ 1024. A different resolution of $x_{res} \times y_{res}$ may be specified by invoking
 
 ```bash
 >> image_transform('image_file', [ xres  yres ])
@@ -507,7 +501,7 @@ Once these MATLAB scripts are run, the rest of the AI Engine build and simulatio
 
 *Figure 13 - Multicore Kernel Placement in AI Engine Array*
 
-Figure 14 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels will support peak processing rates in the range of approximately 254 to 318 MP/s, depending on device speed.
+Figure 14 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels will support peak processing rates in the range of approximately 453 to 568 MP/s, depending on device speed.
 
 ![figure14](images/check_sim_4.png)
 

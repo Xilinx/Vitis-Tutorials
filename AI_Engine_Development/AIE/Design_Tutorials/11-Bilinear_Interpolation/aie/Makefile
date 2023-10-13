@@ -7,11 +7,11 @@
 SRC_DIR           := ./src
 MY_SOURCES        := $(shell find $(SRC_DIR) -name *.cpp) $(shell find $(SRC_DIR) -name *.h)
 
-PLATFORM_USE	  := xilinx_vck190_base_202310_1
-PLATFORM          := --platform=${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PLATFORM_USE	  := xilinx_vck190_base_202320_1
+PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 COMPILE_OPTS      := --aie.pl-freq=625 --aie.adf-api-log-level=2 --aie.kernel-linting \
-                     --aie.verbose ${PLATFORM} --aie.workdir=./Work --aie.xlopt=1 \
+                     --aie.verbose --platform=${PLATFORM} --aie.workdir=./Work --aie.xlopt=1 \
 					 --aie.Xmapper=BufferOptLevel9
 
 X86_SIM_OPTS      := --pkg-dir=./Work --i=./ --o=./x86simulator_output
@@ -51,7 +51,7 @@ help::
 	@echo "  make clean"
 	@echo "      Delete files generated during compilation and simulation"
 
-all:       gen_vectors aiecom aiesim check_aiesim
+all:       aiecom aiesim
 
 aiecom:    ${MY_SOURCES}
 	v++ --compile --target=hw --mode aie ${COMPILE_OPTS} ${SRC_DIR}/blint_app.cpp
@@ -89,4 +89,4 @@ clean:
 	rm -rf *.log *.csv *.db *.vcd logs
 	rm -rf x86simulator_output aiesimulator_output pl_sample_counts
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS ISS_RPC_SERVER_PORT
-	rm -rf pl_sample_count* ./data/*txt
+	rm -rf pl_sample_count*
