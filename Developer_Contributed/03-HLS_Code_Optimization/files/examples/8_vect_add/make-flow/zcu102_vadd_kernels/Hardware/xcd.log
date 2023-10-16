@@ -97,3 +97,35 @@ Tue Feb 28 08:20:56 2023: SERVER: destructor for server bound to port 43863
 Tue Feb 28 08:20:56 2023: XCD main fifo: Good unlink of /tmp/xcdmain10d0ccf9-7e5c-4530-8550-f0bf986bf19c
 Tue Feb 28 08:20:56 2023: Server exiting with status 0.
 Tue Feb 28 08:20:56 2023: Closing log file.
+Thu Oct 12 14:34:11 2023: Running xcd server. This server was built by gradle.
+Thu Oct 12 14:34:11 2023: Server was asked to start on port: '33013'
+Thu Oct 12 14:34:11 2023: Server is using token UUID: '3bbecc11-0501-4238-bebb-9ce55451dc21'
+Thu Oct 12 14:34:11 2023: SESSION_MGR: creating session with session uuid: '6d04a3e9-ade5-4ab9-8d63-1f78fcd2ec76' and name 'default'
+Thu Oct 12 14:34:11 2023: Attempting to start server on port '33013'
+Thu Oct 12 14:34:11 2023: Failed to create acceptor endpoint [::1]:33013, exception: bind: Cannot assign requested address
+Thu Oct 12 14:34:11 2023: XCD main fifo: created main fifo '/tmp/xcdmain3bbecc11-0501-4238-bebb-9ce55451dc21', fd read = 13
+Thu Oct 12 14:34:11 2023: Running Dispatch Server
+Thu Oct 12 14:34:11 2023: Version 2.2.0
+Thu Oct 12 14:34:12 2023: Dispatch Server: Accepted socket connection from client
+Thu Oct 12 14:34:12 2023: Starting Socket connection
+Thu Oct 12 14:34:12 2023: EXCHANGE_TOKEN received, server token: 3bbecc11-0501-4238-bebb-9ce55451dc21, passed token: 3bbecc11-0501-4238-bebb-9ce55451dc21
+Thu Oct 12 14:34:12 2023: DISPATCH_HANDLER: Adding handler from function makeHandler in library libxv_system_diagram
+Thu Oct 12 14:34:12 2023: SESSION_MGR: creating session with session uuid: '6da985bc-6f26-47e9-8f22-451b1a162044' and name 'krnl_vadd'
+Thu Oct 12 14:34:12 2023: KERNEL_SVC: creating session with uuid: '6da985bc-6f26-47e9-8f22-451b1a162044' and name 'krnl_vadd'
+Thu Oct 12 14:34:12 2023: GUIDANCE_SMGR: creating guidance session with uuid: '6da985bc-6f26-47e9-8f22-451b1a162044' and name 'krnl_vadd'
+Thu Oct 12 14:34:12 2023: SYSTEM_DIAGRAM: creating session with uuid: '6da985bc-6f26-47e9-8f22-451b1a162044' and name 'krnl_vadd'
+Thu Oct 12 14:34:13 2023: SESSION_MGR: closing session for UUID '6da985bc-6f26-47e9-8f22-451b1a162044' with name 'krnl_vadd'
+Thu Oct 12 14:34:13 2023: KERNEL_SVC: closing session for UUID '6da985bc-6f26-47e9-8f22-451b1a162044' with name 'krnl_vadd'
+Thu Oct 12 14:34:13 2023: GUIDANCE_SMGR: closing session for UUID '6da985bc-6f26-47e9-8f22-451b1a162044' with name 'krnl_vadd'
+Thu Oct 12 14:34:13 2023: SYSTEM_DIAGRAM: closing session for UUID '6da985bc-6f26-47e9-8f22-451b1a162044' with name 'krnl_vadd'
+Thu Oct 12 14:34:13 2023: STOP_SERVER received, server token: 3bbecc11-0501-4238-bebb-9ce55451dc21, passed token: 3bbecc11-0501-4238-bebb-9ce55451dc21
+Thu Oct 12 14:34:13 2023: Socket received request to stop server.
+Thu Oct 12 14:34:13 2023: Dispatch Server: do_await_stop
+Thu Oct 12 14:34:13 2023: Dispatch Server: stopping mainFifo_
+Thu Oct 12 14:34:13 2023: XCD main fifo: Stopping
+Thu Oct 12 14:34:13 2023: XCD main fifo: do_read error code: Operation canceled
+Thu Oct 12 14:34:13 2023: XCD main fifo: bytes_transferred: 0
+Thu Oct 12 14:34:13 2023: SERVER: destructor for server bound to port 33013
+Thu Oct 12 14:34:13 2023: XCD main fifo: Good unlink of /tmp/xcdmain3bbecc11-0501-4238-bebb-9ce55451dc21
+Thu Oct 12 14:34:13 2023: Server exiting with status 0.
+Thu Oct 12 14:34:13 2023: Closing log file.

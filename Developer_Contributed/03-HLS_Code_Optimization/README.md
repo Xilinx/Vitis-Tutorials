@@ -16,9 +16,18 @@ Author: Daniele Bagni, Xilinx Inc
 
 # Optimization Techniques for Vitis HLS and HW Acceleration on Embedded Boards
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
+
 - Target boards: ZCU102 and VCK190
-- Last update: 26 May 2023
+
+- Last update: 13 Oct. 2023
+
+- STATUS:
+  - build on ``xirengwts08`` is OK
+  - 2023.2-related hyperlinks and archives yet to be updated
+  - test on VCK190 is OK
+  - test on ZCU102 not done yet
+
 
 ## Table of Contents
 
@@ -67,7 +76,7 @@ Within a "simplified" HLS terminology:
 
 In some cases, the maximum performance can be obtained just with Vitis HLS compiler directives without touching the code. In other cases, this might also require some code change to "help" the compiler do a better job. There is not a single solution that fits for all possible applications as each application is a world in itself. But the examples illustrated here cover a large variety of cases seen in recent years across the globe, as the most representative to illustrate "good" coding style for HLS.
 
-In the following document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it in a certain working directory ``${WRK_DIR}`` (for example, in this case, ``export WRK_DIR=/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_Contributed``).
+In the following document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it in a certain working directory ``${WRK_DIR}`` (for example, in this case, ``export WRK_DIR=/media/danieleb/DATA/2023.2/Vitis-Tutorials-2023.2/Developer_Contributed``).
 
 The organization of the folders tree of this tutorial is illustrated here:
 
@@ -119,7 +128,7 @@ The fourth step, known as Implementation (known as **imp**), is applied transpar
 
 ### Warnings
 
-1. Everything shown in this project used an Ubuntu 18.04 Desktop with related Vitis 2023.1 release (with or without updates).
+1. Everything shown in this project used an Ubuntu 18.04 Desktop with related Vitis 2023.2 release (with or without updates).
 
 2. It is recommended to write the SD card that boots the VCK190 board with the Windows OS utility called [Win32 Disk Imager 1.0](https://sourceforge.net/projects/win32diskimager/).
 
@@ -153,31 +162,31 @@ for file in $(find . -name "*akefile" ); do dos2unix ${file}; done
 
 You need the following archives, in particular:
 
-- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2023.1 Vitis Installer** (it makes the Vitis install process easy) and the **2023.1 Vitis Update**.
+- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2023.2 Vitis Installer** (it makes the Vitis install process easy) and the **2023.2 Vitis Update**.
 
-- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2023.1**.
+- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2023.2**.
 
-- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2023.1 PetaLinux Tools Installer**.
+- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2023.2 PetaLinux Tools Installer**.
 
-- Go to the bottom of [PetaLinux 2023.1 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.1_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
+- Go to the bottom of [PetaLinux 2023.2 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.2_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
 
 - Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials).
 
-- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.1 and Ubuntu 18.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
+- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.2 and Ubuntu 18.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
 
 
 At the end, you should have the following files:
 
 ```text
-Xilinx_Unified_2023.1_*_Lin64.bin
-Xilinx_Vivado_Vitis_Update_2023.1_*.tar.gz
-xilinx-versal-common-v2023.1_*.tar.gz
+Xilinx_Unified_2023.2_*_Lin64.bin
+Xilinx_Vivado_Vitis_Update_2023.2_*.tar.gz
+xilinx-versal-common-v2023.2_*.tar.gz
 Vitis_Libraries-main.zip
-Vitis-Tutorials-2023.1.zip
+Vitis-Tutorials-2023.2.zip
 xrt_202310.*_18.04-amd64-xrt.deb
 ```
 
-First, install the basic version of Vitis 2023.1 via its installer ``Xilinx_Unified_2023.1_*_Lin64.bin``, and then its update ``Xilinx_Vivado_Vitis_Update_2023.1_*.tar.gz``.
+First, install the basic version of Vitis 2023.2 via its installer ``Xilinx_Unified_2023.2_*_Lin64.bin``, and then its update ``Xilinx_Vivado_Vitis_Update_2023.2_*.tar.gz``.
 Everything is placed in the  ``/tools/Xilinx/`` folder.
 
 ### 0.2 Sudo or not Sudo?
@@ -223,15 +232,15 @@ In conclusion, either the installation is done with root privileges (``sudo``), 
 
 ### 0.3  Installing Common for Target Boards
 
-Install the two archives ``xilinx-*-common-v2023.1_*.tar.gz`` in the ``/opt/xilinx/common/`` folder.
+Install the two archives ``xilinx-*-common-v2023.2_*.tar.gz`` in the ``/opt/xilinx/common/`` folder.
 
 Then execute the following commands as a normal user, according to what discussed is in the previous sub-section:
 
 ```shell
-cd /opt/xilinx/common/xilinx-versal-common-v2023.1/
+cd /opt/xilinx/common/xilinx-versal-common-v2023.2/
 chmod 777 sdk.h # only if needed
 ./sdk.sh -p -y -d .
-cd /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/
+cd /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/
 chmod 777 sdk.h # only if needed
 ./sdk.sh -p -y -d .
 ```
@@ -262,29 +271,29 @@ which was also put in the scripts  ``*_sample_env_setup.sh``.
 
 > **IMPORTANT!**: You cannot install PetaLinux into an NFS driver; otherwise, the install process ends with a non-predictable error message.
 
-Before installing ``petalinux``, check in the Excel foil ``2023.1_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
+Before installing ``petalinux``, check in the Excel foil ``2023.2_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
 
 ```
 #create the destination folder   
-sudo mkdir /petalinux_2023.1
+sudo mkdir /petalinux_2023.2
 #change permissions
-$ chmod 777 ~/Downloads/petalinux-v2023.1-*-installer.run
-$ ~/Downloads/petalinux-v2023.1-*-installer.run  -d /petalinux_2023.1
+$ chmod 777 ~/Downloads/petalinux-v2023.2-*-installer.run
+$ ~/Downloads/petalinux-v2023.2-*-installer.run  -d /petalinux_2023.2
 
 . . .
 
 INFO: Installing PetaLinux...
 INFO: Checking PetaLinux installer integrity...
-INFO: Installing PetaLinux to "/petalinux_2023.1/."
-INFO: Installing buildtools in /petalinux_2023.1/./components/yocto/buildtools
-INFO: Installing buildtools-extended in /petalinux_2023.1/./components/yocto/buildtools_extended
-INFO: PetaLinux has been installed to /petalinux_2023.1/.
+INFO: Installing PetaLinux to "/petalinux_2023.2/."
+INFO: Installing buildtools in /petalinux_2023.2/./components/yocto/buildtools
+INFO: Installing buildtools-extended in /petalinux_2023.2/./components/yocto/buildtools_extended
+INFO: PetaLinux has been installed to /petalinux_2023.2/.
 ```
 
 To set ``petalinux`` into your terminal, you need the following command:
 
 ```shell
-source /petalinux_2023.1/settings.sh
+source /petalinux_2023.2/settings.sh
 ```
 
 which was also placed in the script  ``*_sample_env_setup.sh``.
@@ -513,7 +522,7 @@ This scenario happens in ``sol1_orig_depINTER_RAW`` solution of the ``hls_dep_pr
 and here is what you see in the cycle accurate simulation:
 
 ```text
-$finish called at time : 21942500 ps : File "/media/danieleb/DATA/2023.1/Vitis-Tutorials-2023.1/Developer_contributed/03-HLS_Code_Optimization/files/examples/4_dependency/hls_dep_prj/sol1_orig_depINTER_RAW/sim/verilog/top_histogram.autotb.v" Line 389
+$finish called at time : 21942500 ps : File "/media/danieleb/DATA/2023.2/Vitis-Tutorials-2023.2/Developer_contributed/03-HLS_Code_Optimization/files/examples/4_dependency/hls_dep_prj/sol1_orig_depINTER_RAW/sim/verilog/top_histogram.autotb.v" Line 389
 ## quit
 INFO: [Common 17-206] Exiting xsim at Mon Sep 26 17:28:01 2022...
 got    23 expected    24
@@ -955,9 +964,9 @@ Note the  following screenshots of Figures 10.1-1, 10.1-2, 10.1-3, 10.1-4, 10.1-
 If you import the zip archive directly in Vitis, all you have to do is **changing these three environmental variables** (``Sysroot path``, ``Root File System``, ``Kernel Image``):
 
 ```text
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/rootfs.ext4  #Root FS
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/Image        #Kernel Image
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/rootfs.ext4  #Root FS
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/Image        #Kernel Image
 ```
 
 The various detailed project settings are shown here for your reference:
@@ -1214,9 +1223,9 @@ vitis -workspace ./wrk
 Make sure to check these three environmental variables (``Sysroot path``, ``Root File System``, ``Kernel Image``). See the following case:
 
 ```text
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/rootfs.ext4  #Root FS
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.1/Image        #Kernel Image
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/rootfs.ext4  #Root FS
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/Image        #Kernel Image
 ```
 
 ##### 10.2.1.2  Makefile-based Flow
@@ -1298,9 +1307,9 @@ vitis -workspace ./vck190_wrk
 Make sure to check these three environmental variables (``Sysroot path``, ``Root File System``, ``Kernel Image``). See the following case:
 
 ```text
-- /opt/xilinx/common/xilinx-versal-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
-- /opt/xilinx/common/xilinx-versal-common-v2023.1/rootfs.ext4  #Root FS
-- /opt/xilinx/common/xilinx-versal-common-v2023.1/Image        #Kernel Image
+- /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+- /opt/xilinx/common/xilinx-versal-common-v2023.2/rootfs.ext4  #Root FS
+- /opt/xilinx/common/xilinx-versal-common-v2023.2/Image        #Kernel Image
 ```
 
 ##### 10.2.2.2  Makefile-based Flow
@@ -1447,9 +1456,9 @@ If you use an Ubuntu PC, install ``PuTTY`` utility with the command ``sudo apt i
 
 ### Vitis DSP Libraries
 
-- [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2023.1/)
+- [Vitis DSP Libraries Comprehensive Documentation](https://xilinx.github.io/Vitis_Libraries/dsp/2023.2/)
 
-### Vitis Unified Software Development Platform 2023.1 Documentation
+### Vitis Unified Software Development Platform 2023.2 Documentation
 
 Below are links to Vitis related information referenced in this tutorial:
 

@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:   26 May 20223
+# Date:   12 Oct 20223
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR VCK190 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -14,24 +14,24 @@
 # GUUP Environment Setup:
 # set Platform, Vitis and Petalinux repo
 # =======================================================
-#ts 2022.2_daily_latest -petalinux petalinux-v2022.2_daily_latest
+#ts 2023.1_daily_latest -petalinux petalinux-v2023.1_daily_latest
 #ts 2023.2_daily_latest -petalinux petalinux-v2023.2_daily_latest
 
 
 # =======================================================
 # global variables for this tutorial
 # =======================================================
-#RELEASE=2022.2
+#RELEASE=2023.1
 RELEASE=2023.2
 BOARD=vck190
 BASE_NUM=202320_1
-#BASE_NUM=202220_1
+#BASE_NUM=202310_1
 
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
-export GUUP_DIR=<PUT-YOUR-GUUP-DIR-HERE>
+export GUUP_DIR=/group/xirguup
 
-export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.2/Vitis-Tutorials_2023.2_next/Developer_Contributed
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2023.2/Developer_Contributed
 
 
 # =======================================================
@@ -74,8 +74,8 @@ source ${WRK_DIR}/${TUTORIAL}/files/make-flow/local_var_setup.sh
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
 #export DSPLIB_ROOT=<Path to 2023.2 DSP Libs - Directory>
-export DSPLIB_VITIS=/group/xirguup/danieleb/ide2022.2/Vitis_Libraries
-export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
+export DSPLIB_VITIS=/group/xirguup/danieleb/ide2023.2
+export DSPLIB_ROOT=${DSPLIB_VITIS}/xf_dsp-next
 
 
 # =========================================================
@@ -132,4 +132,4 @@ echo "ROOTFS               "  ${ROOTFS}
 echo "VITIS_PLATFORM_XPFM  "  ${VITIS_PLATFORM_XPFM}
 echo "PLATFORM_REPO_PATHS  "  ${PLATFORM_REPO_PATHS}
 #echo "PATH " ${PATH}
-echo "DSPLIB_ROOT          "  ${DSPLIB_VITIS}/dsp
+echo "DSPLIB_ROOT          "  ${DSPLIB_ROOT}

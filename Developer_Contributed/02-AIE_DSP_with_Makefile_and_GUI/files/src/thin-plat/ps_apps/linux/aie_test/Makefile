@@ -1,6 +1,9 @@
 # Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+# Date: 13 Oct 2023
+# modified by  Daniele Bagni
+
 ECHO             := @echo
 
 SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
@@ -13,21 +16,21 @@ APP_SRC_CTRL     := ./../../../vitis/ip/aie/Work/ps/c_rts/aie_control_xrt.cpp
 
 GCC              ?= aarch64-linux-gnu-g++
 
-GCC_INCLUDES     := -I${SYSROOT}/usr/include \
-                    -I${SYSROOT}/usr/include/xrt \
-                    -I${SYSROOT}/usr/include/xaiengine \
-                    -I${XILINX_VITIS}/aietools/include \
-					          -I${XILINX_VITIS}/include \
-					          -I${DSPLIB_ROOT}/L1/include/aie \
-					          -I${DSPLIB_ROOT}/L1/src/aie \
-					          -I${DSPLIB_ROOT}/L1/tests/aie/inc \
-					          -I${DSPLIB_ROOT}/L1/tests/aie/src \
-					          -I${DSPLIB_ROOT}/L2/include/aie \
-		                -I$(DSPLIB_ROOT)/L2/tests/aie/common/inc \
-		                -I../../../vitis/ip/aie/src \
-		                -I../../../vitis/ip/aie/src/graphs
+GCC_INCLUDES	:=	-I${SYSROOT}/usr/include \
+			-I${SYSROOT}/usr/include/xrt \
+			-I${SYSROOT}/usr/include/xaiengine \
+			-I${XILINX_VITIS}/aietools/include \
+			-I${XILINX_VITIS}/include \
+			-I${DSPLIB_ROOT}/L1/include/aie \
+			-I${DSPLIB_ROOT}/L1/src/aie \
+			-I${DSPLIB_ROOT}/L1/tests/aie/inc \
+			-I${DSPLIB_ROOT}/L1/tests/aie/src \
+			-I${DSPLIB_ROOT}/L2/include/aie \
+			-I$(DSPLIB_ROOT)/L2/tests/aie/common/inc \
+			-I../../../vitis/ip/aie/src \
+			-I../../../vitis/ip/aie/src/graphs
 
-GCC_C_FLAGS      := -O -Wall -std=c++14 -DXAIE_DEBUG \
+GCC_C_FLAGS      := -O -Wall -std=c++17 -DXAIE_DEBUG \
                     -pthread \
                     --sysroot=${SYSROOT}
 

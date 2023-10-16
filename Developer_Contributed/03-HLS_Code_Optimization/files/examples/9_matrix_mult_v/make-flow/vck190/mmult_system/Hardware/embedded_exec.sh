@@ -7,7 +7,7 @@ date
 echo ""
 SECONDS=0
 
-cd /run/media/sd-mmcblk0p1
+cd /run/media/mmcblk0p1
 export XILINX_XRT=/usr
 ./mmult ./binary_container_1.xclbin
 

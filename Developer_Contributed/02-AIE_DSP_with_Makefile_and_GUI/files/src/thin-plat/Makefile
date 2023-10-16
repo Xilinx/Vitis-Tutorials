@@ -1,6 +1,10 @@
 # Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
+# This makefile replaces the one from origina Thin Platform, to adapt it to this repo
+# date: 13 Oct 2023
+# modified by Daniele Bagni
+
 
 # Top-level Makefile -- Calls sub-makefiles
 
@@ -11,8 +15,6 @@ ECHO                               = @echo
 ################################################################################
 REQUIRED_VERSION                   = 2023.2
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
-#REQUIRED_VERSION                   = 2022.2
-#VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "Vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 
 ###############################################
@@ -26,7 +28,7 @@ export TARGET                     := hw
 export SW_BUILD_TOOL              := petalinux
 
 # XPFM_PRE_BUILDS = false (Build xpfm) or true (Use xpfm pre-builds)
-export XPFM_PRE_BUILDS            := true
+export XPFM_PRE_BUILDS            := false
 #false
 
 # LINUX_PRE_BUILDS = false (Build linux) or true (Use linux pre-builds)
@@ -35,6 +37,9 @@ export LINUX_PRE_BUILDS           := true
 
 # ILA_EN = 0 (Disabled) or 1 (Enabled)
 export ILA_EN                     := 0
+
+# BOARD_NAME = vck190 (prod) or vek280 (revB) or vek280_es1 (revA)
+export BOARD_NAME                 := vck190
 
 ###########################################################
 # Linux/Yocto Variables that may be changed to your needs #
@@ -65,11 +70,19 @@ export LINUX_ETH_CONFIG           := DHCP
 ################################################################
 # Variables needed for the build process, PLEASE DO NOT MODIFY #
 ################################################################
+export PLATFORM_CUSTOM            := ${BOARD_NAME}_thin
+export LINUX_MACHINE              := ${BOARD_NAME}-versal
+
+ifeq (${BOARD_NAME}, vck190)
 export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
-export PLATFORM_CUSTOM            := vck190_thin
 export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202320_1
-#export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202220_1
-export LINUX_MACHINE              := vck190-versal
+else ifeq (${BOARD_NAME}, vek280)
+export DEVICE_NAME                := xcve2802-vsvh1760-2MP-e-S
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+else
+export DEVICE_NAME                := xcve2802-vsvh1760-2LP-e-S-es1
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+endif
 
 LINUX_SRC_DIR                     := ./linux/src
 LINUX_BUILD_DIR                   := ./linux/${LINUX_MACHINE}
@@ -204,7 +217,7 @@ ifeq (${TARGET}, hw_emu)
 	$(ECHO) "[ERROR] XPFM_PRE_BUILDS = true and TARGET = hw_emu is NOT supported!"; exit 1
 endif
 endif
-	$(ECHO) "AMD/XILINX TOOLS & VERSION CHECK SUCCESSFUL"
+	$(ECHO) "AMD  TOOLS & VERSION CHECK SUCCESSFUL"
 
 vivado_platform:
 ifeq (${XPFM_PRE_BUILDS}, true)
