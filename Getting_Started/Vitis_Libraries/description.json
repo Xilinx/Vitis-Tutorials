@@ -1,0 +1,30 @@
+{
+    "name": "Vitis_Libraries",
+    "description": "Getting Started with Vitis Libraries",
+    "flow": "vitis",
+ 
+    "platform_allowlist": ["u250"],
+ 
+    "testinfo": {
+        "test_name": "GS_Vitis_Lib",
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_sw_emu": 30,
+                    "vitis_hw_emu": 200,
+                    "vitis_hw_build": 470,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+             "vitis_sw_emu"
+        ],
+        "make_options" : [],
+        "category": "canary",
+        "custom_build_target": {
+            "all": "run"
+        }
+    }
+}
