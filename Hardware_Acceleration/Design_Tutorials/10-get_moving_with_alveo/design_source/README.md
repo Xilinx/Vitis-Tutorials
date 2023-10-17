@@ -14,7 +14,7 @@ git clone https://github.com/Xilinx/Vitis_Libraries.git
 This repository includes both hardware and software sources.
 
 This repository has been validated against the Vitis Unified Development Environment
-release 2022.2 and has been hardware-validated against the following platforms:
+release 2023.2 and has been hardware-validated against the following platforms:
 
 | Alveo Card |             Platform                          |   XRT    |
 | :--------- | :-------------------------------------------: | :-----:  |

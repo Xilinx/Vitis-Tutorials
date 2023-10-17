@@ -10,7 +10,7 @@
 
 ## Introduction
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 AMD FPGAs and AMD Versal™ adaptive SoC devices are uniquely suitable for low-latency acceleration of high-performance algorithms and workloads. With the demise of traditional Moore's Law scaling, design-specific architectures (DSAs) are becoming the tool of choice for developers needing the optimal balance of capability, power, latency, and flexibility. But, approaching FPGA and Versal adaptive SoC development from a purely software background can seem daunting.
 
