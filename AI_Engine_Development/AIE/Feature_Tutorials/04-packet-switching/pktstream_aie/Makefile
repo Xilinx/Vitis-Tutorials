@@ -3,8 +3,17 @@
 #SPDX-License-Identifier: MIT
 
 TARGET   = hw_emu
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
-XSA   = vck190_aie_base_graph_${TARGET}.xsa
+ARCH = aie
+
+ifeq ($(ARCH), aie)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+else ifeq ($(ARCH), aie-ml)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm
+else
+$(error ARCH is not supported)
+endif
+
+XSA   = aie_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
 
 GRAPH    = aie/graph.cpp
@@ -12,10 +21,6 @@ LIBADF  = libadf.a
 AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
-
-ROOTFS:=${EDGE_COMMON_SW}/rootfs.ext4
-IMAGE:=${EDGE_COMMON_SW}/Image
-
 
 ##########################################################################################################################################################
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
@@ -53,9 +58,6 @@ guard-IMAGE:
 guard-CXX:
 	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
-guard-SYSROOT:
-	$(call check_defined, SYSROOT, Run: xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
-
 ###
 
 all: ${XSA} ${HOST_EXE} package
@@ -76,9 +78,9 @@ ${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS}
 
 kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
-	$(MAKE) -C pl_kernels/
+	$(MAKE) -C pl_kernels/ PLATFORM=${PLATFORM}
 	
-host: guard-CXX guard-SYSROOT ${HOST_EXE}
+host: guard-CXX ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
 	$(MAKE) -C sw/
 
@@ -100,7 +102,7 @@ launch_hw_emu.sh: package_hw_emu
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
-	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
+	       aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
 	$(MAKE) -C pl_kernels clean
 	$(MAKE) -C sw clean

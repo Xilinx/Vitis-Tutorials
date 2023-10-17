@@ -2,8 +2,6 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
-
 .PHONY: clean
 
 all: $(subst .cpp,.xo,$(wildcard *.cpp)) ../Work/temp/packet_ids_c.h
