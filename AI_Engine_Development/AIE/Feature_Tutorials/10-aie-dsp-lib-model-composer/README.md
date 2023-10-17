@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -9,7 +9,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -19,11 +19,12 @@ The purpose of this tutorial is to provide hands-on experience for designing AI 
 
 Install the tools:
 
-* Get and install [MATLAB and Simulink 2021a or 2021b](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
+* Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
+  * The following MATLAB releases are supported: R2021a, R2021b, R2022a Update 6, R2022b Update 6
   * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2023.1](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2023.2](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -154,7 +155,7 @@ These are there to help you if you cannot complete any of the four stages.
     * **Scale output down by 2**: Shift1
     * **Rounding mode**: Floor
 
-    Click **Apply** and **OK**.
+    Leave all other settings at their default values. Click **Apply** and **OK**.
 
    ![missing image](Images/Image_008.png)
 
@@ -170,7 +171,7 @@ These are there to help you if you cannot complete any of the four stages.
 10. Cascade the three blocks: **Random Source**, **Cast**, **AIE FIR Filter**.
 
 11. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink blocks. **Open** `ReferenceChain.slx`. Copy the block **HB1** over to your design.
-12. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**) to create the following design:
+12. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**, **Vitis Model Composer Hub**) to create the following design:
 
       ![missing image](Images/Image_009.png)
 
@@ -261,19 +262,19 @@ When creating a DSP design, one of the most important parameters to consider is 
 
 ## Stage 3: Generate the Code and Perform Emulation-AI Engine
 
-In this stage, you will generate the graph code of this design and perform bit-true and cycle true simulations with the AI Engine Simulator.
+In this stage, you will generate the graph code of this design and perform bit-true and cycle-approximate simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block, and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Click the canvas, and type ``model co``. Select the **Vitis Model Composer Hub** block.
-3. Double-click the block **Model Composer Hub**, select the **FIRchain** subsystem, and set the following parameters on the **AIE Settings** tab:
-    * Check **Create testbench**.
-    * Check **Run cycle approximate AIE Simulation after code generation**.
-    * Check **Plot AIE Simulation Output and Estimate Throughput**.
-    * Check **Collect Data for Vitis Analyzer**.
-4. Click **Apply**.
-5. Click **Generate**.
+2. Double-click the block **Model Composer Hub** and click on the **Code Generation** tab.
+3. Select the **FIRchain** subsystem, and set the following parameters on the **AIE Settings** tab:
+    * Check **Create Testbench**.
+    * Check **Run cycle approximate AIE Simulation (SystemC) after code generation**.
+    * Check **Collect profiling statistics and enable 'printf' for debugging**.
+    * Check **Collect trace data for Vitis Analyzer and viewing internal signals**.
+3. Click **Apply**.
+4. Click **Generate**.
 
-The Simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/src_aie/FIRchain.h``:
+The Simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/ip/FIRchain/src/FIRchain.h``:
 
 ```C++
 #ifndef __XMC_FIRCHAIN_H__
@@ -345,14 +346,15 @@ Finally, the bit-exact simulation (Emulation-AIE) is performed and the result co
 
 ![missing image](Images/Image_012.png)
 
-Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Timeline**, and the **Profile** information.
+Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Trace View**, and the **Profile** information.
 
 ![missing image](Images/Image_022.png)
 
 ![missing image](Images/Image_023.png)
 
-The Simulation Data Inspector opens and shows the output of the AI Engine. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received, but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, you can use data cursors to select a specific time region over which to calculate throughput:
+ Vitis Model Composer can also plot the output of the cycle-approximate AI Engine simulation and calculate a throughput estimate. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received, but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, you can use data cursors to select a specific time region over which to calculate throughput:
 
+1. In the Model Composer Hub, click on **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
 1. Select the `Out1` signal from the list on the left.
 2. Right-click on the plot, and select **Data Cursors**->**Two**.
 3. Position the cursors at the beginning of the first and third signal frames, as shown below. 
