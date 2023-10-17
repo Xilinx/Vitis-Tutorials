@@ -15,7 +15,6 @@ void vectorized_weighted_sum_with_margin(input_buffer<int32,extents<256>,margin<
 	aie::vector<int32,8> coeffs = aie::load_v<8>(weights);
 
 	aie::vector<int32,16> data;
-	aie::accum<acc80,4> acc;
 	aie::vector<int32,8> dataout;
 	data.insert(0,*inIter++);
 
@@ -24,7 +23,7 @@ void vectorized_weighted_sum_with_margin(input_buffer<int32,extents<256>,margin<
 		chess_loop_range(4,32)
 	{
 		data.insert(1,*inIter++);
-		acc=aie::sliding_mul<4,8>(coeffs,0,data,1);
+		auto acc=aie::sliding_mul<4,8>(coeffs,0,data,1);
 		dataout.insert(0,acc.to_vector<int32>());
 		acc=aie::sliding_mul<4,8>(coeffs,0,data,5);
 		dataout.insert(1,acc.to_vector<int32>());

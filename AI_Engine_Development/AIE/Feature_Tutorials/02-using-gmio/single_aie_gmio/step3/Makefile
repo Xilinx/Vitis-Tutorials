@@ -3,10 +3,18 @@
 #SPDX-License-Identifier: MIT
 
 TARGET   = hw_emu
+ARCH = aie
+
+ifeq ($(ARCH), aie)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+else ifeq ($(ARCH), aie-ml)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm
+else
+$(error ARCH is not supported)
+endif
+
 MODE	 = linux
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
-XSA	 = vck190_aie_base_graph_${TARGET}.xsa
-XPFM	 = vck190_xpfm
+XSA	 = ${ARCH}_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
 SDKTARGETSYSROOT ?= ${SYSROOT}
 
@@ -95,6 +103,6 @@ launch_hw_emu.sh: package_hw_emu
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
-	       vck190_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
+	       *.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
 	$(MAKE) -C sw clean

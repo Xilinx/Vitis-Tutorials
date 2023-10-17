@@ -8,7 +8,13 @@ SPDX-License-Identifier: MIT
 #include <adf.h>
 #include "kernel.h"
 
+#if __AIEARCH__==10 or __AIE_ARCH__==10
 static const int col[8]={2,6,10,18,26,34,42,46};
+#elif __AIEARCH__==20 or __AIE_ARCH__==20
+static const int col[8]={2,6,14,22,30,34};
+#else
+static const int col[8]={0};//for PS compilation
+#endif
 static const int NUM=4;
 
 class topgraph: public adf::graph
