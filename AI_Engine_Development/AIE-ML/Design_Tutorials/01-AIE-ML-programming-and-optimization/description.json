@@ -1,0 +1,50 @@
+{
+    "name": "AIE-ML_Programming-and-Optimization",
+    "description": "01-AIE-ML_Programming-and-Optimization",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vek280"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "AIE-ML_D_01-Programming",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+	"make_options": [
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app embedded_exec.sh \\\"",
+            "EMBEDDED_PACKAGE_OUT=./",
+            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+	    ],
+        "custom_build_target": {
+            "all": "run_hw_emu"
+        },
+        "custom_board_target": "run_test",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_versal.sh"]
+            },
+           "build": {
+               "pre_exec": ["./env_setup_versal.sh"]
+           }
+        }
+    }
+}
