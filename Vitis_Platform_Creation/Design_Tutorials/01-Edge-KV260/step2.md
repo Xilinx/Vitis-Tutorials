@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -8,34 +8,32 @@
 
 # Step 2: Create the Vitis Platform
 
-In this step, you will create a Vitis platform running a Linux operation system. The Vitis platform requires several software components which need to be prepared in advance. Due to the boot flow differences between KV260 and base platforms for AMD evaluation boards like ZCU104, platform developer needs to prepare one additional DTBO file besides the normal software components for Vitis platforms because device tree file of programmalbe logic (PL) side depends on the hardware design and is loaded after Linux boots up. In addition, application developers need to add this DTBO file to the application deployment package as well. The other software components generation flow is similar to the flow described in the [ZCU104 tutorial](../02-Edge-AI-ZCU104/step2.md). However, in this case, the valuable software component is sysroot,which is used for host application cross-compilation. So you will go on utilizing the common image which provides the sysroot and expedite the process of platform creation.
+In this step, you will create a Vitis platform running a Linux operation system. The Vitis platform requires several software components which need to be prepared in advance. Due to the boot flow differences between KV260 and base platforms for AMD evaluation boards like ZCU104, platform developer needs to prepare one additional DTBO file besides the normal software components for Vitis platforms because device tree file of programmable logic (PL) side depends on the hardware design and is loaded after Linux boots up. In addition, application developers need to add this DTBO file to the application deployment package as well. The other software components generation flow is similar to the flow described in the [ZCU104 tutorial](../02-Edge-AI-ZCU104/step2.md). However, in this case, the valuable software component is sysroot,which is used for host application cross-compilation. So you will go on utilizing the common image which provides the sysroot and expedite the process of platform creation.
 
-## Prepare the Common Image
+### Prepare the Common Image
 
-1. Download common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html). Go to the **WorkSpace** folder you created in step 1, and place the image package in **WorkSpace** folder similar to the following:
+1. Download common image from [Xilinx website download page.](https://www.xilinx.com/support/download.html). Go to the **WorkSpace** folder you created in step 1, and place the image package in **WorkSpace** folder.
 
    ```bash
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    ├── kv260_hardware_platform
-   └── xilinx-zynqmp-common-v2023.1.tar.gz
+   └── xilinx-zynqmp-common-v2023.2.tar.gz
    ```
 
 2. Extract the common image.
 
-    You will create one folder named **kv260_vitis_platform** to store the work content for this step 2.
 
    ```bash
-   mkdir kv260_vitis_platform
-   cd kv260_vitis_platform
-   tar xvf ../xilinx-zynqmp-common-v2023.1.tar.gz -C .
+   cd WorkSpace
+   tar xvf ../xilinx-zynqmp-common-v2023.2.tar.gz -C .
    ```
 
-   You can see **xilinx-zynqmp-common-v2023.1** folder which contains the components located in **kv260_vitis_platform** folder similar to the following.
+   You can see **xilinx-zynqmp-common-v2023.2** folder which contains the components located in **WrokSpace** folder.
 
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2023.1
+   ├── xilinx-zynqmp-common-v2023.2
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -57,30 +55,30 @@ If you need to do system customization, take the following steps as reference. F
 
 <summary><strong>Click for Detailed Steps</strong></summary>  
 
-1. Check the [AMD Kria™ K26 SOM wiki](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM), and download the BSP package from the following link: <https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2023.1-final.bsp>
+1. Check the [AMD Kria™ K26 SOM wiki](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM), and download the BSP package from the following link: <https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2023.2-final.bsp>
 
-    Save it to **WorkSpace** directory.
+   Save it to **WorkSpace** directory.
 
 2. Set up the PetaLinux environment.
 
     ```bash
     cd WorkSpace
-    mkdir kv260_vitis_platform
-    cd kv260_vitis_platform
+    mkdir kv260_petalinux
+    cd kv260_petalinux
     source <petaLinux_tool_install_dir>/settings.sh
     ```
 
 3. Update the PetaLinux eSDK to enable the recipes needed by the Starter Kit SOM BSP.
 
     ```bash
-    petalinux-upgrade -u 'http://petalinux.xilinx.com/sswreleases/rel-v2022/sdkupdate/' -p 'aarch64'
+    petalinux-upgrade -u 'http://petalinux.xilinx.com/sswreleases/rel-v2023/sdkupdate/' -p 'aarch64'
     ```
 
 4. Create PetaLinux with the Starter Kit SOM BSP, and the XSA export from step 1.
 
     ```bash
-    petalinux-create --type project -s xilinx-kv260-starterkit-v2023.1-final.bsp
-    cd xilinx-kv260-starterkit-2023.1
+    petalinux-create --type project -s xilinx-kv260-starterkit-v2023.2-final.bsp
+    cd xilinx-kv260-starterkit-2023.2
     petalinux-config --get-hw-description=<vivado_design_dir> --silent  
     ```
 
@@ -121,10 +119,10 @@ If you need to do system customization, take the following steps as reference. F
 
    ```bash
    source <Vitis_tool_install_dir>/settings64.sh
-   cd kv260_vitis_platform
+   cd WrokSpace
    xsct
-   createdts -hw ../kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
-   -platform-name mydevice -git-branch xlnx_rel_v2023.1 -overlay -compile
+   createdts -hw kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
+   -platform-name mydevice -git-branch xlnx_rel_v2023.2 -overlay -compile
    ```
 
    The `createdts` command has the following input values. Specify them as you need.
@@ -146,7 +144,8 @@ If you need to do system customization, take the following steps as reference. F
    pl.dtsi:27.26-31.5: Warning (simple_bus_reg): /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
    ```
 
-   > **NOTE:** Createdts is a command executing in XSCT console to generate device files. This command needs several inputs to generate the device tree files. Regarding the meaning of every option, you can execute a help command to check the details. Besides XSCT is a Console tool of Vitis. You can start it by typing `xsct` in Linux terminal to start it. Or, you can select menu **Xilinx > XSCT Console** to start the XSCT tool after you launch Vitis.
+   > **NOTE:** The `createdts` command is used within the XSCT console to generate device tree files. This command requires several inputs to produce the desired device tree files. If you're unsure about the specific options and their meanings, you can execute a help command to access detailed information. Additionally, it's important to note that XSCT is a console tool integrated into Vitis. You can initiate it by typing `xsct` in the Linux terminal or, alternatively, select the **Xilinx > XSCT** Console option from the Vitis menu after launching the Vitis tool.
+   
 
    > **NOTE**: Device tree knowledge is a common know-how. Please refer to [AMD Device tree WIKI page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421121/Device+Trees) or [Device Tree WIKI page](https://en.wikipedia.org/wiki/Devicetree#Linux) for more information if you are not familiar with it.
    
@@ -161,7 +160,7 @@ If you need to do system customization, take the following steps as reference. F
    Run the following command to build the dtsi file and create a directory to store the dtbo file.
 
    ```bash
-   cd kv260_vitis_platform
+   cd WrokSpace
    dtc -@ -O dtb -o mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtsi
    mkdir dtg_output
    cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/pl.dtbo dtg_output
@@ -171,93 +170,67 @@ If you need to do system customization, take the following steps as reference. F
 
 ### Create the Vitis Platform
 
-1. Then you create a `pfm` folder, plus `boot` and `sd_dir` inside the `pfm` folder to store all the necessary files for Vitis platform creation. The `boot` directory for boot components and `sd_dir` for FAT32 partition contents in SD card will give Vitis when creating the platform.
 
-   ```bash
-   cd kv260_vitis_platform
-   mkdir pfm
-   mkdir pfm/boot
-   mkdir pfm/sd_dir
-   ```
+1. Install sysroot.
 
-   The following files are the content of `boot` directory and the sources of creating `BOOT.BIN` as well. They are required for the Vitis workflow, but because KV260 Starter Kit boot components are fixed in the QSPI flash, these files will not be used in our flow. So just leave it empty.
-
-   - `zynqmp_fsbl.elf`: MPSoC first stage boot loader
-   - `pmufw.elf`: MPSoC PMU Firmware
-   - `bl31.elf`: MPSoC Arm Trusted Firmware
-   - `u-boot.elf`: U-boot with device tree in the elf
-   - `system.dtb`: Device tree for Linux
-
-   Contents in `sd_dir` directory will be packaged to FAT32 partition of `sd_card.img` by the v++ package tool. Usually, you will store `boot.scr` and `system.dtb` in this directory. Because the KV260 workflow does not program the SD card, you can skip adding contents to this directory. Leave it empty.
-
-2. Install sysroot.
-
-   - Go to `<xilinx-zynqmp-common-v2023.1>` directory.
-   - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory **kv260_vitis_platform** (this is an example) and confirm.
+   - Go to `<WorkSpace/xilinx-zynqmp-common-v2023.2>` directory.
+   - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. For example: `./sdk.sh -d .`. **.** means the current directory. 
    >**NOTE:** The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
 
-   After this step, your WorkSpace directory hierarchy looks like the following.
 
-   ```bash
-   - v260_hardware_platform             # Vivado Project Directory
-   - kv260_vitis_platform               # Software components and vitis platform directory
-     - xilinx-zynqmp-common-v2023.1     # common image directory
-     - device-tree-xlnx                 # device tree repo directory
-     - mydevice                         # device tree source file directory
-     - dtg_output                       # DTBO file directory
-     - sysroots                         # Extracted Sysroot Directory
-     - pfm                              # Platform Packaging Sources
-       - boot                           # boot components directory
-       - sd_dir                         # Files to be put in FAT32 partition of SD card
-   ```
+   >Note: Sysroot is not mandatory components for the platform itself. It is the cross compile tool prepared for applications compilation.
 
-3. Create a Vitis platform.
+2. Create a Vitis platform.
 
-    First, create a Vitis platform project with the XSA file generated by Vivado from Step 1.
+   For this example, you will use the Vitis Unifeid IDE to create the Vitis Platform. Got to `WorkSpace` directory and follow steps below to create the platform.
 
-   1. Launch the Vitis IDE.
-      - Go to the **kv260_vitis_platform** folder you created:
+   1. Run Vitis by typing `vitis -w .` in the console. `-w` is to specify the workspace. `.` means the current workspace directory.
+   2. In the Vitis Unified IDE, from menu select **File > New Component > Platform** to create a platform component.
+   3. On the **Create Platform Component** setup dialog
+      - Enter the component name and location. For this example, type `kv260_custom` and use default location. Click **Next**.
+      - Click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `kv260_hardware_platform.xsa`. 
+      - Set the operating system to **linux**.</br>
+      - Set the processor to **psu_cortexa53**.</br>
+      - Check the option **Generate boot artifacts**. Then click **Next**.</br> 
+         >Note: Enabling this option will trigger the tool to automatically generate a PMU firmware domain and an FSBL (First Stage Boot Loader) domain into the platform
+      - Review the summary and click **Finish**.
+      >Note: After a few moments, the platform component will be prepared and available in the component view. Simultaneously, the platform configuration file, `vitis-comp.json`, will be automatically displayed in the main view. Users can access the `vitis-comp.json` file by expanding the Settings section under the platform component.
 
-         ```bash
-         cd <full_pathname_to_kv260_vitis_platform>
-         ```
+3. Set up the software settings in the Platform configuration view by clicking the **Linux On psu_cortexa53** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
 
-      - Launch Vitis by typing `vitis &` in the console.
-      - Select **kv260_vitis_platform** folder as workspace directory.
+   - **Display Name**:  update it as `xrt`
+   - **Bif file**: Click the button to generate bif file or click **Browse** to select existing bif file. 
 
-   2. Create a new platform project.
+     >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-      - Select menu **File > New > Platform Project** to create a platform project.
-      - Enter the project name. For this example, type `kv260_custom`. Click **Next**.
-      - In the Platform page:
-        - Click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `kv260_hardware_platform.xsa`.
-        - Set the operating system to **linux**.
-        - Set the processor to **psu_cortexa53**.
-        - Architecture: **64-bit**
-        - **Uncheck** option **Generate boot components** because we will use PetaLinux generated boot components.
-        - Click **Finish**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2023.2** and click **OK**.
 
-   3. Setup software settings in Platform Settings view.
+   - **DTB File**: Browse to **mydevice/psu_cortexa53_0/device_tree_domain/bsp** and select system.dtb, then click **OK**.
+      >Note: If the directory you specified for Pre-build image directory already contains DTB file, this DTB field will be automatically updated. 
 
-      - Click the **linux on psu_cortexa53** domain, browse to the locations, and select the directory or file needed to complete the dialog box for the following:
+   - **FAT32 Partition Directory**: This directory is used to add additional file to the fat32 partition. User can set it according to your requirement.
 
-      - **Bif file**: Click the drop-down icon and select **Generate BIF**.
+   - **QEMU Data**: This Directory is used to add additional file for emulation. User can set it accordingly.
 
-        > **NOTE:** The file names in `<>` are placeholders. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
+   ![vitis_linux_config.PNG](./images/vitis_linux_config.png)
 
-      - **Boot Components Directory**: Browse to **kv260_vitis_platform/pfm/boot** and click **OK**.
+   >**Note:**: **Qemu Args File** and **Pmu Args File**  are populated by the tool automatically. If there are additional QEMU settings, please update it accordingly.
 
-      - **FAT32 Partition Directory**: Browse to **kv260_vitis_platform/pfm/sd_dir** and click **OK**.
+4. Select **kv260_custom** platform component in the flow navigator, then click the **Build** button to build the platform.
 
-   4. Click **kv260_custom** project in the Vitis Explorer view, click the **Build** button to generate the platform.
+   ![missing image](./images/build_vitis_platform.png)
 
-      ![build_vitis_platform.png](./images/build_vitis_platform.png)
+   >**Note:** The generated platform is placed in the export directory. BSP and source files are also provided for rebuilding the FSBL, if required, and are associated with the platform. The platform is ready to be used for application development.
 
-      >**NOTE:** The generated platform is placed in the export directory. BSP and source files are also provided for re-building the FSBL and PMU, if desired, and are associated with the platform. The platform is ready to be used for application development.
+   ![missing image](./images/vitis_platform_output.png)
 
-      ![vitis_platform_output.png](./images/vitis_platform_output.png)
+   >Note: Once the compilation is complete, users can find the XPFM file by expanding the Output directory, which offers a structured view of the output. The actual file path of platform file is located in the `WorkSapce/kv260_custom/export/kv260_custom/` directory. Additionally, users can access the full path of the platform file by hovering the mouse pointer over the XPFM file.
 
-      If you would create an Vitis application in the same workspace as this platform, you can find this platform available in the platform selection page in platform creation wizard. If you want to reuse this platform in another workspace, add its path to PLATFORM_REPO_PATHS environment variable before launching Vitis GUI, or use the **Add** button in platform selection page of Vitis GUI to add its path.
+   >Note: The Vitis Unified IDE will find the boot-related files mentioned in the software components in begin of this step from Pre-buit image directory and place them in the boot folder of the platform.
+
+   If you create a Vitis application component in the same workspace as this platform component, you can find this platform available in the platform selection page in the application Creation wizard. If you want to reuse this platform in another workspace, add its path to the `PLATFORM_REPO_PATHS` environment variable before launching the Vitis GUI, or use the "Add" button on the platform selection page of the Vitis GUI to add its path.
+
+
 
 ### Next Step
 

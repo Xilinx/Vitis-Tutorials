@@ -8,13 +8,13 @@
 
 # Vitis Custom Embedded Platform Creation Example on KV260
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 The [AMD Kria™ KV260 Vision AI Starter Kit](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html) is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It is based on the AMD UltraScale+™ MPSoC technology similar to ZCU104 evaluation board. In this example, you will extend the [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/) to KV260 Vision AI Starter Kit.
 
 To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, cross reference [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/), or ask questions in Github Issues page.
 
-For your reference, this example total system structure is similar to the following figure.
+For your reference, The structure of this example system is shown in the following figure..
 
 ![missing image](./images/structure.svg)
 
@@ -77,7 +77,7 @@ The platform creation steps are introduced in the following pages. Each page des
   - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html)
   - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/pjr1542153622642.html)
 - Platform Examples
-  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.1/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.1/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
+  - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 - [Xilinx Run Time (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
 - [Vitis-AI GitHub Repository](https://github.com/Xilinx/Vitis-AI)
 

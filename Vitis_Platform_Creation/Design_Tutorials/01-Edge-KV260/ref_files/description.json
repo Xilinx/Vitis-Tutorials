@@ -26,7 +26,7 @@
             }
         ],
         "targets": [
-            
+            "vitis_hw_build"  
         ],
         "custom_build_target":
         {

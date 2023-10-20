@@ -8,7 +8,8 @@ PLATFORM_NAME=kv260_custom
 PLATFORM= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SW_COMP = $(ROOT_DIR)/../step2_pfm/sw_comp/
 SYSROOTDIR=$(ROOT_DIR)/../step2_pfm/sysroot/
-
+VERSION=2023.2
+COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 
 .PHONY: help  
@@ -29,11 +30,11 @@ Vitis_Accel_Examples:
 
 # Quick command for generating vadd hw xclbin
 vadd_hw: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 # vadd_hw generates the files for running on hardware. User needs to pick the files required by KV260, rename thr file and transfer them to the board
 # Do not use the generated sd_card.img
 $(PL_EXAMPLE_PATH)/simple_vadd:   Vitis_Accel_Examples $(PLATFORM)  
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=zynquplus HOST_ARCH=aarch64 EDGE_COMMON_SW=$(SW_COMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=zynquplus HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 
 $(PL_EXAMPLE_PATH)/shell.json:
