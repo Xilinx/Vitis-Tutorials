@@ -21,7 +21,7 @@ void upscale(
 		
 		in_t = *InIter++;
 		max_value = readincr(outmax);                   //Max value out of 16-lane vector
-		scale = (max_value < THRESHOLD) ? 2 : 1;        //If max value > Threshold upscale by 2, if not upscale by 1
+		scale = (max_value < THRESHOLD) ? 2 : 1;        //If max value < Threshold upscale by 2, if not upscale by 1
 		upscale_t = aie::mul(in_t,aie::to_float(scale));//Input scaled based on Threshold using aie::mul API
 		*OutIter++ = upscale_t.to_vector<float>(0);	
 	}

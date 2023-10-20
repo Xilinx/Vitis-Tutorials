@@ -115,15 +115,18 @@ Shows how to calculate kernel latency and throughput using profile information.
 1. In the Vitis IDE toolbar, click the arrow next to the manage configurations button, and select **Emulation-AIE**. This sets the build target for the AI Engine simulation.
 
     ![build target](./Images/Build_target.PNG)
-2. Right-click the *[aiengine]* domain project, select **C/C++ Build Settings**, choose **Compiler**, and add `-O0` to the Pre Processor Options. This improves the debug visibility.
-![build setting](./Images/Build_setting.PNG)
+2. Right-click the *[aiengine]* domain project, select **C/C++ Build Settings**, choose **Miscellaneous** -> **Optimization** -> from the drop down choose **No Optimizations(xlopt=0)**. This option helps IDE debugging capability by disabling any kernel optimizations.
 
 3. Right-click the *[aiengine]* domain project, and select the **Build** option. Once the build completes, you see the **Compilation Complete** and **Build Finished** messages in the console.
 
 4. Right-click the *[aiengine]* domain project, and select the **Run As → Launch AIE Emulator** option to start the simulation for the aiesimulation target. When the simulation completes, you see the following output in the console:
 ![aie simulator output](./Images/aiesimulator_output.PNG)
-5. The aiesimulator output files from the design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data`. Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/data/output_data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files. Highlight the files to be compared, then right-click one of highlighted files, and select **compare with** > **each other with transformation** . Click the **Predefined filters** icon(as shown below) > Enable **Remove timestamp** checkmark and click **OK** twice. Selecting **each other with transformation** is required because AI Engine simulation inserts a timestamp for each output data. For example, compare `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/Emulation-AIE/data/output_upscale.txt`.
-![predefined filter](./Images/predefined_filter.PNG)
+
+5. The aiesimulator output files from design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data` and the golden output data is located at `09-debug-walkthrough/reference_output/`.Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
+   * Add the golden data to the `${PROJECT}/data/` by right clicking on the `data/` directory in *[aiengine]* domain project and select **Import sources**.
+   * Highlight the two files to be compared.
+   * Right-click on one of highlighted files, and select **compare with** > **each other with transformation** . Click the **Predefined filters** icon(as shown below) > Enable **Remove timestamp** checkmark and click **OK** twice. Selecting **each other with transformation** is required because AI Engine simulation inserts a timestamp for each output data. For example, compare `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/Emulation-AIE/data/output_upscale.txt`.
+![predefined filter](./Images/predefined_filter.PNG).
 
 # Section 2
 

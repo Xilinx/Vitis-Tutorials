@@ -162,7 +162,10 @@ Demonstrates how to use a GDB server to debug the design.
 3. Right-click the *[aiengine]* domain project, and select the **Build** option. Once the build completes, you see the **Compilation Complete** and **Build Finished** messages in the console.
 4. Right-click the *[aiengine]* domain project, and select the **Run As → Launch SW Emulator** option to start simulation for an x86simulation target. When the simulation complete, you see the following output in the console.
 ![simulator output](./Images/x86simulator_output.PNG)
-5. The x86simulator output files from design are located at `${PROJECT}/Emulation-SW/x86simulator_output/data`. Verify the output files `${PROJECT}/Emulation-SW/x86simulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-SW/x86simulator_output/data/output_data_shuffle.txt` against the golden files `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/data/output_data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files; highlight the two files to be compared, then right-click one of the highlighted files, and select **compare with** then **Each other**. For example, compare `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/Emulation-SW/data/output_upscale.txt`.
+5. The x86simulator output files from design are located at `${PROJECT}/Emulation-SW/x86simulator_output/data` and the golden output data is located at `09-debug-walkthrough/reference_output/`.Verify the output files `${PROJECT}/Emulation-SW/x86simulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-SW/x86simulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
+   * Add the golden data to the `${PROJECT}/data/` by right clicking on the `data/` directory in *[aiengine]* domain project and select **Import sources**.
+   * Highlight the two files to be compared.
+   * Right-click one of the highlighted files, and select **compare with** then **Each other**. For example, compare `${PROJECT}/data/upscale.txt` and `${PROJECT}/Emulation-SW/data/output_upscale.txt`.
 
 # Section 2
 
@@ -211,7 +214,7 @@ This section walks you through a debug methodology that uses the Vitis IDE debug
 ![debug controls](./Images/debug_controls.PNG)
 5. Press **F8** or the **Resume** button in the toolbar. Observe the simulation stops at the user-defined breakpoint as follows.
 ![breakpoint](./Images/break_point.PNG)
-6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. Double-click the Variables view to enlarge the area. You can restore it back to the original size by double-clicking again. Expand the variable, `v_in`, and continue expanding to `(Vin → data → __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data →  0 → [])`. If you click that, it shows the value '16' at the bottom (based on the iteration in your case).
+6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. Double-click the Variables view to enlarge the area. You can restore it back to the original size by double-clicking again. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data → 0: 16)`. If you click that, it shows the value '16' at the bottom (based on the iteration in your case).
 ![variables view](./Images/variables_view.PNG)
 7. You can either continue stepping for all iterations, or remove the breakpoint and hit the **Run** button in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, you can click the disconnect button, and switch back to Design mode.
 
@@ -267,29 +270,28 @@ pkg-dir= <Path to work directory>
 
 This feature allows you to dump and inspect data traffic at kernel ports with data types. Examine how this feature is helpful.
 
-1. Open the `src/kernels/data_shuffle.cc` file in the *[aiengine]* domain project, and comment out the line 24.
-2. Build the project, open the `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options` file, and update the dump feature from `no` to `yes`.
-3. Right-click the *[aiengine]* domain project, and select **Run As** → **Launch SW Emulator**.
-4. Once the simulation is completed, you can observe the following messages in the console.
+1. Build the project, open the `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options` file, and update the dump feature from `no` to `yes`.
+2. Right-click the *[aiengine]* domain project, and select **Run As** → **Launch SW Emulator**.
+3. Once the simulation is completed, you can observe the following messages in the console.
 
    ```
    Processing './x86simulator_output/dump/x86sim_dump.data'
    
    File                   Port direction  Port type  Data type  Kernel or platform port
    ---------------------  --------------  ---------  ---------  -----------------------
-   mygraph_in_out_0.txt   out             window     int32      mygraph.in.out[0]     
-   mygraph_p_d_in_0.txt   in              window     int32      mygraph.p_d.in[0]     
-   mygraph_u_s_out_0.txt  out             window     float      mygraph.u_s.out[0]    
-   mygraph_out0_in_0.txt  in              window     float      mygraph.out0.in[0]    
-   mygraph_d_s_out_0.txt  out             window     int32      mygraph.d_s.out[0]    
-   mygraph_out1_in_0.txt  in              window     int32      mygraph.out1.in[0]    
-   mygraph_p_d_out_2.txt  out             window     float      mygraph.p_d.out[2]    
-   mygraph_u_s_in_0.txt   in              window     float      mygraph.u_s.in[0]     
-   mygraph_u_s_in_1.txt   in              stream     int32      mygraph.u_s.in[1]     
-   mygraph_d_s_in_1.txt   in              stream     int32      mygraph.d_s.in[1]     
-   mygraph_p_d_out_1.txt  out             stream     int32      mygraph.p_d.out[1]    
-   mygraph_p_d_out_0.txt  out             window     int32      mygraph.p_d.out[0]    
-   mygraph_d_s_in_0.txt   in              window     int32      mygraph.d_s.in[0]     
+   mygraph_in_out_0.txt   out             iobuffer     int32      mygraph.in.out[0]     
+   mygraph_p_d_in_0.txt   in              iobuffer     int32      mygraph.p_d.in[0]     
+   mygraph_u_s_out_0.txt  out             iobuffer     float      mygraph.u_s.out[0]    
+   mygraph_out0_in_0.txt  in              iobuffer     float      mygraph.out0.in[0]    
+   mygraph_d_s_out_0.txt  out             iobuffer     int32      mygraph.d_s.out[0]    
+   mygraph_out1_in_0.txt  in              iobuffer     int32      mygraph.out1.in[0]    
+   mygraph_p_d_out_2.txt  out             iobuffer     float      mygraph.p_d.out[2]    
+   mygraph_u_s_in_0.txt   in              iobuffer     float      mygraph.u_s.in[0]     
+   mygraph_u_s_in_1.txt   in              stream       int32      mygraph.u_s.in[1]     
+   mygraph_d_s_in_1.txt   in              stream       int32      mygraph.d_s.in[1]     
+   mygraph_p_d_out_1.txt  out             stream       int32      mygraph.p_d.out[1]    
+   mygraph_p_d_out_0.txt  out             iobuffer     int32      mygraph.p_d.out[0]    
+   mygraph_d_s_in_0.txt   in              iobuffer     int32      mygraph.d_s.in[0]     
    
    Wrote './x86simulator_output/dump/mygraph_in_out_0.txt'
    Wrote './x86simulator_output/dump/mygraph_p_d_in_0.txt'
@@ -308,13 +310,13 @@ This feature allows you to dump and inspect data traffic at kernel ports with da
 
    ```
 
-   >**NOTE:** :The `Port type` column in the above console should show the type as *buffer*, but in 2023.1 release, it shows as the *window* port.
-
    Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
+   
+For more information about the snapshots, refer to the topic [Data-snapshots](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Data-Snapshots)
 
-5. Open the `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump/mygraph_in_out_0.txt` file, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
+4. Open the `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump/mygraph_p_d_in_0.txt` file for example, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
 
-6. Similarly, you can open the input/output of all the kernels in a graph, and observe the intermediate outputs as well as the interface ports.
+5. Similarly, you can open the input/output of all the kernels in a graph, and observe the intermediate outputs as well as the interface ports.
 
 ### Deadlock Detection
 
@@ -324,7 +326,7 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 
 #### Scenario 1
 
-1. For example, open the `src/kernels/data_shuffle.cc`, and comment out line 24.
+1. For example, open the `src/kernels/data_shuffle.cc`, and comment out line `if(remainder == 0)`.
 
 2. Compile the design by rebuilding the *[aiengine]* domain project.
 
@@ -364,7 +366,7 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 
    ![dot file](./Images/dot_file.PNG)
 
-   The paths in the red indicate the root cause of the deadlock. In this design, if you observe carefully, observe the graph path 'n3-c7-n2-c6-n5', the edge `c7` is not sending enough data to the edge `c6`. From your graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producing kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
+   The paths in the red indicate the root cause of the deadlock. In this design, if you observe carefully, observe the graph path 'n3-c7-n2-c6-n5', the edge `c6` is expecting more data than what is actually being sent from edge `c7`. From your graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producing kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
 7. Revert the changes you have done on `src/kernels/data_shuffle.cc`.
 
 #### Scenario 2
@@ -372,7 +374,7 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 1. Empty the file `data/inx.txt`. Make sure to backup the file before emptying it.
 2. Repeat the steps 1-6, and observe the deadlock path now.
 
-   ![dot file](./Images/dot_file.PNG)
+   ![dot file](./Images/dot_file_1.PNG)
 
    In this case, due to the insufficient input data to fill the input buffer, the kernel went into the hang state waiting for the input data.
 
@@ -495,7 +497,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
    ```
 
 4. Add the memory read violation to the kernel code, and try to see the valgrind messages.
-5. Open `src/kernels/peak_detect.cc`, and change the line 26 to `v_in = *(InIter+8500000500)`.
+5. Open `src/kernels/peak_detect.cc`, and change the line after the `for` loop from `v_in = *(InIter++)` to  `v_in = *(InIter+8500000500)`.
 6. Build the *[aiengine]* domain project, and run the x86simulation. This time observe the console carefully for the following messages in the output console:
 
    ```
@@ -512,7 +514,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
    ..
    ==15387== For lists of detected and suppressed errors, rerun with: -s
    ==15387== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-   /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/bin/x86simulator: line 374: 15387 Segmentation fault      valgrind $VALGRIND_ARGS $X86SIM_PROG
+   <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/bin/x86simulator: line 374: 15387 Segmentation fault      valgrind $VALGRIND_ARGS $X86SIM_PROG
    ```
 
    Valgrind points out the file that has out of bound read access with the line number as shown above.
@@ -538,7 +540,7 @@ Before beginning, it is expected to set the environment variables as described i
 
 ### x86simulation on the Command Line
 
-1. Go to the tutorial directory, and locate the `Makefile`.
+1. Go to the `${TUTORIAL_DIRECTORY}/cmd_src/` directory, and locate the `Makefile`.
 2. Do `make aie` in the Linux terminal. This command runs the compilation.
 3. Do `make sim` to simulate the AI Engine graph for the x86sim target.
 
@@ -593,8 +595,8 @@ This topic walks you through running the x86simulator with the GDB.
    #0  data_shuffle (from_prev=..., outmax=0x7fffedffad78, out_shift=...) at ./../.././aie/kernels/data_shuffle.cc:9
    #1  0x0000000000411814 in b5_kernel_wrapper (arg0=..., arg1=0x4a26b0, arg2=...) at wrap_data_shuffle.cc:6
    #2  0x000000000042180a in x86sim::Kernel_b5_data_shuffle::invokeKernel (this=0x4a5a90) at PthreadSim.cpp:82
-   #3  0x00007ffff7b4293f in x86sim::IMEKernel::execute() () from /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/lib/lnx64.o/libx86sim.so
-   #4  0x00007ffff7b59564 in ?? () from /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/lib/lnx64.o/libx86sim.so
+   #3  0x00007ffff7b4293f in x86sim::IMEKernel::execute() () from <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/lib/lnx64.o/libx86sim.so
+   #4  0x00007ffff7b59564 in ?? () from <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/lib/lnx64.o/libx86sim.so
    #5  0x00007ffff7483dff in std::execute_native_thread_routine (__p=0x4a8890) at ../../../.././libstdc++-v3/src/c++11/thread.cc:80
    #6  0x00007ffff7bc6ea5 in start_thread () from /lib64/libpthread.so.0
    #7  0x00007ffff6be096d in clone () from /lib64/libc.so.6
