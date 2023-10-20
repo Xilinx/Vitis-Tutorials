@@ -16,7 +16,7 @@ FIXED_PLATFORM = fixed_platform/export/fixed_platform/fixed_platform.xpfm
 ### DO NOT MODIFY BELOW THIS LINE UNLESS NECESSARY
 ################################################################################################################################################
 
-XOS       = mm2s_1.xo s2mm_1.xo
+XOS       = mm2s_1/mm2s_1.xo s2mm_1/s2mm_1.xo
 VCC       = v++
 VPP_SPEC  = system.cfg
 VPP_FLAGS = --save-temps --verbose --config ${VPP_SPEC} --config /proj/xtcRepo/dsv/HEAD/EVEREST/NOC/IPI/TCs/HEAD/xcvc1902/system_xsim.cfg
@@ -24,7 +24,7 @@ VPP_FLAGS = --save-temps --verbose --config ${VPP_SPEC} --config /proj/xtcRepo/d
 .PHONY: clean
 
 all: fixed_xsa fixed_platform baremetal_elf package 
-
+sd_card:all
 check-xsa:
 ifeq ($(wildcard $(EXTENSIBLE_XSA)),)
 	@echo "'XSA' is not accesible, please provide your xsa file path"
@@ -33,9 +33,11 @@ ifeq ($(wildcard $(EXTENSIBLE_XSA)),)
 endif
 	@echo "XSA is accesible"
 
+${XOS}: xo
+xo:
+	${VCC} -c --mode hls --platform $(EXTENSIBLE_XSA) --config mm2s.cfg --work_dir mm2s_1
+	${VCC} -c --mode hls --platform $(EXTENSIBLE_XSA) --config s2mm.cfg --work_dir s2mm_1
 
-%.xo: %.cpp 
-	${VCC} -c --platform ${PLATFORM} -t ${TARGET} -k $(basename $<) $< -o $@ --verbose --save-temps
 fixed_xsa: $(FIXED_XSA)
 
 ${FIXED_XSA}: ${VPP_SPEC} ${XOS}
@@ -73,6 +75,6 @@ endif
 
 clean:
 	rm -rf _x v++_* ${XOS} *.o.* *.xo.* \
-	       *.xclbin* *.xsa *_log *.log Work Map_Report.csv *.bin  \
+	       *.xclbin* *.xsa *_log *.log Work Map_Report.csv *.bin  mm2s_1 s2mm_1\
 	       BOOT* *.xo emu_qemu_scripts *.cdo *.bif compile_log_pre *.elf *.o launch_hw_emu.sh qemu_args.txt *.xsa xnwOut *.pdi fixed_platform v++.package_summary *.link_summary libadf* lpd* NOC* pmc* plm* sd_card* sim ilpProblem* sol.db drivers .Xil .ipcache package.hw* ext_platform_wrapper_*
 	make -C sw clean

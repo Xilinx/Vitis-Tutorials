@@ -8,7 +8,7 @@
 
 # Versal Extensible Hardware Design Validation
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 In this tutorial, you will learn how to validate a Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
@@ -187,7 +187,7 @@ If the PDI can't load successfully, please check the CIPS configuration.
 
 #### Test3: Peripheral bare-metal test
 
-   Please refer to [Embedded Design Tutorial](https://github.com/Xilinx/Embedded-Design-Tutorials/blob/master/docs/Introduction/Versal-EDT/docs/2-cips-noc-ip-config.rst#creating-a-hello-world-application-for-the-arm-cortex-a72-on-ocm) to create a bare-metal application based on the fixed XSA file and run on board test the peripherals.
+   Please refer to [Embedded Design Tutorial](https://github.com/Xilinx/Embedded-Design-Tutorials/blob/master/docs/Introduction/Versal-EDT/docs/2-cips-noc-ip-config.rst#creating-a-hello-world-application-for-the-arm-cortex-a72-on-ocm) to create a bare-metal application based on the fixed XSA file and run on board to test the peripherals.
    
    Application templates can choose the Peripheral or memory test:
 

@@ -31,8 +31,9 @@ static XS2mm_1 S2mmInstance;
 static XMm2s_1 Mm2sInstance;
 
 #ifndef TESTAPP_GEN
-	#define S2MM_DEVICE_ID		  XPAR_S2MM_1_1_DEVICE_ID
-	#define MM2S_DEVICE_ID		  XPAR_XMM2S_1_0_DEVICE_ID
+	#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+//#define MM2S_BASEADDRESS		  XPAR_XMM2S_1_0_DEVICE_ID
+	#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_S_AXI_CONTROL_BASEADDR
 #endif
 
 #define MM2S_1_BASE XPAR_XMM2S_1_0_S_AXI_CONTROL_BASEADDR
@@ -105,7 +106,7 @@ int  PLKernelInitialize()
 	int Status;
 	static XS2mm_1_Config *S2mmConfig;
 	static XMm2s_1_Config *Mm2sConfig;
-	S2mmConfig=XS2mm_1_LookupConfig(S2MM_DEVICE_ID);
+	S2mmConfig=XS2mm_1_LookupConfig(S2MM_BASEADDRESS);
 	if(NULL == S2mmConfig) {
 		return XST_FAILURE;
 	}
@@ -113,7 +114,7 @@ int  PLKernelInitialize()
 	if (Status != XST_SUCCESS) {
 		return XST_FAILURE;
 	}
-	Mm2sConfig=XMm2s_1_LookupConfig(MM2S_DEVICE_ID);
+	Mm2sConfig=XMm2s_1_LookupConfig(MM2S_BASEADDRESS);
 	if(NULL == Mm2sConfig) {
 		return XST_FAILURE;
 	}

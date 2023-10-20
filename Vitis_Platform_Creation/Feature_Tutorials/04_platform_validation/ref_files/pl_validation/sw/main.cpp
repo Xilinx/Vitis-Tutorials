@@ -28,10 +28,14 @@ SPDX-License-Identifier: MIT
 #define LPDDR4_MEMORY_HIGHADDR XPAR_AXI_NOC_DDR_CH_1_HIGHADDR
 
 #ifndef TESTAPP_GEN
-#define INTC_DEVICE_ID2		  XPAR_CIPS_0_PSPMC_0_PSV_ACPU_GIC_DEVICE_ID
-#define S2MM_DEVICE_ID		  XPAR_S2MM_1_1_DEVICE_ID
-#define MM2S_DEVICE_ID		  XPAR_XMM2S_1_0_DEVICE_ID
-#define INTC_DEVICE_ID		  XPAR_INTC_0_DEVICE_ID        
+//#define GIC_BASE_ADDRESS		  XPAR_CIPS_0_PSPMC_0_PSV_ACPU_GIC_DEVICE_ID
+#define GIC_BASE_ADDRESS		XPAR_CIPS_0_PSPMC_0_PSV_ACPU_GIC_BASEADDR
+//#define S2MM_BASEADDRESS		  XPAR_S2MM_1_1_DEVICE_ID
+#define S2MM_BASEADDRESS		XPAR_XS2MM_1_0_S_AXI_CONTROL_BASEADDR
+//#define MM2S_BASEADDRESS		  XPAR_XMM2S_1_0_DEVICE_ID
+#define MM2S_BASEADDRESS		XPAR_VITISREGION_MM2S_1_1_S_AXI_CONTROL_BASEADDR
+//#define INTC_BASEADDRESS		  XPAR_INTC_0_DEVICE_ID 
+#define INTC_BASEADDRESS       XPAR_AXI_INTC_0_BASEADDR	
 #endif
 #define INPUT_SIZE 	32
 #define OUTPUT_SIZE 32
@@ -132,7 +136,7 @@ int  PLKernelInitialize()
 	int Status;
 	static XS2mm_1_Config *S2mmConfig;
 	static XMm2s_1_Config *Mm2sConfig;
-	S2mmConfig=XS2mm_1_LookupConfig(S2MM_DEVICE_ID);
+	S2mmConfig=XS2mm_1_LookupConfig(S2MM_BASEADDRESS);
 	if(NULL == S2mmConfig) {
 		return XST_FAILURE;
 	}
@@ -140,7 +144,7 @@ int  PLKernelInitialize()
 	if (Status != XST_SUCCESS) {
 		return XST_FAILURE;
 	}
-	Mm2sConfig=XMm2s_1_LookupConfig(MM2S_DEVICE_ID);
+	Mm2sConfig=XMm2s_1_LookupConfig(MM2S_BASEADDRESS);
 	if(NULL == Mm2sConfig) {
 		return XST_FAILURE;
 	}
@@ -276,7 +280,7 @@ int InterruptInitialize()
 	static XIntc_Config *IntcConfig;
 
 	//Find the Gic config 
-	GicConfig = XScuGic_LookupConfig(INTC_DEVICE_ID2);
+	GicConfig = XScuGic_LookupConfig(GIC_BASE_ADDRESS);
 	if (NULL == GicConfig) {
 		return XST_FAILURE;
 	}
@@ -302,7 +306,7 @@ int InterruptInitialize()
 	XScuGic_InterruptHandler(&GicInstance);
 
 	
-	Status=XIntc_Initialize(&IncInstance,INTC_DEVICE_ID);
+	Status=XIntc_Initialize(&IncInstance,INTC_BASEADDRESS);
 	if (Status != XST_SUCCESS) {
 		return XST_FAILURE;
 	}
