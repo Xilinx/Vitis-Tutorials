@@ -6,7 +6,8 @@
 
 all: $(subst .cpp,.xo,$(wildcard *.cpp))
 %.xo: %.cpp
-	v++ -c --platform ${PLATFORM} -k $(basename $<) $< -o $@ --verbose --save-temps
+	sed 's/s2mm/$(basename $<)/' config.cfg > tmp.cfg
+	v++ -c --mode hls --platform ${PLATFORM} --config tmp.cfg
 
 clean:
 	rm -rf _x *.xo* *.log

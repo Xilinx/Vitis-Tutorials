@@ -2,11 +2,8 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
-SDKTARGETSYSROOT ?= ${SYSROOT}
-
 HOST_EXE     = ../host.exe
 HOST_OBJ   = host.o
-SDKTARGETSYSROOT ?= ${SYSROOT}
 
 CXXFLAGS += -c -I${SDKTARGETSYSROOT}/usr/include/xrt/
 
