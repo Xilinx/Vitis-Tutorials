@@ -52,7 +52,7 @@ Other than this, the functionality of the vector-add kernel is very easily recog
 
 The pragmas are used to map function parameters to distinct kernel ports. By mapping the two inputs parameters to different input ports, the kernel will be able to read both inputs in parallel. As a general rule, and without going into further details in this introductory tutorial, it is important to think about interface requirements of hardware accelerators and they will have a determining impact on maximum achievable performance.
 
-The Vitis online documentation provides comprehensive information on [C/C++ Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Developing-PL-Kernels-using-C) as well as a complete [HLS Pragmas](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/HLS-Pragmas) reference guide.
+The Vitis online documentation provides comprehensive information on [C/C++ Kernels](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=rjk1519742919747) as well as a complete [HLS Pragmas](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=tfo1593136615570) reference guide.
 
 ### The Source Code for the Host Program
 

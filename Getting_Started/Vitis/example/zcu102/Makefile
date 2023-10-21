@@ -57,9 +57,9 @@ $(BUILD_DIR)/app.exe:
 xo: $(BUILD_DIR)/vadd.xo
 $(BUILD_DIR)/vadd.xo:
 ifeq ($(TARGET),sw_emu)
-	v++ -c -t ${TARGET} --platform $(PLATFORM) --config $(SRCDIR)/zcu102.cfg -k vadd -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
+	v++ -t ${TARGET} -c -k vadd --platform $(PLATFORM) --config $(SRCDIR)/zcu102.cfg -I$(SRCDIR) $(SRCDIR)/vadd.cpp -o $(BUILD_DIR)/vadd.xo 
 else
-	v++ -c --mode hls --platform $(PLATFORM) --config $(SRCDIR)/zcu102_hls.cfg --work_dir $(BUILD_DIR)
+	v++ -c --mode hls --platform $(PLATFORM) --config $(SRCDIR)/hls_config.cfg --work_dir $(BUILD_DIR)
 endif
 
 xclbin: $(BUILD_DIR)/vadd.xclbin

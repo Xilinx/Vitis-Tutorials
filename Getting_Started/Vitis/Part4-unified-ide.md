@@ -11,9 +11,9 @@
 
 # Vitis Getting Started Tutorial
 
-## Part 4: Build and Run with the new Vitis unified IDE
+## Part 4: Build and Run with the Vitis unified IDE
 
-This lab introduces the new Vitis unified IDE as described in [Introduction to Vitis unified IDE](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Introduction). The unified IDE provides a single tool for end-to-end application development, without the need to jump between multiple tools for design, debug, integration and analysis. 
+This lab introduces the new Vitis unified IDE as described in [Introduction to Vitis unified IDE](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=svk1630656618393). The unified IDE provides a single tool for end-to-end application development, without the need to jump between multiple tools for design, debug, integration and analysis. 
 
 **NOTE:** The following text assumes you have setup the environment as instructed in [Part 2: Installation and Configuration](./Part2.md).
 
@@ -22,13 +22,9 @@ This lab introduces the new Vitis unified IDE as described in [Introduction to V
 The first step is to create a workspace for your project, and to launch the Vitis unified IDE using the following steps: 
 
 1. Create a workspace: `mkdir <tutorial_path>/Getting_Started/Vitis/example/workVADD`
-2. Launch the Vitis unified IDE: `vitis -new -w workVADD`
+2. Launch the Vitis unified IDE: `vitis -w workVADD`
 
-The workspace is a folder for holding the various components and projects of a design. 
-
-**TIP:** The workspace is simply the place where you will store the files related to creating and building your project, or multiple projects. However, file watcher limitations can occur if you create a project with too many files as described in the [*Limitations and Known Issues*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Limitations-and-Known-Issues). 
-
-The Vitis Unified IDE opens displaying the Welcome page. 
+The Vitis Unified IDE opens the specified workspace displaying the Welcome page. The workspace is a folder for holding the various components and projects of a design. 
 
  ![HLS Component](./images/unified-ide-create-hls1.png)
 
@@ -37,10 +33,10 @@ The Vitis Unified IDE opens displaying the Welcome page.
 Use the **File > New Component > HLS** to create a new HLS component. This opens the Create HLS Component wizard to the *Name and Location* page. 
 
 1. For the **Component name** field specify `vadd`
-2. For the **Component location** specify the workspace (default value)
+2. For the **Component location** specify the workspace which is the default value
 3. Click Next to open the *Configuration File* page
 
-The *Configuration File* lets you specify commands for building and running the HLS component as described in [*v++ Mode HLS*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-HLS). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-an-HLS-Component).
+The *Configuration File* lets you specify commands for building and running the HLS component as described in [*HLS Config File Commands*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=azw1690243984459). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=yzz1661583719823).
 
  ![HLS Component](./images/unified-hls-component2.png)
 
@@ -57,14 +53,15 @@ After adding the file you can see fields for adding CFLAGS and CSIMFLAGS for all
 **TIP:** There are no Test bench files for the `vadd` kernel, but you will test the kernel later using the software emulation flow of the System project. 
 
 7. Click **Next** to open the the *Select Part* page.
-10. Set the radio button to Platform, select the `xilinx_zcu102_base_202310_1` platform and click **Next** to open the *Settings* page. 
+8. Set the radio button to Platform, select the `xilinx_zcu102_base_202320_1` platform and click **Next** to open the *Settings* page. 
 
-8.  On the *Settings* page select the `Vitis Kernel Flow` and enable the check box to `Run Additional Packing Step to create .xo output`. 
-9.  Under the Clock settings specify `8ns` for the Period, and `12%` for the Uncertainty to override the default values. 
+9.  On the *Settings* page specify `8ns` for the **clock**, and `12%` for the **clock_uncertainty** to override the default values.
+10.  For **flow_target** select the `Vitis Kernel Flow` 
+11. For **package.output.format** specify `Generate a Vitis XO` to create .xo output`. 
 
-The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Specifying-the-Clock-Frequency)
+The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=ycw1585572210561)
 
-10. Click **Next** to open the *Summary* page. Review the *Summary* page and click **Finish** to create the defined HLS component.
+12. Click **Next** to open the *Summary* page. Review the *Summary* page and click **Finish** to create the defined HLS component.
 
 The HLS component is created and opened as shown in the figure below.
 
@@ -88,13 +85,13 @@ This opens the Create Application Component wizard on the *Name and Location* pa
 
 This opens the *Select Platform* page. 
 
-3.  On the *Select Platform* page select the `xilinx_zcu102_base_202310_1` platform and click **Next** to open the *Select Domain* page. 
+3.  On the *Select Platform* page select the `xilinx_zcu102_base_202320_1` platform and click **Next** to open the *Select Domain* page. 
 
 On the *Select Domain* page you will select from the available processor domains and OS. In this case there is only one choice. 
 
 4.  Select the `xrt` domain and click **Next** to open the *Sysroot* page. 
 
-On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA).
+On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=lqx1607351968855).
 
 Enter the path to the Sysroot for the selected platform and click **Next** to open the *Summary* page. 
 
@@ -106,13 +103,14 @@ In the Vitis Components Explorer view expand the `host` component, right-click t
 
 After adding it, you can select the `host.cpp` file in the Vitis Components Explorer to open it in the Code Editor in the central editor window. This example shows the simplest way of using XRT API to interact with the hardware accelerator.
  
-Having added the source code to the component, you are now ready to compile the code. Looking at the Flow Navigator with the Application component the active component, you can see there are Build commands under X86 Simulation and Hardware. For Data Center applications, these two are essentially the same as the Application component runs on the X86 processor for both Hardware and Emulation. However, for Embedded Processor-based platforms, these are two different build configurations. For software emulation, even though the platform uses an embedded processor, emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). For hardware emulation, or to run on hardware, the Application component must be compiled for the embedded processor domain. These Build choices reflect that requirement. 
+Having added the source code to the component, you are now ready to compile the code. Looking at the Flow Navigator with the Application component the active component, you can see there are Build commands under X86 Simulation and Hardware. For Data Center applications, these two are essentially the same as the Application component runs on the X86 processor for both Hardware and Emulation. However, for Embedded Processor-based platforms, these are two different build configurations. For software emulation, even though the platform uses an embedded processor, emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vfp1662765605490). For hardware emulation, or to run on hardware, the Application component must be compiled for the embedded processor domain. These Build choices reflect that requirement. 
 
-6. After the `host.cpp` is imported, click the **Build** command under the HARDWARE heading to build the application. 
+6. After the `host.cpp` is imported, click the **Build** command to build the application for X86 Simulation or for Hardware. 
+
 
 ### Creating the System Project
 
-The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project-for-Heterogeneous-Computing). The HLS component and the Application component are integrated into the system project using the following steps. 
+The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=zhh1630894738303). The HLS component and the Application component are integrated into the system project using the following steps. 
 
 1.  From the main menu select **File > New Component > System Project**
 
@@ -124,14 +122,14 @@ This opens the *Select Platform* page.
 
 3.  On the Select Part page select the `xilinx_zcu102_base_202310_1` platform and click **Next** to open the Embedded Component Paths page. 
 
-The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
+The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=lqx1607351968855). Enter the following choices and click **Next** to proceed: 
 
 ```
 Kernel Image: <path-to-common-files>/Image
 Root FS: <path-to-common-files>/rootfs.ext4
 Sysroot: <path-to-common-files>/sysroots/cortexa72-cortexa53-xilinx-linux
 ```
-**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
+**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=ztg1661787911900).
 
 4.  Review the Summary page and click **Finish** to create the defined System project. 
  
@@ -139,7 +137,7 @@ The System project `vitis-sys.json` file is opened in the center editor, and the
 
 ![Unified IDE - System Project Binary](./images/unified-system-project.png)
 
-After creating the System project, you need to configure it. You must define which of the components in the current workspace should be added to the System. Then you can define the hardware linking options used by the `v++ --link` command, and the packaging options used by the `v++ --package` command to build the system. Take a moment to examine the different sections of the System, Hardware Linker Settings, Package Settings, and Components. These are described in greater detail in [*Creating a System Project*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project).
+After creating the System project, you need to configure it. You must define which of the components in the current workspace should be added to the System. Then you can define the hardware linking options used by the `v++ --link` command, and the packaging options used by the `v++ --package` command to build the system. Take a moment to examine the different sections of the System, Hardware Linker Settings, Package Settings, and Components. These are described in greater detail in [*Creating a System Project for Heterogeneous Computing*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=zhh1630894738303).
 
 5.  Scroll down in the `vitis-sys.json` to the Components section at the bottom, and select the **Add Existing Component** link to add the HLS component to the System. 
 
@@ -163,7 +161,7 @@ For now, expand the `vadd` entry in the binary containers table and at the botto
 
 9.  Select the `hw_link/vadd-link.cfg` to open the Config File for the binary container. 
 
-These are commands that determine how the device binary will be generated. The Config File Editor opens and displays the *V++ linker settings*. The config file commands are described in [v++ Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command). Look through the available settings. In the lower half of the Config File Editor is a *Kernel Data* section that lets you specify the number of CUs for each kernels, or the naming convention applied. You can also enable profiling options for when the device is run. 
+These are commands that determine how the device binary will be generated. The Config File Editor opens and displays the *V++ linker settings*. The config file commands are described in [v++ Command](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wrj1504034328013). Look through the available settings. In the lower half of the Config File Editor is a *Kernel Data* section that lets you specify the number of CUs for each kernels, or the naming convention applied. You can also enable profiling options for when the device is run. 
 
 10.  In the Config File Editor select the **Source Editor** command to see the text form of the Config File Editor. Using the text form you can edit the config file directly. 
 
@@ -196,7 +194,7 @@ After building, you will need to create a launch configuration for the *Run* or 
 
 ![Unified IDE - Launch Config](./images/unified-system-project-launch-config.png)
 
-This will create a new launch configuration with the default name of `System_project_hw_emu_new`. You might need to setup the arguments for the launch configuration as described in [*Launching Run or Debug of the System Project*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Launching-Run-or-Debug-of-the-System-Project).  You can rename the launch configuration by using the **Edit** command link next to the *Launch config name* field. Use the **Append XCLBINs** which will copy `./vadd.xclbin` to the *Cmd line args* field. You can specify other command line arguments as required by your application.  
+This will create a new launch configuration with the default name of `System_project_hw_emu_new`. You might need to setup the arguments for the launch configuration as described in [*Launching Run or Debug of the System Project*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=kmf1661584105351).  You can rename the launch configuration by using the **Edit** command link next to the *Launch config name* field. Use the **Append XCLBINs** which will copy `./vadd.xclbin` to the *Cmd line args* field. You can specify other command line arguments as required by your application.  
 
 17. In the Flow Navigator click **Start Emulator** to configure and run the QEMU environment for the specified platform.  
 

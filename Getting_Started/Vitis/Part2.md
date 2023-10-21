@@ -17,7 +17,7 @@ To develop and deploy applications with Vitis, you need to install the Vitis uni
 
 ### Step 1: Review the Installation Requirements
 
-Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements).
+Prior to starting the installation process, make sure to check the [Vitis installation requirements](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=igz1531201833632).
 
 >**NOTE:** Windows OS support is limited to the Vitis embedded software development flow. The Vitis application acceleration flow is only supported on Linux.
 
@@ -29,9 +29,9 @@ Download the latest version of the Vitis from the [AMD download website](https:/
 
 After downloading the Vitis, XRT and platform packages, install them in the following order and according to the provided instructions:
 
-1. [Install the Vitis Software Platform](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-the-Vitis-Software-Platform)
+1. [Install the Vitis Software Platform](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=juk1557377661419)
 
-2. [Install the Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
+2. [Install the Xilinx Runtime and Platforms](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pjr1542153622642)
 
 >**NOTE:** Installing XRT is not required when targeting Arm®-based embedded platforms. The Vitis compiler has its own copy of xclbinutil for hardware generation; and for software compilation, you can use the XRT from the sysroot on the Embedded Processor platform.
 
@@ -39,7 +39,7 @@ After downloading the Vitis, XRT and platform packages, install them in the foll
 
 #### Step 4A: Installing Data Center Platform Files
 
-AMD provides base platforms for the Alveo U200, U250, U50 and U280 data-center acceleration cards. Before installing a platform, you need to download the following packages:
+AMD provides base platforms for the Alveo U250, U50 and U280 data-center acceleration cards for example. Before installing a platform, you need to download the following packages:
 
 1. Xilinx Runtime (XRT)
 
