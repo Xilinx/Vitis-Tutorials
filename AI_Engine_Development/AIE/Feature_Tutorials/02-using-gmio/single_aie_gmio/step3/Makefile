@@ -16,11 +16,10 @@ endif
 MODE	 = linux
 XSA	 = ${ARCH}_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
-SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
-AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -workdir=./Work ${GRAPH} 
+AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} |& tee log.txt
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd foo
 EMU_CMD = ./launch_hw_emu.sh
 
@@ -104,5 +103,5 @@ launch_hw_emu.sh: package_hw_emu
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
 	       *.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
-	       ilpProblem* sol.db drivers .Xil
+	       ilpProblem* sol.db drivers .Xil  aiesimu* x86simu*
 	$(MAKE) -C sw clean

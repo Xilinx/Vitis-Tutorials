@@ -27,6 +27,7 @@ void ref_func(int32* din,int32 c[8],int32* dout,int size){
 }
 const int ITERATION=4;
 const int BLOCK_SIZE_in_Bytes=ITERATION*1024;
+#if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char ** argv) {
     gr.init();
 
@@ -68,3 +69,4 @@ int main(int argc, char ** argv) {
 
     return error;
 };
+#endif

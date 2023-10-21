@@ -27,6 +27,7 @@ void ref_func(int32* din,int32 c[8],int32* dout,int size){
 }
 const int ITERATION=1;
 const int BLOCK_SIZE_in_Bytes=ITERATION*1024;
+#if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char ** argv) {
     gr.init();
 
@@ -63,10 +64,11 @@ int main(int argc, char ** argv) {
  
     gr.end();
     if(error==0){
-	std::cout<<"PASS!"<<std::endl;
+		std::cout<<"PASS!"<<std::endl;
     }else{
-	std::cout<<"ERROR!"<<std::endl;
+		std::cout<<"ERROR!"<<std::endl;
     }
 
     return error;
 };
+#endif

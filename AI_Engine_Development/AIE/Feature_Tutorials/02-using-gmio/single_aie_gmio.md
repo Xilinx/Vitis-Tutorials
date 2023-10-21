@@ -198,30 +198,22 @@ Change the working directory to `single_aie_gmio/step3`. Examine `aie/graph.cpp`
 
 >**Note:** `gr.gmioOut.aie2gm_nb()` will return immediately after it has been called without waiting for the data transfer to be completed. PS can do other tasks after non-blocking API call when data is being transferred. Then, it needs `gr.gmioOut.wait();` to do the data synchronization. After `GMIO::wait`, the output data is in memory and can be processed by the host application.
 
-To make GMIO work in hardware flow, the following code needs to be added to the main function before graph execution and GMIO data transfer:
+To make GMIO work in hardware flow, examine `sw/host.cpp`. It uses XRT API instead:
 
 ```cpp
-	#if !defined(__AIESIM__) && !defined(__X86SIM__)
-		#include "adf/adf_api/XRTConfig.h"
-		#include "experimental/xrt_kernel.h"
-		// Create XRT device handle for ADF API
-		char* xclbinFilename = argv[1];
-		auto dhdl = xrtDeviceOpen(0);//device index=0
-		xrtDeviceLoadXclbinFile(dhdl,xclbinFilename);
-		xuid_t uuid;
-		xrtDeviceGetXclbinUUID(dhdl, uuid);
-		adf::registerXRT(dhdl, uuid);
-	#endif
-```
+	auto din_buffer = xrt::aie::bo (device, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+	int* dinArray= din_buffer.map<int*>();
+	auto dout_buffer = xrt::aie::bo (device, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+	int* doutArray= dout_buffer.map<int*>();
+    std::cout<<"GMIO::malloc completed"<<std::endl;
 
-The macro `__AIESIM__` is automatically defined by the tool when running AI Engine simulator. The macro `__X86SIM__` is automatically defined by the tool when running x86simulator. The guard macros `__AIESIM__` and `__X86SIM__` as shown in the previous code (this part of the code is not used in AI Engine simulator) can be used in hardware flow and hardware emulation flow to make those flows work correctly.
-
-At the end of the program, close the device using the XRT API `xrtDeviceClose()`.
-
-```cpp
-	#if !defined(__AIESIM__) && !defined(__X86SIM__)
-		xrtDeviceClose(dhdl);
-	#endif
+	......
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	din_buffer.async("gr.gmioIn",XCL_BO_SYNC_BO_GMIO_TO_AIE,BLOCK_SIZE_in_Bytes,/*offset*/0);
+    ghdl.run(ITERATION);
+	auto dout_buffer_run=dout_buffer.async("gr.gmioOut",XCL_BO_SYNC_BO_AIE_TO_GMIO,BLOCK_SIZE_in_Bytes,/*offset*/0);
+    //PS can do other tasks here when data is transferring
+    dout_buffer_run.wait();//Wait for gmioOut to complete
 ```
 
 ### Run AI Engine Simulator and Hardware Flow
