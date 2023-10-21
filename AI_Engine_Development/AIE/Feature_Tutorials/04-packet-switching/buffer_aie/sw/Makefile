@@ -2,8 +2,6 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
-SDKTARGETSYSROOT ?= ${SYSROOT}
-
 HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   = aie_control_xrt.o host.o

@@ -8,7 +8,7 @@ using namespace adf;
 
 mygraph gr;
 
-#if defined(__AIESIM__) || defined(__ADF_FRONTEND__)
+#if defined(__AIESIM__) || defined(__X86SIM__)
 int main(int argc, char ** argv) {
   gr.init();
   gr.run(2);

@@ -18,7 +18,7 @@ HOST_EXE = host.exe
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
-AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} |& tee log.txt
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
 
@@ -58,6 +58,8 @@ guard-IMAGE:
 guard-CXX:
 	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
 
+guard-SDKTARGETSYSROOT:
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux)
 ###
 
 all: ${XSA} ${HOST_EXE} package
@@ -73,14 +75,14 @@ aiesim: ${LIBADF}
 
 xsa: guard-PLATFORM_REPO_PATHS ${XSA}
 ${XSA}: ${LIBADF} ${VPP_SPEC} ${XOS} 
-	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF} \
+	${VCC} -g -l --platform ${PLATFORM} ${XOS} ${LIBADF}  \
 	       -t ${TARGET} ${VPP_FLAGS} -o $@
 
 kernels: guard-PLATFORM_REPO_PATHS ${XOS}
 ${XOS}: 
 	$(MAKE) -C pl_kernels/ PLATFORM=${PLATFORM}
 	
-host: guard-CXX ${HOST_EXE}
+host: guard-CXX guard-SDKTARGETSYSROOT ${HOST_EXE}
 ${HOST_EXE}: sw/*.cpp
 	$(MAKE) -C sw/
 
@@ -103,6 +105,6 @@ launch_hw_emu.sh: package_hw_emu
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
 	       aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
-	       ilpProblem* sol.db drivers .Xil
+	       ilpProblem* sol.db drivers .Xil aiesimu* x86simu*
 	$(MAKE) -C pl_kernels clean
 	$(MAKE) -C sw clean

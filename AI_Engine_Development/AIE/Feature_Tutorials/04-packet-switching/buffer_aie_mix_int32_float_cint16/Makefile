@@ -15,12 +15,10 @@ endif
 
 XSA   = aie_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
-SDKTARGETSYSROOT ?= ${SYSROOT}
 
 GRAPH    = aie/graph.cpp
-PACKET_JSON_REPORT = Work/reports/packet_switching_report.json
 LIBADF  = libadf.a
-AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} |& tee log.txt
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
 
@@ -99,7 +97,6 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 		--package.defer_aie_run \
 		--package.sd_file embedded_exec.sh \
 		--package.sd_dir data \
-		--package.sd_file ${PACKET_JSON_REPORT} \
 		--package.sd_file ${HOST_EXE} ${XSA} ${LIBADF} 
 
 run_hw_emu: launch_hw_emu.sh
