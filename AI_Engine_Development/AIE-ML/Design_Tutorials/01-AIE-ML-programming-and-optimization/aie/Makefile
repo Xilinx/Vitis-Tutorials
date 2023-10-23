@@ -38,11 +38,11 @@ X86OUTDIR := x86simulator_output$(OPT)
 
 GRAPH    = src/graph.cpp
 LIBADF  = libadf$(OPT).a
-AIE_CMPL_CMD := aiecompiler -include="./src" --workdir=$(WORKDIR) ${GRAPH}
-AIE_FLAGS += -v -log-level=5
-AIE_FLAGS += --Xpreproc="$(SIZES_D)"
-AIE_FLAGS += --Xchess="ClassicMatMult:backend.mist2.xargs=+Omodo"
-AIE_FLAGS += --output-archive=$(LIBADF)
+AIE_CMPL_CMD := v++ --compile --mode aie --include "./src" --aie.workdir $(WORKDIR) ${GRAPH}
+AIE_FLAGS +=  --aie.log-level 5
+AIE_FLAGS += --aie.Xpreproc "\"$(SIZES_D)\""
+AIE_FLAGS += --aie.Xchess "ClassicMatMult:backend.mist2.xargs=+Omodo"
+AIE_FLAGS += --aie.output-archive $(LIBADF)
 
 ifdef PLATFORM
 AIE_FLAGS += --platform=$(PLATFORM)
@@ -76,7 +76,7 @@ ${LIBADF}: src/*
 	${AIE_CMPL_CMD} ${AIE_FLAGS}
 
 x86: src/*
-	${AIE_CMPL_CMD} --target=x86sim ${AIE_FLAGS}
+	${AIE_CMPL_CMD} --target x86sim ${AIE_FLAGS}
 
 aiesim: ${LIBADF}
 	${AIE_SIM_CMD}

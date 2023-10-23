@@ -80,8 +80,16 @@ XO_FILES := $(subst .cpp,.xo,$(CPP_FILES))
 #$(wildcard *_$(PLIOW).cpp)
 all: SystemSettings $(XO_FILES)
 
+# %.xo: %.cpp
+# 	v++ -c --platform ${PLATFORM} --clock.defaultFreqHz ${FREQ_HZ} --hls.clock ${FREQ_HZ}:$(basename $<) -k $(basename $<) $< -o $@ --verbose --save-temps
+#
+
 %.xo: %.cpp
-	v++ -c --platform ${PLATFORM} --clock.defaultFreqHz ${FREQ_HZ} --hls.clock ${FREQ_HZ}:$(basename $<) -k $(basename $<) $< -o $@ --verbose --save-temps
+	mkdir -p plkernels
+	sed "s/syn.top=/syn.top=$(basename $@)/g" BaseConfig.cfg > plkernels/HLSConfig_$(basename $@).cfg
+	sed -i "s/syn.file=/syn.file=..\/$(basename $@).cpp/g" plkernels/HLSConfig_$(basename $@).cfg
+	v++ --compile --mode hls --platform $(PLATFORM) --config plkernels/HLSConfig_$(basename  $@).cfg --work_dir plkernels/$(basename $@)
+	cp plkernels/$(basename $@)/$(basename $@).xo .
 
 clean:
-	rm -rf _x *.xo* *.log .Xil system_settings.h .crashReporter system_settings*
+	rm -rf _x *.xo* *.log .Xil system_settings.h .crashReporter system_settings* plkernels
