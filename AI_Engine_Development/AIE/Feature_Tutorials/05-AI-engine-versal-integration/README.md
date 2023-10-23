@@ -9,7 +9,7 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -19,19 +19,22 @@ This tutorial demonstrates creating a system design running on the AI Engine, PS
 
 This tutorial steps through software emulation, hardware emulation, and hardware flow in the context of a complete Versal adaptive SoC system integration. By default, the Makefile is set for `sw_emu`. If you need to build for `hw_emu`,`hw`, use the corresponding TARGET option as described in corresponding sections.
 
-**IMPORTANT**: Before beginning the tutorial ensure you have installed Vitis&trade; 2023.1 software. The software includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+**IMPORTANT**: Before beginning the tutorial ensure you have installed Vitis&trade; 2023.2 software. The software includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
 1. Navigate to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh```.
-3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2023.1``` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm```.
+2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh```.
 
-This tutorial targets VCK190 production board for 2023.1 version.
+**Note** : This tutorial demonstrates how software emulation can run the PS application on an x86 process instead of an Arm process(QEMU). So, you may need to unset the `CXX` variable during the step `Running software emulation`. More information is provided in the software emulation flow section.
+
+3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2023.2``` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm```.
+
+This tutorial targets VCK190 production board for 2023.2 version.
 
 ## Objectives
 
@@ -45,7 +48,7 @@ After completing this tutorial, you should be able to:
 * Package the design to run on software emulation, hardware emulation, and an easy-to-boot SD card image to run on hardware.
 * Become familiar with the new Vitis unified IDE
 
-This tutorial contains two flows that you can work through: the Vitis classic command line flow incorporating the aiecompiler, aiesimulator, and v++ command, and the new Vitis unified IDE flow which demonstrates the use of the new tool available in preview mode in the 2023.1 release as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1553](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide)). The classic command-line flow is documented in the following text. The new Vitis unified IDE flow can be found [here](./unified-ide.md).
+This tutorial contains two flows that you can work through: the Vitis classic command line flow incorporating the aiecompiler, aiesimulator, and v++ command, and the new Vitis unified IDE flow which demonstrates the use of the new tool available in the 2023.2 release as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)). The classic command-line flow is documented in the following text. The new Vitis unified IDE flow can be found [here](./unified-ide.md).
 
 ## Tutorial Overview
 
@@ -100,14 +103,14 @@ make aie
 Or
 
 ```bash
-aiecompiler --target=x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work aie/graph.cpp
+v++ -c --mode aie --target x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --work_dir=./Work aie/graph.cpp
 ```
 
 | Flag | Description |
 | ---- | ----------- |
 | --target | Target how the compiler will build the graph and it is set to `x86sim`.  Default is `hw` |
 | --include | All the include files needed to build the graph. |
-| --workdir | The location where the work directory will be created. |
+| --work_dir | The location where the work directory will be created. |
 
 The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
 
@@ -192,8 +195,8 @@ make kernels
 Or
 
 ```bash
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
 ```
 
 Looking at the `v++` command line, you will notice several options. The following table describes each option.
@@ -249,7 +252,7 @@ make xsa
 or
 
 ```bash
-v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 | Flag/Switch | Description |
@@ -263,19 +266,19 @@ Now you have a generated `.xsa` that will be used to execute your design on the 
 
 ### 3. Compile the A72 Host Application
 
-When all the new AI Engine outputs are created, you can compile your host application by following the typical cross-compilation flow for the Cortex-A72. As you might notice, the host code uses [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker, it is using the library `-lxrt_coreutil`.
+When all the new AI Engine outputs are created, you can compile your host application using g++(Note: we are not using a typical cross-compilation flow for the Cortex-A72) . As you might notice, the host code uses [XRT](http://www.github.com/Xilinx/XRT) (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Notice that in the linker, it is using the library `-lxrt_coreutil`. Note that to compile the host code, it is required to use the c++17 package. Ensure your `gcc` or `g++` compiler has the necessary packages installed.
 
 a. Open `sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
    **Note:** [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to ["Programming the PS Host Application"](https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/program_ps_host_application.html).
 
-b. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, `GCC_INCLUDES`.
+b. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, `GCC_INCLUDES` which are self-explanatory that you will be compiling this code with C++ 17. More explanation will be provided in the packaging step.
 
-* `GCC_FLAGS`: Self-explanatory that you will be compiling this code with C++ 14. More explanation will be provided in the packaging step.
+**Note**: XRT needs to be installed on the host and the $XILINX_XRT variable should be set by sourcing the `/opt/xilinx/xrt/setup.sh`.
 
-* `GCC_INCLUDES`: Contains the list of all the necessary include files from the SDKTARGETSYSROOT as well as the AI Engine tools.
+c. Unset the CXX variable that points to the aarch64-linux-gnu-g++ compiler. Run the following command to set g++ for the x86 process.
 
-c. Close the `Makefile`, and run the command:
+d. Close the `Makefile`, and run the command:
 
 ```bash
      make host
@@ -286,9 +289,9 @@ or
 ```bash
      cd ./sw
 
-     aarch64-xilinx-linux-g++ -Wall -c -std=c++14 -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast --sysroot=$SDKTARGETSYSROOT -I$SDKTARGETSYSROOT/usr/include/xrt -I$SDKTARGETSYSROOT/usr/include -I./ -I../aie -I$XILINX_VITIS/aietools/include -I$XILINX_VITIS/include -o host.o host.cpp
-     
-     aarch64-xilinx-linux-g++ host.o -lxrt_coreutil -L$SDKTARGETSYSROOT/usr/lib --sysroot=$SDKTARGETSYSROOT -L$XILINX_VITIS/aietools/lib/aarch64.o -o host.exe
+     g++ -Wall -c -std=c++17 -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I$XILINX_XRT/include -I./ -I../aie -I$XILINX_VITIS/aietools/include  -o host.o host.cpp
+ 
+     g++ *.o -lxrt_coreutil -std=c++17 -L$XILINX_XRT/lib -o ./host_ps_on_x86
 
 cd ..
 ```
@@ -298,13 +301,12 @@ The follow table describes some of the GCC options being used.
 | Flag | Description |
 | ---- | ----------- |
 | `-Wall` | Print out all warnings. |
-| `-Wno-int-to-pointer-cast` | Warn about an integer to pointer cast. |
-| `--sysroot` | Tells the compiler where to find the headers/libs for cross-compile. |
-| `-std=c++14` | This is required for Linux applications using XRT. |
+| `-std=c++17` | This is required for Linux applications using XRT. |
+| `-I$XILINX_XRT/lib` | This includes the XRT libraries that are used in host code. |
 
 ### 4. Package the Design
 
-With all the AI Engine outputs and the new platform created, you can now generate the packaged SD card directory contains everything to boot Linux and have your generated application and `.xclbin`.
+With all the AI Engine outputs and the new platform created, you can now generate the packaged SD card directory contains everything to run your generated application and `.xclbin`. In addition to packaging, the `emconfigutil` command is used to generate the device, board, and device tree details (emconfig.json) which are required by XRT before loading the xclbin.
 
 To package the design, run the following command:
 
@@ -315,16 +317,18 @@ make package
 Or
 
 ```bash
+emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --nd 1
+```
+
+followed by
+
+```bash
 cd ./sw
-v++ -p -t sw_emu  \
-    -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm \
-    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4 \
-    --package.image_format=ext4 \
-    --package.boot_mode=sd \
-    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/Image \
+v++ -p -t sw_emu \
     --package.defer_aie_run \
-    --package.sd_file embedded_exec.sh \
-    --package.sd_file host.exe ../tutorial.xsa ../libadf.a
+    --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm \
+    --package.out_dir ./package.sw_emu \
+    ../tutorial.xsa ../libadf.a
 cd ..
 ```
 
@@ -334,18 +338,12 @@ The following table describes the packager options:
 
 | Switch/flag | Description |
 | --- | --- |
-| `rootfs` | Points to the formatted image of the platform. |
-| `image_format` | Tells the packager what the image format is. |
-| `boot_mode` | Determines how the design is going to be run. |
-| `kernel_image` | Points to the Image file created by PetaLinux. |
 | `defer_aie_run` | Tells the packager at boot to not start the AI Engine and let the host application control it. |
-| `sd_file` | Tells the packager what file is to be packaged in the `sd_card` directory. You will need to specify this multiple times for all the files to be packaged. |
+| `out_dir` | Specifies the package output directory. |
 
 ### 5. Run Software Emulation
 
-After packaging, everything is set to run emulation. Software emulation is the first step to building and testing the system in a functional process. The software emulation can run the PS application as an Arm process by booting PetaLinux on a QEMU machine or as an x86 process.
-
-#### Run the PS Application as an ARM Process (QEMU)
+After packaging everything is set to run emulation. This step demonstrates how software emulation can run the PS application on an x86 process (instead of an Arm process for an AI Engine design). Software emulation is an abstract model and first step to build and test the system in a functional process. It does not use any of the PetaLinux drivers such as Zynq OpenCL (ZOCL), interrupt controller, or Device Tree Binary (DTB). Hence, the overhead of creating an sd_card.img, and booting PetaLinux on a full QEMU machine is too heavyweight for software emulation and can be avoided.
 
 a. To run emulation use the following command:
 
@@ -357,119 +355,18 @@ Or
 
 ```bash
 cd ./sw
-./launch_sw_emu.sh 
-```
-
-When launched, use the Linux prompt presented to run the design. Note that the emulation process is slow, so do not touch the keyboard of your terminal or you might stop the emulation of the Versal booth (as it happens in the real HW board).
-
-b. Execute the following command when the emulated Linux prompt finally appears:
-
-```bash
-cd /run/media/*1
-export XILINX_XRT=/usr
-export XCL_EMULATION_MODE=sw_emu
-```
-
-This will set up the design to run emulation.
-
-c. Run the design using the following command:
-
-```bash
-./host.exe a.xclbin
-```
-
-d. You should see an output displaying **TEST PASSED**. When this is shown, run the keyboard command `Ctrl+A`, immediately followed by `x` to end the QEMU instance.
-
-**Note:** The next step 'Run PS application on x86', is a process to run software emulation on x86. The main advantage of running the PS application on x86 is that it does not require Linux to boot up, therefore the software emulation runs faster compared with running on the QEMU emulator. You can either choose to follow these steps or jump directly to **Section 4** and run Hardware Emulation and Hardware steps.  
-
-#### Run PS Application on x86 Process
-
-This step demonstrates how software emulation can run the PS application on an x86 process instead of an Arm process for an AI Engine design. Software emulation is an abstract model and does not use any of the PetaLinux drivers such as Zynq OpenCL (ZOCL), interrupt controller, or Device Tree Binary (DTB). Hence, the overhead of creating an `sd_card.img`, and booting PetaLinux on a full QEMU machine is too heavyweight for software emulation and can be avoided.
-
-There are no changes required in the AI Engine graph compilation for x86sim target, V++ compile, and link steps. For the remaining stages such as, host compilation, package, and launch emulation, follow these steps:
-
-a. Remove the host compilation outputs (`.o`) and executable (`host.exe`) generated during **Run PS application on Arm Process (QEMU)** step.
-
-```bash
-cd ..
-make clean_for_x86
-```
-
-**Note:** XRT needs to be installed on the host and the `$XILINX_XRT` variable should be set by sourcing the `/opt/xilinx/xrt/setup.sh`.
-
-b. Unset the `CXX` variable that points to the `aarch64-linux-gnu-g++` compiler. Run the following command to set `g++` for the x86 process.
-
-```bash
-setenv CXX g++
-```
-
-c. Use the tutorial's `Makefile.sw_x86` that configures the correct GCC_FLAGS, GCC_LIB, and GCC_INCLUDE options and `package` commands that corresponds to running the PS application on an x86 process.
-
-```bash
-cp -rf Makefile.sw_x86 Makefile
-```
-
-d. Compile the host application by running the following command.
-
-```bash
-make host
-```
-
-or
-
-```bash
-cd ./sw
- 
-g++ -Wall -c -std=c++17 -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I$XILINX_XRT/include -I./ -I../aie -I$XILINX_VITIS/aietools/include  -o host.o host.cpp
- 
-g++ *.o -lxrt_coreutil -L$XILINX_VITIS/aietools/lib/lnx64.o -L$XILINX_XRT/lib -o ./host_ps_on_x86
-
-```
-
-**Note:**
-To compile the host code, it is required to use the `c++17` package. Ensure your `gcc` or `g++` compiler has the necessary packages installed.
-
-e. Package the design. In addition to packaging, the `emconfigutil` command is used to generate the device, board, and device tree details (`emconfig.json`) which are required by XRT before loading the `xclbin`.
-
-```bash
-make package
-```
-
-or
-
-```bash
-emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --nd 1
-```
-
-followed by:
-
-```bash
-cd ./sw
-v++ -p -t sw_emu \
-    --package.defer_aie_run \
-    --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm \
-    --package.out_dir ./package.sw_emu \
-    ../tutorial.xsa ../libadf.a
-```
-
-f. To run the emulation use the following command:
-
-```bash
-cd ./sw
 setenv XCL_EMULATION_MODE sw_emu
 ./host_ps_on_x86 a.xclbin 
 ```
 
-**Note:**
+b. You should see an output displaying **TEST PASSED**. 
 
-1. Observe the difference in launching the emulation process. Unlike in the QEMU emulator, the `launch_sw_emu.sh` script is not used. Instead, the outputs of the host compilation and package steps are used to launch the emulation.
-2. Also notice that the start up time required to boot up Linux in the QEMU process is longer, and the emulation process is slower than running the PS application on x86.
 
 ## Section 4: Compile AI Engine Code for AIE Simulator: Viewing Compilation Results in Vitis Analyzer
 
 ### **Important**
 
-If you have performed the steps for **Software Emulation on x86 Process**, enure you follow the guidance below. If you have not performed these steps, you can skip this step and proceed to 'Compiling an AI Engine Graph'.
+If you have performed the steps for **Software Emulation**, ensure you follow the guidance below. If not, you can skip this step and proceed to 'Compiling an AI Engine Graph'.
 
 1. Set back the `SYSROOT` and `CXX` variables as mentioned in the **Introduction**.
 2. Clean the `Working` directory to remove all the files that are related to the software emulation by running the following command:
@@ -477,12 +374,6 @@ If you have performed the steps for **Software Emulation on x86 Process**, enure
     ```bash
     make clean
     ```
-
-3. Copy back the original `Makefile` to run hardware emulation and hardware using the following command:
-
-```bash
-cp Makefile.org Makefile
-```
 
 ### Compiling an AI Engine ADF Graph for V++ Flow
 
@@ -495,7 +386,7 @@ make aie TARGET=hw
 Or
 
 ```bash
-aiecompiler --target=hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -include="$XILINX_VITIS/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --xlopt=0 -workdir=./Work aie/graph.cpp
+v++ -c --mode aie --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --aie.xlopt=0 --work_dir=./Work aie/graph.cpp
 ```
 
 The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
@@ -666,8 +557,8 @@ make kernels TARGET=hw_emu
 or
 
 ```bash
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --save-temps -g -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --save-temps -g -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --config pl_kernels/s2mm.cfg
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm --config pl_kernels/mm2s.cfg
 ```
 
 To get more details about several options of `v++` command line, refer to the **Compiling HLS Kernels Using V++** topic in **Section 3**
@@ -696,12 +587,14 @@ make xsa TARGET=hw_emu
 or
 
 ```bash
-v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsad
+v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 Now you have a generated `.xsa` that will be used to execute your design on the platform.
 
 ### 3.Compile the A72 Host Application
+
+Note: Unlike the software emulation where we used a g++ compiler to compile the host application, you use Arm cross-compiler `aarch64-xilinx-linux-g++` in hardware emulation. If you have exercised the software emulation step, please make sure to setback the `SYSROOT` and `CXX` variables as mentioned in the **Introduction**.
 
 To compile the A72 host application, run the command:
 
@@ -737,11 +630,11 @@ Or
 ```bash
 cd ./sw
 v++ --package -t hw_emu \
-    -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm \
-    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4 \
+    -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm \
+    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/Image \
+    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
@@ -832,7 +725,7 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
     or
 
     ```bash
-    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
+    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
    ```
 
 2. Then re-run the packaging step with:
@@ -846,11 +739,11 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
     ```bash
     cd ./sw
     v++ --package -t hw \
-        -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm \
-        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4 \
+        -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm \
+        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
         --package.image_format=ext4 \
         --package.boot_mode=sd \
-        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.1/Image \
+        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/Image \
         --package.defer_aie_run \
         --package.sd_file host.exe ../tutorial.xsa ../libadf.a
     cd ..
@@ -876,7 +769,7 @@ You should see **TEST PASSED**. You have successfully run your design on hardwar
 In this tutorial you learned the following:
 
 * How to compile PLIO and PL Kernels using `v++ -c`.
-* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vck190_base_202310_1` platform.
+* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vck190_base_202320_1` platform.
 * How to use Vitis Analyzer to explore the various reports generated from compilation and emulation/simulation.
 * How to package your host code, and the generated `xclbin` and `libadf.a` into an SD card directory.
 * How to execute the design for software emulation.
