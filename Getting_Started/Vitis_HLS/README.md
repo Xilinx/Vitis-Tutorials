@@ -19,17 +19,11 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
-Vitis High-Level Synthesis (HLS) is a key part of the Vitis application acceleration development flow. The tool is responsible for compiling C/C++ and OpenCL code into a kernel for acceleration in the programmable logic (PL) region of AMD devices. Thus, it is the tool that compiles the hardware kernels for the Vitis tools by performing high-level synthesis.
-
-> **TIP:** Vitis HLS can also be used to generate Vivado IP from C/C++ code, but that flow is not the subject of this tutorial. Although similar, there are some significant differences between producing Vitis XO kernels and Vivado RTL IP. However, you can use this tutorial as a general introduction to the Vitis HLS tool. 
-
-This tutorial contains two flows that you can work through: 
-* The Vitis HLS tool GUI flow to build, analyze, and optimize a hardware kernel. For more information, refer to [Vitis HLS Flow Overview](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Flow-Overview).
-* The new Vitis unified IDE flow which includes the bottom-up development of HLS designs as described in the *Vitis Unified IDE and Common Command-Line Reference Guide* ([UG1553](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide)).
+Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code for implementation in the programmable logic (PL) region of AMD devices. It is the tool that performs high-level synthesis of the C/C++ code and exports it as either a Vivado IP (.zip) for use in the Vivado Design Suite and the Embedded Software development flow, or as a Vitis kernel (.xo) for use in the Vitis acceleration flow and heterogeneous system designs. Although the Vitis kernel and Vivadp IP flows are similar, there are some fundamental differences as explained in [Introduction to Vitis HLS Components](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=tgc1661815832870). This tutorial demonstrates the Vitis unified IDE flow for the bottom-up development of HLS designs.
 
 
 ### Before You Begin
@@ -76,18 +70,15 @@ For more information see [AMD AR 73698](https://www.xilinx.com/support/answers/7
 
 ## Next Steps
 
-This tutorials presents two different tool flows for users of high-level synthesis. The first is the new Vitis unified IDE for creating an HLS component; the second is the existing Vitis HLS tool. You can choose your path by selecting one of the following:
-
-1.  [Using the new Vitis unified IDE](./unified_ide_project.md)
-2.  [Using the classic Vitis HLS GUI](./new_project.md)
+This tutorials presents [Using the Vitis unified IDE](./unified_ide_project.md) for creating an HLS component:
 
 <!--
 
-1. [Creating the Vitis HLS Project](./new_project.md) - Create the project to specify the source code and testbench.
+1. [Creating the Vitis HLS Project](./unified_ide_project.md) - Create the project to deine the HLS component.
 
-2. [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md) - Simulate and synthesize the design, and analyze the results.
+2. [Running High-Level Synthesis and Analyzing Results](./unified-synth_and_analysis.md) - Simulate and synthesize the design, and analyze the results.
 
-3. [Using Optimization Techniques](./optimization_techniques.md) - Try different optimization techniques to achieve the initiation interval (II)=1.
+3. [Using Optimization Techniques](./unified-optimization_techniques.md) - Try different optimization techniques to achieve the initiation interval (II)=1.
 
 4. [Reviewing the Dataflow Optimization](./dataflow_design.md) - Add the Dataflow optimization to achieve even better results.
 

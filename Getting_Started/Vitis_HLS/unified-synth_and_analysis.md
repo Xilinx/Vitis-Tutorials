@@ -26,7 +26,6 @@ You can see the General settings of the dct component reflect the part, clock an
 
 1.  On the left, select the **C Simulation** category. 
 2.  Review the various simulation settings. 
-3.  Select the checkbox for **Enable Profiling**. 
 
 Look at the Flow Navigator with the dct component active. It displays the C Simulation step, C Synthesis, C/RTL Co-simulation, and Implementation as the primary steps of the HLS component workflow. 
 
