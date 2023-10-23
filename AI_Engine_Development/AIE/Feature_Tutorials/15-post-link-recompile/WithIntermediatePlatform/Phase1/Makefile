@@ -37,13 +37,11 @@ CONFIG_FILE := system.cfg
 
 
 # Command-line options
-VPP := v++
-AIECC := aiecompiler
 
-AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE}/src" -include="${AIE}/data" -include="${AIE}/src/aie_kernels"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
+AIE_INCLUDE_FLAGS := --include "$(XILINX_VITIS)/aietools/include" --include "${AIE}/src" --include "${AIE}/data" --include "${AIE}/src/aie_kernels"
+AIE_FLAGS := --target hw $(AIE_INCLUDE_FLAGS) --aie.pl-freq 200
 AIE_FLAGS += --platform $(BASE_PLATFORM)
-AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
+AIE_FLAGS +=  --aie.Xpreproc=-DDATA_DIR=$(DATA_DIR)
 
 VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(HwLink)/$(CONFIG_FILE) -o $(XSA)
@@ -95,7 +93,7 @@ check_aiesim:
 	../check_op 1 $(DATA_DIR)/s2mm_ref.txt aiesimulator_output/data/DataOut1.txt
 
 $(GRAPH_O): $(GRAPH)
-	$(AIECC) $(AIE_FLAGS) -workdir=./Work $(GRAPH)
+	v++ --compile --mode aie $(AIE_FLAGS) --aie.workdir ./Work $(GRAPH)
 	@echo "COMPLETE: libadf.a created."
 
 
@@ -110,8 +108,13 @@ $(GRAPH_O): $(GRAPH)
 kernels: $(KERNEL_XO)
 	@echo "COMPLETE: Kernels Created."
 
+
 %.xo: ${PL}/src/%.cpp
-	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
+	mkdir -p plkernels
+	sed "s/syn.top=/syn.top=$(basename $@)/g" $(PL)/BaseConfig.cfg > plkernels/HLSConfig_$(basename $@).cfg 
+	sed -i "s/syn.file=/syn.file=..\/..\/..\/Files\/PL\/src\/$(basename $@).cpp/g" plkernels/HLSConfig_$(basename $@).cfg
+	v++ --compile --mode hls --platform $(BASE_PLATFORM) --config plkernels/HLSConfig_$(basename  $@).cfg --work_dir plkernels/$(basename $@)
+	cp plkernels/$(basename $@)/$(basename $@).xo .
 
 ########################################################
 
@@ -121,7 +124,7 @@ kernels: $(KERNEL_XO)
 # the hardware part of the design. This creates an xclbin
 # that will be used to run the design on the platform.
 link: $(GRAPH_O) $(KERNEL_XO)
-	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [link] failed error code: $$?"; exit 1)
+	v++ $(VPP_LINK_FLAGS) || (echo "task: [link] failed error code: $$?"; exit 1)
 	@echo "COMPLETE: .xsa created."
 ########################################################
 
@@ -135,4 +138,4 @@ clean:
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
 	rm -rf aie_primitive.json  drivers  vpl_gen_fixed_presynth.pdi
-	rm -rf .crashReporter extracted
+	rm -rf .crashReporter extracted plkernels

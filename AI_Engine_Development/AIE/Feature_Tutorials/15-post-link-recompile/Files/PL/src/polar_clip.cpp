@@ -166,7 +166,9 @@ inline void process_polar_clip(int &in_sample, int &out_sample) {
 
 
 
-void polar_clip(hls::stream<pliopkt>& sin,hls::stream<pliopkt>& sout) {
+void polar_clip(hls::stream<pliopkt>& sin, hls::stream<pliopkt>& sout) {
+#pragma HLS interface axis port=sin
+#pragma HLS interface axis port=sout
 
   pliopkt sample;
   pliopkt ovalue;

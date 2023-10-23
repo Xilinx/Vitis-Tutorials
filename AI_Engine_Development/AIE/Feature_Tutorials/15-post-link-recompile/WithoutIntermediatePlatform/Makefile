@@ -39,18 +39,16 @@ GRAPH2_O := libadf2.a
 
 KERNEL := s2mm.cpp mm2s.cpp polar_clip.cpp
 KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
+# KERNEL := polar_clip.cpp
+# KERNEL_XO := polar_clip.xo
 CONFIG_FILE := system.cfg
 
 
 # Command-line options
-VPP := v++
-AIECC := aiecompiler
+AIE_INCLUDE_FLAGS := --include "$(XILINX_VITIS)/aietools/include" --include "${AIE}/src" --include "${AIE}/data" --include "${AIE}/src/aie_kernels"
+AIE_FLAGS := --target hw $(AIE_INCLUDE_FLAGS) --aie.pl-freq 200
+AIE_FLAGS +=  --aie.Xpreproc=-DDATA_DIR=$(DATA_DIR)
 
-AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE}/src" -include="${AIE}/data" -include="${AIE}/src/aie_kernels"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
-AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
-
-VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(HwLink)/$(CONFIG_FILE) -o $(XSA)
 
 
@@ -103,17 +101,13 @@ aiesim: $(GRAPH_O)
 	aiesimulator --pkg-dir=./Work
 	make check_aiesim
 
-aiesim2: $(GRAPH_O)
-	rm -f $(DATA_DIR)/DataOut1.txt
-	aiesimulator --pkg-dir=./Work2
-	make check_aiesim
 
 check_aiesim:
 	../check_op 1 $(DATA_DIR)/s2mm_ref.txt $(DATA_DIR)/DataOut1.txt
 	../check_op 1 $(DATA_DIR)/polar_clip_in_reim_ref.txt $(DATA_DIR)/polar_clip_in.txt
 
 $(GRAPH_O): $(GRAPH)
-	$(AIECC) $(AIE_FLAGS) --platform=$(BASE_PLATFORM) -workdir=./Work $(GRAPH)
+	v++ --compile --mode aie $(AIE_FLAGS) --platform $(BASE_PLATFORM) --aie.workdir ./Work $(GRAPH)
 	@echo "COMPLETE: libadf.a created."
 
 aie2: $(GRAPH2_O)
@@ -123,7 +117,7 @@ aiesim2: $(GRAPH2_O)
 	make check_aiesim
 
 $(GRAPH2_O): $(GRAPH2)
-	$(AIECC) $(AIE_FLAGS)  --platform=$(XSA) --output-archive=$(GRAPH2_O) --workdir=./Work2 --constraints=$(CONSTRAINTS)/AI_interface.aiecst $(GRAPH2)
+	v++ --compile --mode aie $(AIE_FLAGS)  --platform $(XSA) --aie.output-archive $(GRAPH2_O) --aie.workdir ./Work2 --aie.constraints $(CONSTRAINTS)/AI_interface.aiecst $(GRAPH2)
 	@echo "COMPLETE: libadf2.a created."
 
 ########################################################
@@ -138,7 +132,12 @@ kernels: $(KERNEL_XO)
 	@echo "COMPLETE: Kernels Created."
 
 %.xo: ${PL}/src/%.cpp
-	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
+	mkdir -p plkernels
+	sed "s/syn.top=/syn.top=$(basename $@)/g" $(PL)/BaseConfig.cfg > plkernels/HLSConfig_$(basename $@).cfg 
+	sed -i "s/syn.file=/syn.file=..\/..\/Files\/PL\/src\/$(basename $@).cpp/g" plkernels/HLSConfig_$(basename $@).cfg
+	v++ --compile --mode hls --platform $(BASE_PLATFORM) --config plkernels/HLSConfig_$(basename  $@).cfg --work_dir plkernels/$(basename $@)
+	cp plkernels/$(basename $@)/$(basename $@).xo .
+
 ########################################################
 
 
@@ -147,7 +146,7 @@ kernels: $(KERNEL_XO)
 # the hardware part of the design. This creates an xclbin
 # that will be used to run the design on the platform.
 link: $(GRAPH_O) $(KERNEL_XO)
-	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [xclbin] failed error code: $$?"; exit 1)
+	v++ $(VPP_LINK_FLAGS) || (echo "task: [xclbin] failed error code: $$?"; exit 1)
 	@echo "COMPLETE: .xclbin created."
 ########################################################
 
@@ -175,9 +174,10 @@ LDCLFLAGS := $(GCC_LIB)
 
 
 host: guard-CXX guard-SDKTARGETSYSROOT
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o Work/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o $(PS)/src/host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
+
+#	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o Work/ps/c_rts/aie_control_xrt.cpp
 
 ########################################################
 
@@ -224,3 +224,4 @@ clean:
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
 	rm -rf *.json *.pdi drivers extracted .crashReporter
+	rm -rf ./plkernels

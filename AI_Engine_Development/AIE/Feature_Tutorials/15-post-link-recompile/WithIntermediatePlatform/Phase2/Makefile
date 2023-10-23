@@ -45,10 +45,10 @@ CONFIG_FILE := system.cfg
 VPP := v++
 AIECC := aiecompiler
 
-AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include" -include="${AIE2}/src" -include="${AIE2}/data" -include="${AIE2}/src/aie_kernels"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --pl-freq=200
-AIE_FLAGS += -platform=$(XSA)
-AIE_FLAGS +=  --Xpreproc=-DDATA_DIR=$(DATA_DIR)
+AIE_INCLUDE_FLAGS := --include "$(XILINX_VITIS)/aietools/include" --include "${AIE2}/src" --include "${AIE2}/data" --include "${AIE2}/src/aie_kernels"
+AIE_FLAGS := --target hw $(AIE_INCLUDE_FLAGS) --aie.pl-freq 200
+AIE_FLAGS += --platform $(XSA)
+AIE_FLAGS +=  --aie.Xpreproc=-DDATA_DIR=$(DATA_DIR)
 
 
 .ONESHELL:
@@ -104,7 +104,7 @@ aiesim2: $(GRAPH2_O)
 	make check_aiesim
 
 $(GRAPH2_O): $(GRAPH2)
-	$(AIECC) $(AIE_FLAGS)  --output-archive=$(GRAPH2_O) --workdir=./Work2 $(GRAPH2)
+	v++ --compile --mode aie  $(AIE_FLAGS)  --aie.output-archive $(GRAPH2_O) --aie.workdir ./Work2 $(GRAPH2)
 	@echo "COMPLETE: libadf2.a created."
 
 ########################################################
@@ -137,9 +137,10 @@ endif
 
 
 host: guard-CXX
-	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o Work2/ps/c_rts/aie_control_xrt.cpp
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o $(PS)/src/host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
+
+# $(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o Work2/ps/c_rts/aie_control_xrt.cpp
 
 ########################################################
 
