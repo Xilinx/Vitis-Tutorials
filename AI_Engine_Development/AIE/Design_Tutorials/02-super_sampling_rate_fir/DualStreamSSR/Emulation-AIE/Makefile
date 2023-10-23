@@ -7,22 +7,18 @@
 # AIE compiler tools
 AIE_TOP_DIR = ..
 AIE_BUILD_DIR = .
-AIE_CC = aiecompiler
+AIE_CC = v++ --compile --mode aie
 
 AIE_GRAPH_FILES = ${AIE_TOP_DIR}/aie/SSRgraph.cpp
 AIE_OUT_DIR = ${AIE_BUILD_DIR}/Work
 AIE_DATA_DIR = ${AIE_BUILD_DIR}/data
 AIE_HW_DIR = ${AIE_BUILD_DIR}/hw
-AIE_TR_DATA_DIR = ${AIE_BUILD_DIR}/.tracecompass/.tracing
-AIE_TRACE_DIR = ${AIE_BUILD_DIR}/Traces
 RM = rm -f
 RMDIR = rm -rf
-SRC_LOG_FILE_PATH = ${AIE_TOP_DIR}/Module2.build.log
-DST_LOG_FILE_PATH = ${AIE_BUILD_DIR}/build.log
 PLATFORM ?=$(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 # AIE compiler settings
-AIE_FLAGS = -v -include="${XILINX_VITIS}/aietools/include" -include="${XILINX_HLS}/include" -include="${AIE_TOP_DIR}/" -include="${AIE_TOP_DIR}/aie" -include="${AIE_TOP_DIR}/data" -target=hw   -platform=$(PLATFORM) -workdir=$(AIE_OUT_DIR)
+AIE_FLAGS = --aie.verbose --include "${XILINX_VITIS}/aietools/include" --include "${XILINX_HLS}/include" --include "${AIE_TOP_DIR}/" --include "${AIE_TOP_DIR}/aie" --include "${AIE_TOP_DIR}/data" --target hw   --platform $(PLATFORM) --aie.workdir $(AIE_OUT_DIR)
 
 # Sources
 SRCS = ${AIE_TOP_DIR}/aie/aie_kernels/FirDoubleStream.cpp ${AIE_TOP_DIR}/aie/aie_kernels/FirDoubleStream.h ${AIE_TOP_DIR}/aie/SSRgraph.cpp  ${AIE_TOP_DIR}/aie/SSRgraph.h  ${AIE_TOP_DIR}/aie/system_settings.h  ${AIE_TOP_DIR}/aie/aie_kernels.h
@@ -36,7 +32,6 @@ all: clean aie aiesim aieviz
 
 aie:   $(SRCS)
 	-$(AIE_CC) $(AIE_FLAGS) $(AIE_GRAPH_FILES)
-	if [ -f $(SRC_LOG_FILE_PATH) ]; then cp $(SRC_LOG_FILE_PATH) $(DST_LOG_FILE_PATH) 2>/dev/null; echo; echo "INFO: Look at the log file Debug/build.log for more details."; else echo "Warning: Build log file $(SRC_LOG_FILE_PATH) doesn't exist."; fi; \
 
 aiesim:
 	if [ -d data ]; then echo "data exists"; else ln -s ../data data; fi;
@@ -46,7 +41,7 @@ aieviz:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 
 clean:
-	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) $(AIE_TR_DATA_DIR) $(AIE_TRACE_DIR) ${AIE_BUILD_DIR}/aiesim* ${AIE_BUILD_DIR}/ess* ${AIE_BUILD_DIR}/profile* ${AIE_BUILD_DIR}/xnwOut ${AIE_BUILD_DIR}/.Xil
+	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) ${AIE_BUILD_DIR}/aiesim* ${AIE_BUILD_DIR}/ess* ${AIE_BUILD_DIR}/profile* ${AIE_BUILD_DIR}/xnwOut ${AIE_BUILD_DIR}/.Xil
 	find ./ -type f | grep -v Makefile | xargs rm -Rf
 
 .PHONY: all clean aie aiesim aieviz
