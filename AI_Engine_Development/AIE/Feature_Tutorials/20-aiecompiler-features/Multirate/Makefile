@@ -15,8 +15,6 @@ else
 $(error "ARCH should be either 1 for AI Engine or 2 for AI Engine ML   (ARCH = $(ARCH))")
 endif
 
-TARGET   = hw_emu
-HOST_EXE = host.exe
 
 PFM_NAME := $(strip $(PFM_NAME))
 PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
@@ -24,8 +22,8 @@ PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 GRAPH    = src/graph.cpp
 LIBADFAIE  = libadfaie.a
 LIBADFX86  = libadfx86.a
-AIE_CMPL_CMD = aiecompiler -include="./src" -workdir=./WorkAie ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADFAIE) --Xpreproc="-DGV=$(VERSION)"
-X86_CMPL_CMD = aiecompiler --target=x86sim -include="./src" -workdir=./WorkX86 ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADFX86)  --Xpreproc="-DGV=$(VERSION)"
+AIE_CMPL_CMD = v++ --compile --mode aie --include "./src" --aie.workdir ./WorkAie ${GRAPH} --platform=$(PLATFORM) --aie.output-archive $(LIBADFAIE) --aie.Xpreproc "-DGV=$(VERSION)"
+X86_CMPL_CMD = v++ --compile --mode aie --target x86sim --include "./src" --aie.workdir ./WorkX86 ${GRAPH} --platform $(PLATFORM) --aie.output-archive $(LIBADFX86)  --aie.Xpreproc "-DGV=$(VERSION)"
 
 AIE_SIM_CMD = aiesimulator --pkg-dir=./WorkAie --dump-vcd foo
 # AIE_SIM_CMD += --hang-detect-time=10000
@@ -34,11 +32,10 @@ X86_SIM_CMD = x86simulator --pkg-dir=./WorkX86 --trace --trace-print
 
 BUFFER_vs_STREAM ?= 1
 
-all: ${XSA} ${HOST_EXE} package
-run: all run_hw_emu
-sd_card: all
-
 .PHONY: data buffer stream evalfifo disptypeio dispfifo disprepetition
+
+run:
+	make clean data aie aiesim
 
 data:
 	mkdir -p data
@@ -48,7 +45,8 @@ disprepetition:
 	DisplayRepetition
 
 dispfifo:
-	more ./AIESim_FIFO_Guidance.json
+	if [ -f ./AIESim_FIFO_Guidance.json ]; then more ./AIESim_FIFO_Guidance.json ; fi
+
 
 disptypeio:
 	echo "Interface chosen $(BUFFER_vs_STREAM) : 1-> Buffer    2-> Stream"
@@ -68,7 +66,7 @@ evalfifo:
 
 aie: ${LIBADFAIE}
 ${LIBADFAIE}: src/*
-	${AIE_CMPL_CMD} --Xpreproc="-DBUFFER_vs_STREAM=$(BUFFER_vs_STREAM)"
+	${AIE_CMPL_CMD} --aie.Xpreproc "-DBUFFER_vs_STREAM=$(BUFFER_vs_STREAM)"
 	make disprepetition
 
 
@@ -76,7 +74,7 @@ ${LIBADFAIE}: src/*
 
 x86:${LIBADFX86}
 ${LIBADFX86}: src/*
-	${X86_CMPL_CMD} --Xpreproc="-DBUFFER_vs_STREAM=$(BUFFER_vs_STREAM)"
+	${X86_CMPL_CMD} --aie.Xpreproc "-DBUFFER_vs_STREAM=$(BUFFER_vs_STREAM)"
 	DisplayRepetition
 
 aiesim: ${LIBADFAIE}
@@ -146,7 +144,11 @@ clean:
 	rm -rf _x ${LIBADFAIE} ${LIBADFX86} WorkAie WorkX86 .Xil vitis_analyzer* foo.vcd *.log pl_sample*
 	rm -rf aiesimulator_output x86simulator_output vitis_design_wrapper*
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp *.txt
-	rm -rf *json logs
+	rm -rf  logs
+	find *.json | grep -v "description.json" | xargs rm -f
+
+
+
 
 clean_all: clean
 	rm -rf data

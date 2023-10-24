@@ -1,9 +1,6 @@
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
-TARGET   = hw_emu
-HOST_EXE = host.exe
-
 CASE ?= 1
 ARCH ?= 1
 
@@ -22,17 +19,23 @@ PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 
 GRAPH    = src_$(CASE)/graph.cpp
 LIBADF  = libadf_$(CASE).a
-AIE_CMPL_CMD = aiecompiler -include="./src_$(CASE)" -workdir=./Work_$(CASE) ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADF)
+AIE_CMPL_CMD = v++ --compile --mode aie --include "./src_$(CASE)" --aie.workdir ./Work_$(CASE) ${GRAPH} --platform=$(PLATFORM) --aie.output-archive $(LIBADF)
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work_$(CASE) --dump-vcd foo
 
 all: clean data aie aieviz
+
+run: clean data aie aiesim
 
 
 .PHONY: data help _help
 
 data:
 	mkdir -p data
-	CreateLinearData.py int16 32 2048 > data/input.txt
+	CreateLinearData.py int16 32 4096 > data/input0.txt
+	CreateLinearData.py int16 32 4096 > data/input1.txt
+	CreateLinearData.py int16 32 4096 > data/input2.txt
+	CreateLinearData.py int16 32 4096 > data/input3.txt
+	CreateLinearData.py int16 32 4096 > data/input.txt
 
 
 aie: ${LIBADF}
