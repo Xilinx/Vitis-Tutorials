@@ -28,10 +28,10 @@ VPP := v++
 AIECC := v++ --mode aie -c 
 
 AIE_INCLUDE_FLAGS := --include="$(XILINX_VITIS_AIETOOLS)/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  --work_dir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
 
-VPP_XO_FLAGS := -c --platform $(PLATFORM) -g --save-temps
-VPP_LINK_FLAGS := -l --platform $(PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
+VPP_XO_FLAGS := --mode hls -c --platform $(PLATFORM) 
+VPP_LINK_FLAGS := -l --platform $(PLATFORM) ip_repo/polar_clip.xo pl_kernels/s2mm.xo pl_kernels/mm2s.xo $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
@@ -62,7 +62,8 @@ sd_card: kernels aie xclbin host package
 kernels: $(KERNEL_XO)
 
 %.xo: pl_kernels/%.cpp
-	$(VPP) $(VPP_XO_FLAGS) -k $(basename $(notdir $<)) $< -o $@
+	$(VPP) $(VPP_XO_FLAGS) --config pl_kernels/s2mm.cfg 
+	$(VPP) $(VPP_XO_FLAGS) --config pl_kernels/mm2s.cfg 
 
 polar_clip.xo:
 	vivado -mode batch -source polar_clip_rtl_kernel.tcl

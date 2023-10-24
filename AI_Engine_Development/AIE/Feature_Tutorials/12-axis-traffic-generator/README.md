@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal® AI Engine</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal® AI Engine</h1>
    </td>
  </tr>
  <tr>
@@ -37,12 +37,12 @@ The Xilinx® Versal® adaptive compute acceleration platform (ACAP) is a fully s
 
 This tutorial shows how to use AXI Traffic Generators to provide input and capture output from an AI Engine kernel in hardware emulation.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.1) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial, complete the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2023.1/sdk.sh`.
-2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2023.1` directory.
+1. Set up your platform by running the `xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2023.2/sdk.sh`.
+2. Set up your `ROOTFS` and `IMAGE` to point to the `xilinx-versal-common-v2023.2` directory.
 3. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ### Objectives
@@ -60,7 +60,7 @@ After completing the tutorial, you should be able to:
 
 To demonstrate this feature in a meaningful way you'll also make use of a DSPLibrary function - the "Fast Fourier Transform" or FFT. The DSP Library tutorial provides detailed instructions on how to setup your environment to compile DSPLIB. Please complete that tutorial before continuing.
 
-* https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/08-dsp-library
+* https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/AIE/Feature_Tutorials/08-dsp-library
 
 ### Tutorial Overview
 
@@ -97,21 +97,21 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://www.xilinx.com/member/versal_ai_core_docs_ea.html)
+* [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Architecture-Overview)
 
-* [UG1295 Digital Signal Processing Library for AI Engine](https://www.xilinx.com/member/versal_ai_engines.html#documentation)
+* [Vitis Libraries for AI Engine](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
 To run through this tutorial, you will need to download and install the following tools:
 
-* Install the [Vitis Software Platform 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
-* Install the [Vitis Software Platform 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
+* Install the [Vitis Software Platform 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html)
 
 * Obtain licenses for the AI Engine tools
 
-* Download and setup the [Xilinx DSP Library (DSPLib) 2023.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [Xilinx DSP Library (DSPLib) 2023.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
-* Download and setup the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
+* Download and setup the [VCK190 Vitis Platform for 2023.2](https://www.xilinx.com/member/versal_ai_tools_ea.html#platforms)
 
 ### *Environment*: Setting Up Your Target Platform Environment
 
@@ -124,7 +124,7 @@ export DSPLIB_ROOT=<YOUR-DSPLIB-DIRECTORY>
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 export PYTHON_INSTALL=<YOUR-PYTHON_INSTALL_PATH>
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2023.1/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2023.2/settings64.sh
 ```
 
 Then source the environment script:
@@ -134,11 +134,10 @@ source env_setup_2023.sh
 
 ## *Validation*: Confirming Tool Installation
 
-Ensure that you are using the 2023.1 version of Xilinx&reg; tools.
+Ensure that you are using the 2023.2 version of Xilinx&reg; tools.
 
 ```bash
 which vitis
-which aiecompiler
 echo $DSPLIB_ROOT
 ```
 
@@ -355,9 +354,9 @@ plt.plot( list(range(0,len(aie_out))),np.imag(aie_out),label  ="aie_out I ")
 
 The process of linking XO files via `v++` and the `system.cfg` is covered in depth in the following two tutorials. For this tutorial these steps are handled by the provided makefile and you will review only the highlights.
 
-https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/05-AI-engine-versal-integration
+https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/AIE/Feature_Tutorials/05-AI-engine-versal-integration
 
-https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Design_Tutorials/03-beamforming/Module_04_AI_Engine_and_PL_Integration
+https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/AIE/Design_Tutorials/03-beamforming/Module_04_AI_Engine_and_PL_Integration
 
 ### Section 1: Compile Kernels and AI Engine Graph
 
@@ -432,7 +431,7 @@ After all the new AI Engine outputs are created, you can compile your host appli
     graph_top.end();
     ```
 
-   **Note:** [XRT](https://xilinx.github.io/XRT/2023.1/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
+   **Note:** [XRT](https://xilinx.github.io/XRT/2023.2/html/index.html) is used in the host application. This API layer is used to communicate with the programmable logic, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to the "Programming the PS Host Application".
 
 2. Close the main.cpp, and run the command.
 
@@ -522,7 +521,9 @@ In this tutorial you learned how to:
 * Capture the AI Engine output in python.
 * Plot/Graph the data in python and compare against a golden reference model.
 
-To read more about the use of Vitis in the AI Engine flow see: *UG1076: Versal ACAP AI Engine Programming Environment Chapter 13: Running Hardware Emulation & Traffic Generators*.
+To read more about the use of Vitis in the AI Engine flow see:
+	*UG1076: AI Engine Tools and Flows User Guide, Chapter 4 Simulating-an-AI-Engine-Graph-Application : section Hardware Emulation & External Traffic Generator*.
+	*UG1393: Vitis Unified Software Platform Documentation: Application Acceleration Development, Chapter 4 Simulating the Application With The Emulation Flow : Section Working-with-I/O-Traffic-Generators*.
 
 ## Support
 

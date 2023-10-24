@@ -48,13 +48,13 @@ CONFIG_FILE := system.cfg
 
 # Command-line options
 VPP := v++
-AIECC := aiecompiler
+AIECC := v++ --mode aie -c 
 
-AIE_INCLUDE_FLAGS := -include="$(XILINX_VITIS)/aietools/include"  -include="./aie" -include="./data" -include="./aie/kernels" -include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --xlopt=0 -workdir=./Work 
+AIE_INCLUDE_FLAGS := --include="$(XILINX_VITIS)/aietools/include"  --include="./aie" --include="./data" --include="./aie/kernels" --include="./"
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --aie.xlopt=0 --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm 
 
 ifeq (${EXTIO}, true)
-	AIE_FLAGS += --Xpreproc=-DEXTERNAL_IO
+	AIE_FLAGS += --aie.Xpreproc=-DEXTERNAL_IO
 endif
 
 
