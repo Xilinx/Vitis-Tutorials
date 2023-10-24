@@ -26,7 +26,7 @@ Data generation for this tutorial requires [Python 3](https://www.python.org/dow
 - sys
 - numpy
 
-All these designs will compile for AI Engine architecture (VCK190 production board using `ARCH=1` in `make` command line) and the AI Engine ML architecture (VEK280 es1 board using `ARCH=2` in `make` command line)
+All these designs will compile for AI Engine architecture (VCK190 production board using `ARCH=aie` in `make` command line) and the AI Engine ML architecture (VEK280 es1 board using `ARCH=aie-ml` in `make` command line)
 
 ## Objectives
 

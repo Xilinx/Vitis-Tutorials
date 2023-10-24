@@ -18,7 +18,7 @@
         "targets": [
             "vitis_aie_sim"
         ],
-        "make_options": [ "ARCH=1" ],
+        "make_options": [ "ARCH=aie" ],
         "custom_build_target":
         {
             "all": "run"

@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: MIT
 
 CASE ?= 1
-ARCH ?= 1
+ARCH ?= aie
 
-ifeq ($(ARCH),1)
+ifeq ($(ARCH), aie)
 PFM_NAME := xilinx_vck190_base_202320_1
 $(info "ARCH set for AI Engine Architecture   (ARCH = $(ARCH))")
-else ifeq ($(ARCH),2)
+else ifeq ($(ARCH), aie-ml)
 PFM_NAME := xilinx_vek280_es1_base_202320_1
 $(info "ARCH set for AI Engine ML Architecture   (ARCH = $(ARCH))")
 else
-$(error "ARCH should be either 1 for AI Engine or 2 for AI Engine ML   (ARCH = $(ARCH))")
+$(error "ARCH should be either aie for AI Engine or aie-ml for AI Engine ML   (ARCH = $(ARCH))")
 endif
 
 

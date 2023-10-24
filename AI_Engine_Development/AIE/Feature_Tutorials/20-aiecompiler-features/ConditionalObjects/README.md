@@ -31,7 +31,7 @@ For `aiecompiler` environment, the `BOOLEAN_CONDITION` will be generally passed 
 
 The following examples illustrate various ways to generate conditional objects at the graph level. All examples are available in different source directories: `src1` to `src4`. They can be compiled using: `make CASE=N clean data aie aieviz` with `N= 1,2,3,4`. Type `make help` to get the list of all available examples.
 
-All these examples can be compiled either for the AI Engine architecture `ARCH=1` (default value) or the AI Engine ML architecture `ARCH=2`.
+All these examples can be compiled either for the AI Engine architecture `ARCH=aie` (default value) or the AI Engine ML architecture `ARCH=aie-ml`.
 
 
 ### Case 1: Conditional Cascade Port
