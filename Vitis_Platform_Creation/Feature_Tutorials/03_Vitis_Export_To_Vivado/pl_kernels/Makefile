@@ -4,7 +4,7 @@
 # */
 
 VCC = v++
-XSA = ../vivado_impl/flat_wa.xsa
+XSA = ../vivado_impl/prj_bdc_ext_hw.xsa
 
 .PHONY: clean
 

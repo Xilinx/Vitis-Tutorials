@@ -5,8 +5,8 @@
 
 # Compile ADF graph to build libadf.a
 AIECC    =v++ -c --mode aie
-AIEFLAGS = --platform ../vivado_impl/flat_wa.xsa
-#AIEFLAGS1 =--part ${PART}
+AIEFLAGS = --platform ../vivado_impl/prj_bdc_ext_wa.xsa
+
  
 
 .PHONY: clean

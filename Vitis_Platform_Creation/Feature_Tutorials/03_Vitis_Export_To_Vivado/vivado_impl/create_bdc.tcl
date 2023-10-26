@@ -16,7 +16,7 @@ current_bd_design [get_bd_designs ExtensibleRegion]
 foreach intf [get_bd_intf_ports] {
 	set_property HDL_ATTRIBUTE.LOCKED TRUE [get_bd_intf_ports $intf]
 }
-set_property PFM_NAME {xilinx.com:vck190:flat:0.5} [get_files ExtensibleRegion.bd]
+set_property PFM_NAME {xilinx.com:vck190:prj_bdc:0.5} [get_files ExtensibleRegion.bd]
 
 validate_bd_design
 save_bd_design

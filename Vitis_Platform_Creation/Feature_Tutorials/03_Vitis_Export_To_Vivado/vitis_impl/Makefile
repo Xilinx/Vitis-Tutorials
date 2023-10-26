@@ -2,11 +2,11 @@
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 # */
-PLATFORM =../vivado_impl/flat_wa.xsa 
+PLATFORM =../vivado_impl/prj_bdc_ext_wa.xsa 
 XOS      =../pl_kernels/*.xo
 AIELIB   =../aie/libadf.a
 TARGET   =hw
-VMA      =${TARGET}.vma
+VMA      =prj_bdc_${TARGET}.vma
 VCC      =v++
 VPP_LINK_SPEC =system.cfg
 VPP_LINK_FLAGS=--save-temps --export_archive --config ${VPP_LINK_SPEC}

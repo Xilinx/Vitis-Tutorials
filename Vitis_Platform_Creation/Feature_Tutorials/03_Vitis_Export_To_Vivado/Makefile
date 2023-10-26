@@ -1,12 +1,12 @@
 # Copyright (C) 2023, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: MIT
 
-DESIGN   =flat
-PLATFORM =vivado_impl/${DESIGN}_wa.xsa
+DESIGN   =prj_bdc
+PLATFORM =vivado_impl/${DESIGN}_ext_hw.xsa
 TARGET   =hw
 ADF     =aie/libadf.a
 XOS  	=s2mm.xo mm2s.xo polar_clip.xo
-VMA     =flat_${TARGET}.vma
+VMA     =prj_bdc_${TARGET}.vma
 PART    =xcvc1902-vsvd1760-2MP-e-S
 
 
@@ -45,5 +45,5 @@ clean:
 	make clean -C pl_kernels
 	make clean -C aie
 	rm -rf vivado.* .Xil _x sd_card package .crashReporter {DESIGN}
-	rm -rf v++* xsa .gen flat *.log BOOT.BIN
+	rm -rf v++* xsa .gen prj_bdc *.log BOOT.BIN
 	rm -rf *.xclbin *.bin *.img *.xclbin.package_summary *.bif *.xsa

@@ -2,10 +2,10 @@
 # Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 # */
-DESIGN   =flat
-PLATFORM =./${DESIGN}_wa.xsa
+DESIGN   =prj_bdc
+PLATFORM =./${DESIGN}_ext_hw.xsa
 TARGET   =hw
-VMA      =../vitis/vma/${TARGET}.vma
+VMA      =../vitis/vma/${DESIGN}_${TARGET}.vma
 TCLARGS  =-tclargs ${DESIGN} ${VMA}
 
 .PHONY: clean import export xsa

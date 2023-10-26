@@ -4,7 +4,7 @@
 # */
 # 
 ################################################################
-# This is a generated script based on design: flat
+# This is a generated script based on design: prj_bdc
 #
 # Though there are limitations about the generated script,
 # the main purpose of this utility is to make learning
@@ -37,13 +37,6 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 # START
 ################################################################
 
-# To test this script, run the following commands from Vivado Tcl console:
-# source flat_script.tcl
-
-# If there is no project opened, this script will create a
-# project, but make sure you do not have an existing project
-# <./myproj/project_1.xpr> in the current working folder.
-
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project project_1 myproj -part xcvc1902-vsva2197-2MP-e-S
@@ -53,7 +46,7 @@ if { $list_projs eq "" } {
 
 # CHANGE DESIGN NAME HERE
 variable design_name
-set design_name flat
+set design_name prj_bdc
 
 # If you do not already have an existing IP Integrator design open,
 # you can create a design using the following command:
