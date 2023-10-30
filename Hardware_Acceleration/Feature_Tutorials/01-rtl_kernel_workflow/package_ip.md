@@ -127,10 +127,10 @@ To fix the error in the Ports and Interfaces window, you must add at least one r
 
 Name | Description | Offset | Size (bits)
 -----|-------------|--------|-----
-USER_CTRL | Control Signals | 0x000 | 32
-scalar00 | Scalar values | 0x010 | 32
-A | Pointer argument | 0x018 | 64
-B | Pointer argument | 0x024 | 64
+USER_CTRL | Control Signals | 0x010 | 32
+scalar00 | Scalar values | 0x014 | 32
+A | Pointer argument | 0x01c | 64
+B | Pointer argument | 0x028 | 64
 
 1. Under Packaging Steps, select **Addressing and Memory**.
    This displays the Addressing and Memory window.

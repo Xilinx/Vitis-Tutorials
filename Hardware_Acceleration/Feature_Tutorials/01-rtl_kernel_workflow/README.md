@@ -8,7 +8,7 @@
 
 # Getting Started with RTL Kernels
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Tutorial Overview
 
@@ -47,13 +47,13 @@ The labs in this tutorial use:
 An RTL kernel in the Vitis design flow must implement an execution model and satisfy the hardware interface requirements as described in [Packaging RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) in the Vitis Application Acceleration Development Flow documentation (UG1393). The Vector-Accumulate RTL IP used in this tutorial performs the operation `B[i]=A[i]+B[i]` and has the following characteristics:
 
 * An AXI4-Lite slave interface (`s_axilite`) used to access programmable registers (control registers, scalar arguments, and pointer base addresses).
-  * Offset `0x00`: Control Register: Controls and provides kernel status.
+  * Offset `0x10`: User Control Register: Controls and provides kernel status.
     * Bit `0`: **start signal**: Asserted by the host application when kernel can start .processing data. Must be cleared when the **done** signal is asserted.
     * Bit `1`: **done signal**: Asserted by the kernel when it has completed operation. Cleared on read.
     * Bit `2`: **idle signal**: Asserted by the kernel when it is not processing any data. The transition from Low to High should occur synchronously with the assertion of the **done** signal.
-  * Offset `0x10` Register for the scalar `size` argument.
-  * Offset `0x18` Register specifying the base address for pointer argument `A`.
-  * Offset `0x24` Register specifying the base address for pointer argument `B`.
+  * Offset `0x14` Register for the scalar `size` argument.
+  * Offset `0x1c` Register specifying the base address for pointer argument `A`.
+  * Offset `0x28` Register specifying the base address for pointer argument `B`.
 * Two AXI4 memory mapped interfaces for the pointer arguments, `A` and `B`, used to communicate with global memory.
   * All AXI4 master interfaces must have 64-bit addresses.
   * The RTL designer is responsible for partitioning global memory spaces to specify the kernel arguments. The base address (memory offset) for each partition must be set by a control register programmable through the `s_axilite` interface as described above.

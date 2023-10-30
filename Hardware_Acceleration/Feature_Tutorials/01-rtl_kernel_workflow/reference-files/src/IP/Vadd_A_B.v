@@ -109,10 +109,10 @@ module Vadd_A_B #(
 ///////////////////////////////////////////////////////////////////////////////
 // Wires and Variables
 ///////////////////////////////////////////////////////////////////////////////
-wire                                ap_start                      ;
-wire                                ap_idle                       ;
-wire                                ap_done                       ;
-wire                                ap_ready;
+wire                                user_start                      ;
+wire                                user_idle                       ;
+wire                                user_done                       ;
+wire                                user_ready;
 wire [32-1:0]                       scalar00                      ;
 wire [64-1:0]                       A                             ;
 wire [64-1:0]                       B                             ;
@@ -149,10 +149,10 @@ inst_control_s_axi (
   .BREADY    ( s_axi_control_bready  ),
   .BRESP     ( s_axi_control_bresp   ),
   .interrupt ( interrupt             ),
-  .ap_start  ( ap_start              ),
-  .ap_done   ( ap_done               ),
-  .ap_idle   ( ap_idle               ),
-  .ap_ready(ap_ready),
+  .user_start( user_start            ),
+  .user_done ( user_done             ),
+  .user_idle ( user_idle             ),
+  .user_ready( user_ready            ),
   .scalar00  ( scalar00              ),
   .A         ( A                     ),
   .B         ( B                     )
@@ -210,10 +210,10 @@ Vector_addition (
   .m01_axi_rready  ( m01_axi_rready  ),
   .m01_axi_rdata   ( m01_axi_rdata   ),
   .m01_axi_rlast   ( m01_axi_rlast   ),
-  .ap_start        ( ap_start        ),
-  .ap_done         ( ap_done         ),
-  .ap_idle         ( ap_idle         ),
-  .ap_ready(ap_ready),
+  .user_start        ( user_start        ),
+  .user_done         ( user_done         ),
+  .user_idle         ( user_idle         ),
+  .user_ready        ( user_ready        ),
   .scalar00        ( scalar00        ),
   .A               ( A               ),
   .B               ( B               )

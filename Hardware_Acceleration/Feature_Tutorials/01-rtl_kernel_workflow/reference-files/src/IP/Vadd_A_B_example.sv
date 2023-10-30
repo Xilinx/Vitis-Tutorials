@@ -53,11 +53,11 @@ module Top_wrapper #(
   input  wire [C_M01_AXI_DATA_WIDTH-1:0]   m01_axi_rdata  ,
   input  wire                              m01_axi_rlast  ,
   // SDx Control Signals
-  input  wire                              ap_start       ,
-  output wire                              ap_idle        ,
-  output wire                              ap_done        ,
+  input  wire                              user_start       ,
+  output wire                              user_idle        ,
+  output wire                              user_done        ,
   input  wire [32-1:0]                     scalar00       ,
-  output wire                               ap_ready,
+  output wire                               user_ready,
   input  wire [64-1:0]                     A              ,
   input  wire [64-1:0]                     B              
 );
@@ -98,28 +98,28 @@ always @(posedge ap_clk) begin
   areset <= ~ap_rst_n;
 end
 
-// create pulse when ap_start transitions to 1
+// create pulse when user_start transitions to 1
 always @(posedge ap_clk) begin
   begin
-    ap_start_r <= ap_start;
+    ap_start_r <= user_start;
   end
 end
 
-assign ap_start_pulse = ap_start & ~ap_start_r;
+assign ap_start_pulse = user_start & ~ap_start_r;
 
-// ap_idle is asserted when done is asserted, it is de-asserted when ap_start_pulse
+// user_idle is asserted when done is asserted, it is de-asserted when ap_start_pulse
 // is asserted
 always @(posedge ap_clk) begin
   if (areset) begin
     ap_idle_r <= 1'b1;
   end
   else begin
-    ap_idle_r <= ap_done ? 1'b1 :
-      ap_start_pulse ? 1'b0 : ap_idle;
+    ap_idle_r <= user_done ? 1'b1 :
+      ap_start_pulse ? 1'b0 : user_idle;
   end
 end
 
-assign ap_idle = ap_idle_r;
+assign user_idle = ap_idle_r;
 
 // Done logic
 always @(posedge ap_clk) begin
@@ -127,15 +127,15 @@ always @(posedge ap_clk) begin
     ap_done_r <= '0;
   end
   else begin
-    ap_done_r <= (ap_start_pulse | ap_done) ? '0 : ap_done_r | ap_done_i;
+    ap_done_r <= (ap_start_pulse | user_done) ? '0 : ap_done_r | ap_done_i;
   end
 end
 
-assign ap_done = &ap_done_r;
+assign user_done = &ap_done_r;
 
 // ready logic 
 
-assign ap_ready = ap_done;
+assign user_ready = user_done;
 
 // Vadd example
 Vadd_A #(

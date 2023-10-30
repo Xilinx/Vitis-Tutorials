@@ -159,18 +159,15 @@ std::cout << "INFO: IP Start" << std::endl;
 //axi_ctrl = IP_START;
 ip1.write_register(USER_OFFSET, axi_ctrl);
 
+uint32_t krnl_done, krnl_idle;
 // Wait until the IP is DONE
 int i = 0;
-//axi_ctrl = 0;
-while (axi_ctrl != IP_IDLE) {
-//while ((axi_ctrl & IP_IDLE) != IP_IDLE) {
+while (krnl_done != IP_DONE) {
     axi_ctrl = ip1.read_register(USER_OFFSET);
+    krnl_done = axi_ctrl & 0xfffffff2;
+    krnl_idle = axi_ctrl & 0xfffffff4;
     i = i + 1;
-    std::cout << "Read Loop iteration: " << i << " and Axi Control = " << axi_ctrl << "\n";
-    if (i > 100000) {
-axi_ctrl = IP_IDLE;
-        ip1.write_register(USER_OFFSET, axi_ctrl);
-    }
+    std::cout << "Read Loop iteration: " << i << " Kernel Done: " << krnl_done << " Kernel Idle: " << krnl_idle << "\n";
 }
 ```
 

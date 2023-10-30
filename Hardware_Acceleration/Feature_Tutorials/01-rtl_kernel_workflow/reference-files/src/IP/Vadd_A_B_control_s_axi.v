@@ -29,10 +29,10 @@ module Vadd_A_B_control_s_axi
     output wire                          RVALID,
     input  wire                          RREADY,
     output wire                          interrupt,
-    output wire                          ap_start,
-    input  wire                          ap_done,
-    input  wire                          ap_ready,
-    input  wire                          ap_idle,
+    output wire                          user_start,
+    input  wire                          user_done,
+    input  wire                          user_ready,
+    input  wire                          user_idle,
     output wire [31:0]                   scalar00,
     output wire [63:0]                   A,
     output wire [63:0]                   B
@@ -56,19 +56,23 @@ module Vadd_A_B_control_s_axi
 //        bit 0  - Channel 0 (ap_done)
 //        bit 1  - Channel 1 (ap_ready)
 //        others - reserved
-// 0x10 : Data signal of scalar00
+// 0x10 : User Control signals
+//        bit 0  - user_start (Read/Write/COH)
+//        bit 1  - user_done (Read/COR)
+//        bit 2  - user_idle (Read)
+// 0x14 : Data signal of scalar00
 //        bit 31~0 - scalar00[31:0] (Read/Write)
-// 0x14 : reserved
-// 0x18 : Data signal of A
-//        bit 31~0 - A[31:0] (Read/Write)
+// 0x18 : reserved
 // 0x1c : Data signal of A
+//        bit 31~0 - A[31:0] (Read/Write)
+// 0x20 : Data signal of A
 //        bit 31~0 - A[63:32] (Read/Write)
-// 0x20 : reserved
-// 0x24 : Data signal of B
-//        bit 31~0 - B[31:0] (Read/Write)
+// 0x24 : reserved
 // 0x28 : Data signal of B
+//        bit 31~0 - B[31:0] (Read/Write)
+// 0x2c : Data signal of B
 //        bit 31~0 - B[63:32] (Read/Write)
-// 0x2c : reserved
+// 0x30 : reserved
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
@@ -77,14 +81,15 @@ localparam
     ADDR_GIE             = 6'h04,
     ADDR_IER             = 6'h08,
     ADDR_ISR             = 6'h0c,
-    ADDR_SCALAR00_DATA_0 = 6'h10,
-    ADDR_SCALAR00_CTRL   = 6'h14,
-    ADDR_A_DATA_0        = 6'h18,
-    ADDR_A_DATA_1        = 6'h1c,
-    ADDR_A_CTRL          = 6'h20,
-    ADDR_B_DATA_0        = 6'h24,
-    ADDR_B_DATA_1        = 6'h28,
-    ADDR_B_CTRL          = 6'h2c,
+    ADDR_USER_CTRL       = 6'h10,
+    ADDR_SCALAR00_DATA_0 = 6'h14,
+    ADDR_SCALAR00_CTRL   = 6'h18,
+    ADDR_A_DATA_0        = 6'h1c,
+    ADDR_A_DATA_1        = 6'h20,
+    ADDR_A_CTRL          = 6'h24,
+    ADDR_B_DATA_0        = 6'h28,
+    ADDR_B_DATA_1        = 6'h2c,
+    ADDR_B_CTRL          = 6'h30,
     WRIDLE               = 2'd0,
     WRDATA               = 2'd1,
     WRRESP               = 2'd2,
@@ -209,7 +214,7 @@ always @(posedge ACLK) begin
         if (ar_hs) begin
             rdata <= 1'b0;
             case (raddr)
-                ADDR_AP_CTRL: begin
+                ADDR_USER_CTRL: begin
                     rdata[0] <= int_ap_start;
                     rdata[1] <= int_ap_done;
                     rdata[2] <= int_ap_idle;
@@ -248,7 +253,7 @@ end
 
 //------------------------Register logic-----------------
 assign interrupt = int_gie & (|int_isr);
-assign ap_start  = int_ap_start;
+assign user_start  = int_ap_start;
 assign scalar00  = int_scalar00;
 assign A         = int_A;
 assign B         = int_B;
@@ -257,9 +262,9 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_ap_start <= 1'b0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_AP_CTRL && WSTRB[0] && WDATA[0])
+        if (w_hs && waddr == ADDR_USER_CTRL && WSTRB[0] && WDATA[0])
             int_ap_start <= 1'b1;
-        else if (ap_ready)
+        else if (user_ready)
             int_ap_start <= int_auto_restart; // clear on handshake/auto restart
     end
 end
@@ -269,9 +274,9 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_ap_done <= 1'b0;
     else if (ACLK_EN) begin
-        if (ap_done)
+        if (user_done)
             int_ap_done <= 1'b1;
-        else if (ar_hs && raddr == ADDR_AP_CTRL)
+        else if (ar_hs && raddr == ADDR_USER_CTRL)
             int_ap_done <= 1'b0; // clear on read
     end
 end
@@ -281,7 +286,7 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_ap_idle <= 1'b0;
     else if (ACLK_EN) begin
-            int_ap_idle <= ap_idle;
+            int_ap_idle <= user_idle;
     end
 end
 
@@ -290,7 +295,7 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_ap_ready <= 1'b0;
     else if (ACLK_EN) begin
-            int_ap_ready <= ap_ready;
+            int_ap_ready <= user_ready;
     end
 end
 
@@ -299,7 +304,7 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_auto_restart <= 1'b0;
     else if (ACLK_EN) begin
-        if (w_hs && waddr == ADDR_AP_CTRL && WSTRB[0])
+        if (w_hs && waddr == ADDR_USER_CTRL && WSTRB[0])
             int_auto_restart <=  WDATA[7];
     end
 end
@@ -329,7 +334,7 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_isr[0] <= 1'b0;
     else if (ACLK_EN) begin
-        if (int_ier[0] & ap_done)
+        if (int_ier[0] & user_done)
             int_isr[0] <= 1'b1;
         else if (w_hs && waddr == ADDR_ISR && WSTRB[0])
             int_isr[0] <= int_isr[0] ^ WDATA[0]; // toggle on write
@@ -341,7 +346,7 @@ always @(posedge ACLK) begin
     if (ARESET)
         int_isr[1] <= 1'b0;
     else if (ACLK_EN) begin
-        if (int_ier[1] & ap_ready)
+        if (int_ier[1] & user_ready)
             int_isr[1] <= 1'b1;
         else if (w_hs && waddr == ADDR_ISR && WSTRB[0])
             int_isr[1] <= int_isr[1] ^ WDATA[1]; // toggle on write
