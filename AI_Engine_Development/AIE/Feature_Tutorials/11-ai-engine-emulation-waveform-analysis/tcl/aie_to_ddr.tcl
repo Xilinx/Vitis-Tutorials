@@ -7,10 +7,10 @@
 remove_wave -of [get_wave_config] [get_waves -of [get_wave_config] *]
 
 set S2MM [add_wave_group S2MM]
-set s2mm_intf [get_objects -r $scope_path/s2mm_1/m_axi_gmem -filter {type==proto_inst}]
+set s2mm_intf [get_objects -r $scope_path/VitisRegion/s2mm_1/m_axi_gmem -filter {type==proto_inst}]
 add_wave -into $S2MM $s2mm_intf
 
-set s2mm_intf [get_objects -r $scope_path/s2mm_1/s -filter {type==proto_inst}]
+set s2mm_intf [get_objects -r $scope_path/VitisRegion/s2mm_1/* -filter {type==proto_inst}]
 add_wave -into $S2MM $s2mm_intf
 
 set DDR4 [add_wave_group DDR4]

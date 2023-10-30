@@ -16,12 +16,12 @@ add_wave -into $CIPS $cips_intf
 
 # Create a wave group called NOISE and add all signals of the random_noise_1 to it
 set NOISE [add_wave_group NOISE]
-set noise_intf [get_objects -r $scope_path/random_noise_1/* -filter {type==proto_inst}]
+set noise_intf [get_objects -r $scope_path/VitisRegion/random_noise_1/* -filter {type==proto_inst}]
 add_wave -into $NOISE $noise_intf
 
 # Create a wave group called S2MM and add all signals of the S2MM kernel to it
 set S2MM [add_wave_group S2MM]
-set s2mm_intf [get_objects -r $scope_path/s2mm_1/* -filter {type==proto_inst}]
+set s2mm_intf [get_objects -r $scope_path/VitisRegion/s2mm_1/* -filter {type==proto_inst}]
 add_wave -into $S2MM $s2mm_intf
 
 # Create a wave group called CIPS_NOC and all signals of the CIPS NoC to it

@@ -9,7 +9,7 @@
 
 # Versal System Design Clocking
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -20,7 +20,7 @@ In this tutorial, you will learn clocking concepts for the Vitis compiler and ho
 ![Design](./images/design.png)
 Prerequisites for this tutorial are:
 
-* Familiarity with the `aiecompiler` flow.
+* Familiarity with the `v++ -c --mode aie` flow.
 * Familiarity with the `gcc` style command line compilation.
 
 In the design, the following clocking steps are used:
@@ -31,23 +31,22 @@ In the design, the following clocking steps are used:
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
 For detailed information, see the Clocking the PL Kernels section [here](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
-**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2023.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
+**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023.2.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4`, and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/`.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4`, and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/`.
 
-This tutorial targets VCK190 production board for 2023.1 version.
+This tutorial targets VCK190 production board for 2023.2 version.
 
 ## Objectives
 
 You will learn the following:
 
-* Clocking of PL kernels
-* Introduction of datawidth converters, clock-domain crossing, and FIFOs in `v++`
+* Clocking in Versal for PL and AIE kernels using --freqhz directive. 
 
 ## Step 1 - Building ADF Graph
 
@@ -56,15 +55,15 @@ The ADF graph has connections to the PL through the PLIO interfaces. These inter
 **NOTE**: If you do not specify the `--pl-freq`, it will be set to 1/4 the frequency of the AI Engine frequency.
 
 ```bash
-aiecompiler --target=hw -include="$(XILINX_VITIS)/aietools/include" -include="./aie" -include="./data" -include="./aie/kernels" -include="./" --pl-freq=200 --workdir=./Work aie/graph.cpp
+v++ -c --mode aie --target=hw -include="$(XILINX_VITIS)/aietools/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./" --freqhz=200000000 --aie.workdir=./Work aie/graph.cpp
 ```
 
 | Flag | Description |
 | ---- | ----------- |
 | --target | Target how the compiler will build the graph. Default is `hw`. |
 | --include | All the typical include files needed to build the graph. |
-| --pl-freq | Sets all PLIO reference frequencies (in MHz). |
-| --workdir | The location of where the work directory will be created. |
+| --freqhz=200000000 | Sets all PLIO reference frequencies (in MHz). |
+| --aie.workdir | The location of where the work directory will be created. |
 
 ## Step 2 - Clocking the PL Kernels
 
@@ -73,14 +72,14 @@ In this design, you will use three kernels called: **MM2S**, **S2MM**, and **Pol
 Run the following commands.
 
 ```bash
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -k mm2s ./pl_kernels/mm2s.cpp 
-        --hls.clock 150000000:mm2s -o mm2s.xo --save-temps \
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm 
+        --freqhz=150000000 --config pl_kernels/mm2s.cfg \
 
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm -k s2mm ./pl_kernels/s2mm.cpp 
-        --hls.clock 150000000:s2mm -o s2mm.xo --save-temps \
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm 
+        --freqhz=150000000 --config pl_kernels/s2mm.cfg \
 
-    v++ -c --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --hls.clock 200000000:polar_clip -k polar_clip 
-        ./pl_kernels/polar_clip.cpp -o polar_clip.xo --save-temps \ 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm 
+        --freqhz=200000000 --config ./pl_kernels/polar_clip.cfg \
 ```
 
 A brief explanation of the `v++` options:
@@ -88,11 +87,10 @@ A brief explanation of the `v++` options:
 | Flag/Switch | Description |
 | --- | ---|
 | `-c` | Tells `v++` to run the compiler.|
+| `--mode` | Tells `v++` to run the HLS mode for the PL compilation.|
 | `--platform` | (required) The platform to be compiled towards.|
-| `-k` | (required) Kernel name.|
-| `--hls.clock` | Tells the Vitis compiler to use a specific clock defined by a nine digit number (in the previous example above the clock is 100 MHz). Specifying this will help with the compiler make optimizations based on kernel timing.|
-| `-o` | (required) The output, which will always be `.xo`.|
-| `--save-temps` | (optional) Will create a folder structure and save the compilation of the kernel.|
+| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
+| `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
 For additional information, see [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
 
@@ -124,48 +122,68 @@ stream_connect=ai_engine_0.DataOut1:s2mm.s
 Here you might notice some connectivity and clocking options.
 
 * `nk`: This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
-* `stream_connect`: This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces. You can also define a FIFO on this line by adding a depth value to the end.
+* `stream_connect`: This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces.
 
-There are many more options available for `v++`. For a full list, see the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
+With the changes made, you can now run the following command:
 
-1. Modify the `system.cfg` file so that the second `stream_connect` has a stream depth of `1024`. Replace the line with `ai_engine_0.Dataout` line with this: `stream_connect=ai_engine_0.Dataout:s2mm.s:1024`
-   * Keep this file open for now.
-2. The data output of the AI Engine is at 32-bit and at a high clock frequency. To reduce the possibilities of dropping data, you can attach the `s2mm` kernel to the AI Engine with a larger datawidth (64-bits) and the clock frequency to `s2mm` to keep relative bandwidth the same. To do this, the Vitis Compiler will auto instantiate a Clock Converter block and Datawidth Converter block to make sure connectivity is achieved.
-   * Open the `s2mm.cpp` in `./pl_kernels` to see that the line `23` has 64-bit defined for both input and output.
-3. Because the `s2mm` kernel is running slower than that for kernel compilation and linking is to make sure that clock is connected correctly. In the `system.cfg` file, uncomment these lines:
+```bash
+    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/        xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm 
+    pl_kernels/s2mm.xo pl_kernels/mm2s.xo pl_kernels/polar_clip.xo ./aie/libadf.a --freqhz=200000000:mm2s.ap_clk --freqhz=200000000:s2mm.ap_clk 
+    --config system.cfg --save-temps -o tutorial1.xsa
+```
+| Flag/Switch | Description |
+| --- | ---|
+| `--link` | Tells `v++` that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
+| `--target` | Tells `v++` how far of a build it should go, hardware (which will build down to a bitstream) or hardware emulation (which will build the emulation models).|
+| `--platform` |  Same from the previous two steps.|
+| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
+| `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
-    ```ini
-    [clock]
-    freqHz=200000000:s2mm.ap_clk
-    tolerance=1000000:s2mm.ap_clk
-    ```
+Once the linking is done, you can view clock report generated by v++ --link after pre-synthesis: ``automation_summary_pre_synthesis.txt``
 
-    Here you are telling the `v++` linker to override the default clock frequency to 200 MHz for the `s2mm` kernel, and setting the clock tolerance to 1 MHz. By setting a tolerance, you are giving the linker a better chance to make sure a clock can be generated that meets your bandwidth.
-4. With the changes made, you can now run the following command:
-
-    ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm s2mm.xo \
-        mm2s.xo polar_clip.xo ./aie/libadf.a --config system.cfg \
-        --save-temps -o tutorial1.xclbin
-    ```
-
-    | Flag/Switch | Description |
-    | --- | --- |
-    | `--link` | Tells `v++` that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
-    | `--target` | Tells `v++` how far of a build it should go, hardware (which will build down to a bitstream) or hardware emulation (which will build the emulation models). |
-    | `--platform` |  Same from the previous two steps. |
-    | `--config` | This allows you to simplify the `v++` command-line if it gets too unruly and have items in an ini style file. |
-
-5. When the linking is complete, you can view what the design looks like in the AMD Vivado™ Design Suite tools. Navigate to `_x/link/vivado/vpl`.
-   1. Run the command in the terminal: `vivado -source openprj.tcl`
-   2. When the tool is open, locate the button on the left in the Flow Navigator and click, "Open Block Design". You should see an output similar to the following figure. (The following figure has reduced nets visible to see the added FIFO, Datawidth Converter, and Clock Converter).
-
-    ![IPI Diagram](./images/vivado_ipi.PNG)
+   ![IPI Diagram](./images/clocking_summary.png)
 
     **IMPORTANT: Do not change anything in this view. This is only for demonstration purposes.**
 
-   * From the changes made in the previous steps, you will notice a new clock, Datawidth Converter, Clock Converter, and a new FIFO on the `s2mm` kernel.
-      * Do note that if you change a kernel or connectivity you have to re-run the `v++` linker.
+   * As we can see that AIE compile frequency= 200 MHz (same as given in command in step 1)
+
+   * To compile, PL kernel frequency for mm2s = 150 MHz (same as given in command in step 2.1)
+
+   * To compile, PL kernel frequency for s2mm = 150 MHz (same as given in command in step 2.2)
+
+   * To compile, PL kernel frequency for Polar_clip  = 200 MHz (same as given in command in step 2.3)
+
+To check the platform frequency, give command at terminal: platforminfo /proj/xbuilds/2023.2_daily_latest/internal_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+
+Clock frequency used by Vitis for linking are derived in following way:
+
+    * Clock frequency used in linking for mm2s = 200 MHz (CLI)
+
+    * Clock frequency used in linking for s2mm = 200 MHz (CLI)
+
+    * Clock frequency used in linking for polar_clip = 100 MHz (config file)
+
+Since these clock frequencies are not matching with the platform clock frequency, so vitis picked the clock frequency from the platform which is coming under the default tolerance (+/- 10%). If link frequency is outside the limit of tolerance new MMCM would be instantiated by Vitis to generate the clock frequency used in linking.
+
+So, for linking, the clock frequency used by Vitis in a following way:
+
+    For mm2s:
+
+    Frequency given during linking = 200 MHz
+
+    Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
+
+    For s2mm:
+
+    Frequency given during linking = 200 MHz
+
+    Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
+
+    For polar_clip:
+
+    Frequency given during linking = 100 MHz
+
+    Frequency used by Vitis = 104.17 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
 
 **NOTE: Any change to the `system.cfg` file can also be done on the command line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).**
 

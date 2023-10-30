@@ -11,7 +11,7 @@ set pl_intf [get_objects -r $scope_path/CIPS_0/*M_AXI*FPD*tlm -filter {type==pro
 add_wave -into $CIPS $pl_intf
 
 set NOISE [add_wave_group NOISE]
-set pl_intf [get_objects -r $scope_path/random_noise_1/* -filter {type==proto_inst}]
+set pl_intf [get_objects -r $scope_path/VitisRegion/random_noise_1/* -filter {type==proto_inst}]
 add_wave -into $NOISE $pl_intf
 
 set AIENGINE [add_wave_group AIENGINE]
