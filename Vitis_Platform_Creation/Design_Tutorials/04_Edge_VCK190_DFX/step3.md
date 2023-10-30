@@ -46,7 +46,7 @@ You can verify hardware configuration (clocks, memory) and software configuratio
    Board:                            versal_extensible_dfx_platform_base
    Name:                             versal_extensible_dfx_platform_base
    Version:                          1.0
-   Generated Version:                2023.1
+   Generated Version:                2023.2
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               0
@@ -142,8 +142,8 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 1. Launch the Vitis platform.
 
    ```bash
-   mkdir -p ref_files/step4_verify
-   cd ref_files/step4_verify
+   mkdir -p ref_files/step3_verify
+   cd ref_files/step3_verify
    vitis -workspace ./ &
    ```
 
@@ -153,7 +153,7 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 
    1. Select **Xilinx -> Add custom platform...**.
    2. Click the **add** button.
-   3. Select the directory that [step3](./step3.md) generates. For example `ref_files/step2_sw/pfm`.
+   3. Select the directory that [step2](./step2.md) generates. For example `ref_files/step2_sw/pfm`.
    4. Click **OK**.
 
 3. Create vector addition application on the custom platform.
@@ -165,9 +165,9 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 
       ![missing image](./images/step4/vitis_create_vadd.png)
 
-   5. Input **Sysroot** path (`step3_pfm/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux`)
-   6. Input **RootFS** path (`step3_pfm/sw_comp/rootfs.ext4`)
-   7. Input **Kernel Image** path (`step3_pfm/sw_comp/Image`). These components were prepared in [step 3](./step3.md). Click **Next**.
+   5. Input **Sysroot** path (`step2_sw/build/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux`)
+   6. Input **RootFS** path (`step2_sw/build/sw_comp/rootfs.ext4`)
+   7. Input **Kernel Image** path (`step2_sw/build/sw_comp/Image`). These components were prepared in [step 2](./step2.md). Click **Next**.
    8. Select template **Vector Addition**. Click **Finish**.
 
 4. Build the vector addition application for hardware emulation.

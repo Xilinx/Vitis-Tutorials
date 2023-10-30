@@ -49,21 +49,25 @@ set my_board [get_board_parts *${BOARD}:part0* -latest_file_version]
 create_project project_1 ./project_1 -part xcvc1902-vsva2197-2MP-e-S -force 
 set_property board_part $my_board [current_project]
 create_bd_design "versal_dfx_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_dfx_platform:1.0 -design versal_dfx_platform -options { Clock_Options.VALUE {clk_out1 156.25 0 true clk_out2 104.167 1 false} Include_AIE.VALUE true Include_DDR.VALUE true}
+instantiate_example_design -template xilinx.com:design:versal_dfx_platform:1.0 -design versal_dfx_platform -options { Include_AIE.VALUE true Include_DDR.VALUE true}
 update_compile_order -fileset sources_1
+generate_target all [get_files  project_1/project_1.srcs/sources_1/bd/versal_dfx_platform/versal_dfx_platform.bd]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sim_1
+set_property top vitis_design_wrapper [current_fileset] 
 
 
+#create_pr_configuration -name config_1 -partitions [list versal_dfx_platform_i/VitisRegion:VitisRegion_inst_0 ]
+#set_property PR_CONFIGURATION config_1 [get_runs impl_1]
 #run implementtation
 launch_runs impl_1 -to_step write_device_image -jobs 10
 wait_on_run impl_1
 open_run impl_1
-
-
+set_property platform.platform_state "impl" [current_project]
 write_hw_platform -force -fixed -static -file vck190_custom_dfx_static.xsa
 write_hw_platform  -force -rp versal_dfx_platform_i/VitisRegion vck190_custom_dfx_rp.xsa
-#set_property platform.platform_state "pre_synth" [current_project]
-# Default Value
-#write_hw_platform -hw_emu -force -file vck190_custom_dfx_hw_emu.xsa
-set_property platform.platform_state "pre_synth" [current_project] 
-# Default Value
+
+#generate emulation xsa
+set_property platform.platform_state "pre_synth" [current_project]
 write_hw_platform -hw_emu -force -file vck190_custom_dfx_hw_emu.xsa
+

@@ -6,6 +6,7 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+#PLATFORM=/proj/rdi/xbuilds/2023.2_daily_latest/internal_platforms/xilinx_vck190_base_dfx_202320_1/xilinx_vck190_base_dfx_202320_1.xpfm
 COMMON_IMAGE ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
 SYSROOT ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux/
 
@@ -26,8 +27,6 @@ Vitis_Accel_Examples:
 	
 
 vadd: Vitis_Accel_Examples  
-	cd Vitis_Accel_Examples/ && sed -i '116 i\VPP_FLAGS += --config system.cfg' cpp_kernels/simple_vadd/makefile_versal_ps.mk
-	cp system.cfg workaround.tcl Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 # vadd_hw is a place-holder for manual build and test on hardware
@@ -39,11 +38,10 @@ vadd_hw: Vitis_Accel_Examples
 vadd_hw_package: Vitis_Accel_Examples
 	$(MAKE) -C $(PL_EXAMPLE_PATH) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE)
 
-
-#aie_adder:Vitis_Accel_Examples 
-#	cd Vitis_Accel_Examples/ && sed -i '8 i\[advanced] param=compiler.userPostSysLinkOverlayTcl="workaround.tcl"' aie_kernels/aie_adder/system.cfg
-#	cp  workaround.tcl Vitis_Accel_Examples/aie_kernels/aie_adder/
-#	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
+vadd_xo: Vitis_Accel_Examples
+	$(MAKE) -C $(PL_EXAMPLE_PATH) xo TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE)
+aie_adder:Vitis_Accel_Examples 
+	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
 
 aie_adder_hw: Vitis_Accel_Examples 
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)

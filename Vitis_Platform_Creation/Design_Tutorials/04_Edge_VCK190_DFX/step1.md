@@ -82,29 +82,8 @@ The generated design is shown in the following figure:
 ![Vivado Design Block Diagram](images/step1/vivado_versal_dfx_diagram.PNG)
 ![Vivado Design Block Diagram](images/step1/vivado_dynamic_region_diagram.PNG)
 
-At this stage, the Vivado block automation has already created a top block design and a dynamic region block. It added the CIPS, AXI NOC block, dfx_decoupler, and supporting logic blocks to the top diagram. It also added the AI engine, AXI NOC and clock in dynamic region (`VitisRegion.bd`) and also applied all board presets for the VCK190. Block generation and address aperture setting has also been done.
+At this stage, the Vivado block automation has already created a top block design and a dynamic region block. It added the CIPS, AXI NOC block, dfx_decoupler, and supporting logic blocks to the top diagram. It also added the AI engine, AXI NOC and clock in dynamic region (`VitisRegion.bd`) and also applied all board presets for the VCK190. Block generation and address aperture setting has also been done. In the following sections, we will delve into the sub-modules within this CED DFX platform. The sub-module design methodology is a fundamental aspect applied to all DFX designs.
 
-The next sections explain the sub-module in this CED DFX platform. The submodule design methodology is applied to all the DFX design.
-
-### Modify the IP address in address editor (Optional)
-
-   >Note: This step is not mandatory for platform creation. Please refer to it according to your requirement.
-
-   If users need to modify the IP address please go through following steps.
-   1. Check the location address space of your IP 
-   2. Go to address editor by clicking **Window**-> **Address editor** to open it.
-
-   Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
-
-   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
-
-      ![Platform Setup - AXI Ports](images/step1/FPD.PNG)
-
-   - Go to address editor, modify the interrupt controller IP base address according to your requirement. Following is just an example.
-
-      ![Platform Setup - AXI Ports](images/step1/versal_address.PNG)
-      
-   >Note: The modified base address should be in the LPD address space and the high address should also be in the LPD address space.
 ### DFX Platform Design Submodule Explanation
 
 The following sections provide the platform hardware submodule explanation with diagrams. In the diagrams, the Vitis region is the dynamic area (RP). Blocks outside of the Vitis Region are in the static region. They will be loaded at boot time and won't be reconfigured.
@@ -159,7 +138,27 @@ Static region and dynamic region can have their own clock and reset signals.
 
 The Clock Wizard in static region is required so that the device tree generator (DTG) can generate correct device tree to describe this clock topology.
 
-#### Export Hardware Emulation XSA
+### Modify the IP address in address editor (Optional)
+
+   >Note: This step is not mandatory for platform creation. Please refer to it according to your requirement.
+
+   If users need to modify the IP address please go through following steps.
+   1. Check the location address space of your IP 
+   2. Go to address editor by clicking **Window**-> **Address editor** to open it.
+
+   Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
+
+   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
+
+      ![Platform Setup - AXI Ports](images/step1/FPD.PNG)
+
+   - Go to address editor, modify the interrupt controller IP base address according to your requirement. Following is just an example.
+
+      ![Platform Setup - AXI Ports](images/step1/versal_address.PNG)
+      
+   >Note: The modified base address should be in the LPD address space and the high address should also be in the LPD address space.
+
+### Export Hardware Emulation XSA
 
 The Versal Extensible Platform Example has set up the simulation model of each IP properly. You will review the settings in this session. If you created the block design by yourself, ensure these settings are applied before running emulation on your platform.
 
@@ -187,7 +186,7 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
    write_hw_platform -hw_emu -file hw_emu/hw_emu.xsa
    ```
 
-#### Export Hardware XSA
+### Export Hardware XSA
 
 1. Run Implementation.
 
