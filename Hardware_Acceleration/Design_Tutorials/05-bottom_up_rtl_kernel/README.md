@@ -11,7 +11,7 @@
 
 # Bottom-up RTL Kernel Flow with Vitis for Acceleration
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 Register transfer level (RTL) design is a traditional and important hardware accelerator development methodology for FPGA. RTL modules provide excellent flexibility and efficiency, while the design process is a time consuming and error-prone process. The Vitis unified software platform provides a mature and proven RTL kernel design methodology. With Vitis and the included the AMD Vivado&trade; Design Suite, you can focus on your core accelerating module, instead of spending a lot of time on integration, host-field programmable gate array (FPGA) communication, direct memory access (DMA), and other supporting tasks.
 
@@ -45,7 +45,7 @@ The designs have been verified with the following software/hardware environment 
   * Perl package installed for Verilog simulation (**required**)
   * OpenSSL library installed for hardware output validate (**required**)
   * GCC 7
-* Vitis: 2023.1
+* Vitis: 2023.2
 * Hardware and Platform for your Alveo card (you need both the deployment and development platforms):
   * Alveo U200: xilinx_u200_gen3x16_xdma_2_202110_1
   * Alveo U250: xilinx_u250_gen3x16_xdma_4_1_202210_1

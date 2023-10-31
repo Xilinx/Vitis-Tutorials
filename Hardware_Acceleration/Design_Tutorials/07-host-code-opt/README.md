@@ -8,7 +8,7 @@
 
 # Host Code Optimization
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -34,7 +34,7 @@ The following sections focus on the following specific host code optimization co
 This tutorial uses:
 
 * BASH Linux shell commands
-* 2023.1 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.  
+* 2023.2 Vitis core development kit release and the *xilinx_u200_gen3x16_xdma_2_202110_1* platform.  
 If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:** Before running any of the examples, make sure you have the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
@@ -180,10 +180,8 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
    After the run completes, open the Application Timeline using the Vitis analyzer, then select the Application Timeline located in left side panel.
 
    ```
-   vitis_analyzer pipeline/xrt.run_summary
+   vitis -a pipeline/xrt.run_summary
    ```
-
-   >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
    The Application Timeline view illustrates the full run of the executable. The three main sections of the timeline are:
 

@@ -8,7 +8,7 @@
 
 # Using HBM
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -21,7 +21,7 @@ This tutorial covers essential steps on migrating an existing application using 
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2023.1 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* and *xilinx_u50_gen3x16_xdma_5_202210_1* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have an AMD Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
+* 2023.2 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* and *xilinx_u50_gen3x16_xdma_5_202210_1* platforms. If necessary, it can be easily ported to other versions and platforms. Its also expected that you have an AMD Alveo™ Data Center accelerator card that supports DDR and HBM to run this tutorial.
 
 >**IMPORTANT:**
 >

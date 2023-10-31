@@ -104,8 +104,6 @@ For each module of this tutorial, Vitis can be run via the GUI **or** at the com
 
 Vitis Analyzer is a graphical tool which lets you browse many aspects of the design starting from the whole system down to the details of the kernel.
 
-In the 2023.1 release, the `vitis_analyzer` command opens the Analysis view of the new Vitis Unified IDE and loads the specified summary files as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking the links provided in the summary report.
-
 <details>
   <summary><b>Click to expand! (instructions for <code>Vitis Analyzer</code></b>)</summary>
 

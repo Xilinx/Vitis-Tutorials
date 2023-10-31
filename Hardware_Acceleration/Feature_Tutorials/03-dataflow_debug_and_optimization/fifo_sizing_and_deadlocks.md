@@ -75,7 +75,7 @@ The goal of this tutorial is to help you analyze a dataflow design and identify 
 
 Note that for complex designs, with data-dependent synchronizations (e.g., a process reads 128 times from a FIFO in one execution and 32 times in another), a process might block for a variety of reasons, that change over time. In this case, the Dataflow co-simulation waveforms might be the only viable approach for debugging — as described in the earlier lab.
 
-As the second exercise in this tutorial, you will first synthesize the example design and bring up the dataflow viewer to show how a deadlock can be investigated and resolved. In this lab, you will look at a simple [deadlock example](./reference-files/src/deadlock/example.cpp), found in the `reference-files/deadlock` folder.
+As the second exercise in this tutorial, you will first synthesize the example design and bring up the dataflow viewer to show how a deadlock can be investigated and resolved. In this lab, you will look at a simple [deadlock example](./reference_files/deadlock/example.cpp), found in the `reference-files/deadlock` folder.
 
 In this lab, you will:
 

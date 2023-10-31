@@ -18,30 +18,31 @@ help:
 TARGET := hw_emu
 DEVICE := xilinx_u250_gen3x16_xdma_4_1_202210_1
 LAB := run1
-EXECUTABLE := host
-XO := krnl_vadd.$(TARGET).$(DEVICE).xo
-XCLBIN := krnl_vadd.$(TARGET).$(DEVICE).xclbin
 
+ifeq ($(TARGET),sw_emu)
+	XO := krnl_vadd.sw_emu.xo
+else
+	XO := krnl_vadd.hw.xo
+endif
+
+XCLBIN := krnl_vadd.$(TARGET).xclbin
+
+#Locate RTL Kernel
 RTL_KRNL := ./src/rtl_kernel/rtl_kernel_wizard_0.xo
 
 # Host building global settings
-CXXFLAGS += -I$(XILINX_XRT)/include/ -I$(XILINX_VIVADO)/include/ -Wall -O0 -g -std=c++11 -L$(XILINX_XRT)/lib/ -lOpenCL -pthread -lrt -lstdc++
-CXXFLAGS2 := -lOpenCL
+CXXFLAGS += -g -std=c++17 -Wall -O0
 
 # Kernel compiler & linker global settings
-#CLFLAGS := -t $(TARGET) --platform $(DEVICE) --config compile.cfg
-#LDCLFLAGS := -t $(TARGET) --platform $(DEVICE) --config link.cfg
-CLFLAGS := -t $(TARGET) --platform $(DEVICE) -g
+CLFLAGS := -t $(TARGET) --platform $(DEVICE)
 
 ifeq ($(LAB),$(filter $(LAB),run1))
-LDCLFLAGS := -t $(TARGET) --platform $(DEVICE) --config run1.cfg
+   EXECUTABLE := host_1
+   LDCLFLAGS := -t $(TARGET) --platform $(DEVICE) --config run1.cfg
 else
-LDCLFLAGS := -t $(TARGET) --platform $(DEVICE) --config run2.cfg
+   EXECUTABLE := host_2
+   LDCLFLAGS := -t $(TARGET) --platform $(DEVICE) --config run2.cfg
 endif
-
-#LDCLFLAGS += --profile.data:all:all:all
-#LDCLFLAGS += --profile.stall:all:all:all
-#LDCLFLAGS += --profile.exec:all:all:all
 
 all: $(EXECUTABLE) $(XO) $(XCLBIN) emconfig
 
@@ -51,31 +52,31 @@ xclbin: $(XO) $(XCLBIN)
 
 # Building kernel
 $(XO): ./src/kernel_cpp/krnl_vadd.cpp
-	v++ $(CLFLAGS) -c -k krnl_vadd -I'$(<D)' -o'$@' '$<'
-#$(XCLBIN): krnl_vadd.$(TARGET).$(DEVICE).xo ../../script/workplace/rtl_project/src/rtl_kernel/rtl_kernel_wizard_0/rtl_kernel_wizard_0.xo
-#	v++ $(LDCLFLAGS) -l -o'$@' $(+)
+ifeq ($(TARGET),sw_emu)
+	v++ $(CLFLAGS) -c -k krnl_vadd -g -o'$@' '$<'
+else
+	v++ --platform $(DEVICE) -c --mode hls --config hls_config.cfg
+endif
 
+$(XCLBIN): $(XO) 
 ifeq ($(LAB),$(filter $(LAB),run1))
-$(XCLBIN): krnl_vadd.$(TARGET).$(DEVICE).xo 
 	v++ $(LDCLFLAGS) -l -o'$@' $(+)
 else
-#$(XCLBIN): krnl_vadd.$(TARGET).$(DEVICE).xo ../script/workplace/rtl_project/src/rtl_kernel/rtl_kernel_wizard_0/rtl_kernel_wizard_0.xo
-#	v++ $(CLFLAGS) -l -o'$@' $(+)
-$(XCLBIN): krnl_vadd.$(TARGET).$(DEVICE).xo
 	v++ $(LDCLFLAGS) -l -o'$@' $(+) $(RTL_KRNL)
 endif
 
 
-# Building Host
-#$(EXECUTABLE): ./src/host/host_step2.cpp
-#	g++ $(CXXFLAGS) -o '$@' '$<' $(CXXFLAGS2)
-
+# Building Executable
 ifeq ($(LAB),$(filter $(LAB),run1))
-$(EXECUTABLE): ./src/host/host_step1.cpp
-	g++ $(CXXFLAGS) -o '$@' '$<' $(CXXFLAGS2)
+$(EXECUTABLE): ./src/host/xrt-host_step1.cpp
+	g++ $(CXXFLAGS) -o '$@' '$<'  \
+		-D_GLIBCXX_USE_CXX11_ABI=0 -I${XILINX_XRT}/include/ \
+                -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 else
-$(EXECUTABLE): ./src/host/host_step2.cpp
-	g++ $(CXXFLAGS) -o '$@' '$<' $(CXXFLAGS2)
+$(EXECUTABLE): ./src/host/xrt-host_step2.cpp
+	g++ $(CXXFLAGS) -o '$@' '$<'  \
+		-D_GLIBCXX_USE_CXX11_ABI=0 -I${XILINX_XRT}/include/ \
+                -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 endif
 
 

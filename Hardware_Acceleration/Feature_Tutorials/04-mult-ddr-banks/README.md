@@ -9,7 +9,7 @@
 
 # Using Multiple DDR Banks
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -44,7 +44,7 @@ The example in this tutorial uses a C++ kernel; however, the steps described are
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2023.1 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* platform. If necessary, it can be easily extended to other versions and platforms.
+* 2023.2 Vitis core development kit release and the *xilinx_u250_gen3x16_xdma_4_1_202210_1* platform. If necessary, it can be easily extended to other versions and platforms.
 
 >**IMPORTANT:**
 >
@@ -70,7 +70,7 @@ Note: This tutorial showcases only hw_emu flow. If the user wants to run HW flow
 
    ```bash
      #setup Xilinx Vitis tools, XILINX_VITIS and XILINX_VIVADO will be set in this step. source <VITIS install path>/settings64.sh. for example:
-     source /opt/Xilinx/Vitis/2023.1/settings64.sh
+     source /opt/Xilinx/Vitis/2023.2/settings64.sh
      #Setup runtime. XILINX_XRT will be set in this step
      source /opt/xilinx/xrt/setup.sh
    ```
@@ -215,9 +215,8 @@ vadd_1:m_axi_gmem2-DDR[2]          RD = 0.000 KB               WR = 0.391 KB
   You can also open the `xrt.run_summary` and look at the Profile Summary to examine the **Kernel to Global Memory** section showing data transfers. 
 
    ```bash
-   vitis_analyzer xrt.run_summary
+   vitis -a xrt.run_summary
    ```
- >**NOTE:** In the 2023.1 release, this command opens the Analysis view of the new Vitis Unified IDE and loads the run summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
 You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.
 

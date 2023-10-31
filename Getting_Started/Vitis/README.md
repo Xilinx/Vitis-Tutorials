@@ -19,9 +19,9 @@
 Welcome to the Vitis Getting Started tutorial. The Vitis tool provides a unified flow for developing FPGA accelerated application targeted to either Data Center accelerator cards or Embedded Processor platforms. If you are looking to learn more about the Vitis application acceleration development flow in order to get started with FPGA acceleration, you have come to the right place.
 
 This tutorial is divided into three separate flows: 
-* The [Embedded System Design flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pkl1657651602103)
-* The [Data Center Acceleration flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=fvi1642629875790)
-* The [Vitis unified IDE flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=svk1630656618393)
+* The [Embedded System Design flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pkl1657651602103.html)
+* The [Data Center Acceleration flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=fvi1642629875790.html)
+* The [Vitis unified IDE flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=svk1630656618393.html)
 
 These flows use the same host applications and accelerated kernel source code, but have differences in the build and implementation of the systems. Use the Embedded System design flow if you are working with an AMD Adaptive SoC device such as AMD Versal™, or Data Center Acceleration if you are working with an AMD Alveo™ accelerator card, and use the Vitis unified IDE flow if you are interested in working with the latest version of the Vitis tools. 
 
@@ -52,9 +52,9 @@ The Vitis unified software platform provides a framework for developing and deli
 
 A Vitis accelerated application consists of two distinct components: a software program running on a standard processor such as an X86 processor, or ARM embedded processor, and a AMD device binary (`xclbin`) containing hardware accelerated functions, or kernels.
 
-* The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the [XRT native API](https://xilinx.github.io/XRT/master/html/index.html) implemented by the AMD Runtime library (XRT) to interact with the acceleration kernel in the AMD device. A description of the host application and required API calls can be found in the Vitis documentation under [Writing the Software Application](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vpy1519742402284).
+* The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the [XRT native API](https://xilinx.github.io/XRT/master/html/index.html) implemented by the AMD Runtime library (XRT) to interact with the acceleration kernel in the AMD device. A description of the host application and required API calls can be found in the Vitis documentation under [Writing the Software Application](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vpy1519742402284.html).
 
-* The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the AMD device. Refer to [Developing PL Kernels using C++](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=rjk1519742919747), or [Packaging RTL Kernels](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=qnk1504034323350) in the Vitis documentation for coding requirements. The kernels are integrated with a Vitis hardware platform using standard AXI interfaces.
+* The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the AMD device. Refer to [Developing PL Kernels using C++](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=rjk1519742919747.html), or [Packaging RTL Kernels](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=creating-rtl-kernels-qnk1504034323350.html) in the Vitis documentation for coding requirements. The kernels are integrated with a Vitis hardware platform using standard AXI interfaces.
 
 ![img](./images/part1_execution_model.png)
 
@@ -82,7 +82,7 @@ The Vitis build process follows a standard compilation and linking process for b
 
 * The host program is built using the GNU C++ compiler (g++) for Data Center applications or the GNU C++ Arm cross-compiler for Embedded Processor devices.
 
-* The FPGA binary is built using the Vitis compiler (v++). First the kernels are compiled into a AMD object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the AMD device binary (.xclbin) file. As described in [V++ Command](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wrj1504034328013), the Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.
+* The FPGA binary is built using the Vitis compiler (v++). First the kernels are compiled into a AMD object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the AMD device binary (.xclbin) file. As described in [V++ Command](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=wrj1504034328013.html), the Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.
 
 ![img](./images/part1_build_flow.png)
 
@@ -96,7 +96,7 @@ The Vitis compiler provides three different build targets: two emulation targets
 
 * Hardware: The kernel code is compiled into a hardware description language (RTL), and then synthesized and implemented for a target AMD device, resulting in a binary (`xclbin`) file that will run on the actual FPGA.
 
->**TIP**: As described in [Simulating the Application with the Emulation Flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=btg1600442263101), there are significant differences in the build and runtime environments between Data Center and Embedded Processor platforms. These two flows will be discussed in detail in the following sections.
+>**TIP**: As described in [Simulating the Application with the Emulation Flow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=btg1600442263101.html), there are significant differences in the build and runtime environments between Data Center and Embedded Processor platforms. These two flows will be discussed in detail in the following sections.
 
 ## Next Steps
 

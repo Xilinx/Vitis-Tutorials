@@ -23,7 +23,7 @@
 
 ## Introduction
 
-Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code for implementation in the programmable logic (PL) region of AMD devices. It is the tool that performs high-level synthesis of the C/C++ code and exports it as either a Vivado IP (.zip) for use in the Vivado Design Suite and the Embedded Software development flow, or as a Vitis kernel (.xo) for use in the Vitis acceleration flow and heterogeneous system designs. Although the Vitis kernel and Vivadp IP flows are similar, there are some fundamental differences as explained in [Introduction to Vitis HLS Components](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=tgc1661815832870). This tutorial demonstrates the Vitis unified IDE flow for the bottom-up development of HLS designs.
+Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code for implementation in the programmable logic (PL) region of AMD devices. It is the tool that performs high-level synthesis of the C/C++ code and exports it as either a Vivado IP (.zip) for use in the Vivado Design Suite and the Embedded Software development flow, or as a Vitis kernel (.xo) for use in the Vitis acceleration flow and heterogeneous system designs. Although the Vitis kernel and Vivadp IP flows are similar, there are some fundamental differences as explained in [Introduction to Vitis HLS Components](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=tgc1661815832870.html). This tutorial demonstrates the Vitis unified IDE flow for the bottom-up development of HLS designs.
 
 
 ### Before You Begin
@@ -31,11 +31,11 @@ Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code for i
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2023.1 Vitis core development kit release.
+* 2023.2 Vitis core development kit release.
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vhc1571429852245.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on the AMD Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions To complete installation, follow the instructions on the [Alveo Product Documentation tab](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 ### Setup the environment to run Vitis
@@ -43,7 +43,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2023.1/settings64.sh
+source <Vitis_install_path>/Vitis/2023.2/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
