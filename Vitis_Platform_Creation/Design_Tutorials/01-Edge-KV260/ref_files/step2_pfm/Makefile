@@ -37,7 +37,7 @@ endif
 
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2023.1  -overlay -compile"
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME).xsa -zocl  -platform-name $(DT_PLAT_NAME) -out .  -git-branch xlnx_rel_v2023.2  -overlay -compile"
 
 dtbo:$(DT_PATH)/pl.dtsi
 	dtc -@ -O dtb -o $(DT_PATH)/pl.dtbo $(DT_PATH)/pl.dtsi

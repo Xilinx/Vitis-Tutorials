@@ -52,7 +52,7 @@ hw: $(ABS_BD_TCL)
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.1 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
+	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
 	
 	
 # Target: sysroot

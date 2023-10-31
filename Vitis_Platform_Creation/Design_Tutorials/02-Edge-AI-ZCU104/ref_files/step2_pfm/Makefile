@@ -37,7 +37,7 @@ endif
 #echo command is to avoid the return error code caused by the createdts command warning	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2023.1 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2023.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
 
 #create platfrom 
 pfm:
