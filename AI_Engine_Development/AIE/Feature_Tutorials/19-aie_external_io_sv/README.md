@@ -9,7 +9,7 @@
 
 # Using Verilog Traffic Generators in AIE Simulation
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 
@@ -43,16 +43,16 @@ After completing this tutorial, you should be able to:
 
 * Use python-based automation to generate AMD Vivado™ Design Suite TCL scripts and aie instantiable module for your external testbench.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html. The common image package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023.2.html. The common image package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 
 Before starting this tutorial run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.1/sdk.sh`.
-3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.1` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.1/base_platforms/`.
+2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/`.
 
-This tutorial targets VCK190 production board for 2023.1 version.
+This tutorial targets VCK190 production board for 2023.2 version.
 
 ## Documentation
 
@@ -127,7 +127,7 @@ The AIE wrapper stubs will be generated based on the external PLIO declarations 
 1. Perform the ADF graph compilation to generate `scsim_config.json` file that resides in `Work/config/scsim_config.json` directory. This config file contains information on the PLIOs declared in the graph.
 
     ```
-    aiecompiler --aiearch=aie --platform=$(PLATFORM)  -v -log-level=3 --pl-freq=500 -include=./aie --dataflow --output=graph.json aie/graph.cpp
+    v++ -c --mode aie --platform=$(PLATFORM) --aie.pl-freq 500 --aie.adf-api-log-level 3 --include=./aie  --output=graph.json aie/graph.cpp
     ```
 
     or
