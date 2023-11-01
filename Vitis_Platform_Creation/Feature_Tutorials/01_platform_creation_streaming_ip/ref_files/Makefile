@@ -67,8 +67,7 @@ $(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
 pfm:
 	@echo "INFO: Creating Final Platform $(PLATFORM_NAME)"
 	@echo "set place for vitis configuration file "
-	mkdir -p tmp && set %XILINX_VITIS_DATA_DIR%="tmp/"
-	vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(XSA_PATH)/$(XSA_NAME)_hw.xsa --xsa-emu_path $(XSA_PATH)/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(XSA_PATH)/$(XSA_NAME)_hw.xsa --xsa-emu_path $(XSA_PATH)/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 	echo "Platform created:" && \
 	find . -name "*.xpfm"

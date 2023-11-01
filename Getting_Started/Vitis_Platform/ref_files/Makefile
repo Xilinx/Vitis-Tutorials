@@ -67,7 +67,7 @@ $(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
 # Input: vck190_custom.xsa in build/vivado directory
 pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
-	vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 
 Vitis_Accel_Examples:
 	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git

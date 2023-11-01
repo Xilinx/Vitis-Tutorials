@@ -43,8 +43,7 @@ dtb:
 pfm:
 	@echo "INFO: Creating Final Platform $(PLATFORM_NAME)"
 	@echo "set place for vitis configuration file "
-	mkdir tmp && set %XILINX_VITIS_DATA_DIR%="tmp/"
-	vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa --xsa-emu_path ../step1_vivado/build/vivado/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_ZYNQMP) --dtb $(DTB)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa --xsa-emu_path ../step1_vivado/build/vivado/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_ZYNQMP) --dtb $(DTB)
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 #install SDK tool
 sysroot: $(SYSROOT)
