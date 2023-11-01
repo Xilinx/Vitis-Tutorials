@@ -47,7 +47,7 @@ Before starting this tutorial run the following steps.
 
 This tutorial is based on a basic design, as shown below. This design contains two AI Engine kernels with an intermediate kernel in the PL. The overall system is fed and flushed from kernels mm2s and s2mm that are in PL. In this full system design, the intermediate processing kernel is the polar_clip which is also in the PL logic. 
 
-![Diagram of the design](./images/TutorialImages-CompleteSystem.svg)
+![Diagram of the design](./images/full_system_design.png)
 
 ### Analyzing the full system design in the external traffic generators 
 

@@ -51,10 +51,11 @@ out_classifier_data = out_classifier.receive_data_with_size(1024)
 out_interpolator_data = out_interpolator.receive_data_with_size(1024)
 ```
 
-This API is a blocking API and it will wait till specified data i.e. 1024 bytes is received at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list. 
+This API is a blocking API and it will wait till specified data i.e. 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list. 
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (golden.txt). 
 
+For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
 </details>
 
 <details>
@@ -89,55 +90,56 @@ Here the first parameter `in_interpolator_data` is the list of int16 values expe
 In order to get the received data values from the classifier, use receive_data_with_size(exp_data_size) API call. This API needs expected data size (in bytes) as an argument. 
 
 ```BASH 
-out_classifier_data = out_classifier.receive_data_with_size(2048)
-out_interpolator_data = out_interpolator.receive_data_with_size(4096)
+out_classifier_data = out_classifier.receive_data_with_size(1024)
+out_interpolator_data = out_interpolator.receive_data_with_size(1024)
 ```
 
-This API is a blocking API and it will wait till specified data i.e. 2048 bytes is received at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list. If expected size is not received, you will see INFO stating number of bytes received Vs number of bytes expected as below: 
+This API is a blocking API and it will wait till specified data i.e. 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list.
 
-<add screenshot>
+Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (classifier_golden.txt). 
 
-Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(polar_clip_in_ref.txt). The output of the classifier is validated against the golden output (golden.txt). 
-
+For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
 </details>
 
 <details>
   <summary>C++</summary>
 
-### C++
+### CPP
 
 #### 1. Instantiating the XTLM Utilities
 
 You can create the sender and receiver objects for the AIE that will make sure to instantiate the XTLM utilies for IPC based communication while sending or receiving the traffic.
 
 ```BASH
-    in_interpolator = aie_input_plio("in_interpolator", 'int16')
-    out_interpolator = aie_output_plio("out_interpolator", 'int16')
-    in_classifier = aie_input_plio("in_classifier", 'int16')
-    out_classifier = aie_output_plio("out_classifier", 'int32')
+    xtlm_ipc::axis_master in_interpolator("in_interpolator");
+	xtlm_ipc::axis_slave out_interpolator("out_interpolator");
+
+	xtlm_ipc::axis_master in_classifier("in_classifier");
+	xtlm_ipc::axis_slave out_classifier("out_classifier");
+
 ```
 #### 2. Transmitting the data using send_data (data_val, tlast) API
 
 You can prepare the list of data values and send them using send_data API call. See lines <> in the script. The API expects data values list as the first parameter and TLAST value as the second.  
 
 ```BASH
-in_interpolator.send_data(in_interpolator_data, True)
-in_classifier.send_data(in_classifier_data, True)
+in_interpolator.send_data(interpolator_byte_array, true);
+in_classifier.send_data(classifier_byte_array, true);
 ```
-Here the first parameter `in_interpolator_data` is the list of int16 values expected by the AIE kernel. The second parameter is the TLAST value as `True`
+Here the first parameter `interpolator_byte_array` is the data values in the form of byte array. The second parameter is the TLAST value as `True`
 
 #### 3. Receiving the data using receive_data_with_size API(expected_data_size)
 
 In order to get the received data values from the classifier, use receive_data_with_size(exp_data_size) API call. This API needs expected data size (in bytes) as an argument. 
 
 ```BASH 
-out_classifier_data = out_classifier.receive_data_with_size(2048)
-out_interpolator_data = out_interpolator.receive_data_with_size(4096)
+out_classifier.receive_data_with_size(data_out_cls, 1024)
+out_interpolator.receive_data_with_size(data_out, 1024)
 ```
 
-This API is a blocking API and it will wait till specified data i.e. 2048 bytes is received at the output port. Once received the specified data size, you can see the data values in the `out_classifier_data` and `out_interpolator_data` list.
+This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_data` and `out_data_cls` byte array. You can convert the byte array into user data type using the conversion APIs. For conversion APIs, refer [Writing Traffic Generators in C++](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/General-Purpose-C-API)
 
-Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (golden.txt). 
+Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (classifier_golden.txt). 
 
 </details>
 
