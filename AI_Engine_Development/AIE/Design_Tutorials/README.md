@@ -18,7 +18,7 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td width="65%" align="center"><b>Description</b>
  </tr>
 <tr>
- <td align="center"><a href="../../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
+ <td align="center"><a href="../../../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
  <td>This is a Versal system example design based on a VCK190 thin custom platform (Minimal clocks and AXI exposed to PL) that includes HLS/RTL kernels and AI Engine kernel using a full Makefile build-flow.</td>
  </tr>
  <tr>

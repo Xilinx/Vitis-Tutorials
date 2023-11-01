@@ -98,6 +98,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./19-aie_external_io_sv/">Using Verilog Traffic Generators in AIE Simulation</a></td>
  <td>This tutorial demonstrates how to use Verilog or System Verilog modules to drive traffic in and out of an ADF graph running in the AIE Simulator.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
+ <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
+ </tr>
  </table>
 
 

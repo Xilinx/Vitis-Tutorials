@@ -1,12 +1,35 @@
 # Vitis-Tutorials ChangeLog
 
-## 2023.1_update (Sep. 21, 2023)
+## 2023.2 (Nov. 1st, 2023)
+### New Tutorials 
+- AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization/
+- AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features/ 
+
+### Tutorial Updates
+- Update existing AIE feature tutorials to work with AIE-ML
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/02-using-gmio/
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/03-rtp-reconfiguration/
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/04-packet-switching/
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration/
+    - AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features/
+- Tutorials that contain GUI design flow have been updated to work with the Unified IDE, which has become the default GUI in Vitis 2023.2 
+- Updated tutorials to use the Unified CLI
+
+### EoU Improvements
+- Add an additional level under AI_Engine_Development to host tutorials targeting AIE and AIE-ML.
+    - AI_Engine_Development/AIE
+    - AI_Engine_Development/AIE-ML
+
+<details open>
+    <summary>2023.1 Release</summary>
+
+## 2023.1_update (Sep. 21th, 2023)
 ### New Tutorials 
 - AI_Engine_Development/Design_Tutorials/05-Prime-Factor-FFT/
 - AI_Engine_Development/Design_Tutorials/09-ddc_chain/
 - AI_Engine_Development/Design_Tutorials/11-Bilinear_Interpolation/
 
-## 2023.1_update (Jul. 27, 2023)
+## 2023.1_update (Jul. 27th, 2023)
 ### New Tutorials 
 - Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation/
 ### Tutorial Updates
@@ -17,7 +40,7 @@
     - AI_Engine_Development/README
     - Vitis_Platform_Creation/README
 
-## 2023.1_update (Jun. 12, 2023)
+## 2023.1_update (Jun. 12th, 2023)
 ### New Tutorials 
 - Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
 
@@ -46,8 +69,9 @@
 
 ### EoU Improvements
 - Some of the tutorials have been restructured to improve user experience.
+</details>
 
-<details open>
+<details close>
     <summary>2022.2 Release</summary>
 
 ## 2022.2_update (Mar 1st, 2023)

@@ -19,7 +19,7 @@ Visit more Vitis developer videos on <a href="https://www.youtube.com/channel/UC
 
 ## Unlocking a New Design Experience For All Developers
 
-The [Vitis unified software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) enables the development of embedded software and accelerated applications on heterogeneous AMD platforms (including FPGAs, SoCs, and Versal™ ACAPs). It provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. Learn how to use Vitis, Vitis AI, and the Vitis accelerated libraries to implement a fully end-to-end accelerated application using purely software-defined flows.
+The [Vitis™ software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
 
 ## Where to Start
 
@@ -53,10 +53,10 @@ Alternatively, you can also download repository contents as a ZIP file. The down
 To download a ZIP file of a specific branch, do one of the following:
 
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
-- From a terminal, execute the following command. The following uses the 2023.1 branch as an example.
+- From a terminal, execute the following command. The following uses the 2023.2 branch as an example.
 
   ```
-  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2023.1.zip && unzip 2023.1.zip 
+  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2023.2.zip && unzip 2023.2.zip 
   ```
 
 ## Release Notes
@@ -96,21 +96,20 @@ To download a ZIP file of a specific branch, do one of the following:
     </tbody>
 </table>
 
-
 <table border="0" width="100%">
     <tbody>
         <tr>
-            <td colspan="2" height="24" align="center">
-                <strong> <a href="./Hardware_Acceleration">Hardware Acceleration</a> </strong>
+            <td colspan="3" height="24" align="center">
+                <strong> <a href="./AI_Engine_Development/AIE-ML/">AI Engine Development on AIE-ML :new:</a></strong>
             </td>
         </tr>
         <tr>
-            <td colspan="2" height="48">
-                Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even Verilog and VHDL.
+            <td colspan="3" height="48">
+                Learn how to target, develop, and deploy advanced algorithms using Versal AIE-ML architecture in conjunction with PL IP/kernels and software applications running on the embedded processors.
             </td>
         </tr>
         <tr>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
             <td height="24">
@@ -119,87 +118,37 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow">Getting Started with RTL Kernels</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/02-using-gmio">Using GMIO with AIE-ML </a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial">Convolution Example</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/03-rtp-reconfiguration">Runtime Parameter Reconfiguration</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization">AIE-ML Programming :new:</a>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/02-mixing-c-rtl-kernels">Mixing C and RTL</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/04-packet-switching">Packet Switching  </a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/02-bloom">Bloom Filter Example</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
+            </td>                
+            <td> 
+                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>               
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization">Dataflow Debug and Optimization</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration">RTL Systems Integration Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks">Using Multiple DDR Banks</a>
-            </td>
+            </td>                
             <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson">Traveling Salesperson Problem</a>
             </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu">Using Multiple Compute Units</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel">Bottom RTL Kernel Design Flow Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation">Controlling Vivado Implementation</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Cholesky Algorithm Acceleration</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/07-using-hbm">Optimizing for HBM</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/07-host-code-opt">XRT Host Code Optimization</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application</a>
-            </td>
-        </tr>
-    <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo">Get Moving with Alveo</a>
-            </td>
-        </tr>
+        </tr>        
     </tbody>
 </table>
-
 
 <table border="0" width="100%">
     <tbody>
@@ -333,6 +282,7 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>
             <td>
             </td>
@@ -430,6 +380,109 @@ To download a ZIP file of a specific branch, do one of the following:
             </tr>
         </tbody>
     </table>
+
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td colspan="2" height="24" align="center">
+                <strong> <a href="./Hardware_Acceleration">Hardware Acceleration</a> </strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="48">
+                Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even Verilog and VHDL.
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <strong>Feature Tutorials</strong>
+            </td>
+            <td height="24">
+                <strong>Design Tutorials</strong>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow">Getting Started with RTL Kernels</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial">Convolution Example</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/02-mixing-c-rtl-kernels">Mixing C and RTL</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/02-bloom">Bloom Filter Example</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization">Dataflow Debug and Optimization</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration">RTL Systems Integration Example</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks">Using Multiple DDR Banks</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson">Traveling Salesperson Problem</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu">Using Multiple Compute Units</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel">Bottom RTL Kernel Design Flow Example</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation">Controlling Vivado Implementation</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Cholesky Algorithm Acceleration</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/07-using-hbm">Optimizing for HBM</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/07-host-code-opt">XRT Host Code Optimization</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application</a>
+            </td>
+        </tr>
+    <tr>
+            <td height="24">
+                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API</a>
+            </td>
+            <td>
+                <a href="./Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo">Get Moving with Alveo</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ## Other Vitis Tutorial Repositories
 

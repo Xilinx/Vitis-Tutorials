@@ -375,6 +375,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
+<tr>
+ <td align="center"><a href="./Feature_Tutorials/20-aiecompiler-features/">AIE Compiler Features</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ </tr>
  </table>
 
 ### Design Tutorials
@@ -397,7 +412,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
  <tr>
- <td align="center"><a href="../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
+ <td align="center"><a href="../../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
  <td>Custom</td>
  <td>Linux</td>
  <td> </td>
