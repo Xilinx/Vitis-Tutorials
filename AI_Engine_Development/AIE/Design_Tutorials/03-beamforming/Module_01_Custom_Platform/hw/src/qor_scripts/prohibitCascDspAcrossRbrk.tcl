@@ -1,7 +1,7 @@
 
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 catch {unset ys}
 foreach cr [get_clock_regions {X*Y1 X*Y2 X*Y3}] {

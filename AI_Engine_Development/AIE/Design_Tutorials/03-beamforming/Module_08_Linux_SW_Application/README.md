@@ -43,11 +43,11 @@ One of the first things the host application does is bind the UIO drivers to the
 
 These functions call the `mmap` function to bind the physical address of the PL kernels to a memory pointer. The host application uses the memory pointer to access the register maps of the PL kernels.   
 
-### Changes in 2023.1
+### Changes in 2023.2
 
 All AI Engine related APIs are handled through XRT APIs. XRT APIs provide this flexibility by parsing the metadata in aie.xclbin and corresponding binding code in compiled `aie_control_xrt.cpp`. Hence, it is no longer necessary to include graph.h or graph.cpp into host application compilation. Instead, only the PLIOs needed for performance measurements need to be included in `host_app.cpp`. These changes are implemented in the source code in this module.
 
-Thus, host application is agnostic to AI Engine source code starting 2023.1.
+Thus, host application is agnostic to AI Engine source code starting 2023.2.
 
 
 ## Load AIE XCLBIN   

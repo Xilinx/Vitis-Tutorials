@@ -37,7 +37,7 @@ Transmit delay: 0 msec/char 0 msec/line
 ```
 
 7. Power on the board.
-8. Wait until you see the `root@versal-rootfs-common-2023_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+8. Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 9. Run the following commands into the TeraTerm terminal:
 
 ```

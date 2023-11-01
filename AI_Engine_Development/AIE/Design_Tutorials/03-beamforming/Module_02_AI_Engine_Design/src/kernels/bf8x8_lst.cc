@@ -1,83 +1,58 @@
-
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
- 
-#include <adf.h>
+#ifndef INLINE
+
 #include "include.h"
+#include "aie_api/aie.hpp"
+#include "aie_api/utils.hpp"
+#include "aie_api/aie_adf.hpp"
 
 
 void bf8x8_init()
 {
-	set_rnd(rnd_sym_inf);
-	set_sat();
+    set_rnd(rnd_sym_inf);
+    set_sat();
 };
 
-
-void bf8x8_lst(input_window_cint16  * restrict c_input, input_window_cint16  * restrict x_input,
-         input_stream_cacc48 * data_in, output_window_cint16 * restrict c_output)
+void bf8x8_lst(input_buffer<cint16> & __restrict c_input, input_buffer<cint16> & __restrict x_input, input_cascade<cacc48> * cascadein, output_buffer<cint16> & __restrict dat_out)
 {
+    
+    auto x_in = aie::cbegin_vector<8>(x_input);
+    auto d_out= aie::begin_vector<8>(dat_out);
+    auto c_in = aie::cbegin_vector<8>(c_input);
+    for (unsigned prbcnt=0; prbcnt<NUM_PRBS; ++prbcnt)
+        chess_prepare_for_pipelining
+    {
+        for (unsigned i=0; i<12; ++i)  
+        chess_prepare_for_pipelining
+        chess_unroll_loop(2)
+        {
+            aie::vector<cint16, 8> bufa0 = *c_in++;
+            aie::vector<cint16, 8> bufa1 = *c_in++;
+            aie::vector<cint16, 8> bufb0;
+            aie::vector<cint16, 8> bufb1;
 
-	// buffer for coefficients
-	v16cint16 bufa = undef_v16cint16();
-	v16cint16 bufb = undef_v16cint16();
-	
-	// Loop Through the PRBs
-	for (unsigned prbcnt=0; prbcnt<NUM_PRBS; ++prbcnt)
-	chess_flatten_loop
-	{
-		
-		// initialize the coefficient memory
-		bufa = upd_w(bufa, 0, window_readincr_v8(c_input));
-		bufa = upd_w(bufa, 1, window_readincr_v8(c_input));
-		bufb = upd_w(bufb, 0, window_readincr_v8(c_input));
-		bufb = upd_w(bufb, 1, window_readincr_v8(c_input));
-		
-		//---------------------------------------
-		// Every Loop Deals with Two Subcarriers
-		//---------------------------------------
-		for (unsigned i=0; i<6; ++i)
-		chess_prepare_for_pipelining
-		{
-			v8cint16 dat;
-			v8cacc48 acc  = undef_v8cacc48(); 
+            aie::vector<cint16, 8 > dat0 = *x_in++;
+            aie::accum<cacc48 , 8> acc1;
+            cascadein >> acc1;
+            acc1      = aie::mac(acc1, dat0[0], bufa0); bufb0 = *c_in++; 
+            acc1      = aie::mac(acc1, dat0[1], bufa1); bufb1 = *c_in++; 
 
-			// read in 8 input data
-			dat = window_readincr_v8(x_input);
-			
-			acc = upd_lo(acc, mac4(READSCD, bufa, 0, 0x3210, 8, dat, 0,  0x0000, 1)); 
-			acc = upd_hi(acc, mac4(READSCD, bufa, 4, 0x3210, 8, dat, 0,  0x0000, 1)); 
-					
-			acc = upd_lo(acc, mac4(ext_lo(acc),    bufb, 0, 0x3210, 8, dat, 2,  0x0000, 1)); bufa = upd_w(bufa, 0, window_readincr_v8(c_input));
-			acc = upd_hi(acc, mac4(ext_hi(acc),    bufb, 4, 0x3210, 8, dat, 2,  0x0000, 1)); bufa = upd_w(bufa, 1, window_readincr_v8(c_input));
-								
-			acc = upd_lo(acc, mac4(ext_lo(acc),    bufa, 0, 0x3210, 8, dat, 4,  0x0000, 1)); bufb = upd_w(bufb, 0, window_readincr_v8(c_input));
-			acc = upd_hi(acc, mac4(ext_hi(acc),    bufa, 4, 0x3210, 8, dat, 4,  0x0000, 1)); bufb = upd_w(bufb, 1, window_read_v8(c_input)); window_decr_v8(c_input, 4);
-						
-			acc = upd_lo(acc, mac4(ext_lo(acc),    bufb, 0, 0x3210, 8, dat, 6,  0x0000, 1)); 
-			acc = upd_hi(acc, mac4(ext_hi(acc),    bufb, 4, 0x3210, 8, dat, 6,  0x0000, 1)); window_writeincr(c_output, srs(acc, SHFT));
+            acc1      = aie::mac(acc1, dat0[2], bufb0); bufa0 = *c_in++; 
+            acc1      = aie::mac(acc1, dat0[3], bufb1); bufa1 = *c_in++; 
+ 
+            acc1      = aie::mac(acc1, dat0[4], bufa0); bufb0 = *c_in++; 
+            acc1      = aie::mac(acc1, dat0[5], bufa1); bufb1 = *c_in;   
 
-			// read in 8 input data
-			dat = window_readincr_v8(x_input);
-		
-			acc = upd_lo(acc,mac4(READSCD, bufb, 0, 0x3210, 8, dat, 6,  0x0000, 1)); 
-			acc = upd_hi(acc,mac4(READSCD, bufb, 4, 0x3210, 8, dat, 6,  0x0000, 1)); 
-			
-			acc = upd_lo(acc,mac4(ext_lo(acc),   bufa,  0, 0x3210, 8, dat, 4,  0x0000, 1)); bufb = upd_w(bufb, 1, window_readdecr_v8(c_input));
-			acc = upd_hi(acc,mac4(ext_hi(acc),   bufa,  4, 0x3210, 8, dat, 4,  0x0000, 1)); bufb = upd_w(bufb, 0, window_readdecr_v8(c_input));
-								
-			acc = upd_lo(acc,mac4(ext_lo(acc),   bufb,  0, 0x3210, 8, dat, 2,  0x0000, 1)); bufa = upd_w(bufa, 1, window_readdecr_v8(c_input));
-			acc = upd_hi(acc,mac4(ext_hi(acc),   bufb,  4, 0x3210, 8, dat, 2,  0x0000, 1)); bufa = upd_w(bufa, 0, window_read_v8(c_input)); window_incr_v8(c_input, 4);
-						
-			acc = upd_lo(acc,mac4(ext_lo(acc),   bufa,  0, 0x3210, 8, dat, 0,  0x0000, 1)); 
-			acc = upd_hi(acc,mac4(ext_hi(acc),   bufa,  4, 0x3210, 8, dat, 0,  0x0000, 1)); window_writeincr(c_output, srs(acc, SHFT));
-			
-		}// end of loop for PRB
-			
-		// move the coefficient pointer to next PRB.
-		window_incr_v8(c_input, 4);
-		
-	}// end of loop through PRBs
-  
-}// end of function
+            acc1      = aie::mac(acc1, dat0[6], bufb0); 
+            acc1      = aie::mac(acc1, dat0[7], bufb1); 
+            *d_out++ =  acc1.to_vector<cint16>(SHFT);
+            c_in = c_in - 7;
+        }
+        c_in = c_in + 8;
+    }
+}
+
+#endif //INLINE

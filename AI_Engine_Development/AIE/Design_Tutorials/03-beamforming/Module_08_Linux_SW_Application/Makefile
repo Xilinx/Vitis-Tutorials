@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 
 
@@ -54,7 +54,6 @@ exe: ${AIE_APP_EXE}
 
 ${AIE_APP_EXE}: ${AIE_APP}
 	$(CXX) $(CFLAGS) $(AIE_APP) $(AIE_APP_CTRL) -o $(AIE_APP_EXE) --sysroot=$(PFM_SYSROOT) -I$(SYSROOT_INCLUDE) -I$(XILINX_VITIS)/aietools/include/ -I$(AIE_INCLUDE) -I$(XRT_INCLUDE) $(EXE_INCLUDE) -Xlinker -rpath-link=$(PFM_SYSROOT) -ladf_api_xrt -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(PFM_SYSROOT)/../ -lxrt_coreutil -L$(AIE_LINKER)
-
 
 clean:
 	rm -rf ${AIE_APP_EXE}

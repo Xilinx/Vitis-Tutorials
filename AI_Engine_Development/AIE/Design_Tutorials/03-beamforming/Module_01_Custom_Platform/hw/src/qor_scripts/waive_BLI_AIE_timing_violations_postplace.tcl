@@ -1,7 +1,7 @@
 
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 # Last update; 2019/09/12
 # Last change: added conditions to prevent ERRORs when no BLI or AIE_PL cells are found after place_design

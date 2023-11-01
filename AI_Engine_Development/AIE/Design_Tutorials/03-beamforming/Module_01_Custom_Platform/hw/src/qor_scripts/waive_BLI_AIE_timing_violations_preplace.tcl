@@ -1,7 +1,7 @@
 
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 # Last update; 2019/09/06
 # Last change: checking on AIE_PL BEL location to make sure there is a BLI site available

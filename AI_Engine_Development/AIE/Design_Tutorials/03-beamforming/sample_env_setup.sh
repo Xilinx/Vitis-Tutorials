@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 # Make sure the SHELL is in /bin/bash if not do
 # echo $SHELL

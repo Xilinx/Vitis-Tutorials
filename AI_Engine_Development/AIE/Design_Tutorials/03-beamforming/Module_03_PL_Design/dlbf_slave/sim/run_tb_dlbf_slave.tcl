@@ -1,7 +1,7 @@
 
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 set project "project_tb_dlbf_slave"
 create_project $project ./$project -part xcvc1902-vsva2197-2MP-e-S

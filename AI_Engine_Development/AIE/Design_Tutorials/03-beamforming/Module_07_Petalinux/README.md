@@ -33,12 +33,12 @@ Creation of the PetaLinux software platform can be broken down into the followin
 
 ### Create PetaLinux: Creating the PetaLinux Project with a BSP
 
-First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you use a VCK190 board, the ``xilinx-vck190-v2023.1-final.bsp`` package is required.
+First, create the PetaLinux project from a board support package (BSP) with the `petalinux-create` command. A BSP is a collection of software drivers and an operating system on which your Linux applications are built. It is the support code for a given hardware platform or board that helps in basic initialization at power-up and helps software applications to be run on top of it. Because you use a VCK190 board, the ``xilinx-vck190-v2023.2-final.bsp`` package is required.
 
 ```
 mkdir -p build;
 cd build;
-petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2023.1-final.bsp -n vck190_linux
+petalinux-create -t project -s <PATH-TO-BSP>/xilinx-vck190-v2023.2-final.bsp -n vck190_linux
 ```
 
 These commands create a new PetaLinux project directory structure under `build/vck190_linux`.

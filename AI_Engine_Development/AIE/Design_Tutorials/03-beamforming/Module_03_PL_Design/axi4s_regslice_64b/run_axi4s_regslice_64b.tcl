@@ -1,7 +1,7 @@
 
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 set IP_NAME "axi4s_regslice_64b"
 set IP_REPO "build"
