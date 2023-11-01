@@ -10,7 +10,7 @@
 
 # AI Engine Graph Execution and Measurement
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.
 
@@ -141,16 +141,16 @@ There are multiple ways to measure performance:
 
 
     ```
-    T 662400 ns
+    T 652800 ns
     2 
     ......
-    T 10899200 ns
+    T 10889600 ns
     30 
     ```
 
-    The first samples come out in `662400 ps`, and the last samples come out in `10899200 ps`. The throughput therefore can be calculated as follows:
+    The first samples come out in `652800 ps`, and the last samples come out in `10889600 ps`. The throughput therefore can be calculated as follows:
 
-        Total time = 10899200 - 662400 = 10236800 ps
+        Total time = 10889600 - 652800 = 10236800 ps
         Total bytes = 128 * 100 = 12800 bytes
         Throughput = 12800/(10236800*1e-6) = 1250.3 MB/s
         
@@ -185,8 +185,8 @@ There are multiple ways to measure performance:
     The output of AI Engine simulator looks like the following:
 
     ```
-    cycle count:12648
-    Throughput of the graph: 1265.022138 MB/s
+    cycle count:12665
+    Throughput of the graph: 1263.324122 MB/s
     ```
 
     The event API can be applied in AI Engine simulator, hardware emulation, and hardware flows.
@@ -195,7 +195,7 @@ There are multiple ways to measure performance:
 
     ![Profile View](./images/figure3.PNG)
 
-    Kernel `aie_dest1` takes 8068 cycles for 100 iterations. The `main` function takes 4664 cycles for 100 iterations of the graph. This is around 47 cycles of overhead for each iteration of the graph. This overhead includes the lock acquires of the buffers and the overhead of API calls.
+    Kernel `aie_dest1` takes 8368 cycles for 100 iterations. The `main` function takes 4383 cycles for 100 iterations of the graph. This is around 44 cycles of overhead for each iteration of the graph. This overhead includes the lock acquires of the buffers and the overhead of API calls.
 
     The performance of `aie_dest1` is bounded by the stream interface throughput. The theoretical limit is up to 4 bytes a cycle (5 GB/s), and there are 128 bytes of input for one run. This means that it at least has 32 cycles for the main loop, although it takes 80 cycles. This indicates that the loop is not well-pipelined.
 
@@ -203,7 +203,7 @@ There are multiple ways to measure performance:
 
     ![PL_TO_SHIM](./images/figure4.PNG)
 
-    Search it for multiple times. When it is stable, it can be seen that every eight cycles, it happens once. This is because the frequency of the PL has been set at 312.5 MHz by the option `--pl-freq=312.5` for the AI Engine compiler and AI Engine-PL interface is 32-bit width, which is one-fourth of the best achievable performance. 
+    Search it for multiple times. When it is stable, it can be seen that every eight cycles, it happens once. This is because the frequency of the PL has been set at 312.5 MHz by the option `pl-freq=312.5` for the AI Engine compiler and AI Engine-PL interface is 32-bit width, which is one-fourth of the best achievable performance. 
 
     From a best performance and best resource perspective, you might select a 64-bit interface at 625 MHz if timing allows. If not, it is possible to have the PL running at 312.5 MHz with a 128-bit width interface. 
     

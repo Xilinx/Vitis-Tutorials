@@ -9,9 +9,9 @@ HOST_EXE = host.exe
 
 GRAPH    = aie/graph.cpp
 LIBADF  = libadf.a
-AIE_CMPL_CMD = aiecompiler -platform=${PLATFORM} -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
+AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} --aie.pl-freq=312.5 |& tee log.txt
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd=foo
-X86_CMPL_CMD = aiecompiler -platform=${PLATFORM} --target=x86sim -include="./aie" -include="./data" -include="./aie/kernels" -include="./" -workdir=./Work ${GRAPH}
+X86_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} --target=x86sim |& tee log.txt
 X86_SIM_CMD = x86simulator 
 X86SIM=0
 EMU_CMD = ./launch_hw_emu.sh 

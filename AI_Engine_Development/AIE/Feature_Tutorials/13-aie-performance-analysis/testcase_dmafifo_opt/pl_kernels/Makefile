@@ -8,7 +8,8 @@ PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_bas
 
 all: $(subst .cpp,.xo,$(wildcard *.cpp))
 %.xo: %.cpp
-	v++ -c --platform ${PLATFORM} --clock.defaultFreqHz 400000000 -k $(basename $<) $< -o $@ --verbose --save-temps
+	sed 's/s2mm/$(basename $<)/' config.cfg > tmp.cfg
+	v++ -c --mode hls --platform ${PLATFORM} --config tmp.cfg
 
 clean:
 	rm -rf _x *.xo* *.log

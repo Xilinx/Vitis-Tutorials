@@ -10,7 +10,7 @@
 
 # AI Engine Status Analysis
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 This tutorial shows you how to output a summary of the AI Engine status for further analysis in an AMD Vitis&trade; Analyzer. The main methods to output AI Engine status are as follows:
 
@@ -86,8 +86,6 @@ Open the run summary file with the following command:
 		vitis_analyzer xrt.run_summary
 
 In Vitis Analyzer, click **Set Compile Directory** in Summary view. 
-
-![set compile summary](./images/aie_status1.PNG)
 
 In the prompted dialog box, click the **...** button, and select the AI Engine compile summary (such as `./Work/graph.aiecompile_summary`) to set the AI Engine compile summary. 
 
