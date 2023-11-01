@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # Prime Factor FFT-1008
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 

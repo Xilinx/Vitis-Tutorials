@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
