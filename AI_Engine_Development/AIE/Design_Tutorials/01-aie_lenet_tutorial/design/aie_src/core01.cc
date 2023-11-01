@@ -90,12 +90,17 @@ INLINE_DECL void core01(
 	
 }
 #endif
-
-void core01_top(input_window_int32 *inA, output_window_int32 *out){
+//adf::input_buffer<int>  & __restrict i1,
+              //  adf::output_buffer<int> & __restrict o1
+void core01_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out){
 	int shift = 9;
 	set_sat();
 	set_rnd(rnd_sym_inf);
-	core01(ROW_A >> 2, COL_A >> 3, COL_B >> 2, (int8_t *) inA -> ptr, (int8_t *) out -> ptr, shift);
+	//int8_t *__restrict ptr = inA.data();
+	//int8_t *__restrict ptr_1 = out.data();
+	int *__restrict ptr = inA.data();
+	int *__restrict ptr_1 = out.data();
+	core01(ROW_A >> 2, COL_A >> 3, COL_B >> 2, (int8_t *)ptr, (int8_t *)ptr_1, shift);
 }
 
 

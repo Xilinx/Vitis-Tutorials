@@ -31,7 +31,7 @@ SPDX-License-Identifier: MIT
 #define COL_C_3 128
 #endif 
 
-
+using namespace adf;
 
 #ifndef INLINE
 #ifndef INLINE_DECL
@@ -51,8 +51,7 @@ void core03(
         int shift
 );
 
-void core03_top(input_window_int32 *in1, 
-                output_window_int32 *out);
+void core03_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out);
 
 #else
 #  ifndef INLINE_DECL

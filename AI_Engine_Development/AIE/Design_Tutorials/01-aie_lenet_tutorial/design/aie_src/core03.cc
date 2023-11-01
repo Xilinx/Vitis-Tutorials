@@ -113,8 +113,7 @@ INLINE_DECL void core03(
 }
 #endif
 
-void core03_top(input_window_int32 *inA, 
-                output_window_int32 *out){
+void core03_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out){
 	int shift = 6;
     set_sat();
     set_rnd(rnd_sym_inf);
@@ -123,11 +122,13 @@ void core03_top(input_window_int32 *inA,
 	int tileY_A = 4;
 	int tileX_C = 4;
 	int tileY_C = 4;
+	
+	int *__restrict ptr = inA.data();
+	int *__restrict ptr_1 = out.data();
 
 	core03(ROW_A_3 >> 2, COL_A_3 >> 3, COL_B_3 >> 2, 
            tileX_A, tileY_A, tileX_C, tileY_C, 
-           (int8_t *) inA -> ptr, 
-           (int8_t *) out -> ptr, 
+           (int8_t *)ptr, (int8_t *)ptr_1, 
            shift);
 }
 

@@ -9,7 +9,7 @@
 
 # Versal™ AI Engine LeNet Tutorial
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 
@@ -115,15 +115,15 @@ Tools Documentation:
 
 To build and run the LeNet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2023.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2023.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
-* Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202310_1` platform)
+* Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202320_1` platform)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+* Download and set up the [VCK190 Vitis Platform for 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 </details>
 
@@ -161,7 +161,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202310_1",
+"baseName": "xilinx_vck190_base_202320_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -182,7 +182,7 @@ Output of the above command should be as follows:
 ### LeNet Design Build
 In this section, you will build and run the LeNet design. You will compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). You can review [Integrating the Application Section in the AI Engine Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step.
 
-![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow_2022_1.PNG)
+![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow.PNG)
 
 At the end of this section, the design flow will generate a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.   
 
@@ -220,7 +220,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
@@ -239,7 +239,7 @@ mkdir -p ./build/hw_emu
 cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_base_202310_1     \
+          --platform xilinx_vck190_base_202320_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -339,7 +339,7 @@ The expanded command is as follow:
 cd ./build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202310_1            \
+          --platform xilinx_vck190_base_202320_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -359,7 +359,7 @@ If EN_TRACE=1, the command is expanded as follow:
 cd ./build/hw;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202310_1            \
+          --platform xilinx_vck190_base_202320_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -433,31 +433,31 @@ or
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib \
 			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
 			-o ../build/app_control.o                   
 
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib \
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
 aarch64-linux-gnu-g++   ./build/app_control.o			                \
 			./build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/sysroots/aarch64-xilinx-linux/usr/lib\
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
+			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
                         -ladf_api_xrt                      		        \
@@ -510,10 +510,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202310_1  			\
+	-f xilinx_vck190_base_202320_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/aiesim_data	                \
@@ -537,10 +537,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202310_1  			\
+	-f xilinx_vck190_base_202320_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/aiesim_data	                \
@@ -567,8 +567,8 @@ cd ../../;
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/rootfs.ext4|The root filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.1/Image|The pre-built Petalinux Image the processor boots from.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4|The root filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/aiesim_data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_aie_xrt.elf|The PS host application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xsa|The XSA file created in the `make xsa` step.|
@@ -597,12 +597,12 @@ cd ./build/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt display:
 ```bash
-root@versal-rootfs-common-2023_1:~#
+root@versal-rootfs-common-2023_2:~#
 ```
 
 In some cases, the following error might display:
 ```
-root@versal-rootfs-common-2023_1:~## xinit: giving up
+root@versal-rootfs-common-2023_2:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -613,7 +613,7 @@ Enabling notebook extension jupyter-js-widgets/extension...
 
 After the root prompt displays, run the following commands to run the design:  
 ```
-cd /mnt/sd-mmcblk0p1
+cd /mnt/
 ./lenet_aie_xrt.elf a.xclbin
 ```
 
@@ -665,12 +665,12 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 
 ```
-cd /mnt/sd-mmcblk0p1
+cd /mnt/
 ./lenet_aie_xrt.elf a.xclbin
 ```
 
@@ -843,11 +843,12 @@ source(core01) = "core01.cc";
 runtime<ratio>(core01) = 0.6;
 ```
 #### Add Connectivity Information
-This is done by using the templated connect<> object. The connection can be window<> or stream. If a window connection is used, then window parameters must be specified.
+This is done by using the templated connect<> object. The connection can be buffer<> or stream. If a window connection is used, then buffer parameters must be specified.
 In this description, ports are referred to by indices. An example of the connection between the input port of the graph and input of an AI Engine kernel is as follows:
 
 ```
-connect< window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
+connect(in[0].out[0], core01.in[0]);
+dimensions(core01.in[0]) = {(ROW_A * COL_A)/4};
 single_buffer(core01.in[0]);
 
 ```
@@ -860,8 +861,7 @@ connect<>(core01lut,core01);
 Based on the datatype of `core01lut`, the API call is inferred as a look up table in the AI Engine tile.
 
 #### LeNet Top Level Application
-Define a top level application file (`graph.cpp` in this design) that creates PLIOs, kernels and connect them together to define a dataflow, for example:
-
+Define a top level application file (`graph.cpp` in this design) 
 The main program is the driver of the graph(graph.cpp). It contains an instance of the graph class and used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are:
 
 ```
@@ -869,7 +869,7 @@ The main program is the driver of the graph(graph.cpp). It contains an instance 
    int main(int argc, char ** argv)
    {
       g.init();
-      g.run();
+      g.run(100);
       g.end();
 
       return 0;
@@ -906,7 +906,7 @@ The AI Engine control code is used by the PS host application to do the followin
 
 The PS Host application stack diagram for the LeNet tutorial is shown in the following diagram.
 
-![Alt Text](images/Lenet_PS_stack_20202.PNG)
+![Alt Text](images/Lenet_PS_stack.PNG)
 
 The steps to run the A72 application are as follows:
 
@@ -949,7 +949,7 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
 #### 5. Open Graph, Obtain Handle, and Execute Graph
-The following registration function was added in 2023.1 for XRT to use ADF API callbacks:
+The following registration function was added in 2023.2 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
 
@@ -990,38 +990,38 @@ scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
 Then run the Vitis analyzer on the summary file, for example, `vitis_analyzer xrt.run_summary &`
 The following is the snapshot of the time trace for the LeNet design run in hw.
-![HW result of Lenet design](images/Lenet_trace_2023.PNG)
+![HW result of Lenet design](images/Lenet_trace.PNG)
 
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 2177 us
+					 = 2136.679 us
 Throughput = (no of images / processing time)
 
-Throughput (with 156.25 MHz) = 100 / 2177us
-		             = 45,935 images/s
+Throughput (with 156.25 MHz) = 100 / 2136.679us
+		             = 46801.6019  images/s
 
 The processing time reported by trace is with the data mover kernel running at 156.250MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
 Throughput (scaled to 312.5 MHz),
-	  = 45,935 images/s x (312.5 / 156.25 ) 
-	  = 91,870 images/s
+	  = 46801.6019 images/s x (312.5 / 156.25 ) 
+	  = 93,603.2038 images/s
 ```
 The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
-![Emulation result of Lenet design](images/Lenet_hw_emu_Processing_time.png)
+![Emulation result of Lenet design](images/Lenet_hw_emu_Processing_time.PNG)
 
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 1068.96 us
+					 = 1067.641 us
 Throughput = (no of images / Processing time)
-           = 100 / 1068.96 us
-           = 93,548.86 images/s
+           = 100 / 1067.641  us
+           = 93,664.4434 images/s
 
 ```
 
 ## Power Measurement Details
-Resource utilization and power are measured using vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.1 version) tools.
+Resource utilization and power are measured using vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.2 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1058,17 +1058,17 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2023.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://docs.xilinx.com/r/en-US/ug1275-xilinx-power-estimator-versal).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2023.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://docs.xilinx.com/r/en-US/ug1275-xilinx-power-estimator-versal).
 
 3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
 
-![Image of Lenet XPE Util and Power Measurement](images/Lenet_xpe.PNG)
+![Image of Lenet XPE Util and Power Measurement](images/Lenet_xpe.png)
 
 A summary of resource utilization and power is given in the following table.
 
 | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | Dynamic Power<br/>(in mW) | 
 |:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:-------------------------------:|
-| 5                       | 30%         | 52                            | 7%           | 14               | 7%                | 1343                            |
+| 5                       | 36%         | 52                            | 20%          | 14               | 7%                | 1524                            |
 
 ## References
 
@@ -1100,7 +1100,7 @@ The following are links to Vitis related information referenced in this tutorial
 
 ##### Revision History
 
-* Apr 2023 - Updated for 2023.1
+* Apr 2023 - Updated for 2023.2
 * Jan 2023 - Updated for 2022.2
 * May 2022 - Updated for 2022.1
 * Oct 2021 - Updated for 2021.2

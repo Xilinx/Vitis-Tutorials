@@ -60,6 +60,10 @@ class myGraph : public graph {
 	 source(core03) = "core03.cc";
 	 source(core05) = "core05.cc";
 	 source(core04) = "core04.cc";
+//adf::connect(m_i[ind], m_k[ind].in[0]);
+//          adf::connect(m_k[ind].out[0], m_o[ind]);
+//          adf::dimensions(m_k[ind].in[0]) = { NUM_SAMPLES };
+//          adf::dimensions(m_k[ind].out[0]) = { NUM_SAMPLES };
 
          location<kernel>(core01) = tile(8,0);
 	 location<kernel>(core02) = tile(8,1);
@@ -74,20 +78,31 @@ class myGraph : public graph {
          core04lut = parameter::array(B04);
 
 
-         connect< window<ROW_A * COL_A> > (in[0].out[0], core01.in[0]);
-         connect<>(core01lut,core01);
-         connect< window<ROW_A * COL_B> > (core01.out[0], out[0].in[0]);
-         connect< window<ROW_A_2 * COL_A_2> > (in[1].out[0], core02.in[0]);
+         connect(in[0].out[0], core01.in[0]);//< window<ROW_A * COL_A> >
+         dimensions(core01.in[0]) = {(ROW_A * COL_A)/4};
+	 connect<>(core01lut,core01);
+         connect(core01.out[0], out[0].in[0]);//< window<ROW_A * COL_B> > 
+ 	 dimensions(core01.out[0]) = {(ROW_A * COL_B)/4};
+         connect(in[1].out[0], core02.in[0]);//< window<ROW_A_2 * COL_A_2> > 
+	 dimensions(core02.in[0]) = {(ROW_A_2 * COL_A_2)/4};
          connect<>(core02lut,core02);
-         connect< window<ROW_A_2 * COL_B_2> > (core02.out[0], out[1].in[0]);
-         connect< window<ROW_A_3 * COL_A_3> > (in[2].out[0], core03.in[0]);
+         connect(core02.out[0], out[1].in[0]);//< window<ROW_A_2 * COL_B_2> > 
+	 dimensions(core02.out[0]) = {(ROW_A_2 * COL_B_2)/4};
+         connect(in[2].out[0], core03.in[0]); //< window<ROW_A_3 * COL_A_3> >
+	 dimensions(core03.in[0]) = {(ROW_A_3 * COL_A_3)/4};
          connect<>(core03lut,core03);
-         connect< window<ROW_A_3 * COL_B_3> > (core03.out[0], core04.in[0]);
-         connect< window<ROW_A_5 * COL_A_5> > (in[3].out[0], core05.in[0]);
+         connect(core03.out[0], core04.in[0]); //< window<ROW_A_3 * COL_B_3> >
+	 dimensions(core03.out[0]) ={(ROW_A_3 * COL_B_3)/4};
+	 dimensions(core04.in[0]) = {(ROW_A_3 * COL_B_3)/4};
+         connect(in[3].out[0], core05.in[0]);  //< window<ROW_A_5 * COL_A_5> > 
+	 dimensions(core05.in[0]) = {(ROW_A_5 * COL_A_5)/4};
          connect<>(core05lut,core05);
-         connect< window<ROW_A_5 * COL_B_5> > (core05.out[0], core04.in[1]);
+         connect(core05.out[0], core04.in[1]);//< window<ROW_A_5 * COL_B_5> > 
+	 dimensions(core05.out[0]) = {(ROW_A_5 * COL_B_5)/4};
+	 dimensions(core04.in[1]) = {(ROW_A_5 * COL_B_5)/4};
          connect<>(core04lut,core04);
-         connect< window<ROW_A_4 * COL_B_4> > (core04.out[0], out[2].in[0]);
+         connect(core04.out[0], out[2].in[0]);//< window<ROW_A_4 * COL_B_4> > 
+	 dimensions(core04.out[0]) = {(ROW_A_4 * COL_B_4)/4};
 
          //single_buffer(in0.out[0]);
          //single_buffer(in1.out[0]);

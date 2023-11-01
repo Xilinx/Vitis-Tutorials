@@ -14,6 +14,7 @@ SPDX-License-Identifier: MIT
 #include "aie_api/aie_adf.hpp"
 #include <aie_api/utils.hpp>
 
+using namespace adf;
 
 #ifndef ROW_A_5 
 #define ROW_A_5 8
@@ -51,8 +52,7 @@ void core05(
         int shift
 );
 
-void core05_top(input_window_int32 *in1, 
-                output_window_int32 *out);
+void core05_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out);
 
 #else
 #  ifndef INLINE_DECL

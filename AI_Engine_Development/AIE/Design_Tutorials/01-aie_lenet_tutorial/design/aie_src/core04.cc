@@ -128,7 +128,7 @@ INLINE_DECL void core04(
 }
 #endif
 
-void core04_top(input_window_int32 *inA1, input_window_int32 *inA2, output_window_int32 *out){
+void core04_top(input_buffer<int> & __restrict inA1, input_buffer<int> & __restrict inA2, output_buffer<int> & __restrict out){
   const int rowA = ROW_A_4;
   const int colA = COL_A_4;
   const int rowB = COL_A_4;
@@ -137,5 +137,8 @@ void core04_top(input_window_int32 *inA1, input_window_int32 *inA2, output_windo
   int shift = 7;
   set_sat();
   set_rnd(rnd_sym_inf);
-  core04(rowA >> 2, colA >> 3, colB >> 2, (int8_t *) inA1 -> ptr, (int8_t *) inA2 -> ptr, (int8_t *) out -> ptr, shift);
+  int *__restrict ptr = inA1.data();
+  int *__restrict ptr_1 = inA2.data();
+  int *__restrict ptr_2 = out.data();
+  core04(rowA >> 2, colA >> 3, colB >> 2,(int8_t *)ptr, (int8_t *)ptr_1,(int8_t *)ptr_2, shift);
 }

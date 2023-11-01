@@ -8,7 +8,7 @@
 # =======================================================
 export PLATFORM_REPO_PATHS= <YOUR-2023.2-PLATFORM-DIRECTORY>
 export XILINX_VITIS = <YOUR-2023.2-VITIS-DIRECTORY>/2023.2
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-v2023.2-DIRECTORY>
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.2-DIRECTORY>
 
 # ====================================================
 # Source Versal Image ,Vitis and Aietools

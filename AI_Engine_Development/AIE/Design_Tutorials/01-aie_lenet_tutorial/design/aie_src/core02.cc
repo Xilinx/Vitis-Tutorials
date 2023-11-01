@@ -85,9 +85,12 @@ INLINE_DECL void core02(
 
 }
 #endif
-void core02_top(input_window_int32 *inA, output_window_int32 *out){
+void core02_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out){
     int shift = 8;
     set_sat();
     set_rnd(rnd_sym_inf);
-	core02(ROW_A_2 >> 2, COL_A_2 >> 3, COL_B_2 >> 2, (int8_t *) inA -> ptr, (int8_t *) out -> ptr, shift);
+	int *__restrict ptr = inA.data();
+	int *__restrict ptr_1 = out.data();
+
+	core02(ROW_A_2 >> 2, COL_A_2 >> 3, COL_B_2 >> 2,(int8_t *)ptr, (int8_t *)ptr_1, shift);
 }

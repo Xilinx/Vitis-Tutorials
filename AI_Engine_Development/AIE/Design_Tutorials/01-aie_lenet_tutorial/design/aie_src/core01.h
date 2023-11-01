@@ -24,7 +24,7 @@ SPDX-License-Identifier: MIT
 #define COL_B 8
 #endif 
 
-
+using namespace adf;
 
 #ifndef INLINE
 #ifndef INLINE_DECL
@@ -42,7 +42,7 @@ void core01(
 	int shift
 );
 
-void core01_top(input_window_int32 *in1, output_window_int32 *out);
+void core01_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out);
 
 #else
 #  ifndef INLINE_DECL

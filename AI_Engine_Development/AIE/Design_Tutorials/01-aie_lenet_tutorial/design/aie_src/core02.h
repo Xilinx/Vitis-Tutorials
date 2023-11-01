@@ -12,7 +12,7 @@ SPDX-License-Identifier: MIT
 #include "aie_api/aie_adf.hpp"
 #include <aie_api/utils.hpp>
 
-
+using namespace adf;
 
 #ifndef ROW_A_2 
 #define ROW_A_2 64
@@ -33,7 +33,7 @@ SPDX-License-Identifier: MIT
 #define INLINE_DECL
 #endif
 
-void core02_top(input_window_int32 *inA, output_window_int32 *out);
+void core02_top(input_buffer<int> & __restrict inA, output_buffer<int> & __restrict out);
 
 void core02(
         const int RowA_tile,
