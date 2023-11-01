@@ -112,17 +112,30 @@ Shows how to calculate kernel latency and throughput using profile information.
 
 ## Build and Simulate in the Vitis IDE
 
-1. In the Vitis IDE toolbar, click the arrow next to the manage configurations button, and select **Emulation-AIE**. This sets the build target for the AI Engine simulation.
+1. From the left-side pane in the Vitis IDE, select the AI Engine Component and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings.
+2. Select the **XLOpt** settings and under the **Kernel optimization** setting, select the **0 - None** from the drop-down. This gives greater visibility during the AI Engine debug. 
 
-    ![build target](./Images/Build_target.PNG)
+
+![build setting](./Images/Build_setting.PNG)
+![build target](./Images/Build_target.PNG)
 2. Right-click the *[aiengine]* domain project, select **C/C++ Build Settings**, choose **Miscellaneous** -> **Optimization** -> from the drop down choose **No Optimizations(xlopt=0)**. This option helps IDE debugging capability by disabling any kernel optimizations.
 
-3. Right-click the *[aiengine]* domain project, and select the **Build** option. Once the build completes, you see the **Compilation Complete** and **Build Finished** messages in the console.
+3. Now, in the **Flow** navigator window, select the **Build** option under **AIE SIMULATOR/HARDWARE**. This builds the AI Engine component for AIE Simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console. Also a green tick mark as highlighted below.
 
-4. Right-click the *[aiengine]* domain project, and select the **Run As → Launch AIE Emulator** option to start the simulation for the aiesimulation target. When the simulation completes, you see the following output in the console:
+![build output](./Images/build_output.PNG)
+
+4. In the **Flow** navigator window, under **AIE SIMULATION/HARDWARE**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking on **Create Configuration** -> **New Launch Configuration** -> **AIESim**.
+
+![Create_Configuration](./Images/create_configuration.PNG)
+
+5. You can change the Launch Config Name and click Run button to start simulation for AIE simulation target. When the simulation complete, you see the following output in the console.
+
+![aiesimulator_output](./Images/aiesimulator_output.PNG)
+
+6. Right-click the *[aiengine]* domain project, and select the **Run As → Launch AIE Emulator** option to start the simulation for the aiesimulation target. When the simulation completes, you see the following output in the console:
 ![aie simulator output](./Images/aiesimulator_output.PNG)
 
-5. The aiesimulator output files from design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data` and the golden output data is located at `09-debug-walkthrough/reference_output/`.Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
+7. The aiesimulator output files from design are located at `${PROJECT}/Emulation-AIE/aiesimulator_output/data` and the golden output data is located at `09-debug-walkthrough/reference_output/`.Verify the output files `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-AIE/aiesimulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
    * Add the golden data to the `${PROJECT}/data/` by right clicking on the `data/` directory in *[aiengine]* domain project and select **Import sources**.
    * Highlight the two files to be compared.
    * Right-click on one of highlighted files, and select **compare with** > **each other with transformation** . Click the **Predefined filters** icon(as shown below) > Enable **Remove timestamp** checkmark and click **OK** twice. Selecting **each other with transformation** is required because AI Engine simulation inserts a timestamp for each output data. For example, compare `${PROJECT}/data/golden_upscale.txt` and `${PROJECT}/Emulation-AIE/data/output_upscale.txt`.
@@ -134,7 +147,7 @@ Shows how to calculate kernel latency and throughput using profile information.
 
 The simplest form of tracing is to use a formatted `printf()` statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. No additional include files are necessary for using `printf()` other than standard C/C++ includes (`stdio.h`). You can add `printf()` statements to your code to be processed during the aiesimulation or hardware emulation, and remove them or comment them out for hardware builds.
 
-1. Open the source file, `src/kernels/upscale.cc`. Add the following lines after `int_t = *IniIter++;`:
+1. Open the source file, `src/kernels/upscale.cc`. Add the following lines after `in_t = *IniIter++;`:
 
     ```
     float * print_ptr = (float*)&in_t;
@@ -144,11 +157,10 @@ The simplest form of tracing is to use a formatted `printf()` statement in the c
 
     >**NOTE:** Adding `printf()` statements to your AI Engine kernel code will increase the compiled size of the AI Engine program. Be careful that the compiled size of your kernel code does not exceed the per-AI Engine processor memory limit of 16 KB.
 
-2. Rebuild the *[aiengine]* project.
-3. To enable the `printf()` function, it is required to specify `--profile` in run configuration.
-![debug print(f)](./Images/debug_printf.PNG)
-4. Click **Apply** and **Run**.
-5. Observe the following `print` statements in the console:
+2. Rebuild the *AI Engine* component.
+3. To enable the `printf()` function, it is required to enable **profile** option in launch configuration settings. To do this, hover your mouse over the **Run** option in the **Flow** navigator and click on the settings button. Now, in the launch configuration window, tick the **Enable Profile** option under **Profile Options** as shown below.
+![enable_profile](./Images/enable_profile.PNG)
+4. Observe the following `print` statements in the console:
 
     ```
     Configuring PL-Interface for graph mygraph...
@@ -175,50 +187,42 @@ The simplest form of tracing is to use a formatted `printf()` statement in the c
 
 This section walks you through a debug methodology that uses the Vitis IDE debugger. You can learn how to invoke the debugger, add breakpoints, view intermediate values, etc.
 
-1. After the design is built for the aiesimulation target, right-click the *[aiengine]* domain project, and select **Debug As** → **Launch AIE Emulator**.
-2. This gets you to the debug mode in the Vitis IDE and waits in `o_buffer_main.h` waiting to acquire the lock to read the input data.
-3. Open the source file, `peak_detect.cc`, and place the breakpoint at line 33 by double-clicking the blue space beside the line number in the source editor.
+1. After the design is built for the aiesimulation target, click on **Flow** Navigator -> **AIE Simulation** -> **Debug** option..
+2. This gets you to the debug mode in the Vitis IDE and waits in `io_buffer_main.h` waiting to acquire the lock to read the input data.
+3. Open the source file, `peak_detect.cc`, and place the breakpoint at line (vin = \*InIter++) by clicking on the empty space beside the line number in the source editor.
 
     >**NOTE:**
     >
-    >1. You should see the stack trace corresponding to the all the kernel functions mapped to a particular tile. For example, in this case, the kernel `peak_detect` mapped to the tile [25,0]. So, when you select the `core[25,0]` in the `Debug` window, then only the breakpoint you set in the `peak_detect.cc` appears to be active. If not, it appears as red cross sign. Similarly for other tiles and kernel function breakpoints.
-    >2. Sometimes you might see the yellow warning symbol at the breakpoint you placed. That indicates that the breakpoint is planted at some other line in the same source code. This is because the compiler optimized the particular operation, and the breakponts can only be placed at lines that are not optimized by the compiler.
+    >1. You should see the stack trace corresponding to the all the kernel functions mapped to a particular tile. For example, in this case, the kernel `peak_detect` mapped to the tile [25,0]. So, when you select the `core[25,0]` in the `Debug` window, then the **CALL STACK** shows only the trace information correspoinding to the `core[25,0]`.
+    >2. Not all the lines in the source code are allowed for placing the break-point. Sometimes when you try to place the breakpoint at a particular line (for example, line 27 as shown in below screenshot, the breakpoint is adjusted to the line-32 in the same source code with **Info** message at the bottom corner as highlighted below. This is because the compiler optimized the particular operation, and the breakponts can only be placed at lines that are not optimized by the compiler.  
     >
     >       ![breakpoint placement](./Images/breakpoint_placement.PNG)
     >
-    >* `1` -> Selecting the core[25,0] in the debug window.
-    >* `2` -> Indicates the current location of the pointer during the debug (explained more in later steps).
-    >* `3` -> Breakpoint placed at a line that is optimized by compiler.
-    >* `4` -> Breakpoint placed correctly which can be used to debug. Note a small blue tick mark.
+    >* `1` -> Indicates the current location of the pointer during the debug (explained more in later steps).
+    >* `2` -> Try adding a breakpoint at a line that is optimized by compiler.
+    >* `3` -> Breakpoint automatically shifted to the other line which can be used to debug. Note the info message.
     >
 
-4. Notice the `resume`,`pause`,`terminate`,`disconnect`,`step-in`,`step-over`, and `step-return` options in the taskbar after entering debug mode.
-5. You should be able to view the variables, breakpoints, registers, and set expressions to analyze the design at each iteration during the debug session.
+4. Notice the `continue`,`pause`,`step-over`,`step-into`,`step-out`, `restart` and `terminate` options in the taskbar after entering debug mode.
+5. You should be able to view the variables, breakpoints, watchpoints to analyze the design at each iteration during the debug session.
 ![debug analysis view](./Images/debug_analysis_view.PNG)
 
-6. After placing the breakpoint in `peak_detect.cc`, click the **Resume** button. You can see the debugger stops at that particular line. Hovering your mouse on any particular variable gives you the value at that particular instance of the run. For example, the address value of the `InIter` is `0x38000`.
+6. After placing the breakpoint in `peak_detect.cc`, click the **continue** button. You can see the debugger stops at that particular line. From the variable view you can get the address of any particular variable at that particular instance of the run. For example, the address value of the `InIter` is `0x38000`.
 ![address of variable](./Images/address_of_variable.PNG)
 
-7. Use the **Memory** monitor window to get the values at the address location, `0x38000`. Click the **+** button, and add the address `0x38000` to the memory monitor. You should see the values equal to the input values in `data/inx.txt`. Also, based on the location of breakpoint, you should be able to see the similar values in the **variable** view. If that variable is not visible in a particular iteration (due to compiler optimizations), you should still be able to track the value by adding in **Expressions**.
+7. Use the **Memory** Inspector option to get the values at the address location, `0x38000`. Click the **+** button, and add the address `0x38000` to the memory monitor. You should see the values equal to the input values in `data/inx.txt`. 
 
-8. Click the **Expressions** and **Add new expression**, and type `vin`. You should see the initial zeros which matches with the values you see in the memory inspector. In each iteration, 16 values of 4-bytes (int32) are sent as an input in one iteration.
+![memory_view](./Images/memory_view.PNG)
 
-9. Now, click the resume button again, and you should see the following next set of 16 values in the `vin`.
-![memory variable](./Images/memory_variable.PNG)
+8. Also, based on the location of breakpoint, you should be able to see the similar values in the **variable** view. If that variable is not visible in a particular iteration (due to compiler optimizations), you should still be able to track the value by adding in **Expressions**.
 
-10. Hover you mouse on `OutIter_1`, get the memory address, and validate the values. As the `OutIter_1` is just a passthrough operation from the input to the output, you should see the same values as in `InIter`.
+8. Select the `+` option in `Watch` window to **Add new expression**, and type `vin`. You should see the initial zeros which matches with the values you see in the memory inspector. In each iteration, 16 values of 4-bytes (int32) are sent as an input in one iteration.
 
-### Exercise Step
+![Add expression](./Images/add_expression.PNG)
 
-1. Click the **Instructor stepping mode** icon (click twice; this is a bug in the Vitis IDE) in the **Debug** window, and observe the disassembly view of the kernel code. You should be able to place breakpoints in this, and use `step-into` control to view the intermediate values.
+9. Now, click the continue button again, and you should see the following next set of 16 values in the `vin`.
 
-2. Look at the **Register** view, and observe the changes in the register values, especially the program counter (PC) at each step.
-![diassembly view](./Images/disassembly_view.PNG)>
-
-3. Once you are done with the debugging, remove the breakpoint by double-clicking the breakpoint itself, and select the top-level project (in this case, PeakDetect) and the **Resume** button. You can see all cores goes into the `Disabled` state and also the `core(s) are done executing` message in the console.
-4. Click the **Disconnect** button, and navigate to the **Design** mode from top right corner.
-
->**NOTE:** During the debug process, if any of the kernel status in the stack trace is shown as `Lock stall` or `Memory stall`, you might need to consider selecting the other core, and click `Resume` manually. This is becuase in the debug mode it is expected to run each individual core manually.
+10.  Get the memory address of `OutIter_1`, and validate the values. As the `OutIter_1` is just a passthrough operation from the input to the output, you should see the same values as in `InIter`.
 
 ### Limitations
 
@@ -232,28 +236,27 @@ This section walks you through a debug methodology that uses the Vitis IDE debug
 
 This section walks you through a flow to enable profiling and trace in the Vitis IDE. Using this, you should be able to get performance metrics and generate trace data which can be visualized in the Vitis Analyzer.
 
-1. Right-click the *[aiengine]* domain project, and select **Run As** → **Run Configurations**.
-2. Under **Main** tab, select **AI Engine Emulator**, and click **AI Engine Emulator for PeakDetect Emulation-AIE**.
-3. Enable the check box **Generate Trace**, and leave the default options **VCD** with the filename *foo*.
-4. Enable the **Generate Profile** check box, and leave the other default options under that.
+1. In the Flow navigator window, under AIE SIMULATION/HARDWARE, select the Run Settings.
+2. Under **aie_component_aiesim_1** Configuration, select the check box **Generate Trace**, Trace Tyep **VCD**   and leave the default option **VCD** with the filename *foo*.
+3. Under Profile Options tab, enable the **Generate Profile** check box, and leave the other default options under that.
 
     >**NOTE:**  You can also try enablling profile generation for selected tiles.
     >![profile trace run config](./Images/Profie_trace_runconfig.PNG)
 
-    Launch the aiesimulation by selecting **Run As → Launch AIE Emulator**.<br />
-5. Once the Run completes, right-click `${PROJECT}/Emulation-AIE/aiesimulator_output/default.aierun_summary`, and select **Open with** -> **Vitis Analyzer Report**. This opens the following Vitis Analyzer window.
+    In the Flow navigator window, under AIE SIMULATION/HARDWARE, select the Run option to launch the aiesimulation.
+4. Once the Run completes, In the Flow navigator window, under AIE SIMULATION/HARDWARE select **Reports** -> **trace**. This opens the following Vitis Analyzer window.
 ![profile trace in vitis analyzer](./Images/profile_trace_va.PNG)
 
-6. Click the **Profile** -> select the **Summary** and **Profile Details** corresponding to all the tiles ([24,0],[25,0],[25,1]), and observe the cycle count, instruction count, and program memory size. More information about the profile details is explained in the [Design Performance Debug](./README.md#Design-performance-debug) section.
+5. Click the **Profile** -> select the **Summary** and **Profile Details** corresponding to all the tiles ([24,0],[25,0],[25,1]), and observe the cycle count, instruction count, and program memory size. More information about the profile details is explained in the [Design Performance Debug](./README.md#Design-performance-debug) section.
 
-7. Click **Trace**, and observe the trace events corresponding to all the tiles. For example, select the core `[25,0]` corresponding to the kernel `peak_detect`. Expand the kernel function and zoom in to check the input and output values.
+6. Click **Trace**, and observe the trace events corresponding to all the tiles. For example, select the core `[25,0]` corresponding to the kernel `peak_detect`. Expand the kernel function and zoom in to check the input and output values.
 ![trace kernel io](./Images/trace_kernel_io.PNG)
 
-    >**NOTE:** If the VCD file generated during AI Engine simulation is too large, it takes too much time for the Vitis Analyzer to analyze the VCD and open the trace view. Alternatively, you can do an online analysis of the VCD when running the AI Engine simulator using the WDB and CTF files. To generate this, you need to choose **Online** option instead of **VCD** in step 3.
+    >**NOTE:** If the VCD file generated during AI Engine simulation is too large, it takes too much time for the Vitis Analyzer to analyze the VCD and open the trace view. Alternatively, you can do an online analysis of the VCD when running the AI Engine simulator using the WDB and CTF files. To generate this, you need to choose **Online** option instead of **VCD** in step 2.
 
 ### Exercise Step
 
-You should be able to add arguments `--dump-vcd=foo`, `--online -wdb` in the **Run As** -> **Run configurations** -> **Arguments** tab, and open the event trace in the Vitis Analyzer using the `default.aierun_summary` file. You can open the `.wdb` file directly from **File** -> **%Fill%** in the Vitis Analyzer.
+Under **aie_component_aiesim_1** Configuration, select the check box **Generate Trace**, Trace Tyep **Online Wdb** and open the event trace in the Analysis View -> aie_component -> Run-aie_component -> trace.
 
  ![argument wbd](./Images/argument_wdb.PNG)
 
@@ -266,26 +269,22 @@ AI Engine designs can run into simulator hangs. A common cause is insufficient i
 This topic walks you through the practical scenario of deadlock during aiesimulation and different the simulator options that helps debugging.
 
 1. Open the `src/kernels/data_shuffle.cc`, and comment out the line 24.
-2. Compile the design by rebuilding the *[aiengine]* domain project.
-3. Run the aiesimulation by right-clicking the *[aiengine]* domain project and **Run As** → **Launch AIE Emulator**, and observe the hang.
+2. Compile the design by rebuilding the *[aie_component]* under AIE SIMULATOR/HARDWARE.
+3. Run the aiesimulation by ** AIE SIMULATOR/HARDWARE ** → **Run**, and observe the hang.
 4. You can wait for few seconds to confirm the hang, and click the icon located in bottom right corner that shows background operations in progress view and the kill the simulation process.
 ![simulation hang](./Images/simulation_hang.PNG)
 5. The AI Engine simulator provides an option to exit the simulation if all active cores in stalled state after the time period (in ns).
-6. For example, add `--hang-detect-time=60` in the **Run configurations** -> **Arguments**, and rerun the aiesimulation. You can observe the simulation exits smoothly with the following information in the console.
+6. For example, add `--hang-detect-time=60` in the **Run configurations** -> **Additional Arguments**, and rerun the aiesimulation. You can observe the simulation exits smoothly with the following information in the console.
 
     ```
     Enabling core(s) of graph mygraph
-    [WARNING]: T=580800 ps All Cores in Hang State 
-    Waiting for core(s) of graph mygraph to finish execution ...
-    [WARNING]: T=653600 ps All Cores in Hang State 
-    [WARNING]: T=1846400 ps All Cores in Hang State 
-    [WARNING]: T=1906400 ps All Cores in Hang State for 60ns
+    WARNING: All the cores are in stalled state at T=636000.000000 ps for a period of 60ns
     |---------------- Core Stall Status ----------------|
-    (24,1) -> Stream stall ->  SS0  at T=1702400 ps
-    (25,1) -> Lock stall ->  Lock_West  at T=1748800 ps
-    (25,2) -> Lock stall ->  Lock_East  at T=1846400 ps
+    (24,1) -> Lock stall ->  Lock_East detected at T=571600.000000 ps
+    (25,1) -> Lock stall ->  Lock_East detected at T=575600.000000 ps
+    (25,2) -> Lock stall ->  Lock_South detected at T=574000.000000 ps
     |---------------------------------------------------|
-    [CRITICAL WARNING]: Closing Simulator 
+    WARNING: This simulation is running with hang detection time of 60ns, to modify the hang detect time please rerun simulation with -hang-detect-time=<value in NS> option 
     Exiting!
     ```
 
@@ -305,8 +304,8 @@ More information about how to visualize the deadlock using the stream stalls and
 
 This topic is a continuation of the [Deadlock Detection](./README.md#Deadlock-detection) section and walks you through the visualization of the deadlock (Lock stall and stream stall) in the Vitis Analyzer.
 
-1. After simulating with the `--hang-detect-time=60` option, open the `default.aierun_summary` file in the Vitis Analyzer.
-2. Click **Trace**, and expand the `data_shuffle` kernel function. It ran for only two iterations and went into a stream stall.
+1. After simulating with the `--hang-detect-time=60` option, open the trace **analysis view -> aie_component -> AIE SIMULATOR/HARDWARE -> Run-aie_component -> Trace**.
+2. Expand the `data_shuffle` kernel function. It ran for only two iterations and went into a stream stall.
 ![stream stall](./Images/stream_stall.PNG)
 3. Expand the `peak_detect` kernel function, and observe the lock stall after three iterations.
 ![lock stall](./Images/lock_stall.PNG)
@@ -328,7 +327,7 @@ Besides using the simulator option, it is necessary to first identify an invalid
 
     ```
     # For Vitis IDE project
-    cd ${PROJECT_PATH}/Emulation-AIE/Work/aie/25_0/Release
+    cd ${PROJECT_PATH}/peakDetect/aie_component/build/hw/Work/aie/25_0/Release/25_0
     readelf -S 25_0
     ```
 
@@ -382,24 +381,20 @@ Besides using the simulator option, it is necessary to first identify an invalid
 
     Here, the flags `WA` and `AX` indicates, this section will be loaded into tile memory.
 
-3. Add the memory read violation to the kernel code by opening `src/kernels/peak_detect.cc`, and change the line-26 to `v_in = *(InIter+8500000500)`.
+3. Add the memory read violation to the kernel code by opening `src/kernels/peak_detect.cc`, and change the line-26 to `v_in = *(InIter+8500)`.
 4. Build the *[aiengine]* domain project, add the `--enable-memory-check` option to the **Run Configurations**, and run the aiesimulation.
 5. Observe the following messages in the console.
 
     ```
     Waiting for core(s) of graph mygraph to finish execution ...
-    660 ns [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dme_lda_n_out access out of boundary! address = 0x000013d20 prog_cntr = 0x0462
-    660 ns [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dme_ldb_n_out access out of boundary! address = 0x000013d00 prog_cntr = 0x0462
-
-    Warning: (W545) sc_stop has already been called
-    In file: sc_simcontext.cpp:1051
-    In process: tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc.dm_access_adr_check @ 660 ns
-    660 ns [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dmo_lda_n_out access out of boundary! address = 0x000013d30 prog_cntr = 0x0462
-    660 ns [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dmo_ldb_n_out access out of boundary! address = 0x000013d10 prog_cntr = 0x0462
+    670400 ps [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dme_lda_e_out access out of 	  boundary! address = 0xbcd20 prog_cntr = 0x00010010010100
+    670400 ps [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dme_ldb_e_out access out of boundary! address = 0xbcd00 prog_cntr = 0x00010010010100
+    670400 ps [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dmo_lda_e_out access out of boundary! address = 0xbcd30 prog_cntr = 0x00010010010100
+    670400 ps [ERROR] tl.aie_logical.aie_xtlm.math_engine.array.tile_25_1.cm.proc: dmo_ldb_e_out access out of boundary! address = 0xbcd10 prog_cntr = 0x00010010010100
     ```
 
-    The address `0x000013d30` is out of range from the valid addresses you see from the `readelf` command.
-6. The AI Engine simulation generates the `${PROJECT_PATH}/Emulation-AIE/AIESim_Guidance.json` file which can be viewed when the `${PROJECT_PATH}/Emulation-AIE/aiesimulator_output/default.aierun_summary` file is opened in the Vitis Analyzer.
+    The address `0x0000bcd30` is out of range from the valid addresses you see from the `readelf` command.
+6. The AI Engine simulation generates the `${PROJECT_PATH}/peakDetect/aie_component/build/hw/AIESim_Guidance.json` file which can be viewed when the `${PROJECT_PATH}/peakDetect/aie_component/build/hw/aiesimulator_output/default.aierun_summary` file is opened in the Vitis Analyzer.
 ![aiesim guidance](./Images/aiesim_guidance.PNG)
 
 7. The **PC** column in the **Memory Violations** tab helps redirecting to the kernel function that has a memory violation.
@@ -410,31 +405,22 @@ Besides using the simulator option, it is necessary to first identify an invalid
 
 # Section 8
 
-## Single Kernel Debug
+## Kernel Debug
 
-The AI Engine Pipeline view in the Vitis IDE allows you to correlate instructions executed in a specific clock cycle with the labels in the Disassembly view. The underlying AI Engine pipeline is exposed in debug mode using the pipeline view. The Vitis IDE only supports the pipeline view for graphs containing single kernels.
+The AI Engine Pipeline view in the Vitis IDE allows you to correlate instructions executed in a specific clock cycle with the labels in the Disassembly view. The underlying AI Engine pipeline is exposed in debug mode using the pipeline view.
 
-That is, the pipeline view is supported when your graph has AI Engine kernels targeted to a single AI Engine tile. There can only be only one single kernel in a graph or multiple kernels mapped to a single tile for the pipeline view to be enabled. So to get the pipleline view, do the following source code changes to the Peakdetector design.
+1. So to get the pipleline view, In the Flow navigator window, under AIE SIMULATION/HARDWARE, select the Run Settings under **aie_component_aiesim_1** Configuration, select the check box **Enable Pipeline View**.
+![enable_pipeline view](./Images/enable_pipeline.PNG)
 
-1. Clone the git repository, and copy and replace all files from `{GIT_TUTORIAL_PATH}/AIE_Simulation/src/kernels/` with the files in `${PROJECT_PATH}/src/kernels/`. It is recommended to make a copy of the original files before replacing.
-    > **NOTE:** These source changes are done to accommodate the kernels in a single tile. As the original sources contains stream connections in between two kernels and two stream connections to PLIO; they cannot fit in a single AI Engine tile.
+2. Select **Generate Profile** from the Profile Options.
 
-2. Also, replace the `{GIT_TUTORIAL_PATH}/AIE_Simulation/src/graph.h` with the `${PROJECT_PATH}/src/graph.h`.
-
-3. Observe the runtime ratios in the `graph.h`. This change from the original design makes all the kernels to be placed in a single AI Engine tile.
-
-4. Rebuild the design, and observe the graph view in the Vitis Analyzer. Observe the single buffer between two kernels instead of ping-pong buffers. This is because now two kernels are mapped to a single AI Engine core and ping-pong buffers are not required.
-
-5. To enable the Pipeline view on graphs with a single kernel, select **Generate Profile** from the Debug configurations.
-
-6. Enter the debug, as explained in the [Debug Using Vitis IDE Debugger](./README.md#Debug-using-Vitis-IDE-debugger) section, to observe only a single core in the **Debug** window. The  **Pipeline View** automatically comes up as soon as IDE enters the debug mode.
+3. Enter the debug, as explained in the [Debug Using Vitis IDE Debugger](./README.md#Debug-using-Vitis-IDE-debugger) section, to observe only a single core in the **Debug** window. The  **Pipeline View** automatically comes up as soon as IDE enters the debug mode.
 ![pipeline view](./Images/pipeline_view.PNG) 
 
-7. Click the **Step Over** button, and observe the changes in the pipeline view as well as the **Cycle Count**,**Program Counter** in Runtime statistics. The main advantage of the pipeline view is when you want to observe how many cycles a particular instruction takes.
+4. Click the **Step Over** button, and observe the changes in the pipeline view as well as the **Cycle Count**,**Program Counter** in Runtime statistics. The main advantage of the pipeline view is when you want to observe how many cycles a particular instruction takes.
 
-8. Once the debug is done, hit the **Resume** button to complete the simulation or the **Terminate** button to exit the debugger smoothly.
+5. Once the debug is done, hit the **Resume** button to complete the simulation or the **Terminate** button to exit the debugger smoothly.
 
-9. Revert all the source changes to exercise the other debug features.
 
 # Section 9
 
@@ -444,16 +430,16 @@ To estimate the design performance during the AI Engine simulation, it is necess
 
 Refer to the Section 4 [Enabling the Profile and Trace Options](./README.md#Enabling-the-profile-and-trace-options) to understand how to enable profiling in the Vitis IDE.
 
-1. After running the AI Engine Simulation, open the `default.aierun_summary` file in the Vitis Analyzer, and click the **Profile**.
+1. After running the AI Engine Simulation, open the profile **analysis view -> aie_component -> AIE SIMULATOR/HARDWARE -> Run-aie_component -> Profile** .
 2. You can click the **Summary** corresponding to each tile in the landing page, and observe the cycle count, instruction count, and program memory.
 3. Now, under the **Function Reports**, click the **Total Function Time** to observe the following table at the bottom for the `data_shuffle` kernel function.
 ![profile function time](./Images/profile_function_time.PNG)
 
-    * The `data_shuffle` kernel function took 2,305 cycles for seven iterations, i.e., ~329 cycles for one iteration which is the **Avg Function Time**.
-    * The `main` function is added by the compiler and different from the `main()` function in the `graph.cpp` file. This function took 1,461 cycles in total which includes the time to transfer control back and forth between each graph iteration, lock stalls, etc.
-    * The `_main_init` runs once for all graph iterations, and it took 181 cycles.
-    * The `_cxa_finalize` function took 41 cycles to call the destructors of the global c++ objects.
-    * The `_fini` function executes the program terminating instructions, and it took 28 cycles.
+    * The `data_shuffle` kernel function took 2,303 cycles for seven iterations, i.e., ~329 cycles for one iteration which is the **Avg Function Time**.
+    * The `main` function is added by the compiler and different from the `main()` function in the `graph.cpp` file. This function took 99749 cycles in total which includes the time to transfer control back and forth between each graph iteration, lock stalls, etc.
+    * The `_main_init` runs once for all graph iterations, and it took 26 cycles.
+    * The `_cxa_finalize` function took 43 cycles to call the destructors of the global c++ objects.
+    * The `_fini` function executes the program terminating instructions, and it took 24 cycles.
 
 4. If you click the AI Engine Simulation **Summary**, you can notice the AI Engine Frequency as `1250 MHz` i.e., `0.8ns`, i.e., `1` cycle = `0.8 ns`
     Now, the data_shuffle function took `329` cycles for `1` iteration, i.e., `329 * 0.8 ~= 264 ns`.
@@ -465,7 +451,7 @@ Refer to the Section 4 [Enabling the Profile and Trace Options](./README.md#Enab
 
 ### Calculating the Graph Throughput Using Graph Output
 
-1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (`upscale` kernel in this case). Add a marker at the start of the first output sample as highlighted as follows. Then click the `Go to last time` icon, and observe the cursor moves to the end of the last iteration. Now, click the **previous transition** icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2273.600 ns`.
+1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (`upscale` kernel in this case). Add a marker at the start of the first output sample as highlighted as follows. Then click the `Go to last time` icon, and observe the cursor moves to the end of the last iteration. Now, click the **previous transition** icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2282.320 ns`.
 ![trace graph throughput](./Images/trace_graph_throughput.PNG)
 2. The number of bytes transferred is `128 samples * 4 Bytes * 7 iterations` = `3584` bytes.
 3. Throughput = 3584/2273 * e-9 ~= 1.5 GBPS.
