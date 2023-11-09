@@ -30,11 +30,11 @@ You can create the sender and receiver objects for the AIE that will make sure t
     in_classifier = aie_input_plio("in_classifier", 'int16')
     out_classifier = aie_output_plio("out_classifier", 'int32')
 ```
-Here the first parameter `in_interpolator` is a string value that should match PLIO names in the graph PLIO constructors. The second parameter is the AIE kernel datatype with which sender/receiver is interfaced. For more details on datatype mapping in Python based external traffic generators, see <UG1393 link> 
+Here the first parameter `in_interpolator` is a string value that should match PLIO names in the graph PLIO constructors. The second parameter is the AIE kernel datatype with which sender/receiver is interfaced. For more details on datatype mapping in Python based external traffic generators, see [Writing Traffic Generators in Python](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
 
 #### 2. Transmitting the data using send_data (data_val, tlast) API
 
-You can prepare the list of data values and send them using send_data API call. See lines <> in the script. The API expects data values list as the first parameter and TLAST value as the second.  
+You can prepare the list of data values and send them using send_data API call. See lines 37 and 58 in the script `TrafficGenerator/Python/xtg_aie.py`. The API expects data values' list as the first parameter and TLAST value as the second.  
 
 ```BASH
 in_interpolator.send_data(in_interpolator_data, True)
@@ -65,7 +65,7 @@ For more details on Python based APIs, refer [Writing Traffic Generators in Pyth
 
 #### 1. Instantiating the XTLM Utilies
 
-You need to instantiate the classes to send and receive the data. See lines below. 
+You need to instantiate the classes to send and receive the data. See lines below inside `TrafficGenerator/MATLAB/xtg_aie.m` 
 
 ```BASH
     in_interpolator = aie_input_plio("in_interpolator", 'int16')
@@ -108,7 +108,7 @@ For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](ht
 
 #### 1. Instantiating the XTLM Utilities
 
-You can create the sender and receiver objects for the AIE that will make sure to instantiate the XTLM utilies for IPC based communication while sending or receiving the traffic.
+You can create the sender and receiver objects for the AIE that will make sure to instantiate the XTLM utilies for IPC based communication while sending or receiving the traffic. The CPP based code is found inside `TrafficGenerator/CPP/` folder. 
 
 ```BASH
     xtlm_ipc::axis_master in_interpolator("in_interpolator");
