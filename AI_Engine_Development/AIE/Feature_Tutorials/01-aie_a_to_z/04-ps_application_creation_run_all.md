@@ -146,35 +146,23 @@ Before you run the system in hardware, you need to rebuild the system to target 
 
 ## Step 6: Run the System in Hardware
 
-You have two ways to run the application.
-
-**A:** Use Jtag to launch the application.
-
-   1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable, and set the BOOT MODE to JTAG.
-
-   2. Right-click the **simple_application_system**, and click **Run As → Launch Hardware**.
-
-         ![missing image](images/run-on-hw.png)
-
-   3. You should see the application running successfully with no error.
-
-         ![missing image](images/hw_output.png)
-
-**B:** Use the SD card to run the application.
+Use the SD card to run the application.
 
    1. Set up your board with proper connection of power cable, JTAG USB cable, UART USB cable, and set the BOOT MODE to SD Boot.
 
-   2. Right-click the **simple_application_system**, and expand Hardware. In the `package` directory, you would find a `sd_card.img` file.
+   2. Under the  **simple_aie_application_system_project** component expand **Output > hw > package**. In the `package` directory, you will find a `sd_card.img` file.
+
+  ![missing image](images/232_package_sd_card.jpg)
 
         > **NOTE:** You can find the `sd_card.img` file in **package** and **package_aie_debug** directories. The `sd_card.img` in **package_aie_debug** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package** directory is for free running. So choose `sd_card.img` in **package** directory for SD card free running.
 
    3. Format your SD card FAT32 partition using the `sd_card.img` file.
 
-         ![missing image](images/package_sd_card.png)
+   4. Start a UART terminal connected to the COM ports of the VCK190         
 
-   4. Insert your SD card into your board, and power on your board. You should see the application running successfully with no error.
+   5. Insert your SD card into your board, and power on your board. You should see the application running successfully with no error.
 
-         ![missing image](images/hw_output.png)
+         ![missing image](images/232_hw_output.jpg)
 
 ## Summary
 
