@@ -8,11 +8,11 @@
 
 # Versal Platform Creation Quick Start
 
-***Vitis New IDE 2023.2***, ***Vivado 2023.2***
+***Vitis Unified IDE 2023.2***, ***Vivado 2023.2***
 
-***Board: VCK190***
+***Board: VCK190 VEK280***
 
-In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 evaluation board in short. 
+In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 or VEK280 evaluation board in short. 
 
 This time, we will utilize AMD Versal™ extensible platform from the CED example, using pre-built Linux common image and `createdts` command to generate software components. And then create an embedded Versal acceleration platform with AMD Vitis™ Unified IDE. At last, leverage the Vector Addition example to validate this platform. 
 
@@ -43,6 +43,8 @@ This is a quick start for Versal platform creation. If you have queries about so
    - Select **Versal Extensible Embedded Platform** in Select Project Template window.
    - Input **project name** and **project location**. Keep **Create project subdirectory** checked. Click **Next**.
    - Select target board in Default Part window. In this example, we use **Versal VCK190 Evaluation Platform**. Click **Next**.
+
+      >Note: Please select **Versal VEK280 Pre-production** board if you target vek280.
   
    ![CED Configuration](./images/vivado_ced_config.png)
 
@@ -57,7 +59,10 @@ This is a quick start for Versal platform creation. If you have queries about so
 
    ![Vivado Design Block Diagram](images/vivado_design_diagram.png)
 
-   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. 
+
+   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190 or VEK280. 
+
+   >Note: The block design of the VEk280 is slightly different from that of the VCK190. While the VCK190 incorporates one DDR4 and one LPDDR4, the VEK280 elevates its performance with the inclusion of two LPDDR4s.
    
 4. Generate Block Diagram
 
@@ -81,12 +86,14 @@ This is a quick start for Versal platform creation. If you have queries about so
    - Click **Next** on Export Hardware Platform page.
    - Select **Hardware and hardware emulation**.  Click **Next**.
    - Select **Pre-synthesis**, because we are not making an DFX platform. Click **Next**.
-   - Input Name: **VCK190_Custom_Platform**, click Next.
-   - Update file Xsa file name to **vck190_custom**, click Next.
+   - Input Name: **Custom_Platform**, click Next.
+   - Update file XSA file name to **vck190_custom**, click Next.
    - Review the summary. Click **Finish**.
    - **vck190_custom.xsa** file is generated in Vivado project location directory.
 
    >Note: If there are any IPs that do not support simulation, generate Hardware XSA and Hardware Emulation XSA separately.
+
+   >Note: If you target VEK280, please update XSA name to **vek280_custom**.
 
 ## Step 2: Create Vitis Platform
 
@@ -109,11 +116,13 @@ This is a quick start for Versal platform creation. If you have queries about so
    Then execute `createdts` command in XSCT console like the following:
 
    ```bash
-   createdts -hw <full path>/vck190_custom_hw.xsa -out . -zocl \
+   createdts -hw <full path>/vck190_custom.xsa -out . -zocl \
    -platform-name mydevice -git-branch xlnx_rel_v2023.2 -board versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile   
    ```
 
-   Notice that `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom_hw.xsa`. Besides, the following information would show in XSCT console. Ignore the following warning and that means you succeed to get system.dtb file, which is located in `mydevice/psv_cortexa72_0/device_tree_domain/bsp/`.
+   >Note: If you target VEK280, please specify the XSA  to **vek280_custom.xsa**  and board to **versal-vek280-revb**.
+
+   Notice that `-hw ` option is your XSA file generated in step1 located in your Vivado Project directory named `vck190_custom.xsa`. Besides, the following information would show in XSCT console. Ignore the following warning and that means you succeed to get system.dtb file, which is located in `mydevice/psv_cortexa72_0/device_tree_domain/bsp/`.
 
    ```bash
    pl.dtsi:9.21-46.4: Warning (unit_address_vs_reg): /amba_pl@0: node has a unit name, but no reg property
@@ -128,7 +137,10 @@ This is a quick start for Versal platform creation. If you have queries about so
    - Run Vitis by typing `vitis -w .` in the console. **-w** is to specify the workspace. `.` means the current workspace.
    - In the Vitis IDE, select **File > New Component > Platform** to create a platform component.
    - Enter the **Component name**. For this example, type `vck190_custom`, click **Next**.
-   - In the XSA selecting page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `Your Vivado Project Directory>/vck190_custom.xsa`. Click **Next**.
+
+      >Note: If you target VEK280, please update component name to **vek280_custom**.
+
+   - In the XSA selecting page, click **Browse** button, select the XSA file generated by the Vivado. In this case, it is `Your Vivado Project Directory>/vck190_custom.xsa` or `vek280_custom.xsa`. Click **Next**.
    - Set the **operating system** to **linux** and set the processor to **psv_cortexa72**. Click **Next**.
    - Review the summary and click **Finish**.
 
@@ -158,8 +170,11 @@ This is a quick start for Versal platform creation. If you have queries about so
    ![missing image](./images/vitis_examples.PNG)
 
    - Select **Simple Vector Addition**, and click **Create application from template**.
-   - Input the **System project name**: `Vadd` and click **Next**.
+   - Input the **System project name**: `vadd` and click **Next**.
    - Select the platform we created in previous step. In this case, it is `vck190_custom` platform.
+
+      >Note: If you target VEK280, please select `vek280_custom` platform.
+
    - Input **Sysroot** path: `xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux`
    - Input **RootFS** path: `xilinx-versal-common-v2023.2/rootfs.ext4`
    - Input **Kernel Image** path: `xilinx-versal-common-v2023.2/Image` and click **Next**.
@@ -279,7 +294,7 @@ To use these scripts, download Versal common image from [AMD website download pa
 
    ```bash
    # cd to the ref_files directory, e.g.
-   cd ref_files
+   cd ref_files/<board>
    make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  #Specify the path of the common image
    ```
    This command is to generate platform with pre-built software components and do sw emulation by running vadd application to test this platform.

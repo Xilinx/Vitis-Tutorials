@@ -1,0 +1,46 @@
+{
+    "name": "Getting_Started-Vitis_Platform",
+    "description": "Quickly create a Versal Platform",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["vek280"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "GS_pfm",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_emu": 200
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
+        ],
+        "custom_build_target":
+        {
+            "all": "all",
+            "hw" : "sd_card"
+        }
+        
+    }
+}
+
