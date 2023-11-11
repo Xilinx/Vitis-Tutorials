@@ -61,13 +61,13 @@ This section helps you debug your command line project by using the features of 
 
 ## Build for Hardware Emulation Using the Vitis IDE
 
-Before getting into this section, it is expected that you created an AI Engine application in the Vitis IDE and ran x86simulation [Build and Simulate in the Vitis IDE](../AIE_Simulation/README.md#Build-and-simulate-in-Vitis-IDE).
+Before getting into this section, it is expected that you created an AI Engine application in the Vitis IDE and ran AIEsimulation [Build and Simulate in the Vitis IDE](../AIE_Simulation/README.md#Build-and-simulate-in-Vitis-IDE).
 
 Create a system project manually using the steps mentioned in [Port a Command Line Project to the Vitis IDE System Project](../CreateIDESystemProj.md) and download the Vitis IDE exported project ([Download Vitis IDE project](../README.md#Download-Vitis-IDE-project)).
 
 Besides referring to the link provided above to create a system project, make sure to follow the following points to avoid unnecessary issues during the emulation process:
 
-* While creating a HW-link project, the Vitis IDE tool, by default, creates a `binary_container_1-link.cfg` file under the `{$PROJECT}/Emulation-HW/` directory that contains the connectivity as follows:
+* While creating a HW-link project, the Vitis IDE tool, by default, creates a `binary_container_1-link.cfg` file under the `{$PROJECT}/system_project/hw_link/` directory that contains the connectivity as follows:
 
     ```
     [connectivity]
@@ -75,26 +75,23 @@ Besides referring to the link provided above to create a system project, make su
     nk=s2mm:2:s2mm_1.s2mm_2
     ```
 
-    If you are porting a command line project to the Vitis IDE environment, make sure to remove the above connectivity statements that start with `nk` in your `system.cfg` file and add as a source to your HW-Link project.
+    If you are porting a command line project to the Vitis IDE environment, make sure to replace the above connectivity statements that start with `nk` in your `system.cfg` file and add as a source to your HW-Link project.
 
 * As the AI Engine graph is being loaded by the host PS application, you can defer the running of the graph after the graph has been loaded using the `xrt::graph` API. By default, the AMD platform management controller (PMC) loads and runs the graph. However, the v++ `--package.defer_aie_run` option will let you defer the graph run until after the graph has been loaded using the `xrt::graph` API.
+
 ![package options](./Images/package_options.PNG)
 
-1. To build the system project, right-click the **PeakDetect_System** and select **Build Project**. The top-level project uses an incremental build approach that recognizes the state of the subprojects and only rebuilds projects that need to be updated.
-2. Once the build completes, right-click the **PeakDetect_System**, select **Run As** -> **Run Configurations**, add the environment variables as follows, and hit **Apply** -> **Run**:
-![environment variables](./Images/environment_variables.PNG)
+1. To build the system project, in the Flow Navigator -> [system_project] component -> select **Build All**. The top-level project uses an incremental build approach, select the components to be built along with system project.
+2. After packaging, everything is set to run emulation. In the Flow Navigator -> [system_project] component -> select **Start Emulator** -> show waveform -> start :
 
-3. In the **Launch on Emulator** window, click the **Start Emulator and Run** button. This starts the QEMU emulation environment and boots Linux. The Emulation console shows a transcript of the QEMU launch and Linux boot process.
+![Start Emulator](./Images/environment_variables.PNG)
 
-    Alternatively, you can also start emulation by selecting the **Vitis -> Start/Stop Emulator** option. One advantage with this is, you can specify the emulator arguments. For example, you can specify options for the AI Engine simulator and run the graph application manually after the Linux boot:
+3. Run the emulation by clicking Flow Navigator -> [system_project] component -> select **Run**, after the following messages are displayed in the 'TASK: EMULATION FOR SYSTEM_PROJECT' console.  
 
-    `-aie-sim-options ${FULL_PATH}/aiesimulator_output/aiesim_options.txt`
-![emulator start stop](./Images/emulator_start_stop.PNG)
-
-4. You can observe the Linux boot and application run message in the console as follows:
 ![emulation console](./Images/emulation_console.PNG)
 
-5. You can stop emulation by clicking the **Vitis -> Start/Stop Emulator** option, and hit **Stop**.
+5. You can stop emulation by clicking In the Flow Navigator -> [system_project] component -> select **Stop Emulator**.
+![Stop Emulation](./Images/stop_emulation.PNG)
 
 # Section 2
 
@@ -162,12 +159,12 @@ This way you should be able to identify whether a data is being sent/received, t
 
 This section walks you through profiling the AI Engine as part of running the hardware emulation and calculate the throughput of the design considering the system as a whole, i.e., when the MM2S module is transferring data to the AI Engine, the AI Engine computes the output and transferrs the data to the S2MM module. Also note, in this case, the PS is controlling both the PL and AI Engine. Compare the throughput of the design with the AI Engine as a standalone module(aiesimulation results).
 
-1. In the Vitis IDE, go to **Vitis** -> **Start/Stop Emulation**.
-2. Add the `-aie-sim-options {PROJECT_PATH}/Emulation-AIE/aiesimulator_output/aiesim_options.txt` in the **Emulator Arguments** option, and click **Start**.
+1. In the Vitis IDE, go to Flow Navigator -> [system_project] component -> **Vitis** -> **Start Emulation**.
+2. Add the `-aie-sim-options {PROJECT_PATH}/aie_component/build/hw/aiesimulator_output/aiesim_options.txt` in the **Emulator Arguments** option, and click **Start**.
 3. Now the hardware emulation launches and starts the QEMU emulation environment. The Emulation console shows a transcript of the QEMU launch and Linux boot process.
-4. Once the boot completes in the Vitis IDE, run the application using **Run Configurations** -> **Launch HW Emulator** on the system project.
+4. Once the boot completes in the Vitis IDE, run the application using **Run** on the system project.
 5. This runs the application and shows **TEST PASSED** in the output console.
-6. Duble-click the `default.aierun_summary` file from the `{PROJECT_PATH}/PeakDetect_system/Emulation-HW/package/sim/behav_waveform/xsim/` path. This opens the summary file in the Vitis Analyzer.
+6. Duble-click the System_Project -> HARDWARE EMULATION -> Reports -> Summary file. This opens the summary file `{PROJECT_PATH}/system_project/build/hw_emu/package/package/sim/behav_waveform/xsim` path in the Vitis Analyzer.
 7. As you observe, it carry forwards the aiesimulator options specified in `aiesimulator_output/aiesim_options` and provides the results.
 
 ### Calculating the Kernel Latency
@@ -200,7 +197,7 @@ From the trace information, you can calculate the kernel latency as follows:
 
 # Section 4
 
-## Command Line Project Source Code Debug with the Vitis IDE
+## Command Line Project Source Code Debug with the Vitis IDE (classic)
 
 This section uses the command line flow to build for hardware emulation.
 

@@ -16,8 +16,7 @@ The x86simulator supports faster simulation to help verify the kernel's function
 Before starting this tutorial:
 
 * It is expected that you have run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
-* Create a system project manually using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](../CreateIDESystemProj.md), or download the Vitis exported project as instructed in [Download the Vitis IDE Project](../README.md#Download-Vitis-IDE-project).
-* Open the Vitis IDE tool by typing `vitis` in the console, set the workspace, and the IDE opens. Click **File**->**Import**, select the **Vitis exported project zip file**, browse to the above zip file, and click **Next**. Enable the **System Projects** check box, and click **Finish**.
+* Create a system project manually using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](../CreateIDESystemProj.md).
 
 ## Features
 
@@ -155,17 +154,16 @@ Demonstrates how to use a GDB server to debug the design.
 
 ## Build and Simulate in the Vitis IDE
 
-1. In the Vitis IDE toolbar, click the arrow next to the manage configurations button, and select the 'Emulation-SW'. This sets the build target for x86 simulation.
-![build target](./Images/Build_target.PNG)
-2. Right-click the *[aiengine]* domain project, select **C/C++ Build Settings**, choose **Compiler**, and add `-O0` to the Pre Processor Options. This improves the debug visibility.
+1. Once the Vitis IDE is opened and the system project is created manually, select the **AI Engine Component** from the left-side pane, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings. 
+2. Select the **Module-Specific** settings and click **Add item** under the **Pre-processor** setting.
 ![build settings](./Images/Build_setting.PNG)
-3. Right-click the *[aiengine]* domain project, and select the **Build** option. Once the build completes, you see the **Compilation Complete** and **Build Finished** messages in the console.
-4. Right-click the *[aiengine]* domain project, and select the **Run As → Launch SW Emulator** option to start simulation for an x86simulation target. When the simulation complete, you see the following output in the console.
+3. Add `-O0` to the Pre-processor option. This improves the debug visibility.
+4. Now, in the **Flow** navigator window, select the **Build** option under **X86 SIMULATION**. This builds the AI Engine component for x86simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console. Also a green tick mark as highlighted below.
+![build output](./Images/Build_output.PNG)
+5. In the **Flow** navigator window, under **X86SIMULATION**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking on **Create Configuration** -> **New Launch Configuration** -> **x86sim**. 
+![Create_Configuration](./Images/create_configuration.PNG)
+6. You can change the **Launch Config Name** and click **Run** button to start simulation for x86simulation target. When the simulation complete, you see the following output in the console.
 ![simulator output](./Images/x86simulator_output.PNG)
-5. The x86simulator output files from design are located at `${PROJECT}/Emulation-SW/x86simulator_output/data` and the golden output data is located at `09-debug-walkthrough/reference_output/`.Verify the output files `${PROJECT}/Emulation-SW/x86simulator_output/data/output_upscale.txt` and `${PROJECT}/Emulation-SW/x86simulator_output/data/output_data_shuffle.txt` against the golden files `09-debug-walkthrough/reference_output/upscale.txt` and `09-debug-walkthrough/reference_output/data_shuffle.txt` to ensure that the design's I/O functionalities are correct. The Vitis IDE supports compare with the feature to compare two files.
-   * Add the golden data to the `${PROJECT}/data/` by right clicking on the `data/` directory in *[aiengine]* domain project and select **Import sources**.
-   * Highlight the two files to be compared.
-   * Right-click one of the highlighted files, and select **compare with** then **Each other**. For example, compare `${PROJECT}/data/upscale.txt` and `${PROJECT}/Emulation-SW/data/output_upscale.txt`.
 
 # Section 2
 
@@ -175,10 +173,10 @@ The simplest form of tracing is to use a formatted `printf()` statement in the c
 
 This section talks about adding a `printf()` statement in the source code, compile and run `x86simulator`, and check the output in the console.
 
-1. From the Vitis IDE, browse to the *[aiengine]* domain project and expand **src** → **kernels** → **click** on `peak_detect.cc`.
+1. From the Vitis IDE, browse to the *[AI Engine]* component and expand **Sources** → **kernels** → **click** on `peak_detect.cc`.
 2. Add `#include <adf/x86sim/x86simDebug.h>` at the beginning of the source file and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` after for the loop.
-3. To compile the project, right-click the *[aiengine]* domain project, and select **'Build Project'**.
-4. To run the project, right-click **Run As** → **Launch SW Emulator**.
+3. To compile the project, select the **Build** option under **X86 SIMULATION** in **FLOW** navigator. 
+4. To run the project, select the **Run** option under **X86SIMULATION** in **Flow** navigator.
 5. The expected result is as follows.
 ![printf support](./Images/printf_support.PNG)
 6. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
@@ -197,9 +195,10 @@ The x86simulator supports printing vector output data value via `printf()`. This
       printf("Iteration-%d -> Vector-%d -> value = %d\n",i,pp,print_ptr[pp]);
    ```
 
-2. Recompile the project either by right-clicking the project → **Build project**, or by hitting the **build** button in the taskbar.
+2. Recompile the project either by hitting the **build** option in the Flow navigator.
 3. Run the x86simulation, and observe the following `printf` statements in the console.
 ![vector printf](./Images/vector_printf.PNG)
+4. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
 
 # Section 4
 
@@ -207,16 +206,21 @@ The x86simulator supports printing vector output data value via `printf()`. This
 
 This section walks you through a debug methodology that uses the Vitis IDE debugger. You can learn how to invoke the debugger, add breakpoints, view intermediate values, etc.
 
-1. After the design is built for the x86simulation target, right-click the *[aiengine]* domain project, and select **Debug as** → **Launch SW Emulator**.
+1. After the design is built for the x86simulation target, click on **Flow** Navigator -> **X86 Simulation** -> **Debug** option.
 2. This gets you to the debug mode in the Vitis IDE and waits in the `graph.cpp` file (after the *main()* function).
-3. Open any source file from the Explorer window, and add the breakpoint of interest. For example, open the *peak_detect.cc* source file, and add the breakpoint at line 26.
+3. Open any source file from the Explorer window, and add the breakpoint of interest. For example, open the *peak_detect.cc* source file, and add the breakpoint at line (`vin = *InIter++`) after for loop.
 4. Observe the different debug functionalities/controls available, that is, step-in, step-over, step-return, resume, terminate, disconnect, etc.
 ![debug controls](./Images/debug_controls.PNG)
-5. Press **F8** or the **Resume** button in the toolbar. Observe the simulation stops at the user-defined breakpoint as follows.
+5. Press **Resume** button in the toolbar. Observe the simulation stops at the user-defined breakpoint as follows.
 ![breakpoint](./Images/break_point.PNG)
-6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. Double-click the Variables view to enlarge the area. You can restore it back to the original size by double-clicking again. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data → 0: 16)`. If you click that, it shows the value '16' at the bottom (based on the iteration in your case).
+6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. 
+
+**Note** : You can drag the complete debug window from left-side pane down to the output console in the bottom pane and expand the Variables view to enlarge the area. You can restore it back to the original size by dragging back to the left-side. 
+![rearranging_debugMode](./Images/rearranging_debugMode.PNG)
+
+7. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data →  0: 16)`. (Value-"16" based on the iteration in your case).
 ![variables view](./Images/variables_view.PNG)
-7. You can either continue stepping for all iterations, or remove the breakpoint and hit the **Run** button in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, you can click the disconnect button, and switch back to Design mode.
+8. You can either continue stepping for all iterations, or remove the breakpoint and hit the **Run** button in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, you can switch back to **Vitis Component** view.
 
 # Section 5
 
@@ -232,10 +236,15 @@ The following table lists some x86simulator options which are used for debugging
 
 All x86simulator supported features allow you to debug designs without using the debugger and do not require any instrumentation of kernel code.
 
-One obvious way to specify these options is to add them in Run configurations in the Vitis IDE. To do this, right-click the *[aiengine]* domain project, select **Run As** → **Run configurations**, and add the following options in Arguments tab.
-![run configurations](./Images/run_configurations.PNG)
+One obvious way to specify these options is to add them to the Launch configuration settings in the Vitis IDE. To do this, hover your mouse over the **Run** option in the **Flow** navigator and click on the settings button. Now, in the launch configuration window, click on the **X86 Simulator Options** as shown below.
 
-Another way to enable the feature is to update the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options` from `no` to `yes` for the selected feature.
+![launch_config_settings](./Images/launch_config_settings.PNG)
+
+From the list of settings as shown below, you can enable or disable any x86simulation specific option.
+
+![x86simulator_options](./Images/x86simulator_options.PNG)
+
+Another way to enable the feature is to switch to the source editor mode as highlighted above and update the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options` from `no` to `yes` for the selected feature.
 
 ```
 # For setting input directory path : define input-dir
@@ -270,9 +279,10 @@ pkg-dir= <Path to work directory>
 
 This feature allows you to dump and inspect data traffic at kernel ports with data types. Examine how this feature is helpful.
 
-1. Build the project, open the `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options` file, and update the dump feature from `no` to `yes`.
-2. Right-click the *[aiengine]* domain project, and select **Run As** → **Launch SW Emulator**.
-3. Once the simulation is completed, you can observe the following messages in the console.
+1. Open the `src/kernels/data_shuffle.cc` file in the *AI Engine* component, and comment out the line `if(remainder == 0)`.
+2. Build the project, open the `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options` file, and update the dump feature from `no` to `yes`.
+3. Select the **Run** option under **X86SIMULATION** in **Flow** navigator.
+4. Once the simulation is completed, you can observe the following messages in the console.
 
    ```
    Processing './x86simulator_output/dump/x86sim_dump.data'
@@ -310,13 +320,11 @@ This feature allows you to dump and inspect data traffic at kernel ports with da
 
    ```
 
-   Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
-   
-For more information about the snapshots, refer to the topic [Data-snapshots](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Data-Snapshots)
+Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
 
-4. Open the `${PROJECT_PATH}/Emulation-SW/x86simulator_output/dump/mygraph_p_d_in_0.txt` file for example, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
+5. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/dump/mygraph_in_out_0.txt` file, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
 
-5. Similarly, you can open the input/output of all the kernels in a graph, and observe the intermediate outputs as well as the interface ports.
+6. Similarly, you can open the input/output of all the kernels in a graph, and observe the intermediate outputs as well as the interface ports.
 
 ### Deadlock Detection
 
@@ -326,11 +334,11 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 
 #### Scenario 1
 
-1. For example, open the `src/kernels/data_shuffle.cc`, and comment out line `if(remainder == 0)`.
+1. For example, open the `src/kernels/data_shuffle.cc`, and comment out line 24.
 
-2. Compile the design by rebuilding the *[aiengine]* domain project.
+2. Compile the design by rebuilding the *AI Engine* Component.
 
-3. Run x86simulation by right-clicking the *[aiengine]* domain project and selecting **Run As** → **Launch SW Emulator**.
+3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
 
 4. Observe that the x86simulator detects error and output messages on the console. In addition to that, the file, `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot`, is generated.
 
@@ -360,13 +368,13 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 
    This is the textual representation of the deadlock path (starting to the end). To get the pictorial representation of the same, you need to use the `dot` application.
 
-5. Locate the `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot` file path in your terminal.
+5. Locate the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/simulator_state_post_analysis.dot` file path in your terminal.
 
 6. Issue the command `dot -Tpng simulator_state_post_analysis.dot > simulator_state_post_analysis.png`, and open the file.
 
    ![dot file](./Images/dot_file.PNG)
 
-   The paths in the red indicate the root cause of the deadlock. In this design, if you observe carefully, observe the graph path 'n3-c7-n2-c6-n5', the edge `c6` is expecting more data than what is actually being sent from edge `c7`. From your graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producing kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
+   The paths in the red indicate the root cause of the deadlock. In this design, if you observe carefully, observe the graph path 'n3-c7-n2-c6-n5', the edge `c7` is not sending enough data to the edge `c6`. From your graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producing kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
 7. Revert the changes you have done on `src/kernels/data_shuffle.cc`.
 
 #### Scenario 2
@@ -374,7 +382,7 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
 1. Empty the file `data/inx.txt`. Make sure to backup the file before emptying it.
 2. Repeat the steps 1-6, and observe the deadlock path now.
 
-   ![dot file](./Images/dot_file_1.PNG)
+   ![dot file](./Images/dot_file.PNG)
 
    In this case, due to the insufficient input data to fill the input buffer, the kernel went into the hang state waiting for the input data.
 
@@ -389,16 +397,12 @@ Trace capability is used for debugging simulation hangs without the need for ins
 Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) section, where the stream data from the producer kernel does not match with the consumer kernel. Now see how to visualize the information using the trace feature of the x86simulator.
 
 1. Make the changes to the source code as mentioned in the Deadlock Detection section, Scenario 1, and build the project.
-2. Right-click the *[aiengine]* domain project, and select **Run As** → **Run Configurations**.
-3. In the Arguments tab, add `--trace` to the program arguments.
 
-   ```
-   --pkg-dir=./Work --i=.. --trace
-   ```
+2. Open the launch configuration settings and select the **Enable trace** option.
 
-4. Click **Apply** and **Run**
+3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
 
-5. Once the run completes, you can see the following information in the console.
+4. Once the run completes, you can see the following information in the console.
 
    ```
    Processing './x86simulator_output/trace/x86sim_event_trace.data'
@@ -412,11 +416,11 @@ Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) 
    Simulation completed successfully returning zero
    ```
 
-6. Open the `${PROJECT_PATH}/Emulation-SW//x86simulator_output/trace/x86sim_event_trace.data.txt` file, and observe the trace events.
+5. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/trace/x86sim_event_trace.data.txt` file, and observe the trace events.
 
-7. Observe the events corresponding to all the kernels. Say, for `mygraph.d_s`. Go to the last but one timestamp on that kernel, and locate the `stream stall begin in[1]` followed by `thread terminated`, as the deadlock happened.
+6. Observe the events corresponding to all the kernels. Say, for `mygraph.d_s`. Go to the last but one timestamp on that kernel, and locate the `stream stall begin in[1]` followed by `thread terminated`, as the deadlock happened.
 
-8. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many samples of data got processed.
+7. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many samples of data got processed.
 
 For more details on the kind of events that are recorded, refer to the [Trace Report](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the *AI Engine Tools and Flows User Guide* (UG1076).
 
@@ -426,15 +430,13 @@ This is in continuation to the [Trace Report in the File](./README.md#Trace-Repo
 
 >**NOTE:** Make sure you are still using the design changes that are done as part of exercising the deadlock situation.
 
-1. Make sure the *[aiengine]* domain project is successfully built for Emulation-SW.
+1. Make sure the *AI Engine* component is successfully built for X86 Simulation target.
 
-2. Right-click the *[aiengine]* domain project, and select **Run As** → **Run Configurations**.
+2. Open the launch configuration settings and select the **Enable trace print** option.
 
-3. In the Arguments tab, add `--trace-print` to the program arguments.
+3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
 
-4. Click **Apply** and **Run**.
-
-5. Observe the output in the console that has timestamp, internal name of the kernel, and event type.
+4. Observe the output in the console that has timestamp, internal name of the kernel, and event type.
 
    ```
    x86simulator --pkg-dir=./Work --i=.. --trace-print
@@ -449,6 +451,8 @@ This is in continuation to the [Trace Report in the File](./README.md#Trace-Repo
    ```
 
    Here you can notice that the output in the console is not as polished as the file generated by `--trace`. But this is useful when your design runs for long time, and you wish to see the event while the simulation is running.
+   
+You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
 
 # Section 6
 
@@ -472,8 +476,8 @@ Memory access violations occur when a kernel is reading or writing out of bounds
    export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
    ```
 
-1. After relaunching the Vitis IDE tool, enable the valgrind feature either by updating the configuration file, `${PROJECT_PATH}/Emulation-SW/Work/options/x86sim.options` or adding `--valgrind` to run configuration, and click **Apply** then **Close**.
-2. Run the x86simulation by right-clicking the *[aiengine]* domain project and selecting **Run As** → **Launch SW Emulator**.
+1. After relaunching the Vitis IDE tool, either by enabling the **Valgrind** option in the launch configuration settings or by updating the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options`.
+2. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator..
 3. With no violations in the kernel code, the valgrind messages looks similar to the following in the console:
 
    ```
@@ -497,8 +501,8 @@ Memory access violations occur when a kernel is reading or writing out of bounds
    ```
 
 4. Add the memory read violation to the kernel code, and try to see the valgrind messages.
-5. Open `src/kernels/peak_detect.cc`, and change the line `v_in = *(InIter++)` to  `v_in = *(InIter+8500000500)` after the `for` loop.
-6. Build the *[aiengine]* domain project, and run the x86simulation. This time observe the console carefully for the following messages in the output console:
+5. Open `src/kernels/peak_detect.cc`, and change the line 25 to `v_in = *(InIter+8500000500)`.
+6. Build the *AI Engine* component, and run the x86simulation. This time observe the console carefully for the following messages in the output console:
 
    ```
    x86simulator --pkg-dir=./Work --i=.. --valgrind
@@ -514,7 +518,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
    ..
    ==15387== For lists of detected and suppressed errors, rerun with: -s
    ==15387== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
-   <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/bin/x86simulator: line 374: 15387 Segmentation fault      valgrind $VALGRIND_ARGS $X86SIM_PROG
+   /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/bin/x86simulator: line 374: 15387 Segmentation fault      valgrind $VALGRIND_ARGS $X86SIM_PROG
    ```
 
    Valgrind points out the file that has out of bound read access with the line number as shown above.
@@ -540,7 +544,7 @@ Before beginning, it is expected to set the environment variables as described i
 
 ### x86simulation on the Command Line
 
-1. Go to the `${TUTORIAL_DIRECTORY}/cmd_src/` directory, and locate the `Makefile`.
+1. Go to the ${Tutorial_Directory}/cmd_src, and locate the `Makefile`.
 2. Do `make aie` in the Linux terminal. This command runs the compilation.
 3. Do `make sim` to simulate the AI Engine graph for the x86sim target.
 
@@ -595,8 +599,8 @@ This topic walks you through running the x86simulator with the GDB.
    #0  data_shuffle (from_prev=..., outmax=0x7fffedffad78, out_shift=...) at ./../.././aie/kernels/data_shuffle.cc:9
    #1  0x0000000000411814 in b5_kernel_wrapper (arg0=..., arg1=0x4a26b0, arg2=...) at wrap_data_shuffle.cc:6
    #2  0x000000000042180a in x86sim::Kernel_b5_data_shuffle::invokeKernel (this=0x4a5a90) at PthreadSim.cpp:82
-   #3  0x00007ffff7b4293f in x86sim::IMEKernel::execute() () from <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/lib/lnx64.o/libx86sim.so
-   #4  0x00007ffff7b59564 in ?? () from <VITIS_INSTALL_PATH>/Vitis/202X.X/aietools/lib/lnx64.o/libx86sim.so
+   #3  0x00007ffff7b4293f in x86sim::IMEKernel::execute() () from /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/lib/lnx64.o/libx86sim.so
+   #4  0x00007ffff7b59564 in ?? () from /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/lib/lnx64.o/libx86sim.so
    #5  0x00007ffff7483dff in std::execute_native_thread_routine (__p=0x4a8890) at ../../../.././libstdc++-v3/src/c++11/thread.cc:80
    #6  0x00007ffff7bc6ea5 in start_thread () from /lib64/libpthread.so.0
    #7  0x00007ffff6be096d in clone () from /lib64/libc.so.6

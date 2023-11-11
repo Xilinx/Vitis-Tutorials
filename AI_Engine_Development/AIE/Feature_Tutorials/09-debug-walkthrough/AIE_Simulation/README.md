@@ -454,7 +454,7 @@ Refer to the Section 4 [Enabling the Profile and Trace Options](./README.md#Enab
 1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (`upscale` kernel in this case). Add a marker at the start of the first output sample as highlighted as follows. Then click the `Go to last time` icon, and observe the cursor moves to the end of the last iteration. Now, click the **previous transition** icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2282.320 ns`.
 ![trace graph throughput](./Images/trace_graph_throughput.PNG)
 2. The number of bytes transferred is `128 samples * 4 Bytes * 7 iterations` = `3584` bytes.
-3. Throughput = 3584/2273 * e-9 ~= 1.5 GBPS.
+3. Throughput = 3584/2282 * e-9 ~= 1.5 GBPS.
 
     Theoratically, AI Engine can transfer four bytes per cycle (in this case, 0.8 ns). So, to transfer `3584` bytes of data, it requires 896 cycles (896 * 0.8 = 716 ns). So, the theoratical througput is 5 GBPS.
 
