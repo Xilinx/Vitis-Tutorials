@@ -15,16 +15,20 @@ These tutorials illustrate various platform features and how you can incorporate
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./Feature_Tutorials/01_platform_creation_streaming_ip/">Incorporating Stream Interfaces</a></td>
+ <td align="center"><a href="./01_platform_creation_streaming_ip/">Incorporating Stream Interfaces</a></td>
  <td>This tutorial demonstrates how you can stream data between Vitis kernels and AXI stream connections exposed in the platform.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
+ <td align="center"><a href="./02_petalinux_customization/">PetaLinux Building and System Customization</a></td>
  <td>This tutorial demonstrates how you can customize a PetaLinux project to work for Vitis acceleration applications.</td>
  </tr>
   <tr>
- <td align="center"><a href="./Feature_Tutorials/03_Vitis_Export_To_Vivado/">Hardware Design Fast Iteration with Vitis Export to Vivado</a></td>
+ <td align="center"><a href="./03_Vitis_Export_To_Vivado/">Hardware Design Fast Iteration with Vitis Export to Vivado</a></td>
  <td>The Vitis export to Vivado is the new feature release in the Vivado 2023.1 / Vitis 2023.1 suite that enables bi-directional hardware hand-offs between the Vitis tools and the Vivado design suite, which improves developer productivity.</td>
+ </tr>
+  <tr>
+ <td align="center"><a href="./04_platform_validation/">Versal Extensible Hardware Design Validation</a></td>
+ <td>In this tutorial, you will learn how to validate a Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic Versal platform creation tutorial. </td>
  </tr>
  </table>
 

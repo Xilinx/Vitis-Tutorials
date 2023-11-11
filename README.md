@@ -118,10 +118,10 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/02-using-gmio">Using GMIO with AIE-ML </a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/01-aie_a_to_z">A to Z Bare-metal Flow </a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/03-rtp-reconfiguration">Runtime Parameter Reconfiguration</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/02-using-gmio">Using GMIO with AIE-ML </a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization">AIE-ML Programming :new:</a>
@@ -129,10 +129,10 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/04-packet-switching">Packet Switching  </a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/03-rtp-reconfiguration">Runtime Parameter Reconfiguration</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/04-packet-switching">Packet Switching</a>
             </td>                
             <td> 
                 <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>               
@@ -140,9 +140,10 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
             </td>
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>                
             <td>
             </td>
@@ -293,6 +294,34 @@ To download a ZIP file of a specific branch, do one of the following:
     </tbody>
 </table>
 
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td colspan="3" height="24" align="center">
+                <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development :new:</a></strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" height="48">
+                Introduce Vitis embedded design flows, learn the Vitis Unified IDE for developing embedded software applications targeted towards AMD embedded processors.
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <strong>Getting Started</strong>
+            </td>
+            <td height="24">
+                <strong>Feature Tutorials</strong>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified Embedded IDE :new: </a>
+            </td>
+            <td> </td>
+        </tr>  
+    </tbody>
+</table>
 
 <table border="0" width="100%">
     <tbody>
