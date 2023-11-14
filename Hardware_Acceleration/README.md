@@ -10,11 +10,11 @@
 
 ## Introduction
 
-The tutorials under the Hardware Acceleration category help you learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL. You may also learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level events, and more. 
+The tutorials under the Hardware Acceleration category help you learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL. You may also learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level events, and more.
 
-- The Hardware Acceleration <a href="./Feature_Tutorials/">**Feature Tutorials**</a> illustrate specific features or flows of Vitis, some features may not be required by all designs but are still useful for some use cases.
+- The Hardware Acceleration **[Feature Tutorials](./Feature_Tutorials/)** illustrate specific features or flows of Vitis. Some features might not be required by all designs but are still useful for some use cases.
 
-- The Hardware Acceleration <a href="./Design_Tutorials/">**Design Tutorials**</a> illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
+- The Hardware Acceleration **[Design Tutorials](./Design_Tutorials/)** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and show more complex and complete designs or applications.
 
 These tutorials target different boards including Alveo™ Data Center acceleration cards or MPSoC Evaluation Boards like ZCU104. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 

@@ -5,11 +5,11 @@ Hardware Acceleration: Feature Tutorials
 
 .. sidebar:: More Information
 
-   See Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
+   See AMD Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
 
 
 
-The Hardware Acceleration Feature Tutorials illustrate specific features or flows of Vitis, some features may not be required by all designs but are still useful for some use cases.
+The Hardware Acceleration Feature Tutorials illustrate specific features or flows of Vitis. Some features might not be required by all designs but are still useful for some use cases.
 
 The :doc:`landing page <../../Hardware_Acceleration>` of Hardware Acceleration contains important information including tool version, environment settings, and a table describing the platform, kernels, and supported features or flows of each tutorial. It is strongly recommended that you review the details before starting to use the acceleration tutorials.
 
@@ -57,7 +57,7 @@ The :doc:`landing page <../../Hardware_Acceleration>` of Hardware Acceleration c
      - This tutorial demonstrates the flexible kernel linking process to increase the number of kernel instances on an FPGA, which improves the parallelism in a combined host-kernel system.
 
    * - :doc:`Controlling Vivado Implementation <./06-controlling-vivado-implementation/README>`
-     - This tutorial demonstrates how you can control the Vivado&reg; tools flow when implementing your project.
+     - This tutorial demonstrates how you can control the AMD Vivado™ tools flow when implementing your project.
 
    * - :doc:`Optimizing for HBM <./07-using-hbm/README>`
      - This tutorial demonstrates how you can take best advantage of HBM on platforms that support it.
@@ -66,7 +66,7 @@ The :doc:`landing page <../../Hardware_Acceleration>` of Hardware Acceleration c
      - This tutorial demonstrates how kernels can directly access buffers host memory directly. This capability requires a compatible platform.
 
    * - :doc:`Using GT Kernels and Ethernet IPs on Alveo <./09-using-ethernet-on-alveo/README>`
-     - This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on Alveo card with Vitis flow.
+     - This tutorial demonstrates how to use networking GT kernels with generated Ethernet IPs and implement them on AMD Alveo™ card with Vitis flow.
 
    * - :doc:`Enabling FPGA to FPGA P2P Transfer using Native XRT C++ API <./10-p2p-card-to-card/README>`
      - This tutorial demonstrates how to enable p2p transfer from one FPGA device to another using XRT API host code.

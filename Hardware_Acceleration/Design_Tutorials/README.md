@@ -9,7 +9,7 @@
 
 # Design Tutorials
 
-The Hardware Acceleration **Design Tutorials** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
+The Hardware Acceleration **Design Tutorials** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and show more complex and complete designs or applications.
 
 The <a href="../README.md">README</a> of Hardware Acceleration contains important information including tool version, environment settings, and a table describing the platform, kernels, and supported features or flows of each tutorial. It is strongly recommended that you review the details before starting to use the acceleration tutorials.
 
@@ -48,7 +48,7 @@ The <a href="../README.md">README</a> of Hardware Acceleration contains importan
  </tr>
 <tr>
  <td align="center"><a href="./08-alveo_aurora_kernel/">Aurora Kernel on Alveo</a></td>
- <td>This tutorial demonstrates how to integrate Aurora IP in user design on Alveo card with Vitis flow to realize high-speed inter-card communications.</td>
+ <td>This tutorial demonstrates how to integrate Aurora IP in user design on AMD Alveo™ card with Vitis flow to realize high-speed inter-card communications.</td>
  </tr>
  <tr>
  <td align="center"><a href="./09-sssp-application/">Single Source Shortest Path Application</a></td>
