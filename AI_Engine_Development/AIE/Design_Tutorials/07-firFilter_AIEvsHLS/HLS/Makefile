@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -260,7 +260,7 @@ ifeq ($(EN_TRACE),1)
 endif
 
 VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16}
-
+VPP_LINK_FLAGS += --advanced.param "compiler.worstNegativeSlack=-0.1"
 #ifeq ($(N_FIR_FILTERS),1)
 #   ifeq ($(N_FIR_TAPS),15)
 #      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
@@ -295,18 +295,19 @@ VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET
 
 ifeq ($(N_FIR_FILTERS),10)
    ifeq ($(N_FIR_TAPS),15)
-	   VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-		VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high}
+	   #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+		#VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
 	     
    else ifeq ($(N_FIR_TAPS),64)
       VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
-     #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_1}
+     # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
+     # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_1}
      # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
      # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_BalanceSLRs}
      # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={ExploreWithRemap}
@@ -318,13 +319,17 @@ ifeq ($(N_FIR_FILTERS),10)
      # VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={false} 
    
    else ifeq ($(N_FIR_TAPS),129)
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
-      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore} 
+      VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_ExtraTimingOpt}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SpreadLogic_low}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={AltSpreadLogic_high}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.IS_ENABLED}={true}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.ROUTE_DESIGN.ARGS.DIRECTIVE}={AggressiveExplore}
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.POST_ROUTE_PHYS_OPT_DESIGN.ARGS.DIRECTIVE}={Explore} 
+      #VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_EarlyBlockPlacement} 
    
    else ifeq ($(N_FIR_TAPS),240)
       VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Retiming} 
@@ -355,8 +360,8 @@ VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIV
 ##VPP_LINK_FLAGS += --vivado.impl.lsf '{bsub -R "select[type=X86_64] rusage[mem=65536]" -N -q medium}'
 #VPP_LINK_FLAGS += --advanced.param "compiler.enableMultiStrategies=1"
 #VPP_LINK_FLAGS += --advanced.param "compiler.multiStrategiesWaitOnAllRuns=1"
-#VPP_LINK_FLAGS += --vivado.synth.jobs 32
-#VPP_LINK_FLAGS += --vivado.impl.jobs 8
+VPP_LINK_FLAGS += --vivado.synth.jobs 32
+VPP_LINK_FLAGS += --vivado.impl.jobs 8
 
 # =========================================================
 # Packaging Flags
@@ -523,7 +528,6 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
 	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
-
 endif
 else
 	@echo ""

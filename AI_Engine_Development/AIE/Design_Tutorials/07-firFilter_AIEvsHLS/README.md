@@ -9,7 +9,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -137,13 +137,13 @@ filter_AIEvsHLS
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), install the following tools.
 
-* Install the [Vitis Software Platform 2023.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2023.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+* Download and set up the [VCK190 Vitis Platform for 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 * [DSP Library (DSPLib) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
@@ -159,10 +159,10 @@ When the elements of the Vitis software platform are installed, update the shell
 
 Edit `sample_env_setup.sh` script with your file paths:
 ```bash
-export PLATFORM_REPO_PATHS= <YOUR-2023.1-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2023.1-VITIS-DIRECTORY>/2023.1
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.1-DIRECTORY>
-export DSPLIBS_VITIS=<YOUR-PATH-TO-2023.1-DSP-LIBRARY>
+export PLATFORM_REPO_PATHS= <YOUR-2023.2-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2023.2-VITIS-DIRECTORY>/2023.2
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.2-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2023.2-DSP-LIBRARY>
 
 source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 source $XILINX_VITIS/settings64.sh
@@ -190,7 +190,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the previous command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202310_1",
+"baseName": "xilinx_vck190_base_202320_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -229,14 +229,14 @@ For DSP based design, the designer begins with an estimate of the system clock r
 
 For AI Engine based designs, a FIR kernel running on the AI Engine is executing its code at the AI Engine clock rate (which 1 GHz for the platform used). The maximum throughput of various filter configuration has been benchmarked and can be found on the [Vitis DSP Library Benchmark/QoR page](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/benchmark.html).
 
-For the filter sizes selected in this tutorial, the following AI Engine throughputs are obtained:
+For the filter sizes selected in this tutorial and window_size of 2048 , the following AI Engine throughputs are obtained:
 
-| Taps | Throughput     |
-|------|----------------|
-|   15 | 1200    MSPS(*)|
-|   64 | 329.969 MSPS   |
-|  129 | 215.578 MSPS   |
-|  240 | 134.48  MSPS   |
+| Taps | No of aie_per_firs |  Throughput     |
+|------|--------------------|-----------------|
+|   15 |        2           |  1199.9  MSPS(*)|
+|   64 |        2           |  511.574 MSPS   |
+|  129 |        4           |  488.685 MSPS   |
+|  240 |        4           |  312.07  MSPS   |
 
 ***Note***: This result is I/O bound.
 
@@ -253,14 +253,14 @@ The AI Engine reduces the overall requirement on the PL and DSPs in a design wit
 
 | Impl | Filters | Taps | Param        | Throughput    | LUTS  | Flops | DSP   | AIE   |
 |------|---------|------|--------------|---------------|-------|-------|-------|-------|
-| AIE  |     1   |   64 | win=256      | 329.969  MSPS |   191 |   568 |     0 |     1 |
-| HLS  |     1   |   64 | ck_per_sam=1 | 497.41   MSPS |  5700 |  1794 |    64 |     0 |
-| AIE  |    10   |   64 | win=256      | 329.635  MSPS |   190 |   568 |     0 |    10 |
-| HLS  |    10   |   64 | ck_per_sam=1 | 477.772  MSPS | 17089 | 45820 |   640 |     0 |
-| AIE  |     1   |  240 | win=256      | 134.48   MSPS |   191 |   568 |     0 |     1 |
-| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  2357 |  7360 |    60 |     0 |
-| AIE  |    10   |  240 | win=256      | 134.25   MSPS |   190 |   568 |     0 |    10 |
-| HLS  |    10   |  240 | ck_per_sam=4 | 123.48   MSPS | 16687 | 62212 |   600 |     0 |
+| AIE  |     1   |   64 | win=2048     | 511.573  MSPS |   189 |   568 |     0 |   2   |
+| HLS  |     1   |   64 | ck_per_sam=1 | 497.22   MSPS |  1891 |  5932 |    64 |   0   |
+| AIE  |    10   |   64 | win=2048     | 504.174  MSPS |   189 |   568 |     0 |   20  |
+| HLS  |    10   |   64 | ck_per_sam=1 | 477.145  MSPS | 17350 | 46148 |   640 |   0   |
+| AIE  |     1   |  240 | win=2048     | 134.48   MSPS |   190 |   568 |     0 |   4   |
+| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  3676 | 22377 |   120 |   0   |
+| AIE  |    10   |  240 | win=2048      | 134.25   MSPS |   190 |   568 |    0 |   10  |
+| HLS  |    10   |  240 | ck_per_sam=4 | 123.48   MSPS | 16733 | 62413 |   600 |   0   |
 
 It is clear that the AI Engine implementation offers significant savings of PL resources, especially as the design size increases.
 
@@ -273,13 +273,13 @@ It is clear that the AI Engine implementation offers significant savings of PL r
 
 ### Power Utilization
 In general, smaller designs are more power efficient in the PL than in AI Engines, but the advantage switches over to AI Engines as the design becomes larger.
-This can be seen in the following dynamic power graph for 240-tap FIR chains with 1 and 10 FIR filters connected sequentially. In the case of the HLS or DSP implementation, the power slope is a straight line. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so we can see that the power utilization is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.In ten FIR filters in the chain, the power of the AI Engine implementation is using ~2.602 Watt less than that of the HLS and DSP based FIR filter chain.
+This can be seen in the following dynamic power graph for 240-tap FIR chains with 1 and 10 FIR filters connected sequentially. Below AIE dynamic power values are for window_size of 2048. In the case of the HLS or DSP implementation, the power slope is a straight line. For the AI Engine implementation, a single filter starts off with a much higher dynamic power, but the slope is shallower, so we can see that the power utilization is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.In ten FIR filters in the chain, the power of the AI Engine implementation is using ~2.362 Watt less than that of the HLS and DSP based FIR filter chain.
 Below table shows power utilization of FIR AIE and HLS for 240-taps
 
 | No of Filters | AIE FIR    |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |   0.774    |   0.474      |
-|      10       |   1.726    |   4.328      |
+|      1        |   1.217    |   0.948      |
+|      10       |   2.362    |   4.314      |
 
 ![Image of 240 Tap FIR filter dynamic power](images/FIR_240Taps_POWER_v_NoOfFilters.png)
 
@@ -291,13 +291,13 @@ Below table shows power utilization of FIR AIE and HLS for 240-taps
 <summary>Computational Efficiency</summary>
 
 ### Computational Efficiency
-Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1 and 10 filters. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.
+Computational efficiency is a very common and important metric for comparing two designs. It is calculated by dividing the throughput by the power consumed (MegaSamples/Watt). For a given design, the one with a higher number is more efficient in its use of power to perform the computations.  In the following graph computational efficiency is plotted for a 240-tap FIR filter chain with 1 and 10 filters. Below AIE Computational efficiency values are for window_size of 2048. For this graph the slope is not relevant, but whether for a given chain, the efficiency of a design is better or worse than the other implementation. Here we can see that the computation efficiency is better for a one DSP implementation of a single FIR filter , but the AI Engine implementation efficiency is better as the number of filters in a chain increases.
 Below table shows computational efficiency of FIR AIE and HLS for 240-taps
 
 | No of Filter  |   AIE FIR  |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |   173.746  |   263.3838   |
-|      10       |  77.78099  |   28.5305    |
+|      1        |   256.430  |   315.1102   |
+|      10       |   49.4079  |   28.62282   |
 
 
 ![Image of 240 Tap FIR computational efficiency](images/FIR_240Taps_ComputationalEfficiency_v_NoOfFilters.png)
@@ -318,18 +318,18 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 
 | Cascade length | Throughput (MSPS)       |
 |----------------|-------------------------|
-|      1         |      215.578            | 
-|      2         |      309.599            | 
-|      4         |      387.054            | 
+|      1         |      200.96             | 
+|      2         |      332.92             | 
+|      4         |      488.64             | 
 
 
 ![Image of 129 Tap FIR filter metrics - Throughput vs Casc Length](images/FIR_129Taps_Throughput_v_CascLen.png)
 
-| Cascade length | Dynamic power(mW)       |
+| Cascade length | Dynamic power(W)        |
 |----------------|-------------------------|
-|      1         |       0.769             |
-|      2         |       0.850             |
-|      4         |       1.020             |
+|      1         |       0.817             |
+|      2         |       0.950             |
+|      4         |       1.220             |
 
 
 ![Image of 129 Tap FIR filter metrics - Power vs Casc Length](images/FIR_129Taps_Power_v_CascLen.png)
@@ -338,9 +338,9 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 
 | CASCADE LENGTH |  Performance(MSPS/W)  |
 |----------------|-----------------------|
-|      1         |     280.3355          |
-|      2         |     364.2341          |
-|      4         |      387.054          |
+|      1         |     245.9790          |
+|      2         |     350.8082          |
+|      4         |      401.509          |
 
 
 
@@ -355,10 +355,10 @@ The following table provides some additional information on data on throughput f
 
 | Filters | Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) | Throughput (CASC_LEN=4) |
 |---------|------|-------------------------|-------------------------|-------------------------|
-|     1   |   15 | 1200 MSPS(*)            | 1199.707 MSPS           | Too small to cascade    |
-|     1   |   64 | 329.969 MSPS            | 419.959  MSPS           | 521.28 MSPS             |
-|     1   |  129 | 215.578 MSPS            | 309.599  MSPS           | 387.054 MSPS            |
-|     1   |  240 | 134.48 MSPS             | 222.216  MSPS           | 285.0052 MSPS           |
+|     1   |   15 | 1199.99 MSPS(*)         |  1199.999 MSPS          | Too small to cascade    |
+|     1   |   64 | 344.081 MSPS            |  511.573 MSPS           | 660.201     MSPS        |
+|     1   |  129 | 200.964 MSPS            |  332.917 MSPS           | 488.637      MSPS       |
+|     1   |  240 | 116.911 MSPS            |  200.024 MSPS           | 325.380      MSPS       |
 
 (*)Note: this result is I/O bound.
 
@@ -376,10 +376,10 @@ The following is data for the AI Engine with one 64-tap FIR filter example for v
 
 | Impl | Filters | Taps | Window Size | Latency  | Execution Time  | Throughput   |
 |------|---------|------|-------------|----------|-----------------|--------------|
-| AIE  |     1   |   64 |       64    | 0.3633us | 64.71  us       | 253.19  MSPS |
-| AIE  |     1   |   64 |      256    | 1.020 us | 49.65333 us     | 329.969 MSPS |
-| AIE  |     1   |   64 |     1024    | 3.783 us | 44.496 us       | 368.21  MSPS |
-| AIE  |     1   |   64 |     2048    | 7.453 us | 41.88 us        | 391.21  MSPS |
+| AIE  |     1   |   64 |       64    | 1.100 us | 136.53 us       | 120.00  MSPS |
+| AIE  |     1   |   64 |      256    | 3.333 us | 136.5333 us     | 119.999 MSPS |
+| AIE  |     1   |   64 |     1024    | 12.30 us | 136.53 us       | 120.00  MSPS |
+| AIE  |     1   |   64 |     2048    | 8.306 us | 47.61 us        | 344.08  MSPS |
 
 If, for example, our throughput requirements were 250 MSPS, a window size of 64 would satisfy that performance requirement with the least amount of latency.
 
@@ -402,42 +402,42 @@ Open the implemented design and select **Report Utilization**. For AI Engine uti
 The utilization and power observations are shown in the following table.
 
 #### AIE
-|Filters|Taps| AI Engine Cores | Vector Load | Number Of Active Memory Banks | Memory R/W Rate | AI Engine Tiles | Interconnect Load | Power   | Performance (MSPS/Watt) |
-|-------|----|-----------------|-------------|-------------------------------|-----------------|-----------------|-------------------|---------|-------------------------|
-|     1 | 15 |        1        |    7%       |              10               |        2%       |        2        |         6%        | 684 mW  |         1754.38         |
-|     1 | 64 |        1        |    30%      |              10               |       11%       |        2        |         6%        | 733 mW  |         450.162         |
-|     1 |129 |        1        |    50%      |              10               |       15%       |        2        |         6%        | 769 mW  |        280.3355         |
-|     1 |240 |        1        |    53%      |              10               |       16%       |        2        |         6%        | 774 mW  |          173.746        |
-|    10 | 15 |       10        |    7%       |              64               |        2%       |       12        |         4%        |1217 mW  |          985.549        |
-|    10 | 64 |       10        |    18%      |              64               |        9%       |       12        |         4%        |1453 mW  |          226.865        |
-|    10 |129 |       10        |    27%      |              64               |       12%       |       12        |         4%        |1622 mW  |         132.5490        |
-|    10 |240 |       10        |    33%      |              64               |       15%       |       12        |         4%        |1726 mW  |         77.78099        |
+|Filters|Taps| AI Engine Cores | Cascade Length  |Vector Load | Number Of Active Memory Banks | Memory R/W Rate | AI Engine Tiles | Interconnect Load | Power (W) | Performance (MSPS/Watt) |
+|-------|----|-----------------|-----------------|------------|-------------------------------|-----------------|-----------------|-------------------|-----------|-------------------------|
+|     1 | 15 |        1        |        2        |   48%      |              20               |       20%       |        4        |         3.58%     | 0.352     |        3409.090         |
+|     1 | 64 |        1        |        2        |   48%      |              20               |       20%       |        5        |         3.54%     | 0.974     |        525.229          |
+|     1 |129 |        1        |        4        |   48%      |              32               |       20%       |        7        |         3.58%     | 1.242     |         393.466         |
+|     1 |240 |        1        |        4        |   48%      |              32               |       20%       |        6        |         3.58%     | 1.217     |         256.430         |
+|    10 | 15 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         330.760         |
+|    10 | 64 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         138.967         |
+|    10 |129 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         85.871          |
+|    10 |240 |       10        |        1        |   48%      |             104               |       20%       |       20        |         3.68%     | 2.362     |          49.407         |
 
 #### HLS
-|Filters|Taps| LUTs  | FF (Regs) | DSPs | Dynamic Power | Performance (MSPS/Watt) |
-|-------|----|-------|-----------|------|---------------|-------------------------|
-|     1 | 15 |  1157 |    2501   |  16  |     150 mW    |         3324.593        |
-|     1 | 64 |  5700 |    1794   |  64  |     392 mW    |         1268.903        |
-|     1 |129 |  1806 |    4862   |  34  |     318 mW    |         392.72          |
-|     1 |240 |  2357 |    7360   |  60  |     474 mW    |         263.38          |
-|    10 | 15 |  4700 |   13600   | 160  |    1088 mW    |         450.15          |
-|    10 | 64 | 17089 |   45820   | 640  |    3398 mW    |         140.60          |
-|    10 |129 | 10959 |   37174   | 340  |    2205 mW    |          56.19          |
-|    10 |240 | 16687 |   62212   | 600  |    4328 mW    |         28.5305         |
+|Filters|Taps| LUTs  | FF (Regs) | DSPs | Dynamic Power(W) | Performance (MSPS/Watt) |   
+|-------|----|-------|-----------|------|------------------|-------------------------| 
+|     1 | 15 |  2107 |   4412    |  32  |      0.362       |    3293.774             |      
+|     1 | 64 |  1891 |   5932    |  64  |      0.393       |    1265.205             | 
+|     1 |129 |  4010 |  10242    | 130  |      0.726       |    682.484              | 
+|     1 |240 | 3676  |  22377    | 120  |      0.948       |    315.110              | 
+|    10 | 15 | 12929 |  26658    | 320  |      2.196       |    436.625              | 
+|    10 | 64 | 17530 |  46148    | 640  |      3.404       |    140.172              | 
+|    10 |129 | 17205 | 117436    | 660  |      5.507       |    44.271               | 
+|    10 |240 | 16733 | 62413     | 600  |      4.314       |    28.622               | 
 
 #### Power from XPE vs HW
 
 **AIE**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      2.834     |    2.93307    |
-|    10 |240 |      2.844     |    3.30939    |
+|    10 | 64 |      4.7       |    4.623      |
+|    10 |240 |      3.097     |    2.637      |
 
 **HLS**
 |Filters|Taps| xpe Load(in A) | HW Load(in A) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      4.559     |    3.6611     |
-|    10 |240 |      5.73      |   4.64931     |
+|    10 | 64 |      4.306     |    3.714      |
+|    10 |240 |      5.548     |    4.731      |
 
 </details>
 
@@ -469,22 +469,22 @@ To measure throughput, the cursors are lined up with the start and end of the re
 ```
 	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
 	
-	Processing time (with 156.250MHz) = 93.741us
-	Processing time (scaled to 300MHz)= (93.741 * (156.25/300)) us
-					  = 48.823us
+	Processing time (with 156.250MHz) = 103.084us
+	Processing time (scaled to 300MHz)= (103.084 * (156.25/300)) us
+					  = 53.6896 us
 
 	Throughput = (Input Sample * Iterations) /(Processing time)
-          	   = (2048 x 8 ) / 48.823us
-         	   =  335 Msamples / sec
+          	   = (2048 x 8 ) / 53.6896 us
+         	   =  305.1615 Msamples / sec
 ```
 
 To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
 ```
 	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
 
-	Latency (with 156.250MHz)  = 2.010us
-	Latency (scaled to 300MHz) = (2.010 * (156.25/300)) us
-				   = 1.0468 us
+	Latency (with 156.250MHz)  = 2.144us
+	Latency (scaled to 300MHz) = (2.144 * (156.25/300)) us
+				   = 1.1167 us
 
 
 
@@ -497,11 +497,11 @@ A trace of the AI Engine implementation with N_FIR_FILTERS=1 and N_FIR_TAPS=64 o
 To measure throughput, the cursors are lined up with the start and end of the read (datamover_0.strmInpFromFIR) stream (cursor times with us resolution can be obtained by zooming in further):
 ```
 	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
-			= 49.6533 us
+			=  136.5333us
 
 	Throughput = (Input Sample * Iterations) /(Processing time)
-          	   = (2048 x 8 ) / 49.6533 us
-     	           = 329.967 Msamples / sec
+          	   = (2048 x 8 ) / 136.5333 us
+     	           = 120.0 Msamples / sec
 
 ```
 ## Latency calculation of 64 Taps, 1 Filter is below.
@@ -509,7 +509,7 @@ To measure throughput, the cursors are lined up with the start and end of the re
 To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
 ```
 	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
-		= 1.020 us
+		= 3.333 us
 ```
 
 </details>
