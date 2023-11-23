@@ -4,13 +4,13 @@
 #
 
 
-ECHO                               = @echo
+ECHO                                = @echo
 
-################################################################################
-# Variables needed for AMD/XILINX tools version checking, PLEASE DO NOT MODIFY #
-################################################################################
+BOARD_NAME                         ?= vck190
+PLATFORM_CUSTOM                    ?= ${BOARD_NAME}_thin
+
 DTG                                := device-tree-xlnx
-DTG_VERSION                        := xlnx_rel_v2022.2
+DTG_VERSION                        := xlnx_rel_v2023.2
 
 DTC                                := dtc
 DTC_PATH                           := $(abspath ${DTC})
@@ -58,8 +58,8 @@ ${DTC}:
 
 build_xsct:
 	$(ECHO) "dtg/build_xsct: Currently errors out, but should be the prefered method"
-	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name vck190_thin -git-branch xlnx_rel_v2022.2 -dtsi ${DTSI_DIR}/${DTSI_FILE} -compile"
-	cp ./vck190_thin/psv_cortexa72_0/device_tree_domain/bsp/system.dtb ${DTB_FILE}
+	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name ${PLATFORM_CUSTOM} -git-branch ${DTG_VERSION} -dtsi ${DTSI_DIR}/${DTSI_FILE} -compile"
+	cp ./${PLATFORM_CUSTOM}/psv_cortexa72_0/device_tree_domain/bsp/system.dtb ${DTB_FILE}
 
 build_dts:
 	$(ECHO) "dtg/build_dts: Building the dts from the supplied xsa"
@@ -85,7 +85,7 @@ dump_dts:
 
 clean:
 	rm -rf .Xil ${DTS}
-	rm -rf vck190_thin
+	rm -rf ${PLATFORM_CUSTOM}
 
 ultraclean:
 	rm -rf ${DTG}

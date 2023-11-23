@@ -68,6 +68,7 @@ update_device_tree:
 	cp -r ${SRC_DIR_DEVICE_TREE}/* ${DEST_DIR_DEVICE_TREE}/
 
 update_config:
+	chmod 777 ${CFG}
 	${CFG} --file ${FILE_MAIN_CFG}      --set-str CONFIG_SUBSYSTEM_RFS_FORMATS "cpio cpio.gz cpio.gz.u-boot tar.gz jffs2 ext4"
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt
 	${CFG} --file ${FILE_ROOT_FS_CFG}   --keep-case --enable  xrt-dev
