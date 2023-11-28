@@ -49,6 +49,7 @@ All AI Engine related APIs are handled through XRT APIs. XRT APIs provide this f
 
 Thus, host application is agnostic to AI Engine source code starting 2023.2.
 
+*Note: observing performance degradation when using input_plio/output_plio, we have abstained from updating the PLIO creation. This update will be addressed in a subsequent release.
 
 ## Load AIE XCLBIN   
 
