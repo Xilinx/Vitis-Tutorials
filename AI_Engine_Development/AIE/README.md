@@ -42,7 +42,7 @@ Run the following steps to setup environment (do **NOT** apply to tutorials that
 
 ### Getting Started with AI Engine Development Using the AI Engine Tutorials
 
-![missing image](AI_Engine_dev_flow.jpg)
+![missing image](AI_Engine_dev_flow.png)
 
 If you are new with the AI Engine Architecture and tools, we recommend that you start with the <a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a>, which will guide you through the entire flow from platform creation in AMD Vivado™ to AI Engine application creation, system integration and testing on Hardware using the Vitis IDE.
 
