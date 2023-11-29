@@ -1,0 +1,244 @@
+{
+  "NodeConstraints": {
+    "DataIn0": {
+      "shim": {
+        "column": 24,
+        "channel": 0
+      }
+    },
+    "DataIn6": {
+      "shim": {
+        "column": 23,
+        "channel": 0
+      }
+    },
+    "DataOut6": {
+      "shim": {
+        "column": 23,
+        "channel": 0
+      }
+    },
+    "DataIn8": {
+      "shim": {
+        "column": 22,
+        "channel": 0
+      }
+    },
+    "DataOut8": {
+      "shim": {
+        "column": 22,
+        "channel": 0
+      }
+    },
+    "DataIn10": {
+      "shim": {
+        "column": 38,
+        "channel": 0
+      }
+    },
+    "DataOut10": {
+      "shim": {
+        "column": 38,
+        "channel": 0
+      }
+    },
+    "DataIn12": {
+      "shim": {
+        "column": 32,
+        "channel": 0
+      }
+    },
+    "DataOut0": {
+      "shim": {
+        "column": 24,
+        "channel": 0
+      }
+    },
+    "DataOut12": {
+      "shim": {
+        "column": 32,
+        "channel": 0
+      }
+    },
+    "DataIn14": {
+      "shim": {
+        "column": 17,
+        "channel": 0
+      }
+    },
+    "DataOut14": {
+      "shim": {
+        "column": 17,
+        "channel": 0
+      }
+    },
+    "DataIn16": {
+      "shim": {
+        "column": 20,
+        "channel": 0
+      }
+    },
+    "DataOut16": {
+      "shim": {
+        "column": 20,
+        "channel": 0
+      }
+    },
+    "DataIn18": {
+      "shim": {
+        "column": 15,
+        "channel": 0
+      }
+    },
+    "DataOut18": {
+      "shim": {
+        "column": 15,
+        "channel": 0
+      }
+    },
+    "DataIn1": {
+      "shim": {
+        "column": 31,
+        "channel": 0
+      }
+    },
+    "DataOut1": {
+      "shim": {
+        "column": 31,
+        "channel": 0
+      }
+    },
+    "DataIn3": {
+      "shim": {
+        "column": 7,
+        "channel": 0
+      }
+    },
+    "DataOut3": {
+      "shim": {
+        "column": 7,
+        "channel": 0
+      }
+    },
+    "DataIn5": {
+      "shim": {
+        "column": 9,
+        "channel": 0
+      }
+    },
+    "DataOut5": {
+      "shim": {
+        "column": 9,
+        "channel": 0
+      }
+    },
+    "DataIn2": {
+      "shim": {
+        "column": 39,
+        "channel": 0
+      }
+    },
+    "DataIn7": {
+      "shim": {
+        "column": 13,
+        "channel": 0
+      }
+    },
+    "DataOut7": {
+      "shim": {
+        "column": 13,
+        "channel": 0
+      }
+    },
+    "DataIn9": {
+      "shim": {
+        "column": 29,
+        "channel": 0
+      }
+    },
+    "DataOut9": {
+      "shim": {
+        "column": 29,
+        "channel": 0
+      }
+    },
+    "DataIn11": {
+      "shim": {
+        "column": 3,
+        "channel": 0
+      }
+    },
+    "DataOut11": {
+      "shim": {
+        "column": 3,
+        "channel": 0
+      }
+    },
+    "DataIn13": {
+      "shim": {
+        "column": 16,
+        "channel": 0
+      }
+    },
+    "DataOut2": {
+      "shim": {
+        "column": 39,
+        "channel": 0
+      }
+    },
+    "DataOut13": {
+      "shim": {
+        "column": 16,
+        "channel": 0
+      }
+    },
+    "DataIn15": {
+      "shim": {
+        "column": 27,
+        "channel": 0
+      }
+    },
+    "DataOut15": {
+      "shim": {
+        "column": 27,
+        "channel": 0
+      }
+    },
+    "DataIn17": {
+      "shim": {
+        "column": 35,
+        "channel": 0
+      }
+    },
+    "DataOut17": {
+      "shim": {
+        "column": 35,
+        "channel": 0
+      }
+    },
+    "DataIn19": {
+      "shim": {
+        "column": 21,
+        "channel": 0
+      }
+    },
+    "DataOut19": {
+      "shim": {
+        "column": 21,
+        "channel": 0
+      }
+    },
+    "DataIn4": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    },
+    "DataOut4": {
+      "shim": {
+        "column": 25,
+        "channel": 0
+      }
+    }
+  }
+}
