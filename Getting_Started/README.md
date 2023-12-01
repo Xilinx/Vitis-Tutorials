@@ -6,21 +6,21 @@
  </tr>
 </table>
 
-Welcome to Vitis Getting Started to explore beginner-friendly tutorials. The tutorials here walk you through the procedure of building a design with Vitis, Vitis HLS and Libraries and how to create a Vitis platform from start to finish, showing you the overall design process and how to use the basic features.
 
-* [**Vitis Introduction and Getting Started**](./Vitis) :
-  + An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into two separate flows: 
-    * The Data Center flow
-    * The Embedded Processor flow
+* **[Vitis Introduction and Getting Started](./Vitis)**:
+  * An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into separate flows:
+    * Data Center
+    * Embedded Processor
+    * Vitis Unified IDE
 
-* [**Vitis HLS**](./Vitis_HLS) :
-  * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment
-  * This tutorial contains instructions for both Vitis Unified IDE and Vitis HLS GUI
+* **[Vitis HLS](./Vitis_HLS)**:
+  * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment.
+  * This tutorial uses Vitis Unified IDE.
 
-* [**Vitis Libraries**](./Vitis_Libraries) :
+* **[Vitis Libraries](./Vitis_Libraries)**:
   * Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
 
-* [**Vitis Platform**](./Vitis_Platform) :
+* **[Vitis Platform](./Vitis_Platform)**:
   * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
   * This tutorial uses Vitis Unified IDE.
   

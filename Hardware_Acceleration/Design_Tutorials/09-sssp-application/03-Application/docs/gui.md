@@ -24,7 +24,7 @@ Follow these steps to create a project with Vitis Libraries.
 
 3. Create your application name and click **Next**.
 
-    ![application diagram](../../images/create_app_23.1.png)
+    ![application diagram](../../images/create_app.png)
 
 4. Choose the Vitis IDE libraries and download them.
 

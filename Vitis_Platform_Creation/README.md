@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ Platform Creation Tutorials</h1>
    </td>
  </tr>
 </table>
@@ -12,22 +12,22 @@
 
 Before going to platform creation, Let's get an initial idea of platform.
 
-![image](XPFM.PNG)
+![image](XPFM.png)
 
-Briefly speaking, platform is a package which contains the HPFM（XSA）file and SPFM (software components). When you input the XSA file and software components, Vitis IDE tool will package them together and generate platform XPFM file. where the XSA file is designed and exported from Vivado tool. Software components is prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux if needed. 
+Briefly speaking, a platform is a package that contains the HPFM（`.xsa`）file and SPFM (software components). When you input the `.xsa` file and software components, the Vitis IDE tool will package them together and generate a platform `.xpfm` file, while the `.xsa` file is designed and exported from the AMD Vivado tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
 
-**Platform Creation Example Quick Access**
+#### Platform Creation Example Quick Access
 
-- For first experience of platform, please refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform)
-- For **ZYNQMP** device family, please refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
-- For **Versal** device family, please refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
-- For **DFX** platform, please refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
-- For **SOM** series, please refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260)
-- For **PetaLinux** customization, please refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization)
+- For a first experience of platforms, refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform/)
+- For **ZYNQMP** device family, refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
+- For **Versal** device family, refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
+- For **DFX** platform, refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
+- For **SOM** series, refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260/)
+- For **PetaLinux** customization, refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization/)
 
 ### Platform Creation Tutorials
 
-The tutorials under the Vitis Platform Creation category help you learn how to develop an extnsible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
+The tutorials under the Vitis Platform Creation category help you learn how to develop an extensible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
 
 - The **[Design Tutorials](./Design_Tutorials/)** showcase end-to-end workflow for creating the Vitis extensible platforms from scratch for different device families and boards.
 - The **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop the platform.
@@ -51,7 +51,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>VCK190</td>
   <td>Flat</td>
   <td>Vivado &<br>Vitis Unified IDE</td>
-  <td><b>Highlights</b>: simplest Vitis Platform creation and usage flow. 
+  <td><b>Highlights</b>: simplest Vitis Platform creation and usage flow.
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design tempalte to quick start.  </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
@@ -67,7 +67,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>VCK190</td>
   <td>Flat</td>
   <td>Vivado &<br>Vitis IDE</td>
-  <td><b>Highlights</b>: Platform design flow for custom boards. 
+  <td><b>Highlights</b>: Platform design flow for custom boards.
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design (device part based) to create the hardware and do further customizations. </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
@@ -84,7 +84,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>DFX</td>
   <td>Vivado &<br>Vitis IDE</td>
   <td>
-    <b>Highlights</b>: Design flow for Vitis DFX (Dynamic Function eXchange) Platform. 
+    <b>Highlights</b>: Design flow for Vitis DFX (Dynamic Function eXchange) Platform.
       <ul>
         <li><b>Hardware design</b>: Using Vivado Customizable Example Design for DFX platform and doing further customizations. </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
@@ -95,14 +95,14 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
 
  <tr>
   <td align="center"><a href="./Design_Tutorials/02-Edge-AI-ZCU104/README.md">Create Vitis Platforms for Zynq UltraScale+ MPSoC</a></td>
-  <td>ZYNQ UltraScale+ MPSoC</td>
+  <td>Zynq UltraScale+ MPSoC</td>
   <td>ZCU104</td>
   <td>Flat</td>
   <td>Vivado &<br>Vitis IDE</td>
   <td>
-    <b>Highlights</b>: Creating a Vitis platform for Zynq UltraScale+ MPSoC from scratch. 
+    <b>Highlights</b>: Creating a Vitis platform for Zynq UltraScale+ MPSoC from scratch.
       <ul>
-        <li><b>Hardware design</b>: Creating the hardware design from scratching without any help of Vivado example design templates. </li>
+        <li><b>Hardware design</b>: Creating the hardware design from scratch without any help from Vivado example design templates. </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
         <li><b>Verification</b>: Vector Addition and Vitis-AI</li>
       </ul>
@@ -117,7 +117,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Flat</td>
   <td>Vivado &<br>Vitis IDE</td>
   <td>
-      <b>Highlights</b>: Kria SOM Platform creation and usage flow 
+      <b>Highlights</b>: Kria SOM Platform creation and usage flow
       <ul>
         <li><b>Hardware design</b>: Creating from scratch </li>
         <li><b>Software design</b>: Using Common Image and showing device tree overlay (DTBO) creation flow</li>
@@ -142,12 +142,12 @@ These tutorials illustrate various platform features and how you can incorporate
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/01_platform_creation_streaming_ip/">Incorporating Stream Interfaces</a></td>
-  <td>Generic but using Versal AI Core as example</td>
+  <td>Generic, but using Versal AI Core as example</td>
   <td>VCK190</td>
   <td>Flat</td>
   <td>Vivado &<br>Vitis IDE</td>
   <td>
-      <b>Highlights</b>: 
+      <b>Highlights</b>:
       <ul>
         <li>Adding custom IP into the platform hardware</li>
         <li>Using AXI Stream IP in platform and kernel</li>
@@ -175,7 +175,7 @@ These tutorials illustrate various platform features and how you can incorporate
     <td>
       <b>Highlights</b>:
       <ul>
-        <li>Skipping creating the platform before v++ linking</li>
+        <li>Skip creating the platform before v++ linking</li>
         <li>Using Vivado to do design implementation and timing closure</li>
         <li>Fast iteration for hardware design</li>
       </ul>
@@ -204,8 +204,8 @@ These tutorials illustrate various platform features and how you can incorporate
 ### Abbreviation
 
 - **XSA**   : Vivado exported archive file that contains hardware information required for Vitis and PetaLinux
-- **DFX**   ：Dynamic Functional Exchange
-- **SOM**   : System On Module
+- **DFX**   ：Dynamic Function eXchange
+- **SOM**   : System-on-Modules
 - **DTB**   : Device Tree Binary
 - **DTBO**  : Device Tree Binary Overlay
 

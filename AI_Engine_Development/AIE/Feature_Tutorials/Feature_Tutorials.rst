@@ -11,7 +11,7 @@ AI Engine Development: Feature Tutorials
 
 The AI Engine Development Feature Tutorials highlight specific features and flows that help develop AI Engine applications.
 
-The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
+The :doc:`landing page <../../AIE>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
 
 
 

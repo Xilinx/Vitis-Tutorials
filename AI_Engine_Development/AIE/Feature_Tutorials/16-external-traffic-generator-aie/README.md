@@ -65,7 +65,8 @@ For details on how to run traffic generators with emulation flow, please visit [
 
 You can also validate individual AIE blocks using external traffic generators that helps you quickly validate the entire AIE graph without having the burden to write the PL logic.  
 
-As observed in the full system design, the output of the polar clip PL process is the input to the classifier. While validating individula blocks, the output of the interpolator can be validated against the golden data(polar_clip_in_ref.txt). The classifier input is generated from the reference dataset available (polar_clip_out_ref.txt)  which is dumped output of the polar clip PL logic. The output of the classifier is validated against the golden output (golden.txt). 
+As observed in the full system design, the output of the polar clip PL process is the input to the classifier. While validating individual blocks, the output of the interpolator can be validated against the golden data(interpolator_golden.txt) which is input of the polar clip PL logic in the full system design. The classifier input (classifier_in.txt) is generated from the reference dataset available (output of the polar clip PL processing kernel from full system design) which is dumped output of the polar clip PL logic. The output of the classifier is validated against the golden output (classifier_golden.txt). 
+It's your choice if you want to read data from the file and prepare dataset or generate data on the fly with your own custom logic based on the design testbench dataset requirement.
 
 ![Ext IO AIE](images/aie_etg_design.png)
 

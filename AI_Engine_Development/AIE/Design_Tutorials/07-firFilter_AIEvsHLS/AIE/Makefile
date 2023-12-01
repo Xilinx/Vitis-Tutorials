@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -243,6 +243,7 @@ AIE_FLAGS += --Xpreproc="-DN_AIE_ITERS=$(N_AIE_ITERS)"
 #AIE_FLAGS += --Xpreproc="-DAIESIM_INPUT_FILE=$(AIESIM_INPUT_FILE)"
 
 AIE_FLAGS += --Xmapper=BufferOptLevel9
+AIE_FLAGS += --Xelfgen="-j32"
 AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
 
 AIE_FLAGS += --log-level=5
@@ -262,6 +263,7 @@ GCC_FLAGS := -O
 GCC_FLAGS += -c
 GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
+GCC_FLAGS += -D__AIE_ARCH__=10
 GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG
 GCC_FLAGS += -DN_FIR_FILTERS=$(N_FIR_FILTERS)
@@ -298,6 +300,13 @@ VPP_FLAGS += --save-temps
 VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose
 VPP_FLAGS += -g
+ifeq ($(N_FIR_FILTERS),10)
+    ifeq ($(N_FIR_TAPS),15)	 
+        VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
+    else ifeq ($(N_FIR_TAPS),129)	 
+        VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
+    endif
+endif
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)
 DATAMOVER_KERNEL_VPP_FLAGS += -D N_FIR_TAPS=$(N_FIR_TAPS)
@@ -347,7 +356,6 @@ PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 ifeq ($(EN_TRACE),1)
    ifeq ($(TARGET),hw)
       PKG_FLAGS += --package.sd_file $(PROFILING_CONFIGS_REPO)/xrt.ini
-   
    endif
 endif
 
@@ -560,7 +568,6 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
 	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
-
 endif
 else
 	@echo ""

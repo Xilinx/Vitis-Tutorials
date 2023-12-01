@@ -8,7 +8,7 @@
 
 ## Design Tutorials
 
-The AI Engine Development Design Tutorials showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both these phases are demonstrated in these tutorials.
+The AI Engine Development Design Tutorials showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
 The <a href="../README.md">**README**</a> of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
 
@@ -34,7 +34,7 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
  </tr> 
  <td align="center"><a href="./04-Polyphase-Channelizer/">Polyphase Channelizer</a></td>
- <td>This tutorial demonstrates an implementation of a system-level design (ie. Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.</td>
+ <td>This tutorial demonstrates an implementation of a system-level design (such as Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.</td>
  </tr> 
  </tr> 
  <td align="center"><a href="./05-Prime-Factor-FFT/">Prime Factor FFT-1008</a></td>

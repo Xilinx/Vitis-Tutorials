@@ -83,7 +83,7 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
 5. Set the Operating System to  ***aie_runtime*** and the Processor to ***ai_engine*** and click ***Next***. Then click ***Finish*** to create the platform component.
 
-      ![missing image](images/232_create_platform_pg2.jpg)
+      ![missing image](images/232_create_platform_pg3.jpg)
 
 6. Then build the platform by clicking on ***Build*** In the flow navigator with the base_pfm_vck190 component selected.
 

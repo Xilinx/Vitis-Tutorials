@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal AI Engine/HLS FIR Filter Tutorial (HLS Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -110,7 +110,7 @@ The individual make steps to build the design with the options that applied to t
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and compiles them into their respective XO files.
 
 The following commands compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, EN_TRACE=0):
 
@@ -129,7 +129,7 @@ v++ --target hw_emu					\
 	--hls.clock 500000000:fir_hls 			\
 	-D N_FIR_FILTERS=$(N_FIR_FILTERS)		\
 	-D N_FIR_TAPS=$(N_FIR_TAPS)			\
-	--platform xilinx_vck190_base_202310_1		\
+	--platform xilinx_vck190_base_202320_1		\
 	--include design/pl_src 		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x 					\
@@ -143,7 +143,7 @@ v++ --target hw_emu					\
 	--hls.clock 300000000:datamover 			\
 	-D N_FIR_FILTERS=$(N_FIR_FILTERS)		\
 	-D N_FIR_TAPS=$(N_FIR_TAPS)			\
-	--platform xilinx_vck190_base_202310_1		\
+	--platform xilinx_vck190_base_202320_1		\
 	--include design/pl_src 			\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x 					\
@@ -202,7 +202,7 @@ The expanded command is as follows:
 cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu
 
 v++ -l 				\
-	--platform xilinx_vck190_base_202310_1 		\
+	--platform xilinx_vck190_base_202320_1 		\
 	--include design/pl_src 		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x \
@@ -348,7 +348,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x			\
-	-f xilinx_vck190_base_202310_1									\
+	-f xilinx_vck190_base_202320_1									\
 	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 						\
 	--package.kernel_image $(COMMON_IMAGE_VERSAL)/Image 						\
 	--package.boot_mode=sd										\
@@ -413,12 +413,12 @@ cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt come up:
 ```bash
-root@versal-rootfs-common-2023_1:~#
+root@versal-rootfs-common-2023_2:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2023_1:~## xinit: giving up
+root@versal-rootfs-common-2023_2:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -494,11 +494,12 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
-cd /mnt/sd-mmcblk0p1
+mount /dev/mmcblk0p1 /mnt
+cd /mnt
 ./fir_hls_xrt.elf a.xclbin
 ```
 
@@ -582,9 +583,15 @@ struct fir_params : hls::ip_fir::params_t {
     static const unsigned input_width   = 16;
     static const unsigned output_width  = 16;
     static const unsigned output_rounding_mode = hls::ip_fir::truncate_lsbs;
-    static const unsigned input_length  = WINDOW_LENGTH;
-    static const unsigned output_length = WINDOW_LENGTH;
-    static const unsigned sample_period = SAMP_PERIOD;
+   #if N_FIR_TAPS == 15
+     static const unsigned input_length  = WINDOW_LENGTH_HALF;
+     static const unsigned output_length = WINDOW_LENGTH_HALF;
+     static const unsigned sample_period = SAMP_PERIOD;
+   #else
+     static const unsigned input_length  = WINDOW_LENGTH;
+     static const unsigned output_length = WINDOW_LENGTH;
+     static const unsigned sample_period = SAMP_PERIOD;
+   #endif
     static const unsigned coeff_structure = hls::ip_fir::symmetric;
 };
 ```
@@ -594,143 +601,208 @@ Note that the FIR filter wrapper has the concept of an input/output length, whic
 
 In the HLS (DSP) implementation, arrays (windows) are a means of passing data to functions, but these data arrays are ultimately translated into AXI-streams. For this implementation, WINDOW_SIZE is made to be 64k.
 
+To match the performance of 15 taps of AIE with HLS , we have used multi instance method only for 15 taps. 
 The following section instantiates arrays of filter objects (one for real values, one for imaginary):
 ```
+#if N_FIR_TAPS == 15
+static hls::FIR<fir_params> fir_real[N_FIR_FILTERS*2];
+static hls::FIR<fir_params> fir_imag[N_FIR_FILTERS*2];
+#else
 static hls::FIR<fir_params> fir_real[N_FIR_FILTERS];
 static hls::FIR<fir_params> fir_imag[N_FIR_FILTERS];
+#endif
+
 ```
 
 In `fir_hls.cpp` file,`complex_split` function is used to take the incoming array (stream) of 128-bit data, and split each word into two 16-bit word streams:
 ```
-void complex_split (hls::stream<ap_axiu<128, 0, 0, 0> >& StreamIn,
-                    DataWindow_t DataRealInp,
-                    DataWindow_t DataImagInp
-                   )
+void complex_split(
+        hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp,
+        DataWindow_t DataRealInp, DataWindow_t DataImagInp
+        )
 {
-   CMPLX_SPLIT_LOOP:for(int ix = 0; ix < WINDOW_LENGTH; ix += 4) {
-      #pragma HLS PIPELINE II=1
-      
-      ap_axiu<128, 0, 0, 0> fir_inp = strmInp.read();
+CMPLX_SPLIT_LOOP:for(int ix = 0; ix < WINDOW_LENGTH; ix += 4) {
+#pragma HLS PIPELINE II=1
 
-      // To enable Dataflow...
-      Data_t tmp_imag_inp[4];
-      Data_t tmp_real_inp[4];
-      //#pragma HLS ARRAY_RESHAPE variable=tmp_imag_inp cyclic factor=4 dim=1
-      //#pragma HLS ARRAY_RESHAPE variable=tmp_real_inp cyclic factor=4 dim=1
+                     ap_axiu<128, 0, 0, 0> fir_inp = strmInp.read();
 
-      tmp_imag_inp[0].range(15, 0) = fir_inp.data.range(15, 0);
-      tmp_real_inp[0].range(15, 0) = fir_inp.data.range(31, 16);
+                     // To enable Dataflow...
+                     Data_t tmp_imag_inp[4];
+                     Data_t tmp_real_inp[4];
+                     //#pragma HLS ARRAY_RESHAPE variable=tmp_imag_inp cyclic factor=4 dim=1
+                     //#pragma HLS ARRAY_RESHAPE variable=tmp_real_inp cyclic factor=4 dim=1
 
-      tmp_imag_inp[1].range(15, 0) = fir_inp.data.range(47, 32);
-      tmp_real_inp[1].range(15, 0) = fir_inp.data.range(63, 48);
+                     tmp_imag_inp[0].range(15, 0) = fir_inp.data.range(15, 0);
+                     tmp_real_inp[0].range(15, 0) = fir_inp.data.range(31, 16);
 
-      tmp_imag_inp[2].range(15, 0) = fir_inp.data.range(79, 64);
-      tmp_real_inp[2].range(15, 0) = fir_inp.data.range(95, 80);
+                     tmp_imag_inp[1].range(15, 0) = fir_inp.data.range(47, 32);
+                     tmp_real_inp[1].range(15, 0) = fir_inp.data.range(63, 48);
 
-      tmp_imag_inp[3].range(15, 0) = fir_inp.data.range(111, 96);
-      tmp_real_inp[3].range(15, 0) = fir_inp.data.range(127, 112);
+                     tmp_imag_inp[2].range(15, 0) = fir_inp.data.range(79, 64);
+                     tmp_real_inp[2].range(15, 0) = fir_inp.data.range(95, 80);
 
-      DataImagInp[ix] = tmp_imag_inp[0];
-      DataRealInp[ix] = tmp_real_inp[0];
+                     tmp_imag_inp[3].range(15, 0) = fir_inp.data.range(111, 96);
+                     tmp_real_inp[3].range(15, 0) = fir_inp.data.range(127, 112);
 
-      DataImagInp[ix + 1] = tmp_imag_inp[1];
-      DataRealInp[ix + 1] = tmp_real_inp[1];
-                                           
-      DataImagInp[ix + 2] = tmp_imag_inp[2];
-      DataRealInp[ix + 2] = tmp_real_inp[2];
-                                           
-      DataImagInp[ix + 3] = tmp_imag_inp[3];
-      DataRealInp[ix + 3] = tmp_real_inp[3];
-   }
+                     DataImagInp[ix] = tmp_imag_inp[0];
+                     DataRealInp[ix] = tmp_real_inp[0];
+
+                     DataImagInp[ix + 1] = tmp_imag_inp[1];
+                     DataRealInp[ix + 1] = tmp_real_inp[1];
+
+                     DataImagInp[ix + 2] = tmp_imag_inp[2];
+                     DataRealInp[ix + 2] = tmp_real_inp[2];
+
+                     DataImagInp[ix + 3] = tmp_imag_inp[3];
+                     DataRealInp[ix + 3] = tmp_real_inp[3];
+                 }
 }
+
+
 ```
 
 In `fir_hls.cpp` file, `complex_merge` function is the inverse of complex_split, and used to merge the words from two incoming 16-bit streams into one 32-bit stream:
 ```
-void complex_merge (DataWindow_t DataRealOut,
-                    DataWindow_t DataImagOut,
-                    hls::stream<ap_axiu<128, 0, 0, 0> >& StreamOut
-                )
+void complex_merge(
+        DataWindow_t DataRealOut, DataWindow_t DataImagOut,
+        hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut
+        )
 {
-   CMPLX_MERGE_LOOP:for(int ix = 0; ix < WINDOW_LENGTH; ix += 4) {
-      #pragma HLS PIPELINE II=1
-      
-      ap_axiu<128, 0, 0, 0> fir_out;
-      
-      fir_out.data.range(15,  0) = DataImagOut[ix].range(15, 0);
-      fir_out.data.range(31, 16) = DataRealOut[ix].range(15, 0);
-      
-      fir_out.data.range(47, 32) = DataImagOut[ix + 1].range(15, 0);
-      fir_out.data.range(63, 48) = DataRealOut[ix + 1].range(15, 0);
-                                                      
-      fir_out.data.range(79, 64) = DataImagOut[ix + 2].range(15, 0);
-      fir_out.data.range(95, 80) = DataRealOut[ix + 2].range(15, 0);
-                                                       
-      fir_out.data.range(111,  96) = DataImagOut[ix + 3].range(15, 0);
-      fir_out.data.range(127, 112) = DataRealOut[ix + 3].range(15, 0);
-      
-      strmOut.write(fir_out);
-   }
+CMPLX_MERGE_LOOP:for(int ix = 0; ix < WINDOW_LENGTH; ix += 4) {
+#pragma HLS PIPELINE II=1
+
+                     ap_axiu<128, 0, 0, 0> fir_out;
+
+                     fir_out.data.range(15,  0) = DataImagOut[ix].range(15, 0);
+                     fir_out.data.range(31, 16) = DataRealOut[ix].range(15, 0);
+
+                     fir_out.data.range(47, 32) = DataImagOut[ix + 1].range(15, 0);
+                     fir_out.data.range(63, 48) = DataRealOut[ix + 1].range(15, 0);
+
+                     fir_out.data.range(79, 64) = DataImagOut[ix + 2].range(15, 0);
+                     fir_out.data.range(95, 80) = DataRealOut[ix + 2].range(15, 0);
+
+                     fir_out.data.range(111,  96) = DataImagOut[ix + 3].range(15, 0);
+                     fir_out.data.range(127, 112) = DataRealOut[ix + 3].range(15, 0);
+
+                     strmOut.write(fir_out);
+                 }
 }
+
 ```
 
 The function `fir_wrap` is used to construct the filter chain. It uses a series of #if/#elif preprocessor directives to enable the code, since it was not possible to generate it iteratively using a loop. (The limitation being synthesis of arrays of arrays).
 ```
 void fir_wrap(
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut
-   )
+        hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp,
+        hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut
+        )
 {
-   #pragma HLS dataflow
-   
-   DataWindow_t DataRealInp, DataImagInp;
-   DataWindow_t DataRealOut, DataImagOut;
-   #pragma HLS stream variable=DataRealInp depth=16
-   #pragma HLS stream variable=DataRealOut depth=16
-   #pragma HLS stream variable=DataImagInp depth=16
-   #pragma HLS stream variable=DataImagOut depth=16
-   #pragma HLS ARRAY_RESHAPE variable=DataRealInp cyclic factor=4 dim=1
-   #pragma HLS ARRAY_RESHAPE variable=DataImagInp cyclic factor=4 dim=1
-   #pragma HLS ARRAY_RESHAPE variable=DataRealOut cyclic factor=4 dim=1
-   #pragma HLS ARRAY_RESHAPE variable=DataImagOut cyclic factor=4 dim=1
-   
-   DataWindow_t DataRealInp_buff, DataImagInp_buff;
-   DataWindow_t DataRealOut_buff, DataImagOut_buff;
-   #pragma HLS stream variable=DataRealInp_buff depth=16
-   #pragma HLS stream variable=DataImagInp_buff depth=16
-   #pragma HLS stream variable=DataRealOut_buff depth=16
-   #pragma HLS stream variable=DataImagOut_buff depth=16
-   
-   complex_split(strmInp, DataRealInp, DataImagInp);
-   buffInp(DataRealInp, DataImagInp, DataRealInp_buff, DataImagInp_buff);
-   
-   #if (N_FIR_FILTERS == 1)
-      fir_real[0].run(DataRealInp_buff, DataRealOut_buff);
-      fir_imag[0].run(DataImagInp_buff, DataImagOut_buff);
-   
-   #elif (N_FIR_FILTERS > 1)
-      DataWindow_t DataReal_0, DataImag_0;
-      #pragma HLS stream variable=DataReal_0 depth=16
-      #pragma HLS stream variable=DataImag_0 depth=16
-      
-      fir_real[0].run(DataRealInp_buff, DataReal_0);
-      fir_imag[0].run(DataImagInp_buff, DataImag_0);
-   
-   #endif
-   
-   #if (N_FIR_FILTERS == 2)
-      fir_real[1].run(DataReal_0, DataRealOut_buff);
-      fir_imag[1].run(DataImag_0, DataImagOut_buff);
-   
-   #elif (N_FIR_FILTERS > 2)
-      DataWindow_t DataReal_1, DataImag_1;
-      #pragma HLS stream variable=DataReal_1 depth=16
-      #pragma HLS stream variable=DataImag_1 depth=16
-      
-      fir_real[1].run(DataReal_0, DataReal_1);
-      fir_imag[1].run(DataImag_0, DataImag_1);
-   
-   #endif
+#pragma HLS dataflow
+
+    DataWindow_t DataRealInp, DataImagInp;
+    DataWindow_t DataRealOut, DataImagOut;
+#pragma HLS stream variable=DataRealInp depth=16
+#pragma HLS stream variable=DataRealOut depth=16
+#pragma HLS stream variable=DataImagInp depth=16
+#pragma HLS stream variable=DataImagOut depth=16
+#pragma HLS ARRAY_RESHAPE variable=DataRealInp cyclic factor=4 dim=1
+#pragma HLS ARRAY_RESHAPE variable=DataImagInp cyclic factor=4 dim=1
+#pragma HLS ARRAY_RESHAPE variable=DataRealOut cyclic factor=4 dim=1
+#pragma HLS ARRAY_RESHAPE variable=DataImagOut cyclic factor=4 dim=1
+
+#if (N_FIR_TAPS == 15)   
+    DataWindow_t DataRealInp_buff1, DataImagInp_buff1;
+    DataWindow_t DataRealInp_buff2, DataImagInp_buff2;
+    DataWindow_t DataRealOut_buff1, DataImagOut_buff1;
+    DataWindow_t DataRealOut_buff2, DataImagOut_buff2;
+#pragma HLS stream variable=DataRealInp_buff1 depth=16
+#pragma HLS stream variable=DataImagInp_buff1 depth=16
+#pragma HLS stream variable=DataRealInp_buff2 depth=16
+#pragma HLS stream variable=DataImagInp_buff2 depth=16
+#pragma HLS stream variable=DataRealOut_buff1 depth=16
+#pragma HLS stream variable=DataImagOut_buff1 depth=16
+#pragma HLS stream variable=DataRealOut_buff2 depth=16
+#pragma HLS stream variable=DataImagOut_buff2 depth=16
+#else
+    DataWindow_t DataRealOut_buff, DataImagOut_buff;
+    DataWindow_t DataRealInp_buff, DataImagInp_buff;
+#pragma HLS stream variable=DataRealInp_buff depth=16
+#pragma HLS stream variable=DataImagInp_buff depth=16
+#pragma HLS stream variable=DataRealOut_buff depth=16
+#pragma HLS stream variable=DataImagOut_buff depth=16
+#endif
+
+    complex_split(strmInp, DataRealInp, DataImagInp);
+#if (N_FIR_TAPS == 15)   
+    buffInp_15tap(DataRealInp, DataImagInp, DataRealInp_buff1, DataImagInp_buff1, DataRealInp_buff2, DataImagInp_buff2);
+#else
+    buffInp(DataRealInp, DataImagInp, DataRealInp_buff, DataImagInp_buff);
+#endif
+
+#if (N_FIR_FILTERS == 1)
+#if (N_FIR_TAPS == 15)
+    fir_real[0].run(DataRealInp_buff1, DataRealOut_buff1);
+    fir_imag[0].run(DataImagInp_buff1, DataImagOut_buff1);
+    fir_real[1].run(DataRealInp_buff2, DataRealOut_buff2);
+    fir_imag[1].run(DataImagInp_buff2, DataImagOut_buff2);
+#else
+    fir_real[0].run(DataRealInp_buff, DataRealOut_buff);
+    fir_imag[0].run(DataImagInp_buff, DataImagOut_buff);
+#endif
+
+#elif (N_FIR_FILTERS > 1)
+#if (N_FIR_TAPS == 15)
+    DataWindow_t DataReal_a0, DataImag_a0;
+    DataWindow_t DataReal_a1, DataImag_a1;
+#pragma HLS stream variable=DataReal_a0 depth=16
+#pragma HLS stream variable=DataImag_a0 depth=16
+#pragma HLS stream variable=DataReal_a1 depth=16
+#pragma HLS stream variable=DataImag_a1 depth=16
+
+    fir_real[0].run(DataRealInp_buff1, DataReal_a0);
+    fir_imag[0].run(DataImagInp_buff1, DataImag_a0);
+    fir_real[1].run(DataRealInp_buff2, DataReal_a1);
+    fir_imag[1].run(DataImagInp_buff2, DataImag_a1);
+#else
+    DataWindow_t DataReal_0, DataImag_0;
+#pragma HLS stream variable=DataReal_0 depth=16
+#pragma HLS stream variable=DataImag_0 depth=16
+
+    fir_real[0].run(DataRealInp_buff, DataReal_0);
+    fir_imag[0].run(DataImagInp_buff, DataImag_0);
+#endif
+
+#endif
+
+#if (N_FIR_FILTERS == 2)
+    fir_real[1].run(DataReal_0, DataRealOut_buff);
+    fir_imag[1].run(DataImag_0, DataImagOut_buff);
+
+#elif (N_FIR_FILTERS > 2)
+#if (N_FIR_TAPS == 15)
+    DataWindow_t DataReal_b0, DataImag_b0;
+    DataWindow_t DataReal_b1, DataImag_b1;
+#pragma HLS stream variable=DataReal_b0 depth=16
+#pragma HLS stream variable=DataImag_b0 depth=16
+#pragma HLS stream variable=DataReal_b1 depth=16
+#pragma HLS stream variable=DataImag_b1 depth=16
+
+    fir_real[2].run(DataReal_a0, DataReal_b0);
+    fir_imag[2].run(DataImag_a0, DataImag_b0);
+    fir_real[3].run(DataReal_a1, DataReal_b1);
+    fir_imag[3].run(DataImag_a1, DataImag_b1);
+#else
+    DataWindow_t DataReal_1, DataImag_1;
+#pragma HLS stream variable=DataReal_1 depth=16
+#pragma HLS stream variable=DataImag_1 depth=16
+
+    fir_real[1].run(DataReal_0, DataReal_1);
+    fir_imag[1].run(DataImag_0, DataImag_1);
+#endif
+
+#endif
+
 
 ..etc
 ```

@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 
 import matplotlib.pyplot as plt
@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 #240 Taps FIR: Power vs. Number of Filters...
 x1 = [1,10]
-y1 = [0.774,1.726]
+y1 = [1.217,2.3628]
 # plotting the line 1 points
 #plt.plot(x1, y1, label = "240 Taps AIE FIR")
 plt.figure(1)
@@ -16,7 +16,7 @@ plt.plot(x1, y1, color='blue', linewidth = 3,
 #plt.set_xlabel('time [s]', fontsize='large', fontweight='bold')
 # line 2 points
 x2 = [1,10]
-y2 = [0.474,4.328]
+y2 = [0.948,4.314]
 # plotting the line 2 points
 #plt.plot(x2, y2, label = "240 Taps HLS FIR")
 plt.plot(x2, y2, color='orange', linewidth = 3,
@@ -37,7 +37,7 @@ plt.margins()
 
 #240 Taps FIR: Computational Efficiency vs. Number of Filters...
 x1 = [1,10]
-y1 = [173.74677,77.78099]
+y1 = [256.430,49.40791]
 # plotting the line 1 points
 #plt.plot(x1, y1, label = "240 Taps AIE FIR")
 plt.figure(2)
@@ -46,7 +46,7 @@ plt.plot(x1, y1, color='blue', linewidth = 3,
 #plt.set_xlabel('time [s]', fontsize='large', fontweight='bold')
 # line 2 points
 x2 = [1,10]
-y2 = [263.3838,28.5305]
+y2 = [315.110,28.62282]
 # plotting the line 2 points
 #plt.plot(x2, y2, label = "240 Taps HLS FIR")
 plt.plot(x2, y2, color='orange', linewidth = 3,
@@ -66,7 +66,7 @@ plt.margins()
 #129 Taps FIR: Casc Length Metrics...
 ##129 Taps FIR: Throughput vs. Cascade Length...
 x3 = [1,2,4]
-y3 = [215.578,309.599,387.054]
+y3 = [200.96,332.92,482.64]
 
 plt.figure(3)
 plt.plot(x3, y3, color='blue', linewidth = 3,
@@ -85,7 +85,7 @@ plt.margins()
 
 ##129 Taps FIR: Power vs. Cascade Length...
 x4 = [1,2,4]
-y4 = [0.769,0.85,1.02]
+y4 = [0.817,0.95,1.22]
 
 plt.figure(4)
 plt.plot(x4, y4, color='blue', linewidth = 3,
@@ -104,7 +104,7 @@ plt.margins()
 
 ##129 Taps FIR: Computational Efficiency vs. Cascade Length...
 x5 = [1,2,4]
-y5 = [280.3355,364.2341,379.4647]
+y5 = [245.97,350.808,401.509]
 
 plt.figure(5)
 plt.plot(x5, y5, color='blue', linewidth = 3,

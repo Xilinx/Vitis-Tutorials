@@ -9,9 +9,9 @@ AI Engine Development: Design Tutorials
 
 
 
-The AI Engine Development Design Tutorials showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both these phases are demonstrated in these tutorials.
+The AI Engine Development Design Tutorials showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
-The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
+The :doc:`landing page <../../AIE>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
 
 
 
@@ -21,15 +21,18 @@ The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development c
    :caption: Design Tutorials
    :hidden:
 
-   Versal Custom Thin Platform Extensible System <../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README>
+   Versal Custom Thin Platform Extensible System <./01-Versal_Custom_Thin_Platform_Extensible_System/README>
    LeNet Tutorial <./01-aie_lenet_tutorial/README>
    Super Sampling Rate FIR Filters <./02-super_sampling_rate_fir/README>
    Beamforming Design <./03-beamforming/README>
+   Polyphase Channelizer <./Design_Tutorials/04-Polyphase-Channelizer/README>
+   Prime Factor FFT <./Design_Tutorials/05-Prime-Factor-FFT/README>
    2D-FFT <./06-fft2d_AIEvsHLS/README>
    FIR Filter <./07-firFilter_AIEvsHLS/README>
    N-Body Simulator <./08-n-body-simulator/README>
+   Digital Down-conversion Chain: Converting from Intrinsics to API <./09-ddc_chain/README>
    Versal GeMM Implementation <./10-GeMM_AIEvsDSP/README>
-
+   Bilinear Interpolation <./11-Bilinear_Interpolation/README>
 
 
 
@@ -41,7 +44,7 @@ The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development c
    * - Tutorial
      - Description
 	 
-   * - :doc:`Versal Custom Thin Platform Extensible System <../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/README>`
+   * - :doc:`Versal Custom Thin Platform Extensible System <./01-Versal_Custom_Thin_Platform_Extensible_System/README>`
      - This is a Versal system example design based on a VCK190 thin custom platform (Minimal clocks and AXI exposed to PL) that includes HLS/RTL kernels and AI Engine kernel using a full Makefile build-flow.
 
    * - :doc:`LeNet Tutorial <./01-aie_lenet_tutorial/README>`
@@ -52,6 +55,12 @@ The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development c
 
    * - :doc:`Beamforming Design <./03-beamforming/README>`
      - This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.
+
+   * - :doc:`Polyphase Channelizer <./04-Polyphase-Channelizer/README>`
+     - This tutorial demonstrates an implementation of a system-level design (such as Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.
+
+   * - :doc:`Prime Factor FFT-1008 <./05-Prime-Factor-FFT/README>`
+     - This Versal system example implements a 1008-pt FFT using the Prime Factor Algorithm. The design uses both AI Engine and PL kernels working cooperatively. AI Engine elements are hand-coded using AIE API. PL elements are implemented using Vitis HLS. System integration in Vitis is managed using the new v++ Unified Command Line flow.
 
    * - :doc:`2D-FFT <./06-fft2d_AIEvsHLS/README>`
      - This tutorial performs two implementations of a system-level design (2D-FFT): one with AI Engine, and the other with HLS using the DSP Engines.
@@ -74,6 +83,13 @@ The :doc:`landing page <../../AI_Engine_Development>` of AI Engine Development c
        - Performance comparisons between Python x86, C++ Arm A72, and AI Engine N-Body Simulators
        - Effective throughput calculation (GFLOPS) vs. Theoretical peak throughput of AI Engine
 
+   * - :doc:`Digital Down-conversion Chain - Converting from Intrinsics to API <./09-ddc_chain/README>`
+     - This tutorial demonstrates the steps to upgrade a 32-branch digital down-conversion chain so that it is compliant with the latest tools and coding practice.
+
    * - :doc:`Versal GeMM Implementation <./10-GeMM_AIEvsDSP/README>`
      - This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with RTL using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.
+
+   * - :doc:`Bilinear Interpolation <./11-Bilinear_Interpolation/README>`
+     - This tutorial demonstrates how the bilinear interpolation algorithm may be efficiently implemented using AI Engines. It also provides guidance for customizing the design to function with varying image resolutions, and to take advantage of multicore processing on the AI Engine array to achieve desired throughput.
+
 
