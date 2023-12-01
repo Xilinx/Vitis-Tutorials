@@ -12,7 +12,7 @@
 
 Before going to platform creation, Let's get an initial idea of platform.
 
-![image](XPFM.png)
+![image](XPFM.PNG)
 
 Briefly speaking, a platform is a package that contains the HPFM（`.xsa`）file and SPFM (software components). When you input the `.xsa` file and software components, the Vitis IDE tool will package them together and generate a platform `.xpfm` file, while the `.xsa` file is designed and exported from the AMD Vivado tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
 
