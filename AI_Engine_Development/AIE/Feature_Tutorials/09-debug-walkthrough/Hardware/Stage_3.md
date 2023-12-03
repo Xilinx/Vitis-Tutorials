@@ -47,7 +47,7 @@ This is a three step process:
 
 * Add the PL profile monitors in the V++ link command, and generate the SD card image.
 * Prepare the `xrt.ini` file, and run the design on hardware.
-* Observe the output in the Vitis Analyzer, and analyze the performance.
+* Observe the output in the AMD Vitis&trade; Analyzer, and analyze the performance.
 
 1. Open the `Makefile` from `cmd_src/` directory.
 2. Locate the `VPP_LINK_FLAGS`, and add `--profile.data all:all:all` as follows:
@@ -56,12 +56,9 @@ This is a three step process:
    VPP_LINK_FLAGS := -l -t $(TARGET) --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) --profile.data all:all:all --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
    ```
 
-   The `--profile.data:<arg>` option enables the monitoring of data ports through the monitor IP that are added into the design. In this example, `<arg>` is set to `all:all:all`, i.e, assign the data profile to all CUs; *you can find names from `system.cfg` file as `s2mm_1`,`s2mm_2` and `mm2s`* and interfaces of all kernels, *s2mm and mm2s*.
-
+   The `--profile.data:<arg>` option enables the monitoring of data ports through the monitor IP that are added into the design. In this example, `<arg>` is set to `all:all:all`, i.e, assign the data profile to all CUs; you can find the names from the `system.cfg` file as `s2mm_1`,`s2mm_2` and `mm2s`* and interfaces of all kernels, `s2mm` and `mm2s`.
 3. Do `make all TARGET=hw`, and a hardware image `sd_card.img` gets generated inside the `sw/` directory.
-
 4. Flash the `sd_card.img` file to the SD card. You can follow step 3 in [Running the Design on Hardware](../Stage-1#Running-the-design-on-hardware) section.
-
 5. Create a `xrt.ini` file with content as follows:
 
    ```
@@ -94,10 +91,8 @@ This is a three step process:
 
 8. Once the Vitis Analyzer opens, click the `Profile Summary` in the left side pane, and navigate to the **Compute Unit Utilization**. Observe the compute units and kernels. Also note the time and clock frequency as follows.
 ![CU Utilization](./Images/cu_utilization.PNG)
-
 9. You can get the data transfer for each compute unit and total Read/write in megabytes by navigating to **Kernel Data Transfers** -> **Top Kernel Transfer** as follows:
 ![Top kernel transfer](./Images/top_kernel_transfer.PNG)
-
 10. From the **Kernel Data Transfers** -> **Kernel Transfer** tab, you can get the transfer rate, througput utilization (%), and latency details.
 
 ## Inserting ILAs to Monitor Specific AXI Interfaces
@@ -116,11 +111,9 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 
    Notice here the `s2mm_1:s`,`s2mm_2:s`, and `mm2s:s`. The syntax is `<Compute Unit name>:<Interface name>`.
 
-   Make sure the compute unit name matches with the one specified in the `system.cfg` file. In this exercise, monitor the stream _output from `mm2s` module going to theAI Engine, going to `s2mm` module_.
-
+   Make sure the compute unit name matches with the one specified in the `system.cfg` file. In this exercise, monitor the stream _output from `mm2s` module going to the AI Engine, going to `s2mm` module_.
    >**NOTE:** V++ allows multiple `--debug.chipscope` lines to meet design debug needs.
-
-2. Build the design. Especially, if you have already compiled the AI Engine design and PL modules, it is required to run the linking step in the `Makefile` and repackage to generate the SD card image.
+2. Build the design. Especially, if you have already compiled the AI Engine design and PL modules; it is required to run the linking step in the `Makefile` and repackage to generate the SD card image.
 
    ```
    make clean
@@ -141,7 +134,6 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 
 1. Run the hardware server from the computer that connects to the target board. To do so, launch the hardware server from the computer that has a JTAG connection to the VCK190 board.
 ![hardware server](./Images/launch_hwServer.PNG)
-
 2. Launch Vivado by issuing the command, `vivado`.
 3. Set up the Vivado Hardware Manager by clicking **Flow** -> **Hardware Manager**, and click  **Open target**.
 4. Select **Open New Target**, and click **Next**.
@@ -149,7 +141,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 6. After a successful connection to your host, you can verify the hardware devices `arm_dap_0`,`xcvc1902_1`, and click **Next**.
 7. Click **Finish**.
 8. Under the **Hardware Device Properties** window, click the ellipsis (...) to select the generated probe file from `${PROJECT_PATH}/tutorial.ltx`.
-9. After the hardware device got refreshed, you can observe the following messages in the Tcl console:
+9. After the hardware device got refreshed, you can observe the following messages in the Tcl Console:
 
    ```
    Processed interface mm2s_s_ila1_slot0
@@ -159,14 +151,11 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 
 10. Click the `hw_ila_1` as follows:
 ![hw_ila_1](./Images/hw_ila_1.PNG)
-
 11. Select the `+` button from the **Trigger Setup - hw_ila_1** window, and select the `TVALID` signal probes, and click **OK**.
 ![add probes](./Images/add_probes.PNG)
-
 12. Once the probes are added, select `1 (logical one)` from the dropdown in the `Value` column for all three probes. This is required to capture the signals when `TVALID` is high.
 13. Observe the **Core status** as `IDLE` in the **Settings-hw_ila_1** window. Now, select the `>(Play)` button at the top to capture the configured signals, and observe the status changes to `Waiting for Trigger` as follows:
 ![ILA status](./Images/ILA_status.PNG)
-
 14. Wait for the ILA to be ready to capture signals, and run the application on the `VCK190` board.
 
       ```
@@ -184,8 +173,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 1. Expand the `slot_0 : mm2s_s : Interface`. The `mm2s_s : TVALID` shows `1`, which indicates a valid data is available at the time marker pointed. Moving the time marker across the timeline, changes the AXI protocol values indicating value changes at that particular time.
 
    This is the method to determine when/what valid data is sent/received.
-
-   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.xilinx.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in *Vivado Design Suite User Guide: Programming and Debugging* (UG908).
+   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.xilinx.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in the _Vivado Design Suite User Guide: Programming and Debugging_ (UG908).
 
 ## Support
 

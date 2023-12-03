@@ -9,11 +9,12 @@
 
 ***Version: Vitis 2023.2***
 
-This tutorial explains how to add custom IPs into a Versal™ adaptive SoC platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). Therefore, for each step, there is a pointer to the corresponding part of that tutorial, as required.
+This tutorial explains how to add custom IPs into a Versal™ adaptive SoC platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/README.md). Therefore, for each step, there is a pointer to the corresponding part of that tutorial, as required.
 
-This tutorial targets the Versal board. 
+This tutorial targets the Versal board.
 
 ## Overview
+
 The tutorial is structured as follows:
 - [Versal Platform Creation with Custom IP](#versal-platform-creation-with-custom-ip)
   - [Overview](#overview)
@@ -59,7 +60,7 @@ In this step, you add a DDS compiler IP into the platform design that you create
 
     You can adjust the frequency value but keep the sample rate in mind. The clocking rate is 300 MHz. If there are too few samples within one cycle, the sine wave cannot be sampled correctly.
 
-    ![missing image](images/dds_freq.png)   
+    ![missing image](images/dds_freq.png)
 
 4. Exit the configuration page and connect the `aclk` port to the `clk_out1` signal of clocking wizard.
 

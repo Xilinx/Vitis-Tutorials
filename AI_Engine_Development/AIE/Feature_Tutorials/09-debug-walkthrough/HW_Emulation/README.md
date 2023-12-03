@@ -11,7 +11,7 @@
 
 ## Introduction
 
-To simulate the entire system, including the AI Engine graph and programmable logic (PL) along with the XRT-based host application to control the AI Engine and PL, for a specific board and platform, you must use the hardware emulation flow. This flow includes the SystemC model of the AI Engine, transaction-level SystemC models for the NoC, double-data rate (DDR) memory, PL kernels (RTL), and processing system (PS) (running on the Quick Emulator (QEMU). This can be used in analyzing the data which helps you gauge the efficiency of the kernels, the stall and active times associated with each AI Engine, and pinpoint the AI Engine kernel whose performance might not be optimal.
+To simulate the entire system, including the AI Engine graph and programmable logic (PL) along with the XRT-based host application to control the AI Engine and PL, for a specific board and platform, you must use the hardware emulation flow. This flow includes the SystemC model of the AI Engine, transaction-level SystemC models for the NoC, double-data rate (DDR) memory, PL kernels (RTL), and processing system (PS) (running on the Quick Emulator (QEMU)). This can be used in analyzing the data which helps you gauge the efficiency of the kernels, the stall and active times associated with each AI Engine, and pinpoint the AI Engine kernel whose performance might not be optimal.
 
 The following are some of the features of the hardware emulation that are covered in this section of the tutorial:
 
@@ -51,7 +51,7 @@ This section profiles the system for hardware emulation and compares the through
 <a href="./README.md#Command-line-project-source-code-debug-with-Vitis-IDE">Command Line project Source Code Debug with the Vitis IDE</a>
 </td>
 <td>
-This section helps you debug your command line project by using the features of the Vitis IDE debugger without porting your system design to the IDE.
+This section helps you debug your command line project by using the features of the AMD Vitis&trade; IDE debugger without porting your system design to the IDE.
 </td>
 </tr>
 
@@ -142,16 +142,14 @@ This section walks you through debugging PL kernels in the Vivado logic simulato
 8. Now observe the waveform in the Vivado XSIM GUI. The system contains one `mm2s` compute unit and two `s2mm` compute units. You can notice them in the waveform viewer as follows:
 
     ![compute units](./Images/compute_units.PNG)
-
 9. You can form a group of signals by right-clicking anywhere in the **Name** column, and select **New Group**. Add all the MM2S and S2MM-related signals to this group by dragging them correspondingly.
 ![xsim waveform](./Images/xsim_waveform.PNG)
-
 10. Zoom into the waveform window to locate the transactions clearly.
 11. The `m_axi_gmem` is the transaction level signal which indicates the `Read` transaction in `mm2s` and `write` transaction in `s2mm`.
-12. The `TDATA` in `mm2s` shows the data that is being read into the AI Engine module. To correlate with the number of iterations (seven), you specified in the graph, observe the `TREADY` signal which goes high when the AI Engine module is ready to read and the `TVALID` signal goes high for all the Read transactions.
+12. The `TDATA` in `mm2s` shows the data that is being read into the AI Engine module. To correlate with the number of iterations (seven), you specified in the graph, observe the `TREADY` signal which goes high when the AI Engine module is ready to read, and the `TVALID` signal goes high for all the Read transactions.
 13. Similarly you can notice in `s2mm_1` the `TVALID` is high indicating the valid data and the `TLAST` goes high at the end of every iteration, goes low during start of next iteration.
 
-This way you should be able to identify whether a data is being sent/received, to/from the AI Engine module correctly or not.
+    This way you should be able to identify whether a data is being sent/received, to/from the AI Engine module correctly or not.
 
 # Section 3
 
@@ -188,9 +186,8 @@ From the trace information, you can calculate the kernel latency as follows:
 
 #### Calculating the Graph Throughput Using the Graph Output
 
-1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (Upscale kernel in this case). Add a marker at the start of the first output sample as highlighted below. Then click on the **Go** button to the last time icon and observe the cursor moves to the end of the last iteration. Now, click the previous transition icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2244.8 ns`.
+1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (Upscale kernel in this case). Add a marker at the start of the first output sample as highlighted below. Then click the **Go** button to the last time icon, and observe the cursor moves to the end of the last iteration. Now, click the previous transition icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2244.8 ns`.
 ![graph throughput](./Images/graph_throughput.PNG)
-
 2. The number of bytes transferred is, `128` samples * `4` Bytes * `7` iterations = `3584` tes. Throughput = `3584/2244 * e-9 ~= 1.5 GBPS`.
 
     Compare the throughput with the one you got during `aiesimulation` where the AI Engine is a standalone module; see [Section 9](../AIE_Simulation/README.md#Calculating-Graph-throughput-using-Graph-output) in AIE Simulation.
@@ -230,7 +227,7 @@ Before starting this tutorial:
     * Compiles the AI Engine kernels and generates `libadf.a`.
     * Compiles the PL kernels `s2mm`,`mm2s` and generates `.xo`.
     * Hardware linking step to link AI Engine kernels and PL kernels using the `system.cfg` file. This generates the `.xsa` file.
-    * Compiles the host application and generates the executable file `host.exe`.<
+    * Compiles the host application and generates the executable file `host.exe`.
     * Packages `libadf.a`,`.xsa`, and `host.exe` files.
 
 4. To debug the source code in the Vitis IDE, you need three Linux terminals.
@@ -285,8 +282,8 @@ Before starting this tutorial:
 
    ![command debug configuration menu](/.Images/cmd_debugConfigMenu.PNG)
 
-   * Create a new Debug configuration by double-clicking the **Single Application Debug**.
-   * Add the Debug type name, **aie_application_debug**, and **Debug Type** as **Attach to running target**.
+   * Create a new Debug configuration by double-clicking **Single Application Debug**.
+   * Add the Debug type name, **aie_application_debug** and **Debug Type** as **Attach to running target**.
 
         ![commmand debug configuration](./Images/cmd_debugConfigWin.PNG)
 

@@ -1,7 +1,7 @@
 <p align="right"><a>English</a> | <a href="docs-jp/README.md">日本語</a></p>
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ In-Depth Tutorials</h1>
     </td>
  </tr>
 </table>
@@ -19,7 +19,7 @@ Visit more Vitis developer videos on <a href="https://www.youtube.com/channel/UC
 
 ## Unlocking a New Design Experience For All Developers
 
-The [Vitis™ software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
+The [Vitis software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
 
 ## Where to Start
 

@@ -11,11 +11,11 @@ What is a Platform?
 
 
 
-.. image:: ./docs/XPFM.png
+.. image:: ./docs/images/XPFM.png
    :alt: Vitis Platform
 
 
-Briefly speaking, a platform is a package that contains the HPFM (``.xsa``) file and SPFM (software components). When you input the ``.xsa`` file and software components, the Vitis™ IDE tool will package them together and generate a platform ``.xpfm`` file, while the ``.xsa`` file is designed and exported from the AMD Vivado™ tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
+Briefly speaking, a platform is a package that contains the HPFM (``.xsa``) file and SPFM (software components). When you input the ``.xsa`` file and software components, the AMD Vitis™ IDE tool will package them together and generate a platform ``.xpfm`` file, while the ``.xsa`` file is designed and exported from the AMD Vivado™ tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
 
 
 Platform Creation Example Quick Access
@@ -55,13 +55,6 @@ Design Tutorials
 
 
 
-.. note:: 
-
-   This design flow is applicable to most AMD demo boards.
-
-
-
-
 .. list-table:: 
    :widths: 21 8 8 6 12 45
    :header-rows: 1
@@ -73,7 +66,7 @@ Design Tutorials
      - IDE Flow
      - Design Target
 	 
-   * - :doc:`Versal Platform Creation Quick Start <./docs/Design_Tutorials/Vitis_Platform/README>`
+   * - `Vitis Platform Quick Start <https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
      - Versal AI Core
      - VCK190
      - Flat
@@ -87,6 +80,7 @@ Design Tutorials
        - **Hardware design**: Using Vivado Customizable Example Design template to quick start.  
        - **Software design**: Using ``createdts`` and Common Image to quick start. 
        - **Verification**: Vector Addition.
+
        .. note:: 
 
           This design flow is applicable to most AMD demo boards. 
@@ -105,7 +99,10 @@ Design Tutorials
        - **Hardware design**: Using Vivado Customizable Example Design (device part based) to create the hardware and do further customizations.  
        - **Software design**: Using ``createdts`` and Common Image to quick start. 
        - **Verification**: Vector Addition.
-       Note: This tutorial uses VCK190 board as a custom board. The design does not use any of its presets.
+
+       .. note:: 
+
+          This tutorial uses VCK190 board as a custom board. The design does not use any of its presets. 
 
    * - :doc:`Versal DFX Platform Creation Tutorial <./docs/Design_Tutorials/04_Edge_VCK190_DFX/README>`
      - Versal AI Core
@@ -262,15 +259,6 @@ Feature Tutorials
 
     DTBO
       Device Tree Binary Overlay
-
-
-
-
-
-
-
-
-
 
 
 

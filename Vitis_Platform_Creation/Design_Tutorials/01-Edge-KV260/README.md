@@ -10,9 +10,9 @@
 
 ***Version: Vitis 2023.2***
 
-The [AMD Kria™ KV260 Vision AI Starter Kit](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html) is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It is based on the AMD UltraScale+™ MPSoC technology similar to ZCU104 evaluation board. In this example, you will extend the [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/) to KV260 Vision AI Starter Kit.
+The [AMD Kria™ KV260 Vision AI Starter Kit](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html) is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It is based on the AMD UltraScale+™ MPSoC technology similar to ZCU104 evaluation board. In this example, you will extend the [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/README.md) to KV260 Vision AI Starter Kit.
 
-To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, cross reference [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/), or ask questions in Github Issues page.
+To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, cross reference [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/README.md), or ask questions in Github Issues page.
 
 For your reference, The structure of this example system is shown in the following figure..
 
@@ -53,7 +53,7 @@ Because the  Kria SOM Starter Kit provides an off-the-shelf boot image and has i
 | Transfer files and run | Use scp to copy generated files to Linux partition on SD card                              |                           | skip writing sd_card.img        |
 
 > **NOTE:** In step 2, after extracting the common image there are a lot of output components, the only valuable output product in this case is sysroot. It is used for host application cross-compilation. Because the boot images of KV260 Starter Kit is fixed, you do not need to generate any boot components, e.g., FSBL, etc.
-
+>
 > **NOTE:** In this case, we assume you start to do this experiment after you have already had your board booted up successfully. If you do not, refer to [kv260 getting started page](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit/kv260-getting-started/getting-started.html).
 
 The following chapters will explain the details about these steps.
@@ -66,7 +66,6 @@ The platform creation steps are introduced in the following pages. Each page des
 - [Step 2: Create the Vitis Platform](./step2.md)
 - [Step 3: Test the Platform](./step3.md)
 - [Iteration Guidelines](./Iteration_guideline.md)
-           
 
 ***Start from [Step 1: Vivado Design](./step1.md).***
 

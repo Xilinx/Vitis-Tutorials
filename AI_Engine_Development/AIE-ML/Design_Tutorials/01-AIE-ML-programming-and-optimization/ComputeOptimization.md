@@ -1,18 +1,18 @@
-<!-- <table class="sphinxhide" width="100%"> -->
+<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
 
 # Compute Optimization
 
-##  _AI Engine-ML_  matrix multiplication Instruction Set
+## AI Engine-ML matrix multiplication Instruction Set
 
 
-The _AI Engine-ML_ has specific hardware instructions for matrix multiplications. Depending on the bitwidth of the operands, various matrix sizes are supported. In the following table the notation `MxKxN` means that matrix multiplication with a first operand of size M rows x K columns and a second operand of size K rows x N columns is supported.
+The *AI Engine-ML* has specific hardware instructions for matrix multiplications. Depending on the bitwidth of the operands, various matrix sizes are supported. In the following table the notation `MxKxN` means that matrix multiplication with a first operand of size M rows x K columns and a second operand of size K rows x N columns is supported.
 
 **Matrix Multiplication modes for real types**
 
@@ -80,11 +80,11 @@ In order to avoid too many pointer manipulations, the **A** tiles will be read 2
 
 This way to do offloads the pointer manipulation to the DMA programming, freeing some scalar processor cycles.
 
-The next 2 animated GIFs will show how **A** matrix is read from the Memory Tile and how **C** matrix is written to it. You can see that I chose to have __super tiles__ consisting of 2 sub-matrices one above the other:
+The next 2 animated GIFs will show how **A** matrix is read from the Memory Tile and how **C** matrix is written to it. You can see that I chose to have **super tiles** consisting of 2 sub-matrices one above the other:
 
-![Matrix **A** read order](images/OptA_Order.gif)
+![Matrix A read order](images/OptA_Order.gif)
 
-![Matrix **C** write order](images/OptC_Order.gif)
+![Matrix C write order](images/OptC_Order.gif)
 
 These read write orders are obtained using the following tiling parameters:
 
@@ -204,7 +204,7 @@ The 16-bit output version is doing a frog-leap in performances, **C** sub-matric
 
 Let's have a look to this code:
 
-![Inner Loop as seen in `vitis_analyzer`](images/InnerLoopOpt16bits.png)
+![Inner Loop as seen in vitis_analyzer](images/InnerLoopOpt16bits.png)
 
 Some lines (1568, 1584, ...) are not fully displayed in the interface, we need to get the original assembly code in the compilation directory (aie/Work1/aie/20_0/Release/20_0.lst). Let's focus on the inner loop delimited by the ZLS/ZLE flags (Zero Overhead Loop Start/End):
 

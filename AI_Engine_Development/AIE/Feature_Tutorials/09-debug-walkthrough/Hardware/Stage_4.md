@@ -11,9 +11,9 @@
 
 This stage helps you determine the AI Engine kernel or graph construct causing design performance drop or stall or causing a deadlock by:
 
-   * Running and analyzing runtime trace data using the AI Engine Event trace flow.
-   * Profiling Intra-kernel performance.
-   * Using the AMD Vitis&trade; IDE debugger to debug kernel source code.
+* Running and analyzing runtime trace data using the AI Engine Event trace flow.
+* Profiling Intra-kernel performance.
+* Using the AMD Vitis&trade; IDE debugger to debug kernel source code.
 
 <table style="width:100%">
 
@@ -23,7 +23,7 @@ This stage helps you determine the AI Engine kernel or graph construct causing d
 </td>
 <td>
 Explains how to use the different event trace options for compiling and its significance. Also walks through the steps to generate a hardware image.<br />
-<a href="./Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; * Prepare for hardware run</a>
+<a href="./Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; - Prepare for hardware run</a>
 </td>
 </tr>
 
@@ -32,30 +32,30 @@ Explains how to use the different event trace options for compiling and its sign
 <a href="./Stage_4.md#XRT-Flow"> Event Trace Analysis - XRT Flow</a>
 </td>
 <td>
-Explains how to do an AI Engine event trace and analysis by setting up the configuration file `xrt.ini`, and run the hardware design to generate the trace data using the XRT flow.<br />
-<a href="./Stage_4.md#Launch-Vitis-Analyzer-to-Examine-Event-Trace-Files">&nbsp; &nbsp; &nbsp; * Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
-<a href="./Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; * Details of the Event Trace data</a> <br />
+Explains how to do an AI Engine event trace and analysis by setting up the configuration file,  `xrt.ini`, and run the hardware design to generate the trace data using the XRT flow.<br />
+<a href="./Stage_4.md#Launch-Vitis-Analyzer-to-Examine-Event-Trace-Files">&nbsp; &nbsp; &nbsp; - Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
+<a href="./Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; - Details of the Event Trace data</a> <br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Stage_4.md#XSDB-Flow"> Event Trace Analysis - XSDB Flow</a>
 </td>
 <td>
-This method explains how to use the SXSDB-based flow to perform event trace analysis on an AI Engine design.<br />
+This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Stage_4.md#Event-trace-considerations"> Event Trace Considerations</a>
 </td>
 <td>
 This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
-<a href="./Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; * Event Trace Choice Considerations</a> <br />
-<a href="./Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; * Number of Event Trace Streams Methodology</a> <br />
-<a href="./Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; * Event Trace Limitations</a> <br />
+<a href="./Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; - Event Trace Choice Considerations</a> <br />
+<a href="./Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; - Number of Event Trace Streams Methodology</a> <br />
+<a href="./Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; - Event Trace Limitations</a> <br />
 </td>
 </tr>
 	
@@ -75,7 +75,7 @@ This tutorial targets the event trace feature running on the hardware board that
 
 Before starting this tutorial:
 
-* It is expected that you cloned the Git repository, and the design files are ready to build.
+* It is expected that you cloned the git repository, and the design files are ready to build.
 * It is expected that you have run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
 
 ### Build the Design
@@ -150,28 +150,25 @@ After the design is built, you are ready to run on the hardware board.
 1. Open the Vitis Analyzer using the `vitis_analyzer xrt.run_summary` command.
 2. It is required to set the design's compile summary file when you run the Vitis Analyzer for first time on the design.
 3. Select **Trace** from the left pane of the Vitis Analyzer. Initially, details of the event are not shown.
-![initial trace](./Images/Initial_trace.PNG)
-
+   ![initial trace](./Images/Initial_trace.PNG)
 4. Zoom in to see the detailed information for each state of the AI Engine tiles.
-![trace zoom view](./Images/Trace_zoomView.PNG)
+   ![trace zoom view](./Images/Trace_zoomView.PNG)
 
 #### Details of the Event Trace Data
 
 1. Select the `Graph` view to examine the design. Select `p_d` to identify the tile as (25,0).
-![graph view trace](./Images/graph_view_trace.PNG)
-
+   ![graph view trace](./Images/graph_view_trace.PNG)
 2. Adjust the trace view to the correct size with the zoom in or zoom out icons, and move the marker to the end of `peak_detect` or the beginning of `_main`. This is considered as the beginning of an iteration. A period of lock stall indicates data is sent from the PL to AIE tile.
-![adjusted trace view](./Images/adjusted_trace_view.PNG)
-
+   ![adjusted trace view](./Images/adjusted_trace_view.PNG)
 3. Observe the end of the `peak_detect` kernel corresponding to the core(25,0) and start of the core(24,0) and core(25,1). If you observe the graph view, you can notice that the kernel `peak_detect` sends data to both the `upscale` and `data_shuffle` kernels. The same behavior can be observed in the trace view as well.
-4. You can calculate the execution time of one iteration as follows. Place the marker at start and end of the iteration and (1) - (2) gives 262.2 ns which is ~= 329 cycles. This matches with the `Function time` in the profile data from both the AI Engine simulation and hardware emulation.
-![iteration time](./Images/iteration_time.PNG)
+4. You can calculate the execution time of one iteration as follows. Place the marker at the start and end of the iteration and (1) - (2) gives 262.2 ns which is ~= 329 cycles. This matches with the `Function time` in the profile data from both the AI Engine simulation and hardware emulation.
+   ![iteration time](./Images/iteration_time.PNG)
 
 ### XSDB Flow
 
 1. Program the device using the sd_card image, and remove any `xrt.ini` files in the sd_card to avoid misbehavior with the XSDB commands.
-2. _Target connection setup_: Run the hardware server from the computer that connects to the target board. To do so, launch the hardware server from the computer that has a JTAG connection to the VCK190 board.
-![launch hardware server](./Images/launch_hwServer.PNG)
+2. *Target connection setup*: Run the hardware server from the computer that connects to the target board. To do so, launch the hardware server from the computer that has a JTAG connection to the VCK190 board.
+   ![launch hardware server](./Images/launch_hwServer.PNG)
 3. Go to the directory where the AI Engine compile `Work/directory` is present, and launch XSDB.
 4. From the XSDB terminal, issue the following commands from the XSDB prompt:
 
@@ -186,7 +183,6 @@ After the design is built, you are ready to run on the hardware board.
 
    * `-base-address 0x900000000` is the address that needs to avoid collision with your design.
    * `-depth 0x8000000` is the size of the event trace file. Adjust accordingly with your design size and amount of the event trace data.
-
 5. After the above `aietrace` start command is run, switch to the hardware Linux console, and run the application.
 
    ```
@@ -225,7 +221,7 @@ Based on the design, select GMIO if the design has limited PL resources left for
 
 #### Event Trace Limitations
 
-1. Due to limited resources, overruns can be seen from the event trace. Follow [Number of Event Trace Streams Methodology](#Number-of-Event-Trace-Streams-Methodology) to configure the number of trace streams to minimize the overruns issue.
+1. Due to limited resources, overruns can be seen from the event trace. Follow [Number of Event Trace Streams Methodology](#number-of-event-trace-streams-methodology) to configure the number of trace streams to minimize the overruns issue.
 2. It is required that the `--broadcast-enable-core` option is used to compile the design. This is to eliminate time sync issues where the start time of each tile is off by ~100 ns or more.
 3. Run forever applications are supported by the XSDB flow only.
 
@@ -233,16 +229,13 @@ Based on the design, select GMIO if the design has limited PL resources left for
 
 This section uses the system project built using the Vitis IDE and launch the IDE debugger to debug the host code and AI Engine kernel source code. Unlike debugging at simulation level, this topic walks you through connecting the harware to the IDE debugger, placing breakpoints in the host code and kernel source code, and observing intermittent values in the Varibale view, register view, and memory inspector.
 
-1. Download the Vitis IDE project from [Download the Vitis IDE project](../README.md#Download-Vitis-IDE-project) and import in Vitis IDE.
-
+1. Download the Vitis IDE project from [Download the Vitis IDE project](../README.md#Download-Vitis-IDE-project) and import into the Vitis IDE.
 2. Invoke the Vitis IDE, and select **File** -> **Import** -> **Vitis project exported zip file**.
-3. Browse to the `PeakDetect.ide.zip`, enable the **System Projects** checkbox , and click **Finish**.
+3. Browse to the `PeakDetect.ide.zip`, enable the **System Projects** checkbox, and click **Finish**.
 4. Click the arrow button next to the **Manage configurations to the current project** icon in the taskbar, and select **Hardware**.
 5. Right-click the **PeakDetect_system**, and select the **Build Project**. It takes 20-25 minutes to completely build for the hardware target.
 6. Prepare the target hardware by flashing the `sd_card.img` on to the VCK190. (Refer to the following note).
-
    >**NOTE:** The `sd_card.img` at the `{Project}/Hardware/package` directory is for regular use, and the `sd_card.img` at the `{Project}/Hardware/package_aie_debug` directory is for the debug run on the board.
-
 7. Plug in the sd_card into the SD card slot, and power up the board.
 8. Once the boot completes, type `ifconfig` in the hardware console. This is required to set up the Linux TCF agent to connect with the host.
 
@@ -278,43 +271,38 @@ This section uses the system project built using the Vitis IDE and launch the ID
 
    >**NOTE:** It is required to connect the VCK190 board to the Ethernet cable to get the ethernet address.
 
-9. Set up the connnection to the target hardware board.
-	* Run the hardware server from the computer that connects to the target board. To do so, launch the hw_server from the computer that has the JTAG connection to the VCK190 board.
-	![launch hardware server](./Images/launch_hwServer.PNG)
-	* Create the debug target connection from the Vitis IDE by right-clicking the **PeakDetect_system**, and select the **Debug** -> **Debug configuraions**.
-	* Under the **Main** tab -> **Target** section -> **Hardware server** option -> **Local target** -> **New** as follows.
-	![target hardware setup](./Images/target_hwsetup.PNG)
-	* In the **Target Connection Details** window, enter the **Target name** and **Host**. The Host name should match with what you see in the launch hardware server window, and hit **Test Connection**.
-	* You should see the following **Connection Successful!** message:
-	![connection successful](./Images/connection_successful.PNG)
+9. Set up the connection to the target hardware board.
 
-	* You can also click the **>>Advanced** button to view the details of the VCK190 as follows.
-	![advanced options](./Images/advanced_option.PNG)
-10. Similarly, set up the Linux TCF Agent. Under the **Main** tab -> **Target** section -> **Linux TCF Agent** option, select **New** and enter the **Target** and **Host** details. Enter the `inet addr` address you see after issuing the `ifconfig` command in the hardware Linux console in the **Host** field. Click **Test Connection**. You see **Connection Successful** message as shown above.
-
+   * Run the hardware server from the computer that connects to the target board. To do so, launch the hw_server from the computer that has the JTAG connection to the VCK190 board.
+     ![launch hardware server](./Images/launch_hwServer.PNG)
+   * Create the debug target connection from the Vitis IDE by right-clicking the **PeakDetect_system**, and select the **Debug** -> **Debug configuraions**.
+   * Under the **Main** tab -> **Target** section -> **Hardware server** option -> **Local target** -> **New** as follows.
+     ![target hardware setup](./Images/target_hwsetup.PNG)
+   * In the **Target Connection Details** window, enter the **Target name** and **Host**. The Host name should match with what you see in the launch hardware server window, and hit **Test Connection**.
+   * You should see the following **Connection Successful!** message:
+     ![connection successful](./Images/connection_successful.PNG)
+   * You can also click the **>>Advanced** button to view the details of the VCK190 as follows.
+     ![advanced options](./Images/advanced_option.PNG)
+10. Similarly, set up the Linux TCF Agent. Under the **Main** tab -> **Target** section -> **Linux TCF Agent** option, select **New**, and enter the **Target** and **Host** details. Enter the `inet addr` address you see after issuing the `ifconfig` command in the hardware Linux console in the **Host** field. Click **Test Connection**. You see **Connection Successful** message as shown above.
 11. Now, in the Vitis IDE, right-click the **PeakDetect_system**, and select the **Debug As** -> **Launch Hardware**.
 12. The Vitis IDE switches automatically to the debug mode, and the debugger suspends the host application at an automatic breakpoint in the `host.cpp` as follows.
-![host debug](./Images/host_debug.PNG)
-
-13. NPlace a breakpoint at line 38 in the `host.cpp`, and click **resume**. Observe the following values of different variables in the **Variables view**:
-![host variables](./Images/host_variables.PNG)
-
-      This way you can debug the host code.
-
+    ![host debug](./Images/host_debug.PNG)
+13. Place a breakpoint at line 38 in the `host.cpp`, and click **resume**. Observe the following values of diferent variables in the **Variables view**. This way you can debug the host code.
+    ![host variables](./Images/host_variables.PNG)
 14. You can also debug the AI Engine cores by placing the breakpoints in the kernel source code. Open the `src/kernels/peak_detect.cc` kernel, and place a breakpoint at line 33. Click the  **resume** button, and observe the following values in the register view and variable view.
 15. You can hover your mouse over variables in the editor window and get the memory address. Add that address in the memory inspector, and observe the corresponding values. For more details, refer to the [Debug Using Vitis IDE debugger](../AIE_Simulation/README.md#Debug-using-Vitis-IDE-debugger).
-![debug hardware view](./Images/debug_HardwareView.PNG)
+    ![debug hardware view](./Images/debug_HardwareView.PNG)
 16. You can select each individual core in the AI Engine and debug using the 'step-in','step-over' options, or remove all breakpoints, select the **PeakDetect**, and click the **resume** button to run all the cores. When all cores are completed, you can see status as **Disabled** for all the cores.
-![debug stack](./Images/debug_stack.PNG)
-17. When the application run completes in hardware, you can observe the following **TEST PASSED** in the console .
-![serial terminal passed](./Images/serial_TerminalPassed.PNG)
+    ![debug stack](./Images/debug_stack.PNG)
+17. When the application run completes in hardware, you can observe the following **TEST PASSED** in the console.
+    ![serial terminal passed](./Images/serial_TerminalPassed.PNG)
 
 ### Limitations of the Source Code Debug on Hardware
 
 * There are maximum of four breakpoints available for each tile. One of these four breakpoints is assigned to first line of `main()` function by default and can be cleared and then assigned to other lines during debug.
 * Due to the compiler, the `-O0` option is not supported; non-sequential execution when stepping through the source code is expected.
 * If an individual kernel is highlighted, select the **resume** button to continue execution until the next breakpoint or blocked to wait for I/O. If the PeakDetect design is highlighted, select the **resume** button to resume all kernels execution until meet each kernel's breakpoint or blocked waiting for each kernel's I/O operation.
-Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values.
+  Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values.
 * `printf()` is not supported in hardware debug.
 
 ## Support

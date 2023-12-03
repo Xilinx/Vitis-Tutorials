@@ -138,7 +138,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
 2. Create the Vitis platform.
 
-   For this example, you will use the Vitis Unifeid IDE to create the Vitis Platform. Got to `WorkSpace` directory and follow steps below to create the platform.
+   For this example, you will use the Vitis Unified IDE to create the Vitis Platform. Got to `WorkSpace` directory and follow steps below to create the platform.
 
    1. Run Vitis by typing `vitis -w .` in the console. `-w` is to specify the workspace. `.` means the current worksapce directory.
    2. In the Vitis Unified IDE, from menu select **File > New Component > Platform** to create a platform component.
@@ -148,7 +148,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
          >Note: If you want to create a platform with emulation support please click **Emulation** and select the emulation XSA file.
       - Set the operating system to **linux**.</br>
       - Set the processor to **psu_cortexa53**.</br>
-      - Check the option **Generate boot artifacts**. Then click **Next**.</br> 
+      - Check the option **Generate boot artifacts**. Then click **Next**.</br>
          >Note: Enabling this option will trigger the tool to automatically generate a PMU firmware domain and an FSBL (First Stage Boot Loader) domain into the platform
       - Review the summary and click **Finish**.
       >Note: After a few moments, the platform component will be prepared and available in the component view. Simultaneously, the platform configuration file, `vitis-comp.json`, will be automatically displayed in the main view. Users can access the `vitis-comp.json` file by expanding the Settings section under the platform component.
@@ -156,7 +156,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 3. Set up the software settings in the Platform configuration view by clicking the **Linux On psu_cortexa53** domain, browse to the locations and select the directory or file needed to complete the dialog box for the following:
 
    - **Display Name**:  update it as `xrt`
-   - **Bif file**: Click the button to generate bif file or click **Browse** to select existing bif file. 
+   - **Bif file**: Click the button to generate bif file or click **Browse** to select existing bif file.
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
@@ -180,14 +180,14 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
    ![missing image](./images/vitis_platform_output.png)
 
-   >Note: After compilation, users can locate the XPFM file by expanding the Output directory. This provides a logical view of the output. The actual path of platform file is under `worksapce/zcu104_custom/export/zcu104_custom/` directory. Users can also view the complete path of the platform file by simply hovering the mouse pointer over the XPFM file.
+   >Note: After compilation, users can locate the XPFM file by expanding the Output directory. This provides a logical view of the output. The actual path of platform file is under `workspace/zcu104_custom/export/zcu104_custom/` directory. Users can also view the complete path of the platform file by simply hovering the mouse pointer over the XPFM file.
 
    >Note: The Vitis Unified IDE will find the boot-related files menntioned in the software components in begin of this step and place them in the boot folder of the platform.
 
    If you create a Vitis application component in the same workspace as this platform component, you can find this platform available in the platform selection page in the application Creation wizard. If you want to reuse this platform in another workspace, add its path to the `PLATFORM_REPO_PATHS` environment variable before launching the Vitis GUI, or use the "Add" button on the platform selection page of the Vitis GUI to add its path.
 
   
-   User could also use Vitis python command to create the platform component. 
+   User could also use Vitis python command to create the platform component.
 
    </details>
 
@@ -248,6 +248,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
    vitis -s platform_creation.py --platform_name <> --xsa_path <> --xsa-emu_path <> --boot <> --dtb <>
    ```
    </details>
+
 ### Fast Track
 
 Scripts are provided to create the Vitis platform component. To use these scripts, run the following steps.

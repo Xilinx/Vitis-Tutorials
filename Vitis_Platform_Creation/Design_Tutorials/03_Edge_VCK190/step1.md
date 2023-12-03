@@ -289,7 +289,7 @@ Some blocks in the block design has multiple types of simulation models. Vitis e
 
 ### Validate the Output of Step 1
 
-   Refer to [Platform Validation Example](../..//Feature_Tutorials/03_platform_validation/)
+   Refer to [Platform Validation Example](../../Feature_Tutorials/04_platform_validation/README.md)
 
 ### Fast Track
 

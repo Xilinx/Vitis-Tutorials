@@ -154,16 +154,16 @@ Demonstrates how to use a GDB server to debug the design.
 
 ## Build and Simulate in the Vitis IDE
 
-1. Once the Vitis IDE is opened and the system project is created manually, select the **AI Engine Component** from the left-side pane, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings. 
+1. Once the Vitis IDE is opened and the system project is created manually, select the **AI Engine Component** from the left-side pane, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings.
 2. Select the **Module-Specific** settings and click **Add item** under the **Pre-processor** setting.
-![build settings](./Images/Build_setting.PNG)
+   ![build settings](./Images/Build_setting.PNG)
 3. Add `-O0` to the Pre-processor option. This improves the debug visibility.
 4. Now, in the **Flow** navigator window, select the **Build** option under **X86 SIMULATION**. This builds the AI Engine component for x86simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console. Also a green tick mark as highlighted below.
-![build output](./Images/Build_output.PNG)
-5. In the **Flow** navigator window, under **X86SIMULATION**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking on **Create Configuration** -> **New Launch Configuration** -> **x86sim**. 
-![Create_Configuration](./Images/create_configuration.PNG)
+   ![build output](./Images/Build_output.PNG)
+5. In the **Flow** navigator window, under **X86SIMULATION**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking on **Create Configuration** -> **New Launch Configuration** -> **x86sim**.
+   ![Create_Configuration](./Images/create_configuration.PNG)
 6. You can change the **Launch Config Name** and click **Run** button to start simulation for x86simulation target. When the simulation complete, you see the following output in the console.
-![simulator output](./Images/x86simulator_output.PNG)
+   ![simulator output](./Images/x86simulator_output.PNG)
 
 # Section 2
 
@@ -175,10 +175,10 @@ This section talks about adding a `printf()` statement in the source code, compi
 
 1. From the Vitis IDE, browse to the *[AI Engine]* component and expand **Sources** → **kernels** → **click** on `peak_detect.cc`.
 2. Add `#include <adf/x86sim/x86simDebug.h>` at the beginning of the source file and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` after for the loop.
-3. To compile the project, select the **Build** option under **X86 SIMULATION** in **FLOW** navigator. 
+3. To compile the project, select the **Build** option under **X86 SIMULATION** in **FLOW** navigator.
 4. To run the project, select the **Run** option under **X86SIMULATION** in **Flow** navigator.
 5. The expected result is as follows.
-![printf support](./Images/printf_support.PNG)
+   ![printf support](./Images/printf_support.PNG)
 6. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
 
 # Section 3
@@ -197,7 +197,7 @@ The x86simulator supports printing vector output data value via `printf()`. This
 
 2. Recompile the project either by hitting the **build** option in the Flow navigator.
 3. Run the x86simulation, and observe the following `printf` statements in the console.
-![vector printf](./Images/vector_printf.PNG)
+   ![vector printf](./Images/vector_printf.PNG)
 4. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
 
 # Section 4
@@ -210,16 +210,16 @@ This section walks you through a debug methodology that uses the Vitis IDE debug
 2. This gets you to the debug mode in the Vitis IDE and waits in the `graph.cpp` file (after the *main()* function).
 3. Open any source file from the Explorer window, and add the breakpoint of interest. For example, open the *peak_detect.cc* source file, and add the breakpoint at line (`vin = *InIter++`) after for loop.
 4. Observe the different debug functionalities/controls available, that is, step-in, step-over, step-return, resume, terminate, disconnect, etc.
-![debug controls](./Images/debug_controls.PNG)
+   ![debug controls](./Images/debug_controls.PNG)
 5. Press **Resume** button in the toolbar. Observe the simulation stops at the user-defined breakpoint as follows.
-![breakpoint](./Images/break_point.PNG)
-6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. 
+   ![breakpoint](./Images/break_point.PNG)
+6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view.
 
-**Note** : You can drag the complete debug window from left-side pane down to the output console in the bottom pane and expand the Variables view to enlarge the area. You can restore it back to the original size by dragging back to the left-side. 
-![rearranging_debugMode](./Images/rearranging_debugMode.PNG)
+   **Note** : You can drag the complete debug window from left-side pane down to the output console in the bottom pane and expand the Variables view to enlarge the area. You can restore it back to the original size by dragging back to the left-side.
+   ![rearranging_debugMode](./Images/rearranging_debugMode.PNG)
 
 7. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data →  0: 16)`. (Value-"16" based on the iteration in your case).
-![variables view](./Images/variables_view.PNG)
+   ![variables view](./Images/variables_view.PNG)
 8. You can either continue stepping for all iterations, or remove the breakpoint and hit the **Run** button in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, you can switch back to **Vitis Component** view.
 
 # Section 5
@@ -320,7 +320,7 @@ This feature allows you to dump and inspect data traffic at kernel ports with da
 
    ```
 
-Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
+   Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
 
 5. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/dump/mygraph_in_out_0.txt` file, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
 
@@ -451,7 +451,7 @@ This is in continuation to the [Trace Report in the File](./README.md#Trace-Repo
    ```
 
    Here you can notice that the output in the console is not as polished as the file generated by `--trace`. But this is useful when your design runs for long time, and you wish to see the event while the simulation is running.
-   
+
 You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
 
 # Section 6
@@ -470,11 +470,11 @@ Memory access violations occur when a kernel is reading or writing out of bounds
 
 `x86simulator` requires `VALGRIND_HOME`, `VALGRIND_LIB`, and `PATH` environmental variables to be configured per your host computer configuration. Exit out of the Vitis IDE, and set up the following environmental variables and relaunch the Vitis IDE. For example:
 
-   ```
-   export PATH=<Install_Path>/valgrind/3.16.1/:$PATH
-   export VALGRIND_HOME=<Install_Path>/valgrind/3.16.1/
-   export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
-   ```
+```
+export PATH=<Install_Path>/valgrind/3.16.1/:$PATH
+export VALGRIND_HOME=<Install_Path>/valgrind/3.16.1/
+export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
+```
 
 1. After relaunching the Vitis IDE tool, either by enabling the **Valgrind** option in the launch configuration settings or by updating the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options`.
 2. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator..
@@ -523,7 +523,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
 
    Valgrind points out the file that has out of bound read access with the line number as shown above.
 
-### Exercise Step
+### Section 6 Exercise Step
 
 1. Add the following lines of code that creates an uninitialized variable in any kernel code and see how the Valgrind helps in identifying the issue:
 
@@ -572,10 +572,10 @@ This topic walks you through running the x86simulator with the GDB.
 
 2. After `x86simulator` is launched successfully with the GDB, set up a breakpoint using the `break` command.
 
-      ```
-      (gdb) break data_shuffle
-      Breakpoint 2 at 0x410f47: file ./../.././aie/kernels/data_shuffle.cc, line 9.
-      ```
+   ```
+   (gdb) break data_shuffle
+   Breakpoint 2 at 0x410f47: file ./../.././aie/kernels/data_shuffle.cc, line 9.
+   ```
 
 3. Type `c` and continue execution until the breakpoint is hit.
 
@@ -711,11 +711,11 @@ This feature uses the GDB server to debug and requires two terminals working tog
    ==44263== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
    ```
 
-#### Exercise Step
+#### Section 7 Exercise Step
 
 Insert an out-of-bound read access error as mentioned in [Memory Access Violation and Valgrind Support](./README.md#Memory-access-violation-and-valgrind-support), and perform the steps from (j)-(n). Observe the violation using the `--valgrind-gdb` command in Terminal 1.
 
-## Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 

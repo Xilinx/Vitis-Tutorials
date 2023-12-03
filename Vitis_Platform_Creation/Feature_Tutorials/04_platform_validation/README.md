@@ -1,7 +1,7 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
@@ -10,47 +10,49 @@
 
 ***Version: Vitis 2023.2***
 
-In this tutorial, you will learn how to validate a Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
+In this tutorial, you will learn how to validate an AMD Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/README.md). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
-This tutorial targets the Versal board or Versal parts. 
+This tutorial targets the Versal board or Versal parts.
 
 ## Overview
+
 The tutorial is structured as follows:
-- [Versal Platform Validation](#versal-platform-validation)
+
+- [Versal Extensible Hardware Design Validation](#versal-extensible-hardware-design-validation)
   - [Overview](#overview)
   - [Extensible platform validation general outline](#extensible-platform-validation-general-outline)
   - [Platform hardware validation](#platform-hardware-validation)
-    - [Stage I](#stage-i-base-bootable-design-verification)
-      - [Step 1: Prepare a hardware design](#step-1-prepare-a-hardware-design)
-      - [Step 2: Validate the hardware design](#step-2-validate-the-hardware-design)
-        - [Test1: Go through implementation](#test1-go-through-implementation)
-        - [Test2: Validate PDI on Hardware](#test2-validate-pdi-on-hardware)
-        - [Test3: Peripheral bare-metal test](#test3-peripheral-bare-metal-test)
-    - [Stage II Extensible platform interface verification](#stage-ii-extensible-platform-interface-verification)
-      - [Step 1: Prepare a Hardware Platform](#step-1-prepare-a-hardware-platform)
-      - [Step 2: Utilize the V++ linker to link a kernel and generate fixed XSA file](#step-2-utilize-the-v-linker-to-link-a-kernel-and-generate-fixed-xsa-file)
-      - [Step 3: Create a platform with standalone domain](#step-3-create-a-platform-with-standalone-domain)
-      - [Step 4: Create application base on the platform](#step-4-create-application-base-on-the-platform)
-      - [Extensible platform validation Demonstration](#extensible-platform-validation-Demonstration)
-         - [Test example 1: Interrupt connection check](#test-example-1-interrupt-connection-check)
-         - [Test example 2: Test Example 2: AIE test](#test-example-2-aie-test)
-   - [Support](#support)
-   
+  - [Stage I Base bootable design verification](#stage-i-base-bootable-design-verification)
+    - [Step 1: Prepare a hardware design](#step-1-prepare-a-hardware-design)
+    - [Step 2: Validate the hardware design](#step-2-validate-the-hardware-design)
+      - [Test1: Go through implementation](#test1-go-through-implementation)
+      - [Test2: Validate PDI on Hardware](#test2-validate-pdi-on-hardware)
+      - [Test3: Peripheral bare-metal test](#test3-peripheral-bare-metal-test)
+  - [Stage II Extensible platform interface verification](#stage-ii-extensible-platform-interface-verification)
+    - [Step 1: Prepare a Hardware Platform](#step-1-prepare-a-hardware-platform)
+    - [Step 2: Utilize the V++ linker to link a kernel and generate fixed XSA file](#step-2-utilize-the-v-linker-to-link-a-kernel-and-generate-fixed-xsa-file)
+    - [Step 3: Create a platform with standalone domain](#step-3-create-a-platform-with-standalone-domain)
+    - [Step 4: Create application base on the platform](#step-4-create-application-base-on-the-platform)
+    - [Extensible platform validation demonstration](#extensible-platform-validation-demonstration)
+      - [Test example 1: Interrupt connection check](#test-example-1-interrupt-connection-check)
+      - [Test Example 2: AIE test](#test-example-2-aie-test)
+    - [Support](#support)
+
 
 ## Extensible platform validation general outline
 
 No matter user use Vitis flow or Vitis export to Vivado flow to develop their acceleration application, the extensible hardware platform (XSA) which provides the hardware environment for application kernels is the development start point.
 Thereby, hardware platform validation is necessary before going to next stage.
 
->Note: For Vitis export to Vivado flow, please refer to [Vitis Export To Vivado](03_Vitis_Export_To_Vivado).
+>Note: For Vitis export to Vivado flow, please refer to [Vitis Export To Vivado](../03_Vitis_Export_To_Vivado/README.md).
 
 Hardware platform validation can be divided into two stage. The first stage is to validate the peripherals to ensure a bootable design.
 
-The second stage is to validate the platform interface exported to kernel. Extensible hardware platform provides the interface like: AXI master interface, AXI slave interface, AXI streaming interface and interrupt interface for kernels. These interface guarantee the kernel control, memory access, large data moving and interrupt control. Validating the platform, that is to validate the interfaces provided to kernels. 
+The second stage is to validate the platform interface exported to kernel. Extensible hardware platform provides the interface like: AXI master interface, AXI slave interface, AXI streaming interface and interrupt interface for kernels. These interface guarantee the kernel control, memory access, large data moving and interrupt control. Validating the platform, that is to validate the interfaces provided to kernels.
 
 ![missing image](images/interface.svg)
 
-The interfaces exported for extensible XSA is linked by V++ linker to connect PL or AIE kernels. V++ linker supports to take XSA or XPFM as input. Linking a kernel with the hardware XSA and testing from kernel side would be the easiest way for validation. 
+The interfaces exported for extensible XSA is linked by V++ linker to connect PL or AIE kernels. V++ linker supports to take XSA or XPFM as input. Linking a kernel with the hardware XSA and testing from kernel side would be the easiest way for validation.
 
 The validation can include following tests:
 
@@ -76,7 +78,7 @@ Please follow the instructions in [Versal platform creation tutorial-Step1](../.
 
 #### Test1: Go through implementation
 
-   As the hardware platform is created from part support example design or from scratch, it's recommended to run through implementation and device image generation to find errors in early stage for the base bootable design. The platform doesn't need the implementation results, the implementation is used for design validation only. 
+   As the hardware platform is created from part support example design or from scratch, it's recommended to run through implementation and device image generation to find errors in early stage for the base bootable design. The platform doesn't need the implementation results, the implementation is used for design validation only.
 
 <details>
   <summary><b>Show Detailed Steps of Implementation</b></summary>
@@ -90,7 +92,7 @@ Please follow the instructions in [Versal platform creation tutorial-Step1](../.
 
    - In Sources tab, right click system.bd and select ***Create HDL Wrapper***. In the pop-up window, select ***Let Vivado Manage***.
 
-3. Select ***Run implementation*** from Flow Navigator, Click **OK** in **Launch Runs** setup dialog. 
+3. Select ***Run implementation*** from Flow Navigator, Click **OK** in **Launch Runs** setup dialog.
 
 4. Generate Device Image (For Method2)
 
@@ -232,7 +234,7 @@ Please refer to [Versal platform creation tutorial-Step3](../../Design_Tutorials
    2. Kernel accesses the memory to determine whether the memory is accessible or not from kernel side, and thus indirectly determine whether AXI slave interface for memory is working or not.
    3. Kernel triggers interrupt to PS and PS try to capture the interrupt to determine whether the interrupt connection is correct or not, and thus indirectly determine whether the interrupt is working or not. 
 
-   One reference design [examples](ref_files/) is provided under ref_file directory for your reference. Next we will demonstrate how to use the examples provided in ref_files directory to do validation.
+   One reference design example is provided in the `ref_files` directory for your reference. Next we will demonstrate how to use the examples provided in ref_files directory to do validation.
 
 ### Extensible platform validation demonstration
 
@@ -245,7 +247,7 @@ Please refer to [Versal platform creation tutorial-Step3](../../Design_Tutorials
 
    ![missing image](images/delete_irq_connection.PNG)
 
-   2. Go to [ref_files](ref_files/) directory.
+   2. Go to the `ref_files` directory.
 
    ```bash
    cd ref_files/pl_validation
@@ -289,7 +291,7 @@ Please refer to [Versal platform creation tutorial-Step3](../../Design_Tutorials
 
    1. Please follow the instructions in [Versal platform creation tutorial-Step1](../../Design_Tutorials/03_Edge_VCK190/step1.md) to create a custom hardware platform. You can skip the optional steps.
 
-   2. Go to [ref_files](ref_files/) directory.
+   2. Go to the `ref_files` directory.
 
    ```bash
    cd ref_files/aie_validation
