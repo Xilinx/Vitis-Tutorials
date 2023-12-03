@@ -11,7 +11,7 @@ What is a Platform?
 
 
 
-.. image:: ./docs/images/XPFM.png
+.. image:: ./XPFM.PNG
    :alt: Vitis Platform
 
 

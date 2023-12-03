@@ -58,6 +58,7 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
    ":doc:`Runtime Parameter Reconfiguration <./docs/Feature_Tutorials/03-rtp-reconfiguration/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
    ":doc:`Packet Switching <./docs/Feature_Tutorials/04-packet-switching/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
    ":doc:`AIE Versal Integration <./docs/Feature_Tutorials/05-AI-engine-versal-integration/README>`","Base","Linux","CLI, Vitis Unified IDE","","MM2S / S2MM","Yes","Yes","Yes","Yes","Yes","",""
+   ":doc:`AIE-ML Performance Analysis <./docs/Feature_Tutorials/13-aie-ml-performance-analysis/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
    ":doc:`AIE Compiler Features <./docs/Feature_Tutorials/20-aiecompiler-features/README>`","Base","Linux","","","MM2S / S2MM","Yes","Yes","","Yes","Yes","Yes","Yes"
 
 

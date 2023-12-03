@@ -125,6 +125,21 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
  <td> </td>
  </tr>
  <tr>
+ <td align="center"><a href="./Feature_Tutorials/13-aie-ml-performance-analysis/">AIE-ML Performance Analysis</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>Base</td>
  <td>Linux</td>

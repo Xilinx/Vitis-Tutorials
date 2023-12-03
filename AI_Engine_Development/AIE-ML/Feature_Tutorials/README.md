@@ -36,6 +36,10 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <td>This tutorial demonstrates creating a system design running on the AI Engine-ML (AIE-ML), PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
  </tr>
  <tr>
+ <td align="center"><a href="./13-aie-ml-performance-analysis/">AI Engine-ML Performance Analysis Tutorial</a></td>
+ <td> This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
+ </tr>
+ <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
  </tr>

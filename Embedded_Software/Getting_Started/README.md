@@ -8,6 +8,8 @@
 
 ## Getting Started in Vitis Unified Embedded IDE
 
+***Version: 2023.2***
+
 This tutorial should act as the start point, or a refresher to the Vitis Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will create the platform, hello world application, setup the target connections and deploy on our target board.
 
 **Notes:**

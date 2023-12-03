@@ -24,7 +24,10 @@
 * **[Vitis Platform](./Vitis_Platform)**:
   * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
   * This tutorial uses Vitis Unified IDE.
-  
+
+* **[Vitis Unified IDE for Embedded Design](../Embedded_Software/Getting_Started)**:
+  * This tutorial shows the basic steps of the Vitis Embedded design flow and uses the Vitis Unified IDE. Users will be able to navigate the capabilities of the IDE using a minimum number of steps.
+  * The steps include creating the platform, adding hello world application, setting up the target connection and deploying to the target board.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
