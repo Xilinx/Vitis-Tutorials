@@ -1,0 +1,18 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Fri Dec  1 13:31:49 2023
+# Process ID: 15398
+# Current directory: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow
+# Command line: vivado
+# Log file: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/vivado.log
+# Journal file: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/vivado.jou
+# Running On: mh-vitis, OS: Linux, CPU Frequency: 3428.503 MHz, CPU Physical cores: 4, Host memory: 16471 MB
+#-----------------------------------------------------------
+start_gui
+create_project rtl_kernel /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/rtl_kernel -part xcu200-fsgd2104-2-e
+set_property board_part xilinx.com:au200:part0:1.3 [current_project]
+import_files {/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_example_vadd.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_example_adder.v /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_control_s_axi.v /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_example.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B.v /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_B.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_example_axi_write_master.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/B_axi_read_master.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/Vadd_A_B_example_counter.sv /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/reference-files/src/IP/A_axi_read_master.sv}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1

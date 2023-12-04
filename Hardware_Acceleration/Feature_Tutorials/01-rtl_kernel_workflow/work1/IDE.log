@@ -1,0 +1,55 @@
+12:39:23 DEBUG : Logs will be stored at '/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/IDE.log'.
+12:39:24 INFO  : Launching XSCT server: xsct -n  -interactive /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/temp_xsdb_launch_script.tcl
+12:39:25 INFO  : Registering command handlers for Vitis TCF services
+12:39:25 INFO  : Platform repository initialization has completed.
+12:39:26 INFO  : XSCT server has started successfully.
+12:39:26 INFO  : plnx-install-location is set to ''
+12:39:26 INFO  : Successfully done setting XSCT server connection channel  
+12:39:26 INFO  : Successfully done query RDI_DATADIR 
+12:39:26 INFO  : Successfully done setting workspace for the tool. 
+09:23:27 DEBUG : Logs will be stored at '/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/IDE.log'.
+09:23:28 INFO  : Launching XSCT server: xsct -n  -interactive /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/temp_xsdb_launch_script.tcl
+09:23:29 INFO  : Platform repository initialization has completed.
+09:23:31 INFO  : XSCT server has started successfully.
+09:23:31 INFO  : Successfully done setting XSCT server connection channel  
+09:23:31 INFO  : Registering command handlers for Vitis TCF services
+09:23:31 INFO  : plnx-install-location is set to ''
+09:23:31 INFO  : Successfully done setting workspace for the tool. 
+09:23:31 INFO  : Successfully done query RDI_DATADIR 
+09:31:32 INFO  : Added binary container 'binary_container_1' in project 'kernelTest_system_hw_link'
+09:31:32 INFO  : Added kernel '[Vadd_A_B - kernelTest_kernels/src/Vadd_A_B.xo]' in binary container 'binary_container_1' of project 'kernelTest_system_hw_link'
+09:34:29 INFO  : Build configuration of 'kernelTest_system' is updated to 'Emulation-HW'
+09:34:29 INFO  : Build configuration of system project is automatically updated to 'Emulation-HW'.
+09:34:29 INFO  : Build configuration of 'kernelTest_system_hw_link' is updated to 'Emulation-HW'
+09:34:29 INFO  : Build configuration of 'kernelTest' is updated to 'Emulation-HW'
+10:45:52 DEBUG : Logs will be stored at '/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/IDE.log'.
+10:45:53 INFO  : Launching XSCT server: xsct -n  -interactive /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/temp_xsdb_launch_script.tcl
+10:45:55 INFO  : Platform repository initialization has completed.
+10:45:56 INFO  : Registering command handlers for Vitis TCF services
+10:45:56 INFO  : XSCT server has started successfully.
+10:45:56 INFO  : plnx-install-location is set to ''
+10:45:57 INFO  : Successfully done setting XSCT server connection channel  
+10:45:57 INFO  : Successfully done query RDI_DATADIR 
+10:45:57 INFO  : Successfully done setting workspace for the tool. 
+10:52:25 INFO  : Launching executable: Emulation-HW/kernelTest  ${project_loc:kernelTest_system}/Emulation-HW/binary_container_1.xclbin
+10:55:45 INFO  : Launching executable: Emulation-HW/kernelTest  ${project_loc:kernelTest_system}/Emulation-HW/binary_container_1.xclbin
+10:57:40 INFO  : Build configuration of 'kernelTest_system' is updated to 'Hardware'
+10:57:40 INFO  : Build configuration of system project is automatically updated to 'Hardware'.
+10:57:40 INFO  : Build configuration of 'kernelTest_system_hw_link' is updated to 'Hardware'
+10:57:40 INFO  : Build configuration of 'kernelTest' is updated to 'Hardware'
+12:16:53 DEBUG : Logs will be stored at '/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/IDE.log'.
+12:16:54 INFO  : Launching XSCT server: xsct -n  -interactive /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/temp_xsdb_launch_script.tcl
+12:16:56 INFO  : Platform repository initialization has completed.
+12:16:57 INFO  : XSCT server has started successfully.
+12:16:58 INFO  : Registering command handlers for Vitis TCF services
+12:16:58 INFO  : plnx-install-location is set to ''
+12:16:58 INFO  : Successfully done setting XSCT server connection channel  
+12:16:58 INFO  : Successfully done query RDI_DATADIR 
+12:16:58 INFO  : Successfully done setting workspace for the tool. 
+12:17:15 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:18:19 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:27:35 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:35:50 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:36:47 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:56:35 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin
+12:57:10 INFO  : Launching executable: Hardware/kernelTest  ${project_loc:kernelTest_system}/Hardware/binary_container_1.xclbin

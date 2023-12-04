@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hostApp:AcceleratedHostProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hostApp="http://www.xilinx.com/acceleration/hostApplication" name="kernelTest" location="/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest" platform="/opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/xilinx_u55n_gen3x4_xdma_2_202110_1.xpfm" platformUID="xilinx:u55n:gen3x4_xdma_2:202110.1" systemProject="kernelTest_system" sysConfig="config0_0" cpu="x86" cpuInstance="x86" os="Linux">
+  <configuration name="Emulation-SW" id="com.xilinx.ide.accel.config.sw_emu.x86.60910232" dirty="true">
+    <configBuildOptions xsi:type="hostApp:HostApplicationOptions"/>
+  </configuration>
+  <configuration name="Emulation-HW" id="com.xilinx.ide.accel.config.hw_emu.x86.2032510684">
+    <configBuildOptions xsi:type="hostApp:HostApplicationOptions" target="hw_emu"/>
+  </configuration>
+  <configuration name="Hardware" id="com.xilinx.ide.accel.config.hw.x86.1089888103" dirty="true">
+    <configBuildOptions xsi:type="hostApp:HostApplicationOptions" target="hw"/>
+  </configuration>
+</hostApp:AcceleratedHostProject>

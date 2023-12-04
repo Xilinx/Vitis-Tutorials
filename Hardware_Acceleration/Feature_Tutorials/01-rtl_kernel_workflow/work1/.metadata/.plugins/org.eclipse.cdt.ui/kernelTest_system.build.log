@@ -1,0 +1,28 @@
+12:56:45 **** Incremental Build of configuration Hardware for project kernelTest_system ****
+make all 
+/home/mh/xilinx/Vitis/2022.2/bin/v++ --package --config package.cfg ../../kernelTest_system_hw_link/Hardware/binary_container_1.xclbin -o binary_container_1.xclbin
+Option Map File Used: '/home/mh/xilinx/Vitis/2022.2/data/vitis/vpp/optMap.xml'
+
+****** v++ v2022.2 (64-bit)
+  **** SW Build 3671529 on 2022-10-13-17:52:11
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+INFO: [v++ 60-1306] Additional information associated with this v++ package can be found at:
+	Reports: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/package.build/reports/package
+	Log files: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/package.build/logs/package
+Running Dispatch Server on port: 46073
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/binary_container_1.xclbin.package_summary, at Mon Dec  4 12:56:57 2023
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/package.build/reports/package/v++_package_binary_container_1_guidance.html', at Mon Dec  4 12:56:57 2023
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/xilinx_u55n_gen3x4_xdma_2_202110_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/hw/hw.xsa'
+INFO: [v++ 74-78] Compiler Version string: 2022.2
+INFO: [v++ 60-2256] Packaging for hardware
+INFO: [v++ 60-2460] Successfully copied a temporary xclbin to the output xclbin: /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/binary_container_1.xclbin
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/mh/Vitis-Tutorials/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/work1/kernelTest_system/Hardware/binary_container_1.xclbin.package_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 13s
+INFO: [v++ 60-1653] Closing dispatch client.
+cp -f binary_container_1.xclbin ../../kernelTest/Hardware
+
+12:57:00 Build Finished (took 14s.994ms)
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="sdx.custom.platform.repository.locations" value=""/>
+	<section name="com.xilinx.sdx.core.ui.editor.FilteredAcceleratorSelectionDialog">
+		<item key="ShowStatusLine" value="true"/>
+		<item key="History" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History/&gt;"/>
+		<item key="options.expanded" value="false"/>
+		<item key="showAcceleratedFunctions" value="true"/>
+		<section name="DialogBoundsSettings">
+			<item key="DIALOG_HEIGHT" value="800"/>
+			<item key="DIALOG_WIDTH" value="800"/>
+			<item key="DIALOG_X_ORIGIN" value="285"/>
+			<item key="DIALOG_Y_ORIGIN" value="-145"/>
+			<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
+		</section>
+	</section>
+</section>

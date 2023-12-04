@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hwkernel:HwKernelProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hwkernel="http://www.xilinx.com/acceleration/hwkernel" name="kernelTest_kernels" platform="/opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/xilinx_u55n_gen3x4_xdma_2_202110_1.xpfm" platformUID="xilinx:u55n:gen3x4_xdma_2:202110.1" systemProject="kernelTest_system" cpu="">
+  <configuration name="Emulation-SW" id="com.xilinx.ide.accel.config.hwkernel.sw_emu.232917571" dirty="true">
+    <configBuildOptions xsi:type="hwkernel:KernelOptions" kernelDebug="true"/>
+  </configuration>
+  <configuration name="Emulation-HW" id="com.xilinx.ide.accel.config.hwkernel.hw_emu.791425703" dirty="true">
+    <configBuildOptions xsi:type="hwkernel:KernelOptions" kernelDebug="true" target="hw_emu"/>
+  </configuration>
+  <configuration name="Hardware" id="com.xilinx.ide.accel.config.hwkernel.hw.220194223" dirty="true">
+    <configBuildOptions xsi:type="hwkernel:KernelOptions" target="hw"/>
+  </configuration>
+</hwkernel:HwKernelProject>

@@ -1,0 +1,7 @@
+12:56:41 **** Incremental Build of configuration Hardware for project kernelTest ****
+make -j8 all 
+g++ -std=c++1y -DVITIS_PLATFORM=xilinx_u55n_gen3x4_xdma_2_202110_1 -D__USE_XOPEN2K8 -I/opt/xilinx/xrt/include/ -I/home/mh/xilinx/Vitis_HLS/2022.2/include/ -O2 -g -Wall -c -fmessage-length=0 -o "src/user-host.o" "../src/user-host.cpp"
+g++ -o "kernelTest" src/user-host.o -luuid -lxrt_coreutil -lxilinxopencl -lpthread -lrt -lstdc++ -L/opt/xilinx/xrt/lib/ -Wl,-rpath-link,/opt/xilinx/xrt/lib
+
+12:56:43 Build Finished (took 1s.117ms)
+

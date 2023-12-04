@@ -1,0 +1,6 @@
+12:56:44 **** Incremental Build of configuration Hardware for project kernelTest_system_hw_link ****
+make all 
+make: Nothing to be done for 'all'.
+
+12:56:45 Build Finished (took 416ms)
+

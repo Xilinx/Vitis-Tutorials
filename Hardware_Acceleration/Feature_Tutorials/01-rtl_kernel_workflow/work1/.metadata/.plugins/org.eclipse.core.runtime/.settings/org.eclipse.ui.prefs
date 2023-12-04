@@ -1,0 +1,5 @@
+PERSPECTIVE_BAR_EXTRAS=com.xilinx.ide.application.ui.perspectve,org.eclipse.debug.ui.DebugPerspective
+SHOW_OPEN_ON_PERSPECTIVE_BAR=false
+SHOW_TEXT_ON_PERSPECTIVE_BAR=true
+eclipse.preferences.version=1
+showIntro=false

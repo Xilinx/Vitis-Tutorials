@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.xilinx.sdx.system.debug.launch.SdxMultiLaunchDelegate">
+    <booleanAttribute key="aie_event_trace.configuration.enabled" value="false"/>
+    <listAttribute key="aie_event_trace.configurations"/>
+    <stringAttribute key="aie_event_trace.debug_ip_layout_file" value=""/>
+    <booleanAttribute key="aie_event_trace.enabled" value="false"/>
+    <stringAttribute key="aie_event_trace.metadata_file" value=""/>
+    <stringAttribute key="aie_event_trace.trace_address" value="0x8F0000000"/>
+    <stringAttribute key="aie_event_trace.trace_depth" value="0x80000"/>
+    <booleanAttribute key="aie_event_trace.xrt_flow" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.ui.breakpoint.main" value="true"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.ui.exec.script" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.ui.exec.script.location" value=""/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.ui.fsbl_exit_function" value=""/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.ui.fsbl_flow" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.ui.fsbl_path" value=""/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.ui.fsbl_run" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.ui.skip.fpga.revision.check" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uiapplication.path" value=""/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uicrosstrigger.bpcontainer" value="{&quot;arch&quot;:&quot;zynq&quot;,&quot;isSelected&quot;:false,&quot;breakPoints&quot;:[]}"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uidebug.type" value="STANDALONE_DEBUG"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uienable.crosstrigger" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uifpga.device" value="Auto Detect"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uihw.bit.file" value=""/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uihw.init.tcl" value=""/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uipl.powerup" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uiproc.appl.map" value="{}"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uiproc.selection" value=""/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uiprogram.fpga" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uiproject.name" value=""/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uips.device" value="Auto Detect"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uips7.init" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uips7.post" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uireset.apu" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uireset.lock.step" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uireset.rpu" value="false"/>
+    <booleanAttribute key="com.xilinx.sdk.tcf.debug.uireset.system" value="false"/>
+    <stringAttribute key="com.xilinx.sdk.tcf.debug.uitarget.peer" value="Local"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.active.build.config" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.application.type" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.build.disabled" value="true"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.custom.launch.storage" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.data.files" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.debug.target" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.eclipse.portable.path" value="true"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.edge.kernel.function.names" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.edge.kernel.start" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.emulation" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.estimate" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.hw_spec.path" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.ingore.peer.conflict" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.launch.work.dir" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.performance.analysis" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.performance.analysis.linux.hw.target" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.sdsoc.project" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.secure.debug" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.secure.debug.image" value=""/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.system.launch" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.trace" value="false"/>
+    <stringAttribute key="com.xilinx.sdx.sdsoc.debug.ui.versal.system.emulation" value="false"/>
+    <stringAttribute key="ide.launch.pdi.path" value=""/>
+    <stringAttribute key="ide.launch.program.device" value="false"/>
+    <stringAttribute key="launch.version" value=""/>
+    <booleanAttribute key="multilaunch.active_build_config" value="true"/>
+    <mapAttribute key="multilaunch.app_args">
+        <mapEntry key="kernelTest" value=""/>
+    </mapAttribute>
+    <mapAttribute key="multilaunch.app_launch_cfg_files"/>
+    <booleanAttribute key="multilaunch.auto_update_args" value="true"/>
+    <stringAttribute key="multilaunch.build_config_id" value=""/>
+    <booleanAttribute key="multilaunch.dc.live_waveform" value="false"/>
+    <booleanAttribute key="multilaunch.dc.use_waveform" value="false"/>
+    <booleanAttribute key="multilaunch.debug_selected_apps" value="false"/>
+    <booleanAttribute key="multilaunch.disable_build" value="true"/>
+    <booleanAttribute key="multilaunch.emulation" value="false"/>
+    <stringAttribute key="multilaunch.linux_peer_id" value="Linux Agent"/>
+    <stringAttribute key="multilaunch.linux_remote_work_dir" value="/run/media/mmcblk0p1"/>
+    <stringAttribute key="multilaunch.project_name" value="kernelTest_system"/>
+    <stringAttribute key="multilaunch.selected_apps" value=""/>
+    <stringAttribute key="multilaunch.standalone_peer_id" value="Local"/>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+        <listEntry value="/kernelTest_system"/>
+    </listAttribute>
+    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+        <listEntry value="4"/>
+    </listAttribute>
+    <booleanAttribute key="org.eclipse.tcf.debug.AttachChildren" value="false"/>
+    <booleanAttribute key="org.eclipse.tcf.debug.DisconnectOnCtxExit" value="false"/>
+    <booleanAttribute key="org.eclipse.tcf.debug.StopAtEntry" value="false"/>
+    <booleanAttribute key="org.eclipse.tcf.debug.StopAtMain" value="true"/>
+    <booleanAttribute key="org.eclipse.tcf.debug.UseContextFilter" value="false"/>
+    <booleanAttribute key="org.eclipse.tcf.debug.UseTerminal" value="false"/>
+    <stringAttribute key="profile.data.transfer.trace" value="coarse"/>
+    <stringAttribute key="profile.enable" value="true"/>
+    <stringAttribute key="profile.mode" value="default"/>
+    <stringAttribute key="profile.stall.trace" value="off"/>
+    <stringAttribute key="profile_options.aie_event_trace" value="false"/>
+    <stringAttribute key="profile_options.aie_event_trace_level" value="functions"/>
+    <stringAttribute key="profile_options.aie_profile" value="false"/>
+    <stringAttribute key="profile_options.aie_profile_core_metrics" value="heat_map"/>
+    <stringAttribute key="profile_options.aie_profile_interface_metrics" value="input_bandwidths"/>
+    <stringAttribute key="profile_options.aie_profile_memory_metrics" value="dma_locks"/>
+    <stringAttribute key="profile_options.aie_status" value="false"/>
+    <stringAttribute key="profile_options.aie_status_interval" value="1000"/>
+    <stringAttribute key="profile_options.aie_trace_buffer_offload_interval_ms" value="10"/>
+    <stringAttribute key="profile_options.aie_trace_buffer_size" value="1"/>
+    <stringAttribute key="profile_options.aie_trace_buffer_units" value="M"/>
+    <stringAttribute key="profile_options.aie_trace_file_dump_interval_s" value="5"/>
+    <stringAttribute key="profile_options.continuous_trace" value="false"/>
+    <stringAttribute key="profile_options.continuous_trace_interval" value="10"/>
+    <stringAttribute key="profile_options.device_counters" value="false"/>
+    <stringAttribute key="profile_options.device_trace" value="coarse"/>
+    <stringAttribute key="profile_options.dpu_profile" value="false"/>
+    <stringAttribute key="profile_options.host_trace" value="true"/>
+    <stringAttribute key="profile_options.lop_trace" value="false"/>
+    <stringAttribute key="profile_options.native_xrt_Trace" value="false"/>
+    <stringAttribute key="profile_options.opencl_trace" value="false"/>
+    <stringAttribute key="profile_options.periodic_aie_trace_offload" value="true"/>
+    <stringAttribute key="profile_options.power_profile" value="false"/>
+    <stringAttribute key="profile_options.profile_interval" value="1000"/>
+    <stringAttribute key="profile_options.stall_trace" value="off"/>
+    <stringAttribute key="profile_options.trace_buffer_size" value="1"/>
+    <stringAttribute key="profile_options.trace_file_dump_interval" value="5"/>
+    <stringAttribute key="profile_options.xrt_Trace" value="false"/>
+</launchConfiguration>

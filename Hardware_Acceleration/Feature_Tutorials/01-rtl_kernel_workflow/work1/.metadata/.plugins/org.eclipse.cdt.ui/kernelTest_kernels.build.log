@@ -1,0 +1,6 @@
+12:56:43 **** Incremental Build of configuration Hardware for project kernelTest_kernels ****
+make -j8 all 
+make: Nothing to be done for 'all'.
+
+12:56:44 Build Finished (took 417ms)
+

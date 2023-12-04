@@ -1,0 +1,52 @@
+Mon Dec  4 12:16:58 2023: Server was asked to start on port: '43813'
+Mon Dec  4 12:16:58 2023: Server is using token UUID: '8fbb1178-59b1-465d-a643-422618932db9'
+Mon Dec  4 12:16:58 2023: Attempting to start server on port '43813'
+Mon Dec  4 12:16:58 2023: XRC main fifo: created main fifo '/tmp/xrcmain8fbb1178-59b1-465d-a643-422618932db9', fd read = 11
+Mon Dec  4 12:16:58 2023: Running Rule Check Server
+Mon Dec  4 12:16:58 2023: Version 1.6.1
+Mon Dec  4 12:16:59 2023: Rule Check Server: Accepted socket connection from client
+Mon Dec  4 12:16:59 2023: EXCHANGE_TOKEN received, server token: 8fbb1178-59b1-465d-a643-422618932db9, passed token: 8fbb1178-59b1-465d-a643-422618932db9
+Mon Dec  4 12:17:15 2023: SESSION_MGR: creating session with session uuid: 'abb64b71-2804-40fc-86eb-f3725333c3f0' and name 'SystemDebugger_kernelTest_system_1_kernelTest'
+Mon Dec  4 12:17:19 2023: SESSION_MGR: closing session for UUID 'abb64b71-2804-40fc-86eb-f3725333c3f0' with name 'SystemDebugger_kernelTest_system_1_kernelTest'
+Mon Dec  4 12:18:18 2023: SESSION_MGR: creating session with session uuid: '664cb69e-cbeb-46a6-a6b6-d696c328b50e' and name 'SystemDebugger_kernelTest_system_1_kernelTest'
+Mon Dec  4 12:18:19 2023: SESSION_MGR: closing session for UUID '664cb69e-cbeb-46a6-a6b6-d696c328b50e' with name 'SystemDebugger_kernelTest_system_1_kernelTest'
+Mon Dec  4 12:27:35 2023: SESSION_MGR: creating session with session uuid: '0691718b-e353-4fbd-adac-e3dae9c59134' and name 'SystemDebugger_kernelTest_system_2_kernelTest'
+Mon Dec  4 12:27:38 2023: SESSION_MGR: closing session for UUID '0691718b-e353-4fbd-adac-e3dae9c59134' with name 'SystemDebugger_kernelTest_system_2_kernelTest'
+Mon Dec  4 12:35:22 2023: SESSION_MGR: creating session with session uuid: 'ba0bea80-598b-4920-9d3a-eef73e829a34' and name 'Hardware'
+Mon Dec  4 12:35:23 2023: SESSION_MGR: closing session for UUID 'ba0bea80-598b-4920-9d3a-eef73e829a34' with name 'Hardware'
+Mon Dec  4 12:35:24 2023: SESSION_MGR: creating session with session uuid: 'ae35f015-78c2-4d9d-9172-cc08c56ea10b' and name 'Hardware'
+Mon Dec  4 12:35:25 2023: SESSION_MGR: closing session for UUID 'ae35f015-78c2-4d9d-9172-cc08c56ea10b' with name 'Hardware'
+Mon Dec  4 12:35:25 2023: SESSION_MGR: creating session with session uuid: '058d40bf-c62b-49ee-8d4c-68d6a1c8db0a' and name 'Hardware'
+Mon Dec  4 12:35:26 2023: SESSION_MGR: closing session for UUID '058d40bf-c62b-49ee-8d4c-68d6a1c8db0a' with name 'Hardware'
+Mon Dec  4 12:35:50 2023: SESSION_MGR: creating session with session uuid: 'c17192e2-b2bf-4bb8-8e15-2bb3ac520029' and name 'SystemDebugger_kernelTest_system_3_kernelTest'
+Mon Dec  4 12:35:54 2023: SESSION_MGR: closing session for UUID 'c17192e2-b2bf-4bb8-8e15-2bb3ac520029' with name 'SystemDebugger_kernelTest_system_3_kernelTest'
+Mon Dec  4 12:36:15 2023: SESSION_MGR: creating session with session uuid: 'd1428ac1-9b10-44f0-8166-f3bb998e6da3' and name 'Hardware'
+Mon Dec  4 12:36:16 2023: SESSION_MGR: closing session for UUID 'd1428ac1-9b10-44f0-8166-f3bb998e6da3' with name 'Hardware'
+Mon Dec  4 12:36:17 2023: SESSION_MGR: creating session with session uuid: '0f782c5d-c1ef-4246-a8b7-3ca6a860d635' and name 'Hardware'
+Mon Dec  4 12:36:17 2023: SESSION_MGR: closing session for UUID '0f782c5d-c1ef-4246-a8b7-3ca6a860d635' with name 'Hardware'
+Mon Dec  4 12:36:18 2023: SESSION_MGR: creating session with session uuid: 'ad1aefd3-79d3-4766-aecf-81bd566a70fc' and name 'Hardware'
+Mon Dec  4 12:36:19 2023: SESSION_MGR: closing session for UUID 'ad1aefd3-79d3-4766-aecf-81bd566a70fc' with name 'Hardware'
+Mon Dec  4 12:36:47 2023: SESSION_MGR: creating session with session uuid: '1eca7bb0-2dd7-4deb-9f3d-c8f63a659b3b' and name 'SystemDebugger_kernelTest_system_4_kernelTest'
+Mon Dec  4 12:36:50 2023: SESSION_MGR: closing session for UUID '1eca7bb0-2dd7-4deb-9f3d-c8f63a659b3b' with name 'SystemDebugger_kernelTest_system_4_kernelTest'
+Mon Dec  4 12:53:39 2023: SESSION_MGR: creating session with session uuid: 'b85ff0f8-3638-4f00-88f6-14131cdb243e' and name 'Hardware'
+Mon Dec  4 12:53:39 2023: SESSION_MGR: closing session for UUID 'b85ff0f8-3638-4f00-88f6-14131cdb243e' with name 'Hardware'
+Mon Dec  4 12:53:40 2023: SESSION_MGR: creating session with session uuid: 'f518d4c9-f6bf-4d79-9b86-5a1097673787' and name 'Hardware'
+Mon Dec  4 12:53:40 2023: SESSION_MGR: closing session for UUID 'f518d4c9-f6bf-4d79-9b86-5a1097673787' with name 'Hardware'
+Mon Dec  4 12:53:41 2023: SESSION_MGR: creating session with session uuid: '6fd2bd31-37d6-425f-b836-de7f2ad803a0' and name 'Hardware'
+Mon Dec  4 12:53:41 2023: SESSION_MGR: closing session for UUID '6fd2bd31-37d6-425f-b836-de7f2ad803a0' with name 'Hardware'
+Mon Dec  4 12:56:35 2023: SESSION_MGR: creating session with session uuid: 'b75847be-3575-430c-9d75-01272514d8ae' and name 'SystemDebugger_kernelTest_system_4_kernelTest'
+Mon Dec  4 12:56:38 2023: SESSION_MGR: closing session for UUID 'b75847be-3575-430c-9d75-01272514d8ae' with name 'SystemDebugger_kernelTest_system_4_kernelTest'
+Mon Dec  4 12:56:41 2023: SESSION_MGR: creating session with session uuid: 'd967bfce-a56c-4ebd-b4f8-f178c9460c85' and name 'Hardware'
+Mon Dec  4 12:56:43 2023: SESSION_MGR: closing session for UUID 'd967bfce-a56c-4ebd-b4f8-f178c9460c85' with name 'Hardware'
+Mon Dec  4 12:56:43 2023: SESSION_MGR: creating session with session uuid: 'c311a0bb-112f-4c16-8db5-32a91ad1daa8' and name 'Hardware'
+Mon Dec  4 12:56:44 2023: SESSION_MGR: closing session for UUID 'c311a0bb-112f-4c16-8db5-32a91ad1daa8' with name 'Hardware'
+Mon Dec  4 12:56:44 2023: SESSION_MGR: creating session with session uuid: 'dc2ae2f0-cc48-4f69-a7ec-751ef9631f2c' and name 'Hardware'
+Mon Dec  4 12:56:45 2023: SESSION_MGR: closing session for UUID 'dc2ae2f0-cc48-4f69-a7ec-751ef9631f2c' with name 'Hardware'
+Mon Dec  4 12:57:10 2023: SESSION_MGR: creating session with session uuid: 'df6c859e-2078-4913-83a4-df5483674e54' and name 'SystemDebugger_kernelTest_system_5_kernelTest'
+Mon Dec  4 12:57:13 2023: SESSION_MGR: closing session for UUID 'df6c859e-2078-4913-83a4-df5483674e54' with name 'SystemDebugger_kernelTest_system_5_kernelTest'
+Mon Dec  4 13:05:15 2023: STOP_SERVER received, server token: 8fbb1178-59b1-465d-a643-422618932db9, passed token: 8fbb1178-59b1-465d-a643-422618932db9
+Mon Dec  4 13:05:15 2023: Socket received request to stop server.
+Mon Dec  4 13:05:15 2023: SERVER: destructor for server bound to port 43813
+Mon Dec  4 13:05:15 2023: XRC main fifo: Good unlink of /tmp/xrcmain8fbb1178-59b1-465d-a643-422618932db9
+Mon Dec  4 13:05:15 2023: Server exiting with status 0.
+Mon Dec  4 13:05:15 2023: Closing log file.

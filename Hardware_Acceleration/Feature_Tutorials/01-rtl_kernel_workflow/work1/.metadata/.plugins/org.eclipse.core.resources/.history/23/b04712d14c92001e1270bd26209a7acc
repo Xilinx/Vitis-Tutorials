@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hwlink:HwLinkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hwlink="http://www.xilinx.com/acceleration/hwlink" name="kernelTest_system_hw_link" platform="/opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/xilinx_u55n_gen3x4_xdma_2_202110_1.xpfm" systemProject="kernelTest_system" cpu="pl">
+  <configuration name="Emulation-SW" id="com.xilinx.ide.accel.config.hwlink.sw_emu.780079199">
+    <configBuildOptions xsi:type="hwlink:LinkOptions"/>
+  </configuration>
+  <configuration name="Emulation-HW" id="com.xilinx.ide.accel.config.hwlink.hw_emu.1389115865">
+    <configBuildOptions xsi:type="hwlink:LinkOptions" target="hw_emu"/>
+  </configuration>
+  <configuration name="Hardware" id="com.xilinx.ide.accel.config.hwlink.hw.640317884">
+    <configBuildOptions xsi:type="hwlink:LinkOptions" target="hw"/>
+  </configuration>
+</hwlink:HwLinkProject>

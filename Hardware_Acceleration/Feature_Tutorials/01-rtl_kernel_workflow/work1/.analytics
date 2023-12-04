@@ -1,0 +1,40 @@
+timestamp=[2023-12-01 12:39:24], mode=WORKBENCH_START, duration=0:00:04.640, duration_ms=4640, data={}
+timestamp=[2023-12-01 12:39:25], mode=WORKBENCH_UI_INIT, duration=0:00:00.761, duration_ms=761, data={editors_count=0, platform_editors_count=0, projects_count=0, platform_projects_count=0, active_platform_editor=false, projects=}
+timestamp=[2023-12-01 12:39:25], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:01.070, duration_ms=1070, data={}
+timestamp=[2023-12-01 12:44:46], mode=APP_CREATION, duration=0:00:04.375, duration_ms=4375, data={name=kernelTest, project_type=datacenter, os=NA, processor=null, runtime=OpenCL, platform=xilinx_u55n_gen3x4_xdma_2_202110_1, application_type=application}
+timestamp=[2023-12-04 09:23:29], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.810, duration_ms=810, data={}
+timestamp=[2023-12-04 09:23:30], mode=WORKBENCH_START, duration=0:00:07.976, duration_ms=7976, data={}
+timestamp=[2023-12-04 09:23:31], mode=WORKBENCH_UI_INIT, duration=0:00:00.992, duration_ms=992, data={editors_count=2, platform_editors_count=0, projects_count=5, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,kernelTest,kernelTest_kernels,kernelTest_system,kernelTest_system_hw_link}
+timestamp=[2023-12-04 09:35:24], mode=BUILD, duration=0:00:06.713, duration_ms=6713, data={name=kernelTest, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 09:39:16], mode=BUILD, duration=0:00:00.474, duration_ms=474, data={name=kernelTest_kernels, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 09:39:22], mode=BUILD, duration=0:00:01.873, duration_ms=1873, data={name=kernelTest_system, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 10:45:55], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.974, duration_ms=974, data={}
+timestamp=[2023-12-04 10:45:55], mode=WORKBENCH_START, duration=0:00:07.263, duration_ms=7263, data={}
+timestamp=[2023-12-04 10:45:56], mode=WORKBENCH_UI_INIT, duration=0:00:00.403, duration_ms=403, data={editors_count=3, platform_editors_count=0, projects_count=5, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,kernelTest,kernelTest_kernels,kernelTest_system,kernelTest_system_hw_link}
+timestamp=[2023-12-04 10:46:53], mode=BUILD, duration=0:00:00.492, duration_ms=492, data={name=kernelTest, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 10:46:55], mode=BUILD, duration=0:00:00.468, duration_ms=468, data={name=kernelTest_kernels, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 10:51:31], mode=BUILD, duration=0:04:35.528, duration_ms=275528, data={name=kernelTest_system_hw_link, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 10:51:48], mode=BUILD, duration=0:00:17.554, duration_ms=17554, data={name=kernelTest_system, configuration=Emulation-HW, clean_build=false}
+timestamp=[2023-12-04 10:57:54], mode=BUILD, duration=0:00:01.189, duration_ms=1189, data={name=kernelTest, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 10:57:55], mode=BUILD, duration=0:00:00.423, duration_ms=423, data={name=kernelTest_kernels, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:02:25], mode=BUILD, duration=1:04:29.800, duration_ms=3869800, data={name=kernelTest_system_hw_link, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:02:42], mode=BUILD, duration=0:00:15.410, duration_ms=15410, data={name=kernelTest_system, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:16:56], mode=PLATFORM_REPOSITORY_INIT, duration=0:00:00.902, duration_ms=902, data={}
+timestamp=[2023-12-04 12:16:57], mode=WORKBENCH_START, duration=0:00:07.781, duration_ms=7781, data={}
+timestamp=[2023-12-04 12:16:57], mode=WORKBENCH_UI_INIT, duration=0:00:00.489, duration_ms=489, data={editors_count=3, platform_editors_count=0, projects_count=5, platform_projects_count=0, active_platform_editor=false, projects=RemoteSystemsTempFiles,kernelTest,kernelTest_kernels,kernelTest_system,kernelTest_system_hw_link}
+timestamp=[2023-12-04 12:35:23], mode=BUILD, duration=0:00:01.172, duration_ms=1172, data={name=kernelTest, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:35:24], mode=BUILD, duration=0:00:00.421, duration_ms=421, data={name=kernelTest_kernels, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:35:26], mode=BUILD, duration=0:00:00.803, duration_ms=803, data={name=kernelTest_system_hw_link, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:35:41], mode=BUILD, duration=0:00:15.300, duration_ms=15300, data={name=kernelTest_system, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:36:16], mode=BUILD, duration=0:00:01.186, duration_ms=1186, data={name=kernelTest, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:36:17], mode=BUILD, duration=0:00:00.420, duration_ms=420, data={name=kernelTest_kernels, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:36:19], mode=BUILD, duration=0:00:00.762, duration_ms=762, data={name=kernelTest_system_hw_link, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:36:34], mode=BUILD, duration=0:00:15.102, duration_ms=15102, data={name=kernelTest_system, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:53:39], mode=BUILD, duration=0:00:00.429, duration_ms=429, data={name=kernelTest, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:53:40], mode=BUILD, duration=0:00:00.420, duration_ms=420, data={name=kernelTest_kernels, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:53:41], mode=BUILD, duration=0:00:00.714, duration_ms=714, data={name=kernelTest_system_hw_link, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:53:56], mode=BUILD, duration=0:00:15.046, duration_ms=15046, data={name=kernelTest_system, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:56:43], mode=BUILD, duration=0:00:01.131, duration_ms=1131, data={name=kernelTest, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:56:44], mode=BUILD, duration=0:00:00.427, duration_ms=427, data={name=kernelTest_kernels, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:56:45], mode=BUILD, duration=0:00:00.696, duration_ms=696, data={name=kernelTest_system_hw_link, configuration=Hardware, clean_build=false}
+timestamp=[2023-12-04 12:57:00], mode=BUILD, duration=0:00:15.000, duration_ms=15000, data={name=kernelTest_system, configuration=Hardware, clean_build=false}

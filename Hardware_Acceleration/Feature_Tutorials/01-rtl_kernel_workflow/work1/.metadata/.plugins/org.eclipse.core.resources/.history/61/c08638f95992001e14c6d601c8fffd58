@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<systemproject:SystemProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:systemproject="http://www.xilinx.com/systemproject" name="kernelTest_system" platform="/opt/xilinx/platforms/xilinx_u55n_gen3x4_xdma_2_202110_1/xilinx_u55n_gen3x4_xdma_2_202110_1.xpfm" platformUID="xilinx:u55n:gen3x4_xdma_2:202110.1" sysConfig="config0_0" rootFSLocation="" linuxImage="" sysroot="">
+  <configuration name="Emulation-SW" id="com.xilinx.sdx.system.managedbuilder.swemu.configuration.947589937">
+    <configBuildOptions xsi:type="systemproject:SystemOptions">
+      <applications name="kernelTest_system_hw_link" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-SW"/>
+      <applications name="kernelTest_kernels" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-SW"/>
+      <applications name="kernelTest" domainName="x86" domainPrettyName="x86" appBuildConfig="Emulation-SW"/>
+    </configBuildOptions>
+  </configuration>
+  <configuration name="Emulation-HW" id="com.xilinx.sdx.system.managedbuilder.hwemu.configuration.774235903">
+    <configBuildOptions xsi:type="systemproject:SystemOptions" target="hw_emu">
+      <applications name="kernelTest_system_hw_link" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-HW"/>
+      <applications name="kernelTest_kernels" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-HW"/>
+      <applications name="kernelTest" domainName="x86" domainPrettyName="x86" appBuildConfig="Emulation-HW"/>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="systemproject:SystemOptions" target="hw_emu">
+      <applications name="kernelTest_system_hw_link" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-HW"/>
+      <applications name="kernelTest_kernels" domainName="" domainPrettyName="pl" appBuildConfig="Emulation-HW"/>
+      <applications name="kernelTest" domainName="x86" domainPrettyName="x86" appBuildConfig="Emulation-HW"/>
+    </lastBuildOptions>
+  </configuration>
+  <configuration name="Hardware" id="com.xilinx.sdx.system.managedbuilder.hw.configuration.1241822794">
+    <configBuildOptions xsi:type="systemproject:SystemOptions" target="hw">
+      <applications name="kernelTest_system_hw_link" domainName="" domainPrettyName="pl" appBuildConfig="Hardware"/>
+      <applications name="kernelTest_kernels" domainName="" domainPrettyName="pl" appBuildConfig="Hardware"/>
+      <applications name="kernelTest" domainName="x86" domainPrettyName="x86" appBuildConfig="Hardware"/>
+    </configBuildOptions>
+    <lastBuildOptions xsi:type="systemproject:SystemOptions" target="hw">
+      <applications name="kernelTest_system_hw_link" domainName="" domainPrettyName="pl" appBuildConfig="Hardware"/>
+      <applications name="kernelTest_kernels" domainName="" domainPrettyName="pl" appBuildConfig="Hardware"/>
+      <applications name="kernelTest" domainName="x86" domainPrettyName="x86" appBuildConfig="Hardware"/>
+    </lastBuildOptions>
+  </configuration>
+</systemproject:SystemProject>
