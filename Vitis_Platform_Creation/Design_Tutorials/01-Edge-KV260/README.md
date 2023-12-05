@@ -71,14 +71,15 @@ The platform creation steps are introduced in the following pages. Each page des
 
 ## References
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html)
-  - [Platform Creation General Rules](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/vcm1596051749044.html)
-  - [Setting up the Vitis environment](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/settingupvitisenvironment.html)
-  - [Installing Xilinx Runtime](https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/pjr1542153622642.html)
+- *Vitis Unified Software Platform Documentation: Application Acceleration Development* ([UG1393](https://docs.xilinx.com/access/sources/dita/map?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration))
+  - [Platform Creation General Rules](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vcm1596051749044.html)
+  - [Setting Up the Vitis Environment](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=zks1565446519267.html)
+  - [Installing Xilinx Runtime](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=pjr1542153622642.html)
 - Platform Examples
   - [zcu102](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu102_base) and [zcu104](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2023.2/Xilinx_Official_Platforms/xilinx_zcu104_base) base platform source code in [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
-- [Xilinx Run Time (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
+- [Xilinx Runtime (XRT)](https://xilinx.github.io/XRT/master/html/index.html)
 - [Vitis-AI GitHub Repository](https://github.com/Xilinx/Vitis-AI)
+
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

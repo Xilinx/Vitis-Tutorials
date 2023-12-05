@@ -22,6 +22,7 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
    Runtime Parameter Reconfiguration <./03-rtp-reconfiguration/README>
    Packet Switching <./04-packet-switching/README>
    Versal Integration for Hardware Emulation and Hardware <./05-AI-engine-versal-integration/README>
+   AI Engine-ML Performance Analysis Tutorial <./13-aie-ml-performance-analysis/README>
    AIE Compiler Features <./20-aiecompiler-features/README>
 
 
