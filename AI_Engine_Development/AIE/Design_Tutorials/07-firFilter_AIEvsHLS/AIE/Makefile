@@ -306,6 +306,12 @@ ifeq ($(N_FIR_FILTERS),10)
     else ifeq ($(N_FIR_TAPS),129)	 
         VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
     endif
+else
+   ifeq ($(N_FIR_TAPS),129)
+       ifeq ($(N_AIES_PER_FIR),2)
+            VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
+       endif
+   endif
 endif
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)

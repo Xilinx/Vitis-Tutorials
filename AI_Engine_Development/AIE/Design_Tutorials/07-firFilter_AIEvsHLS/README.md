@@ -235,8 +235,8 @@ For the filter sizes selected in this tutorial and window_size of 2048 , the fol
 |------|--------------------|-----------------|
 |   15 |        2           |  1199.9  MSPS(*)|
 |   64 |        2           |  511.574 MSPS   |
-|  129 |        4           |  488.685 MSPS   |
-|  240 |        4           |  312.07  MSPS   |
+|  129 |        2           |  266.710 MSPS   |
+|  240 |        1           |  116.91  MSPS   |
 
 ***Note***: This result is I/O bound.
 
@@ -257,9 +257,9 @@ The AI Engine reduces the overall requirement on the PL and DSPs in a design wit
 | HLS  |     1   |   64 | ck_per_sam=1 | 497.22   MSPS |  1891 |  5932 |    64 |   0   |
 | AIE  |    10   |   64 | win=2048     | 504.174  MSPS |   189 |   568 |     0 |   20  |
 | HLS  |    10   |   64 | ck_per_sam=1 | 477.145  MSPS | 17350 | 46148 |   640 |   0   |
-| AIE  |     1   |  240 | win=2048     | 134.48   MSPS |   190 |   568 |     0 |   4   |
+| AIE  |     1   |  240 | win=2048     | 116.91   MSPS |   190 |   568 |     0 |   1   |
 | HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  3676 | 22377 |   120 |   0   |
-| AIE  |    10   |  240 | win=2048      | 134.25   MSPS |   190 |   568 |    0 |   10  |
+| AIE  |    10   |  240 | win=2048     | 116.67   MSPS |   190 |   568 |    0  |   10  |
 | HLS  |    10   |  240 | ck_per_sam=4 | 123.48   MSPS | 16733 | 62413 |   600 |   0   |
 
 It is clear that the AI Engine implementation offers significant savings of PL resources, especially as the design size increases.
@@ -278,8 +278,8 @@ Below table shows power utilization of FIR AIE and HLS for 240-taps
 
 | No of Filters | AIE FIR    |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |   1.217    |   0.948      |
-|      10       |   2.362    |   4.314      |
+|      1        |   0.839    |   0.489      |
+|      10       |   3.043    |   4.314      |
 
 ![Image of 240 Tap FIR filter dynamic power](images/FIR_240Taps_POWER_v_NoOfFilters.png)
 
@@ -296,8 +296,8 @@ Below table shows computational efficiency of FIR AIE and HLS for 240-taps
 
 | No of Filter  |   AIE FIR  |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |   256.430  |   315.1102   |
-|      10       |   49.4079  |   28.62282   |
+|      1        |   139.346  |   255.2997   |
+|      10       |  38.34234  |   28.62282   |
 
 
 ![Image of 240 Tap FIR computational efficiency](images/FIR_240Taps_ComputationalEfficiency_v_NoOfFilters.png)
@@ -319,7 +319,7 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 | Cascade length | Throughput (MSPS)       |
 |----------------|-------------------------|
 |      1         |      200.96             | 
-|      2         |      332.92             | 
+|      2         |      266.71             | 
 |      4         |      488.64             | 
 
 
@@ -328,7 +328,7 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 | Cascade length | Dynamic power(W)        |
 |----------------|-------------------------|
 |      1         |       0.817             |
-|      2         |       0.950             |
+|      2         |       0.820             |
 |      4         |       1.220             |
 
 
@@ -339,7 +339,7 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 | CASCADE LENGTH |  Performance(MSPS/W)  |
 |----------------|-----------------------|
 |      1         |     245.9790          |
-|      2         |     350.8082          |
+|      2         |     324.4648          |
 |      4         |      401.509          |
 
 
@@ -357,7 +357,7 @@ The following table provides some additional information on data on throughput f
 |---------|------|-------------------------|-------------------------|-------------------------|
 |     1   |   15 | 1199.99 MSPS(*)         |  1199.999 MSPS          | Too small to cascade    |
 |     1   |   64 | 344.081 MSPS            |  511.573 MSPS           | 660.201     MSPS        |
-|     1   |  129 | 200.964 MSPS            |  332.917 MSPS           | 488.637      MSPS       |
+|     1   |  129 | 200.964 MSPS            |  266.710 MSPS           | 488.637      MSPS       |
 |     1   |  240 | 116.911 MSPS            |  200.024 MSPS           | 325.380      MSPS       |
 
 (*)Note: this result is I/O bound.
@@ -404,22 +404,24 @@ The utilization and power observations are shown in the following table.
 #### AIE
 |Filters|Taps| AI Engine Cores | Cascade Length  |Vector Load | Number Of Active Memory Banks | Memory R/W Rate | AI Engine Tiles | Interconnect Load | Power (W) | Performance (MSPS/Watt) |
 |-------|----|-----------------|-----------------|------------|-------------------------------|-----------------|-----------------|-------------------|-----------|-------------------------|
-|     1 | 15 |        1        |        2        |   48%      |              20               |       20%       |        4        |         3.58%     | 0.352     |        3409.090         |
-|     1 | 64 |        1        |        2        |   48%      |              20               |       20%       |        5        |         3.54%     | 0.974     |        525.229          |
-|     1 |129 |        1        |        4        |   48%      |              32               |       20%       |        7        |         3.58%     | 1.242     |         393.466         |
-|     1 |240 |        1        |        4        |   48%      |              32               |       20%       |        6        |         3.58%     | 1.217     |         256.430         |
-|    10 | 15 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         330.760         |
-|    10 | 64 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         138.967         |
-|    10 |129 |       10        |        2        |   48%      |             164               |       20%       |       27        |         3.54%     | 3.628     |         85.871          |
-|    10 |240 |       10        |        1        |   48%      |             104               |       20%       |       20        |         3.68%     | 2.362     |          49.407         |
+|     1 | 15 |        1        |     2           |   6.01%    |              20               |      4.26%      |        4        |        3.58 %     |   0.772   |    1554.40              |
+|     1 | 64 |        1        |     2           |   25.29%   |              20               |      18.61%     |        4        |        3.58 %     |   0.882   |    580.015              |
+|     1 |129 |        1        |     2           |   51.29%   |              32               |      29.15%     |        4        |        3.58 %     |   0.822   |    324.464              |
+|     1 |240 |        1        |     1           |   62.16%   |              32               |      21.58%     |        3        |        5.38 %     |   0.839   |    139.346              |
+|    10 | 15 |       10        |     20          |   6%       |             164               |      3.87%      |       27        |        3.54 %     |   1.573   |    632.280              |
+|    10 | 64 |       10        |     20          |   15.67%   |             164               |      13.22%     |       27        |        3.54 %     |   2.53    |    199.278              |
+|    10 |129 |       10        |     20          |   33.72%   |             164               |      22.50%     |       27        |        3.54 %     |   2.667   |    93.5707              |
+|    10 |240 |       10        |     10          |   38.02%   |             104               |      16.56%     |       27        |        3.54 %     |   3.043   |    38.3423              |
+
+*Note: The vector load, Number of memory banks are calculated from vcd analyzer
 
 #### HLS
 |Filters|Taps| LUTs  | FF (Regs) | DSPs | Dynamic Power(W) | Performance (MSPS/Watt) |   
 |-------|----|-------|-----------|------|------------------|-------------------------| 
 |     1 | 15 |  2107 |   4412    |  32  |      0.362       |    3293.774             |      
 |     1 | 64 |  1891 |   5932    |  64  |      0.393       |    1265.205             | 
-|     1 |129 |  4010 |  10242    | 130  |      0.726       |    682.484              | 
-|     1 |240 | 3676  |  22377    | 120  |      0.948       |    315.110              | 
+|     1 |129 |  4010 |  10242    | 130  |      0.524       |    475.788              | 
+|     1 |240 | 3676  |  22377    | 120  |      0.489       |    255.299              | 
 |    10 | 15 | 12929 |  26658    | 320  |      2.196       |    436.625              | 
 |    10 | 64 | 17530 |  46148    | 640  |      3.404       |    140.172              | 
 |    10 |129 | 17205 | 117436    | 660  |      5.507       |    44.271               | 
