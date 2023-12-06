@@ -56,7 +56,6 @@ VPP_FLAGS += --clock.defaultFreqHz 150000000
 # V++ LINKER FLAGS
 # =========================================================
 VPP_LDFLAGS := --advanced.param compiler.userPostSysLinkOverlayTcl=$(XSA_DIR)/post_sys_link.tcl
-
 # =========================================================
 # BUILD DIRECTORIES
 # =========================================================
@@ -72,7 +71,7 @@ all: pl_kernels xsa
 
 # ################ TARGET: make xsa ################
 xsa: $(BUILD_DIR)/hpc.xsa
-$(BUILD_DIR)/hpc.xsa: $(TEMP_DIR)/packet_sender.xo $(TEMP_DIR)/m2s_x2.xo $(TEMP_DIR)/packet_receiver.xo $(TEMP_DIR)/s2m_x4.xo $(AIE_DIR)/build/libadf.a
+$(BUILD_DIR)/hpc.xsa: $(TEMP_DIR)/packet_sender.xo $(TEMP_DIR)/mm2s_mp.xo $(TEMP_DIR)/packet_receiver.xo $(TEMP_DIR)/s2mm_mp.xo $(AIE_DIR)/build/libadf.a
 	@echo "### ***** linking pl kernels into hpc.xsa ... *****"
 	mkdir -p $(BUILD_DIR) && cd $(BUILD_DIR); \
 	v++ -l $(VPP_FLAGS) \

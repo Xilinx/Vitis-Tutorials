@@ -3,7 +3,7 @@ Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
-#include "nbody_subsystem.h"
+#include "src/nbody_subsystem.h"
 
 #define NUM_INSTANCES 1
 
@@ -13,18 +13,22 @@ template <int COL_OFFSET>
 class nbodySystem : public adf::graph {
 	
 public:
-	input_port in[1 + NUM_INSTANCES];
-	output_port out[NUM_INSTANCES];
+	input_plio   i_in[NUM_INSTANCES]; 
+	input_plio   j_in[NUM_INSTANCES];
+	output_plio  out[NUM_INSTANCES];   
 
+	
 	nbodySubsystem<COL_OFFSET+0, 0>  nbody_inst0;
 
 	nbodySystem() {
-	
-		connect< pktstream, window<WINDOW_SIZE_I> >(in[0], nbody_inst0.in[0]);	
-		connect< stream >(in[1], nbody_inst0.in[1]);
+		i_in[0] =  input_plio::create("in_i",  adf::plio_32_bits, "../../data/input_i0.txt", 400);
+		j_in[0] =  input_plio::create("in_j",  adf::plio_32_bits, "../../data/input_j.txt", 400);
+		out[0] =   output_plio::create("out_i", adf::plio_32_bits, "./data/output_i0.txt", 400);
 		
-		connect< pktstream >(nbody_inst0.out[0], out[0]);
+		connect(i_in[0].out[0], nbody_inst0.data_in[0]);
+		connect(j_in[0].out[0], nbody_inst0.data_in[1]);
 
-		
+		connect(nbody_inst0.data_out[0], out[0].in[0]);
+
   	}
 };

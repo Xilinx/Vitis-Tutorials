@@ -33,8 +33,8 @@ Following is a table comparing the executions times to simulate 12,800 particles
 |Name|Hardware|Algorithm|Average Execution Time for 1 Timestep (seconds)|
 |---|---|--|---|
 |Python NBody Simulator|x86 Linux Machine|O(N)|14.96|
-|C++ NBody Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|123.299|
-|AI Engine NBody Simulator|Versal AI Engine IP|O(N)|0.007|
+|C++ NBody Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|123.294|
+|AI Engine NBody Simulator|Versal AI Engine IP|O(N)|0.0072|
 
 As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation and a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. A vectorized C++ NBody Simulator O(N) implementation can be created with pthreads, but is left as an exercise for the user.
 
@@ -52,13 +52,13 @@ The following table describes the total number of floating-point operations (FLO
 
 **Note: To calculate the total, each `mac` is considered 2 operations (`mul` and `add`).**
 
-Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (i.e. 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.004657468 seconds. **Therefore the effective throughput of the entire design is ~921.2 GFLOP/s**.  
+Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (i.e. 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.0072 seconds. **Therefore the effective throughput of the entire design is ~595.911 GFLOP/s**.  
 
-The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we're only using 1/10th of its potential!
+The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we're only using less than 1/10th of its potential!
 
 |Effective Throughput|Theoretical Peak Throughput|
 |--|--|
-|0.9212 TFLOP/s|8 TFLOP/s|
+|0.595 TFLOP/s|8 TFLOP/s|
 
 This design of an N-Body Simulator on the AI Engine is a straightforward implementation without any major optimizations done. To further maximize the throughput of the entire design:
 

@@ -3,8 +3,8 @@ Module_03_pl_kernels/Vitis_Libraries/
 x1_design/pl_kernels/Vitis_Libraries
 Module_03_pl_kernels/_krnlgen/
 Module_03_pl_kernels/kernel/.stamp
-Module_03_pl_kernels/kernel/m2s_x2.cpp
-Module_03_pl_kernels/kernel/s2m_x4.cpp
+Module_03_pl_kernels/kernel/mm2s_mp.cpp
+Module_03_pl_kernels/kernel/s2mm_mp.cpp
 build*/
 *.jou
 *.log

@@ -79,8 +79,9 @@ $(BUILD_DIR)/libadf.a: $(DEPS)
 	@mkdir -p $(BUILD_DIR);				\
 	cd $(BUILD_DIR);				\
 	aiecompiler -v  --target=hw			\
-	--platform $(PLATFORM)			\
-	--stacksize=2000				\
+	--platform=${PLATFORM}				\
+	--Xelfgen="-j8"					\
+	--stacksize=4096				\
 	-include="$(XILINX_VITIS)/aietools/include" 	\
 	-include="$(AIE_DIR)" 				\
 	-include="$(AIE_DIR)/src"			\
@@ -89,7 +90,6 @@ $(BUILD_DIR)/libadf.a: $(DEPS)
         $(GRAPH_CPP)					\
 	-workdir=$(WORK_DIR) | tee  $(BUILD_DIR)/aiecompiler_$(INST).log
 	@echo "### ***** AI Engine Graph Compilation done! ***** ###"
-
 # ################ TARGET: make sim ################
 sim: $(BUILD_DIR)/aiesimulator_$(INST).log
 

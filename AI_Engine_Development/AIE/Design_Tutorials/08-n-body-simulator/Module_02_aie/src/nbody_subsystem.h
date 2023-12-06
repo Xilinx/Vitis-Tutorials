@@ -1,10 +1,12 @@
-/*Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
-#include "kernels.h"
-#include "include.h"
-#include "globals.h"
+#include "src/kernels.h"
+#include "src/include.h"
+#include "src/globals.h"
+
 
 extern float chess_storage(%chess_alignof(v8float))  particles_i[NUM_I*7];
 extern float chess_storage(%chess_alignof(v8float))  particles_i_new[NUM_I*3];
@@ -24,14 +26,14 @@ private:
 	parameter global_particles_j[NUM_ENGINES_PER_COL];
 	
 public:
-	input_port in[2];
-	output_port out[1];
+	port<input> data_in[2];
+	port<output> data_out[1];
 
 	nbodySubsystem() {
     
 		// packet stream to different engines
 		pkt_split_i  = pktsplit<NUM_ENGINES_PER_COL>::create();
-		connect< pktstream > (in[0], pkt_split_i.in[0]);
+		connect<adf::pktstream>(data_in[0], pkt_split_i.in[0]);//pktstream
 
 		// output of nbody subsystem to pkt merge
 		pkt_merge_i  = pktmerge<NUM_ENGINES_PER_COL>::create();
@@ -48,24 +50,33 @@ public:
 			runtime<ratio>(transmit_new_i_kernel[row]) = 0.1;
 			location<kernel>(transmit_new_i_kernel[row]) = tile(COL_OFFSET,ROW_OFFSET+row);
 			
-			connect< pktstream, window<WINDOW_SIZE_I> > (pkt_split_i.out[row], nbody_kernel[row].in[0]);
-			connect< stream, window<WINDOW_SIZE_J> > (in[1], async(nbody_kernel[row].in[1]));
+			connect(pkt_split_i.out[row], nbody_kernel[row].in[0]);//pktstream, window<WINDOW_SIZE_I>
+			dimensions( nbody_kernel[row].in[0])={WINDOW_SIZE_I};
+			 
+                        connect(data_in[1], nbody_kernel[row].in[1]);// stream, window<WINDOW_SIZE_J> broadcast 
+			dimensions( nbody_kernel[row].in[1])={WINDOW_SIZE_J}; 
 
-			connect< adf::window<WINDOW_SIZE_I> > (nbody_kernel[row].out[0], transmit_new_i_kernel[row].in[0]);
-			connect< adf::window<WINDOW_SIZE_I>, adf::pktstream> (transmit_new_i_kernel[row].out[0], pkt_merge_i.in[row]);  //i
+			connect(nbody_kernel[row].out[0], transmit_new_i_kernel[row].in[0]);// adf::window<WINDOW_SIZE_I>
+			dimensions( nbody_kernel[row].out[0])={WINDOW_SIZE_I};
+			dimensions( transmit_new_i_kernel[row].in[0])={WINDOW_SIZE_I};  
+			connect(transmit_new_i_kernel[row].out[0], pkt_merge_i.in[row]);  //i//adf::window<WINDOW_SIZE_I>, adf::pktstream
+			//connect(nbody_kernel[row].out[0],pkt_merge_i.in[row]);
+			
+                        dimensions( transmit_new_i_kernel[row].out[0])={WINDOW_SIZE_I};
 			
 			global_particles_j[row] = parameter::array(particles_j);
-			connect<>(global_particles_j[row], nbody_kernel[row]);
+			connect(global_particles_j[row], nbody_kernel[row]);
 			
 			global_particles_i[row] = parameter::array(particles_i);
-			connect<>(global_particles_i[row], nbody_kernel[row]);
+			connect(global_particles_i[row], nbody_kernel[row]);
 			
 			global_particles_i_new[row] = parameter::array(particles_i_new);
-			connect<>(global_particles_i_new[row], nbody_kernel[row]);
+			connect(global_particles_i_new[row], nbody_kernel[row]);
 			
+						
 		}
 
-		adf::connect< adf::pktstream> (pkt_merge_i.out[0], out[0]);  
+		connect<adf::pktstream,adf::pktstream>(pkt_merge_i.out[0], data_out[0]);  // adf::pktstream
 		
 	}
 };

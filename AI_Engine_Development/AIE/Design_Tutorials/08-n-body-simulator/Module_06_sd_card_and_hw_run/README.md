@@ -19,9 +19,9 @@ or
 
 ```
 v++ -t hw                                                                         \
-    --platform xilinx_vck190_base_202310_1                                        \
+    --platform xilinx_vck190_base_202320_1                                        \
     --package.defer_aie_run                                                       \
-    -p ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202310_1/hpc.xclbin \
+    -p ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202320_1/hpc.xclbin \
     ../Module_02_aie/build/libadf.a                                               \
     --package.out_dir ./build                                                     \
     --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4                           \

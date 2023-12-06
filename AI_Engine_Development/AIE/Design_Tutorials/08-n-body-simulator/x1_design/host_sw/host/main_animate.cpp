@@ -159,11 +159,11 @@ int main(int argc, char ** argv)
     xrtKernelHandle packet_receiver_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "packet_receiver");	
     Logger::flog(LMESSAGE,"Packet Receiver PL Kernel Opened ... ");
     
-    xrtKernelHandle s2m_x4_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "s2m_x4");	
-    Logger::flog(LMESSAGE,"S2M_x4 PL Kernel Opened ... ");
+    xrtKernelHandle s2mm_mp_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "s2mm_mp");	
+    Logger::flog(LMESSAGE,"S2MM_MP PL Kernel Opened ... ");
 
-    xrtKernelHandle m2s_ij_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "m2s_x2");
-    Logger::flog(LMESSAGE,"M2S_x2 PL Kernel Opened ... ");
+    xrtKernelHandle m2s_ij_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "mm2s_mp");
+    Logger::flog(LMESSAGE,"MM2S_MP PL Kernel Opened ... ");
     
     xrtKernelHandle packet_sender_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "packet_sender");	
     Logger::flog(LMESSAGE,"Packet Sender PL Kernel Opened ... ");
@@ -177,12 +177,12 @@ int main(int argc, char ** argv)
       Logger::flog(LMESSAGE,"Packet Receiver PL Kernel run started ... ");
     }
     
-    xrtRunHandle s2m_x4_rhdl = xrtKernelRun(s2m_x4_khdl, nullptr, out_i_bohdl_k[0], mem_size_i_out,
+    xrtRunHandle s2mm_mp_rhdl = xrtKernelRun(s2mm_mp_khdl, nullptr, out_i_bohdl_k[0], mem_size_i_out,
 					    nullptr, out_i_bohdl_k[1], mem_size_i_out,
 					    nullptr, out_i_bohdl_k[2], mem_size_i_out,
 					    nullptr, out_i_bohdl_k[3], mem_size_i_out);
     if(profile==OFF){
-      Logger::flog(LMESSAGE,"S2M_x4 PL Kernel run started ... ");
+      Logger::flog(LMESSAGE,"S2MM_MP PL Kernel run started ... ");
     }
     
     // start input kernels run handles
@@ -190,7 +190,7 @@ int main(int argc, char ** argv)
 					    in_i_bohdl, nullptr, mem_size_i, 
 					    in_j_bohdl, nullptr, mem_size_j);
     if(profile==OFF){
-      Logger::flog(LMESSAGE,"M2S_x2 PL Kernel run started ... ");
+      Logger::flog(LMESSAGE,"MM2S_MP PL Kernel run started ... ");
     }
      
     xrtRunHandle packet_sender_rhdl = xrtKernelRun(packet_sender_khdl);
@@ -218,7 +218,7 @@ int main(int argc, char ** argv)
       Logger::flog(LMESSAGE,msg);
     }
 
-    state = xrtRunWait(s2m_x4_rhdl); 
+    state = xrtRunWait(s2mm_mp_rhdl); 
     if(profile==OFF){
       msg = "S2M Kernel Run Completed with Status(" + Logger::int2str(state,false) + ")"; 
       Logger::flog(LMESSAGE,msg); 
@@ -262,8 +262,8 @@ int main(int argc, char ** argv)
     xrtKernelClose(packet_receiver_khdl);
     Logger::flog(LMESSAGE,"Packet Receiver Kernel/Run Handles closed ...");
     
-    xrtRunClose(s2m_x4_rhdl);
-    xrtKernelClose(s2m_x4_khdl);
+    xrtRunClose(s2mm_mp_rhdl);
+    xrtKernelClose(s2mm_mp_khdl);
     Logger::flog(LMESSAGE,"S2M Kernel/Run Handles closed ...");
     
     xrtRunClose(m2s_ij_rhdl);

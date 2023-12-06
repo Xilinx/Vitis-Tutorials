@@ -1,7 +1,7 @@
-/*Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
- SPDX-License-Identifier: MIT
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
 */
-
 
 #ifndef GLOBALS_H
 #define GLOBALS_H

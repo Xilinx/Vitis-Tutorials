@@ -19,8 +19,9 @@ or, follow steps 1 and 2 as follows:
 ## Step 1: Compile Host Software
 Following is an example of how to compile the `../Module_02_aie/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp` file.
 ```
-XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
+XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/data_mover
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
+VITIS_PYTHON3 := python3
 
 $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -Wall -c -g \
                       -fmessage-length=0  \
@@ -88,14 +89,14 @@ The Logger API is used to save logging messages from the host applications to th
 * LNONE
 
 ## Host Applications
-The `host/main_xrt.cpp` host application is compiled into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `m2s_x2` PL kernel's `ibuff` and `jbuff` DDR buffer inputs.  This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the `s2m_x4` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_x4_k0.txt`, `s2m_x4_k1.txt`, `s2m_x4_k2.txt`, and `s2m_x4_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
+The `host/main_xrt.cpp` host application is compiled into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `mm2s_mp` PL kernel's `ibuff` and `jbuff` DDR buffer inputs.  This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the `s2mm_mp` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_golden_i_k0.txt`, `s2m_golden_i_k1.txt`, `s2m_golden_i_k2.txt`, and `s2m_golden_i_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
 
 The `host/main_animate.cpp` host application is compiled into the `build/ps_animate.exe` executable. This host application does the following:
 
 * uses the NBodySimulator API to generate initial data (`input_i` and `input_j`)
 * save the position data (x,y,and z) for all 12,800 particles to the `animation_data.txt`
 * feeds input data through the AI Engine design
-* captures the output data from the `s2m_x4` kernel
+* captures the output data from the `s2mm_mp` kernel
 * reconstructs the output data into a new `input_i` and new `input_j` arrays
 * feeds the new `input_i` and `input_j` back into the AI Engine design and computes another timesteps
 
