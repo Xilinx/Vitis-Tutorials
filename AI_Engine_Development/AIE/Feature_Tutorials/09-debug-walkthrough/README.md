@@ -53,7 +53,15 @@ Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and cre
 
 ## Methods
 
+There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodlogies that helps analyzing the design and take decisions to improve.
+
+Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md).
+
+
+## Methods
+
 There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are debug methodologies that help with analyzing the design and making improvements.
+
 
 ## Debug Methodologies
 
