@@ -154,6 +154,7 @@ Demonstrates how to use a GDB server to debug the design.
 
 ## Build and Simulate in the Vitis IDE
 
+
 1. Once the Vitis IDE is opened and the system project is created manually, select the **AI Engine Component** from the left-side pane, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings. 
 2. Select the **Module-Specific** settings and click **Add item** under the **Pre-processor** setting.
 ![build settings](./Images/Build_setting.PNG)
@@ -164,6 +165,7 @@ Demonstrates how to use a GDB server to debug the design.
 ![Create_Configuration](./Images/create_configuration.PNG)
 6. You can change the **Launch Config Name** and click **Run** button to start simulation for x86simulation target. When the simulation complete, you see the following output in the console.
 ![simulator output](./Images/x86simulator_output.PNG)
+
 
 # Section 2
 
@@ -178,7 +180,7 @@ This section talks about adding a `printf()` statement in the source code, compi
 3. To compile the project, select the **Build** option under **X86 SIMULATION** in **FLOW** navigator. 
 4. To run the project, select the **Run** option under **X86SIMULATION** in **Flow** navigator.
 5. The expected result is as follows.
-![printf support](./Images/printf_support.PNG)
+   ![printf support](./Images/printf_support.PNG)
 6. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
 
 # Section 3
@@ -243,6 +245,7 @@ One obvious way to specify these options is to add them to the Launch configurat
 From the list of settings as shown below, you can enable or disable any x86simulation specific option.
 
 ![x86simulator_options](./Images/x86simulator_options.PNG)
+
 
 Another way to enable the feature is to switch to the source editor mode as highlighted above and update the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options` from `no` to `yes` for the selected feature.
 
@@ -454,6 +457,8 @@ This is in continuation to the [Trace Report in the File](./README.md#Trace-Repo
    
 You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
 
+You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
+
 # Section 6
 
 ## Memory Access Violation and Valgrind Support
@@ -470,11 +475,11 @@ Memory access violations occur when a kernel is reading or writing out of bounds
 
 `x86simulator` requires `VALGRIND_HOME`, `VALGRIND_LIB`, and `PATH` environmental variables to be configured per your host computer configuration. Exit out of the Vitis IDE, and set up the following environmental variables and relaunch the Vitis IDE. For example:
 
-   ```
-   export PATH=<Install_Path>/valgrind/3.16.1/:$PATH
-   export VALGRIND_HOME=<Install_Path>/valgrind/3.16.1/
-   export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
-   ```
+```
+export PATH=<Install_Path>/valgrind/3.16.1/:$PATH
+export VALGRIND_HOME=<Install_Path>/valgrind/3.16.1/
+export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
+```
 
 1. After relaunching the Vitis IDE tool, either by enabling the **Valgrind** option in the launch configuration settings or by updating the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options`.
 2. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator..
@@ -523,7 +528,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
 
    Valgrind points out the file that has out of bound read access with the line number as shown above.
 
-### Exercise Step
+### Section 6 Exercise Step
 
 1. Add the following lines of code that creates an uninitialized variable in any kernel code and see how the Valgrind helps in identifying the issue:
 
@@ -572,10 +577,10 @@ This topic walks you through running the x86simulator with the GDB.
 
 2. After `x86simulator` is launched successfully with the GDB, set up a breakpoint using the `break` command.
 
-      ```
-      (gdb) break data_shuffle
-      Breakpoint 2 at 0x410f47: file ./../.././aie/kernels/data_shuffle.cc, line 9.
-      ```
+   ```
+   (gdb) break data_shuffle
+   Breakpoint 2 at 0x410f47: file ./../.././aie/kernels/data_shuffle.cc, line 9.
+   ```
 
 3. Type `c` and continue execution until the breakpoint is hit.
 
@@ -711,11 +716,11 @@ This feature uses the GDB server to debug and requires two terminals working tog
    ==44263== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
    ```
 
-#### Exercise Step
+#### Section 7 Exercise Step
 
 Insert an out-of-bound read access error as mentioned in [Memory Access Violation and Valgrind Support](./README.md#Memory-access-violation-and-valgrind-support), and perform the steps from (j)-(n). Observe the violation using the `--valgrind-gdb` command in Terminal 1.
 
-## Support
+### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 

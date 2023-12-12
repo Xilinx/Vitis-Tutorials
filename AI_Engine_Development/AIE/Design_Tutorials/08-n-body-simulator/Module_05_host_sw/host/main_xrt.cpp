@@ -35,17 +35,17 @@ int main(int argc, char ** argv)
   //adf::registerXRT(dhdl, top->m_header.uuid);
   Logger::flog(LMESSAGE,"loaded a.xclbin ... ");
   
-  int num_i = (32 * 4);
-  int window_size_i = (num_i * 7);
-  int window_size_i_out = (32 * 7);
-  int num_i_particles = (num_i * NUM_CU); 
+  int num_i = 32*4;
+  int window_size_i = num_i*7;
+  int window_size_i_out = 32*7;
+  int num_i_particles = num_i*NUM_CU; 
 
-  int num_j_particles = (num_i * NUM_CU); 
-  int window_size_j = (num_j_particles * 4);
+  int num_j_particles = num_i*NUM_CU; 
+  int window_size_j = num_j_particles*4;
 
-  int mem_size_i = (window_size_i * NUM_CU * sizeof(int));
-  int mem_size_i_out = (32 * 7 * NUM_CU * sizeof(int));
-  int mem_size_j = (window_size_j * sizeof(float));
+  int mem_size_i = window_size_i*NUM_CU*sizeof(int);
+  uint64_t mem_size_i_out = 32*7*NUM_CU*sizeof(int);
+  int mem_size_j = window_size_j*sizeof(float);
   
   msg =  "==============================\n"; 
   msg += "Welcome to the NBODY Simulator\n";
@@ -82,7 +82,7 @@ int main(int argc, char ** argv)
   Logger::flog(LMESSAGE,msg);
   std::ifstream infileI(filename);
   std::string line;
-  for(int i=0; i<(window_size_i*NUM_CU); i++) {
+  for(int i=0; i<window_size_i*NUM_CU; i++) {
     std::getline(infileI, line);
     std::istringstream iss(line);
     int val; 
@@ -104,7 +104,7 @@ int main(int argc, char ** argv)
   msg = "reading " + filename + " file ...";
   Logger::flog(LMESSAGE,msg);
   std::ifstream infileJ(filename);
-  for(int i=0; i< window_size_j; i++) {
+  for(int i=0; i<window_size_j; i++) {
     std::getline(infileJ, line);
     std::istringstream iss(line);
     float val; 
@@ -128,7 +128,7 @@ int main(int argc, char ** argv)
     std::ifstream infileIGold(filename);
     msg = "reading " + filename + " file ...";
     Logger::flog(LMESSAGE,msg);
-    for (int i = 0; i < (window_size_i_out * NUM_CU); i++) {
+    for (int i = 0; i < window_size_i_out*NUM_CU; i++) {
       std::getline(infileIGold, line);
       std::istringstream iss(line);
       long val; 
@@ -174,13 +174,13 @@ int main(int argc, char ** argv)
     Logger::flog(LMESSAGE,msg);
     
     //load i data to ddr
-    for(int i=0; i<(window_size_i * NUM_CU); i++){
-      *(host_in_i + i)=data_i[i];
+    for(int i=0; i<window_size_i*NUM_CU; i++){
+      *(host_in_i+i)=data_i[i];
     }
     
     //load j data to ddr
     for(int i=0; i<window_size_j; i++){
-      *(host_in_j + i)=data_j[i];
+      *(host_in_j+i)=data_j[i];
     }
     
     // sync input memory
@@ -197,11 +197,11 @@ int main(int argc, char ** argv)
     xrtKernelHandle packet_receiver_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "packet_receiver");	
     Logger::flog(LMESSAGE,"Packet Receiver PL Kernel Opened ... ");
     
-    xrtKernelHandle s2m_x4_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "s2m_x4");	
-    Logger::flog(LMESSAGE,"S2M_x4 PL Kernel Opened ... ");
+    xrtKernelHandle s2mm_mp_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "s2mm_mp");	
+    Logger::flog(LMESSAGE,"S2MM_MP PL Kernel Opened ... ");
 
-    xrtKernelHandle m2s_ij_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "m2s_x2");
-    Logger::flog(LMESSAGE,"M2S_x2 PL Kernel Opened ... ");
+    xrtKernelHandle m2s_ij_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "mm2s_mp");
+    Logger::flog(LMESSAGE,"MM2S_MP PL Kernel Opened ... ");
     
     xrtKernelHandle packet_sender_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "packet_sender");	
     Logger::flog(LMESSAGE,"Packet Sender PL Kernel Opened ... ");
@@ -225,21 +225,18 @@ int main(int argc, char ** argv)
     if(profile==OFF){
       Logger::flog(LMESSAGE,"Packet Receiver PL Kernel run started ... ");
     }
-    
-    xrtRunHandle s2m_x4_rhdl = xrtKernelRun(s2m_x4_khdl, nullptr, out_i_bohdl_k[0], mem_size_i_out,
-					    nullptr, out_i_bohdl_k[1], mem_size_i_out,
-					    nullptr, out_i_bohdl_k[2], mem_size_i_out,
-					    nullptr, out_i_bohdl_k[3], mem_size_i_out);
+	xrtRunHandle s2mm_mp_rhdl = xrtKernelRun(s2mm_mp_khdl, nullptr, out_i_bohdl_k[0], mem_size_i_out, nullptr, out_i_bohdl_k[1], mem_size_i_out, nullptr, out_i_bohdl_k[2], mem_size_i_out, nullptr, out_i_bohdl_k[3], mem_size_i_out);
+
     if(profile==OFF){
-      Logger::flog(LMESSAGE,"S2M_x4 PL Kernel run started ... ");
+      Logger::flog(LMESSAGE,"S2MM_MP PL Kernel run started ... ");
     }
     
     // start input kernels run handles
-    xrtRunHandle m2s_ij_rhdl = xrtKernelRun(m2s_ij_khdl,
+    xrtRunHandle m2s_ij_rhdl = xrtKernelRun(m2s_ij_khdl, 
 					    in_i_bohdl, nullptr, mem_size_i, 
 					    in_j_bohdl, nullptr, mem_size_j);
     if(profile==OFF){
-      Logger::flog(LMESSAGE,"M2S_x2 PL Kernel run started ... ");
+      Logger::flog(LMESSAGE,"MM2S_MP PL Kernel run started ... ");
     }
      
     xrtRunHandle packet_sender_rhdl = xrtKernelRun(packet_sender_khdl);
@@ -267,7 +264,7 @@ int main(int argc, char ** argv)
       Logger::flog(LMESSAGE,msg);
     }
 
-    state = xrtRunWait(s2m_x4_rhdl); 
+    state = xrtRunWait(s2mm_mp_rhdl); 
     if(profile==OFF){
       msg = "S2M Kernel Run Completed with Status(" + Logger::int2str(state,false) + ")"; 
       Logger::flog(LMESSAGE,msg); 
@@ -299,7 +296,7 @@ int main(int argc, char ** argv)
       for (int cu =0; cu < NUM_CU; cu++) {
 	for (int k = 0; k<4; k++){
 	  for (int i = 0; i < window_size_i_out; i++) {  
-	    diff =  golden_data_k[k][(cu * window_size_i_out) + i] ^ *(host_out_i_k[k]+(cu * window_size_i_out) + i);
+	    diff =  golden_data_k[k][(cu*window_size_i_out)+i] ^ *(host_out_i_k[k]+(cu*window_size_i_out)+i);
 	    if (diff!=0) {
 	      total_error += 1;
 	    } 
@@ -307,9 +304,9 @@ int main(int argc, char ** argv)
 	    msg +=" compute_unit#:" + Logger::int2str(cu,false); 
 	    msg +=" kernel:" + Logger::int2str(k,false); 
 	    msg +=" Data i:" + Logger::int2str(i,false);
-	    int val = host_in_i[i+(cu * window_size_i)]; 
+	    int val = host_in_i[i+(cu*window_size_i)]; 
 	    msg +=" in_i:" + Logger::int2float2str(val); 
-	    val = *(host_out_i_k[k]+ (cu * window_size_i_out) + i); 
+	    val = *(host_out_i_k[k]+ (cu*window_size_i_out) + i); 
 	    msg +=" out_i:" + Logger::int2float2str(val);
 	    val = golden_data_k[k][(cu*window_size_i_out)+i]; 
 	    msg +=" out_i_expected:" + Logger::int2float2str(val);
@@ -338,8 +335,8 @@ int main(int argc, char ** argv)
     xrtKernelClose(packet_receiver_khdl);
     Logger::flog(LMESSAGE,"Packet Receiver Kernel/Run Handles closed ...");
     
-    xrtRunClose(s2m_x4_rhdl);
-    xrtKernelClose(s2m_x4_khdl);
+    xrtRunClose(s2mm_mp_rhdl);
+    xrtKernelClose(s2mm_mp_khdl);
     Logger::flog(LMESSAGE,"S2M Kernel/Run Handles closed ...");
     
     xrtRunClose(m2s_ij_rhdl);

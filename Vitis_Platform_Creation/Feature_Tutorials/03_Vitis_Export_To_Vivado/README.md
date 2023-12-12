@@ -1,11 +1,8 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
  </tr>
 </table>
 
@@ -15,7 +12,7 @@
 
 ## Introduction
 
-The Vitis Export to Vivado is the new feature release in AMD Vivado&trade; 2023.1/Vitis 2023.1 suites which enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity. You can do the hardware design development in the Vivado Design Suite and use the Vitis tool to do the software development, such as, Xilinx Runtime (XRT), AI Engine (AIE) development, and programmable logic (PL) kernels development in the Vitis tool. Prior to this release, for any change in the hardware design, you needed to export the extensible XSA, go to the Vitis environment, and carry out the further development flow in the Vitis tool. This flow provides the flexibility to do the hardware design development in the Vivado design, which includes hardware design development, synthesis, implementation, and timing closure in Vivado and other development tasks like XRT, AIE development, application development, HLS kernel development, etc. in the Vitis tool. In 2023.1, the flow supports hardware development only (i.e., `TARGET=HW`).
+The Vitis Export to Vivado is the new feature release in AMD Vivado™ 2023.1/Vitis 2023.1 suites which enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity. You can do the hardware design development in the Vivado Design Suite and use the Vitis tool to do the software development, such as, Xilinx Runtime (XRT), AI Engine (AIE) development, and programmable logic (PL) kernels development in the Vitis tool. Prior to this release, for any change in the hardware design, you needed to export the extensible XSA, go to the Vitis environment, and carry out the further development flow in the Vitis tool. This flow provides the flexibility to do the hardware design development in the Vivado design, which includes hardware design development, synthesis, implementation, and timing closure in Vivado and other development tasks like XRT, AIE development, application development, HLS kernel development, etc. in the Vitis tool. In 2023.1, the flow supports hardware development only (i.e., `TARGET=HW`).
 
 The tutorial describes the flow which starts from the Vivado Design Suite. The hardware design to be developed in the Vivado design and export the extensible hardware platform (.xsa) from the Vivado Design Suite that forms the basis of many differentiated Vitis hardware applications. The extensible platform is imported into the Vitis environment to perform the development of the AI Engine Graph application and additional PL kernels for the system design. Compile the AIE graph and PL kernels. Link the compiled output, extensible platform to export the VMA during the v++ linking phase using the new v++ switch. Import the VMA file into Vivado using the new Tcl API and later, design development work can be continued in the Vivado design. Design flow section shared the complete design flow.
 
@@ -51,8 +48,6 @@ After completing the tutorial, you will be able to do the following:
  6. Generate `fixed.xsa`.
 
 ## DESIGN FILES
-
---------------
 
 1. The following Tcl files used to create the Vivado project are in the `vivado_impl` directory:
 
@@ -117,7 +112,7 @@ Output: The generated extensible XSA is located in the director `vivado_impl/fla
 
 #### Step 2
 
-After exporting the XSA, you need to compile AIE and PL Kernels, and generate `libadf.a` and `.xo ` file respectively before running the v++ linker (same as the Vitis integrated flow).
+After exporting the XSA, you need to compile AIE and PL Kernels, and generate `libadf.a` and `.xo` file respectively before running the v++ linker (same as the Vitis integrated flow).
 
 ##### 2.1: Compile the AIE Graph and Generate `libadf.a`
 

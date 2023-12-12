@@ -29,7 +29,7 @@ When using Vitis flow to create platform and develop acceleration applications, 
     - If user update the host code, they just need to clean the host first and then rebuild the host. After copying the host ELF to the fat partition of the sd card.
     - If user update the Kernel code, they just need to clean the kernel and hardware link first and then rebuild the kernel and hardware link. After coping the XCLBIN file to the fat partition of the sd card.
 
-When using Vitis export to Vivado flow to develop acceleration application, please follow [Vitis Export to Vivdao](../../Feature_Tutorials/03_Vitis_Export_To_Vivado) to do iteration.
+When using Vitis export to Vivado flow to develop acceleration application, please follow [Vitis Export to Vivdao](../../Feature_Tutorials/03_Vitis_Export_To_Vivado/README.md) to do iteration.
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

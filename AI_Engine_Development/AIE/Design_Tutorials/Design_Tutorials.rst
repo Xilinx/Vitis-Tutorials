@@ -25,8 +25,8 @@ The :doc:`landing page <../../AIE>` of AI Engine Development contains important 
    LeNet Tutorial <./01-aie_lenet_tutorial/README>
    Super Sampling Rate FIR Filters <./02-super_sampling_rate_fir/README>
    Beamforming Design <./03-beamforming/README>
-   Polyphase Channelizer <./Design_Tutorials/04-Polyphase-Channelizer/README>
-   Prime Factor FFT <./Design_Tutorials/05-Prime-Factor-FFT/README>
+   Polyphase Channelizer <./04-Polyphase-Channelizer/README>
+   Prime Factor FFT <./05-Prime-Factor-FFT/README>
    2D-FFT <./06-fft2d_AIEvsHLS/README>
    FIR Filter <./07-firFilter_AIEvsHLS/README>
    N-Body Simulator <./08-n-body-simulator/README>

@@ -1,10 +1,12 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1> AIE-ML Development </h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
+
+# AI Engine for Machine Learning (AIE-ML) Development
 
 ## Introduction
 
@@ -121,6 +123,21 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
  <td>Yes</td>
  <td> </td>
  <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/13-aie-ml-performance-analysis/">AIE-ML Performance Analysis</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/20-aiecompiler-features/">AIE Compiler Features</a></td>

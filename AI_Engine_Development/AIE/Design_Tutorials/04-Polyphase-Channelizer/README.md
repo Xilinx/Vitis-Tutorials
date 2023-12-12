@@ -225,7 +225,7 @@ The Power Design Manager (PDM) is the new, next-generation power estimation plat
 
 The PDM has three modes to estimate power:
 
-* **Manual Estimation Flow:** All device and design parameters including device part, design resources (AI Engine, PL and AI Engine), clocks, toggle rate, etc. are input manually into the GUI.
+* **Manual Estimation Flow:** All device and design parameters including device part, design resources (AI Engine, PL and PS), clocks, toggle rate, etc. are input manually into the GUI.
 * **Import Compilation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after compiling the design.
 * **Import Simulation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after simulating the design.
 

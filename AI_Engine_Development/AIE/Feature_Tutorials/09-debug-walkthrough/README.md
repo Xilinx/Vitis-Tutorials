@@ -13,7 +13,7 @@
 
 ## Introduction
 
-The Vitis environment development methodology reflects the heterogeneous nature of AMD Versal&trade; adapative SoC systems, which typically consist of a processing system (PS), programmable logic (PL), and AI Engine (AIE) functionality. Using the Vitis tools, you can develop and verify these components independently and gradually integrate them to form the final system.
+The AMD Vitis&trade; environment development methodology reflects the heterogeneous nature of AMD Versal&trade; adapative SoC systems, which typically consist of a processing system (PS), programmable logic (PL), and AI Engine (AIE) functionality. Using the Vitis tools, you can develop and verify these components independently and gradually integrate them to form the final system.
 
 ![development methodology](./Images/dev_methodology.PNG)
 
@@ -28,9 +28,9 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into the register contents view, variable values view, breakpoints view, and hence, necessitates a GUI. The Vitis integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html>.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html>.
 
-The `common image` package contains a prebuilt Linux kernel and root file system that can be used with a Versal board for embedded design development using Vitis. Before starting this tutorial run the following steps:
+The `common image` package contains a prebuilt Linux kernel and root file system that can be used with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
 2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
@@ -54,6 +54,14 @@ Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and cre
 ## Methods
 
 There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodlogies that helps analyzing the design and take decisions to improve.
+
+Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md).
+
+
+## Methods
+
+There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are debug methodologies that help with analyzing the design and making improvements.
+
 
 ## Debug Methodologies
 
@@ -86,7 +94,7 @@ Demonstrates how to add the formatted `printf()` to print debug messages.
 <a href="./X86_Simulation/README.md#Debug-using-printf-with-Vector-datatypes">Debug Using printf() with Vector Data Types</a>
 </td>
 <td>
-Demonstrates how to print vector output data value via `printf()`.
+Demonstrates how to print the vector output data value via `printf()`.
 </td>
 </tr>
 
@@ -116,7 +124,7 @@ Demonstrates how to use the x86simulator options file for debugging.
 Demonstrates how to use the data dump feature with a practical scenario.
 </td>
 </tr>
- 
+
 <tr>
 <td>
 <a href="./X86_Simulation/README.md#Deadlock-detection">Deadlock Detection</a>
@@ -158,7 +166,7 @@ Demonstrates how to debug memory access violations in an AI Enigne design using 
 <a href="./X86_Simulation/README.md#Using-GDB-debugger-in-command-line">Using the GDB in the Command Line</a>
 </td>
 <td>
-Demonstrates about debugging in command line using the GNU Debugger (GDB).
+Demonstrates debugging in command line using the GNU Debugger (GDB).
 </td>
 </tr>
 
@@ -167,10 +175,10 @@ Demonstrates about debugging in command line using the GNU Debugger (GDB).
 <a href="./X86_Simulation/README.md#x86simulation-on-command-line">x86simulation on the Command Line</a>
 </td>
 <td>
-Demosntrates how to run x86simulation on the command line.
+Demonstrates how to run x86simulation on the command line.
 </td>
 </tr>
- 
+
 <tr>
 <td>
 <a href="./X86_Simulation/README.md#x86simulation-with-GDB">x86simulation with the GDB</a>
@@ -179,7 +187,7 @@ Demosntrates how to run x86simulation on the command line.
 Demonstrates how to use the GDB during x86simulation.
 </td>
 </tr>
- 
+
 <tr>
 <td>
 <a href="./X86_Simulation/README.md#x86simulator-Using-GDB-server">x86simulator Using a GDB Server</a>
@@ -198,7 +206,7 @@ Demonstrates how to use a GDB server to debug the design.
  <a href="./AIE_Simulation/README.md#Build-and-simulate-in-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
 </td>
 <td>
-Demonstrates how to use Vitis IDE to build and simulate an AI Engine design.
+Demonstrates how to use the Vitis IDE to build and simulate an AI Engine design.
 </td>
 </tr>
 	
@@ -207,7 +215,7 @@ Demonstrates how to use Vitis IDE to build and simulate an AI Engine design.
 <a href="./AIE_Simulation/README.md#Debug-using-printf">Debug Using printf</a>
 </td>
 <td>
-Explains how to add a `printf() `statement, and view the output in the console.
+Explains how to add a `printf()` statement, and view the output in the console.
 </td>
 </tr>
 
@@ -216,7 +224,7 @@ Explains how to add a `printf() `statement, and view the output in the console.
 <a href="./AIE_Simulation/README.md#Debug-using-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
 </td>
 <td>
-Explores different debugging techniques that uses the Vitis IDE debugger.
+Explores different debugging techniques that use the Vitis IDE debugger.
 </td>
 </tr>
 
@@ -296,7 +304,7 @@ Explains how to create a system project, build for sofware emulation, and run.
 <td>
 Explains how to debug for software emulation using the Vitis IDE.
 </td>
-</tr> 
+</tr>
 
 <tr>
 <td>
@@ -318,26 +326,26 @@ Explains how to use the GDB to debug in the command line using the option, `-ker
 <td>
 Explains how to create a system project, build for hardware emulation, and run.
 </td>
-</tr> 
+</tr>
 
 <tr>
 <td>
 <a href="./HW_Emulation/README.md#Debug-PL-kernels-using-the-Vivado-Logic-Simulator">Debug PL Kernels Using the Vivado Logic Simulator</a>
 </td>
 <td>
-Explains how to use Vivado XSIM to debug the PL kernels.
+Explains how to use the AMD Vivado™ XSIM to debug the PL kernels.
 </td>
 </tr>
- 
+
 <tr>
 <td>
 <a href="./HW_Emulation/README.md#Performance-of-the-AI-Engine-using-hardware-emulation-results">Performance of the AI Engine Using Hardware Emulation Results</a>
 </td>
 <td>
-This section profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in AI Engine simulation.
+This section profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in a AI Engine simulation.
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./HW_Emulation/README.md#Command-line-project-source-code-debug-with-Vitis-IDE">Command Line Project Source Code Debug with the Vitis IDE</a>
@@ -359,52 +367,52 @@ This section helps you debug your command line project using the features of the
 Explains how to determine the functional correctness of the design by running on hardware.
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_1.md#Error-Handling-and-Reporting-in-Host-Application">Error Handling and Reporting in the Host Application</a>
 </td>
 <td>
 Explains how to use error reporting APIs to handle errors in the host code.<br />
- <a href="./Hardware/Stage_1.md#XRT-error-handling-APIs">&nbsp; &nbsp; &nbsp; *Xilinx Runtime (XRT) error handling APIs</a> - This method reports errors that can be detected during the XRT runtime function call or underneath driver, system, hardware, etc.<br />
+ <a href="./Hardware/Stage_1.md#XRT-error-handling-APIs">&nbsp; &nbsp; &nbsp; * XRT error handling APIs</a> - This method reports errors that can be detected during the XRT runtime function call or underneath driver, system, hardware, etc.<br />
  <a href="./Hardware/Stage_1.md#Using-XBUtil">&nbsp; &nbsp; &nbsp; * Using XBUtil</a> - XButil error reporting can accumulate all the errors from various classes and sorts them by timestamp.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_1.md#Analyzing-Run-results">Analyzing Run Results</a>
 </td>
 <td>
-Explains different techniques (XRT, XBUtil and XSDB) to analyze the design by running on hardware and helps to choose from the following methodologies.<br />
- <a href="./Hardware/Stage_1.md#AI-Engine-status-using-XRT"> &nbsp; &nbsp; &nbsp; * AI Engine status using XRT</a> - Using XRT is fast and host executable can automatically reads the `xrt.ini` file to configure the runtime. - <br />
+Explains different techniques (XRT, XBUtil, and XSDB) to analyze the design by running on hardware and helps to choose from the following methodologies.<br />
+ <a href="./Hardware/Stage_1.md#AI-Engine-status-using-XRT"> &nbsp; &nbsp; &nbsp; - AI Engine status using XRT</a> - Using XRT is fast and host executable can automatically reads the `xrt.ini` file to configure the runtime. - <br />
  <a href="./Hardware/Stage_1.md#Manual-AI-Engine-status-using-XBUtil-utility">&nbsp; &nbsp; &nbsp; * Manual AI Engine status using XBUtil utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
- <a href="./Hardware/Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; * Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for baremetal applications in addition to the Linux-based applications.<br />
+ <a href="./Hardware/Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; - Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for baremetal applications in addition to the Linux-based applications.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_1.md#Using-APIs-in-host-application">Using APIs in the Host Application</a>
 </td>
 <td>
 Explains how to modify the host code to add APIs in the host application that helps profiling the design for getting throughput, latency, and bandwidth.<br />
- <a href="./Hardware/Stage_1.md#Profiling-Graph-throughput">&nbsp; &nbsp; &nbsp; * Profiling Graph throughput</a> - Provides insight on how to modify the host code for profiling the number of samples sent and received.<br />
+ <a href="./Hardware/Stage_1.md#Profiling-Graph-throughput">&nbsp; &nbsp; &nbsp; - Profiling Graph throughput</a> - Provides insight on how to modify the host code for profiling the number of samples sent and received.<br />
  <a href="./Hardware/Stage_1.md#Profiling-to-count-Samples-sent-and-received">&nbsp; &nbsp; &nbsp; * Profiling to count Samples sent and received (Exercise Step)</a> - Provides insight on how to modify the host code for profiling the number of samples sent and received.<br />
 </td>
 </tr>
- 	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_2.md#XRT-Flow"> Hardware Profiling Feature - XRT Flow</a>
 </td>
 <td>
-Explains how to set up the configuration file `xrt.ini` and run the hardware design to generate profile data using the XRT flow.<br />
-<a href="./Hardware/Stage_2.md#Open-multiple-profile-runs-in-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; * Open multiple profile runs in Vitis Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
-<a href="./Hardware/Stage_2.md#Profiling-Data-Explaination">&nbsp; &nbsp; &nbsp; * Profiling Data Explaination</a> - This explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
+Explains how to set up the configuration file `xrt.ini`, and run the hardware design to generate profile data using the XRT flow.<br />
+<a href="./Hardware/Stage_2.md#Open-multiple-profile-runs-in-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in Vitis Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
+<a href="./Hardware/Stage_2.md#Profiling-Data-Explaination">&nbsp; &nbsp; &nbsp; - Profiling Data Explaination</a> - This explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_2.md#XSDB-Flow"> Hardware Profiling Feature - XSDB Flow</a>
@@ -413,7 +421,7 @@ Explains how to set up the configuration file `xrt.ini` and run the hardware des
 This method explains how to use the XSDB-based flow to profile for both baremetal and Linux operating systems.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_3.md#Profiling-Using-PL-Profile-Monitors">Profiling Using PL Profile Monitors</a>
@@ -422,7 +430,7 @@ This method explains how to use the XSDB-based flow to profile for both baremeta
 Explains how to insert PL profile monitors in the v++link command. This helps identify specific PL kernels(s) causing a performance drop.
 </td>
 </tr>
- 
+
 <tr>
 <td>
 <a href="./Hardware/Stage_3.md#Inserting-ILAs-to-Monitor-Specific-AXI-Interfaces">Inserting ILA(s) to Monitor Specific AXI Interfaces</a>
@@ -431,14 +439,14 @@ Explains how to insert PL profile monitors in the v++link command. This helps id
 Explains how to insert one or more integrated logic analyzers (ILAs) to monitor specific PL AXI interfaces to help identify exactly where and when a throughput drop occurs. Also helps in identifying whether data is sent correctly to the AI Engine from the PL compenents and received correctly from the AI Engine to the PL.
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_4.md#Build-the-design"> Build the Design for Event Trace Analysis</a>
 </td>
 <td>
 Explains how to use different event trace options for compiling and its significance. Also walks through the steps to generate the hardware image.<br />
-<a href="./Hardware/Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; * Prepare for the hardware run</a>
+<a href="./Hardware/Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; - Prepare for the hardware run.</a>
 </td>
 </tr>
 
@@ -449,10 +457,10 @@ Explains how to use different event trace options for compiling and its signific
 <td>
 Explains how to do an AI Engine event trace and analysis by setting up the configuration file `xrt.ini` and run the hardware design to generate trace data using the  XRT flow.<br />
 <a href="./Hardware/Stage_4.md#Launch-Vitis-Analyzer-to-Examine-Event-Trace-Files">&nbsp; &nbsp; &nbsp; * Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
-<a href="./Hardware/Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; * Details of the Event Trace data</a> <br />
+<a href="./Hardware/Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; - Details of the Event Trace data</a> <br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_4.md#XSDB-Flow"> Event Trace Analysis - XSDB Flow</a>
@@ -461,16 +469,16 @@ Explains how to do an AI Engine event trace and analysis by setting up the confi
 This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
 </td>
 </tr>
-	
+
 <tr>
 <td>
 <a href="./Hardware/Stage_4.md#Event-trace-considerations"> Event Trace Considerations</a>
 </td>
 <td>
 This method explains how to use the XSDB-based flow to perform event trace analysis on anAI Engine design.<br />
-<a href="./Hardware/Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; * Event Trace Choice Considerations</a> <br />
-<a href="./Hardware/Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; * Number of Event Trace Streams Methodology</a> <br />
-<a href="./Hardware/Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; * Event Trace Limitations</a> <br />
+<a href="./Hardware/Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; - Event Trace Choice Considerations</a> <br />
+<a href="./Hardware/Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; - Number of Event Trace Streams Methodology</a> <br />
+<a href="./Hardware/Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; - Event Trace Limitations</a> <br />
 </td>
 </tr>
 

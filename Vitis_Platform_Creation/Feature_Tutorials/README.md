@@ -1,11 +1,11 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ Platform Creation Tutorials</h1>
    </td>
  </tr>
 </table>
 
-### Feature Tutorials
+## Feature Tutorials
 
 These tutorials illustrate various platform features and how you can incorporate them into your own custom platforms.
 
@@ -24,11 +24,11 @@ These tutorials illustrate various platform features and how you can incorporate
  </tr>
   <tr>
  <td align="center"><a href="./03_Vitis_Export_To_Vivado/">Hardware Design Fast Iteration with Vitis Export to Vivado</a></td>
- <td>The Vitis export to Vivado is the new feature release in the Vivado 2023.1 / Vitis 2023.1 suite that enables bi-directional hardware hand-offs between the Vitis tools and the Vivado design suite, which improves developer productivity.</td>
+ <td>The Vitis export to AMD Vivado™ feature enables bi-directional hardware hand-offs between the Vitis tools and the Vivado design suite, which improves developer productivity.</td>
  </tr>
   <tr>
  <td align="center"><a href="./04_platform_validation/">Versal Extensible Hardware Design Validation</a></td>
- <td>In this tutorial, you will learn how to validate a Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic Versal platform creation tutorial. </td>
+ <td>In this tutorial, you will learn how to validate an AMD Versal™ ACAP extensible platform. This tutorial is an <i><b>add-on</b></i> to the basic Versal platform creation tutorial.</td>
  </tr>
  </table>
 

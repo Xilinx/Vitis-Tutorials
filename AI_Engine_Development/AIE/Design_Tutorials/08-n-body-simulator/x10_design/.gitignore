@@ -2,8 +2,8 @@ aie/build/
 pl_kernels/build/
 pl_kernels/_krnlgen/
 pl_kernels/kernel/.stamp
-pl_kernels/kernel/m2s_x2.cpp
-pl_kernels/kernel/s2m_x4.cpp
+pl_kernels/kernel/mm2s_mp.cpp
+pl_kernels/kernel/s2mm_mp.cpp
 xclbin/build/
 host_sw/build/
 sd_card/build/

@@ -9,7 +9,7 @@
 
 # N-Body Simulator
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
@@ -43,7 +43,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * [Vitis™ Unified Software Development Platform 2023.1](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+      * [Vitis™ Unified Software Development Platform 2023.2](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
       * [Xilinx® Runtime and Platforms (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
       * [Embedded Platform VCK190 Base or VCK190 ES1 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
@@ -72,7 +72,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2023.1 version of the AMD tools.
+Ensure you are using the 2023.2 version of the AMD tools.
 
 ```bash
 which vitis
@@ -155,18 +155,18 @@ This algorithm can be vectorized, hence reducing the complexity to O(N). In our 
 Source: [GRAPE-6: Massively-Parallel Special-Purpose Computer for Astrophysical Particle Simulations](https://academic.oup.com/pasj/article/55/6/1163/2056223)
 
 ### System Design Overview
-The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` device on the VCK190 board. It consists of PL HLS datamover kernels from the AMD Vitis Utility Library (`m2s_x2` and `s2m_x4`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
+The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` device on the VCK190 board. It consists of PL HLS datamover kernels from the AMD Vitis Utility Library (`mm2s_mp` and `s2mm_mp`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
 
 ![alt text](images/System_diagram.PNG)
 
 #### Dataflow
 * The host applications store input data (`i` and `j`) in global memory (DDR) and turn on the PL HLS kernels (running at 300 MHz) and the AI Engine graph (running at 1GHz).
-* Data moves from DDR to the dual-channel HLS datamover kernel `m2s_x2`. The `i` data goes into one channel and the `j` data goes into the other channel. Here, data movement switches from AXI-MM to AXI-Stream. The read/write bandwith of DDR is set to the default 0.04 Gbps.
-* The AI Engine graph performs packet switching on the `input_i` data, so the `i` data needs to be packaged appropriately before being sent to the AI Engine. So from the `m2s_x2` kernel, it is streamed to the HLS `packet_sender` kernel. The `packet_sender` kernel sends a packet header and appropriately asserts `TLAST` before sending packets of `i` data to the 100 `input_i` ports in the AI Engine.
-* The AI Engine graph expects the `j` data to be streamed directly into the AI Engine kernels, so no additional packaging is needed. The `j` data is directly streamed from the `m2s_x2` kernel into the AI Engine.  
+* Data moves from DDR to the dual-channel HLS datamover kernel `mm2s_mp`. The `i` data goes into one channel and the `j` data goes into the other channel. Here, data movement switches from AXI-MM to AXI-Stream. The read/write bandwith of DDR is set to the default 0.04 Gbps.
+* The AI Engine graph performs packet switching on the `input_i` data, so the `i` data needs to be packaged appropriately before being sent to the AI Engine. So from the `mm2s_mp` kernel, it is streamed to the HLS `packet_sender` kernel. The `packet_sender` kernel sends a packet header and appropriately asserts `TLAST` before sending packets of `i` data to the 100 `input_i` ports in the AI Engine.
+* The AI Engine graph expects the `j` data to be streamed directly into the AI Engine kernels, so no additional packaging is needed. The `j` data is directly streamed from the `mm2s_mp` kernel into the AI Engine.  
 * The AI Engine distributes the gravity equation computations onto 100 accelerators (each using 4 AI Engine tiles). The AI Engine graph outputs new `i` data through the 100 `output_i` ports. The `output_i` data is also packet switched and needs to be appropriately managed by the `packet_receiver`.
 * The `packet_receiever` kernel receives a packet and evaluates the header as 0, 1, 2, or 3 and appropriately sends the `output_i` data to the `k0`, `k1`, `k2`, or `k3` streams.
-* The `s2m_x4` quad-channel HLS datamover kernel receives the `output_i` data and writes it to global memory (DDR). Here, data movement switches from AXI-Stream to AXI-MM.
+* The `s2mm_mp` quad-channel HLS datamover kernel receives the `output_i` data and writes it to global memory (DDR). Here, data movement switches from AXI-Stream to AXI-MM.
 * Then, depending on the host application, the new output data is read and compared against the golden expected data or saved as the next iteration of `i` data and the AI Engine N-Body Simulator runs for another timestep.
 
 *Note:* The entire design is a compute-bound problem, meaning we are limited to how fast the AI Engine tiles compute the floating-point gravity equations. This is not a memory-bound design.

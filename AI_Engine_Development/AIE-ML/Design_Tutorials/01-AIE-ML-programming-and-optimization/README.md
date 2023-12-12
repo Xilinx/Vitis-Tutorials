@@ -1,9 +1,8 @@
-﻿</table>
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
@@ -14,13 +13,13 @@
 
 ## Introduction
 
-Xilinx  introduced the Versal™ AI Edge series, designed to enable AI innovation from the edge to the endpoint. This new series is mainly based on the AI Engine-ML that delivers 4X machine learning compute compared to previous AI Engine architecture and integrates new accelerator RAM with an enhanced memory hierarchy for evolving AI algorithms.
+Xilinx introduced the Versal™ AI Edge series, designed to enable AI innovation from the edge to the endpoint. This new series is mainly based on the AI Engine-ML that delivers 4X machine learning compute compared to previous AI Engine architecture and integrates new accelerator RAM with an enhanced memory hierarchy for evolving AI algorithms.
 
 >**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.2 software.  The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html)
 The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
-1. Goto the directory where you have unzipped the Versal Common Image package
+1. Go to the directory where you have unzipped the Versal Common Image package
 2. In a Bash shell run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
 3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable to`$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms`
@@ -48,21 +47,23 @@ This tutorial is based on matrix multiplication which is a usual algorithm in Ma
 
 ## Prerequisite knowledge
 
-To follow this tutorial you need to understand the architecture of the _AI Engine-ML_ as well as the art of buffer descriptor programming:
+To follow this tutorial you need to understand the architecture of the *AI Engine-ML* as well as the art of buffer descriptor programming:
 
 - **AI Engine ML Architecture:**: [am020](https://docs.xilinx.com/r/en-US/am020-versal-aie-ml)
 - **Programming Buffer Descriptors with Tiling parameters:** [UG1603](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-coding)
 
 A short introduction to **AI Engine-ML** architecture is available [here](AIEngineMLArchitecture.md).
 
-The various memory levels contains DMAs used to receive/transfer data to/from memory or Programmable Logic. These DMAs use Buffer Descriptors (BDs) that contains the parameters of these transfers. The best way to program these BDs is to use _Tiling Parameters_ that are introduced [here](TilingParametersProgramming.md).
+The various memory levels contains DMAs used to receive/transfer data to/from memory or Programmable Logic. These DMAs use Buffer Descriptors (BDs) that contains the parameters of these transfers. The best way to program these BDs is to use *Tiling Parameters* that are introduced [here](TilingParametersProgramming.md).
 
 ## Matrix Multiplication
 
 Matrix multiplication is very common algorithm that can be found in numerous standard applications. The basic equation is:
 
+```
 $$ C = A.B $$
 $$ \left( c_{ij} \right)_{\substack{0\leq i \lt M \\ 0 \leq j \lt N}}  =  \sum_{k=0}^{k<K} a_{ik}.b_{kj}$$
+```
 
 ![Matrix Multiplication](images/MatrixMult.png)
 
@@ -72,11 +73,11 @@ In the following image, index in the boxes shows the increasing address:
 
 ![Matrix Storage](images/DataStorage.png)
 
-## Taking advantage of _AI Engine-ML_  architecture
+## Taking advantage of *AI Engine-ML*  architecture
 
-The _AI Engine-ML_ has specific hardware instructions for matrix multiplications. Depending on the bitwidth of the operands, various matrix sizes are supported. In the following table the notation `MxKxN` means that matrix multiplication with a first operand of size M rows x K columns and a second operand of size K rows x N columns is supported.
+The *AI Engine-ML* has specific hardware instructions for matrix multiplications. Depending on the bitwidth of the operands, various matrix sizes are supported. In the following table the notation `MxKxN` means that matrix multiplication with a first operand of size M rows x K columns and a second operand of size K rows x N columns is supported.
 
-**Matrix Multiplication modes for real types**
+### Matrix Multiplication modes for real types
 
 | 8b x 4b | 8b x 8b | 16b x 8b | 8b x 16b | 16b x 16b | 32b x 16b | 16b x 32b | 32b x 32b | bfloat16 x bfloat16
 |---|---|---|---|---|---|---|---|---|
@@ -89,7 +90,7 @@ The _AI Engine-ML_ has specific hardware instructions for matrix multiplications
 |         | 4x16x8  |          |          |           |           |   |   |   |
 
 
-**Matrix Multiplication modes for complex types**
+### Matrix Multiplication modes for complex types
 
 
 | c16b x 16b | c16b x c16b | c32b x c16b | c32b x c32b |
@@ -100,19 +101,21 @@ The _AI Engine-ML_ has specific hardware instructions for matrix multiplications
 |   |   |  1x4x8 |   |
 |   |   |  2x4x8 |   |
 
-In the example developped in this tutorial the 3 matrices A, B and C are all 64x64 with 8-bit data:
+In the example developed in this tutorial the 3 matrices A, B and C are all 64x64 with 8-bit data:
 
+```
 $$A_{64x64}.B_{64x64} = C_{64x64}$$
+```
 
- The mode `4x16x8` will be used so that we need to decompose matrix **A** into `4x16`sub-matrices, matrix **B** into `16x8`sub-matrices in oder to compute **C** using `4x8` sub-results:
+The mode `4x16x8` will be used so that we need to decompose matrix **A** into `4x16`sub-matrices, matrix **B** into `16x8`sub-matrices in oder to compute **C** using `4x8` sub-results:
 
- ![Matrix Multiplication using sub-matrices](images/MatMultBlock.png)
+![Matrix Multiplication using sub-matrices](images/MatMultBlock.png)
 
-In order to use these matrix multiplication modes we need to have one submatrix stored in a register and the other matrix in another register. Unfortunately, when an AI Engine-ML reads memory, it reads 256 contiguous bits from the memory. Multiple reads would be necessary to read a sub-matrix of the right size. A solution is to re-arrange data so that sub-matrices are in contiguous memory addresses. The _adf_ graph API provides a very handy way to do such data ordering manipulation.
+In order to use these matrix multiplication modes we need to have one submatrix stored in a register and the other matrix in another register. Unfortunately, when an AI Engine-ML reads memory, it reads 256 contiguous bits from the memory. Multiple reads would be necessary to read a sub-matrix of the right size. A solution is to re-arrange data so that sub-matrices are in contiguous memory addresses. The *adf* graph API provides a very handy way to do such data ordering manipulation.
 
 Let's first have a look to the chosen architecture for this matrix multiply small application:
 
- ![Block Diagram](images/BlockDiagram.png)
+![Block Diagram](images/BlockDiagram.png)
 
  Multiple **A** and **B** matrices are stored in DDR which are copied in a memory tile using ping-pong buffering. These matrices are then copied again to AI Engine-ML memory using also ping-pong buffering. The kernel operates on the 2 stored matrices to compute the output **C** matrix. This matrix is then copied to a memory tile and then DDR. Data reordering can be done either between DDR and memory tile, or between memory tile and AI Engine-ML memory. The latter choice has been done.
 
@@ -120,14 +123,13 @@ The goal of the reordering is to be able to have the sub-matrices needed by the 
 
 In first place the block must be extracted using memory tile DMA and stored in the AI Engine-ML memory. The tiling has to occur when reading from the memory tile because it is currently impossible to provide a read or a write access pattern to the AI Engine-ML memory.
 
-
- ![Extraction](images/Extraction.png)
+![Extraction](images/Extraction.png)
 
  The first block, on the top-left of the picture is first extracted and stored row by row on the AI Engine-ML memory. The second block, starting with the column vector **(8,72, 136, 200)** is then also extracted from the memory tile and stored in the AI Engine-ML memory. Finally we obtain the following re-arrangement of the data:
 
 ![Reordering](images/Reordering.png)
 
-## _AI Engine-ML_ code analysis
+## AI Engine-ML code analysis
 
 This tutorial has been built to allow the user to easily change matrices and sub-matrices sizes. Matrix **A** being of size **(M,K)** and matrix **B** of size **(K,N)**, the resulting matrix **C** has size **(M,N)**. The `Makefile` defines these default values to 64 (`sizeM, sizeK, sizeN`). The size of the sub-matrices used by the AIE API is also defined (`subM, subK, subN`). All these values can be overriden in the `make` command line.
 
@@ -172,11 +174,11 @@ The `system_settings.h` header file defines all the sizes that will be used inte
 #define CTILES_COLS_NS BTILES_COLS_NS
 ```
 
-As explained in previous section, the matrices will be transferred from DDR to memory tile without any change, and then from memory tile to _AI Engine-ML_ memory with a reordering of the data to make them easier to read from the kernel.
+As explained in previous section, the matrices will be transferred from DDR to memory tile without any change, and then from memory tile to *AI Engine-ML* memory with a reordering of the data to make them easier to read from the kernel.
 
 Even the write access pattern to the memory tile on the input side as well as read access pattern on the output side is just linear contiguous addressing, it needs to be specified in the graph. All these tiling parameters are defined in the file `tiling_parameters.h`. Let's have a look to these parameters for the input matrix **A**:
 
-```C++
+```cpp
 adf::tiling_parameters WriteAns_pattern = {
     .buffer_dimension={A_COLS,A_ROWS},
     .tiling_dimension={A_COLS,1},
@@ -205,7 +207,7 @@ The matrix is a 2D set of data dimension 0 being the number of columns, dimensio
 
 The data storage at kernel level is declared as 2D just to clarify the way it is stored but we use data pointers (essentially 1D data access) in the kernel code:
 
-```C++
+```cpp
 std::vector<uint32> DimAin = {
     ATILES_COLS_NS*ATILES_ROWS_NS, // Tile size
     A_ROWS*A_COLS/ATILES_COLS_NS/ATILES_ROWS_NS // Total number of Tiles
@@ -220,7 +222,7 @@ std::vector<uint32> DimBin = {
 
 The matrix multiplication kernel is very simple to write as the data have been reordered. Computing a block row of the output matrix requires to read multiple times the same block row of matrix **A** and the entire matrix **B**:
 
-```C++
+```cpp
 template<typename ITYPE,typename OTYPE, int SHIFT_RESULT>
 void ClassicMatMult(adf::input_buffer<ITYPE,adf::extents<adf::inherited_extent,adf::inherited_extent>> & __restrict inA,
     adf::input_buffer<ITYPE,adf::extents<adf::inherited_extent,adf::inherited_extent>> & __restrict inB,
@@ -263,11 +265,11 @@ void ClassicMatMult(adf::input_buffer<ITYPE,adf::extents<adf::inherited_extent,a
 
                 *pC++ = ctile.template to_vector<OTYPE>(SHIFT_RESULT);
 
-                pA -= NTilesPerCol_A; // Back to begining of row
+                pA -= NTilesPerCol_A; // Back to beginning of row
                 // For matrix B the next tile is used
             }
             pA += NTilesPerCol_A;                  // Next Row
-            pB -= NTilesPerCol_B * NTilesPerRow_B; // Back to begining of matrix B
+            pB -= NTilesPerCol_B * NTilesPerRow_B; // Back to beginning of matrix B
         }
     }
 ```
@@ -328,18 +330,21 @@ Testbench creation is quite special as this tutorial is designed to evolve towar
 
 After an AIE or X86 simulation you can compare the simulation output with the reference output. This is done either with `make compareaie` or `make comparex86`. For sw_emu and hw_emu, the verification is done within the host code.
 
-```BASH
+```bash
 make clean-all OPT=0 data x86 x86sim comparex86
 ```
+
 This will compile simulate and verify the result for the default size matrices using x86 simulation.
 
-```BASH
+```bash
 make sizeK=128 clean-all OPT=0 data x86 x86sim comparex86
 ```
+
 Will do the same thing but with **A** matrices of size (64,128) and **B** matrices of size (128,64).
 
 AI Engine simulation can be conducted the same way:
-```BASH
+
+```bash
 make clean-all OPT=0 data aie aiesim compareaie
 ```
 
@@ -349,7 +354,7 @@ Finally for hardware emulation `make OPT=0 all_hw_emu` will compile, link and cr
 
 After running AIE simulation with 64x64 matrices, we can look at the profiling results with:
 
-```BASH
+```bash
 make OPT=0 aieviz
 ```
 
@@ -373,7 +378,7 @@ We can see that the number of cycles to run the entire function is 2092 cycles. 
 - number of multiplications to perform: 64 x 64 x 64
 - number of parallel int8 x int8 multiplications in the SIMD vector processor: 256
 
-```TXT
+```txt
              64 x 64 x 64
 Efficiency = ------------ = 0.49
               2092 x 256

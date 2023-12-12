@@ -9,7 +9,7 @@
 
 # Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Table of Contents
 
@@ -177,7 +177,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.1)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
 
@@ -206,8 +206,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2023.1` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2023.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2023.1/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2023.2` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2023.2/sdk.sh` script.
 5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -235,7 +235,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202310_1",
+ "baseName": "xilinx_vck190_base_202320_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -305,7 +305,7 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT Release Notes](https://docs.xilinx.com/r/en-US/ug1451-xrt-release-notes)
 
-#### Vitis Unified Software Development Platform 2023.1 Documentation (https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+#### Vitis Unified Software Development Platform 2023.2 Documentation (https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
 
 Below are links to Vitis related information referenced in this tutorial:
 

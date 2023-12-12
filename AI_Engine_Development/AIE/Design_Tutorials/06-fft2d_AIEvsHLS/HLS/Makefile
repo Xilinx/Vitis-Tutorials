@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -131,16 +131,29 @@ FFT_2D_INSTS := 1
 #   250Mhz(default)
 # =========================================================
 HZ_UNIT := 1000000
+ifeq ($(FFT_2D_PT),2048)
+    ifeq ($(FFT_2D_DT),0)
+        PL_FREQ := 304.5
+        FFT_2D_PL_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * 2" | bc`)
+    else 
+        PL_FREQ := 200
+        FFT_2D_PL_FREQ := 500
+    endif
+else ifeq ($(FFT_2D_PT),512)
+    ifeq ($(FFT_2D_DT),0)
+        PL_FREQ := 281.5
+        FFT_2D_PL_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * 2" | bc`)
+    else
+        PL_FREQ := 250
+        FFT_2D_PL_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * 2" | bc`)
+    endif
+else
+    PL_FREQ := 250
+    FFT_2D_PL_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * 2" | bc`)
+endif
 
-PL_FREQ := 250
 VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * $(HZ_UNIT)" | bc`)
-
-# FFT_2D Kernels at twice the frequency of the datamover...
-FFT_2D_PL_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * 2" | bc`)
 FFT_2D_VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${FFT_2D_PL_FREQ} * $(HZ_UNIT)" | bc`)
-#FFT_2D_PL_FREQ := 650
-#FFT_2D_VPP_CLOCK_FREQ := $(FFT_2D_PL_FREQ)000000
-
 # =========================================================
 # Iteration Count:
 # 16(default)
@@ -314,7 +327,7 @@ VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET
 #VPP_LINK_FLAGS += --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.RETIMING}={true}
 
 ifeq ($(FFT_2D_DT),1)
-   ifeq ($((FFT_2D_PT)),128)
+   ifeq ($(FFT_2D_PT),128)
       ifeq ($(FFT_2D_INSTS),10)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_2}
       else
@@ -327,19 +340,32 @@ ifeq ($(FFT_2D_DT),1)
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.OPT_DESIGN.ARGS.DIRECTIVE}={Explore}
          VPP_LINK_FLAGS += --vivado.prop run.impl_1.{STEPS.PLACE_DESIGN.ARGS.DIRECTIVE}={SSI_BalanceSLRs}
       endif
+    else
+      ifeq ($(FFT_2D_PT),$(filter $(FFT_2D_PT),256 2048))
+         ifeq ($(FFT_2D_INSTS),10)
+            VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_1}
+         endif
+      endif
    endif 
-endif       
-
+else
+   ifeq ($(FFT_2D_DT),0)
+      ifeq ($(FFT_2D_PT),2048)
+         ifeq ($(FFT_2D_INSTS),5)
+            VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Congestion_SSI_SpreadLogic_high} 
+        else ifeq ($(FFT_2D_INSTS),10)
+            VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_NetDelay_high} 	
+        endif
+      else 
+         ifeq ($(FFT_2D_PT),512)
+            ifeq ($(FFT_2D_INSTS),10)
+               VPP_LINK_FLAGS += --vivado.prop run.impl_1.{strategy}={Performance_Auto_3}
+            endif
+         endif
+      endif
+   endif       
+endif
+VPP_LINK_FLAGS += --advanced.param "compiler.worstNegativeSlack=-0.100"
 VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/post_sys_link.tcl
-
-# Enabling Multiple Strategies For Closing Timing...
-#VPP_LINK_FLAGS += --vivado.impl.strategies "ALL"
-#VPP_LINK_FLAGS += --vivado.impl.lsf '{bsub -R "select[type=X86_64] rusage[mem=65536]" -N -q medium}'
-#VPP_LINK_FLAGS += --advanced.param "compiler.enableMultiStrategies=1"
-#VPP_LINK_FLAGS += --advanced.param "compiler.multiStrategiesWaitOnAllRuns=1"
-#
-#VPP_LINK_FLAGS += --vivado.synth.jobs 32
-#VPP_LINK_FLAGS += --vivado.impl.jobs 32
 
 # =========================================================
 # Packaging Flags
@@ -354,7 +380,6 @@ PKG_FLAGS += --package.boot_mode=sd
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
-#PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 PKG_FLAGS += --package.sd_file $(EXEC_SCRIPTS_REPO)/$(EMBEDDED_EXEC_SCRIPT)
 
 ifeq ($(EN_TRACE),1)
@@ -450,27 +475,6 @@ $(BUILD_TARGET_DIR)/$(APP_ELF): $(APP_SRC_CPP)
 	@echo "Host Application Compilation Complete..."
 	@echo "#####################################"
 	@echo ""
-
-# This step compiles the A72 application. This step is the 
-# same for TARGET=[hw_emu | hw]. Compile the PS code.
-# Outputs: in build/ directory
-#	fft_2d_hls_app_inf_run.o
-# 	fft_2d_hls_xrt_inf_run.elf
-
-#INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
-#INF_RUN_GCC_FLAGS += -DITER_CNT=-1
-
-#application_inf_run: $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-
-#$(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(APP_SRC_CPP)
-#	mkdir -p $(BUILD_TARGET_DIR)
-#	@rm -rf $(BUILD_TARGET_DIR)/fft_2d_hls_app_inf_run.o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-#	$(CXX) $(INF_RUN_GCC_FLAGS) $(GCC_INC_FLAGS) $(APP_SRC_CPP) -o $(BUILD_TARGET_DIR)/fft_2d_hls_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB)
-#	$(CXX) $(BUILD_TARGET_DIR)/fft_2d_hls_app_inf_run.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
-#	@echo ""
-#	@echo "Host Application Compilation Infinite Run Complete..."
-#	@echo "########################################"
-#	@echo ""
 
 # =========================================================
 # Step 4. Package Generation 

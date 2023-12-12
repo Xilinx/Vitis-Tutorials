@@ -1,0 +1,14 @@
+{
+  "mm2s_mp": {
+    "S_WIDTH": 32,
+    "NUM_PORTS": 2
+  },
+ "s2mm_mp": {
+    "S_WIDTH": 32,
+    "NUM_PORTS": 4
+  },
+  "single_port": {
+    "S_WIDTH": 64,
+    "NUM_PORTS": 1
+  }
+}

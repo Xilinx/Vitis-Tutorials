@@ -239,29 +239,31 @@ _vector<float,8>_ **fpabs_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _
    ret[i] =  abs(xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]])
  ```
 
- #### fpneg_mul
+#### fpneg_mul
 
- Signature is identical to `fpmul`:
+Signature is identical to `fpmul`:
 
- _vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
-  It returns the opposite value of the product:
-  ```
-  for (i = 0 ; i < 8 ; i++)
-    ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
-  ```
+It returns the opposite value of the product:
 
-  #### fpneg_abs_mul
+```
+for (i = 0 ; i < 8 ; i++)
+  ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
+```
 
-  Only for real arguments. Signature is identical to `fpmul`:
+#### fpneg_abs_mul
 
-  _vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+Only for real arguments. Signature is identical to `fpmul`:
 
-   It returns the opposite value of the product:
-   ```
-   for (i = 0 ; i < 8 ; i++)
-     ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
-   ```
+_vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+
+It returns the opposite value of the product:
+
+```
+for (i = 0 ; i < 8 ; i++)
+ ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
+```
 
 
 #### fpmac, fpmsc, fpmac_abs, fpmsc_abs
@@ -280,6 +282,7 @@ _vector<float,8>_ **fpmac**(_vector<float,8>_ **acc**, _vector<float,32>_ **xbuf
 #### fpmul_conf, fpmac_conf
 
 These functions are fully configurable `fpmul` and `fpmac`  functions. The output can be considered to always have eight values because each part of the complex float is treated differently. A `vector<cfloat,4>` will have the loop interating over real0 - complex0 - real1 - complex1 ... This capability is introduced to allow flexibility and implement operations on conjugates.
+
 
 _vector<float,8>_ **fpmac_conf**(_vector<float,8>_ **acc**, _vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**, _bool_ **ones**, _bool_ **abs**, _unsigned int_ **addmode**, _unsigned int_ **addmask**, _unsigned int_ **cmpmode**, _unsigned int &_ **cmp**)
 
@@ -378,14 +381,6 @@ In this design you learned:
 
 
 
-## License
-
-___
-
- The MIT License (MIT)
-
- Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
- SPDX-License-Identifier: MIT
 
 ## Support
 

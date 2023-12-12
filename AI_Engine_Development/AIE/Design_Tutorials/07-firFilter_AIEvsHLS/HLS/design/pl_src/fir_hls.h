@@ -30,19 +30,19 @@
 #endif
 
 #if N_FIR_TAPS == 129
-   #if N_FIR_FILTERS == 10
+   //#if N_FIR_FILTERS == 10
       #define SAMP_PERIOD 2  // Reduced performance by 4 to create a feasible design
-   #elif N_FIR_FILTERS == 1
-      #define SAMP_PERIOD 1  // Reduced performance by 4 to create a feasible design
-   #endif
+   //#elif N_FIR_FILTERS == 1
+      //#define SAMP_PERIOD 1  // Reduced performance by 4 to create a feasible design
+   //#endif
 #endif
 
 #if N_FIR_TAPS == 240
-   #if N_FIR_FILTERS == 10
+   //#if N_FIR_FILTERS == 10
       #define SAMP_PERIOD 4  // Reduced performance by 4 to create a feasible design
-   #elif N_FIR_FILTERS == 1
-      #define SAMP_PERIOD 2  // Reduced performance by 4 to create a feasible design
-   #endif
+   //#elif N_FIR_FILTERS == 1
+      //#define SAMP_PERIOD 2  // Reduced performance by 4 to create a feasible design
+   //#endif
 #endif
 
 

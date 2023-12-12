@@ -10,9 +10,10 @@
 
 - [Step 3: Test the Platform](#step-3-test-the-platform)
   - [Test 1: Read Platform Info](#test-1-read-platform-info)
-  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
-  - [Congratulations](#congratulations)
-  - [Fast Track](#fast-track)
+    - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+    - [Congratulations](#congratulations)
+    - [Fast Track](#fast-track)
+    - [Next Steps](#next-steps)
 
 ## Test 1: Read Platform Info
 
@@ -236,7 +237,7 @@ Feel free to check more tutorials in this repository.
 
 ### Fast Track
 
-If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>` in [ref_files](./ref_files) directory to generate the reference design and compare with your design. COMMON_IMAGE_ZYNQMP is a flag to specify the common image path. Please download common image from [Xilinx website download page](https://www.xilinx.com/support/download.html) and give the path to the flag.
+If you encounter any issues when creating the custom platform and the validation application in this tutorial, you can run `make all COMMON_IMAGE_ZYNQMP=<path/to/common_image/>` in the `ref_files` directory to generate the reference design and compare with your design. COMMON_IMAGE_ZYNQMP is a flag to specify the common image path. Please download common image from [Xilinx website download page](https://www.xilinx.com/support/download.html) and give the path to the flag.
 
 The command line flow has slight differences comparing to Vitis IDE flow.
 

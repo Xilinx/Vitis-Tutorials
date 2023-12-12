@@ -1,6 +1,6 @@
-#######################################
-AI Engine Development
-#######################################
+##############################################################################
+AI Engine for Machine Learning Development
+##############################################################################
 
 
 .. sidebar:: More Information
@@ -16,7 +16,7 @@ The tutorials under the AI Engine for Machine Learning (AIE-ML) Development help
 
 .. important:: 
 
-   Before beginning a tutorial, ensure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms, including the VEK280 ES1 base platform that is used in these tutorials. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from `Downloads <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html>`_ .
+   Before beginning a tutorial, ensure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms, including the VEK280 ES1 base platform that is used in these tutorials. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from `Downloads <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html>`_.
 
 The `common image` package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis software platform.
 
@@ -29,7 +29,7 @@ Before starting a tutorial, run the following steps:
 
 
 
-.. note:: 
+.. note::
 
    These tutorials target VEK280 ES1 board or build custom board using ES devices, which are subject to a special license, please obtain a license for using Beta Devices in AMD tools, and make sure it's enabled by executing `enable_beta_device` (or add it to the tools initial ``.tcl`` files).
 
@@ -47,7 +47,7 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>
+   Feature Tutorials <./Feature_Tutorials/Feature_Tutorials>
 
 .. csv-table:: Feature Tutorials
    :header: "Tutorial","Platform","OS","IDE Flow","Libraries Used","HLS Kernel","x86 simulator","aie simulator","SW Emu","HW Emu","HW","Event Trace in HW","Profile in HW"
@@ -58,6 +58,7 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
    ":doc:`Runtime Parameter Reconfiguration <./docs/Feature_Tutorials/03-rtp-reconfiguration/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
    ":doc:`Packet Switching <./docs/Feature_Tutorials/04-packet-switching/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
    ":doc:`AIE Versal Integration <./docs/Feature_Tutorials/05-AI-engine-versal-integration/README>`","Base","Linux","CLI, Vitis Unified IDE","","MM2S / S2MM","Yes","Yes","Yes","Yes","Yes","",""
+   ":doc:`AIE-ML Performance Analysis <./docs/Feature_Tutorials/13-aie-ml-performance-analysis/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
    ":doc:`AIE Compiler Features <./docs/Feature_Tutorials/20-aiecompiler-features/README>`","Base","Linux","","","MM2S / S2MM","Yes","Yes","","Yes","Yes","Yes","Yes"
 
 
@@ -72,7 +73,7 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
    :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./Design_Tutorials/Design_Tutorials>
 
 
 

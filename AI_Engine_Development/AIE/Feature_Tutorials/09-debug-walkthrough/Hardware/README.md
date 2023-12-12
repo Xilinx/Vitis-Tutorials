@@ -11,13 +11,13 @@
 
 ## Getting Started
 
-To excercise and walk through the different hardware debug methodologies, it is required to clone the git repository, get the design files ready to build, and generate the hardware image file(`sd_card.img`).
+To excercise and walk through the different hardware debug methodologies, it is required to clone the git repository, get the design files ready to build, and generate the hardware image file (`sd_card.img`).
 
 Make sure you set the environment variables as explained in this [link](../README.md#Introduction).
 
 ## Introduction
 
-Designs running on AMD Versal&trade; AI Engine devices can target the AI Engine, programmable logic (PL), and Arm&reg; host. To ensure a design targeting such multi-domain devices is functionally correct and meets the design performance specification, AMD recommends a five-stage profile and debug methodology in hardware.
+Designs running on AMD Versal&trade; AI Engine devices can target the AI Engine, programmable logic (PL), and Arm&reg; host. To ensure a design targeting such multi-domain devices is functionally correct and meets the design performance specification, AMD recommends a five stage profile and debug methodology in hardware.
 
 The stages are as follows:
 
@@ -40,7 +40,7 @@ This stage helps you determine:
 
 ## [System Profiling](./Stage_2.md)
 
-In this stage you can profile the AI Engine Core, Interface, and Memory modules in XRT or XSDB flows. It is a non-intrusive feature which can be enabled at runtime using the `XRT.ini` file or running scripts in XSDB. The feature uses performance counters available in the AI Engine array to gather profile data. The amount and type of data gathered is limited by the number of performance counters available.
+In this stage, you can profile the AI Engine Core, Interface, and Memory modules in the XRT or XSDB flows. It is a non-intrusive feature which can be enabled at runtime using the `XRT.ini` file or running scripts in XSDB. The feature uses performance counters available in the AI Engine array to gather profile data. The amount and type of data gathered is limited by the number of performance counters available.
 
 ## [PL Kernel Analysis](./Stage_3.md)
 
@@ -62,7 +62,7 @@ This stage helps you determine the AI Engine kernel or graph construct causing t
 
 The goal of this stage is to debug the host application and address application exceptions or crashes, if any exist using `printf()` or the Vitis IDE debugger.
 
-**Complete hardware profile and debug methodology**
+### Complete Hardware Profile and Debug Methodology
 
 ![hardware debug](./Images/complete_hwDebug.PNG)
 

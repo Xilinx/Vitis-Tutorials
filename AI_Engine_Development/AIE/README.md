@@ -1,10 +1,13 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ AI Engine</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
+
+
+# AI Engine Development
 
 ## Introduction
 
@@ -17,17 +20,22 @@ The tutorials under the AI Engine Development help you learn how to target, deve
 ## Getting Started
 
 ### AI Engine Documentation
-To easily find the right documentation corresponding to the development stage you are at, we recommend you use the <a href="https://docs.xilinx.com/p/ai-engine-development">AI Engine Design Process Hub </a>.
+
+To easily find the right documentation corresponding to the development stage you are at, we recommend you use the [AI Engine Design Process Hub](https://docs.xilinx.com/p/ai-engine-development).
+
 The major documentation for AI Engine includes:
-- <a href="https://docs.xilinx.com/r/en-US/am009-versal-ai-engine">AM009 - Versal ACAP AI Engine Architecture Manual</a>
-- <a href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment">UG1076 - AI Engine Tools and Flows</a>
-- <a href="https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding">UG1079 - AI Engine Kernel and Graph Programming Guide</a>
+
+- *Versal ACAP AI Engine Architecture Manual* [AM009](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine)
+- *AI Engine Tools and Flows* [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
+- *AI Engine Kernel and Graph Programming Guide* [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding)
 
 ### AI Engine Training
+
 If you are new with AI Engine, the following training courses can help you understand the architechure and design flow.
-- <a href="https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+1">Designing with Versal AI Engine 1: Architecture and Design Flow	</a>
-- <a href="https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+2">Designing with Versal AI Engine 2: Graph Programming with AI Engine Kernels </a>
-- <a href="https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+3">Designing with Versal AI Engine 3: Kernel Programming and Optimization </a>
+
+- [Designing with Versal AI Engine 1: Architecture and Design Flow](https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+1)
+- [Designing with Versal AI Engine 2: Graph Programming with AI Engine Kernels](https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+2)
+- [Designing with Versal AI Engine 3: Kernel Programming and Optimization](https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+3)
 
 ### Environment Settings
 
@@ -42,11 +50,12 @@ Run the following steps to setup environment (do **NOT** apply to tutorials that
 
 ### Getting Started with AI Engine Development Using the AI Engine Tutorials
 
-![missing image](AI_Engine_dev_flow.jpg)
+![missing image](AI_Engine_dev_flow.png)
 
 If you are new with the AI Engine Architecture and tools, we recommend that you start with the <a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a>, which will guide you through the entire flow from platform creation in AMD Vivado™ to AI Engine application creation, system integration and testing on Hardware using the Vitis IDE.
 
 #### AI Engine Application Development
+
 To get started with AI Engine application development, we recommend that you look at the following tutorials:
 - <a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a> which will guide you to create an AI Engine using application using the AMD provided DSP library
 - <a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a> which will also guide you to create an AI Engine using application using the AMD provided DSP library but using the ModelComposer tool which enables easy designs through a MATLAB Simulink environment.

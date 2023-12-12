@@ -1,7 +1,7 @@
 <p align="right"><a>English</a> | <a href="docs-jp/README.md">日本語</a></p>
 <table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ In-Depth Tutorials</h1>
     </td>
  </tr>
 </table>
@@ -19,7 +19,7 @@ Visit more Vitis developer videos on <a href="https://www.youtube.com/channel/UC
 
 ## Unlocking a New Design Experience For All Developers
 
-The [Vitis™ software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
+The [Vitis software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
 
 ## Where to Start
 
@@ -93,6 +93,13 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./Getting_Started/Vitis_Platform/">Vitis Platform Introduction </a>
             </td>
         </tr>
+        <tr>
+            <td>
+                <a href="./Embedded_Software/Getting_Started">Vitis Unified IDE for Embedded Design :new: </a>
+            </td>
+            <td>
+            </td>
+        </tr>        
     </tbody>
 </table>
 
@@ -148,6 +155,15 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
             </td>
         </tr>        
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/13-aie-ml-performance-analysis">AIE-ML Performance Analysis :new:</a>
+            </td>
+            <td>
+            </td>                
+            <td>
+            </td>
+        </tr>   
     </tbody>
 </table>
 
@@ -267,7 +283,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform">AI Engine A-to-Z Flow for Linux</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT">Prime Factor FFT </a>
             </td>
         </tr>
         <tr>
@@ -278,7 +294,7 @@ To download a ZIP file of a specific branch, do one of the following:
                  <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/09-ddc_chain">Digital Down-conversion Chain </a>
             </td>
         </tr>
         <tr>
@@ -288,7 +304,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>
             </td>
         </tr>
     </tbody>
@@ -298,7 +314,7 @@ To download a ZIP file of a specific branch, do one of the following:
     <tbody>
         <tr>
             <td colspan="3" height="24" align="center">
-                <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development :new:</a></strong>
+                <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development :new: </a></strong>
             </td>
         </tr>
         <tr>

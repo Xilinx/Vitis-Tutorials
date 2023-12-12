@@ -1,7 +1,7 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
@@ -9,10 +9,11 @@
 # Step 3: Test the Platform
 
 - [Step 3: Test the Platform](#step-3-test-the-platform)
-    - [Test 1: Read Platform Info](#test-1-read-platform-info)
-    - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
+  - [Test 1: Read Platform Info](#test-1-read-platform-info)
+  - [Test 2: Run Vector Addition Application](#test-2-run-vector-addition-application)
     - [Fast Track for Vector Addition](#fast-track-for-vector-addition)
-    - [Congratulations](#congratulations)
+  - [Congratulations](#congratulations)
+  - [Next Steps](#next-steps)
 
 ## Test 1: Read Platform Info
 
@@ -101,6 +102,7 @@ System Configurations:
 Supported Runtimes:
   Runtime: C/C++
 ```
+
 </details>
 
 You can verify clock information and memory information are set as expected.
@@ -124,11 +126,11 @@ Vector addition is the simplest acceleration PL kernel. The Vitis Unified IDE ca
       - Set **Sysroot** to ```zcu104_software_platform/xilinx-zynqmp-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
-   After seconds the vadd system project, vadd host component and vadd kernel component will be ready in the component view. 
-     
+   After seconds the vadd system project, vadd host component and vadd kernel component will be ready in the component view.
+
 2. Building Vector Addition Application
 
-   Vadd system project supports three targets: Software emulation, Hardware emulation and Hardware. User could select the target accordingly following steps below. 
+   Vadd system project supports three targets: Software emulation, Hardware emulation and Hardware. User could select the target accordingly following steps below.
 
    - Go to flow navigator and select vadd system project.
 
@@ -172,7 +174,7 @@ Vector addition is the simplest acceleration PL kernel. The Vitis Unified IDE ca
       First, login with user `petalinux` and set up a new password (it is then also the sudo password):
 
       1. Log into the system
-      
+
          ```bash
          petalinux login:petalinux
          You are required to change your password immediately (administrator enforced).
@@ -200,7 +202,7 @@ Vector addition is the simplest acceleration PL kernel. The Vitis Unified IDE ca
          ./simple_vadd krnl_vadd.xclbin
          ```
 
-      It should show program prints and XRT debug information .
+      It should show program prints and XRT debug information.
 
       ```
       TEST PASSED

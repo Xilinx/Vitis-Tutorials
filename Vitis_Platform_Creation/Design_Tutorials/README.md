@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ Platform Creation Tutorials</h1>
    </td>
  </tr>
  <tr>
@@ -10,7 +10,7 @@
 </table>
 
 
-### Design Tutorials
+## Design Tutorials
 
 <table style="width:100%">
  <tr>
@@ -34,7 +34,7 @@
 
  <tr>
  <td align="center"><a href="./01-Edge-KV260/README.md">Custom Kria SOM Platform Creation Example</a></td>
- <td>Extend the <a href="./02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board: Kria SOM KV260 Starter Kit.
+ <td>Extend the <a href="./02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board, the AMD Kria™ SOM KV260 Starter Kit.
 </td>
  </tr>
 </table>

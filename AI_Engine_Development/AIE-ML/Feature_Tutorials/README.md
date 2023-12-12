@@ -7,7 +7,8 @@
 </table>
 
 ## Feature Tutorials
-The AIE-ML Development Feature Tutorials highlight specific features and flows that help develop AIE-ML aplications.
+
+The AIE-ML Development Feature Tutorials highlight specific features and flows that help develop AIE-ML applications.
 
  <table style="width:100%">
  <tr>
@@ -20,11 +21,11 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  </tr>
  <tr>
  <td align="center"><a href="./02-using-gmio/">Using GMIO with AIE-ML</a></td>
- <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engine-ML (AIE-ML) and external DDR</td>
+ <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engine-ML (AIE-ML) and external DDR.</td>
  </tr>
  <tr>
  <td align="center"><a href="./03-rtp-reconfiguration/">Runtime Parameter Reconfiguration</a></td>
- <td>Learn how to dynamically update AI Engine-ML (AIE-ML) runtime parameters</td>
+ <td>Learn how to dynamically update AI Engine-ML (AIE-ML) runtime parameters.</td>
  </tr>
  <tr>
  <td align="center"><a href="./04-packet-switching/">Packet Switching</a></td>
@@ -33,6 +34,10 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <tr>
  <td align="center"><a href="./05-AI-engine-versal-integration/">AI Engine Versal Integration for Hardware Emulation and Hardware</a></td>
  <td>This tutorial demonstrates creating a system design running on the AI Engine-ML (AIE-ML), PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./13-aie-ml-performance-analysis/">AI Engine-ML Performance Analysis Tutorial</a></td>
+ <td> This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
  </tr>
  <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>

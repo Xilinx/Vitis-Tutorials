@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -123,6 +123,52 @@ else
 endif
 
 
+
+ifeq ($(FFT_2D_PT),64)
+    ifeq ($(FFT_2D_DT),0)
+       FFT_ROW_CASCADE_LENGTH := 3
+       FFT_COL_CASCADE_LENGTH := 3
+    else ifeq ($(FFT_2D_DT),1)
+       FFT_ROW_CASCADE_LENGTH := 6
+       FFT_COL_CASCADE_LENGTH := 5
+    endif
+endif
+
+ifeq ($(FFT_2D_PT),128)
+    ifeq ($(FFT_2D_DT),0)
+       FFT_ROW_CASCADE_LENGTH := 2
+       FFT_COL_CASCADE_LENGTH := 2
+    else ifeq ($(FFT_2D_DT),1)
+       FFT_ROW_CASCADE_LENGTH := 5
+       FFT_COL_CASCADE_LENGTH := 6
+    endif
+endif
+
+ifeq ($(FFT_2D_PT),256)
+    ifeq ($(FFT_2D_DT),1)
+       FFT_ROW_CASCADE_LENGTH := 6
+       FFT_COL_CASCADE_LENGTH := 6
+    endif
+endif
+
+ifeq ($(FFT_2D_PT),512)
+    ifeq ($(FFT_2D_DT),1)
+        FFT_ROW_CASCADE_LENGTH := 4
+        FFT_COL_CASCADE_LENGTH := 4
+    endif
+endif
+
+ifeq ($(FFT_2D_PT),2048)
+    ifeq ($(FFT_2D_DT),1)
+            FFT_ROW_CASCADE_LENGTH := 4
+            FFT_COL_CASCADE_LENGTH := 4
+    endif
+endif
+# Default values if none of the conditions match
+ifeq ($(FFT_ROW_CASCADE_LENGTH),)
+    FFT_ROW_CASCADE_LENGTH := 1
+    FFT_COL_CASCADE_LENGTH := 1
+endif
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
 #   FFT_2D_PT =   64:   32 x   64
@@ -259,22 +305,33 @@ AIE_FLAGS += --Xpreproc="-DFFT2D_INSTS=$(FFT_2D_INSTS)"
 AIE_FLAGS += --Xpreproc="-DMAT_ROWS=$(MAT_ROWS)"
 AIE_FLAGS += --Xpreproc="-DMAT_COLS=$(MAT_COLS)"
 AIE_FLAGS += --Xpreproc="-DFFT_2D_DT=$(FFT_2D_DT)"
+AIE_FLAGS += --Xpreproc="-DFFT_ROW_CASCADE_LENGTH=$(FFT_ROW_CASCADE_LENGTH)"
+AIE_FLAGS += --Xpreproc="-DFFT_COL_CASCADE_LENGTH=$(FFT_COL_CASCADE_LENGTH)"
 AIE_FLAGS += --Xpreproc="-DITER_CNT=16"
 #AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
 AIE_FLAGS += --platform=$(PLATFORM)
-
 AIE_FLAGS += --log-level=5
 AIE_FLAGS += --test-iterations=2
 AIE_FLAGS += --pl-freq=$(PL_FREQ)
 #AIE_FLAGS += --dataflow
-
 # Constraints for same shim solution for all variations
 # aids in timeing closure of the design...
-AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
-
-AIE_FLAGS += --Xmapper=BufferOptLevel9
+ifeq ($(FFT_2D_DT),1)
+  ifeq ($(FFT_2D_PT),2048)
+     ifeq ($(FFT_2D_INSTS),5)
+        AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst_1
+     else
+        AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+     endif
+   else
+      AIE_FLAGS += --Xmapper=BufferOptLevel9
+      AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+   endif
+else
+  AIE_FLAGS += --Xmapper=BufferOptLevel9
+  AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+endif
 AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
-
 #AIE_FLAGS += --heapsize=7000
 AIE_FLAGS += --Xchess="main:bridge.llibs=softfloat m"
 AIE_FLAGS += --workdir=$(WORK_DIR)
@@ -298,8 +355,10 @@ GCC_FLAGS += -DFFT2D_INSTS=$(FFT_2D_INSTS)
 GCC_FLAGS += -DMAT_ROWS=$(MAT_ROWS)
 GCC_FLAGS += -DMAT_COLS=$(MAT_COLS)
 GCC_FLAGS += -DFFT_2D_DT=$(FFT_2D_DT)
+GCC_FLAGS += -DFFT_ROW_CASCADE_LENGTH=$(FFT_ROW_CASCADE_LENGTH)
+GCC_FLAGS += -DFFT_COL_CASCADE_LENGTH=$(FFT_COL_CASCADE_LENGTH)
 GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
-
+GCC_FLAGS += -D__AIE_ARCH__=10
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
 GCC_INC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
 GCC_INC_FLAGS += -I$(SDKTARGETSYSROOT)/usr/include
@@ -312,6 +371,7 @@ GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L1/tests/aie/inc
 GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L1/tests/aie/src
 GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L2/include/aie
 GCC_INC_FLAGS += -I$(DSPLIB_ROOT)/L2/tests/aie/common/inc
+
 
 GCC_INC_LIB += -L$(SDKTARGETSYSROOT)/usr/lib
 GCC_INC_LIB += -L$(XILINX_VITIS)/aietools/lib/aarch64.o

@@ -1,11 +1,12 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Getting Started Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
 
+# Getting Started
 
 * **[Vitis Introduction and Getting Started](./Vitis)**:
   * An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into separate flows:
@@ -23,7 +24,10 @@
 * **[Vitis Platform](./Vitis_Platform)**:
   * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
   * This tutorial uses Vitis Unified IDE.
-  
+
+* **[Vitis Unified IDE for Embedded Design](../Embedded_Software/Getting_Started)**:
+  * This tutorial shows the basic steps of the Vitis Embedded design flow and uses the Vitis Unified IDE. Users will be able to navigate the capabilities of the IDE using a minimum number of steps.
+  * The steps include creating the platform, adding hello world application, setting up the target connection and deploying to the target board.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

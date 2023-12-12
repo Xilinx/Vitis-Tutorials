@@ -18,21 +18,21 @@ or
 ```
 v++ -l                                     \
     -t hw                                  \
-    --platform xilinx_vck190_base_202310_1 \
+    --platform xilinx_vck190_base_202320_1 \
     --save-temps                           \
     -g                                     \
     --optimize 2                           \
     --hls.jobs 8                           \
     --config ./conn.cfg                    \
     --clock.defaultFreqHz 150000000        \
-    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202310_1               \
-    --report_dir ./build/reports/_build.hw.xilinx_vck190_base_202310_1/hpc  \
+    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202320_1               \
+    --report_dir ./build/reports/_build.hw.xilinx_vck190_base_202320_1/hpc  \
     --advanced.param compiler.userPostSysLinkOverlayTcl=./post_sys_link.tcl  \
-    -o './build/build_dir.hw.xilinx_vck190_base_202310_1/hpc.xclbin'        \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202310_1/packet_sender.xo   \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202310_1/m2s_x2.xo          \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202310_1/packet_receiver.xo \
-    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202310_1/s2m_x4.xo          \
+    -o './build/build_dir.hw.xilinx_vck190_base_202320_1/hpc.xclbin'        \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202320_1/packet_sender.xo   \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202320_1/mm2s_mp.xo          \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202320_1/packet_receiver.xo \
+    ../Module_03_pl_kernels/build/_x_temp.hw.xilinx_vck190_base_202320_1/s2mm_mp.xo          \
     ../Module_02_aie/build/libadf.a
 ```
 

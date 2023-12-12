@@ -8,7 +8,7 @@
  </tr>
 </table>
 
-# Conditionnal Objects Instantiation
+# Conditional Objects Instantiation
 
 
 ## Introduction
