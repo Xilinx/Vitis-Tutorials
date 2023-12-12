@@ -1,3 +1,7 @@
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: MIT
+#*
 set_property PACKAGE_PIN AN1 [get_ports {CH0_LPDDR4_0_0_dq_a[0]}]
 set_property PACKAGE_PIN AP2 [get_ports {CH0_LPDDR4_0_0_dq_a[1]}]
 set_property PACKAGE_PIN AR4 [get_ports {CH0_LPDDR4_0_0_dq_a[2]}]
