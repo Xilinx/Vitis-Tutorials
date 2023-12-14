@@ -1,8 +1,7 @@
 #/*
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 #*/
-
 
 if { $argc != 1 } {
     puts "Please provide the board type with -tclargs: VCK190 or VCK190_ES1"
