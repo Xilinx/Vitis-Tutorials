@@ -34,8 +34,8 @@ sd_card*/
 packaged_kernel*
 tmp_kernel_pack*
 release_build
-linux/vck190-versal
-linux/vck190-versal-meta
+linux/*-versal
+linux/*-versal-meta
 linux/sysroot
 linux/dtg/dts
 linux/dtg/device-tree-xlnx
