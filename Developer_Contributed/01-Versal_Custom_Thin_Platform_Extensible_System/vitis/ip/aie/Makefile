@@ -6,7 +6,7 @@
 ECHO              := @echo
 
 BOARD_NAME        ?= vck190
-PLATFORM_CUSTOM   := ${BOARD_NAME}_thin
+PLATFORM_CUSTOM   ?= ${BOARD_NAME}_thin
 
 XPFM              := ../../xpfm_export/build/platform/${PLATFORM_CUSTOM}/export/${PLATFORM_CUSTOM}/${PLATFORM_CUSTOM}.xpfm
 TARGET            ?= hw
