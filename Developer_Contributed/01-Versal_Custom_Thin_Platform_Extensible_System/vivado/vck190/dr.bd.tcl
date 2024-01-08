@@ -41,7 +41,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 ################################################################
 
 # To test this script, run the following commands from Vivado Tcl console:
-# source ext_platform_script.tcl
+# source vck190_thin_script.tcl
 
 # If there is no project opened, this script will create a
 # project, but make sure you do not have an existing project
@@ -50,7 +50,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project project_1 myproj -part xcvc1902-vsva2197-2MP-e-S
-   set_property BOARD_PART xilinx.com:vck190:part0:3.2 [current_project]
+   set_property BOARD_PART xilinx.com:vck190:part0:3.1 [current_project]
 }
 
 
@@ -117,13 +117,13 @@ if { ${design_name} eq "" } {
 }
 
   # Add USER_COMMENTS on $design_name
-  set_property USER_COMMENTS.comment0 "\t \t ======================= >>>>>>>>> An Example Versal Extensible Embedded Platform <<<<<<<<< =======================
-			\t Note:
-			\t --> Board preset applied to CIPS and memory controller settings
-			\t --> AI Engine control path is connected to CIPS
-			\t --> V++ will connect AI Engine data path automatically
-			\t --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
-			\t --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
+  set_property USER_COMMENTS.comment0 "	 	 ======================= >>>>>>>>> An Example Versal Extensible Embedded Platform <<<<<<<<< =======================
+				 Note:
+				 --> Board preset applied to CIPS and memory controller settings
+				 --> AI Engine control path is connected to CIPS
+				 --> V++ will connect AI Engine data path automatically
+				 --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
+				 --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
 
 common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
 
@@ -293,8 +293,8 @@ proc create_root_design { parentCell } {
       PS_MIO7 {{AUX_IO 0} {DIRECTION in} {DRIVE_STRENGTH 8mA} {OUTPUT_DATA default} {PULL disable} {SCHMITT 0} {SLEW slow} {USAGE Reserved}} \
       PS_MIO9 {{AUX_IO 0} {DIRECTION in} {DRIVE_STRENGTH 8mA} {OUTPUT_DATA default} {PULL disable} {SCHMITT 0} {SLEW slow} {USAGE Reserved}} \
       PS_NUM_FABRIC_RESETS {1} \
-      PS_PCIE_EP_RESET1_IO {PMC_MIO 38} \
-      PS_PCIE_EP_RESET2_IO {PMC_MIO 39} \
+      PS_PCIE_EP_RESET1_IO {None} \
+      PS_PCIE_EP_RESET2_IO {None} \
       PS_PCIE_RESET {{ENABLE 1}} \
       PS_PL_CONNECTIVITY_MODE {Custom} \
       PS_TTC0_PERIPHERAL_ENABLE {1} \
@@ -339,6 +339,7 @@ proc create_root_design { parentCell } {
     CONFIG.PRIM_SOURCE {No_buffer} \
     CONFIG.RESET_TYPE {ACTIVE_LOW} \
     CONFIG.USE_PHASE_ALIGNMENT {true} \
+    CONFIG.CE_TYPE {HARDSYNC} \
   ] $clk_wizard_0
 
 
@@ -734,7 +735,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins cips_noc/aclk9]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins CIPS_0/pl_ps_irq0]
   connect_bd_net -net clk_wizard_0_clk_out1 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0] [get_bd_pins icn_ctrl/aclk] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n]
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins icn_ctrl/aresetn]
 
   # Create address segments

@@ -25,7 +25,13 @@ set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
    puts ""
-   catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+   if { [string compare $scripts_vivado_version $current_vivado_version] > 0 } {
+      catch {common::send_gid_msg -ssname BD::TCL -id 2042 -severity "ERROR" " This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Sourcing the script failed since it was created with a future version of Vivado."}
+
+   } else {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2041 -severity "ERROR" "This script was generated using Vivado <$scripts_vivado_version> and is being run in <$current_vivado_version> of Vivado. Please run the script in Vivado <$scripts_vivado_version> then open the design in Vivado <$current_vivado_version>. Upgrade the design by running \"Tools => Report => Report IP Status...\", then run write_bd_tcl to create an updated script."}
+
+   }
 
    return 1
 }
@@ -35,7 +41,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 ################################################################
 
 # To test this script, run the following commands from Vivado Tcl console:
-# source ext_platform_script.tcl
+# source vek280_thin_script.tcl
 
 # If there is no project opened, this script will create a
 # project, but make sure you do not have an existing project
@@ -111,13 +117,13 @@ if { ${design_name} eq "" } {
 }
 
   # Add USER_COMMENTS on $design_name
-  set_property USER_COMMENTS.comment0 "\t \t ======================= >>>>>>>>> An Example Versal Extensible Embedded Platform <<<<<<<<< =======================
-			\t Note:
-			\t --> Board preset applied to CIPS and memory controller settings
-			\t --> AI Engine control path is connected to CIPS
-			\t --> V++ will connect AI Engine data path automatically
-			\t --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
-			\t --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
+  set_property USER_COMMENTS.comment0 "	 	 ======================= >>>>>>>>> An Example Versal Extensible Embedded Platform <<<<<<<<< =======================
+				 Note:
+				 --> Board preset applied to CIPS and memory controller settings
+				 --> AI Engine control path is connected to CIPS
+				 --> V++ will connect AI Engine data path automatically
+				 --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
+				 --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
 
 common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
 
@@ -283,7 +289,7 @@ proc create_root_design { parentCell } {
       PS_NUM_FABRIC_RESETS {1} \
       PS_PCIE_EP_RESET1_IO {PS_MIO 18} \
       PS_PCIE_EP_RESET2_IO {PS_MIO 19} \
-      PS_PCIE_RESET {ENABLE 1} \
+      PS_PCIE_RESET {{ENABLE 1}} \
       PS_PL_CONNECTIVITY_MODE {Custom} \
       PS_TTC0_PERIPHERAL_ENABLE {1} \
       PS_UART0_PERIPHERAL {{ENABLE 1} {IO {PMC_MIO 42 .. 43}}} \
@@ -314,6 +320,7 @@ proc create_root_design { parentCell } {
   # Create instance: clk_wizard_0, and set properties
   set clk_wizard_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0 ]
   set_property -dict [list \
+    CONFIG.CE_TYPE {HARDSYNC} \
     CONFIG.CLKOUT_DRIVES {MBUFGCE,BUFG,BUFG,BUFG,BUFG,BUFG,BUFG} \
     CONFIG.CLKOUT_DYN_PS {None,None,None,None,None,None,None} \
     CONFIG.CLKOUT_GROUPING {Auto,Auto,Auto,Auto,Auto,Auto,Auto} \
@@ -554,7 +561,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins cips_noc/aclk9]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins CIPS_0/pl_ps_irq0]
   connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins icn_ctrl/aclk] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n]
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins icn_ctrl/aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn]
 
   # Create address segments
