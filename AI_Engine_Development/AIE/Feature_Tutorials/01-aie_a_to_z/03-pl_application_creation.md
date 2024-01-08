@@ -86,7 +86,7 @@ Now that you have imported the kernels, you need to tell the Vitis linker how to
 
       ![missing image](images/232_sys_proj.jpg)
 
-7.  Click again on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***HLS*** and select the ***mm2s*** and ***s2mm*** components.
+7.  Click again on ***Add Existing Components*** in the **Components** section at the bottom of the file. Click ***AI Engine*** and select the **simple_aie_application*** components.
 
 8. Now you need to tell the Vitis compiler about the connectivity of the system. This step is done using a configuration file. Still in the settings file **vitis-sys.json**, under **Hardware Link Settings** expend **binary_container_1** and click on ***hw_link/binary_container_1-link.cfg***
 
