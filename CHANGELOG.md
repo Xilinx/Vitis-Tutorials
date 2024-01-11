@@ -1,9 +1,16 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.2_update (Jan. 11, 2024)
+### New Tutorials
+- Embedded_Software/Feature_Tutorials/01-user_managed_mode/
+- Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration/
+- Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows/
+
 ## 2023.2 (Nov. 1st, 2023)
 ### New Tutorials 
 - AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization/
 - AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features/ 
+- Embedded_Software/Getting_Started/
 
 ### Tutorial Updates
 - Update existing AIE feature tutorials to work with AIE-ML
@@ -13,7 +20,7 @@
     - AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration/
     - AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features/
 - Tutorials that contain GUI design flow have been updated to work with the Unified IDE, which has become the default GUI in Vitis 2023.2 
-- Updated tutorials to use the Unified CLI
+- Updated tutorials to use the Vitis Unified CLI
 
 ### EoU Improvements
 - Add an additional level under AI_Engine_Development to host tutorials targeting AIE and AIE-ML.
