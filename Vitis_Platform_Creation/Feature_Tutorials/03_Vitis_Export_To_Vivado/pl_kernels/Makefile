@@ -4,12 +4,12 @@
 # */
 
 VCC = v++
-XSA = ../vivado_impl/flat_wa.xsa
+XSA = ../hw/build/my_project/vck190_prj_ext_hw.xsa
 
-.PHONY: clean
+.PHONY: all clean
 
-%.xo: %.cpp
-	${VCC} -c -k $(basename $<) -f ${XSA} -s -o $@ $< 
+all: polar_clip.cpp
+	${VCC} -c -k $(basename $<) -f ${XSA} -s $< -o polar_clip.xo 
 
 clean:
 	rm -rf _x hls *.log *.xo* .Xil .crashReporter *.xo.compile_summary

@@ -1,63 +1,104 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
-    </td>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
  </tr>
 </table>
 
 # Vitis Export To Vivado
 
-***Version: Vitis 2023.1***
+***Version: Vitis 2023.2***
 
 ## Introduction
 
-The Vitis Export to Vivado is the new feature release in AMD Vivado™ 2023.1/Vitis 2023.1 suites which enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity. You can do the hardware design development in the Vivado Design Suite and use the Vitis tool to do the software development, such as, Xilinx Runtime (XRT), AI Engine (AIE) development, and programmable logic (PL) kernels development in the Vitis tool. Prior to this release, for any change in the hardware design, you needed to export the extensible XSA, go to the Vitis environment, and carry out the further development flow in the Vitis tool. This flow provides the flexibility to do the hardware design development in the Vivado design, which includes hardware design development, synthesis, implementation, and timing closure in Vivado and other development tasks like XRT, AIE development, application development, HLS kernel development, etc. in the Vitis tool. In 2023.1, the flow supports hardware development only (i.e., `TARGET=HW`).
+The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. Refer UG1393 https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
 
-The tutorial describes the flow which starts from the Vivado Design Suite. The hardware design to be developed in the Vivado design and export the extensible hardware platform (.xsa) from the Vivado Design Suite that forms the basis of many differentiated Vitis hardware applications. The extensible platform is imported into the Vitis environment to perform the development of the AI Engine Graph application and additional PL kernels for the system design. Compile the AIE graph and PL kernels. Link the compiled output, extensible platform to export the VMA during the v++ linking phase using the new v++ switch. Import the VMA file into Vivado using the new Tcl API and later, design development work can be continued in the Vivado design. Design flow section shared the complete design flow.
+**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2023.2 and Vivado 2023.2 software.
 
-To use Vitis export to the Vivado flow, a new v++ switch and three Tcl APIs are introduced. This tutorial helps you understand the following new switch and Tcl APIs in the flow:
-
-The new v++ switch introduced in this flow to export Vitis metadata is:
-
-```bash
-1. v++ -l --export_archive
-```
-
-New Vivado Tcl APIs introduced in this flow to import and remove the VMA from Vivado are:
-
-```bash
-2. vitis:: import_archive
-3. vitis:: remove_archive_hierarchy
-4. vitis:: remove_archive
-```
-
-**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2023.1 and Vivado 2023.1 software.
-
-This tutorial demonstrates the hardware design development using Tcl-based flow. You can try any other design methodology which supports Block Design Container (BDC) as the flow supports BDC-based designs only.
+### We are creating the custom BDC based platform using the tcl script. The Vitis Export to Vivado flow supports BDC-based platform only. 
 
 ## Objectives
 
-After completing the tutorial, you will be able to do the following:
+After completing this tutorial, you will be able to do the following:
 
- 1. Export the extensible platform (.xsa) from the hardware design developed in the Vivado Design Suite.
- 2. PL kernel development and compilation in the Vitis environment.
- 3. AIE graph development and compilation in the Vitis environment.
- 4. Export the Vitis-Metadata-Archive (VMA) using the new v++ command, `--export_archive`.
- 5. Import the VMA in Vivado Design Suite using the new Tcl API.
- 6. Generate `fixed.xsa`.
+ 1. Modify BD platform setup in Vivado to connect RTL-IP stream ports to AIE PLIO.
+ 2. Export the extensible platform (.xsa) from the hardware design in Vivado.
+ 3. Create the Vitis-Metadata-Archive (VMA) using the --export_archive option in v++ --link command.
+ 4. Import the VMA in Vivado using `vitis::import_archive` Tcl API.
+ 5. Generate `fixed.xsa` from Vivado, and from there, the xclbin file is needed to test the design in hardware or hardware emulation.
+
+##  Recommended design development flow steps:
+
+The recommended steps are as follows: 
+1. Develop hardware design in Vivado.
+2. Export the extensible platform (.xsa) from Vivado. 
+3. Use the Extensible platform (.xsa) in Vitis to develop and compile AI Engine Graph application and PL kernels. 
+4. Link the AIE / PL compiled output, connectivity graph, extensible platform to export the VMA (Vitis Metadata Archive) in Vitis.
+5. Import the VMA file into Vivado.
+6. To run the design in hardware emulation:
+   
+   6.1: Run simulation scripts
+   
+   6.2: Generate fixed xsa in Vivado
+   
+   6.3: Run v++ package target hw_emu to generate xclbin in Vitis
+   
+   6.4: Run host.exe
+   
+7. To run the design in hardware:
+ 
+   7.1: Run synthesis and implementation. Close timing in Vivado.
+   
+   7.2: Generate fixed.xsa in vivado
+   
+   7.3: Run v++ package target hw to generate xclbin in Vitis
+   
+   7.4: Take the design to hardware and run host.exe
+   
+![Flow_Diagram](./images/design_flow_3_1.png)
+
+The steps in the above diagram are covered in detail in the below section "Design Flow".
+
+The Vitis export to the Vivado flow introduces a new v++ link option and three new Tcl APIs. This tutorial helps you understand how to use this flow:
+
+The v++ link option introduced in this flow to generate Vitis Metadata is:
+
+```bash
+v++ -l --export_archive
+```
+
+This option can be used with v++ --l only. Do not use --target with this command, it is not supported. 
+
+The Vivado Tcl APIs are introduced in this flow to import and remove the VMA from Vivado are:
+
+```bash
+vitis:: import_archive
+vitis:: remove_archive_hierarchy
+vitis:: remove_archive
+```
+
 
 ## DESIGN FILES
 
-1. The following Tcl files used to create the Vivado project are in the `vivado_impl` directory:
+--------------
 
-    - [Flat.tcl](./vivado_impl/flat.tcl)
+1. Vivado design tcl scripts are located in `hw\xsa_scripts` folder:
 
-    - [create_bdc.tcl](./vivado_impl/create_bdc.tcl)
+    - [xsa.tcl](./hw/xsa_scripts/xsa.tcl)
+    
+    - [project.tcl](./hw/xsa_scripts/project.tcl)
+    
+    - [ext_bdc.tcl](./hw/xsa_scripts/ext_bdc.tcl)
 
-    - [flat_pre_bdc.tcl](./vivado_impl/flat_pre_bdc.tcl)
+    - [vck190_bd.tcl](./hw/xsa_scripts/vck190_bd.tcl)
 
-2. AIE files for AIE development are in the `aie` folder.
+    - [pfm_decls.tcl](./hw/xsa_scripts/pfm_decls.tcl)
+   
+2. Files for AIE graph are in the `aie` folder.
 
     - [Graph.cpp](./aie/graph.cpp)
 
@@ -67,212 +108,375 @@ After completing the tutorial, you will be able to do the following:
 
     - [kernels.h](./aie/kernels.h)
 
-3. PL_KERNELS for PL kernel development are in the `pl_kernels` folder.
-
-    - [mm2s.cpp](./pl_kernels/mm2s.cpp)
+3. Files for Polar_clip HLS kernel are in the `pl_kernels` folder.
 
     - [polar_clip.cpp](./pl_kernels/polar_clip.cpp)
 
-    - [s2mm.cpp](./pl_kernels/s2mm.cpp)
-
 4. The system configuration file is in the `vitis_impl` folder.
 
-   - [system.cfg](./vitis_impl/system.cfg)
+   - [system.cfg](./vitis_impl/system.cfg): Connection details for AIE and HLS Kernel: Polar_clip
 
 ## Design Flow
 
-This tutorial covers the following two use cases. Both use cases are related to the changes done after the VMA import as there is no change in the flow until the AI Engine (AIE) and PL kernels compilation (same as Vitis Integrated flow).
+This tutorial covers two use cases as follows: 
 
-1. Modification(s) in the hardware design after the VMA import (second iteration onwards) is in Vivado only. No changes affecting the AIE-PL boundary.
-2. Modification(s) are related to the AIE-PL boundary and Vitis development after the VMA import (second iteration onwards). In this use case, modifications related to Vivado are also supported.
+Use Case 1: Changes in the hardware design after VMA import not affecting the PLIO interface. In this use case, we are considering no hardware design change in Vivado affects the AIE-PL boundary or AIE/PL kernels. So, developer can do the hardware development in Vivado and generate the fixed xsa. 
 
-The complete flow (from hardware design creation to export .xclbin) is divided into seven steps as shown in the following figure:
+Use Case 2: Changes in the hardware design after VMA import affects the PLIO interface or changes in vitis sw files. This use case will be helpful to update the Vivado design for following Vitis development: 
+   1. Changes are required in AIE-PL (PLIO) boundary.
+   2. Changes done in HLS kernel. 
+   3. Changes done in connection and need modifications in Vitis configuration file.  
 
-![Flow_Diagram](./images/flow_dig.png)
+To incorporate Vitis changes in Vivado, following steps are required:
+   1. Remove the imported VMA from vivado. 
+   2. Re export the extensible xsa from vivado (if there are any changes done in vivado after the last extensible xsa export). 
+   3. Re compile the modified software files with the latest exported extensible xsa.
+   4. Re export the VMA with updated software changes.
+   5. Import the latest VMA into the design.
 
-### Use Case 1: Vitis Export to Vivado Flow with Changes Related to Vivado Only After Importing the VMA
+Note: Use the make command in the tutorial from the parent folder `03_Vitis_Export_To_Vivado`
 
-#### Step 1
+#### Step 1 : Create the hardware design in Vivado
 
-Create the hardware platform using the Tcl flow. The Tcl files are shared in the `vivado_impl` folder.
+Step 1.1 : Create the hardware design in Vivado using the Tcl flow. The Tcl files are shared in directory `hw/xsa_scripts`. 
 
-Use the following command to generate the Vivado project through Tcl and Export XSA.
+Use the following make command to generate the Vivado project through Tcl:
 
-```bash
-vivado -mode batch -source ./vivado_impl/flat.tcl
-```
+`make xsa`
 
-OR use the `make` command to generate the XSA.
+The above make command source the xsa.tcl (top file) file. The tcl file calls below files:
 
-```bash
-make xsa
-```
+     1. project.tcl : Creates the project my_project in Vivado for the board VCK190 and create the BDC (Block Design Container) as ext_bdc. 
 
-Output: The generated extensible XSA is located in the director `vivado_impl/flat_wa.xsa` and `flat` folder contains the Vivado project flat.
+     2. ext_bdc.tcl : Create the block design ext_bdc.tcl. In this BDC, AIE and related PL IPs are placed and connections are done through the tcl. 
 
-#### Step 2
+     3. vck190_bd.tcl : Create the vck190_prj.bd and configures CIPS, CIPS NoC and Memory controllers for DDR4 and LPDDR4 and make connections. 
 
-After exporting the XSA, you need to compile AIE and PL Kernels, and generate `libadf.a` and `.xo` file respectively before running the v++ linker (same as the Vitis integrated flow).
+     4. pfm_decls.tcl : Set the platform attributes for the ext_bdc design like SP TAGs for AXI Port, clock, interrupt etc. 
 
-##### 2.1: Compile the AIE Graph and Generate `libadf.a`
 
-Use the following command to execute 2.1:
+Open the Vivado project by opening the project file .xpr from the path:  `./hw/build/my_project folder/my_project.xpr` 
 
-```bash
-v++ -c --mode aie --platform ../vivado_impl/flat_wa.xsa ./aie/graph.cpp 
-```
+![image](./images/my_project_1.png)
 
-OR use the `make` command to generate the AIE-compiled output.
+Step 1.2: Add the custom RTL IPs in Vivado. Here, we are using stream_in and stream_out RTL IPs which we are adding in ext_bdc.bd. Stream_out RTL IP is a free running RTL block which generates the stream data indefinitely. Stream_in IP receives the data from AIE and status of the received data can be checked by PS through AXI Lite interface. Below steps demonstrates how to add custom RTL IPs in the bd to export the extensible xsa from the Vivado:
+
+1. Package RTL IPs. (We have placed the packaged RTL IPs in the folder `custom_ip`)
+
+2. Add the RTL path in the IP repository from the project manager settings in the Vivado. After adding the path click ok.
+
+![image](./images/add_custom_ip_1.png)
+
+3. Open ext_bd.bd. Source "my_project_changes.tcl" located in hw folder. Source the tcl file to execute following actions:
+
+![image](./images/source_tcl.png)
+
+
+![image](./images/add_ip_2.png)
+
+a. Change IP configuration settings for following IPs:
+
+   		a. icn_ctrl: Set the master ports to 7. 
+   
+   		b. DDRNoC : Set the slave axi ports to 0. 
+   
+   		c. LPDDRNoC : Set the slave axi ports to 0.
+
+b. Connecting the clock of both RTL-IPs to clock_out1, reset_n to reset generated by clk_out1 and connect stream_in slave AXI port to Master port 7 of icn_ctrl.
+ 
+![image](./images/rtl_ip_connected_1.png)
+
+c. Assign the address to the port: /stream_in_/s_axi_ontrol.
+
+4. Go to Platform setup: 
+   Select AXI Stream Port: Give the SPTAG name to stream port of stream_out as AIE_IN and stream_in as AIE_OUT. 
+   ![image](./images/platform_setup_3.png)
+
+
+5. Validate and save the bd : ext_bdc. Ignore the warning as we are going to connect the intr port of axi_intc_cascaded_1, stream port of stream_in_0 and stream port out_r of stream_out_0 during the v++ --link in step 2.3
+   ![image](./images/critical_warning.png)
+
+7. Re-generate target for vck190_prj.bd
+   
+
+8. Export the extensible platform :
+    
+    a. Go to Flow Navigator > IP Integrator > Export platform. Click Next
+    ![image](./images/export_platform_4.png)
+    
+    b. Select Platform Type = Hardware. Click Next.
+    
+    c. Select Platform State = Pre-synthesis. Click Next.
+    
+    d. Keep the Platform Properties settings as is. Click Next.
+    
+    e. Give XSA file Name = vck190_prj_ext_hw_ext_hw and Export to = /hw/build/my_project. Click Next and Finish
+    ![image](./images/export_platform_5.png)
+
+Output: The generated extensible XSA is located at `hw/build/my_project/vck190_prj_ext_hw.xsa`. 
+
+#### Step 2 Create the software components in Vitis
+
+After exporting the XSA, compile AIE and PL kernels to generate `libadf.a` and `.xo ` file respectively.
+
+Step 2.1: Compile the AIE Graph to generate `libadf.a`
+
+Use the `make` command to generate the libadf.a (AIE compiled output).
 
 ```bash
 make adf
 ```
+The above make command compiles the graph.cpp using the v++ command: v++ -c --mode aie --platform ../hw/build/my_project/vck190_prj_ext_hw.xsa graph.cpp
+If you want to run the command directly from the terminal, you can run it from the AIE folder.
 
-Output: The generated `libadf.a` is located in the directory `aie\libadf.a`.
+The graph has two PLIOs. The first PLIO is connected to interpolator AIE Kernel and the second PLIO is connected to classifier AIE Kernel. 
+ 
+Output: The generated `libadf.a` is located in the directory `aie/libadf.a`.
 
-##### 2.2: Compile PL Kernels to Generate the .xo File
+Step 2.2: Compile PL Kernels to generate the .xo File
 
-Command to execute 2.2:
+We are using one PL kernels: polar clip. In this step, we compile the HLS kernel and generate the .xo file. 
 
-You are using three PL kernels. In this step, generate the XO files for all three kernels.
-
-1. Generate the kernel, `mm2s.xo`.
-
-    ```bash
-    v++ -c -k mm2s -f ./vivado_impl/flat_wa.xsa -s -o mm2s.xo ./pl_kernels/mm2s.cpp 
-    ```
-
-2. Generate the kernel, `polar_clip.xo`.
-
-    ```bash
-    v++ -c -k polar_clip -f ./vivado_impl/flat_wa.xsa -s -o polar_clip.xo ./pl_kernels/polar_clip.cpp
-    ```
-
-3. Generate the kernel, `s2mm.xo`.
-
-    ```bash
-    v++ -c -k s2mm -f ./vivado_impl/flat_wa.xsa -s -o s2mm.xo ./pl_kernels/s2mm.cpp
-    ```
-
-    OR
-
-    All three XOs can be generated using the `make` command:
-
-    ```bash
-    make xos
-    ```
-
-    Output: The generated .xo files are located in the directory `pl_kernels\mm2s.xo`,  `pl_kernels\polar_clip.xo`, and `pl_kernels\s2mm.xo`.
-
-##### 2.3: Export the `vma` File Using the v++ Linker Using the New Switch `--export_archive` and Linking the `extensible.xsa`, `libadf.a`, XOs, and `system.cfg`
-
-Command to export the VMA:
+Make command to compile and generate .xo file: 
 
 ```bash
-v++ -l --platform ../vivado_impl/flat_wa.xsa  ../pl_kernels/*.xo ../aie/libadf.a --save-temps --export_archive --config system.cfg -o vitis_impl/flat_hw.vma
+make xos
 ```
+The above make command compiles the polar_clip.cpp using the v++ command inside the pl_kernel folder: 
 
-Here, *.xo represents all PL `kernel.xo` files and path.
+v++ -c -k polar_clip -f ../hw/build/my_project/vck190_prj_ext_hw.xsa -s polar_clip.cpp -o polar_clip.xo
 
-OR use the `make` command to generate the VMA:
+If you want to run the command directly from the terminal, you can run it from the pl_kernel folder.
+
+Output: The generated .xo files are located in the directory `pl_kernels/polar_clip.xo`.
+
+Step 2.3: Integrate the AIE+PL subsystem by linking the extensible platform (vitis_design_ext_hw.xsa), AIE graph (libadf.a), PL kernel (polar_clip.xo)  and the Vitis configuration file (system.cfg). Use the --export_archive linker option to generate a Vitis Metadata Archive (vma) file which can then be imported in Vivado.
+
+Use the `make` command to generate .vma file:
 
 ```bash
 make vma
 ```
+The above make command runs the the v++ -l command: 
 
-Output: The generated .vma file in `vitis_impl`.
+v++ -l --platform ../hw/build/my_project/vck190_prj_ext_hw.xsa  ../pl_kernels/polar_clip.xo ../aie/libadf.a --save-temps --export_archive --config system.cfg -o vitis_design_hw.vma
 
-#### Step 3
+In the configuration file (system.cfg), provide details about the connectivity between the AIE and PL IPs. Vitis uses the file to make the connectivity during linking:
 
-Import the VMA file in the Vivado project.
+```bash
+[connectivity]
+nk=polar_clip:2:polar_clip_1.polar_clip_2
+# Connect AIE input of PLIO-1 to RTL-IP port AIE_IN
+stream_connect=AIE_IN:ai_engine_0.DataIn1
+# Connect AIE output of PLIO-1 to input of HLS kernel: polar_clip_1
+stream_connect=ai_engine_0.polar_clip_out:polar_clip_1.in_sample
+# Connect output of polar_clip_1 to input of AIE PLIO-2
+stream_connect=polar_clip_1.out_sample:ai_engine_0.polar_clip_in
+# Connect output of PLIO-2 to RTL-IP port AIE_OUT
+stream_connect=ai_engine_0.DataOut1:AIE_OUT
+```
 
-1. Open the Vivado project from the project directory, `./vivado_impl/flat/flat.xpr`.
+Output: The generated .vma file is located in `vitis_impl/vitis_design_hw.vma`.
 
-    ![Vivado-1](./images/Step_3_1.png)
+#### Step 3: Import VMA into Vivado project
 
-2. From the Tcl console, use the Tcl API to import the VMA: `vitis::import_archive ./vitis_imple/flat_wa.xsa`.
+After exporting VMA file in step-2, import the VMA file in the Vivado project.
 
-    ![TCL-1](./images/Step_3_2.png)
+1. Open the Vivado project from the project directory, `./hw/build/my_project/my_project.xpr`.
+       
+2. From the Tcl console, use the Tcl API to import the VMA: `vitis::import_archive ./vitis_impl/vitis_design_hw.vma`.
 
-3. After running the Tcl API to import the VMA, the modified design shall have `ExtensibleRegion_VMA.BDC`:
+    ![image](./images/step3_2.png)
 
-    ![image](./images/Step_3_3.png)
+3. After running the Tcl API to import the VMA, a BDC will be created and named as `ext_bdc_vma.bd`
 
-4. `ExtensibleRegion_vma.bd` shall be seen as:
+      ![image](./images/after_vma_import_2.png)
 
-    ![image](./images/Step_3_4.png)
+4. Connection between AIE, RTL Ips and HLS Kernel in `ext_bdc_vma.bd` is as follows:
 
-#### Step 4: Changes Related to Vivado Design Only
+    ![image](./images/after_vma_import_4.png)
+    
+Here, it can be seen that the open ports in step 1.2.8 are connected using the v++ --link.
 
-Review of the VMA section can be done here. The BDC shows which kernels are used in the Vitis region and connections. You can review the PL-AIE connection also as per the design requirement.
-In this step, you are free to do all design analysis and modification as done before in Vivado. Refer to [UG1393](<https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
+#### Step 4: Changes in the Vivado design after the VMA import
 
- **NOTE:** Any changes related to imported VMA BDC can only be done through Vitis. It is read-only. To perform any changes in Vivado, ensure that latest VMA is imported into Vivado.
+Developer can make the Vivado design changes in the ext_bdc_vma.bd after importing VMA except inside the hierarchy (VitisRegion.v). You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy. Refer to [UG1393](<https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
 
- *To progress the Vivado changes, you need to ensure that the changes should be done after importing the latest VMA only. If you do the changes in Vivado after the XSA is exported and before importing the VMA, changes will be lost.*
+ **NOTE:** Any changes related to VitisRegion hierarchy in ext_bdc_vma.bd can only be done through Vitis. It is read-only in Vivado. 
+ 
+Based on the Vivado design changes affecting the PLIO interface or not, we are covering the two use cases as discussed. In step-5, we are covering the use-case 1, where the design changes are not affecting the PLIO interface. To do the Vivado design changes affecting the PLIO interface refer to -[Use Case 2: Vivado design changes affecting the PLIO boundary]
 
-#### Step 5
+#### Step 5-1: Use Case 1 : Vivado design changes doesn't require any PLIO interface change.
 
-If there are no changes required in the Vitis environment, this step can be skipped. For more details, refer to Use Case 2.
+This step is to cover the use-case 1 to make the Vivado design changes not affecting PLIO interface. We are not making any change in the Vivado design and moving to step-6.
+
+#### Step 5-2: Use Case 2: Vivado design changes that require PLIO interface change
+
+This step covers use-case 2 i.e. Vivado design changes affecting the PLIO interface. 
+To import the latest VMA from Vitis, you have to remove the existing VMA from the Vivado project. To remove the imported VMA from the Vivado design, you can use one of the following two commands:
+
+1. `vitis::remove_archive_hierarchy` : This command can be used to remove the imported VMA BDC (VitisRegion.bd) only and keep the design modifications done in Vivado are intact. This command keeps internal links of Vitis Metadata which is helpful for the further hardware design interations. 
+2. `vitis::remove_archive` : This command can be used to remove imported VMA BDC and all the bd variants generated after the vma import. This command is helpful in the scenarios where developer wants to clean the project with previous vma iterations and start with fresh vma import. It removes all internal links of Vitis Metadata and Vivado design modifications done in child bds.
+
+For design development in iterations, it is recommended to use vitis::remove_archive_hierarchy.
+
+In this tutorial, we are adding one HLS kernel (Polar_clip) in cascade to existing polar_clip kernel to show how to add another HLS kernel and modify the connectivity graph. Since we have already compiled the hls kernel and not done any change in the Vivado design, we need to only update the system.cfg. Updating the connectivity graph helps to establish the connection between polar-clip 1 to polar-clip 2. Following steps would help us to understand the flow:
+
+1. To remove the imported VMA only, using the Tcl API, `vitis::remove_archive_hierarchy` as shared above. 
+![image](./images/Step-10.png)
+
+The updated BD can be seen in the following image, only the VMA is removed and connections gets open for AIE and RTL-IPs.
+
+![image](./images/after_vma_import_5.png)
+
+2. Modify the system.cfg to update the connectivity graph changes.
+ 
+```bash
+[connectivity]
+nk=polar_clip:2:polar_clip_1.polar_clip_2
+# Connect AIE input of PLIO-1 to RTL-IP port AIE_IN
+stream_connect=AIE_IN:ai_engine_0.DataIn1
+# Connect AIE output of PLIO-1 to input of HLS kernel: polar_clip_1
+stream_connect=ai_engine_0.polar_clip_out:polar_clip_1.in_sample
+# Connect output of polar_clip_1 to input of polar_clip_2
+stream_connect=polar_clip_1.out_sample:polar_clip_2.in_sample
+# Connect output of polar_clip_2 to input of AIE PLIO-2
+stream_connect=polar_clip_2.out_sample:ai_engine_0.polar_clip_in
+# Connect output of PLIO-2 to RTL-IP port AIE_OUT
+stream_connect=ai_engine_0.DataOut1:AIE_OUT
+```
+
+3. Run v++ --link to export .vma with modified system.cfg generated in step 2.
+
+4. Import the updated .vma into the Vivado project
+
+![image](./images/after_vma_mport_8.png)
+
+In case if you want to make modifications in the Vivado design, you can do that in the following way: 
+1. Make changes in the vck190_prj.bd (changes related to CIPS) or in the latest imported *_vma.bd* (changes related to PLIO interface).
+2. Validate and save the bd.
+3. Regenerate the target and re export the extensible XSA using the command 'write_hw_platform -force <vck190_prj_ext_hw_1.xsa>'. 
+4. This extensible XSA will have the Vivado design changes which are done after importing the previous VMA. 
+5. Use the latest exported extensible XSA (vck190_prj_ext_hw_1.xsa) to re generate the VMA using following steps:
+
+   5.1: If the changes are made related to AIE design or AIE-PL boundary, regenerate the libadf.a (remove old libadf.a or revision control it) with the newer extensible xsa.
+   
+   5.2: If the changes are made in the HLS kernels, re-compile the kernels with the newer extensible xsa to generate updated xos (remove old generated xos or revision control).
+   
+   5.3: Make the changes in the system.cfg file (as done in this use-case), reexport the VMA with updated libadf.a, xos, system.cfg and extensbile xsa. Repeat "Step-3" to import the modified VMA in the design.
+   
 
 #### Step 6: Generate the Fixed XSA
 
-In this step, run the design through the implementation run and timing closure. You are free to make all design changes as mentioned in Step 4 and changes in the timing constraint is allowed to meet timing. If you encounter any implementation and timing violation or optimization issues, resolve it in this step and take the design to closure as before. After design closure in Vivado is done, the `fixed.xsa` can be generated by using the Tcl API: `write_hw_platform -fixed ./vivado_impl/flat_fixed.xsa`. Take the design to closure as in the Vitis integrated flow. After, the design closure is done in Vivado.
+In this step, generate the fixed xsa for hardware (testing design on hardware) flow or hardware emulation flow. Following steps helps to generate the fixed xsa successfully:
 
-![image](./images/step_6.png)
+Steps to generate fixed xsa for hardware flow:
+1. Regenerate the target for ext_bdc_vma.bd. 
+2. Run the design synthesis, implementation run and timing closure. 
+3. Address timing violations and other implementation issues with the design. 
+4. Generate the fixed xsa using the TCL API: `write_hw_platform -fixed ./hw/build/my_project/vck190_prj_fixed_hw.xsa`. 
 
-Output: The fixed XSA, `flat_fixed.xsa`, is in the `vivado_impl` folder.
+![image](./images/export_fixed_hw_xsa.png)
+
+Output: The fixed XSA, `vck190_prj_fixed_hw.xsa`, is located in the folder `hw/build/my_project`.
+
+Steps to generate the fixed xsa for hardware emulation:
+
+1. Regenerate the target for the ext_bdc_vma.bd and vck190_prj.bd
+2. Generate the simulation scrips: `launch_simulation -scripts_only
+3. Set the variable AIE_WORK_DIR=<absolute_path>/aie/Work from the terminal.
+4. Go to the folder:./hw/build/my_project/my_project.sim/sim_1/behav/xsim/ and run compile.sh and elaborate.sh from the terminal.
+5. Generate the fixed xsa to run hardware emulation: `write_hw_platform -fixed -include_sim_content ./hw/build/my_porject/vck190_prj_fixed_hw_emu.xsa`
+
+![image](./images/export_fixed_hw__emu_xsa.png)
+
+Output: The fixed XSA, `vck190_prj_fixed_hw_emu.xsa`, is located in the folder `hw/build/my_project`.
 
 #### Step 7: Generate the XCLBIN
 
-Like previous flows, `fixed.xsa` can be used for many purposes like application development running on Petalinux/Yocto, XRT, or bare-metal flows. Later, generate the xcilbin using the v++  package command:
-`v++ -p -t hw --platform ./vivado_impl/flat_fixed.xsa ./aie/libadf.a -o flat_hw.xclbin`
+The ‘common image’ package (https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-versal-common-v2023.2_10140544.tar.gz) contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis software platform.
 
-This step will generate the .xclbin without having any software details like rootfs etc,.
-To run the design on hardware, you need to add the software details while packaging. Refer to the Building and Packaging section in [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
+Before starting this tutorial, run the following steps:
 
-### Use Case 2: Vitis Export to Vivado Flow with Changes Related to Vitis and Vivado After Importing the VMA
+1. Go to the directory where you have unzipped the Versal Common Image package.
+2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh``.
+3. Set up your ROOTFS and IMAGE to point to the ``rootfs.ext4`` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2023.2`` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This use case covers the scenario when you want to make changes in Vivado and Vitis. For making the changes in Vivado, you can progress as described in Step 4 of Use Case 1. For changes to be done in Vitis, import the latest VMA into Vivado (to ensure that latest `extensible.xsa` and VMA are in sync) as described in Step 5.
+Compile the A72 Host Application: The host code uses XRT (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Note that to compile the host code, it is required to use the c++17 package. Ensure your gcc or g++ compiler has the necessary packages installed.
 
-#### Step 5: Changes Related to the Vitis Design
+Run the make command to compile the host application to generate host.exe
 
-This step supports any modification in the Vitis region design which might or might not impact the boundary of the PL-AIE region. Remove the imported VMA from the existing Vivado design. To remove the imported VMA from the Vivado design, use the following two commands:
+`make host`
 
-1. `vitis::remove_archive_hierarchy`
-2. `vitis::remove_archive`
+The PS code written in host.cpp located in the folder sw. The make command compile host.cpp to generate host.exe.
 
-In this use case, it is considered that there is/are change(s) in the Vitis design. To execute the change, you need to remove the imported VMA from the Vivado project. Use the following steps to execute:
+After generating host.exe, run v++ --package to generate .xclbin.
 
-1. Remove the imported VMA only using the Tcl API, `vitis::remove_archive_hierarchy`. Implement the changes in Vivado, and repeat Step 1 to export the updated XSA file. Repeat Step 2 to use the latest XSA to link the updated AIE-compiled output, PL kernels output, and `system.cfg`. Export the updated VMA. Repeat Step 3 to import the modified VMA in the design.
+Use the make command to generate the xcilbin using the v++  package command for HW flow:
 
-    In this example, plan to add one more polar clip IP in the Vitis region. Because the .xo file has been already generated in the previous steps (Use Case 1), you can directly modify connections in the `system.cfg` file as follows:
+`make package TARGET=hw`
 
-    ![image](./images/step_9.png)
+The above make command executes the below command:
 
-    In the `system.cfg`, you have added one more polar_clip kernel. The new polar_clip_2 kernel is concatenated with the formal polar_clip_1 kernel.
+```bash
+v++ -p -t hw -f ./hw/build/my_project/vck190_prj_fixed_hw.xsa \
+--package.sd_dir ../versal/aie ./aie/libadf.a \
+--package.out_dir package.hw \
+--package.rootfs ../sw/versal/xilinx-versal/rootfs.ext4 \
+--package.sd_file ../sw/versal/xilinx-versal/Image \
+--package.sd_file emconfig.json \
+--package.bl31_elf ../boot/bl31.elf \
+--package.boot_mode sd \
+--package.uboot ../boot/u-boot.elf \
+--package.sd_file ../xrt/image/boot.scr \
+--package.sd_file host.exe \
+--package.dtb ../boot/system.dtb \
+-o vck190_vitis_design_hw.xclbin 
+```
+To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
 
-    After using the `vitis::remove_archive_hierarchy` command, the updated BD will display as shown in the following image, in which the added PL IPs and connections are intact and only the VMA is removed.
+Use the make command to generate the xcilbin using the v++  package command for HW Emulation flow:
+`make package TARGET=hw_emu`
 
-    ![image](./images/Step-10.png)
+The above make command executes the below command:
 
-    After running the command, the modified VMA region is shown as:
+```bash
+emconfigutil --platform ./hw/build/my_project/vck190_prj_fixed_hw_emu.xsa --nd 1;\
+v++ -p -t hw_emu -f ./hw/build/my_project/vitis_design_fixed_hw_emu.xsa \
+--package.sd_dir ../sw/versal/aie ./aie/libadf.a \
+--package.out_dir package.hw_emu \
+--package.rootfs ../sw/versal/xilinx-versal/rootfs.ext4 \
+--package.sd_file ../sw/versal/xilinx-versal/Image \
+--package.sd_file emconfig.json \
+--package.bl31_elf ../boot/bl31.elf \
+--package.boot_mode sd \
+--package.uboot ../boot/u-boot.elf \
+--package.sd_file ../xrt/image/boot.scr \
+--package.sd_file host.exe \
+--package.defer_aie_run \
+--package.dtb ../boot/system.dtb \
+-o vck190_vitis_design_hw_emu.xclbin 
+```
 
-    ![image](./images/Step-11.png)
+To run the hardware emulation, execute the below steps after .xclbin generation:
 
-2. Remove the imported VMA using the Tcl API, `vitis::remove_archive` to remove the imported VMA with changes done in Vivado after the VMA import. After this command, you need to start from Step 1, export extensible.xsa again with hardware changes, and repeat the steps as described in Use Case 1. The use of this command helps the developer in case there is a need to knock off all the changes or configurations done during the hardware development in Vivado and start from the last VMA import (in case, considering multiple VMA are imported).
+```bash
+make run
+```
+You can see in the terminal, that data is received well in stream_in IP. Reading the register to check the number of packets received, it is random as we are checking status through PS randomly. Reading the error register to confirm, any error is occurred during transaction. Message: "TEST IS DONE" concludes the hardware emulation flow.
 
-    Repeat Step 6 and 7 from use case -1 to generate the `fixed.xsa` and xclbin files.
+![image](./images/package_run.png)
 
 ## Summary
 
 In this tutorial, you learned the following after completing the tutorial:
 
- 1. Start the design in Vivado using the BDC methodology and export `extensible.xsa`.
+ 1. Start the design in the Vivado using the BDC methodology and export `extensible.xsa`.
  2. Compilation of AIE graph and PL kernels xo.
  3. Link the compiled output, `system.cfg`, `extensible.xsa`, and export the VMA.
- 4. Import the VMA into Vivado and progress the platform development in Vivado.
- 5. Generate the `fixed.xsa` file from Vivado.
+ 4. Import the VMA into the Vivado and progress the platform development in the Vivado.
+ 5. Generate the `fixed.xsa` file from the Vivado to support hardware and hardware emulation flow.
 
 To read more about the flow, refer to [UG1393](https://docs.xilinx.com/search/all?query=Vitis+Unified+Software+Platform+Documentation%253A+Application+Acceleration+Development+(UG1393)&content-lang=en-US) (Chapter 19: Managing Vivado Synthesis, Implementation, and Timing Closure).
 
@@ -282,4 +486,4 @@ GitHub issues will be used for tracking requests and bugs. For questions, go to 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>![image](https://media.gitenterprise.xilinx.com/user/2897/files/e44dbf9c-a23d-454f-a757-437e46fd02f4)

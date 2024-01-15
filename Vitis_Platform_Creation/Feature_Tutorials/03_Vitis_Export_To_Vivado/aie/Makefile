@@ -5,17 +5,17 @@
 
 # Compile ADF graph to build libadf.a
 AIECC    =v++ -c --mode aie
-AIEFLAGS = --platform ../vivado_impl/flat_wa.xsa
-#AIEFLAGS1 =--part ${PART}
+AIEFLAGS = --platform ../hw/build/my_project/vck190_prj_ext_hw.xsa
+
  
 
-.PHONY: clean
+.PHONY: all clean
 
-all: libadf.a
-
-libadf.a: graph.cpp graph.h 
+all: graph.cpp graph.h 
 	${AIECC} ${AIEFLAGS} $<
 
 clean:
-	rm -rf .Xil Work libadf.a Map_Report.csv sol.db xcd.log AIECompiler.log temp
+	rm -rf .Xil Work *.a Map_Report.csv sol.db xcd.log AIECompiler.log
+	rm -rf aiesimlator_output function_wdb_dir trdata.aiesim 
+	rm *.log *.wcfg *.wdb pl_sample_counts
 
