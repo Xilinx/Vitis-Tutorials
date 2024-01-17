@@ -326,13 +326,54 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">
                 <strong>Getting Started</strong>
             </td>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
         </tr>
         <tr>
             <td height="24">
                 <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified Embedded IDE :new: </a>
+            </td>
+            <td> 
+                <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode :new: </a>
+            </td>
+            <td>
+                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Vitis Classic to Unified Project Migration :new: </a> 
+            </td>
+        </tr>  
+        <tr>
+            <td height="24"> </td>
+            <td> </td>
+            <td> 
+                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow :new: </a>
+            </td>
+        </tr>  
+    </tbody>
+</table>
+
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td colspan="3" height="24" align="center">
+                <strong> <a href="./Vitis_HLS/">Vitis HLS :new: </a></strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" height="48">
+                Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code. These tutorials offer a broader introduction to the Vitis HLS flows and use cases.
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <strong>Feature Tutorials</strong>
+            </td>
+            <td height="24">
+                <strong>Design Tutorials</strong>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE :new: </a>
             </td>
             <td> </td>
         </tr>  
