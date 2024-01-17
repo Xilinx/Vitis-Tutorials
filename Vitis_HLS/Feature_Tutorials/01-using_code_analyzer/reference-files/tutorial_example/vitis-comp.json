@@ -1,0 +1,12 @@
+{
+  "name": "tutorial_example",
+  "type": "HLS",
+  "configuration": {
+    "componentType": "HLS",
+    "configFiles": [
+      "hls_config.cfg"
+    ],
+    "work_dir": "tutorial_example"
+  },
+  "previousBuildStatusMap": {}
+}
