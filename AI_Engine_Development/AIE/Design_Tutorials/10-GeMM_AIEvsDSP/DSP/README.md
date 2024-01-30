@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal Matrix Multiplication using DSP58 Tutorial (XDXX)</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal Matrix Multiplication using DSP58 Tutorial (XDXX)</h1>
    </td>
  </tr>
 </table>
@@ -179,7 +179,7 @@ The expanded command is as follows:
 ```
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -l --platform xilinx_vck190_base_202310_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+v++ -l --platform xilinx_vck190_base_202320_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g --clock.freqHz 500000000:gemm_large_ocm_0 --clock.defaultTolerance 0.001 \
    --config $(SYSTEM_CONFIGS_REPO)/gemm.cfg --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
    --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16} \
@@ -331,7 +331,7 @@ or
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202310_1 \
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202320_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/gemm_dsp_xrt.elf \
    $(BUILD_TARGET_DIR)/gemm.hw.xclbin
@@ -397,7 +397,7 @@ and do:
 When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
 
 ```bash
-root@versal-rootfs-common-2023.1:~#
+root@versal-rootfs-common-2023_2:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -473,7 +473,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -836,7 +836,7 @@ For all applications, designers must work to predefined specifications and build
 
 ### Resource Utilization
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.1 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.2 version) tools.
 
 The registers, CLB LUT, BRAM, URAM and DSP Engine utilization information can be found in the Vivado project if you perform the following steps:
 

@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 #include "graph.cpp"
@@ -19,6 +19,10 @@ SPDX-License-Identifier: X11
 #include "experimental/xrt_kernel.h"
 #include "experimental/xrt_bo.h"
 
+#define OPTIMIZED_OVERLAY 1
+
+#if OPTIMIZED_OVERLAY
+
 // HLS Datamover Loops and Graph will run Infinitely...
 #if ITER_CNT == -1
    #define MATA_SZ -1 
@@ -26,17 +30,11 @@ SPDX-License-Identifier: X11
    #define MATC_SZ -1
 
 #else
-   #if GEMM_SIZE < 1024
-      #define MATA_SZ (((GEMM_SIZE * GEMM_SIZE ) / CASC_LN ) / 8) * ITER_CNT
-      #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE ) / 32 ) / 8) * ITER_CNT * 8
-      #define MATC_SZ (((GEMM_SIZE * GEMM_SIZE ) / SPLIT ) / 8) * ITER_CNT
-   
-   #else
-      #define MATA_SZ (((GEMM_SIZE * GEMM_SIZE * 4) / CASC_LN ) / 8) * ITER_CNT
-      #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE ) / 32 ) / 8) * ITER_CNT * 32
-      #define MATC_SZ (((GEMM_SIZE * GEMM_SIZE ) / SPLIT ) / 8) * ITER_CNT
-   
-   #endif
+     #define MATA_SZ (((GEMM_SIZE_ZP_A) * GEMM_SIZE / CASC_LN) / 8) * ITER_CNT * ((GEMM_SIZE_ZP_B/SPLIT) / DIM_B)
+     #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE_ZP_B ) / (CASC_LN*SPLIT) ) / 8) * ITER_CNT * (GEMM_SIZE_ZP_A / DIM_A) 
+     #define MATC_SZ (((GEMM_SIZE_ZP_A * GEMM_SIZE_ZP_B ) / SPLIT ) / 8) * ITER_CNT
+#endif
+
 #endif
 
 using namespace std;
@@ -83,9 +81,9 @@ class datamover
       dma_hls_khdl = xrtPLKernelOpenExclusive(dhdl, top->m_header.uuid, dma_hls_obj);
       dma_hls_rhdl = xrtRunOpen(dma_hls_khdl);
 
-      int rval = xrtRunSetArg(dma_hls_rhdl, 44, MATA_SZ);
-          rval = xrtRunSetArg(dma_hls_rhdl, 45, MATB_SZ);
-          rval = xrtRunSetArg(dma_hls_rhdl, 46, MATC_SZ);
+      int rval = xrtRunSetArg(dma_hls_rhdl, 35, MATA_SZ);
+          rval = xrtRunSetArg(dma_hls_rhdl, 36, MATB_SZ);
+          rval = xrtRunSetArg(dma_hls_rhdl, 37, MATC_SZ);
           //rval = xrtRunSetArg(dma_hls_rhdl, 47, ITER_CNT);
       
       printf("Initialised dma_hls...\n");

@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 #pragma once
@@ -19,6 +19,10 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A2,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A7,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B2,
@@ -43,21 +47,8 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B21,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B22,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B23,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B24,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B25,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B26,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B27,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B28,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B29,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B30,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B31,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C2,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C3,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C4,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C5,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C6,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C7,
    ap_int<32> matSz_A, ap_int<32> matSz_B, ap_int<32> matSz_C
    );

@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 
@@ -11,42 +11,72 @@ SPDX-License-Identifier: X11
    #include "matrix_mult_graph.hpp"
    
    using namespace adf;
+   #define OPTIMIZED_OVERLAY 1
+   #if OPTIMIZED_OVERLAY
+   #define SPLIT 3
+   #define CASC_LN 8
+   #define N_SAMPLES 1
    
-   #if GEMM_SIZE < 1024
-      #define SPLIT 8
-      #define CASC_LN 4
-      #define N_SAMPLES 1
-      #define DIM_A (GEMM_SIZE / (SPLIT)) // * CASC_LN))
-      #define DIM_AB (GEMM_SIZE)// / CASC_LN)
-      #define DIM_B (GEMM_SIZE / SPLIT)
+   //defining DIM_A, DIM_B, DIM_AB
+   #if GEMM_SIZE == 32
+   #define DIM_A 16 
+   #define DIM_B 12
+   #elif GEMM_SIZE == 64
+   #define DIM_A 32 
+   #define DIM_B 24
+   #elif GEMM_SIZE == 128
+   #define DIM_A 44 
+   #define DIM_B 44 
+   #elif GEMM_SIZE == 256
+   #define DIM_A 44 
+   #define DIM_B 44 
+   #elif GEMM_SIZE == 512
+   #define DIM_A 16 
+   #define DIM_B 16
+   #elif GEMM_SIZE == 1024
+   #define DIM_A 16 
+   #define DIM_B 16
+   #endif
+   #define DIM_AB (GEMM_SIZE)
    
-      #if ITER_CNT == -1
-         #define GRAPH_ITER_CNT ITER_CNT
-      
-      #else
-         #define GRAPH_ITER_CNT (SPLIT * ITER_CNT)
-      
-      #endif
-      
-   #else
-      #define SPLIT 8
-      #define CASC_LN 4
-      #define N_SAMPLES 1
-      #define DIM_A (GEMM_SIZE / 32) // * CASC_LN))
-      #define DIM_AB (GEMM_SIZE)// / CASC_LN)
-      #define DIM_B (GEMM_SIZE / 32)
+   //defining GEMM_SIZE_ZP_A
+   #if (GEMM_SIZE % DIM_A) == 0 
+       #define GEMM_SIZE_ZP_A GEMM_SIZE			
+   #else 
+       #define GEMM_SIZE_ZP_A (GEMM_SIZE - (GEMM_SIZE % DIM_A) + DIM_A)	
+   #endif
    
-      #if ITER_CNT == -1
-         #define GRAPH_ITER_CNT ITER_CNT
-      
-      #else
-         #define GRAPH_ITER_CNT ((32 / 8) * 32 * ITER_CNT)
-      
-      #endif
+   //defining GEMM_SIZE_ZP_B
+   #if (GEMM_SIZE % (DIM_B*SPLIT)) == 0 
+       #define GEMM_SIZE_ZP_B GEMM_SIZE			
+   #else 
+       #define GEMM_SIZE_ZP_B ((GEMM_SIZE) - ((GEMM_SIZE) % (DIM_B*SPLIT)) + (DIM_B*SPLIT))
+   #endif
+
+////   //defining GRAPH_ITER_CNT
+//   #if ITER_CNT == -1
+//       #define GRAPH_ITER_CNT ITER_CNT
+//   #else
+//       #if GEMM_SIZE == 32
+//           #define GRAPH_ITER_CNT 2*ITER_CNT
+//       #elif GEMM_SIZE == 64
+//           #define GRAPH_ITER_CNT 2*ITER_CNT
+//       #elif GEMM_SIZE == 128
+//           #define GRAPH_ITER_CNT 3*ITER_CNT
+//       #elif GEMM_SIZE == 256
+//           #define GRAPH_ITER_CNT 12*ITER_CNT
+//       #elif GEMM_SIZE == 512
+//           #define GRAPH_ITER_CNT 352*ITER_CNT
+//       #elif GEMM_SIZE == 1024
+//           #define GRAPH_ITER_CNT 1408*ITER_CNT
+//       #endif
+//   #endif
    
    #endif
    
-   #define WINDOW_SIZE (DIM_A * DIM_AB * N_SAMPLES)
+   
+   #define WINDOW_SIZE_A (DIM_A * DIM_AB * N_SAMPLES)
+   #define WINDOW_SIZE_B (DIM_B * DIM_AB * N_SAMPLES)
    
    extern int base_col, base_row;
    
@@ -60,7 +90,7 @@ SPDX-License-Identifier: X11
          GeMM() {
             // GeMM Graph Declarations...
             xf::dsp::aie::blas::matrix_mult::matrix_mult_graph<int16, int16, DIM_A, DIM_AB, DIM_B, 0, 0, \
-               ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE, WINDOW_SIZE, CASC_LN> mmult[SPLIT];
+               ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE_A, WINDOW_SIZE_B, CASC_LN> mmult[SPLIT];
             
             // Mat A PLIO node names...
             for(int j = 0; j < CASC_LN; ++j) {
@@ -109,8 +139,9 @@ SPDX-License-Identifier: X11
                }
                
                // Connecting port IO nodes...
-               adf::connect<>(mmult[i].out, matC_out[i].in[0]);
+               adf::connect<>(mmult[i].out[0], matC_out[i].in[0]);
             }
+            location<graph>(*this) = area_group({{aie_tile, 14, 0, 13+CASC_LN, SPLIT}});
          }
    };
 

@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
     </td>
  </tr>
 </table>
@@ -121,7 +121,7 @@ The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual d
 ### make kernels: Compiling PL Kernels
 
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
 
 ```
 make kernels
@@ -561,7 +561,7 @@ When hardware emulation is launched, you see the QEMU simulator load. Wait for t
 
 ```bash
 
-root@versal-rootfs-common-2023_1:~#
+root@versal-rootfs-common-2023_2:~#
 
 ```
 
@@ -640,7 +640,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -1329,7 +1329,7 @@ For all applications, designers must work to predefined specifications and build
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.1 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.2 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1381,7 +1381,7 @@ $(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
 	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2023.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2023.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
 
 3. Follow the steps below to load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization (step 5 and 6 in the below images) for the gemm_32x32x32 design:
 
