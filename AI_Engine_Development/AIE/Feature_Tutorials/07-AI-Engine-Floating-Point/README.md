@@ -256,13 +256,13 @@ for (i = 0 ; i < 8 ; i++)
 
 Only for real arguments. Signature is identical to `fpmul`:
 
-_vector<float,8>_ **fpneg_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
+_vector<float,8>_ **fpneg_abs_mul**(_vector<float,32>_ **xbuf**, _int_ **xstart**, _unsigned int_ **xoffs**, _vector<float,8>_ **zbuf**, _int_ **zstart**, _unsigned int_ **zoffs**)
 
 It returns the opposite value of the product:
 
 ```
 for (i = 0 ; i < 8 ; i++)
- ret[i] =  - xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]]
+ ret[i] =  - abs ( xbuf[xstart + xoffs[i]] * zbuf[zstart + zoffs[i]] )
 ```
 
 
