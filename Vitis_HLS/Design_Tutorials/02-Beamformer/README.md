@@ -8,7 +8,7 @@
 
 # Adaptive Beamforming for Radar:<br>Floating-Point QRD+WBS in an FPGA
 
-***Version: Vitis HLS 2023.2***
+***Version: Vitis 2023.2***
 
 ## ABSTRACT
 
@@ -57,7 +57,7 @@ The Vitis high-level synthesis (HLS) tool uses C/C++ as the language for hardwar
 
 ![Figure 2: RTL-Based vs. C-Based Iterative Development Time](./images/Development_Time.PNG)
 
-In addition, the C/C++ based design framework can contribute to faster design times simply by virtue of being a level of abstraction higher than traditional RTL-based method. Finally, Vitis HLS enables high-level design exploration that allows users to quickly explore multiple hardware architectures with different area vs. performance trade-offs without modifying the source code. This can be achieved using compiler directives. Additional information is available in the [Vitis HLS Feature Tutorial on Beamformer Analysis](../../Feature_Tutorials/README.md), which goes into detail on the methods for micro-optimization and the analysis methods that an inform that process
+In addition, the C/C++ based design framework can contribute to faster design times simply by virtue of being a level of abstraction higher than traditional RTL-based method. Finally, Vitis HLS enables high-level design exploration that allows users to quickly explore multiple hardware architectures with different area vs. performance trade-offs without modifying the source code. This can be achieved using compiler directives. Additional information is available in the [Vitis HLS Feature Tutorial on Beamformer Analysis](../../Feature_Tutorials/02-Beamformer_Analysis/), which goes into detail on the methods for micro-optimization and the analysis methods that an inform that process
 
 ## The QRD and Weight Back Substitution (QRD+WBS)
 
@@ -123,7 +123,7 @@ Design time, when compared to writing VHDL/Verilog code by hand, is reduced by o
 
 5. Analysis capabilities can help to guide and advise on how to write better HLS code. Well formatted reports and visualizations allow the user additional insights into their code to help them write better HLS C.
 
-This tutorial will focus on the process and results; to get a more in depth look at these Analysis features and a discussion why certain pragmas are utilized in this design, refer to the [Beamformer Analysis tutorial](../../Feature_Tutorials/README.md) in the [HLS Feature Tutorials](../../Feature_Tutorials) section.
+This tutorial will focus on the process and results; to get a more in depth look at these Analysis features and a discussion why certain pragmas are utilized in this design, refer to the [Beamformer Analysis tutorial](../../Feature_Tutorials/02-Beamformer_Analysis) in the [HLS Feature Tutorials](../../Feature_Tutorials) section.
 
 ## Results
 

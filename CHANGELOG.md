@@ -1,5 +1,13 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.2_update (Jan. 31, 2024)
+### New Tutorials
+- Vitis_HLS/Design_Tutorials/02-Beamformer/
+- Vitis_HLS/Feature_Tutorials/01-using_code_analyzer/
+- Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis/
+- AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT/
+- AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D/
+
 ## 2023.2_update (Jan. 11, 2024)
 ### New Tutorials
 - Embedded_Software/Feature_Tutorials/01-user_managed_mode/

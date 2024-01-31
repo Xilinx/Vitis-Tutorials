@@ -153,6 +153,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>                
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML :new:</a>            
             </td>
         </tr>        
         <tr>
@@ -307,6 +308,15 @@ To download a ZIP file of a specific branch, do one of the following:
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>
             </td>
         </tr>
+        <tr>
+            <td height="24">
+            </td>
+            <td>
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture :new:</a>
+            </td>
+        </tr>
     </tbody>
 </table>
 
@@ -364,7 +374,7 @@ To download a ZIP file of a specific branch, do one of the following:
             </td>
         </tr>
         <tr>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
             <td height="24">
@@ -375,7 +385,13 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">
                 <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE :new: </a>
             </td>
-            <td> </td>
+            <td>
+                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP :new: </a>
+            </td>
+            <td>
+                <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar:
+Floating-Point QRD+WBS in an FPGA :new: </a>
+            </td>
         </tr>  
     </tbody>
 </table>

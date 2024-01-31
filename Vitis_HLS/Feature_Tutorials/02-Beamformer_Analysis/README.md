@@ -15,7 +15,7 @@
 
 This tutorial demonstrates the micro-optimization techniques used to increase performance for Vitis HLS designs.  The fundamental HLS pragmas used for micro-optimization are `PIPELINE`, `UNROLL`, and `ARRAY_RESHAPE` or `ARRAY_PARTITION`. This tutorial walks through the HLS analysis tools which can be used to guide the optimization process by highlighting inefficiencies and recommending pragmas.
 
-The tutorial is based on the [Beamformer IP](../../../Design_Tutorials/02_Beamformer) that is discussed in more depth in the [Design Tutorials](../../../Design_Tutorials) section of the [Vitis HLS Tutorials](../../../../Vitis_HLS).
+The tutorial is based on the [Beamformer IP](../../Design_Tutorials/02-Beamformer) that is discussed in more depth in the [Design Tutorials](../../Design_Tutorials) section of the [Vitis HLS Tutorials](../../../Vitis_HLS).
 
 ![Beamformer Diagram](./images/Beamformer_Diagram.png)
 

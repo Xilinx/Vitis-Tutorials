@@ -74,6 +74,10 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./11-Bilinear_Interpolation/">Bilinear Interpolation</a></td>
  <td>This tutorial demonstrates how the bilinear interpolation algorithm may be efficiently implemented using AI Engines. It also provides guidance for customizing the design to function with varying image resolutions, and to take advantage of multicore processing on the AI Engine array to achieve desired throughput.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./12-IFFT64K-2D/">64K IFFT Using 2D Architecture</a></td>
+ <td>This Versal system example implements a 64K-pt IFFT using a 2D architecture. We decompose 64K = 256 x 256 and build the transform in two dimensions using row and column FFT-256. A matrix transpose is performed in between in the PL. This alternative "divide and conquer" approach is attractive in the SSR > 1 regime.</td>
+ </tr>
  </table>
 
 

@@ -20,7 +20,7 @@ These tutorials illustrate specific features of Vitis™ HLS development flow, s
  <td>This tutorial shows you how to use the pre-synthesis feature called Code Analyzer for the Vitis High-Level Synthesis tool flow.</td>
  </tr>
   <tr>
- <td align="center"><a href="./02_Beamformer_Analysis/">HLS Micro-Optimization Tutorial using Beamformer IP</a></td>
+ <td align="center"><a href="./02-Beamformer_Analysis/">HLS Micro-Optimization Tutorial using Beamformer IP</a></td>
  <td>This tutorial shows you how to use HLS analysis tools to make low-level optimizations on a subset of the beamformer algorithm.</td>
  </tr>
  </table>
