@@ -16,16 +16,20 @@ These tutorials illustrate specific features of Vitis Embedded Software developm
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
- <td align="center"><a href="./01-user_managed_mode/">User Managed Mode in Vitis Unified Embedded IDE</a></td>
+ <td align="center"><a href="./01-user_managed_mode/">User Managed Mode in Vitis Unified IDE</a></td>
  <td>This tutorial introduces how command line users can make use of Vitis Unified IDE to debug their applications in GUI and how to quickly call makefile actions.</td>
  </tr>
  <tr>
- <td align="center"><a href="./03-vitis_classic_to_unified_migration/">Vitis Classic to Unified Project Migration</a></td>
+ <td align="center"><a href="./03-vitis_classic_to_unified_migration/">Migrating from classic Vitis IDE to Vitis Unified IDE</a></td>
  <td>This tutorial demonstrates the migration steps and deep dive into the details about hardware to software handoff metadata, how to migrate libraries and drivers.</td>
  </tr>
  <tr>
  <td align="center"><a href="./04-vitis_scripting_flows/">Vitis Embedded Scripting Flow</a></td>
  <td>This tutorial demonstrates how to automate GUI steps with scripts for both project management and debugging.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./02-Debugging/">Vitis Embedded Software Debugging Guide</a></td>
+ <td>This tutorial demonstrates different debugging features available within the Vitis Embedded software development flow for bare-metal and Linux applications. It also introduces the flow to create a debuggable FSBL and how to do cross triggering in Vitis Unified IDE.</td>
  </tr>
  </table>
 

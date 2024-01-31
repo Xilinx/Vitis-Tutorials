@@ -342,18 +342,20 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified Embedded IDE :new: </a>
+                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified IDE :new: </a>
             </td>
             <td> 
                 <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode :new: </a>
             </td>
             <td>
-                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Vitis Classic to Unified Project Migration :new: </a> 
+                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE :new: </a> 
             </td>
         </tr>  
         <tr>
             <td height="24"> </td>
-            <td> </td>
+            <td>
+                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide :new: </a>            
+            </td>
             <td> 
                 <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow :new: </a>
             </td>

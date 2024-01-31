@@ -7,6 +7,7 @@
 - Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis/
 - AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT/
 - AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D/
+- Embedded_Software/Feature_Tutorials/02-Debugging/
 
 ## 2023.2_update (Jan. 11, 2024)
 ### New Tutorials
