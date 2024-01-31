@@ -210,6 +210,7 @@ aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
 aarch64-linux-gnu-g++ *.o -lxrt_coreutil \
     --sysroot=<path_to_sysroot/cortexa72-cortexa53-xilinx-linux> \
     -std=c++14 -o host.exe
+```
 
 or
 
