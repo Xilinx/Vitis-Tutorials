@@ -252,7 +252,7 @@ make xsa
 or
 
 ```bash
-v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 | Flag/Switch | Description |
@@ -306,7 +306,7 @@ The follow table describes some of the GCC options being used.
 
 ### 4. Package the Design
 
-With all the AI Engine outputs and the new platform created, you can now generate the packaged SD card directory contains everything to run your generated application and `.xclbin`. In addition to packaging, the `emconfigutil` command is used to generate the device, board, and device tree details (emconfig.json) which are required by XRT before loading the xclbin.
+With all the AI Engine outputs and the new platform created, you can now generate `.xclbin` and the packaged SD card directory, which contains everything to run your generated application. In addition to packaging, the `emconfigutil` command is used to generate the device, board, and device tree details (emconfig.json) which are required by XRT before loading the xclbin.
 
 To package the design, run the following command:
 
