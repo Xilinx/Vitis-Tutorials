@@ -259,19 +259,17 @@ The Makefile and source files for the AI Engine and HLS implementations are in t
 
 The following table compares a 1024 x 2048 point 10-instance FFT-2D design implemented using the AI Engines and HLS with DSP Engines respectively. It lists the throughput, resource utilization, power consumption, and performance in throughput/Watt for `cint16` implementations.
 
-| Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+| Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in W) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6215.528                           | 3546.4672               | 20              | 77%              | 420 /<br/>19%                        | 72               | 11360 /<br/> 3654         | 0     | 0    | 6781                      | 916.60936                              |
-| HLS           | 4979.797                           | 4040.900                | NA              | NA               | NA                                   | NA               | 98899 /<br/> 61591        | 250   | 180  | 5800                      | 858.59                                 |
+| AIE           | 6225.187                           | 3537.296                | 20              | 79%              | 364 /<br/>44%                        | 72               | 11360 /<br/> 3647         | 0     | 0    | 5.486                      | 1134.740773                              |
+| HLS           | 6277.483                           | 4211.296                | NA              | NA               | NA                                   | NA               | 88447 /<br/> 56429        | 250   | 180  | 6.819                      | 920.587051                               |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
-* An almost 51% improvement in the aggregate throughput.
-* Reduced latency by ~29%.
-* Performance increase of ~2x to 1351 MSPS/Watt.
-* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~98K FFs, ~61K LUTs, and 250 BRAMs are reduced to 46 AI Engines, 11k FFs, and 4K LUTs.
+* Reduced latency by ~19.054%.
+* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~88K FFs, ~56K LUTs, and 250 BRAMs are reduced to 72 AI Engines, 11k FFs, and 3K LUTs.
 
-It is important to understand that those 46 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 26 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 26 AI Engine tiles is only 25%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
+It is important to understand that those 72 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 52 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 52 AI Engine tiles is only 79%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
 
 Additionally, increasing the number of instances in the AI Engine design is easier than the HLS design, which runs into timing closure issues, especially for higher FFT point size designs.
 
