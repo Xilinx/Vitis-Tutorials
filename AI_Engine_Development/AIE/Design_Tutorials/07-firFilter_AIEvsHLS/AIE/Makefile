@@ -300,19 +300,19 @@ VPP_FLAGS += --save-temps
 VPP_FLAGS += --temp_dir $(BUILD_TARGET_DIR)/_x
 VPP_FLAGS += --verbose
 VPP_FLAGS += -g
-ifeq ($(N_FIR_FILTERS),10)
-    ifeq ($(N_FIR_TAPS),15)	 
+#ifeq ($(N_FIR_FILTERS),10)
+ifeq ($(N_FIR_TAPS),15)	 
         VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
-    else ifeq ($(N_FIR_TAPS),129)	 
-        VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
-    endif
-else
-   ifeq ($(N_FIR_TAPS),129)
-       ifeq ($(N_AIES_PER_FIR),2)
-            VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
-       endif
-   endif
+    #else ifeq ($(N_FIR_TAPS),129)	 
+    #    VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
 endif
+#else
+#   ifeq ($(N_FIR_TAPS),129)
+#       ifeq ($(N_AIES_PER_FIR),2)
+#            VPP_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(EXEC_SCRIPTS_REPO)/post_sys_link.tcl
+#       endif
+#   endif
+#endif
 
 DATAMOVER_KERNEL_VPP_FLAGS := --hls.clock $(VPP_CLOCK_FREQ):$(DATAMOVER_KERNEL_NAME)
 DATAMOVER_KERNEL_VPP_FLAGS += -D N_FIR_TAPS=$(N_FIR_TAPS)
