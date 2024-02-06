@@ -1,13 +1,13 @@
 {
-    "name": "VHLS_D_02-beamformer",
-    "description": "VHLS_D_02-beamformer",
+    "name": "VHLS_F_02-beamformer_analysis",
+    "description": "VHLS_F_02-beamformer_analysis",
     "gui": "false",
     "flow": "vitis",
 
     "platform_allowlist": [ "xcvp1202-vsva2785-1LP-i-L"],
      
     "testinfo": {
-        "test_name": "VHLS_D_02-beamformer",
+        "test_name": "VHLS_F_02-beamformer_analysis",
         "disable": false, 
         "jobs": [
             {

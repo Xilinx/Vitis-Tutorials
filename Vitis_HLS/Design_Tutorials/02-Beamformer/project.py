@@ -6,7 +6,7 @@ import shutil
 from datetime import datetime
 
 print ("\n-----------------------------------------------------")
-print ("HLS Design Tutorial 01: Beamformer\n")
+print ("HLS Design Tutorial 02: Beamformer\n")
 
 # Create names
 tmpdir = './tmp'
@@ -46,9 +46,9 @@ comp.execute('SYNTHESIS')
 #comp.execute('IMPLEMENTATION')
 
 # Clean up, delete the workspace
-if (os.path.isdir(workspace)):
-    shutil.rmtree(workspace, ignore_errors=True)
-    print(f"Deleted workspaces in {workspace}")
+if (os.path.isdir(tmpdir)):
+    shutil.rmtree(tmpdir, ignore_errors=True)
+    print(f"Deleted workspaces in {tmpdir}")
 
 # Close the client connection and terminate the vitis server
 vitis.dispose()
