@@ -72,7 +72,6 @@ extern "C"
         xf::cv::Mat<TYPE, MAX_OUT_HEIGHT, MAX_OUT_WIDTH, NPC> out_mat(height_out, width_out);
 
 #pragma HLS DATAFLOW
-
         xf::cv::Array2xfMat<AXI_WIDTH, TYPE, MAX_IN_HEIGHT, MAX_IN_WIDTH, NPC>(image_in, in_mat);
         xf::cv::resize<XF_INTERPOLATION_AREA,
                        XF_8UC3,
@@ -81,7 +80,10 @@ extern "C"
                        MAX_OUT_HEIGHT,
                        MAX_OUT_WIDTH,
                        NPC,
-                       MAX_DOWN_SCALE>(in_mat, out_mat);
+                       false,
+                       MAX_DOWN_SCALE,
+                       _XFCVDEPTH_DEFAULT,
+                       _XFCVDEPTH_DEFAULT>(in_mat, out_mat);
         xf::cv::xfMat2Array<AXI_WIDTH, TYPE, MAX_OUT_HEIGHT, MAX_OUT_WIDTH, NPC>(out_mat, image_out);
     }
 }
