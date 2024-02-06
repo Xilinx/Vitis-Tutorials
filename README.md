@@ -303,6 +303,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>
             <td>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter">Two Tone Filter :new:</a>            
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>
