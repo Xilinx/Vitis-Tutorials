@@ -163,6 +163,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
             </td>                
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial :new:</a>
             </td>
         </tr>   
     </tbody>
