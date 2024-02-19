@@ -206,7 +206,7 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
  <td> </td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/02-Prime-Factor-FFT/">Prime Factor FFT-1008 on AIE-ML</a></td>
+  <td align="center"><a href="./Design_Tutorials/02-Prime-Factor-FFT/">Prime Factor FFT-1008 on AIE-ML</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
@@ -219,6 +219,20 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
  <td>Yes</td>
  <td> </td>
  <td> </td>
+ </tr>
+ <td align="center"><a href="./Design_Tutorials/03-AIE-ML-lenet_tutorial/">AIE-ML LeNet Tutorial</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
  </tr>
  </table>
 
