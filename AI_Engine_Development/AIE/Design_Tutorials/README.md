@@ -78,8 +78,11 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./12-IFFT64K-2D/">64K IFFT Using 2D Architecture</a></td>
  <td>This Versal system example implements a 64K-pt IFFT using a 2D architecture. We decompose 64K = 256 x 256 and build the transform in two dimensions using row and column FFT-256. A matrix transpose is performed in between in the PL. This alternative "divide and conquer" approach is attractive in the SSR > 1 regime.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./13-FFT-DFT-on-AIE/">Implementing FFT and DFT Designs on AI Engines</a></td>
+ <td>This tutorial illustrates several techniques for mapping FFT and DFT algorithms to the AI Engine array including the Stockham FFT used in AMD Vitis DSPlib, hand-coded variants implemented using the AI Engine API, and a direct form DFT using vector-matrix multiplication. We also illustrate how to trade off AI engine tile resource vs. throughput performance of the Stockham FFT in DSPlib using its <code>TP_CASC_LEN</code> and <code>TP_PARALLEL_POWER</code> template parameters. This is useful when configuring DSPlib FFT library instances to serve as part of a larger 2D FFT architecture.</td>
+ </tr>
  </table>
-
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
