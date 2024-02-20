@@ -314,6 +314,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">
             </td>
             <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engines :new:</a>            
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture :new:</a>

@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.2_update (Feb. 19, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial/
+- AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE/
+- AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter/ 
+
 ## 2023.2_update (Jan. 31, 2024)
 ### New Tutorials
 - Vitis_HLS/Design_Tutorials/02-Beamformer/
