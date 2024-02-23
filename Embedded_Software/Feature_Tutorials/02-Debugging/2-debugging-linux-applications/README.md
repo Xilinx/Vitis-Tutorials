@@ -2,13 +2,13 @@
 
 ***Version: Vitis 2023.2***
 
-The Vitis IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
+The AMD Vitis™ IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
 
 - Setting breakpoints
 - Stepping through program execution
 - Viewing program variables, memory contents, and the stack 
 
-The following diagram illustrates the general Linux application debug flow. The Vitis Debugger an integrated debugger supporting Zynq®-7000 SoC, Zynq UltraScale+ MPSoC, and MicroBlaze™ and Versal™ processors.
+The following diagram illustrates the general Linux application debug flow. The Vitis Debugger an integrated debugger supporting AMD Zynq™ 7000 SoC, AMD Zynq™ UltraScale+™ MPSoC, and MicroBlaze™ and AMD Versal™ processors.
 
 ![](images/Linux_debug_flow.png)
 
@@ -17,7 +17,7 @@ The following diagram illustrates the general Linux application debug flow. The 
 
 ## Limitations
 
-Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2023.2. If users require this feature then it is recommended that Vitis Classic 2023.2 is used.
+Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2023.2. If you require this feature, then it is recommended that you use Vitis Classic 2023.2.
 
 ## Getting Started
 
@@ -30,7 +30,7 @@ Linux debug setup is a mandatory step. Setup allows you to create platform and a
 1. 
    **Note:** You can skip the manual steps by using the automated `petalinux_build.sh` script to generate Linux images. However, make sure to select the appropriate configuration whenever prompted.
 
-5. Navigate to `zcu102` in your Vivado project and copy `mpsoc_preset_wrapper.xsa` to your desired Vitis work directory (in the following example, it is `vitis_work_dir`) as `zcu102.xsa`.
+5. Navigate to `zcu102` in your AMD Vivado™ project and copy `mpsoc_preset_wrapper.xsa` to your desired Vitis work directory (in the following example, it is `vitis_work_dir`) as `zcu102.xsa`.
 
     ```
     $ cd zcu102/mpsoc_preset_wrapper.xsa
@@ -68,7 +68,7 @@ Linux debug setup is a mandatory step. Setup allows you to create platform and a
 
     ```
 
-8. Run the `Vitis-workspace.py` script for workspace setup in Vitis Unified CommandLine Interface (CLI). After successful execution of the script, a Vitis worskpace named `linux_debug_ws` will be created with a ZCU102 based platform and a Linux test application.
+8. Run the `Vitis-workspace.py` script for workspace setup in Vitis Unified CommandLine Interface (CLI). After successful execution of the script, a Vitis worskpace named `linux_debug_ws` is created with a ZCU102 based platform and a Linux test application.
 
     ```
     vitis_work_dir
@@ -119,9 +119,9 @@ Select the settings based on your connection
   ```
 ## Connecting to QEMU
 
-Petalinux supports the Quick EMUlation (QEMU) emulator. This is useful for users how dont have access to Physical board. Users can use the steps below to boot Linux on the QEMU. Users can pass `qemu-args` to pass the network information. The hardware used in this tutorial is for a ZCU102 which has the GEM enabled at GEM3. This command will look slightly different GEM is used.
+Petalinux supports the Quick EMUlation (QEMU) emulator. This is useful if you do not have access to Physical board. You can use the following steps to boot Linux on the QEMU. You can pass `qemu-args` to pass the network information. The hardware used in this tutorial is for a ZCU102 which has the GEM enabled at GEM3. This command will look slightly different GEM is used.
 
-The hostfwd definitions along with user network arguments i.e  `-net nic -net nic -net nic -net nic,vlan=1 -net user,vlan=1) hostfwd=tcp:<host address>:<host port used for forwarding>-<guest address>:<guest port>`
+The hostfwd definitions along with user network arguments, that is ,   `-net nic -net nic -net nic -net nic,vlan=1 -net user,vlan=1) hostfwd=tcp:<host address>:<host port used for forwarding>-<guest address>:<guest port>`
 
 ```
 petalinux-boot --qemu --kernel --qemu-args "-net nic -net nic -net nic -net nic,netdev=gem3 -netdev user,id=gem3,hostfwd=tcp:127.0.0.1:1540-10.0.2.15:1534"
@@ -169,7 +169,7 @@ The goal of multithread application debugging is to make the application thread-
 
 ![](images/launch_config.PNG)
 
-4. The code will stop at the program entry. There are various debugging techniques such as breakpoints, stepping, and so on to identify the data that needs to be protected. This example will use the breakpoint inside thread function.
+4. The code stops at the program entry. There are various debugging techniques such as breakpoints, stepping, and so on to identify the data that must be protected. This example will use the breakpoint inside thread function.
 5. Put a breakpoint at below two lines.
 
     ```
@@ -234,7 +234,7 @@ The goal of dynamic memory allocation debugging is to understand memory manageme
 
 ![](images/launch_config.PNG)
 
-4. The code will stop at the program entry.
+4. The code stops at the program entry.
 5. Use debugging techniques such as the Variables view, step over, breakpoints, and so on to identify the incorrect memory assignment.
 6. Place a breakpoint at the following lines.
 
@@ -311,8 +311,7 @@ The first step is to create a block design. You can create this according to you
   ![](images/ZynqMP-Block-Design.PNG)
 
 #### Generating the Bitstream
-The preset example creates an HDL wrapper and also generates output products. You can directly perform synthesis and implementation, a
-nd you can generate a bitstream. To generate a bitstream, click **Generate Bitstream**. 
+The preset example creates an HDL wrapper and also generates output products. You can directly perform synthesis and implementation, and you can generate a bitstream. To generate a bitstream, click **Generate Bitstream**. 
 
 #### Exporting the XSA
 
@@ -328,7 +327,7 @@ Launch the Vivado Tcl console. Source `vivado_design.tcl`.
 
 ### PetaLinux Build
 
-It is required to configure the PetaLinux project to support Linux application debug. Run the following commands for each step listed below. Users can use the BSP for their board. However, the steps below uses ZynqMP template, and the MACHINE_NAME is updated. This would be a more generic flow
+It is required to configure the PetaLinux project to support Linux application debug. Run the following commands for each step listed below. You can use the BSP for their board. However, the steps below uses ZynqMP template, and the MACHINE_NAME is updated. This would be a more generic flow
 
 1. Create the PetaLinux project:
 
