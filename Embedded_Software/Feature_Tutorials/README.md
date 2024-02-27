@@ -6,9 +6,9 @@
 </table>
 
 
-### Feature Tutorials
+# Feature Tutorials
 
-These tutorials illustrate specific features of AMD Vitis™ Embedded Software development flow, some features may not be required by all designs but are still useful for some use cases.
+These tutorials illustrate specific features of the Vitis Embedded Software development flow. Some features might not be required by all designs but are still useful for some use cases.
 
  <table style="width:100%">
  <tr>

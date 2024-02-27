@@ -6,13 +6,13 @@
 </table>
 
 
-## Vitis Embedded Software Tutorials
+# Vitis Embedded Software Tutorials
 
 The tutorials under the Vitis™ Embedded Software category help you learn the Vitis Embedded Design Flows.
 
-### Getting Started 
+## Getting Started
 
-The [Getting Started](./Getting_Started/) tutorial should act as the start point, or a refresher to the Vitis Unified Embedded flows. 
+The [Getting Started](./Getting_Started/) tutorial should act as the start point, or a refresher to the Vitis Unified Embedded flows.
 
 <table style="width:100%">
   <tr>
@@ -26,7 +26,7 @@ The [Getting Started](./Getting_Started/) tutorial should act as the start point
 </table>
 
 
-### Feature Tutorials
+## Feature Tutorials
 
 The [Feature Tutorials](./Feature_Tutorials) illustrate specific features of Vitis Embedded Software development flow, some features may not be required by all designs but are still useful for some use cases.
 
