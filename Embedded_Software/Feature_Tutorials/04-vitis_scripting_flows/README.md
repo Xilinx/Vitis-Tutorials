@@ -7,74 +7,75 @@
 
 ***Version: Vitis 2023.2***
 
-## Vitis Embedded Scripting Flows
+# Vitis Embedded Scripting Flows
 
-Once users are comfortable using the GUI to generate their components, then the next step might be to automate this from command line. The Vitis has a CommandLine Interface (CLI) that users can use to do everything that was done in the Vitis GUI on commandline. 
+Once users are comfortable using the GUI to generate their components, then the next step might be to automate this from command line. The Vitis has a CommandLine Interface (CLI) that users can use to do everything that was done in the Vitis GUI on commandline.
 
 There are commandline API for creating Vitis components, API for extracting the hardware metadata from the SDT or XSA. There are also API for deploying and debugging the application in the XSDB debugger. There is a table of contents below to aid users to a specific set of API.
 
-# Table of Contents
+## Table of Contents
+
 * [Component creation using the Vitis commands](#vitis-commands)
 * [Metadata extraction using HSI API](#metadata-commands)
 * [Deploy and Debug in XSDB from commandline](#xsdb-commands)
 
 ## Building Demo XSA file
 
-There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial. 
+There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial.
 
 Launch Vivado 2023.2 and use the TCL commands below
 
 ```
 cd scripts
 source ./create_xsa.tcl
-``` 
+```
 
 This will create a **design_1_wrapper.xsa** in the ../zcu102 folder
 
-## Launching Vitis CommandLine Interface (CLI)
+### Launching Vitis CommandLine Interface (CLI)
 
 ```
 vitis -i
-``` 
+```
 
-The Vitis Interactive shell is used in this tutorial for demostration purposes. However, users can deploy a Python script from Vitis too using the command below
+The Vitis Interactive shell is used in this tutorial for demonstration purposes. However, users can deploy a Python script from Vitis too using the command below
 
 ```
 vitis -s path/to/python_script.py
-``` 
+```
 
 <a name="vitis-commands"/>
 
-# Component creation using the Vitis commands
+## Component creation using the Vitis commands
 
-The Vitis Unified IDE will compile a <i>builder.py</i> script with all the Vitis Python API commands to rebuild a workspace in the logs directory in the workspace. This can be used as a reference to generating the Vitis Python API script.
+The Vitis Unified IDE will compile a `builder.py` script with all the Vitis Python API commands to rebuild a workspace in the logs directory in the workspace. This can be used as a reference to generating the Vitis Python API script.
 
-## Create Vitis Client
+### Create Vitis Client
 
 ```
 client = vitis.create_client()
-``` 
+```
 
-## Client Help
+### Client Help
 
 Users can view the help as shown below
 
 ```
 help(client)
-``` 
+```
 
 
 
-## Create Vitis workspace
+### Create Vitis workspace
 
 In Vitis, the default workspace is the current working directory. In the command line, we can just set this up
 
 ```
 workspace = "path/to/workspace"
 client.set_workspace(workspace)
-``` 
+```
 
-Users can use the commands below to add the <i>vitis_ws</i> workspace to the current directory
+Users can use the commands below to add the `vitis_ws` workspace to the current directory
 
 ```
 import os
@@ -83,20 +84,17 @@ pwd = os.getcwd()
 client.set_workspace(pwd + "/vitis_ws")
 ```
 
-## Create Vitis Platform
+### Create Vitis Platform
 
-<details>
-  <summary>Additional Notes</summary>
-Users can use the HSI Python API to extract the available processors from the XSA. This is discussed later in this tutorial
-</details>
+> **Note**: Users can use the HSI Python API to extract the available processors from the XSA. This is discussed later in this tutorial
 
-The Boot Artifacts will be automatically generated. For Zynq Ultrascale this will be the FSBL. If users dont want this, then use the <i>no_boot_bsp = True</i>
+The Boot Artifacts will be automatically generated. For Zynq Ultrascale this will be the FSBL. If users dont want this, then use the `no_boot_bsp = True`
 
 ```
 platform = client.create_platform_component(name = "base_platform",hw = "design_1_wrapper.xsa",os = "standalone",cpu = "psu_cortexa53_0")
 ```
 
-## Opening an existing Vitis Platform
+### Opening an existing Vitis Platform
 
 There are two use-cases here. If the platform was created above and the user just wants to show the details. Or, if we are opening a workspace and use/manipulate and existing platform
 
@@ -112,7 +110,7 @@ platform = client.get_platform_component(name = "name of platform")
 platform.report()
 ```
 
-## Add Software Repository
+### Add Software Repository
 
 Users can add a software repository to add custom driver, bsp or libraries to the workspace
 
@@ -120,7 +118,7 @@ Users can add a software repository to add custom driver, bsp or libraries to th
 client.set_sw_repo(level="local", path="path to repo")
 ```
 
-## List/get Vitis domains in a Platform
+### List/get Vitis domains in a Platform
 
 Users can list all the domains in the platform
 
@@ -149,20 +147,19 @@ Users can return a specific domain within a platform using the metadata above
 domain_object = platform.get_domain(name = "domain_name")
 ```
 
-## Create Vitis domains in a Platform
+### Create Vitis domains in a Platform
 
 Users can create a domain for a specific processor and OS. Supported OS are standalone, linux
 
-<details>
-  <summary>Additional Notes</summary>
-Users can use the HSI Python API to extract the available processors from the XSA. This is discussed later in this tutorial
-</details>
+
+> **Note**: Users can use the HSI Python API to extract the available processors from the XSA. This is discussed later in this tutorial.
+
 
 ```
 domain = platform.add_domain(cpu = "psu_cortexa53_0",os = "standalone",name = "my_domain",display_name = "my_domain")
 ```
 
-## Update hardware in existing Vitis Platform
+### Update hardware in existing Vitis Platform
 
 When we generate a platform, the metadata is extracted from the XSA, and this is used to generate the S-DT. This will also rebuild any domains within the platform
 
@@ -170,7 +167,7 @@ When we generate a platform, the metadata is extracted from the XSA, and this is
 platform.update_hw(hw = "path to new XSA")
 ```
 
-## Building Platform
+### Building Platform
 
 The command below will build the platform and all its domains. The platform should be built after all the domains are created.
 
@@ -178,7 +175,7 @@ The command below will build the platform and all its domains. The platform shou
 status = platform.build()
 ```
 
-## View or Manipulate Vitis Domains
+### View or Manipulate Vitis Domains
 
 There is a wide array of API that can be used here. These can be seen in the link above. I will just show a simple subset of these. For example, we can view the OS, drivers, libs
 
@@ -188,7 +185,7 @@ domain_object.get_drivers()
 domain_object.get_libs()
 ```
 
-## get_os
+### get_os
 
 This will be delivered as a list. Users can iterate through this
 
@@ -204,7 +201,7 @@ for os in domain_object.get_os():
     print(os['os'])
 ```
 
-## get_drivers
+### get_drivers
 
 This will be delivered as a list. Users can iterate through this
 
@@ -212,6 +209,7 @@ This will be delivered as a list. Users can iterate through this
 for driver in domain_object.get_drivers():
     print(driver)
 ```
+
 Each object in the list will be delivered as a dictionary with keys; 'name', 'ip_type', 'path'. For example, users can return all the driver names
 
 ```
@@ -219,7 +217,7 @@ for driver in domain_object.get_drivers():
     print(driver['name'])
 ```
 
-## get_libs
+### get_libs
 
 This will be delivered as a list. Users can iterate through this
 
@@ -234,7 +232,8 @@ Each object in the list will be delivered as a dictionary with keys; 'name', 'cu
 for lib in domain_object.get_libs():
     print(lib['name'])
 ```
-## Library/driver parameters
+
+### Library/driver parameters
 
 Users can view the parameters of a library/driver
 
@@ -251,10 +250,8 @@ domain_object.list_params("proc", "processor name")
 
 For example, users can list all the os parameters. This will return a list of all the parameters. Each set of parameters is delivered as a dictionary with keys; 'parameter_name', 'description', 'default_value', 'value', 'possible_options', 'datatype', 'permission
 
-<details>
-  <summary>Additional Notes</summary>
-Users can do dict_object.keys() to see a list of all the keys in a dictionary
-</details>
+> **Note**: Users can do dict_object.keys() to see a list of all the keys in a dictionary
+
 
 ```
 os_params = domain_object.list_params("os", "standalone")
@@ -267,7 +264,7 @@ for param in os_params:
     print(param['parameter_name'])
 ```
 
-## get_config
+### get_config
 
 For example, if users want to find a parameter value of a lib, os, or . 
 
@@ -283,46 +280,44 @@ ticktimer = domain_object.get_config(option = 'lib', lib_name = 'xiltimer', para
 ticktimer['value']
 ```
 
-## set_config
+### set_config
 
-Users can set parameters on lib, os or proc. 
+Users can set parameters on lib, os or proc.
 
-For example, to set the stdin to a specific uart 
+For example, to set the stdin to a specific uart.
 
 ```
 domain_object.set_config(option = 'os', param = 'standalone_stdout', value = 'psu_uart_1')
 ```
 
-## Getting Compiler option on Domain
+### Getting Compiler option on Domain
 
-Users can use the <i>get_config</i> API to get the compiler options for the domain. This is useful if debugging drivers, or libraries
+Users can use the `get_config` API to get the compiler options for the domain. This is useful if debugging drivers, or libraries
 
 ```
 domain_object.get_config(option = 'proc', param = 'proc_compiler_flags')
 domain_object.get_config(option = 'proc', param = 'proc_extra_compiler_flags')
 ```
 
-## Setting Compiler option on Domain
+### Setting Compiler option on Domain
 
-Users can use the <i>set_config</i> API to set the compiler options for the domain. This is useful if debugging drivers, or libraries
+Users can use the `set_config` API to set the compiler options for the domain. This is useful if debugging drivers, or libraries
 
 ```
 domain_object.set_config(option = 'proc', param = 'proc_compiler_flags', value = 'value here')
 domain_object.set_config(option = 'proc', param = 'proc_extra_compiler_flags', value = 'value here')
 ```
 
-## Get list of Embedded Application Templates
+### Get list of Embedded Application Templates
 
-<details>
-<summary>Additional Notes</summary>
- Valid types are 'ACCL_APP'(Accelerated applications), 'HLS','AIE', 'EMBD_APP'(Embedded applications). 'ACCL_APP' is default type.
-</details>
+> **Note**: Valid types are 'ACCL_APP'(Accelerated applications), 'HLS','AIE', 'EMBD_APP'(Embedded applications). 'ACCL_APP' is default type.
+
 
 ```
 apps = client.get_templates(type = "EMBD_APP")
 ```
 
-This will list of all the Embedded Application templates
+This will list of all the Embedded Application templates:
 
 ```
  'ddr_self_refresh',
@@ -359,15 +354,15 @@ This will list of all the Embedded Application templates
  'linux_hello_world'
 ```
 
-## Creating Vitis Application
+### Creating Vitis Application
 
-The API below will create an application built upon the domain created above. Users can use the <i>platform.list_domains</i> API to get a list of domains within the platform. The platform should be built <i>platform.build()</i> before this API is ran.
+The API below will create an application built upon the domain created above. Users can use the `platform.list_domains` API to get a list of domains within the platform. The platform should be built `platform.build()` before this API is ran.
 
 ```
 app = client.create_app_component(name="hello_world",platform = "base_platform/base_platform.xpfm",domain = "my_domain",template = "hello_world")
 ```
 
-## Setting Application Compiler option
+### Setting Application Compiler option
 
 Users can set the application compiler options. For exmaple
 
@@ -376,7 +371,7 @@ app.set_app_config(key='USER_COMPILE_DEBUG_LEVEL', values=['-g3'])
 app.set_app_config(key='USER_COMPILE_OTHER_FLAGS', values='"-fmessage-length=0 -MT"$@" -k"')
 ```
 
-## Building Vitis Application
+### Building Vitis Application
 
 ```
 app = client.get_component(name="hello_world")
@@ -385,37 +380,33 @@ app.build()
 
 <a name="metadata-commands"/>
 
-# Metadata extraction using HSI API
+## Metadata extraction using HSI API
 
-The Vitis Python commands above allow users to create portable scripts that will build their Vitis workspace from commandline. Users can also take advantage of the Python HSI package to allow users to enhance their scripts to build workspaces across devices and even architechtures. The Python HSI package allows users to extract the hardware metadata from the XSA. This can include the IP (called cells), IP pins, IP interfaces and even the interconnectivity between IP (nets) using some of the techniques discussed below
+The Vitis Python commands above allow users to create portable scripts that will build their Vitis workspace from commandline. Users can also take advantage of the Python HSI package to allow users to enhance their scripts to build workspaces across devices and even architectures. The Python HSI package allows users to extract the hardware metadata from the XSA. This can include the IP (called cells), IP pins, IP interfaces and even the interconnectivity between IP (nets) using some of the techniques discussed below
 
-## Import HSI Python Package
+### Import HSI Python Package
 
 ```
 import hsi
 ```
 
-## Import XSA file
+### Import XSA file
 
-Users need to import the XSA container file exported from Vivado, and create a <i>HwDesign</i> object. Users can use the XSA in the prebuilt platforms in Vitis.
+Users need to import the XSA container file exported from Vivado, and create a `HwDesign` object. Users can use the XSA in the prebuilt platforms in Vitis.
 
-<details>
-  <summary>Additional Notes</summary>
-This created a Hardware Manager Object called "HwDesign" that users can use to extract the required HW metadata needed for their software system.
-</details>
-
+> **Note**: This created a Hardware Manager Object called "HwDesign" that users can use to extract the required HW metadata needed for their software system.
 
 ```
 HwDesign = hsi.HwManager.open_hw_design("design_1_wrapper.xsa")
 ```
 
-## Close Hardware Design
+### Close Hardware Design
 
 ```
 HwDesign.close()
 ```
 
-## Get System Info from XSA
+### Get System Info from XSA
 
 Users can read the system level information on the HwDesign object
 
@@ -440,7 +431,7 @@ TIMESTAMP        string   true       Wed Aug 16 16:42:32 2023
 VIVADO_VERSION   string   true       2023.2
 ```
 
-Users can return a specific property such a the <i>FAMILY</i>
+Users can return a specific property, such as the `FAMILY`
 
 ```
 Vitis [0]: arch = HwDesign.FAMILY
@@ -451,13 +442,14 @@ Vitis [0]: print(arch)
 zynquplus
 ```
 
-## Get all IP in XSA
+### Get all IP in XSA
 
-Users can get the hardware objects such as the cells, nets, pins, ports, interface pins, interface ports, ect. Below the <i>get_cells</i> is used to get all the cells, (or IP) in an XSA file.
+Users can get the hardware objects such as the cells, nets, pins, ports, interface pins, interface ports, ect. Below the `get_cells` is used to get all the cells, (or IP) in an XSA file.
 
 ```
 cells = HwDesign.get_cells(hierarchical='true')
 ```
+
 Users can use type(cells) or type(cells[0]) to see the object type
 
 ```
@@ -467,7 +459,8 @@ Out[0]: PyContainer
 Vitis [0]: type(cells[0])
 Out[0]: HwCell
 ```
-## Get cell properties
+
+### Get cell properties
 
 ```
 cells[0].report_property()
@@ -550,13 +543,14 @@ Vitis [0]: print(procs)
 psu_cortexa53_0 psu_cortexa53_1 psu_cortexa53_2 psu_cortexa53_3 psu_cortexr5_0 psu_cortexr5_1 psu_pmu_0
 ```
 
-## Get all IP in Address Map of Processor
+### Get all IP in Address Map of Processor
 
 Another popular use case is to get all the IP on a processor memory map. The procs object container created above.
 
 ```
 Vitis [0]: memmap = HwDesign.get_mem_ranges(of_object=procs[0])
 ```
+
 Here, users can see the list of all the IP on the memory map
 
 ```
@@ -564,9 +558,9 @@ Vitis [0]: print(memmap)
 axi_gpio_0 psu_acpu_gic psu_adma_0 psu_adma_1 psu_adma_2 psu_adma_3 psu_adma_4 psu_adma_5 psu_adma_6 psu_adma_7 psu_afi_0 psu_afi_1 psu_afi_2 psu_afi_3 psu_afi_4 psu_afi_5 psu_afi_6 psu_ams psu_apm_0 psu_apm_1 psu_apm_2 psu_apm_5 psu_apu psu_can_1 psu_cci_gpv psu_cci_reg psu_coresight_0 psu_crf_apb psu_crl_apb psu_csu_0 psu_csudma psu_ctrl_ipi psu_ddr_0 psu_ddr_1 psu_ddr_phy psu_ddr_qos_ctrl psu_ddr_xmpu0_cfg psu_ddr_xmpu1_cfg psu_ddr_xmpu2_cfg psu_ddr_xmpu3_cfg psu_ddr_xmpu4_cfg psu_ddr_xmpu5_cfg psu_ddrc_0 psu_dp psu_dpdma psu_efuse psu_ethernet_3 psu_fpd_gpv psu_fpd_slcr psu_fpd_slcr_secure psu_fpd_xmpu_cfg psu_fpd_xmpu_sink psu_gdma_0 psu_gdma_1 psu_gdma_2 psu_gdma_3 psu_gdma_4 psu_gdma_5 psu_gdma_6 psu_gdma_7 psu_gpio_0 psu_gpu psu_i2c_0 psu_i2c_1 psu_iou_scntr psu_iou_scntrs psu_iousecure_slcr psu_iouslcr_0 psu_ipi_0 psu_lpd_slcr psu_lpd_slcr_secure psu_lpd_xppu psu_lpd_xppu_sink psu_mbistjtag psu_message_buffers psu_ocm psu_ocm_ram_0 psu_ocm_xmpu_cfg psu_pcie psu_pcie_attrib_0 psu_pcie_dma psu_pcie_high1 psu_pcie_high2 psu_pcie_low psu_pmu_global_0 psu_qspi_0 psu_qspi_linear_0 psu_r5_0_atcm_global psu_r5_0_btcm_global psu_r5_1_atcm_global psu_r5_1_btcm_global psu_r5_tcm_ram_global psu_rcpu_gic psu_rpu psu_rsa psu_rtc psu_sata psu_sd_1 psu_serdes psu_siou psu_smmu_gpv psu_smmu_reg psu_ttc_0 psu_ttc_1 psu_ttc_2 psu_ttc_3 psu_uart_0 psu_uart_1 psu_usb_0 psu_usb_xhci_0 psu_wdt_0 psu_wdt_1
 ```
 
-## Get Pins on an IP
+### Get Pins on an IP
 
-Users can use the <i>get_pins</i> API to get the pins in an XSA file. These can be pins at a high level
+Users can use the `get_pins` API to get the pins in an XSA file. These can be pins at a high level
 
 ```
 Vitis [0]: pins = HwDesign.get_pins(hierarchical='true')
@@ -626,7 +620,7 @@ Vitis [0]: print(axi_gpio_pins)
 s_axi_aclk
 ```
 
-Filtering on the <i>TYPE</I> pin property is also useful to find all interrupt pins
+Filtering on the `TYPE` pin property is also useful to find all interrupt pins
 
 ```
 Vitis [0]: axi_gpio_pins = HwDesign.get_pins(of_object=cells[0],filter='TYPE==INTERRUPT')
@@ -643,9 +637,9 @@ Vitis [0]: print(axi_gpio_in_clks)
 s_axi_aclk
 ```
 
-## Get Interface Pins on an IP
+### Get Interface Pins on an IP
 
-Users can use the <i>get_intf_pins()</i> API to read the interface pins of an IP such as the AXI Interfaces. Here, I used thre axi_gpio cell object discovered above
+Users can use the `get_intf_pins()` API to read the interface pins of an IP such as the AXI Interfaces. Here, I used thre axi_gpio cell object discovered above
 
 ```
 Vitis [0]: axi_gpio_intf_pins = HwDesign.get_intf_pins(of_object=cells[0])
@@ -677,29 +671,29 @@ Similar API are shown below
 
 <a name="xsdb-commands"/>
 
-# Deploy and Debug firmware using XSDB Python API
+## Deploy and Debug firmware using XSDB Python API
 
 All the commands available in the Vitis IDE for debugging are also available in the Vitis commandline (CLI) such as connect to a target, list targets, download data file, read/write to memory (or register), add breakpoints and debug. Users can use the HSI API above to create dynamic scripts that will work across different architectures. For example, users can extract the architecture from the XSA and use this info to property to connect to the target and download its binaries. Users can also read the device over the debugger.
 
-## Import xsdb python package
+### Import xsdb python package
 
 ```
 import xsdb
 ```
 
-## Start a session
+### Start a session
 
 ```
 session = xsdb.start_debug_session()
 ```
 
-## XSDB Help
+### XSDB Help
 
 ```
 xsdb.help("functions")
 ```
 
-## Connect to a hw_server
+### Connect to a hw_server
 
 Users can connect to a hw_server running on a localhost, or remote (as shown below)
 
@@ -714,7 +708,7 @@ session.connect("--symbol", url="TCP:lentinus15:3121")
 ```
 
 
-## Get all JTAG Targets
+### Get all JTAG Targets
 
 ```
 Vitis [0]: jtag = session.jtag_targets()
@@ -725,7 +719,8 @@ Vitis [0]: jtag = session.jtag_targets()
   2  xczu9 (idcode 24738093 irlen 12 fpga)
   3  arm_dap (idcode 5ba00477 irlen 4)
 ```
-Users can filter on the JTAG Targets 
+
+Users can filter on the JTAG Targets
 
 ```
 Vitis [0]: jtag = session.jtag_target(filter='name==arm_dap')
@@ -752,7 +747,7 @@ This is a nested dict. If users wanted to get the idcode, then they would need t
 Vitis [0]: print(jtag["jsn-JTAG-SMT2NC-210308A7B222-5ba00477-0"]["idcode"])
 ```
 
-Users can make this more dynamic
+Users can make this more dynamic.
 
 ```
 Vitis [0]: key = list(jtag.keys())
@@ -761,7 +756,7 @@ Vitis [0]: print(jtag[key[0]]["idcode"])
 5ba00477
 ```
 
-Users can use this info to determine the arch of the target device 
+Users can use this info to determine the arch of the target device.
 
 ```
 Vitis [0]: if idcode == '4ba00477':
@@ -775,9 +770,9 @@ Vitis [0]: if idcode == '4ba00477':
         ...: 
 ```
 
-## Get all Targets
+### Get all Targets
 
-Users can list all the targets with the command below
+Users can list all the targets with the following command:
 
 ```
 print(session.targets())
@@ -798,7 +793,8 @@ Vitis [0]: print(session.targets())
           11  Cortex-A53 #2 (APU Reset)
           12  Cortex-A53 #3 (APU Reset)
 ```
-## Filter on a specific Target
+
+### Filter on a specific Target
 
 To set a specific target, users can use the filter example as shown below
 
@@ -806,19 +802,19 @@ To set a specific target, users can use the filter example as shown below
 session.targets("--set", filter="name =~ *Cortex-A53 #0*")
 ```
 
-## Dowload ELF to target
+### Dowload ELF to target
 
 ```
 session.dow("test.elf")
 ```
 
-## Dowload PDI to Versal target
+### Dowload PDI to Versal target
 
 ```
 session.device_program("test.pdi")
 ```
 
-## Dowload Data file to target
+### Dowload Data file to target
 
 The command below will download the test.bin to address 0x10000000 of the current target
 
@@ -826,7 +822,7 @@ The command below will download the test.bin to address 0x10000000 of the curren
 session.dow("test.bin", "--data", addr=0x10000000)
 ```
 
-## Memory read/write
+### Memory read/write
 
 For example, to read from address 0x0
 
@@ -840,7 +836,7 @@ For example, to write 0x12345678 to address 0x0
 session.mwr(address=0x0, words=0x12345678)
 ```
 
-## Program Hello World ELF onto Zynq Ultrascale+
+### Program Hello World ELF onto Zynq Ultrascale+
 
 In the use case below, the XSDB API are used to connect to a Zynq Ultrascale target, The PMU is enabled in the target and the PMUFW ELF is downloaded. The FSBL ELF is downloaded to the Cortex A53 processor. There is a breakpoint added at the exit function in the FSBL. This will ensure that the FSBL is complete. Finally, the Hello World application is downloaded and executed.
 
@@ -871,7 +867,7 @@ a53.dow("hello_world.elf")
 a53.con()
 ```
 
-## Program PDI onto Versal
+### Program PDI onto Versal
 
 Programming the Versal using a PDI is alot more staightforward than Zynq Ultrascale as all the binaries are placed in the PDI
 
@@ -885,9 +881,9 @@ versal = session.targets("--set", filter="name =~ *Versal*")
 versal.device_program("project_1.pdi")
 ```
 
-## Using example script
+### Using example script
 
-There is an example <i>build_ws.py()</i> script that users can use as a reference to build a Vitis Unified IDE workspace. The script will create a hello_world application for a target XSA. The script also utilizes the HSI Python API to extract the HW metadata such as the architecture and processors from the XSA. It uses this metadata to control how the workspace is created. 
+There is an example `build_ws.py()` script that users can use as a reference to build a Vitis Unified IDE workspace. The script will create a hello_world application for a target XSA. The script also utilizes the HSI Python API to extract the HW metadata such as the architecture and processors from the XSA. It uses this metadata to control how the workspace is created.
 
 Use the command below to launch the script
 
@@ -896,7 +892,7 @@ cd scripts
 vitis -s create_unified_workspace.py path/to/xsa
 ```
 
-**Note** This script is to be used as a reference only
+> **Note**: This script is to be used as a reference only.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 

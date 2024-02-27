@@ -7,7 +7,7 @@
 
 ***Version: Vitis 2023.2***
 
-# Migrating from classic Vitis IDE to Vitis Unified IDE
+# Vitis Classic to Unified Project Migration
 
 The methodology to pass the metadata from hardware from Vivado to Vitis IDE has changed. However, these changes will not affect the users as the AMD baremetal drivers, standalone bsp and libraries have been fully ported to this new methodology.
 
