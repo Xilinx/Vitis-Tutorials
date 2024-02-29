@@ -642,7 +642,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  </tr>
  <tr>
- <td align="center"><a href="./Design_Tutorials/13-FFT-DFT-on-AIE/">FFT and DFT on AI Engines</a></td>
+ <td align="center"><a href="./Design_Tutorials/13-FFT-DFT-on-AIE/">FFT and DFT on AI Engine</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
@@ -656,6 +656,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/14-Bitonic-Sorting/">Bitonic SIMD Sorting on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>  
  </table>
 
 
