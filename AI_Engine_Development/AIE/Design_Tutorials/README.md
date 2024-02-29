@@ -82,6 +82,10 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./13-FFT-DFT-on-AIE/">Implementing FFT and DFT Designs on AI Engines</a></td>
  <td>This tutorial illustrates several techniques for mapping FFT and DFT algorithms to the AI Engine array including the Stockham FFT used in AMD Vitis DSPlib, hand-coded variants implemented using the AI Engine API, and a direct form DFT using vector-matrix multiplication. We also illustrate how to trade off AI engine tile resource vs. throughput performance of the Stockham FFT in DSPlib using its <code>TP_CASC_LEN</code> and <code>TP_PARALLEL_POWER</code> template parameters. This is useful when configuring DSPlib FFT library instances to serve as part of a larger 2D FFT architecture.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./14-Bitonic-Sorting/">Bitonic SIMD Sorting on AI Engine for float Datatypes</a></td>
+ <td>This tutorial illustrates how to implement a Bitonic SIMD sorter on AI Engine in Versal for <code>float</code> data types. Two examples are given. First, a small example using N=16 demonstrates the concept and identifies strategies for vectorization & management of the vector register space. These ideas are then applied to a second larger example using N=1024. Profiling & throughput performance are compared to <code>std::sort()</code>.</td>
+ </tr>
  </table>
 
 
