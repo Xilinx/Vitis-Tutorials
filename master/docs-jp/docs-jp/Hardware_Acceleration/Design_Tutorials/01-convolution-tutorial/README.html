@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>ビデオたたみ込みフィルタリング アプリケーションの高速化 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="AXI-Stream と Vitis を使用した混合カーネル デザインのチュートリアル" href="../03-rtl_stream_kernel_integration/README.html" />
+    <link rel="prev" title="アクセラレーション FPGA アプリケーションの最適化: ブルーム フィルターの例" href="../02-bloom/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">ブルーム フィルターの例</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">たたみ込みの例</a><ul><li class="toctree-l4"><a class="reference internal" href="#introduction-to-acceleration">アクセラレーションの概要</a></li><li class="toctree-l4"><a class="reference internal" href="#running-fpga-accelerated-application">FPGA アクセラレーション アプリケーションの実行</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL システム統合の例</a></li><li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">巡回セールスパーソン問題</a></li><li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">ボトム RTL カーネルのデザイン フローの例</a></li><li class="toctree-l3"><a class="reference internal" href="../06-cholesky-accel/README.html">コレスキー アルゴリズム アクセラレーション</a></li><li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT ホスト コードの最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Alveo での Aurora カーネル</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>ビデオたたみ込みフィルター アプリケーションのアクセラレーション</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="accelerating-video-convolution-filtering-application">
+<h1>ビデオたたみ込みフィルター アプリケーションのアクセラレーション<a class="headerlink" href="#accelerating-video-convolution-filtering-application" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<p>このチュートリアルでは、ザイリンクス Alveo データセンター アクセラレータ カードを使用してアクセラレーションされた計算量の多いアプリケーションについて説明します。FPGA 上で実行する特定のカーネルを設計し、パフォーマンスのためのホスト側アプリケーションの最適化について簡単に説明します。カーネルはスループットが最大になるように設計され、ホスト アプリケーションは、ホストと FPGA カードの間でデータが効率的に転送されるように最適化されます。ホスト アプリケーションは、複数のカーネル呼び出しに対処できるようにデータ転送を重複させて、データ移動の遅延をなくします。このチュートリアルでは、<em></em><strong>Vitis HLS を使用してビルド可能なハードウェア カーネルのパフォーマンスを簡単に見積もる方法と、その見積もりがどれくらい正確で実際のハードウェア パフォーマンスに近いか</strong>についても説明します。</p>
+<div class="section" id="introduction-to-acceleration">
+<h2>アクセラレーションの概要<a class="headerlink" href="#introduction-to-acceleration" title="Permalink to this heading">¶</a></h2>
+<p>1 つ目の演習は、ビデオ フィルターをザイリンクス Alveo アクセラレータ カードに移植することで達成可能なアクセラレーション パフォーマンスをすばやく体験できるように設計されています。Alveo シリーズ カードは、データセンター アプリケーションをアクセラレーションするために設計されています。ただし、このチュートリアルはいくつかの簡単な変更を加えると、ほかのアクセラレータ カードにも適用できます。</p>
+<p>この最初の演習で実行する手順は次のとおりです。</p><ul class="simple"> <li><p>Vitis アプリケーション アクセラレーション開発フローを設定</p></li> <li><p>ハードウェア最適化済みのアクセラレータを実行し、そのパフォーマンスをアプリケーションのベースラインと比較</p></li> </ul>
+<p>この演習では、CPU のパフォーマンスと比較すると、かなりパフォーマンスを向上できることを示します。このチュートリアルの次の演習では、2D たたみ込みカーネルとホスト側アプリケーションのさまざまな最適化および設計手法を使用して、このようなパフォーマンスを達成する方法について説明します。</p>
+<div class="section" id="cloning-the-github-repository-and-setting-up-the-vitis-tool">
+<h3>GitHub リポジトリのクローンおよび Vitis ツールの設定<a class="headerlink" href="#cloning-the-github-repository-and-setting-up-the-vitis-tool" title="Permalink to this heading">¶</a></h3>
+<p>このチュートリアルを実行するには、次の手順に示すように、git リポジトリをクローンし、圧縮ファイルの一部をダウンロードして抽出する必要があります。</p>
+<div class="section" id="clone-git-repo">
+<h4>Git リポジトリのクローン<a class="headerlink" href="#clone-git-repo" title="Permalink to this heading">¶</a></h4>
+<p>次のコマンドを使用して、リポジトリをクローンします。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/Xilinx/Vitis-Tutorials.git</pre></div>
+</div>
+</div>
+<div class="section" id="copy-and-extract-large-files">
+<h4>大容量ファイルのコピーおよび抽出<a class="headerlink" href="#copy-and-extract-large-files" title="Permalink to this heading">¶</a></h4>
+<p>次のように、たたみ込みチュートリアルのディレクトリに大きなファイルをコピーして抽出します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial
+wget https://www.xilinx.com/bin/public/openDownload?filename<span class="o">=</span>conv_tutorial_files.tar.gz -O conv_tutorial_files.tar.gz
+tar -xvzf  conv_tutorial_files.tar.gz
+</pre></div>
+</div>
+<p><strong>注記</strong>: VITIS_TUTORIAL_REPO_PATH は、git リポジトリがクローンされるローカルのディレクトリ パスです。</p>
+</div>
+<div class="section" id="setting-up-the-vitis-tool">
+<h4>Vitis ツールの設定<a class="headerlink" href="#setting-up-the-vitis-tool" title="Permalink to this heading">¶</a></h4>
+<p>ローカル インストールごとに、次のコマンドを使用して、アプリケーション ビルドおよびランタイム環境を設定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;XILINX_VITIS_INSTALL_PATH&gt;/settings64.sh
+<span class="nb">source</span> &lt;XRT_INSTALL_PATH&gt;/setup.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="baseline-the-application-performance">
+<h3>アプリケーション パフォーマンスのベースライン<a class="headerlink" href="#baseline-the-application-performance" title="Permalink to this heading">¶</a></h3>
+<p>ソフトウェア アプリケーションは、解像度 1920x1080 の高解像度 (HD) ビデオフレーム/画像を処理します。一連の画像にたたみ込みを実行し、パフォーマンス結果のサマリを表示します。これは、ベースライン ソフトウェアのパフォーマンスを測定するために使用されます。次のように、チュートリアルを指定する環境変数を repo のパスを基準に設定してください。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CONV_TUTORIAL_DIR</span><span class="o">=</span>/VITIS_TUTORIAL_REPO_PATH/Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial</pre></div>
+</div>
+<p><strong>VITIS_TUTORIAL_REPO_PATH</strong> は、クローン後にユーザーが配置した git repo のローカル パスです。</p>
+<p><strong>注記</strong>: このチュートリアルのすべての演習で <code class="docutils literal notranslate"><span class="pre">CONV_TUTORIAL_DIR</span></code> 変数が正しく設定されるようにしてください。</p>
+<p>アプリケーションを実行して、次のようにパフォーマンスを測定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span>/sw_run
+./run.sh 
+</pre></div>
+</div>
+<p>次に示すような結果が表示されます。CPU のスループットを書き留めておきます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+Number of runs    : <span class="m">60</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">6</span>
+
+Generating a random 1920x1080 input image
+Running Software version on <span class="m">60</span> images
+
+CPU  Time         :    <span class="m">28</span>.0035 s
+CPU  Throughput   :    <span class="m">12</span>.7112 MB/s
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-fpga-accelerated-application">
+<h2>FPGA アクセラレーション アプリケーションの実行<a class="headerlink" href="#running-fpga-accelerated-application" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="launching-the-host-application">
+<h3>ホスト アプリケーションの起動<a class="headerlink" href="#launching-the-host-application" title="Permalink to this heading">¶</a></h3>
+<p>FPGA アクセラレーションされたビデオたたみ込みフィルターを使用するアプリケーションを起動します。アプリケーションは、実際の FPGA カードで実行されます (システム実行とも呼ばれます)。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$CONV_TUTORIAL_DIR</span> make run</pre></div>
+</div>
+<p>結果のサマリは、次のようになります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>----------------------------------------------------------------------------
+Xilinx 2D Filter Example Application <span class="o">(</span>Randomized Input Version<span class="o">)</span>
+
+FPGA binary       : ../xclbin/fpgabinary.hw.xclbin
+Number of runs    : <span class="m">60</span>
+Image width       : <span class="m">1920</span>
+Image height      : <span class="m">1080</span>
+Filter <span class="nb">type</span>       : <span class="m">3</span>
+Max requests      : <span class="m">12</span>
+Compare perf.     : <span class="m">1</span>
+
+Programming FPGA device
+Generating a random 1920x1080 input image
+Running FPGA accelerator on <span class="m">60</span> images
+Running Software version
+Comparing results
+
+Test PASSED: Output matches reference
+
+FPGA Time         :     <span class="m">0</span>.4240 s
+FPGA Throughput   :   <span class="m">839</span>.4765 MB/s
+CPU  Time         :    <span class="m">28</span>.9083 s
+CPU  Throughput   :    <span class="m">12</span>.3133 MB/s
+FPGA Speedup      :    <span class="m">68</span>.1764 x
+----------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h3>結果<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h3>
+<p>ホスト アプリケーション コンソールの出力から、FPGA アクセラレーション カーネルが 68x の係数で CPU のみのインプリメンテーションを上回ることがわかります。CPU よりもパフォーマンスが大きく向上します。次の演習では、このパフォーマンスによって 1080p の解像度で 3 つ以上の HD ビデオ チャンネルを並列処理する方法を説明します。このチュートリアルでは、C++ で記述されたカーネルとホスト アプリケーションをビルドして、このようなパフォーマンス向上を達成する方法について説明します。ホスト アプリケーションは、OpenCL API とザイリンクス ランタイム (XRT) を使用して、このカスタム ビルド ハードウェア カーネルの計算能力を効果的に引き出します。</p>
+<hr class="docutils" />
+<p align="center"><b>次の演習モジュール: <a href="./lab1_app_introduction_performance_estimation.html">ビデオたたみ込みフィルター: 概要およびパフォーマンス見積もり</a></b></p><p>Apache ライセンス、バージョン 2.0 (以下「ライセンス」) に基づいてライセンス付与されています。本ライセンスに準拠しないと、このファイルを使用することはできません。ライセンスのコピーは、http://www.apache.org/licenses/LICENSE-2.0 から入手できます。</p>
+<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup><br><sup>XD018</sup></br></p></b></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../02-bloom/README.html" class="btn btn-neutral float-left" title="Optimizing Accelerated FPGA Applications: Bloom Filter Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../03-rtl_stream_kernel_integration/README.html" class="btn btn-neutral float-right" title="Mixed Kernels Design Tutorial with AXI Stream and Vitis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

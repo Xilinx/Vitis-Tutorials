@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -104,10 +105,10 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
     </td>
  </tr>
-</table><section id="versal-custom-thin-platform-extensible-system">
+</table><div class="section" id="versal-custom-thin-platform-extensible-system">
 <h1>Versal Custom Thin Platform Extensible System<a class="headerlink" href="#versal-custom-thin-platform-extensible-system" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial describes a Versal VCK190 System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Vitis 2021.1.</p>
-<section id="getting-started">
+<div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <p>The Versal VCK190 System Example Design full Makefile build-flow builds the whole project in the following order:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mf">1.</span> <span class="n">version_check</span><span class="p">:</span> <span class="n">Checks</span> <span class="k">if</span> <span class="n">the</span> <span class="n">Vivado</span><span class="p">,</span> <span class="n">Petalinux</span><span class="p">,</span> <span class="ow">and</span> <span class="n">Vitis</span> <span class="n">version</span> <span class="ow">is</span> <span class="mf">2021.1</span>
@@ -142,8 +143,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>End result: <code class="docutils literal notranslate"><span class="pre">[project-root]/package_output/sd_card/*</span></code> can be used for FAT-32 sd_card (partition); or <code class="docutils literal notranslate"><span class="pre">[project-root]/package_output/sd_card.img</span></code> can be used.</p></li>
 </ul>
-</section>
-<section id="more-in-depth">
+</div>
+<div class="section" id="more-in-depth">
 <h2>More In-Depth<a class="headerlink" href="#more-in-depth" title="Permalink to this heading">¶</a></h2>
 <p>The following explains the different sub-build steps. Click on each item for more detailed information.<br />Each step is sequential (in the order listed - by the <code class="docutils literal notranslate"><span class="pre">[project-root]/Makefile</span></code>):</p>
 <details>
@@ -231,8 +232,8 @@ function OptanonWrapper() { }
 <li><p>All other files can be ignored; they are an output from the Vitis packager and are unused</p></li>
 <li><p>After this step you could open the full blockdesign (platform extended with all kernels) in Vivado for review</p></li>
 </ul>
-</details></section>
-<section id="testing">
+</details></div>
+<div class="section" id="testing">
 <h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>Copy over the <code class="docutils literal notranslate"><span class="pre">[project-root]/package_output/sd_card/*</span></code> to an sd card or put the <code class="docutils literal notranslate"><span class="pre">[project-root]/package_output/sd_card.img</span></code> on an sd card.</p></li>
@@ -291,8 +292,8 @@ function OptanonWrapper() { }
    <span class="n">root</span><span class="nd">@linux</span><span class="p">:</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">sd</span><span class="o">-</span><span class="n">mmcblk0p1</span><span class="c1">#</span>
 </pre></div>
 </div>
-</section>
-<section id="notes">
+</div>
+<div class="section" id="notes">
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>xsa: CIPS settings are added manually; configured in the bd-files.</p></li>
@@ -310,8 +311,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>Simulations and Emulations are <strong>NOT</strong> included in this Tutorial!</p></li>
 </ul>
-</section>
-<section id="design-considerations">
+</div>
+<div class="section" id="design-considerations">
 <h2>Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this heading">¶</a></h2>
 <p>Note: The <strong>MUST</strong>’s in below explanations are due to how the generic Makefiles are setup, and is <strong>NOT</strong> a Xilinx tools requirement!</p>
 <ul class="simple">
@@ -329,15 +330,15 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ul>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <p>The following documents provide supplemental information for this tutorial.</p>
-<section id="ai-engine-documentation">
+<div class="section" id="ai-engine-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this heading">¶</a></h3>
 <p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.</p>
-</section>
-<section id="xilinx-runtime-xrt-architecture">
+</div>
+<div class="section" id="xilinx-runtime-xrt-architecture">
 <h3><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">Xilinx Runtime (XRT) Architecture</a><a class="headerlink" href="#xilinx-runtime-xrt-architecture" title="Permalink to this heading">¶</a></h3>
 <p>The following are links to the XRT information used by this tutorial:</p>
 <ul class="simple">
@@ -345,8 +346,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://github.com/Xilinx/XRT">XRT Github Repo</a>: Contains the XRT source code.</p></li>
 <li><p><a class="reference external" href="https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h">XRT AIE API</a>: Documents the AI Engine XRT API calls</p></li>
 </ul>
-</section>
-<section id="vitis-unified-software-development-platform-2021-1-documentation">
+</div>
+<div class="section" id="vitis-unified-software-development-platform-2021-1-documentation">
 <h3><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html">Vitis Unified Software Development Platform 2021.1 Documentation</a><a class="headerlink" href="#vitis-unified-software-development-platform-2021-1-documentation" title="Permalink to this heading">¶</a></h3>
 <p>The following are links to Vitis related information referenced in this tutorial:</p>
 <ul class="simple">
@@ -354,9 +355,9 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis Application Acceleration Development Flow Tutorials</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/irn1582730075765.html">Vitis HLS</a></p></li>
 </ul>
-</section>
-</section>
-<section id="revision-history">
+</div>
+</div>
+<div class="section" id="revision-history">
 <h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>October 2021 - Optimized AI Engine Datamovers + Added more clarifications in this README.md + Improved petalinux version check</p></li>
@@ -373,8 +374,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD106 | © Copyright 2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD106 | © Copyright 2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

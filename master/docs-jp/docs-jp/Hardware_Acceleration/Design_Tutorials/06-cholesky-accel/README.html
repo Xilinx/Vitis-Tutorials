@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>コレスキー アルゴリズムの Vitis ハードウェア アクセラレーション - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="ホスト コードの最適化" href="../07-host-code-opt/README.html" />
+    <link rel="prev" title="Vitis を使用したボトムアップ RTL カーネル フローでのアクセラレーション" href="../05-bottom_up_rtl_kernel/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#introduction">入門</a></li><li class="toctree-l2 current"><a class="reference internal" href="../../Hardware-Acceleration.html#design-tutorials">設計チュートリアル</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="../02-bloom/README.html">ブルーム フィルターの例</a></li><li class="toctree-l3"><a class="reference internal" href="../01-convolution-tutorial/README.html">たたみ込みの例</a></li><li class="toctree-l3"><a class="reference internal" href="../03-rtl_stream_kernel_integration/README.html">RTL システム統合の例</a></li><li class="toctree-l3"><a class="reference internal" href="../04-traveling-salesperson/README.html">巡回セールスパーソン問題</a></li><li class="toctree-l3"><a class="reference internal" href="../05-bottom_up_rtl_kernel/README.html">ボトム RTL カーネルのデザイン フローの例</a></li><li class="toctree-l3 current"><a class="current reference internal" href="#">コレスキー アルゴリズム アクセラレーション</a></li><li class="toctree-l3"><a class="reference internal" href="../07-host-code-opt/README.html">XRT ホスト コードの最適化</a></li><li class="toctree-l3"><a class="reference internal" href="../08-alveo_aurora_kernel/README.html">Alveo での Aurora カーネル</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../../Hardware-Acceleration.html#feature-tutorials">機能チュートリアル</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../../Hardware-Acceleration.html">Vitis ハードウェア アクセラレータ</a> &raquo;</li><li>コレスキー アルゴリズムの Vitis ハードウェア アクセラレーション</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/06-cholesky-accel/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="vitis-hardware-acceleration-on-cholesky-algorithm">
+<h1>コレスキー アルゴリズムの Vitis ハードウェア アクセラレーション<a class="headerlink" href="#vitis-hardware-acceleration-on-cholesky-algorithm" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<p>このチュートリアルは、3 つのセクションに分割されます。</p><ul class="simple"> <li><p><a class="reference internal" href="01-Workflows/README.html"><span class="doc">セクション 1</span></a> (~ 10 分):</p><ul> <li><p>Vitis とホスト/カーネルの実例の概要</p><ul> <li><p>Vitis により多くの処理が自動的に実行されるので、ユーザーはアプリケーション コードに集中できることを示します。</p></li> </ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="02-System_Setup/README.html"><span class="doc">セクション 2</span></a> (Alveo U50 カードが既にインストール済みの場合は数分):</p><ul> <li><p>Vitis 開発ツールを設定します。</p></li> <li><p>サーバーにインストールされたカードを見つけて確認します。</p></li> </ul>
+</li>
+<li><p><a class="reference internal" href="03-Algorithm_Acceleration/README.html"><span class="doc">セクション 3</span></a> (数時間):</p><ul> <li><p>Cholesky アルゴリズムを理解し、まず CPU 上で実行します。</p></li> <li><p>コードを分類し直して、ホストとカーネル プログラムの両方を作成します。</p></li> <li><p>ホストとカーネルをバインドする API を確認します。</p></li> <li><p>複数のモジュールにわたってカーネルにインクリメンタル最適化を適用して、スループットを向上させます。最後に、最適化されたアクセラレータを使用する Alveo カードをプログラミングし、パフォーマンスを確認します。</p></li> <li><p><a class="reference internal" href="03-Algorithm_Acceleration/docs/cpu_src/README.html"><span class="doc">入門</span></a></p><ul> <li><p>Cholesky アルゴリズムの紹介</p></li> <li><p>CPU バージョンの実行</p></li> </ul>
+</li>
+<li><p><a class="reference internal" href="03-Algorithm_Acceleration/docs/module1_baseline/README.html"><span class="doc">Vitis モジュール 1</span></a></p><ul> <li><p>最初のカーネル デザインを使用し、パフォーマンス ベースラインを基準点として取得</p></li> <li><p>Vitis を GUI モードまたは <code>make</code> で実行</p></li> <li><p>Vitis アナライザーを実行して、アプリケーションのタイムラインを視覚化</p></li> <li><p>Vitis HLS を実行して、カーネル コードのパフォーマンスとリソースを確認</p></li> </ul>
+</li>
+<li><p><a class="reference internal" href="03-Algorithm_Acceleration/docs/module2_pipeline/README.html"><span class="doc">Vitis モジュール 2</span></a> (<code>PIPELINE</code> と <code>INTERFACE</code> の影響に焦点を当てた短いモジュール)</p><ul> <li><p>HLS <code>PIPELINE</code> プラグマによる命令の並列化を理解</p></li> <li><p><code>INTERFACE</code> プラグマを適用して物理ポート アダプターを管理</p></li> </ul>
+</li>
+<li><p><a class="reference internal" href="03-Algorithm_Acceleration/docs/module3_datatype/README.html"><span class="doc">Vitis モジュール 3</span></a></p><ul> <li><p><code>double</code> データ型よりもハードウェア効率の高い C++ の <code>float</code> データ型を使用するようにデザインを変更</p></li> <li><p>Vitis、Vitis アナライザー、および Vitis HLS を実行</p></li> </ul>
+</li>
+<li><p><a class="reference internal" href="03-Algorithm_Acceleration/docs/module4_dataflow/README.html"><span class="doc">Vitis モジュール 4</span></a></p><ul> <li><p><code>DATAFLOW</code> タスク並列最適化プラグマを適用</p></li> <li><p>Vitis、Vitis アナライザー、および Vitis HLS を実行 (特定のデータフロー波形の表示を含む)</p></li> <li><p>U50 カードで実行</p></li> </ul>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+Apache ライセンス、バージョン 2.0（以下、「本ライセンス」）に基づきライセンスされます。
+あなたは、本使用許諾に従った場合を除き、このファイルを使用することはできません。
+ライセンスのコピーは、http://www.apache.org/licenses/LICENSE-2.0 から入手できます。<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../05-bottom_up_rtl_kernel/README.html" class="btn btn-neutral float-left" title="Bottom-up RTL Kernel Flow with Vitis for Acceleration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../07-host-code-opt/README.html" class="btn btn-neutral float-right" title="Host Code Optimization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

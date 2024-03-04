@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>アクセラレーション パフォーマンスの確認 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>アクセラレーション パフォーマンスの体験</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/02-bloom/2_experience-acceleration.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="experiencing-acceleration-performance">
+<h1>アクセラレーション パフォーマンスの体験<a class="headerlink" href="#experiencing-acceleration-performance" title="Permalink to this heading">¶</a></h1>
+<p>この演習では、アプリケーションをまずソフトウェアのみのバージョンで実行し、その後コンパイル済み FPGA アクセラレータを使用して最適化されたアクセラレーション バージョンを実行し、アクセラレーションの可能性を体験します。</p>
+<ol><li><p>次のコマンドを実行してアプリケーションを設定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Source the Vitis runtime environment</span>
+<span class="nb">export</span> <span class="nv">LAB_WORK_DIR</span><span class="o">=</span>&lt;Downloaded Github repository&gt;/Hardware_Acceleration/Design_Tutorials/02-bloom
+</pre></div>
+</div>
+</li> <li><p>C アプリケーションをビルドします。</p>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">cpu_src</span></code> ディレクトリに移動します。</p></li> <li><p>次のコマンドを使用して、ドキュメント数を引数として指定して元の C アプリケーションを実行し、比較のためのゴールデン出力ファイルを生成します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run_fpga <span class="nv">SOLUTION</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>生成された出力スコアは、ホスト コードの <code class="docutils literal notranslate"><span class="pre">cpu_profile_score</span></code> 配列に格納されます。この配列は、指定されたドキュメント総数の出力を表します。結果は、次のようになります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">host</span> <span class="mi">100000</span>
+<span class="n">Initializing</span> <span class="n">data</span>
+<span class="n">Creating</span> <span class="n">documents</span> <span class="o">-</span> <span class="n">total</span> <span class="n">size</span> <span class="p">:</span> <span class="mf">1398.903</span> <span class="n">MBytes</span> <span class="p">(</span><span class="mi">349725824</span> <span class="n">words</span><span class="p">)</span>
+<span class="n">Creating</span> <span class="n">profile</span> <span class="n">weights</span>
+
+<span class="n">Total</span> <span class="n">execution</span> <span class="n">time</span> <span class="n">of</span> <span class="n">CPU</span>          <span class="o">|</span>  <span class="mf">2949.3867</span> <span class="n">ms</span>
+<span class="n">Compute</span> <span class="n">Hash</span> <span class="n">processing</span> <span class="n">time</span>         <span class="o">|</span>  <span class="mf">2569.3266</span> <span class="n">ms</span>
+<span class="n">Compute</span> <span class="n">Score</span> <span class="n">processing</span> <span class="n">time</span>        <span class="o">|</span>   <span class="mf">380.0601</span> <span class="n">ms</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Execution</span> <span class="n">COMPLETE</span>
+</pre></div>
+</div>
+</li></ol></li> <li><p>FPGA 上でアプリケーションを実行します。この演習では、FPGA アクセラレータは並列係数 8 でインプリメントされています。</p><ul> <li><p>8 個の入力ワードが並列処理され、各クロック サイクルで 8 つの出力フラグが生成されます。</p>
+<p>最適化されたアプリケーションを FPGA 上で実行するには、次の <code class="docutils literal notranslate"><span class="pre">make</span></code> コマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run_fpga <span class="nv">SOLUTION</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>次の出力が表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Processing</span> <span class="mf">1398.905</span> <span class="n">MBytes</span> <span class="n">of</span> <span class="n">data</span>
+<span class="n">Splitting</span> <span class="n">data</span> <span class="ow">in</span> <span class="mi">8</span> <span class="n">sub</span><span class="o">-</span><span class="n">buffers</span> <span class="n">of</span> <span class="mf">174.863</span> <span class="n">MBytes</span> <span class="k">for</span> <span class="n">FPGA</span> <span class="n">processing</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Executed</span> <span class="n">FPGA</span> <span class="n">accelerated</span> <span class="n">version</span>  <span class="o">|</span>   <span class="mf">427.1341</span> <span class="n">ms</span>   <span class="p">(</span> <span class="n">FPGA</span> <span class="mf">230.345</span> <span class="n">ms</span> <span class="p">)</span>
+<span class="n">Executed</span> <span class="n">Software</span><span class="o">-</span><span class="n">Only</span> <span class="n">version</span>     <span class="o">|</span>   <span class="mf">3057.6307</span> <span class="n">ms</span>
+<span class="o">--------------------------------------------------------------------</span>
+<span class="n">Verification</span><span class="p">:</span> <span class="n">PASS</span>
+</pre></div>
+</div>
+<p>スループットは、次のように計算されます。</p>
+<p>スループット = 合計データ量/合計時間 = 1.39 GB/427.1341 ms = 3.25 GB/s</p>
+<p>FPGA アクセラレーションを効果的に利用することにより、アプリケーションのスループットが 7 倍になりました。</p></li> </ul>
+</li>
+</ol>
+<div class="section" id="next-steps">
+<h2>次の手順<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>この手順では、FPGA を使用して達成可能なアクセラレーションを観察しました。次に、<a class="reference internal" href="3_architect-the-application.html"><span class="doc">アクセラレーションのためのアプリケーションを構築</span></a>し、元のアプリケーションをプロファイリングしてどの関数をアクセラレーションできるかを調べます。希望のアクセラレーションを達成するためのインターフェイス境界およびパフォーマンス制約も定義します。</p>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="docs/README.md">チュートリアルの初めに戻る</a></b></p><p align="center" class="sphnixhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

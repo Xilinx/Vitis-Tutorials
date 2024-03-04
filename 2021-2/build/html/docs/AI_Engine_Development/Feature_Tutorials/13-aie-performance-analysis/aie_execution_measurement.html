@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -108,13 +108,13 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="ai-engine-graph-execution-and-measurement">
+</table><div class="section" id="ai-engine-graph-execution-and-measurement">
 <h1>AI Engine Graph Execution and Measurement<a class="headerlink" href="#ai-engine-graph-execution-and-measurement" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
 <p>AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.</p>
 <p>This example introduces the Trace view to show how kernels with buffers and streams are executed and synchronized. Performance measurement methods are also introduced to help you identify the performance bottlenecks in the design. An optimized version of the design is then introduced.</p>
 <p><strong>Note:</strong> The default working directory in this step is <code class="docutils literal notranslate"><span class="pre">testcase_ssfifo</span></code>, unless explicitly stated otherwise.</p>
-<section id="graph-and-kernel-code">
+<div class="section" id="graph-and-kernel-code">
 <h2>Graph and Kernel Code<a class="headerlink" href="#graph-and-kernel-code" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> command to compile the design:</p>
@@ -168,8 +168,8 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 </pre></div>
 </div>
 <p>It reads from the stream input and the window buffer, and writes to the stream output.</p>
-</section>
-<section id="graph-execution-model">
+</div>
+<div class="section" id="graph-execution-model">
 <h2>Graph Execution Model<a class="headerlink" href="#graph-execution-model" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Use the following command to run AI Engine simulator:</p>
@@ -202,8 +202,8 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 <p><strong>Note:</strong> The stream interface does not need to acquire lock; it has inherent backward and forward pressure for data synchronization. Every lock acquire and release event has some cycles of overhead.</p>
 </li>
 </ol>
-</section>
-<section id="graph-performance-measurement">
+</div>
+<div class="section" id="graph-performance-measurement">
 <h2>Graph Performance Measurement<a class="headerlink" href="#graph-performance-measurement" title="Permalink to this heading">¶</a></h2>
 <p>There are multiple ways to measure performance:</p>
 <ol>
@@ -272,8 +272,8 @@ __attribute__ ((noinline)) void aie_dest2(input_stream&lt;int32&gt; *in, input_w
 </ul>
 </li>
 </ol>
-</section>
-<section id="design-optimization-considerations">
+</div>
+<div class="section" id="design-optimization-considerations">
 <h2>Design Optimization Considerations<a class="headerlink" href="#design-optimization-considerations" title="Permalink to this heading">¶</a></h2>
 <p>In this section, the reference design is in <code class="docutils literal notranslate"><span class="pre">testcase_dmafifo_opt</span></code>. From performing the above analysis, it can be seen that the bottleneck of this design contains the following issues:</p>
 <ul>
@@ -346,13 +346,13 @@ Throughput of the graph: 3742.86 MB/s
 ```
 </pre></div>
 </div>
-<section id="conclusion">
+<div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>This example has shown a number of different ways to do performance analysis and profiling. Some optimization skills have also been introduced. In the next section, take a look at how deadlocks might occur, and how to analyze them: see <a class="reference internal" href="aie_hang_analysis.html"><span class="doc">AI Engine Deadlock Analysis</span></a>.</p>
-</section>
-</section>
-</section>
-<section id="revision-history">
+</div>
+</div>
+</div>
+<div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>July 2021: Initial release.</p></li>
@@ -363,7 +363,7 @@ Throughput of the graph: 3742.86 MB/s
 </pre></div>
 </div>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-</section>
+</div>
 
 
            </div>

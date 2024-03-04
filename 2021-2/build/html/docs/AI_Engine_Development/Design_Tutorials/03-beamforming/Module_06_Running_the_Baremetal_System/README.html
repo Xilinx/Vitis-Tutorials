@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -107,11 +107,11 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="introduction-packaging-and-running-the-system">
+</table><div class="section" id="introduction-packaging-and-running-the-system">
 <h1>Introduction: Packaging and Running the System<a class="headerlink" href="#introduction-packaging-and-running-the-system" title="Permalink to this heading">¶</a></h1>
 <p>After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the Versal™ device. This requires the use of the Vitis™ compiler <code class="docutils literal notranslate"><span class="pre">--package</span></code> command. For Versal ACAPs, the programmable device image (PDI) file is used to boot and program the hardware device.</p>
 <p>In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/integrate_ai_engine_application.html#ariaid-title8">AI Engine Documentation: Packaging</a> for more details on this packaging process.</p>
-<section id="building-the-design-hardware-emulation">
+<div class="section" id="building-the-design-hardware-emulation">
 <h2>Building the Design: Hardware Emulation<a class="headerlink" href="#building-the-design-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>For hardware emulation, the <code class="docutils literal notranslate"><span class="pre">–-package</span></code> command adds the PDI and EMULATION_DATA sections to the XCLBIN file and outputs a new XCLBIN file (<code class="docutils literal notranslate"><span class="pre">a.xclbin</span></code>):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make package
@@ -135,7 +135,7 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Notice the absence of the <code class="docutils literal notranslate"><span class="pre">-D__PS_ENABLE_AIE__</span></code> (Module 05) and <code class="docutils literal notranslate"><span class="pre">–package.defer_aie_run</span></code> options (Module 06). This bare-metal application is loaded and launched at boot time and these options are not required. In Modules 08 and 09, you will compile the Linux host application and package; these options will be required at this point because the Linux host application launches and controls the graph.</p>
-<section id="dependencies">
+<div class="section" id="dependencies">
 <h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -162,15 +162,15 @@ function OptanonWrapper() { }
 <td>The AI Engine application created in Module 02.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="build-products">
+</table></div>
+<div class="section" id="build-products">
 <h3>Build Products<a class="headerlink" href="#build-products" title="Permalink to this heading">¶</a></h3>
 <p>|Filename|Description|
 |  —  |  —  |
 |build/hw_emu_main_partial/hw_emu_main_partial.package/|Package directory containing the files needed to run hardware emulation.|</p>
-</section>
-</section>
-<section id="running-the-system-hardware-emulation">
+</div>
+</div>
+<div class="section" id="running-the-system-hardware-emulation">
 <h2>Running the System: Hardware Emulation<a class="headerlink" href="#running-the-system-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>Running the system depends on the build target. The process of running the hardware emulation build is different from that of running the hardware build. For hardware emulation, the <code class="docutils literal notranslate"><span class="pre">--package</span></code> command generates the <code class="docutils literal notranslate"><span class="pre">launch_hw_emu.sh</span></code> script. This script is used to launch the emulation environment. Hardware emulation runs the AI Engine simulator for the graph application, the Vivado® logic simulator (XSIM) for the PL kernels, and QEMU for the PS host application.</p>
 <p>Use the following command to launch hardware emulation from the command line.</p>
@@ -185,8 +185,8 @@ function OptanonWrapper() { }
 </div>
 <p>This step takes several hours to complete. You can open a new shell and continue with the next section while hardware emulation completes.</p>
 <p>To exit QEMU simulation, press <strong>Ctrl+A</strong>, let go of the keyboard, and then press <strong>x</strong>.</p>
-</section>
-<section id="building-the-design-hardware">
+</div>
+<div class="section" id="building-the-design-hardware">
 <h2>Building the Design: Hardware<a class="headerlink" href="#building-the-design-hardware" title="Permalink to this heading">¶</a></h2>
 <p>For hardware builds, the package process creates an XCLBIN file containing the ELF files and graph configuration data objects (CDOs) for the AI Engine application. Because you already ran the <code class="docutils literal notranslate"><span class="pre">main_partial.elf</span></code> host application during hardware emulation, use the <code class="docutils literal notranslate"><span class="pre">main_full.elf</span></code> for the hardware package:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make package <span class="nv">TARGET</span><span class="o">=</span>hw <span class="nv">MAIN</span><span class="o">=</span>main_full
@@ -205,7 +205,7 @@ function OptanonWrapper() { }
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 </pre></div>
 </div>
-<section id="id1">
+<div class="section" id="id1">
 <h3>Dependencies<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -232,15 +232,15 @@ function OptanonWrapper() { }
 <td>The AI Engine application created in Module 02.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="id2">
+</table></div>
+<div class="section" id="id2">
 <h3>Build Products<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>|Filename|Description|
 |  —  |  —  |
 |build/hw_main_full/hw_main_full.package/|Package directory containing files needed to run hardware (VCK190 board).|</p>
-</section>
-</section>
-<section id="running-the-system-hardware">
+</div>
+</div>
+<div class="section" id="running-the-system-hardware">
 <h2>Running the System: Hardware<a class="headerlink" href="#running-the-system-hardware" title="Permalink to this heading">¶</a></h2>
 <p>For the hardware build, the <code class="docutils literal notranslate"><span class="pre">–-package</span></code> command creates an <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code> file which contains the contents of the <code class="docutils literal notranslate"><span class="pre">sd_card/</span></code> folder.  The next step is to copy the <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code> file onto an SD card, which will become the boot device of your system.</p>
 <p>Perform the following steps to run the <code class="docutils literal notranslate"><span class="pre">hw_main_full_ps.elf</span></code> excutable on your VCK190 board.</p>
@@ -270,8 +270,8 @@ function OptanonWrapper() { }
  <span class="o">*****</span> <span class="n">END</span> <span class="n">TEST</span> <span class="o">*****</span>
 </pre></div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging">AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Packaging</a></p></li>
@@ -279,18 +279,18 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Deploying-the-System">AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Deploying the System</a></p></li>
 <li><p><a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-General-Options">Vitis Compiler Command Options</a></p></li>
 </ul>
-</section>
-</section>
-<section id="support">
+</div>
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></section>
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
 
 
            </div>

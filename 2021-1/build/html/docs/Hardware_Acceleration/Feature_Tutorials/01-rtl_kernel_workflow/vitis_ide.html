@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +110,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="rtl-kernel-wizard-flow">
+</table><div class="section" id="rtl-kernel-wizard-flow">
 <h1>RTL Kernel Wizard Flow<a class="headerlink" href="#rtl-kernel-wizard-flow" title="Permalink to this heading">¶</a></h1>
 <p>The process described in this lab follows the flow described in <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/rtl_kernel_wizard.html#ouz1504034324041">RTL Kernel Wizard</a> of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <blockquote>
@@ -140,8 +141,8 @@ function OptanonWrapper() { }
 </ol>
 <p>The new project wizard closes and opens the Vitis IDE with your new project loaded.
 <img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
-</section>
-<section id="configuration-with-the-rtl-kernel-wizard">
+</div>
+<div class="section" id="configuration-with-the-rtl-kernel-wizard">
 <h1>Configuration with the RTL Kernel Wizard<a class="headerlink" href="#configuration-with-the-rtl-kernel-wizard" title="Permalink to this heading">¶</a></h1>
 <p>From the top menu bar of the Vitis IDE, click <strong>Xilinx &gt; Launch RTL Kernel Wizard &gt; rtl_ke_t2_kernels</strong>.</p>
 <p>The RTL Kernel wizard opens to the Welcome page, which offers a brief introduction to the process used for defining RTL kernels. You will be following that process in this tutorial. Take a minute to read the instructions, and then click <strong>Next</strong> to proceed.</p>
@@ -153,7 +154,7 @@ function OptanonWrapper() { }
 <li><p>A Vivado Design Suite project for the kernel</p></li>
 </ul>
 <p>As you continue through this tutorial, you will replace the sample kernel with the existing Vector-Accumulate IP, and package it as an XO file.</p>
-<section id="general-settings">
+<div class="section" id="general-settings">
 <h2>General Settings<a class="headerlink" href="#general-settings" title="Permalink to this heading">¶</a></h2>
 <p>The General Settings page is displayed as shown below.</p>
 <p><img alt="Default perspective" src="../../../../_images/rtl_kernel-general_settings.png" /></p>
@@ -173,8 +174,8 @@ function OptanonWrapper() { }
 <li><p>For <strong>Kernel control interface</strong> select <code class="docutils literal notranslate"><span class="pre">ap_ctrl_hs</span></code>.</p></li>
 <li><p>For the remaining options, keep the default values, and click <strong>Next</strong> to proceed.</p></li>
 </ol>
-</section>
-<section id="scalars">
+</div>
+<div class="section" id="scalars">
 <h2>Scalars<a class="headerlink" href="#scalars" title="Permalink to this heading">¶</a></h2>
 <p>Scalar arguments are used to pass input parameters from the host application to the kernel. For the number of input arguments specified, a corresponding register is created to facilitate passing the argument from software to hardware. Each argument is assigned an ID value that is used to access that argument from the host application. This ID value can be found on the Summary page of the wizard.</p>
 <ul class="simple">
@@ -182,8 +183,8 @@ function OptanonWrapper() { }
 <li><p><strong>Argument type</strong>: Type of the scalar argument expressed as a native C/C++ datatype. For example, (u)char, (u)short, or (u)int.</p></li>
 </ul>
 <p>Keep the default values, and then click <strong>Next</strong>.<br /><img alt="Scalar Page" src="../../../../_images/rtl_kernel-scalar_page.png" /></p>
-</section>
-<section id="global-memory">
+</div>
+<div class="section" id="global-memory">
 <h2>Global Memory<a class="headerlink" href="#global-memory" title="Permalink to this heading">¶</a></h2>
 <p>Global memory is used to pass large data sets between the host and kernels and between kernels to other kernels. This memory can be accessed by the kernel through an AXI4 master interface. For each AXI4 master interface, you can customize the interface name, data width, and the number of associated arguments.</p>
 <ul>
@@ -210,12 +211,12 @@ function OptanonWrapper() { }
 </li>
 <li><p>Click <strong>Next</strong> to proceed.</p></li>
 </ol>
-</section>
-<section id="streaming-interfaces">
+</div>
+<div class="section" id="streaming-interfaces">
 <h2>Streaming Interfaces<a class="headerlink" href="#streaming-interfaces" title="Permalink to this heading">¶</a></h2>
 <p>You do not need streaming interface for this design. Keep the default value and click <strong>Next</strong>.</p>
-</section>
-<section id="example-summary-page">
+</div>
+<div class="section" id="example-summary-page">
 <h2>Example Summary Page<a class="headerlink" href="#example-summary-page" title="Permalink to this heading">¶</a></h2>
 <p>The Summary page displays the summary of the various other pages you just stepped through t define the RTL Kernel. Review the summary page for correctness.</p>
 <ul>
@@ -238,14 +239,14 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <p>Click <strong>OK</strong> to launch Vivado Design Suite to package the RTL IP and create the kernel.</p>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Next you will take an RTL design and <a class="reference internal" href="vivado_ip.html"><span class="doc">package it as an IP in the Vivado Design Suite</span></a>.
 </br></p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of this Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

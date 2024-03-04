@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>アプリケーションのプロファイリング - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>アプリケーションのプロファイリング</li><li class="wy-breadcrumbs-aside"><a href="../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/doc/profile_tutorial.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="profiling-the-application">
+<h1>アプリケーションのプロファイリング<a class="headerlink" href="#profiling-the-application" title="Permalink to this heading">¶</a></h1>
+<p>Vitis は、コンパイル時にさまざまなシステムおよびカーネル リソースのパフォーマンス レポートを生成します。また、XRT では、ソフトウェアおよびハードウェア エミュレーションとシステム実行モードの両方で、アプリケーションの実行中にプロファイリング データを収集します。コンパイルおよび実行からリンクされた多数のレポートをリンクした実行サマリ レポートは、アクティブ ビルドの実行後に自動的に生成され、Vitis アナライザーで表示できます。</p>
+<p>プロファイリング レポートおよびデータは、アプリケーションのパフォーマンスのボトルネックを特定し、システム内で問題を検出し、デザインを最適化してパフォーマンスを向上するために使用できます。プロファイリング レポートを取得するには、関連するオプションが xrt.ini ファイルでオンになっていることを確認します。このファイルは、ホスト実行ファイルと同じディレクトリに配置する必要があります。このチュートリアルでは、提供されている既に処理済みの xrt.ini を使用します。./sw/duild/ ディレクトリを確認してください。詳細は、Vitis オンライン資料の <a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration/xrt.ini-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">xrt.ini ファイル</a>を参照してください。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Debug</span><span class="p">]</span>
+<span class="n">profile</span><span class="o">=</span><span class="n">true</span>
+<span class="n">timeline_trace</span><span class="o">=</span><span class="n">true</span>
+<span class="n">data_transfer_trace</span><span class="o">=</span><span class="n">fine</span>
+</pre></div>
+</div>
+<p>ここでは、U200 カードの rtc_alpha_tb のハードウェア実行結果を例に使用します。実行サマリには、6 つのカテゴリのレポートがリストされます。これは、システム実行からの実行サマリであるため、波形は使用できません。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_analyzer</span> <span class="n">rtc_alpha_hw</span><span class="o">.</span><span class="n">xclbin</span><span class="o">.</span><span class="n">run_summary</span>
+</pre></div>
+</div>
+<div class="section" id="run-guidance">
+<h2>実行ガイダンス<a class="headerlink" href="#run-guidance" title="Permalink to this heading">¶</a></h2>
+<p>ガイダンスには、レポートされた違反に関するメッセージ、推奨される解決方法の概要、詳細な解決方法へのウェブ リンクが含まれます。このルールは、広範なリファレンス デザインのセットに基づいた汎用ルールであるため、すべてのデザインに適用されるとは限りません。そのため、ガイダンス ルールを理解して、特定のアルゴリズムおよび要件に基づいて適切な操作を実行するようにしてください。</p>
+<div align="center"><img src="./images/hw_guidance.PNG" alt="Hardware Run Guidance" > </div></div>
+<div class="section" id="platform-and-system-diagrams">
+<h2>プラットフォームとシステム ダイアグラム<a class="headerlink" href="#platform-and-system-diagrams" title="Permalink to this heading">¶</a></h2>
+<p>プラットフォームとシステム ダイアグラムには、プラットフォーム リソースとプラットフォームに統合されたカーネル コードが表示されます。システム ダイアグラムは、XCLBIN で使用されるメモリ バンクまたは PLRAM、および CU の関数引数が AXI4 インターフェイスにどのように接続されているかを示します。これには、実行時のプロファイル データが含まれます。また、下の表のリソース情報は、システム ダイアグラムの各カーネルまたは CU の横にあるボックスに表示することもできます。</p>
+<p>右上の <strong>[Settings]</strong> ボタンを使用すると、未使用のメモリ、インターフェイス ポート、プロファイル情報、およびリソース情報を表示/非表示を切り替えることができます。</p>
+<div align="center"><img src="./images/hw_sys_diagram.PNG" alt="Hardware System Diagram" > </div></div>
+<div class="section" id="profile-summary">
+<h2>プロファイル サマリ<a class="headerlink" href="#profile-summary" title="Permalink to this heading">¶</a></h2>
+<p>カーネルとホスト間のトラフィックのプロファイル データの取り込みを有効にすると、追加のリソースが消費され、パフォーマンスに影響する可能性があります。そのため、このチュートリアルのプリビルド済みの XCLBIN ファイルからは、これらの要素をソースで削除してあります。</p>
+<p>カーネルにアクセラレーション モニターと AXI パフォーマンス モニターを追加すると、Vitis コンパイラのリンク プロセスで <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> オプションを追加して、カーネルのデータ プロファイリングを有効にできます。例として、次の ./hw/Makefile への次の変更を参照してください。詳細は、Vitis オンライン資料の <a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration/Vitis-%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">Vitis コンパイラ コマンド</a>を参照してください。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rtc_alpha_$(TARGET).xclbin: $(XOS_RTC_ALPHA)
+	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_alpha.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_ALPHA)
+
+rtc_gen_test_$(TARGET).xclbin: $(XOS_RTC_GEN_TEST)
+	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_gen_test.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_GEN_TEST)
+</pre></div>
+</div>
+<div align="center"><img src="./images/hw_profile_summary.PNG" alt="Profile Summary" > </div><p>XCLBIN ファイルの生成時に <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> オプションを追加しなくても、ほとんどのプロファイリング レポートは利用できます。カーネル データ転送のような一部のセクションだけ、データが表示されません。</p>
+<div align="center"><img src="./images/no_kernel_data.PNG" alt="No Kernel Data" > </div></div>
+<div class="section" id="application-timeline">
+<h2>アプリケーション タイムライン<a class="headerlink" href="#application-timeline" title="Permalink to this heading">¶</a></h2>
+<p>アプリケーション タイムラインは、ホストとカーネルのイベント情報を収集し、共通のタイムラインに表示します。これは、システムの全体的な状態とパフォーマンスを視覚的に表示して理解するのに役立ちます。このグラフィカルな表示により、カーネル同期および並列実行の効率に関する問題を発見しやすくなります。</p>
+<div align="center"><img src="./images/hw_timeline.PNG" alt="Application Timeline" > </div><p>プロファイリングの詳細および Vitis アナライザーの使用方法については、Vitis オンライン資料の<a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration/%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E3%83%97%E3%83%AD%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AA%E3%83%B3%E3%82%B0">アプリケーションのプロファイリング</a>を参照してください。</p>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

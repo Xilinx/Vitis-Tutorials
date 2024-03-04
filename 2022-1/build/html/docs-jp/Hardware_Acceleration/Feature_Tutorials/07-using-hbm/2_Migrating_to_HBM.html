@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>アプリケーション の概要 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>アプリケーションの概要</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/07-using-hbm/2_Migrating_to_HBM.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="application-overview">
+<h1>アプリケーションの概要<a class="headerlink" href="#application-overview" title="Permalink to this heading">¶</a></h1>
+<p>このチュートリアルでは、DDR ベースのインプリメンテーションの単純なベクター加算例を使用します。<code class="docutils literal notranslate"><span class="pre">in1</span></code> および <code class="docutils literal notranslate"><span class="pre">in2</span></code> ポートは、それぞれ DDR バンク 0 および 1 から読み出し、<code class="docutils literal notranslate"><span class="pre">out</span></code> ポートは DDR バンク 2 に結果を書き込みます。このチュートリアルでは HBM に移行するのに必要な既存のアプリケーションの変更について説明します。</p>
+<div class="section" id="using-ddr">
+<h2>DDR の使用<a class="headerlink" href="#using-ddr" title="Permalink to this heading">¶</a></h2>
+<p>カーネル コードは、次の関数シグネチャを持つ単純なベクター加算です。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">vadd</span><span class="p">(</span>
+  <span class="n">const</span> <span class="n">unsigned</span> <span class="nb">int</span> <span class="o">*</span><span class="n">in1</span><span class="p">,</span> <span class="o">//</span> <span class="n">Read</span><span class="o">-</span><span class="n">Only</span> <span class="n">Vector</span> <span class="mi">1</span>
+  <span class="n">const</span> <span class="n">unsigned</span> <span class="nb">int</span> <span class="o">*</span><span class="n">in2</span><span class="p">,</span> <span class="o">//</span> <span class="n">Read</span><span class="o">-</span><span class="n">Only</span> <span class="n">Vector</span> <span class="mi">2</span>
+  <span class="n">unsigned</span> <span class="nb">int</span> <span class="o">*</span><span class="n">out</span><span class="p">,</span>       <span class="o">//</span> <span class="n">Output</span> <span class="n">Result</span>
+  <span class="nb">int</span> <span class="n">dsize</span><span class="p">,</span>                <span class="o">//</span> <span class="n">Size</span> <span class="ow">in</span> <span class="n">integer</span>
+  <span class="n">const</span> <span class="n">unsigned</span> <span class="nb">int</span> <span class="n">kernel_loop</span><span class="p">,</span> <span class="o">//</span> <span class="n">Running</span> <span class="n">the</span> <span class="n">same</span> <span class="n">kernel</span> <span class="n">operations</span> <span class="n">kernel_loop</span> <span class="n">times</span>
+  <span class="nb">bool</span> <span class="n">addRandom</span>           <span class="o">//</span> <span class="n">Address</span> <span class="n">Pattern</span> <span class="ow">is</span> <span class="n">random</span>
+  <span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple"> <li><p>in1 および in2: AXI インターフェイスを介した DDR からのストリーミングデータの入力。</p></li> <li><p>out: AXI インターフェイスを介して DDR に書き込まれるベクトル加算のストリーミング出力結果の出力。</p></li> <li><p>dsize: DDR にアクセスするカーネル ポートからのメモリ アクセスのサイズを設定。</p></li> <li><p>kernel_loop: メモリへのアクセスにビジー状態を維持するためにカーネル操作が呼び出される回数。</p></li> <li><p>addRandom: 1 に設定されていると、ランダム アクセスをイネーブルにします。</p></li> </ul>
+<p>カーネル ソース コードの詳細は、<code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/reference_files/kernel.cpp</span></code> を参照してください。</p>
+<p>ポートから DDR バンクへの接続は、<code class="docutils literal notranslate"><span class="pre">--sp</span></code> システム ポート マッピング オプションを使用して構築されます。このオプションを使用すると、開発者はカーネル ポートを特定のグローバル メモリ バンクにマップできます。</p>
+<p>詳細は、『Vitis アプリケーション アクセラレーション開発フロー』の<a href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration">「カーネル ポートのメモリへのマップ」</a>を参照してください。</p>
+<p>DDR_connectivity.cfg 接続ファイルの内容を次に示します。makefile ターゲットは、このファイルを自動的に作成します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>connectivity<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in1:DDR<span class="o">[</span><span class="m">0</span><span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in2:DDR<span class="o">[</span><span class="m">1</span><span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.out:DDR<span class="o">[</span><span class="m">2</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>ホスト コードは、DDR0、DDRR1、および DDR2 にそれぞれ 1 つずつ、3 つのバッファーを作成します。<code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/reference_files/host.cpp</span></code> で使用可能なホストコードを参照してください。各バッファーは、16 GB の容量を持つ 1 つの DDR バンクに接続されます。これは、このアプリケーションで使用されるバッファー サイズよりも大きくなります。Linux カーネルの制限により、最大 4 GB まで移行できるはずです。</p>
+<p>次のコードは、vector_size_bytes サイズの 3 つのバッファーを作成します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">134</span> <span class="p">:</span> <span class="n">cl</span><span class="p">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_USE_HOST_PTR</span> <span class="o">|</span> <span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span> <span class="n">vector_size_bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">source_in1</span><span class="p">[</span><span class="n">total_data_size</span><span class="p">]);</span>
+<span class="mi">135</span> <span class="p">:</span> <span class="n">cl</span><span class="p">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_USE_HOST_PTR</span> <span class="o">|</span> <span class="n">CL_MEM_READ_ONLY</span><span class="p">,</span> <span class="n">vector_size_bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">source_in2</span><span class="p">[</span><span class="n">total_data_size</span><span class="p">]);</span>
+<span class="mi">136</span> <span class="p">:</span> <span class="n">cl</span><span class="p">::</span><span class="n">Buffer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">CL_MEM_USE_HOST_PTR</span> <span class="o">|</span> <span class="n">CL_MEM_WRITE_ONLY</span><span class="p">,</span> <span class="n">vector_size_bytes</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">source_hw_results</span><span class="p">[</span><span class="n">total_data_size</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">140</span> <span class="p">:</span> <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">buffer_in2</span><span class="p">[</span><span class="n">j</span><span class="p">]));</span>
+<span class="mi">141</span> <span class="p">:</span> <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">buffer_in1</span><span class="p">[</span><span class="n">j</span><span class="p">]));</span>
+<span class="mi">142</span> <span class="p">:</span> <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">buffer_output</span><span class="p">[</span><span class="n">j</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>カーネル ソース コードの詳細は、<code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/reference_files/host.cpp</span></code> を参照してください。</p>
+</div>
+<div class="section" id="run-application-using-ddr">
+<h2>DDR を使用したアプリケーションの実行<a class="headerlink" href="#run-application-using-ddr" title="Permalink to this heading">¶</a></h2>
+<p>600 MB のサイズの順次アドレス パターンの DDR を使用してハードウェア アプリケーションを実行し、カーネルを一度エンキューしてみましょう。ホストは、600 MB を DDR0 (buffer_in1) および DDR1(buffer_in2) に移行します。カーネルは計算を実行し、結果を DDR2 の buffer_output に格納します。</p>
+<p>実行する makefile コマンドは、次のとおりです。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#make ddr_addSeq_build - executed already in first module.</span> make ddr_addSeq</pre></div>
+</div>
+<p>上記の run コマンドは、基本的に次のように説明できます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="nv">TARGET</span><span class="o">=</span>hw <span class="nv">memtype</span><span class="o">=</span>DDR <span class="nv">dsize</span><span class="o">=</span><span class="m">600</span> <span class="nv">addrndm</span><span class="o">=</span><span class="m">0</span> <span class="nv">krnl_loop</span><span class="o">=</span><span class="m">1</span> <span class="nv">buildxclbin</span><span class="o">=</span><span class="m">0</span>
+</pre></div>
+</div>
+<ul class="simple"> <li><p>memtype は、メモリを DDR または HBM として設定します。</p></li> <li><p>dsize は、ホストからメモリ バンクに移行され、カーネル ポート in1 および in2 によってアクセスされるデータの量です。</p></li> <li><p>kernel_loop はカーネル ループが繰り返される回数を設定します。</p></li> <li><p>buildxclbin=0 は新しい xclbin を生成しません。</p></li> <li><p>txSize は、デフォルトで 64 に設定されます。これは、メモリにアクセスしているときにカーネル ポートから発行されるトランザクションのサイズです。</p></li> </ul>
+<p>make コマンドは、../build/DDR_Banks_d512_txSize64 のような build ディレクトリを生成します。</p>
+<p>TARGET=hw_emu はハードウェア エミュレーションの実行にも使用できますが、600 MB サイズのバッファー用にアプリケーションを実行するには時間がかかります。このため、アプリケーションは TARGET=hw を使用してハードウェア上で実行されます。</p>
+<p>ハードウェア上でアプリケーションを実行する上記のコマンドは、次の結果を表示します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*** Running hw mode ***  Use Command Line to run application!
+cd ./../build/DDR_Banks_d512_txSize64 &amp;&amp;  ./host vadd_hw.xclbin 600 0 1 64;
+
+ Total Data of 600.000 Mbytes to be written to global memory from host
+
+ Kernel is invoked 1 time and repeats itself 1 times
+
+Found Platform
+Platform Name: Xilinx
+DEVICE xilinx_u200_gen3x16_xdma_2_202110_1
+INFO: Reading vadd_hw.xclbin
+Loading: &#39;vadd_hw.xclbin&#39;
+- host loop iteration #0 of 1 total iterations
+kernel_time_in_sec = 0.0416315
+Duration using events profiling: 41473086 ns
+ match_count = 157286400 mismatch_count = 0 total_data_size = 157286400
+Throughput Achieved = 15.17 GB/s
+TEST PASSED
+</pre></div>
+</div>
+<p>ホストは 600 MB のデータを DDR0 と DDR1 の両方に移行しています。カーネルは、それぞれ DDR0 および DDR1 からの in1、in2 ポートを使用してこのデータにアクセスします。ベクター加算はカーネルによって実行され、結果は DDR2 に書き込まれます。DDR2 の結果はホストに移行し戻されます。次のセクションでは、この DDR ベースのアプリケーションを HBM に移行するために必要な手順について説明します。</p>
+</div>
+</div>
+<div class="section" id="migration-to-hbm">
+<h1>HBM への移行<a class="headerlink" href="#migration-to-hbm" title="Permalink to this heading">¶</a></h1>
+<p>ホスト コードとカーネル コードは、DDR が使用されているか、HBM が使用されているか、PLRAM が使用されているかにかかわらず、使用されているメモリ タイプに依存しません。ここで変更する必要があるのは、接続ファイルだけです。</p>
+<p>Vitis フローにより、<code class="docutils literal notranslate"><span class="pre">-sp</span></code> オプションを使用してメモリ接続を簡単に切り替えることができます。この場合は、DDR を HBM に置き換える必要があります。各 HBM バンクの容量は 256 MB です。当社のアプリケーションでは 600 MB のデータを追加する必要があるため、3 つの HBM バンクを連続したメモリとして使用する必要があります。Vitis フローでこれを実行するには、次の接続ファイルに示されているようにメモリをグループ分けします。</p>
+<div class="section" id="run-application-using-hbm">
+<h2>HBM を使用したアプリケーションの実行<a class="headerlink" href="#run-application-using-hbm" title="Permalink to this heading">¶</a></h2>
+<p>ここでは、次の 3 つを試してみます。</p>
+<ol class="simple"><li><p>2 つの HBM PC からカーネル ポート in1 および in2 を読み出します。ホストは 512 MB のデータを HBM に送信します。</p></li> <li><p>2 つの HBM PC からカーネル ポート、in1 および in2 を読み出します。ホストは 512 MB を超えるデータを送信します。512 MB を超えるアクセスをしているので、このコンフィギュレーションではアプリケーション エラーが発生します。</p></li> <li><p>カーネル ポート in1 および in2 は同じ HBM PC を共有します。</p></li></ol>
+<p>接続ファイル HBM_connectivity.cfg 例の内容を次に示します。makefile ターゲットは、banks 引数に基づいてこのファイルを自動的に作成します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>connectivity<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in1:HBM<span class="o">[</span><span class="m">0</span>:1<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in2:HBM<span class="o">[</span><span class="m">2</span>:3<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.out:HBM<span class="o">[</span><span class="m">4</span>:5<span class="o">]</span>
+</pre></div>
+</div>
+<ol class="simple"><li><p>次のコマンドを実行して、in1、in2、および out ポート用にサイズ 512 MB の HBM メモリを含むアプリケーションを使用します。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#make hbm_addSeq_2Banks_build  - executed already in first module.</span>
+make hbm_addSeq_2Banks
+</pre></div>
+</div>
+<p>上記のコマンドは、次と同じです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">memtype</span><span class="o">=</span><span class="n">HBM</span> <span class="n">banks</span><span class="o">=</span><span class="mi">0_1</span> <span class="n">dsize</span><span class="o">=</span><span class="mi">512</span> <span class="n">buildxclbin</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+<ul class="simple"> <li><p>dsize=512 は、カーネル ポート in1 および in2 によって HBM からアクセスされるデータ サイズを設定します。</p></li> <li><p>banks=0_1 は、適切な builddir, ../build/HBM_2Banks_d512_txSize64 に上記の内容を含む HBM_connectivity.cfg ファイルを作成します</p></li> </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">./../</span><span class="n">build</span><span class="o">/</span><span class="n">HBM_addSeq_2Banks_d512_txSize64</span> <span class="o">&amp;&amp;</span>  <span class="o">./</span><span class="n">host</span> <span class="n">vadd_hw</span><span class="o">.</span><span class="n">xclbin</span> <span class="mi">512</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">64</span><span class="p">;</span>
+
+ <span class="n">Total</span> <span class="n">Data</span> <span class="n">of</span> <span class="mf">512.000</span> <span class="n">Mbytes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">written</span> <span class="n">to</span> <span class="k">global</span> <span class="n">memory</span> <span class="kn">from</span> <span class="nn">host</span>
+
+ <span class="n">The</span> <span class="n">kernel</span> <span class="ow">is</span> <span class="n">invoked</span> <span class="mi">1</span> <span class="n">time</span> <span class="ow">and</span> <span class="n">repeats</span> <span class="n">itself</span> <span class="n">one</span> <span class="n">time</span>
+
+<span class="n">Found</span> <span class="n">Platform</span>
+<span class="n">Platform</span> <span class="n">Name</span><span class="p">:</span> <span class="n">Xilinx</span>
+<span class="n">DEVICE</span> <span class="n">xilinx_u50_gen3x16_xdma_201920_3</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">vadd_hw</span><span class="o">.</span><span class="n">xclbin</span>
+<span class="n">Loading</span><span class="p">:</span> <span class="s1">&#39;vadd_hw.xclbin&#39;</span>
+<span class="o">-</span> <span class="n">host</span> <span class="n">loop</span> <span class="n">iteration</span> <span class="c1">#0 of 1 total iterations</span>
+<span class="n">kernel_time_in_sec</span> <span class="o">=</span> <span class="mf">0.0413112</span>
+<span class="n">Duration</span> <span class="n">using</span> <span class="n">events</span> <span class="n">profiling</span><span class="p">:</span> <span class="mi">41136148</span> <span class="n">ns</span>
+ <span class="n">match_count</span> <span class="o">=</span> <span class="mi">134217728</span> <span class="n">mismatch_count</span> <span class="o">=</span> <span class="mi">0</span> <span class="n">total_data_size</span> <span class="o">=</span> <span class="mi">134217728</span>
+<span class="n">Throughput</span> <span class="n">Achieved</span> <span class="o">=</span> <span class="mf">13.0511</span> <span class="n">GB</span><span class="o">/</span><span class="n">s</span>
+<span class="n">TEST</span> <span class="n">PASSED</span>
+</pre></div>
+</div>
+<ol class="simple"><li><p>ホストが 512 MB 以上のデータを転送すると、アプリケーションで次のエラーが発生します。</p></li></ol>
+<p>次のコマンドを実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span> <span class="n">memtype</span><span class="o">=</span><span class="n">HBM</span> <span class="n">banks</span><span class="o">=</span><span class="mi">0_1</span> <span class="n">dsize</span><span class="o">=</span><span class="mi">600</span>
+</pre></div>
+</div>
+<p>次に示すように、アプリケーションが実行されるとエラーになります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">./../</span><span class="n">build</span><span class="o">/</span><span class="n">HBM_addSeq_2Banks_d512_txSize64</span> <span class="o">&amp;&amp;</span>  <span class="o">./</span><span class="n">host</span> <span class="n">vadd_hw</span><span class="o">.</span><span class="n">xclbin</span> <span class="mi">600</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">64</span><span class="p">;</span>
+
+ <span class="n">Total</span> <span class="n">Data</span> <span class="n">of</span> <span class="mf">600.000</span> <span class="n">Mbytes</span> <span class="n">to</span> <span class="n">be</span> <span class="n">written</span> <span class="n">to</span> <span class="k">global</span> <span class="n">memory</span> <span class="kn">from</span> <span class="nn">host</span>
+
+ <span class="n">The</span> <span class="n">kernel</span> <span class="ow">is</span> <span class="n">invoked</span> <span class="mi">1</span> <span class="n">time</span> <span class="ow">and</span> <span class="n">repeats</span> <span class="n">itself</span> <span class="mi">1</span> <span class="n">times</span><span class="o">.</span>
+
+<span class="n">Found</span> <span class="n">Platform</span>
+<span class="n">Platform</span> <span class="n">Name</span><span class="p">:</span> <span class="n">Xilinx</span>
+<span class="n">DEVICE</span> <span class="n">xilinx_u50_gen3x16_xdma_201920_3</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Reading</span> <span class="n">vadd_hw</span><span class="o">.</span><span class="n">xclbin</span>
+<span class="n">Loading</span><span class="p">:</span> <span class="s1">&#39;vadd_hw.xclbin&#39;</span>
+<span class="o">-</span> <span class="n">host</span> <span class="n">loop</span> <span class="n">iteration</span> <span class="c1">#0 of 1 total iterations</span>
+<span class="n">XRT</span> <span class="n">build</span> <span class="n">version</span><span class="p">:</span> <span class="mf">2.8.743</span>
+<span class="n">Build</span> <span class="nb">hash</span><span class="p">:</span> <span class="mi">77</span><span class="n">d5484b5c4daa691a7f78235053fb036829b1e9</span>
+<span class="n">Build</span> <span class="n">date</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">16</span> <span class="mi">00</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">11</span>
+<span class="n">Git</span> <span class="n">branch</span><span class="p">:</span> <span class="mf">2020.2</span>
+<span class="n">PID</span><span class="p">:</span> <span class="mi">17233</span>
+<span class="n">UID</span><span class="p">:</span> <span class="mi">31781</span>
+<span class="p">[</span><span class="n">Mon</span> <span class="n">Jan</span> <span class="mi">11</span> <span class="mi">19</span><span class="p">:</span><span class="mi">28</span><span class="p">:</span><span class="mi">15</span> <span class="mi">2021</span> <span class="n">GMT</span><span class="p">]</span>
+<span class="n">HOST</span><span class="p">:</span> <span class="n">xcodpeascoe40</span>
+<span class="n">EXE</span><span class="p">:</span> <span class="o">/</span><span class="n">scratch</span><span class="o">/</span><span class="n">ravic</span><span class="o">/</span><span class="n">Vitis</span><span class="o">-</span><span class="n">In</span><span class="o">-</span><span class="n">Depth</span><span class="o">-</span><span class="n">Tutorial</span><span class="o">/</span><span class="n">Runtime_and_System_Optimization</span><span class="o">/</span><span class="n">Feature_Tutorials</span><span class="o">/</span><span class="mi">04</span><span class="o">-</span><span class="n">using</span><span class="o">-</span><span class="n">hbm</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">HBM_addSeq_2Banks_d512_txSize64</span><span class="o">/</span><span class="n">host</span>
+<span class="p">[</span><span class="n">XRT</span><span class="p">]</span> <span class="n">ERROR</span><span class="p">:</span> <span class="n">std</span><span class="p">::</span><span class="n">bad_alloc</span>
+<span class="o">./../</span><span class="n">reference_files</span><span class="o">/</span><span class="n">host</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span><span class="mi">162</span> <span class="n">Error</span> <span class="n">calling</span> <span class="n">err</span> <span class="o">=</span> <span class="n">krnl_vector_add</span><span class="o">.</span><span class="n">setArg</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">buffer_output</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="n">error</span> <span class="n">code</span> <span class="ow">is</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span>
+<span class="p">[</span><span class="n">XRT</span><span class="p">]</span> <span class="n">WARNING</span><span class="p">:</span> <span class="n">Profiling</span> <span class="n">may</span> <span class="n">contain</span> <span class="n">incomplete</span> <span class="n">information</span><span class="o">.</span> <span class="n">Please</span> <span class="n">ensure</span> <span class="nb">all</span> <span class="n">OpenCL</span> <span class="n">objects</span> <span class="n">are</span> <span class="n">released</span> <span class="n">by</span> <span class="n">your</span> <span class="n">host</span> <span class="n">code</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span> <span class="n">clReleaseProgram</span><span class="p">())</span><span class="o">.</span>
+<span class="n">Makefile</span><span class="p">:</span><span class="mi">102</span><span class="p">:</span> <span class="n">recipe</span> <span class="k">for</span> <span class="n">target</span> <span class="s1">&#39;run&#39;</span> <span class="n">failed</span>
+<span class="n">make</span><span class="p">:</span> <span class="o">***</span> <span class="p">[</span><span class="n">run</span><span class="p">]</span> <span class="n">Error</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>HBM[0:1] に 600 MB のバッファーを作成しようとすると、アプリケーションでエラーが発生します。XRT では、これを 256*2 = 512MB の連続メモリとして認識しますが、ホストがこのサイズ制限を超えているため、アプリケーション エラーになります。</p>
+<p>提供されている makefile には、<code class="docutils literal notranslate"><span class="pre">banks</span></code> 引数を使用してカスタム接続ファイルを作成する柔軟性があります。ターゲットに mem_connectivity.mk の機能を持たせて、メモリ接続ファイルを作成します。</p>
+<ol class="simple"><li><p>アプリケーションがフルのメモリ バンクを必要としない場合は、Vitis フローでポート間でメモリ バンクを共有する機能も提供されます。ポート in1 と in2 間でバンクを共有するための接続の例を次に示します。</p></li></ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>connectivity<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in1:HBM<span class="o">[</span><span class="m">0</span>:1<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.in2:HBM<span class="o">[</span><span class="m">1</span>:2<span class="o">]</span>
+<span class="nv">sp</span><span class="o">=</span>vadd_1.out:HBM<span class="o">[</span><span class="m">3</span>:4<span class="o">]</span>
+</pre></div>
+</div>
+<p>ポート in1 および in2、および HBM のバンク 1 を共有します。これで、アプリケーションがカーネル ポートごとに 384 MB のバッファーを最大サイズとして作成できます。</p>
+<p>次のコマンドを実行して、in1、in2、および out ポート用にサイズ 384 MB の HBM メモリを含むアプリケーションを使用します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#make hbm_addSeq_overlap_build  - executed already in first module.</span>
+make hbm_addSeq_overlap
+</pre></div>
+</div>
+<p>上記のコマンドの結果は、次のようになります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*** Running hw mode ***  Use Command Line to run application!
+cd ./../build/HBM_overlapBanks_d512_txSize64 &amp;&amp;  ./host vadd_hw.xclbin 384 0 1 64;
+
+ Total Data of 384.000 Mbytes to be written to global memory from host
+
+ Kernel is invoked 1 time and repeats itself 1 times
+
+Found Platform
+Platform Name: Xilinx
+DEVICE xilinx_u50_gen3x16_xdma_201920_3
+INFO: Reading vadd_hw.xclbin
+Loading: &#39;vadd_hw.xclbin&#39;
+- host loop iteration #0 of 1 total iterations
+kernel_time_in_sec = 0.0311151
+Duration using events profiling: 30897093 ns
+ match_count = 100663296 mismatch_count = 0 total_data_size = 100663296
+Throughput Achieved = 13.0321 GB/s
+TEST PASSED
+
+</pre></div>
+</div>
+<p>複数のポートが重複するバンクを共有しており、バッファーの 1 つ (または複数) が重複部分を利用しようとする場合、対応するカーネル ポートにバッファーを割り当てる順序 (ホストコード内) が重要になることがあります。この例では、ポート in1 と in2 の両方のバッファーが、それぞれ 384 MB を割り当てる際に、重複するバンク 1 を利用しようとしています。このため、ホスト アプリケーションは、まず in1 にバッファーを割り当ててから、in2 にバッファーを割り当てる必要があります。この順序を逆にすると、<code class="docutils literal notranslate"><span class="pre">bad</span> <span class="pre">alloc</span></code> エラーが発生します。次の図は、これを示しています。</p>
+<p><img alt="Buffer Assignment for overlapping banks " src="../../../../_images/Buffer_allocation.png" /></p>
+<p>つまり、必要となる直前まで割り当てをしない Lazy Allocation はありません。バッファーは、ホスト コードのバッファーの処理順序に従って、前もって (即座に) 割り当てられます。</p>
+<p>さらに、アプリケーション要件に基づいて、32 個の HBM バンクすべてを各カーネル ポートに接続することもできます。このようにすると、すべてのポートでメモリ領域全体を使用できるようになります。HBM 全体の効率性は、前のチュートリアル モジュールで説明したように、アクセス パターンとアクセスするチャネル数によって異なります。</p>
+</div>
+</div>
+<div class="section" id="next-step">
+<h1>次の手順<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h1>
+<p>次の手順では、32 チャネルすべてを接続として使用しますが、1 つのカーネル ポートから 1 つの PC または PC のグループにアクセスし、トランザクション サイズによってアドレス パターンを変化させることで最大帯域幅を達成する方法について説明します。</p>
+<p align="center"><b>次の手順: <a href="3_BW_Explorations.html">HBM の帯域幅結果</a></b></p></br><hr/>
+<p align="center"><b><a href="README.md">チュートリアルの初めに戻る</a></b></p><p align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

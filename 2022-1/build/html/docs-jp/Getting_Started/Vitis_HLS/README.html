@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis HLS の解析および最適化 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>Vitis HLS の解析および最適化</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Getting_Started/Vitis_HLS/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション チュートリアル</h1></td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><!-- 
+# Copyright 2022 Xilinx Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><div class="section" id="vitis-hls-analysis-and-optimization">
+<h1>Vitis HLS の解析および最適化<a class="headerlink" href="#vitis-hls-analysis-and-optimization" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<div class="section" id="introduction">
+<h2>入門チュートリアル<a class="headerlink" href="#入門チュートリアル" title="Permalink to this heading"></a></h2>
+<p>Vitis 高位合成 (HLS) は、Vitis アプリケーション アクセラレーション開発フローの重要な部分です。このツールは、C/C++ および OpenCL コードをカーネルにコンパイルして、ザイリンクス デバイスのプログラマブル ロジック (PL) でのアクセラレーションに使用できるようにします。つまり、高位合成を実行して Vitis ツール用にハードウェア カーネルをコンパイルするツールです。</p>
+<blockquote>
+<div><p><strong>ヒント:</strong> Vitis HLS を使用して C/C++ コードから Vivado IP を生成することもできますが、このチュートリアルでは実行しません。Vitis の XO カーネルと Vivado RTL IP の生成は、似ていますが、大きな違いもいくつかあります。このチュートリアルは、Vitis HLS ツールの一般的な概要を示すものです。</p>
+</div></blockquote>
+<p>このチュートリアルでは、Vitis HLS ツールの GUI を使用してハードウェア カーネルをビルド、解析、最適化します。Vitis ツールでは Vitis カーネル フローを使用します。詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) の Vitis HLS フローの <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Vitis-HLS-Process-Overview">Vitis カーネル フローのイネーブル</a>を参照してください。</p>
+<div class="section" id="before-you-begin">
+<h3>開始前の確認事項<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h3>
+<p>このチュートリアルでは、次を使用します。</p><ul class="simple"> <li><p>BASH Linux シェル コマンド。</p></li> <li><p>2022.1 Vitis コア開発キット リリース。</p></li> </ul>
+<blockquote>
+<div><p><strong>重要:</strong></p><ul class="simple"> <li><p>例を実行する前に、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) のアプリケーション アクセラレーション開発フローの<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation-Requirements">インストール</a>の手順に従って、Vitis コア開発キットをインストールしてください。</p></li> <li><p>ザイリンクス Alveo™ データセンター アクセラレータ カードでアプリケーションを実行する場合は、各 Alveo カードのリンク先の <a class="reference external" href="https://japan.xilinx.com/products/boards-and-kits/alveo.html">[資料] タブ</a>に表示される資料で説明されるように、カードとソフトウェア ドライバーを正しくインストールしてください。</p></li> </ul>
+</div></blockquote>
+</div>
+<div class="section" id="setup-the-environment-to-run-vitis">
+<h3>Vitis を実行する環境の設定<a class="headerlink" href="#setup-the-environment-to-run-vitis" title="Permalink to this heading">¶</a></h3>
+<p>Vitis を実行する環境を設定するには、次のスクリプトを実行して、特定のコマンド シェルで実行する環境を設定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span>&lt;Vitis_install_path&gt;/Vitis/2022.1/settings64.sh <span class="nb">source</span> /opt/xilinx/xrt/setup.sh</pre></div>
+</div>
+<p><em>注記: .csh スクリプトも提供されていますが、このチュートリアルでは bash シェルが使用されていることを前提としています。</em></p>
+<p>インストールしたデータセンター プラットフォームまたはエンベデッド プラットフォームのディレクトリを指定するには、次の環境変数を設定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PLATFORM_REPO_PATHS</span><span class="o">=</span>&lt;path to platforms&gt;</pre></div>
+</div>
+<p><em>注記: Ubuntu ディストリビューションによっては、Vitis を正しく設定するために LIBRARY_PATH もエクスポートする必要があります。</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LIBRARY_PATH</span><span class="o">=</span>/usr/lib/x86_64-linux-gnu</pre></div>
+</div>
+<p>詳細は、<a class="reference external" href="https://japan.xilinx.com/support/answers/73698.html">ザイリンクス アンサー 73698</a> を参照してください。</p>
+</div>
+<div class="section" id="accessing-the-tutorial-reference-files">
+<h3>チュートリアル リファレンス ファイルの入手<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>リファレンス ファイルを入手するには、ターミナルに <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code> と入力します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">Getting_Started/Vitis_HLS</span></code> ディレクトリに移動し、<code class="docutils literal notranslate"><span class="pre">reference-files</span></code> ディレクトリにアクセスします。</p></li></ol>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>次の手順<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
+<p>演習は、次の順序で実行します。</p><ul class="simple"> <li><p><a class="reference internal" href="new_project.html"><span class="doc">Vitis HLS プロジェクトの作成</span></a></p></li> <li><p><a class="reference internal" href="synth_and_analysis.html"><span class="doc">高位合成の実行および結果の解析</span></a></p></li> <li><p><a class="reference internal" href="optimization_techniques.html"><span class="doc">最適化テクニックの使用</span></a></p></li> <li><p><a class="reference internal" href="dataflow_design.html"><span class="doc">DATAFLOW 最適化の確認</span></a></p></li> </ul>
+<!--
+
+1. [Creating the Vitis HLS Project](./new_project.md) - Create the project to specify the source code and testbench.
+
+2. [Running High-Level Synthesis and Analyzing Results](./synth_and_analysis.md) - Simulate and synthesize the design, and analyze the results.
+
+3. [Using Optimization Techniques](./optimization_techniques.md) - Try different optimization techniques to achieve the initiation interval (II)=1.
+
+4. [Reviewing the Dataflow Optimization](./dataflow_design.md) - Add the Dataflow optimization to achieve even better results.
+
+--></br>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="./README.md">メイン ページに戻る</a> &mdash; <a href="./../README.md">入門コースの初めに戻る</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

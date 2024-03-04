@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +110,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="using-multiple-ddr-banks">
+</table><div class="section" id="using-multiple-ddr-banks">
 <h1>Using Multiple DDR Banks<a class="headerlink" href="#using-multiple-ddr-banks" title="Permalink to this heading">¶</a></h1>
 <p>In the previous step, you noticed the overlap of the host data transfer documents sent to FPGA were also split into multiple buffers. Flags from the FPGA were also sent to the host immediately; this overlaps the compute profile score on the CPU with the “Compute FPGA” which further improves the application execution time.</p>
 <p>You also observed memory contention because the host and kernel both accessed the same bank at the same time.
@@ -130,7 +131,7 @@ sp=runOnfpga_1.input_words:DDR[1:2]
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">-sp</span></code> option instructs the <code class="docutils literal notranslate"><span class="pre">v++</span></code> linker that <code class="docutils literal notranslate"><span class="pre">input_words</span></code> is connected to both DDR banks 1 and 2. You will need to rebuild the kernel because connectivity is now changed.</p></li>
 </ul>
-<section id="code-modifications">
+<div class="section" id="code-modifications">
 <h2>Code Modifications<a class="headerlink" href="#code-modifications" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">$LAB_WORK_DIR/reference_files</span></code>, and with a file editor, open <code class="docutils literal notranslate"><span class="pre">run_sw_overlap_multiDDR.cpp</span></code>.</p></li>
@@ -200,7 +201,7 @@ sp=runOnfpga_1.input_words:DDR[1:2]
 </div>
 </li>
 </ol>
-<section id="run-the-application-using-8-words-in-parallel">
+<div class="section" id="run-the-application-using-8-words-in-parallel">
 <h3>Run the Application Using 8 Words in Parallel<a class="headerlink" href="#run-the-application-using-8-words-in-parallel" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Go to the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> directory and run the <code class="docutils literal notranslate"><span class="pre">make</span></code> command.</p>
@@ -220,8 +221,8 @@ sp=runOnfpga_1.input_words:DDR[1:2]
 </li>
 </ol>
 <p>The overall FPGA time was reduced from 230 ms to 175 ms.</p>
-</section>
-<section id="review-the-profile-report-and-timeline-trace">
+</div>
+<div class="section" id="review-the-profile-report-and-timeline-trace">
 <h3>Review the Profile Report and Timeline Trace<a class="headerlink" href="#review-the-profile-report-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>Run the following commands to view the Timeline Trace report.</p>
@@ -259,16 +260,16 @@ The kernel is always writing to same DDR bank1 as flags size is relatively small
 </ol>
 <p>Compared to the previous step using only one DDR, there is no overall application gain. The FPGA compute performance improves, but the bottleneck is processing the “Compute Score”, which is limited by CPU Performance. If the CPU can process faster, you can get the better performance.</p>
 <p>Based on the results, the throughput of the application is 1399MB/426 ms = approximately 3.27 GBs. You now have approximately 7.2x (=3058 ms/426 ms) the performance results compared to the software-only version.</p>
-</section>
-</section>
-<section id="conclusion">
+</div>
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>Congratulations! You have successfully completed the tutorial.</p>
 <p>In this tutorial, you learned that optimizing how the host application interacts with the accelerator makes a significant difference. A native initial implementation delivered a 4x performance improvement over the reference software implementation. By leveraging data-parallelism, the overlapping data transfers, compute, and the overlapping CPU processing with FPGA processing, using multiple DDR banks, the application performance was increased by another 1.8x, achieving a total of 7.2x acceleration.</p>
 <hr class="docutils" />
 <p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

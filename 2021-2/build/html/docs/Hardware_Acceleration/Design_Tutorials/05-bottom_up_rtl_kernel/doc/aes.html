@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -100,9 +100,9 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rtl-module-aes">
+  <div class="section" id="rtl-module-aes">
 <h1>RTL Module: Aes<a class="headerlink" href="#rtl-module-aes" title="Permalink to this heading">¶</a></h1>
-<section id="about-the-aes-encryption-algorithm">
+<div class="section" id="about-the-aes-encryption-algorithm">
 <h2>About the AES Encryption Algorithm<a class="headerlink" href="#about-the-aes-encryption-algorithm" title="Permalink to this heading">¶</a></h2>
 <p>The AES algorithm is a commonly used symmetric-key encryption algorithm, meaning that the same key is used for both encrypting and decrypting the data. The input and output data blocks for the AES algorithm are 16-bytes blocks (128-bits). AES has three key length types: 128-bit, 192-bit, and 256-bit. Before AES encryption and encryption operation, a operation called key-expansion must be run when a key is given. The AES algorithm includes lots of bit-wise and byte-wise operations, so it is very suitable to be implemented with the hardware accelerator.</p>
 <div align="center">
@@ -117,28 +117,28 @@ function OptanonWrapper() { }
 </ul>
 <p>In this tutorial, we only involve ECB and CBC. The following figures provide explanations for these models.
 <strong>Notes</strong>: Figures are from Wikipedia (<a class="reference external" href="wikipedia.org">wikipedia.org</a>).</p>
-<section id="aes-ecb-encryption">
+<div class="section" id="aes-ecb-encryption">
 <h3>AES-ECB Encryption<a class="headerlink" href="#aes-ecb-encryption" title="Permalink to this heading">¶</a></h3>
 <div align="center">
 <img src="./images/ECB_encryption.svg" alt="AES-ECB encryption" >
-</div></section>
-<section id="aes-ecb-decryption">
+</div></div>
+<div class="section" id="aes-ecb-decryption">
 <h3>AES-ECB Decryption<a class="headerlink" href="#aes-ecb-decryption" title="Permalink to this heading">¶</a></h3>
 <div align="center">
 <img src="./images/ECB_decryption.svg" alt="AES-ECB decryption" >
-</div></section>
-<section id="aes-cbc-encryption">
+</div></div>
+<div class="section" id="aes-cbc-encryption">
 <h3>AES-CBC Encryption<a class="headerlink" href="#aes-cbc-encryption" title="Permalink to this heading">¶</a></h3>
 <div align="center">
 <img src="./images/CBC_encryption.svg" alt="AES-CBC encryption" >
-</div></section>
-<section id="aes-cbc-decryption">
+</div></div>
+<div class="section" id="aes-cbc-decryption">
 <h3>AES-CBC Decryption<a class="headerlink" href="#aes-cbc-decryption" title="Permalink to this heading">¶</a></h3>
 <div align="center">
 <img src="./images/CBC_decryption.svg" alt="AES-CBC decryption" >
-</div></section>
-</section>
-<section id="id1">
+</div></div>
+</div>
+<div class="section" id="id1">
 <h2>RTL Module Aes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>The RTL module <code class="docutils literal notranslate"><span class="pre">Aes</span></code> is the core module of AES encryption/decryption module. It uses native RTL ports interface. You can find the Verilog source code in the <strong>~/aes/rtl</strong> directory. The signal descriptions are as follows.</p>
 <table border="1" class="docutils">
@@ -218,12 +218,12 @@ function OptanonWrapper() { }
 <td>When the key expansion job is in progress, EXP_FINISH will keep low. EXP_FINISH will keep high in idle state.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="testbench">
+</table></div>
+<div class="section" id="testbench">
 <h2>Testbench<a class="headerlink" href="#testbench" title="Permalink to this heading">¶</a></h2>
 <p>A simple native Verilog testbench is provided in the <strong>~/aes/tbench</strong> directory. The testbench uses a pre-generated random dataset by a Perl script as the stimulus, and the output result is compared with the reference dataset generated by the OpenSSL utility. The shell script <strong>~/aes/runsim_aes_xsim.sh</strong> is used to generate the input stimulus and output reference, and to run the simulation with Vivado XSIM.</p>
-</section>
-<section id="usage">
+</div>
+<div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>A Makefile is provided here to run the simulation. Use following command to run the Verilog simulation:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">aes</span>
@@ -235,8 +235,8 @@ function OptanonWrapper() { }
 <img src="./images/aes_waveform.png" alt="AES waveform" >
 </div><hr class="docutils" />
 <p>Now that you have the necessary information about the Aes module, you can start to add the necessary AXI interfaces and IPs to make it a usable kernel for the Vitis flow. This is described in the next section: <a class="reference internal" href="krnl_aes.html"><span class="doc">RTL Kernel: krnl_aes</span></a>.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

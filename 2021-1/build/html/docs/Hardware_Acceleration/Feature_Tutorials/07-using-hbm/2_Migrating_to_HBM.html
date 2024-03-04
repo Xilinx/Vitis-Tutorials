@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -99,10 +100,10 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="application-overview">
+  <div class="section" id="application-overview">
 <h1>Application Overview<a class="headerlink" href="#application-overview" title="Permalink to this heading">¶</a></h1>
 <p>This tutorial uses a simple example of vector addition with DDR based implementation. Ports <code class="docutils literal notranslate"><span class="pre">in1</span></code> and <code class="docutils literal notranslate"><span class="pre">in2</span></code> are reading from DDR banks 0 and 1, respectively, and port <code class="docutils literal notranslate"><span class="pre">out</span></code> is writing the results in DDR bank 2. The tutorial will walk through the necessary changes to the existing application to migrate to HBM.</p>
-<section id="using-ddr">
+<div class="section" id="using-ddr">
 <h2>Using DDR<a class="headerlink" href="#using-ddr" title="Permalink to this heading">¶</a></h2>
 <p>The kernel code is a simple vector addition with the following function signature.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">vadd</span><span class="p">(</span>
@@ -145,8 +146,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>For more information on the kernel source code, refer to  <code class="docutils literal notranslate"><span class="pre">&lt;Project&gt;/reference_files/host.cpp</span></code></p>
-</section>
-<section id="run-application-using-ddr">
+</div>
+<div class="section" id="run-application-using-ddr">
 <h2>Run application using DDR<a class="headerlink" href="#run-application-using-ddr" title="Permalink to this heading">¶</a></h2>
 <p>Let’s run the hardware application using DDR with a size of 600MB, sequential address pattern, and enqueue the kernel one time. The host will migrate 600MB to DDR0 (buffer_in1) and DDR1(buffer_in2) respectively. The kernel will perform the compute and store the results in DDR2, buffer_output.</p>
 <p>Here is the makefile command to run ()</p>
@@ -189,13 +190,13 @@ TEST PASSED
 </pre></div>
 </div>
 <p>The host is migrating 600MB of data to both DDR0 and DDR1. The kernel accesses this data using in1, in2 ports from DDR0 and DDR1, respectively. The vector addition is performed by kernel, and results are written to DDR2. These results from DDR2 are migrated back to the host. The next section goes over the steps required to migrate this DDR based application to HBM.</p>
-</section>
-</section>
-<section id="migration-to-hbm">
+</div>
+</div>
+<div class="section" id="migration-to-hbm">
 <h1>Migration to HBM<a class="headerlink" href="#migration-to-hbm" title="Permalink to this heading">¶</a></h1>
 <p>The host code and kernel code are agnostic to the memory type used, whether DDR is used or HBM, or even PLRAMs. The only change you will need to make here is to modify the connectivity file.</p>
 <p>Vitis flow makes it easy to switch memory connection using <code class="docutils literal notranslate"><span class="pre">-sp</span></code> switches, and in this case, we need to replace DDR with HBM. The capacity of each HBM bank is 256MB. Since our application requires 600MB of data to be added, we will need 3 HBM banks as contiguous memory. Vitis flow enables this by grouping the memory as shown below in the connectivity file.</p>
-<section id="run-application-using-hbm">
+<div class="section" id="run-application-using-hbm">
 <h2>Run application using HBM<a class="headerlink" href="#run-application-using-hbm" title="Permalink to this heading">¶</a></h2>
 <p>You will perform the following 3 experiments here.</p>
 <ol class="simple">
@@ -323,9 +324,9 @@ TEST PASSED
 <p><img alt="Buffer Assignment for overlapping banks " src="../../../../_images/Buffer_allocation.png" /></p>
 <p>In other words, there is no Lazy Allocation. The buffers are allocated upfront (and immediately) following the host code buffer handling order.</p>
 <p>Additionally, you can also connect all the 32 HBM banks to each of the kernel ports based on the application requirement. This way, the whole memory space will be available to all the ports. The overall HBM efficiency will vary based on the access pattern and how many channels are being accessed, as described in the previous tutorial module.</p>
-</section>
-</section>
-<section id="next-step">
+</div>
+</div>
+<div class="section" id="next-step">
 <h1>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h1>
 <p>In the next steps, you will experiment with how to achieve the maximum bandwidth using all 32 channels as connectivity but accessing either 1 PC or a group of PCs from a single kernel port and varying the address patterns as transaction size.</p>
 <p align="center"><b>
@@ -333,7 +334,7 @@ Start the next step: <a href="3_BW_Explorations.md"> HBM Bandwidth Results</a>
 </b></p>
 </br>
 <hr/>
-<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
+<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
 
 
            </div>

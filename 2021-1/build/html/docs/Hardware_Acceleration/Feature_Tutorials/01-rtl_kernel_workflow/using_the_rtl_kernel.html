@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,12 +110,12 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="using-the-rtl-kernel-in-a-vitis-ide-project">
+</table><div class="section" id="using-the-rtl-kernel-in-a-vitis-ide-project">
 <h1>Using the RTL Kernel in a Vitis IDE Project<a class="headerlink" href="#using-the-rtl-kernel-in-a-vitis-ide-project" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><strong>TIP</strong>: You can also use the RTL kernel you created in the Package IP lab in the Vitis IDE.</p>
 </div></blockquote>
-<section id="delete-and-import-host-code">
+<div class="section" id="delete-and-import-host-code">
 <h2>Delete and Import Host Code<a class="headerlink" href="#delete-and-import-host-code" title="Permalink to this heading">¶</a></h2>
 <p>After exiting the Vivado tool, the following files are added to the HW kernel project (<code class="docutils literal notranslate"><span class="pre">rtl_ke_t2_kernels</span></code>) displayed in the Project Explorer in the Vitis IDE:</p>
 <ul class="simple">
@@ -143,8 +144,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>In the Project Explorer view, right-click and select <code class="docutils literal notranslate"><span class="pre">Open</span></code> (or double-click <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>), which opens it in the Code Editor window.</p></li>
 </ol>
-</section>
-<section id="host-code-structure">
+</div>
+<div class="section" id="host-code-structure">
 <h2>Host Code Structure<a class="headerlink" href="#host-code-structure" title="Permalink to this heading">¶</a></h2>
 <p>Examine the host application in the Code Editor window. The structure of the host code is divided into three sections:</p>
 <ol class="simple">
@@ -181,8 +182,8 @@ function OptanonWrapper() { }
 </li>
 </ul>
 <p>The structure and requirements of the host application are discussed in greater detail in <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=lhv1569273988420.html">Developing Applications</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
-</section>
-<section id="add-the-hardware-function">
+</div>
+<div class="section" id="add-the-hardware-function">
 <h2>Add the Hardware Function<a class="headerlink" href="#add-the-hardware-function" title="Permalink to this heading">¶</a></h2>
 <p>With the host application code (<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>) added to the host project, and the RTL kernel code (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) added to the kernel project, you need to specify the hardware function in order to generate the device binary or <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> file.</p>
 <ol>
@@ -193,8 +194,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>Click <strong>OK</strong>.</p></li>
 </ol>
-</section>
-<section id="build-the-project">
+</div>
+<div class="section" id="build-the-project">
 <h2>Build the Project<a class="headerlink" href="#build-the-project" title="Permalink to this heading">¶</a></h2>
 <p>With the host application code (<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>) and the RTL kernel code (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) added to the project, you are ready to build and run the project.</p>
 <blockquote>
@@ -232,21 +233,21 @@ function OptanonWrapper() { }
 <li><p>In the <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations</span></code> dialog box click <strong>Apply</strong> and then click <strong>Run</strong> to run the configuration, and then verify the results.</p></li>
 </ol>
 <p>The Console window in the Vitis IDE displays <strong>INFO: Test Completed</strong>. You have built and run the application using your RTL kernel.</p>
-<section id="optional-build-and-run-the-hardware-on-the-target-platform">
+<div class="section" id="optional-build-and-run-the-hardware-on-the-target-platform">
 <h3>(Optional) Build and Run the Hardware on the Target Platform<a class="headerlink" href="#optional-build-and-run-the-hardware-on-the-target-platform" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>In the Vitis Application Project Settings, change <strong>Active build configuration</strong> to <strong>Hardware</strong>.<br />In the system configuration, the kernel code is implemented onto the FPGA, resulting in a binary that will run on the selected platform card.</p></li>
 <li><p>If you have an available hardware platform, build and run the hardware build, and then verify the results.</p></li>
 </ol>
-</section>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+</div>
+<div class="section" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you have used the <strong>Package IP/Package_XO</strong> flow to create an RTL kernel, and you have also used the <strong>RTL Kernel wizard</strong>. You packaged the RTL IP project into the compiled XO file needed by the Vitis tool. You then added the RTL kernel to an application project, coupled with the host code, and built and run the Hardware Emulation configuration.  In the Vitis IDE, a binary container was created using the XO file, and a <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file was compiled.</p>
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 
 
            </div>

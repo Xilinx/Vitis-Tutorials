@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>4.DATAFLOW 最適化の確認 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Vitis ライブラリ入門" href="../Vitis_Libraries/README.html" />
+    <link rel="prev" title="3.最適化テクニックの使用" href="optimization_techniques.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../Vitis-Getting-Started.html">概要</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../Vitis/Getting_Started_Vitis.html">Vitis の概要および入門</a></li><li class="toctree-l2 current"><a class="reference internal" href="Getting_Started_Vitis_HLS.html">Vitis HLS</a><ul class="current"><li class="toctree-l3"><a class="reference internal" href="Getting_Started_Vitis_HLS.html#before-you-begin">開始前の確認事項</a></li><li class="toctree-l3"><a class="reference internal" href="Getting_Started_Vitis_HLS.html#set-up-the-environment-to-run-vitis">Vitis を実行するための環境の設定</a></li><li class="toctree-l3"><a class="reference internal" href="Getting_Started_Vitis_HLS.html#access-the-tutorial-reference-files">チュートリアル リファレンス ファイルの入手</a></li><li class="toctree-l3 current"><a class="reference internal" href="Getting_Started_Vitis_HLS.html#next-steps">次の手順</a><ul class="current"><li class="toctree-l4"><a class="reference internal" href="new_project.html">Vitis HLS プロジェクトの作成</a></li><li class="toctree-l4"><a class="reference internal" href="synth_and_analysis.html">高位合成の実行および結果の解析</a></li><li class="toctree-l4"><a class="reference internal" href="optimization_techniques.html">最適化テクニックの使用</a></li><li class="toctree-l4 current"><a class="current reference internal" href="#">4.DATAFLOW 最適化の確認</a></li><li class="toctree-l4"><a class="reference internal" href="#summary">まとめ</a></li></ul></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_Libraries/README.html">Vitis ライブラリ</a></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_Platform/README.html">Vitis プラットフォーム</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../Vitis-Getting-Started.html">入門</a>&raquo;</li> <li><a href="Getting_Started_Vitis_HLS.html">Vitis HLS</a>&raquo;</li><li>4.DATAFLOW 最適化の確認</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Getting_Started/Vitis_HLS/dataflow_design.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション チュートリアル</h1></td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><!-- 
+# Copyright 2022 Xilinx Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><div class="section" id="reviewing-the-dataflow-optimization">
+<h1>4.DATAFLOW 最適化の確認<a class="headerlink" href="#reviewing-the-dataflow-optimization" title="Permalink to this heading">¶</a></h1>
+<p>前の手順では、DCT アルゴリズムを最適化して、パイプライン処理済みループを使用して II=1 を達成するさまざまな方法について説明しました。この手順では、DATAFLOW 指示子を使用して関数またはループのタスク レベルの並列処理をイネーブルにします。詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) の Vitis HLS フローの <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/set_directive_dataflow">set_directive_dataflow</a> を参照してください。</p>
+<p>DATAFLOW 最適化では、ループ レベルの並列処理に加え、コード内のさまざまな関数間にタスク レベルの並列処理が可能な限り作成されます。</p>
+<div class="section" id="create-a-new-solution">
+<h2>新規ソリューションの作成<a class="headerlink" href="#create-a-new-solution" title="Permalink to this heading">¶</a></h2>
+<p>Vitis 統合ソフトウェア プラットフォームの資料 (UG1416) の Vitis HLS フローの<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Creating-Additional-Solutions">追加のソリューションの作成</a>に示すように、複数のソリューションを作成することで、さまざまなデザイン最適化方法を試すことができます。この演習では、新しいソリューションを作成して DATAFLOW 最適化を使用してみます。</p>
+<ol><li><p>[Explorer] ビューで最上位プロジェクト (<code class="docutils literal notranslate"><span class="pre">dct_prj</span></code>) を選択します。</p></li> <li><p>右クリックし、<strong>[New Solution]</strong> をクリックします。</p>
+<p>[Solution Wizard] ダイアログ ボックスが開きます。</p></li> <li><p>次のように選択します。</p>
+<ol><li><p>[Solution Name] フィールドに <code class="docutils literal notranslate"><span class="pre">DATAFLOW</span></code> と入力します。</p></li> <li><p>[Options] で、[Copy directives and constraints from solution] チェック ボックスをオンにして、<code class="docutils literal notranslate"><span class="pre">solution1</span></code> を選択します。</p></li> <li><p>その他の設定は、デフォルトのままにします。</p>
+<p><img alt="New Solution" src="../../../_images/new_solution-dataflow.png" /></p></li> <li><p><strong>[Finish]</strong> をクリックして新しいソリューションを作成します。</p></li></ol>
+<blockquote>
+<div><p><strong>ヒント:</strong> 新規ソリューションを作成すると、それがアクティブ ソリューションとして設定され、シミュレーション、合成、その他のコマンドすべてがそのソリューションを使用して実行されます。アクティブ ソリューションは、[Explorer] ビューでソリューションを右クリックし、<strong>[Set Active Solution]</strong> をクリックすると変更できます。</p>
+</div></blockquote></li></ol>
+</div>
+<div class="section" id="add-the-dataflow-optimization">
+<h2>DATAFLOW 最適化の追加<a class="headerlink" href="#add-the-dataflow-optimization" title="Permalink to this heading">¶</a></h2>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> タブをクリックしてコード エディターをアクティブにします。</p></li> <li><p>[Directive] ビューで最上位の <code class="docutils literal notranslate"><span class="pre">dct</span></code> 関数を選択して右クリックし、<strong>[Insert Directive]</strong> をクリックします。</p>
+<p>[Vitis HLS Directive Editor] が開きます。
+<img alt="DATAFLOW" src="../../../_images/dataflow_pragma.png" /></p></li> <li><p>次のように選択します。</p>
+<ol class="simple"><li><p>[Directive] フィールドで <strong>[DATAFLOW]</strong> を選択します。</p></li> <li><p>[Destination] フィールドで <strong>[Directive File]</strong> を選択します。</p></li> <li><p><strong>[OK]</strong> をクリックして閉じて、指示子を適用します。</p></li></ol></li> <li><p>メイン メニューから <strong>[Solution] → [Run CSynthesis] → [All Solutions]</strong> をクリックして合成を再実行します。すべてのソリューションに対して合成が実行され、結果を比較できます。</p>
+<p><img alt="All Solutions" src="../../../_images/synthesis-all_solutions.png" /></p>
+<p>合成が終了すると、アクティブ ソリューション (この場合は DATAFLOW ソリューション) の合成サマリ レポートが表示されます。次の図に示す [Vitis HLS Report Comparison] も表示され、合成されたすべてのソリューションの合成結果が表示されます。</p>
+<p><img alt="Synthesis Report" src="../../../_images/synthesis-compare_results.png" /></p>
+<p>この比較結果から、DATAFLOW ソリューションの開始間隔 (II) が最初のソリューションの約 65% になったことがわかります。これは、DATAFLOW 最適化によるタスク レベルの並列処理の主な利点です。また、デザインの FF および LUT の使用量の見積もりが増加しています。これらはあくまでも見積もりなので、Vivado 合成およびインプリメンテーションのいずれかまたは両方を実行して、より正確なリソース使用量を取得する必要があります。</p>
+<p>次の図に、DATAFLOW ソリューションの合成サマリ レポートを示します。</p>
+<p><img alt="Synthesis Report" src="../../../_images/synthesis_report-dataflow.png" /></p></li></ol>
+</div>
+<div class="section" id="view-the-dataflow-graph">
+<h2>データフロー グラフの表示<a class="headerlink" href="#view-the-dataflow-graph" title="Permalink to this heading">¶</a></h2>
+<p>Vitis HLS には、[Analysis] パースペクティブの機能の 1 つとしてデータフロー グラフも提供されています。DATAFLOW 最適化は、必要なパフォーマンス データを提供する C/RTL 協調シミュレーション完了後にのみ理解可能になる動的最適化です。合成後は、協調シミュレーションを実行する必要があります。詳細は、『Vitis 統合ソフトウェア プラットフォームの資料 』(UG1416) の Vitis HLS フローの <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/C/RTL-Co-Simulation-in-Vitis-HLS">Vitis HLS での C/RTL 協調シミュレーション</a>を参照してください。</p>
+<ol><li><p>メニューから <strong>[Solution] → [Run C/RTL Co-Simulation]</strong> をクリックします。[Co-simulation Dialog] ダイアログ ボックスが表示されます。</p></li> <li><p>次のように選択します。</p>
+<ol class="simple"><li><p><strong>[Channel (PIPO/FIFO) Profiling]</strong> をオンにします。</p></li> <li><p><strong>[OK]</strong> をクリックします。</p></li></ol>
+<p><img alt="RTL Co-Sim" src="../../../_images/rtl-co-sim.png" /></p>
+<p>協調シミュレーションが終了すると、協調シミュレーション レポートが開き、シミュレーション テストベンチが問題なく実行されたかどうかが表示されます。データフロー解析では、テストベンチが合成済み関数を複数回呼び出して、複数のイテレーションからパフォーマンス データを取得し、FIFO をフラッシュします。パフォーマンスに関しては、1 つの関数呼び出しでレイテンシ、その関数への 2 つ以上の呼び出しで II (開始間隔) が計算されます。</p></li> <li><p>シミュレーションが完了したら、<strong>[Solution]</strong> → <strong>[Open Dataflow Viewer]</strong> をクリックして、次のようなビューアーを開きます。</p>
+<blockquote>
+<div><p><strong>ヒント:</strong> デザインにデータフロー グラフが含まれるかどうかは、[Explorer] ビューまたは [Synthesis Summary] でプロジェクトに <img alt="Dataflow Icon" src="../../../_images/icon_dataflow.png" /> アイコンがあるかどうかでわかります。</p>
+</div></blockquote>
+<p>[Dataflow] ビューには、関数とその関数を介するフローが表示されます。C/RTL 協調シミュレーションを実行すると、グラフのパフォーマンス データが書き込まれ、グラフの下の [Process] および [Channel] の表にもデータが挿入されます。協調シミュレーションからのパフォーマンス データがない場合、グラフおよび表には値が存在しないことを示す「NA」と表示されます。詳細は、『Vitis 統合ソフトウェア プラットフォームの資料』 (UG1416) の Vitis HLS フローの <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Dataflow-Viewer">Dataflow Viewer</a> を参照してください。</p>
+<p><img alt="Dataflow Graph" src="../../../_images/dataflow_graph_channels.png" /></p>
+<p>データフロー ビューアーでは、次のスループット解析オプションが使用されます。</p><ul class="simple"> <li><p>グラフには、DATAFLOW 領域の全体的なトポロジが表示され、どのタイプのチャネル (FIFO/PIPO) が DATAFLOW 領域のタスク間通信のために推論されたかが示されます。各チャネルおよびプロセスを解析すると、デッドロックや FIFO のサイズが適切でないためにスループットが小さいなどの問題を解決するのに役立ちます。</p></li> <li><p>協調シミュレーションのデータがあると、シミュレーション過程で FIFO の最大サイズを確認することにより、FIFO のサイズを決定する際の基準となるので、FIFO サイズの問題を解決できます。また、協調シミュレーションでは、自動デッドロック検出により、デッドロックに関係するプロセスおよびチャネルがハイライトされるので、問題をすばやく見つけて修正できます。</p></li> <li><p>協調シミュレーション後にレポートされるデータには、FIFO のサイズだけでなく、プロセスおよびチャネルごとに、入力を待っていたり、出力の書き込みがブロックされたりしているストール時間も示されます。このグラフがあると、これらの問題を理解し、プロデューサーが高速でコンシューマーが高速 (またはその逆) の状況に対処するためチャネルのサイズをどのように管理すればよいかを判断するのに役立ちます。また、DATAFLOW 領域の真ん中で入力から読み出すことがパフォーマンスにどのように影響するかを理解するのにも有益です。これがパフォーマンスに影響する状況はよくあります。</p></li> </ul>
+</li>
+</ol>
+</div>
+<div class="section" id="convert-the-directives-into-pragmas">
+<h2>指示子のプラグマへの変換<a class="headerlink" href="#convert-the-directives-into-pragmas" title="Permalink to this heading">¶</a></h2>
+<p>デザインを最適化したので、Tcl スクリプトの指示子 (Vitis HLS ツールが実行) をソース コードのプラグマに変換して、その他のユーザーやデザイン チームと共有し、Vitis 統合ソフトウェア プラットフォーム内で使用できるようにします。[Directive] ビューで指示子を選択し、次のプロセスを使用してプラグマに変更します。</p>
+<ol><li><p><code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> タブをクリックしてコード エディターをアクティブにするか、必要であればソース コードを開きます。</p></li> <li><p>[Directive] ビューをスクロールダウンして指示子を右クリックし、<strong>[Modify Directive]</strong> をクリックします。[Vitis HLS Directive Editor] が表示されます。</p></li> <li><p>[Vitis HLS Directive Editor] で [Destination] を <strong>[Source File]</strong> に変更し、<strong>[OK]</strong> をクリックします。これで指示子がプラグマに変更されてソース コード ファイルに記述されます。これは、<code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> ソース ファイルで確認できます。</p>
+<p><code class="docutils literal notranslate"><span class="pre">col_inbuf</span></code> 変数の <code class="docutils literal notranslate"><span class="pre">ARRAY_PARTITION</span></code> 指示子を変更すると、<code class="docutils literal notranslate"><span class="pre">col_inbuf</span></code> 変数が見つからないので、関数の 1 行目にプラグマを挿入することを示す<strong>警告</strong>メッセージが表示されます。<strong>[OK]</strong> をクリックしてプラグマを挿入します。</p>
+<p>プラグマの配置は、<code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> ファイルの <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">HLS</span> <span class="pre">ARRAY_PARTITION...</span></code> 行を切り取って、42 行目の <code class="docutils literal notranslate"><span class="pre">col_inbuf</span></code> 変数の定義の後に貼り付けて、手動で修正する必要があります。プラグマは変数の後に定義しないと、コンパイラで正しく関連付けられません。このようにしておかないと、Vitis HLS でコードをコンパイルする際にエラー メッセージが表示されます。</p>
+<p>指示子をプラグマに変換したので、最適化がコードに含まれるようになり、<code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> コードが移植可能になりました。</p></li> <li><p><strong>[File]</strong> → <strong>[Save As]</strong> をクリックして、プラグマを含む <code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> ファイルを <code class="docutils literal notranslate"><span class="pre">./vitis_hls_analysis/reference-files</span></code> フォルダーに保存します。このファイルは次の演習で使用できます。</p></li></ol>
+</div>
+<div class="section" id="export-the-vitis-kernel">
+<h2>Vitis カーネルのエクスポート<a class="headerlink" href="#export-the-vitis-kernel" title="Permalink to this heading">¶</a></h2>
+<p>最後に、高位合成の結果を合成済みカーネル (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) ファイルとしてエクスポートできます。</p>
+<ol class="simple"><li><p>メイン メニューから <strong>[Solution] → [Export RTL]</strong> をクリックします。[Export RTL] ダイアログ ボックスが開きます。</p></li> <li><p>[Format Selection] で <strong>[Vitis Kernel (.xo)]</strong> を選択します。</p></li> <li><p>[Output location] フィールドで <code class="docutils literal notranslate"><span class="pre">dct.xo</span></code> ファイルを書き込む <code class="docutils literal notranslate"><span class="pre">./vitis_hls_analysis/reference-files</span></code> フォルダーを指定します。</p></li> <li><p><strong>[OK]</strong> をクリックしてカーネルをエクスポートします。</p></li></ol>
+</div>
+</div>
+<div class="section" id="summary">
+<h1>まとめ<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h1>
+<p>このチュートリアルでは、次のことを学びました。</p>
+<ol class="simple"><li><p>Vitis HLS ツールで C/C++ コードを最適化し、Vitis アプリケーション アクセラレーション開発フローで使用できるように RTL コードに合成しました。</p></li> <li><p>コードを最適化した後、Vitis アプリケーション プロジェクトで使用できるよう、コンパイル済みカーネル オブジェクト (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) をエクスポートしました。</p></li></ol>
+<p>これらは、Vitis および Vitis HLS ツールを使用してアプリケーションおよび関数をビルドしてアクセラレーションする要素です。Vitis アプリケーション プロジェクトでは、RTL カーネル オブジェクト (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) を含む Vitis HLS カーネルとコンパイルされていない C/C++ カーネル コード (<code class="docutils literal notranslate"><span class="pre">.c</span></code>/<code class="docutils literal notranslate"><span class="pre">.cpp</span></code>) を混合して、より複雑なアクセラレーション アプリケーションを作成できます。</p>
+<p>このチュートリアルでは、前の演習で最適化したコンパイルされていない C++ コード (<code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code>) を作成しました。必要に応じて HLS カーネル オブジェクトを削除し、Vitis アプリケーション プロジェクトにこの最適化済み C++ コードを追加できます。その場合、Vitis IDE で C++ カーネル コードをコンパイルする際に、ビルド プロセスの一部として Vitis HLS が呼び出されます。</p>
+</br>
+<hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.md">メイン ページに戻る</a> &mdash; <a href="./README.md">チュートリアルの初めに戻る</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="optimization_techniques.html" class="btn btn-neutral float-left" title="3. Using Optimization Techniques" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../Vitis_Libraries/README.html" class="btn btn-neutral float-right" title="Getting Started With Vitis Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

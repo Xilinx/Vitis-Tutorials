@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>ALPHA_MIX HLS C カーネルの作成- Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>HLS C カーネル (alpha_mix) の作成</li><li class="wy-breadcrumbs-aside"><a href="../../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration/doc/alpha_mix_tutorial.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="alpha-mix-hls-c-kernel-creation">
+<h1>HLS C カーネル (alpha_mix) の作成<a class="headerlink" href="#alpha-mix-hls-c-kernel-creation" title="Permalink to this heading">¶</a></h1>
+<p>設計仕様によれば、alpha_mix カーネルには次の関数が含まれます。</p><ul class="simple"> <li><p>AXI Stream スレーブ インターフェイスを介したモノクロ (1 チャネル 8 ビット深度) デジタル クロック画像を受信</p></li> <li><p>AXI マスター インターフェイスを介してグローバル メモリから背景画像を読み出し</p></li> <li><p>デジタル クロック画像のサイズを指定したスケールに変更</p></li> <li><p>クロックの桁文字とクロック画像の背景レイヤーの色を指定</p></li> <li><p>クロック桁、クロック背景レイヤー、および背景画像 (不透明度設定あり) を混合</p></li> <li><p>AXI-Stream マスター インターフェイスを介して混合画像を出力</p></li> </ul>
+<p>次のコード ブロックは、alpha_mix カーネルの最上位関数の宣言部分です。ハードウェア AXI-Stream ポート (マスターまたはスレーブ) は hls::stream データ型で表記され、ハードウェア AXI マスター ポート (読み出しまたは書き込み) は ap_uint (実際には配列ポインター) データ型で表記され、これらのカーネル引数は通常の int データ型で表記され、まとめて AXI スレーブ インターフェイスにマップされます。</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="n">alpha_mix</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">time_img_input</span><span class="p">,</span><span class="w"> </span><span class="c1">// time image input</span> <span class="w"></span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">256</span><span class="o">&gt;</span><span class="w"> </span><span class="o">*</span><span class="n">bgr_img_input</span><span class="p">,</span><span class="w"> </span><span class="c1">// background image input</span> <span class="w"></span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="n">ap_axiu</span><span class="o">&lt;</span><span class="mi">64</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mix_img_output</span><span class="p">,</span><span class="w"> </span><span class="c1">// mixed image output</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_rows_in</span><span class="p">,</span><span class="w"> </span><span class="c1">// input time image height</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_cols_in</span><span class="p">,</span><span class="w"> </span><span class="c1">// input time image width</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_rows_rsz</span><span class="p">,</span><span class="w"> </span><span class="c1">// resized time image height</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_cols_rsz</span><span class="p">,</span><span class="w"> </span><span class="c1">// resized time image width</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_pos_row</span><span class="p">,</span><span class="w"> </span><span class="c1">// resized time image position - Y</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_img_pos_col</span><span class="p">,</span><span class="w"> </span><span class="c1">// resized time image position - X</span> <span class="w"></span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">time_char_color</span><span class="p">,</span><span class="w"> </span><span class="c1">// [31:0] = [xRGB]</span> <span class="w"></span><span class="n">ap_uint</span><span class="o">&lt;</span><span class="mi">32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">time_bgr_color</span><span class="p">,</span><span class="w"> </span><span class="c1">// [31:0] = [xRGB]</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">time_bgr_opacity</span><span class="p">,</span><span class="w"> </span><span class="c1">// time image background opacity，[7:0] used</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">bgr_img_rows</span><span class="p">,</span><span class="w"> </span><span class="c1">// background image height</span> <span class="w"></span><span class="kt">int</span><span class="w"> </span><span class="n">bgr_img_cols</span><span class="w"> </span><span class="c1">// background image width</span> <span class="p">)</span><span class="w"></span></pre></div>
+</div>
+<p>次に、alpha_mix カーネルのサブ関数とデータフローの図を示します。</p>
+<div align="center"><img src="./images/alpha_mix_flow.png" alt="alpha_mix flow" > </div><p>この図の赤で塗りつぶされたサブ関数は Vitis ビジョン ライブラリのもので、青のサブ関数は手書きのものです。xf::cv::Mat は、OpenCV ソフトウェア ライブラリの cv::Mat に該当するもので、画像データの処理に非常に便利です。ハードウェア インプリメンテーションで画像を順番にピクセル レベルで処理する場合 (ピクセル データにランダムにアクセスする必要がない場合)、#pragma HLS stream を使用すると、コンパイラで xf::cv::Mat オブジェクトを配列にマップできます。これは、この alpha_mix カーネルに該当します。Vitis ビジョン ライブラリの多くの関数は、入力および出力データとして xf::cv::Mat をサポートします。HLS C コードでは、for-loop を使用して、xf::cv::mat ストリーム内のデータを簡単に処理できます。入力および出力 xf::cv::Mat オブジェクトに適用されるアルファ ミキシング操作については、サブ関数ミキシング部分のソース コードを参照してください。</p>
+<p>Vitis の v++ コマンドを使用して、HLS C ソースコードをカーネル ファイル (xo) にコンパイルします。たとえば、次のコマンドを使用して、xilinx_u50_gen3x16_xdma_201920_3 プラットフォームを使用するハードウェア カーネルに alpha_mix.c をコンパイルします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">++</span> <span class="o">--</span><span class="n">platform</span> <span class="n">xilinx_u50_gen3x16_xdma_201920_3</span> \ <span class="o">--</span><span class="n">target</span> <span class="n">hw</span> \ <span class="o">--</span><span class="n">kernel</span> <span class="n">alpha_mix</span> \ <span class="o">--</span><span class="n">include</span> <span class="o">./</span><span class="n">include</span> \ <span class="o">--</span><span class="n">advanced</span><span class="o">.</span><span class="n">prop</span> <span class="n">kernel</span><span class="o">.</span><span class="n">alpha_mix</span><span class="o">.</span><span class="n">kernel_flags</span><span class="o">=</span><span class="s2">&quot;-std=c++0x -D__SDSVHLS__ -DHLS_NO_XIL_FPO_LIB&quot;</span> \ <span class="o">--</span><span class="nb">compile</span> \ <span class="o">--</span><span class="n">output</span> <span class="n">alpha_mix</span><span class="o">.</span><span class="n">xo</span> \ <span class="n">alpha_mix</span><span class="o">.</span><span class="n">c</span></pre></div>
+</div>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

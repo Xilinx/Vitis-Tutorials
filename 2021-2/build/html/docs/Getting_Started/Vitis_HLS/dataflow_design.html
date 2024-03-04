@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -89,9 +88,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -144,11 +144,11 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="reviewing-the-dataflow-optimization">
+--><div class="section" id="reviewing-the-dataflow-optimization">
 <h1>4. Reviewing the DATAFLOW Optimization<a class="headerlink" href="#reviewing-the-dataflow-optimization" title="Permalink to this heading">¶</a></h1>
 <p>In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/set_directive_dataflow">set_directive_dataflow</a> in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416).</p>
 <p>The DATAFLOW optimization tries to create task-level parallelism between the various functions in the code on top of the loop-level parallelism where possible.</p>
-<section id="create-a-new-solution">
+<div class="section" id="create-a-new-solution">
 <h2>Create a New Solution<a class="headerlink" href="#create-a-new-solution" title="Permalink to this heading">¶</a></h2>
 <p>As described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Creating-Additional-Solutions">Creating Additional Solutions</a> in the Vitis HLS flow of the Vitis Unified Software Platform documentation (UG1416), you can create multiple solutions to let you pursue or explore different approaches to optimizing your design. Here you will create a new solution to explore the use of the DATAFLOW optimization.</p>
 <ol>
@@ -170,8 +170,8 @@ function OptanonWrapper() { }
 </div></blockquote>
 </li>
 </ol>
-</section>
-<section id="add-the-dataflow-optimization">
+</div>
+<div class="section" id="add-the-dataflow-optimization">
 <h2>Add the DATAFLOW Optimization<a class="headerlink" href="#add-the-dataflow-optimization" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Select the <code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> tab to make the Code Editor active.</p></li>
@@ -195,8 +195,8 @@ function OptanonWrapper() { }
 <p><img alt="Synthesis Report" src="../../../_images/synthesis_report-dataflow.png" /></p>
 </li>
 </ol>
-</section>
-<section id="view-the-dataflow-graph">
+</div>
+<div class="section" id="view-the-dataflow-graph">
 <h2>View the Dataflow Graph<a class="headerlink" href="#view-the-dataflow-graph" title="Permalink to this heading">¶</a></h2>
 <p>Vitis HLS also provides a Dataflow Graph viewer as one of the features in the Analysis perspective. The DATAFLOW optimization is a dynamic optimization that can only really be understood after C/RTL co-simulation which provides needed performance data. After synthesis, you must run co-simulation. For more information, refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/C/RTL-Co-Simulation-in-Vitis-HLS">C/RTL Co-Simulation in Vitis HLS</a> in the Vitis HLS Flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
 <ol>
@@ -224,8 +224,8 @@ The Co-simulation dialog box displays.</p></li>
 </ul>
 </li>
 </ol>
-</section>
-<section id="convert-the-directives-into-pragmas">
+</div>
+<div class="section" id="convert-the-directives-into-pragmas">
 <h2>Convert the Directives into Pragmas<a class="headerlink" href="#convert-the-directives-into-pragmas" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have your optimized design, you can transfer the directives from a Tcl script, which the Vitis HLS tool runs, to pragmas in the source code which can be shared to other users or design teams, and used within the Vitis unified software platform. Select the directives in the Directive view, and change them to pragmas using the following process.</p>
 <ol>
@@ -238,8 +238,8 @@ The Co-simulation dialog box displays.</p></li>
 </li>
 <li><p>To save the <code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code> file with the pragmas into the <code class="docutils literal notranslate"><span class="pre">./vitis_hls_analysis/reference-files</span></code> folder, select <strong>File</strong> &gt; <strong>Save As</strong>. You can use the file in the next lab.</p></li>
 </ol>
-</section>
-<section id="export-the-vitis-kernel">
+</div>
+<div class="section" id="export-the-vitis-kernel">
 <h2>Export the Vitis Kernel<a class="headerlink" href="#export-the-vitis-kernel" title="Permalink to this heading">¶</a></h2>
 <p>Finally, you can export the results of the high-level synthesis as a synthesized kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) file.</p>
 <ol class="simple">
@@ -248,8 +248,8 @@ The Co-simulation dialog box displays.</p></li>
 <li><p>In the Output location field specify the <code class="docutils literal notranslate"><span class="pre">./vitis_hls_analysis/reference-files</span></code> folder to write the <code class="docutils literal notranslate"><span class="pre">dct.xo</span></code> file.</p></li>
 <li><p>To export the kernel, select <strong>OK</strong>.</p></li>
 </ol>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial:</p>
 <ol class="simple">
@@ -260,8 +260,8 @@ The Co-simulation dialog box displays.</p></li>
 <p>You have the optimized but uncompiled C++ code (<code class="docutils literal notranslate"><span class="pre">dct.cpp</span></code>) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you want. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.</p>
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

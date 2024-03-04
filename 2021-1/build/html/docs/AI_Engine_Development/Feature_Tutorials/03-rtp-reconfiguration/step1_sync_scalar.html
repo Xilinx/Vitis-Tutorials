@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,13 +107,13 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="synchronous-update-of-scalar-rtp">
+</table><div class="section" id="synchronous-update-of-scalar-rtp">
 <h1>Synchronous Update of Scalar RTP<a class="headerlink" href="#synchronous-update-of-scalar-rtp" title="Permalink to this heading">¶</a></h1>
 <p>Kernel execution depends on the availability of windows of data on their inputs, and the space to write windows of data on their outputs. This example illustrates a complementary method, whereby a kernel will only get triggered to run after a write of data from another processor. This can be an ARM® processor or another AI Engine.</p>
 <p>In this example, a write from an ARM processor causes a partial sine wave to be generated using the direct digital synthesis (DDS) kernel on the AI Engine. The ARM processor can control the frequency of the sine wave by writing different values to the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> parameter. In HW and HW Cosim flow, the AI Engine output is streamed to the PL kernels, and the PS controls the running AI Engine and PL. The following figure shows this example.</p>
 <p><img alt="design structure and flow" src="../../../../_images/figure1.PNG" /></p>
 <p><strong>Note:</strong> The default working directory in this step is “step1”, unless specified explicitly otherwise.</p>
-<section id="review-graph-programming-code">
+<div class="section" id="review-graph-programming-code">
 <h2>Review Graph Programming Code<a class="headerlink" href="#review-graph-programming-code" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Examine the header file, (<code class="docutils literal notranslate"><span class="pre">aie/dds.h</span></code>), of the sine kernel (DDS):</p>
@@ -149,8 +150,8 @@ gr.end();
 <p>The graph <code class="docutils literal notranslate"><span class="pre">run()</span></code> has been called with the parameter <code class="docutils literal notranslate"><span class="pre">4</span></code> to specify the iteration number of the graph. Otherwise, it will run forever.</p>
 </li>
 </ol>
-</section>
-<section id="review-rtp-update-code">
+</div>
+<div class="section" id="review-rtp-update-code">
 <h2>Review RTP Update Code<a class="headerlink" href="#review-rtp-update-code" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Examine <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code> again. The following line is to connect the trigger input port of the graph to the first input port of the dds kernel (i.e., the <code class="docutils literal notranslate"><span class="pre">phase_increment</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">sine</span></code> function).</p>
@@ -187,8 +188,8 @@ gr.end();
 <p>Because the <code class="docutils literal notranslate"><span class="pre">runtime</span></code> parameter in this example is synchronous, the graph execution on the AI Engine will start after the first update call for one iteration, then wait for the next trigger by the next update call. Four consecutive update calls will run the graph for four iterations, where the first two iterations use 10 as the value for the <code class="docutils literal notranslate"><span class="pre">phase_increment</span></code> parameter and the last two iterations use 100.</p>
 </li>
 </ol>
-</section>
-<section id="run-ai-engine-compiler-and-ai-engine-simulator">
+</div>
+<div class="section" id="run-ai-engine-compiler-and-ai-engine-simulator">
 <h2>Run AI Engine Compiler and AI Engine Simulator<a class="headerlink" href="#run-ai-engine-compiler-and-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Run the AI Engine compiler and the AI Engine simulator to verify the functional correctness of the design. Note that <code class="docutils literal notranslate"><span class="pre">graph.cpp</span></code> is only used for the AI Engine simulator, which is a SystemC simulation.</p>
@@ -242,8 +243,8 @@ gr.end();
 </li>
 </ol>
 <p><img alt="sine waveform - imaginary" src="../../../../_images/figure3.PNG" /></p>
-</section>
-<section id="build-for-hardware-emulation-and-hardware-flow">
+</div>
+<div class="section" id="build-for-hardware-emulation-and-hardware-flow">
 <h2>Build for Hardware Emulation and Hardware Flow<a class="headerlink" href="#build-for-hardware-emulation-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, you generated the AI Engine design graph (<code class="docutils literal notranslate"><span class="pre">libadf.a</span></code>) using the AI Engine compiler. Note that the graph has instantiated a PLIO (in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>), which will be connected to the PL side.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PLIO</span> <span class="o">*</span><span class="n">dout</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PLIO</span><span class="p">(</span><span class="s2">&quot;Dataout&quot;</span><span class="p">,</span> <span class="n">plio_32_bits</span><span class="p">,</span>  <span class="s2">&quot;data/output.txt&quot;</span><span class="p">);</span>
@@ -377,8 +378,8 @@ ${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_cor
 <p><code class="docutils literal notranslate"><span class="pre">--package.sd_dir</span> <span class="pre">&lt;arg&gt;</span></code> specifies a directory path to package into the *<code class="docutils literal notranslate"><span class="pre">sd_card*</span> <span class="pre">directory/image</span></code>, which is helpful for including some golden data into the package.</p>
 <p>“<code class="docutils literal notranslate"><span class="pre">--package.sd_file</span> <span class="pre">&lt;arg&gt;</span></code>” is used to specify files to package into the *<code class="docutils literal notranslate"><span class="pre">sd_card*</span> <span class="pre">directory/image</span></code>.</p>
 <p>For more details about <code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">-p</span> <span class="pre">(--package)</span></code> options, refer to <em>Application Acceleration Development</em> (UG1393).</p>
-</section>
-<section id="deploy-for-hardware-emulation-and-hardware-flow">
+</div>
+<div class="section" id="deploy-for-hardware-emulation-and-hardware-flow">
 <h2>Deploy for Hardware Emulation and Hardware Flow<a class="headerlink" href="#deploy-for-hardware-emulation-and-hardware-flow" title="Permalink to this heading">¶</a></h2>
 <p>The final step is to run HW emulation using the following make command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_hw_emu</span>
@@ -409,8 +410,8 @@ ${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_cor
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you learned about the following core concepts:</p>
 <ul class="simple">
@@ -419,8 +420,8 @@ ${CXX} -o ../host.exe aie_control_xrt.o host.o -ladf_api_xrt -lgcc -lc -lxrt_cor
 <li><p>HW emulation and HW run</p></li>
 </ul>
 <p>Next, review <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP</span></a>.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD001</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD001</sup></br></p></div>
+</div>
 
 
            </div>

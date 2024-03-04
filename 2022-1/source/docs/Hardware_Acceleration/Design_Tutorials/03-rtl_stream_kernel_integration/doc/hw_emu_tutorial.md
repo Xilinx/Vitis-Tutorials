@@ -23,9 +23,7 @@ Let's take the Hardware Emulation result of *rtc_gen_test* on U200 card as an ex
 vitis_analyzer rtc_gen_test_hw_emu.xclbin.run_summary
 ```
 
-<div align="center">
-<img src="./images/hw_emu_waveform.PNG" alt="Hardware Emulation Waveform" >
-</div>
+![Hardware Emulation Waveform](./images/hw_emu_waveform.PNG)
 
 You can also open the waveform database with the Vivado logic simulator `xsim`
 

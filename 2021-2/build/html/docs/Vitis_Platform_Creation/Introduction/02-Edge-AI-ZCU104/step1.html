@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -114,10 +114,10 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="step-1-create-the-vivado-hardware-design-and-generate-xsa">
+--><div class="section" id="step-1-create-the-vivado-hardware-design-and-generate-xsa">
 <h1>Step 1: Create the Vivado Hardware Design and Generate XSA<a class="headerlink" href="#step-1-create-the-vivado-hardware-design-and-generate-xsa" title="Permalink to this heading">¶</a></h1>
 <p>In this step, we will create the hardware design for the ZCU104 Vitis acceleation platform. We will start from a ZCU104 preset design, add platform required peripherals and configure them. After everything is set, we will export the hardware design to XSA.</p>
-<section id="create-base-vivado-project-from-preset">
+<div class="section" id="create-base-vivado-project-from-preset">
 <h2>Create Base Vivado Project from Preset<a class="headerlink" href="#create-base-vivado-project-from-preset" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Launch Vivado</p>
@@ -169,8 +169,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 <p>At this stage, the Vivado block automation has added a Zynq UltraScale+ MPSoC block and applied all board presets for the ZCU104. The presets includes MPSoC PS block configurations and pin assignments.</p>
 <p><strong>What to do for custom boards?</strong></p>
 <p>For a custom board, please double click MPSoC block and setup parameters according to the board hardware. Next we’ll add the IP blocks and metadata to create a base hardware design that supports acceleration kernels.</p>
-</section>
-<section id="customize-system-design-for-clock-and-reset">
+</div>
+<div class="section" id="customize-system-design-for-clock-and-reset">
 <h2>Customize System Design for Clock and Reset<a class="headerlink" href="#customize-system-design-for-clock-and-reset" title="Permalink to this heading">¶</a></h2>
 <p>V++ linker can automatically link the clock signals between kernel and platform. The available clock signals in the platform are exported by <strong>PFM.CLK</strong> property.</p>
 <p>For simple designs, interrupt signals can be sourced by processor’s <strong>pl_clk</strong>. The limitation is that the processor has maximum 4 pl_clks and their phase is not aligned.</p>
@@ -241,8 +241,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ul>
 </li>
 </ol>
-</section>
-<section id="add-interrupt-support">
+</div>
+<div class="section" id="add-interrupt-support">
 <h2>Add Interrupt Support<a class="headerlink" href="#add-interrupt-support" title="Permalink to this heading">¶</a></h2>
 <p>V++ linker can automatically link the interrupt signals between kernel and platform. The available interrupt signals in the platform are exported by <strong>PFM.IRQ</strong> property.</p>
 <p>For simple designs, interrupt signals can be sourced by processor’s <strong>pl_ps_irq</strong>. The limitation is that it can only provide maximum 16 interrupt signals. To provide more interrupt signals, We can use <strong>AXI Interrupt Controller</strong>. We’ll enable <strong>AXI HPM0 LPD</strong> to control the <strong>AXI Interrupt Controller</strong>, add the <strong>AXI Interrupt Controller</strong> and enable interrupt signals for <strong>PFM.IRQ</strong>. Here are the detailed steps.</p>
@@ -304,8 +304,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </ol>
 <p>The IPI design connection would like below till now:</p>
 <p><img alt="ipi_fully_connection.png" src="../../../../_images/ipi_fully_connection1.png" /></p>
-</section>
-<section id="enable-axi-interfaces-for-the-platform">
+</div>
+<div class="section" id="enable-axi-interfaces-for-the-platform">
 <h2>Enable AXI Interfaces for the Platform<a class="headerlink" href="#enable-axi-interfaces-for-the-platform" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Enable AXI Master interfaces from PS</p>
@@ -344,8 +344,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 <p><img alt="Platform Setup - AXI Ports" src="../../../../_images/platform_setup_interfaces1.png" /></p>
 </li>
 </ol>
-</section>
-<section id="emulation-setup-optional">
+</div>
+<div class="section" id="emulation-setup-optional">
 <h2>Emulation Setup (Optional)<a class="headerlink" href="#emulation-setup-optional" title="Permalink to this heading">¶</a></h2>
 <p>This step is only needed when creating an emulation-capable platform.</p>
 <p>When a component comes with multiple types of simulation models, selecting SystemC TLM (Transaction-level Modeling) model would run much faster than RTL model. For Processing System component, it’s mandatory to use TLM for Hardware Emulation.</p>
@@ -363,8 +363,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </div>
 </li>
 </ol>
-</section>
-<section id="export-hardware-xsa">
+</div>
+<div class="section" id="export-hardware-xsa">
 <h2>Export Hardware XSA<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Validate the block design</p>
@@ -466,8 +466,8 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </div>
 </li>
 </ol>
-</section>
-<section id="fast-track">
+</div>
+<div class="section" id="fast-track">
 <h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create projects and generate outputs. To use these scripts, please run the following steps.</p>
 <ol>
@@ -484,12 +484,12 @@ In the Run Block Automation dialog, ensure the following is check marked:</p>
 </div>
 </li>
 </ol>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Now we finish the Hardware platform creation flow, then we should go to the <a class="reference internal" href="step2.html"><span class="doc">Step2: Software platform creation</span></a></p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

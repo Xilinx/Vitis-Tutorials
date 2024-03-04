@@ -72,8 +72,8 @@ function OptanonWrapper() { }
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -117,16 +117,14 @@ function OptanonWrapper() { }
 <div class="section" id="run-guidance">
 <h2>Run Guidance<a class="headerlink" href="#run-guidance" title="Permalink to this heading">¶</a></h2>
 <p>Guidance includes message for reported violations, a brief suggested resolution, and a detailed resolution provided as a web link. The rules are generic rules based on an extensive set of reference designs, thus might not be applicable for every design. You need to understand the specific guidance rules and take appropriate action based on your specific algorithm and requirements.</p>
-<div align="center">
-<img src="./images/hw_guidance.PNG" alt="Hardware Run Guidance" >
-</div></div>
+<p><img alt="Hardware Run Guidance" src="../../../../../_images/hw_guidance.PNG" /></p>
+</div>
 <div class="section" id="platform-and-system-diagrams">
 <h2>Platform and System Diagrams<a class="headerlink" href="#platform-and-system-diagrams" title="Permalink to this heading">¶</a></h2>
 <p>The Platform and System Diagrams display a representation of the platform resources and the kernel code integrated onto the platform. The System Diagram shows memory banks or PLRAMs used by the XCLBIN, how the function arguments of CUs are connected to AXI4 interfaces. It includes profile data from the run, and the resource information from the bottom table can also be displayed in a box next to each kernel or CU in the System Diagram.</p>
 <p>Please use upper right <strong>Settings</strong> button to display or hide Unused Memory, Interface Ports, Profile Info, and Resource info.</p>
-<div align="center">
-<img src="./images/hw_sys_diagram.PNG" alt="Hardware System Diagram" >
-</div></div>
+<p><img alt="Hardware System Diagram" src="../../../../../_images/hw_sys_diagram.PNG" /></p>
+</div>
 <div class="section" id="profile-summary">
 <h2>Profile Summary<a class="headerlink" href="#profile-summary" title="Permalink to this heading">¶</a></h2>
 <p>Enabling profile data capturing for traffic between the kernels and host consumes additional resources and may impact performance, so we cleared those elements out of the sources as we delivered the pre-built XCLBIN files with this tutorial.</p>
@@ -138,18 +136,15 @@ rtc_gen_test_$(TARGET).xclbin: $(XOS_RTC_GEN_TEST)
 	v++ -l $(XOCCFLAGS) $(XOCCLFLAGS) --config xclbin_rtc_gen_test.ini --profile_kernel data:all:all:all  -o $@ $(XOS_RTC_GEN_TEST)
 </pre></div>
 </div>
-<div align="center">
-<img src="./images/hw_profile_summary.PNG" alt="Profile Summary" >
-</div><p>Even without <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> option added while generating XCLBIN files, most of the profiling reports are still available, only few sections like the Kernel Data Transfers will show no data.</p>
-<div align="center">
-<img src="./images/no_kernel_data.PNG" alt="No Kernel Data" >
-</div></div>
+<p><img alt="Profile Summary" src="../../../../../_images/hw_profile_summary.PNG" /></p>
+<p>Even without <code class="docutils literal notranslate"><span class="pre">--profile_kernel</span></code> option added while generating XCLBIN files, most of the profiling reports are still available, only few sections like the Kernel Data Transfers will show no data.</p>
+<p><img alt="No Kernel Data" src="../../../../../_images/no_kernel_data.PNG" /></p>
+</div>
 <div class="section" id="application-timeline">
 <h2>Application Timeline<a class="headerlink" href="#application-timeline" title="Permalink to this heading">¶</a></h2>
 <p>Application Timeline collects and displays host and kernel events on a common timeline, it helps to understand and visualize the overall health and performance of the systems. The graphical display makes it easy to discover issues regarding kernel synchronization and efficient concurrent execution.</p>
-<div align="center">
-<img src="./images/hw_timeline.PNG" alt="Application Timeline" >
-</div><p>If you are looking for more details of Profiling and how to use <em>Vitis Analyzer</em>, check on <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/profilingapplication.html">Profiling the Application</a> from Vitis online documentation.</p>
+<p><img alt="Application Timeline" src="../../../../../_images/hw_timeline.PNG" /></p>
+<p>If you are looking for more details of Profiling and how to use <em>Vitis Analyzer</em>, check on <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_1/vitis_doc/profilingapplication.html">Profiling the Application</a> from Vitis online documentation.</p>
 <p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 </div>
 

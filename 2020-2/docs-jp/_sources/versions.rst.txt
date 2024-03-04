@@ -1,9 +1,0 @@
-<p class="caption"><span class="caption-text">Versions</span></p>
-  <ul class="this-page-menu">
-    <li><a href="https://xilinx.github.io/Vitis-Tutorials/Master/docs/README.html"
-           rel="nofollow">Master</a></li>
-    <li><a href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/README.html"
-           rel="nofollow">2020.2</a></li>
-    <li><a href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html"
-           rel="nofollow">2020.1</a></li>
-   </ul>

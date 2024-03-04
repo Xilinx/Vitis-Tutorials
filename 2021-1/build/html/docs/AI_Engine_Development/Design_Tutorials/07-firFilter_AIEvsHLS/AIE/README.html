@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -104,24 +105,24 @@ function OptanonWrapper() { }
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2021.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
    </td>
  </tr>
-</table><section id="table-of-contents">
+</table><div class="section" id="table-of-contents">
 <h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="#building-the-design">Building the Design</a></p>
 <p><a class="reference external" href="#hardware-design-details">Hardware Design Details</a></p>
 <p><a class="reference external" href="#software-design-details">Software Design Details</a></p>
 <p><a class="reference external" href="#references">References</a></p>
 <p><a class="reference external" href="#revision-history">Revision History</a></p>
-</section>
-<section id="building-the-design">
+</div>
+<div class="section" id="building-the-design">
 <h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>Design Build</summary><section id="design-build">
+<summary>Design Build</summary><div class="section" id="design-build">
 <h2>Design Build<a class="headerlink" href="#design-build" title="Permalink to this heading">¶</a></h2>
 <p>In this section, you will build and run the FIR filter design using the AI Engine implementation. You will compile the AI Engine design and integrate it into a larger system design (including the programmable logic (PL) kernels and processing system (PS) host application). You can review <a class="reference external" href="#ai-engine-documentation">Integrating the Application Section in the AI Engine Documentation</a> for the general flow.</p>
 <p>At the end of this section, the design flow will generate a new directory (called <code class="docutils literal notranslate"><span class="pre">build/</span></code>). Underneath are sub-directories named <code class="docutils literal notranslate"><span class="pre">fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps</span></code> (for example, fir_aie_1firs_15taps) depending on value of <code class="docutils literal notranslate"><span class="pre">N_FIR_FILTERS</span></code> and <code class="docutils literal notranslate"><span class="pre">N_FIR_TAPS</span></code> chosen in the build. Each sub-directory contains the <code class="docutils literal notranslate"><span class="pre">Work/</span></code>, <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code>, and <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolders. The <code class="docutils literal notranslate"><span class="pre">Work/</span></code> subfolder is an output from the AI Engine compiler. The <code class="docutils literal notranslate"><span class="pre">hw_emu/</span></code> subfolder contains the build for hardware emulation. The <code class="docutils literal notranslate"><span class="pre">hw/</span></code> subfolder contains the build for the hardware run on a VCK190 board.</p>
 </details><details>
-<summary>Make Steps</summary></section>
-<section id="make-steps">
+<summary>Make Steps</summary></div>
+<div class="section" id="make-steps">
 <h2>Make Steps<a class="headerlink" href="#make-steps" title="Permalink to this heading">¶</a></h2>
 <p>To run the following <code class="docutils literal notranslate"><span class="pre">make</span></code> steps (e.g. <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">kernels</span></code>, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">graph</span></code>, etc), you must be in the <code class="docutils literal notranslate"><span class="pre">Makefiles/</span></code> folder.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> Makefiles
@@ -136,8 +137,8 @@ function OptanonWrapper() { }
 <li><p>EN_TRACE: Flag to enable trace data to be captured. 0 is disabled and 1 is enabled. Default is 0.</p></li>
 </ul>
 </details><details>
-<summary>Build the Entire Design with a Single Command</summary></section>
-<section id="build-the-entire-design-with-a-single-command">
+<summary>Build the Entire Design with a Single Command</summary></div>
+<div class="section" id="build-the-entire-design-with-a-single-command">
 <h2>Build the Entire Design with a Single Command<a class="headerlink" href="#build-the-entire-design-with-a-single-command" title="Permalink to this heading">¶</a></h2>
 <p>If you are already familiar with the AI Engine and Vitis™ accelerated kernel compilation flows, you can build the entire design with one command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make run <span class="o">(</span>default hardware emulation, <span class="m">1</span> filter <span class="m">15</span> taps, no trace enabled<span class="o">)</span>
@@ -163,8 +164,8 @@ In the file <code class="docutils literal notranslate"><span class="pre">\&lt;pr
 </ol>
 </details><p>The individual make steps to build the design with the options applied to them are specified as follows.</p>
 <details>
-<summary>make kernels: Compile PL Kernels</summary></section>
-<section id="make-kernels-compile-pl-kernels">
+<summary>make kernels: Compile PL Kernels</summary></div>
+<div class="section" id="make-kernels-compile-pl-kernels">
 <h2>make kernels: Compile PL Kernels<a class="headerlink" href="#make-kernels-compile-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In this step, the Vitis compiler takes any kernels (RTL or HLS C) in the PL region of the target platform (<code class="docutils literal notranslate"><span class="pre">xilinx_vck190_base_202110_1</span></code>) and compiles them into their respective XO files.</p>
 <p>The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):</p>
@@ -248,8 +249,8 @@ v++ 	--target hw_emu					\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow</summary></section>
-<section id="make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow">
+<summary>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow</summary></div>
+<div class="section" id="make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow">
 <h2>make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow<a class="headerlink" href="#make-graph-creating-the-ai-engine-adf-graph-for-vitis-compiler-flow" title="Permalink to this heading">¶</a></h2>
 <p>An adaptive data flow (ADF) graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives.</p>
 <ul class="simple">
@@ -319,8 +320,8 @@ aiecompiler 	-include=$(DSPLIB_ROOT)/L1/src/aie 		\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make xclbin: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary></section>
-<section id="make-xclbin-use-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform">
+<summary>make xclbin: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary></div>
+<div class="section" id="make-xclbin-use-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform">
 <h2>make xclbin: Use Vitis Tools to Link AI Engine and HLS Kernels with the Platform<a class="headerlink" href="#make-xclbin-use-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform" title="Permalink to this heading">¶</a></h2>
 <p>After the AI Engine graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XCLBIN file.</p>
 <p>The Vitis tools allow you to integrate the AI Engine graph and HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the AI Engine and PL kernels into the design).</p>
@@ -449,8 +450,8 @@ v++ 	-l 						\
 </tr>
 </tbody>
 </table></details> <details>
-<summary>make application: Compile the Host Application</summary></section>
-<section id="make-application-compile-the-host-application">
+<summary>make application: Compile the Host Application</summary></div>
+<div class="section" id="make-application-compile-the-host-application">
 <h2>make application: Compile the Host Application<a class="headerlink" href="#make-application-compile-the-host-application" title="Permalink to this heading">¶</a></h2>
 <p>You can compile the host application by following the typical cross-compilation flow for the Cortex-A72. To build the application run the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">application</span>
@@ -574,8 +575,8 @@ aarch64-linux-gnu-g++ 	../app_control.o			\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make package: Package the Design</summary></section>
-<section id="make-package-package-the-design">
+<summary>make package: Package the Design</summary></div>
+<div class="section" id="make-package-package-the-design">
 <h2>make package: Package the Design<a class="headerlink" href="#make-package-package-the-design" title="Permalink to this heading">¶</a></h2>
 <p>With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all executables, bitstreams, configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications and <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>.</p>
 <p>The command to run this step is as follows (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):</p>
@@ -714,8 +715,8 @@ v++	-p  							\
 </tr>
 </tbody>
 </table></details><details>
-<summary>make run_emu: Run Hardware Emulation</summary></section>
-<section id="make-run-emu-run-hardware-emulation">
+<summary>make run_emu: Run Hardware Emulation</summary></div>
+<div class="section" id="make-run-emu-run-hardware-emulation">
 <h2>make run_emu: Run Hardware Emulation<a class="headerlink" href="#make-run-emu-run-hardware-emulation" title="Permalink to this heading">¶</a></h2>
 <p>After packaging, everything is set to run emulation or hardware.
 To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):</p>
@@ -763,8 +764,8 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 <p>The XSIM Waveform Viewer is launched. Drag and drop the signals into the Viewer and click Play to start the emulation. Go back to the terminal and wait for the Linux prompt to show up.</p>
 <p>In the XSIM Waveform Viewer, you will see the signals you added to the waveform adjusting over the execution of the design. Once done, hit the pause button and close the window to end the emulation.</p>
 </details><details>
-<summary>TARGET=hw: Run on Hardware</summary></section>
-<section id="run-on-hardware">
+<summary>TARGET=hw: Run on Hardware</summary></div>
+<div class="section" id="run-on-hardware">
 <h2>Run on Hardware<a class="headerlink" href="#run-on-hardware" title="Permalink to this heading">¶</a></h2>
 <p>To run the design in hardware, re-run the following “make” steps with TARGET=hw and other applicable options (see the previously listed make steps)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">kernels</span>     <span class="n">TARGET</span><span class="o">=</span><span class="n">hw</span>
@@ -809,18 +810,18 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 </pre></div>
 </div>
 <p>After execution completes and the testcase passes data integrity check, ‘TEST PASSED’ should appear on the terminal.</p>
-</details></section>
-</section>
-<section id="hardware-design-details">
+</details></div>
+</div>
+<div class="section" id="hardware-design-details">
 <h1>Hardware Design Details<a class="headerlink" href="#hardware-design-details" title="Permalink to this heading">¶</a></h1>
 <details>
-<summary>FIR Filter AI Engine Implementation architecture and  AI Engine/PL Function Partitioning</summary><section id="fir-filter-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning">
+<summary>FIR Filter AI Engine Implementation architecture and  AI Engine/PL Function Partitioning</summary><div class="section" id="fir-filter-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning">
 <h2>FIR Filter AI Engine Implementation Architecture and AI Engine/PL Function Partitioning<a class="headerlink" href="#fir-filter-ai-engine-implementation-architecture-and-ai-engine-pl-function-partitioning" title="Permalink to this heading">¶</a></h2>
 <p>The following figure shows a high level block diagram of the design. The test harness consists of the compute kernels, data mover kernels and DDR to store input and output vectors. This setup is maintained in the two implementations (using AI Engine in this section of the tutorial and HLS &amp; DSPs in the other). In this setup, the interface between the data mover kernels and DDR is memory mapped AXI4 and it is AXI4-stream between data mover kernel and AI Engine kernel. The mm2s kernel moves data from the DDR memory into the FIR Filter and the s2mm kernel moves the data from FIR filter back to DDR memory. The data widths of both the kernels are 128 bits wide, and they run at 300 MHz, providing a transfer rate of up to 1.2 Gsamples/sec.</p>
 <p><img alt="Image of FIR Filter AIE implementation architecture" src="../../../../../_images/fir_aie_block_diagram.png" /></p>
 </details><details>
-<summary>Design Details</summary></section>
-<section id="design-details">
+<summary>Design Details</summary></div>
+<div class="section" id="design-details">
 <h2>Design Details<a class="headerlink" href="#design-details" title="Permalink to this heading">¶</a></h2>
 <p>The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, and AI Engine and the interfaces among them. The <code class="docutils literal notranslate"><span class="pre">v++</span></code> linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system level design, PL kernels are added to the base platform depending on the application, that is, the PL kernels present in each design may vary. An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by v++ -l step (make XCLBIN in the tool flow section above) and include the following:</p>
 <ul class="simple">
@@ -834,8 +835,8 @@ To run emulation use the following command (default TARGET=hw_emu, N_FIR_FILTERS
 <p>The actual FIR filter chain itself is implemented in the AI Engine domain. The graph connects together in a chain the specified number of filters. For purposes of simplicity in benchmarking, all the filters in the chain are identical, though it is unlikely such a chain would be used in a practical application.</p>
 <p>Notice the system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine run-time trace data if the EN_TRACE option is enabled in the design. The mm2s/s2mm kernels and the AI Engine Array Interface are both operating at 300 MHz.</p>
 </details><details>
-<summary>AI Engine and PL Kernels</summary></section>
-<section id="ai-engine-and-pl-kernels">
+<summary>AI Engine and PL Kernels</summary></div>
+<div class="section" id="ai-engine-and-pl-kernels">
 <h2>AI Engine and PL Kernels<a class="headerlink" href="#ai-engine-and-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>The top level AI Engine graph fir_aie_graph.h instantiates the symmetric FIR filter from the AI Engine DSP library, (DSPLib), and uses a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to connect them all together in a chain. The file fir_aie_graph.cpp instantiates the filter chain, and connects it to the AI Engine’s  128-bit PLIO interfaces.</p>
 <p>The PL-based data movers consist of MM2S and S2MM kernels. The MM2S move data from DDR memory through the NoC to the AI Engine array and the final FIR output from the AI Engine array is moved back to DDR memory through the NoC by the S2MM kernel. In either data mover kernel, the side facing NoC uses a memory mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine array uses an AXI4-Stream interface.
@@ -850,25 +851,25 @@ Some additional details regarding the data mover kernels include:</p>
 <li><p>The data width is 128 bits</p></li>
 <li><p>To avoid bandwidth limitation resulting in back pressure which causes performance degradation, the HLS pragma <code class="docutils literal notranslate"><span class="pre">max_write_burst_length</span></code> is set higher than the default to 256 bits.</p></li>
 </ul>
-</details></section>
-</section>
-<section id="software-design-details">
+</details></div>
+</div>
+<div class="section" id="software-design-details">
 <h1>Software Design Details<a class="headerlink" href="#software-design-details" title="Permalink to this heading">¶</a></h1>
 <p>The software design in the FIR Filter AI Engine implementation consists of the following sections:</p>
 <details>
-<summary>AI Engine Kernels and Graph Representation</summary><section id="ai-engine-kernels-and-graph-representation">
+<summary>AI Engine Kernels and Graph Representation</summary><div class="section" id="ai-engine-kernels-and-graph-representation">
 <h2>AI Engine Kernels and Graph Representation<a class="headerlink" href="#ai-engine-kernels-and-graph-representation" title="Permalink to this heading">¶</a></h2>
 <p>DSPLib FIR filter kernels are C/C++ programs written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review <a class="reference external" href="#ai-engine-documentation">AI Engine Kernel Programming Section in the AI Engine Documentation</a> for a high-level overview of kernel programming. These DSPLib kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results to <code class="docutils literal notranslate"><span class="pre">build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/Work/fir_aie_graph.aiecompile_summary</span></code>. You can view the graph by running the following command:</p>
 <p><code class="docutils literal notranslate"><span class="pre">vitis_analyzer</span> <span class="pre">build/fir_aie_$(N_FIR_FILTERS)firs_$(N_FIR_TAPS)taps/Work/fir_aie_graph.aiecompile_summary</span></code></p>
 <p>The following figures show the graph representation of the AI Engine kernels (N_FIR_FILTERS=5, N_FIR_TAPS=64).</p>
 <p><img alt="Image of FIR Filter Chain, 5 Filters, each 64 taps" src="../../../../../_images/fir_aie_5firs_64taps_graph.png" /></p>
 </details><details>
-<summary>Data Flow Graph</summary></section>
-<section id="data-flow-graph">
+<summary>Data Flow Graph</summary></div>
+<div class="section" id="data-flow-graph">
 <h2>Data Flow Graph<a class="headerlink" href="#data-flow-graph" title="Permalink to this heading">¶</a></h2>
 <p>This section describes the overall data-flow graph specification of the FIR filter design using AI Engine which is compiled by the AI Engine compiler. Refer to <a class="reference external" href="#ai-engine-documentation">AI Engine Programming Section in the AI Engine Documentation</a> for information on ADF graphs.</p>
 <p>The overall graph definition of the design is contained in the <code class="docutils literal notranslate"><span class="pre">fir_aiegraph.cpp</span></code> file. The top level graph in turns contains the subgraph, <code class="docutils literal notranslate"><span class="pre">fir_aie_graph.h</span></code>, which is described in the following subsection.</p>
-<section id="define-the-graph-class">
+<div class="section" id="define-the-graph-class">
 <h3>Define the Graph Class<a class="headerlink" href="#define-the-graph-class" title="Permalink to this heading">¶</a></h3>
 <p>Define the FIR graph class by using the objects defined in the appropriate name space. It must include the ADF library. To access ADF library elements, the following declaration is used to scope into it:
 <code class="docutils literal notranslate"> <span class="pre">using</span> <span class="pre">namespace</span> <span class="pre">adf;</span></code>
@@ -881,8 +882,8 @@ All user graphs are defined from the class <code class="docutils literal notrans
    port&lt;output&gt; out;
 </pre></div>
 </div>
-</section>
-<section id="instantiate-dsplib-fir-filters">
+</div>
+<div class="section" id="instantiate-dsplib-fir-filters">
 <h3>Instantiate DSPLib FIR Filters<a class="headerlink" href="#instantiate-dsplib-fir-filters" title="Permalink to this heading">¶</a></h3>
 <p>The DSPLib symmetric FIR Filter kernels are created using the following array declaration. The pre-processor #if statement is used as a workaround here because in C++ each array element requires its own template parameters, even if they are identical:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">FirGraph</span><span class="p">():</span>  <span class="n">FIR_ARRAY</span> <span class="p">{</span>
@@ -896,8 +897,8 @@ All user graphs are defined from the class <code class="docutils literal notrans
 <span class="o">&lt;...</span> <span class="n">etc</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</section>
-<section id="add-connectivity-information">
+</div>
+<div class="section" id="add-connectivity-information">
 <h3>Add Connectivity Information<a class="headerlink" href="#add-connectivity-information" title="Permalink to this heading">¶</a></h3>
 <p>This is done by using the templated connect&lt;&gt; object. For our cascaded chain, the first FIR filter must have its input connected to the subgraph input <code class="docutils literal notranslate"><span class="pre">in</span></code>, and the last FIR filter must have its output connected to the subgraph output <code class="docutils literal notranslate"><span class="pre">out</span></code>. If there is more than one FIR filter, their inputs and outputs must be daisy chained together:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                <span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="ow">in</span><span class="p">,</span> <span class="n">FIR_ARRAY</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="ow">in</span><span class="p">);</span>
@@ -909,8 +910,8 @@ All user graphs are defined from the class <code class="docutils literal notrans
                 <span class="n">connect</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">FIR_ARRAY</span><span class="p">[</span><span class="n">N_FIR_FILTERS</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">out</span><span class="p">);</span>
 </pre></div>
 </div>
-</section>
-<section id="top-level-application">
+</div>
+<div class="section" id="top-level-application">
 <h3>Top Level Application<a class="headerlink" href="#top-level-application" title="Permalink to this heading">¶</a></h3>
 <p>Define a top-level application file (<code class="docutils literal notranslate"><span class="pre">fir_aie_graph.cpp</span></code> in this design) specifies the top level port connectivity (the PLIO objects, which also have file names provided for simulation purposes). It then creates a platform object, connecting up the PLIO objects to it. It also creates an instance of the <code class="docutils literal notranslate"><span class="pre">FirGraph</span></code> graph, and connects the FilterChain to the platform’s IOs
 that contains an instance of the graph class and connects the graph to a simulation platform to provide file input and output:</p>
@@ -924,8 +925,8 @@ that contains an instance of the graph class and connects the graph to a simulat
 <span class="n">connect</span><span class="o">&lt;&gt;</span> <span class="n">net1</span><span class="p">(</span><span class="n">FilterChain</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="n">platform</span><span class="o">.</span><span class="n">sink</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 </pre></div>
 </div>
-</section>
-<section id="simulator-control">
+</div>
+<div class="section" id="simulator-control">
 <h3>Simulator Control<a class="headerlink" href="#simulator-control" title="Permalink to this heading">¶</a></h3>
 <p>For this graph to be simulated using the AI Engine simulator, or the x86 functional simulator, the main function is defined, which calls methods to initialize the FilterChain, runs it the specified number of iterations, and then performs cleanup:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#if defined(__AIESIM__) || defined(__NEW_X86Sim__)</span>
@@ -943,15 +944,15 @@ that contains an instance of the graph class and connects the graph to a simulat
 <p>Refer to the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">AI Engine Documentation</a> for details.</p>
 <p>Note that for running on hardware (hw) or hardware emulation (hw_emu), the main() function is not required. In this case, it is only necessary to create an instance of the platform and graph, and the PS Host application code will control it via XRT calls. (See PS Host Application in the following section)</p>
 </details><details>
-<summary>PL Kernels</summary></section>
-</section>
-<section id="pl-kernels">
+<summary>PL Kernels</summary></div>
+</div>
+<div class="section" id="pl-kernels">
 <h2>PL Kernels<a class="headerlink" href="#pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In addition to the kernels operating in the AI Engine array, this design specifies kernels to run in the PL region of the device (written in HLS C++). The software design of the data mover kernels are described below:</p>
-<section id="mm2s-mm2s-cpp">
+<div class="section" id="mm2s-mm2s-cpp">
 <h3>mm2s (mm2s.cpp)<a class="headerlink" href="#mm2s-mm2s-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The mm2s kernel reads data from a Memory Mapped AXI4 (MM-AXI4) interface and writes it to an AXI4-Stream Interface</p>
-<section id="arguments">
+<div class="section" id="arguments">
 <h4>Arguments<a class="headerlink" href="#arguments" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel takes the following arguments:</p>
 <ul class="simple">
@@ -959,28 +960,28 @@ that contains an instance of the graph class and connects the graph to a simulat
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;qdma_axis&lt;D,0,0,0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface which is set to 128. The remaining three parameters should be set to 0.</p></li>
 </ul>
 <p>The mm2s kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:</p>
-</section>
-<section id="pragma-hls-interface-s-axilite">
+</div>
+<div class="section" id="pragma-hls-interface-s-axilite">
 <h4>pragma HLS INTERFACE s_axilite<a class="headerlink" href="#pragma-hls-interface-s-axilite" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernels has one <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> interface (specifying a AXI4-Lite slave I/O protocol) with <code class="docutils literal notranslate"><span class="pre">bundle=control</span></code> associated with all the arguments (<code class="docutils literal notranslate"><span class="pre">mem</span></code>,<code class="docutils literal notranslate"><span class="pre">s</span></code>, and <code class="docutils literal notranslate"><span class="pre">size</span></code>). This interface is also associated with <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
-<section id="pragma-hls-interface-m-axi">
+<div class="section" id="pragma-hls-interface-m-axi">
 <h5>pragma HLS INTERFACE m_axi<a class="headerlink" href="#pragma-hls-interface-m-axi" title="Permalink to this heading">¶</a></h5>
 <p>The mm2s kernel has one <code class="docutils literal notranslate"><span class="pre">m_axi</span></code> interface (specifying a AXI4 master I/O protocol) with <code class="docutils literal notranslate"><span class="pre">offset=slave</span> <span class="pre">bundle=gmem</span></code>. This interface also has <code class="docutils literal notranslate"><span class="pre">max_read_burst_length=256</span></code>. Part of this AXI4 interface is the Read Address Channel containing the signals <code class="docutils literal notranslate"><span class="pre">ARBURST</span></code> and <code class="docutils literal notranslate"><span class="pre">ARLEN</span></code>. This interface has a burst type <code class="docutils literal notranslate"><span class="pre">ARBURST=INCR</span></code> and can support burst length <code class="docutils literal notranslate"><span class="pre">ARLEN</span></code> of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The <code class="docutils literal notranslate"><span class="pre">max_read_burst_length=256</span></code> sets the burst length <code class="docutils literal notranslate"><span class="pre">ARLEN=256</span></code> transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the <code class="docutils literal notranslate"><span class="pre">mem</span></code> argument) is the previous address plus 16.</p>
-</section>
-</section>
-<section id="pragma-hls-interface-axis">
+</div>
+</div>
+<div class="section" id="pragma-hls-interface-axis">
 <h4>pragma HLS INTERFACE axis<a class="headerlink" href="#pragma-hls-interface-axis" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel has one <code class="docutils literal notranslate"><span class="pre">axis</span></code> interface (specifying a AXI4-Stream I/O protocol)</p>
-</section>
-<section id="pragma-hls-pipeline-ii-1">
+</div>
+<div class="section" id="pragma-hls-pipeline-ii-1">
 <h4>pragma HLS PIPELINE II=1<a class="headerlink" href="#pragma-hls-pipeline-ii-1" title="Permalink to this heading">¶</a></h4>
 <p>The mm2s kernel has a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that is a candidate for burst read because the memory addresses per loop iteration is consecutive (<code class="docutils literal notranslate"><span class="pre">ARBURST=INCR</span></code>). To pipeline this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use this pragma by setting the initiation interval (<code class="docutils literal notranslate"><span class="pre">II</span></code>) = 1.</p>
-</section>
-</section>
-<section id="s2mm-s2mm-cpp">
+</div>
+</div>
+<div class="section" id="s2mm-s2mm-cpp">
 <h3>s2mm (s2mm.cpp)<a class="headerlink" href="#s2mm-s2mm-cpp" title="Permalink to this heading">¶</a></h3>
 <p>The s2mm kernel reads 128 bits of data from an AXI4-Stream interface and writes it to an AXI Memory mapped interface.</p>
-<section id="id1">
+<div class="section" id="id1">
 <h4>Arguments<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel takes the following arguments:</p>
 <ul class="simple">
@@ -988,27 +989,27 @@ that contains an instance of the graph class and connects the graph to a simulat
 <li><p><code class="docutils literal notranslate"><span class="pre">hls::stream&lt;qdma_axis&lt;D,0,0,0&gt;&gt;</span></code> is a data type defined in <code class="docutils literal notranslate"><span class="pre">ap_axi_sdata.h</span></code>. It is a special data class used for data transfer when using a streaming platform. The parameter <code class="docutils literal notranslate"><span class="pre">&lt;D&gt;</span></code> is the data width of the streaming interface and is set to 128 (same as the <code class="docutils literal notranslate"><span class="pre">mem</span></code> argument). The remaining three parameters should be set to 0.</p></li>
 </ul>
 <p>The s2mm kernel also specifies the following pragmas to help optimize the kernel code and adhere to interface protocols:</p>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h4>pragma HLS INTERFACE s_axilite<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">s_axilite</span></code> interface  (specifying a AXI4-Lite slave I/O protocol) with <code class="docutils literal notranslate"><span class="pre">bundle=control</span></code> associated with all the arguments (<code class="docutils literal notranslate"><span class="pre">mem</span></code>,<code class="docutils literal notranslate"><span class="pre">s</span></code>, and <code class="docutils literal notranslate"><span class="pre">size</span></code>). This interface is also associated with <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
-</section>
-<section id="id3">
+</div>
+<div class="section" id="id3">
 <h4>pragma HLS INTERFACE m_axi<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">m_axi</span></code> interface (specifying an AXI4 master I/O protocol) with <code class="docutils literal notranslate"><span class="pre">offset=slave</span> <span class="pre">bundle=gmem</span></code>. This interface also has <code class="docutils literal notranslate"><span class="pre">max_write_burst_length=256</span></code>. Part of this AXI4 interface is the Write Address channel containing the signals <code class="docutils literal notranslate"><span class="pre">AWBURST</span></code> and <code class="docutils literal notranslate"><span class="pre">AWLEN</span></code>. This interface has a burst type <code class="docutils literal notranslate"><span class="pre">AWBURST=INCR</span></code> and can support burst length <code class="docutils literal notranslate"><span class="pre">AWLEN</span></code> of 1-256 read transfers. In an incrementing burst, the address for each transfer in the burst is an increment of the previous transfer address. The <code class="docutils literal notranslate"><span class="pre">max_write_burst_length=256</span></code> sets the burst length <code class="docutils literal notranslate"><span class="pre">AWLEN=256</span></code> transfers, meaning that in every transaction (burst), there are 256 transfers of data. The address of each transfer with a size of 16 bytes (128-bits from the mem argument) is the previous address plus 16.</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h4>pragma HLS INTERFACE axis<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has one <code class="docutils literal notranslate"><span class="pre">axis</span></code> interface (specifying an AXI4-Stream I/O protocol)</p>
-</section>
-<section id="id5">
+</div>
+<div class="section" id="id5">
 <h4>pragma HLS PIPELINE II=1<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
 <p>The s2mm kernel has a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop that is a candidate for burst write because the memory addresses (mem[i]) are contiguous (memory accesses across loop iterations are consecutive). To pipeline this <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, you can use this pragma by setting the initiation interval (<code class="docutils literal notranslate"><span class="pre">II</span></code>) = 1.</p>
 </details><details>
-<summary>PS Host Application</summary></section>
-</section>
-</section>
-<section id="ps-host-application">
+<summary>PS Host Application</summary></div>
+</div>
+</div>
+<div class="section" id="ps-host-application">
 <h2>PS Host Application<a class="headerlink" href="#ps-host-application" title="Permalink to this heading">¶</a></h2>
 <p>The FIR filter AI Engine tutorial uses the embedded PS as an external controller to control the AI Engine graph and data mover PL kernels. Review <a class="reference external" href="#ai-engine-documentation">Programming the PS Host Application Section in the AI Engine Documentation</a> to understand the process to create a host application.</p>
 <p>In addition to the PS host application (<code class="docutils literal notranslate"><span class="pre">design/app_src/fir_aie_app.cpp</span></code>), the AI Engine control code must also be compiled. This control code (<code class="docutils literal notranslate"><span class="pre">aie_control_xrt.cpp</span></code>) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code.</p>
@@ -1019,14 +1020,14 @@ that contains an instance of the graph class and connects the graph to a simulat
 </ul>
 <p>Within the PS host application, three classes are defined (two for the PL kernels (mm2s and s2mm) and one for the FilterChain graph), which defines methods used to control and monitor the corresponding kernels.</p>
 <p>The main sections of the PS host application code is described in the following subsections:</p>
-<section id="include-graph-cpp">
+<div class="section" id="include-graph-cpp">
 <h3>Include graph.cpp<a class="headerlink" href="#include-graph-cpp" title="Permalink to this heading">¶</a></h3>
 <p>Include the <code class="docutils literal notranslate"><span class="pre">fir_aie_graph.cpp</span></code> AI Engine application file. This file contains the instantiation of the AI Engine FIR FilterChain data flow graph object, and is required so the application code understands the structure of the graph.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include fir_aie_graph.cpp</span>
 </pre></div>
 </div>
-</section>
-<section id="define-input-and-output-files">
+</div>
+<div class="section" id="define-input-and-output-files">
 <h3>Define Input and Output Files<a class="headerlink" href="#define-input-and-output-files" title="Permalink to this heading">¶</a></h3>
 <p>A single data file is provides data to stimulate the filter chain.  However, the output data will depend on the value of the makefile parameters N_FIR_FILTERS and N_FIR_TAPS. Data files have been generated for the four corner cases (1 FILTERS / 15 TAPS, 10 FILTERS / 15 TAPS, 1 FILTERS / 240 TAPS, 10 FILTERS / 240 TAPS). For other configurations, the data is not checked.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;input_data.h&quot;</span>
@@ -1044,8 +1045,8 @@ that contains an instance of the graph class and connects the graph to a simulat
 <span class="c1">#endif</span>
 </pre></div>
 </div>
-</section>
-<section id="define-data-sizes">
+</div>
+<div class="section" id="define-data-sizes">
 <h3>Define Data Sizes<a class="headerlink" href="#define-data-sizes" title="Permalink to this heading">¶</a></h3>
 <p>To enable comparing of the 2 implementations of this design, i.e. AIE and HLS implementation, it is desirable to have a small data set to be able to run it through simulation, and a large data set to run through hardware to minimize the effects of measurement errors on determining the performance metrics. This has been done by providing a small 8k sample of input data (I and Q samples) in which the data repeats twice. The application code then copies the data into potentially much larger buffer, using REPEAT_OFFSET to determine where the data begins to repeat itself, and REPETITIONS to copy from this point forward to the end of the buffer the specified number of times. Having two cycles of data and a fixed offset (REPEAT_OFFSET) is necessary to allow the filter’s start-up transient to settle out and reach a steady state for subsequent cycles. Likewise, FLUSH_SAMPLES specifies the number of zero samples to add to the end of the buffer to clear out the FIR filter, so the application can be run multiple times.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define SAMPLES_PER_WORD   4</span>
@@ -1056,12 +1057,12 @@ that contains an instance of the graph class and connects the graph to a simulat
 <span class="c1">#define FLUSH_SAMPLES   4096</span>
 </pre></div>
 </div>
-</section>
-<section id="load-xclbin-function">
+</div>
+<div class="section" id="load-xclbin-function">
 <h3>load_xclbin Function<a class="headerlink" href="#load-xclbin-function" title="Permalink to this heading">¶</a></h3>
 <p>This function is responsible for loading the XCLBIN file into the device.</p>
-</section>
-<section id="mm2s-class">
+</div>
+<div class="section" id="mm2s-class">
 <h3>mm2s Class<a class="headerlink" href="#mm2s-class" title="Permalink to this heading">¶</a></h3>
 <p>This class provides the following methods for controlling/monitoring this kernel:</p>
 <ul class="simple">
@@ -1071,8 +1072,8 @@ that contains an instance of the graph class and connects the graph to a simulat
 <li><p>close(): closes the input data buffer object and kernel</p></li>
 <li><p>load(): loads data from the input file into the data buffer, using REPEAT_OFFSET, REPETITIONS and FLUSH_SAMPLES to potentially generate a much larger data set than the input file (see #define-data-sizes).</p></li>
 </ul>
-</section>
-<section id="s2mm-class">
+</div>
+<div class="section" id="s2mm-class">
 <h3>s2mm Class<a class="headerlink" href="#s2mm-class" title="Permalink to this heading">¶</a></h3>
 <p>This class provides the following methods for controlling / monitoring this kernel:</p>
 <ul class="simple">
@@ -1083,8 +1084,8 @@ Note: This call will only return once it receives the number of samples specifie
 <li><p>close(): closes the output data buffer object and kernel</p></li>
 <li><p>golden_check(): Compare data in the output data buffer object with the data from the output file, using REPEAT_OFFSET and REPETITIONS to compare the data correctly(see #define-data-sizes).</p></li>
 </ul>
-</section>
-<section id="fir-chain-class">
+</div>
+<div class="section" id="fir-chain-class">
 <h3>FIR Chain Class<a class="headerlink" href="#fir-chain-class" title="Permalink to this heading">¶</a></h3>
 <p>This class provides the following methods for controlling the graph:</p>
 <ul class="simple">
@@ -1092,65 +1093,65 @@ Note: This call will only return once it receives the number of samples specifie
 <li><p>run(): resets and starts execution the AI Engine FIR chain graph</p></li>
 <li><p>close(): closes the graph</p></li>
 </ul>
-</section>
-<section id="main-function">
+</div>
+<div class="section" id="main-function">
 <h3>Main Function<a class="headerlink" href="#main-function" title="Permalink to this heading">¶</a></h3>
 <p>This is the main PS application code that controls the kernels and runs data through the design. The various steps this code goes through is described in the following subsections.</p>
-<section id="check-command-line-argument">
+<div class="section" id="check-command-line-argument">
 <h4>1. Check Command Line Argument<a class="headerlink" href="#check-command-line-argument" title="Permalink to this heading">¶</a></h4>
 <p>The beginning of the A72 application is represented by the main function. It takes in one command line argument: an XCLBIN file.</p>
-</section>
-<section id="open-xclbin">
+</div>
+<div class="section" id="open-xclbin">
 <h4>2. Open XCLBIN<a class="headerlink" href="#open-xclbin" title="Permalink to this heading">¶</a></h4>
 <p>The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device.</p>
-</section>
-<section id="create-and-initialize-data-mover-kernels-and-fir-chain-graph">
+</div>
+<div class="section" id="create-and-initialize-data-mover-kernels-and-fir-chain-graph">
 <h4>3. Create and Initialize Data Mover Kernels and FIR Chain Graph<a class="headerlink" href="#create-and-initialize-data-mover-kernels-and-fir-chain-graph" title="Permalink to this heading">¶</a></h4>
 <p>Create the kernel objects, initialize them, and load the input data from the constant array into the input buffer.</p>
-</section>
-<section id="run-the-data-mover-kernels-and-fir-chain-graph">
+</div>
+<div class="section" id="run-the-data-mover-kernels-and-fir-chain-graph">
 <h4>4. Run the Data Mover Kernels and FIR Chain Graph<a class="headerlink" href="#run-the-data-mover-kernels-and-fir-chain-graph" title="Permalink to this heading">¶</a></h4>
 <p>Start execution of the FIR Filter Graph and the mm2s/s2mm kernels.</p>
-</section>
-<section id="wait-for-data-mover-kernels-to-complete">
+</div>
+<div class="section" id="wait-for-data-mover-kernels-to-complete">
 <h4>5. Wait for Data Mover Kernels to Complete<a class="headerlink" href="#wait-for-data-mover-kernels-to-complete" title="Permalink to this heading">¶</a></h4>
 <p>Wait for the mm2s and s2mm kernels to complete.</p>
-</section>
-<section id="verify-output-results">
+</div>
+<div class="section" id="verify-output-results">
 <h4>6. Verify Output Results<a class="headerlink" href="#verify-output-results" title="Permalink to this heading">¶</a></h4>
 <p>Compare data in <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">buffer</span></code> object with the reference golden data.</p>
-</section>
-<section id="release-allocated-resources">
+</div>
+<div class="section" id="release-allocated-resources">
 <h4>7. Release Allocated Resources<a class="headerlink" href="#release-allocated-resources" title="Permalink to this heading">¶</a></h4>
 <p>Close the mm2s/s2mm kernels and FIR chain graph.</p>
-</details></section>
-</section>
-</section>
-</section>
-<section id="references">
+</details></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <p>The following documents provide supplemental information for this tutorial.</p>
-<section id="ai-engine-documentation">
+<div class="section" id="ai-engine-documentation">
 <h2><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/yii1603912637443.html">AI Engine Documentation</a><a class="headerlink" href="#ai-engine-documentation" title="Permalink to this heading">¶</a></h2>
 <p>Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, and AI Engine simulation, and performance analysis.</p>
-</section>
-</section>
-<section id="revision-history">
+</div>
+</div>
+<div class="section" id="revision-history">
 <h1>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Jul 2021 - Initial Release</p></li>
 </ul>
-</section>
-<section id="support">
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD061 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

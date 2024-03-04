@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -97,8 +96,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -136,14 +137,14 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="using-multiple-ddr-banks">
+</table><div class="section" id="using-multiple-ddr-banks">
 <h1>Using Multiple DDR Banks<a class="headerlink" href="#using-multiple-ddr-banks" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>By default, in the Vitis™ core development kit, the data transfer between the kernel and the DDR is achieved using a single DDR bank. In some applications, data movement is a performance bottleneck. In cases where the kernels need to move large amounts of data between the global memory (DDR) and the FPGA, you can use multiple DDR banks. This enables the kernels to access multiple memory banks simultaneously. As a result, the application performance increases.</p>
 <p>The System Port mapping option using the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command <code class="docutils literal notranslate"><span class="pre">--sp</span></code> switch allows the designer to map kernel ports to specific global memory banks, such as DDR or PLRAM. This tutorial shows you how to map kernel ports to multiple DDR banks.</p>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses a simple example of vector addition. It shows the <code class="docutils literal notranslate"><span class="pre">vadd</span></code> kernel reading data from <code class="docutils literal notranslate"><span class="pre">in1</span></code> and <code class="docutils literal notranslate"><span class="pre">in2</span></code> and producing the result, <code class="docutils literal notranslate"><span class="pre">out</span></code>.</p>
 <p>In this tutorial, you implement the vector addition application using three DDR banks.</p>
@@ -158,8 +159,8 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/mult-ddr-banks_fig_02.png" /></p>
 <p>To achieve the desired mapping, instruct the Vitis core development kit to connect each kernel argument to the desired bank.</p>
 <p>The example in this tutorial uses a C++ kernel; however, the steps described are also the same for RTL and OpenCL™ API kernels.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>The labs in this tutorial use:</p>
 <ul class="simple">
@@ -173,14 +174,14 @@ function OptanonWrapper() { }
 <li><p>If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo.html">Alveo Portfolio page</a>.</p></li>
 </ul>
 </div></blockquote>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
 </ol>
-</section>
-<section id="tutorial-setup">
+</div>
+<div class="section" id="tutorial-setup">
 <h3>Tutorial Setup<a class="headerlink" href="#tutorial-setup" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To set up the Vitis core development kit, run the following commands.</p>
@@ -235,9 +236,9 @@ make all
 <li><p><code class="docutils literal notranslate"><span class="pre">DDR</span> <span class="pre">Bank</span> <span class="pre">1</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">DDR</span> <span class="pre">Bank</span> <span class="pre">2</span></code></p></li>
 </ul>
-</section>
-</section>
-<section id="set-v-linker-options">
+</div>
+</div>
+<div class="section" id="set-v-linker-options">
 <h2>Set v++ Linker Options<a class="headerlink" href="#set-v-linker-options" title="Permalink to this heading">¶</a></h2>
 <p>You will instruct the <code class="docutils literal notranslate"><span class="pre">v++</span></code> Kernel Linker to connect the kernel arguments to the corresponding banks. Use the <code class="docutils literal notranslate"><span class="pre">sp</span></code> option to map kernel ports or kernel arguments.</p>
 <ul>
@@ -316,7 +317,7 @@ Therefore, the <code class="docutils literal notranslate"><span class="pre">sp</
 </div>
 <p>You will see the DDR banks assigned to each of the kernel arguments along with the traffic on each of the interfaces during HW-Emulation.</p>
 <p><img alt="missing image" src="../../../../_images/mult-ddr-banks_img_vitis.png" /></p>
-<section id="conclusion">
+<div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>This tutorial showed you how to change the default mapping of ports <code class="docutils literal notranslate"><span class="pre">in1</span></code>, <code class="docutils literal notranslate"><span class="pre">in2</span></code>, and <code class="docutils literal notranslate"><span class="pre">out</span></code> of kernel vadd from a single DDR bank to multiple DDR banks. You also learned how to:</p>
 <ul class="simple">
@@ -327,9 +328,9 @@ Therefore, the <code class="docutils literal notranslate"><span class="pre">sp</
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
-</section>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,10 +107,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="introduction">
+</table><div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
 <p>In this section of the tutorial, you will learn how to add PL kernels in HLS into the system project and build the whole system.</p>
-<section id="step-1-modify-the-graph-for-use-in-hardware-build">
+<div class="section" id="step-1-modify-the-graph-for-use-in-hardware-build">
 <h2>Step 1. Modify the Graph for Use in Hardware Build<a class="headerlink" href="#step-1-modify-the-graph-for-use-in-hardware-build" title="Permalink to this heading">¶</a></h2>
 <p>You now have a working application to be run on the AI Engine array. What you need now is to modify the AI Engine graph to be used in hardware and connect the AI Engine array to the PL using the Vitis compiler (V++).</p>
 <ol class="simple">
@@ -141,8 +142,8 @@ function OptanonWrapper() { }
 <ol class="simple">
 <li><p>Change the <em><strong>Active build configuration</strong></em> to <em><strong>Hardware</strong></em> and rebuild the project.</p></li>
 </ol>
-</section>
-<section id="step-2-add-pl-kernels">
+</div>
+<div class="section" id="step-2-add-pl-kernels">
 <h2>Step 2. Add PL Kernels<a class="headerlink" href="#step-2-add-pl-kernels" title="Permalink to this heading">¶</a></h2>
 <p>In this example, HLS kernels are used which bridge between memory and the AXI4-Stream interface to input and output data from memory.</p>
 <ul class="simple">
@@ -156,8 +157,8 @@ function OptanonWrapper() { }
 <li><p>In the <em><strong>hw-kernels.prj</strong></em> page, click on the lightning icon (<em><strong>Add HW function</strong></em>) icon and select both functions (<code class="docutils literal notranslate"><span class="pre">mm2s</span></code> and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code>) as hardware functions.</p></li>
 </ol>
 <p><img alt="missing image" src="../../../../_images/hw_kernels.png" /></p>
-</section>
-<section id="step-3-configure-hardware-linking-project">
+</div>
+<div class="section" id="step-3-configure-hardware-linking-project">
 <h2>Step 3. Configure Hardware Linking Project<a class="headerlink" href="#step-3-configure-hardware-linking-project" title="Permalink to this heading">¶</a></h2>
 <p>Now that you have imported the kernels, you need to tell the Vitis linker how to connect everything together.</p>
 <ol class="simple">
@@ -189,8 +190,8 @@ For example, to connect the AXI4-Stream interface of the <code class="docutils l
 </pre></div>
 </div>
 <p><img alt="missing image" src="../../../../_images/hw_link_cfg4.png" /></p>
-</section>
-<section id="step-4-build-the-system">
+</div>
+<div class="section" id="step-4-build-the-system">
 <h2>Step 4. Build the System<a class="headerlink" href="#step-4-build-the-system" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Select the <em><strong>simple_application_system</strong></em> project and click on the hammer icon to build it. The compilation process takes some time to finish. The underlying AI Engine application project, hardware kernel project, and hardware linking project are compiled one after another. The system should build successfully with no error.</p>
@@ -214,8 +215,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
 
 
            </div>

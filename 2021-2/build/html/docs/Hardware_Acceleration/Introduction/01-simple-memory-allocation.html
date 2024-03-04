@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +106,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>The FPGA image that we’ve loaded contains a very simple vector addition core.  It takes two buffers of
 arbitrary length as inputs and produces a buffer of equal length as an output.  As the name implies, during
@@ -130,8 +130,8 @@ our earlier example, we’re only loading a single passenger into each car on th
 to pass the data over PCIe, set up DMA, etc. For the next few examples, we’ll look at how to efficiently
 manage the buffers for our inputs and outputs to this function.  Only after that will we start to take
 advantage of the acceleration we can get from the Alveo Data Center accelerator card.</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>This example is the first time we’re going to actually run something on the FPGA, modest though it may be.  In order to run something on the card there are four things that we must do:</p>
 <ol class="simple">
@@ -241,8 +241,8 @@ attempt to access the buffer immediately after enqueuing the transfer, it have f
 </ol>
 <p>Only one synchronization is needed were this a real application.  As previousl mentioned, we’re using several
 to better report on the timing of various operations in the workflow.</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory.</p>
 <p><code class="docutils literal notranslate"><span class="pre">./01_simple_malloc</span> <span class="pre">alveo_examples</span></code></p>
@@ -336,8 +336,8 @@ For now let’s establish a baseline:</p>
 <td align="center">-170.857 ms</td>
 </tr>
 </tbody>
-</table></section>
-<section id="extra-exercises">
+</table></div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -346,8 +346,8 @@ the timing for individual operations? Do they all scale at the same rate?</p></l
 <li><p>If you remove synchronization between each step, what is the quantitative effect on the runtime?</p></li>
 <li><p>What happens if you remove the synchronization after the final buffer copy from Alveo back to the host?</p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Once again we have to pay our FPGA configuration “tax”.  We will need to save at least 250 ms over the CPU
@@ -360,7 +360,7 @@ taken when reading buffers back in from the Alveo global memory to ensure synchr
 accesses the data in the buffer.</p></li>
 </ul>
 <p>Read <a class="reference internal" href="02-aligned-memory-allocation.html"><span class="doc">Example 2: Aligned Memory Allocation</span></a></p>
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

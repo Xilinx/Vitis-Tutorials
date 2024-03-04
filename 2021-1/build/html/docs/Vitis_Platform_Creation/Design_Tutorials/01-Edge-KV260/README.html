@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -87,8 +86,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -136,12 +137,12 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="vitis-custom-embedded-platform-creation-example-on-kv260">
+</table><div class="section" id="vitis-custom-embedded-platform-creation-example-on-kv260">
 <h1>Vitis Custom Embedded Platform Creation Example on KV260<a class="headerlink" href="#vitis-custom-embedded-platform-creation-example-on-kv260" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.1</strong></em></p>
 <p><a class="reference external" href="https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html">Kria KV260 Vision AI Starter Kit</a> is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It’s based on the UltraScale+ MPSoC technology similar to ZCU104 evaluation board. In this example, we will extend the <a class="reference external" href="../../Introduction/02-Edge-AI-ZCU104/">ZCU104 custom embedded platform creation example</a> to KV260 Vision AI Starter Kit.</p>
 <p>To highlight the differences between KV260 and ZCU104, this example will simplify the descriptions of general steps that are shared between all MPSoC platforms, but add more KV260 specific contents. If you have question in some steps, please cross reference <a class="reference external" href="../../Introduction/02-Edge-AI-ZCU104/">ZCU104 custom embedded platform creation example</a> or ask questions in Github Issues page.</p>
-<section id="custom-platform-planning">
+<div class="section" id="custom-platform-planning">
 <h2>Custom Platform Planning<a class="headerlink" href="#custom-platform-planning" title="Permalink to this heading">¶</a></h2>
 <p>The platform we create should be able to run these applications finally</p>
 <ul class="simple">
@@ -150,8 +151,8 @@ function OptanonWrapper() { }
 </ul>
 <p>The hardware design of the platform would provide basic support for Vitis acceleration. It’s similar to the ZCU104 example.</p>
 <p>In regards of software setup, we will inherit what KV260 BSP provides, e.g. the device tree, kernel and rootfs settings.</p>
-</section>
-<section id="kria-som-architecture-and-vitis-acceleration-considerations">
+</div>
+<div class="section" id="kria-som-architecture-and-vitis-acceleration-considerations">
 <h2>Kria SOM Architecture and Vitis Acceleration Considerations<a class="headerlink" href="#kria-som-architecture-and-vitis-acceleration-considerations" title="Permalink to this heading">¶</a></h2>
 <p>Kria SOM has some ease-of-use designs for application developers. It provides software-like development experience on FPGA and SoC, such as real time reloading applications without rebooting the system. In order to allow updating PL design without rebooting Linux, it boots Linux from ARM Cortex-A53 and loads FPGA bitstream using Linux. To ensure the board can always boot successfully and prevent the board get into brick status by accidental mistakes, Kria SOM boot flow forces to boot Linux from QSPI mode and the boot firmware in QSPI is read only. Linux will mount rootfs in the SD card. User can update the rootfs in the SD Card.</p>
 <p>If you have read the <a class="reference external" href="../../Introduction">Platform Creation Introduction Tutorials</a>, you have known that the Vitis platform and application development can be divided into these steps:</p>
@@ -205,8 +206,8 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table><p>The following chapters will explain the details about these steps.</p>
-</section>
-<section id="step-by-step-tutorial">
+</div>
+<div class="section" id="step-by-step-tutorial">
 <h2>Step-by-Step Tutorial<a class="headerlink" href="#step-by-step-tutorial" title="Permalink to this heading">¶</a></h2>
 <p>We’ll introduce the platform creation steps in the following pages. Each page describes one major step in the platform creation process.</p>
 <ul class="simple">
@@ -216,8 +217,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference internal" href="step4.html"><span class="doc">Step 4: Test the Platform</span></a></p></li>
 </ul>
 <p><em><strong>Let’s start from <a class="reference internal" href="step1.html"><span class="doc">step 1: Vivado Design</span></a>.</strong></em></p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/index.html">UG1393: Vitis Acceleration Flow User Guide</a></p>
@@ -235,8 +236,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">Xilinx Run Time (XRT)</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-AI">Vitis-AI GitHub Repository</a></p></li>
 </ul>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

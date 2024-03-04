@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,10 +106,10 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
-</table><section id="section-2-system-setup">
+</table><div class="section" id="section-2-system-setup">
 <h1>Section 2 - System Setup<a class="headerlink" href="#section-2-system-setup" title="Permalink to this heading">¶</a></h1>
 <p>In order to proceed to the Vitis optimization part of the tutorial, we’ll need to setup the environment and the tools. Please follow the below steps to install and setup Vitis and Alveo U50 accelerator card.</p>
-<section id="install-vitis-software-platform">
+<div class="section" id="install-vitis-software-platform">
 <h2>Install Vitis Software Platform<a class="headerlink" href="#install-vitis-software-platform" title="Permalink to this heading">¶</a></h2>
 <p>The <a class="reference external" href="https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html">Vitis Unified Software Development Platform</a> provides a unified programming model for accelerating Edge, Cloud, and Hybrid computing applications. To develop applications, you will need to download and install the Vitis core development kit from <a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html">Xilinx Download Center</a>, Vitis 2020.1 will be used for this tutorial.</p>
 <p><strong><u><em>Note:</em></u></strong> The Vitis core development kit does not need to be installed on the same server as the Alveo Data Center accelerator card. It can be installed on a system without any cards installed if you only need for development flow, but XRT and target development platform for Alveo card must be installed to work with Vitis.</p>
@@ -124,8 +124,8 @@ function OptanonWrapper() { }
     For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
 <pre><code> export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH </code></pre>
-</details></section>
-<section id="install-alveo-u50-accelerator-card">
+</details></div>
+<div class="section" id="install-alveo-u50-accelerator-card">
 <h2>Install Alveo U50 Accelerator card<a class="headerlink" href="#install-alveo-u50-accelerator-card" title="Permalink to this heading">¶</a></h2>
 <p>For details of Alveo U50 accelerator card we are about to use for this tutorial, visit the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo/u50.html">Alveo U50 Product Page</a>. It provides links to all the resources necessary to become familiar with the Alveo U50 Data Center accelerator card along with installation packages and instructions on both RedHat/CentOS and Ubuntu operating systems under <strong>Getting Started</strong> tab.</p>
 <p>To install Alveo U50 accelerator card on your server, follow the instructions in the <em>Alveo U50 Data Center Accelerator Card Installation Guide</em> (<a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards%3Bv=latest%3Bd=ug1370-u50-installation.pdf">UG1370</a>). It provides the latest hardware and driver software installation procedures including card bring-up and validation, also the steps to deploy hardware accelerated applications using the Alveo U50 card.</p>
@@ -140,8 +140,8 @@ function OptanonWrapper() { }
         For this tutorial, you need to set below environment variable to your Terminal of Nimbix Desktop before start to launch Vitis or run Makefile command we provided with source code.
     </p>
     <pre><code>export PATH=/opt/xilinx/Vivado/2021.2/tps/lnx64/gcc-6.2.0/bin:$PATH  </code></pre>
-</details></section>
-<section id="setup-environment-to-run-vitis">
+</details></div>
+<div class="section" id="setup-environment-to-run-vitis">
 <h2>Setup Environment to Run Vitis<a class="headerlink" href="#setup-environment-to-run-vitis" title="Permalink to this heading">¶</a></h2>
 <p>To configure the environment to run the Vitis software platform, run the following scripts, which set up the environment to run in a specific command shell.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#setup XILINX_VITIS and XILINX_VIVADO variables</span>
@@ -154,8 +154,8 @@ function OptanonWrapper() { }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">PLATFORM_REPO_PATHS</span><span class="o">=&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">platforms</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</section>
-<section id="validate-alveo-u50-accelerator-card">
+</div>
+<div class="section" id="validate-alveo-u50-accelerator-card">
 <h2>Validate Alveo U50 Accelerator card<a class="headerlink" href="#validate-alveo-u50-accelerator-card" title="Permalink to this heading">¶</a></h2>
 <p>With the Alveo U50 accelerator card installed in a server, you can deploy applications to be run on the host server and accelerator card. Follow the instructions in Chaptor 5 -  Card Bring-Up and Validation of the <em>Alveo U50 Data Center Accelerator Card Installation Guide</em> (<a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/bkdoc?k=accelerator-cards%3Bv=latest%3Bd=ug1370-u50-installation.pdf">UG1370</a>) to validate your installed Alveo U50 card.</p>
 <p>The <strong>xbutil validate</strong> command validates the correct installation by performing a various set of tests on the giving Alveo card, and you need to setup environment for XRT to perform the validation.</p>
@@ -196,8 +196,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Please proceed to <a class="reference internal" href="../03-Algorithm_Acceleration/README.html"><span class="doc">Section 3</span></a>.</p>
-<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

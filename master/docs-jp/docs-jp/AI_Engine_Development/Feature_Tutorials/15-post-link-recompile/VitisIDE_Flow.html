@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Phase 1: Create a Fixed Platform from an AI Engine Application and PL Kernels &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Phase 1: Create a Fixed Platform from an AI Engine Application and PL Kernels</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/AI_Engine_Development/Feature_Tutorials/15-post-link-recompile/VitisIDE_Flow.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Post-Link Recompile of an AI Engine Application</h1>
+   </td>
+ </tr>
+ <tr>
+ <td align="center"><h1>Lab 3: Vitis IDE Flow</h1>
+ </td>
+ </tr></table><div class="section" id="phase-1-create-a-fixed-platform-from-an-ai-engine-application-and-pl-kernels">
+<h1>Phase 1: Create a Fixed Platform from an AI Engine Application and PL Kernels<a class="headerlink" href="#phase-1-create-a-fixed-platform-from-an-ai-engine-application-and-pl-kernels" title="Permalink to this heading">¶</a></h1>
+<ol>
+<li><p>Launch the Vitis IDE on a new workspace, <code class="docutils literal notranslate"><span class="pre">Phase1Wkspc</span></code>:</p>
+<p><img alt="Vitis IDE Launcher" src="../../../../_images/VitisIDELauncher.png" /></p>
+</li>
+<li><p>The design that will be used for the purposes of this tutorial is shown in the following block diagram:</p></li>
+</ol>
+<p><img alt="Application Block Diagram" src="../../../../_images/CompleteSystem.svg" /></p>
+<p>The AI Engine graph itself is composed of two kernels:</p>
+<ul class="simple">
+<li><p><strong>Interpolator</strong>: This kernel interpolates the input signal by 2.</p></li>
+<li><p><strong>Classifier</strong>: The output of this kernel is the quadrant of the input complex number.</p></li>
+</ul>
+<p>The programmable logic is composed of three kernels:</p>
+<ul class="simple">
+<li><p><strong>mm2s</strong>: This kernel sends data to the AI Engine through PLIO.</p></li>
+<li><p><strong>PolarClip</strong>: This kernel clips the modulus of the data (complex data).</p></li>
+<li><p><strong>s2mm</strong>: This kernel gets data from the AI Engine through PLIO.</p></li>
+</ul>
+<p>Now create the project, starting with the AI Engine sub-project.</p>
+<ol>
+<li><p>From the menu bar, select <strong>File → New → Application Project</strong>. In the platform selection GUI, select the <strong>xilinx_vck190_base_202210_1 [custom]</strong>. On the next screen, specify <strong>CoSim1_AIE</strong> as the Application Project Name and <strong>CoSim1_system</strong> as the System Project Name. Ensure that the selected Processor is <strong>ai_engine</strong>.</p>
+<p><img alt="Application Project Details" src="../../../../_images/NewApplicationProject.png" /></p>
+</li>
+<li><p>Select <strong>Empty Application</strong> in the template selection screen.</p></li>
+<li><p>You must also include a hardware kernel project for the programmable logic part. Right-click <strong>Cosim1_system</strong> and select <strong>Add Hw Kernel Project…</strong>. Specify <strong>CoSim1_PL</strong> as the Hw Kernel Project Name.</p></li>
+</ol>
+<p>You should now have the following project structure in the Explorer view:</p>
+<p><img alt="Project Structure" src="../../../../_images/ProjectStructure.png" /></p>
+<ol>
+<li><p>Import the source code for the AI Engine sub-project. Right-click <strong>CoSim1_AIE [aiengine]</strong> and select <strong>Import Sources…</strong>. Browse to <strong>Files</strong> and select <strong>AIE</strong>. On the following screen, check <strong>AIE</strong> and remove the trailing <strong>/src</strong> from the “Into folder:” edit area.</p>
+<p><img alt="AIE Import Sources" src="../../../../_images/AIE_ImportSources.png" /></p>
+</li>
+<li><p>Reiterate the same operations for the <strong>CoSim1_PL</strong> sub-project and selecting the directory <strong>PL</strong> in the Files directory.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code> folders should be populated in the AI Engine sub-project, as well as the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder in the programmable logic sub-project:</p>
+<p><img alt="Populated sub-directories" src="../../../../_images/PopulatedSubDirectories.png" /></p>
+</li>
+<li><p>Set some parameters of the AI Engine sub-project. Right-click <strong>CoSim1_AIE [aiengine]</strong> and select <strong>C/C++ Build Settings</strong>. In the <strong>Configuration</strong> menu select <em>[ All Configurations ]</em>.</p></li>
+<li><p>In the Top-Level Files sub-window, click <strong>+</strong>, then click <strong>Workspace</strong> and select <strong>Cosim1_AIE/src/graph.cpp</strong>.</p>
+<p><img alt="C/C++ Settings" src="../../../../_images/CC++Settings.png" /></p>
+<p>You can now compile the AI Engine project for Emulation-AIE active build configuration.</p>
+</li>
+<li><p>Right-click <strong>CoSim1_AIE</strong> and select <strong>Build Project…</strong>.</p></li>
+<li><p>During compile, take a look in the file <code class="docutils literal notranslate"><span class="pre">graph.h</span></code> which contains the graph itself and the interface to the PL.</p></li>
+<li><p>When the compilation has finished, you can visualize the result by double-clicking <strong>Cosim1_system / CoSim1_AIE / Emulation-AIE / Compile Summary (graph)</strong> in the Assistant view of the IDE. Vitis Analyzer is launched and you can visualize the graph and the array placement:</p></li>
+</ol>
+<p><img alt="Vitis Analyzer" src="../../../../_images/VitisAnalyzerPhase1.png" /></p>
+<p>The kernels are grouped in the 24th and 25th columns of the array. The communication with the the kernel <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code>, as well as the input data and the output data transfers, also occur in columns 24 and 25 of the array.</p>
+<ol class="simple">
+<li><p>Open the project file <strong>Cosim1_PL/Cosim1_PL.prj</strong>. Click the lightning icon to select all the PL kernels:</p></li>
+</ol>
+<p><img alt="Add PL Kernels" src="../../../../_images/SelectHwFunctions.png" /></p>
+<ol class="simple">
+<li><p>Select <strong>mm2s</strong>, <strong>polar_clip</strong>, and <strong>s2mm</strong>, then click <strong>OK</strong>.</p></li>
+<li><p>Compile the PL kernels by right-clicking on <strong>Cosim1_PL</strong> and selecting <strong>Build Project</strong>.</p></li>
+</ol>
+<p>When the compilation is finished, link the AI Engine domain with the programmable logic domain. This can be done in the sub-project, <code class="docutils literal notranslate"><span class="pre">Cosim1_system_hw_link</span></code>, that was automatically created at the beginning of this tutorial. You have to define how you want the various parts of the design to be connected together. This is the purpose of the configuration file that you will now import.</p>
+<ol class="simple">
+<li><p>Right-click <strong>Cosim1_system_hw_link</strong> and select <strong>Import Sources…</strong>. Browse to <strong>PostLinkRecompile / Files / HwLink</strong> and click <strong>Open</strong>. Check <strong>system.cfg</strong>. For the “Into folder:” edit area, click <strong>Browse</strong> and select <strong>Cosim1_system_hw_link [pl]</strong>.</p></li>
+<li><p>In Explorer view, click <strong>Cosim1_system_hw_link [pl] / Cosim1_system_hw_link.prj</strong> to open the project file. There is one container named <code class="docutils literal notranslate"><span class="pre">binary_container_1</span></code>, populated with the three kernels <code class="docutils literal notranslate"><span class="pre">polar_clip</span></code>, <code class="docutils literal notranslate"><span class="pre">mm2s</span></code> and <code class="docutils literal notranslate"><span class="pre">s2mm</span></code>.</p></li>
+<li><p>Click <strong>binary_container_1</strong> to change the name to <strong>cosim_container</strong>. Right-click <strong>cosim_container</strong> and select <strong>Edit v++ options</strong>. Specify the Vitis command line options: <strong>–config ../system.cfg</strong>. Specify <strong>0</strong> compute units for all these PL kernels as the number and the names are specified in the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file.</p></li>
+</ol>
+<p><img alt="Compute Units" src="../../../../_images/ComputeUnits.png" /></p>
+<ol class="simple">
+<li><p>Right-click <strong>Cosim1_system_hw_link [pl]</strong> and select <strong>Build Project</strong>.</p></li>
+</ol>
+<p>The outcome of this link stage contains a major file <code class="docutils literal notranslate"><span class="pre">cosim_container.xsa</span></code> which is the hardware platform specification.</p>
+<p><img alt="Outcome of link stage" src="../../../../_images/LinkStageOutput.png" /></p>
+<ol class="simple">
+<li><p>Double-click <strong>cosim_container.xsa</strong> to display the hardware platform specification. This is the address map for all IPs in the hardware platform.</p></li>
+<li><p>Double-click <strong>cosim_container.xsa.link_summary</strong> to launch Vitis Analyzer. From here, you can visualize the system and platform diagram.</p></li>
+</ol>
+</div>
+<div class="section" id="phase-2-use-a-platform-generated-by-v-and-modify-the-ai-engine-application">
+<h1>Phase 2: Use a Platform generated by V++ and modify the AI Engine Application<a class="headerlink" href="#phase-2-use-a-platform-generated-by-v-and-modify-the-ai-engine-application" title="Permalink to this heading">¶</a></h1>
+<p>The purpose of phase 2 of this tutorial is to start from the generated hardware platform and modify the AI Engine application. To start the second phase, close the Vitis software and then start it again using another workspace, <strong>Phase2Wkspc</strong>.</p>
+<ol class="simple">
+<li><p>Create a new application project by clicking <strong>File → New → Application Project</strong>. In the Platform Selection screen, click <strong>Create a new platform from hardware (XSA)</strong>. To find the XSA file, browse to the XSA file that you generated in the previous stage: <strong>CoSim1_system_hw_link / Emulation-HW / cosim_container.xsa</strong>. Give it a new name: <strong>PostLinkPlatform</strong>.</p></li>
+</ol>
+<p><img alt="Fixed Platform Selection" src="../../../../_images/PostLinkPlatformCreation.png" /></p>
+<ol class="simple">
+<li><p>Click <strong>Next</strong> to go back to the application project creation:</p>
+<ul class="simple">
+<li><p>Application project name: <strong>Cosim2_AIE</strong></p></li>
+<li><p>System project name: <strong>Cosim2_system</strong></p></li>
+<li><p>Processor: <strong>aiengine</strong></p></li>
+</ul>
+</li>
+</ol>
+<p><img alt="New AI Engine project" src="../../../../_images/NewAIEngineProject.png" /></p>
+<p>In the Explorer view, you can see two projects have been created:</p>
+<ul class="simple">
+<li><p><strong>CoSim2_system</strong> with the sub-project <strong>Cosim2_AIE</strong></p></li>
+<li><p><strong>PostLinkPlatform</strong></p></li>
+</ul>
+<ol class="simple">
+<li><p>Update the AI Engine project. Import the source files in the directory <code class="docutils literal notranslate"><span class="pre">AIE2</span></code>. Right-click <strong>Cosim2_AIE</strong> and select <strong>Import Sources…</strong>. Browse to <strong>PostLinkRecompile / Files / AIE2</strong>. On the next screen check <strong>AIE2</strong> and remove the trailing <strong>/src</strong> from the “Into folder:” edit area. There is a single modification in the file <code class="docutils literal notranslate"><span class="pre">graph.h</span></code>:</p>
+<ul class="simple">
+<li><p>The interpolator kernel is now constrained to be placed in the AI Engine tile column 5 row 5.</p></li>
+</ul>
+</li>
+<li><p>Right-click <strong>Cosim2_system → Cosim2_AIE</strong> and select <strong>C/C++ Build Settings</strong>. In the Top-Level Files window, click <strong>+</strong>, click <strong>Workspace</strong>, and select <strong>Cosim2_AIE / src / graph.cpp</strong>. Click <strong>Apply and Close</strong>.</p></li>
+</ol>
+<p>You can now build the AI Engine project. It will start by compiling the standalone domain of the PostLinkPlatform platform and continue with the AI Engine project.</p>
+<ol>
+<li><p>After the compilation is finished, double-click <strong>Cosim2_system / Cosim2_AIE / Emulation-AIE / Work / graph.aiecompile_summary</strong>. Vitis Analyzer is launched. Display the <strong>Graph</strong> and the <strong>Array</strong>:</p>
+<p><img alt="Graph and Array View" src="../../../../_images/VitisAnalyzerPhase2.png" /></p>
+<p>On the left of the array view, you can see the effect of the constraint on the placement of the kernel <code class="docutils literal notranslate"><span class="pre">interpolator</span></code>. On the right, you can see the constraint implied by the platform itself.</p>
+<p>The kernel <code class="docutils literal notranslate"><span class="pre">interpolator</span></code> has been constrained to be placed in the tile (5,5).  In the previous phase, you saw that all the connections with the PL occurred within column 24 and 25. In this phase, these connections’ locations have been turned into a constraint. This is why you see long routes to connect the predefined PLIOs with the new location of the <code class="docutils literal notranslate"><span class="pre">interpolator</span></code> kernel.</p>
+<p>The ultimate goal of this phase is the hardware emulation of the global system (AI Engine array, PL, PS). The Xilinx Runtime library (XRT) is a key component of the Vitis software platform that enables developers to deploy on Xilinx adaptable platforms, especially Versal ACAPs. The PS application in this tutorial is based on XRT.</p>
+</li>
+<li><p>Start by creating an XRT domain. Double-click <strong>PostLinkPlatform / platform.spr</strong>. In the PostLinkPlatform project GUI, right-click <strong>PostLinkPlatform</strong> and select <strong>Add Domain</strong>. Enter the following parameters:</p></li>
+</ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Name</td>
+<td align="left">xrt</td>
+</tr>
+<tr>
+<td align="left">OS</td>
+<td align="left">linux</td>
+</tr>
+<tr>
+<td align="left">Bif File</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/boot/linux.bif</td>
+</tr>
+<tr>
+<td align="left">Boot Components Directory</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/boot</td>
+</tr>
+<tr>
+<td align="left">Linux Image Directory</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/xrt/image</td>
+</tr>
+</tbody>
+</table><p><img alt="New Domain XRT" src="../../../../_images/NewXRTDomain.png" /></p>
+<ol class="simple">
+<li><p>The XRT domain parameters are filled up automatically, but the Linux RootFS, sysroot directory, and all the QEMU parameters still need to be updated if they are not correctly specified:</p></li>
+</ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Linux Rootfs</td>
+<td align="left">/<strong>Your_Local_Install</strong>/common/xilinx-versal-common-v2022.1/rootfs.ext4</td>
+</tr>
+<tr>
+<td align="left">Sysroot Directory</td>
+<td align="left">/<strong>Your_Local_Install</strong>/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux</td>
+</tr>
+<tr>
+<td align="left">QEMU Data</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/qemu</td>
+</tr>
+<tr>
+<td align="left">QEMU Arguments</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/qemu/qemu_args.txt</td>
+</tr>
+<tr>
+<td align="left">PMC QEMU Arguments</td>
+<td align="left">/<strong>Your_Local_Install</strong>/platforms/xilinx_vck190_base_202210_1/sw/xilinx_vck190_base_202210_1/qemu/pmc_args.txt</td>
+</tr>
+</tbody>
+</table><p><img alt="Finalizing XRT" src="../../../../_images/FinalizeXRT.png" /></p>
+<ol class="simple">
+<li><p>In Explorer view, right-click <strong>PostLinkPlatform</strong> and select <strong>Build project</strong>.</p></li>
+<li><p>Create a new application. Right-click <strong>CoSim2_system</strong> and select <strong>Add Application project…</strong>. Provide the application project name: <strong>Cosim2_PS</strong>. By default, it is associated to the processor <code class="docutils literal notranslate"><span class="pre">psv_cortexa72_SMP</span></code>, which contains the <code class="docutils literal notranslate"><span class="pre">xrt</span></code> domain. On the next screen, specify the kernel image.</p></li>
+</ol>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Kernel Image</td>
+<td align="left">/<strong>Your_Local_Install</strong>/common/xilinx-versal-common-v2022.1/Image</td>
+</tr>
+</tbody>
+</table><ol class="simple">
+<li><p>Select the <strong>Empty Application</strong> template to finish the application project creation. After this step, there is nothing required other than the standard operations to perform hardware emulation.</p></li>
+<li><p>Import the sources. Right-click <strong>CoSim2_PS</strong> and select <strong>Import Sources</strong>. Navigate to <strong>PostLinkrecompile / Files / PS</strong>. Check <strong>PS</strong>, remove the trailing <strong>/src</strong> in the “Into folder:” edit area, and click <strong>Finish</strong>.</p></li>
+<li><p>There is another file to import, which has been automatically generated by the AI Engine compiler: <code class="docutils literal notranslate"><span class="pre">Cosim2_AIE/Emulation-AIE/Work/ps/c_rts/aie_control_xrt.cc</span></code>. It contains basic definitions related to the graph that are required during hardware emulation and hardware implementation. Copy it over to the directory <code class="docutils literal notranslate"><span class="pre">Cosim2_PS/src</span></code>.</p></li>
+<li><p>Right-click <strong>Cosim2_PS</strong> and select <strong>C/C++ Settings</strong>.</p></li>
+<li><p>In GCC Host Compiler(…), select <strong>Dialect</strong>. For the language standard, select <strong>ISO C++ly(-stdc++1y)</strong>.</p></li>
+<li><p>In Includes, two paths need to be added:</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">${workspace_loc:/Cosim2_AIE/src}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${env_var:XILINX_VITIS}/aietools/include</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>Finally, in the GCC Host Linker (…), select <strong>Libraries</strong>. In the library search path, add the following two paths:</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">${env_var:XILINX_VITIS}/aietools/lib/aarch64.o</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">${env_var:XILINX_VITIS}/aietools/lib/lnx64.o</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>In Libraries, add the following two libraries:</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">adf_api_xrt</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xrt_coreutil</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>Click <strong>Apply and Close</strong> to finish the settings. Build the PS application <strong>CoSim2_PS</strong>.</p></li>
+<li><p>Open the <strong>Cosim2_system</strong> project file and fill in the packaging option: <code class="docutils literal notranslate"><span class="pre">../../../Phase1Wkspc/CoSim1_AIE_system_hw_link/Emulation-HW/cosim_container.xsa</span></code>. Build the system project <strong>CoSim2_system</strong>.</p></li>
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> simulation. Right-click <strong>CoSim2_system</strong> and select <strong>Run As → Run Configurations</strong>. Double-click <strong>System Project Debug</strong> to create a new run configuration. Click the <strong>Edit…</strong> button beside the Program Arguments. The argument is the name of the XSA file: <strong>cosim_container.xsa</strong>. Uncheck the <strong>Automatically add binary container(s) to arguments</strong> option at the bottom of the window.</p></li>
+<li><p>Click <strong>Apply</strong> and <strong>Run</strong>, then click <strong>Start Emulator and Run</strong>. The simulation runs to the end, specifying at <code class="docutils literal notranslate"><span class="pre">(Step</span> <span class="pre">8)</span></code> (~2 minutes) that the simulation has passed.</p></li>
+</ol>
+</div>
+<div class="section" id="hardware-implementation">
+<h1>Hardware Implementation<a class="headerlink" href="#hardware-implementation" title="Permalink to this heading">¶</a></h1>
+<ol class="simple">
+<li><p>Replicate exactly the same flow for hardware implementation, changing the system target to <strong>Hardware</strong> to run the design on your VCK190 board. Select one of the following base platforms depending on your board:</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xilinx_vck190_base_202210_1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xilinx_vck190_es1_base_202210_1</span></code></p></li>
+</ul>
+<ol class="simple">
+<li><p>When the two phases are completed, there will be a <code class="docutils literal notranslate"><span class="pre">sd_card.img</span></code> file in the <code class="docutils literal notranslate"><span class="pre">Hardware</span></code> directory. Use a standard SD card imager with this file to initialize an SD card.</p></li>
+<li><p>Place the SD card in the top SD card slot of your board.</p></li>
+<li><p>Open a serial terminal connected to the right COM port of your VCK190 and switch on your board.</p></li>
+<li><p>The system boots. When this is finished, change the directory before launching the PS application.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">mmcblk0p1</span>
+<span class="o">./</span><span class="n">CoSim2</span><span class="o">.</span><span class="n">exe</span> <span class="n">cosim_container</span><span class="o">.</span><span class="n">xsa</span>
+</pre></div>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h2>
+<p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
+<p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+<p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+<p align="center"><sup>XD039 | &copy; Copyright 2021–2022 Xilinx, Inc.</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -97,9 +96,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -136,10 +136,10 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="host-code-optimization">
+</table><div class="section" id="host-code-optimization">
 <h1>Host Code Optimization<a class="headerlink" href="#host-code-optimization" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial concentrates on performance tuning of the host code associated with an FPGA accelerated application. Host code optimization is only one aspect of performance optimization, which includes the following disciplines:</p>
 <ul class="simple">
@@ -148,8 +148,8 @@ function OptanonWrapper() { }
 <li><p>Topological optimization</p></li>
 <li><p>Implementation optimization</p></li>
 </ul>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you operate on a simple, single, generic C++ kernel implementation. This allows you to eliminate any aspects of the kernel code modifications, topological optimizations, and implementation choices from the analysis of host code implementations.</p>
 <blockquote>
@@ -161,8 +161,8 @@ function OptanonWrapper() { }
 <li><p>Kernel and Host Code Synchronization</p></li>
 <li><p>Buffer Size</p></li>
 </ul>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses:</p>
 <ul class="simple">
@@ -176,22 +176,22 @@ function OptanonWrapper() { }
 <li><p>If you run applications on Xilinx® Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo.html">Alveo Portfolio page</a>.</p></li>
 </ul>
 </div></blockquote>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, type the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Design_Tutorials/07-host-code-opt</span></code> directory, and then access the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p></li>
 </ol>
-</section>
-</section>
-<section id="model">
+</div>
+</div>
+<div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading">¶</a></h2>
 <p>In this example, the kernel is created solely for host code optimization. It is designed to be static throughout this tutorial, which allows you to see the effects of your optimizations on the host code.</p>
 <!--this could be better suited as a table--><p>The C++ kernel has one input and one output port. These ports are 512-bits wide to optimally use the AXI bandwidth. The number of elements consumed by kernel per execution is configurable through the <code class="docutils literal notranslate"><span class="pre">numInputs</span></code> parameter. Similarly, the <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> parameter can be used to alter the latency of the kernel. The algorithm increments the input value by the value for <code class="docutils literal notranslate"><span class="pre">ProcessDelay</span></code>. However, this increment is implemented by a loop executing <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> times incrementing the input value by one each time. Because this loop is present within the kernel implementation, each iteration will end up requiring a constant amount of cycles, which can be multiplied by the <code class="docutils literal notranslate"><span class="pre">processDelay</span></code> number.</p>
 <p>The kernel is also designed to enable AXI burst transfers. The kernel contains a read and a write process, executed in parallel with the actual kernel algorithm (<code class="docutils literal notranslate"><span class="pre">exec</span></code>) towards the end of the process.
 The read and the write process initiates the AXI transactions in a simple loop and writes the received values into internal FIFOs or reads from internal FIFOs and writes to the AXI outputs. The Vitis compiler implements these blocks as concurrent parallel processes, because the DATAFLOW pragma was set on the surrounding <code class="docutils literal notranslate"><span class="pre">pass_dataflow</span></code> function.</p>
-</section>
-<section id="building-the-device-binary-xclbin">
+</div>
+<div class="section" id="building-the-device-binary-xclbin">
 <h2>Building the Device Binary (xclbin)<a class="headerlink" href="#building-the-device-binary-xclbin" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>NOTE</strong>: In this tutorial, run all instructions from the <code class="docutils literal notranslate"><span class="pre">reference-files</span></code> directory.</p>
@@ -204,8 +204,8 @@ The read and the write process initiates the AXI transactions in a simple loop a
 <blockquote>
 <div><p><strong>NOTE:</strong> This build process can take several hours, but the kernel compilation must be completed before you can analyze the impact of optimizations on the host code performance.</p>
 </div></blockquote>
-</section>
-<section id="host-code">
+</div>
+<div class="section" id="host-code">
 <h2>Host Code<a class="headerlink" href="#host-code" title="Permalink to this heading">¶</a></h2>
 <p>Before examining different implementation options for the host code, view the structure of the code. The host code file is designed to let you focus on the key aspects of host code optimization.</p>
 <p>The following three classes are provided through header files in the common source directory (<code class="docutils literal notranslate"><span class="pre">srcCommon</span></code>):</p>
@@ -250,7 +250,7 @@ The read and the write process initiates the AXI transactions in a simple loop a
 <li><p><code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code></p></li>
 </ul>
 <p>However, the main function in the <code class="docutils literal notranslate"><span class="pre">host.cpp</span></code> file follows a specific structure described in the following section.</p>
-<section id="host-cpp-main-functions">
+<div class="section" id="host-cpp-main-functions">
 <h3>host.cpp Main Functions<a class="headerlink" href="#host-cpp-main-functions" title="Permalink to this heading">¶</a></h3>
 <p>The main function contains the following sections marked in the source accordingly.</p>
 <ol class="simple">
@@ -272,8 +272,8 @@ The read and the write process initiates the AXI transactions in a simple loop a
 <blockquote>
 <div><p><strong>NOTE:</strong> The setup, as well as the other sections, can print additional messages recording the system status, as well as overall <code class="docutils literal notranslate"><span class="pre">PASS</span></code> or <code class="docutils literal notranslate"><span class="pre">FAIL</span></code> of the run.</p>
 </div></blockquote>
-</section>
-<section id="lab-1-pipelined-kernel-execution-using-out-of-order-event-queue">
+</div>
+<div class="section" id="lab-1-pipelined-kernel-execution-using-out-of-order-event-queue">
 <h3>Lab 1: Pipelined Kernel Execution Using Out-of-Order Event Queue<a class="headerlink" href="#lab-1-pipelined-kernel-execution-using-out-of-order-event-queue" title="Permalink to this heading">¶</a></h3>
 <p>In this first exercise, you will look at a pipelined kernel execution.</p>
 <p>In this build you are only dealing with a single instance of the kernel, or compute unit (CU) running in the hardware. However, as previously described, the run of a kernel also requires the transmission of data to and from the CU. These activities should be pipelined to minimize the idle-time of the kernel working with the host application.</p>
@@ -342,8 +342,8 @@ The read and the write process initiates the AXI transactions in a simple loop a
 <p>If you select other pass kernel enqueues, you will see that all 10 are now showing dependencies only within the Write/Execute/Read group. This allows the read and write operations to overlap with the execution, and you are effectively pipelining the software write, execute, and read. This can considerably improve the overall performance because the communication overhead is occurring concurrently with the execution of the accelerator.</p>
 </li>
 </ol>
-</section>
-<section id="lab-2-kernel-and-host-code-synchronization">
+</div>
+<div class="section" id="lab-2-kernel-and-host-code-synchronization">
 <h3>Lab 2: Kernel and Host Code Synchronization<a class="headerlink" href="#lab-2-kernel-and-host-code-synchronization" title="Permalink to this heading">¶</a></h3>
 <p>For this step, look at the source code in <code class="docutils literal notranslate"><span class="pre">src/sync_host.cpp</span></code> and examine the execution loop (line 55). This is the same code used in the previous section of this tutorial.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// -- Execution -----------------------------------------------------------</span>
@@ -436,8 +436,8 @@ The read and the write process initiates the AXI transactions in a simple loop a
 </div></blockquote>
 </li>
 </ol>
-</section>
-<section id="lab-3-opencl-api-buffer-size">
+</div>
+<div class="section" id="lab-3-opencl-api-buffer-size">
 <h3>Lab 3: OpenCL API Buffer Size<a class="headerlink" href="#lab-3-opencl-api-buffer-size" title="Permalink to this heading">¶</a></h3>
 <p>In the final section of this tutorial, you will investigate how the buffer size impacts the total performance. In this section you will focus on the host code in <code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code>.</p>
 <p>The execution loop is the same as it was at the end of the prior section. However, in the <code class="docutils literal notranslate"><span class="pre">src/buf_host.cpp</span></code> file the number of tasks to be processed has increased to 100. The goal of this change is to get 100 accelerator calls to transfer 100 buffers and read 100 buffers. This enables the tool to get a more accurate average throughput estimate per transfer.</p>
@@ -475,9 +475,9 @@ The read and the write process initiates the AXI transactions in a simple loop a
 </li>
 </ol>
 <p>Concerning host code performance, this step function identifies a relationship between buffer size and total execution speed. As shown in this example, it is easy to take an algorithm and alter the buffer size when the default implementation is based on a small amount of input data. It does not have to be dynamic and runtime deterministic, as performed here, but the principle remains the same. Instead of transmitting a single value set for one invocation of the algorithm, you would transmit multiple input values and repeat the algorithm execution on a single invocation of the accelerator.</p>
-</section>
-</section>
-<section id="conclusion">
+</div>
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial illustrated three specific areas of host code optimization:</p>
 <ul class="simple">
@@ -487,8 +487,8 @@ The read and the write process initiates the AXI transactions in a simple loop a
 </ul>
 <p>Consider these areas when trying to create an efficient acceleration implementation. The tutorial showed how these performance bottlenecks can be analyzed and shows one way of how they can be improved.</p>
 <p>In general, there are many ways to implement your host code and improve performance. This applies to improving host to accelerator performance and other areas such as buffer management. This tutorial did not cover all aspects related to host code optimization.</p>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>For more information about tools and processes you can use to analyze the application performance in general, refer to the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-Optimizing-and-Debugging-the-Application">Profiling, Optimizing, and Debugging the Application</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 </br></p>
@@ -500,8 +500,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD018</sup></br></p></div>
+</div>
 
 
            </div>

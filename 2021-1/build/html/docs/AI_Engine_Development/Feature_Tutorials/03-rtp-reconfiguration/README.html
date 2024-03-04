@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -98,8 +97,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -134,9 +135,9 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="runtime-parameter-reconfiguration">
+</table><div class="section" id="runtime-parameter-reconfiguration">
 <h1>Runtime Parameter Reconfiguration<a class="headerlink" href="#runtime-parameter-reconfiguration" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial is designed to demonstrate how the runtime parameters (RTP) can be changed during execution to modify the behavior of AI Engine kernels. Both scalar and array parameters are supported.</p>
 <p><strong>IMPORTANT</strong>: Before beginning the tutorial make sure you have read and followed the <em>Vitis Software Platform Release Notes</em> (v2021.1) for setting up software and installing the VCK190 base platform.</p>
@@ -154,8 +155,8 @@ function OptanonWrapper() { }
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202110_1/xilinx_vck190_base_202110_1.xpfm
 </pre></div>
 </div>
-</section>
-<section id="objectives">
+</div>
+<div class="section" id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h2>
 <p>After completing this tutorial, you will be able to:</p>
 <ul class="simple">
@@ -167,8 +168,8 @@ function OptanonWrapper() { }
 <li><p>Use OpenCL API or C version XRT API or C++ version XRT API to control PL kernel execution.</p></li>
 <li><p>Verify the system by HW co-simulation and running in hardware.</p></li>
 </ul>
-</section>
-<section id="steps">
+</div>
+<div class="section" id="steps">
 <h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Integrate a kernel with a scalar runtime parameter into a graph. Demonstrate how to use OpenCL API to control PL kernels execution. See details in <a class="reference internal" href="step1_sync_scalar.html"><span class="doc">Synchronous Update of Scalar RTP</span></a>.</p>
 <p><strong>Step 2</strong>: Mark the runtime parameter for asynchronous updates and observe the effect this has on a simulation. See details in <a class="reference internal" href="step2_async_scalar.html"><span class="doc">Asynchronous Update of Scalar RTP</span></a>.</p>
@@ -177,8 +178,8 @@ function OptanonWrapper() { }
 <p><strong>Step 5</strong>: Update the AI Engine kernel with an asynchronous RTP <code class="docutils literal notranslate"><span class="pre">inout</span></code> port. Demonstrate how to use the Adaptive Data Flow (ADF) API and the XRT API (C++ Version) to control graph execution and RTP reads. Use the C++ version of the XRT API to control the PL kernels. See details in <a class="reference internal" href="step5_async_array_update_read.html"><span class="doc">Asynchronous Array RTP Update and Read for AI Engine Kernel</span></a>.</p>
 <p><strong>Note:</strong> In this tutorial, a Makefile is provided. If make commands exist, you just need to run them. Detailed commands are also shown to better illustrate the concepts. You can run these commands manually.</p>
 <p><strong>Hint:</strong> In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is highly recommended to start from the beginning and progress to completion.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD001</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD001</sup></br></p></div>
+</div>
 
 
            </div>

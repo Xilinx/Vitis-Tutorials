@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,10 +109,10 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-getting-started-tutorial">
+</table><div class="section" id="vitis-getting-started-tutorial">
 <h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="part-4-build-and-run-the-data-center-application">
+<div class="section" id="part-4-build-and-run-the-data-center-application">
 <h2>Part 4 : Build and Run the Data Center Application<a class="headerlink" href="#part-4-build-and-run-the-data-center-application" title="Permalink to this heading">¶</a></h2>
 <p>In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow">Data Center Application Acceleration Flow</a>, and includes the image flow diagram shown below. From the image you can see the standard G++ compilation process for the host application, and the use of the Vitis compiler (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) for building the Xilinx device binary (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>). These are the steps you will be working through in this lab.</p>
 <p><img alt="img" src="../../../_images/data_center_flow.png" /></p>
@@ -121,10 +121,10 @@ function OptanonWrapper() { }
 <li><p>Hardware Emulation - The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates. Refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Hardware-Emulation">Hardware Emulation</a> for more information.</p></li>
 <li><p>Hardware - The kernel code is compiled into a hardware model (RTL) and then implemented on the FPGA, resulting in a binary that will run on the actual FPGA. Refer to <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/System-Hardware-Target">System Hardware Target</a> for more information.</p></li>
 </ul>
-</section>
-<section id="building-and-running-on-alveo-u200-data-center-accelerator-card">
+</div>
+<div class="section" id="building-and-running-on-alveo-u200-data-center-accelerator-card">
 <h2>Building and Running on Alveo U200 Data-Center Accelerator Card<a class="headerlink" href="#building-and-running-on-alveo-u200-data-center-accelerator-card" title="Permalink to this heading">¶</a></h2>
-<section id="setting-up-the-environment">
+<div class="section" id="setting-up-the-environment">
 <h3>Setting up the environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">¶</a></h3>
 <blockquote>
 <div><p>IMPORTANT: This tutorial requires Vitis 2021.1 or later to run.</p>
@@ -143,8 +143,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ul>
-</section>
-<section id="targeting-software-emulation">
+</div>
+<div class="section" id="targeting-software-emulation">
 <h3>Targeting Software Emulation<a class="headerlink" href="#targeting-software-emulation" title="Permalink to this heading">¶</a></h3>
 <p>To build for software emulation, enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
@@ -208,8 +208,8 @@ TEST PASSED
 <li><p><strong>xrt.run_summary</strong>: A summary report of the events of the application runtime</p></li>
 </ul>
 <p>These files and reports are the results of the build and run process targeting the software emulation build. You wil be taking a closer look at some of these files in Part 5 of this tutorial.</p>
-</section>
-<section id="targeting-hardware-emulation">
+</div>
+<div class="section" id="targeting-hardware-emulation">
 <h3>Targeting Hardware Emulation<a class="headerlink" href="#targeting-hardware-emulation" title="Permalink to this heading">¶</a></h3>
 <p>To build for hardware emulation, enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
@@ -232,8 +232,8 @@ v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../s
 </pre></div>
 </div>
 <p>When the run completes, you should see the TEST PASSED message indicating that the run completed successfully. You can list the contents of the u200/hw_emu folder to see the files that were created during this build and run process. Refer to <em>Targeting Software Emulation</em> for a brief explanation of the different files.</p>
-</section>
-<section id="targeting-hardware">
+</div>
+<div class="section" id="targeting-hardware">
 <h3>Targeting Hardware<a class="headerlink" href="#targeting-hardware" title="Permalink to this heading">¶</a></h3>
 <p>To build for the hardware target, , enter the following commands to setup the target build directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200
@@ -257,9 +257,9 @@ v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_1_202110_1 --config ../../src/u
 <p><em>NOTE: Make sure to run the program on a server where the Alveo card is installed. If you built the application on a different machine, you will need to source the /opt/xilinx/xrt/setup.sh script after connecting to the desired server and before running the above command.</em></p>
 <p>You should see the same TEST PASSED message indicating that the run completed successfully. If you look in the u200/hw folder you will see some of the files that were created during this build and run process. Refer to <em>Targeting Software Emulation</em> for a brief explanation of the different files.</p>
 <p>Congratulations!! You have just completed your first run of a Vitis accelerated application on the Alveo U200 card! There are additional <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis-Tutorials</a> to work through to learn additional details of the Vitis tools, and <a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples/tree/2021.2">Vitis_Accel_Examples</a> to use for examples of host application and kernel coding.</p>
-</section>
-</section>
-<section id="next-step">
+</div>
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p><strong>Click here to <a class="reference internal" href="Part5.html"><span class="doc">Visualizing Results and Viewing Reports</span></a></strong></p>
 <hr class="docutils" />
@@ -272,8 +272,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

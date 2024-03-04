@@ -1,8 +1,0 @@
--M
-microblaze-fdt
--device
-loader,file=<xrt/qemu/pmufw.elf>
--machine-path
-.
--display
-none

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -97,9 +96,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -136,14 +136,14 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="controlling-vivado-implementation">
+</table><div class="section" id="controlling-vivado-implementation">
 <h1>Controlling Vivado Implementation<a class="headerlink" href="#controlling-vivado-implementation" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>The Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the Vivado® tool implementation flows. It generates the platform file (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=buildingdevicebinary.html%3Ba=hnw1523048617934">Managing Vivado Synthesis and Implementation Results</a> in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
-</section>
-<section id="tutorial-overview">
+</div>
+<div class="section" id="tutorial-overview">
 <h2>Tutorial Overview<a class="headerlink" href="#tutorial-overview" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial shows you how to control the Vivado tool flows to implement your project and guides you through the steps in the command line flow.</p>
 <p>The Vitis core development kit provides two methods to control the Vivado tool flow:</p>
@@ -160,8 +160,8 @@ function OptanonWrapper() { }
 <blockquote>
 <div><p><strong>TIP:</strong> The design used in this tutorial is taken from the <code class="docutils literal notranslate"><span class="pre">cl_gmem_2banks</span></code> example in the <code class="docutils literal notranslate"><span class="pre">ocl_kernels</span></code> category of the <a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples/tree/master/ocl_kernels/cl_gmem_2banks/src">Vitis Accel Examples</a> on GitHub.</p>
 </div></blockquote>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial uses:</p>
 <ul class="simple">
@@ -177,14 +177,14 @@ If necessary, it can be easily ported to other versions and platforms.</p></li>
 <li><p>Before running this lab, you should be familiar with the <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started/Vitis">Vitis Getting Started</a> tutorial.</p></li>
 </ul>
 </div></blockquote>
-<section id="accessing-the-tutorial-reference-files">
+<div class="section" id="accessing-the-tutorial-reference-files">
 <h3>Accessing the Tutorial Reference Files<a class="headerlink" href="#accessing-the-tutorial-reference-files" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>To access the reference files, enter the following into a terminal: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/Xilinx/Vitis-Tutorials</span></code>.</p></li>
 <li><p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation</span></code> directory, and then access <code class="docutils literal notranslate"><span class="pre">reference-files/run</span></code> directory.</p></li>
 </ol>
-</section>
-<section id="set-up-the-vitis-environment">
+</div>
+<div class="section" id="set-up-the-vitis-environment">
 <h3>Set Up the Vitis Environment<a class="headerlink" href="#set-up-the-vitis-environment" title="Permalink to this heading">¶</a></h3>
 <p>Set up the Vitis core development kit by running these commands:</p>
 <blockquote>
@@ -195,9 +195,9 @@ If necessary, it can be easily ported to other versions and platforms.</p></li>
 </pre></div>
 </div>
 </div></blockquote>
-</section>
-</section>
-<section id="controlling-vivado-synthesis-and-implementation-through-the-vitis-compiler">
+</div>
+</div>
+<div class="section" id="controlling-vivado-synthesis-and-implementation-through-the-vitis-compiler">
 <h2>Controlling Vivado Synthesis and Implementation through the Vitis Compiler<a class="headerlink" href="#controlling-vivado-synthesis-and-implementation-through-the-vitis-compiler" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>NOTE:</strong> In this tutorial, run all instructions from the <code class="docutils literal notranslate"><span class="pre">reference-files/run</span></code> directory.</p>
@@ -260,8 +260,8 @@ v++ -t hw -s --config design.cfg -R2 -l -o apply_watermark.hw.xilinx_u200_gen3x1
 </li>
 </ol>
 <p>You have successfully applied properties to manage or influence the results of synthesis and implementation in the Vivado Design Suite.</p>
-</section>
-<section id="optimizing-the-design-in-the-vivado-tool">
+</div>
+<div class="section" id="optimizing-the-design-in-the-vivado-tool">
 <h2>Optimizing the Design in the Vivado Tool<a class="headerlink" href="#optimizing-the-design-in-the-vivado-tool" title="Permalink to this heading">¶</a></h2>
 <p>You can optimize the Vivado implementation results to achieve your goal using various optimization techniques, to achieve timing closure for example, or to improve performance. After working with the Vivado tool to optimize your design, write a design checkpoint (DCP) from the routed design to reuse in the Vitis compiler link process (<code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">--link</span></code>).</p>
 <blockquote>
@@ -291,7 +291,7 @@ write_checkpoint -force ./_x/link/vivado/routed.dcp
 </li>
 <li><p>Select  <strong>File &gt; Exit</strong>.</p></li>
 </ol>
-<section id="reuse-the-optimized-checkpoint-to-create-the-device-binary">
+<div class="section" id="reuse-the-optimized-checkpoint-to-create-the-device-binary">
 <h3>Reuse the Optimized Checkpoint to Create the Device Binary<a class="headerlink" href="#reuse-the-optimized-checkpoint-to-create-the-device-binary" title="Permalink to this heading">¶</a></h3>
 <p>Next, reuse the <code class="docutils literal notranslate"><span class="pre">routed.dcp</span></code> checkpoint file generated by the <code class="docutils literal notranslate"><span class="pre">opt.tcl</span></code> script to generate a new platform file (<code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>). To do this, add the <code class="docutils literal notranslate"><span class="pre">--reuse_impl</span></code> option to the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command. This reruns the <code class="docutils literal notranslate"><span class="pre">--link</span></code> process using the already implemented Vivado design checkpoint file (<code class="docutils literal notranslate"><span class="pre">.dcp</span></code>). It runs in much less time than the initial hardware build required.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v++ -t hw --config design.cfg -l -o <span class="s1">&#39;apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xclbin&#39;</span> apply_watermark.hw.xilinx_u200_gen3x16_xdma_1_202110_1.xo --reuse_impl ./_x/link/vivado/routed.dcp
@@ -303,9 +303,9 @@ write_checkpoint -force ./_x/link/vivado/routed.dcp
 Starting FPGA bitstream generation.
 </pre></div>
 </div>
-</section>
-</section>
-<section id="putting-it-all-together">
+</div>
+</div>
+<div class="section" id="putting-it-all-together">
 <h2>Putting it All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this heading">¶</a></h2>
 <p>The following section summarizes all the steps to control the Vivado tool implementation with the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command, optimize design with the Vivado tools, and reuse implemented DCP to generate the platform file. You might use it as a quick reference for commands.</p>
 <ol>
@@ -342,15 +342,15 @@ g++ -I<span class="nv">$XILINX_XRT</span>/include/ -I<span class="nv">$XILINX_VI
 </div>
 </li>
 </ol>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial illustrated how to use the <code class="docutils literal notranslate"><span class="pre">v++</span></code> command <code class="docutils literal notranslate"><span class="pre">--vivado</span></code> option to control Vivado synthesis and implementation, using a simple example to optimize the design with the Vivado tool. It also showed the steps to reuse an implemented DCP to generate the device binary file (<code class="docutils literal notranslate"><span class="pre">.xclbin</span></code>), building the Vitis accelerated application from the optimized Vivado implementation.
 </br></p>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
-<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

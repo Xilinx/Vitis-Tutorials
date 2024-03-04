@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -114,7 +114,7 @@ function OptanonWrapper() { }
 <p><a class="reference external" href="#Step-2-Import-project-source-code">Step 2 Import project source code</a></p>
 <p><a class="reference external" href="#Step-3-Configure-project">Step 3 Configure project</a></p>
 <p><a class="reference external" href="#Step-4-Configure-system-project-in-packaging-options">Step 4 Configure system project in packaging options</a></p>
-<section id="step-1-create-project">
+<div class="section" id="step-1-create-project">
 <h1>Step 1 Create project<a class="headerlink" href="#step-1-create-project" title="Permalink to this heading">¶</a></h1>
 <p>Launch Vitis IDE by issuing the command, <code class="docutils literal notranslate"><span class="pre">vitis</span></code>.</p>
 <img src="images/po_new.png" width="450">
@@ -125,30 +125,30 @@ function OptanonWrapper() { }
 <img src="images/po_system_np.png" width="450"><img src="images/po_system_ps.png" width="600"><p>Fill in sysroot, rootfs, and image information for PS application.</p>
 <img src="images/po_system_ps_sysroot.png" width="600"><p>Select “Empty Application” under “Acceleration templates with PL and AIE accelerators” for PS sub-project.
 After the previously listed steps are completed, you should have AI Engine, PS, PL and hardware link sub-projects under system project.</p>
-<img src="images/po_expect_project.png" width="450"></section>
-<section id="step-2-import-project-source-code">
+<img src="images/po_expect_project.png" width="450"></div>
+<div class="section" id="step-2-import-project-source-code">
 <h1>Step 2 Import project source code<a class="headerlink" href="#step-2-import-project-source-code" title="Permalink to this heading">¶</a></h1>
 <p>Import source code for AI Engine sub-projects.</p>
 <img src="images/po_import.png" width="450">
 <img src="images/po_import1.png" width="450"><p>Continue to import data for aiengine sub-project, source code for PS, PL, and hardware link sub-projects.</p>
 <p><strong>Note:</strong> If the PS sub-project requires <code class="docutils literal notranslate"><span class="pre">defer-aie-run</span></code> option in packaging, <code class="docutils literal notranslate"><span class="pre">aie_control_xrt.cpp</span></code> is required to be imported in the PS sub-project.</p>
-</section>
-<section id="step-3-configure-project">
+</div>
+<div class="section" id="step-3-configure-project">
 <h1>Step 3 Configure project<a class="headerlink" href="#step-3-configure-project" title="Permalink to this heading">¶</a></h1>
-<section id="step-3-1-configure-ai-engine-sub-project">
+<div class="section" id="step-3-1-configure-ai-engine-sub-project">
 <h2>Step 3.1 Configure AI Engine sub-project<a class="headerlink" href="#step-3-1-configure-ai-engine-sub-project" title="Permalink to this heading">¶</a></h2>
 <p>Configure top level graph.
 <img src="images/po_graph.png"></p>
 <p>Configure include paths.</p>
 <img src="images/po_aie_c_config.png" width="450">
-<img src="images/po_aie_c_config1.png" width="450"></section>
-<section id="step-3-2-configure-hardware-link">
+<img src="images/po_aie_c_config1.png" width="450"></div>
+<div class="section" id="step-3-2-configure-hardware-link">
 <h2>Step 3.2 Configure hardware link<a class="headerlink" href="#step-3-2-configure-hardware-link" title="Permalink to this heading">¶</a></h2>
 <p>Configure hardware link with <code class="docutils literal notranslate"><span class="pre">v++</span></code> option</p>
 <img src="images/po_hw_config.png">
 <img src="images/po_hw_config1.png" width="450"><p>Import <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file to the proper project/location.</p>
-<img src="images/po_hw_config2.png"></section>
-<section id="step-3-3-configure-hardware-kernels">
+<img src="images/po_hw_config2.png"></div>
+<div class="section" id="step-3-3-configure-hardware-kernels">
 <h2>Step 3.3 Configure hardware kernels<a class="headerlink" href="#step-3-3-configure-hardware-kernels" title="Permalink to this heading">¶</a></h2>
 <p>Add hardware functions to project.</p>
 <img src="images/po_hw_config3.png"><p>Note: If hardware functions are inside the graph, check mark “PL Kernel in AIE Graph” from this configuration.</p>
@@ -156,26 +156,26 @@ After the previously listed steps are completed, you should have AI Engine, PS, 
 <img src="images/po_hw_config4.png"></p>
 <p>Update (comment out) <code class="docutils literal notranslate"><span class="pre">nk=kernel:1:kernel_n</span></code> line from the <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> file. This is because the Vitis IDE relies on the previous step to determine the number of instances for each PL kernel. Redundant configuration of number of kernels in <code class="docutils literal notranslate"><span class="pre">system.cfg</span></code> results compilation errors.
 <img src="images/po_hw_config5.png"></p>
-</section>
-<section id="step-3-4-configure-ps-sub-project">
+</div>
+<div class="section" id="step-3-4-configure-ps-sub-project">
 <h2>Step 3.4 Configure PS sub-project<a class="headerlink" href="#step-3-4-configure-ps-sub-project" title="Permalink to this heading">¶</a></h2>
 <img src="images/po_ps_c_config.png" width="450"><p>Configure PS application include paths.</p>
 <img src="images/po_ps_c_config2.png" width="600"><p>Configure PS application link libraries.</p>
-<img src="images/po_ps_c_config3.png" width="600"></section>
-</section>
-<section id="step-4-configure-system-project-in-packaging-options">
+<img src="images/po_ps_c_config3.png" width="600"></div>
+</div>
+<div class="section" id="step-4-configure-system-project-in-packaging-options">
 <h1>Step 4 Configure system project in packaging options<a class="headerlink" href="#step-4-configure-system-project-in-packaging-options" title="Permalink to this heading">¶</a></h1>
 <img src="images/po_system_config.png"><p><strong>Note:</strong> This configuration is optional and depends on the design.</p>
 <ol class="simple">
 <li><p>If initialize is required, run, and end from PS, then use the <code class="docutils literal notranslate"><span class="pre">--package.defer_aie_run</span></code> option.</p></li>
 <li><p>If data files need to be packaged to the sd_card, then use the <code class="docutils literal notranslate"><span class="pre">--package.sd_dir</span> <span class="pre">${PROJECT_PATH}/data</span></code> option.</p></li>
 </ol>
-</section>
-<section id="support">
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="https://support.xilinx.com/">support.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”);
 you may not use this file except in compliance with the License.
@@ -188,7 +188,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,7 +109,7 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="using-the-rtl-kernel-in-a-vitis-ide-project">
+</table><div class="section" id="using-the-rtl-kernel-in-a-vitis-ide-project">
 <h1>Using the RTL Kernel in a Vitis IDE Project<a class="headerlink" href="#using-the-rtl-kernel-in-a-vitis-ide-project" title="Permalink to this heading">¶</a></h1>
 <ol class="simple">
 <li><p>Change directory to the tutorial folder: <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow/reference_files</span></code></p></li>
@@ -145,7 +145,7 @@ function OptanonWrapper() { }
 </ol>
 <p>The new project wizard closes and opens the Vitis IDE with your new project loaded.</p>
 <p><img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
-<section id="add-the-hardware-kernel-xo">
+<div class="section" id="add-the-hardware-kernel-xo">
 <h2>Add the Hardware Kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>)<a class="headerlink" href="#add-the-hardware-kernel-xo" title="Permalink to this heading">¶</a></h2>
 <p>You must add the recently generated user-managed RTL kernel (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) and host code (<code class="docutils literal notranslate"><span class="pre">user-host.cpp</span></code>) into the project.</p>
 <ol class="simple">
@@ -188,8 +188,8 @@ function OptanonWrapper() { }
 </ol>
 <p>The new project wizard closes and opens the Vitis IDE with your new project loaded.</p>
 <p><img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h2>Add the Hardware Kernel (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>)<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>You must add the recently generated user-managed RTL kernel (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) and host code (<code class="docutils literal notranslate"><span class="pre">user-host.cpp</span></code>) into the project.</p>
 <ol class="simple">
@@ -207,8 +207,8 @@ function OptanonWrapper() { }
 <div><p><strong>TIP:</strong> There is also an xrt-host file tha can be used to connect to an ap_ctrl_hs version of the RTL kernel.</p>
 </div></blockquote>
 <p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel-host.png" /></p>
-</section>
-<section id="build-the-project">
+</div>
+<div class="section" id="build-the-project">
 <h2>Build the Project<a class="headerlink" href="#build-the-project" title="Permalink to this heading">¶</a></h2>
 <p>With the host application code (<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>) and the RTL kernel code (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) added to the project, you are ready to build and run the project.</p>
 <ol class="simple">
@@ -242,15 +242,15 @@ function OptanonWrapper() { }
 <li><p>In the <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations</span></code> dialog box click <strong>Apply</strong> and then click <strong>Run</strong> to run the configuration, and then verify the results.</p></li>
 </ol>
 <p>The Console window in the Vitis IDE displays <strong>TEST PASSED</strong>. You have built and run the application using your user-managed RTL kernel.</p>
-<section id="optional-build-and-run-the-hardware-on-the-target-platform">
+<div class="section" id="optional-build-and-run-the-hardware-on-the-target-platform">
 <h3>(Optional) Build and Run the Hardware on the Target Platform<a class="headerlink" href="#optional-build-and-run-the-hardware-on-the-target-platform" title="Permalink to this heading">¶</a></h3>
 <ol class="simple">
 <li><p>In the Vitis Application Project Settings, change <strong>Active build configuration</strong> to <strong>Hardware</strong>.<br />In the system configuration, the kernel code is implemented onto the FPGA, resulting in a binary that will run on the selected platform card.</p></li>
 <li><p>If you have an available hardware platform, build and run the hardware build, and then verify the results.</p></li>
 </ol>
-</section>
-</section>
-<section id="makefile-use">
+</div>
+</div>
+<div class="section" id="makefile-use">
 <h2>Makefile Use<a class="headerlink" href="#makefile-use" title="Permalink to this heading">¶</a></h2>
 <p>There is a Makefile included in the <code class="docutils literal notranslate"><span class="pre">01-rtl_kernel_workflow/reference-files</span></code> folder. You can use this file to make the following targets:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw_emu</span> <span class="o">|</span> <span class="n">hw</span><span class="o">&gt;</span> <span class="n">HOST</span><span class="o">=</span><span class="n">user</span>
@@ -267,14 +267,14 @@ function OptanonWrapper() { }
 <blockquote>
 <div><p><strong>TIP:</strong> You can use the Makefile <code class="docutils literal notranslate"><span class="pre">-n</span></code> option to generate the command lines without running the commands: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span> <span class="pre">TARGET=hw_emu</span> <span class="pre">HOST=user</span> <span class="pre">-n</span></code></p>
 </div></blockquote>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+<div class="section" id="summary">
 <h1>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h1>
 <p>In this tutorial you have used the <strong>Package IP/Package_XO</strong> flow to create a user-managed RTL kernel. You packaged the RTL IP project into the compiled XO file needed by the Vitis compiler. You added the RTL kernel to an application project, coupled with the host code, and built and ran the Hardware Emulation configuration.  In the Vitis IDE, a binary container was created using the XO file, and a <code class="docutils literal notranslate"><span class="pre">xclbin</span></code> file was compiled.</p>
 </br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
+<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Getting Started Pathway</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
 
 
            </div>

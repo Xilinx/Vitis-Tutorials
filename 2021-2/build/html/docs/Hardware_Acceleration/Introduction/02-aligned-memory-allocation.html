@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,14 +106,14 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="overview">
+</table><div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>In our last example we allocated memory simply, but as we saw the DMA engine requires that our buffers be
 aligned to 4 KiB pages boundaries.  If the buffers are not so aligned, which they likely won’t be if don’t
 explicitly ask for it, then the runtime will copy the buffers so that their contents are aligned.</p>
 <p>That’s an expensive operation, but can we quantify how expensive?  And how can we allocate aligned memory?</p>
-</section>
-<section id="key-code">
+</div>
+<div class="section" id="key-code">
 <h1>Key Code<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
 <p>This is a relatively short example in that we’re only changing four lines vs. Example 1, our buffer
 allocation.  There are various ways to allocate aligned memory but in this case we’ll make use of a POSIX
@@ -129,8 +129,8 @@ We also need to include an additional header not shown in the listing, <code cla
 <p>Note that for our calls to <code class="docutils literal notranslate"><span class="pre">posix_memalign()</span></code>, we’re passing in our requested alignment, which in this case
 is 4 KiB as we discussed previously.</p>
 <p>Otherwise, this is the only change to the code vs. the first example.  Note that we have changed the allocation for <em>all</em> of the buffers, including buffer <code class="docutils literal notranslate"><span class="pre">d</span></code> which is only used by the CPU baseline VADD function.  We’ll see if this has any impact on the runtime performance for both the accelerator and the CPU.</p>
-</section>
-<section id="running-the-application">
+</div>
+<div class="section" id="running-the-application">
 <h1>Running the Application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
 <p>With the XRT initialized, run the application by running the following command from the build directory:</p>
 <p><code class="docutils literal notranslate"><span class="pre">./02_aligned_malloc</span> <span class="pre">alveo_examples</span></code></p>
@@ -246,8 +246,8 @@ microseconds to ensure the buffers are aligned when we allocate them, we can sav
 time later when those buffers are consumed.</p>
 <p>Also note that as expected in this use-case, the software runtime is the same.  We’re changing the alignment
 of the allocated memory, but otherwise it’s normal userspace memory allocation.</p>
-</section>
-<section id="extra-exercises">
+</div>
+<div class="section" id="extra-exercises">
 <h1>Extra Exercises<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
 <p>Some things to try to build on this experiment:</p>
 <ul class="simple">
@@ -256,8 +256,8 @@ example still hold true?</p></li>
 <li><p>Experiment with other methods of allocating aligned memory (not the OCL API).  Do you see differences
 between the approaches, beyond minor run-to-run fluctuations?</p></li>
 </ul>
-</section>
-<section id="key-takeaways">
+</div>
+<div class="section" id="key-takeaways">
 <h1>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p>Unaligned memory will kill your performance.  Always ensure buffers you want to share with the Alveo card
@@ -265,7 +265,7 @@ are aligned.</p></li>
 </ul>
 <p>Now we’re getting somewhere!  Let’s try using the OpenCL API to allocate memory and see what happens.</p>
 <p>Read <a class="reference internal" href="03-xrt-memory-allocation.html"><span class="doc">Example 3: Memory Allocation with XRT</span></a></p>
-<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2019-2021 Xilinx</sup></p></div>
 
 
            </div>

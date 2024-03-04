@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -88,9 +87,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -128,13 +128,13 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-getting-started-tutorial">
+</table><div class="section" id="vitis-getting-started-tutorial">
 <h1>Vitis Getting Started Tutorial<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.2</strong></em></p>
-<section id="part-3-review-the-kernel-code-and-host-application">
+<div class="section" id="part-3-review-the-kernel-code-and-host-application">
 <h2>Part 3 : Review the Kernel Code and Host Application<a class="headerlink" href="#part-3-review-the-kernel-code-and-host-application" title="Permalink to this heading">¶</a></h2>
 <p>The example used in this tutorial is a trivial vector-add application. The simplicity of this example allows focusing on the key concepts of FPGA acceleration without being distracted by complicated algorithmic consideration.</p>
-<section id="the-source-code-for-the-vector-add-kernel">
+<div class="section" id="the-source-code-for-the-vector-add-kernel">
 <h3>The Source Code for the Vector-Add Kernel<a class="headerlink" href="#the-source-code-for-the-vector-add-kernel" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial the hardware accelerator (also referred to as kernel) is modeled in C++. The Vitis flow also supports kernels coded in Verilog or VHDL. An example using a Verilog RTL version of the vector-add kernel can be found <a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples/tree/master/rtl_kernels/rtl_vadd">here</a>.</p>
 <p>Using C++, the description of the hardware accelerator fits in less than 20 lines of code and can be easily and efficiently implemented in FPGA using the Vitis compiler.</p>
@@ -167,8 +167,8 @@ function OptanonWrapper() { }
 <p>Other than this, the functionality of the vector-add kernel is very easily recognizable. The vadd function reads in two inputs vectors (in1 and in2) and adds them into the out vector using a simple for loop. The ‘size’ parameter indicates the number of elements in the input and output vector.</p>
 <p>The pragmas are used to map function parameters to distinct kernel ports. By mapping the two inputs parameters to different input ports, the kernel will be able to read both inputs in parallel. As a general rule, and without going into further details in this introductory tutorial, it is important to think about interface requirements of hardware accelerators and they will have a determining impact on maximum achievable performance.</p>
 <p>The Vitis online documentation provides comprehensive information on <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/C/C-Kernels">C/C++ Kernels</a> as well as a complete <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/HLS-Pragmas">HLS Pragmas</a> reference guide.</p>
-</section>
-<section id="the-source-code-for-the-host-program">
+</div>
+<div class="section" id="the-source-code-for-the-host-program">
 <h3>The Source Code for the Host Program<a class="headerlink" href="#the-source-code-for-the-host-program" title="Permalink to this heading">¶</a></h3>
 <p>The source code for the host program is written in C/C++ and uses standard OpenCL APIs to interact with the hardware-accelerated vector-add kernel.</p>
 <ul class="simple">
@@ -209,9 +209,9 @@ function OptanonWrapper() { }
 <li><p><strong>Step 4:</strong> The call to <code class="docutils literal notranslate"><span class="pre">q.finish()</span></code> returns when all previously enqueued operations have completed. In this case, it implies that the output buffer containing the results of the kernel have been migrated back to host memory and can safely be used by the software application. Here the results are simply checked against expected values before the program finishes.</p></li>
 </ul>
 <p>This example shows the simplest way of using OpenCL APIs to interact with the hardware accelerator. As always, additional information can be found in the <a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/OpenCL-Programming">OpenCL Programming</a>.</p>
-</section>
-</section>
-<section id="next-step">
+</div>
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p><strong>Click here to <a class="reference internal" href="Part4-data_center.html"><span class="doc">Build and Run the Data Center Application</span></a></strong></p>
 <p><strong>Click here to <a class="reference internal" href="Part4-embedded_platform.html"><span class="doc">Build and Run the Embedded Processor Application</span></a></strong></p>
@@ -225,8 +225,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

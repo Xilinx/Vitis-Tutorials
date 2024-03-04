@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -92,8 +91,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -132,27 +133,27 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="vitis-flow-101-part-2-installation-guide">
+</table><div class="section" id="vitis-flow-101-part-2-installation-guide">
 <h1>Vitis Flow 101 – Part 2 : Installation Guide<a class="headerlink" href="#vitis-flow-101-part-2-installation-guide" title="Permalink to this heading">¶</a></h1>
 <p>To develop and deploy applications with Vitis, you need to install the Vitis unified software environment, the Xilinx Runtime library (XRT) and the platform files specific to the acceleration card used in your project.</p>
-<section id="step-1-installation-requirements">
+<div class="section" id="step-1-installation-requirements">
 <h2>Step 1 – Installation Requirements<a class="headerlink" href="#step-1-installation-requirements" title="Permalink to this heading">¶</a></h2>
 <p>Prior to starting the installation process, make sure to check the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#igz1531201833632">Vitis installation requirements</a>.</p>
 <p><em>NOTE: Windows OS support is limited to the Vitis embedded software development flow. The Vitis acceleration flow is only supported on Linux.</em></p>
-</section>
-<section id="step-2-download-vitis">
+</div>
+<div class="section" id="step-2-download-vitis">
 <h2>Step 2 – Download Vitis<a class="headerlink" href="#step-2-download-vitis" title="Permalink to this heading">¶</a></h2>
 <p>Download the latest version of the Vitis from the <a class="reference external" href="https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html">Xilinx download website</a>. Make sure to download the Linux Self-Extracting web installer or the Single-File installer.</p>
-</section>
-<section id="step-3-install-downloaded-packages">
+</div>
+<div class="section" id="step-3-install-downloaded-packages">
 <h2>Step 3 – Install Downloaded Packages<a class="headerlink" href="#step-3-install-downloaded-packages" title="Permalink to this heading">¶</a></h2>
 <p>After downloading the Vitis, XRT and platform packages, installing them in the following order and according to the provided instructions:</p>
 <ol class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#dhg1543555360045">Install the Vitis Software Platform</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#pjr1542153622642">Install the Xilinx Runtime and Platforms</a></p></li>
 </ol>
-</section>
-<section id="step-4-download-and-install-platform-specific-files">
+</div>
+<div class="section" id="step-4-download-and-install-platform-specific-files">
 <h2>Step 4 – Download and Install Platform-specific files<a class="headerlink" href="#step-4-download-and-install-platform-specific-files" title="Permalink to this heading">¶</a></h2>
 <details><summary><b>For Embedded platforms, click here</b></summary><p>Xilinx provides base platforms for the ZCU102 and ZCU104 cards. Before installing a platform, you need to download the following packages:</p>
 <ol class="simple">
@@ -178,8 +179,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo/u50.html#gettingStarted">U50</a></p></li>
 <li><p><a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/alveo/u280.html#gettingStarted">U280</a></p></li>
 </ul>
-</details></section>
-<section id="step-5-setup-the-environment-to-run-vitis">
+</details></div>
+<div class="section" id="step-5-setup-the-environment-to-run-vitis">
 <h2>Step 5 – Setup the environment to run Vitis<a class="headerlink" href="#step-5-setup-the-environment-to-run-vitis" title="Permalink to this heading">¶</a></h2>
 <p>To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;Vitis_install_path&gt;/Vitis/2021.1/settings64.sh
@@ -196,12 +197,12 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>For more information see <a class="reference external" href="https://www.xilinx.com/support/answers/73698.html">Xilinx AR 73698</a>.</p>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Congratulations on successfully installing everything you need to use Vitis! You can now move on to <a class="reference internal" href="Part3.html"><span class="doc">Part 3</span></a> and get going with your first example project.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -108,11 +108,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<section id="ai-engine-gmio-performance-profile">
+<div class="section" id="ai-engine-gmio-performance-profile">
 <h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#ai-engine-gmio-performance-profile" title="Permalink to this heading">¶</a></h1>
 <p>=======</p>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h1>AI Engine GMIO Performance Profile<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><strong>Note</strong>: This tutorial targets the <a class="reference external" href="https://www.xilinx.com/products/boards-and-kits/vck190.html">VCK190 ES board</a>. This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license, contact your Xilinx sales contact.</p>
@@ -135,7 +135,7 @@ has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, i
 </div></blockquote>
 </div></blockquote>
 <p>In this example, 32 AI Engine GMIO inputs, 32 AI Engine GMIO outputs are utilized in the graph and the performance from one input and one output to 32 inputs and 32 outputs through various ways is profiled. Then you will learn about the NOC bandwidth and the advantages and disadvantages of choosing GMIO for data transfer.</p>
-<section id="design-introduction">
+<div class="section" id="design-introduction">
 <h2>Design Introduction<a class="headerlink" href="#design-introduction" title="Permalink to this heading">¶</a></h2>
 <p>This design has a graph that has 32 AI Engine kernels. Each kernel has one input and one output. Thus, 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are connected to the graph.</p>
 <p>Change the working directory to <code class="docutils literal notranslate"><span class="pre">perf_profile_aie_gmio</span></code>. Take a look at the graph code in <code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>.</p>
@@ -240,14 +240,14 @@ has 16 AI Engine to NoC master unit (NMU) in total. For each AI Engine to NMU, i
 </pre></div>
 </div>
 <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
-<section id="performance-profiling-methods">
+<div class="section" id="performance-profiling-methods">
 <h3>Performance Profiling Methods<a class="headerlink" href="#performance-profiling-methods" title="Permalink to this heading">¶</a></h3>
-</section>
-</section>
-</section>
-<section id="in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp">
+</div>
+</div>
+</div>
+<div class="section" id="in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp">
 <h1>In this example, some methods for profiling the design are introduced. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:<a class="headerlink" href="#in-this-example-some-methods-for-profiling-the-design-are-introduced-the-code-to-be-profiled-is-in-aie-graph-cpp" title="Permalink to this heading">¶</a></h1>
-<section id="id2">
+<div class="section" id="id2">
 <h2>Performance Profiling Methods<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
 <p>In this example, we will introduce some methods for profiling the design. The code to be profiled is in <code class="docutils literal notranslate"><span class="pre">aie/graph.cpp</span></code>:</p>
 <blockquote>
@@ -423,7 +423,7 @@ PASS!
 </pre></div>
 </div>
 <p>It is seen that when the used GMIO ports number increases, the performance for the specific GMIO port drops, indicating that the total system throughput is limited by NOC and DDR bandwidth.</p>
-<section id="conclusion">
+<div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h3>
 <p>In this tutorial, you learned about:</p>
 <ul class="simple">
@@ -442,9 +442,9 @@ PASS!
 <p>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
 <p>See the License for the specific language governing permissions and</p>
 <p>limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p></section>
-</section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD007</sup></br></p></div>
+</div>
+</div>
 
 
            </div>

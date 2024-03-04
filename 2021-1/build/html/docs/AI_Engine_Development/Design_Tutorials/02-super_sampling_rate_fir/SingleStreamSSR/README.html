@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,22 +107,22 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="single-stream-interface">
+</table><div class="section" id="single-stream-interface">
 <h1>Single-Stream Interface<a class="headerlink" href="#single-stream-interface" title="Permalink to this heading">¶</a></h1>
-<section id="super-sampling-rate-fir-filter">
+<div class="section" id="super-sampling-rate-fir-filter">
 <h2>Super Sampling Rate FIR Filter<a class="headerlink" href="#super-sampling-rate-fir-filter" title="Permalink to this heading">¶</a></h2>
 <p>The purpose of this third part of the tutorial is to understand how to implement a FIR filter that has an input sample rate above the clock frequency of the AI Engine array.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">SingleStreamSSR</span></code> directory to continue.</p>
-</section>
-<section id="super-sampling-rate-and-polyphase">
+</div>
+<div class="section" id="super-sampling-rate-and-polyphase">
 <h2>Super Sampling Rate and Polyphase<a class="headerlink" href="#super-sampling-rate-and-polyphase" title="Permalink to this heading">¶</a></h2>
 <p>When the input sampling Rate is above the clock frequency of the processor (Super Sampling Rate), samples must be acquired in parallel. For a 2 Gsps input sample rate, you can specify that the filter should receive two samples at a 1 GHz rate which can be seen as two data streams (Polyphase decomposition), each one at 1 Gsps. Because the AI Engine array AXI-Stream network is limited to 1 GHz (slowest speed grade), the high sampling rate input (above 1 Gsps) will need to be decomposed into multiple phases to be processed.</p>
 <p>As a first example, suppose there is a 2 Gsps data stream to be processed, it can be split in two phases to be routed to the AI Engine array:</p>
 <p><img src="../Images/PolyphaseOrder2.jpg" width=1000><br></p>
 <p>A 5 Gsps data stream must be split into 5 phases:</p>
 <p><img src="../Images/PolyphaseOrder5.jpg" width=1000><br></p>
-</section>
-<section id="organize-computation-for-a-2-gsps-data-stream-in-2-phases">
+</div>
+<div class="section" id="organize-computation-for-a-2-gsps-data-stream-in-2-phases">
 <h2>Organize Computation for a 2 Gsps Data Stream in 2 Phases<a class="headerlink" href="#organize-computation-for-a-2-gsps-data-stream-in-2-phases" title="Permalink to this heading">¶</a></h2>
 <p>For a single-rate filter, a 2 Gsps input sample rate means also a 2 Gsps output sample rate. Because the input stream is separated into two (even, odd) streams, the output stream must be split the same way.</p>
 <p>Take a look at how <strong>y0</strong> is computed:</p>
@@ -167,8 +168,8 @@ function OptanonWrapper() { }
 <p><img src="../Images/Phase3Out.jpg" width=1000><br></p>
 <p><img src="../Images/Phase3OutDetail.jpg" width=1000><br></p>
 <p>The Data and the Coefficients being split into <em>N</em> Phases (four in this case), the resulting architecture requires <em>N</em>Phases x <em>N</em>Phases (4x4 = 16) to be implemented.</p>
-</section>
-<section id="designing-the-graph">
+</div>
+<div class="section" id="designing-the-graph">
 <h2>Designing the Graph<a class="headerlink" href="#designing-the-graph" title="Permalink to this heading">¶</a></h2>
 <p>The kernels created in the previous section can be reused here as the only difference will be the way that thay are connected together. In the preceding images, you can see that there are 16 associations <strong>(Data Phase, Coefficient Phase)</strong>. Also, it can clearly be seen that some of the data streams will have the first data discarded before the computation starts:</p>
 <ul class="simple">
@@ -228,8 +229,8 @@ function OptanonWrapper() { }
 </tbody>
 </table><p>Depending on the row, the latencies are completely different. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module, with an AI Engine serving the inputs and outputs. This would drastically reduce performance. Another possibility is to have these FIFOs implemented in the PL, and have two streams coming from the PL for each column, one serving the even rows and the other serving the odd rows. A single FIFO is required on the first and last columns, but two are necessary for the inner columns:</p>
 <p><img src="../Images/FourPhasesDualStreams.jpg" width=1000><br></p>
-</section>
-<section id="c-code-analysis">
+</div>
+<div class="section" id="c-code-analysis">
 <h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this heading">¶</a></h2>
 <p>The kernel definition is exactly the same as the previous part of this tutorial. The only difference is in the graph to encode this 16 kernel four-phase filter.</p>
 <p>At the graph level, all the kernels are first declared in a class:</p>
@@ -307,8 +308,8 @@ function OptanonWrapper() { }
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</section>
-<section id="compilation-and-analysis">
+</div>
+<div class="section" id="compilation-and-analysis">
 <h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Ensure the <code class="docutils literal notranslate"><span class="pre">InitPythonPath</span></code> has been sourced in the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> three methods are defined:</p>
@@ -358,8 +359,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>This architecture achieves very close to 4 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></div>
+</div>
 
 
            </div>

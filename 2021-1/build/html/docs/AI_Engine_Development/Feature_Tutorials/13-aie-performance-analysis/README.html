@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -100,8 +99,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -137,13 +138,13 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="performance-and-deadlock-analysis">
+</table><div class="section" id="performance-and-deadlock-analysis">
 <h1>Performance and Deadlock Analysis<a class="headerlink" href="#performance-and-deadlock-analysis" title="Permalink to this heading">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example.</p>
-</section>
-<section id="before-you-begin">
+</div>
+<div class="section" id="before-you-begin">
 <h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
 <p><strong>IMPORTANT</strong>: First, set up the Vitis™ unified software platform and install the VCK190 base platform. Follow the instructions in the <a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/acceleration_installation.html#vhc1571429852245">Vitis Software Platform Release Notes and Installation Guide</a>.</p>
 <p>Before you begin this tutorial, run the following steps:</p>
@@ -153,7 +154,7 @@ function OptanonWrapper() { }
 <li><p>Set up your IMAGE to point to xilinx-versal-common-v2021.1/Image.</p></li>
 <li><p>Set up your <code class="docutils literal notranslate"><span class="pre">PLATFORM_REPO_PATHS</span></code> environment variable based upon where you downloaded the platform.</p></li>
 </ol>
-<section id="objectives">
+<div class="section" id="objectives">
 <h3>Objectives<a class="headerlink" href="#objectives" title="Permalink to this heading">¶</a></h3>
 <p>After completing this tutorial, you will understand how to:</p>
 <ul class="simple">
@@ -162,21 +163,21 @@ function OptanonWrapper() { }
 <li><p>Identify a performance bottleneck.</p></li>
 <li><p>Analyze a deadlock (hang issue) in the design.</p></li>
 </ul>
-</section>
-</section>
-<section id="steps">
+</div>
+</div>
+<div class="section" id="steps">
 <h2>Steps<a class="headerlink" href="#steps" title="Permalink to this heading">¶</a></h2>
 <p><strong>Step 1</strong>: Learn about the execution model of an AI Engine graph, including how memory with lock and FIFO works. Learn performance measurement methods. Identify performance bottlenecks and practise optimization. Go to <a class="reference internal" href="aie_execution_measurement.html"><span class="doc">AI Engine Graph Execution and Measurement</span></a>.</p>
 <p><strong>Step 2</strong>: Learn about how a deadlock might occur with an example design. Learn how to analyze a deadlock in the AI Engine simulator, hardware emulation, and hardware flows. Go to <a class="reference internal" href="aie_hang_analysis.html"><span class="doc">AI Engine Deadlock Analysis</span></a>.</p>
 <p><strong>Tip:</strong> In this tutorial, the designs are self-contained in each step. You can choose to start at any step depending on your experience and requirements. Be aware that the concepts and options introduced in the previous step might not be repeated later. It is recommended to start from the beginning and progress through to completion.</p>
-</section>
-<section id="revision-history">
+</div>
+<div class="section" id="revision-history">
 <h2>Revision History<a class="headerlink" href="#revision-history" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>July 2021: Initial release.</p></li>
 </ul>
-</section>
-<section id="support">
+</div>
+<div class="section" id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h2>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
 <p>© Copyright 2021 Xilinx, Inc.</p>
@@ -185,8 +186,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

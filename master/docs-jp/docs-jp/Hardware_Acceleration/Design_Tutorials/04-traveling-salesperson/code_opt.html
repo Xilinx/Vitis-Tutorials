@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis HLS へのプロジェクトの読み込み- Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>Vitis HLS へのプロジェクトの読み込み</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/code_opt.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody"><!--
+/*
+ * Copyright 2020-2022 Xilinx, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */ --><table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><blockquote>
+<div><p><strong>注記:</strong> <br />このセクションでは、距離をフェッチするために 4 回のパラレル メモリ ルックアップを使用して<strong>巡回セールスマン問題</strong> (TSP) デザインがインプリメントされます。</p>
+</div></blockquote>
+<div class="section" id="load-the-project-into-vitis-hls">
+<h1>Vitis HLS へのプロジェクトの読み込み<a class="headerlink" href="#load-the-project-into-vitis-hls" title="Permalink to this heading">¶</a></h1>
+<p>ターミナルを開いて <code class="docutils literal notranslate"><span class="pre">build</span></code> ディレクトリに移動します。次のコマンドを実行すると、Vitis HLS のグラフィカル インターフェイスが開き、hls_opt.tcl Tcl ファイルに含まれている設定に基づいてプロジェクトがコンフィギュレーションされます。</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@server:~$ </span><span class="nb">cd</span> ./build <span class="gp">user@server:~$ </span>vitis_hls -p hls_opt.tcl <span class="p">&amp;</span></pre></div>
+</div>
+<p>ツールが表示されたら、左側の <em></em>[Explorer] ビューで <code class="docutils literal notranslate"><span class="pre">proj-&gt;Source</span></code> を展開し、<code class="docutils literal notranslate"><span class="pre">tsp_opt.cpp</span></code> をダブルクリックしてソース コードを確認します。テストベンチは、<code class="docutils literal notranslate"><span class="pre">proj-&gt;TestBench</span></code> のすぐ下の <code class="docutils literal notranslate"><span class="pre">tsp_TB.cpp</span></code> というファイルにあります。</p>
+</div>
+<div class="section" id="review-code-changes">
+<h1>コード変更の確認<a class="headerlink" href="#review-code-changes" title="Permalink to this heading">¶</a></h1>
+<p>距離に対して配列が 4 つあります。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_0</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_1</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_2</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances_3</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span><span class="w"></span>
+</pre></div>
+</div>
+<p>受信する距離データ ポイントは一度に 1 つずつ読み出されますが、4 つのメモリすべてにコピーされます。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_distances</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">streamDistances</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_0</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_1</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_2</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">distances_3</span><span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="n">N</span><span class="p">][</span><span class="n">i</span><span class="o">%</span><span class="n">N</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">loop_compute</span></code> メイン ループは連続的に 4 インクリメントし、<code class="docutils literal notranslate"><span class="pre">compute</span></code> 関数のコピーに 4 つの値を分配します。それぞれが経路を評価します。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">loop_compute</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">factorialN</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#pragma HLS pipeline II=1</span>
+<span class="w">    </span><span class="n">candidate0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate0</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">distances_0</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate1</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">distances_1</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate2</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">distances_2</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">candidate3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate3</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="o">+</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">distances_3</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>最短距離の最終的な決定は、次のとおりです。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="c1">// Determine shortest between the 4 candidates</span>
+<span class="w">    </span><span class="n">shortestDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">({</span><span class="w"> </span><span class="n">candidate0</span><span class="p">,</span><span class="w"> </span><span class="n">candidate1</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                  </span><span class="n">candidate2</span><span class="p">,</span><span class="w"> </span><span class="n">candidate3</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-c-simulation-and-c-synthesis">
+<h1>C シミュレーションおよび C 合成の実行<a class="headerlink" href="#running-c-simulation-and-c-synthesis" title="Permalink to this heading">¶</a></h1>
+<p>まず、C シミュレーションを実行し、最適化されたデザインが問題なく動作することを確認します。シミュレーションのランタイムを短縮するために <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> ファイルを編集して少ない数の都市に設定し (<code class="docutils literal notranslate"><span class="pre">N=5</span></code>)、<strong></strong>C シミュレーションを実行します。</p>
+<p>シミュレーションの結果を確認したら、C 合成用に <code class="docutils literal notranslate"><span class="pre">tsp.h</span></code> ファイルで都市の数を再度増やし (<code class="docutils literal notranslate"><span class="pre">N=13</span></code>)、結果を元のデザインと比較できるようにします。<strong></strong>C 合成を実行します。</p>
+<p>次の図に、Vitis HLS GUI の C 合成レポートを示します (<strong></strong>[Performance and Resource Estimates] セクション)。<br /><img src="./images/synthesis2.png" alt="synthesis" title="synthesis" width="900" height="200" /></p>
+<p>次のことがわかります。</p><ul class="simple"> <li><p><code class="docutils literal notranslate"><span class="pre">tsp</span></code> 関数のレイテンシは 1 秒未満である</p></li> <li><p>入力データは同じであるため、ループ距離トリップカウントは予期したとおり変わっていない</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">compute</span></code> 関数のパラレル実行により、メイン ループのトリップカウント (<code class="docutils literal notranslate"><span class="pre">loop_compute</span></code>) は階乗 12 の 4 分の 1 (12!/4) である</p></li> <li><p>新しい <code class="docutils literal notranslate"><span class="pre">Loop</span> <span class="pre">3</span></code> は、取得した 4 つの結果の最小を返す最後の std::min 呼び出しからのものである</p></li> </ul>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

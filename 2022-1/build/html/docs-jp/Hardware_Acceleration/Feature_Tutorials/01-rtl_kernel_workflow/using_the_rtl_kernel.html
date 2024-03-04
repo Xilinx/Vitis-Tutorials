@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis IDE プロジェクトでの RTL カーネルの使用 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>Vitis IDE プロジェクトでの RTL カーネルの使用</li><li class="wy-breadcrumbs-aside"><a href="../../../../_sources/docs/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow/using_the_rtl_kernel.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>ハードウェア アクセラレーション チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="using-the-rtl-kernel-in-a-vitis-ide-project">
+<h1>Vitis IDE プロジェクトでの RTL カーネルの使用<a class="headerlink" href="#using-the-rtl-kernel-in-a-vitis-ide-project" title="Permalink to this heading">¶</a></h1>
+<ol class="simple"><li><p>チュートリアル フォルダーに移動します (<code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">./01-rtl_kernel_workflow/reference_files</span></code>)。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">work1</span></code> という名前の新しいワークスペースを作成します。</p></li> <li><p>次のコマンドを入力して Vitis IDE を起動します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis</span> <span class="o">-</span><span class="n">workspace</span> <span class="n">work1</span></pre></div>
+</div>
+<ol class="simple"><li><p>Vitis IDE が開きます。<strong>[File] → [New] → [Application Project]</strong> をクリックします。</p></li></ol>
+<p>New Application Project ウィザードが開きます。</p>
+<p><img alt="New Application Project" src="../../../../_images/rtl_kernel-new_application_project.png" /></p>
+<ol class="simple"><li><p>表示されるプロセスの概要を確認します。<strong>[Next]</strong> をクリックします。</p></li> <li><p>[Platform] ページが表示されます。<code class="docutils literal notranslate"><span class="pre">xilinx_u200_gen3x16_xdma_2_202110_1</span></code> を選択し、<strong>[Next]</strong> をクリックします。</p></li></ol>
+<p><img alt="Platform page" src="../../../../_images/rtl_kernel-platform_page.png" /></p>
+<ol class="simple"><li><p>[Application Project Details] ページが表示されます。次を選択します。</p>
+<ol class="simple"><li><p>プロジェクト名 (例: <code class="docutils literal notranslate"><span class="pre">kernelTest</span></code>) を入力します。</p></li> <li><p>[Create New System Project] をオンにします。システム プロジェクト名はプロジェクト名から生成されます。これは、必要に応じて変更できます。</p></li> <li><p>プロセッサは、選択したプラットフォームから自動的に選択されます。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li></ol></li></ol>
+<p><img alt="New Application Project" src="../../../../_images/rtl_kernel-details_page.png" /></p>
+<ol class="simple"><li><p>[Templates] ページが開き、プロジェクトの作成に使用可能なテンプレートがリストされます。<strong>[Empty Application (XRT Native API)]</strong> を選択し、<strong>[Finish]</strong> をクリックして Vitis アプリケーション プロジェクトを作成します。</p></li></ol>
+<p>New Application Project ウィザードが閉じ、Vitis IDE に新規プロジェクトが読み込まれます。</p>
+<p><img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
+<div class="section" id="add-the-hardware-kernel-xo">
+<h2>ハードウェア カーネル (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) の追加<a class="headerlink" href="#add-the-hardware-kernel-xo" title="Permalink to this heading">¶</a></h2>
+<p>最近生成されたユーザー管理 RTL カーネル (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) およびホスト コード (<code class="docutils literal notranslate"><span class="pre">user-host.cpp</span></code>) をプロジェクトに追加する必要があります。</p>
+<ol class="simple"><li><p><strong>[Explorer]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest_kernels</span></code> プロジェクトを右クリックし、<strong>[Import Sources]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo</span></code> フォルダーを指定し、プロジェクトに追加する <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> カーネル ファイルを選択します。<strong>[Finish]</strong> をクリックすると、ダイアログ ボックスが閉じ、カーネルが追加されます。</p></li></ol>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel.png" /></p>
+<ol class="simple"><li><p><strong>[Hardware Kernel Project Settings]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest_kernels.prj</span></code> プロジェクト ファイルを開き、<strong>[Add Hardware Function]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> フォルダーを選択し、<code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> カーネルを選択します。<strong>[OK]</strong> をクリックすると、ダイアログ ボックスが閉じ、プロジェクトにハードウェア関数が追加されます。</p></li></ol>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel-hw-function.png" /></p>
+<ol class="simple"><li><p><strong>[Explorer]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest</span></code> プロジェクトを右クリックし、<strong>[Import Sources]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">src/host</span></code> フォルダーを指定し、プロジェクトに追加する <code class="docutils literal notranslate"><span class="pre">user-managed.cpp</span></code> ファイルを選択します。<strong>[Finish]</strong> をクリックすると、ダイアログ ボックスが閉じ、ホスト コードが追加されます。</p></li></ol>
+<blockquote>
+<div><p><strong>ヒント:</strong> RTL カーネルの ap_ctrl_hs バージョンに接続するために使用できる xrt-host ファイルもあります。</p>
+</div></blockquote>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel-host.png" /></p>
+<ol class="simple"><li><p>Vitis IDE が開きます。<strong>[File]</strong> → <strong>[New]</strong> → <strong>[Application Project]</strong> をクリックします。<br />New Application Project ウィザードが開きます。</p></li></ol>
+<p><img alt="New Application Project" src="../../../../_images/rtl_kernel-new_application_project.png" /></p>
+<ol class="simple"><li><p>表示されるプロセスの概要を確認します。<strong>[Next]</strong> をクリックします。</p></li> <li><p>[Platform] ページが表示されます。<code class="docutils literal notranslate"><span class="pre">xilinx_u200_gen3x16_xdma_2_202110_1</span></code> を選択し、<strong>[Next]</strong> をクリックします。</p></li></ol>
+<p><img alt="Platform page" src="../../../../_images/rtl_kernel-platform_page.png" /></p>
+<ol class="simple"><li><p>[Application Project Details] ページが表示されます。次を選択します。</p>
+<ol class="simple"><li><p>プロジェクト名 (例: <code class="docutils literal notranslate"><span class="pre">kernelTest</span></code>) を入力します。</p></li> <li><p>[Create New System Project] をオンにします。システム プロジェクト名はプロジェクト名から生成されます。これは、必要に応じて変更できます。</p></li> <li><p>プロセッサは、選択したプラットフォームから自動的に選択されます。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li></ol></li></ol>
+<p><img alt="New Application Project" src="../../../../_images/rtl_kernel-details_page.png" /></p>
+<ol class="simple"><li><p>[Templates] ページが開き、プロジェクトの作成に使用可能なテンプレートがリストされます。<strong>[Empty Application (XRT Native API)]</strong> を選択し、<strong>[Finish]</strong> をクリックして Vitis アプリケーション プロジェクトを作成します。</p></li></ol>
+<p>New Application Project ウィザードが閉じ、Vitis IDE に新規プロジェクトが読み込まれます。</p>
+<p><img alt="Default Perspective" src="../../../../_images/rtl_kernel-default_perspective.png" /></p>
+</div>
+<div class="section" id="id1">
+<h2>ハードウェア カーネル (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) の追加<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>最近生成されたユーザー管理 RTL カーネル (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) およびホスト コード (<code class="docutils literal notranslate"><span class="pre">user-host.cpp</span></code>) をプロジェクトに追加する必要があります。</p>
+<ol class="simple"><li><p><strong>[Explorer]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest_kernels</span></code> プロジェクトを右クリックし、<strong>[Import Sources]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">rtl_kernel/rtl_kernel.srcs/sources_1/imports/xo</span></code> フォルダーを指定し、プロジェクトに追加する <code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> カーネル ファイルを選択します。<strong>[Finish]</strong> をクリックすると、ダイアログ ボックスが閉じ、カーネルが追加されます。</p></li></ol>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel.png" /></p>
+<ol class="simple"><li><p><strong>[Hardware Kernel Project Settings]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest_kernels.prj</span></code> プロジェクト ファイルを開き、<strong>[Add Hardware Function]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code> フォルダーを選択し、<code class="docutils literal notranslate"><span class="pre">Vadd_A_B</span></code> カーネルを選択します。<strong>[OK]</strong> をクリックすると、ダイアログ ボックスが閉じ、プロジェクトにハードウェア関数が追加されます。</p></li></ol>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel-hw-function.png" /></p>
+<ol class="simple"><li><p><strong>[Explorer]</strong> ビューで <code class="docutils literal notranslate"><span class="pre">kernelTest</span></code> プロジェクトを右クリックし、<strong>[Import Sources]</strong> をクリックします。<code class="docutils literal notranslate"><span class="pre">src/host</span></code> フォルダーを指定し、プロジェクトに追加する <code class="docutils literal notranslate"><span class="pre">user-managed.cpp</span></code> ファイルを選択します。<strong>[Finish]</strong> をクリックすると、ダイアログ ボックスが閉じ、ホスト コードが追加されます。</p></li></ol>
+<blockquote>
+<div><p><strong>ヒント:</strong> RTL カーネルの ap_ctrl_hs バージョンに接続するために使用できる xrt-host ファイルもあります。</p>
+</div></blockquote>
+<p><img alt="Add RTL Kernel" src="../../../../_images/add_rtl_kernel-host.png" /></p>
+</div>
+<div class="section" id="build-the-project">
+<h2>プロジェクトのビルド<a class="headerlink" href="#build-the-project" title="Permalink to this heading">¶</a></h2>
+<p>ホスト アプリケーション コード (<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>) および RTL カーネル コード (<code class="docutils literal notranslate"><span class="pre">Vadd_A_B.xo</span></code>) をプロジェクトに追加したら、プロジェクトをビルドして実行できます。</p>
+<ol class="simple"><li><p><strong>[Hardware Kernel Project Settings]</strong> ビューで [Active build configuration] を <strong>[Emulation-HW]</strong> に設定します。ハードウェア エミュレーションは、次のような場合に有益です。</p><ul class="simple"> <li><p>FPGA に含まれるロジックの機能を検証。</p></li> <li><p>アクセラレータおよびホスト アプリケーションの初期パフォーマンス見積もりを取得。</p></li> </ul>
+</li>
+</ol>
+<p>RTL カーネルはソフトウェア エミュレーションをサポートしません。</p>
+<blockquote>
+<div><p><strong>重要:</strong> <a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1393-vitis-application-acceleration/RTL-カーネルへの-C-モデルの追加">RTL カーネルへの C モデルの追加</a>で説明されているように、ソフトウェア エミュレーション用の C モデルを XRT 管理カーネルに追加することはできますが、これはユーザー管理カーネルではサポートされません。</p>
+</div></blockquote>
+<ol><li><p>[Assistant] ビューで、最上位のシステム プロジェクト (<code class="docutils literal notranslate"><span class="pre">kernelTest_system</span></code>) を選択して <strong>[Build]</strong> (<img alt="Build Command" src="../../../../_images/icon_build.png" />) をクリックし、アクティブな [Emulation-HW] ビルド コンフィギュレーションをビルドします。</p>
+<p>Vitis アプリケーション プロジェクトのさまざまな要素 (プロセッサ コード (<code class="docutils literal notranslate"><span class="pre">host.cpp</span></code>)、RTL カーネル (.xo) をターゲット プラットフォームにリンクするハードウェア リンク プロジェクト、デザインをパッケージする最上位システム プロジェクト) がビルドされます。</p>
+<blockquote>
+<div><p><strong>ヒント</strong>: RTL カーネルは <code class="docutils literal notranslate"><span class="pre">.xo</span></code> ファイルとしてインポートされるため、カーネルをコンパイルする必要はありません。</p>
+</div></blockquote></li> <li><p>[Assistant] ビューで <strong>[Run]</strong> ボタンをクリックし、[Run Configurations] を選択します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">System</span> <span class="pre">Project</span> <span class="pre">Debug</span></code> コンフィギュレーションを選択し、<strong>[New launch configuration]</strong> (<img alt="Launch Config" src="../../../../_images/icon-new-launch-config.png" />) をクリックして、実行用の新しいコンフィギュレーションを作成します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">SystemDebugger_kernelTest_system</span></code> コンフィギュレーションが作成されます。</p>
+<p>ホスト プログラムは、<code class="docutils literal notranslate"><span class="pre">xclbin</span></code> ファイルを入力引数として受け取ります。これは、[Program Arguments] リストで指定する必要があります。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">Program</span> <span class="pre">Arguments</span></code> の横にある <strong>[Edit]</strong> をクリックします。</p>
+<p><strong>[Automatically update arguments]</strong> がオンになっている場合は、<code class="docutils literal notranslate"><span class="pre">xclbin</span></code> ファイルが自動的に検索され、含まれます。</p></li> <li><p><strong>[OK]</strong> をクリックして引数を追加します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Configurations</span></code> ダイアログ ボックスで <strong>[Apply]</strong> をクリックし、<strong>[Run]</strong> をクリックしてコンフィギュレーションを実行し、結果を確認します。</p></li></ol>
+<p>Vitis IDE の [Console] ウィンドウに「<strong>TEST PASSED</strong>」と表示されます。ユーザー管理 RTL カーネルを使用してアプリケーションをビルドして実行しました。</p>
+<div class="section" id="optional-build-and-run-the-hardware-on-the-target-platform">
+<h3>(オプション) ターゲット プラットフォームでのハードウェアのビルドと実行<a class="headerlink" href="#optional-build-and-run-the-hardware-on-the-target-platform" title="Permalink to this heading">¶</a></h3>
+<ol class="simple"><li><p>[Vitis Application Project Settings] で <strong>[Active build configuration]</strong> を <strong>[Hardware]</strong> に変更します。<br />システム コンフィギュレーションでは、カーネル コードが FPGA にインプリメントされるので、選択したプラットフォーム カードで実行されるバイナリが生成されます。</p></li> <li><p>使用可能なハードウェア プラットフォームがある場合は、ハードウェアをビルドして実行し、結果を検証してください。</p></li></ol>
+</div>
+</div>
+<div class="section" id="makefile-use">
+<h2>makefile の使用<a class="headerlink" href="#makefile-use" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">01-rtl_kernel_workflow/reference-files</span></code> フォルダーに含まれている makefile があります。このファイルを使用して次のターゲットを作成できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">make</span> <span class="n">run</span> <span class="n">TARGET</span><span class="o">=&lt;</span><span class="n">hw_emu</span> <span class="o">|</span> <span class="n">hw</span><span class="o">&gt;</span> <span class="n">HOST</span><span class="o">=</span><span class="n">user</span></pre></div>
+</div>
+<p>makefile は次を実行します。</p>
+<ol class="simple"><li><p>Vivado プロジェクトをビルドして RTL デザイン IP をパッケージし、ユーザー管理カーネル (<code class="docutils literal notranslate"><span class="pre">.xo</span></code>) をパッケージする</p></li> <li><p>Vitis コンパイラ (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) を使用してカーネルをターゲット プラットフォームにリンクし、.xlcbin ファイルを生成する</p></li> <li><p>XRT ネイティブ API ホスト アプリケーション (<code class="docutils literal notranslate"><span class="pre">./src/host/user-host.cpp</span></code>) をコンパイルする</p></li> <li><p>(必要な場合) エミュレーション プラットフォームを生成し、エミュレーション環境を設定する</p></li> <li><p>アプリケーションおよびカーネルを実行する</p></li></ol>
+<blockquote>
+<div><p><strong>ヒント:</strong> makefile <code class="docutils literal notranslate"><span class="pre">-n</span></code> オプションを使用すると (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span> <span class="pre">TARGET=hw_emu</span> <span class="pre">HOST=user</span> <span class="pre">-n</span></code>)、コマンドを実行せずにコマンド ラインを生成できます。</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="summary">
+<h1>サマリ<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h1>
+<p>このチュートリアルでは、<strong>[Package IP/Package_XO]</strong> フローを使用してユーザー管理 RTL カーネルを作成しました。RTL IP プロジェクトを Vitis コンパイラで必要とされるコンパイル済み XO ファイルにパッケージしました。RTL カーネルをアプリケーション プロジェクトに追加し、ホスト コードと組み合わせて、ハードウェア エミュレーション コンフィギュレーションをビルドして実行しました。Vitis IDE で、XO ファイルを使用してバイナリ コンテナーを作成し、<code class="docutils literal notranslate"><span class="pre">xclbin</span></code> ファイルをコンパイルしました。</p></br><hr/>
+<p align="center" class="sphinxhide"><b><a href="/README.md">入門コースの初めに戻る</a> &mdash; <a href="./README.md">チュートリアルの初めに戻る</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

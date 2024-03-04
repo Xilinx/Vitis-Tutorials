@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -107,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="building-the-design">
+</table><div class="section" id="building-the-design">
 <h1>Building the Design<a class="headerlink" href="#building-the-design" title="Permalink to this heading">¶</a></h1>
 <p>Create the custom platform by running the <code class="docutils literal notranslate"><span class="pre">make</span></code> step as follows. This creates a Vivado® project from the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> provided and the Vitis™ bare-metal embedded project from the <code class="docutils literal notranslate"><span class="pre">vck190_v1_0_pfm.tcl</span></code> provided:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make platform
@@ -120,7 +120,7 @@ vivado -mode batch -source vck190_v1_0_xsa.tcl -tclargs xcvc1902-vsva2197-2MP-e-
 xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 </pre></div>
 </div>
-<section id="options-table">
+<div class="section" id="options-table">
 <h2>Options Table<a class="headerlink" href="#options-table" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
@@ -151,8 +151,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>Tcl script that takes in three arguments: platform name, XSA file, and output path.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="dependencies">
+</table></div>
+<div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
@@ -227,8 +227,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>File with all PS QEMU args listed. This is used to start PS QEMU.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="build-products">
+</table></div>
+<div class="section" id="build-products">
 <h2>Build Products<a class="headerlink" href="#build-products" title="Permalink to this heading">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
@@ -263,69 +263,69 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>Folder generated from the XSCT command. Contains the final platform file vck190_v1_0.xpfm used by the Vitis software platform later on.</td>
 </tr>
 </tbody>
-</table></section>
-<section id="introduction-what-is-a-custom-vitis-embedded-platform">
+</table></div>
+<div class="section" id="introduction-what-is-a-custom-vitis-embedded-platform">
 <h2>Introduction: What is a Custom Vitis Embedded Platform?<a class="headerlink" href="#introduction-what-is-a-custom-vitis-embedded-platform" title="Permalink to this heading">¶</a></h2>
 <p>A platform is the starting point of any Vitis design. Vitis applications are built on top of the platforms. Xilinx provides pre-built base platforms at the <a class="reference external" href="https://www.xilinx.com/support/download.html">Xilinx download center</a>. The source code of these base platforms is available through the <a class="reference external" href="https://github.com/Xilinx/Vitis_Embedded_Platform_Source">Xilinx GitHub site</a>.</p>
 <p>In this beamforming tutorial, a custom Vitis embedded platform is created from scratch. An embedded platform includes a hardware platform and a software platform.</p>
-<section id="what-is-the-hardware-platform">
+<div class="section" id="what-is-the-hardware-platform">
 <h3>What is the Hardware Platform?<a class="headerlink" href="#what-is-the-hardware-platform" title="Permalink to this heading">¶</a></h3>
 <p>The hardware platform is the static, unchanging portion of your hardware design. It includes the Xilinx support archive (XSA) file exported from the Vivado Design Suite. The hardware platform describes platform hardware setup and the acceleration resources that can be used by acceleration applications; for example, input and output interfaces, clocks, and AXI buses. The Vitis tool builds on top of the platform to connect up your PL kernels and AI Engine design.</p>
 <p>The XSA for the beamforming tutorial is generated by the <code class="docutils literal notranslate"><span class="pre">vivado</span></code> command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vivado</span> <span class="o">-</span><span class="n">mode</span> <span class="n">batch</span> <span class="o">-</span><span class="n">source</span> <span class="n">vck190_v1_0_xsa</span><span class="o">.</span><span class="n">tcl</span> <span class="o">-</span><span class="n">tclargs</span> <span class="n">xcvc1902</span><span class="o">-</span><span class="n">vsva2197</span><span class="o">-</span><span class="mi">2</span><span class="n">MP</span><span class="o">-</span><span class="n">e</span><span class="o">-</span><span class="n">S</span>
 </pre></div>
 </div>
-</section>
-<section id="what-is-the-software-platform">
+</div>
+<div class="section" id="what-is-the-software-platform">
 <h3>What is the Software Platform?<a class="headerlink" href="#what-is-the-software-platform" title="Permalink to this heading">¶</a></h3>
 <p>The software platform is the environment that runs the software to control the kernels for acceleration applications. It includes the domain setup and boot components setup. The software platform in the beamforming tutorial has three domains: an AI Engine domain, a Linux domain, and a bare-metal (standalone) domain. The components to builds the AI Engine and Linux domains are provided in the <code class="docutils literal notranslate"><span class="pre">sw_comp</span></code> folder.</p>
 <p>The software platforms and final XPFM platform file are generated by the Xilinx® Software Command-line Tool (XSCT) command. The XSCT tool is an interactive and scriptable command-line interface to the Vitis IDE.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xsct</span> <span class="o">-</span><span class="n">nodisp</span> <span class="o">-</span><span class="n">sdx</span> <span class="o">./</span><span class="n">vck190_v1_0_pfm</span><span class="o">.</span><span class="n">tcl</span> <span class="o">../</span><span class="n">hw</span><span class="o">/</span><span class="n">vck190_v1_0</span><span class="o">.</span><span class="n">xsa</span> <span class="n">build</span>
 </pre></div>
 </div>
-</section>
-<section id="platform-vivado-project">
+</div>
+<div class="section" id="platform-vivado-project">
 <h3>Platform Vivado Project<a class="headerlink" href="#platform-vivado-project" title="Permalink to this heading">¶</a></h3>
 <p>The platform Vivado project is generated with the Tcl script <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code>. Open this script, review the comments, and follow the notes in the next sections of this module.</p>
-<section id="create-platform-vivado-project">
+<div class="section" id="create-platform-vivado-project">
 <h4>Create Platform Vivado Project<a class="headerlink" href="#create-platform-vivado-project" title="Permalink to this heading">¶</a></h4>
 <p>The first thing this <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script does is call the <code class="docutils literal notranslate"><span class="pre">create_project</span></code> function and create the Vivado <code class="docutils literal notranslate"><span class="pre">vck190_v1_0_vivado</span></code> project.</p>
-</section>
-<section id="create-block-design">
+</div>
+<div class="section" id="create-block-design">
 <h4>Create Block Design<a class="headerlink" href="#create-block-design" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script then calls the <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> script, which generates the platform block design. Open the block design in the Vivado project located at <code class="docutils literal notranslate"><span class="pre">hw/build/vck190_v1_0_vivado/vck190_v1_0.xpr</span></code>. You will notice that there are five major components to the hardware platform: the AI Engine, CIPS, NoC (Network-on-Chip), Clocking Wizard IP, Clock Reset IPs, 16 AXI4-LITE SmartConnect interfaces, and a top-level AXI4-Lite SmartConnect (called <code class="docutils literal notranslate"><span class="pre">ctrl_sm</span></code>).</p>
 <p><img alt="Platform Block Design" src="../../../../../_images/Module_01_Custom_Platform_block_design.png" /></p>
 <p>Open the <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> file and review the comments. After the <code class="docutils literal notranslate"><span class="pre">Setup</span> <span class="pre">and</span> <span class="pre">Error</span> <span class="pre">Checking</span></code> commands, you will notice that the main function of this file is called <code class="docutils literal notranslate"><span class="pre">create_root_design</span></code>.</p>
-</section>
-<section id="port-instantiation">
+</div>
+<div class="section" id="port-instantiation">
 <h4>Port Instantiation<a class="headerlink" href="#port-instantiation" title="Permalink to this heading">¶</a></h4>
 <p>The first thing the <code class="docutils literal notranslate"><span class="pre">create_root_design</span></code> function does is to create two block design interface ports called <code class="docutils literal notranslate"><span class="pre">SYS_CLK1_IN_0</span></code> and <code class="docutils literal notranslate"><span class="pre">ddr4_dimm1</span></code> for the system clock and DDR memory ports.</p>
-</section>
-<section id="ai-engine">
+</div>
+<div class="section" id="ai-engine">
 <h4>AI Engine<a class="headerlink" href="#ai-engine" title="Permalink to this heading">¶</a></h4>
 <p>Next, the <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> file creates an instance of the AI Engine and sets its properties. Note how most of the ports are empty (<code class="docutils literal notranslate"><span class="pre">{}</span></code>). Here, you have just instantiated the AI Engine interfaces in the platform. Later on, the Vitis linker step will connect the AI Engine to the PL kernels. At this step, the AI Engine <code class="docutils literal notranslate"><span class="pre">S00_AXI</span></code> slave interface configuration category is set to NoC.</p>
-</section>
-<section id="axi-debug-hub-ip-and-simulation-clock-and-reset-generator-ip">
+</div>
+<div class="section" id="axi-debug-hub-ip-and-simulation-clock-and-reset-generator-ip">
 <h4>AXI Debug Hub IP and Simulation Clock and Reset Generator IP<a class="headerlink" href="#axi-debug-hub-ip-and-simulation-clock-and-reset-generator-ip" title="Permalink to this heading">¶</a></h4>
 <p>The AXI Debug Hub IP and the Simulation Clock and Reset Generator IP are then instantiated, and their properties are set.</p>
-</section>
-<section id="axi-smartconnects">
+</div>
+<div class="section" id="axi-smartconnects">
 <h4>AXI SmartConnects<a class="headerlink" href="#axi-smartconnects" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> creates an instance of an AXI SmartConnect IP called <code class="docutils literal notranslate"><span class="pre">ctrl_sm</span></code>. This is the top-level AXI SmartConnect which is configured to have one clock, 16 master interfaces, and one slave interface. After this, 16 additional AXI SmartConnect IPs are instantiated. These will be connected to the 16 master interfaces in the <code class="docutils literal notranslate"><span class="pre">ctrl_sm</span></code> later on in the script.</p>
-</section>
-<section id="axi-verification-ips">
+</div>
+<div class="section" id="axi-verification-ips">
 <h4>AXI Verification IPs<a class="headerlink" href="#axi-verification-ips" title="Permalink to this heading">¶</a></h4>
 <p>Next, 16 instances of the AXI Verification IP are created, and their properties are set. Later on in the script, the 16 AXI SmartConnect IPs will be connected to the 16 AXI Verification IPs.</p>
-</section>
-<section id="clock-infrastructure">
+</div>
+<div class="section" id="clock-infrastructure">
 <h4>Clock Infrastructure<a class="headerlink" href="#clock-infrastructure" title="Permalink to this heading">¶</a></h4>
 <p>Seven instances of the Processor Reset System IP and an instance of the Clocking Wizard are created. The Clocking Wizard is configured to generate seven output clocks (that is to say, <code class="docutils literal notranslate"><span class="pre">CLOCKOUT_REQUESTED_OUT_FREQUENCY</span></code>= 100 MHz, 250 MHz, 500 MHz, 400 MHz, 450 MHz, 250 MHz). It is best practice to also instantiate a Process Reset System IP is for each output clock to ensure proper clocking. Having too many clocks tied to the same reset can result in adverse affects such as cross-clock domain issues.</p>
-</section>
-<section id="cips">
+</div>
+<div class="section" id="cips">
 <h4>CIPS<a class="headerlink" href="#cips" title="Permalink to this heading">¶</a></h4>
 <p>Instantiate and configure the CIPS IP block. Notice the system monitor is enabled with the use of the <code class="docutils literal notranslate"><span class="pre">CONFIG.SMON_*</span></code> properties.</p>
-</section>
-<section id="noc">
+</div>
+<div class="section" id="noc">
 <h4>NoC<a class="headerlink" href="#noc" title="Permalink to this heading">¶</a></h4>
 <p>The NoC is then instantiated and its properties are set. It has two AXI master interfaces, eight AXI slave interfaces, and 10 clocks. The NoC configuration is as follows:</p>
 <table border="1" class="docutils">
@@ -388,22 +388,22 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>aclk7</td>
 </tr>
 </tbody>
-</table></section>
-<section id="create-interface-connections">
+</table></div>
+<div class="section" id="create-interface-connections">
 <h4>Create Interface Connections<a class="headerlink" href="#create-interface-connections" title="Permalink to this heading">¶</a></h4>
 <p>Now that the major components of the block design are instantiated, the next step is to connect them all together with the <code class="docutils literal notranslate"><span class="pre">connect_bd_intf_net</span></code> commands.</p>
-</section>
-<section id="clock-connections">
+</div>
+<div class="section" id="clock-connections">
 <h4>Clock Connections<a class="headerlink" href="#clock-connections" title="Permalink to this heading">¶</a></h4>
 <p>The first connection you created connects the <code class="docutils literal notranslate"><span class="pre">SYS_CLK1_IN_0_1</span></code> port (created at the beginning of the <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> script) with the <code class="docutils literal notranslate"><span class="pre">SYS_CLK0_IN</span></code> input port of the Simulation Clock and Reset Generator IP.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">SYS_CLK0</span></code> pin of the Simulation Clock and Reset Generator IP is then connected to the <code class="docutils literal notranslate"><span class="pre">sys_clk0</span></code> pin of the NoC.</p>
-</section>
-<section id="axi-smartconnect-connections">
+</div>
+<div class="section" id="axi-smartconnect-connections">
 <h4>AXI SmartConnect Connections<a class="headerlink" href="#axi-smartconnect-connections" title="Permalink to this heading">¶</a></h4>
 <p>Connect the 16 AXI Verification IP masters to the 16 AXI SmartConnect slaves, then connect the 16 AXI SmartConnect to the 16 master interfaces in the top-level AXI SmartConnect (<code class="docutils literal notranslate"><span class="pre">sm_ctrl</span></code>). Connect the <code class="docutils literal notranslate"><span class="pre">sm_ctrl</span></code> to the master interface <code class="docutils literal notranslate"><span class="pre">M_AXI_FPD</span></code> on the CIPs. These connections allow any of the master AXI Verification IPs to access the CIPS slave connected to the <code class="docutils literal notranslate"><span class="pre">sm_ctrl</span></code> AXI SmartConnect.</p>
-</section>
-</section>
-<section id="cips-and-noc-connections">
+</div>
+</div>
+<div class="section" id="cips-and-noc-connections">
 <h3>CIPS and NoC Connections<a class="headerlink" href="#cips-and-noc-connections" title="Permalink to this heading">¶</a></h3>
 <p>The next set of connections to make is between the CIPS and the NoC. The CIPS connections have been added to the previous NoC interface table to illustrate the connections being created.</p>
 <table border="1" class="docutils">
@@ -477,7 +477,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>ps_cips/FPD_LPD_AXI_0</td>
 </tr>
 </tbody>
-</table><section id="noc-connections">
+</table><div class="section" id="noc-connections">
 <h4>NoC Connections<a class="headerlink" href="#noc-connections" title="Permalink to this heading">¶</a></h4>
 <p>Connect the NoC up to other parts of the design. First, the <code class="docutils literal notranslate"><span class="pre">ddr4_dimm1</span></code> port created at the beginning of the <code class="docutils literal notranslate"><span class="pre">dr.bd.tcl</span></code> script is connected to the NoC <code class="docutils literal notranslate"><span class="pre">CH0_DDR4_0</span></code> interface. This configures the NoC to have a single memory controller port.</p>
 <p>Connect the AXI Debug Hub IP to the master interface of the NoC ( <code class="docutils literal notranslate"><span class="pre">M00_AXI</span></code>), then connect the AI Engine to the second master interface of the NoC (<code class="docutils literal notranslate"><span class="pre">M01_AXI</span></code>). Set the AI Engine’s <code class="docutils literal notranslate"><span class="pre">s00_axi_aclk</span></code> to the NoC’s <code class="docutils literal notranslate"><span class="pre">aclk9</span></code>.</p>
@@ -552,8 +552,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>ps_cips/FPD_LPD_AXI_0</td>
 </tr>
 </tbody>
-</table></section>
-<section id="clocking-infrastructure-connections">
+</table></div>
+<div class="section" id="clocking-infrastructure-connections">
 <h4>Clocking Infrastructure Connections<a class="headerlink" href="#clocking-infrastructure-connections" title="Permalink to this heading">¶</a></h4>
 <p>The next step is to connect the output clocks of the Clocking Wizard to the rest of the design. First, connect the Clocking Wizard’s output clock 6 (100 MHz) to the AXI Debug Hub IP and the NoC PL clock (<code class="docutils literal notranslate"><span class="pre">aclk5</span></code>). Sync the Processor Reset System #6 to this clock as well. Also, connect the asynchronous reset of the AXI Debug Hub IP to the Processor Reset System #6.</p>
 <p>Next, connect the Clocking Wizard’s output clock 1 (250MHz) to the <code class="docutils literal notranslate"><span class="pre">ctrl_sm</span></code>, the 16 AXI SmartConnects, 16 AXI Verification IPs, and the CIPS’ <code class="docutils literal notranslate"><span class="pre">m_axi_fpd_aclk</span></code>. Sync the Processor Reset System #1 to this clock as well.</p>
@@ -561,8 +561,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <p>Connect the Clocking Wizard’s <code class="docutils literal notranslate"><span class="pre">locked</span></code> pin to the <code class="docutils literal notranslate"><span class="pre">dcm_locked</span></code> pins of the Processor Reset Systems.</p>
 <p>Connect the CIPS’ <code class="docutils literal notranslate"><span class="pre">pl0_ref_clk</span></code> as the input to the Clocking Wizard (<code class="docutils literal notranslate"><span class="pre">clk_in1</span></code>).</p>
 <p>Lastly, connect the CIPs’ <code class="docutils literal notranslate"><span class="pre">pl0_resetn</span></code> as the input to the <code class="docutils literal notranslate"><span class="pre">ext_reset_in</span></code> pins of Processor Reset Systems.</p>
-</section>
-<section id="cips-clocks">
+</div>
+<div class="section" id="cips-clocks">
 <h4>CIPS Clocks<a class="headerlink" href="#cips-clocks" title="Permalink to this heading">¶</a></h4>
 <p>The last set of connections connects the CIPS clock pins to the NoC clock pins. A summary table of the connections is provided below:</p>
 <table border="1" class="docutils">
@@ -647,44 +647,44 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <td>lpd_axi_noc_clk</td>
 </tr>
 </tbody>
-</table></section>
-</section>
-<section id="create-address-segments">
+</table></div>
+</div>
+<div class="section" id="create-address-segments">
 <h3>Create Address Segments<a class="headerlink" href="#create-address-segments" title="Permalink to this heading">¶</a></h3>
 <p>After making the connections between the blocks, assign memory addresses in CIPS to various blocks (AI Engine, AXI Debug Hub, 16 AXI SmartConnects, NoC).</p>
-<section id="set-platform-attributes">
+<div class="section" id="set-platform-attributes">
 <h4>Set Platform Attributes<a class="headerlink" href="#set-platform-attributes" title="Permalink to this heading">¶</a></h4>
 <p>Set the platform properites of the Vivado design (i.e. properties PFM.*). First, set the <code class="docutils literal notranslate"><span class="pre">PFM_NAME</span></code> to the current block design. Next, add the control and memory hardware interfaces using the <code class="docutils literal notranslate"><span class="pre">PFM.AXI_PORT</span></code> function.</p>
-</section>
-<section id="control-interfaces-requirements">
+</div>
+<div class="section" id="control-interfaces-requirements">
 <h4>Control Interfaces Requirements<a class="headerlink" href="#control-interfaces-requirements" title="Permalink to this heading">¶</a></h4>
 <p>Every platform must declare at least one general purpose AXI master port (<code class="docutils literal notranslate"><span class="pre">M_AXI_GP</span></code>). For each of the 16 AXI SmartConnects, 15 <code class="docutils literal notranslate"><span class="pre">M_AXI_GP</span></code> interfaces have been declared. Additionally, there is a <code class="docutils literal notranslate"><span class="pre">M_AXI_NoC</span></code> control interface on the NoC. These interfaces are used by the Vitis linker step to connect the PL kernels to the platform.</p>
-</section>
-<section id="memory-interface-requirements">
+</div>
+<div class="section" id="memory-interface-requirements">
 <h4>Memory Interface Requirements<a class="headerlink" href="#memory-interface-requirements" title="Permalink to this heading">¶</a></h4>
 <p>Every platform must declare at least one memory interface with the AXI slave port (<code class="docutils literal notranslate"><span class="pre">S_AXI_*</span></code>). 28 <code class="docutils literal notranslate"><span class="pre">S_AXI_NOC</span></code> memory interfaces are declared. The Vitis linker step connects DDR4 memory to these ports.</p>
-</section>
-</section>
-<section id="clock-requirements">
+</div>
+</div>
+<div class="section" id="clock-requirements">
 <h3>Clock Requirements<a class="headerlink" href="#clock-requirements" title="Permalink to this heading">¶</a></h3>
 <p>Every platform must have at least one clock enabled in <code class="docutils literal notranslate"><span class="pre">PFM.CLOCK</span></code> property and one clock must be set to default. There are five clocks declared and <code class="docutils literal notranslate"><span class="pre">clk_out1</span></code> is the default.</p>
-<section id="set-platform-attributes-with-for-loops">
+<div class="section" id="set-platform-attributes-with-for-loops">
 <h4>Set Platform Attributes with <code class="docutils literal notranslate"><span class="pre">for</span></code> Loops<a class="headerlink" href="#set-platform-attributes-with-for-loops" title="Permalink to this heading">¶</a></h4>
 <p>After creating the block diagram, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script sources the <code class="docutils literal notranslate"><span class="pre">pfm_decls.tcl</span></code> script. This script reapplies the <code class="docutils literal notranslate"><span class="pre">PFM.*</span></code> properties, but showcases how to do it with <code class="docutils literal notranslate"><span class="pre">for</span></code> loops.</p>
-</section>
-<section id="ddr4-constraints">
+</div>
+<div class="section" id="ddr4-constraints">
 <h4>DDR4 Constraints<a class="headerlink" href="#ddr4-constraints" title="Permalink to this heading">¶</a></h4>
 <p>After sourcing the <code class="docutils literal notranslate"><span class="pre">pfm_decl.tcl</span></code> script, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script sets the DDR4 design constraints. Open the <code class="docutils literal notranslate"><span class="pre">ddr4_dm_3200_triplet-1.xcd</span></code> constraints file. It sets the package pins to power to the correct DDR4 banks in use.</p>
-</section>
-<section id="create-wrapper-for-block-design">
+</div>
+<div class="section" id="create-wrapper-for-block-design">
 <h4>Create Wrapper for Block Design<a class="headerlink" href="#create-wrapper-for-block-design" title="Permalink to this heading">¶</a></h4>
 <p>Next, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> calls the <code class="docutils literal notranslate"><span class="pre">make_wrapper</span></code> function to create a wrapper for the block design and set it as the top-level wrapper.</p>
-</section>
-<section id="post-link-tcl-commands">
+</div>
+<div class="section" id="post-link-tcl-commands">
 <h4>Post Link Tcl Commands<a class="headerlink" href="#post-link-tcl-commands" title="Permalink to this heading">¶</a></h4>
 <p>Some platforms require post link Tcl commands to complete the platform creation. The beamforming design does not require any post link Tcl commands, so this script is empty. The script is provided if you choose to modify the beamforming platform and add any post link Tcl commands to the platform Vivado project.</p>
-</section>
-<section id="timing-closure">
+</div>
+<div class="section" id="timing-closure">
 <h4>Timing Closure<a class="headerlink" href="#timing-closure" title="Permalink to this heading">¶</a></h4>
 <p>After a Vivado design is created, Vivado then goes through the design implementation process. This process involves placement, routing, and physical optimization.</p>
 <ul class="simple">
@@ -697,25 +697,25 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <p>The <code class="docutils literal notranslate"><span class="pre">pre_place.tcl</span></code> script calls the <code class="docutils literal notranslate"><span class="pre">prohibitCascBramAcrossRbrk.tcl</span></code>, <code class="docutils literal notranslate"><span class="pre">prohibitCascUramAcrossRbrk.tcl</span></code>, and <code class="docutils literal notranslate"><span class="pre">prohibitCascDspAcrossRbrk.tcl</span></code> scripts which prohibit the cascading the BRAM, URAM, and DSP resources. It also calls the <code class="docutils literal notranslate"><span class="pre">waive_BLI_AIE_timing_violations_preplace.tcl</span></code> script which allows the timing violations between the BLI registers and AI Engine before placements.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">post_place.tcl</span></code> script calls the <code class="docutils literal notranslate"><span class="pre">waive_BLI_AIE_timing_violations_postplace.tcl</span></code> which allows timing violations between the BLI register and the AI Engine after placement.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">post_route.tcl</span></code> and the <code class="docutils literal notranslate"><span class="pre">post_physopts.tcl</span></code> scripts are empty because this beamforming tutorial does not require Tcl commands after routing and physical optimization. These scripts are provided for you to add commands if you wish to modify this tutorial.</p>
-</section>
-<section id="emulation-setup">
+</div>
+<div class="section" id="emulation-setup">
 <h4>Emulation Setup<a class="headerlink" href="#emulation-setup" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script sets up the platform for hardware emulation. When creating emulation-capable platforms, CIPS and NoC must use TLM (transaction-level modeling) as the simulation model.</p>
-</section>
-<section id="platform-output-type">
+</div>
+<div class="section" id="platform-output-type">
 <h4>Platform Output Type<a class="headerlink" href="#platform-output-type" title="Permalink to this heading">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script then sets the platform output type to <code class="docutils literal notranslate"><span class="pre">hw_export</span></code>.</p>
-</section>
-<section id="wrap-up-vivado-project">
+</div>
+<div class="section" id="wrap-up-vivado-project">
 <h4>Wrap Up Vivado Project<a class="headerlink" href="#wrap-up-vivado-project" title="Permalink to this heading">¶</a></h4>
 <p>The next few commands in  the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script finalize and wrap up the Vivado project creation process by updating the compiler order, assigning the block design addresses, and validating the block design.</p>
-</section>
-<section id="export-hardware-xsa">
+</div>
+<div class="section" id="export-hardware-xsa">
 <h4>Export Hardware XSA*<a class="headerlink" href="#export-hardware-xsa" title="Permalink to this heading">¶</a></h4>
 <p>Lastly, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_xsa.tcl</span></code> script generates the files necessary to support the block design with the <code class="docutils literal notranslate"><span class="pre">generate_target</span></code> command and write the pre-synthesis expandable XSA with the <code class="docutils literal notranslate"><span class="pre">write_hw_platform</span></code> command.</p>
-</section>
-</section>
-<section id="software-platform">
+</div>
+</div>
+<div class="section" id="software-platform">
 <h3>Software Platform<a class="headerlink" href="#software-platform" title="Permalink to this heading">¶</a></h3>
 <p>After creating the hardware platform (XSA) with the AI Engine IP through Vivado, import this XSA into the Vitis environment and create the software platform. You will then add the aie_runtime, Linux, and standalone (bare-metal) domains into the software platform. The domains are configured with prebuilt Petalinux software components. Review Steps 2 and 3 of the <a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Introduction/03_Edge_VCK190/README.md">Versal Custom Platform Creation Tutorial</a> if you want to learn how to create the Petalinux software components from scratch.</p>
 <p>Certain software components distributed with this tutorial are licensed under open source licenses, such as the GPL and BSD, source files for these materials are located at the following locations:</p>
@@ -724,7 +724,7 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <li><p>sw/src/boot/u-boot.elf is built from the <a class="reference external" href="https://github.com/Xilinx/u-boot-xlnx">u-boot-xlnx repository</a></p></li>
 </ul>
 <p>The software platform is through the TCL script located <code class="docutils literal notranslate"><span class="pre">sw/vck_190_v1_0_pfm.tcl</span></code>. In this section you will review important aspects of the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_pfm.tcl</span></code> script used to generate the Vitis project. Open this script, review the comments, follow the notes in the next sections of this module.</p>
-<section id="platform-create">
+<div class="section" id="platform-create">
 <h4>Platform Create<a class="headerlink" href="#platform-create" title="Permalink to this heading">¶</a></h4>
 <p>The first step <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_pfm.tcl</span></code> executes is creating the software platform and setting the platform project name, description, XSA and output path using the <code class="docutils literal notranslate"><span class="pre">platform</span> <span class="pre">create</span></code> command. The command marks the platform to build without generating boot components with the <code class="docutils literal notranslate"><span class="pre">-no-boot-bsp</span></code> option.</p>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span>platform create
@@ -735,8 +735,8 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
   -no-boot-bsp
 </pre></div>
 </div>
-</section>
-<section id="domain-create-ai-engine">
+</div>
+<div class="section" id="domain-create-ai-engine">
 <h4>Domain Create: AI Engine<a class="headerlink" href="#domain-create-ai-engine" title="Permalink to this heading">¶</a></h4>
 <p>Next, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_pfm.tcl</span></code> script creates an AI Engine domain and selects <code class="docutils literal notranslate"><span class="pre">aie_runtime</span></code> as the operating system and <code class="docutils literal notranslate"><span class="pre">ai_engine</span></code> as the processor with the <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">create</span></code> command. It configures the <code class="docutils literal notranslate"><span class="pre">pmcqemu-args</span></code>, <code class="docutils literal notranslate"><span class="pre">qemu-args</span></code>, and <code class="docutils literal notranslate"><span class="pre">qemu-data</span></code> attributes with the <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">config</span></code> command.</p>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">domain</span><span class="w"> </span>create<span class="w"> </span><span class="o">-</span>name<span class="w"> </span>aiengine<span class="w"> </span><span class="o">-</span>os<span class="w"> </span>aie_runtime<span class="w"> </span><span class="o">-</span>proc<span class="w"> </span><span class="k">{</span><span class="nv">ai_engine</span><span class="k">}</span>
@@ -745,15 +745,15 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <span class="nv">domain</span><span class="w"> </span>config<span class="w"> </span><span class="o">-</span>qemu-data<span class="w"> </span><span class="nv">$SW_COMP</span><span class="o">/</span>src<span class="o">/</span>boot
 </pre></div>
 </div>
-</section>
-<section id="domain-create-linux">
+</div>
+<div class="section" id="domain-create-linux">
 <h4>Domain Create: Linux<a class="headerlink" href="#domain-create-linux" title="Permalink to this heading">¶</a></h4>
 <p>Next, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_pfm.tcl</span></code> script creates a Linux domain and selects <code class="docutils literal notranslate"><span class="pre">linux</span></code> as the operating system and the <code class="docutils literal notranslate"><span class="pre">psv_cortexa72</span></code> as the processor with the <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">create</span></code> command. This domain uses the pre-build XRT Linux image when creating the PetaLinux project. It sets the <code class="docutils literal notranslate"><span class="pre">boot</span></code>, <code class="docutils literal notranslate"><span class="pre">bif</span></code>, <code class="docutils literal notranslate"><span class="pre">pmcqemu-args</span></code>, <code class="docutils literal notranslate"><span class="pre">qemu-args</span></code>, and <code class="docutils literal notranslate"><span class="pre">qemu-data</span></code> with the <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">config</span></code> command.</p>
-<section id="bif-file">
+<div class="section" id="bif-file">
 <h5>BIF File<a class="headerlink" href="#bif-file" title="Permalink to this heading">¶</a></h5>
 <p>The BIF file describes the boot components and their properties for Bootgen to generate the boot.bin file. A BIF file must be provided here so that the application build process can package the boot image.</p>
-</section>
-<section id="boot-directory">
+</div>
+<div class="section" id="boot-directory">
 <h5>Boot Directory<a class="headerlink" href="#boot-directory" title="Permalink to this heading">¶</a></h5>
 <p>The boot directory includes all the files described in the BIF file that must also be provided. The contents of the image directory will be copied in the FAT32 partition of the final SD card image. In the beamforming example, the boot directory contains the bl31.elf, and u-boot.elf, and system.dtb files generated by PetaLinux. Later on, Vitis compiler (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) looks for files in the boot directory and replaces the placeholders with real file names and paths. It then calls Bootgen to generate the boot.bin file.</p>
 <div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c">### Create the Linux domain</span>
@@ -765,23 +765,23 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <span class="nv">domain</span><span class="w"> </span>config<span class="w"> </span><span class="o">-</span>qemu-data<span class="w"> </span><span class="nv">$SW_COMP</span><span class="o">/</span>src<span class="o">/</span>boot
 </pre></div>
 </div>
-</section>
-</section>
-<section id="domain-create-bare-metal">
+</div>
+</div>
+<div class="section" id="domain-create-bare-metal">
 <h4>Domain Create: Bare Metal<a class="headerlink" href="#domain-create-bare-metal" title="Permalink to this heading">¶</a></h4>
 <p>Lastly, the <code class="docutils literal notranslate"><span class="pre">vck_190_v1_0_pfm.tcl</span></code> script creates the bare-metal domain and selects <code class="docutils literal notranslate"><span class="pre">standalone</span></code> as the operating system and the <code class="docutils literal notranslate"><span class="pre">psv_cortexa72_0</span></code> as the processor with the <code class="docutils literal notranslate"><span class="pre">domain</span> <span class="pre">create</span></code> command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">### Create the Standalone domain</span>
 <span class="n">domain</span> <span class="n">create</span> <span class="o">-</span><span class="n">name</span> <span class="n">standalone_domain</span> <span class="o">-</span><span class="n">os</span> <span class="n">standalone</span> <span class="o">-</span><span class="n">proc</span> <span class="n">psv_cortexa72_0</span>
 </pre></div>
 </div>
-</section>
-<section id="generate-platform">
+</div>
+<div class="section" id="generate-platform">
 <h4>Generate Platform<a class="headerlink" href="#generate-platform" title="Permalink to this heading">¶</a></h4>
 <p>Finally, software platform is generated with the <code class="docutils literal notranslate"><span class="pre">platform</span> <span class="pre">generate</span></code> command. The final generated custom platform can be found in <code class="docutils literal notranslate"><span class="pre">build/output/vck190_v1_0/export/vck190_v1_0/vck190_v1_0.xpfm</span></code>. This is the platform that will be used in later modules and that the Vitis tool will build on top of.</p>
-</section>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2021_1/vitis_doc/create_embedded_platforms.html#rjs1596051748503">Creating Embedded Platforms in Vitis</a></p></li>
@@ -801,18 +801,18 @@ xsct -nodisp -sdx ./vck190_v1_0_pfm.tcl vck190_v1_0 ../hw/vck190_v1_0.xsa build
 <li><p>CIPS Product Guide (<a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/versal_cips/v2_1/pg352-cips.pdf">PG352</a>)</p></li>
 <li><p>Versal ACAP Programmable Network on Chip and Integrated Memory Controller Product Guide (<a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/axi_noc/v1_0/pg313-network-on-chip.pdf">PG313</a>)</p></li>
 </ul>
-</section>
-</section>
-<section id="support">
+</div>
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></section>
+<p align="center"> XD016 | &copy; Copyright 2021 Xilinx, Inc.</p></div>
 
 
            </div>

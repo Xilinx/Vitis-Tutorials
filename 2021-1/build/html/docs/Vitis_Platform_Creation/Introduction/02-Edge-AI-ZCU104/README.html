@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -90,8 +89,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -133,13 +134,13 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="vitis-custom-embedded-platform-creation-example-on-zcu104">
+--><div class="section" id="vitis-custom-embedded-platform-creation-example-on-zcu104">
 <h1>Vitis Custom Embedded Platform Creation Example on ZCU104<a class="headerlink" href="#vitis-custom-embedded-platform-creation-example-on-zcu104" title="Permalink to this heading">¶</a></h1>
 <p><em><strong>Version: Vitis 2021.1 + Vitis AI 1.4</strong></em></p>
 <p>In this module, we will create a custom Vitis embedded platform for ZCU104. It will be capable to run <em><strong>Vitis acceleration applications</strong></em> including <em><strong>Vitis-AI applications</strong></em>. Of course, general <em><strong>embedded software application</strong></em> can also run on this platform.</p>
 <p>Since ZCU104 is a validated Xilinx Evaluation Board and Vivado includes its processing system presets, we will skip step 0 mentioned in previous overview module and start to build the full hardware and generate XSA.</p>
 <p>To prepare the software components, we will import XSA into PetaLinux project and do some configurations. After building software and hardware components, we’ll package the platform. At last, we’ll run several test applications including Vitis-AI application on this platform to test this customized platform.</p>
-<section id="custom-platform-planning">
+<div class="section" id="custom-platform-planning">
 <h2>Custom Platform Planning<a class="headerlink" href="#custom-platform-planning" title="Permalink to this heading">¶</a></h2>
 <p>The platform we create should be able to run these applications finally</p>
 <ul class="simple">
@@ -149,8 +150,8 @@ function OptanonWrapper() { }
 <p>Vadd application requires 1x clock, 1x interrupt, 1x M_AXI for kernel control and 1x S_AXI for memory access.</p>
 <p>Vitis-AI application would integrate DPU as RTL kernel. It would require two clocks: clk and clk2x. We can give 200MHz and 400MHz clocks for easy timing closure. One interrupt is needed as well. DPU is a memory hungry IP so the platform needs to provide multiple AXI HP interfaces.</p>
 <p>On the software side, the platform needs to provide the XRT, ZOCL packages. Host application can use XRT OpenCL API to control Kernel. Vitis-AI software framework can control DPU with XRT. ZOCL is the kernel module that talks to acceleration kernels. It needs a device tree node so it will be added. Other Vitis-AI dependencies will also be added. Common image provided by Xilinx can accomplish all these features. Besides these common features, we wish to add GCC compilers to do application native compilation, add mesa-mega driver for Vitis-AI demo applications and replace the dropbear with openssh so that the network speed can be faster.</p>
-</section>
-<section id="step-by-step-tutorial">
+</div>
+<div class="section" id="step-by-step-tutorial">
 <h2>Step-by-Step Tutorial<a class="headerlink" href="#step-by-step-tutorial" title="Permalink to this heading">¶</a></h2>
 <p>We’ll introduce the platform creation steps in the following pages. Each page describes one major step in the platform creation process.</p>
 <ul class="simple">
@@ -160,8 +161,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference internal" href="step4.html"><span class="doc">Step 4: Test the Platform</span></a></p></li>
 </ul>
 <p><em><strong>Let’s start from <a class="reference internal" href="step1.html"><span class="doc">step 1: Vivado Design</span></a>.</strong></em></p>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.xilinx.com/html_docs/xilinx2020_2/vitis_doc/index.html">UG1393: Vitis Acceleration Flow User Guide</a></p>
@@ -179,8 +180,8 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="https://xilinx.github.io/XRT/master/html/index.html">Xilinx Run Time (XRT)</a></p></li>
 <li><p><a class="reference external" href="https://github.com/Xilinx/Vitis-AI">Vitis-AI Github Repository</a></p></li>
 </ul>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

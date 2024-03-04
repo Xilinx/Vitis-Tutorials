@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="window-based-ai-engine-kernels">
+</table><div class="section" id="window-based-ai-engine-kernels">
 <h1>Window Based AI Engine Kernels<a class="headerlink" href="#window-based-ai-engine-kernels" title="Permalink to this heading">¶</a></h1>
 <p>This example shows you how to construct a graph with packet switching capability. In the first section, <a class="reference external" href="#Construct-Graph-with-Packet-Switching-Capability">Construct Graph with Packet Switching Capability</a>, the example graph features:</p>
 <ul class="simple">
@@ -121,7 +122,7 @@ function OptanonWrapper() { }
 <li><p>Shows PS code for the system design in <a class="reference external" href="#Example-PS-code-for-Packet-Switching">Example PS code for Packet Switching</a>.</p></li>
 <li><p>Shows how to <a class="reference external" href="#Run-Hardware-Emulation-and-Hardware-flows">Run Hardware Emulation and Hardware flows</a>.</p></li>
 </ul>
-<section id="construct-graph-with-packet-switching-capability">
+<div class="section" id="construct-graph-with-packet-switching-capability">
 <h2>Construct Graph with Packet Switching Capability<a class="headerlink" href="#construct-graph-with-packet-switching-capability" title="Permalink to this heading">¶</a></h2>
 <p>To explicitly control the multiplexing and de-multiplexing of packets, two new templated node classes are added to the ADF graph library: <code class="docutils literal notranslate"><span class="pre">pktsplit&lt;n&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">pktmerge&lt;n&gt;</span></code>. A node instance of class <code class="docutils literal notranslate"><span class="pre">pktmerge&lt;n&gt;</span></code> is a n:1 multiplexer of n packet streams producing a single packet stream. A node instance of class <code class="docutils literal notranslate"><span class="pre">pktsplit&lt;n&gt;</span></code> is a 1:n de-multiplexer of a packet stream producing n different packet streams.</p>
 <p><strong>Note: The maximum number of allowable packet streams is thirty-two on a single physical channel (<strong>n≤32</strong>).</strong></p>
@@ -177,8 +178,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>The macro names <code class="docutils literal notranslate"><span class="pre">Datain0_0</span></code>, …, <code class="docutils literal notranslate"><span class="pre">Dataout0_3</span></code> do not change between different compilations. You can see how these macros are used in the PL kernels in this test case in a later section.</p>
-</section>
-<section id="packet-format">
+</div>
+<div class="section" id="packet-format">
 <h2>Packet Format<a class="headerlink" href="#packet-format" title="Permalink to this heading">¶</a></h2>
 <p>The first 32-bit word of a packet must always be a packet header which encodes several bit fields, as shown in the following table.</p>
 <table border="1" class="docutils">
@@ -226,8 +227,8 @@ function OptanonWrapper() { }
 <p>The last 32-bit word should have its <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> set High. Other words should set their <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> Low.</p>
 <p>When the packet originates from the PL, the packet header should be constructed by the PL kernels manually. When the AI Engine receives the packet, it is decoded and routed to the destination corresponding to the packet ID in the header.</p>
 <p>When the packet originates from the AI Engine, the first 32-bit word should be decoded by the PL kernels manually. By decoding the packet ID from the packet, and reading the packet switching header files (<code class="docutils literal notranslate"><span class="pre">Work/temp/packet_ids_c.h</span></code> and <code class="docutils literal notranslate"><span class="pre">Work/temp/packet_ids_v.h</span></code>) by the compiler, the PL kernels should be able to route the packet to the correct destination.</p>
-</section>
-<section id="prepare-data-and-run-ai-engine-simulator">
+</div>
+<div class="section" id="prepare-data-and-run-ai-engine-simulator">
 <h2>Prepare Data and Run AI Engine Simulator<a class="headerlink" href="#prepare-data-and-run-ai-engine-simulator" title="Permalink to this heading">¶</a></h2>
 <p>When constructing the input data file for the AI Engine simulator, the data file should contain the sequence of packets. Each packet contains the packet header, follwed by the data. The last data has the <code class="docutils literal notranslate"><span class="pre">TLAST</span></code> keyword in a separate line just above the data. The data is in 32-bit integer format, including the header. The following is an example of a packet in the data file (<code class="docutils literal notranslate"><span class="pre">data/input.txt</span></code>).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2415853568</span>
@@ -283,8 +284,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>Here, Dataout0_<strong>3</strong> denotes that the packet ID 0 comes from <code class="docutils literal notranslate"><span class="pre">pktmerge.in[3]</span></code>. By looking at the graph code (<code class="docutils literal notranslate"><span class="pre">aie/graph.h</span></code>) or graph view in Vitis analyzer, you can find which AI Engine kernel actually produced it. In this example result, it is kernel <code class="docutils literal notranslate"><span class="pre">core[3]</span></code> (<code class="docutils literal notranslate"><span class="pre">aie/aie_core4.cpp</span></code>).</p>
-</section>
-<section id="example-pl-kernels-for-packet-switching">
+</div>
+<div class="section" id="example-pl-kernels-for-packet-switching">
 <h2>Example PL Kernels for Packet Switching<a class="headerlink" href="#example-pl-kernels-for-packet-switching" title="Permalink to this heading">¶</a></h2>
 <p>This section describes how the PL kernels can generate and decode packet headers, and how to distribute packets to the corresponding destinations. HLS example code is provided, and hardware emulation and hardware flows can be run.</p>
 <p>The packet switching feature does not have a dependency on the PL kernel types (HLS, Verilog, etc) and their design structure. It just has requirements around the packet format and how the packet ID works as described in the previous sections.</p>
@@ -406,8 +407,8 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 </pre></div>
 </div>
 <p>Note that for both packet sender and packet receiver, the packet IDs are read from <code class="docutils literal notranslate"><span class="pre">packet_ids_c.h</span></code>, which is generated by the AI Engine compiler. Therefore, it requires that the AI Engine compilation is completed before the PL kernel compilation. Or, if packet IDs are changed when the AI Engine side has had any change, it requires the PL kernels to be re-compiled.</p>
-</section>
-<section id="example-ps-code-for-packet-switching">
+</div>
+<div class="section" id="example-ps-code-for-packet-switching">
 <h2>Example PS code for Packet Switching<a class="headerlink" href="#example-ps-code-for-packet-switching" title="Permalink to this heading">¶</a></h2>
 <p>The PS code for hardware emulation and hardware flows is in <code class="docutils literal notranslate"><span class="pre">sw/host.cpp</span></code>. You can review the code. It opens the XCLBIN using the following code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">//</span> <span class="n">Open</span> <span class="n">xclbin</span>
@@ -486,8 +487,8 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 </div>
 <p>Then, finally, it performs post-processing and releases objects.</p>
 <p>Note that there is no special packet switching handling in the PS code. It is already done on the AI Engine and PL side.</p>
-</section>
-<section id="run-hardware-emulation-and-hardware-flows">
+</div>
+<div class="section" id="run-hardware-emulation-and-hardware-flows">
 <h2>Run Hardware Emulation and Hardware flows<a class="headerlink" href="#run-hardware-emulation-and-hardware-flows" title="Permalink to this heading">¶</a></h2>
 <p>Run HW emulation with the following make command (it builds the HW system and host application).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">run_hw_emu</span>
@@ -517,8 +518,8 @@ void hls_packet_sender(hls::stream&lt;ap_axiu&lt;32,0,0,0&gt;&gt; &amp;s0,hls::s
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEST</span> <span class="n">PASSED</span>
 </pre></div>
 </div>
-</section>
-<section id="conclusion">
+</div>
+<div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you learned about the following concepts.</p>
 <ul class="simple">
@@ -539,8 +540,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></section>
-</section>
+<p align="center"><sup>XD029 | &copy; Copyright 2020-2021 Xilinx, Inc.</sup></p></div>
+</div>
 
 
            </div>

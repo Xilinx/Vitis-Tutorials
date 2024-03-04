@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis ライブラリ入門 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Versal プラットフォーム作成クイック スタート" href="../Vitis_Platform/README.html" />
+    <link rel="prev" title="4.DATAFLOW 最適化の確認" href="../Vitis_HLS/dataflow_design.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../Vitis-Getting-Started.html">概要</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../Vitis/Getting_Started_Vitis.html">Vitis の概要および入門</a></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_HLS/Getting_Started_Vitis_HLS.html">Vitis HLS</a></li><li class="toctree-l2 current"><a class="current reference internal" href="#">Vitis ライブラリ</a><ul><li class="toctree-l3"><a class="reference internal" href="#before-you-begin">開始前の確認事項</a><ul><li class="toctree-l4"><a class="reference internal" href="#setup-environment">環境のセットアップ</a></li><li class="toctree-l4"><a class="reference internal" href="#get-vitis-libraries">Vitis ライブラリの取得</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#running-the-tutorial">チュートリアルの実行</a><ul><li class="toctree-l4"><a class="reference internal" href="#create-and-run-a-hls-project">HLS プロジェクトの作成および実行</a></li><li class="toctree-l4"><a class="reference internal" href="#use-the-exported-ip-in-rtl-design-with-vivado-flow">Vivado フローでのエクスポートされた IP の RTL デザインでの使用</a></li></ul></li><li class="toctree-l3"><a class="reference internal" href="#summary">まとめ</a></li><li class="toctree-l3"><a class="reference internal" href="#reference">参考資料</a></li></ul></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_Platform/README.html">Vitis プラットフォーム</a></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../Vitis-Getting-Started.html">入門</a>&raquo;</li><li>Vitis ライブラリ入門</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Getting_Started/Vitis_Libraries/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table>
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション チュートリアル</h1>
+   </td>
+ </tr>
+</table><div class="section" id="getting-started-with-vitis-libraries">
+<h1>Vitis ライブラリ入門<a class="headerlink" href="#getting-started-with-vitis-libraries" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: Vitis 2022.1</strong></em></p>
+<p>このチュートリアルでは、Vitis ライブラリを使用して独自のデザインを構築する方法について説明します。ここでは、FFT の L1 ライブラリをサンプルとして使用します。ライブラリのコピーから、それ自体のコンパイルおよびシミュレーション、最上位デザインへのインスタンシエートまでの説明が含まれています。</p>
+<div class="section" id="before-you-begin">
+<h2>開始前の確認事項<a class="headerlink" href="#before-you-begin" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="setup-environment">
+<h3>環境のセットアップ<a class="headerlink" href="#setup-environment" title="Permalink to this heading">¶</a></h3>
+<p>ライブラリを使用し始める前に、まず Vitis 環境をセットアップする必要があります。Vitis 環境をセットアップする方法は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform">Vitis オンライン資料</a>を参照してください。Vitis および XRT をセットアップするためのスクリプト例は、次のとおりです。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source &lt;Vitis Tool Installation Path&gt;/Vitis/2022.1/settings64.sh
+$ source /opt/xilinx/xrt/setup.sh
+$ export PLATFORM_REPO_PATHS=&lt;Platform Installation Path&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-vitis-libraries">
+<h3>Vitis ライブラリの取得<a class="headerlink" href="#get-vitis-libraries" title="Permalink to this heading">¶</a></h3>
+<p>次に、Vitis ライブラリをローカル パスにコピーする必要があります。</p>
+<p>Vitis ライブラリはオープンソースで、ザイリンクス GitHub (https://github.com/Xilinx/Vitis_Libraries) にあります。</p>
+<p>作業ディレクトリとして $/home/project$ を使用している場合は、次のコマンドを使用して Vitis ライブラリ リポジトリを作業ディレクトリにコピーします。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Vitis_Libraries/
+├── Jenkinsfile
+├── LICENSE.txt
+├── README.md
+├── blas/
+├── codec/
+├── data_analytics/
+├── data_compression/
+├── database/
+├── dsp/
+├── genomics/
+├── graph/
+├── hpc/
+├── quantitative_finance/
+├── security/
+├── solver/
+├── sparse/
+├── utils/
+└── vision/
+</pre></div>
+</div>
+<p>ダウンロードは、ネットワークによって数秒から数分かかります。完了したら、サブフォルダーを参照してファイル構造を確認できます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Vitis_Libraries/ ├── Jenkinsfile ├── LICENSE.txt ├── README.md ├── blas/ ├── codec/ ├── data_analytics/ ├── data_compression/ ├── database/ ├── dsp/ ├── genomics/ ├── graph/ ├── hpc/ ├── quantitative_finance/ ├── security/ ├── solver/ ├── sparse/ ├── utils/ └── vision/</pre></div>
+</div>
+<p>最上位フォルダーにはさまざまなライブラリ カテゴリがあります。この演習では、<strong>dsp</strong> ライブラリを使用します。サブディレクトリ <em>dsp</em> に入ると、次のようなディレクトリ構造になっています。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dsp/
+├── Jenkinsfile
+├── L1/
+│   ├── README.md
+│   ├── examples/
+│   ├── include/
+│   ├── meta/
+│   ├── src/
+│   └── tests/
+├── L2/
+│   ├── README.md
+│   ├── benchmarks/
+│   ├── examples/
+│   ├── include/
+│   ├── meta/
+│   └── tests/
+├── LICENSE.txt
+├── README.md
+├── docs/
+│   ├── Doxyfile
+│   ├── Makefile
+│   ├── Makefile.sphinx
+│   ├── README.md
+│   └── src/
+├── ext/
+│   ├── README.md
+│   ├── make_utility/
+│   └── xcl2/
+└── library.json
+</pre></div>
+</div>
+<p>このライブラリは C++ で記述されており、3 つのレベルのアブストラクションが含まれています。</p><ul class="simple"> <li><p>L1: モジュール レベル。コア LZ ベースおよびデータ圧縮特定 (LZ4 圧縮や Snappy 圧縮など) のモジュールの最適化されたハードウェア インプリメンテーションを提供します。</p></li> <li><p>L2: カーネル レベル。LZ4、Snappy、zlib、および Zstd データ圧縮アルゴリズムのデモが、最適化されたハードウェア モジュールを内部で使用するカーネルによって表示されます。</p></li> <li><p>L3: ソフトウェア API レベル。ビルド済みバイナリ (オーバーレイ) を使用したアクセラレーションのオフロードの詳細をラップし、ユーザーがハードウェア開発なしに Alveo カードでデータ圧縮タスクをアクセラレーションできるようにします。</p></li> </ul>
+</div>
+</div>
+<div class="section" id="running-the-tutorial">
+<h2>チュートリアルの実行<a class="headerlink" href="#running-the-tutorial" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="create-and-run-a-hls-project">
+<h3>HLS プロジェクトの作成および実行<a class="headerlink" href="#create-and-run-a-hls-project" title="Permalink to this heading">¶</a></h3>
+<p>この手順では、L1 Vitis dsp ライブラリの <a class="reference external" href="https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp/L1/examples/1Dfix_impluse">1Dfix_impluse</a> サンプルに含まれているファイルを使用して HLS プロジェクトを作成します。ソース ファイルおよびスクリプト ファイルはすべてこのフォルダーにあります。ここでは、Vitis ライブラリが <em>/home/project/Vitis_Libraries</em> ディレクトリにコピーされているものとします。</p>
+<ol class="simple"><li><p><code class="docutils literal notranslate"><span class="pre">/home/project/Vitis_libraries/dsp/L1/examples/1Dfix_impluse</span></code> フォルダーに移動し、下のコマンドを実行して HLS プロジェクトを作成します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">make</span> <span class="n">run</span> <span class="n">CSIM</span><span class="o">=</span><span class="mi">1</span> <span class="n">CSYNTH</span><span class="o">=</span><span class="mi">1</span> <span class="n">COSIM</span><span class="o">=</span><span class="mi">1</span> <span class="n">XPART</span><span class="o">=</span><span class="n">xcvu9p</span><span class="o">-</span><span class="n">flgc2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p>このコマンドを実行すると、プロジェクト作成、C 合成、C シミュレーション、および協調シミュレーション フローが実行されます。パラメーターを変更すると、特定の手順をスキップできます。ここでは、例として xcvu9p デバイスが使用されていますが、ほかの FPGA デバイスに変更できます。または、キーワード <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> を使用してアクセラレーション プラットフォーム (u250 Alveo プラットフォームなど) を指定できます。フローの最後で、[Console] ビューに入力および出力データ値が出力され、シミュレーションの最後に <em><strong>PASS</strong></em> が表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+
+<span class="o">===============================================================</span>
+<span class="o">--</span><span class="n">Input</span> <span class="n">Impulse</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">===============================================================</span>
+<span class="o">===============================================================</span>
+<span class="o">--</span><span class="n">Output</span> <span class="n">Step</span> <span class="n">fuction</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">===============================================================</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="p">[</span><span class="n">COSIM</span> <span class="mi">212</span><span class="o">-</span><span class="mi">1000</span><span class="p">]</span> <span class="o">***</span> <span class="n">C</span><span class="o">/</span><span class="n">RTL</span> <span class="n">co</span><span class="o">-</span><span class="n">simulation</span> <span class="n">finished</span><span class="p">:</span> <span class="n">PASS</span> <span class="o">***</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>テストベンチでは、FFT への入力としてシングル パルス信号が使用されるため、出力はステップ信号になるはずです。これは、画面に出力される値からわかります。</p>
+<ol class="simple"><li><p>Vitis HLS GUI でプロジェクトを開きます。次のコマンドを <code class="docutils literal notranslate"><span class="pre">/home/project/Vitis_libraries/dsp/L1/examples/1Dfix_impluse</span></code> ディレクトリで実行します。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vitis_hls</span> <span class="o">-</span><span class="n">p</span> <span class="n">prj_impulse_test</span><span class="o">.</span><span class="n">prj</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>ソース ファイル、合成レポート、または波形ビューアーは、[Explorer] ビューおよび Flow Navigator から選択して参照できます。</p>
+<p>top_module.cpp により FFT ライブラリが呼び出され、パラメーターが data_path.hpp ファイルで定義されます。FFT ライブラリを使用する方法の詳細は、Vitis ライブラリの <a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/dsp/2022.1/user_guide/L1.html#fixed-point-1-d-ssr-fft-usage">github.io</a> ページを参照してください。</p>
+<ol class="simple"><li><p>HLS プロジェクトに IP をエクスポートします。</p></li></ol>
+<p>ライブラリ IP が正しく機能していることを確認したので、Vivado IP にそれをエクスポートします。これを実行するには、<em></em>Flow Navigator で <em></em>[IMPLEMENTATION] → <code class="docutils literal notranslate"><span class="pre">Export</span> <span class="pre">RTL</span></code> をクリックします。ポップアップ ウィンドウで、設定をすべてそのまま使用し、<code class="docutils literal notranslate"><span class="pre">OK</span></code> をクリックして IP をエクスポートします。既定では、IP は <code class="docutils literal notranslate"><span class="pre">&lt;project</span> <span class="pre">folder&gt;/solutionN/impl</span></code> にエクスポートされます。ここでは次のディレクトリになります。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">Vitis_Libraries</span><span class="o">/</span><span class="n">dsp</span><span class="o">/</span><span class="n">L1</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="mi">1</span><span class="n">Dfix_impluse</span><span class="o">/</span><span class="n">prj_impulse_test</span><span class="o">.</span><span class="n">prj</span><span class="o">/</span><span class="n">solution1</span><span class="o">/</span><span class="n">impl</span>
+</pre></div>
+</div>
+<p>パスは、エクスポート ポップアップ メニューでカスタマイズできます。</p>
+<p>次の手順では、Vivado を起動し、最上位デザインを作成してエクスポートされた IP をインスタンシエートします。この時点で Vitis HLS GUI を閉じます。</p>
+<ol class="simple"><li><p>協調シミュレーションの波形を表示します (オプション)。</p></li></ol>
+<p>協調シミュレーション関連のコマンド ラインをファイル <code class="docutils literal notranslate"><span class="pre">./run_hls.tcl</span></code> (48 行付近) で次のように変更し、XSIM 波形ダンプ オプションをオンにできます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>...
+if {$COSIM == 1} {
+  cosim_design -wave_debug
+}
+...
+</pre></div>
+</div>
+<p>その後、次のコマンドを再実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">make</span> <span class="n">run</span> <span class="n">COSIM</span><span class="o">=</span><span class="mi">1</span> <span class="n">XPART</span><span class="o">=</span><span class="n">xcvu9p</span><span class="o">-</span><span class="n">flgc2104</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">e</span>
+</pre></div>
+</div>
+<p>このようにすると、次のようなシミュレーションの波形を取得できます。例は、シングル SSR ストリーム ポートに対するものです。</p>
+<p><img alt="../../../_images/cosim_wave.png" src="../../../_images/cosim_wave.png" /></p>
+<p>協調シミュレーションの波形におけるインターフェイスの信号の動作を、次の Vivado シミュレーション テストベンチの基準として使用します。</p>
+</div>
+<div class="section" id="use-the-exported-ip-in-rtl-design-with-vivado-flow">
+<h3>Vivado フローでのエクスポートされた IP の RTL デザインでの使用<a class="headerlink" href="#use-the-exported-ip-in-rtl-design-with-vivado-flow" title="Permalink to this heading">¶</a></h3>
+<p>このチュートリアルの root ディレクトリにいるものとします。</p>
+<ol class="simple"><li><p>提供の RTL ソース ファイルを使用して最上位プロジェクトを Vivado で作成します。</p></li></ol>
+<p>次のコマンドを使用し、ディレクトリを作成して Vivado GUI を起動します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">vivado</span>
+<span class="n">cd</span> <span class="o">./</span><span class="n">vivado</span>
+<span class="n">vivado</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>既定のプロジェクト名の <em>project_1</em> を使用して新しいプロジェクトを作成し、タイプには <em><strong></strong></em>[RTL Project] を選択し、<em><strong></strong></em>[Do not specify sources at this time] をオンにします。このプロジェクトのデバイスには <em><strong>xcvu9p-flgc2104-2-e</strong></em> を選択します。ほかのデバイスを選択することもできます。</p>
+<p>プロジェクトが作成されたので、このプロジェクトにソース ファイルを追加します。<code class="docutils literal notranslate"><span class="pre">PROJECT</span> <span class="pre">MANAGER</span></code> → <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">Sources</span></code> → <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">or</span> <span class="pre">create</span> <span class="pre">design</span> <span class="pre">sources</span></code> → <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">Files</span></code> をクリックし、<em><strong>src</strong></em> フォルダーにある <em><strong>fft_wrap.v</strong></em> を追加します。次に、<code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">or</span> <span class="pre">create</span> <span class="pre">simulation</span> <span class="pre">sources</span></code> → <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">Files</span></code> をクリックして、<em><strong>fft_tb.v</strong></em> をプロジェクトに追加します。同じ手順を使用して、<em><strong>datain.txt</strong></em> および <em><strong>dataref.txt</strong></em> ファイルもプロジェクトにシミュレーション ソースとして追加します。</p>
+<p><em><strong>fft_wrap.v</strong></em> により、前の手順でエクスポートした FFT IP がインスタンシエートされます。Vivado で検出されるように IP リポジトリ パスを設定する必要があります。これを実行するには、Flow Navigator で <code class="docutils literal notranslate"><span class="pre">settings</span></code> をクリックし、IP エクスポート フォルダーをリポジトリ パスに追加します。</p>
+<p><img alt="../../../_images/ip_repo.png" src="../../../_images/ip_repo.png" /></p>
+<p>Flow Navigator で <code class="docutils literal notranslate"><span class="pre">IP</span> <span class="pre">Catalog</span></code> をクリックすると、FFT IP が [User Repository] に表示されるはずです。</p>
+<p><img alt="../../../_images/ip_catalog.png" src="../../../_images/ip_catalog.png" /></p>
+<p>IP をダブルクリックして <code class="docutils literal notranslate"><span class="pre">OK</span></code> をクリックし、プロジェクトにそれを追加します。これで、IP コアが問題なくインスタンシエートされたことをプロジェクトの階層ビューで確認できるはずです。</p>
+<ol class="simple"><li><p><strong>fft_wrap.v</strong> ファイルを開き、ポート信号を確認します。クロック、リセット、および制御信号 (start、done、idle、ready) に加えて、4 つの入力ストリーム ポート (<em>inData_x</em> および <em>inData_x_ce</em>) と 4 つの出力ストリーム ポート (<em>outData_x</em> および <em>outData_x</em>we*) があります。入力および出力データ バスは、<em>_ce</em> または <em>_we</em> 信号によって検証されます。テストベンチ ファイル <strong>fft_tb.v</strong> で、<strong>datain.txt</strong> ファイルから入力データを読み出し、それを 4 つのデータ ストリームに分割して fft モジュールに送信します。4 つの出力データ ストリームが受信され、基準データ ファイル <strong>dataref.txt</strong> と比較されます。テスト データセットは、<em>/home/project/Vitis_Libraries/dsp/L1/examples/1Dfix_impluse</em> ディレクトリにあるシミュレーション サンプルと同じです。</p></li></ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">fft_wrap</span> <span class="p">(</span>
+  <span class="n">output</span>          <span class="n">inData_0_ce</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">inData_1_ce</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">inData_2_ce</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">inData_3_ce</span><span class="p">,</span>
+
+  <span class="nb">input</span>   <span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">inData_0</span><span class="p">,</span>
+  <span class="nb">input</span>   <span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">inData_1</span><span class="p">,</span>
+  <span class="nb">input</span>   <span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">inData_2</span><span class="p">,</span>
+  <span class="nb">input</span>   <span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">inData_3</span><span class="p">,</span>
+
+  <span class="n">output</span>          <span class="n">outData_0_we</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">outData_1_we</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">outData_2_we</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">outData_3_we</span><span class="p">,</span>  
+
+  <span class="n">output</span>  <span class="p">[</span><span class="mi">41</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">outData_0</span><span class="p">,</span>
+  <span class="n">output</span>  <span class="p">[</span><span class="mi">41</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">outData_1</span><span class="p">,</span>
+  <span class="n">output</span>  <span class="p">[</span><span class="mi">41</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">outData_2</span><span class="p">,</span>
+  <span class="n">output</span>  <span class="p">[</span><span class="mi">41</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span>  <span class="n">outData_3</span><span class="p">,</span>
+  
+  <span class="nb">input</span>           <span class="n">clk</span><span class="p">,</span>
+  <span class="nb">input</span>           <span class="n">rst</span><span class="p">,</span>
+  <span class="nb">input</span>           <span class="n">start</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">done</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">idle</span><span class="p">,</span>
+  <span class="n">output</span>          <span class="n">ready</span>
+
+<span class="p">);</span>
+</pre></div>
+</div>
+<ol class="simple"><li><p>最上位プロジェクトをシミュレーションします。</p></li></ol>
+<p>Flow Navigator で <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Simulation</span></code> → <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Behavioral</span> <span class="pre">Simulation</span></code> をクリックします。波形が読み込まれた状態で Vivado シミュレータが起動します。入力データ バス幅は 32 ビット、出力データ バス幅は 42 ビットです。</p>
+<p>問題が発生しなければ、シミュレーションはスムーズに終了します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Result verification SUCCEED! Simulation finished.</pre></div>
+</div>
+<p>シミュレーションの波形のスクリーンショットは、次のとおりです。</p>
+<p><img alt="../../../_images/xsim_result.png" src="../../../_images/xsim_result.png" /></p>
+<p>シミュレーション ウィンドウを閉じます。</p>
+<ol class="simple"><li><p>最上位プロジェクトをインプリメンテーションします。</p></li></ol>
+<p>Flow Navigator で <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">Implementation</span></code> をクリックし、ポップアップ ウィンドウで <em><strong></strong></em>[OK] をクリックします。Vivado 合成およびインプリケーション フローが実行され、この IP に対してタイミングおよびリソース レポートの両方が生成されます。</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>まとめ<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルでは、L1 Vitis ライブラリ エレメントを使用して独自のデザインを構築する方法について説明しました。FFT サンプルが説明用に選択されていますが、類似のフローに従ってほかのライブラリ エレメントを使用できます。</p>
+</div>
+<div class="section" id="reference">
+<h2>参考資料<a class="headerlink" href="#reference" title="Permalink to this heading">¶</a></h2>
+<p>Vitis ライブラリの資料: https://xilinx.github.io/Vitis_Libraries/</p>
+<p align="center" class="sphinxhide"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../Vitis_HLS/dataflow_design.html" class="btn btn-neutral float-left" title="4. Reviewing the DATAFLOW Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../Vitis_Platform/README.html" class="btn btn-neutral float-right" title="Versal Platform Creation Quick Start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

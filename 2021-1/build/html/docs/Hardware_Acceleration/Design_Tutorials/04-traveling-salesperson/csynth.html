@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -122,7 +123,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="run-vitis-hls-c-synthesis">
+</table><div class="section" id="run-vitis-hls-c-synthesis">
 <h1>Run Vitis HLS C Synthesis<a class="headerlink" href="#run-vitis-hls-c-synthesis" title="Permalink to this heading">¶</a></h1>
 <p>In the previous phase, the C simulation, the code execution was purely C based and although special libraries are used for streams, no RTL was yet involved.
 In C synthesis, the top function <code class="docutils literal notranslate"><span class="pre">tsp</span></code> is analyzed and compiled based on the hints (called pragma or directives) passed to the HLS compiler.  Once the operations are scheduled and mapped onto hardware constructs, the final code is generated in RTL (with both Verilog and VHDL).</p>
@@ -140,13 +141,13 @@ In C synthesis, the top function <code class="docutils literal notranslate"><spa
 <li><p>The full latency for the <code class="docutils literal notranslate"><span class="pre">tsp</span></code> function is 479,001,957 (close to half a billion clock cycles) mainly contributed by <code class="docutils literal notranslate"><span class="pre">loop_compute</span></code></p></li>
 <li><p>That latency of 479,001,600 is exactly factorial 12 (12!) which corresponds to the the scenario with 13 cities (N=13) given that the first city (the route starting point) is fixed, so the permutations are applied on the 12 remaining cities.</p></li>
 </ul>
-</section>
-<section id="next">
+</div>
+<div class="section" id="next">
 <h1>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="cosim.html"><span class="doc">Run the RTL/C cosimulation</span></a></p></li>
 </ul>
-</section>
+</div>
 
 
            </div>

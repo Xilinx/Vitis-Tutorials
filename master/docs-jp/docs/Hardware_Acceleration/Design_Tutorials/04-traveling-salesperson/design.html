@@ -1,314 +1,45 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
 
-
-
-<!DOCTYPE HTML>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-	<head>
-		<meta charset="utf-8">
-		
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" href="https://static.cloud.coveo.com/searchui/v2.4382/css/CoveoFullSearch.css"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta name="description"/>
-		<meta name="keywords"/>
-		<meta property="og:title" content=""/>
-		<meta property="og:description"/>
-		<!-- favicon -->
-		<link rel="icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../../_static/favicon.ico"/>
-		<!-- Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css"/>
-
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>Design Structure &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  
-  
-  
-
-  
-      <script type="text/javascript" src="../../../../_static/js/jquery.min.js"></script>
-	  <script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/d3dd8c60ed.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/common-ui-all.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/CoveoJsSearch.Lazy.min.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/linkid.js"></script>
-    <script type="text/javascript" src="../../../../_static/js/Searchbox.min.js"></script>
-	<script type="text/javascript" src="../../../../_static/js/header-footer.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
 
-    
-
-  
-  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/common-ui-all.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/header-footer.min.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../_static/css/pro.min.css" media="all" />
-    <link rel="index" title="インデックス" href="../../../../genindex.html" />
-    <link rel="search" title="検索" href="../../../../search.html" /> 
-	</head>
-	<body>
-		<div class="xilinx-bs3"/>
-		<div class="root responsivegrid">
-			<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 aem-Grid--large--16 aem-Grid--xlarge--16 aem-Grid--xxlarge--16 aem-Grid--xxxlarge--16 ">
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn aem-GridColumn--default--12">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="header parbase aem-GridColumn aem-GridColumn--default--12">
-								<noindex>
-									<header data-component="header">
-										<nav class="navbar navbar-default aem-Grid aem-Grid--16">
-											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-												<div class="container-fluid main-nav">
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="logo-column">
-																<div class="logo">
-																	<a href="https://japan.xilinx.com/">
-																	<img src="https://github.com/Xilinx/Image-Collateral/blob/main/xilinx-header-logo.svg?raw=true" title="Xilinx Inc"/>
-																	</a>
-																</div>
-															</div>
-															<div class="navbar-column">
-																<div class="navbar navbar-collapse collapse" id="xilinx-main-menu">
-																	<div class="mobile-search-container">
-																		<div id="headerSearchBox" class="headerSearch"
-																			data-component="header-search"
-																			data-redirect-if-empty="false"
-																			data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																			data-coveo-organization-id="xilinxcomprode2rjoqok">
-																			<div class='coveo-search-section'>
-																				<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																				<ul class="dropdown-menu options">
-																					<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
-																						<a href="#">
-																						All</a>
-																					</li>
-																					<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com//products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						Silicon Devices</a>
-																					</li>
-																					<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com//products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						Boards and Kits</a>
-																					</li>
-																					<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com//products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
-																						<a href="#">
-																						IP</a>
-																					</li>
-																					<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
-																						<a href="#">
-																						Support</a>
-																						<ul>
-																							<li data-label="Documentation" data-action-link="https://www.xilinx.com//support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
-																								<a href="#">
-																								Documentation</a>
-																							</li>
-																							<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com//support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
-																								<a href="#">
-																								Knowledge Base</a>
-																							</li>
-																							<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
-																								<a href="#">
-																								Community Forums</a>
-																							</li>
-																						</ul>
-																					</li>
-																					<li data-label="Partners" data-action-link="https://www.xilinx.com//alliance/member-keyword-search.html" data-search-hub="Partner">
-																						<a href="#">
-																						Partners</a>
-																					</li>
-																					<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
-																						<a href="#">
-																						Videos</a>
-																					</li>
-																					<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
-																						<a href="#">
-																						Press</a>
-																					</li>
-																				</ul>
-																				<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
-																				<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																			</div>
-																		</div>
-																	</div>
-																	<ul class="nav navbar-nav nav-justified">
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://japan.xilinx.com/applications.html">
-																			Applications</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://japan.xilinx.com/products/silicon-devices.html">
-																			Products</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://developer.xilinx.com/">
-																			Developers</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://japan.xilinx.com/support.html">
-																			Support</a>
-																		</li>
-																		<li class="accordion-toggle-icons" data-component="toggle-dropdown">
-																			<a href="https://japan.xilinx.com/about/company-overview.html">
-																			About</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-															<script type="text/javascript" src="../../../../_static/js/gtm.js"></script>
-															<!--<div class="mini-nav">
-																<button type="button" data-function="xilinx-mobile-menu" id="nav-toggle" class="navbar-toggle collapsed visible-xs-block" aria-expanded="false">
-																<span></span>
-																<span></span>
-																<span></span>
-																<span></span>
-																</button>
-																<ul class="list-inline">
-																	<li class="dropdown user-menu">
-																		<button data-toggle="dropdown">
-																		<span class="sr-only">Account</span>
-																		<span class="fas fa-user"></span>
-																		</button>
-																		<ul class="dropdown-menu">
-																			<li>
-																				<a href="https://www.xilinx.com/myprofile/subscriptions.html">
-																				My Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/registration/create-account.html">
-																				Create Account</a>
-																			</li>
-																			<li>
-																				<a href="https://www.xilinx.com/bin/protected/en/signout">
-																				Sign Out</a>
-																			</li>
-																		</ul>
-																	</li>
-																	<li class="hidden-xs">
-																		<button data-function="search-toggle">
-																		<span class="sr-only">Search</span>
-																		<span class="far fa-search"></span>
-																		</button>
-																	</li>
-																</ul>
-															</div>
-															-->
-															<div class="search-container">
-																<div id="headerSearchBox" class="headerSearch"
-																	data-component="header-search"
-																	data-redirect-if-empty="false"
-																	data-coveo-access-token="xxa237d4dd-f0aa-47fc-9baa-af9121851b33"
-																	data-coveo-organization-id="xilinxcomprode2rjoqok">
-																	<div class='coveo-search-section'>
-																		<div class="CoveoAnalytics" data-search-hub="Site"></div>
-																		<ul class="dropdown-menu options">
-																			<li class="option" data-label="All" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-search-hub="Site">
-																				<a href="#">
-																				All</a>
-																			</li>
-																			<li data-label="Silicon Devices" data-action-link="https://www.xilinx.com/products/silicon-devices/si-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				Silicon Devices</a>
-																			</li>
-																			<li data-label="Boards and Kits" data-action-link="https://www.xilinx.com/products/boards-and-kits/bk-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				Boards and Kits</a>
-																			</li>
-																			<li data-label="Intellectual Property" data-action-link="https://www.xilinx.com/products/intellectual-property/ip-keyword-search.html" data-search-hub="Product">
-																				<a href="#">
-																				IP</a>
-																			</li>
-																			<li data-label="Support" class="option" data-action-link="https://www.xilinx.com/search/support-keyword-search.html" data-search-hub="Support">
-																				<a href="#">
-																				Support</a>
-																				<ul>
-																					<li data-label="Documentation" data-action-link="https://www.xilinx.com/support/documentation-navigation/documentation-keyword-search.html" data-search-hub="Document">
-																						<a href="#">
-																						Documentation</a>
-																					</li>
-																					<li data-label="Knowledge Base" data-action-link="https://www.xilinx.com/support/answer-navigation/answer-keyword-search.html" data-search-hub="AnswerRecord">
-																						<a href="#">
-																						Knowledge Base</a>
-																					</li>
-																					<li data-label="Community Forums" data-action-link="https://www.xilinx.com/search/forums-keyword-search.html" data-search-hub="Forums">
-																						<a href="#">
-																						Community Forums</a>
-																					</li>
-																				</ul>
-																			</li>
-																			<li data-label="Partners" data-action-link="https://www.xilinx.com/alliance/member-keyword-search.html" data-search-hub="Partner">
-																				<a href="#">
-																				Partners</a>
-																			</li>
-																			<li data-label="Videos" data-action-link="https://www.xilinx.com/video/video-keyword-search.html" data-search-hub="Video">
-																				<a href="#">
-																				Videos</a>
-																			</li>
-																			<li data-label="Press" data-action-link="https://www.xilinx.com/search/press-keyword-search.html" data-search-hub="Press">
-																				<a href="#">
-																				Press</a>
-																			</li>
-																		</ul>
-																		<a href="#" class="btn dropdown-toggle value" data-toggle="dropdown"></a>
-																		<div class="CoveoSearchbox" data-id="coveosearchbox" data-action-link="https://www.xilinx.com/search/site-keyword-search.html" data-placeholder="Search Xilinx"></div>
-																	</div>
-																</div>
-																<button data-function="search-toggle">
-																<span class="sr-only">検索</span>
-																<span class="far fa-times"></span>
-																</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</nav>
-									</header>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="parsys aem-GridColumn--xxxlarge--none aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
-						<div class="container-fluid">
-							<div class="row">
-							<div class="col-xs-12">
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> Vitis™ チュートリアル
-          
-
-          
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
               <div class="version">
-                2021.2
+                2022.1
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -316,117 +47,62 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-      
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-            
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">English version</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">master</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
 </ul>
-<p class="caption"><span class="caption-text">入門</span></p>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
 </ul>
-<p class="caption"><span class="caption-text">アクセラレーション</span></p>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Hardware-Acceleration.html">Hardware Acceleration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">AI エンジン</span></p>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
 </ul>
-<p class="caption"><span class="caption-text">プラットフォーム</span></p>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis Platform Creation</a></li>
 </ul>
-<p class="caption"><span class="caption-text">その他のバージョン</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
 </ul>
 
-            
-			
-			<p class="caption"><span class="caption-text">このページ</span></p>
-				<ul class="current">
-				  <li class="toctree-l1"><a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/design.md.txt"
-						rel="nofollow">ソースの表示</a></li>
-				</ul>
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../../index.html">Vitis™ チュートリアル</a>
-        
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>デザイン構造</li>
-    
-    
+      <li>Design Structure</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/design.md.txt" rel="nofollow"> ページ ソースの表示</a>
-          
-        
+            <a href="../../../../_sources/docs/Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson/design.md.txt" rel="nofollow"> View page source</a>
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <!--
 /*
- * Copyright 2021 Xilinx, Inc.
+ * Copyright 2020-2022 Xilinx, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -438,175 +114,116 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ --> <table class="sphinxhide" width="100%">
+ */ --><table width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis ハードウェア アクセラレーション</h1>
-    <a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</br></a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
     </td>
  </tr>
 </table><blockquote>
-<div><p><strong>このセクションの内容</strong><br />フル デザイン構造 (テストベンチおよびアクセラレーション関数) と、適用されるコンパイラ ヒント (プラグマ) について説明します。</p>
+<div><p><strong>In this section…</strong><br />We describe the full design structure (testbench and accelerated function) and discuss the compiler hints (pragmas) applied.</p>
 </div></blockquote>
 <div class="section" id="design-structure">
-<h1>デザイン構造<a class="headerlink" href="#design-structure" title="Permalink to this headline">¶</a></h1>
-<p>サンプル デザインの構造は次のとおりです。</p>
+<h1>Design Structure<a class="headerlink" href="#design-structure" title="Permalink to this heading">¶</a></h1>
+<p>The example design is structured as follows:</p>
 <ul>
-<li><p>ハードウェア アクセラレーション最上位関数 <code class="docutils literal notranslate"><span class="pre">tsp</span></code> には、2 つの仮引数 (入力距離と、見つかった最短距離に対する出力結果) があります。  テストベンチ (main) は関数をラップし、距離データ ポイントを送信して結果を収集します。<br />図を次に示します。<br /><img src="images/descript.png" alt="ブロック図" title="説明" width="600" height="250" /></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tsp</span></code> 関数およびその仮引数 (AXI4-Stream に対するカスタマイズを含む):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">tsp</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span> <span class="n">streamDistances</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">shortestDistance</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="c1">// defines our input as coming from an AXI-Stream via the INTERFACE pragma</span>
-  <span class="cp">#pragma HLS INTERFACE axis port=streamDistances</span>
+<li><p>The hardware accelerated top function <code class="docutils literal notranslate"><span class="pre">tsp</span></code> has two formal parameters: the input distances and the output result for the shortest distance found.  The testbench (main) wraps around the function and sends distance data points and collects the result.<br />Here is the diagram:<br /><img src="./images/descript.png" alt="block diagram" title="description" width="600" height="250" /></p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">tsp</span></code> function and its formal parameters (and the customization to AXI-Stream):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">tsp</span><span class="p">(</span><span class="n">hls</span><span class="o">::</span><span class="n">stream</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">streamDistances</span><span class="p">,</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">shortestDistance</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// defines our input as coming from an AXI-Stream via the INTERFACE pragma</span>
+<span class="w">  </span><span class="cp">#pragma HLS INTERFACE axis port=streamDistances</span>
 </pre></div>
 </div>
 </li>
-<li><p>概念的には、このアクセラレーション関数 <code class="docutils literal notranslate"><span class="pre">tsp</span></code> は、特定の都市からその他の都市への一連の距離を受信します。  ストリームを通して送信されるデータ ポイントの数は N (都市の数) x N です。入力は、<code class="docutils literal notranslate"><span class="pre">hls::stream</span></code> ビルトイン ライブラリからの Vitis HLS <strong>stream</strong> として宣言され、<code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> プラグマによって AXI4-Stream に対してさらに特化されます。</p></li>
-<li><p>ストリーム経由でテストベンチによって送信されるデータの型は unsigned int (<code class="docutils literal notranslate"><span class="pre">uint16_t</span></code>) で、テストベンチはこのハードウェア効率の高いデータ型に浮動小数点の距離を正規化します。</p>
+<li><p>Conceptually, this accelerated function <code class="docutils literal notranslate"><span class="pre">tsp</span></code> receives a series of distances from a given city to all others.  The number of data points sent through the stream is N (the number of cities) times N. Notice that the input is declared as a Vitis HLS <strong>stream</strong> from the <code class="docutils literal notranslate"><span class="pre">hls::stream</span></code> built-in library and further specialized to AXI-Stream via the <code class="docutils literal notranslate"><span class="pre">INTERFACE</span></code> pragma.</p></li>
+<li><p>The data sent by the testbench over the stream is of type unsigned int (<code class="docutils literal notranslate"><span class="pre">uint16_t</span></code>), the testbench normalizes the floating point distances to this hardware efficient data type:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Normalizing distances to get the maximum precision on 16-bit integers</span>
-<span class="kt">uint16_t</span> <span class="n">maxUint</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span>
-<span class="k">for</span> <span class="p">(</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span> <span class="p">{</span>
-  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Distance (fp32): &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; Norm.(uint16): &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span> <span class="o">*</span> <span class="n">maxUint</span><span class="p">);</span>
-  <span class="n">inputDistances</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span> <span class="o">*</span> <span class="n">maxUint</span><span class="p">);</span>
-<span class="p">}</span>
+<span class="kt">uint16_t</span><span class="w"> </span><span class="n">maxUint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="o">*</span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Distance (fp32): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; Norm. (uint16): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="p">)((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">maxUint</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">inputDistances</span><span class="p">.</span><span class="n">write</span><span class="p">((</span><span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">maxDist</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">maxUint</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p>距離はその後、専用の (大きい) メモリ ブロックではなく、デバイス ロジック エレメントにメモリ エレメントとしてインプリメントされる小さい内部配列に格納されます。  たとえば 13 都市の場合、これは 16 ビット ワードとして表現した 13x13=169 個の距離、つまり合計 2,704 ビットになり、1 個のデバイス専用ブロック メモリ (BRAM の場合は 36,000 ビット) が保持できるものよりも大幅に少ないです。</p></li>
-<li><p>オンチップ メモリを使用して実行するルックアップは高速であり、パフォーマンスをさらに向上させるためにチュートリアルの後の手順でこれを有効活用します。</p></li>
-<li><p>すべての異なる置換 (permutation) を効率的な方法で生成することは非常に重要です。その理由は、都市数によって異なる経路のルックアップが数百万または数十億回も必要となることがあり、その場合は数が多すぎて事前に計算して格納できないからです。経路の置換はオンザフライで作成する必要があります。
-これはC++ の <code class="docutils literal notranslate"><span class="pre">next_permutation()</span></code> 関数で可能ですが、特定の置換の計算がその前の置換に依存している場合、この関数は本質的に並列実行するのが困難です。  ここでは、階乗進法に基づいて異なる方法を使用します。<br />ループ インデックスを使用し、それを階乗ベースで変換します。次に、階乗表記のプロパティを使用し、置換としてエンコードされる転倒ベクトルを推定します。</p>
-<p>詳細は、次を参照してください。<br />https://stackoverflow.com/a/7919887/11316188 および https://ja.wikipedia.org/wiki/階乗進法</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="c1">// Represent &quot;i&quot; in factorial base</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="o">++</span><span class="n">k</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">factorial</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="p">);</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">factorial</span><span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">k</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="c1">// Transform the factorial representation into an inversion vector</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">char</span> <span class="n">k</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">k</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">char</span> <span class="n">j</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span>
-      <span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">perm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span>
+<li><p>The distances are then stored into an internal array which is small enough to be implemented as memory elements onto the device logic elements rather than dedicated (and larger) memory blocks.  Indeed, if we consider 13 cities, it corresponds to 13x13=169 distances represented as 16-bit words which amounts to 2,704 bits which is much less of what a single of the device dedicated block memory (36k-bits for the BRAM) can hold.</p></li>
+<li><p>Lookups performed with on-chip memory are fast and we’ll use this at our advantage in a later step of the tutorial to further improve the performance.</p></li>
+<li><p>Generating all the different permutations in an eficient manner is critical since, depending on the number of cities, we may need millions or billions of different routes lookups that we cannot pre-compute and store storeas there are just too many. We need to create these route permutations “on-the-fly”.
+Wait! Isn’t that what the C++ <code class="docutils literal notranslate"><span class="pre">next_permutation()</span></code> function gives us?… Yes, but that function is inherently difficult to parallelize given that one permutation calculation depends on the previous one.  In our example we use a different method based on factoradics:<br />We use the loop index and convert it in factorial base. Then we use a property of factorial representation to deduce an inversion vector which is encoded as a permutation.</p>
+<p>More information here: https://stackoverflow.com/a/7919887/11316188<br />and here https://en.wikipedia.org/wiki/Factorial_number_system</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">// Represent &quot;i&quot; in factorial base</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Transform the factorial representation into an inversion vector</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="o">--</span><span class="n">k</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="o">--</span><span class="n">j</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="n">perm</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">perm</span><span class="p">[</span><span class="n">k</span><span class="p">]);</span><span class="w"></span>
 
-  <span class="c1">// This is perm[] for N=4 across all 3!=6 iterations:</span>
-  <span class="c1">// 0 | 1 | 2 | 3</span>
-  <span class="c1">// 0 | 1 | 3 | 2</span>
-  <span class="c1">// 0 | 2 | 1 | 3</span>
-  <span class="c1">// 0 | 2 | 3 | 1</span>
-  <span class="c1">// 0 | 3 | 1 | 2</span>
-  <span class="c1">// 0 | 3 | 2 | 1</span>
+<span class="w">  </span><span class="c1">// This is perm[] for N=4 across all 3!=6 iterations:</span>
+<span class="w">  </span><span class="c1">// 0 | 1 | 2 | 3</span>
+<span class="w">  </span><span class="c1">// 0 | 1 | 3 | 2</span>
+<span class="w">  </span><span class="c1">// 0 | 2 | 1 | 3</span>
+<span class="w">  </span><span class="c1">// 0 | 2 | 3 | 1</span>
+<span class="w">  </span><span class="c1">// 0 | 3 | 1 | 2</span>
+<span class="w">  </span><span class="c1">// 0 | 3 | 2 | 1</span>
 </pre></div>
 </div>
-<p>上記のコードは、置換の辞書式リスト (lexicographic list) を生成します。<br />たとえば、N=5 の場合、反復番号 17 は階乗ベースで 02210 と表現されます (0x24、2x6、2x2、1x1、および 0)。<br />置換を計算するには、次を実行します。</p>
+<p>The code above generates a lexicographic list of permutations.<br />For example with N=5, the iteration number 17 is represented as 02210 in factorial base: 0x24, 2x6, 2x2, 1x1 and 0.<br />To calculate the permutation:</p>
 <ul class="simple">
-<li><p>一番右の 0 (0221<strong>0</strong>) の場合、これより左側にある数字を見ます。一番左の数字のみが 0 よりも小さいまたは同等であるため、<strong>0</strong>+1=<strong>1</strong> になります。</p></li>
-<li><p>次に、隣の 1 (022<strong>1</strong>0) の場合、それより左側にある数字を見ると、ここでも 1 は一番左の 0 に対してのみ大きいまたは同等であるため、<strong>1</strong>+1=<strong>2</strong> になります。</p></li>
-<li><p>次に、その左隣の 2 (02<strong>2</strong>10) の場合、2 はそれより左側にある 2 つの数字よりも大きいまたは同等であるため、<strong>2</strong>+1+1=<strong>4</strong> になります。</p></li>
-<li><p>次に、さらにその左隣の 2 (0<strong>2</strong>210) の場合、<strong>2</strong>+1=<strong>3</strong> になります。</p></li>
-<li><p>18 番目のシーケンスである反復 17 に対する置換は、0,3,4,2,1 です。</p></li>
-<li><p>先行の 0 は常に存在します。その理由は、ループは N! ではなく (N-1)! で実行され、0 が参照都市、つまり経路を計算するための始点になるからです。</p></li>
+<li><p>Take the 0 (0221<strong>0</strong>) and look at digits on its left. Only the leftmost digit is smaller or equal, so this gives us <strong>0</strong>+1=<strong>1</strong>.</p></li>
+<li><p>Now take 1 (022<strong>1</strong>0) and look left, it’s bigger or equal only to the last 0 again, so <strong>1</strong>+1=<strong>2</strong></p></li>
+<li><p>Now take the next 2 on the left (02<strong>2</strong>10), it’s bigger or equal than its two neighbors on the left, so  <strong>2</strong>+1+1=<strong>4</strong></p></li>
+<li><p>Now take the second 2 on the left ((0<strong>2</strong>210)) and that gives <strong>2</strong>+1=<strong>3</strong></p></li>
+<li><p>The permutation for iteration 17 which is the 18th sequence is 0,3,4,2,1</p></li>
+<li><p>The leading 0 is always present since the loop runs on (N-1)! and not N! and that 0 becomes the reference city, the starting point to calculate the route</p></li>
 </ul>
 </li>
-<li><p>次に、上記で説明したように小さくてオンチップ RAM にマップされる <code class="docutils literal notranslate"><span class="pre">distances</span></code> 配列からの置換を持つ経路をルックアップします。  経路全体の計算は、<code class="docutils literal notranslate"><span class="pre">getDistance</span></code> 関数によって実行されます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">getDistance</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="n">perm</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="k">const</span> <span class="kt">uint16_t</span> <span class="n">distances</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">])</span>
-<span class="p">{</span>
-  <span class="cp">#pragma HLS INLINE</span>
+<li><p>Next, we lookup the route with the permutation from the <code class="docutils literal notranslate"><span class="pre">distances</span></code> array which as explained is rather small and mapped onto on-chip RAM.  The full route calculation is done through the <code class="docutils literal notranslate"><span class="pre">getDistance</span></code> function:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">getDistance</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">perm</span><span class="p">[</span><span class="n">N</span><span class="p">],</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">])</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="cp">#pragma HLS INLINE</span>
 
-  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="mi">-1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">+=</span> <span class="n">distances</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]];</span>
-  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">ret</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">distances</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]];</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">ret</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">getDistance</span></code> の値は <code class="docutils literal notranslate"><span class="pre">compute</span></code> が返す内容で、各反復によって最短距離がアップデートされます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>  <span class="nl">loop_compute</span><span class="p">:</span> <span class="k">for</span><span class="p">(</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">int</span> <span class="n">i_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i_</span> <span class="o">&lt;</span> <span class="n">factorialN</span><span class="p">;</span> <span class="n">i_</span> <span class="o">+=</span> <span class="mi">1</span> <span class="p">)</span>
-  <span class="p">{</span>
-    <span class="cp">#pragma HLS pipeline II=1</span>
-    <span class="n">candidate</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="p">,</span> <span class="n">distances</span><span class="p">));</span>
-  <span class="p">}</span>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">getDistance</span></code> is what <code class="docutils literal notranslate"><span class="pre">compute</span></code> returns and each iteration updates the shortest thus far:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nl">loop_compute</span><span class="p">:</span><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">factorialN</span><span class="p">;</span><span class="w"> </span><span class="n">i_</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cp">#pragma HLS pipeline II=1</span>
+<span class="w">    </span><span class="n">candidate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="p">(</span><span class="n">i_</span><span class="p">,</span><span class="w"> </span><span class="n">distances</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p>最後に、<code class="docutils literal notranslate"><span class="pre">shortestDistance</span></code> (<code class="docutils literal notranslate"><span class="pre">tsp</span></code> アクセラレータの出力) により、見つかった最小値が提供されます。</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="c1">// Last candidate from loop above holds the shortest distance</span>
- <span class="n">shortestDistance</span> <span class="o">=</span> <span class="n">candidate</span><span class="p">;</span>
+<li><p>Lastly, the <code class="docutils literal notranslate"><span class="pre">shortestDistance</span></code> (the output of our <code class="docutils literal notranslate"><span class="pre">tsp</span></code> accelerator) provides the smallest value found:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="c1">// Last candidate from loop above holds the shortest distance</span>
+<span class="w"> </span><span class="n">shortestDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">candidate</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
-<li><p>下の波形ビューに、4 都市 (N=4) の場合のタイムラインを示します。行 #6 には 16 個の距離の入力ストリームが表示されています。結果は行 #11 に表示されており、有効なマスクが 1 つ上の行 (行 #10) にあります。<br /><img src="./images/wave1.png" alt="波形" title="波形" width="990" height="330" /></p></li>
+<li><p>The waveform view below shows the timeline for four cities (N=4), the input stream of 16 distances is shown on row #6 while the result comes on row #11 with its valid mask one row above (row #10):<br /><img src="./images/wave1.png" alt="waveform" title="waveform" width="990" height="330" /></p></li>
 </ul>
 </div>
 <div class="section" id="next">
-<h1>次の手順<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h1>
+<h1>Next<a class="headerlink" href="#next" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="csim.html"><span class="doc">C シミュレーションを実行</span></a></p></li>
+<li><p><a class="reference internal" href="csim.html"><span class="doc">Run the C simulation</span></a></p></li>
 </ul>
 </div>
 
 
            </div>
-           
           </div>
-          <footer>
-<!-- Atalwar: Moved the footer code to layout.html to resolve conflict with the Xilinx template -->
-</footer>
-
-        </div>
-      </div>
-
-
-	  <!-- Sphinx Page Footer block -->
-  
-
-  <hr/>
-
-  <div role="contentinfo" class="copyright">
-    <p class="footerinfo">
-      <span class="lastupdated">
-        最終更新日: 2022 年 1 月 18 日
-      </span>
-
-    </p>
-	<br>
-  </div>
-      </div>
-    </section>
-
-
-  
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-   <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-
-  <script type="text/javascript" id="searchindexloader"></script>
-
-
-  
-  
-    
-  
-
-
-
-  <!--  Xilinx template footer block -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="xilinxExperienceFragments experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<div class="xf-content-height">
-						<div class="aem-Grid aem-Grid--16 aem-Grid--default--16 ">
-							<div class="footer parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-								<noindex>
-                  <!-- make footer fixed - NileshP -->
+          
                   <style>
                         .footer {
                         position: fixed;
@@ -615,100 +232,61 @@
                         width: 100%;
                         }
                   </style>
-                  <!-- make footer fixed NileshP-->
-									<footer>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
 										<div class="aem-Grid aem-Grid--16">
 											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
 												<div class="container-fluid sub-footer">
-													<div class="row">
-														<div class="footerSocial parbase">
-															<div class="col-md-push-6 col-lg-push-6 col-md-6 col-lg-6">
-																<ul class="list-inline pull-right social-menu">
-																	<li>
-																		<a href="https://www.linkedin.com/company/xilinx">
-																		<span class="linkedin icon"></span>
-																		<span class="sr-only">LinkedIn</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.twitter.com/XilinxInc">
-																		<span class="twitter icon"></span>
-																		<span class="sr-only">Twitter</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.facebook.com/XilinxInc">
-																		<span class="facebook icon"></span>
-																		<span class="sr-only">Facebook</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.youtube.com/XilinxInc">
-																		<span class="youtube icon"></span>
-																		<span class="sr-only">YouTube</span>
-																		</a>
-																	</li>
-																	<li>
-																		<a href="https://www.xilinx.com/registration/subscriber-signup.html">
-																		<span class="newsletter icon"></span>
-																		<span class="sr-only">Subscribe to Newsletter</span>
-																		</a>
-																	</li>
-																</ul>
-															</div>
-														</div>
-														<div class="col-md-pull-6 col-lg-pull-6 col-md-6 col-lg-6">
-															<span class="copyright">
-                                  
-                                  &copy; 2019-2022, Xilinx, Inc.
-                              </span>
-															<ul class="list-inline sub-menu">
-																<li>
-																	<a href="https://www.xilinx.com/about/privacy-policy.html">Privacy</a>
-																</li>
-																<li>
-																	<a href="https://www.xilinx.com/about/legal.html">Legal</a>
-																</li>
-																<li>
-																	<a href="https://www.xilinx.com/about/contact.html">Contact</a>
-																</li>
-															</ul>
-														</div>
-													</div>
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
 												</div>
 											</div>
 										</div>
-									</footer>
-								</noindex>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="quicklinks parbase aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--0 aem-GridColumn--default--16">
-					<noindex>
-						<span class="quickLinks">
-							<ul>
-								<li>
-									<a href="#top" class="btn backToTop">
-									<span class="fas fa-angle-up" aria-hidden="true"></span>
-									</a>
-								</li>
-							</ul>
-						</span>
-					</noindex>
-				</div>
-			</div>
-		</div>
-		<script>window.CQ = window.CQ || {}</script>
-		<script src="https://static.cloud.coveo.com/searchui/v2.4382/js/CoveoJsSearch.Lazy.min.js"></script>
-		<script>
-			var underscoreSetup = function () {
-			  _.templateSettings.interpolate = /\{\{=([^-][\S\s]+?)\}\}/g;
-			  _.templateSettings.evaluate = /\{\{([^-=][\S\s]+?)\}\}/g;
-			  _.templateSettings.escape = /\{\{-([^=][\S\s]+?)\}\}/g;
-			}
+										
+</br>
 
-			underscoreSetup();
-		</script>
-	</body>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
 </html>

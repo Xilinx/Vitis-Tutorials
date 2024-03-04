@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -99,7 +100,7 @@ function OptanonWrapper() { }
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="hbm-bandwidth-explorations">
+  <div class="section" id="hbm-bandwidth-explorations">
 <h1>HBM Bandwidth Explorations<a class="headerlink" href="#hbm-bandwidth-explorations" title="Permalink to this heading">¶</a></h1>
 <p>In this section, you will observe achievable bandwidth using one HBM master port. You will also explore access to single or multiple Pseudo channels as various transaction sizes are initiated by the kernel master port.</p>
 <ul class="simple">
@@ -114,7 +115,7 @@ traffic masters and use cases. For more information, refer to <a href="https://w
 <p>The kernel ports in1,in2, and out are connected to all the HBM channels. In this scenario, each kernel port will have access to all the HBM channels. The application should implement this connectivity only if the application requires accessing all the channels. HBM memory subsystem will attempt to give the kernel the best access to all the memories connected to, say, kernel port in1 to M11 or M12 of the HBM subsystem. The application will experience extra latency to access the Psuedo channels on the extremes, say PC0 or PC31, from the middle master M12. Due to this, the application may require more outstanding transaction settings on AXI interfaces connected to kernel ports.</p>
 <p>In this module, all the kernel ports are connected to all the Psudeo channels for simplicity.</p>
 <p>Let’s start with Bandwidth experiments using sequential accesses first.</p>
-<section id="sequential-accesses">
+<div class="section" id="sequential-accesses">
 <h2>Sequential Accesses<a class="headerlink" href="#sequential-accesses" title="Permalink to this heading">¶</a></h2>
 <p>In this step, first, you will build the xclbin that can support transaction size of, say 64 bytes, 128 bytes, 256 bytes,512 bytes, 1024 bytes. Next, you can explore achievable bandwidth accessing a single Pseudo channel of HBM (256MB), two Psuedo channels (512MB), and four Psuedo channels (1024MB)</p>
 <p>Here is an example of building the application using following target for Master 0 accessing PC0 as shown below. (Don’t run this command)</p>
@@ -161,11 +162,11 @@ traffic masters and use cases. For more information, refer to <a href="https://w
 <p>This use case shows the maximum results when using one kernel master, M0 to access HBM. The table above shows the measured bandwidth in GB/s achieved.</p>
 <p>The top 5 rows show the point to point accesses, ie, 256 MB accesses, with the Transaction size variation. The bandwidth is consistent around 13 GB/s.</p>
 <p>The next ten rows show a grouping of 2 pseudo channels and 4 pseudo channels, ie, 512 MB and 1024 MB, respectively, and the bandwidth is constant.</p>
-<section id="conclusion-the-bandwidth-achieved-for-sequential-accesses-is-mostly-independent-of-the-topology-and-is-constant-at-about-13-gb-s">
+<div class="section" id="conclusion-the-bandwidth-achieved-for-sequential-accesses-is-mostly-independent-of-the-topology-and-is-constant-at-about-13-gb-s">
 <h3>Conclusion: The bandwidth achieved for sequential accesses is mostly independent of the topology and is constant at about 13 GB/s.<a class="headerlink" href="#conclusion-the-bandwidth-achieved-for-sequential-accesses-is-mostly-independent-of-the-topology-and-is-constant-at-about-13-gb-s" title="Permalink to this heading">¶</a></h3>
-</section>
-</section>
-<section id="random-accesses">
+</div>
+</div>
+<div class="section" id="random-accesses">
 <h2>Random Accesses<a class="headerlink" href="#random-accesses" title="Permalink to this heading">¶</a></h2>
 <p>We are using the same topologies as the previous step but using an addressing scheme using random addresses within the selected range.</p>
 <p>To run all the variations like in the previous step, You can also use the following Makefile target to run the application. There is no need to rebuild the xclbins again.</p>
@@ -196,11 +197,11 @@ traffic masters and use cases. For more information, refer to <a href="https://w
 <p>The bandwidth drops compared to the top 5 rows from 13GB/s using the sequential accesses at the previous step. You can still experience better bandwidth for larger transaction sizes than 64 bytes though, this is simply explained because when accessing 128 bytes or more, then, only the first access is random the next accesses in the transaction are sequential, so the memory is better utilized, efficiency-wise.</p>
 <p>When the master is addressing 2 or 4 PCs to access a larger range, the bandwidth will drop significantly. So it’s important to observe that a single M_AXI connected to 1 PC will provide better bandwidth than connected to multiple PCs.</p>
 <p>Let’s use the specific example of Row 13, the transaction size is 256 bytes and using a 1 GB of randomly accessed data - i.e. utilizing PC0-3. We can see the performance is ~2 GB/s. If this was a real design need, it would be advantageous to change the microarchitecture of said design to use 4 M_AXI to access 4 individual PC in an exclusive manner. This means that the kernel code would have to check the index/address it wished to access and then exclusively use one of the pointer arguments (translating to one of the 4 M_AXI) to make this memory access. As you might have already understood the access range is now 256 MB per pointer/M_AXI, which basically means that we fall back to a use case where we have one master accessing one PC, and this is exactly the situation in Row 3. As a result, this would provide 12+ GB/s of bandwidth using 4 interfaces but with only one utilized at a time. You could try to further improve the situation by making 2 parallel accesses using those 4 M_AXI but this means that the part of the design providing the indexes/addresses need to provide 2 in parallel, which might be a challenge too.</p>
-<section id="conclusion-the-bandwith-is-higher-when-accessing-a-single-pseudo-channel-over-256-mb-data-or-less-compared-to-accessing-multiple-pseudo-channels">
+<div class="section" id="conclusion-the-bandwith-is-higher-when-accessing-a-single-pseudo-channel-over-256-mb-data-or-less-compared-to-accessing-multiple-pseudo-channels">
 <h3>Conclusion: The bandwith is higher when accessing a single Pseudo Channel over 256 MB data (or less) compared to accessing multiple Pseudo Channels.<a class="headerlink" href="#conclusion-the-bandwith-is-higher-when-accessing-a-single-pseudo-channel-over-256-mb-data-or-less-compared-to-accessing-multiple-pseudo-channels" title="Permalink to this heading">¶</a></h3>
-</section>
-</section>
-<section id="random-accesses-with-rama-ip">
+</div>
+</div>
+<div class="section" id="random-accesses-with-rama-ip">
 <h2>Random Accesses with RAMA IP<a class="headerlink" href="#random-accesses-with-rama-ip" title="Permalink to this heading">¶</a></h2>
 <p>In this step, we are using the same topologies as the previous step, but now we are using RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.</p>
 <p>The v++ linker requires a tcl file to connect the RAMA IP to the Axi Master ports. Refer to the file <code class="docutils literal notranslate"><span class="pre">./makefile/rama_post_sys_link.tcl</span></code> for more information</p>
@@ -244,16 +245,16 @@ traffic masters and use cases. For more information, refer to <a href="https://w
 </div>
 <p>The top 5 rows show the point to point accesses, i.e. 256 MB accesses, with a transaction size variation. The bandwidth achieved is very similar to the previous step without RAMA IP.
 The next ten rows with access to 512 MB and 1024MB respectively show a significant increase in achieved bandwidth compared to the previous step when configuration didn’t utilised  RAMA IP.</p>
-<section id="conclusion-the-rama-ip-significantly-improves-memory-access-efficiency-in-cases-where-the-required-memory-access-exceeds-256-mb-one-hbm-pseudo-channel">
+<div class="section" id="conclusion-the-rama-ip-significantly-improves-memory-access-efficiency-in-cases-where-the-required-memory-access-exceeds-256-mb-one-hbm-pseudo-channel">
 <h3>Conclusion: The RAMA IP significantly improves memory access efficiency in cases where the required memory access exceeds 256 MB (one HBM pseudo-channel)<a class="headerlink" href="#conclusion-the-rama-ip-significantly-improves-memory-access-efficiency-in-cases-where-the-required-memory-access-exceeds-256-mb-one-hbm-pseudo-channel" title="Permalink to this heading">¶</a></h3>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">¶</a></h2>
 <p>Congratulations! You have completed the tutorial.</p>
 <p>In this tutorial, you learned it’s relatively easy to migrate a DDR-based application to HBM based application using v++ flow. You also experimented with how the HBM based application throughput varies based on the address patterns and the overall memory being accessed by the kernel.</p>
-<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><b><a href="README.md">Return to Start of Tutorial</a></b></p><p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

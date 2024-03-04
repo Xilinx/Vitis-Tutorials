@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -89,8 +88,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -125,7 +126,7 @@ function OptanonWrapper() { }
  </tr>
 </table><p>In this tutorial, you will learn how to add custom IPs into a Versal™ ACAP platform. This tutorial is an ‘add-on’ to the basic <a class="reference external" href="../../Introduction/03_Edge_VCK190">Versal platform creation tutorial</a>. So for each step, there will be a pointer to the corresponding part of that tutorial, as required.</p>
 <p>This tutorial targets the VCK190 ES board (see https://www.xilinx.com/products/boards-and-kits/vck190.html). This board is currently available via early access. If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and ES license please contact your Xilinx sales contact.</p>
-<section id="overview">
+<div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
 <p>The tutorial is structured as follows:</p>
 <ol class="simple">
@@ -135,12 +136,12 @@ function OptanonWrapper() { }
 <li><p><a class="reference external" href="#step-4-package-the-platform-in-the-vitis-software-platform">Step 4: Package the Platform in the Vitis Software Platform</a></p></li>
 <li><p><a class="reference external" href="#step-5-test-the-platform">Step 5: Test the Platform</a></p></li>
 </ol>
-<section id="step-1-create-a-hardware-platform">
+<div class="section" id="step-1-create-a-hardware-platform">
 <h2>Step 1: Create a Hardware Platform<a class="headerlink" href="#step-1-create-a-hardware-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this tutorial, you will use the prebuilt example design for VCK190 board to build the hardware platform. This method saves time instead of having to manually create the IP integrator block design.</p>
 <p>Follow the instructions in <a class="reference internal" href="../../Introduction/03_Edge_VCK190/step0.html"><span class="doc">Versal platform creation tutorial-Step0</span></a>. You can skip the optional steps.</p>
-</section>
-<section id="step-2-add-custom-ip-into-the-block-design">
+</div>
+<div class="section" id="step-2-add-custom-ip-into-the-block-design">
 <h2>Step 2: Add Custom IP into the Block Design<a class="headerlink" href="#step-2-add-custom-ip-into-the-block-design" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will add a DDS compiler IP into the platform design that you created in the last step. The DDS compiler IP is provided in the Xilinx IP catalog in the Vivado® Design Suite. To see details about this IP, see the product guide, <a class="reference external" href="https://www.xilinx.com/support/documentation/ip_documentation/dds_compiler/v6_0/pg141-dds-compiler.pdf">PG141</a>. Because it is a publicly available IP, it supports simulation inherently. If you want to add your own IP cores, you must provide simulation models to support simulation.</p>
 <ol>
@@ -171,16 +172,16 @@ function OptanonWrapper() { }
 <li><p>Regenerate the block design output products.</p></li>
 <li><p>Export the hardware platform. In the platform type selection page, choose <strong>Hardware and hardware emulation</strong> to run emulation with this platform.</p></li>
 </ol>
-</section>
-<section id="step-3-create-the-software-components-with-petalinux">
+</div>
+<div class="section" id="step-3-create-the-software-components-with-petalinux">
 <h2>Step 3: Create the Software Components with PetaLinux<a class="headerlink" href="#step-3-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will create a PetaLinux project that includes the Vitis unified software platform required components. Follow the instructions in <a class="reference internal" href="../../Introduction/03_Edge_VCK190/step2.html"><span class="doc">Versal platform creation tutorial-Step2</span></a>.</p>
-</section>
-<section id="step-4-package-the-platform-in-the-vitis-software-platform">
+</div>
+<div class="section" id="step-4-package-the-platform-in-the-vitis-software-platform">
 <h2>Step 4: Package the Platform in the Vitis Software Platform<a class="headerlink" href="#step-4-package-the-platform-in-the-vitis-software-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will package the hardware XSA with software components in the Vitis IDE. Follow the instructions in <a class="reference internal" href="../../Introduction/03_Edge_VCK190/step3.html"><span class="doc">Versal platform creation tutorial-Step3</span></a>.</p>
-</section>
-<section id="step-5-test-the-platform">
+</div>
+<div class="section" id="step-5-test-the-platform">
 <h2>Step 5: Test the Platform<a class="headerlink" href="#step-5-test-the-platform" title="Permalink to this heading">¶</a></h2>
 <p>In this step, you will build a simple <code class="docutils literal notranslate"><span class="pre">vadd</span></code> application and run hardware emulation to test the platform. Follow the instructions in <a class="reference internal" href="../../Introduction/03_Edge_VCK190/step4.html"><span class="doc">Versal platform creation tutorial-Step4</span></a>, but we will make some modifications.</p>
 <p>You just need to run test 2 on that page. After creating the <code class="docutils literal notranslate"><span class="pre">vadd</span></code> system project, make the following changes.</p>
@@ -290,18 +291,18 @@ function OptanonWrapper() { }
 </div>
 <p>Choose a tool to print out the data. A possible option is MATLAB®. If you do not have MATLAB installed, other third-party tools, such as Excel, also provide a similar feature. Use your preferred method to print out a sine wave.</p>
 <p><img alt="missing image" src="../../../../_images/sinewave.png" /></p>
-</section>
-</section>
-<section id="support">
+</div>
+</div>
+<div class="section" id="support">
 <h1>Support<a class="headerlink" href="#support" title="Permalink to this heading">¶</a></h1>
 <p>GitHub issues will be used for tracking requests and bugs. For questions go to <a class="reference external" href="http://forums.xilinx.com/">forums.xilinx.com</a>.</p>
-</section>
-<section id="license">
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License”); you may not use this file except in compliance with the License.</p>
 <p>You may obtain a copy of the License at <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
-<p align="center"><sup>XD019 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center"><sup>XD019 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>

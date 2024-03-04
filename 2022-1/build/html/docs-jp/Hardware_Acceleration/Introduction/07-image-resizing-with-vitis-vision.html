@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>概要 - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Getting_Started/Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>概要</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Hardware_Acceleration/Introduction/07-image-resizing-with-vitis-vision.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ ハードウェア アクセラレーションの入門チュートリアル</h1><a href="https://japan.xilinx.com/products/design-tools/vitis.html">xilinx.com の Vitis™ 開発環境を参照</a></td>
+ </tr>
+</table><div class="section" id="overview">
+<h1>概要<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<p>画像処理は、FPGA でのアクセラレーションを活用するのに適した分野です。それにはいくつか理由があります。まず、画像をピクセル レベルで処理する場合、画像のサイズが大きいほど、計算量も増加します。この資料の冒頭で登場したモノレールの比喩がこれによく当てはまります。</p>
+<p>ここで、バイラテラル サイズ変更アルゴリズムの簡単な例を見てみましょう。このアルゴリズムは、入力画像の解像度を変更します。この操作は次のようになります。</p><ul class="simple"> <li><p>メモリから画像のピクセル データを読み出します。</p></li> <li><p>必要に応じて、ピクセル データを適切なフォーマットに変換します。ここでは、OpenCV ライブラリで使用されるデフォルト フォーマットである BGR に変換します。さまざまなストリームやカメラなどからデータを受信する実際のシステムでは、ソフトウェアまたはアクセラレータ (次の例で説明するように、ここでは基本的に「コストのかからない」操作) でフォーマットを変換する必要があります。</p></li> <li><p>カラー画像の場合は、各チャネルを抽出します。</p></li> <li><p>個々のチャネルに対してバイラテラル サイズ変更アルゴリズムを使用します。</p></li> <li><p>チャネルを再結合し、メモリに戻します。</p></li> </ul>
+<p>これを図で表すと、次のようになります。</p>
+<p><img alt="Image Resize Algorithm" src="../../../_images/07-resize-algorithm.jpg" /></p>
+<p>この図では、オプションの色変換手順は示していません。</p>
+<p>これらの操作は、1 つずつ順に実行されます。前にも説明しましたが、メモリに何度もアクセスするのはコストがかかります。メモリからデータをストリーミングしながら、FPGA でこれらの計算すべてを実行できれば、通常は各操作および計算の追加レイテンシが非常に短くなります。これを利用して、インプリメントする特定の関数用にハードウェアを最適に使用するカスタム ドメイン特化アーキテクチャを構築できます。</p>
+<p>そして、クロックごとにより多くのピクセルを処理するためにデータパス幅を広くするか (<strong>アムダールの法則</strong>)、または複数のパイプラインを使用して多くの画像を並行処理するか (<strong>グスタフソンの法則</strong>) を選択できます。理想的には、この両方を使用して最適化していきます。アルゴリズムをできるだけ効率よく処理できるカーネルを構築し、FPGA ファブリックを最大限に活用してできるだけ多くのカーネルを配置します。</p>
+</div>
+<div class="section" id="key-code">
+<h1>キー コード<a class="headerlink" href="#key-code" title="Permalink to this heading">¶</a></h1>
+<p>このアルゴリズムには、Vitis ビジョン ライブラリを使用します。これはハードウェア用に最適化されたライブラリで、アプリケーションで直接使用可能なよく使用されるビジョン関数 (概念的に OpenCV に類似) の多くをインプリメントします。このライブラリは、必要に応じてソフトウェアの OpenCV 関数やほかのライブラリ呼び出しと組み合わせて使用することもできます。</p>
+<p>また、ほかのカーネル用に、画像の事前および事後処理用にこれらのライブラリを使用することも可能です。たとえば、カメラやネットワーク ストリームから生のデータを入力して、それを事前処理し、その結果をニューラル ネットワークに入力して処理するなどです。これらの操作は、ホスト メモリに戻らずにすべて FPGA で実行でき、すべて並列処理できます。発生する可能性のある唯一の競合は、レジスタ空間の競合ではなく、帯域幅の競合である、パイプライン処理された機能のストリームを構築すると考えてください。</p>
+<p>Vitis ビジョン ライブラリで、テンプレートを使用して、クロックごとに処理するピクセルの数などを設定します。詳細は、<a class="reference external" href="https://xilinx.github.io/Vitis_Libraries/vision/2020.1/index.html">Vitis ビジョン ライブラリの資料</a>を参照してください。</p>
+</div>
+<div class="section" id="running-the-application">
+<h1>アプリケーションの実行<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h1>
+<p>XRT ランタイムが初期化されたら、ビルド ディレクトリから次のコマンドを実行してアプリケーションを実行します。</p>
+<p><code class="docutils literal notranslate"><span class="pre">./07_opencv_resize</span> <span class="pre">alveo_examples</span> <span class="pre">&lt;path_to_image&gt;</span></code></p>
+<p>この例でのハードウェアのコンフィギュレーション方法のため、画像が特定の要件を満たす必要があります。1 クロックごとに 8 ピクセル処理するので、入力幅は 8 の倍数である必要があります。</p>
+<p>そうでない場合、要件が満たされていないことを示すエラー メッセージが表示されます。これはライブラリの基本的な要件ではありません。どんな解像度の画像でも、1 クロックごとに何ピクセルでも処理できます。ただし、入力画像が特定の要件を満たしていれば、さらに高速処理が可能となり、最適なパフォーマンスが得られます。ハードウェアおよびソフトウェア OpenCV インプリメンテーション両方からのサイズ変更後の画像に加え、プログラムにより次のようなメッセージが表示されます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 7: OpenCV Image Resize --
+
+OpenCV conversion done!  Image resized 1920 x 1080 to 640 x 360
+Starting Xilinx OpenCL implementation...
+Matrix has 3 channels
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: ’./alveo_examples.xclbin’
+
+OpenCV resize operation:            5.145 ms
+OpenCL initialization:              292.673 ms
+OCL input buffer initialization :   4.629 ms
+OCL output buffer initialization :  0.171 ms
+FPGA Kernel resize operation :      4.951 ms
+</pre></div>
+</div>
+<p>この例では根本的に違う操作を実行しているので、前の実行と結果を比較することはしませんが、画像を処理するのにかかる時間を Alveo カードと CPU で比較することは可能です。</p>
+<p>現時点では、Alveo カードと CPU の結果はほぼ同じです。使用しているバイリニア補間アルゴリズムは O(N) ですが、計算は前ほど単純ではないので、前ほど I/O で制限されません。CPU を上回ることはできますが、ほんの少しだけです。</p>
+<p>ここで興味深いのは、多くの計算を入力の解像度ではなく出力の解像度に基づいて実行しているということです。同じ量のデータを転送する必要がありますが、画像を入力の 1/3 のサイズに変換するのではなく、解像度を倍にしたらどうなるかを見てみましょう。例のコードを次のように変更し、再コンパイルします。</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">out_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">cols</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">out_height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">image</span><span class="p">.</span><span class="n">rows</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>例を再び実行すると、興味深い結果が得られます。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-- Example 7: OpenCV Image Resize --
+OpenCV conversion done!  Image resized 1920 x 1080 to 3840 x 2160
+Starting Xilinx OpenCL implementation...
+Matrix has 3 channels
+Found Platform
+Platform Name: Xilinx
+XCLBIN File Name: alveo_examples
+INFO: Importing ./alveo_examples.xclbin
+Loading: ’./alveo_examples.xclbin’
+
+OpenCV resize operation :           11.692 ms
+OpenCL initialization :             256.933 ms
+OCL input buffer initialization :   3.536 ms
+OCL output buffer initialization :  7.911 ms
+FPGA Kernel resize operation :      6.844 ms
+</pre></div>
+</div>
+<p>ここではひとまず、バッファーの初期化は除外して考えます。適切に設計されたシステムでは、メモリ割り当てはアプリケーションのクリティカルパスでは実行されません。データ転送も含めたサイズ変更処理を見ると、<strong>CPU よりほぼ 60% 高速</strong>です。</p>
+<p>CPU と Alveo カードは両方ともこの画像を比較的高速に処理できますが、システム全体のスループット目標が 1 秒ごとに 60 フレームを処理することである場合を考えてみてください。その場合、各フレームを処理するのに 16.66 ms しかありません。たとえば、サイズ変更したフレームをニューラル ネットワークに入力する場合、ほぼすべての時間を使い切ってしまいます。</p>
+<p>パイプラインを実行するためバッファーのチェーンをあらかじめ割り当てれば、アクセラレータを使用することによりフレームごとの時間をほぼ 30% 回復できます。</p>
+<p>入力画像のサイズが 1920x1200 の場合、結果は次の表に示すようになります。</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>動作</th>
+<th align="center">縮小</th>
+<th align="center">拡大</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ソフトウェアでのサイズ変更</td>
+<td align="center">5.145 ms</td>
+<td align="center">11.692 ms</td>
+</tr>
+<tr>
+<td>ハードウェアでのサイズ変更</td>
+<td align="center">4.951 ms</td>
+<td align="center">6.684 ms</td>
+</tr>
+<tr>
+<td>&Delta;Alveo&rarr;CPU</td>
+<td align="center">-194 &micro;s</td>
+<td align="center">-5.008 ms</td>
+</tr>
+</tbody>
+</table><p>さらに、色変換は含めていなかったことを思い出してください。FPGA ではこれはコストのかからない操作です。追加で数クロック サイクル (ns) のレイテンシがありますが、基本的にはピクセル値に対していくつかの乗算および加算を実行する単純な O(N) 演算です。</p>
+</div>
+<div class="section" id="extra-exercises">
+<h1>追加演習<a class="headerlink" href="#extra-exercises" title="Permalink to this heading">¶</a></h1>
+<p>この演習に、追加で次のことを試してみてください。</p><ul class="simple"> <li><p>ホスト コードを編集し、試行錯誤で画像サイズを変えてみましょう。画像サイズを大きくすると、実行時間はどうなりますか。画像サイズを小さくするとどうなりますか。アクセラレータを使用する意味がなくなるのはどの地点はですか。</p></li> <li><p>FPGA アクセラレータに色変換を追加します (ハードウェアを再ビルドする必要あり)。処理時間が長くなるかどうかを確認します。</p></li> </ul>
+<p>学習ポイント</p><ul class="simple"> <li><p>計算がより複雑な O(N) 演算はアクセラレーションの良い候補となりますが、CPU と比較して大きな利点は見られません。</p></li> <li><p>xf::OpenCV などの FPGA に最適化されたライブラリを使用すると、一般的なアルゴリズムを再インプリメントする必要なく、処理速度とリソースのバランスを取ることができますき、アプリケーションのより重要な部分に焦点を置くことができます。</p></li> <li><p>選択するライブラリの最適化によって、デザインが制限されることがあります。ハードウェアをインプリメントする前に、使用するライブラリ関数の資料を参照してください。</p></li> </ul>
+<p>先ほど、FPGA ファブリックでの追加処理は非常に短時間で実行できると述べました。次のセクションで、これが本当であるかを見てみます。</p>
+<p><span class="doc"><a class="reference internal" href="08-vitis-vision-pipeline.html">例 8:</a> Vitis ビジョンを使用した処理パイプラインの構築</span></p>
+<p align="center"><sup>Copyright&copy; 2019-2022 Xilinx</sup></p></div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div> </br> Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+<!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
+
+<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice end for xilinx.github.io -->
+  <title>PetaLinux Building and System Customization &mdash; Vitis™ Tutorials 2022.1 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="prev" title="Versal Platform Creation with Custom IP" href="../01_platform_creation_streaming_ip/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+            <a href="../../../../index.html" class="icon icon-home"> Vitis™ Tutorials
+            <img src="../../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2022.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">日本語版</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs-jp/index.html">Main</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Getting_Started/Vitis-Getting-Started.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Acceleration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Hardware_Acceleration/Hardware-Acceleration.html">Hardware Acceleration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">AI Engine</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../AI_Engine_Development/AI_Engine_Development.html">AI Engine Development</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Platforms</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html">Vitis Platform Creation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Vitis_Platform_Creation.html#design-tutorials">Design Tutorials</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Vitis_Platform_Creation.html#feature-tutorials">Feature Tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../01_platform_creation_streaming_ip/README.html">Versal Platform Creation with Custom IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_platform_creation_streaming_ip/README.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_platform_creation_streaming_ip/README.html#support">Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../01_platform_creation_streaming_ip/README.html#license">License</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">PetaLinux Building and System Customization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prepare-the-base-platform">Prepare the base platform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-petalinux-project">Create a PetaLinux Project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#customize-root-file-system-kernel-device-tree-and-u-boot">Customize Root File System, Kernel, Device Tree and U-boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-the-device-tree">Update the Device tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#add-ext4-rootfs-support">Add EXT4 rootfs support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-petalinux-images">Build PetaLinux Images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fast-track">Fast Track</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Vitis™ Tutorials</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../Vitis_Platform_Creation.html">Vitis Platform Creation Tutorials</a> &raquo;</li>
+      <li>PetaLinux Building and System Customization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/docs/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table><div class="section" id="petalinux-building-and-system-customization">
+<h1>PetaLinux Building and System Customization<a class="headerlink" href="#petalinux-building-and-system-customization" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>Version: PetaLinux 2022.1</strong></em></p>
+<p>A Vitis platform requires software components. This time we’d like to demonstrate software environment customization. We’ll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.</p>
+<p>Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.</p>
+<p>As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage and take the zcu104 base platform from <a class="reference external" href="https://www.xilinx.com/support/download.html">Xilinx website download page</a> as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement.</p>
+<div class="section" id="prepare-the-base-platform">
+<h2>Prepare the base platform<a class="headerlink" href="#prepare-the-base-platform" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Create a workspace</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir workspace
+<span class="nb">cd</span> workspace
+</pre></div>
+</div>
+</li>
+<li><p>Download the base platform and place it under <code class="docutils literal notranslate"><span class="pre">workspace</span></code>  folder. Then extract it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>unzip xilinx_zcu104_base_202210_1.zip <span class="c1">#extract the base platform</span>
+tree -L <span class="m">2</span>
+├── xilinx_zcu104_base_202210_1
+│   ├── hw
+│   ├── hw_emu
+│   ├── sw
+│   ├── version
+│   └── xilinx_zcu104_base_202210_1.xpfm
+└── xilinx_zcu104_base_202210_1.zip
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="create-a-petalinux-project">
+<h2>Create a PetaLinux Project<a class="headerlink" href="#create-a-petalinux-project" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Setup PetaLinux environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> &lt;petaLinux_tool_install_dir&gt;/settings.sh
+</pre></div>
+</div>
+</li>
+<li><p>Create a PetaLinux project named <strong>zcu104_petalinux</strong> and configure the hw option with the XSA file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>petalinux-create --type project --template zynqMP --name zcu104_petalinux
+<span class="nb">cd</span> zcu104_petalinux
+petalinux-config --get-hw-description<span class="o">=</span>xilinx_zcu104_base_202210_1/hw/hw.xsa  <span class="c1"># After you extract the base platform you can find hw.xsa or hw_emu.xsa under &lt;xilinx_zcu104_base_202210_1&gt; directory. if you want to do emulation you can choose hw_emu.xsa </span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note: <code class="docutils literal notranslate"><span class="pre">--template</span></code> option specifies the chipset. zcu104 board adopts the ZYNQMP series chip. Therefore we specify this option as “zynqMP”. If your platform is using Versal chipset. Please set this option to “versal”.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, giving either of them to PetaLinux makes no difference. When simplifying the hardware design for hardware emulation, it’s recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two design has different address-able peripherals, you will need to create two sets of device trees for hardware running and hardware emulation separately.</p>
+</div></blockquote>
+</li>
+<li><p>A petalinux-config menu would be launched, Set to use ZCU104 device tree in this configuration window.</p>
+<ul class="simple">
+<li><p>Select <strong>DTG Settings-&gt;MACHINE_NAME</strong></p></li>
+<li><p>Modify it to <code class="docutils literal notranslate"><span class="pre">zcu104-revc</span></code>.</p></li>
+<li><p>Select <strong>OK -&gt; Exit -&gt; Exit -&gt; Yes</strong> to close this window.</p></li>
+</ul>
+<p>Note:</p>
+<ul class="simple">
+<li><p>If you are using a Xilinx development board it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. You can check the <a class="reference external" href="https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf">ug1144 document</a> for corresponding machine name.</p></li>
+<li><p>If you’re using a custom board, you would need to configure the associated settings (e.g. the PHY information DTS node) in <strong>system-user.dtsi</strong> manually.</p></li>
+<li><p>Device tree is a generic technology in embedded Linux. Please search Google for more information.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="customize-root-file-system-kernel-device-tree-and-u-boot">
+<h2>Customize Root File System, Kernel, Device Tree and U-boot<a class="headerlink" href="#customize-root-file-system-kernel-device-tree-and-u-boot" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>Add user packages</p>
+<ul class="simple">
+<li><p>Append the CONFIG_x lines below to the <strong>&lt;your_petalinux_project_dir&gt;/project-spec/meta-user/conf/user-rootfsconfig</strong> file.</p></li>
+</ul>
+<p><strong>Note: This step is not a must but it makes it easier to find and select all required packages in next step. If this step is skipped, please enable the required packages one by one in next step.</strong></p>
+<p>Packages for base XRT support:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_xrt</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>xrt is required for Vitis acceleration flow. The dependency packages such as ZOCL driver module will be added automatically.</p></li>
+</ul>
+<p>Recommended Packages for easy system management</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_dnf</span>
+<span class="n">CONFIG_e2fsprogs</span><span class="o">-</span><span class="n">resize2fs</span>
+<span class="n">CONFIG_parted</span>
+<span class="n">CONFIG_resize</span><span class="o">-</span><span class="n">part</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>dnf is for package package management</p></li>
+<li><p>parted, e2fsprogs-resize2fs and resize-part can be used for ext4 partition resize. We will use it to expand the ext4 partition to make full use of SD card size when running Vitis-AI test case .</p></li>
+</ul>
+<p><em>Packages for Vitis-AI dependencies support:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">vitisai</span>
+</pre></div>
+</div>
+<p><em>Optional Packages for natively building Vitis AI applications on target board:</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="bp">self</span><span class="o">-</span><span class="n">hosted</span>
+<span class="n">CONFIG_cmake</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">vitisai</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">CONFIG_xrt</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">CONFIG_opencl</span><span class="o">-</span><span class="n">clhpp</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">CONFIG_opencl</span><span class="o">-</span><span class="n">headers</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">opencv</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">opencv</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p><em>Optional Packages for running Vitis-AI demo applications with GUI</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_mesa</span><span class="o">-</span><span class="n">megadriver</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">x11</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">v4lutils</span>
+<span class="n">CONFIG_packagegroup</span><span class="o">-</span><span class="n">petalinux</span><span class="o">-</span><span class="n">matchbox</span>
+</pre></div>
+</div>
+</li>
+<li><p>Enable selected rootfs packages</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">petalinux-config</span> <span class="pre">-c</span> <span class="pre">rootfs</span></code></p></li>
+<li><p>Select <strong>User Packages</strong></p></li>
+<li><p>select name of rootfs all the libraries listed above.</p></li>
+</ul>
+<p><img alt="petalinux_rootfs.png" src="../../../../_images/petalinux_rootfs.png" /></p>
+<p>Note: If step 1 is skipped, please find the corresponding package and enable them.</p>
+</li>
+<li><p>Enable OpenSSH and disable dropbear (optional)</p>
+<p>Dropbear is the default SSH tool in Vitis Base Embedded Platform. If OpenSSH is used to replace Dropbear, the system could achieve 4x times faster data transmission speed over ssh (tested on 1Gbps Ethernet environment). Since Vitis-AI applications may use remote display feature to show machine learning results, using OpenSSH can improve the display experience.*</p>
+<ul class="simple">
+<li><p>Still in the RootFS configuration window, go to root directory by select <strong>Exit</strong> once.</p></li>
+<li><p>Go to <strong>Image Features</strong>.</p></li>
+<li><p>Disable <strong>ssh-server-dropbear</strong> and enable <strong>ssh-server-openssh</strong> and click Exit.</p></li>
+</ul>
+<p><img alt="ssh_settings.png" src="../../../../_images/ssh_settings.png" /></p>
+<ul class="simple">
+<li><p>Go to <strong>Filesystem Packages-&gt; misc-&gt;packagegroup-core-ssh-dropbear</strong> and disable <strong>packagegroup-core-ssh-dropbear</strong>.</p></li>
+<li><p>Go to <strong>Filesystem Packages</strong> level by Exit twice.</p></li>
+<li><p>Go to <strong>console  -&gt; network -&gt; openssh</strong> and enable <strong>openssh</strong>, <strong>openssh-sftp-server</strong>, <strong>openssh-sshd</strong>, <strong>openssh-scp</strong>.</p></li>
+<li><p>Go to root level by <strong>Exit</strong> four times.</p></li>
+</ul>
+</li>
+<li><p>Enable Package Management</p>
+<p>Package management feature can allow the board to install and upgrade software packages on the fly.</p>
+<ul class="simple">
+<li><p>In rootfs config go to <strong>Image Features</strong> and enable <strong>package-management</strong> and <strong>debug_tweaks</strong> option</p></li>
+<li><p>Click <strong>OK</strong>, <strong>Exit</strong> twice and select <strong>Yes</strong> to save the changes.</p></li>
+</ul>
+</li>
+<li><p>Disable CPU IDLE in kernel config (Recommended during debugging).</p>
+<p>CPU IDLE would cause processors get into IDLE state (WFI) when the processor is not in use. When JTAG is connected, the hardware server on host machine talks to the processor regularly. If it talks to a processor in IDLE status, the system will hang because of incomplete AXI transactions. So it is recommended to disable the CPU IDLE feature during project development phase. It can be re-enabled after the design has completed to save power in final products.</p>
+<ul class="simple">
+<li><p>Launch kernel config: <code class="docutils literal notranslate"><span class="pre">petalinux-config</span> <span class="pre">-c</span> <span class="pre">kernel</span></code></p></li>
+<li><p>Ensure the following items are <strong>TURNED OFF</strong> by entering ‘n’ in the [ ] menu selection:</p>
+<ul>
+<li><p><strong>CPU Power Management &gt; CPU Idle &gt; CPU idle PM support</strong></p></li>
+<li><p><strong>CPU Power Management &gt; CPU Frequency scaling &gt; CPU Frequency scaling</strong></p></li>
+</ul>
+</li>
+<li><p>Exit and Save.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="update-the-device-tree">
+<h2>Update the Device tree<a class="headerlink" href="#update-the-device-tree" title="Permalink to this heading">¶</a></h2>
+<p>Device tree describes the hardware components of the system. Xilinx device tree generator (DTG) can generate the device tree according to hardware configurations from XSA file. User needs to add customization settings in system-user.dtsi for PetaLinux to consume if there are any settings not available in XSA, for example, any driver nodes that don’t have a corresponding hardware, or if user need to override any DTG auto-generated configurations.</p>
+<p>ZOCL driver module has no associated hardware, but it’s required by XRT and Vitis acceleration flow. It requires a device tree node to describe the interrupt signal relationship. In previous Vitis and PetaLinux versions, users need to add ZOCL device tree node manually. From 2021.1, PetaLinux can add ZOCL device tree node automatically if the XSA is a Vitis extensible platform project.</p>
+<p>Device Tree Generator (DTG) also overrides the interrupt controller (axi_intc_0) input numbers parameter from 0 to 32 because in the platform XSA the interrupt controller inputs have not been connected but they will be connected after v++ links the acceleration kernels.</p>
+<p>You can review the PetaLinux generated device tree in <strong>project-spec/components/device-tree/device-tree/pl.dtsi</strong> file.</p>
+<p>You can also add your custom device tree modifications to <strong>project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi</strong>. In this example, we setup sdhci1 to low speed mode.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">sdhci1</span> <span class="p">{</span>
+      <span class="n">no</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="n">v</span><span class="p">;</span>
+      <span class="n">disable</span><span class="o">-</span><span class="n">wp</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>sdhci1</strong> node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It’s not a part of Vitis acceleration platform requirements.</p></li>
+</ul>
+<p><strong>Note</strong>: an example file is provided in <a class="reference external" href="ref_files/system-user.dtsi">ref_files/system-user.dtsi</a>.</p>
+</div>
+<div class="section" id="add-ext4-rootfs-support">
+<h2>Add EXT4 rootfs support<a class="headerlink" href="#add-ext4-rootfs-support" title="Permalink to this heading">¶</a></h2>
+<p>It’s recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It can’t retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximum usage of available DDR memory, we’ll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.</p>
+<p>Vitis-AI applications will install additional software packages. If user would like to run Vitis-AI applications, please use EXT4 rootfs. If in any case initramfs would be used, please add all Vitis-AI dependencies to initramfs.</p>
+<ol>
+<li><p>Let PetaLinux generate EXT4 rootfs</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">petalinux-config</span></code></p></li>
+<li><p>Go to <strong>Image Packaging Configuration</strong></p></li>
+<li><p>Enter into <strong>Root File System Type</strong></p></li>
+<li><p>Select Root File System Type as <strong>EXT4</strong></p></li>
+<li><p>Exit and Save.</p></li>
+</ul>
+<p><img alt="missing image" src="../../../../_images/petalinux_image_packaging_configuration.png" /></p>
+</li>
+</ol>
+<!--TODO: CMA change is needed. Other changes are not.--><ol>
+<li><p>Let Linux use EXT4 rootfs during boot</p>
+<p>The setting of which rootfs to use during boot is controlled by <strong>bootargs</strong>. We would change bootargs settings to allow Linux to boot from EXT4 partition. There are various ways to update bootargs. Please take either way below.</p>
+<p>Method A: PetaLinux config</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">petalinux-config</span></code></p></li>
+<li><p>Change <strong>DTG settings -&gt; Kernel Bootargs -&gt; generate boot args automatically</strong> to NO and update <strong>User Set Kernel Bootargs</strong> to <code class="docutils literal notranslate"><span class="pre">earlycon</span> <span class="pre">console=ttyPS0,115200</span> <span class="pre">clk_ignore_unused</span> <span class="pre">root=/dev/mmcblk0p2</span> <span class="pre">rw</span> <span class="pre">rootwait</span> <span class="pre">cma=512M</span></code>. Click OK, Exit thrice and Save.</p></li>
+</ul>
+<p>Method B: device tree</p>
+<ul class="simple">
+<li><p>Update in  <strong>system-user.dtsi</strong></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">chosen</span></code> node in root in addition to the previous changes to this file.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">include</span><span class="o">/</span> <span class="s2">&quot;system-conf.dtsi&quot;</span>
+<span class="o">/</span> <span class="p">{</span>
+    <span class="n">chosen</span> <span class="p">{</span>
+    	<span class="n">bootargs</span> <span class="o">=</span> <span class="s2">&quot;earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note:</p>
+<ul class="simple">
+<li><p><strong>root=/dev/mmcblk0p2</strong> means to use second partition of SD card, which is the EXT4 partition.</p></li>
+<li><p>Please note that we also set these options in bootargs:</p>
+<ul>
+<li><p><strong>clk_ignore_unused</strong>: it tells Linux kernel don’t turn off clocks if this clock is not used. It’s useful clocks that only drives PL kernels because PL kernels are not represented in device tree.</p></li>
+<li><p><strong>cma=512M</strong>: CMA is used to exchange data between PS and PL kernel. The size for CMA is determined by PL kernel requirements. Vitis-AI/DPU needs at least 512MB CMA.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="build-petalinux-images">
+<h2>Build PetaLinux Images<a class="headerlink" href="#build-petalinux-images" title="Permalink to this heading">¶</a></h2>
+<ol>
+<li><p>From any directory within the PetaLinux project, build the PetaLinux project.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">petalinux</span><span class="o">-</span><span class="n">build</span>
+</pre></div>
+</div>
+<p>The PetaLinux image files will be generated in <PetaLinux Project>/images/linux directory.</p>
+</li>
+<li><p>Create a sysroot self-installer for the target Linux system</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">petalinux</span><span class="o">-</span><span class="n">build</span> <span class="o">--</span><span class="n">sdk</span>
+</pre></div>
+</div>
+<p>The generated sysroot package <strong>sdk.sh</strong> will be located in <PetaLinux Project>/images/linux directory. You can extract it when you need.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="fast-track">
+<h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
+<p>Scripts are provided to re-create PetaLinux project and generate outputs.</p>
+<ol>
+<li><p>Run build</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to the step directory, e.g.</span>
+<span class="n">cd</span> <span class="n">ref_files</span>
+<span class="n">make</span> <span class="nb">all</span> <span class="n">XSA_PATH</span><span class="o">=&lt;</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">base_platform</span><span class="o">/&gt;</span> <span class="c1"># to specify the XSA file path </span>
+</pre></div>
+</div>
+</li>
+<li><p>To clean the generated files, please run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
+</pre></div>
+</div>
+</li>
+</ol>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>
+                        .footer {
+                        position: fixed;
+                        left: 0;
+                        bottom: 0;
+                        width: 100%;
+                        }
+                  </style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../01_platform_creation_streaming_ip/README.html" class="btn btn-neutral float-left" title="Versal Platform Creation with Custom IP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2022, Xilinx, Inc..
+      <span class="lastupdated">Last updated on May 16, 2022.
+      </span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>
+
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

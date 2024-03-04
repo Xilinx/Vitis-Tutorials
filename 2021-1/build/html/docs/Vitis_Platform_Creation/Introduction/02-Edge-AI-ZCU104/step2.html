@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -113,11 +114,11 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="step-2-create-the-software-components-with-petalinux">
+--><div class="section" id="step-2-create-the-software-components-with-petalinux">
 <h1>Step 2: Create the Software Components with PetaLinux<a class="headerlink" href="#step-2-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h1>
 <p>A Vitis platform requires software components. Xilinx provides common software images for quick evaluation. Here since we’d like to demonstrate more software environment customization, we’ll use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained. Please feel free to pick your desired customization.</p>
 <p>Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.</p>
-<section id="create-a-petalinux-project">
+<div class="section" id="create-a-petalinux-project">
 <h2>Create a PetaLinux Project<a class="headerlink" href="#create-a-petalinux-project" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Setup PetaLinux environment</p>
@@ -151,8 +152,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 </ul>
 </li>
 </ol>
-</section>
-<section id="customize-root-file-system-kernel-device-tree-and-u-boot">
+</div>
+<div class="section" id="customize-root-file-system-kernel-device-tree-and-u-boot">
 <h2>Customize Root File System, Kernel, Device Tree and U-boot<a class="headerlink" href="#customize-root-file-system-kernel-device-tree-and-u-boot" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Add user packages</p>
@@ -246,8 +247,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 </ul>
 </li>
 </ol>
-</section>
-<section id="update-the-device-tree">
+</div>
+<div class="section" id="update-the-device-tree">
 <h2>Update the Device tree<a class="headerlink" href="#update-the-device-tree" title="Permalink to this heading">¶</a></h2>
 <p>Device tree describes the hardware components of the system. Xilinx device tree generator (DTG) can generate the device tree according to hardware configurations from XSA file. User needs to add customization settings in system-user.dtsi for PetaLinux to consume if there are any settings not available in XSA, for example, any driver nodes that don’t have a corresponding hardware, or if user need to override any DTG auto-generated configurations.</p>
 <p>ZOCL driver module has no associated hardware, but it’s required by XRT and Vitis acceleration flow. It requires a device tree node to describe the interrupt signal relationship. In previous Vitis and PetaLinux versions, users need to add ZOCL device tree node manually. From 2021.1, PetaLinux can add ZOCL device tree node automatically if the XSA is a Vitis extensible platform project.</p>
@@ -264,8 +265,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 <li><p><strong>sdhci1</strong> node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104. It’s not a part of Vitis acceleration platform requirements.</p></li>
 </ul>
 <p><strong>Note</strong>: an example file is provided in <a class="reference external" href="ref_files/step2_petalinux/system-user.dtsi">ref_files/step2_petalinux/system-user.dtsi</a>.</p>
-</section>
-<section id="add-ext4-rootfs-support-optional-but-recommended">
+</div>
+<div class="section" id="add-ext4-rootfs-support-optional-but-recommended">
 <h2>Add EXT4 rootfs support (Optional but recommended)<a class="headerlink" href="#add-ext4-rootfs-support-optional-but-recommended" title="Permalink to this heading">¶</a></h2>
 <p>It’s recommended to use EXT4 for Vitis acceleration designs. PetaLinux uses initramfs format for rootfs by default. It can’t retain the rootfs changes in run time. Initramfs keeps rootfs contents in DDR, which makes user useable DDR memory reduced. To make the root file system retain changes and to enable maximum usage of available DDR memory, we’ll use EXT4 format for rootfs in second partition while keep the first partition FAT32 to store the boot files.</p>
 <p>Vitis-AI applications will install additional software packages. If user would like to run Vitis-AI applications, please use EXT4 rootfs. If in any case initramfs would be used, please add all Vitis-AI dependencies to initramfs.</p>
@@ -313,8 +314,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 </ul>
 </li>
 </ol>
-</section>
-<section id="build-petalinux-images">
+</div>
+<div class="section" id="build-petalinux-images">
 <h2>Build PetaLinux Images<a class="headerlink" href="#build-petalinux-images" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>From any directory within the PetaLinux project, build the PetaLinux project.</p>
@@ -330,8 +331,8 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 <p>The generated sysroot package <strong>sdk.sh</strong> will be located in <PetaLinux Project>/images/linux directory. We’ll extract it in next step.</p>
 </li>
 </ol>
-</section>
-<section id="fast-track">
+</div>
+<div class="section" id="fast-track">
 <h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create PetaLinux project and generate outputs. To use these scripts, please run the following steps.</p>
 <ol>
@@ -349,12 +350,12 @@ petalinux-config --get-hw-description<span class="o">=</span>&lt;vivado_design_d
 </li>
 </ol>
 <p>Note: The Fast Track scripts extracts the sysroot to <PetaLinux Project>/images/linux directory. It’s different than the step-by-step instructions for the convenience of scripting.</p>
-</section>
-<section id="next-step">
+</div>
+<div class="section" id="next-step">
 <h2>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
 <p>Note: Now HW platform and SW platform are all generated. Next we would <a class="reference internal" href="step3.html"><span class="doc">package the Vitis Platform</span></a>.</p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
 
 
            </div>

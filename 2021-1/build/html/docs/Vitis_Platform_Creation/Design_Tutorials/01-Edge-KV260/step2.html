@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -113,7 +114,7 @@ function OptanonWrapper() { }
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
---><section id="step-2-create-the-software-components">
+--><div class="section" id="step-2-create-the-software-components">
 <h1>Step 2: Create the Software Components<a class="headerlink" href="#step-2-create-the-software-components" title="Permalink to this heading">¶</a></h1>
 <table class="sphinxhide" width="100%">
  <tr width="100%">
@@ -122,11 +123,11 @@ function OptanonWrapper() { }
     </td>
  </tr>
 </table><p>Due to the boot flow differences between KV260 and base platforms for Xilinx evaluation boards like ZCU104, platform developer needs to prepare one additional DTBO file besides the normal software components for Vitis platforms because application developers needs to add this DTBO file to the application deployment package. The other software components generation flow is similar to the flow described in the <a class="reference internal" href="../../Introduction/02-Edge-AI-ZCU104/step2.html"><span class="doc">ZCU104 tutorial</span></a>. Since KV260 provides its BSP, we can use the PetaLinux BSP to generate Linux kernel, root file system and boot components, or do more customization based on the BSP.</p>
-</section>
-<section id="step-2-create-the-software-components-with-petalinux">
+</div>
+<div class="section" id="step-2-create-the-software-components-with-petalinux">
 <h1>Step 2: Create the Software Components with PetaLinux<a class="headerlink" href="#step-2-create-the-software-components-with-petalinux" title="Permalink to this heading">¶</a></h1>
 <p>KV260 provides an off-the-shelf boot image and has its enhanced boot sequence. Since the image can boot successfully out of the box, Vitis platform developers can skip some software component preparation steps for Linux booting.</p>
-<section id="generating-normal-software-components-from-the-kv260-starter-kit-bsp">
+<div class="section" id="generating-normal-software-components-from-the-kv260-starter-kit-bsp">
 <h2>Generating Normal Software Components from the KV260 Starter Kit BSP<a class="headerlink" href="#generating-normal-software-components-from-the-kv260-starter-kit-bsp" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Check <a class="reference external" href="https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM">Kria K26 SOM wiki</a>. Download the <strong>Starter Kit SOM BSP</strong> that matches your tool version under <strong>PetaLinux Board Support Package</strong> section.</p>
@@ -167,8 +168,8 @@ petalinux-build --sdk
 <p>The PetaLinux image files and sysroot sdk.sh will be generated in <PetaLinux Project>/images/linux directory. We will use them in the next step.</p>
 </li>
 </ol>
-</section>
-<section id="generate-device-tree-overlay">
+</div>
+<div class="section" id="generate-device-tree-overlay">
 <h2>Generate Device Tree Overlay<a class="headerlink" href="#generate-device-tree-overlay" title="Permalink to this heading">¶</a></h2>
 <p>Since KV260 loads PL after Linux boots up, the PL IP information in the platform needs to be loaded dynamicly as device tree overlay. So one additional requirement for KV260 acceleration platform software is to generate the device tree overlay for the platform PL IPs. This device tree overlay serves two purposes:</p>
 <ol class="simple">
@@ -216,14 +217,14 @@ hsi close_hw_design <span class="o">[</span>hsi current_hw_design<span class="o"
 </div>
 </li>
 </ol>
-<section id="next-step">
+<div class="section" id="next-step">
 <h3>Next Step<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h3>
 <blockquote>
 <div><p>Note:  Now HW platform and SW platform are all generated. Next we would <a class="reference internal" href="step3.html"><span class="doc">package the Vitis Platform</span></a>.</p>
 </div></blockquote>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
-</section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
+</div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -109,10 +110,10 @@ function OptanonWrapper() { }
  <td>
  </td>
  </tr>
-</table><section id="implementing-the-kernel">
+</table><div class="section" id="implementing-the-kernel">
 <h1>Implementing the Kernel<a class="headerlink" href="#implementing-the-kernel" title="Permalink to this heading">¶</a></h1>
 <p>In this lab, you will create an optimized kernel with 4, 8, and 16 words to be processed in parallel. All 100,000 documents worth 1.4 GB are sent from the host CPU to the kernel using a single buffer from the host CPU.</p>
-<section id="bloom4x-kernel-implementation-using-4-words-in-parallel">
+<div class="section" id="bloom4x-kernel-implementation-using-4-words-in-parallel">
 <h2>Bloom4x: Kernel Implementation Using 4 Words in Parallel<a class="headerlink" href="#bloom4x-kernel-implementation-using-4-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>Processing 4 words in parallel will require 32-bits*4 = 128-bits in parallel, but you should access the DDR with 512-bits because the data is contiguous. This will require smaller number of memory accesses.</p>
 <p>Use the following interface requirements to create kernel:</p>
@@ -123,7 +124,7 @@ function OptanonWrapper() { }
 <li><p>Compute the hash (two <code class="docutils literal notranslate"><span class="pre">MurmurHash2</span></code> functions) functions for 4 words every cycle.</p></li>
 </ul>
 <p>Refer to <a class="reference external" href="https://www.xilinx.com/cgi-bin/docs/rdoc?v=2021.1%3Bt=vitis+doc%3Bd=methodologyacceleratingapplications.html">Methodology for Accelerating Applications with the Vitis Software</a> in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).</p>
-<section id="macro-architecture-implementation">
+<div class="section" id="macro-architecture-implementation">
 <h3>Macro Architecture Implementation<a class="headerlink" href="#macro-architecture-implementation" title="Permalink to this heading">¶</a></h3>
 <p>Navigate to the function <code class="docutils literal notranslate"><span class="pre">runOnfpga</span></code> in <code class="docutils literal notranslate"><span class="pre">02-bloom/reference_files/compute_score_fpga_kernel.cpp</span></code>.</p>
 <p>The algorithm has been updated to receive 512-bits of words from the DDR with the following arguments:</p>
@@ -203,8 +204,8 @@ function OptanonWrapper() { }
 </div>
 </li>
 </ol>
-</section>
-<section id="micro-architecture-implementation">
+</div>
+<div class="section" id="micro-architecture-implementation">
 <h3>Micro Architecture Implementation<a class="headerlink" href="#micro-architecture-implementation" title="Permalink to this heading">¶</a></h3>
 <p>Now that you have the top-level function, <code class="docutils literal notranslate"><span class="pre">runOnfpga</span></code> updated with the proper datawidths and interface types, you need to identify the loops to optimize to improve latency and throughput.</p>
 <ol>
@@ -274,8 +275,8 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</section>
-<section id="build-the-kernel-using-the-vitis-tool-flow">
+</div>
+<div class="section" id="build-the-kernel-using-the-vitis-tool-flow">
 <h3>Build the Kernel Using the Vitis Tool Flow<a class="headerlink" href="#build-the-kernel-using-the-vitis-tool-flow" title="Permalink to this heading">¶</a></h3>
 <p>Now, build the kernel using the Vitis compiler. The Vitis compiler will call the Vitis HLS tool to synthesize the C++ kernel code into an RTL kernel. You will also review the reports to confirm if the kernel meets the latency/throughput requirements for your performance goals.</p>
 <ol>
@@ -301,8 +302,8 @@ function OptanonWrapper() { }
 </li>
 <li><p>The HLS reports confirm that the latency of the function meets your target. You still need to ensure the functionality is correct when communicating with the host. In the next section, you will walk through the initial host code and run the software and hardware emulation.</p></li>
 </ol>
-</section>
-<section id="review-the-initial-host-code">
+</div>
+<div class="section" id="review-the-initial-host-code">
 <h3>Review the Initial Host Code<a class="headerlink" href="#review-the-initial-host-code" title="Permalink to this heading">¶</a></h3>
 <p>The initial version of the accelerated application code structure follows the structure of the original software version. The entire input buffer is transferred from the host to the FPGA in a single transaction. Then, the FPGA accelerator performs the computation. Finally, the results are read back from the FPGA to the host before being post-processed.</p>
 <p>The following figure shows the sequential process of the host writing data on the device, compute by the accelerator on the FPGA, and read flags back to host, implemented in this first step. The Profile score is calculated sequentially on CPU after all the flags are received by the host.</p>
@@ -319,8 +320,8 @@ function OptanonWrapper() { }
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">output_inh_flags</span></code>: Output array of 8-bit outputs where each bit in the 8-bit output indicates whether a word is present in the Bloom filter, that is then used for computing score in the CPU.</p></li>
 </ul>
-</section>
-<section id="run-software-emulation-hardware-emulation-and-hw">
+</div>
+<div class="section" id="run-software-emulation-hardware-emulation-and-hw">
 <h3>Run Software Emulation, Hardware Emulation and Hw<a class="headerlink" href="#run-software-emulation-hardware-emulation-and-hw" title="Permalink to this heading">¶</a></h3>
 <ol>
 <li><p>To ensure the application passes Software Emulation with your changes, run the following command.</p>
@@ -372,8 +373,8 @@ function OptanonWrapper() { }
 </li>
 </ol>
 <p>At this point, review the Profile reports and Timeline Trace to extract information, such as how much time it takes to transfer the data between host and kernel and how much time it takes to compute on the FPGA.</p>
-</section>
-<section id="visualize-the-resources-utilized">
+</div>
+<div class="section" id="visualize-the-resources-utilized">
 <h3>Visualize the Resources Utilized<a class="headerlink" href="#visualize-the-resources-utilized" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the HLS Synthesis Report. You will need to build the kernel without <code class="docutils literal notranslate"><span class="pre">SOLUTION=1</span></code> to <code class="docutils literal notranslate"><span class="pre">generate</span> <span class="pre">link_summary</span></code> as this is not provided as part of tutorial. You can skip this step as well.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin.link_summary
@@ -381,16 +382,16 @@ function OptanonWrapper() { }
 </div>
 <p>The HLS Synthesis Report shows the number of LUTs, REG, and BRAM utilized for the Bloom4x kernel implementation.</p>
 <p><img alt="missing image" src="../../../../_images/kernel_4_util.PNG" /></p>
-</section>
-<section id="review-profile-reports-and-timeline-trace">
+</div>
+<div class="section" id="review-profile-reports-and-timeline-trace">
 <h3>Review Profile Reports and Timeline Trace<a class="headerlink" href="#review-profile-reports-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the <code class="docutils literal notranslate"><span class="pre">run_summary</span></code> report.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_4/hw/runOnfpga_hw.xclbin.run_summary
 </pre></div>
 </div>
 <p>The Profile Summary and Timeline Trace reports are useful tools to analyze the performance of the FPGA-accelerated application.</p>
-</section>
-<section id="review-profile-summary-report">
+</div>
+<div class="section" id="review-profile-summary-report">
 <h3>Review Profile Summary Report<a class="headerlink" href="#review-profile-summary-report" title="Permalink to this heading">¶</a></h3>
 <ul>
 <li><p><em>Kernels &amp; Compute Unit: Kernel Execution</em> indicates that the Total Time by kernel enqueue is about 292 ms.</p>
@@ -411,8 +412,8 @@ function OptanonWrapper() { }
 <li><p><em>Kernels &amp; Compute Unit: Compute Unit Stalls</em> confirms that there are almost no “External Memory Stalls”
 <img alt="missing image" src="../../../../_images/Kernel_4_Guidance_Stall.PNG" /></p></li>
 </ul>
-</section>
-<section id="review-the-timeline-trace">
+</div>
+<div class="section" id="review-the-timeline-trace">
 <h3>Review the Timeline Trace<a class="headerlink" href="#review-the-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>The Timeline Trace shows the data transfer from the host to the FPGA and back to the host as they appear. The Timeline Trace can be visualized so that the transfer from the host to the FPGA and the FPGA compute and transfer from the FPGA to host occur sequentially.</p>
 <p><img alt="missing image" src="../../../../_images/Kernel_4_time_1.PNG" /></p>
@@ -421,12 +422,12 @@ function OptanonWrapper() { }
 <li><p>At any given time, either the host or FPGA has access to the DDR. In other words, there is no memory contention between the host and kernel accessing the same DDR.</p></li>
 <li><p>Using a single buffer will create a kernel itself with lowest latency and most optimized performance.</p></li>
 </ul>
-</section>
-<section id="throughput-achieved">
+</div>
+<div class="section" id="throughput-achieved">
 <h3>Throughput Achieved<a class="headerlink" href="#throughput-achieved" title="Permalink to this heading">¶</a></h3>
 <p>Based on the results, the throughput of the application is 1399 MB/838 ms = approx 1.66 GBs. This is your first attempt to run the application on hardware, and you have four times the performance results compared to the software-only version.</p>
-</section>
-<section id="opportunities-for-performance-improvements">
+</div>
+<div class="section" id="opportunities-for-performance-improvements">
 <h3>Opportunities for Performance Improvements<a class="headerlink" href="#opportunities-for-performance-improvements" title="Permalink to this heading">¶</a></h3>
 <p>Because there is no external memory access contention for accessing memory, this is the best possible performance for the Kernel computing four words in parallel.</p>
 <ul class="simple">
@@ -434,13 +435,13 @@ function OptanonWrapper() { }
 <li><p>Also note, even though the kernel is operating at its best performance, the kernel has to wait until the complete transfer is done by the host. Usually, it is recommended that you send a larger buffer from the host to DDR, but a very large buffer will add a delay before the kernel can start, impacting overall performance.</p></li>
 </ul>
 <p>You will continue this lab and create a kernel with 8 words to be computed in parallel. In the next lab, <a class="reference internal" href="5_data-movement.html"><span class="doc">Analyze Data Movement Between Host and Kernel</span></a>, you will experiment with splitting the buffer into multiple chunks, and observe how this affects the performance later in this tutorial.</p>
-</section>
-</section>
-<section id="bloom8x-kernel-implementation-using-8-words-in-parallel">
+</div>
+</div>
+<div class="section" id="bloom8x-kernel-implementation-using-8-words-in-parallel">
 <h2>Bloom8x: Kernel Implementation Using 8 Words in Parallel<a class="headerlink" href="#bloom8x-kernel-implementation-using-8-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>For config Bloom4x, you read 512-bit input values from the DDR and computed 4 words in parallel which uses only 128-bit input values. This steps enables you to run 8 words in parallel.</p>
 <p>You can achieve this by using <code class="docutils literal notranslate"><span class="pre">PF=8</span></code> on the command line. Use the following steps to compute 8 words in parallel.</p>
-<section id="run-hardware-on-the-fpga">
+<div class="section" id="run-hardware-on-the-fpga">
 <h3>Run Hardware on the FPGA<a class="headerlink" href="#run-hardware-on-the-fpga" title="Permalink to this heading">¶</a></h3>
 <p>Use the following command to run the hardware on the FPGA.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer ITER=1 PF=8 
@@ -459,8 +460,8 @@ function OptanonWrapper() { }
 <li><p>The Total FPGA time is 315 ms. This includes the Host to DDR transfer, Total Compute on FPGA and DDR to Host transfer.</p></li>
 <li><p>As expected, when computing 8 words in parallel, the total FPGA Time that includes the data transfer between the host and device, has reduced from 447 ms to 315 ms.</p></li>
 </ul>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3>Visualize the Resources Utilized<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the HLS Synthesis Report. You will need to build the kernel without <code class="docutils literal notranslate"><span class="pre">SOLUTION=1</span></code> to generate link_summary; this is not provided as part of tutorial. You can skip this step.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin.link_summary
@@ -468,8 +469,8 @@ function OptanonWrapper() { }
 </div>
 <p>From the HLS Synthesis Report, you can see that the number of resources increased for LUTs, REG, and BRAM compared to the Bloom4x kernel implementation.</p>
 <p><img alt="missing image" src="../../../../_images/kernel_8_util.PNG" /></p>
-</section>
-<section id="review-profile-summary-report-and-timeline-trace">
+</div>
+<div class="section" id="review-profile-summary-report-and-timeline-trace">
 <h3>Review Profile Summary Report and Timeline Trace<a class="headerlink" href="#review-profile-summary-report-and-timeline-trace" title="Permalink to this heading">¶</a></h3>
 <p>Use the Vitis analyzer to visualize the run_summary report.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vitis_analyzer $LAB_WORK_DIR/build/single_buffer/kernel_8/hw/runOnfpga_hw.xclbin.run_summary
@@ -483,18 +484,18 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../_images/Kernel_8_time_1.PNG" /></p>
 </li>
 </ol>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h3>Throughput Achieved<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Based on the results, the throughput of the application is 1399 MB/739 ms = approximately 1.9 GBs. You have now 4x performance results compared to software-only version.</p></li>
 </ul>
-</section>
-</section>
-<section id="bloom16x-kernel-implementation-using-16-words-in-parallel">
+</div>
+</div>
+<div class="section" id="bloom16x-kernel-implementation-using-16-words-in-parallel">
 <h2>Bloom16x : Kernel Implementation Using 16 Words in Parallel<a class="headerlink" href="#bloom16x-kernel-implementation-using-16-words-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>In the previous step, you read 512-bit input values from the DDR and computed 8 words in parallel. You can compute 16 words in parallel by setting <code class="docutils literal notranslate"><span class="pre">PF=16</span></code> on the command line. Use the following steps to compute 16 words in parallel.</p>
-<section id="id3">
+<div class="section" id="id3">
 <h3>Run Hardware on the FPGA<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd $LAB_WORK_DIR/makefile; make run STEP=single_buffer ITER=1 PF=16
 </pre></div>
@@ -510,18 +511,18 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>As previous steps, you can also review profile and timeline trace reports. This is left out as an homework exercise.</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h3>Opportunities for Performance Improvements<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>In this lab, you focused on building on an optimal kernel with 4, 8 and 16 words in parallel using a single buffer and reviewed the reports. As you observed from the Timeline Report that the kernel cannot start until the whole buffer is transferred to the DDR, which is about 145 ms when the single buffer is used. This is a substantial time delay considering the <code class="docutils literal notranslate"><span class="pre">Kernel</span> <span class="pre">execution</span> <span class="pre">time</span></code> is even smaller than the total host transfer time.</p>
-</section>
-</section>
-<section id="next-steps">
+</div>
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In the next lab, you <a class="reference internal" href="5_data-movement.html"><span class="doc">explore sending documents in multiple buffers</span></a> rather than sending all of the documents at once from the host and explore how this improves the overall application performance. You will also use the configuration <code class="docutils literal notranslate"><span class="pre">Bloom8x</span></code> kernel and <code class="docutils literal notranslate"><span class="pre">Bloom16x</span></code> kernel for exploration in the next step.</p>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></section>
-</section>
+<p align="center" class="sphinxhide"><b><a href="/docs/vitis-getting-started/README.md">Return to Getting Started Pathway</a> — <a href="docs/bloom/README.md">Return to Start of Tutorial</a></b></p><p align="center" class="sphinxhide"><sup>Copyright&copy; 2020 Xilinx</sup></p></div>
+</div>
 
 
            </div>

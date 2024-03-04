@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Versal プラットフォーム作成のクイック スタート - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Vitis ハードウェア アクセラレータ" href="../../Hardware_Acceleration/Hardware-Acceleration.html" />
+    <link rel="prev" title="Vitis ライブラリ入門" href="../Vitis_Libraries/README.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul class="current"><li class="toctree-l1 current"><a class="reference internal" href="../Vitis-Getting-Started.html">概要</a><ul class="current"><li class="toctree-l2"><a class="reference internal" href="../Vitis/Getting_Started_Vitis.html">Vitis の概要および入門</a></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_HLS/Getting_Started_Vitis_HLS.html">Vitis HLS</a></li><li class="toctree-l2"><a class="reference internal" href="../Vitis_Libraries/README.html">Vitis ライブラリ</a></li><li class="toctree-l2 current"><a class="current reference internal" href="#">Vitis プラットフォーム</a><ul><li class="toctree-l3"><a class="reference internal" href="#step-1-create-vivado-design-and-generate-xsa">手順 1: Vivado デザインの作成および XSA の生成</a></li><li class="toctree-l3"><a class="reference internal" href="#step-2-create-vitis-platform">手順 2: Vitis プラットフォームの作成</a></li><li class="toctree-l3"><a class="reference internal" href="#step-3-validate-this-vitis-platform">手順 3: Vitis プラットフォームの検証</a><ul><li class="toctree-l4"><a class="reference internal" href="#run-the-application-on-hardware">ハードウェアでのアプリケーションの実行</a></li><li class="toctree-l4"><a class="reference internal" href="#fast-track">ファースト トラック</a></li></ul></li></ul></li></ul></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li><a href="../Vitis-Getting-Started.html">入門</a>&raquo;</li><li>Versal プラットフォーム作成クイック スタート</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Getting_Started/Vitis_Platform/README.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody"><!-- 
+# Copyright 2020 Xilinx Inc.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+--><table width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/></td>
+ </tr>
+</table><div class="section" id="versal-platform-creation-quick-start">
+<h1>Versal プラットフォーム作成クイック スタート<a class="headerlink" href="#versal-platform-creation-quick-start" title="Permalink to this heading">¶</a></h1>
+<p><em><strong>バージョン: 2022.1</strong></em><br /><em><strong>[Board]: VCK190</strong></em></p>
+<p>このモジュールでは、短時間でプラットフォームを作成してアプリケーションを実行し、このプラットフォームを VCK190 評価ボードに基づいて検証する 3 つの手順について説明します。</p>
+<p>ここでは、CED サンプルからの Versal エクステンシブル プラットフォームを使用し、ビルド済みの Linux 共通イメージおよび Createdts コマンドを使用してソフトウェア コンポーネントを生成します。その後、エンベデッド Versal アクセラレーション プラットフォームを作成します。最後に、Vector Addition サンプルを使用してこのプラットフォームを検証します。また、Linux システム イメージをカスタマイズする必要がある場合は、<a class="reference internal" href="../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.html"><span class="doc">PetaLinux のカスタマイズ</span></a>に関するページを参照してください。</p>
+<div class="section" id="step-1-create-vivado-design-and-generate-xsa">
+<h2>手順 1: Vivado デザインの作成および XSA の生成<a class="headerlink" href="#step-1-create-vivado-design-and-generate-xsa" title="Permalink to this heading">¶</a></h2>
+<ol><li><p>ワークスペースを作成します。Vivado を起動していない場合は、起動します。</p><ul class="simple"> <li><p>mkdir WorkSpace と入力します。</p></li> <li><p>cd WorkSpace と入力します。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;Vitis_Install_Directory&gt;/settings64.sh</span></code> を実行して、Vivado 実行環境を設定します。</p></li> <li><p>コンソールに <code class="docutils literal notranslate"><span class="pre">vivado</span></code> と入力して Vivado を実行します。</p></li> </ul>
+</li>
+<li><p>Versal Extensible Embedded Platform サンプルをダウンロードします。</p><ul class="simple"> <li><p><strong>[Tools] → [Vivado Store]</strong> をクリックします。</p></li> <li><p><strong>[OK]</strong> をクリックして、ウェブからオープンソースのサンプルのダウンロードに同意します。</p></li> <li><p><strong>[Platform] → [Versal Extensible Embedded Platform]</strong> をクリックし、ツールバーのダウンロード ボタンをクリックします。</p></li> <li><p>インストールが終了したら <strong>[Close]</strong> をクリックします。</p></li> </ul>
+<p><img alt="Vivado XHUB download examples" src="../../../_images/vivado_download_example.png" /></p></li> <li><p>Versal エクステンシブル エンベデッド プラットフォーム例のプロジェクトの作成</p><ul class="simple"> <li><p><strong>[File] → [Project] → [Open Example]</strong> をクリックします。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li> <li><p>[Select Project Template] ウィンドウで <strong>[Versal Extensible Embedded Platform]</strong> をオンにします。</p></li> <li><p><strong>[Project Name]</strong> および <strong>[Project location]</strong> を入力します。<strong>[Create project subdirectory]</strong> はオンのままにします。<strong>[Next]</strong> をクリックします。</p></li> <li><p>[Default Part] ページでターゲット ボードを選択します。この例では、<strong>Versal VCK190 Evaluation Platform</strong> を使用します。[Next] をクリックします。</p></li> </ul>
+<p><img alt="CED Configuration" src="../../../_images/vivado_ced_config.png" /></p><ul class="simple"> <li><p>[Configure Clocks Settings]: このページでは、より多くのクロックをイネーブルし、出力周波数を更新し、デフォルト クロックを定義できます。この例では、デフォルト設定のままにします。</p></li> <li><p>[Configure Interrupt Settings]: このプラットフォームのサポートする割り込みの数を選択できます。63 割り込みモードの場合、カスケード モードで 2 つの AXI_INTC が使用されます。この例では、デフォルト設定のままにします。</p></li> <li><p>[Configure Memory Settings]: このデザイン例では、デフォルトで DDR4 のみをイネーブルにします。LPDDR4 をイネーブルにすると、DDR4 と LPDDR4 の両方がイネーブルになります。この例では、デフォルト設定のままにします。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li> <li><p>新しいプロジェクト サマリを確認し、<strong>[Finish]</strong> をクリックします。</p></li> <li><p>しばらくすると、デザイン例が生成されたことがわかります。</p></li> </ul>
+<p>生成されたデザインは次のようになります。</p>
+<p><img alt="Vivado Design Block Diagram" src="../../../_images/vivado_design_diagram.png" /></p>
+<p>この段階で、Vivado ブロック オートメーションにより、CIPS (Control、Interface &amp; Processing System) ブロック、AXI NOC ブロック、AI エンジン、およびすべてのサポート ロジック ブロックを図に追加し、VCK190 のすべてのボード プリセットを適用しました。</p></li> <li><p>ブロック図を生成します。</p><ul class="simple"> <li><p>Flow Navigator で <strong>[Generate Block Diagram]</strong> をクリックします。</p></li> </ul>
+<p><img alt="missing image" src="../../../_images/vivado_generate_bd.png" /></p><ul class="simple"> <li><p><strong>[Synthesis Options]</strong> を <strong>[Global]</strong> にして、生成時間を短縮します。</p></li> </ul>
+<p><img alt="missing image" src="../../../_images/vivado_generate_bd_global.png" /></p><ul class="simple"> <li><p><strong>[Generate]</strong> ボタンをクリックします。</p></li> </ul>
+<p><strong>注記</strong>: このクリティカル警告は無視しても問題ありません。今後、この信号は Vitis で接続されるようになる予定です。</p>
+<p><img alt="Intr Critical Warning " src="../../../_images/vivado_bd_critical_warning.png" /></p></li> <li><p>次のスクリプトを使用してハードウェア プラットフォームをエクスポートします。</p><ul class="simple"> <li><p><strong>[File] → [Export] → [Export Platform]</strong> をクリックします。これには、<strong>Flow Navigator</strong> で <strong>[IP Integrator] → [Export Platform]</strong>、または <strong>[Platform Setup]</strong> タブの下部にある <strong>[Export Platform]</strong> ボタンを使用することもできます。</p></li> <li><p>[Export Hardware Platform] ページで <strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[Hardware]</strong> を選択します。シミュレーションをサポートしない IP がある場合は、ハードウェア XSA とハードウェア エミュレーション XSA をそれぞれ生成する必要があります。<strong>[Next]</strong> をクリックします。</p></li> <li><p>DFX プラットフォームを作成するわけではないので、<strong>[Pre-synthesis]</strong> を選択します。<strong>[Next]</strong> をクリックします。</p></li> <li><p>[Input Name] に <strong>VCK190_Custom_Platform</strong> と入力して [Next] をクリックします。</p></li> <li><p>ファイル名を <strong>vck190_custom_hw</strong> にアップデートし、[Next] をクリックします。</p></li> <li><p>サマリを確認します。<strong>[Finish]</strong> をクリックします。</p></li> <li><p><strong>Vck190_custom_hw.xsa</strong> ファイルが <code class="docutils literal notranslate"><span class="pre">Vivado</span> <span class="pre">project</span> <span class="pre">location</span></code> ディレクトリに生成されます。</p></li> </ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-2-create-vitis-platform">
+<h2>手順 2: Vitis プラットフォームの作成<a class="headerlink" href="#step-2-create-vitis-platform" title="Permalink to this heading">¶</a></h2>
+<ol><li><p><a class="reference external" href="https://japan.xilinx.com/support/download.html">ザイリンクス ウェブサイトのダウンロード ページ</a>から Versal 共通イメージをダウンロードして <code class="docutils literal notranslate"><span class="pre">WorkSpace</span></code> ディレクトリに配置し、その共通イメージを解凍します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar xvf ../xilinx-versal-common-v2022.1.tar.gz .</pre></div>
+</div></li> <li><p>デバイス ツリー ファイルを作成します。</p>
+<p>XSCT ツールを使用して、デバイス ツリー ファイルを生成するコマンドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> WorkSpace
+<span class="nb">source</span> &lt;Vitis_Install_Directory&gt;/settings64.sh
+xsct 
+</pre></div>
+</div>
+<p>次のように <code class="docutils literal notranslate"><span class="pre">createdts</span></code> コマンドを XSCT コンソールで実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>createdts -hw &lt;full path&gt;/vck190_custom_hw.xsa -out . -zocl <span class="se">\</span>
+-platform-name mydevice -git-branch xlnx_rel_v2022.1 -board  <span class="se">\</span>
+versal-vck190-reva-x-ebm-02-reva -compile   
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">-hw</span></code> オプションは、手順 1 で生成された XSA ファイルで、これは <code class="docutils literal notranslate"><span class="pre">vck190_custom_hw.xsa</span></code> という Vivado プロジェクト ディレクトリにあります。XSCT コンソールには、次の情報が表示されます。この警告メッセージを無視すると、&lt;mydevice/psv_cortexa72_0/device_tree_domain/bsp/&gt; にある system.dtb ファイルが取得されるようになります。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pl.dtsi:9.21-46.4: Warning <span class="o">(</span>unit_address_vs_reg<span class="o">)</span>: /amba_pl@0: node has a unit name, but no reg property
+pl.dtsi:41.26-45.5: Warning <span class="o">(</span>simple_bus_reg<span class="o">)</span>: /amba_pl@0/misc_clk_0: missing or empty reg/ranges property
+</pre></div>
+</div>
+<p>コンソールに <code class="docutils literal notranslate"><span class="pre">exit</span></code> と入力し、XSCT コンソールを終了します。</p>
+<p>共通イメージ パッケージの U-Boot イメージには、デフォルトの環境変数がありません。そのため、手動で bootargs をアップデートする必要があります。ここでは、system-user.dtsi を <code class="docutils literal notranslate"><span class="pre">ref_files</span></code> ディレクトリに用意します。それをデバイス ツリー BSP ディレクトリにコピーし、次のように system-top.dts に変更して含めます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp system-user.dtsi mydevice/psv_cortexa72_0/device_tree_domain/bsp/
+<span class="nb">echo</span> <span class="s2">&quot;#include \&quot;system-user.dtsi\&quot;&quot;</span> &gt;&gt; mydevice/psv_cortexa72_0/device_tree_domain/bsp/system-top.dts
+</pre></div>
+</div>
+<p>dts ファイルを再構築します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> mydevice/psv_cortexa72_0/device_tree_domain/bsp/
+gcc -I my_dts -E -nostdinc -undef -D__DTS__ -x assembler-with-cpp -o <span class="se">\</span>
+system.dts system-top.dts  <span class="c1">#preprocess the dts file because DTC command can not recognize the #include grammar</span>
+dtc -I dts -O dtb -o system.dtb system.dts <span class="c1"># compile the dts</span>
+</pre></div>
+</div>
+<p>アップデートされた DTB ファイルは、&lt;mydevice/psv_cortexa72_0/device_tree_domain/bsp/&gt; フォルダーにあります。</p></li> <li><p>Vitis プラットフォームを作成します。</p><ul> <li><p>FAT32 パーティションおよびブート コンポーネントに対して 2 つのディレクトリを <code class="docutils literal notranslate"><span class="pre">WorkSpace</span></code> ディレクトリに作成します。その後、次のようにイメージを準備します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> WorkSpace
+mkdir sd_dir
+mkdir boot
+cp xilinx-versal-common-v2022.1/boot.scr sd_dir/
+cp xilinx-versal-common-v2022.1/bl31.elf boot/
+cp xilinx-versal-common-v2022.1/u-boot.elf boot/
+cp mydevice/psv_cortexa72_0/device_tree_domain/bsp/system.dtb boot/
+</pre></div>
+</div></li> <li><p>コンソールに <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">xilinx-versal-common-v2022.1/sdk.sh</span> <span class="pre">-d</span> <span class="pre">xilinx-versal-common-v2022.1/</span> <span class="pre">-y</span></code> と入力して SDK ツールをインストールします。-d オプションは、インストールする場所のディレクトリを指定するためのものです。-y オプションは、確認を意味します。つまり、これは <code class="docutils literal notranslate"><span class="pre">xilinx-versal-common-v2022.1/</span></code> フォルダーにインストールされます。</p></li> <li><p>コンソールに <code class="docutils literal notranslate"><span class="pre">vitis</span></code> と入力して Vitis を実行します。</p></li> <li><p>Vitis IDE で <strong>[File] → [New] → [Platform Project]</strong> をクリックして、プラットフォーム プロジェクトを作成します。</p></li> <li><p>プロジェクト名を入力します。この例では、「<code class="docutils literal notranslate"><span class="pre">vck190_custom</span></code>」と入力して <strong>[Next]</strong> をクリックします。</p></li> <li><p>[Platform] ページで <strong>[Browse]</strong> ボタンをクリックし、Vivado で生成された XSA ファイルを選択します。この場合、<code class="docutils literal notranslate"><span class="pre">&lt;Your</span> <span class="pre">Vivado</span> <span class="pre">Project</span> <span class="pre">Directory&gt;/vck190_custom_hw.xsa</span></code> にあります。<strong>[Next]</strong> をクリックします。</p></li> <li><p><strong></strong>オペレーティング システムに <strong>[linux]</strong> を設定します。</p></li> <li><p>プロセッサに <strong>[psv_cortexa72]</strong> を設定します。</p></li> <li><p><strong>[Finish]</strong> をクリックします。</p></li> </ul>
+<p><img alt="Created Vitis Platform" src="../../../_images/created_vitis_platform.png" /></p><ul> <li><p><strong>[linux on psv_cortexa72]</strong> ドメインをクリックします。</p></li> <li><p>この行の右側にある編集ボタンをクリックして、<strong>[Display Name]</strong> を <code class="docutils literal notranslate"><span class="pre">xrt</span></code> に更新します。これで、XRT がインストールされ、アクセラレーション アプリケーションを実行できる Linux ドメインであることを示します。</p></li> <li><p><strong>[Bif File]</strong> の設定: ドロップダウン ボタンをクリックして、<strong>[Generate BIF]</strong> を選択します。BIF ファイルがリソース ディレクトリに生成されます。</p>
+<p><img alt="vitis_platform_config" src="../../../_images/vitis_platform_config.PNG" /></p></li> <li><p><strong>[Boot Components Directory]</strong>: <strong>boot</strong> を選択し、[OK] をクリックします。Bootgen は、このディレクトリの BIF で参照されるブート コンポーネントを探し、BOOT.BIN を生成します。</p></li> <li><p><strong>[FAT32 Partition Directory]</strong>: <strong>sd_dir</strong> を選択し、[OK] をクリックします。このディレクトリのファイルは、SD カード イメージの FAT32 パーティションにコピーされます。</p></li> <li><p><strong>[QEMU Data]</strong>: <strong>step3_pfm/boot/</strong> を選択し、[OK] をクリックします。エミュレーターでは、このディレクトリからブート コンポーネントを使用します。</p></li> <li><p>Vivado の [Explorer] ビューで <strong>vck190_custom</strong> プロジェクトを選択し、<strong>[Build]</strong> ボタンをクリックしてプラットフォームを生成します。</p></li> </ul>
+<blockquote>
+<div><p>注記: QEMU 設定が追加されている場合は、qemu_args.txt を適宜アップデートしてください。</p>
+</div></blockquote>
+<p>これで手順 2 が終了し、プラットフォーム作成プロセスが完了したので、次はアプリケーションを実行してこのプラットフォームを検証します。</p></li></ol>
+</div>
+<div class="section" id="step-3-validate-this-vitis-platform">
+<h2>手順 3: Vitis プラットフォームの検証<a class="headerlink" href="#step-3-validate-this-vitis-platform" title="Permalink to this heading">¶</a></h2><ul> <li><p>コンソールに <code class="docutils literal notranslate"><span class="pre">vitis</span></code> と入力して Vitis を実行します。(Vitis が起動している場合、この手順はスキップしてください)</p></li> <li><p><strong>[File] → [New] → [Application Project]</strong> をクリックします。</p></li> <li><p>[Welcome] ページで <strong>[Next]</strong> をクリックします。</p></li> <li><p>[Platform] ページで、リストから <strong>[vck190_custom]</strong> プラットフォームを選択します。<strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[Application project name]</strong> を <strong>vadd</strong> に、ターゲット プロセッサを <strong>psv_cortexa72_SMP</strong> に設定します。<strong>[Next]</strong> をクリックします。</p>
+<p><img alt="missing image" src="../../../_images/vitis_create_vadd.png" /></p></li> <li><p><strong>Sysroot</strong> パス (&lt;xilinx-versal-common-v2022.1/sysroots/cortexa72-cortexa53-xilinx-linux&gt;) を入力します。</p></li> <li><p><strong>RootFS</strong> パス (&lt;xilinx-versal-common-v2022.1/rootfs.ext4&gt;) を入力します。</p></li> <li><p><strong>Kernel Image</strong> パス (&lt;xilinx-versal-common-v2022.1/Image&gt;) を入力します。</p></li> <li><p><strong>[Next]</strong> をクリックします。</p></li> <li><p><strong>[Vector Addition]</strong> テンプレートを選択します。<strong>[Finish]</strong> をクリックします。</p></li> <li><p><strong>vadd_system</strong> プロジェクトを選択します。</p></li> <li><p>ツールバーの <strong>[Build]</strong> (ハンマー アイコン) のドロップダウンをクリックし、<strong>[Hardware]</strong> を選択します。この手順は、<strong>[Active Build Configuration]</strong> に <strong>[Hardware]</strong> を選択し、[Build] アイコンをクリックしても実行できます。</p></li> <li><p>ハードウェアのビルドには時間がかかります。最後に Vitis は、vadd_system/Hardware/package ディレクトリに <strong>sd_card.img</strong> を生成します。</p></li> </ul>
+<div class="section" id="run-the-application-on-hardware">
+<h3>ハードウェアでのアプリケーションの実行<a class="headerlink" href="#run-the-application-on-hardware" title="Permalink to this heading">¶</a></h3>
+<ol><li><p>リモート サーバーまたは仮想マシン上でプロジェクトをビルドする場合は、ローカルに <code class="docutils literal notranslate"><span class="pre">vadd_system/Hardware/package/sd_card.img</span></code> をコピーします。</p></li> <li><p>sd_card.img を SD カードにプログラムします。詳細な手順は、<a class="reference external" href="https://japan.xilinx.com/cgi-bin/docs/ndoc?t=answers;d=73711.html">アンサー #73711</a> を参照してください。</p>
+<blockquote>
+<div><p>注記: SD カードをプログラミングした後、システムから正しく取り出してください。</p>
+</div></blockquote></li> <li><p>UART コンソールへ接続します。</p></li> <li><p>SD カードを挿入し、SD ブートモード (SW1[4:1] = &ldquo;1110&rdquo;: OFF, OFF, OFF, ON) の後電源投入して VCK190 ボードをブートします。</p>
+<blockquote>
+<div><p>注記: ブート モードの詳細は、<a class="reference external" href="https://docs.xilinx.com/r/ja-JP/ug1366-vck190-eval-bd">『VCK190 評価ボード ユーザー ガイド』</a>を参照してください。</p>
+</div></blockquote></li> <li><p>UART コンソールからテスト アプリケーションを起動します。</p>
+<details><summary><strong>ザイリンクス ダウンロード ウェブサイトからの共通イメージを使用している場合は、ここをクリックすると表示される手順に従ってアプリケーションを実行します。</strong></summary><p>自動マウントされた FAT32 パーティションに移動し、次のようにアプリケーションを実行します。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">sd</span><span class="o">-</span><span class="n">mmcblk0p1</span>
+<span class="o">./</span><span class="n">simple_vadd</span> <span class="n">krnl_vadd</span><span class="o">.</span><span class="n">xclbin</span>
+</pre></div>
+</div>
+</details><details>
+<summary><strong>PetaLinux プロジェクトからのイメージを使用している場合は、ここをクリックすると表示される手順に従ってアプリケーションを実行します。</strong></summary><p>まず、ユーザー <code class="docutils literal notranslate"><span class="pre">petalinux</span></code> でログインし、新しいパスワード (sudo パスワード) を設定する必要があります。</p><ul class="simple"> <li><p>システムにログインします。</p></li> </ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>petalinux login:petalinux
+You are required to change your password immediately <span class="o">(</span>administrator enforced<span class="o">)</span>.
+New password:
+Retype new password:
+petalinux:~$ sudo su
+We trust you have received the usual lecture from the <span class="nb">local</span> System
+Administrator. It usually boils down to these three things:
+    <span class="c1">#1) Respect the privacy of others.</span>
+    <span class="c1">#2) Think before you type.</span>
+    <span class="c1">#3) With great power comes great responsibility.</span>
+Password:
+petalinux:/home/petalinux#
+</pre></div>
+</div>
+<ul class="simple"> <li><p>自動マウントされた FAT32 パーティションに移動し、次のようにアプリケーションを実行します。</p></li> </ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">petalinux</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">petalinux</span><span class="c1"># cd /run/media/sd-mmcblk0p1</span>
+<span class="n">petalinux</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">petalinux</span><span class="c1"># ./simple_vadd krnl_vadd.xclbin</span>
+</pre></div>
+</div>
+</details></li> <li><p>UART コンソールに次のように表示されます。</p></li></ol>
+<details>
+  <summary><b>ログを表示</b></summary><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>root@petalinux:/run/media/mmcblk0p1# ./vadd binary_container_1.xclbin
+EXE: /run/media/mmcblk0p1/simple_vadd
+[XRT] WARNING: The xrt.ini flag &quot;opencl_summary&quot; is deprecated and will be removed in a future release.  A summary file is generated when when any profiling is enabled, so please use the appropriate settings from &quot;opencl_trace=true&quot;, &quot;device_counter=true&quot;, and &quot;device_trace=true.&quot;
+[XRT] WARNING: The xrt.ini flag &quot;opencl_device_counter&quot; is deprecated and will be removed in a future release.  Please use the equivalent flag &quot;device_counter.&quot;
+INFO: Reading krnl_vadd.xclbin
+Loading: &#39;krnl_vadd.xclbin&#39;
+[   74.394840] zocl-drm amba_pl@0:zyxclmm_drm: zocl_create_client: created KDS client for pid(577), ret: 0
+[   74.395731] zocl-drm amba_pl@0:zyxclmm_drm: zocl_destroy_client: client exits pid(577)
+[   74.401000] zocl-drm amba_pl@0:zyxclmm_drm: zocl_create_client: created KDS client for pid(577), ret: 0
+Trying to program device[0]: edge
+[   74.937477] [drm] skip kind 29(AIE_RESOURCES) return code: -22
+[   74.938038] [drm] found kind 8(IP_LAYOUT)
+[   74.938641] [drm] found kind 9(DEBUG_IP_LAYOUT)
+[   74.939375] [drm] skip kind 25(AIE_METADATA) return code: -22
+[   74.939688] [drm] found kind 7(CONNECTIVITY)
+[   74.940087] [drm] found kind 6(MEM_TOPOLOGY)
+[   74.940907] [drm] Memory 0 is not reserved in device tree. Will allocate memory from CMA
+[   74.948647] [drm] Memory 1 is not reserved in device tree. Will allocate memory from CMA
+[   74.963753] cu_drv CU.2.auto: cu_probe: CU[0] created
+[   74.974174] cu_drv CU.2.auto:  ffff000803cbac10 xrt_cu_intr_thread: CU[0] start
+[   74.989334] [drm] zocl_xclbin_read_axlf f4f049d5-183a-e265-264d-ecfa34a51343 ret: 0
+[   75.037345] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 locked, ref=1
+[   75.038188] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+[   75.041054] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   75.042096] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 unlocked, ref=0
+[   75.094803] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 locked, ref=1
+[   75.095393] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+Device[0]: program successful!
+[   75.188269] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0xffffffff) shared(true)
+[   75.192218] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_add_context: Client pid(577) add context CU(0x0) shared(true)
+TEST PASSED
+[   78.347703] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   78.349191] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0x0)
+[   78.354584] zocl-drm amba_pl@0:zyxclmm_drm:  ffff000800323c10 kds_del_context: Client pid(577) del context CU(0xffffffff)
+[   78.355356] [drm] bitstream f4f049d5-183a-e265-264d-ecfa34a51343 unlocked, ref=0
+[   78.462912] zocl-drm amba_pl@0:zyxclmm_drm: zocl_destroy_client: client exits pid(577)
+</pre></div>
+</div>
+</details></div>
+<div class="section" id="fast-track">
+<h3>ファスト トラック<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h3>
+<p>Vitis プラットフォームをパッケージしてテストするスクリプトが提供されています。</p>
+<p>これらのスクリプトを使用するには、<a class="reference external" href="https://japan.xilinx.com/support/download.html">ザイリンクス ウェブサイトのダウンロード ページ</a>から Versal 共通イメージをダウンロードし、そのイメージへのパスを次のコマンドに入力します。</p>
+<ol><li><p>ビルドを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd to the ref_files directory, e.g.</span>
+<span class="nb">cd</span> ref_files
+make all <span class="nv">COMMON_IMAGE_PATH</span><span class="o">=</span>&lt;path/to/common_image/&gt;
+</pre></div>
+</div></li> <li><p>生成されたファイルをクリーンアップするには、次を実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean</pre></div>
+</div></li></ol>
+<p align="center"><sup>Copyright&copy; 2022 Xilinx</sup></p></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer"> <a href="../Vitis_Libraries/README.html" class="btn btn-neutral float-left" title="Getting Started With Vitis Libraries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a> <a href="../../Hardware_Acceleration/Hardware-Acceleration.html" class="btn btn-neutral float-right" title="Vitis Hardware Acceleration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a> </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">最終更新日 2022 年 5 月 16 日。内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず<a href="https://github.com/Xilinx/Vitis-Tutorials">最新英語版</a>をご参照ください。</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

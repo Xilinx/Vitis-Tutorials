@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -118,22 +119,22 @@ function OptanonWrapper() { }
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Versal Custom Platform Creation Tutorial</h1>
     </td>
  </tr>
-</table><section id="step-0-create-a-base-bootable-design-for-vck190">
+</table><div class="section" id="step-0-create-a-base-bootable-design-for-vck190">
 <h1>Step 0: Create a Base Bootable Design for VCK190<a class="headerlink" href="#step-0-create-a-base-bootable-design-for-vck190" title="Permalink to this heading">¶</a></h1>
 <p>The purpose of step 0 is to provide a good baseline for platform creation.</p>
 <p>There are various ways to create a starting point for Versal design. In this tutorial, we’ll configure the CIPS and NOC block with Vivado Customizable Example Design. Since the example design has been validated by Xilinx, We will skip testing the base bootable design. For custom board or custom designs, please create a normal Vivado project (not Vitis Platform Project) and validate the design with instructions in <a class="reference external" href="#custom-board-additional-steps">Custom Board Additional Steps</a></p>
-<section id="vck190-es1-setup">
+<div class="section" id="vck190-es1-setup">
 <h2>VCK190 ES1 Setup<a class="headerlink" href="#vck190-es1-setup" title="Permalink to this heading">¶</a></h2>
 <p><strong>Note</strong>: If you’re using production VCK190 board, please skip this step.</p>
 <details>
-  <summary><b>Show VCK190 ES1 Setup Steps</b></summary><section id="vck190-es1-setup-enable-versal-es-devices">
+  <summary><b>Show VCK190 ES1 Setup Steps</b></summary><div class="section" id="vck190-es1-setup-enable-versal-es-devices">
 <h3>VCK190 ES1 Setup: Enable Versal ES Devices<a class="headerlink" href="#vck190-es1-setup-enable-versal-es-devices" title="Permalink to this heading">¶</a></h3>
 <p>Edit your <code class="docutils literal notranslate"><span class="pre">&lt;Vivado_Installation_Path&gt;/scripts/Vivado_init.tcl</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;Vivado_Installation_Path&gt;/scripts/hls_init.tcl</span></code> to add the following line:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enable_beta_device</span> <span class="n">xcvc</span><span class="o">*</span>
 </pre></div>
 </div>
-</section>
-<section id="vck190-es1-setup-download-vck190-es1-board-file">
+</div>
+<div class="section" id="vck190-es1-setup-download-vck190-es1-board-file">
 <h3>VCK190 ES1 Setup: Download VCK190 ES1 board file<a class="headerlink" href="#vck190-es1-setup-download-vck190-es1-board-file" title="Permalink to this heading">¶</a></h3>
 <p><strong>Note</strong>: If you’re using production VCK190 board, please skip this step.</p>
 <ol class="simple">
@@ -155,9 +156,9 @@ function OptanonWrapper() { }
 </ul>
 </li>
 </ol>
-</details></section>
-</section>
-<section id="create-versal-extensible-embedded-platform-example-design">
+</details></div>
+</div>
+<div class="section" id="create-versal-extensible-embedded-platform-example-design">
 <h2>Create Versal Extensible Embedded Platform Example Design<a class="headerlink" href="#create-versal-extensible-embedded-platform-example-design" title="Permalink to this heading">¶</a></h2>
 <ol>
 <li><p>Launch Vivado if you haven’t</p>
@@ -197,11 +198,11 @@ function OptanonWrapper() { }
 </ol>
 <p><em><strong>At this stage, the Vivado block automation has added a Control, Interface &amp; Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190. Since it’s a validated design, you can go to <a class="reference internal" href="step1.html"><span class="doc">step1:Hardware Settings for Vitis Platform</span></a> to review or update platform settings and skip the validation below.</strong></em></p>
 <p><em><strong>For a custom board, platform developers need to configure CIPS and NOC for processor settings and DDR settings. Please complete the following testings before going to next step.</strong></em></p>
-</section>
-<section id="custom-board-additional-steps">
+</div>
+<div class="section" id="custom-board-additional-steps">
 <h2>Custom Board Additional Steps<a class="headerlink" href="#custom-board-additional-steps" title="Permalink to this heading">¶</a></h2>
 <p>When designing platforms on custom boards, we need to verify the base bootable design on board before going forward. It can help to isolate the root cause if the following platform creation steps generates any errors - whether it’s bring by kernel, platform creation, or by the base design configuration.</p>
-<section id="custom-board-considerations">
+<div class="section" id="custom-board-considerations">
 <h3>Custom Board Considerations<a class="headerlink" href="#custom-board-considerations" title="Permalink to this heading">¶</a></h3>
 <p>When designing platform for a custom board, user needs to setup these parameters by themselves.</p>
 <p>On Vivado project side, please</p>
@@ -216,8 +217,8 @@ function OptanonWrapper() { }
 <li><p>Use default <em><strong>MACHINE_NAME</strong></em></p></li>
 <li><p>Update device tree in <em><strong>system_user.dtsi</strong></em> for your custom peripherals on the board, like Ethernet, EEPROM, etc.</p></li>
 </ul>
-</section>
-<section id="optional-go-through-implementation-and-device-image-generation">
+</div>
+<div class="section" id="optional-go-through-implementation-and-device-image-generation">
 <h3>(Optional) Go through Implementation and Device Image Generation<a class="headerlink" href="#optional-go-through-implementation-and-device-image-generation" title="Permalink to this heading">¶</a></h3>
 <p>If the custom platform is created from scratch, it’s recommended to run through implementation and device image generation to find errors in early stage for the base bootable design. The platform doesn’t need the implementation results, the implementation is used for design validation only.</p>
 <p>To run this step, please make sure the project is a normal project. <strong>This project is a Vitis Platform project</strong> should <strong>NOT</strong>  be selected during Vivado project creation.</p>
@@ -252,8 +253,8 @@ function OptanonWrapper() { }
 <p>d) Click Finish</p>
 </li>
 </ol>
-</details></section>
-<section id="optional-validate-pdi-on-hardware">
+</details></div>
+<div class="section" id="optional-validate-pdi-on-hardware">
 <h3>(Optional) Validate PDI on Hardware<a class="headerlink" href="#optional-validate-pdi-on-hardware" title="Permalink to this heading">¶</a></h3>
 <p>If the custom platform is created from scratch, it’s recommended to test the device image (PDI) on hardware to make sure the device initialization configuration is set correctly. This is not a step required for platform creation, but it can reduce issues you find in the last platform validation stage.</p>
 <p>To run this step, please make sure <strong>This project is a Vitis Platform project</strong> is <strong>NOT</strong> selected during platform creation.</p>
@@ -308,8 +309,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 </details><p>If the PDI can’t load successfully, please check the CIPS configuration.</p>
-</details></section>
-<section id="optional-create-petalinux-project">
+</details></div>
+<div class="section" id="optional-create-petalinux-project">
 <h3>(Optional) Create PetaLinux Project<a class="headerlink" href="#optional-create-petalinux-project" title="Permalink to this heading">¶</a></h3>
 <p>If the custom platform is created from scratch, it’s recommended to test building the PetaLinux image and run on hardware before turning this project into a platform project. This is not a step required for platform creation, but it can reduce issues you find in the step 2 - software preparation.</p>
 <p>To run this step, please make sure <strong>This project is a Vitis Platform project</strong> is <strong>NOT</strong> selected during platform creation.</p>
@@ -353,9 +354,9 @@ petalinux-package --boot --u-boot
 </li>
 </ol>
 </details>
-<!--For Create PetaLinux Project--></section>
-</section>
-<section id="fast-track">
+<!--For Create PetaLinux Project--></div>
+</div>
+<div class="section" id="fast-track">
 <h2>Fast Track<a class="headerlink" href="#fast-track" title="Permalink to this heading">¶</a></h2>
 <p>Scripts are provided to re-create projects and generate outputs in each step. To use these scripts, please run the following steps.</p>
 <ol>
@@ -381,7 +382,7 @@ make all
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make clean
 </pre></div>
 </div>
-<section id="change-the-vivado-design-to-vitis-platform-design">
+<div class="section" id="change-the-vivado-design-to-vitis-platform-design">
 <h3>Change the Vivado design to Vitis Platform Design<a class="headerlink" href="#change-the-vivado-design-to-vitis-platform-design" title="Permalink to this heading">¶</a></h3>
 <p>From next step, we will begin to setup the platform properties. It needs the Vivado design to be a Vitis Platform design.</p>
 <ul class="simple">
@@ -390,13 +391,13 @@ make all
 <li><p>Go to <strong>Project Settings -&gt; General</strong>, enable <strong>Project is an extensible Vitis platform</strong></p></li>
 </ul>
 <p><em><strong>Now we have a base bootable design. Next we’ll go to <a class="reference internal" href="step1.html"><span class="doc">step 1 to update the Vivado design for hardware platform requirements</span></a>.</strong></em></p>
-</section>
-</section>
-</section>
-<section id="references">
+</div>
+</div>
+</div>
+<div class="section" id="references">
 <h1>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h1>
 <p>https://github.com/Xilinx/XilinxBoardStore/wiki/Accessing-the-Board-Store-Repository</p>
-<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></section>
+<p align="center"><sup>Copyright&copy; 2021 Xilinx</sup></p></div>
 
 
            </div>

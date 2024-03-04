@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- OneTrust Cookies Consent Notice start for xilinx.github.io --><script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-document-language="true" type="text/javascript" charset="UTF-8" data-domain-script="03af8d57-0a04-47a6-8f10-322fa00d8fc7" ></script>
+<script type="text/javascript">
+function OptanonWrapper() { }
+</script><!-- OneTrust Cookies Consent Notice end for xilinx.github.io --><title>Vitis 入門チュートリアル - Vitis™ チュートリアル 2022.1 の資料</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/_static/custom.css" type="text/css" /><!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]--><script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"><a href="../../../index.html" class="icon icon-home">Vitis™ チュートリアル <img src="../../../_static/xilinx-header-logo.svg" class="logo" alt="Logo"/> </a><div class="version">2022.1</div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">English</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/master/docs/index.html">Main</a></li></ul><p class="caption" role="heading"><span class="caption-text">入門</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../Vitis-Getting-Started.html">概要</a></li></ul><p class="caption" role="heading"><span class="caption-text">アクセラレーション</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Hardware_Acceleration/Hardware-Acceleration.html">ハードウェア アクセラレーション</a></li></ul><p class="caption" role="heading"><span class="caption-text">AI エンジン</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../AI_Engine_Development/AI_Engine_Development.html">AI エンジン開発</a></li></ul><p class="caption" role="heading"><span class="caption-text">プラットフォーム</span></p><ul><li class="toctree-l1"><a class="reference internal" href="../../Vitis_Platform_Creation/Vitis_Platform_Creation.html">Vitis プラットフォームの作成</a></li></ul><p class="caption" role="heading"><span class="caption-text">その他のバージョン</span></p><ul><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li><li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/indexE.html">2020.1</a></li></ul></div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: black" ><i data-toggle="wy-nav-top" class="fa fa-bars"></i> <a href="../../../index.html">Vitis™ チュートリアル</a></nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation"><ul class="wy-breadcrumbs"><li><a href="../../../index.html" class="icon icon-home"></a>&raquo;</li> <li>Vitis 入門チュートリアル</li><li class="wy-breadcrumbs-aside"><a href="../../../_sources/docs/Getting_Started/Vitis/Part4-data_center.md.txt" rel="nofollow">ページ ソースの表示</a></li></ul><hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <table class="sphinxhide">
+ <tr>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ アプリケーション アクセラレーション開発フロー チュートリアル</h1>
+   </td>
+ </tr>
+ <tr>
+ <td>
+ </td>
+ </tr>
+</table><div class="section" id="vitis-getting-started-tutorial">
+<h1>Vitis 入門チュートリアル<a class="headerlink" href="#vitis-getting-started-tutorial" title="Permalink to this heading">¶</a></h1>
+<div class="section" id="part-4-build-and-run-the-data-center-application">
+<h2>パート 4: データセンター アプリケーションのビルドおよび実行<a class="headerlink" href="#part-4-build-and-run-the-data-center-application" title="Permalink to this heading">¶</a></h2>
+<p>このチュートリアルの 4 番目のパートでは、Vitis フローでサポートされる 3 つのビルド ターゲットを使用して、vector-add の例をコンパイルして実行します。フロー全体の説明は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow">データセンター アプリケーション アクセラレーション開発フロー</a>を参照してください。次のフローの図もここに含まれています。イメージから、ホスト アプリケーションの標準の G++ コンパイル プロセスと、ザイリンクス デバイス バイナリ (<code class="docutils literal notranslate"><span class="pre">xclbin</span></code>) を構築するための Vitis コンパイラ (<code class="docutils literal notranslate"><span class="pre">v++</span></code>) を確認できます。この演習で、これらの手順を学びます。</p>
+<p><img alt="img" src="../../../_images/data_center_flow.png" /></p><ul class="simple"> <li><p>ソフトウェア エミュレーション - カーネル コードは、ホスト プロセッサ上で実行されるようにコンパイルされます。これにより、ビルドと実行を高速に繰り返して反復アルゴリズムで調整していくことができます。このターゲットは、構文エラーを特定し、アプリケーションと共に実行されるカーネル コードをソース レベルでデバッグし、システムの動作を検証するのに便利です。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Software-Emulation">ソフトウェア エミュレーション</a>を参照してください。</p></li> <li><p>ハードウェア エミュレーション - カーネル コードがハードウェア モデル (RTL) にコンパイルされ、専用シミュレータで実行されます。ビルドおよび実行ループにかかる時間は長くなりますが、詳細でサイクル精度のカーネル アクティビティが表示されます。このターゲットは、FPGA に配置するロジックの機能をテストして、初期パフォーマンス見積もりを取得する場合に便利です。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Hardware-Emulation">ハードウェア エミュレーション</a>を参照してください。</p></li> <li><p>ハードウェア - カーネル コードがハードウェア モデル (RTL) にコンパイルされ、FPGA にインプリメントされて、実際の FPGA で実行されるバイナリが生成されます。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/System-Hardware-Target">システム ハードウェア エミュレーション</a>を参照してください。</p></li> </ul>
+</div>
+<div class="section" id="building-and-running-on-alveo-u200-data-center-accelerator-card">
+<h2>Alveo U200 データセンター アクセラレーション カードでのビルドおよび実行<a class="headerlink" href="#building-and-running-on-alveo-u200-data-center-accelerator-card" title="Permalink to this heading">¶</a></h2>
+<div class="section" id="setting-up-the-environment">
+<h3>環境の設定<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this heading">¶</a></h3>
+<blockquote>
+<div><p>重要: このチュートリアルを実行するには、Vitis 2022.1 以降が必要です。</p>
+</div></blockquote>
+<p><em>注記: 次の手順は、bash シェルで実行していることを前提としています。</em></p><ul> <li><p>Vitis を実行する環境を設定するには、次のスクリプトを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span>&lt;VITIS_install_path&gt;/settings64.sh <span class="nb">source</span>&lt;XRT_install_path&gt;/setup.sh</pre></div>
+</div></li> <li><p>次の環境変数が、U200 プラットフォームのインストール ディレクトリを指定するように設定されていることを確認します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PLATFORM_REPO_PATHS</span><span class="o">=</span>&lt;path to the U200 platform install dir&gt;</pre></div>
+</div></li> </ul>
+</div>
+<div class="section" id="targeting-software-emulation">
+<h3>ソフトウェア エミュレーションをターゲットに指定<a class="headerlink" href="#targeting-software-emulation" title="Permalink to this heading">¶</a></h3>
+<p>ソフトウェア エミュレーション用に構築するには、ターゲットのビルド ディレクトリを設定するための次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>&lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200 mkdir sw_emu cp xrt.ini sw_emu <span class="nb">cd</span> sw_emu</pre></div>
+</div>
+<p>ターゲットのビルド ディレクトリに移動した後、ホスト アプリケーションおよびデバイス バイナリを構築するために次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++ -Wall -g -std<span class="o">=</span>c++11 ../../src/host.cpp -o app.exe -I<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/include/ -L<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/lib/ -lOpenCL -lpthread -lrt -lstdc++ emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd <span class="m">1</span> v++ -c -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo v++ -l -t sw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin</pre></div>
+</div>
+<p>次に、これら 4 つのコマンドを簡単に説明します。</p>
+<ol class="simple"><li><p><code class="docutils literal notranslate"><span class="pre">g++</span></code> は、標準 GNU C コンパイラを使用してホスト アプリケーションをコンパイルします。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Host-Program">ホスト プログラムのビルド</a>を参照してください。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">emconfigutil</span></code> は、指定したプラットフォーム用にエミュレーションするデバイスのタイプと数を定義するエミュレーション コンフィギュレーション ファイルを生成します。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/emconfigutil-Utility">emconfigutil</a> を参照してください。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">-c</span></code> は、vector-add アクセラレータのソース コードをコンパイルされたカーネル オブジェクト (.xo ファイル) にコンパイルします。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Compiling-Kernels-with-the-Vitis-Compiler">Vitis コンパイラでのカーネルのコンパイル</a>を参照してください。</p></li> <li><p><code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">-l</span></code> は、コンパイルされたカーネルをターゲット プラットフォームにリンクし、FPGA バイナリ (.xclbin ファイル) を生成します。詳細は、<a class="reference external" href="https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-Kernels">カーネルのリンク</a>を参照してください。</p></li></ol>
+<p><code class="docutils literal notranslate"><span class="pre">v++</span></code> コマンドの <code class="docutils literal notranslate"><span class="pre">-t</span></code> オプションは、ビルド ターゲットを指定します。ここでは、ソフトウェア エミュレーション用に構築しているため、<code class="docutils literal notranslate"><span class="pre">sw_emu</span></code> に設定されています。</p>
+<p>また、<code class="docutils literal notranslate"><span class="pre">--config</span></code> オプションを使用すると、追加オプションを含むコンフィギュレーションファイルの名前を指定できます。ここでは、このコンフィギュレーション ファイルを使用して、カーネルの数と特定のメモリ バンクのカーネル引数のマップを指定します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">debug</span><span class="o">=</span><span class="m">1</span> save-temps<span class="o">=</span><span class="m">1</span> <span class="o">[</span>connectivity<span class="o">]</span> <span class="nv">nk</span><span class="o">=</span>vadd:1:vadd_1 <span class="nv">sp</span><span class="o">=</span>vadd_1.in1:DDR<span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="nv">sp</span><span class="o">=</span>vadd_1.in2:DDR<span class="o">[</span><span class="m">2</span><span class="o">]</span> <span class="nv">sp</span><span class="o">=</span>vadd_1.out:DDR<span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="o">[</span>profile<span class="o">]</span> <span class="nv">data</span><span class="o">=</span>all:all:all</pre></div>
+</div>
+<p>ソフトウェア エミュレーションのビルドは迅速で、1 ～ 2 分以上かかることはありません。ビルド プロセスが完了したら、次のようにソフトウェア エミュレーションを開始できます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">XCL_EMULATION_MODE</span><span class="o">=</span>sw_emu ./app.exe</pre></div>
+</div>
+<p>実行が正常に完了したことを示す次のメッセージが表示されます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>INFO: Found Xilinx Platform INFO: Loading <span class="s1">&apos;vadd.xclbin&apos;</span> TEST PASSED</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">u200/sw_emu</span></code> ディレクトリの中を確認すると、この演習の間に次のファイルのいくつかが作成されているのがわかります。</p><ul class="simple"> <li><p><strong>app.exe</strong>: コンパイルされ、リンクされたホスト アプリケーション</p></li> <li><p><strong>emconfig.json</strong>: emconfigutil によって作成されたエミュレーション プラットフォーム</p></li> <li><p><strong>vadd.xo</strong>: コンパイルされた Vadd カーネル</p></li> <li><p><strong>vadd.xo.compile_summary</strong>: コンパイルされたカーネルのサマリ レポート</p></li> <li><p><strong>vadd.xclbin</strong>: カーネルおよびターゲット プラットフォームをリンクするデバイス バイナリ</p></li> <li><p><strong>vadd.xclbin.info</strong>: デバイス バイナリのテキスト形式のレポート</p></li> <li><p><strong>vadd.xo.compile_summary</strong>: リンクされたデバイス バイナリのサマリ レポート</p></li> <li><p><strong>opencl_trace.csv</strong>: アプリケーション ランタイム中に発生するイベントのレポート</p></li> <li><p><strong>summary.csv</strong>: アプリケーション プロファイルのレポート</p></li> <li><p><strong>xrt.run_summary</strong>: アプリケーション ランタイムのイベントのサマリ レポート</p></li> </ul>
+<p>これらのファイルは、ソフトウェア エミュレーション ビルドをターゲットにしているビルドおよび実行プロセスの結果、出力されるファイルです。これらのファイルの一部を、このチュートリアルのパート 5 で詳しく説明します。</p>
+</div>
+<div class="section" id="targeting-hardware-emulation">
+<h3>ハードウェア エミュレーションをターゲットに指定<a class="headerlink" href="#targeting-hardware-emulation" title="Permalink to this heading">¶</a></h3>
+<p>ハードウェア エミュレーション用に構築するには、ターゲットのビルド ディレクトリを設定するための次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>&lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200 mkdir hw_emu cp xrt.ini hw_emu <span class="nb">cd</span> hw_emu</pre></div>
+</div>
+<p>ターゲットのビルド ディレクトリに移動した後、ホスト アプリケーションおよびデバイス バイナリを構築するために次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++ -Wall -g -std<span class="o">=</span>c++11 ../../src/host.cpp -o app.exe -I<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/include/ -L<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/lib/ -lOpenCL -lpthread -lrt -lstdc++ emconfigutil --platform xilinx_u200_gen3x16_xdma_2_202110_1 --nd <span class="m">1</span> v++ -c -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo v++ -l -t hw_emu --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin</pre></div>
+</div>
+<p><em></em>これらのコマンドの簡単な説明は、「ソフトウェア エミュレーションをターゲットに指定」を参照してください。前の手順との唯一の違いは、<code class="docutils literal notranslate"><span class="pre">v++</span></code> ターゲット (<code class="docutils literal notranslate"><span class="pre">-t</span></code>) オプションで、<code class="docutils literal notranslate"><span class="pre">sw_emu</span></code> から <code class="docutils literal notranslate"><span class="pre">hw_emu</span></code> に変更されます。その他のオプションはすべて同じままです。</p>
+<p>ハードウェア エミュレーションはソフトウェア エミュレーションよりも時間がかかりますが、ハードウェア アクセラレータ カードをターゲットにしているときよりは時間はかかりません。ビルドが終了したら、次のコマンドを使用して、ハードウェア エミュレーションを実行します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">XCL_EMULATION_MODE</span><span class="o">=</span>hw_emu ./app.exe</pre></div>
+</div>
+<p>実行が完了すると、問題なく実行が終了したことを示す TEST PASSED というメッセージが表示されます。u200/hw_emu フォルダーの中にあるファイルをリストして、このビルドおよび実行プロセスの間に作成されたファイルを確認できます。<em></em>これらのファイルの簡単な説明は、「ソフトウェア エミュレーションをターゲットに指定」を参照してください。</p>
+</div>
+<div class="section" id="targeting-hardware">
+<h3>ハードウェア ターゲットの指定<a class="headerlink" href="#targeting-hardware" title="Permalink to this heading">¶</a></h3>
+<p>ハードウェア ターゲット用に構築するには、ターゲットのビルド ディレクトリを設定するための次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>&lt;Path to the cloned repo&gt;/Getting_Started/Vitis/example/u200 mkdir hw cp xrt.ini hw <span class="nb">cd</span> hw</pre></div>
+</div>
+<p>ターゲットのビルド ディレクトリに移動した後、ホスト アプリケーションおよびデバイス バイナリを構築するために次のコマンドを入力します。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++ -Wall -g -std<span class="o">=</span>c++11 ../../src/host.cpp -o app.exe -I<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/include/ -L<span class="si">${</span><span class="nv">XILINX_XRT</span><span class="si">}</span>/lib/ -lOpenCL -lpthread -lrt -lstdc++ v++ -c -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg -k vadd -I../../src ../../src/vadd.cpp -o vadd.xo v++ -l -t hw --platform xilinx_u200_gen3x16_xdma_2_202110_1 --config ../../src/u200.cfg ./vadd.xo -o vadd.xclbin</pre></div>
+</div>
+<p>ハードウェアをターゲットにするには、<code class="docutils literal notranslate"><span class="pre">v++</span> <span class="pre">-t</span></code> オプションを <code class="docutils literal notranslate"><span class="pre">hw</span></code> に設定し、<code class="docutils literal notranslate"><span class="pre">emconfigutil</span></code> ステップはエミュレーションにのみ適用されるため省略されます。その他のオプションはすべて同じままです。</p>
+<p>ハードウェア ターゲットのビルドには数時間かかることがありますが、正確な所要時間は、デザインの複雑性、ビルドするコンピューターとその負荷によって異なります。</p>
+<p>ビルドが完了したら、次のコマンドを使用して、AlveoU200 データセンター アクセラレータ カードを使用したシステムでアプリケーションを実行できます。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./app.exe</pre></div>
+</div>
+<p><em>注記: Alveo カードがインストールされたサーバーでプログラムを実行してください。アプリケーションを別のコンピューター上に構築した場合は、目的のサーバーに接続して上記のコマンドを実行する前に、/opt/xilinx/xrt/setup.sh スクリプトを読み込む必要があります。</em></p>
+<p>実行が正常に完了したことを示す TEST PASSED という同じメッセージが表示されます。u200/hw フォルダーを確認すると、このビルドおよび実行プロセスの間に作成されたファイルを確認できます。<em></em>これらのファイルの簡単な説明は、「ソフトウェア エミュレーションをターゲットに指定」を参照してください。</p>
+<p>お疲れさまでした。これで、Alveo U200 カードで初めて Vitis アクセラレーション アプリケーションを実行できました。Vitis ツールをさらに学ぶには、<a class="reference external" href="https://github.com/Xilinx/Vitis-Tutorials">Vitis チュートリアル</a>を進めていってください。また、ホスト アプリケーションおよびカーネル コードの例を使用するには、<a class="reference external" href="https://github.com/Xilinx/Vitis_Accel_Examples/tree/2022.1">Vitis_Accel_Examples</a> を参照してください。</p>
+</div>
+</div>
+<div class="section" id="next-step">
+<h2>次の手順<a class="headerlink" href="#next-step" title="Permalink to this heading">¶</a></h2>
+<p><strong><a class="reference internal" href="Part5.html"><span class="doc">結果の表示とレポートの解析</span></a></strong></p>
+<hr class="docutils" />
+<p>ライセンス規約</p>
+<p>Apache ライセンス、バージョン 2.0 (以下「ライセンス」) に基づいてライセンス付与されています。本ライセンスに準拠しないと、このファイルを使用することはできません。ライセンスのコピーは、http://www.apache.org/licenses/LICENSE-2.0 から入手できます。</p>
+<p>適切な法律で要求されるか、書面で同意された場合を除き、本ライセンスに基づいて配布されるソフトウェアは、明示的または黙示的を問わず、いかなる種類の保証または条件もなく、「現状のまま」配布されます。ライセンスに基づく権限と制限を管理する特定の言語については、ライセンスを参照してください。</p>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2020-2022 Xilinx</sup></p></div>
+</div>
+
+
+           </div>
+          </div>
+          
+                  <style>.footer { position: fixed; left: 0; bottom: 0; width: 100%; }</style>
+				  
+				  <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>© Copyright 2019-2022, Xilinx, Inc.. <span class="lastupdated">Last updated on May 16, 2022.</span></p>
+  </div>
+
+
+
+										<div class="aem-Grid aem-Grid--16">
+											<div class="aem-GridColumn aem-GridColumn--xxxlarge--none aem-GridColumn--xsmall--16 aem-GridColumn--offset--xsmall--0 aem-GridColumn--xlarge--none aem-GridColumn--xxlarge--none aem-GridColumn--default--none aem-GridColumn--offset--large--1 aem-GridColumn--xlarge--12 aem-GridColumn--offset--default--0 aem-GridColumn--xxlarge--10 aem-GridColumn--offset--xlarge--2 aem-GridColumn--offset--xxlarge--3 aem-GridColumn--offset--xxxlarge--4 aem-GridColumn--xsmall--none aem-GridColumn--large--none aem-GridColumn aem-GridColumn--large--14 aem-GridColumn--xxxlarge--8 aem-GridColumn--default--16">
+												<div class="container-fluid sub-footer">
+
+													                    <div class="row">
+                        <div class="col-xs-24">
+                          <p><a target="_blank" href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a> | <a target="_blank" href="https://www.amd.com/en/corporate/privacy">Privacy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/cookies">Cookie Policy</a> | <a target="_blank" href="https://www.amd.com/en/corporate/trademarks">Trademarks</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf">Statement on Forced Labor</a> | <a target="_blank" href="https://www.amd.com/en/corporate/competition">Fair and Open Competition</a> | <a target="_blank" href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf">UK Tax Strategy</a> | <a target="_blank" href="https://docs.xilinx.com/v/u/9x6YvZKuWyhJId7y7RQQKA">Inclusive Terminology</a> | <a href="#cookiessettings" class="ot-sdk-show-settings">Cookies Settings</a></p>
+                        </div>
+                    </div>
+												</div>
+											</div>
+										</div>
+										
+</br>Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .header").show();
+        $(".toggle .header").click(function() {
+            $(this).parent().children().not(".header").toggle(400);
+            $(this).parent().children(".header").toggleClass("open");
+        })
+    });
+</script>
+
+
+</body>
+</html>

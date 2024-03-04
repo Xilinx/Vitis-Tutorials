@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,9 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-1/build/html/index.html">2021.1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -107,11 +107,11 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="multi-kernel-fir-filter-implementation">
+</table><div class="section" id="multi-kernel-fir-filter-implementation">
 <h1>Multi-Kernel FIR Filter Implementation<a class="headerlink" href="#multi-kernel-fir-filter-implementation" title="Permalink to this heading">¶</a></h1>
 <p>In this second part of the tutorial you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory to continue.</p>
-<section id="designing-the-kernel">
+<div class="section" id="designing-the-kernel">
 <h2>Designing the Kernel<a class="headerlink" href="#designing-the-kernel" title="Permalink to this heading">¶</a></h2>
 <p>As in the Single-kernel tutorial, this design will use streaming input and output but the performances must be improved. Limitations can come from two sources:</p>
 <ul class="simple">
@@ -125,8 +125,8 @@ function OptanonWrapper() { }
 <p><img alt="missing image" src="../../../../../_images/FourKernelDivision_2.jpg" /></p>
 <p>The four AI Engines each perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of <code class="docutils literal notranslate"><span class="pre">mac</span></code> operations. For computations being performed on four lanes, the accumulator vector is <code class="docutils literal notranslate"><span class="pre">v4cacc48</span></code>, which is a 384 bit vector that can be sent to the next AI Engine in the chain in one clock cycle.</p>
 <p><img alt="missing image" src="../../../../../_images/FourKernels.jpg" /></p>
-</section>
-<section id="c-code-analysis">
+</div>
+<div class="section" id="c-code-analysis">
 <h2>C++ Code Analysis<a class="headerlink" href="#c-code-analysis" title="Permalink to this heading">¶</a></h2>
 <p>As shown in the previous figure, there are three different types of kernels that differ from their interface:</p>
 <table border="1" class="docutils">
@@ -183,7 +183,7 @@ function OptanonWrapper() { }
 <span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
-<section id="data-and-coefficients-management-and-operation-scheduling">
+<div class="section" id="data-and-coefficients-management-and-operation-scheduling">
 <h3>Data and Coefficients Management and Operation Scheduling<a class="headerlink" href="#data-and-coefficients-management-and-operation-scheduling" title="Permalink to this heading">¶</a></h3>
 <p>The difference between the single-kernel case and this case is that the tap array contains eight elements and that the delay line is only 16 element deep. In the previous section you saw that there were only two <code class="docutils literal notranslate"><span class="pre">mul4</span></code> and <code class="docutils literal notranslate"><span class="pre">mac4</span></code> intrinsics for cint16 x cint16 operations.</p>
 <p><img alt="missing image" src="../../../../../_images/Mul4Intrinsics.jpg" /></p>
@@ -308,9 +308,9 @@ function OptanonWrapper() { }
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="compilation-and-analysis">
+</div>
+</div>
+<div class="section" id="compilation-and-analysis">
 <h2>Compilation and Analysis<a class="headerlink" href="#compilation-and-analysis" title="Permalink to this heading">¶</a></h2>
 <p>Ensure that the <code class="docutils literal notranslate"><span class="pre">InitPythonPath</span></code> has been sourced in the <code class="docutils literal notranslate"><span class="pre">Utils</span></code> directory.</p>
 <p>Navigate to the <code class="docutils literal notranslate"><span class="pre">MultiKernel</span></code> directory. In the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> three methods are defined:</p>
@@ -361,8 +361,8 @@ function OptanonWrapper() { }
 </pre></div>
 </div>
 <p>This architecture achieves very close to 1 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.</p>
-<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></section>
-</section>
+<p align="center"><sup>Copyright&copy; 2020–2021 Xilinx</sup><br><sup>XD020</sup></br></p></div>
+</div>
 
 
            </div>

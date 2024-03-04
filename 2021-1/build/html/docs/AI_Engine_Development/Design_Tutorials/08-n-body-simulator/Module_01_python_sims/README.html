@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="running-the-simulation">
+</table><div class="section" id="running-the-simulation">
 <h1>Running the Simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this heading">¶</a></h1>
 <p><em>Estimated time: less than 1 minute</em></p>
 <p>Run the python simulation with the following command:</p>
@@ -124,7 +125,7 @@ function OptanonWrapper() { }
 <li><p>matplotlib</p></li>
 <li><p>pandas</p></li>
 </ul>
-<section id="python-simulations-on-x86-machine">
+<div class="section" id="python-simulations-on-x86-machine">
 <h2>Python Simulations on x86 Machine<a class="headerlink" href="#python-simulations-on-x86-machine" title="Permalink to this heading">¶</a></h2>
 <p>Review the <code class="docutils literal notranslate"><span class="pre">test.py</span></code> file. Notice that it runs three unit tests: <code class="docutils literal notranslate"><span class="pre">test_random_x1</span></code>, <code class="docutils literal notranslate"><span class="pre">test_random_x10</span></code>, and <code class="docutils literal notranslate"><span class="pre">test_random_x100</span></code>. Each unit test creates two instances of the <code class="docutils literal notranslate"><span class="pre">Particles</span></code> class: <code class="docutils literal notranslate"><span class="pre">particles_i</span></code> and <code class="docutils literal notranslate"><span class="pre">particles_j</span></code>. Each <code class="docutils literal notranslate"><span class="pre">Particles</span></code> object contains arrays of floating point values for the particle positions, particle velocities, and mass (<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">y</span> <span class="pre">z</span> <span class="pre">vx</span> <span class="pre">vy</span> <span class="pre">vz</span> <span class="pre">m</span></code>). These arrays are initalized with random values with the <code class="docutils literal notranslate"><span class="pre">setSphereInitialConditions()</span></code> function in <code class="docutils literal notranslate"><span class="pre">pylib/particles.py</span></code> file. The <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> positions are constrained to be in a sphere by invoking <code class="docutils literal notranslate"><span class="pre">cos()</span></code> and <code class="docutils literal notranslate"><span class="pre">sin()</span></code> functions. The remaining constrains are as follows:</p>
 <ul class="simple">
@@ -161,8 +162,8 @@ function OptanonWrapper() { }
 </tr>
 </tbody>
 </table><p>The 100 tile AI Engine design simulates 12,800 particles. The single tile AI Engine design (x1_design) simulates 128 particles, and the 10 tile AI Engine design (x10_design) simulates 1280 particles.</p>
-</section>
-<section id="results">
+</div>
+<div class="section" id="results">
 <h2>Results<a class="headerlink" href="#results" title="Permalink to this heading">¶</a></h2>
 <p>You should see something similar to the following execution times for the python simulation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
@@ -201,19 +202,19 @@ function OptanonWrapper() { }
 <td>x,y,z scale=+-63256</td>
 </tr>
 </tbody>
-</table></section>
-<section id="optional-creating-animation-gifs">
+</table></div>
+<div class="section" id="optional-creating-animation-gifs">
 <h2>(Optional) Creating Animation GiFs<a class="headerlink" href="#optional-creating-animation-gifs" title="Permalink to this heading">¶</a></h2>
 <p>You can create these .gifs with the following command:</p>
 <p><em>Estimated time: 3 hours</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">animations</span>
 </pre></div>
 </div>
-</section>
-<section id="references">
+</div>
+<div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
-</section>
-<section id="next-steps">
+</div>
+<div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>After running the Python NBody Simulator, you are ready to move to the next module, <a class="reference external" href="../Module_02_aie">Module 02-AI Engine Design</a>.</p>
 <p>© Copyright 2021 Xilinx, Inc.</p>
@@ -228,8 +229,8 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p></section>
-</section>
+<p class="sphinxhide" align="center"><sup>Copyright&copy; 2021 Xilinx</sup><br><sup>XD068</sup></br></p></div>
+</div>
 
 
            </div>

@@ -1,8 +1,7 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
 <!-- OneTrust Cookies Consent Notice start for xilinx.github.io -->
@@ -71,8 +70,10 @@ function OptanonWrapper() { }
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Other Versions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/index.html">2020.2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/README.html">2020.1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/index.html">Main</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2021-2/build/html/index.html">2021.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-2/docs/build/html/index.html">2020.2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://xilinx.github.io/Vitis-Tutorials/2020-1/docs/build/html/README.html">2020.1</a></li>
 </ul>
 
         </div>
@@ -106,7 +107,7 @@ function OptanonWrapper() { }
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html)See Vitis-AI™ Development Environment on xilinx.com</a>
     </td>
  </tr>
-</table><section id="ai-engine-debug-with-ai-engine-emulator">
+</table><div class="section" id="ai-engine-debug-with-ai-engine-emulator">
 <h1>AI Engine Debug with AI Engine Emulator<a class="headerlink" href="#ai-engine-debug-with-ai-engine-emulator" title="Permalink to this heading">¶</a></h1>
 <p>AI Engine emulator provides the following features:</p>
 <ul class="simple">
@@ -128,24 +129,24 @@ function OptanonWrapper() { }
 </ul>
 <p><a class="reference external" href="#4-AI-Engine-emulator---enable-memory-check-option">4. AI Engine Emulator –enable-memory-check option</a></p>
 <p><a class="reference external" href="#5-Command-line-project-source-code-debug-with-AI-Engine-emulator">5. Command-Line Project Source Code Debug with AI Engine emulator</a></p>
-<section id="ai-engine-emulator-source-code-debug">
+<div class="section" id="ai-engine-emulator-source-code-debug">
 <h2>1. AI Engine Emulator Source Code Debug<a class="headerlink" href="#ai-engine-emulator-source-code-debug" title="Permalink to this heading">¶</a></h2>
-<section id="step-1-select-ai-engine-configuration">
+<div class="section" id="step-1-select-ai-engine-configuration">
 <h3>Step 1. Select AI Engine Configuration<a class="headerlink" href="#step-1-select-ai-engine-configuration" title="Permalink to this heading">¶</a></h3>
 <p>From the top menu, select <strong>Emulation-AIE</strong> as the current active configuration.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_config.png" /></p>
-</section>
-<section id="step-2-build-with-ai-engine-emulator">
+</div>
+<div class="section" id="step-2-build-with-ai-engine-emulator">
 <h3>Step 2. Build with AI Engine Emulator<a class="headerlink" href="#step-2-build-with-ai-engine-emulator" title="Permalink to this heading">¶</a></h3>
 <p>Right-click on AI Engine project and select <strong>Build Project</strong> to build.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_build.png" /></p>
-</section>
-<section id="step-3-debug-with-ai-engine-emulator">
+</div>
+<div class="section" id="step-3-debug-with-ai-engine-emulator">
 <h3>Step 3. Debug with AI Engine Emulator<a class="headerlink" href="#step-3-debug-with-ai-engine-emulator" title="Permalink to this heading">¶</a></h3>
 <p>Right-click on AI Engine project, select <strong>Debug As</strong> and <strong>Launch AIE Emulator</strong> to debug AI Engine project.</p>
 <p><img alt="missing image" src="../../../../_images/he_run_aie0.png" /></p>
-</section>
-<section id="step-4-source-code-debug-with-ai-engine-emulator">
+</div>
+<div class="section" id="step-4-source-code-debug-with-ai-engine-emulator">
 <h3>Step 4. Source Code Debug with AI Engine Emulator<a class="headerlink" href="#step-4-source-code-debug-with-ai-engine-emulator" title="Permalink to this heading">¶</a></h3>
 <p>After debugger is launched, the resume, disconnect, step into, step over, and step return buttons can be used to examine source code execution flow. Placing the cursor on each available button pops up information about that button’s functionality.
 <img alt="missing image" src="../../../../_images/he_debug.png" /></p>
@@ -154,14 +155,14 @@ function OptanonWrapper() { }
 <p>During debug, highlighted areas indicate changes in values since the last step.
 <img alt="missing image" src="../../../../_images/he_run_aie.png" /></p>
 <p><img alt="missing image" src="../../../../_images/he_run_aie2.png" /></p>
-</section>
-<section id="step-5-verify-result">
+</div>
+<div class="section" id="step-5-verify-result">
 <h3>Step 5. Verify Result<a class="headerlink" href="#step-5-verify-result" title="Permalink to this heading">¶</a></h3>
 <p>AI Engine emulator output files from the design are located at <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulator_output/data</span></code>. Verify the output files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulation_output/data/dlbf_out[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/Emulation-AIE/aiesimulation_output/data/ulbf_out[0-3].txt</span></code> against golden files <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/dlbf_gold[0-7].txt</span></code> and <code class="docutils literal notranslate"><span class="pre">${PROJECT}/data/ulbf_gold[0-3].txt</span></code> to ensure that the design’s I/O functionalities are correct. Vitis IDE supports the compare with feature to compare two files, highlight the files to be compared, then right-click one of highlighted files, and select <code class="docutils literal notranslate"><span class="pre">compare</span> <span class="pre">with</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span> <span class="pre">with</span> <span class="pre">transformation</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Predefined</span> <span class="pre">filters</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Remove</span> <span class="pre">timestamp</span></code>.
 Selecting <code class="docutils literal notranslate"><span class="pre">each</span> <span class="pre">other</span> <span class="pre">with</span> <span class="pre">transformation</span></code> is required because AI Engine emulation inserts a timestamp for each output data.</p>
-</section>
-</section>
-<section id="ai-engine-emulator-source-code-debug-limitations">
+</div>
+</div>
+<div class="section" id="ai-engine-emulator-source-code-debug-limitations">
 <h2>AI Engine emulator source code debug limitations<a class="headerlink" href="#ai-engine-emulator-source-code-debug-limitations" title="Permalink to this heading">¶</a></h2>
 <ol class="simple">
 <li><p>There are maximum four breakpoints available for each tile. Program under debug is stopped at first line of <code class="docutils literal notranslate"><span class="pre">main()</span></code>. This does not impact those available breakpoints.</p></li>
@@ -169,68 +170,68 @@ Selecting <code class="docutils literal notranslate"><span class="pre">each</spa
 <li><p>If an individual kernel is highlighted, select the resume button to continue execution until next breakpoint or blocked to wait for I/O. If highlight the beamformer design, select resume button to resume all kernels execution until meet each kernel’s breakpoint or blocked  waiting for each kernel’s I/O operation.</p></li>
 <li><p>Due to compiler optimization, some variables’ values are stored in registers. “N/A” is shown in variables view for those optimized variables’ values.</p></li>
 </ol>
-</section>
-<section id="ai-engine-emulator-trace-and-profile-data-generation">
+</div>
+<div class="section" id="ai-engine-emulator-trace-and-profile-data-generation">
 <h2>2. AI Engine Emulator Trace and Profile Data Generation<a class="headerlink" href="#ai-engine-emulator-trace-and-profile-data-generation" title="Permalink to this heading">¶</a></h2>
-<section id="step-1-configuration-before-launching-ai-engine-simulator">
+<div class="section" id="step-1-configuration-before-launching-ai-engine-simulator">
 <h3>Step 1: Configuration Before Launching AI Engine Simulator<a class="headerlink" href="#step-1-configuration-before-launching-ai-engine-simulator" title="Permalink to this heading">¶</a></h3>
 <p>Highlight beamformer sub-project, right-click to select <strong>Run As</strong> &gt; <strong>Run configurations…</strong> to enter into a configuration that allows trace and profile selection.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_init.png" /></p>
 <p><strong>Note:</strong> Enable VCD generation for event trace and enable profile generation for selected/all tiles.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_init1.png" /></p>
 <p><strong>Note:</strong> The <code class="docutils literal notranslate"><span class="pre">--simulation-cycle-timeout</span></code> shown in the previous image is OPTIONAL. In case of long run time, this option helps to control execution period so that trace and profile can be generated properly. Clear this option for other tests especially for source code debug to avoid shorter run time.</p>
-</section>
-<section id="step-2-launch-ai-engine-emulator">
+</div>
+<div class="section" id="step-2-launch-ai-engine-emulator">
 <h3>Step 2: Launch AI Engine Emulator<a class="headerlink" href="#step-2-launch-ai-engine-emulator" title="Permalink to this heading">¶</a></h3>
 <p>After run configuration is completed, right-click on beamformer sub-project to select <strong>Run As</strong> and <strong>Launch AIE Emulator</strong>.
 <img alt="missing image" src="../../../../_images/aie_sim_run.png" />
 Vitis™ IDE console displays <code class="docutils literal notranslate"><span class="pre">[Warning]</span> <span class="pre">:</span> <span class="pre">Sim</span> <span class="pre">result:</span> <span class="pre">0</span></code> indicates this simulation run is completed.</p>
-</section>
-<section id="step-3-launch-vitis-analyzer">
+</div>
+<div class="section" id="step-3-launch-vitis-analyzer">
 <h3>Step 3: Launch Vitis Analyzer<a class="headerlink" href="#step-3-launch-vitis-analyzer" title="Permalink to this heading">¶</a></h3>
 <p>Double-click on <strong>${AIE_PROJECT}/Emulation-AIE/aiesimulator_output/default.aierun_summary</strong> to launch Vitis_analyzer for event trace and profile information.
 <img alt="missing image" src="../../../../_images/aie_sim_va_launch.png" /></p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_va.png" /></p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_profile.png" /></p>
 <p><strong>Note:</strong> Click on <strong>Trace</strong> for generated event trace info. Click on <strong>Profile</strong> for selected AI Engine tiles’ profile report files. These events are timing approximately accurate and can be a good reference for how the design runs.</p>
-</section>
-</section>
-<section id="ai-engine-emulator-printf-support">
+</div>
+</div>
+<div class="section" id="ai-engine-emulator-printf-support">
 <h2>3. AI Engine Emulator <code class="docutils literal notranslate"><span class="pre">printf</span></code> Support<a class="headerlink" href="#ai-engine-emulator-printf-support" title="Permalink to this heading">¶</a></h2>
 <p>The simplest form of tracing is to use a formatted <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. No additional include files are necessary for using <code class="docutils literal notranslate"><span class="pre">printf()</span></code> other than standard C/C++ includes (<code class="docutils literal notranslate"><span class="pre">stdio.h</span></code>). You can add <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your code to be processed during simulation, or hardware emulation, and remove them or comment them out for hardware builds.</p>
-<section id="step-1-add-printf-statement-in-source-code">
+<div class="section" id="step-1-add-printf-statement-in-source-code">
 <h3>Step 1. Add <code class="docutils literal notranslate"><span class="pre">printf</span></code> statement in source code<a class="headerlink" href="#step-1-add-printf-statement-in-source-code" title="Permalink to this heading">¶</a></h3>
 <p>Select <code class="docutils literal notranslate"><span class="pre">bf8x8_fst.cc</span></code> file in Vitis IDE to be edited. Add <code class="docutils literal notranslate"><span class="pre">printf(&quot;prbcnt=%d\n&quot;,</span> <span class="pre">prbcnt);</span></code> statement at line 32 of <code class="docutils literal notranslate"><span class="pre">fb8x8_fst.cc</span></code> file.</p>
 <p><strong>Note:</strong> Adding <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to your AI Engine kernel code will increase the compiled size of the AI Engine program. Be careful that the compiled size of your kernel code does not exceed the per-AI Engine processor memory limit of 16 KB.</p>
-</section>
-<section id="step-2-build-the-project">
+</div>
+<div class="section" id="step-2-build-the-project">
 <h3>Step 2. Build the Project<a class="headerlink" href="#step-2-build-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, and select <strong>Build Project</strong> to build the beamformer project.</p>
-</section>
-<section id="step-3-enable-printf-in-run-configuration">
+</div>
+<div class="section" id="step-3-enable-printf-in-run-configuration">
 <h3>Step 3. Enable <code class="docutils literal notranslate"><span class="pre">printf</span></code> in Run Configuration<a class="headerlink" href="#step-3-enable-printf-in-run-configuration" title="Permalink to this heading">¶</a></h3>
 <p>To enable <code class="docutils literal notranslate"><span class="pre">printf()</span></code> function, it is required to specify <code class="docutils literal notranslate"><span class="pre">--profile</span></code> in run configuration.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_printf0.png" /></p>
-</section>
-<section id="step-4-run-the-project">
+</div>
+<div class="section" id="step-4-run-the-project">
 <h3>Step 4. Run the Project<a class="headerlink" href="#step-4-run-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, and select <strong>Run As</strong> and <strong>Launch AIE Emulator</strong> to run the project in Vitis IDE.</p>
-</section>
-<section id="step-5-expected-result">
+</div>
+<div class="section" id="step-5-expected-result">
 <h3>Step 5. Expected result<a class="headerlink" href="#step-5-expected-result" title="Permalink to this heading">¶</a></h3>
 <p>Output of <code class="docutils literal notranslate"><span class="pre">printf</span></code> statements displays on console window.
 <img alt="missing image" src="../../../../_images/aie_sim_printf.png" /></p>
-</section>
-<section id="printf-limitations">
+</div>
+<div class="section" id="printf-limitations">
 <h3><code class="docutils literal notranslate"><span class="pre">printf</span></code> Limitations<a class="headerlink" href="#printf-limitations" title="Permalink to this heading">¶</a></h3>
 <p>Adding <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements increases program memory size. Make sure not to exceed program memory size when using <code class="docutils literal notranslate"><span class="pre">printf()</span></code> statements to debug.</p>
-</section>
-</section>
-<section id="ai-engine-emulator-enable-memory-check-option">
+</div>
+</div>
+<div class="section" id="ai-engine-emulator-enable-memory-check-option">
 <h2>4. AI Engine Emulator <code class="docutils literal notranslate"><span class="pre">--enable-memory-check</span></code> Option<a class="headerlink" href="#ai-engine-emulator-enable-memory-check-option" title="Permalink to this heading">¶</a></h2>
 <p>This option helps to find out of range memory access from each tile during AI Engine emulation run time, however, this option impacts run time performance negatively.
 The ‘out of range’ memory access indicates valid address assignment within each section. There could be certain addresses that are not assigned between sections. Hence this option is useful to debug the design.</p>
-<section id="step-1-identify-an-invalid-address-from-design">
+<div class="section" id="step-1-identify-an-invalid-address-from-design">
 <h3>Step 1. Identify an Invalid Address from Design<a class="headerlink" href="#step-1-identify-an-invalid-address-from-design" title="Permalink to this heading">¶</a></h3>
 <p>From a Linux terminal that points to a valid Vitis IDE installation/setup, issue this command to list a specific tile’s valid memory addresses and sizes assigned by AI Engine compiler. Flag “A” indicates this section will be loaded into tile memory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># For Vitis IDE project</span>
@@ -241,8 +242,8 @@ readelf -S 6_0
 </pre></div>
 </div>
 <p><img alt="missing image" src="../../../../_images/aie_sim_mem-check1.png" /></p>
-</section>
-<section id="step-2-add-access-to-an-invalid-memory-address">
+</div>
+<div class="section" id="step-2-add-access-to-an-invalid-memory-address">
 <h3>Step 2. Add access to an invalid memory address<a class="headerlink" href="#step-2-add-access-to-an-invalid-memory-address" title="Permalink to this heading">¶</a></h3>
 <p>Add these 7 lines at line 27 of <strong>fb8x8_fst.cc</strong> file to access invalid memory address access, for example 0x00039900.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#if 1</span>
@@ -253,45 +254,45 @@ readelf -S 6_0
 <span class="c1">#endif</span>
 </pre></div>
 </div>
-</section>
-<section id="step-3-build-the-application">
+</div>
+<div class="section" id="step-3-build-the-application">
 <h3>Step 3. Build the application<a class="headerlink" href="#step-3-build-the-application" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, select <strong>Build Project</strong> to build the project.</p>
-</section>
-<section id="step-4-add-enable-memory-check-option-in-build-configuration">
+</div>
+<div class="section" id="step-4-add-enable-memory-check-option-in-build-configuration">
 <h3>Step 4. Add <code class="docutils literal notranslate"><span class="pre">--enable-memory-check</span></code> option in build configuration<a class="headerlink" href="#step-4-add-enable-memory-check-option-in-build-configuration" title="Permalink to this heading">¶</a></h3>
 <p>Highlight beamformer sub-project, right-click to select <strong>Run As</strong> &gt; <strong>Run configurations…</strong>. Add <strong>–enable-memory-check</strong> option to run configuration.</p>
-</section>
-<section id="step-5-run-the-application">
+</div>
+<div class="section" id="step-5-run-the-application">
 <h3>Step 5. Run the application<a class="headerlink" href="#step-5-run-the-application" title="Permalink to this heading">¶</a></h3>
 <p>Highlight the beamformer sub-project, right-click to enable pull-down menu, select <strong>Run As</strong> &gt; <strong>Launch AIE Emulator</strong> to run the project in Vitis IDE.</p>
-</section>
-<section id="step-6-expected-result">
+</div>
+<div class="section" id="step-6-expected-result">
 <h3>Step 6. Expected result<a class="headerlink" href="#step-6-expected-result" title="Permalink to this heading">¶</a></h3>
 <p>Access location at address 0x00039900 that is between sections and is not allowed to access. This triggers the memory check error(s) and displays at Vitis IDE console.</p>
 <p><img alt="missing image" src="../../../../_images/aie_sim_mem-check3.png" />
 Note: The error messages may be rolled out of visible area, scroll up from console window to inspect the expected error messages.</p>
-</section>
-<section id="step-7-additional-test">
+</div>
+<div class="section" id="step-7-additional-test">
 <h3>Step 7. Additional test<a class="headerlink" href="#step-7-additional-test" title="Permalink to this heading">¶</a></h3>
 <p>For invalid memory access that is out of kernel program memory range, for example 0xdeadbeef, a segfault error will be thrown regardless of whether the <code class="docutils literal notranslate"><span class="pre">--enable-memory-check</span></code> option is enabled/disabled.
 Comment out line 30 and uncomment line 29 from the previous source code update. Repeat step 3 and 4 to build and run the updated code.
 Expect to see the segfault error from Vitis IDE console.
 <img alt="missing image" src="../../../../_images/aie_sim_mem-check4.png" /></p>
-</section>
-<section id="step-8-clean-up">
+</div>
+<div class="section" id="step-8-clean-up">
 <h3>Step 8. Clean up<a class="headerlink" href="#step-8-clean-up" title="Permalink to this heading">¶</a></h3>
 <p>Remove those added 7 lines of <strong>bf8x8_fst.cc</strong> file from step 2 to maintain source code sanity.</p>
-</section>
-</section>
-<section id="command-line-project-source-code-debug-with-ai-engine-emulator">
+</div>
+</div>
+<div class="section" id="command-line-project-source-code-debug-with-ai-engine-emulator">
 <h2>5. Command line project source code debug with AI Engine emulator<a class="headerlink" href="#command-line-project-source-code-debug-with-ai-engine-emulator" title="Permalink to this heading">¶</a></h2>
 <p>Use cases that involve using Vitis IDE functionalities without migrating to Vitis IDE are permitted.</p>
-<section id="step-1-download-the-project">
+<div class="section" id="step-1-download-the-project">
 <h3>Step 1. Download the project<a class="headerlink" href="#step-1-download-the-project" title="Permalink to this heading">¶</a></h3>
 <p>Clone the project source from git repository and unzip the zip file.</p>
-</section>
-<section id="step-2-build-the-command-line-project-with-debug-capabilities">
+</div>
+<div class="section" id="step-2-build-the-command-line-project-with-debug-capabilities">
 <h3>Step 2. Build the Command-Line Project with Debug Capabilities<a class="headerlink" href="#step-2-build-the-command-line-project-with-debug-capabilities" title="Permalink to this heading">¶</a></h3>
 <p>Use this tutorial’s <code class="docutils literal notranslate"><span class="pre">Makefile.emu</span></code>  that has the <code class="docutils literal notranslate"><span class="pre">--package.enable_aie_debug</span></code>  option in the packaging step. This option inserts configuration data object (CDO) that generates stop requests for the AI Engine cores, so that they stop at the reset vector. This option is required to add debug capabilities. Issue command <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package_dbg</span></code> with this tutorial’s <code class="docutils literal notranslate"><span class="pre">Makefile.emu</span></code> to package binaries that can be debugged.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp Makefile.emu Makefile
@@ -304,8 +305,8 @@ make package_dbg
 <li><p>The packaged binaries that have debug capabilities require to run with the debugger. Run without the debugger will see the execution hang due to the wait for debugger invocation. Issue command <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">package</span></code> to package binaries back without debugging capabilities.</p></li>
 <li><p>Beamformer design takes about 60 minutes or more to build. It depends on the build computer’s spec.</p></li>
 </ol>
-</section>
-<section id="step-3-launch-hardware-emulator-and-boot-petalinux">
+</div>
+<div class="section" id="step-3-launch-hardware-emulator-and-boot-petalinux">
 <h3>Step 3. Launch Hardware Emulator and Boot Petalinux<a class="headerlink" href="#step-3-launch-hardware-emulator-and-boot-petalinux" title="Permalink to this heading">¶</a></h3>
 <p>There are two Linux terminals required. Both terminals are required to point to a valid Vitis IDE installation/setup area to use Vitis software platform.
 From terminal 1, setup tool path properly and issue this command to launch hardware emulator and boot up Petalinux.</p>
@@ -325,8 +326,8 @@ From terminal 1, setup tool path properly and issue this command to launch hardw
 <li><p>This command takes a few minutes to run because both hardware emulator and Petalinux are required to boot up properly.</p></li>
 <li><p>Wait until both hardware server and Petalinux boot up before moving to the next step.</p></li>
 </ol>
-</section>
-<section id="step-4-run-host-application-from-emulation-console">
+</div>
+<div class="section" id="step-4-run-host-application-from-emulation-console">
 <h3>Step 4. Run Host Application from Emulation Console<a class="headerlink" href="#step-4-run-host-application-from-emulation-console" title="Permalink to this heading">¶</a></h3>
 <p>After the emulator and Petalinux boot up, issue these commands from the emulator console (terminal 1 from step 3).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /mnt/sd-mmcblk0p1
@@ -336,8 +337,8 @@ From terminal 1, setup tool path properly and issue this command to launch hardw
 </pre></div>
 </div>
 <p>Note: This step is required to initialize and debug AI Engine tiles because this design has the <code class="docutils literal notranslate"><span class="pre">--package.defer_aie_run</span></code> option.</p>
-</section>
-<section id="step-5-launch-vitis-ide-and-xrt-server">
+</div>
+<div class="section" id="step-5-launch-vitis-ide-and-xrt-server">
 <h3>Step 5. Launch Vitis IDE and XRT Server<a class="headerlink" href="#step-5-launch-vitis-ide-and-xrt-server" title="Permalink to this heading">¶</a></h3>
 <p>From terminal 2, setup the tool path properly and issue this command to launch the XRT server and Vitis IDE.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vitis -debug -flow embedded -os baremetal -port <span class="m">4352</span> -launch-script <span class="si">${</span><span class="nv">PROJECT_PATH</span><span class="si">}</span>/aie_app_debug_em.tcl
@@ -356,20 +357,20 @@ xrt_server -I30000 -S -s tcp::4352
 <li><p><code class="docutils literal notranslate"><span class="pre">-s</span> <span class="pre">tcp::${xrt_server_port}</span></code>: Defines the agent listening protocol and port. It is 4352 in example, but can be any free port.</p></li>
 </ol>
 <p><strong>Note:</strong> Debugger could be blocked from PS execution initially. Run PS application from simulator shell so debugger stops at first line of main function (default) from AI Engine tiles.</p>
-</section>
-<section id="step-6-expected-vitis-ide">
+</div>
+<div class="section" id="step-6-expected-vitis-ide">
 <h3>Step 6. Expected Vitis IDE<a class="headerlink" href="#step-6-expected-vitis-ide" title="Permalink to this heading">¶</a></h3>
 <p><img alt="missing image" src="../../../../_images/aie_cl_run.png" /></p>
-</section>
-<section id="step-7-clean-up-launched-processes">
+</div>
+<div class="section" id="step-7-clean-up-launched-processes">
 <h3>Step 7. Clean up Launched Processes<a class="headerlink" href="#step-7-clean-up-launched-processes" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>killall -9 pllauncher<span class="p">;</span> killall -9 qemu-system-aarch64<span class="p">;</span> killall -9 xrt_server
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="license">
+</div>
+</div>
+</div>
+<div class="section" id="license">
 <h1>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h1>
 <p>Licensed under the Apache License, Version 2.0 (the “License);
 you may not use this file except in compliance with the License.
@@ -382,7 +383,7 @@ distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</p>
-<p align="center)<sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></section>
+<p align="center)<sup>XD005 | &copy; Copyright 2021 Xilinx, Inc.</sup></p></div>
 
 
            </div>
