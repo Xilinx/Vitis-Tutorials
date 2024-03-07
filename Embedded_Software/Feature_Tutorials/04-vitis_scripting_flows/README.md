@@ -104,7 +104,7 @@ platform_dirs = ['add path to platform']
 client.add_platform_repos(platform_dirs)
  
 # target the platform
-platform = client.get_platform_component(name = "name of platform")
+platform = client.get_component(name = "name of platform")
  
 # print platform details
 platform.report()
@@ -172,6 +172,7 @@ platform.update_hw(hw = "path to new XSA")
 The command below will build the platform and all its domains. The platform should be built after all the domains are created.
 
 ```
+platform = client.get_component(name = "name of platform")
 status = platform.build()
 ```
 

@@ -44,7 +44,7 @@ def generate_workspace(**kwargs):
         print("Info: Detected arch: " + arch)
         print("Info: Using target processor: " + target_proc)
 
-        platform = client.create_platform_component(name = "platform",hw = xsa,os = "standalone",cpu = target_proc)
+        platform = client.create_platform_component(name = "platform",hw_design = xsa,os = "standalone",cpu = target_proc)
         
         #list all domains (there will just be one here). Users can use print(domains) to see the attributes
         domains = platform.list_domains()
@@ -115,7 +115,7 @@ def get_metadata(**kwargs):
             ret_metadata['arch'] = HwDesign.FAMILY
             for proc in HwDesign.get_cells(hierarchical='true',filter='IP_TYPE==PROCESSOR'):
                 if proc.IP_NAME == "psu_cortexa53" or proc.IP_NAME == "psv_cortexa72" or proc.IP_NAME == "ps7_cortexa9":
-                    ret_metadata['target_proc'] = proc.NAME
+                    ret_metadata['target_proc'] = proc.IP_NAME+"_0"
                     break
             #HwDesign.close()
         else:
