@@ -129,6 +129,9 @@ void inp_A(
     ap_int<32> i = 0;
    //inp_A:for(ap_int<32> i =0;i< matSz_A;i++) {
    inp_A:for(ap_int<32> j =matSz_A;j;j--) {
+             if( (matSz_A == -1 ) && (j==1) ) {
+                 j = -1;
+             }
       #pragma HLS PIPELINE II=1
       //#pragma HLS DATAFLOW
       #pragma HLS loop_tripcount min=256 max=8192
@@ -196,6 +199,9 @@ void inp_B(
 {
     ap_int<32> i = 0;
    inp_B:for(ap_int<32> j = matSz_B;j; j--) {
+             if( (matSz_B == -1 ) && (j==1) ) {
+                 j = -1;
+             }
       #pragma HLS PIPELINE II=1
       //#pragma HLS DATAFLOW
       #pragma HLS loop_tripcount min=0 max=8192
@@ -261,6 +267,9 @@ void out_C(
 {
     ap_int<32> i = 0;
    out_C:for(ap_int<32> j = matSz_C;j; j--) {
+             if( (matSz_C == -1 ) && (j==1) ) {
+                 j = -1;
+             }
       #pragma HLS PIPELINE II=1
       //#pragma HLS DATAFLOW
       #pragma HLS loop_tripcount min=0 max=32768
