@@ -14,9 +14,9 @@
 
 #!/bin/bash
 
-petalinux-create -t project --template zynqMP -n ../xilinx-zcu102-v2023.2
-cd ../xilinx-zcu102-v2023.2
+petalinux-create -t project --template zynqMP -n ../xilinx-zcu102-v2024.1
+cd ../xilinx-zcu102-v2024.1
 petalinux-config --get-hw-description=../zcu102/mpsoc_preset_wrapper.xsa --silentconfig
-sed -i 's/template/zcu102-rev1.0/' ../xilinx-zcu102-v2023.2/project-spec/configs/config
+sed -i 's/template/zcu102-rev1.0/' ../xilinx-zcu102-v2024.1/project-spec/configs/config
 petalinux-build
 petalinux-build --sdk

@@ -6,7 +6,7 @@ HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   =  host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
-SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/
+SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/
 
 HOST_CXX      = aarch64-linux-gnu-g++
 

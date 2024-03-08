@@ -7,7 +7,7 @@
 SRC_DIR           := ./src
 MY_SOURCES        := $(shell find $(SRC_DIR) -name *.cpp) $(shell find $(SRC_DIR) -name *.h)
 
-PLATFORM_USE	  := xilinx_vck190_base_202320_1
+PLATFORM_USE	  := xilinx_vck190_base_202410_1
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 COMPILE_OPTS      := --aie.pl-freq=625 --aie.adf-api-log-level=2 --aie.kernel-linting \

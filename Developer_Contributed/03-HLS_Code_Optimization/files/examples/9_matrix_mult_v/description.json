@@ -20,7 +20,7 @@
             "vitis_hw_run"
         ],
 	"make_options": [
-		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm'",
+		"VITIS_PLATFORM_XPFM='${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm'",
 		"EMBEDDED_PACKAGE_OUT=./make-flow/vck190/mmult_system/Hardware/package",
 		"EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
 	],

@@ -6,7 +6,7 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
-VERSION=2023.2
+VERSION=2024.1
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DTB=$(ROOT_DIR)/mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb
 SYSROOT=$(ROOT_DIR)/sysroot
@@ -37,7 +37,7 @@ endif
 #echo command is to avoid the return error code caused by the createdts command warning	
 dtb:
 	@echo "execute createdts to generate dtb file"
-	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2023.2 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
+	xsct -eval " createdts -hw ../step1_vivado/build/vivado/$(XSA_NAME)_hw.xsa -zocl  -platform-name mydevice -out .  -git-branch xlnx_rel_v2024.1 -board  zcu104-revc -dtsi system-user.dtsi -compile" 
 
 #create platfrom 
 pfm:

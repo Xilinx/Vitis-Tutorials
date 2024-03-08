@@ -10,7 +10,7 @@ MY_APP            := dft9_app
 MY_SOURCES        := ${MY_APP}.cpp dft9_graph.h dft9_mmul0.h dft9_mmul1.h dft9_mmul0.cpp dft9_mmul1.cpp \
 	             dft9_mmul3.h dft9_mmul3.cpp dft9_twiddle.h
 
-PLATFORM_USE	  := xilinx_vek280_es1_base_202320_1
+PLATFORM_USE	  := xilinx_vek280_es1_base_202410_1
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

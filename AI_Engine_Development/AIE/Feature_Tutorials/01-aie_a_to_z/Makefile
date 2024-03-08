@@ -6,7 +6,7 @@
 ################################################################################
 # Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2023.2
+REQUIRED_VERSION                   = 2024.1
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 

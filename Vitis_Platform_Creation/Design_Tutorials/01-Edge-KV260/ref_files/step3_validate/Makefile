@@ -8,7 +8,7 @@ PLATFORM_NAME=kv260_custom
 PLATFORM= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SW_COMP = $(ROOT_DIR)/../step2_pfm/sw_comp/
 SYSROOTDIR=$(ROOT_DIR)/../step2_pfm/sysroot/
-VERSION=2023.2
+VERSION=2024.1
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
 

@@ -6,7 +6,7 @@
 #            Makefile used for ME compilation and simulation
 #           Set COMMSLIB_ROOT to the absolute path to commslib
 # #########################################################################
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

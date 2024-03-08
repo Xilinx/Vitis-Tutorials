@@ -5,7 +5,7 @@
 
 XSA=step1_vivado/build/vivado/zcu104_custom_platform_hw.xsa
 XPFM=step2_pfm/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
-VERSION				?=2023.2
+VERSION				?=2024.1
 COMMON_IMAGE_ZYNQMP 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 TARGET=
 .PHONY: help

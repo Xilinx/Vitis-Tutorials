@@ -7,10 +7,10 @@
 DEST_DIR ?= $(CURDIR)
 MK_PATH := $(abspath $(lastword Makefile))
 MK_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4
-IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/Image
+ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4
+IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
-BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
 PYTHONPATH += ${XILINX_VIVADO}/data/emulation/hw_em/lib/python:${XILINX_VIVADO}/data/emulation/python/xtlm_ipc:${XILINX_VIVADO}/data/emulation/ip_utils/xtlm_ipc/xtlm_ipc_v1_0/python
 
 #will update to empty once regression gets successful run
@@ -51,7 +51,7 @@ VPP := v++
 AIECC := v++ --mode aie -c 
 
 AIE_INCLUDE_FLAGS := --include="$(XILINX_VITIS)/aietools/include"  --include="./aie" --include="./data" --include="./aie/kernels" --include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --aie.xlopt=0 --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm 
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS) --aie.xlopt=0 --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm 
 
 ifeq (${EXTIO}, true)
 	AIE_FLAGS += --aie.Xpreproc=-DEXTERNAL_IO
@@ -96,16 +96,16 @@ guard-PLATFORM_REPO_PATHS:
 	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202120_1)
 
 guard-ROOTFS:
-	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2023.2/rootfs.ext4)
+	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2024.1/rootfs.ext4)
 
 guard-IMAGE:
-	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2023.2/Image)
+	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2024.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2023.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2024.1/environment-setup-aarch64-xilinx-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2023.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2024.1/environment-setup-aarch64-xilinx-linux)
 
 all: kernels aie xclbin host package
 sd_card: all

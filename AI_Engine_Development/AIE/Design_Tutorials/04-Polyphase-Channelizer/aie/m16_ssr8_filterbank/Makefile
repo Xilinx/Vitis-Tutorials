@@ -9,7 +9,7 @@ SIM_FIFO          := false
 MY_APP            := m16_ssr8_filterbank_app
 SOURCES           := m16_ssr8_filterbank_graph.h polyphase_fir_graph.h polyphase_fir.h polyphase_fir.cpp
 
-PLATFORM_USE      := xilinx_vck190_base_202320_1
+PLATFORM_USE      := xilinx_vck190_base_202410_1
 PL_FREQ           := --aie.pl-freq=625
 
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm

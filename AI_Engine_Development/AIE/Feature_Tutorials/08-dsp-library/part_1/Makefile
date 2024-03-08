@@ -12,7 +12,7 @@ AIE_DATA_DIR := $(PWD)/data
 
 
 AIE_GRAPH_FILES := $(AIE_SRC_DIR)/test.cpp
-PFM_NAME := xilinx_vck190_base_202320_1
+PFM_NAME := xilinx_vck190_base_202410_1
 PLATFORM := $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 

@@ -6,9 +6,9 @@
 # =======================================================
 # Set Platform ,Vitis and Versal Image repo
 # =======================================================
-export PLATFORM_REPO_PATHS= <YOUR-2023.2-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2023.2-VITIS-DIRECTORY>/2023.2
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-v2023.2-DIRECTORY>
+export PLATFORM_REPO_PATHS= <YOUR-2024.1-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2024.1-VITIS-DIRECTORY>/2024.1
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2024.1-DIRECTORY>
 # ====================================================
 # Source Versal Image ,Vitis and Aietools
 # ====================================================
@@ -22,7 +22,7 @@ export DSPLIB_VITIS=<Path to Vitis Libs - Directory>
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202320_1
+tgt_plat=xilinx_vck190_base_202410_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 # ==========================================================
 # Validating Tool Installation

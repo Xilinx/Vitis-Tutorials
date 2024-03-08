@@ -13,7 +13,7 @@ MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
 # =========================================================
 # BSP
 # =========================================================
-BSP := xilinx-vck190-v2023.2-final.bsp
+BSP := xilinx-vck190-v2024.1-final.bsp
 
 # =========================================================
 # XSA SELECTION
@@ -23,7 +23,7 @@ XSA := $(MODULE_04_DIR)/build/rev1/hw/beamforming.rev1.hw.xsa
 # =========================================================
 # BSP SELECTION
 # =========================================================
-BSP := xilinx-vck190-v2023.2-final.bsp
+BSP := xilinx-vck190-v2024.1-final.bsp
 
 # =========================================================
 # BUILD PRODUCTS

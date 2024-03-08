@@ -55,14 +55,14 @@ package:
 	--package.rootfs ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/rootfs.ext4 \
 	--package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/Image \
 	--package.sd_file emconfig.json \
-	--package.bl31_elf ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/bl31.elf \
+	--package.bl31_elf ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/bl31.elf \
 	--package.boot_mode sd \
-	--package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/u-boot.elf \
+	--package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/u-boot.elf \
 	--package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/boot.scr \
 	--package.sd_file host.exe \
 	--package.sd_file embedded_exec.sh \
 	--package.defer_aie_run \
-	--package.dtb ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/system.dtb \
+	--package.dtb ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/system.dtb \
 	-o vck190_prj_hw_emu.xclbin 
 
 else
@@ -73,13 +73,13 @@ package:
 	--package.out_dir package.hw \
 	--package.rootfs ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/rootfs.ext4 \
 	--package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/Image \
-	--package.bl31_elf ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/bl31.elf \
+	--package.bl31_elf ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/bl31.elf \
 	--package.boot_mode sd \
-	--package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/u-boot.elf \
+	--package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/u-boot.elf \
 	--package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/boot.scr \
 	--package.sd_file host.exe \
 	--package.defer_aie_run \
-	--package.dtb ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202320_1/sw/xilinx_vck190_base_bdc_202320_1/boot/system.dtb \
+	--package.dtb ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202410_1/sw/xilinx_vck190_base_bdc_202410_1/boot/system.dtb \
 	-o vck190_prj_hw.xclbin 
 
 

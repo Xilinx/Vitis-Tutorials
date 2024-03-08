@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 DTB_PLT_NAME=mydevice
 DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
 DTB=$(DTB_LOCATION)/system.dtb
-VERSION=2023.2
+VERSION=2024.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT=$(ROOT_DIR)/sysroot
 XSA_PATH=$(ROOT_DIR)/../step1_vivado/build/vivado/
@@ -40,7 +40,7 @@ endif
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
 	@echo "execute createdts to generate dts file"
-	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -dtsi system-user.dtsi -compile"
+	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2024.1 -dtsi system-user.dtsi -compile"
 
 	
 # Target: sysroot

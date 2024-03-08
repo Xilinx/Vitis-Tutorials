@@ -6,7 +6,7 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
 PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-#PLATFORM=/proj/rdi/xbuilds/2023.2_daily_latest/internal_platforms/xilinx_vck190_base_dfx_202320_1/xilinx_vck190_base_dfx_202320_1.xpfm
+#PLATFORM=/proj/rdi/xbuilds/2024.1_daily_latest/internal_platforms/xilinx_vck190_base_dfx_202410_1/xilinx_vck190_base_dfx_202410_1.xpfm
 COMMON_IMAGE ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
 SYSROOT ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux/
 

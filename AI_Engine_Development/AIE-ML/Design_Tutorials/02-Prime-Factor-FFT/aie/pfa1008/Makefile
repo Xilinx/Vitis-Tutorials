@@ -25,7 +25,7 @@ MY_SOURCES        := ${MY_APP}.cpp pfa1008_graph.h ${DFT7_SOURCE:%=../dft7/%} ${
 	             ${DFT16_SOURCE:%=../dft16/%} \
 	             ${TRANSPOSE0_SOURCE:%=../transpose0/%} ${TRANSPOSE1_SOURCE:%=../transpose1/%}
 
-PLATFORM_USE	  := xilinx_vek280_es1_base_202320_1
+PLATFORM_USE	  := xilinx_vek280_es1_base_202410_1
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

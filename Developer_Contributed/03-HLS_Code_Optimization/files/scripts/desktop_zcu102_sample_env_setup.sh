@@ -17,26 +17,26 @@
 # =======================================================
 RELEASE=2022.2
 BOARD=zcu102
-#BASE_NUM=202320_1
+#BASE_NUM=202410_1
 BASE_NUM=202220_1
 
 #TUTORIAL=AIE_DSP_with_Makefile_and_GUI_2023
 export TUTORIAL=03-HLS_Code_Optimization
 
 #export WRK_DIR=/media/danieleb/DATA/${RELEASE}/Vitis-Tutorials-${RELEASE}/Developer_Contributed
-export WRK_DIR=/media/danieleb/DATA/2023.2/Vitis-Tutorials-2023.2/Developer_Contributed
+export WRK_DIR=/media/danieleb/DATA/2024.1/Vitis-Tutorials-2024.1/Developer_Contributed
 
 
 # =======================================================
 # Set Platform, Vitis and Petalinux repo
 # =======================================================
-#export PLATFORM_REPO_PATHS = <YOUR-2023.2-PLATFORM-DIRECTORY>
+#export PLATFORM_REPO_PATHS = <YOUR-2024.1-PLATFORM-DIRECTORY>
 export PLATFORM_REPO_PATHS=/media/danieleb/DATA/${RELEASE}/tools/Xilinx/Vitis/${RELEASE}/base_platforms
 
-#export XILINX_VITIS = <YOUR-2023.2-VITIS-DIRECTORY>
+#export XILINX_VITIS = <YOUR-2024.1-VITIS-DIRECTORY>
 export XILINX_VITIS=/media/danieleb/DATA/${RELEASE}/tools/Xilinx/Vitis/${RELEASE}
 
-#export PETALINUX = <YOUR-2023.2-PETALINUX-DIRECTORY>
+#export PETALINUX = <YOUR-2024.1-PETALINUX-DIRECTORY>
 export PETALINUX=/tools/Xilinx/PetaLinux/${RELEASE}
 
 # ==================================================================================
@@ -49,7 +49,7 @@ mkdir -p /tmp/danieleb
 export TMPDIR=/tmp/danieleb
 
 
-##export COMMON_IMAGE_ZYNQMP=<YOUR-XILINX-ZYNQMP-COMMON-v2023.2-DIRECTORY>
+##export COMMON_IMAGE_ZYNQMP=<YOUR-XILINX-ZYNQMP-common-v2024.1-DIRECTORY>
 export COMMON_IMAGE_ZYNQMP=${HOME}/common/xilinx-zynqmp-common-v${RELEASE}
 
 : '
@@ -82,7 +82,7 @@ source ${XILINX_VITIS}/settings64.sh
 # ========================================================
 # Set DSP Library for Vitis
 # ========================================================
-#export DSPLIB_ROOT=<Path to 2023.2 DSP Libs - Directory>
+#export DSPLIB_ROOT=<Path to 2024.1 DSP Libs - Directory>
 export DSPLIB_VITIS=/media/danieleb/DATA/${RELEASE}/Vitis_Libraries-main
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 

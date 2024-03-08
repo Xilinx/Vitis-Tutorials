@@ -21,9 +21,9 @@ KERNEL_XO := pl_kernels/s2mm.xo pl_kernels/mm2s.xo pl_kernels/polar_clip.xo
 CONFIG_FILE := system.cfg
 
 SDKTARGETSYSROOT ?= $(SYSROOT)
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
-ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4
-IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/Image
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
+ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4
+IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/Image
 
 # Command-line options
 VPP := v++

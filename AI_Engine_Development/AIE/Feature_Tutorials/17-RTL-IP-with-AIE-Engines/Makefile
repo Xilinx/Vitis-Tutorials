@@ -19,16 +19,16 @@ KERNEL_XO := s2mm.xo mm2s.xo polar_clip.xo
 CONFIG_FILE := system.cfg
 
 SDKTARGETSYSROOT ?= $(SYSROOT)
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
-ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4
-IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2023.2/Image
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
+ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4
+IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/Image
 
 # Command-line options
 VPP := v++
 AIECC := v++ --mode aie -c 
 
 AIE_INCLUDE_FLAGS := --include="$(XILINX_VITIS_AIETOOLS)/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"
-AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+AIE_FLAGS := --target=hw $(AIE_INCLUDE_FLAGS)  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
 
 VPP_XO_FLAGS := --mode hls -c --platform $(PLATFORM) 
 VPP_LINK_FLAGS := -l --platform $(PLATFORM) ip_repo/polar_clip.xo pl_kernels/s2mm.xo pl_kernels/mm2s.xo $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa

@@ -10,7 +10,7 @@ BOARD_NAME                         ?= vck190
 PLATFORM_CUSTOM                    ?= ${BOARD_NAME}_thin
 
 DTG                                := device-tree-xlnx
-DTG_VERSION                        := xlnx_rel_v2023.2
+DTG_VERSION                        := xlnx_rel_v2024.1
 
 DTC                                := dtc
 DTC_PATH                           := $(abspath ${DTC})

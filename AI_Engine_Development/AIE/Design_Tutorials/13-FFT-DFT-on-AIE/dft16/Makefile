@@ -11,7 +11,7 @@ MY_APP            := dft16_app
 MY_SOURCES        := ${MY_APP}.cpp dft16_graph.h dft_1xN_widget_graph.h dft_1xN_widget.h dft_1xN_widget.cpp \
 	             twiddle_dft16.h
 
-PLATFORM_USE      := xilinx_vck190_base_202320_1
+PLATFORM_USE      := xilinx_vck190_base_202410_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

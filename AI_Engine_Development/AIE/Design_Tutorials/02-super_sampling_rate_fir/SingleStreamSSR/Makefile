@@ -4,7 +4,7 @@
 #
 
 
-PFM_NAME ?= xilinx_vck190_base_202320_1
+PFM_NAME ?= xilinx_vck190_base_202410_1
 
 all:
 	make data

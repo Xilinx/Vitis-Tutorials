@@ -10,7 +10,7 @@ ECHO                               = @echo
 ################################################################################
 # Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2023.2
+REQUIRED_VERSION                   = 2024.1
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 
@@ -70,13 +70,13 @@ export LINUX_MACHINE              := ${BOARD_NAME}-versal
 
 ifeq (${BOARD_NAME}, vck190)
 export DEVICE_NAME                := xcvc1902-vsva2197-2MP-e-S
-export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202320_1
+export PLATFORM_PRE_BUILD         := xilinx_vck190_base_202410_1
 else ifeq (${BOARD_NAME}, vek280)
 export DEVICE_NAME                := xcve2802-vsvh1760-2MP-e-S
-export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202410_1
 else
 export DEVICE_NAME                := xcve2802-vsvh1760-2MP-e-S-es1
-export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202320_1
+export PLATFORM_PRE_BUILD         := xilinx_vek280_base_202410_1
 endif
 
 LINUX_SRC_DIR                     := ./linux/src

@@ -18,8 +18,8 @@ BOARD    = versal-vck190-reva-x-ebm-01-reva
 CORE     = psv_cortexa72_0
 
 #versioning
-VERSION          ?= 202320_1
-VER              ?= 202320.1
+VERSION          ?= 202410_1
+VER              ?= 202410.1
 
 #common
 TOP_DIR         ?= $(shell readlink -f .)
@@ -47,9 +47,9 @@ PLATFORM_SW_SRC  = $(TOP_DIR)/platform
 PLATFORM_DIR      = $(TOP_DIR)/platform_repo
 
 #flow related
-PREBUILT_LINUX_PATH ?= /opt/xilinx/platform/xilinx-versal-common-v2023.2
-ifneq ($(wildcard $(TOP_DIR)/xilinx-versal-common-v2023.2),)
-	PREBUILT_LINUX_PATH ?= $(TOP_DIR)/xilinx-versal-common-v2023.2
+PREBUILT_LINUX_PATH ?= /opt/xilinx/platform/xilinx-versal-common-v2024.1
+ifneq ($(wildcard $(TOP_DIR)/xilinx-versal-common-v2024.1),)
+	PREBUILT_LINUX_PATH ?= $(TOP_DIR)/xilinx-versal-common-v2024.1
 endif
 
 #Absolute paths
