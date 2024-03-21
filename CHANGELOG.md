@@ -1,5 +1,10 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.2_update (Mar. 22, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting/
+- AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter/ 
+
 ## 2023.2_update (Feb. 19, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial/
