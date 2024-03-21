@@ -321,6 +321,15 @@ To download a ZIP file of a specific branch, do one of the following:
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture :new:</a>
             </td>
         </tr>
+        <tr>
+            <td height="24">
+            </td>                 
+            <td>      
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter :new:</a>
+            </td>
+        </tr>        
     </tbody>
 </table>
 
