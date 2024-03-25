@@ -10,7 +10,7 @@ export TARGET                      ?= hw_emu
 export AIE_SIM_ONLY                := false
 
 # Platform Selection...
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

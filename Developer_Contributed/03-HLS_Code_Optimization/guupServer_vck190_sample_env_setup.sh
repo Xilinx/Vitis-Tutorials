@@ -27,7 +27,7 @@ export CUR_DIR=$PWD
 RELEASE=2024.1
 BOARD=vck190
 BASE_NUM=202410_1
-#BASE_NUM=202310_1
+#BASE_NUM=202410_1
 
 export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Developer_Contributed
 
