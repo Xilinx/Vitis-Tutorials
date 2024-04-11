@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 // Col BRAM stores matrix B in transposed format (So that one column is written/read at one address)

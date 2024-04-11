@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 // 32 output BRAMs in 2K*16-bit configuration store the column of final output matrix

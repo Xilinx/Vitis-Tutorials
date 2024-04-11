@@ -1,3 +1,7 @@
+#/*
+#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: MIT
+#*
 export PATH=$PATH:/sbin
 export XILINX_XRT=/usr
 export XILINX_VITIS=$PWD

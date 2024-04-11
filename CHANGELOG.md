@@ -1,9 +1,36 @@
 # Vitis-Tutorials ChangeLog
 
+## 2023.2_update (Mar. 22, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting/
+- AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter/ 
+
+## 2023.2_update (Feb. 19, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial/
+- AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE/
+- AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter/ 
+
+## 2023.2_update (Jan. 31, 2024)
+### New Tutorials
+- Vitis_HLS/Design_Tutorials/02-Beamformer/
+- Vitis_HLS/Feature_Tutorials/01-using_code_analyzer/
+- Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis/
+- AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT/
+- AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D/
+- Embedded_Software/Feature_Tutorials/02-Debugging/
+
+## 2023.2_update (Jan. 11, 2024)
+### New Tutorials
+- Embedded_Software/Feature_Tutorials/01-user_managed_mode/
+- Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration/
+- Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows/
+
 ## 2023.2 (Nov. 1st, 2023)
 ### New Tutorials 
 - AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization/
 - AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features/ 
+- Embedded_Software/Getting_Started/
 
 ### Tutorial Updates
 - Update existing AIE feature tutorials to work with AIE-ML
@@ -13,7 +40,7 @@
     - AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration/
     - AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features/
 - Tutorials that contain GUI design flow have been updated to work with the Unified IDE, which has become the default GUI in Vitis 2023.2 
-- Updated tutorials to use the Unified CLI
+- Updated tutorials to use the Vitis Unified CLI
 
 ### EoU Improvements
 - Add an additional level under AI_Engine_Development to host tutorials targeting AIE and AIE-ML.

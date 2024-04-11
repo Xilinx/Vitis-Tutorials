@@ -126,29 +126,36 @@ endif
 
 ifeq ($(FFT_2D_PT),64)
     ifeq ($(FFT_2D_DT),0)
-       FFT_ROW_CASCADE_LENGTH := 3
-       FFT_COL_CASCADE_LENGTH := 3
-    else ifeq ($(FFT_2D_DT),1)
-       FFT_ROW_CASCADE_LENGTH := 6
-       FFT_COL_CASCADE_LENGTH := 5
-    endif
+       FFT_ROW_WINDOW_SIZE := 32
+       FFT_COL_WINDOW_SIZE := 16
+    else
+       FFT_ROW_CASCADE_LENGTH := 1
+       FFT_COL_CASCADE_LENGTH := 1 
+       FFT_ROW_WINDOW_SIZE := 64
+       FFT_COL_WINDOW_SIZE := 32
+     endif
 endif
 
 ifeq ($(FFT_2D_PT),128)
     ifeq ($(FFT_2D_DT),0)
-       FFT_ROW_CASCADE_LENGTH := 2
-       FFT_COL_CASCADE_LENGTH := 2
-    else ifeq ($(FFT_2D_DT),1)
-       FFT_ROW_CASCADE_LENGTH := 5
-       FFT_COL_CASCADE_LENGTH := 6
-    endif
+       FFT_ROW_WINDOW_SIZE := 16
+       FFT_COL_WINDOW_SIZE := 8
+    else
+       FFT_ROW_CASCADE_LENGTH := 3
+       FFT_COL_CASCADE_LENGTH := 3
+       FFT_ROW_WINDOW_SIZE := 32
+       FFT_COL_WINDOW_SIZE := 16
+     endif
+
 endif
 
 ifeq ($(FFT_2D_PT),256)
-    ifeq ($(FFT_2D_DT),1)
-       FFT_ROW_CASCADE_LENGTH := 6
-       FFT_COL_CASCADE_LENGTH := 6
-    endif
+       ifeq ($(FFT_2D_DT),1)
+          FFT_ROW_CASCADE_LENGTH := 3
+          FFT_COL_CASCADE_LENGTH := 3
+          FFT_ROW_WINDOW_SIZE := 16
+          FFT_COL_WINDOW_SIZE := 8
+       endif
 endif
 
 ifeq ($(FFT_2D_PT),512)
@@ -169,6 +176,12 @@ ifeq ($(FFT_ROW_CASCADE_LENGTH),)
     FFT_ROW_CASCADE_LENGTH := 1
     FFT_COL_CASCADE_LENGTH := 1
 endif
+
+ifeq ($(FFT_ROW_WINDOW_SIZE),)
+       FFT_ROW_WINDOW_SIZE := 2
+       FFT_COL_WINDOW_SIZE := 1
+endif
+
 # =========================================================
 # 2 Dimentional FFT Point: MAT_ROWS x MAT_COLS(Mat Dims):
 #   FFT_2D_PT =   64:   32 x   64
@@ -307,6 +320,8 @@ AIE_FLAGS += --Xpreproc="-DMAT_COLS=$(MAT_COLS)"
 AIE_FLAGS += --Xpreproc="-DFFT_2D_DT=$(FFT_2D_DT)"
 AIE_FLAGS += --Xpreproc="-DFFT_ROW_CASCADE_LENGTH=$(FFT_ROW_CASCADE_LENGTH)"
 AIE_FLAGS += --Xpreproc="-DFFT_COL_CASCADE_LENGTH=$(FFT_COL_CASCADE_LENGTH)"
+AIE_FLAGS += --Xpreproc="-DFFT_ROW_WS=$(FFT_ROW_WINDOW_SIZE)"
+AIE_FLAGS += --Xpreproc="-DFFT_COL_WS=$(FFT_COL_WINDOW_SIZE)"
 AIE_FLAGS += --Xpreproc="-DITER_CNT=16"
 #AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
 AIE_FLAGS += --platform=$(PLATFORM)
@@ -357,6 +372,8 @@ GCC_FLAGS += -DMAT_COLS=$(MAT_COLS)
 GCC_FLAGS += -DFFT_2D_DT=$(FFT_2D_DT)
 GCC_FLAGS += -DFFT_ROW_CASCADE_LENGTH=$(FFT_ROW_CASCADE_LENGTH)
 GCC_FLAGS += -DFFT_COL_CASCADE_LENGTH=$(FFT_COL_CASCADE_LENGTH)
+GCC_FLAGS += -DFFT_ROW_WS=$(FFT_ROW_WINDOW_SIZE)
+GCC_FLAGS += -DFFT_COL_WS=$(FFT_COL_WINDOW_SIZE)
 GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
 GCC_FLAGS += -D__AIE_ARCH__=10
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
@@ -643,7 +660,7 @@ ifeq ($(LAUNCH_HW_EMU_EXEC),0)
 
 else
 	cd $(EMBEDDED_PACKAGE_OUT); \
-	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) -timeout 10800 | tee embedded_run.log
+	./launch_hw_emu.sh -run-app $(EMBEDDED_EXEC_SCRIPT) | tee embedded_run.log
 	@echo ""
 	@echo "HW Emulation Complete..."
 	@echo "####################################"

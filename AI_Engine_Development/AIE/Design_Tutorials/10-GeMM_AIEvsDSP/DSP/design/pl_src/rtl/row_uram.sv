@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+SPDX-License-Identifier: MIT
 */
 
 //  row of 32*32 int16 elements mean data width is 512 bits

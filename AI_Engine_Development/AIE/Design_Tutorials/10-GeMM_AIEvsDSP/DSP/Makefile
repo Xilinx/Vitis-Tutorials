@@ -1,5 +1,5 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -89,7 +89,7 @@ MAT_DIMS  := $(GEMM_SIZE)x$(GEMM_SIZE)x$(GEMM_SIZE)
 # PL Frequency in Mhz:
 #   500MHz(default)
 # =========================================================
-PL_FREQ := 800
+PL_FREQ := 700
 VPP_CLOCK_FREQ := $(PL_FREQ)000000
 
 ######################################

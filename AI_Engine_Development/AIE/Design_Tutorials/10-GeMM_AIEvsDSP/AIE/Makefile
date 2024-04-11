@@ -1,6 +1,6 @@
 
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#SPDX-License-Identifier: MIT
 
 %.PHONY: help
 help::
@@ -129,7 +129,7 @@ VPP_CLOCK_FREQ := $(shell printf "%.0f" `echo "${PL_FREQ} * $(HZ_UNIT)" | bc`)
 # Iteration Count:
 # 16(default)
 # =========================================================
-ITER_CNT := 16
+ITER_CNT ?= 16
 
 # =========================================================
 # Profiling/Trace Switches...
@@ -142,6 +142,27 @@ EN_TRACE := 0
 # 0 = Disabled.
 ######################################
 LAUNCH_HW_EMU_EXEC := 0
+# =========================================================
+# Graph Iteration Count:
+# 16(default)
+# =========================================================
+ifeq ($(ITER_CNT),-1)
+	GRAPH_ITER_CNT := ITER_CNT
+else
+ifeq ($(GEMM_SIZE),32)
+	GRAPH_ITER_CNT := 2*ITER_CNT
+	else ifeq ($(GEMM_SIZE),64)
+	GRAPH_ITER_CNT := 2*ITER_CNT
+	else ifeq ($(GEMM_SIZE),128)
+	GRAPH_ITER_CNT := 3*ITER_CNT
+	else ifeq ($(GEMM_SIZE),256)
+	GRAPH_ITER_CNT := 12*ITER_CNT
+	else ifeq ($(GEMM_SIZE),512)
+	GRAPH_ITER_CNT :=352*ITER_CNT
+	else ifeq ($(GEMM_SIZE),1024)
+	GRAPH_ITER_CNT :=1408*ITER_CNT
+endif
+endif
 
 # =========================================================
 # Source directories
@@ -235,6 +256,7 @@ AIE_FLAGS += -include=$(DSPLIB_ROOT)/L2/include/aie
 AIE_FLAGS += -include=$(DSPLIB_ROOT)/L2/tests/aie/common/inc
 AIE_FLAGS += --verbose
 AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
+AIE_FLAGS += --Xpreproc="-DGRAPH_ITER_CNT=$(GRAPH_ITER_CNT)"
 AIE_FLAGS += --Xpreproc="-DGEMM_SIZE=$(GEMM_SIZE)"
 AIE_FLAGS += --Xpreproc="-DGEMM_INSTS=$(GEMM_INSTS)"
 AIE_FLAGS += --platform=$(PLATFORM)
@@ -247,7 +269,7 @@ AIE_FLAGS += --pl-freq=$(PL_FREQ)
 
 # Constraints for same shim solution for all variations
 # aids in timeing closure of the design...
-AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+#AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
 
 AIE_FLAGS += --Xmapper=BufferOptLevel9
 AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
@@ -273,6 +295,7 @@ GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG
 GCC_FLAGS += -DGEMM_INSTS=$(GEMM_INSTS)
 GCC_FLAGS += -DGEMM_SIZE=$(GEMM_SIZE)
+GCC_FLAGS += -D__AIEARCH__=10
 
 GCC_INC_FLAGS := -I$(SDKTARGETSYSROOT)/usr/include/xrt
 GCC_INC_FLAGS += -I$(XILINX_VITIS)/aietools/include/
@@ -315,7 +338,8 @@ VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 ## If Profiling for Performance Measurement is enabled..
 ifeq ($(EN_TRACE),1)
    ifeq ($(TARGET),hw)
-      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
+      #VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
+      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_C0
       VPP_LINK_FLAGS += --profile.trace_memory DDR
       
    endif
@@ -438,13 +462,14 @@ $(LIBADF_A):  $(AIE_SRC_REPO)/graph.*
 # 2 - MatA and MatB both random element (each element is random value \
 # 		between 0 to 9) Matrix... 		
 IO_INP_TYPE := 0
-create_ioFiles:
-	rm -rf $(AIE_SIM_IO_DIR)
+create_ioFiles: $(AIE_SIM_IO_DIR)
+
+$(AIE_SIM_IO_DIR):
 	cd $(AIE_SIM_IO_BASE_DIR); \
-	python $(AIE_SIM_IO_BASE_DIR)/plioGen.py $(GEMM_SIZE) $(IO_INP_TYPE) $(ITER_CNT)
+	python $(AIE_SIM_IO_BASE_DIR)/plioGen.py $(GEMM_SIZE) $(ITER_CNT)
 	chmod 755 -R $(AIE_SIM_IO_DIR)
 
-aiesim: graph
+aiesim: create_ioFiles graph
 	cd $(BUILD_TARGET_DIR); \
 	aiesimulator $(AIE_SIM_FLAGS) 2>&1 | tee -a aiesim.log
 	@echo ""
@@ -452,7 +477,7 @@ aiesim: graph
 	@echo "####################################"
 	@echo ""
 
-aiesim_profile: graph
+aiesim_profile: create_ioFiles graph
 	cd $(BUILD_TARGET_DIR); \
 	aiesimulator $(AIE_SIM_FLAGS) --profile 2>&1 | tee -a aiesim.log
 	@echo ""
@@ -460,7 +485,7 @@ aiesim_profile: graph
 	@echo "####################################"
 	@echo ""
 
-vcd: graph $(XPE_FILE)
+vcd: graph create_ioFiles $(XPE_FILE)
 
 # xpe file generation...
 $(XPE_FILE): $(BLD_TGT_VCD_FILE)
@@ -519,6 +544,7 @@ application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
 
 REG_GCC_FLAGS := $(GCC_FLAGS)
 REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+REG_GCC_FLAGS += -DGRAPH_ITER_CNT=$(GRAPH_ITER_CNT)
 
 $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
@@ -541,6 +567,7 @@ application_inf_run: graph $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
 
 INF_RUN_GCC_FLAGS := $(GCC_FLAGS)
 INF_RUN_GCC_FLAGS += -DITER_CNT=-1
+INF_RUN_GCC_FLAGS += -DGRAPH_ITER_CNT=-1
 
 $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN): $(HOST_APP_SRC)/* $(LIBADF_A)
 	@rm -rf $(BUILD_TARGET_DIR)/app_control_inf_run.o $(BUILD_TARGET_DIR)/gemm_aie_app_inf_run.o $(BUILD_TARGET_DIR)/$(APP_ELF_INF_RUN)
@@ -670,6 +697,7 @@ all: run report_metrics vcd
 clean_tgt:
 	@echo "Cleaning $(TARGET) Target Build Dir..."
 	rm -rf $(BUILD_TARGET_DIR)
+	rm -rf $(AIE_SIM_IO_DIR)
 
 #Clean GeMM instance directory...
 clean_insts:
@@ -684,6 +712,7 @@ clean_gemmsize:
 #Clean all builds...
 cleanall_blds:
 	rm -rf $(BASE_BLD_DIR)
+	rm -rf $(AIE_SIM_IO_BASE_DIR)/gemm_*ioFiles/
 	rm -rf vivado* .Xil *.log vitis* core.*
 
 #Clean_all vivado reports...

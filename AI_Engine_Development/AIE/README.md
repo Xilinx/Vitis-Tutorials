@@ -408,6 +408,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Yes</td>
  <td>Yes</td>
  </tr>
+<tr>
+ <td align="center"><a href="./Feature_Tutorials/21-two_tone_filter/">Two Tone Filter</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>Yes</td>
+ <td>DSPLib</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
 ### Design Tutorials
@@ -610,8 +625,68 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td></td>
  </tr>
+ <tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/12-IFFT64K-2D/">64K IFFT Using 2D Architecture</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/13-FFT-DFT-on-AIE/">FFT and DFT on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/14-Bitonic-Sorting/">Bitonic SIMD Sorting on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./15-farrow_filter/">Fractional Delay Farrow Filter</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>Data Movers</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr>  
  </table>
-
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

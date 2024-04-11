@@ -1,0 +1,29 @@
+{
+    "name": "VHLS_D_02-beamformer",
+    "description": "VHLS_D_02-beamformer",
+    "gui": "false",
+    "flow": "vitis",
+
+    "platform_allowlist": [ "xcvp1202-vsva2785-1LP-i-L"],
+     
+    "testinfo": {
+        "test_name": "VHLS_D_02-beamformer",
+        "disable": false, 
+        "jobs": [
+            {
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "vitis_sw_emu": 60
+                }
+            }
+        ], 
+        "targets": [
+            "vitis_sw_emu"
+        ],
+        "category": "canary", 
+        "custom_build_target":
+        {
+            "all": "all"
+        }
+    }
+}

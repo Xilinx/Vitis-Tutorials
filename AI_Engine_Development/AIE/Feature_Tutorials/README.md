@@ -102,6 +102,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./21-two_tone_filter/">Two Tone Filter on AIE Using DSP libraries and Vitis Model Composer </a></td>
+ <td>This tutorial demonstrates how to implement the same MATLAB model design using the Vitis DSP libraries targeting AI Engine. This MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot. This tutorial has four parts. In part 1, the sampling rate requirement is 400 Msps; in part 2, the sampling rate requirement is 2000 Msps, in part 3, implement the part 1 design using Vitis IDE and then finally, in part4, implement the part 1 design using Vitis Model Composer tool.</td>
+ </tr> 
  </table>
 
 

@@ -111,7 +111,7 @@ guard-SDKTARGETSYSROOT:
 .PHONY: all_hw all_hw_emu run upd_host_hw aie postaie data aiesim aieviz aiesim-fifo compareaie x86 x86sim comparex86
 
 build_hw:
-	make TARGET=hw  clean-all OPT=1 data aie kernels xclbin host package
+	make TARGET=hw  clean-all OPT=$(OPT) data aie kernels xclbin host package
 
 build_hw_emu:
 	make TARGET=hw_emu  clean-all OPT=$(OPT) data aie kernels xclbin host package
@@ -120,7 +120,7 @@ launch_hw_emu:
 	./launch_hw_emu.sh -add-env AIE_COMPILER_WORKDIR=$(AIE_DIR)/Work$(OPT) -aie-sim-options $(ADDON_DIR)/aiesim_options.txt -run-app embedded_exec.sh
 
 run_hw_emu:
-	make OPT=1  build_hw_emu launch_hw_emu
+	make OPT=$(OPT)  build_hw_emu launch_hw_emu
 
 upd_host_hw:
 	make TARGET=hw host package

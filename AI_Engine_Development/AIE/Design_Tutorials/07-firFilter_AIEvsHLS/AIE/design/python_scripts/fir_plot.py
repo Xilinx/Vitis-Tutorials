@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 #240 Taps FIR: Power vs. Number of Filters...
 x1 = [1,10]
-y1 = [0.839,3.043]
+y1 = [0.785,2.359]
 # plotting the line 1 points
 #plt.plot(x1, y1, label = "240 Taps AIE FIR")
 plt.figure(1)
@@ -37,7 +37,7 @@ plt.margins()
 
 #240 Taps FIR: Computational Efficiency vs. Number of Filters...
 x1 = [1,10]
-y1 = [139.346,38.3423]
+y1 = [148.9285,494.8919]
 # plotting the line 1 points
 #plt.plot(x1, y1, label = "240 Taps AIE FIR")
 plt.figure(2)
@@ -46,7 +46,7 @@ plt.plot(x1, y1, color='blue', linewidth = 3,
 #plt.set_xlabel('time [s]', fontsize='large', fontweight='bold')
 # line 2 points
 x2 = [1,10]
-y2 = [255.299,28.62282]
+y2 = [255.299,286.294]
 # plotting the line 2 points
 #plt.plot(x2, y2, label = "240 Taps HLS FIR")
 plt.plot(x2, y2, color='orange', linewidth = 3,
@@ -66,7 +66,7 @@ plt.margins()
 #129 Taps FIR: Casc Length Metrics...
 ##129 Taps FIR: Throughput vs. Cascade Length...
 x3 = [1,2,4]
-y3 = [200.96,266.71,488.64]
+y3 = [154.39,266.65,390.40]
 
 plt.figure(3)
 plt.plot(x3, y3, color='blue', linewidth = 3,
@@ -85,7 +85,7 @@ plt.margins()
 
 ##129 Taps FIR: Power vs. Cascade Length...
 x4 = [1,2,4]
-y4 = [0.817,0.82,1.22]
+y4 = [0.769,0.892,1.098]
 
 plt.figure(4)
 plt.plot(x4, y4, color='blue', linewidth = 3,
@@ -104,7 +104,7 @@ plt.margins()
 
 ##129 Taps FIR: Computational Efficiency vs. Cascade Length...
 x5 = [1,2,4]
-y5 = [245.97,324.4648,401.509]
+y5 = [200.7685,298.934,355.555]
 
 plt.figure(5)
 plt.plot(x5, y5, color='blue', linewidth = 3,

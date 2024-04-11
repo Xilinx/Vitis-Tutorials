@@ -74,8 +74,23 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./11-Bilinear_Interpolation/">Bilinear Interpolation</a></td>
  <td>This tutorial demonstrates how the bilinear interpolation algorithm may be efficiently implemented using AI Engines. It also provides guidance for customizing the design to function with varying image resolutions, and to take advantage of multicore processing on the AI Engine array to achieve desired throughput.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./12-IFFT64K-2D/">64K IFFT Using 2D Architecture</a></td>
+ <td>This Versal system example implements a 64K-pt IFFT using a 2D architecture. We decompose 64K = 256 x 256 and build the transform in two dimensions using row and column FFT-256. A matrix transpose is performed in between in the PL. This alternative "divide and conquer" approach is attractive in the SSR > 1 regime.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./13-FFT-DFT-on-AIE/">Implementing FFT and DFT Designs on AI Engines</a></td>
+ <td>This tutorial illustrates several techniques for mapping FFT and DFT algorithms to the AI Engine array including the Stockham FFT used in AMD Vitis DSPlib, hand-coded variants implemented using the AI Engine API, and a direct form DFT using vector-matrix multiplication. We also illustrate how to trade off AI engine tile resource vs. throughput performance of the Stockham FFT in DSPlib using its <code>TP_CASC_LEN</code> and <code>TP_PARALLEL_POWER</code> template parameters. This is useful when configuring DSPlib FFT library instances to serve as part of a larger 2D FFT architecture.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./14-Bitonic-Sorting/">Bitonic SIMD Sorting on AI Engine for float Datatypes</a></td>
+ <td>This tutorial illustrates how to implement a Bitonic SIMD sorter on AI Engine in Versal for <code>float</code> data types. Two examples are given. First, a small example using N=16 demonstrates the concept and identifies strategies for vectorization & management of the vector register space. These ideas are then applied to a second larger example using N=1024. Profiling & throughput performance are compared to <code>std::sort()</code>.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./15-farrow_filter/">Fractional Delay Farrow Filter</a></td>
+ <td>This Versal system example implements a variable fractional delay algorithm using the Farrow Filter structure and walks the user through common AI Engine design optimization techniques. The design uses both AI Engine and PL kernels working cooperatively. AI Engine elements are hand-coded using AIE API. PL elements are implemented using Vitis HLS. System integration in Vitis is managed using the new v++ Unified Command Line flow.</td>
+ </tr>
  </table>
-
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

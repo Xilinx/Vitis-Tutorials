@@ -153,6 +153,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>                
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML :new:</a>            
             </td>
         </tr>        
         <tr>
@@ -162,6 +163,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td>
             </td>                
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial :new:</a>
             </td>
         </tr>   
     </tbody>
@@ -302,11 +304,32 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
             </td>
             <td>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter">Two Tone Filter :new:</a>            
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>
             </td>
         </tr>
+        <tr>
+            <td height="24">
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine :new:</a>   
+            </td>                 
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine :new:</a>            
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture :new:</a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+            </td>                 
+            <td>      
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter :new:</a>
+            </td>
+        </tr>        
     </tbody>
 </table>
 
@@ -326,15 +349,64 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">
                 <strong>Getting Started</strong>
             </td>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified Embedded IDE :new: </a>
+                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified IDE :new: </a>
             </td>
-            <td> </td>
+            <td> 
+                <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode :new: </a>
+            </td>
+            <td>
+                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE :new: </a> 
+            </td>
+        </tr>  
+        <tr>
+            <td height="24"> </td>
+            <td>
+                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide :new: </a>            
+            </td>
+            <td> 
+                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow :new: </a>
+            </td>
+        </tr>  
+    </tbody>
+</table>
+
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td colspan="3" height="24" align="center">
+                <strong> <a href="./Vitis_HLS/">Vitis HLS :new: </a></strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" height="48">
+                Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code. These tutorials offer a broader introduction to the Vitis HLS flows and use cases.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="24">
+                <strong>Feature Tutorials</strong>
+            </td>
+            <td height="24">
+                <strong>Design Tutorials</strong>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE :new: </a>
+            </td>
+            <td>
+                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP :new: </a>
+            </td>
+            <td>
+                <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar:
+Floating-Point QRD+WBS in an FPGA :new: </a>
+            </td>
         </tr>  
     </tbody>
 </table>

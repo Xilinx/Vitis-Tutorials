@@ -133,7 +133,7 @@ In first place the block must be extracted using memory tile DMA and stored in t
 
 This tutorial has been built to allow the user to easily change matrices and sub-matrices sizes. Matrix **A** being of size **(M,K)** and matrix **B** of size **(K,N)**, the resulting matrix **C** has size **(M,N)**. The `Makefile` defines these default values to 64 (`sizeM, sizeK, sizeN`). The size of the sub-matrices used by the AIE API is also defined (`subM, subK, subN`). All these values can be overriden in the `make` command line.
 
-In this part we focus on a straightforward implementation of the matrix multiply which will be selected by the macro `OPTIMIZED_SOURCE = 0`. The `make` command will be invoked using `make OPT=0 ...`.
+In this part we focus on a straightforward implementation of the matrix multiply which will be selected by the macro `OPTIMIZED_SOURCE = 0`. The `make` command will be invoked using `make OPT=0 ...` which is actually the default.
 
 ```MAKEFILE
 # Default values for A, B, C matrix sizes
@@ -348,7 +348,7 @@ AI Engine simulation can be conducted the same way:
 make clean-all OPT=0 data aie aiesim compareaie
 ```
 
-Finally for hardware emulation `make OPT=0 all_hw_emu` will compile, link and create the package for hardware emulation, and `make OPT=0 run_hw_emu` will run the hardware emulation. `make OPT=0 run` will chain the two previous commands.
+Finally for hardware emulation `make OPT=0 build_hw_emu` will compile, link and create the package for hardware emulation, and `make OPT=0 launch_hw_emu` will run the hardware emulation. `make OPT=0 run_hw_emu` will chain the two previous commands.
 
 ## Performance analysis
 

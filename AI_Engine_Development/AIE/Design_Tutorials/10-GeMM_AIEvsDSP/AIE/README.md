@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.1 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal GeMM Implementation Using Vitis Acceleration Library Tutorial</h1>
     </td>
  </tr>
 </table>
@@ -121,7 +121,7 @@ The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual d
 ### make kernels: Compiling PL Kernels
 
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202310_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
 
 ```
 make kernels
@@ -191,15 +191,18 @@ AIE_FLAGS += -include=$(DSPLIB_ROOT)/L2/include/aie
 AIE_FLAGS += -include=$(DSPLIB_ROOT)/L2/tests/aie/common/inc
 AIE_FLAGS += --verbose
 AIE_FLAGS += --Xpreproc="-DITER_CNT=$(ITER_CNT)"
+AIE_FLAGS += --Xpreproc="-DGRAPH_ITER_CNT=$(GRAPH_ITER_CNT)"
 AIE_FLAGS += --Xpreproc="-DGEMM_SIZE=$(GEMM_SIZE)"
 AIE_FLAGS += --Xpreproc="-DGEMM_INSTS=$(GEMM_INSTS)"
 AIE_FLAGS += --platform=$(PLATFORM)
-AIE_FLAGS += --log-level=5
-AIE_FLAGS += --test-iterations=2
-AIE_FLAGS += --pl-freq=$(PL_FREQ)
-AIE_FLAGS += --dataflow
+#AIE_FLAGS += --target=$(TARGET)
 
-AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+AIE_FLAGS += --log-level=5
+#AIE_FLAGS += --test-iterations=2
+AIE_FLAGS += --pl-freq=$(PL_FREQ)
+#AIE_FLAGS += --dataflow
+
+#AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
 
 AIE_FLAGS += --Xmapper=BufferOptLevel9
 AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
@@ -276,7 +279,7 @@ VPP_LINK_FLAGS += --clock.defaultTolerance 0.001
 ### If Profiling for Performance Measurement is enabled..
 ifeq ($(EN_TRACE),1)
    ifeq ($(TARGET),hw)
-      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
+      VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:strmInp_from_C0
       VPP_LINK_FLAGS += --profile.trace_memory DDR
       
    endif
@@ -319,59 +322,46 @@ The information to tell the linker how to connect the AI Engine and PL kernels t
 nk=dma_hls:1:dma_hls_0
 
 #Connections For GEMM Insts 0...
-stream_connect=dma_hls_0.strmOut_to_A0:ai_engine_0.DataInA0_CASC0
-stream_connect=dma_hls_0.strmOut_to_A1:ai_engine_0.DataInA0_CASC1
-stream_connect=dma_hls_0.strmOut_to_A2:ai_engine_0.DataInA0_CASC2
-stream_connect=dma_hls_0.strmOut_to_A3:ai_engine_0.DataInA0_CASC3
+stream_connect=dma_hls_0.strmOut_to_A0:ai_engine_0.DataInA0_CASC0:512
+stream_connect=dma_hls_0.strmOut_to_A1:ai_engine_0.DataInA0_CASC1:512
+stream_connect=dma_hls_0.strmOut_to_A2:ai_engine_0.DataInA0_CASC2:512
+stream_connect=dma_hls_0.strmOut_to_A3:ai_engine_0.DataInA0_CASC3:512
+stream_connect=dma_hls_0.strmOut_to_A4:ai_engine_0.DataInA0_CASC4:512
+stream_connect=dma_hls_0.strmOut_to_A5:ai_engine_0.DataInA0_CASC5:512
+stream_connect=dma_hls_0.strmOut_to_A6:ai_engine_0.DataInA0_CASC6:512
+stream_connect=dma_hls_0.strmOut_to_A7:ai_engine_0.DataInA0_CASC7:512
 
-stream_connect=dma_hls_0.strmOut_to_B0:ai_engine_0.DataInB0_CASC0
-stream_connect=dma_hls_0.strmOut_to_B1:ai_engine_0.DataInB0_CASC1
-stream_connect=dma_hls_0.strmOut_to_B2:ai_engine_0.DataInB0_CASC2
-stream_connect=dma_hls_0.strmOut_to_B3:ai_engine_0.DataInB0_CASC3
+stream_connect=dma_hls_0.strmOut_to_B0:ai_engine_0.DataInB0_CASC0:512
+stream_connect=dma_hls_0.strmOut_to_B1:ai_engine_0.DataInB0_CASC1:512
+stream_connect=dma_hls_0.strmOut_to_B2:ai_engine_0.DataInB0_CASC2:512
+stream_connect=dma_hls_0.strmOut_to_B3:ai_engine_0.DataInB0_CASC3:512
+stream_connect=dma_hls_0.strmOut_to_B4:ai_engine_0.DataInB0_CASC4:512
+stream_connect=dma_hls_0.strmOut_to_B5:ai_engine_0.DataInB0_CASC5:512
+stream_connect=dma_hls_0.strmOut_to_B6:ai_engine_0.DataInB0_CASC6:512
+stream_connect=dma_hls_0.strmOut_to_B7:ai_engine_0.DataInB0_CASC7:512
 
-stream_connect=dma_hls_0.strmOut_to_B4:ai_engine_0.DataInB1_CASC0
-stream_connect=dma_hls_0.strmOut_to_B5:ai_engine_0.DataInB1_CASC1
-stream_connect=dma_hls_0.strmOut_to_B6:ai_engine_0.DataInB1_CASC2
-stream_connect=dma_hls_0.strmOut_to_B7:ai_engine_0.DataInB1_CASC3
+stream_connect=dma_hls_0.strmOut_to_B8:ai_engine_0.DataInB1_CASC0:512
+stream_connect=dma_hls_0.strmOut_to_B9:ai_engine_0.DataInB1_CASC1:512
+stream_connect=dma_hls_0.strmOut_to_B10:ai_engine_0.DataInB1_CASC2:512
+stream_connect=dma_hls_0.strmOut_to_B11:ai_engine_0.DataInB1_CASC3:512
+stream_connect=dma_hls_0.strmOut_to_B12:ai_engine_0.DataInB1_CASC4:512
+stream_connect=dma_hls_0.strmOut_to_B13:ai_engine_0.DataInB1_CASC5:512
+stream_connect=dma_hls_0.strmOut_to_B14:ai_engine_0.DataInB1_CASC6:512
+stream_connect=dma_hls_0.strmOut_to_B15:ai_engine_0.DataInB1_CASC7:512
 
-stream_connect=dma_hls_0.strmOut_to_B8:ai_engine_0.DataInB2_CASC0
-stream_connect=dma_hls_0.strmOut_to_B9:ai_engine_0.DataInB2_CASC1
-stream_connect=dma_hls_0.strmOut_to_B10:ai_engine_0.DataInB2_CASC2
-stream_connect=dma_hls_0.strmOut_to_B11:ai_engine_0.DataInB2_CASC3
+stream_connect=dma_hls_0.strmOut_to_B16:ai_engine_0.DataInB2_CASC0:512
+stream_connect=dma_hls_0.strmOut_to_B17:ai_engine_0.DataInB2_CASC1:512
+stream_connect=dma_hls_0.strmOut_to_B18:ai_engine_0.DataInB2_CASC2:512
+stream_connect=dma_hls_0.strmOut_to_B19:ai_engine_0.DataInB2_CASC3:512
+stream_connect=dma_hls_0.strmOut_to_B20:ai_engine_0.DataInB2_CASC4:512
+stream_connect=dma_hls_0.strmOut_to_B21:ai_engine_0.DataInB2_CASC5:512
+stream_connect=dma_hls_0.strmOut_to_B22:ai_engine_0.DataInB2_CASC6:512
+stream_connect=dma_hls_0.strmOut_to_B23:ai_engine_0.DataInB2_CASC7:512
 
-stream_connect=dma_hls_0.strmOut_to_B12:ai_engine_0.DataInB3_CASC0
-stream_connect=dma_hls_0.strmOut_to_B13:ai_engine_0.DataInB3_CASC1
-stream_connect=dma_hls_0.strmOut_to_B14:ai_engine_0.DataInB3_CASC2
-stream_connect=dma_hls_0.strmOut_to_B15:ai_engine_0.DataInB3_CASC3
-
-stream_connect=dma_hls_0.strmOut_to_B16:ai_engine_0.DataInB4_CASC0
-stream_connect=dma_hls_0.strmOut_to_B17:ai_engine_0.DataInB4_CASC1
-stream_connect=dma_hls_0.strmOut_to_B18:ai_engine_0.DataInB4_CASC2
-stream_connect=dma_hls_0.strmOut_to_B19:ai_engine_0.DataInB4_CASC3
-
-stream_connect=dma_hls_0.strmOut_to_B20:ai_engine_0.DataInB5_CASC0
-stream_connect=dma_hls_0.strmOut_to_B21:ai_engine_0.DataInB5_CASC1
-stream_connect=dma_hls_0.strmOut_to_B22:ai_engine_0.DataInB5_CASC2
-stream_connect=dma_hls_0.strmOut_to_B23:ai_engine_0.DataInB5_CASC3
-
-stream_connect=dma_hls_0.strmOut_to_B24:ai_engine_0.DataInB6_CASC0
-stream_connect=dma_hls_0.strmOut_to_B25:ai_engine_0.DataInB6_CASC1
-stream_connect=dma_hls_0.strmOut_to_B26:ai_engine_0.DataInB6_CASC2
-stream_connect=dma_hls_0.strmOut_to_B27:ai_engine_0.DataInB6_CASC3
-
-stream_connect=dma_hls_0.strmOut_to_B28:ai_engine_0.DataInB7_CASC0
-stream_connect=dma_hls_0.strmOut_to_B29:ai_engine_0.DataInB7_CASC1
-stream_connect=dma_hls_0.strmOut_to_B30:ai_engine_0.DataInB7_CASC2
-stream_connect=dma_hls_0.strmOut_to_B31:ai_engine_0.DataInB7_CASC3
 
 stream_connect=ai_engine_0.DataOutC0:dma_hls_0.strmInp_from_C0
 stream_connect=ai_engine_0.DataOutC1:dma_hls_0.strmInp_from_C1
 stream_connect=ai_engine_0.DataOutC2:dma_hls_0.strmInp_from_C2
-stream_connect=ai_engine_0.DataOutC3:dma_hls_0.strmInp_from_C3
-stream_connect=ai_engine_0.DataOutC4:dma_hls_0.strmInp_from_C4
-stream_connect=ai_engine_0.DataOutC5:dma_hls_0.strmInp_from_C5
-stream_connect=ai_engine_0.DataOutC6:dma_hls_0.strmInp_from_C6
-stream_connect=ai_engine_0.DataOutC7:dma_hls_0.strmInp_from_C7
 
 [advanced]
 # Disable Profiling in hw_emu so that it is faster...
@@ -410,6 +400,7 @@ application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
 
 REG_GCC_FLAGS := $(GCC_FLAGS)
 REG_GCC_FLAGS += -DITER_CNT=$(ITER_CNT)
+REG_GCC_FLAGS += -DGRAPH_ITER_CNT=$(GRAPH_ITER_CNT)
 
 $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	@rm -rf $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(BUILD_TARGET_DIR)/$(APP_ELF)
@@ -561,7 +552,7 @@ When hardware emulation is launched, you see the QEMU simulator load. Wait for t
 
 ```bash
 
-root@versal-rootfs-common-2023_1:~#
+root@versal-rootfs-common-2023_2:~#
 
 ```
 
@@ -640,7 +631,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -662,12 +653,9 @@ The following figure shows a high-level block diagram of the design. The test ha
 
 The data mover is a PL-based data generator and checker. It generates constant matrices as inputs and checks the output of the gemm core for its output.
 
-#### GeMM Block Diagram for Matrices 32x32x32 to 512x512x512
-![Image of GeMM AIE Implementation Architecture GeMM 32x32x32 to 512x512x512](images/gemm_aie_block_diagram_common.PNG)
+#### GeMM Block Diagram for Matrices 32x32x32 to 1024x1024x1024
+![Image of GeMM AIE Implementation Architecture GeMM 32x32x32 to 1024x1024x1024](images/gemm_aie_block_diagram_common.PNG)
 
-
-#### GeMM Block Diagram for Matrix 1024x1024x1024
-![Image of GeMM AIE Implementation Architecture GeMM 1024x1024x1024](images/gemm_aie_block_diagram_1024x1024x1024.PNG)
 
 </details>
 
@@ -727,13 +715,9 @@ The software design in the AI Engine GeMM tutorial consists of the following sec
 The following figure elaborates on the AI Engine implementation methodology.
 
 
-#### GeMM Block Diagram Methodology for Matrices 32x32x32 to 512x512x512
+#### GeMM Block Diagram Methodology for Matrices 32x32x32 to 1024x1024x1024
 
-![Image of GeMM AIE Implementation Methodology GeMM 32x32x32 to 512x512x512](images/gemm_aie_block_diagram_methodology_common.PNG)
-
-#### GeMM Block Diagram Methodology for Matrix 1024x1024x1024
-
-![Image of GeMM AIE Implementation Methodology GeMM 1024x1024x1024](images/gemm_aie_block_diagram_methodology_1024x1024x1024.PNG)
+![Image of GeMM AIE Implementation Methodology GeMM 32x32x32 to 1024x1024x1024](images/gemm_aie_block_diagram_methodology_common.PNG)
 
 #### AI Engine
 
@@ -754,29 +738,51 @@ for(int i = 0; i < 8; i++) {
 The `graph.h` graph performs GeMM with graph window streaming buffer size as `WINDOW_SIZE`, which is fixed to matrix dimension.
 ```
 ...
-#if GEMM_SIZE < 1024
-      #define SPLIT 8
-      #define CASC_LN 4
-      #define N_SAMPLES 1
-      #define DIM_A (GEMM_SIZE / (SPLIT)) // * CASC_LN))
-      #define DIM_AB (GEMM_SIZE)// / CASC_LN)
-      #define DIM_B (GEMM_SIZE / SPLIT)
-      //#define GRAPH_ITER_CNT (SPLIT * ITER_CNT)
-      #define GRAPH_ITER_CNT (SPLIT)
+   #define SPLIT 3
+   #define CASC_LN 8
+   #define N_SAMPLES 1
    
-   #else
-      #define SPLIT 8
-      #define CASC_LN 4
-      #define N_SAMPLES 1
-      #define DIM_A (GEMM_SIZE / 32) // * CASC_LN))
-      #define DIM_AB (GEMM_SIZE)// / CASC_LN)
-      #define DIM_B (GEMM_SIZE / 32)
-      #define GRAPH_ITER_CNT ((32 / 8) * 32 * ITER_CNT)
+   //defining DIM_A, DIM_B, DIM_AB
+   #if GEMM_SIZE == 32
+   #define DIM_A 16 
+   #define DIM_B 12
+   #elif GEMM_SIZE == 64
+   #define DIM_A 32 
+   #define DIM_B 24
+   #elif GEMM_SIZE == 128
+   #define DIM_A 44 
+   #define DIM_B 44 
+   #elif GEMM_SIZE == 256
+   #define DIM_A 44 
+   #define DIM_B 44 
+   #elif GEMM_SIZE == 512
+   #define DIM_A 16 
+   #define DIM_B 16
+   #elif GEMM_SIZE == 1024
+   #define DIM_A 16 
+   #define DIM_B 16
+   #endif
+   #define DIM_AB (GEMM_SIZE)
    
+   //defining GEMM_SIZE_ZP_A
+   #if (GEMM_SIZE % DIM_A) == 0 
+       #define GEMM_SIZE_ZP_A GEMM_SIZE			
+   #else 
+       #define GEMM_SIZE_ZP_A (GEMM_SIZE - (GEMM_SIZE % DIM_A) + DIM_A)	
    #endif
    
-   #define WINDOW_SIZE (DIM_A * DIM_AB * N_SAMPLES)
+   //defining GEMM_SIZE_ZP_B
+   #if (GEMM_SIZE % (DIM_B*SPLIT)) == 0 
+       #define GEMM_SIZE_ZP_B GEMM_SIZE			
+   #else 
+       #define GEMM_SIZE_ZP_B ((GEMM_SIZE) - ((GEMM_SIZE) % (DIM_B*SPLIT)) + (DIM_B*SPLIT))
+   #endif
 
+   #endif
+   
+   
+   #define WINDOW_SIZE_A (DIM_A * DIM_AB * N_SAMPLES)
+   #define WINDOW_SIZE_B (DIM_B * DIM_AB * N_SAMPLES)
 ...
 ```
 
@@ -794,6 +800,8 @@ Concurrent scheduling is required so that each function runs independently and t
 #pragma HLS DATAFLOW
    
    ap_uint<21> errCnt = 0;
+   ap_uint<128> goldenVal_ZP = ap_uint<128> \
+   ("0x00000000000000000000000000000000", 16);
    
    #if GEMM_SIZE == 32
       ap_uint<128> goldenVal = ap_uint<128> \
@@ -822,7 +830,7 @@ Concurrent scheduling is required so that each function runs independently and t
    #endif
 
 
-   inp_A(strmOut_to_A0, strmOut_to_A1, strmOut_to_A2, strmOut_to_A3,
+   inp_A(strmOut_to_A0, strmOut_to_A1, strmOut_to_A2, strmOut_to_A3, strmOut_to_A4, strmOut_to_A5, strmOut_to_A6, strmOut_to_A7,
          matSz_A);
    
    inp_B(strmOut_to_B0, strmOut_to_B1, strmOut_to_B2, strmOut_to_B3,
@@ -831,11 +839,9 @@ Concurrent scheduling is required so that each function runs independently and t
          strmOut_to_B12, strmOut_to_B13, strmOut_to_B14, strmOut_to_B15,
          strmOut_to_B16, strmOut_to_B17, strmOut_to_B18, strmOut_to_B19,
          strmOut_to_B20, strmOut_to_B21, strmOut_to_B22, strmOut_to_B23,
-         strmOut_to_B24, strmOut_to_B25, strmOut_to_B26, strmOut_to_B27,
-         strmOut_to_B28, strmOut_to_B29, strmOut_to_B30, strmOut_to_B31, matSz_B);
+         matSz_B);
    
-   out_C(strmInp_from_C0, strmInp_from_C1, strmInp_from_C2, strmInp_from_C3,strmInp_from_C4,
-         strmInp_from_C5, strmInp_from_C6, strmInp_from_C7, matSz_C, errCnt, goldenVal);
+   out_C(strmInp_from_C0, strmInp_from_C1, strmInp_from_C2, matSz_C, errCnt, goldenVal, goldenVal_ZP);
    }
 ```
 
@@ -890,17 +896,17 @@ Define the graph classes by using the objects defined in the appropriate name sp
 
 
 ```
- class GeMM: public adf::graph
+   class GeMM: public adf::graph
    {
       public:
          input_plio matA_inp[CASC_LN];
          input_plio matB_inp[(SPLIT * CASC_LN)];
          output_plio matC_out[SPLIT];
          
-         GeMM(): {
+         GeMM() {
             // GeMM Graph Declarations...
             xf::dsp::aie::blas::matrix_mult::matrix_mult_graph<int16, int16, DIM_A, DIM_AB, DIM_B, 0, 0, \
-               ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE, WINDOW_SIZE, CASC_LN> mmult[SPLIT];
+               ROW_MAJOR, ROW_MAJOR, ROW_MAJOR, 0, 0, 0, WINDOW_SIZE_A, WINDOW_SIZE_B, CASC_LN> mmult[SPLIT];
             
             // Mat A PLIO node names...
             for(int j = 0; j < CASC_LN; ++j) {
@@ -949,8 +955,9 @@ Define the graph classes by using the objects defined in the appropriate name sp
                }
                
                // Connecting port IO nodes...
-               adf::connect<>(mmult[i].out, matC_out[i].in[0]);
+               adf::connect<>(mmult[i].out[0], matC_out[i].in[0]);
             }
+            location<graph>(*this) = area_group({{aie_tile, 14, 0, 13+CASC_LN, SPLIT}});
          }
    };
 ```
@@ -1003,6 +1010,10 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A2,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A7,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B2,
@@ -1027,22 +1038,9 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B21,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B22,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B23,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B24,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B25,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B26,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B27,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B28,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B29,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B30,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B31,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C2,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C3,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C4,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C5,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C6,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C7,
    ap_int<32> matSz_A, ap_int<32> matSz_B, ap_int<32> matSz_C
    );
 ```
@@ -1060,6 +1058,10 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A2,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A3,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A4,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A5,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A6,
+   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A7,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B2,
@@ -1084,22 +1086,9 @@ int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B21,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B22,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B23,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B24,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B25,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B26,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B27,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B28,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B29,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B30,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_B31,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C1,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C2,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C3,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C4,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C5,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C6,
-   hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_C7,
    ap_int<32> matSz_A, ap_int<32> matSz_B, ap_int<32> matSz_C
    )
 {
@@ -1107,6 +1096,10 @@ int dma_hls(
    #pragma HLS INTERFACE axis port=strmOut_to_A1
    #pragma HLS INTERFACE axis port=strmOut_to_A2
    #pragma HLS INTERFACE axis port=strmOut_to_A3
+   #pragma HLS INTERFACE axis port=strmOut_to_A4
+   #pragma HLS INTERFACE axis port=strmOut_to_A5
+   #pragma HLS INTERFACE axis port=strmOut_to_A6
+   #pragma HLS INTERFACE axis port=strmOut_to_A7
    #pragma HLS INTERFACE axis port=strmOut_to_B0  
    #pragma HLS INTERFACE axis port=strmOut_to_B1
    #pragma HLS INTERFACE axis port=strmOut_to_B2
@@ -1131,31 +1124,21 @@ int dma_hls(
    #pragma HLS INTERFACE axis port=strmOut_to_B21
    #pragma HLS INTERFACE axis port=strmOut_to_B22
    #pragma HLS INTERFACE axis port=strmOut_to_B23
-   #pragma HLS INTERFACE axis port=strmOut_to_B24
-   #pragma HLS INTERFACE axis port=strmOut_to_B25
-   #pragma HLS INTERFACE axis port=strmOut_to_B26
-   #pragma HLS INTERFACE axis port=strmOut_to_B27
-   #pragma HLS INTERFACE axis port=strmOut_to_B28
-   #pragma HLS INTERFACE axis port=strmOut_to_B29
-   #pragma HLS INTERFACE axis port=strmOut_to_B30
-   #pragma HLS INTERFACE axis port=strmOut_to_B31
    #pragma HLS INTERFACE axis port=strmInp_from_C0 
    #pragma HLS INTERFACE axis port=strmInp_from_C1
    #pragma HLS INTERFACE axis port=strmInp_from_C2
-   #pragma HLS INTERFACE axis port=strmInp_from_C3
-   #pragma HLS INTERFACE axis port=strmInp_from_C4 
-   #pragma HLS INTERFACE axis port=strmInp_from_C5
-   #pragma HLS INTERFACE axis port=strmInp_from_C6
-   #pragma HLS INTERFACE axis port=strmInp_from_C7
    
    #pragma HLS INTERFACE s_axilite port=matSz_A bundle=control
    #pragma HLS INTERFACE s_axilite port=matSz_B bundle=control
    #pragma HLS INTERFACE s_axilite port=matSz_C bundle=control
    //#pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
-   #pragma HLS INTERFACE s_axilite port=return bundle=control 
+   #pragma HLS INTERFACE s_axilite port=return bundle=control  
+   
    #pragma HLS DATAFLOW
    
    ap_uint<21> errCnt = 0;
+      ap_uint<128> goldenVal_ZP = ap_uint<128> \
+      ("0x00000000000000000000000000000000", 16);
    
    #if GEMM_SIZE == 32
       ap_uint<128> goldenVal = ap_uint<128> \
@@ -1182,7 +1165,8 @@ int dma_hls(
       ("0x08000800080008000800080008000800", 16);
    
    #endif
-   inp_A(strmOut_to_A0, strmOut_to_A1, strmOut_to_A2, strmOut_to_A3,
+   
+   inp_A(strmOut_to_A0, strmOut_to_A1, strmOut_to_A2, strmOut_to_A3, strmOut_to_A4, strmOut_to_A5, strmOut_to_A6, strmOut_to_A7,
          matSz_A);
    
    inp_B(strmOut_to_B0, strmOut_to_B1, strmOut_to_B2, strmOut_to_B3,
@@ -1191,11 +1175,9 @@ int dma_hls(
          strmOut_to_B12, strmOut_to_B13, strmOut_to_B14, strmOut_to_B15,
          strmOut_to_B16, strmOut_to_B17, strmOut_to_B18, strmOut_to_B19,
          strmOut_to_B20, strmOut_to_B21, strmOut_to_B22, strmOut_to_B23,
-         strmOut_to_B24, strmOut_to_B25, strmOut_to_B26, strmOut_to_B27,
-         strmOut_to_B28, strmOut_to_B29, strmOut_to_B30, strmOut_to_B31, matSz_B);
+         matSz_B);
    
-   out_C(strmInp_from_C0, strmInp_from_C1, strmInp_from_C2, strmInp_from_C3,strmInp_from_C4,
-         strmInp_from_C5, strmInp_from_C6, strmInp_from_C7, matSz_C, errCnt, goldenVal);
+   out_C(strmInp_from_C0, strmInp_from_C1, strmInp_from_C2, matSz_C, errCnt, goldenVal, goldenVal_ZP);
    
    return errCnt;
 }
@@ -1229,14 +1211,11 @@ The steps to run the A72 application are as follows:
 1. Include `graph.cpp` and other required headers. Define the required macros. The `graph.cpp` AI Engine application file contains the instantiation of the AI Engine GeMM data flow graph object.
 
 ```
-#include "graph.cpp"
-
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "adf/adf_api/XRTConfig.h"
 
@@ -1244,15 +1223,21 @@ The steps to run the A72 application are as follows:
 #include "experimental/xrt_kernel.h"
 #include "experimental/xrt_bo.h"
 
-#if GEMM_SIZE < 1024
-   #define MATA_SZ (((GEMM_SIZE * GEMM_SIZE ) / CASC_LN ) / 8) * ITER_CNT
-   #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE ) / 32 ) / 8) * ITER_CNT * 8
-   #define MATC_SZ (((GEMM_SIZE * GEMM_SIZE ) / SPLIT ) / 8) * ITER_CNT
+#define OPTIMIZED_OVERLAY 1
+
+#if OPTIMIZED_OVERLAY
+
+// HLS Datamover Loops and Graph will run Infinitely...
+#if ITER_CNT == -1
+   #define MATA_SZ -1 
+   #define MATB_SZ -1
+   #define MATC_SZ -1
 
 #else
-   #define MATA_SZ (((GEMM_SIZE * GEMM_SIZE * 4) / CASC_LN ) / 8) * ITER_CNT
-   #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE ) / 32 ) / 8) * ITER_CNT * 32
-   #define MATC_SZ (((GEMM_SIZE * GEMM_SIZE ) / SPLIT ) / 8) * ITER_CNT
+     #define MATA_SZ (((GEMM_SIZE_ZP_A) * GEMM_SIZE / CASC_LN) / 8) * ITER_CNT * ((GEMM_SIZE_ZP_B/SPLIT) / DIM_B)
+     #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE_ZP_B ) / (CASC_LN*SPLIT) ) / 8) * ITER_CNT * (GEMM_SIZE_ZP_A / DIM_A) 
+     #define MATC_SZ (((GEMM_SIZE_ZP_A * GEMM_SIZE_ZP_B ) / SPLIT ) / 8) * ITER_CNT
+#endif
 
 #endif
 
@@ -1370,7 +1355,8 @@ The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to
 1. Run `make vcd` (recipe expanded below) to create the `graph.xpe` file under `$(BUILD_TARGET_DIR)/aiesim_xpe/`:
 
 ```
-vcd: graph $(XPE_FILE)
+vcd: graph create_ioFiles $(XPE_FILE)
+
 $(XPE_FILE): $(BLD_TGT_VCD_FILE)
 	cd $(BUILD_TARGET_DIR); \
 	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
@@ -1381,22 +1367,20 @@ $(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
 	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2023.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+Load the `graph.xpe` into PDM to see the AI Engine power comsumption and resource utilization for the gemm_32x32x32 design:
 
-3. Follow the steps below to load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization (step 5 and 6 in the below images) for the gemm_32x32x32 design:
-
-![Image of GeMM AIE XPE Util and Power Measurement 1kx1kx1k](images/gemm_aie_xpe_32x32x32.PNG)
+![Image of GeMM AIE XPE Util and Power Measurement 32x32x32](images/gemm_aie_xpe_32x32x32.PNG)
 
 A summary of resource utilization and power for all variations is given in the following table.
 
 | GeMM Configuration | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) |
 |:------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
-|        32x32x32    |         32              |    3%       |         352                   |     1%       |           119          |         8%        |  15940    |   3695    |          4880             |
-|        64x64x64    |         32              |   18%       |         352                   |     4%       |           119          |         8%        |  15944    |   3739    |          5680             |
-|     128x128x128    |         32              |   48%       |         352                   |     7%       |           119          |         8%        |  15940    |   3695    |          7204             |
-|     256x256x256    |         32              |   89%       |         352                   |     10%      |           101          |         9%        |  15954    |   3737    |          8768             |
-|     512x512x512    |         32              |   97%       |         608                   |     6%       |           131          |         8%        |  15940    |   3695    |          9824             |
-|  1024x1024x1024    |         32              |   95%       |         608                   |     6%       |           144          |         7%        |  15940    |   3680    |         10132             |
+|        32x32x32    |         24              |    16.05%       |         231                   |     3.05%       |           44          |         12.95%        |  2031    |   1414    |          3668             |
+|        64x64x64    |         24              |   48.78%       |         252                   |     5.825%       |           46          |         12.57%        |  2031    |   1412    |          4937             |
+|     128x128x128    |         24              |   40.94%       |         231                   |     8.2%       |           46          |         12.57%        |  2159    |   1662    |          4760             |
+|     256x256x256    |         24              |   64.72%       |        231                   |     13.67%      |           46          |         12.57%        |  2229    |   1808    |          5795             |
+|     512x512x512    |         24              |   71.21%       |         252                   |     10.27%       |           46          |         12.57%        |  2041    |   1420    |          5884             |
+|  1024x1024x1024    |         24              |   83.18%       |         252                   |     11.94%       |           46          |         12.57%        |  1395    |   2030    |         6364             |
 
 </details>
 
@@ -1431,24 +1415,21 @@ The time reported by trace is with the dma_hls kernel running at 156.250MHz. Sin
 ```
 Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
 
-Processing Time (with 156.250MHZ)    =  31.974 us
-Processing Time (scaled to 312.5MHZ) =  (31.974 * (156.25/312.5)) us
-                                     =   15.987   us
+Processing Time (with 156.250MHZ)    =  7.514 us
+Processing Time (scaled to 312.5MHZ) =  (7.514 * (156.25/312.5)) us
+                                     =   3.757 us
 
 
 Latency = (Start of  processing of Stream input A & B )- (Start of  processing Timestamp of Stream output C)
 
-Latency (with 156.250MHz)  = 0.327us
-Latency (scaled to 312.5MHz) = (0.327 * (156.25/312.5)) us
-				   = 0.1635 us
 
 
 Throughput = (Samples transferred) / processing time
            = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 15.987us
-           = 1024.8326 MSamples/s
-           = 1024.8326 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 2049.665 MB/s
+           = (32 x 32) x 16 / 3.757us
+           = 4360.9263 MSamples/s
+           = 4360.9263 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 8721.8524 MB/s
 ```
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces.
@@ -1458,32 +1439,32 @@ The throughput and latency calculations for the GeMM 32x32x32 design based on th
 
 ```
 Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
-                = 5.7536s
+                = 3.8368us
 
 Latency:
    = Difference between beginning of sending of input A & B  and receiving of output C
    = (Start of  processing of Stream input A & B -
      (Start of  processing Timestamp of Stream output C
-   = 0.118401us
+   = 0.275201us
 
 Throughput = (Samples transferred) / processing time
            = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 5.7536us
-           = 2847.608454 MSamples/s
-           = 2847.608454 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 5695.216908 MB/s
+           = (32 x 32) x 16 / 3.8368us
+           = 4270.225 MSamples/s
+           = 4270.225 x 2 MB/s (As each sample is int16 = 2bytes)
+           = 8540.4504 MB/s
 ```
 
 A summary of throughput and latency for all variations is shown in the following table.
 
 | GeMM Configuration | Data Transfer Size | Latency<br/>(in μs) | Throughput<br/>(in MSPS)  | TOPs  | Matrices/s<br/>(in 10^6/s)|
 |:------------------:|:------------------:|:-------------------:|:-------------------------:|:-----:|:-------------------------:|
-|        32x32x32    |         1024       |        0.118401     |           2847.608        | 0.065 |         2.7808            |    
-|        64x64x64    |         4096       |        0.2816       |           4433.860        | 0.329 |         1.0824            |
-|     128x128x128    |        16384       |        0.777        |           5445.360        | 1.092 |         0.3323            |
-|     256x256x256    |        65536       |        2.944        |           4607.683        | 2.216 |         0.0703            |
-|     512x512x512    |       262144       |        17.385601    |           2452.809        | 2.414 |         0.0093            |
-|  1024x1024x1024    |      1048576       |        11.251201    |           1222.072        | 2.406 |         0.0011            |
+|        32x32x32    |         1024       |        0.275201     |           4270.225        | 0.273 |         4.1701            |    
+|        64x64x64    |         4096       |        0.595201       |           6450.394        | 0.826 |         1.5748            |
+|     128x128x128    |        16384       |        2.374401        |           2921.228        | 0.748 |         0.1783            |
+|     256x256x256    |        65536       |        3.190401        |           2289.691        | 1.172 |         0.0349            |
+|     512x512x512    |       262144       |        1.824001    |           1294.902        | 1.326 |         0.0049            |
+|  1024x1024x1024    |      1048576       |        3.360001    |           756.241        | 1.549 |         0.0007            |
 
 *Note:	Tabulated based on hw_emu
 </details>
@@ -1497,7 +1478,7 @@ TOPs per Watt is represented as TOPs/Power in Watts. The following example shows
 
 ```
 TOPs per Watt = TOPs / Power(Watt)
-              = (0.065 / 4.880) MSPS/Watt
+              = (0.273 / 3.668) MSPS/Watt
               = 0.0134 TOPs/Watt
 ```
 
@@ -1505,12 +1486,12 @@ A summary of TOPs per Watt for all variations is shown in the following table be
 
 | GeMM Configuration | TOPs per Watt |
 |:------------------:|:-------------:|
-|        32x32x32    |     0.0134    |
-|        64x64x64    |     0.0580    |
-|     128x128x128    |     0.1515    |
-|     256x256x256    |     0.2527    |
-|     512x512x512    |     0.24573   |
-|  1024x1024x1024    |     0.23747   |
+|        32x32x32    |     0.0744    |
+|        64x64x64    |     0.1672    |
+|     128x128x128    |     0.1571    |
+|     256x256x256    |     0.2023    |
+|     512x512x512    |     0.2253    |
+|  1024x1024x1024    |     0.2433    |
 
 </details>
 
@@ -1523,14 +1504,14 @@ A consolidated summary of observations for all the point sizes and all the corre
 
 | GeMM Configuration | Perf<br/>(in MSPS) | Latency<br/>(in μs) | TOPs  | No. of Compute Cores | Vector Load | No. of Active Mem Banks | Mem R/W Rate | Active AIE Tiles | Dynamic Power<br/>(in mW) | TOPs per Watt |
 |:------------------:|:------------------:|:-------------------:|:-----:|:--------------------:|:-----------:|:-----------------------:|:------------:|:----------------:|:-------------------------:|:-------------:|
-|        32x32x32    |        2847.608    |        0.1184       | 0.066 | 32                   |  3%         | 352                     | 1%           | 119              |   4880                    |     0.0134    |
-|        64x64x64    |        4433.860    |        0.2816       | 0.329 | 32                   |  18%        | 352                     | 4%           | 119              |   5680                    |     0.0580    |
-|     128x128x128    |        5445.360    |        0.777        | 1.091 | 32                   |  48%        | 352                     | 7%           | 119              |   7204                    |     0.1515    |
-|     256x256x256    |        4607.683    |        2.944        | 2.216 | 32                   |  89%        | 352                     | 10%          | 101              |   8768                    |     0.2527    |
-|     512x512x512    |        2452.809    |        17.385601    | 2.414 | 32                   |  97%        | 608                     | 6%           | 131              |   9824                    |     0.2457    |
-|  1024x1024x1024    |        1222.071    |        11.2512      | 2.406 | 32                   |  95%        | 608                     | 6%           | 144              |  10132                    |     0.2374    |
+|        32x32x32    |        4270.225    |        0.275201       | 0.273 | 24                   |  16.05%         | 231                     | 3.05%           | 44              |   3668                    |     0.0744    |
+|        64x64x64    |        6450.394    |        0.595201       | 0.826 | 24                   |  48.78%        | 252                     | 5.825%           | 46              |   4937                    |     0.1672    |
+|     128x128x128    |        2921.228    |        2.374401        | 0.748 | 24                   |  40.94%        | 231                     | 8.2%           | 46              |   4760                    |     0.1571    |
+|     256x256x256    |        2289.691    |        3.190401        | 1.172 | 24                   |  64.72%        | 231                     | 13.67%          | 46              |   5795                    |     0.2023    |
+|     512x512x512    |        1294.902    |        1.824001    | 1.326 | 24                   |  71.21%        | 252                     | 10.27%           | 46              |   5884                    |     0.2253    |
+|  1024x1024x1024    |        756.241    |        3.360001      | 1.549 | 24                   |  83.18%        | 252                     | 11.94%           | 46              |  6364                    |     0.2433    |
 
-From these observations it can be seen that with the increase in the Matrix Dimensions the TOPs per Watt increases till 256x256x256 then starts to decrease, even though the TOPs increases continously till 1024x1024x1024 but after 256x256x256 the power increases disproportionately leading to reduced per Watt performance. User may find an a much tighter placement solution which may reduce the power consumption further and lead to a more favourable performance, as indicated by the low Vector Load.
+User may find an a much tighter placement solution which may reduce the power consumption further and lead to a more favourable performance, as indicated by the low Vector Load.
 
 </details>
 
@@ -1543,3 +1524,9 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+
+
+
+
+
+

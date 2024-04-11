@@ -45,7 +45,7 @@ To run the following `make` steps (that is, `make kernels`, `make graph`, and so
 
 `FFT_2D_INSTS:` This can be set to 1, 5, or 10 to build the design with the number of kernel instances. The default is `1`.
 
-`ITER_CNT:` The number of iterations the design is run. The default is `8`.
+`ITER_CNT:` The number of iterations the design is run. The default is `16`.
 
 `FFT_2D_PT`: FFT 2D point. Permissible values are `64`, `128`, `256`, `512`, and `2048`.
 
@@ -170,7 +170,7 @@ An ADF graph can be connected to an extensible Vitis platform (the graph I/Os ca
 * All interconnects between kernels are defined in the C++ graph
 * All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object.
 
-To compile the graph using the Makefile flow type (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
+To compile the graph using the Makefile flow type (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
 ```
 make graph
@@ -474,7 +474,7 @@ and do:
 When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
 
 ```bash
-root@versal-rootfs-common-2023.2:~#
+root@versal-rootfs-common-2023_2:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -554,13 +554,13 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands in the TeraTerm terminal:
 
 ```
-cd /mnt/sd-mmcblk0p1
-./init.sh
+mount /dev/mmcblk0p1 /mnt
+cd /mnt
 ./fft_2d_aie_xrt.elf a.xclbin
 ```
 
@@ -756,7 +756,7 @@ The streaming interface data width is kept at 128-bits to reduce read/write over
 
 #### Frequency Selection
 
-AI Engine kernels are configured for `cint16 / 4bytes`, and the streaming interface is at `128bit / 16bytes`. The frequency of the AI Engine array is 1.25 GHz, and the data mover is kept at 312.5 MHz, maintaining a 1:4 ratio.
+AI Engine kernels are configured for `cint16 / 4bytes`, and the streaming interface is at `128bit / 16bytes`. The frequency of the AI Engine array is 1.00 GHz, and the data mover is kept at 312.5 MHz.
 
 </details>
 
@@ -803,6 +803,9 @@ Define the graph classes using objects defined in the appropriate name space. It
 #define FFT_2D_TP_CASC_LEN 1
 // Dynamic FFT Point Size is disabled...
 #define FFT_2D_TP_DYN_PT_SIZE 0
+
+#define FFT_2D_TP_ROW_CASC_LEN FFT_ROW_CASCADE_LENGTH
+#define FFT_2D_TP_COL_CASC_LEN FFT_COL_CASCADE_LENGTH
 
 // TP_WINDOW_VSIZE for FFTrows_graph...
 #define FFT_ROW_TP_WINDOW_VSIZE MAT_COLS
@@ -924,16 +927,16 @@ The `dma_hls` kernel takes the following arguments:
 
 ```
 int dma_hls(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
       int matSz, int rows, int cols, int iterCnt
      );
 ```
 
 - `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit size from 1-1024. In this design, the bit size is set to 128.
-- `hls::stream<qdma_axis<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
+- `hls::stream<ap_axiu<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
 
 ##### Top Function Definition
 
@@ -941,10 +944,10 @@ Use the `dataflow` pragma for concurrently scheduling the three functions `mm2s0
 
 ```
 int dma_hls(
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
-      hls::stream<qdma_axis<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
+      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
       int matSz, int rows, int cols, int iterCnt
      )
 {
@@ -1170,64 +1173,62 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2023.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/technology/power/xpe.html).
+2. If you do not already have it installed, download and install [PDM for Versal Version 2023.2](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/design-tools/power-design-manager.html).
 
 3. AI Engine power comsumption and resource utilization shown in below images for the 32 x 64 point 1-instance design:
-
 ![Image of 2D-FFT AIE XPE](images/fft_2d_aie_xpe_pow.PNG)
 A summary of resource utilization and power for all variations is given in the following table.
-
 ##### cint16 Design
-| Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
-|:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
-| 1                | 64 point<br/>(32 x 64)       | 2                       | 11%          | 28                            | 5%           | 5                | 7%                | 1136     | 369       | 840                       |
-| 1                | 128 point<br/>(64 x 128)     | 2                       | 29%          | 28                            | 11%          | 5                | 7%                | 1136     | 380       | 925                       |
-| 1                | 256 point<br/>(128 x 256)    | 2                       | 45%          | 28                            | 17%          | 5                | 7%                | 1136     | 369       | 999                       |
-| 1                | 512 point<br/>(256 x 512)    | 2                       | 59%          | 30                            | 20%          | 5                | 7%                | 1136     | 369       | 1066                      |
-| 1                | 2048 point<br/>(1024 x 2048) | 2                       | 78%          | 42                            | 19%          | 6                | 7%                | 1136     | 369       | 1180                      |
-| 5                | 64 point<br/>(32 x 64)       | 10                      | 11%          | 140                           | 5%           | 24               | 7%                | 5680     | 1829      | 1833                      |
-| 5                | 128 point<br/>(64 x 128)     | 10                      | 29%          | 140                           | 9%           | 24               | 7%                | 5680     | 1829      | 2257                      |
-| 5                | 256 point<br/>(128 x 256)    | 10                      | 45%          | 140                           | 17%          | 24               | 7%                | 5680     | 1829      | 2623                      |
-| 5                | 512 point<br/>(256 x 512)    | 10                      | 59%          | 150                           | 20%          | 24               | 7%                | 5680     | 1829      | 2954                      |
-| 5                | 2048 point<br/>(1024 x 2048) | 10                      | 78%          | 210                           | 19%          | 32               | 6%                | 5680     | 1829      | 3594                      |
-| 10               | 64 point<br/>(32 x 64)       | 20                      | 11%          | 280                           | 5%           | 42               | 7%                | 11360    | 3654      | 2926                      |
-| 10               | 128 point<br/>(64 x 128)     | 20                      | 29%          | 280                           | 11%          | 42               | 7%                | 11360    | 3800      | 3773                      |
-| 10               | 256 point<br/>(128 x 256)    | 20                      | 44%          | 280                           | 17%          | 42               | 7%                | 11360    | 3654      | 4504                      |
-| 10               | 512 point<br/>(256 x 512)    | 20                      | 58%          | 300                           | 20%          | 42               | 7%                | 11360    | 3654      | 5165                      |
-| 10               | 2048 point<br/>(1024 x 2048) | 20                      | 77%          | 420                           | 19%          | 72               | 6%                | 11360    | 3654      | 6781                      |
-
+| Number of Instances | FFT Configuration         | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in W) | 
+|:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
+| 1                | 64 point<br/>(32 x 64)       |       2                 |  22%        |      28                       |    9%        |      5                 |    7%             |  1136     |  366      |     0.72                  |
+| 1                | 128 point<br/>(64 x 128)     |       2                 |  34.76%     |      28                       |    13.25%    |      5                 |    7%             |  1136     |  366      |     0.768                 |
+| 1                | 256 point<br/>(128 x 256)    |       2                 |  45.24%     |      28                       |    16.85%    |      5                 |    7%             |  1136     |  366      |     0.807                 |
+| 1                | 512 point<br/>(256 x 512)    |       2                 |  59%        |      30                       |    21%       |      5                 |    7%             |  1136     |  366      |     0.861                 |
+| 1                | 2048 point<br/>(1024 x 2048) |       2                 |  79.12%     |      42                       |    19.17%    |      6                 |    7%             |  1136     |  366      |     0.954                 |
+| 5                | 64 point<br/>(32 x 64)       |       10                |  20%        |      140                      |    8%        |      24                |    7%             |  5680     |  1837     |     1.629                 |
+| 5                | 128 point<br/>(64 x 128)     |       10                |  34.56%     |      140                      |    13.23%    |      24                |    7%             |  5680     |  1837     |     1.918                 |
+| 5                | 256 point<br/>(128 x 256)    |       10                |  45.23%     |      140                      |    16.85%    |      24                |    7%             |  5680     |  1837     |     2.115                 |
+| 5                | 512 point<br/>(256 x 512)    |       10                |  59.25%     |      150                      |    20.52%    |      24                |    7%             |  5680     |  1837     |     2.383                 |
+| 5                | 2048 point<br/>(1024 x 2048) |       10                |  79.10%     |      198                      |    20.33%    |      32                |    6%             |  5680     |  1837     |     2.908                 |
+| 10               | 64 point<br/>(32 x 64)       |       20                |  22.35%     |      280                      |    8.51%     |      42                |    7%             |  11360    |  3647     |     2.76                  |
+| 10               | 128 point<br/>(64 x 128)     |       20                |  34.75%     |      280                      |    13.25%    |      42                |    7%             |  11360    |  3647     |     3.243                 |
+| 10               | 256 point<br/>(128 x 256)    |       20                |  45.22%     |      280                      |    16.85%    |      42                |    7%             |  11360    |  3647     |     3.633                 |
+| 10               | 512 point<br/>(256 x 512)    |       20                |  59.29%     |      300                      |    20.53%    |      42                |    7%             |  11360    |  3647     |     4.169                 |
+| 10               | 2048 point<br/>(1024 x 2048) |       20                |  78.86%     |      364                      |    22.06%    |      72                |    6%             |  11360    |  3647     |     5.486                 |
 ##### cfloat Design
-| Number of Instances | FFT Configuration            | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in mW) | 
-|:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
-| 1                | 64 point<br/>(32 x 64)       | 2                       | 43%         | 24                            | 10%          | 5                | 7%                |1136       |367        |  949                      |
-| 1                | 128 point<br/>(64 x 128)     | 2                       | 60%         | 24                            | 14%          | 5                | 7%                |1136       |367        |  1013                     |
-| 1                | 256 point<br/>(128 x 256)    | 2                       | 73%         | 24                            | 16%          | 5                | 7%                |1136       |367        |  1060                     |
-| 1                | 512 point<br/>(256 x 512)    | 2                       | 82%         | 26                            | 17%          | 5                | 7%                |1136       |367        |  1091                     |
-| 1                | 2048 point<br/>(1024 x 2048) | 2                       | 89%         | 52                            | 9%           | 7                | 6%                |1136       |367        |  1164                     |
-| 5                | 64 point<br/>(32 x 64)       | 10                      | 43%         | 120                           | 10%          | 24               | 7%                |5680       |1828       |  2372                     |
-| 5                | 128 point<br/>(64 x 128)     | 10                      | 60%         | 120                           | 14%          | 24               | 7%                |5680       |1828       |  2686                     |
-| 5                | 256 point<br/>(128 x 256)    | 10                      | 73%         | 120                           | 16%          | 24               | 7%                |5680       |1828       |  2925                     |
-| 5                | 512 point<br/>(256 x 512)    | 10                      | 81%         | 130                           | 17%          | 24               | 7%                |5680       |1828       |  3080                     |
-| 5                | 2048 point<br/>(1024 x 2048) | 10                      | 88%         | 260                           | 9%           | 24               | 5%                |5680       |1828       |  3644                     |
-| 10               | 64 point<br/>(32 x 64)       | 20                      | 43%         | 240                           | 10%          | 42               | 7%                |11360      |3654       |  4007                     |
-| 10               | 128 point<br/>(64 x 128)     | 20                      | 60%         | 240                           | 14%          | 42               | 7%                |11360      |3654       |  4631                     |
-| 10               | 256 point<br/>(128 x 256)    | 20                      | 72%         | 240                           | 16%          | 41               | 7%                |11360      |3654       |  5084                     |
-| 10               | 512 point<br/>(256 x 512)    | 20                      | 81%         | 260                           | 17%          | 42               | 7%                |11360      |3654       |  5411                     |
-| 10               | 2048 point<br/>(1024 x 2048) | 20                      | 88%         | 520                           | 9%           | 80               | 6%                |11360      |3654       |  6606                     |
+| Number of Instances | FFT Configuration         | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | FF (Regs) | CLB LUTS  | Dynamic Power<br/>(in W) | 
+|:----------------:|:----------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------------:|:-----------------:|:---------:|:---------:|:-------------------------:|
+| 1                | 64 point<br/>(32 x 64)       |      4                  |  47.380%    |     40                        |  12.710%     |     6                  |   6%              |    1136   |   370     |   0.833                   |
+| 1                | 128 point<br/>(64 x 128)     |      6                  |  55.390%    |     88                        |  10.050%     |     14                 |   5%              |    1136   |   370     |   1.135                   |
+| 1                | 256 point<br/>(128 x 256)    |      6                  |  59.230%    |     88                        |  10.685%     |     13                 |   5%              |    1136   |   370     |   1.131                   |
+| 1                | 512 point<br/>(256 x 512)    |      8                  |  54.320%    |     74                        |  15.525%     |     14                 |   5%              |    1136   |   370     |   1.247                   |
+| 1                | 2048 point<br/>(1024 x 2048) |      8                  |  57.520%    |     130                       |  9.230%      |     22                 |   5%              |    1136   |   370     |   1.421                   |
+| 5                | 64 point<br/>(32 x 64)       |      20                 |  43.420%    |     200                       |  11.645%     |     36                 |   6%              |    5680   |   1838    |   2.325                   |
+| 5                | 128 point<br/>(64 x 128)     |      30                 |  55.370%    |     440                       |  10.035%     |     65                 |   5%              |    5680   |   1838    |   3.672                   |
+| 5                | 256 point<br/>(128 x 256)    |      30                 |  59.070%    |     440                       |  10.650%     |     64                 |   5%              |    5680   |   1838    |   3.736                   |
+| 5                | 512 point<br/>(256 x 512)    |      40                 |  54.090%    |     370                       |  15.460%     |     62                 |   5%              |    5680   |   1838    |   4.169                   |
+| 5                | 2048 point<br/>(1024 x 2048) |      40                 |  56.560%    |     642                       |  9.195%      |     111                |   6%              |    5680   |   1828    |   5.218                   |
+| 10               | 64 point<br/>(32 x 64)       |      40                 |  47.330%    |     400                       |  12.700%     |     63                 |   6%              |    11360  |   3654    |   4.116                   |
+| 10               | 128 point<br/>(64 x 128)     |      60                 |  56.080%    |     880                       |  10.150%     |     119                |   5%              |    11360  |   3654    |   6.688                   |
+| 10               | 256 point<br/>(128 x 256)    |      60                 |  56.080%    |     880                       |  10.800%     |     123                |   5%              |    11360  |   3654    |   6.86                    |
+| 10               | 512 point<br/>(256 x 512)    |      80                 |  54.080%    |     740                       |  15.455%     |     121                |   6%              |    11360  |   3654    |   7.816                   |
+| 10               | 2048 point<br/>(1024 x 2048) |      80                 |  57.400%    |     1284                      |  9.325%      |     265                |   9%              |    11360  |   3654    |   11.134                  |
+
+*Note: The vector load, Number of memory banks and Memory R/w Rate are measured from script based method and then imported the values manually in pdm to get the power.
 
 ##### Power from XPE vs HW
-
 **cint16**
-| Number of Instances | FFT Configurations       | XPE Load(in A) | HW Load(in A) |
+| Number of Instances | FFT Configurations       | XPE Load(in W) | HW Load(in W) |
 |:-----------------:|:--------------------------:|:--------------:|:-------------:|
-| 10                | 512 point (256x512)        |  7.671         |   4.59305     |
-| 10                | 2048 point (1024x2048)     |  9.224         |   5.85561     |
+| 10                | 512 point (256x512)        |    14.961      |   3.88999     |
+| 10                | 2048 point (1024x2048)     |    16.281      |   4.90275     |
 
 **cfloat**
-| Number of Instances | FFT Configurations       | XPE Load(in A) | HW Load(in A) |
+| Number of Instances | FFT Configurations       | XPE Load(in W) | HW Load(in W) |
 |:-----------------:|:--------------------------:|:--------------:|:-------------:|
-| 10                | 512 point (256x512)        | 7.527          |   4.4594      |
-| 10                | 2048 point (1024x2048)     | 10.027         |   6.00331     |
+| 10                | 512 point (256x512)        |   18.566       |    7.11955    |
+| 10                | 2048 point (1024x2048)     |   21.884       |    11.13505   |
 
 </details>
 
@@ -1264,24 +1265,24 @@ The throughput and latency calculations for the 32 x 64 point, 1-instance, and c
 ```
 Processing Time = (End of Processing Timestamp of Stream `strmInp_from_colwiseFFT`) - (Start of Processing Timestamp of Stream `strmInp_from_colwiseFFT`)
 
-Processing Time (with 156.250MHZ)    =  513.965 us
-Processing Time (scaled to 312.5MHZ) =  (513.965 * (156.25/312.5)) us
-                                     =   256.9825   us
+Processing Time (with 156.250MHZ)    =  240.333 us
+Processing Time (scaled to 312.5MHZ) =  (240.333 * (156.25/312.5)) us
+                                     = 120.1665  us
 
 Latency = (Start of Execution Timestamp of Stream `strmOut_to_rowiseFFT`) - (Start of Execution Timestamp of Stream `strmInp_from_colwiseFFT`)
 
-Latency (with 156.250MHz)    = 0.909us
-Latency (scaled to 312.5MHz) = (0.909 * (156.25/312.5)) us
-		             = 0.4545 us
+Latency (with 156.250MHz)    = 25.011 us
+Latency (scaled to 312.5MHz) = (25.011 * (156.25/312.5)) us
+		             = 12.5055 us
 
 Throughput = (Samples transferred) / processing time
            = (MAT_ROWS x MAT_COLS x Iterations) / processing time
-           = (32 x 64 x 16) / 256.9825 us
-           = 127.510 x 2 (Since we have two kernels namely rowise_fft and colwise_fft, we're multiplying the Throughput with factor 2)
+           = (32 x 64 x 16) / 120.1665 us
+           = 272.6883116 x 2 (Since we have two kernels namely rowise_fft and colwise_fft, we're multiplying the Throughput with factor 2)
 
-           = 255.021 MSamples/s
-           = 255.021 x 4 MB/s (As each sample is 4bytes)
-           = 1020.085 MB/s
+           = 545.376623 MSamples/s
+           = 545.376623  x 4 MB/s (As each sample is 4bytes)
+           = 2181.506493  MB/s
 ```
 The throughput and latency calculations for the 32 x 64 point, 1-instance, and cint16 design based on the `hw_emu` run are as follows, along with the snapshot of the timeline trace of hw emulation as follows:
 ![Image of 2D-FFT AI Engine implementation 32x64 hw_emu](images/fft_2d_aie_hw_emu_waveform_view_32x64_x1.PNG)
@@ -1289,62 +1290,60 @@ The throughput and latency calculations for the 32 x 64 point, 1-instance, and c
 Processing Time
    = (End of Processing Timestamp of Stream `strmInp_from_colwiseFFT`) -
      (Start of Processing Timestamp of Stream `strmInp_from_colwiseFFT`)
-   = 261.28us
+   = 111.321 us
 
 Latency:
    = Difference between strmOut_to_rowiseFFT beginning and execution beginning of strmInp_to_colwise
    = (Start of Execution Timestamp of Stream `strmOut_to_rowiseFFT`) -
      (Start of Execution Timestamp of Stream `strmInp_from_colwiseFFT`)
-   = 7.87 us
+   = 12.508801 us
 
 Throughput = (Samples transferred) / processing time
            = (MAT_ROWS x MAT_COLS x Iterations) / processing time
-           = (32 x 64 x 16) / 261.28 us
-           = 125.4133 x 2 (Since we have two kernels namely rowise_fft and colwise_fft, we're multiplying the Throughput with factor 2)
-           = 250.83 MSamples/s
-           = 250.83 x 4 MB/s (As each sample is 4bytes)
-           = 1003.306 MB/s
+           = (32 x 64 x 16) /111.321 us
+           = 294.3559 x 2 (Since we have two kernels namely rowise_fft and colwise_fft, we're multiplying the Throughput with factor 2)
+           = 588.71192 MSamples/s
+           = 588.71192 x 4 MB/s (As each sample is 4bytes)
+           = 2354.8476 MB/s
 ```
-
 A summary of throughput and latency for all variations is shown in the following table.
-
 ##### cint16 Design
 | Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
-| 1                | 64 point<br/>(32 x 64)       | 32768              | 250.829                            |   250.829                       | 7.868                        | 7.868                       |
-| 1                | 128 point<br/>(64 x 128)     | 131072             | 356.855                            |   356.855                       | 20.4832                      | 20.4832                     |
-| 1                | 256 point<br/>(128 x 256)    | 524288             | 486.6468                           |   486.6468                      | 63.2080                      | 50.372                      |
-| 1                | 512 point<br/>(256 x 512)    | 2097152            | 572.2053                           |   572.2053                      | 227.593                      | 184.090                     |
-| 1                | 2048 point<br/>(1024 x 2048) | 33554432           | 621.5528                           |   621.5528                      | 3546.4672                    | 2873.847                    |
-| 5                | 64 point<br/>(32 x 64)       | 32768              | 1254.1365                          |   250.827                       | 7.868                        | 6.457                       |
-| 5                | 128 point<br/>(64 x 128)     | 131072             | 1784.2756                          |   356.855                       | 20.4832                      | 16.493                      |
-| 5                | 256 point<br/>(128 x 256)    | 524288             | 2434.9722                          |   486.646                       | 63.20800                     | 50.365                      |
-| 5                | 512 point<br/>(256 x 512)    | 2097152            | 2861.0269                          |   572.2053                      | 227.5936                     | 184.080                     |
-| 5                | 2048 point<br/>(1024 x 2048) | 33554432           | 3106.654                           |   621.5528                      | 3546.4672                    | 2873.834                    |
-| 10               | 64 point<br/>(32 x 64)       | 32768              | 2508.2792                          |   250.829                       | 7.868                        | 6.455                       |
-| 10               | 128 point<br/>(64 x 128)     | 131072             | 3568.5513                          |   356.855                       | 20.4832                      | 16.493                      |
-| 10               | 256 point<br/>(128 x 256)    | 524288             | 4866.9111                          |   486.6468                      | 63.20800                     | 50.365                      |
-| 10               | 512 point<br/>(256 x 512)    | 2097152            | 5721.85427                         |   572.2053                      | 227.5936                     | 184.083                     |
-| 10               | 2048 point<br/>(1024 x 2048) | 33554432           | 6215.5280                          |   621.5528                      | 3546.4672                    | 2873.110                    |
-                                                                                                                                                         
+| 1                | 64 point<br/>(32 x 64)       | 32768              |      588.708	                    |     588.708                      |      12.509	             |     12.509	          |
+| 1                | 128 point<br/>(64 x 128)     | 131072             |      497.178	                    |     497.178                      |      22.819	             |     22.819	          |
+| 1                | 256 point<br/>(128 x 256)    | 524288             |      490.975	                    |     490.975                      |      63.021	             |     63.021	          |
+| 1                | 512 point<br/>(256 x 512)    | 2097152            |      574.509	                    |     574.509                      |      227.309	             |     227.309	          |
+| 1                | 2048 point<br/>(1024 x 2048) | 33554432           |      623.833	                    |     623.833                      |      3537.290               |     3537.290               |
+| 5                | 64 point<br/>(32 x 64)       | 32768              |      2943.544                      |     588.708                      |      12.509	             |     12.509	          |
+| 5                | 128 point<br/>(64 x 128)     | 131072             |      2485.905                      |     497.178                      |      22.819	             |     22.819	          |
+| 5                | 256 point<br/>(128 x 256)    | 524288             |      2454.873                      |     490.975                      |      63.021	             |     63.021	          |
+| 5                | 512 point<br/>(256 x 512)    | 2097152            |      2872.541                      |     574.509                      |      227.309	             |     227.309	          |
+| 5                | 2048 point<br/>(1024 x 2048) | 33554432           |      3112.594                      |     623.833                      |      3537.290               |     3537.290               |
+| 10               | 64 point<br/>(32 x 64)       | 32768              |      5887.088                      |     588.708                      |      12.509	             |     12.509	          |
+| 10               | 128 point<br/>(64 x 128)     | 131072             |      4971.990                      |     497.178                      |      22.819	             |     22.819	          |
+| 10               | 256 point<br/>(128 x 256)    | 524288             |      4909.748                      |     490.975                      |      63.021	             |     63.021	          |
+| 10               | 512 point<br/>(256 x 512)    | 2097152            |      5745.091                      |     574.509                      |      227.309	             |     227.309	          |
+| 10               | 2048 point<br/>(1024 x 2048) | 33554432           |      6225.188                      |     623.833                      |      3537.290               |     3537.290               |
+                                                                                                                                                     
 ##### cfloat Design
 | Number of Instances | FFT Configuration            | Data Transfer Size | Aggregate Throughput<br/>(in MSPS) | Average Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:----------------------------------:|:--------------------------------:|:---------------------------:|:---------------------------:|
-| 1                | 64 point<br/>(32 x 64)       | 32768              |  159.560                           |   159.560                        | 13.088                      |   13.088                    |
-| 1                | 128 point<br/>(64 x 128)     | 131072             |  186.427                           |   186.427                        | 45.244                      |   45.244                    |
-| 1                | 256 point<br/>(128 x 256)    | 524288             |  197.008                           |   197.008                        | 174.364                     |   174.364                   |
-| 1                | 512 point<br/>(256 x 512)    | 2097152            |  195.077                           |   195.077                        | 713.74                      |   713.74                    |
-| 1                | 2048 point<br/>(1024 x 2048) | 33554432           |  174.650                           |   174.650                        | 12861.968                   |   12861.968                 |
-| 5                | 64 point<br/>(32 x 64)       | 32768              |  797.800                           |   159.560                        | 13.088                      |   13.088                    |
-| 5                | 128 point<br/>(64 x 128)     | 131072             |  932.135                           |   186.427                        | 45.244                      |   45.244                    |
-| 5                | 256 point<br/>(128 x 256)    | 524288             |  985.041                           |   197.008                        | 174.364                     |   174.364                   |
-| 5                | 512 point<br/>(256 x 512)    | 2097152            |  975.3879                          |   195.077                        | 713.74                      |   713.74                    |
-| 5                | 2048 point<br/>(1024 x 2048) | 33554432           |  873.2685                          |   174.650                        | 12861.968                   |   12861.968                 |
-| 10               | 64 point<br/>(32 x 64)       | 32768              |  1595.601                          |   159.560                        | 13.088                      |   13.088                    |
-| 10               | 128 point<br/>(64 x 128)     | 131072             |  1864.271                          |   186.427                        | 45.244                      |   45.244                    |
-| 10               | 256 point<br/>(128 x 256)    | 524288             |  1970.083                          |   197.008                        | 174.364                     |   174.364                   |
-| 10               | 512 point<br/>(256 x 512)    | 2097152            |  1950.775                          |   195.077                        | 713.74                      |   713.74                    |
-| 10               | 2048 point<br/>(1024 x 2048) | 33554432           |  1746.537                          |   174.650                        | 12861.968                   |   12861.968                 |
+| 1                | 64 point<br/>(32 x 64)       | 32768              |      518.586	                    |     518.586                      |     20.230	             |    20.230	           |
+| 1                | 128 point<br/>(64 x 128)     | 131072             |      517.489	                    |     517.489                      |     45.411	             |    45.411	           |
+| 1                | 256 point<br/>(128 x 256)    | 524288             |      511.352	                    |     511.352                      |     103.952	             |    103.952	           |
+| 1                | 512 point<br/>(256 x 512)    | 2097152            |      511.965	                    |     511.965                      |     273.402	             |    273.402	           |
+| 1                | 2048 point<br/>(1024 x 2048) | 33554432           |      442.294	                    |     442.294                      |     5429.270                |    5429.270                 |
+| 5                | 64 point<br/>(32 x 64)       | 32768              |      2592.798                      |     518.586                      |     20.230	             |    20.230	           |
+| 5                | 128 point<br/>(64 x 128)     | 131072             |      2587.443                      |     517.489                      |     45.411	             |    45.411	           |
+| 5                | 256 point<br/>(128 x 256)    | 524288             |      2556.760                      |     511.352                      |     103.952	             |    103.952	           |
+| 5                | 512 point<br/>(256 x 512)    | 2097152            |      2559.827                      |     511.965                      |     273.402	             |    273.402	           |
+| 5                | 2048 point<br/>(1024 x 2048) | 33554432           |      2211.468                      |     442.294                      |     5429.270                |    5429.270                 |
+| 10               | 64 point<br/>(32 x 64)       | 32768              |      5185.729                      |     518.586                      |     20.230	             |    20.230	           |
+| 10               | 128 point<br/>(64 x 128)     | 131072             |      5174.886                      |     517.489                      |     45.411	             |    45.411	           |
+| 10               | 256 point<br/>(128 x 256)    | 524288             |      5113.520                      |     511.352                      |     103.952	             |    103.952	           |
+| 10               | 512 point<br/>(256 x 512)    | 2097152            |      5119.654                      |     511.965                      |     273.402	             |    273.402	           |
+| 10               | 2048 point<br/>(1024 x 2048) | 33554432           |      4422.937                      |     442.294                      |     5429.270                |    5429.270                 |
 
 </details>
 
@@ -1357,49 +1356,46 @@ Performance per Watt is represented as throughput in MSPS/power in Watts. The fo
 
 ```
 Performance per Watt = Throughput(MSPS) / Power(Watt)
-                     = (250.829  / 0.840) MSPS/Watt
-                     = 298.606 MSPS/Watt
+                     = ( 588.708 / 0.72 ) MSPS/Watt
+                     = 817.65 MSPS/Watt
 ```
-
 A summary of performance per Watt for all variations is shown in the following table.
-
 ##### cint16 Design
 | Number of Instances | FFT Configuration     | Performance per Watt (in MSPS/Watt)  |
 |:----------------:|:------------------------:|:-----------------------------------: |
-| 1                | 64 point (32 x 64)       |      298.606                         |
-| 1                | 128 point (64 x 128)     |      385.7892                        |
-| 1                | 256 point (128 x 256)    |      487.133                         |
-| 1                | 512 point (256 x 512)    |      536.778                         |
-| 1                | 2048 point (1024 x 2048) |      526.778                         |
-| 5                | 64 point (32 x 64)       |      684.1988                        |
-| 5                | 128 point (64 x 128)     |      790.5519                        |
-| 5                | 256 point (128 x 256)    |      928.3157                        |
-| 5                | 512 point (256 x 512)    |      968.315                         |
-| 5                | 2048 point (1024 x 2048) |      864.4003                        |
-| 10               | 64 point (32 x 64)       |      857.2383                        |
-| 10               | 128 point (64 x 128)     |      945.8127                        |
-| 10               | 256 point (128 x 256)    |      1080.5752                       |
-| 10               | 512 point (256 x 512)    |      1107.813025                     |
-| 10               | 2048 point (1024 x 2048) |      916.60936                       |
-
+| 1                | 64 point (32 x 64)       |      817.650                      |
+| 1                | 128 point (64 x 128)     |      647.367                      |
+| 1                | 256 point (128 x 256)    |      608.395                      |
+| 1                | 512 point (256 x 512)    |      667.258                      |
+| 1                | 2048 point (1024 x 2048) |      653.914                      |
+| 5                | 64 point (32 x 64)       |      1806.964                     |
+| 5                | 128 point (64 x 128)     |      1296.092                     |
+| 5                | 256 point (128 x 256)    |      1160.696                     |
+| 5                | 512 point (256 x 512)    |      1205.431                     |
+| 5                | 2048 point (1024 x 2048) |      1070.356                     |
+| 10               | 64 point (32 x 64)       |      2133.003                     |
+| 10               | 128 point (64 x 128)     |      1533.145                     |
+| 10               | 256 point (128 x 256)    |      1351.431                     |
+| 10               | 512 point (256 x 512)    |      1378.050                     |
+| 10               | 2048 point (1024 x 2048) |      1134.741                     |
 ##### cfloat Design
 | Number of Instances | FFT Configuration     | Performance per Watt (in MSPS/Watt)  |
 |:----------------:|:------------------------:|:------------------------------------:|
-| 1                | 64 point (32 x 64)       | 168.135086                           |
-| 1                | 128 point (64 x 128)     | 184.0346884                          |
-| 1                | 256 point (128 x 256)    | 185.8569065                          |
-| 1                | 512 point (256 x 512)    | 178.8061921                          |
-| 1                | 2048 point (1024 x 2048) | 150.0429553                          |
-| 5                | 64 point (32 x 64)       | 336.3407605                          |
-| 5                | 128 point (64 x 128)     | 347.0349327                          |
-| 5                | 256 point (128 x 256)    | 336.7663605                          |
-| 5                | 512 point (256 x 512)    | 316.6843877                          |
-| 5                | 2048 point (1024 x 2048) | 239.6455821                          |
-| 10               | 64 point (32 x 64)       | 398.203577                           |
-| 10               | 128 point (64 x 128)     | 402.5635195                          |
-| 10               | 256 point (128 x 256)    | 387.5065321                          |
-| 10               | 512 point (256 x 512)    | 360.5203259                          |
-| 10               | 2048 point (1024 x 2048) | 264.3864672                          |
+| 1                | 64 point (32 x 64)       |      622.552                      |
+| 1                | 128 point (64 x 128)     |      455.937                      |
+| 1                | 256 point (128 x 256)    |      452.124                      |
+| 1                | 512 point (256 x 512)    |      410.558                      |
+| 1                | 2048 point (1024 x 2048) |      311.255                      |
+| 5                | 64 point (32 x 64)       |      1115.182                     |
+| 5                | 128 point (64 x 128)     |      704.641                      |
+| 5                | 256 point (128 x 256)    |      684.358                      |
+| 5                | 512 point (256 x 512)    |      614.015                      |
+| 5                | 2048 point (1024 x 2048) |      423.815                      |
+| 10               | 64 point (32 x 64)       |      1259.895                     |
+| 10               | 128 point (64 x 128)     |      773.757                      |
+| 10               | 256 point (128 x 256)    |      745.411                      |
+| 10               | 512 point (256 x 512)    |      655.022                      |
+| 10               | 2048 point (1024 x 2048) |      397.246                      |
 
 </details>
 
@@ -1412,42 +1408,42 @@ A consolidated summary of observations for all the point sizes and all the corre
 
 ##### cint16 Design
 
-| FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
-|:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
-| 64 point<br/>(32 x 64)<br/> - x1        |  250.829                           | 7.868                        | 2                    | 11%       |    28                      |    5%        | 1136     | 369      | 840                     |  298.606                                  |
-| 128 point<br/>(64 x 128)<br/> - x1      |  356.855                           | 20.4832                      | 2                    | 29%       |    28                      |    11%       | 1136     | 380      | 925                     |  385.7892                                 |
-| 256 point<br/>(128 x 256)<br/> - x1     |  486.6468                          | 63.2080                      | 2                    | 45%       |    28                      |    17%       | 1136     | 369      | 999                     |  487.133                                  |
-| 512 point<br/>(256 x 512)<br/> - x1     |  572.2053                          | 227.593                      | 2                    | 59%       |    30                      |    20%       | 1136     | 369      | 1066                    |  536.778                                  |
-| 2048 point<br/>(1024 x 2048)<br/> - x1  |  621.5528                          | 3546.4672                    | 2                    | 78%       |    42                      |    19%       | 1136     | 369      |  1180                   |  526.778                                  |
-| 64 point<br/>(32 x 64)<br/> - x5        |  1254.1365                         | 7.868                        | 10                   | 11%       |    140                     |    5%        | 5680     | 1829     | 1833                    |  684.1988                                 |
-| 128 point<br/>(64 x 128)<br/> - x5      |  1784.2756                         | 20.4832                      | 10                   | 29%       |    140                     |    9%        | 5680     | 1829     | 2257                    |  790.5519                                 |
-| 256 point<br/>(128 x 256)<br/> - x5     |  2434.9722                         | 63.20800                     | 10                   | 45%       |    140                     |    17%       | 5680     | 1829     | 2623                    |  928.3157                                 |
-| 512 point<br/>(256 x 512)<br/> - x5     |  2861.0269                         | 227.5936                     | 10                   | 59%       |    150                     |    20%       | 5680     | 1829     | 2954                    |  968.315                                  |
-| 2048 point<br/>(1024 x 2048)<br/> - x5  |  3106.654                          | 3546.4672                    | 10                   | 78%       |    210                     |    19%       | 5680     | 1829     | 3594                    |  864.4003                                 |
-| 64 point<br/>(32 x 64)<br/> - x10       |  2508.2792                         | 7.868                        | 20                   | 11%       |    280                     |    5%        | 11360    | 3654     | 2926                    |  857.2383                                 |
-| 128 point<br/>(64 x 128)<br/> - x10     |  3568.5513                         | 20.4832                      | 20                   | 29%       |    280                     |    11%       | 11360    | 3800     | 3773                    |  945.8127                                 |
-| 256 point<br/>(128 x 256)<br/> - x10    |  4866.9111                         | 63.20800                     | 20                   | 44%       |    280                     |    17%       | 11360    | 3654     | 4504                    |  1080.5752                                |
-| 512 point<br/>(256 x 512)<br/> - x10    |  5721.85427                        | 227.5936                     | 20                   | 58%       |    300                     |    20%       | 11360    | 3654     | 5165                    |  1107.813025                              |
-| 2048 point<br/>(1024 x 2048)<br/> - x10 |  6215.5280                         | 3546.4672                    | 20                   | 77%       |    420                     |    19%       | 11360    | 3654     | 6781                    |  916.60936                                |
- 
+| FFT Configuration - Number of Instances | Aggregate Throughput<br/>(in MSPS)| Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
+|:---------------------------------------:|:---------------------------------:|:---------------------------:|:-----------------------:|:-----------:|:-----------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
+| 64 point<br/>(32 x 64)<br/> - x1        |      588.708	              |    12.509	            |    2                    |  22%        |      28                       |    9%        |  1136     |  366    |     0.72                  | 817.650                      |
+| 128 point<br/>(64 x 128)<br/> - x1      |      497.178	              |    22.819	            |    2                    |  34.76%     |      28                       |    13.25%    |  1136     |  366    |     0.768                 | 647.367                      |
+| 256 point<br/>(128 x 256)<br/> - x1     |      490.975	              |    63.021	            |    2                    |  45.24%     |      28                       |    16.85%    |  1136     |  366    |     0.807                 | 608.395                      |
+| 512 point<br/>(256 x 512)<br/> - x1     |      574.509	              |    227.309	            |    2                    |  59%        |      30                       |    21%       |  1136     |  366    |     0.861                 | 667.258                      |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  |      623.833	              |    3537.290                 |    2                    |  79.12%     |      42                       |    19.17%    |  1136     |  366    |     0.954                 | 653.914                      |
+| 64 point<br/>(32 x 64)<br/> - x5        |      2943.544                     |    12.509	            |    10                   |  20%        |      140                      |    8%        |  5680     |  1837   |     1.629                 | 1806.964                     |
+| 128 point<br/>(64 x 128)<br/> - x5      |      2485.905                     |    22.819	            |    10                   |  34.56%     |      140                      |    13.23%    |  5680     |  1837   |     1.918                 | 1296.092                     |
+| 256 point<br/>(128 x 256)<br/> - x5     |      2454.873                     |    63.021	            |    10                   |  45.23%     |      140                      |    16.85%    |  5680     |  1837   |     2.115                 | 1160.696                     |
+| 512 point<br/>(256 x 512)<br/> - x5     |      2872.541                     |    227.309	            |    10                   |  59.25%     |      150                      |    20.52%    |  5680     |  1837   |     2.383                 | 1205.431                     |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  |      3112.594                     |    3537.290                 |    10                   |  79.10%     |      198                      |    20.33%    |  5680     |  1837   |     2.908                 | 1070.356                     |
+| 64 point<br/>(32 x 64)<br/> - x10       |      5887.088                     |    12.509	            |    20                   |  22.35%     |      280                      |    8.51%     |  11360    |  3647   |     2.76                  | 2133.003                     |
+| 128 point<br/>(64 x 128)<br/> - x10     |      4971.990                     |    22.819	            |    20                   |  34.75%     |      280                      |    13.25%    |  11360    |  3647   |     3.243                 | 1533.145                     |
+| 256 point<br/>(128 x 256)<br/> - x10    |      4909.748                     |    63.021	            |    20                   |  45.22%     |      280                      |    16.85%    |  11360    |  3647   |     3.633                 | 1351.431                     |
+| 512 point<br/>(256 x 512)<br/> - x10    |      5745.091                     |    227.309	            |    20                   |  59.29%     |      300                      |    20.53%    |  11360    |  3647   |     4.169                 | 1378.050                     |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 |      6225.188                     |    3537.290                 |    20                   |  78.86%     |      364                      |    22.06%    |  11360    |  3647   |     5.486                 | 1134.741                     |
+                                                                                  
 ##### cfloat Design
 | FFT Configuration - Number of Instances    | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | FF (Regs)| CLB LUTs | Dynamic Power<br/>(in mW) | Performance per Watt<br/>(in MSPS/Watt) |
 |:---------------------------------------:|:----------------------------------:|:---------------------------:|:--------------------:|:-----------:|:--------------------------:|:------------:|:--------:|:--------:|:-------------------------:|:---------------------------------------:|
-| 64 point<br/>(32 x 64)<br/> - x1        |  159.560                            |   13.088                   | 2                    | 43%         | 24                         | 10%          | 1136     |  367     |    949                    |  168.135086                                  |
-| 128 point<br/>(64 x 128)<br/> - x1      |  186.427                            |   45.244                   | 2                    | 60%         | 24                         | 14%          | 1136     |  367     |    1013                   |  184.0346884                                 |
-| 256 point<br/>(128 x 256)<br/> - x1     |  197.008                            |   174.364                  | 2                    | 73%         | 24                         | 16%          | 1136     |  367     |    1060                   |  185.8569065                                 |
-| 512 point<br/>(256 x 512)<br/> - x1     |  195.077                            |   713.74                   | 2                    | 82%         | 26                         | 17%          | 1136     |  367     |    1091                   |  178.8061921                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x1  |  174.650                            |   12861.968                | 2                    | 89%         | 52                         | 9%           | 1136     |  367     |    1164                   |  150.0429553                                 |
-| 64 point<br/>(32 x 64)<br/> - x5        |  797.800                            |   13.088                   | 10                   | 43%         | 120                        | 10%          | 5680     |  1828    |    2372                   |  336.3407605                                 |
-| 128 point<br/>(64 x 128)<br/> - x5      |  932.135                            |   45.244                   | 10                   | 60%         | 120                        | 14%          | 5680     |  1828    |    2686                   |  347.0349327                                 |
-| 256 point<br/>(128 x 256)<br/> - x5     |  985.041                            |   174.364                  | 10                   | 73%         | 120                        | 16%          | 5680     |  1828    |    2925                   |  336.7663605                                 |
-| 512 point<br/>(256 x 512)<br/> - x5     |  975.3879                           |   713.74                   | 10                   | 81%         | 130                        | 17%          | 5680     |  1828    |    3080                   |  316.6843877                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x5  |  873.2685                           |   12861.968                | 10                   | 88%         | 260                        | 9%           | 5680     |  1828    |    3644                   |  239.6455821                                 |
-| 64 point<br/>(32 x 64)<br/> - x10       |  1595.601                           |   13.088                   | 20                   | 43%         | 240                        | 10%          | 11360    |  3654    |    4007                   |  398.203577                                  |
-| 128 point<br/>(64 x 128)<br/> - x10     |  1864.271                           |   45.244                   | 20                   | 60%         | 240                        | 14%          | 11360    |  3654    |    4631                   |  402.5635195                                 |
-| 256 point<br/>(128 x 256)<br/> - x10    |  1970.083                           |   174.364                  | 20                   | 72%         | 240                        | 16%          | 11360    |  3654    |    5084                   |  387.5065321                                 |
-| 512 point<br/>(256 x 512)<br/> - x10    |  1950.775                           |   713.74                   | 20                   | 81%         | 260                        | 17%          | 11360    |  3654    |    5411                   |  360.5203259                                 |
-| 2048 point<br/>(1024 x 2048)<br/> - x10 |  1746.537                           |   12861.968                | 20                   | 88%         | 520                        | 9%           | 11360    |  3654    |    6606                   |  264.3864672                                 |
+| 64 point<br/>(32 x 64)<br/> - x1        |  518.586	                   |  20.230	             | 4                  |  47.380%    |     40                        |  12.710%     |1136   |   370     |   0.833                   |622.552                      |
+| 128 point<br/>(64 x 128)<br/> - x1      |  517.489	                   |  45.411	             | 6                  |  55.390%    |     88                        |  10.050%     |1136   |   370     |   1.135                   |455.937                      |
+| 256 point<br/>(128 x 256)<br/> - x1     |  511.352	                   |  103.952	             | 6                  |  59.230%    |     88                        |  10.685%     |1136   |   370     |   1.131                   |452.124                      |
+| 512 point<br/>(256 x 512)<br/> - x1     |  511.965	                   |  273.402	             | 8                  |  54.320%    |     74                        |  15.525%     |1136   |   370     |   1.247                   |410.558                      |
+| 2048 point<br/>(1024 x 2048)<br/> - x1  |  442.294	                   |  5429.270               | 8                  |  57.520%    |     130                       |  9.230%      |1136   |   370     |   1.421                   |311.255                      |
+| 64 point<br/>(32 x 64)<br/> - x5        |  2592.798                      |  20.230	             | 20                 |  43.420%    |     200                       |  11.645%     |5680   |   1838    |   2.325                   |1115.182                     |
+| 128 point<br/>(64 x 128)<br/> - x5      |  2587.443                      |  45.411	             | 30                 |  55.370%    |     440                       |  10.035%     |5680   |   1838    |   3.672                   |704.641                      |
+| 256 point<br/>(128 x 256)<br/> - x5     |  2556.760                      |  103.952	             | 30                 |  59.070%    |     440                       |  10.650%     |5680   |   1838    |   3.736                   |684.358                      |
+| 512 point<br/>(256 x 512)<br/> - x5     |  2559.827                      |  273.402	             | 40                 |  54.090%    |     370                       |  15.460%     |5680   |   1838    |   4.169                   |614.015                      |
+| 2048 point<br/>(1024 x 2048)<br/> - x5  |  2211.468                      |  5429.270               | 40                 |  56.560%    |     642                       |  9.195%      |5680   |   1828    |   5.218                   |423.815                      |
+| 64 point<br/>(32 x 64)<br/> - x10       |  5185.729                      |  20.230	             | 40                 |  47.330%    |     400                       |  12.700%     |11360  |   3654    |   4.116                   |1259.895                     |
+| 128 point<br/>(64 x 128)<br/> - x10     |  5174.886                      |  45.411	             | 60                 |  56.080%    |     880                       |  10.150%     |11360  |   3654    |   6.688                   |773.757                      |
+| 256 point<br/>(128 x 256)<br/> - x10    |  5113.520                      |  103.952	             | 60                 |  56.080%    |     880                       |  10.800%     |11360  |   3654    |   6.86                    |745.411                      |
+| 512 point<br/>(256 x 512)<br/> - x10    |  5119.654                      |  273.402	             | 80                 |  54.080%    |     740                       |  15.455%     |11360  |   3654    |   7.816                   |655.022                      |
+| 2048 point<br/>(1024 x 2048)<br/> - x10 |  4422.937                      |  5429.270               | 80                 |  57.400%    |     1284                      |  9.325%      |11360  |   3654    |   11.134                  |397.246                      |
 
 These observations show that with the increase in the FFT point size, the window buffer size used in the AI Engines increases, and with that, the throughput increases. Increasing the `TP_WINDOW_VSIZE` parameter in the FFT AI Engine graph can further increase the throughput, especially for the lower point sizes. Still, the AI Engine mapper/router could encounter issues due to the higher memory requirement.
 

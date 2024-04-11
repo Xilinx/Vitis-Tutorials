@@ -22,12 +22,12 @@ SPDX-License-Identifier: MIT
 #define FFT_2D_TP_COL_CASC_LEN FFT_COL_CASCADE_LENGTH
 
 // TP_WINDOW_VSIZE for FFTrows_graph...
-#define FFT_ROW_TP_WINDOW_VSIZE MAT_COLS
+#define FFT_ROW_TP_WINDOW_VSIZE MAT_ROWS * FFT_ROW_WS
 
 // TP_WINDOW_VSIZE for FFTcols_graph
 // Increasing the "TP__WINDOW _VSIZE" so that the ping-pong overhead is less
 // Assigning it as MAT_COLS instead of MAT_ROWS...
-#define FFT_COL_TP_WINDOW_VSIZE MAT_COLS
+#define FFT_COL_TP_WINDOW_VSIZE MAT_COLS * FFT_COL_WS
 
 ////////////////////////////////////////////////////////
 // FFT_2D Datatype related Macros
