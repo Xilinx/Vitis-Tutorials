@@ -63,7 +63,7 @@ VPP_LINK_FLAGS := -l -t $(TARGET) --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRA
 VPP_FLAGS := $(VPP_LINK_FLAGS)
 
 GCC_FLAGS := -Wall -c \
-	     -std=c++17 
+	     -std=c++17 -Wno-int-to-pointer-cast --sysroot=${SDKTARGETSYSROOT} 
 
 ifeq ($(TARGET),sw_emu)
 	GCC_FLAGS += -I${XILINX_XRT}/include
@@ -72,12 +72,14 @@ endif
 ifeq ($(TARGET),sw_emu)
 	GCC_INCLUDES += -I${XILINX_XRT}/include 
 else
-	GCC_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/xrt
+	GCC_INCLUDES += -I$(SDKTARGETSYSROOT)/usr/include/xrt -I$(SDKTARGETSYSROOT)/usr/include
 endif
 
 GCC_LIB := -lxrt_coreutil
 ifeq ($(TARGET),sw_emu)
 	GCC_LIB += -L${XILINX_XRT}/lib 
+else
+	GCC_LIB += -L${XILINX_XRT}/lib --sysroot=${SDKTARGETSYSROOT}
 endif 
 
 LDCLFLAGS := $(GCC_LIB)

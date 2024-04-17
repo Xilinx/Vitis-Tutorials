@@ -9,7 +9,7 @@
 
 # Using RTL IP with AI Engines
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -18,19 +18,19 @@ This tutorial demonstrates the following two features of the Vitis™ unified so
 1. Ability to reuse any AXI-based IP you have created as an RTL IP.
 2. The ability to control your platform, and convert your RTL IP to an RTL kernel allows for a more streamlined process for creating the design you need.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2023.2 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2024.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023.2.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024.1.html
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal™ board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
 1. Goto the directory where you have unzipped the Versal Common Image package
-2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh.
-3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2023.2 directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm
+2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh.
+3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2024.1 directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/lin64/Vitis/2024.1/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
 
-This tutorial targets VCK190 production board for 2023.2 version.
+This tutorial targets VCK190 production board for 2024.1 version.
 
 ## Objectives
 
@@ -157,12 +157,12 @@ To set up the ADF graph to interface with the `polar_clip` RTL kernel and the `m
    * Two additional `PLIO` objects `clip_in` and `clip_out` are added. These are to hook up to the `polar_clip` RTL kernel.
    * There are additional net objects to hook up the RTL kernel to the rest of the platform object.
 
-For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://www.xilinx.com/cgi-bin/docs/rdoc?t=vitis+doc;v=2022.1;d=programmable_logic_integration.html;a=rdd1604332009149).
+For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Development-Flow-for-RTL-Designers).
 
 3. Compile the graph using the following command:
 
    ```bash
-   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm aie/graph.cpp
+   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm aie/graph.cpp
    ```
 
    or

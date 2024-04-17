@@ -64,7 +64,7 @@ This opens the *Add Source Files* page.
 
 The tool automatically selects the top-level graph from imported files. You just need to make sure it has chosen correctly. Clicking **Next** opens the *Select Part* page.  
 
-5.  Select the `xilinx_vck190_base_202310_1` platform and click **Next** to open the *Summary* page. 
+5.  Select the `xilinx_vck190_base_202410_1` platform and click **Next** to open the *Summary* page. 
 
 6.  Review the *Summary* page and click **Finish** to create the defined AI Engine component. 
 
@@ -82,7 +82,7 @@ Select the **Build** command under the X86 Simulation heading.
 
 The tool compiles the aie_component for use with the `x86simulator` using the following command which is displayed in the `aie_component::x86sim` Output window:
 ```
-v++ -c --mode aie --target x86sim --config ./workAIE/aie_component/aiecompiler.cfg –platform ../base_platforms/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm --work_dir ./workAIE/aie_component/build/x86sim/./Work ./workAIE/aie_component/aie/graph.cpp
+v++ -c --mode aie --target x86sim --config ./workAIE/aie_component/aiecompiler.cfg –platform ../base_platforms/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm --work_dir ./workAIE/aie_component/build/x86sim/./Work ./workAIE/aie_component/aie/graph.cpp
 ```
 
 | Flag | Description |
@@ -146,7 +146,7 @@ This opens the *Source Files* page.
 
 6.  Under the Top Function browse and select the `mm2s` function and click **Next**. Note that there are no testbenches for these kernels. 
 
-7.  On the *Select Part* page select the `xilinx_vck190_base_202310_1` platform and click **Next** to open the Settings page. 
+7.  On the *Select Part* page select the `xilinx_vck190_base_202410_1` platform and click **Next** to open the Settings page. 
 
 8.  On the *Settings* page select the `Vitis Kernel Flow` and enable the check box to `Run Additional Packing Step to create .xo output` as you will be using the HLS component in a System project and you will want a PL kernel (`.xo`) to be generated. 
 
@@ -186,7 +186,7 @@ This opens the Create Application Component wizard on the *Name and Location* pa
 
 This opens the *Select Platform* page. 
 
-3.  On the *Select Platform* page select the `xilinx_vck190_base_202310_1` platform and click **Next** to open the *Select Domain* page. 
+3.  On the *Select Platform* page select the `xilinx_vck190_base_202410_1` platform and click **Next** to open the *Select Domain* page. 
 
 On the *Select Domain* page you will select from the available processor domains and OS. In this case there is only one choice. 
 
@@ -213,7 +213,7 @@ In the Vitis Components Explorer view expand the `host` component, right-click t
 
 With the files in place, you are now ready to build the Application. 
 
-With the `host` application active in the Flow Navigator, select **Build** under the x86 SIMULATION header. This will build the host application for use in software emulation. Even though the `xilinx_vck190_base_202310_1` is an embedded platform, software emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). The compilation process is reported to the `host::x86sim` Output window. 
+With the `host` application active in the Flow Navigator, select **Build** under the x86 SIMULATION header. This will build the host application for use in software emulation. Even though the `xilinx_vck190_base_202410_1` is an embedded platform, software emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). The compilation process is reported to the `host::x86sim` Output window. 
 
 After the x86sim build completes you can select **Build** under the HARDWARE heading in the Flow Navigator. The compilation process is reported to the `host::hw` Output window. You have now compiled the host application for both the software emulation flow and the hardware emulation/hardware flows of the System project.
 
@@ -229,7 +229,7 @@ This opens the Create System Project wizard on the *Name and Location* page.
 
 This opens the *Select Platform* page. 
 
-3.  On the Select Part page select the `xilinx_vck190_base_202310_1` platform and click **Next** to open the Embedded Component Paths page. 
+3.  On the Select Part page select the `xilinx_vck190_base_202410_1` platform and click **Next** to open the Embedded Component Paths page. 
 
 The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
 
@@ -329,7 +329,7 @@ From the Flow Navigator, select the **Build All** command under the Hardware Emu
 
 While the System project runs software emulation for an embedded processor using the *PS on x86* mode, hardware emulation is run under the QEMU environment to fully simulate the embedded processor. When running the hardware emulation build this requires you to first use **Start Emulator** from the Flow Navigator. 
 
-**TIP:** Wait until the QEMU environment prompt shows up before starting the **Run** command. You should see something similar to `versal-rootfs-common-20231:/mnt#` in the Output window before proceeding. 
+**TIP:** Wait until the QEMU environment prompt shows up before starting the **Run** command. You should see something similar to `versal-rootfs-common-20241:/mnt#` in the Output window before proceeding. 
 
 With the Emulator running, click **Run** under HARDWARE EMULATION header to start the system project running. 
 
