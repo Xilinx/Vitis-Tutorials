@@ -6,7 +6,7 @@
 ECHO                      := @echo
 
 LINUX_YOCTO_ROOT          ?= ${HOME}/bin
-LINUX_TMP_DIR             ?= /tmp/${USER}/2022.1/yocto
+LINUX_TMP_DIR             ?= /tmp/${USER}/2024.1/yocto
 LINUX_ETH_CONFIG          ?= DHCP
 LINUX_MACHINE             ?= vck190-versal
 

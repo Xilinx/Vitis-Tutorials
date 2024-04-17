@@ -38,11 +38,11 @@ class mygraph : public adf::graph {
       }
 
       // specify kernels
-      dmove_i[0]  = adf::kernel::create_object<my_scalar_dm<cint16, IN_SIZE> >();
+      dmove_i[0]  = adf::kernel::create_object<my_vector_dm<cint16, IN_SIZE> >();
       dmove_i[1]  = adf::kernel::create_object<my_vector_dm<cint16, IN_SIZE> >();
       dmove_i[2]  = adf::kernel::create_object<my_mul_dm<cint16, IN_SIZE> >();
       dmove_i[3]  = adf::kernel::create_object<my_stream_dm<cint16> >();
-      adf::source(dmove_i[0]) = "kernels/my_scalar_dm.cpp";
+      adf::source(dmove_i[0]) = "kernels/my_vector_dm.cpp";
       adf::source(dmove_i[1]) = "kernels/my_vector_dm.cpp";
       adf::source(dmove_i[2]) = "kernels/my_mul_dm.cpp";
       adf::source(dmove_i[3]) = "kernels/my_stream_dm.cpp";

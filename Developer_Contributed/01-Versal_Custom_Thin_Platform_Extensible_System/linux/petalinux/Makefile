@@ -52,7 +52,7 @@ ${PROJ_DIR}: ${XSA_DIR}/${XSA_FILE}
 	make dump_dts
 
 create: 
-	cd ../ && petalinux-create -t project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
+	cd ../ && petalinux-create project --template versal -n ${LINUX_MACHINE} --tmpdir ${LINUX_TMP_DIR}
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  CONFIG_YOCTO_BUILDTOOLS_EXTENDED
 ifeq (${LINUX_BUILD_SOURCES}, local)
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable  CONFIG_YOCTO_BB_NO_NETWORK
@@ -101,7 +101,7 @@ update_build:
 	cd ${PROJ_DIR} && petalinux-build
 
 update_bootimage:
-	cd ${PROJ_DIR} && petalinux-package --boot --plm --psmfw --u-boot --dtb --force
+	cd ${PROJ_DIR} && petalinux-package boot --plm --psmfw --u-boot --dtb --force
 
 update_sysroot:
 ifeq (${LINUX_BUILD_SOURCES}, local)
@@ -111,7 +111,7 @@ ifeq (${LINUX_BUILD_SOURCES}, local)
 endif
 	mkdir -p ${SYSROOT_DIR}
 	cd ${PROJ_DIR} && petalinux-build   --sdk
-	cd ${PROJ_DIR} && petalinux-package --sysroot -d ${SYSROOT_DIR}
+	cd ${PROJ_DIR} && petalinux-package sysroot -d ${SYSROOT_DIR}
 ifeq (${LINUX_BUILD_SOURCES}, local)
 # Turn Network Access OFF again here, since it's not required anymore from here
 	${CFG} --file ${FILE_MAIN_CFG}      --keep-case --enable   CONFIG_YOCTO_BB_NO_NETWORK

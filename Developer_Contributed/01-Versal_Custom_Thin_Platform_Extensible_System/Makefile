@@ -293,7 +293,7 @@ ${XPFM_EXPORT_SW}/system.dtb: ${LINUX_DTB_DIR}/system-top.dtb
 	cp -f ${LINUX_SRC_IMAGES}/bl31.elf               ${XPFM_EXPORT_SW}/bl31.elf
 
 vitis_ip:
-	$(MAKE) all -C vitis/ip
+	$(MAKE) vitis_ip -C vitis
 
 ps_apps:
 	$(MAKE) all -C ps_apps/linux

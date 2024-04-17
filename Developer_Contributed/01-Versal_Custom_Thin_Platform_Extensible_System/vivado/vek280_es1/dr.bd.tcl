@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2023.2
+set scripts_vivado_version 2024.1
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -123,7 +123,7 @@ if { ${design_name} eq "" } {
 				 --> AI Engine control path is connected to CIPS
 				 --> V++ will connect AI Engine data path automatically
 				 --> Execute TCL command : launch_simulation -scripts_only ,to establish the sim_1 source set hierarchy after successful design creation.
-				 --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2023.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
+				 --> For Next steps, Refer to README.md https://github.com/Xilinx/XilinxCEDStore/tree/2024.1/ced/Xilinx/IPI/Versal_Extensible_Embedded_Platform/README.md" [get_bd_designs $design_name]
 
 common::send_gid_msg -ssname BD::TCL -id 2005 -severity "INFO" "Currently the variable <design_name> is equal to \"$design_name\"."
 
@@ -142,7 +142,7 @@ if { $bCheckIPs == 1 } {
 xilinx.com:ip:versal_cips:3.4\
 xilinx.com:ip:axi_intc:4.1\
 xilinx.com:ip:clk_wizard:1.0\
-xilinx.com:ip:axi_noc:1.0\
+xilinx.com:ip:axi_noc:1.1\
 xilinx.com:ip:proc_sys_reset:5.0\
 xilinx.com:ip:smartconnect:1.0\
 xilinx.com:ip:ai_engine:2.0\
@@ -339,7 +339,7 @@ proc create_root_design { parentCell } {
 
 
   # Create instance: cips_noc, and set properties
-  set cips_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 cips_noc ]
+  set cips_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 cips_noc ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {10} \
     CONFIG.NUM_MI {1} \
@@ -450,7 +450,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_pins /cips_noc/aclk9]
 
   # Create instance: noc_lpddr4_0, and set properties
-  set noc_lpddr4_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_lpddr4_0 ]
+  set noc_lpddr4_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_lpddr4_0 ]
   set_property -dict [list \
     CONFIG.CH0_LPDDR4_0_BOARD_INTERFACE {ch0_lpddr4_trip1} \
     CONFIG.CH1_LPDDR4_0_BOARD_INTERFACE {ch1_lpddr4_trip1} \
@@ -473,13 +473,16 @@ proc create_root_design { parentCell } {
   # Create instance: proc_sys_reset_0, and set properties
   set proc_sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0 ]
 
-  # Create instance: icn_ctrl, and set properties
-  set icn_ctrl [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 icn_ctrl ]
+  # Create instance: proc_sys_reset_1, and set properties
+  set proc_sys_reset_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_1 ]
+
+  # Create instance: smc_0, and set properties
+  set smc_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smc_0 ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {1} \
     CONFIG.NUM_SI {1} \
-  ] $icn_ctrl
+  ] $smc_0
 
 
   # Create instance: ai_engine_0, and set properties
@@ -503,7 +506,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_intf_pins /ai_engine_0/S00_AXI]
 
   # Create instance: noc_lpddr4_1, and set properties
-  set noc_lpddr4_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_lpddr4_1 ]
+  set noc_lpddr4_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_lpddr4_1 ]
   set_property -dict [list \
     CONFIG.CH0_LPDDR4_0_BOARD_INTERFACE {ch0_lpddr4_trip2} \
     CONFIG.CH0_LPDDR4_1_BOARD_INTERFACE {ch0_lpddr4_trip3} \
@@ -531,12 +534,12 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net CIPS_0_FPD_CCI_NOC_2 [get_bd_intf_pins CIPS_0/FPD_CCI_NOC_2] [get_bd_intf_pins cips_noc/S02_AXI]
   connect_bd_intf_net -intf_net CIPS_0_FPD_CCI_NOC_3 [get_bd_intf_pins CIPS_0/FPD_CCI_NOC_3] [get_bd_intf_pins cips_noc/S03_AXI]
   connect_bd_intf_net -intf_net CIPS_0_LPD_AXI_NOC_0 [get_bd_intf_pins CIPS_0/LPD_AXI_NOC_0] [get_bd_intf_pins cips_noc/S06_AXI]
-  connect_bd_intf_net -intf_net CIPS_0_M_AXI_GP0 [get_bd_intf_pins CIPS_0/M_AXI_FPD] [get_bd_intf_pins icn_ctrl/S00_AXI]
+  connect_bd_intf_net -intf_net CIPS_0_M_AXI_GP0 [get_bd_intf_pins CIPS_0/M_AXI_FPD] [get_bd_intf_pins smc_0/S00_AXI]
   connect_bd_intf_net -intf_net CIPS_0_PMC_NOC_AXI_0 [get_bd_intf_pins CIPS_0/PMC_NOC_AXI_0] [get_bd_intf_pins cips_noc/S07_AXI]
   connect_bd_intf_net -intf_net cips_noc_M00_AXI [get_bd_intf_pins cips_noc/M00_AXI] [get_bd_intf_pins ai_engine_0/S00_AXI]
   connect_bd_intf_net -intf_net cips_noc_M00_INI [get_bd_intf_pins cips_noc/M00_INI] [get_bd_intf_pins noc_lpddr4_0/S00_INI]
   connect_bd_intf_net -intf_net cips_noc_M01_INI [get_bd_intf_pins cips_noc/M01_INI] [get_bd_intf_pins noc_lpddr4_1/S00_INI]
-  connect_bd_intf_net -intf_net icn_ctrl_M00_AXI [get_bd_intf_pins axi_intc_0/s_axi] [get_bd_intf_pins icn_ctrl/M00_AXI]
+  connect_bd_intf_net -intf_net smc_0_M00_AXI [get_bd_intf_pins axi_intc_0/s_axi] [get_bd_intf_pins smc_0/M00_AXI]
   connect_bd_intf_net -intf_net lpddr4_clk1_1 [get_bd_intf_ports lpddr4_clk1] [get_bd_intf_pins noc_lpddr4_0/sys_clk0]
   connect_bd_intf_net -intf_net lpddr4_clk2_1 [get_bd_intf_ports lpddr4_clk2] [get_bd_intf_pins noc_lpddr4_1/sys_clk0]
   connect_bd_intf_net -intf_net lpddr4_clk3_1 [get_bd_intf_ports lpddr4_clk3] [get_bd_intf_pins noc_lpddr4_1/sys_clk1]
@@ -556,13 +559,17 @@ proc create_root_design { parentCell } {
   connect_bd_net -net CIPS_0_fpd_cci_noc_axi3_clk [get_bd_pins CIPS_0/fpd_cci_noc_axi3_clk] [get_bd_pins cips_noc/aclk4]
   connect_bd_net -net CIPS_0_lpd_axi_noc_clk [get_bd_pins CIPS_0/lpd_axi_noc_clk] [get_bd_pins cips_noc/aclk7]
   connect_bd_net -net CIPS_0_pl_clk0 [get_bd_pins CIPS_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
-  connect_bd_net -net CIPS_0_pl_resetn1 [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins proc_sys_reset_0/ext_reset_in]
+  connect_bd_net -net CIPS_0_pl_resetn1 [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn] [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins proc_sys_reset_1/ext_reset_in]
   connect_bd_net -net CIPS_0_pmc_axi_noc_axi0_clk [get_bd_pins CIPS_0/pmc_axi_noc_axi0_clk] [get_bd_pins cips_noc/aclk8]
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins cips_noc/aclk9]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins CIPS_0/pl_ps_irq0]
-  connect_bd_net -net clk_wizard_0_clk_out1_o3 [get_bd_pins clk_wizard_0/clk_out1_o3] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins icn_ctrl/aclk] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0]
-  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins proc_sys_reset_0/dcm_locked] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n]
-  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins icn_ctrl/aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn]
+  connect_bd_net -net clk_wizard_0_clk_125 [get_bd_pins clk_wizard_0/clk_out1_o3]
+  connect_bd_net -net clk_wizard_0_clk_250 [get_bd_pins clk_wizard_0/clk_out1_o2] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0] [get_bd_pins smc_0/aclk]
+  connect_bd_net -net clk_wizard_0_clk_333 [get_bd_pins clk_wizard_0/clk_out2] [get_bd_pins proc_sys_reset_1/slowest_sync_clk]
+  connect_bd_net -net clk_wizard_0_clk_500 [get_bd_pins clk_wizard_0/clk_out1_o1]
+  connect_bd_net -net clk_wizard_0_clk_62_5 [get_bd_pins clk_wizard_0/clk_out1_o4] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
+  connect_bd_net -net clk_wizard_0_locked [get_bd_pins clk_wizard_0/locked] [get_bd_pins clk_wizard_0/clk_out1_ce] [get_bd_pins clk_wizard_0/clk_out1_clr_n] [get_bd_pins proc_sys_reset_0/dcm_locked] [get_bd_pins proc_sys_reset_1/dcm_locked]
+  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins smc_0/aresetn]
 
   # Create address segments
   assign_bd_address -offset 0x00000000 -range 0x80000000 -target_address_space [get_bd_addr_spaces CIPS_0/FPD_AXI_NOC_0] [get_bd_addr_segs noc_lpddr4_0/S00_INI/C0_DDR_LOW0] -force
@@ -603,9 +610,9 @@ proc create_root_design { parentCell } {
   # Create PFM attributes
   set_property PFM_NAME {xilinx.com:vek280:vek280_es1_custom:1.0} [get_files [current_bd_design].bd]
   set_property PFM.IRQ {intr {id 0 range 15}} [get_bd_cells /axi_intc_0]
-  set_property PFM.CLOCK {clk_out1_o1 {id "0" is_default "true" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "500000000"} clk_out1_o2 {id "1" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "250000000"} clk_out1_o3 {id "2" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "125000000"} clk_out1_o4 {id "3" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "62500000"} clk_out2 {id "4" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "333333333"}} [get_bd_cells /clk_wizard_0]
+  set_property PFM.CLOCK {clk_out1_o1 {id "0" is_default "true" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "500000000"} clk_out1_o2 {id "1" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "250000000"} clk_out1_o3 {id "2" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "125000000"} clk_out1_o4 {id "3" is_default "false" proc_sys_reset "/proc_sys_reset_0" status "fixed" freq_hz "62500000"} clk_out2 {id "4" is_default "false" proc_sys_reset "/proc_sys_reset_1" status "fixed" freq_hz "333333333"}} [get_bd_cells /clk_wizard_0]
   set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "DDR"} S01_AXI {memport "S_AXI_NOC" sptag "DDR"} S02_AXI {memport "S_AXI_NOC" sptag "DDR"} S03_AXI {memport "S_AXI_NOC" sptag "DDR"} S04_AXI {memport "S_AXI_NOC" sptag "DDR"} S05_AXI {memport "S_AXI_NOC" sptag "DDR"} S06_AXI {memport "S_AXI_NOC" sptag "DDR"} S07_AXI {memport "S_AXI_NOC" sptag "DDR"} S08_AXI {memport "S_AXI_NOC" sptag "DDR"} S09_AXI {memport "S_AXI_NOC" sptag "DDR"} S10_AXI {memport "S_AXI_NOC" sptag "DDR"} S11_AXI {memport "S_AXI_NOC" sptag "DDR"} S12_AXI {memport "S_AXI_NOC" sptag "DDR"} S13_AXI {memport "S_AXI_NOC" sptag "DDR"} S14_AXI {memport "S_AXI_NOC" sptag "DDR"} S15_AXI {memport "S_AXI_NOC" sptag "DDR"} S16_AXI {memport "S_AXI_NOC" sptag "DDR"} S17_AXI {memport "S_AXI_NOC" sptag "DDR"} S18_AXI {memport "S_AXI_NOC" sptag "DDR"} S19_AXI {memport "S_AXI_NOC" sptag "DDR"} S20_AXI {memport "S_AXI_NOC" sptag "DDR"} S21_AXI {memport "S_AXI_NOC" sptag "DDR"} S22_AXI {memport "S_AXI_NOC" sptag "DDR"} S23_AXI {memport "S_AXI_NOC" sptag "DDR"} S24_AXI {memport "S_AXI_NOC" sptag "DDR"} S25_AXI {memport "S_AXI_NOC" sptag "DDR"} S26_AXI {memport "S_AXI_NOC" sptag "DDR"} S27_AXI {memport "S_AXI_NOC" sptag "DDR"}} [get_bd_cells /noc_lpddr4_0]
-  set_property PFM.AXI_PORT {M01_AXI {memport "M_AXI_GP" sptag "" memory ""} M02_AXI {memport "M_AXI_GP" sptag "" memory ""} M03_AXI {memport "M_AXI_GP" sptag "" memory ""} M04_AXI {memport "M_AXI_GP" sptag "" memory ""} M05_AXI {memport "M_AXI_GP" sptag "" memory ""} M06_AXI {memport "M_AXI_GP" sptag "" memory ""} M07_AXI {memport "M_AXI_GP" sptag "" memory ""} M08_AXI {memport "M_AXI_GP" sptag "" memory ""} M09_AXI {memport "M_AXI_GP" sptag "" memory ""} M10_AXI {memport "M_AXI_GP" sptag "" memory ""} M11_AXI {memport "M_AXI_GP" sptag "" memory ""} M12_AXI {memport "M_AXI_GP" sptag "" memory ""} M13_AXI {memport "M_AXI_GP" sptag "" memory ""} M14_AXI {memport "M_AXI_GP" sptag "" memory ""} M15_AXI {memport "M_AXI_GP" sptag "" memory ""}} [get_bd_cells /icn_ctrl]
+  set_property PFM.AXI_PORT {M01_AXI {memport "M_AXI_GP" sptag "" memory ""} M02_AXI {memport "M_AXI_GP" sptag "" memory ""} M03_AXI {memport "M_AXI_GP" sptag "" memory ""} M04_AXI {memport "M_AXI_GP" sptag "" memory ""} M05_AXI {memport "M_AXI_GP" sptag "" memory ""} M06_AXI {memport "M_AXI_GP" sptag "" memory ""} M07_AXI {memport "M_AXI_GP" sptag "" memory ""} M08_AXI {memport "M_AXI_GP" sptag "" memory ""} M09_AXI {memport "M_AXI_GP" sptag "" memory ""} M10_AXI {memport "M_AXI_GP" sptag "" memory ""} M11_AXI {memport "M_AXI_GP" sptag "" memory ""} M12_AXI {memport "M_AXI_GP" sptag "" memory ""} M13_AXI {memport "M_AXI_GP" sptag "" memory ""} M14_AXI {memport "M_AXI_GP" sptag "" memory ""} M15_AXI {memport "M_AXI_GP" sptag "" memory ""}} [get_bd_cells /smc_0]
   set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S01_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S02_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S03_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S04_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S05_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S06_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S07_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S08_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S09_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S10_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S11_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S12_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S13_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S14_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S15_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S16_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S17_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S18_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S19_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S20_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S21_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S22_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S23_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S24_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S25_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S26_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S27_AXI {memport "S_AXI_NOC" sptag "LPDDR"}} [get_bd_cells /noc_lpddr4_1]
 
 

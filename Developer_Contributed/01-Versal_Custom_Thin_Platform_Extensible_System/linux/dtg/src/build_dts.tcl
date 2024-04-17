@@ -25,12 +25,12 @@ proc build_dts {xsa dts} {
 }
 
 proc include_board {dts} {
-  foreach lib [glob -nocomplain -directory device-tree-xlnx/device_tree/data/kernel_dtsi/2022.2/include/dt-bindings -type d *] {
+  foreach lib [glob -nocomplain -directory device-tree-xlnx/device_tree/data/kernel_dtsi/2024.1/include/dt-bindings -type d *] {
     if {![file exists $dts/include/dt-bindings/[file tail $lib]]} {
       file copy -force $lib $dts/include/dt-bindings
     }
   }
-  set dtsi_files [glob -nocomplain -directory device-tree-xlnx/device_tree/data/kernel_dtsi/2022.2/versal -type f *versal*]
+  set dtsi_files [glob -nocomplain -directory device-tree-xlnx/device_tree/data/kernel_dtsi/2024.1/versal -type f *versal*]
   if {[llength $dtsi_files] != 0} {
     puts "Info: Board file: versal is found"
     file copy -force [lindex $dtsi_files end] $dts

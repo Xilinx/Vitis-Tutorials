@@ -40,7 +40,7 @@ AIE_INCLUDE       += -include=${AIE_KERNELS}
 # Use to pass arguments to preprocessing # AIE_XFLAGS        := --Xpreproc="-DNB_FFT=${NB_FFT}"
 OTHER_OPTS        += --kernel-linting
 #OTHER_OPTS        += -Xchess="-std=c++17"
-OTHER_OPTS        += -xlopt=2
+OTHER_OPTS        += -xlopt=1
 OTHER_OPTS        += -Xmapper=BufferOptLevel7
 OTHER_OPTS        += --pl-freq=500.0
 OTHER_OPTS        += --pl-register-threshold=125
@@ -93,7 +93,7 @@ sim:
 	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
 
 sim_analyzer:
-	aiesimulator --pkg-dir=$(WORK_DIR) --profile --online -wdb -ctf -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
+	aiesimulator --pkg-dir=$(WORK_DIR) --profile --online -wdb -text -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
 
 analyze:
 	vitis_analyzer -report system.wdb

@@ -54,7 +54,7 @@ else
     SYSTEM_CFG := ./src/system.cfg
 endif
 
-.PHONY: clean all
+.PHONY: clean all vitis_ip
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -67,7 +67,10 @@ help::
 ${BUILD_DIR}:
 	mkdir ${BUILD_DIR}
 
-link: ${BUILD_DIR} ${BUILD_DIR}/${XSA}
+vitis_ip:
+	$(MAKE) all -C ${IP_DIR}
+
+link: vitis_ip ${BUILD_DIR} ${BUILD_DIR}/${XSA}
 
 ${BUILD_DIR}/${XSA}: ${XO} ${GRAPH_O} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
