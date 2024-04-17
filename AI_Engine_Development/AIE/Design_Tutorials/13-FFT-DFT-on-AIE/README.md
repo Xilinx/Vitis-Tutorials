@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # Implementing FFT and DFT Designs on AI Engines
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Abstract
 Fast Fourier Transform (FFT) is essential in digital signal processing (DSP). The AI Engine array of
