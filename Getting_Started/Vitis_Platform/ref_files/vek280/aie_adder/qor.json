@@ -1,0 +1,36 @@
+{
+    "containers": [
+        {
+            "name": "krnl_adder",
+            "meet_system_timing": "true", 
+            "accelerators": [
+                {
+                    "name": "mm2s", 
+                    "check_timing": "true", 
+                    "PipelineType": "none", 
+                    "check_latency": "false", 
+                    "check_warning": "false", 
+                    "loops": [
+                        {
+                            "name": "data_mover", 
+                            "PipelineII": "1"
+                        } 
+                    ]
+                },
+                {
+                    "name": "s2mm", 
+                    "check_timing": "true", 
+                    "PipelineType": "none", 
+                    "check_latency": "false", 
+                    "check_warning": "false", 
+                    "loops": [
+                        {
+                            "name": "data_mover", 
+                            "PipelineII": "1"
+                        } 
+                    ]
+                }
+            ] 
+        }
+    ]
+}

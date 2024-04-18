@@ -63,7 +63,7 @@ set my_board [get_board_parts *${BOARD}:part0* -latest_file_version]
 create_project project_1 ./project_1 -part [get_property PART_NAME [get_board_parts $my_board]] -force 
 set_property board_part $my_board [current_project]
 create_bd_design "ext_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Include_LPDDR.VALUE false Include_AIE.VALUE true }
+instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Include_AIE.VALUE true Include_BDC.VALUE false Include_DDR.VALUE true }
 # Other options are default
 # - Three clocks
 # - 32 interrupt

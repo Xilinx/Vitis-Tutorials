@@ -22,9 +22,9 @@ xhub::install [xhub::get_xitems *ext_platform*]
 
 # ------ Create Vivado Project ------
 create_project project_1 ./project_1 -part  xcve2802-vsvh1760-2MP-e-S -force 
-set_property board_part xilinx.com:vek280:part0:1.0 [current_project]
+set_property board_part xilinx.com:vek280:part0:1.2 [current_project]
 create_bd_design "ext_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Include_AIE.VALUE true Include_DDR.VALUE true}
+instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Include_AIE.VALUE true Include_BDC.VALUE false Include_DDR.VALUE true}
 # Other options are default
 # - Three clocks
 # - 32 interrupt

@@ -1,0 +1,31 @@
+{
+    "containers": [
+        {
+            "name": "krnl_vadd", 
+            "meet_system_timing": "true", 
+            "accelerators": [
+                {
+                    "name": "krnl_vadd", 
+                    "check_timing": "true", 
+                    "PipelineType": "none", 
+                    "check_latency": "true", 
+                    "check_warning": "false", 
+                    "loops": [
+                        {
+                            "name": "mem_rd", 
+                            "PipelineII": "1"
+                        }, 
+                        {
+                            "name": "execute", 
+                            "PipelineII": "1"
+                        }, 
+                        {
+                            "name": "mem_wr", 
+                            "PipelineII": "1"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

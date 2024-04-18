@@ -20,8 +20,8 @@ PLATFORM_NAME=vck190_custom
 PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 #PLATFORM ?=$(ROOT_DIR)/test/vck190_custom/export/vck190_custom/vck190_custom.xpfm
 SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
-PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
-AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
+PL_EXAMPLE_PATH = $(ROOT_DIR)/simple_vadd/
+AIE_EXAMPLE_PATH = $(ROOT_DIR)/aie_adder/
 
 .PHONY: help 
 
@@ -30,7 +30,7 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	@echo "make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
-all: check-common-image hw  dtb sysroot pfm vadd 
+all: check-common-image hw  dtb sysroot pfm  vadd 
 sd_card:check-common-image hw  dtb sysroot pfm vadd_hw 
 
 #target : check  whether the common image is ready 
@@ -52,7 +52,7 @@ hw: $(ABS_BD_TCL)
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2024.1 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
+	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
 	
 	
 # Target: sysroot
@@ -69,30 +69,27 @@ pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
 	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 
-Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
 
 
-$(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-
-vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+vadd: $(SYSROOT)/
+	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 # vadd_hw is a place-holder for manual build and test on hardware
-vadd_hw: Vitis_Accel_Examples $(SYSROOT)/
+vadd_hw: $(SYSROOT)/
 	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder: Vitis_Accel_Examples $(SYSROOT)/
+aie_adder: $(SYSROOT)/
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder_hw: Vitis_Accel_Examples $(SYSROOT)/
+aie_adder_hw: $(SYSROOT)/
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
 	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
 clean:
-	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
+	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou tmp 
 	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
 	-$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
 
 ultraclean:clean
-	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SYSROOT) Vitis_Accel_Examples *journal.py __pycache__ logs ip_cache vitis_journal* 
-	
+	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SYSROOT) *journal.py __pycache__ logs ip_cache vitis_journal* 
+	-$(MAKE) -C $(PL_EXAMPLE_PATH) cleanall
+	-$(MAKE) -C $(AIE_EXAMPLE_PATH) cleanall
+
