@@ -4,7 +4,7 @@
 #
 # Author: Mark Rollins
 
-DO_COSIM        := true
+DO_COSIM        := false
 ECHO            := @echo
 
 PLATFORM_USE    := xilinx_vck190_base_202410_1
