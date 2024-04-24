@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -20,7 +20,7 @@ else:
     xsa=sys.argv[2]
     
 
-platform = client.create_platform_component(name = component_name,hw = "../vivado/build/xsa_platform/"+xsa,os = "aie_runtime",cpu = "ai_engine")
-platform = client.get_platform_component(name=component_name)
+platform = client.create_platform_component(name = component_name,hw_design = "../vivado/build/xsa_platform/"+xsa,os = "aie_runtime",cpu = "ai_engine")
+platform = client.get_component(name=component_name)
 status = platform.build()
 

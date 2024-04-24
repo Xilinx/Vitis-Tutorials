@@ -48,6 +48,15 @@ vitis_platform:
 aie_app:
 	$(MAKE) aie_app -C vitis
 
+pl_app:
+	$(MAKE) pl_app -C vitis
+
+ps_app:
+	$(MAKE) pl_app -C vitis
+
+vitis:
+	$(MAKE) vitis -C vitis
+
 clean:
 	$(MAKE) clean -C vivado
 	$(MAKE) clean -C vitis

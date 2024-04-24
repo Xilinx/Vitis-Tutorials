@@ -37,7 +37,7 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
 5. In the design preset page, keep the default settings. Note that the AI Engine is enabled:
 
-      ![missing image](images/231_design_preset_config.jpg)
+      ![missing image](images/241_design_preset_config.jpg)
 
 6. Click ***Finish*** to complete the example design creation phase, and this will open up the Vivado project with the template design you just created. You can open the block design to view the details of the platform design. By using the pre-built template, you can easily get a validated hardware design of the platform to move on to the next step. In your real design development procedure, you can use this as a baseline design and make further modifications on top of it.
 
@@ -66,6 +66,8 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
       ![missing image](images/export_xsa_pg4.png)
 
 9. Close the Vivado project after platform export process finishes.
+
+> Note:  The vivado platform creation can be automated by running "make vivado_platform"
 
 ### Step 2: Build the Platform in the Vitis Software Platform
 
@@ -99,6 +101,6 @@ In the next step, you will build an AI Engine application using this platform.
 
 <p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to AI Engine Development</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

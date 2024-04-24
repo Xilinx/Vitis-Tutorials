@@ -119,6 +119,8 @@ The compilation process takes some time to finish. The underlying AI Engine appl
 
       ![missing image](images/232_vivado_prj2.jpg)
 
+> Note:  Creation of thr PL can be automated by running "make pl_app"
+
 In the next step, you will create a processing system (PS) bare-metal application, and run the system with it.
 
 <p align="center"><b><a href="./04-ps_application_creation_run_all.md">Go to PS Application and Run</a></b></p>

@@ -1,13 +1,16 @@
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
-XSA							:= custom_platform_vck190.xsa
-VITIS_PLATFORM				:= base_pfm_vck190
-WORKSPACE					:= workspace
+ECHO                         = @echo
 
-.PHONY: clean all
+XSA						:= custom_platform_vck190.xsa
+VITIS_PLATFORM					:= base_pfm_vck190
+WORKSPACE					:= workspace
+CAR 						:= \(
+
+.PHONY: clean all vitis
 
 help::
 	$(ECHO) "Makefile Usage:"
@@ -25,31 +28,32 @@ pfm:../vivado/build/xsa_platform/${XSA}
 	
 aie_app:
 	vitis -s aie_app.py ${VITIS_PLATFORM}
+
+hls_comp:
+	vitis -s hls_comp.py ${VITIS_PLATFORM}
 	
 vpp_link:./workspace/simple_aie_application/src/project.cpp
-	#sed -i '9 a\#if defined(__AIESIM__) || defined(__X86SIM__) || defined(__ADF_FRONTEND__)' ./workspace/simple_aie_application/src/project.cpp;
-	#sed -i '16 a\#endif' ./workspace/simple_aie_application/src/project.cpp;
-	#mkdir src
-	echo "part=xcvc1902-vsva2197-2MP-e-S" > src/s2mm_hls_config.cfg;
-	echo "[hls]" >> src/s2mm_hls_config.cfg;
-	echo "flow_target=vitis" >> src/s2mm_hls_config.cfg;
-	echo "package.output.format=xo" >> src/s2mm_hls_config.cfg;
-	echo "package.output.syn=false" >> src/s2mm_hls_config.cfg;
-	cat src/s2mm_hls_config.cfg > src/mm2s_hls_config.cfg
-	echo "syn.file=${PWD}/../../src/s2mm.cpp" >> src/s2mm_hls_config.cfg;
-	echo "syn.top=s2mm" >> src/s2mm_hls_config.cfg;
-	echo "syn.file=${PWD}/../../src/mm2s.cpp" >> src/mm2s_hls_config.cfg;
-	echo "syn.top=mm2s" >> src/mm2s_hls_config.cfg;
-	echo "[advanced]" > src/hw_link_config.cfg;
-	echo "param=compiler.addOutputTypes=hw_export" >> src/hw_link_config.cfg;
-	echo "" >> src/hw_link_config.cfg;
-	echo "[connectivity]" >> src/hw_link_config.cfg;
-	echo "stream_connect=mm2s_1.s:ai_engine_0.mygraph_in" >> src/hw_link_config.cfg;
-	echo "stream_connect=ai_engine_0.mygraph_out:s2mm_1.s" >> src/hw_link_config.cfg;
+	sed -i '9 a\#if defined(__AIESIM__) || defined(__X86SIM__) || defined(__ADF_FRONTEND__)' ./workspace/simple_aie_application/src/project.cpp;
+	echo "#endif" >> ./workspace/simple_aie_application/src/project.cpp;
 	vitis -s vpp_link.py ${VITIS_PLATFORM}
-	
-vitis: pfm aie_app vpp_link
-	
+
+ps_app: create_ps_app ps_config build_ps
+
+create_ps_app:
+	$(ECHO) "Creating PS platform and PS application"
+	vitis -s ps_app.py
+
+ps_config:./workspace/A-to-Z_app/src/lscript.ld
+	$(ECHO) "Editing Heap Size in Linker script"
+	$(shell sed -i 's/_HEAP_SIZE :.*;/_HEAP_SIZE : 0x100000;/g' ./workspace/A-to-Z_app/src/lscript.ld)
+
+build_ps:
+	vitis -s build_ps_app.py
+
+package:
+	vitis -s package.py
+
+vitis: pfm aie_app hls_comp vpp_link ps_app package
 
 clean:
-	rm -rf ${WORKSPACE} .Xil
+	rm -rf ${WORKSPACE} .Xil package

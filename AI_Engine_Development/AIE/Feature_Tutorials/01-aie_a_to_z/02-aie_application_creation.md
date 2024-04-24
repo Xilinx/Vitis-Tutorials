@@ -96,6 +96,8 @@ You can see that this is a simple operation which is doing the sum of the real a
 
       ![missing image](images/232_aie_app_emu.jpg)
 
+> Note:  The ai engine application creation can be automated by running "make aie_app"
+
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
