@@ -529,172 +529,15 @@ proc create_root_design { parentCell } {
     CONFIG.CH0_LPDDR4_1_BOARD_INTERFACE {ch0_lpddr4_c1} \
     CONFIG.CH1_LPDDR4_0_BOARD_INTERFACE {ch1_lpddr4_c0} \
     CONFIG.CH1_LPDDR4_1_BOARD_INTERFACE {ch1_lpddr4_c1} \
-    CONFIG.MC2_CONFIG_NUM {config26} \
-    CONFIG.MC3_CONFIG_NUM {config26} \
-    CONFIG.MC_ADDR_WIDTH {6} \
-    CONFIG.MC_BOARD_INTRF_EN {true} \
-    CONFIG.MC_BURST_LENGTH {16} \
-    CONFIG.MC_CASLATENCY {36} \
-    CONFIG.MC_CASWRITELATENCY {18} \
-    CONFIG.MC_CH0_LP4_CHA_ENABLE {true} \
-    CONFIG.MC_CH0_LP4_CHB_ENABLE {true} \
-    CONFIG.MC_CH1_LP4_CHA_ENABLE {true} \
-    CONFIG.MC_CH1_LP4_CHB_ENABLE {true} \
     CONFIG.MC_CHAN_REGION0 {DDR_CH1} \
-    CONFIG.MC_CKE_WIDTH {0} \
-    CONFIG.MC_CK_WIDTH {0} \
-    CONFIG.MC_DM_WIDTH {4} \
-    CONFIG.MC_DQS_WIDTH {4} \
-    CONFIG.MC_DQ_WIDTH {32} \
-    CONFIG.MC_ECC_SCRUB_SIZE {4096} \
-    CONFIG.MC_F1_CASLATENCY {36} \
-    CONFIG.MC_F1_CASWRITELATENCY {18} \
-    CONFIG.MC_F1_LPDDR4_MR13 {0x00C0} \
-    CONFIG.MC_F1_TCCD_L {0} \
-    CONFIG.MC_F1_TCCD_L_MIN {0} \
-    CONFIG.MC_F1_TFAW {30000} \
-    CONFIG.MC_F1_TFAWMIN {30000} \
-    CONFIG.MC_F1_TMOD {0} \
-    CONFIG.MC_F1_TMOD_MIN {0} \
-    CONFIG.MC_F1_TMRD {14000} \
-    CONFIG.MC_F1_TMRDMIN {14000} \
-    CONFIG.MC_F1_TMRW {10000} \
-    CONFIG.MC_F1_TMRWMIN {10000} \
-    CONFIG.MC_F1_TRAS {42000} \
-    CONFIG.MC_F1_TRASMIN {42000} \
-    CONFIG.MC_F1_TRCD {18000} \
-    CONFIG.MC_F1_TRCDMIN {18000} \
-    CONFIG.MC_F1_TRPAB {21000} \
-    CONFIG.MC_F1_TRPABMIN {21000} \
-    CONFIG.MC_F1_TRPPB {18000} \
-    CONFIG.MC_F1_TRPPBMIN {18000} \
-    CONFIG.MC_F1_TRRD {7500} \
-    CONFIG.MC_F1_TRRDMIN {7500} \
-    CONFIG.MC_F1_TRRD_L {0} \
-    CONFIG.MC_F1_TRRD_L_MIN {0} \
-    CONFIG.MC_F1_TRRD_S {0} \
-    CONFIG.MC_F1_TRRD_S_MIN {0} \
-    CONFIG.MC_F1_TWR {18000} \
-    CONFIG.MC_F1_TWRMIN {18000} \
-    CONFIG.MC_F1_TWTR {10000} \
-    CONFIG.MC_F1_TWTRMIN {10000} \
-    CONFIG.MC_F1_TWTR_L {0} \
-    CONFIG.MC_F1_TWTR_L_MIN {0} \
-    CONFIG.MC_F1_TWTR_S {0} \
-    CONFIG.MC_F1_TWTR_S_MIN {0} \
-    CONFIG.MC_F1_TZQLAT {30000} \
-    CONFIG.MC_F1_TZQLATMIN {30000} \
-    CONFIG.MC_IP_TIMEPERIOD1 {512} \
-    CONFIG.MC_LP4_CA_A_WIDTH {6} \
-    CONFIG.MC_LP4_CA_B_WIDTH {6} \
-    CONFIG.MC_LP4_CKE_A_WIDTH {1} \
-    CONFIG.MC_LP4_CKE_B_WIDTH {1} \
-    CONFIG.MC_LP4_CKT_A_WIDTH {1} \
-    CONFIG.MC_LP4_CKT_B_WIDTH {1} \
-    CONFIG.MC_LP4_CS_A_WIDTH {1} \
-    CONFIG.MC_LP4_CS_B_WIDTH {1} \
-    CONFIG.MC_LP4_DMI_A_WIDTH {2} \
-    CONFIG.MC_LP4_DMI_B_WIDTH {2} \
-    CONFIG.MC_LP4_DQS_A_WIDTH {2} \
-    CONFIG.MC_LP4_DQS_B_WIDTH {2} \
-    CONFIG.MC_LP4_DQ_A_WIDTH {16} \
-    CONFIG.MC_LP4_DQ_B_WIDTH {16} \
-    CONFIG.MC_LP4_RESETN_WIDTH {1} \
-    CONFIG.MC_ODTLon {8} \
-    CONFIG.MC_ODT_WIDTH {0} \
-    CONFIG.MC_PER_RD_INTVL {0} \
-    CONFIG.MC_PRE_DEF_ADDR_MAP_SEL {ROW_BANK_COLUMN} \
-    CONFIG.MC_TCCD {8} \
-    CONFIG.MC_TCCD_L {0} \
-    CONFIG.MC_TCCD_L_MIN {0} \
-    CONFIG.MC_TCKE {15} \
-    CONFIG.MC_TCKEMIN {15} \
-    CONFIG.MC_TDQS2DQ_MAX {800} \
-    CONFIG.MC_TDQS2DQ_MIN {200} \
-    CONFIG.MC_TDQSCK_MAX {3500} \
-    CONFIG.MC_TFAW {30000} \
-    CONFIG.MC_TFAWMIN {30000} \
-    CONFIG.MC_TMOD {0} \
-    CONFIG.MC_TMOD_MIN {0} \
-    CONFIG.MC_TMRD {14000} \
-    CONFIG.MC_TMRDMIN {14000} \
-    CONFIG.MC_TMRD_div4 {10} \
-    CONFIG.MC_TMRD_nCK {28} \
-    CONFIG.MC_TMRW {10000} \
-    CONFIG.MC_TMRWMIN {10000} \
-    CONFIG.MC_TMRW_div4 {10} \
-    CONFIG.MC_TMRW_nCK {20} \
-    CONFIG.MC_TODTon_MIN {3} \
-    CONFIG.MC_TOSCO {40000} \
-    CONFIG.MC_TOSCOMIN {40000} \
-    CONFIG.MC_TOSCO_nCK {79} \
-    CONFIG.MC_TPBR2PBR {90000} \
-    CONFIG.MC_TPBR2PBRMIN {90000} \
-    CONFIG.MC_TRAS {42000} \
-    CONFIG.MC_TRASMIN {42000} \
-    CONFIG.MC_TRAS_nCK {83} \
-    CONFIG.MC_TRC {63000} \
-    CONFIG.MC_TRCD {18000} \
-    CONFIG.MC_TRCDMIN {18000} \
-    CONFIG.MC_TRCD_nCK {36} \
-    CONFIG.MC_TRCMIN {0} \
-    CONFIG.MC_TREFI {3904000} \
-    CONFIG.MC_TREFIPB {488000} \
-    CONFIG.MC_TRFC {0} \
-    CONFIG.MC_TRFCAB {280000} \
-    CONFIG.MC_TRFCABMIN {280000} \
-    CONFIG.MC_TRFCMIN {0} \
-    CONFIG.MC_TRFCPB {140000} \
-    CONFIG.MC_TRFCPBMIN {140000} \
-    CONFIG.MC_TRP {0} \
-    CONFIG.MC_TRPAB {21000} \
-    CONFIG.MC_TRPABMIN {21000} \
-    CONFIG.MC_TRPAB_nCK {42} \
-    CONFIG.MC_TRPMIN {0} \
-    CONFIG.MC_TRPPB {18000} \
-    CONFIG.MC_TRPPBMIN {18000} \
-    CONFIG.MC_TRPPB_nCK {36} \
-    CONFIG.MC_TRPRE {1.8} \
-    CONFIG.MC_TRRD {7500} \
-    CONFIG.MC_TRRDMIN {7500} \
-    CONFIG.MC_TRRD_L {0} \
-    CONFIG.MC_TRRD_L_MIN {0} \
-    CONFIG.MC_TRRD_S {0} \
-    CONFIG.MC_TRRD_S_MIN {0} \
-    CONFIG.MC_TRRD_nCK {15} \
-    CONFIG.MC_TWPRE {1.8} \
-    CONFIG.MC_TWPST {0.4} \
-    CONFIG.MC_TWR {18000} \
-    CONFIG.MC_TWRMIN {18000} \
-    CONFIG.MC_TWR_nCK {36} \
-    CONFIG.MC_TWTR {10000} \
-    CONFIG.MC_TWTRMIN {10000} \
-    CONFIG.MC_TWTR_L {0} \
-    CONFIG.MC_TWTR_S {0} \
-    CONFIG.MC_TWTR_S_MIN {0} \
-    CONFIG.MC_TWTR_nCK {20} \
-    CONFIG.MC_TXP {15} \
-    CONFIG.MC_TXPMIN {15} \
-    CONFIG.MC_TXPR {0} \
-    CONFIG.MC_TZQCAL {1000000} \
-    CONFIG.MC_TZQCAL_div4 {489} \
-    CONFIG.MC_TZQCS_ITVL {0} \
-    CONFIG.MC_TZQLAT {30000} \
-    CONFIG.MC_TZQLATMIN {30000} \
-    CONFIG.MC_TZQLAT_div4 {15} \
-    CONFIG.MC_TZQLAT_nCK {59} \
-    CONFIG.MC_TZQ_START_ITVL {1000000000} \
-    CONFIG.MC_USER_DEFINED_ADDRESS_MAP {16RA-3BA-10CA} \
-    CONFIG.MC_XPLL_CLKOUT1_PERIOD {1024} \
     CONFIG.NUM_CLKS {0} \
-    CONFIG.NUM_MC {2} \
-    CONFIG.NUM_MCP {1} \
     CONFIG.NUM_MI {0} \
     CONFIG.NUM_NSI {1} \
     CONFIG.NUM_SI {0} \
     CONFIG.sys_clk0_BOARD_INTERFACE {lpddr4_sma_clk1} \
     CONFIG.sys_clk1_BOARD_INTERFACE {lpddr4_sma_clk2} \
   ] $noc_lpddr4
+
 
 
   set_property -dict [ list \
@@ -738,7 +581,7 @@ proc create_root_design { parentCell } {
   connect_bd_net -net ai_engine_0_s00_axi_aclk [get_bd_pins ai_engine_0/s00_axi_aclk] [get_bd_pins cips_noc/aclk9]
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins CIPS_0/pl_ps_irq0]
   connect_bd_net -net clk_wizard_0_clk_125 [get_bd_pins clk_wizard_0/clk_out1_o3]
-  connect_bd_net -net clk_wizard_0_clk_250 [get_bd_pins clk_wizard_0/clk_out1_o2] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0]
+  connect_bd_net -net clk_wizard_0_clk_250 [get_bd_pins clk_wizard_0/clk_out1_o2] [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins cips_noc/aclk0] [get_bd_pins smc_0/aclk]
   connect_bd_net -net clk_wizard_0_clk_333 [get_bd_pins clk_wizard_0/clk_out2] [get_bd_pins proc_sys_reset_1/slowest_sync_clk]
   connect_bd_net -net clk_wizard_0_clk_500 [get_bd_pins clk_wizard_0/clk_out1_o1]
   connect_bd_net -net clk_wizard_0_clk_62_5 [get_bd_pins clk_wizard_0/clk_out1_o4] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
