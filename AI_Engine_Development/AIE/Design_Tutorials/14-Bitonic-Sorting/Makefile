@@ -39,9 +39,9 @@ help::
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 
-all:	all_fft
+all:	all_sort
 
-all_fft:
+all_sort:
 	$(MAKE) all -C bitonic_fp16
 	$(MAKE) all -C bitonic_fp1024
 	$(MAKE) all -C sortcpp_fp16
