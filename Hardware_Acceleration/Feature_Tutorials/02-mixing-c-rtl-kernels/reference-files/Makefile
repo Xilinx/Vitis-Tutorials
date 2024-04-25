@@ -70,12 +70,12 @@ endif
 ifeq ($(LAB),$(filter $(LAB),run1))
 $(EXECUTABLE): ./src/host/xrt-host_step1.cpp
 	g++ $(CXXFLAGS) -o '$@' '$<'  \
-		-D_GLIBCXX_USE_CXX11_ABI=0 -I${XILINX_XRT}/include/ \
+		-I${XILINX_XRT}/include/ \
                 -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 else
 $(EXECUTABLE): ./src/host/xrt-host_step2.cpp
 	g++ $(CXXFLAGS) -o '$@' '$<'  \
-		-D_GLIBCXX_USE_CXX11_ABI=0 -I${XILINX_XRT}/include/ \
+		-I${XILINX_XRT}/include/ \
                 -L$(XILINX_XRT)/lib -lxrt_coreutil -pthread
 endif
 
