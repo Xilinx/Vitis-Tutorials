@@ -2,7 +2,7 @@
     "name": "VHLS_F_01-using-CA",
     "description": "VHLS_F_01-using-CA",
     "gui": "false",
-    "flow": "vitis",
+    "flow": "hls",
 
     "platform_allowlist": [ "u200"],
      
@@ -18,7 +18,9 @@
             }
         ], 
         "targets": [
-            "vitis_sw_emu"
+            "hls_csim", 
+            "hls_csynth", 
+            "hls_cosim"
         ],
         "category": "canary", 
         "custom_build_target":

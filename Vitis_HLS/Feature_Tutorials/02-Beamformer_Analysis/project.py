@@ -62,8 +62,8 @@ for array in arrays:
     cfg_obj.add_lines('hls',['syn.directive.array_reshape=beamformer '+array+' dim=2 type=complete'])
 
 # Execute the desired steps:
-comp.execute('C_SIMULATION') 
-comp.execute('SYNTHESIS')
+comp.run('C_SIMULATION') 
+comp.run('SYNTHESIS')
 
 # Clean up, delete the workspace
 if (os.path.isdir(tmpdir)):

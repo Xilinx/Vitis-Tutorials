@@ -39,8 +39,8 @@ client.set_workspace(workspace)
 comp = client.create_hls_component(name=comp_name, cfg_file = cfg_path)
 
 # Execute the desired steps:
-comp.execute('C_SIMULATION')
-comp.execute('SYNTHESIS')
+comp.run('C_SIMULATION')
+comp.run('SYNTHESIS')
 #comp.execute('CO_SIMULATION')
 #comp.execute('PACKAGE')
 #comp.execute('IMPLEMENTATION')

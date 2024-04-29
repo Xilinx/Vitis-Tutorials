@@ -2,9 +2,9 @@
     "name": "VHLS_F_02-beamformer_analysis",
     "description": "VHLS_F_02-beamformer_analysis",
     "gui": "false",
-    "flow": "vitis",
+    "flow": "hls",
 
-    "platform_allowlist": [ "xcvp1202-vsva2785-1LP-i-L"],
+    "platform_allowlist": [ "u200"],
      
     "testinfo": {
         "test_name": "VHLS_F_02-beamformer_analysis",
@@ -18,7 +18,8 @@
             }
         ], 
         "targets": [
-            "vitis_sw_emu"
+            "hls_csim", 
+            "hls_csynth"
         ],
         "category": "canary", 
         "custom_build_target":
