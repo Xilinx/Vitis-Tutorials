@@ -1,0 +1,43 @@
+{
+    "name": "Design_Tutorials-16-1M-Point-FFT-32Gsps",
+    "description": "16-1M-Point-FFT-32Gsps",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vck190"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "AIE_D_16-1M-Point-FFT",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+        "custom_build_target": {
+            "all": "all"
+        },
+        "custom_board_target": "run_test",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_versal.sh"]
+            },
+           "build": {
+               "pre_exec": ["./env_setup_versal.sh"]
+           }
+        }
+    }
+}
