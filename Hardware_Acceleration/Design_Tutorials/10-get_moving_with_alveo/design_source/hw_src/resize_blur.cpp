@@ -87,6 +87,7 @@ extern "C"
                        MAX_OUT_HEIGHT,
                        MAX_OUT_WIDTH,
                        NPC,
+                       0,
                        MAX_DOWN_SCALE>(in_mat, resized_mat);
         xf::cv::GaussianBlur<FILTER_WIDTH,
                              XF_BORDER_CONSTANT,

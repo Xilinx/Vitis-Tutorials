@@ -81,6 +81,7 @@ extern "C"
                        MAX_OUT_HEIGHT,
                        MAX_OUT_WIDTH,
                        NPC,
+                       0,
                        MAX_DOWN_SCALE>(in_mat, out_mat);
         xf::cv::xfMat2Array<AXI_WIDTH, TYPE, MAX_OUT_HEIGHT, MAX_OUT_WIDTH, NPC>(out_mat, image_out);
     }
