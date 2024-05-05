@@ -14,7 +14,7 @@ SPDX-License-Identifier: MIT
 
 # Digital Down-conversion Chain: Converting from Intrinsics to API
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents <!-- omit from toc -->
 
@@ -94,7 +94,7 @@ When creating the kernel in the upper graph or subgraph, use `kernel::create_obj
 
 ### Migrating from Windows to Buffers
 
-Windows I/O connections between kernels will be deprecated in the 2023.2 release of the AMD Vitis™ software platform. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how the source code of a design should change to upgrade it to buffer I/Os. The following figures show the steps required (repeated for every kernel) to upgrade I/O connections from Windows to buffers.
+Windows I/O connections between kernels were deprecated in the 2023.2 release of the AMD Vitis™ software platform. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how the source code of a design should change to upgrade it to buffer I/Os. The following figures show the steps required (repeated for every kernel) to upgrade I/O connections from Windows to buffers.
 
 1. Make the changes shown in the following figure in the ``kernel.cc`` file:
 
@@ -149,7 +149,7 @@ The 32-branch digital down-conversion design can be built using the command line
 The first step is to set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Versal platforms corresponding to your tool release. This edit should be done in the ```09-ddc_chain/Makefile``` file.
 
 ```shell
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

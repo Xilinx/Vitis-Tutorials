@@ -97,4 +97,4 @@ clean:
 	@rm -rf Work*
 	@rm -rf simulator_output diff_output
 	@rm -rf $(TEMP_FILE) log* $(LOG_FILE)
-	@rm -rf *.log *.jou *.debug *.jstack *.str *.db *tmp Map_Report.csv libadf.a .Xil .AIE_SIM_CMD* .crashReporter* pl_sample_counts
+	@rm -rf *.log *.jou *.debug *.jstack *.str *.db *tmp Map_Report.csv libadf.a .Xil .AIE_SIM_CMD* .crashReporter* pl_sample_counts plio_throughput_info.json
