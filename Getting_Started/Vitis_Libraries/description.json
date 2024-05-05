@@ -1,30 +1,35 @@
 {
     "name": "Vitis_Libraries",
     "description": "Getting Started with Vitis Libraries",
-    "flow": "vitis",
+    "gui": "false",
+    "flow": "hls",
  
-    "platform_allowlist": ["u250"],
+    "platform_allowlist": ["u200"],
  
     "testinfo": {
         "test_name": "GS_Vitis_Lib",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_alveo.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_alveo.sh"
+            }
+         },
+        "disable": false, 
         "jobs": [
             {
-                "max_memory_MB": 32768,
-                "max_time_min": {
-                    "vitis_sw_emu": 30,
-                    "vitis_hw_emu": 200,
-                    "vitis_hw_build": 470,
-                    "vitis_hw_run": 30
-                }
+                "max_memory_MB": 32768
             }
         ],
         "targets": [
-             "vitis_sw_emu"
+            "hls_csim", 
+            "hls_csynth", 
+            "hls_cosim"
         ],
-        "make_options" : [],
         "category": "canary",
         "custom_build_target": {
-            "all": "run"
+            "all": "all"
         }
     }
 }
