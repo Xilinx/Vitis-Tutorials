@@ -8,7 +8,7 @@
 
 # Vitis Embedded Software Tutorials
 
-The tutorials under the Vitis™ Embedded Software category help you learn the Vitis Embedded Design Flows.
+The tutorials under the Vitis™ Embedded Software category help you learn the Vitis embedded software design flows.
 
 ## Getting Started
 
@@ -22,6 +22,10 @@ The [Getting Started](./Getting_Started/) tutorial should act as the start point
   <tr>
     <td><a href=./Getting_Started>Getting Started in Vitis Unified IDE</a></td>
     <td>Navigate through the IDE with minimal steps to get started. We will create the platform, hello world application, setup the target connections and debug our hello world application over JTAG. We will then learn how to program the flash.</td>
+  </tr>
+    <tr>
+    <td><a href=https://www.xilinx.com/video/software/vitis-ide-embedded-design.html> Demo Video for Getting Started</a></td>
+    <td>A 10-minute demonstration video showcasing the end-to-end design flow for getting started with Vitis Unified IDE for embedded software development.</td>
   </tr>
 </table>
 
@@ -57,6 +61,31 @@ The [Feature Tutorials](./Feature_Tutorials) illustrate specific features of Vit
    </tr>
 </table>
 
+## Resources Associated with Tutorials
+
+Following are the resources for embedded software development flow with Vitis Unified IDE.
+
+<table style="width:100%">
+  <tr>
+    <th width="30%" align="center"><b>Resource</b></td>
+    <th width="70%" align="center"><b>Description</b></td>
+  </tr>
+
+  <tr>
+    <td><a href=https://support.xilinx.com/s/article/000035677?language=en_US>Stand-alone Application Migration Example</a></td>
+    <td>Simple example introducing the required source code changes of migrating a stand-alone application from classic Vitis IDE to Vitis Unified IDE.</td>
+  </tr>
+
+  <tr>
+    <td><a href="https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Getting-Started-with-Vitis"> UG1400 </a></td>
+    <td>User Manual for embedded software development with Vitis Unified IDE.</td>
+  </tr>
+  <tr>
+    <td><a href=https://docs.xilinx.com/r/en-US/ug1647-porting-embeddedsw-components>UG1647</a></td>
+    <td>Customer software repository Porting Guide for embeddedsw Components System Device Tree Based Build Flow
+    </td>
+  </tr>
+</table>
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
