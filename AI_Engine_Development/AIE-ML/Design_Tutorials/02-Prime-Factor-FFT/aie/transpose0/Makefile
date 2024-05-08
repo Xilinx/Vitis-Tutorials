@@ -9,7 +9,7 @@ SIM_FIFO          := false
 MY_APP            := transpose0_app
 MY_SOURCES        := ${MY_APP}.cpp transpose0_graph.h
 
-PLATFORM_USE	  := xilinx_vek280_es1_base_202410_1
+PLATFORM_USE	  := xilinx_vek280_base_202410_1
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

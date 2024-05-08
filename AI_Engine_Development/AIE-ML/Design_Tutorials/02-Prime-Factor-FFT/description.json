@@ -1,14 +1,14 @@
 {
-    "name": "Design_Tutorials-05-Prime-Factor-FFT-1008",
-    "description": "05-Prime-Factor-FFT-1008",
+    "name": "Design_Tutorials-02-Prime-Factor-FFT-AIE-ML",
+    "description": "02-Prime-Factor-FFT-AIE-ML",
     "gui": "false",
     "flow": "versal",
 
-    "platform_allowlist": [ "vck190"],
+    "platform_allowlist": [ "vek280"],
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "AIE_D_05-Prime-Factor-FFT-1008",
+        "test_name": "AIE-ML_D_02-Prime-Factor-FFT",
         "jobs": [
             {
                 "index": 0,

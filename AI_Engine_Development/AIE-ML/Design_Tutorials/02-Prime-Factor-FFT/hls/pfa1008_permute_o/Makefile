@@ -7,7 +7,7 @@
 DO_COSIM        := true
 ECHO            := @echo
 
-PLATFORM_USE    := xilinx_vek280_es1_base_202410_1
+PLATFORM_USE    := xilinx_vek280_base_202410_1
 XPFM            := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 KERNEL          := pfa1008_permute_o_wrapper

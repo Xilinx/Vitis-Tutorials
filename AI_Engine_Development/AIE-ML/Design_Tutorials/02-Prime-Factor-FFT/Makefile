@@ -8,7 +8,7 @@ ECHO                               = @echo
 export TARGET                      ?= hw_emu
 
 RELEASE=2024.1
-BOARD=vek280_es1
+BOARD=vek280
 BASE_NUM=202410_1
 
 # Platform Selection...
