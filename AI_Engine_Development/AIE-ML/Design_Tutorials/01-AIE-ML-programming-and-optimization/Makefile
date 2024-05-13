@@ -22,7 +22,7 @@ OPT ?= 0
 # hw_emu|hw
 
 TARGET   ?= hw_emu
-PFM_NAME := xilinx_vek280_es1_base_202410_1
+PFM_NAME := xilinx_vek280_base_202410_1
 PFM_NAME := $(strip $(PFM_NAME))
 PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 PNAME := aieml_pl_${TARGET}

@@ -20,7 +20,7 @@ source $XILINX_VITIS/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vek280_es1_base_202410_1
+tgt_plat=xilinx_vek280_base_202410_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 # ==========================================================

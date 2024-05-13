@@ -8,7 +8,7 @@ ARCH = aie
 ifeq ($(ARCH), aie)
 	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm
 else ifeq ($(ARCH), aie-ml)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_es1_base_202410_1/xilinx_vek280_es1_base_202410_1.xpfm
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm
 else
 $(error ARCH is not supported)
 endif
