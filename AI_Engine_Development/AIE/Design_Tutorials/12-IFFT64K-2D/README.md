@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # 64K-Pt IFFT @ 2 Gsps Using a 2D Architecture
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 
