@@ -3,15 +3,13 @@
 #SPDX-License-Identifier: MIT
 
 HOST_EXE     = ../host.exe
-HOST_INC   = -I../ -I../aie
-HOST_OBJ   = aie_control_xrt.o host.o
-AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
+HOST_INC   = 
+HOST_OBJ   = host.o
 SDKTARGETSYSROOT ?= ${SYSROOT}
 
-CXXFLAGS += -std=c++17 -D__TIMER__ -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+CXXFLAGS += -std=c++17 -D__USE_EVENT_PROFILE__ -I$(XILINX_VIVADO)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -O0 -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} 
 
-LDFLAGS += -ladf_api_xrt -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
-LDCLFLAGS=
+LDFLAGS += -lgcc -lc -lxrt_coreutil -lxilinxopencl -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} 
 
 ${HOST_EXE}: ${HOST_OBJ}
 	${CXX} -o $@ $^ ${LDFLAGS}
@@ -19,8 +17,5 @@ ${HOST_EXE}: ${HOST_OBJ}
 %.o: %.cpp
 	${CXX} ${CXXFLAGS} -o $@ $<
 
-aie_control_xrt.cpp: ${AIE_CTRL_CPP}
-	cp -f ${AIE_CTRL_CPP} .
-
 clean:
-	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} aie_control_xrt.cpp
+	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} 

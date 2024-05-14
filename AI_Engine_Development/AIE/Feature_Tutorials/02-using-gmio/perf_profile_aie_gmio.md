@@ -225,10 +225,11 @@ The AI Engine has hardware performance counters that can be configured to count 
 The code to start profiling is as follows:
 
 ```cpp
-   event::handle handle[NUM];
-   for(int i=0;i<NUM;i++){
-       handle[i] = event::start_profiling(gr.gmioOut[i], event::io_stream_start_to_bytes_transferred_cycles, BLOCK_SIZE_out_Bytes);
-    }
+	xrt::aie::profiling *handle[NUM];
+	for(int i=0;i<NUM;i++){
+		handle[i]=new xrt::aie::profiling(device);
+		handle[i]->start(xrt::aie::profiling::profiling_option::io_stream_start_to_bytes_transferred_cycles, "gr.gmioOut["+std::to_string(i)+"]", "", BLOCK_SIZE_out_Bytes);
+	}
 ```
 
 The code to end profiling and calculate performance is as follows:
@@ -236,18 +237,18 @@ The code to end profiling and calculate performance is as follows:
 ```cpp
 	long long cycle_count[NUM];
 	long long total_cycle_count=0;
-		for(int i=0;i<NUM;i++){
-			cycle_count[i] = event::read_profiling(handle[i]);
-			event::stop_profiling(handle[i]);
-			if(cycle_count[i]>total_cycle_count){
-				total_cycle_count=cycle_count[i];
-			}
+	for(int i=0;i<NUM;i++){
+		cycle_count[i] = handle[i]->read();
+		handle[i]->stop();
+		if(cycle_count[i]>total_cycle_count){
+			total_cycle_count=cycle_count[i];
 		}
-		double bandwidth = (double)(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*NUM / ((double)total_cycle_count*0.8) *1000; //byte per second
-		std::cout<<"Throughput (by event API) bandwidth="<<bandwidth<<"M Bytes/s"<<std::endl;
+	}
+	double bandwidth = (double)(BLOCK_SIZE_in_Bytes+BLOCK_SIZE_out_Bytes)*NUM / ((double)total_cycle_count*0.8) *1000; //byte per second
+	std::cout<<"Throughput (by event API) bandwidth="<<bandwidth<<"M Bytes/s"<<std::endl;
 ```
 
-In this example, `event::start_profiling is` called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.
+In this example, `start` of `xrt::aie::profiling` handler is called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.
 
 For detailed usage about event API, refer to the *Versal Adaptive SoC AI Engine Programming Environment User Guide* ([UG1076](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1076-ai-engine-environment)).
 
