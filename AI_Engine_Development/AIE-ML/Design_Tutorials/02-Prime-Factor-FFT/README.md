@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # Prime Factor FFT-1008 on AIE-ML
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 

@@ -34,7 +34,7 @@ typedef int TT_DATA;            // Assume cint16 data
 
 static constexpr int32_t         NUM_ITER = -1; // Let the graph run and have DMA_SNK terminate things
 static constexpr int32_t        LOOP_CNT_I = 8;
-static constexpr int32_t        LOOP_CNT_O = 8; // Try to stop it early
+static constexpr int32_t        LOOP_CNT_O = 6; // Try to stop it early
 static constexpr int32_t          LOOP_SEL = 0; // ID of loop to capture by DDR SNK PL HLS block
 static constexpr unsigned            DEPTH = 1008; // 4 transform x 1008-pt / 4 samples @ 128-bit
 static constexpr unsigned DDR_WORD_DEPTH_I = DEPTH;
@@ -44,7 +44,9 @@ static constexpr unsigned    NUM_SAMPLES_O = DDR_WORD_DEPTH_O * 4; // 32-bit (ci
 
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES = NUM_SAMPLES_I * 4; // Each sample is 4 bytes (32-bits)
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each sample is 4 bytes (32-bits)
-
+static constexpr unsigned        TOTAL_O_BYTES = DDR_BUFFSIZE_O_BYTES * LOOP_CNT_O;
+static constexpr long long          DDR_CYCLES = 8053;              // To transfer captured samples back (measured HW_EMU)
+static constexpr double      TARGET_THROUGHPUT = 900;
 
 // ------------------------------------------------------------
 // Main
@@ -159,12 +161,27 @@ int main(int argc, char* argv[])
   dma_snk_run.start();
   std::cout << STR_PASSED << "dma_snk_run.start()" << std::endl;
 
+  // Start throughput profiling:
+  xrt::aie::profiling handle(my_device);
+  std::cout << STR_PASSED << "xrt::aie::profiling handle(my_device);" << std::endl;
+
+  handle.start(xrt::aie::profiling::profiling_option::io_stream_start_to_bytes_transferred_cycles,
+               "aie_dut.sig_o","",TOTAL_O_BYTES);
+  std::cout << std::endl << STR_INFO << "Started profiling timers..." << std::endl << std::endl;
 
   // Wait for all kernels to end:
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
+
+  // ------------------------------------------------------------
+  // Measure Throughput
+  // ------------------------------------------------------------
+
+  long long cycle_count = handle.read();
+  handle.stop();
+  double throughput = (double) TOTAL_O_BYTES / ((cycle_count-DDR_CYCLES) * 0.8 * 1e-3);
 
   // ------------------------------------------------------------
   // Retrieve Results
@@ -205,10 +222,19 @@ int main(int argc, char* argv[])
   ss_o.close();
   ss_a.close();
 
+  std::cout << "=============================="          << std::endl;
+  std::cout << "Cycle count: " << cycle_count            << std::endl;
+  std::cout << "Approx Throughput: " << throughput << " MB/sec" << std::endl;
+  std::cout << "Approx Throughput: " << throughput/4 << " Msps" << std::endl;
+  std::cout << "=============================="          << std::endl;
+
+  bool flag_tp = ( abs(throughput/4 - TARGET_THROUGHPUT) > 0.05*TARGET_THROUGHPUT ) ? 1 : 0;
+
   // Done:
-  if ( flag == 0 )
+  if ( flag == 0 && flag_tp == 0 )
     std::cout << std::endl << "--- PASSED ---" << std::endl;
   else
     std::cout << std::endl << "*** FAILED ***" << std::endl;
+
   return(flag);
 }

@@ -15,7 +15,7 @@ class dft16_1 {
 public:
   typedef cint16 TT_DATA;
   typedef cint16 TT_TWID;
-  typedef cacc48 TT_ACC;
+  typedef cacc64 TT_ACC;
   static constexpr unsigned NUM_FFT = 4*7*9;
   static constexpr unsigned NSAMP_I = 16*NUM_FFT; // 16 samples per transform
   static constexpr unsigned NSAMP_O = 16*NUM_FFT; // 16 samples per transform

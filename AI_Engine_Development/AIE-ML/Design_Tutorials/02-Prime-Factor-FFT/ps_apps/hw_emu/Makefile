@@ -9,7 +9,6 @@ ECHO             := @echo
 APP_NAME         := host
 APP_EXE          := ${APP_NAME}.exe
 APP_SRC          := ${APP_NAME}.cpp
-APP_SRC_DEP      := ./*
 APP_SRC_CTRL     := ./../../aie/pfa1008/Work/ps/c_rts/aie_control_xrt.cpp
 
 GCC              := ${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
@@ -47,7 +46,7 @@ help::
 
 all: $(APP_EXE)
 
-$(APP_EXE): $(APP_SRC_DEP) $(APP_SRC_CTRL) ${SYSROOT}
+$(APP_EXE): $(APP_SRC) $(APP_SRC_CTRL) ${SYSROOT}
 	${GCC} ${GCC_C_FLAGS} $(APP_SRC) $(APP_SRC_CTRL) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
 
 clean:

@@ -33,12 +33,15 @@ void transmit( TT_DATA (&buff)[DEPTH], TT_STREAM& sig_o, const int& loop_cnt )
   static constexpr int LATENCY = NFFT/2;
  REPEAT: for (int ll=0; ll < loop_cnt; ll++) {
 #pragma HLS LOOP_TRIPCOUNT min=1 max=8
-  RUN_DEPTH: for (int dd=0; dd < (DEPTH+LATENCY); dd++) {
+  RUN_DEPTH: for (int dd=0; dd < DEPTH; dd++) {
 #pragma HLS PIPELINE II=1
-      TT_DATA stream_val = ( dd < DEPTH ) ? buff[dd] : TT_DATA(0);
-      sig_o.write( stream_val );
+      sig_o.write( buff[dd] );
     } // dd
   } // ll
+ RUN_LATENCY: for (int dd=0; dd < LATENCY; dd++) {
+#pragma HLS PIPELINE II=1
+    sig_o.write( TT_DATA(0) );
+  } // dd
 }
 
 // ------------------------------------------------------------
