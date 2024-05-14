@@ -13,6 +13,13 @@ PETALINUX_ROOTFS_CONFIG=$(PETALINUX_DIR)/project-spec/configs/rootfs_config
 XSA	?=${PLATFORM_REPO_PATHS}/xilinx_zcu104_base_202410_1/hw/hw.xsa
 
 IMAGE_DIR=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)/images/linux/
+# --------------------------------------
+# Note: This makefile is not designed with dependent awareness. 
+# If you change a source file, please run `make clean; make all` to rebuild from scratch.
+#add comments
+# --------------------------------------
+
+
 .PHONY: help
 
 help:

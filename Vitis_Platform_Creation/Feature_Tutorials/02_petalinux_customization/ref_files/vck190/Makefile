@@ -19,6 +19,7 @@ IMAGE_DIR=$(ABS_BUILD_PATH)/$(PETALINUX_PROJ_NAME)/images/linux/
 # --------------------------------------
 # Note: This makefile is not designed with dependent awareness. 
 # If you change a source file, please run `make clean; make all` to rebuild from scratch.
+#add comments
 # --------------------------------------
 
 .PHONY: help
