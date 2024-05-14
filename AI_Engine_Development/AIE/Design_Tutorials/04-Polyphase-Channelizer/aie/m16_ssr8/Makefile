@@ -34,7 +34,7 @@ ALL_INCLUDE       := --include=${PWD} --include=../m16_ssr8_filterbank --include
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM}
 
 XPE_FILE_NAME     := ${MY_APP}.xpe
 VCD_FILE_NAME     := ${MY_APP}
@@ -103,7 +103,7 @@ clean:
 	rm -rf x86simulator_output
 	rm -rf log log* ${LOG_FILE}
 	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json *.jou *.ir
-	rm -rf vitis_analyzer* pl_sample_counts* vck190_thin_wrapper* trdata.aiesim
+	rm -rf vitis_analyzer* pl_sample_counts* vck190_thin_wrapper* trdata.aiesim function_wdb_dir
 	rm -rf temp ISS_RPC_SERVER_PORT
 	rm -rf system*.* vitis_design_wrapper* .crashReporter* .AIE_SIM_CMD_LINE_OPTIONS
 	rm -rf aiesim_xpe .Pdm

@@ -54,35 +54,31 @@ public:
     }
 
     // Stream inputs to all tiles:
-    for (unsigned kk=0; kk < NT; kk++) {
-      if ( kk == 0 ) {
-        connect<stream,stream>( sig_i[2*kk+0], k_input.in[0] );
-        connect<stream,stream>( sig_i[2*kk+1], k_input.in[1] );
-      }
-      else if ( kk == NT-1 ) {
-        connect<stream,stream>( sig_i[2*kk+0], k_output.in[0] );
-        connect<stream,stream>( sig_i[2*kk+1], k_output.in[1] );
-      }
-      else {
-        connect<stream,stream>( sig_i[2*kk+0], k_middle[kk-1].in[0] );
-        connect<stream,stream>( sig_i[2*kk+1], k_middle[kk-1].in[1] );
-      }
-    } // kk
-    // Connect cascade input ports:
-    for (unsigned kk=0; kk < NT-2; kk++) {
-      if ( kk==0 ) {
-        connect<cascade,cascade>( k_input.out[0], k_middle[0].in[2] );
-      }
-      else {
-        connect<cascade,cascade>( k_middle[kk-1].out[0], k_middle[kk].in[2] );
-      }
-    } // kk
-    // Connect final cascade output port:
-    connect<cascade,cascade>( k_middle[NT-3].out[0], k_output.in[2] );
-    // Connect final output port:
-    for (unsigned kk=0; kk < 2; kk++) {
-      connect<stream,stream>( k_output.out[kk], sig_o[kk] );
-    } // kk
+    connect<> n00( sig_i[0], k_input.in[0] );
+    connect<> n01( sig_i[1], k_input.in[1] );
+    connect<> n10( sig_i[2], k_middle[0].in[0] );
+    connect<> n11( sig_i[3], k_middle[0].in[1] );
+    connect<> n20( sig_i[4], k_middle[1].in[0] );
+    connect<> n21( sig_i[5], k_middle[1].in[1] );
+    connect<> n30( sig_i[6], k_output.in[0] );
+    connect<> n31( sig_i[7], k_output.in[1] );
+
+    fifo_depth(n00) = (8);
+    fifo_depth(n01) = (8);
+    fifo_depth(n10) = (8);
+    fifo_depth(n11) = (8);
+    fifo_depth(n20) = (8);
+    fifo_depth(n21) = (8);
+    fifo_depth(n30) = (8);
+    fifo_depth(n31) = (8);
+
+    connect<>( k_input.out[0],     k_middle[0].in[2] );
+    connect<>( k_middle[0].out[0], k_middle[1].in[2] );
+    connect<>( k_middle[1].out[0], k_output.in[2]    );
+
+    connect<>( k_output.out[0], sig_o[0] );
+    connect<>( k_output.out[1], sig_o[1] );
+
   }
 };
 

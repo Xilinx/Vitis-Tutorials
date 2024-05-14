@@ -4,16 +4,12 @@
 #
 # Author: Mark Rollins
 
-DO_COSIM        := true
+DO_COSIM        := false
 ECHO            := @echo
-
-PLATFORM_USE    := xilinx_vck190_base_202410_1
-XPFM            := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 KERNEL          := dma_stream_src_wrapper
 KERNEL_SRC      := dma_stream_src.cpp
 XO              := ${KERNEL}.xo
-HLS_FREQ        := 312500000
 
 .PHONY: clean all help
 
@@ -27,27 +23,15 @@ help::
 
 all: ${XO}
 
-${XO}: ${KERNEL_SRC} ${XPFM}
+${XO}: ${KERNEL_SRC}
+	v++ --config hls.cfg --compile --mode hls --work_dir ${KERNEL}
 ifeq (${DO_COSIM},true)
-	v++ --compile --debug --save-temps \
-		--platform ${XPFM} \
-		--hls.clock ${HLS_FREQ}:${KERNEL} \
-		--hls.pre_tcl run_presyn.tcl \
-		--hls.post_tcl run_postsyn.tcl \
-		--kernel   ${KERNEL} \
-		--output   ${XO} \
-		${KERNEL_SRC}
-	@cat _x/${KERNEL}/${KERNEL}/${KERNEL}/solution/impl/report/verilog/${KERNEL}_export.rpt
-else
-	v++ --compile --debug --save-temps \
-		--platform ${XPFM} \
-		--hls.clock ${HLS_FREQ}:${KERNEL} \
-		--hls.pre_tcl run_presyn.tcl \
-		--kernel   ${KERNEL} \
-		--output   ${XO} \
-		${KERNEL_SRC}
+	vitis-run --mode hls --config hls.cfg --csim --work_dir ${KERNEL}
+	vitis-run --mode hls --config hls.cfg --cosim --work_dir ${KERNEL}
+	vitis-run --mode hls --config hls.cfg --impl --work_dir ${KERNEL}
 endif
 
 clean:
-	rm -f $(XO)* *.log
+	rm -f $(XO)* *.log vitis-comp.json
 	rm -rf .Xil _x/ .crashReporter*
+	rm -rf ${KERNEL}

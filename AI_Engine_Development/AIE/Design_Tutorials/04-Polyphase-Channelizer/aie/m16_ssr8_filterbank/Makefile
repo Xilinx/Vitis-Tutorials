@@ -24,7 +24,7 @@ ALL_INCLUDE       := --include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -91,5 +91,5 @@ clean:
 	rm -rf libadf.a *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
 	rm -rf vitis_analyzer* pl_sample_counts* trdata.aiesim
 	rm -rf temp ISS_RPC_SERVER_PORT vitis_design_wrapper*
-	rm -rf system*.* .crashReporter* .AIE_SIM_CMD_LINE_OPTIONS
+	rm -rf system*.* .crashReporter* .AIE_SIM_CMD_LINE_OPTIONS function_wdb_dir
 
