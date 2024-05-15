@@ -3,13 +3,11 @@
 #SPDX-License-Identifier: MIT
 
 HOST_EXE     = ../host.exe
-HOST_INC   = -I../ -I../aie
-HOST_OBJ   = aie_control_xrt.o host.o
-AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
+HOST_OBJ   =  host.o
 
-CXXFLAGS += -std=c++17 -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
+CXXFLAGS += -std=c++17 -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} 
 
-LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
+LDFLAGS += -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} 
 
 
 .PHONY: clean
@@ -19,9 +17,6 @@ ${HOST_EXE}: ${HOST_OBJ}
 
 %.o: %.cpp
 	${CXX} ${CXXFLAGS} -o $@ $<
-
-aie_control_xrt.cpp: ${AIE_CTRL_CPP}
-	cp -f ${AIE_CTRL_CPP} .
 
 clean:
 	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} aie_control_xrt.cpp

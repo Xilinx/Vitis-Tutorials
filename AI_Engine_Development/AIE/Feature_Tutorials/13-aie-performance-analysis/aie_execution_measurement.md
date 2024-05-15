@@ -10,7 +10,7 @@
 
 # AI Engine Graph Execution and Measurement
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.
 
@@ -190,6 +190,8 @@ There are multiple ways to measure performance:
     ```
 
     The event API can be applied in AI Engine simulator, hardware emulation, and hardware flows.
+    
+    There're equivalent XRT event APIs for profiling in hardare and hardware emulation flows. The code can be found in `sw/host.cpp`.
 
 3. The performance result can also be found in the AI Engine simulator profile report. Add the `--profile` option to `aiesimulator`, open Vitis Analyzer, and open the **Profile** view. The profile result can be viewed as shown in the following figure:
 

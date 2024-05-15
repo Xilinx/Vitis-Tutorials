@@ -7,12 +7,8 @@ SPDX-License-Identifier: MIT
 #include <iostream>
 #include <unistd.h>
 #include <complex>
-#include "adf/adf_api/XRTConfig.h"
-#include "experimental/xrt_kernel.h"
-
-#include "graph.cpp"
-
-using namespace adf;
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_aie.h"
 
 int run(int argc, char* argv[]){
 	size_t iterations = 100;
@@ -54,23 +50,17 @@ int run(int argc, char* argv[]){
 	auto s2mm_run = s2mm(out_bo, nullptr, OUTPUT_SIZE);//1st run for s2mm has started
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
 
-	// graph run
-	adf::registerXRT(dhdl, uuid.get());
-	std::cout<<"Register XRT"<<std::endl;
+	xrt::aie::profiling handle(device);
+	handle.start(xrt::aie::profiling::profiling_option::io_stream_start_to_bytes_transferred_cycles, "gr.dataout", "", output_size_in_bytes);
 
-	event::handle handle = event::start_profiling(gr.dataout, event::io_stream_start_to_bytes_transferred_cycles, output_size_in_bytes);
-	if(handle==event::invalid_handle){
-		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
-		return 1;
-	}
-
-	gr.run(iterations);
-	gr.end();
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.run(iterations);
+	ghdl.end();
 	s2mm_run.wait();
 	// Wait graph for some cycles
-	long long cycle_count = event::read_profiling(handle);
+	long long cycle_count = handle.read();
 	std::cout<<"cycle count:"<<cycle_count<<std::endl;
-	event::stop_profiling(handle);
+	handle.stop();
 	double throughput = (double)output_size_in_bytes / (cycle_count *0.8 * 1e-3); //Every AIE cycle is 0.8ns in production board
 	std::cout<<"Throughput of the graph: "<<throughput<<" MB/s"<<std::endl;
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);

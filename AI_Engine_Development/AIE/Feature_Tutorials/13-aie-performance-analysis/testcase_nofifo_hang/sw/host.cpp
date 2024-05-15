@@ -7,14 +7,10 @@ SPDX-License-Identifier: MIT
 #include <iostream>
 #include <unistd.h>
 #include <complex>
-#include "adf/adf_api/XRTConfig.h"
-#include "experimental/xrt_kernel.h"
-
-#include "graph.cpp"
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_aie.h"
 
 #define OUTPUT_SIZE 2048
-
-using namespace adf;
 
 int run(int argc, char* argv[]){
 	size_t output_size_in_bytes = OUTPUT_SIZE * sizeof(int);
@@ -49,28 +45,22 @@ int run(int argc, char* argv[]){
 		host_in[i]=i;
 	}
 
-	// graph run
-	adf::registerXRT(dhdl, uuid.get());
-	std::cout<<"Register XRT"<<std::endl;
-
-	event::handle handle = event::start_profiling(gr.dataout, event::io_stream_running_event_count);
-	event::handle handle2 = event::start_profiling(gr.in, event::io_stream_running_event_count);
-	if(handle==event::invalid_handle || handle2==event::invalid_handle){
-		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
-		return 1;
-	}	
+	xrt::aie::profiling handle(device), handle2(device);
+	handle.start(xrt::aie::profiling::profiling_option::io_stream_running_event_count, "gr.dataout", "", 0);
+	handle2.start(xrt::aie::profiling::profiling_option::io_stream_running_event_count, "gr.in", "", 0);
 
 	//kernel run
 	auto s2mm_run = s2mm(out_bo, nullptr, OUTPUT_SIZE);//1st run for s2mm has started
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
-	gr.run(4);
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.run(4);
 	// Wait graph for some cycles
-	gr.end(50000); // wait for AIE kernel to complete or at most 50000 cycles
+	ghdl.end(5); // wait for AIE kernel to complete or 5 milliseconds
 
-	long long data_out_count = event::read_profiling(handle);
-	long long data_in_count = event::read_profiling(handle2);
-	event::stop_profiling(handle);
-	event::stop_profiling(handle2);
+	long long data_out_count = handle.read();
+	long long data_in_count = handle2.read();
+	handle.stop();
+	handle2.stop();
 	std::cout<<"Output data received:"<<data_out_count<<std::endl;
 	std::cout<<"Input data sent:"<<data_in_count<<std::endl;
 

@@ -10,7 +10,7 @@
 
 # AI Engine Deadlock Analysis
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:
 
@@ -160,32 +160,30 @@ If a deadlock does not show in the AI Engine simulator or hardware emulation flo
 The PS code to profile how much data has been transferred for the input and output is shown below:
 
 	```
-	event::handle handle = event::start_profiling(*dout, event::io_stream_running_event_count);
-	event::handle handle2 = event::start_profiling(*din, event::io_stream_running_event_count);
-	if(handle==event::invalid_handle || handle2==event::invalid_handle){
-		printf("ERROR:Invalid handle. Only two performance counter in a AIE-PL interface tile\n");
-		return 1;
-	}
+	xrt::aie::profiling handle(device), handle2(device);
+	handle.start(xrt::aie::profiling::profiling_option::io_stream_running_event_count, "gr.dataout", "", 0);
+	handle2.start(xrt::aie::profiling::profiling_option::io_stream_running_event_count, "gr.in", "", 0);
 
 	//kernel run
 	auto s2mm_run = s2mm(out_bo, nullptr, OUTPUT_SIZE);//1st run for s2mm has started
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
-	gr.run(4);
+	auto ghdl=xrt::graph(device,uuid,"gr");
+	ghdl.run(4);
 	// Wait graph for some cycles
-	gr.wait(50000); // wait for AIE kernel to complete or at most 50000 cycles
+	ghdl.end(5); // wait for AIE kernel to complete or 5 milliseconds
 
-	long long data_out_count = event::read_profiling(handle);
-	long long data_in_count = event::read_profiling(handle2);
-	event::stop_profiling(handle);
-	event::stop_profiling(handle2);
+	long long data_out_count = handle.read();
+	long long data_in_count = handle2.read();
+	handle.stop();
+	handle2.stop();
 	std::cout<<"Output data received:"<<data_out_count<<std::endl;
 	std::cout<<"Input data sent:"<<data_in_count<<std::endl;
 	```
 	
 	
-  **Note:** `mm2s` needs to be started after `event::start_profiling`. Otherwise, the data transfer begins after `mm2s` starts, and that happens before `event::start_profiling` and `gr.run(4)`.
+  **Note:** `mm2s` needs to be started after `handle.start()`. Otherwise, the data transfer begins after `mm2s` starts, and that happens before `handle.start()` and `gr.run(4)`.
 
-The output is similar:
+The output is similar as:
 
 	
 	```
