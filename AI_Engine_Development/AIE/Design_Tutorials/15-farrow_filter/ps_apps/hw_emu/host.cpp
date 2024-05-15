@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
   ss_i.close();
   del_i.close();
   std::cout << STR_PASSED << "Successfully read input file sig_i.txt" << std::endl;
-  std::cout << STR_PASSED << "Successfully read input file del_i.txt" << std::endl;
+  std::cout << STR_PASSED << "Successfully read input file del_i_optimized.txt" << std::endl;
 
   // ------------------------------------------------------------
   // Load and start PL kernels

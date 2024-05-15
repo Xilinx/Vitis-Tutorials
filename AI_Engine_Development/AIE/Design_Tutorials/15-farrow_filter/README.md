@@ -10,7 +10,7 @@
 
 # Fractional Delay Farrow Filter
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 
@@ -147,8 +147,8 @@ The first command compiles graph code for the SystemC simulator, the second comm
 Alternatively, you can issue `make all`. The console should output:
 
 ```
-*** LOOP_II *** Tile: 24_0	minII: 43	beforeII: 124	afterII: 124	Line: 77	File: farrow_kernel.cpp
-Raw Throughput = 203.0 MSPS
+*** LOOP_II *** Tile: 24_0	minII: 43	beforeII: 123	afterII: 123	Line: 77	File: farrow_kernel.cpp
+Raw Throughput = 204.7 MSPS
 Max error LSB = 1
 ```
 
@@ -162,10 +162,10 @@ Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary
 
 *Figure 6 - Farrow Filter Initial Implementation Array View*
 
-Because every loop iteration produces 16 samples, you need II=16 to achieve your desired throughput. Your first design achieved II=124, so this version of the implementation clearly has no chance of achieving the desired throughput. You can get a rough estimate of the expected throughput using the expected versus achieved II.
+Because every loop iteration produces 16 samples, you need II=16 to achieve your desired throughput. Your first design achieved II=123, so this version of the implementation clearly has no chance of achieving the desired throughput. You can get a rough estimate of the expected throughput using the expected versus achieved II.
 
-In this case, 16/124 x 1.25 GHz = 161 Msps. Indeed, this is confirmed by the reported Raw Throughput, which is measured across all graph iterations. A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration.
-In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/6.452 $us$ = 158.7 Msps.
+In this case, 16/123 x 1.25 GHz = 163 Msps. Indeed, this is confirmed by the reported Raw Throughput, which is measured across all graph iterations. A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration.
+In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/6.398 $us$ = 160 Msps.
 
 ![figure7](images/farrow_initial_trace_view.png)
 
@@ -186,11 +186,11 @@ After running `make all`, the console should display:
 
 ```
 *** LOOP_II *** Tile: 24_0	minII: 28	beforeII: 91	afterII: 82	Line: 62	File: farrow_kernel.cpp
-Raw Throughput = 300.5 MSPS
+Raw Throughput = 300.8 MSPS
 Max error LSB = 1
 ```
 
-Achieved II dropped from 124 to 82, but you are still not where you need to be, so further optimization is needed.
+Achieved II dropped from 123 to 82, but you are still not where you need to be, so further optimization is needed.
 
 ### Second Farrow Optimization
 
@@ -237,7 +237,7 @@ After running `make all`, the console should display:
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 94	File: farrow_kernel.cpp
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 110	File: farrow_kernel.cpp
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 126	File: farrow_kernel.cpp
-Raw Throughput = 768.5 MSPS
+Raw Throughput = 768.1 MSPS
 Max error LSB = 1
 ```
 
@@ -292,15 +292,15 @@ Steady state throughput is 1024/912.8e-6 = 1115 Msps.
 
 ### Setup and Initialization
 
->**IMPORTANT:** Before beginning the tutorial ensure you have installed Vitis 2023.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html).
+>**IMPORTANT:** Before beginning the tutorial ensure you have installed Vitis 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the ```COMMON_IMAGE_VERSAL``` environment variable to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value, ```$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms```.
+Set the ```COMMON_IMAGE_VERSAL``` environment variable to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value, ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms```.
 
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/15-farrow-filter/Makefile``` file.
 
 ```
 # Platform Selection...
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202320_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

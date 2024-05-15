@@ -54,4 +54,4 @@ clean:
 	$(MAKE) clean -C hls/farrow_dma_src
 	$(MAKE) clean -C ps_apps/hw_emu
 	$(MAKE) clean -C vitis
-	@/bin/rm -rf .crashReporter*
+	@/bin/rm -rf .crashReporter* .Xil vivado.jou vivado.log
