@@ -42,7 +42,7 @@ $(XPFM): $(XSA)
 
 # Step 3: Validate Design
 step3_hwemu_test: $(XPFM)
-	$(MAKE) all TARGET=hw_emu -C step3_validate
+	$(MAKE) run TARGET=hw_emu -C step3_validate
 
 step3_hw_test: $(XPFM)
 	$(MAKE) sd_card TARGET=hw -C step3_validate 

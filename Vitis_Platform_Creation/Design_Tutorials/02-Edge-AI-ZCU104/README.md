@@ -8,7 +8,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2023.2 and Vivado 2023.2***
+***Version: Vitis 2024.1 and Vivado 2024.1***
 
 
 In this module, you will create a custom Vitis embedded platform for ZCU104 capable of running ***Vitis acceleration applications***. Additionally, this platform is versatile enough to support general **embedded software applications**. The diagram below illustrates the structure of this example system.
@@ -51,6 +51,8 @@ The following sections will introduce the platform creation steps. Each section 
 ***Start from [step 1: Create the Hardware Platform](./step1.md).***
 
 ## Change Log
+### 2024.1
+- The Script starts to obtain vadd system project example from tool installation directory.
 ### 2023.2
 - Vitis Unified IDE becomes the default IDE.
 ### 2022.2

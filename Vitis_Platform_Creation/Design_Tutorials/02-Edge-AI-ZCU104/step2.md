@@ -43,7 +43,7 @@ As most of the components are extracted from the common image package, we will p
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    .
-   ├── xilinx-zynqmp-common-v2023.2.tar.gz
+   ├── xilinx-zynqmp-common-v2024.1.tar.gz
    └── zcu104_custom_platform
    ```
 
@@ -53,14 +53,14 @@ As most of the components are extracted from the common image package, we will p
 
    ```bash
    cd WorkSpace
-   tar xvf xilinx-zynqmp-common-v2023.2.tar.gz -C .
+   tar xvf xilinx-zynqmp-common-v2024.1.tar.gz -C .
    ```
 
-You can see the ``xilinx-zynqmp-common-v2023.2`` folder which contains some components located in the ``WorkSpace`` folder as shown below:
+You can see the ``xilinx-zynqmp-common-v2024.1`` folder which contains some components located in the ``WorkSpace`` folder as shown below:
 
 ```
    tree -L 2
-   ├── xilinx-zynqmp-common-v2023.2
+   ├── xilinx-zynqmp-common-v2024.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -93,7 +93,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
    ```bash
    createdts -hw ../zcu104_hardware_platform/zcu104_custom_platform_hw.xsa -zocl  -platform-name mydevice \
-    -git-branch xlnx_rel_v2023.2 -board  zcu104-revc  -dtsi system-user.dtsi -compile
+    -git-branch xlnx_rel_v2024.1 -board  zcu104-revc  -dtsi system-user.dtsi -compile
    ```
 
    The `createdts` command needs the following input values:
@@ -129,7 +129,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
 1. Install the sysroot 
 
-   - Go to common image extracted directory `<WorkSpace/xilinx-zynqmp-common-v2023.2/>`.
+   - Go to common image extracted directory `<WorkSpace/xilinx-zynqmp-common-v2024.1/>`.
    - Type ``./sdk.sh -d <Install Target Dir>`` to install the PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory  **.** (This is an example. **.** means current directory. ) and confirm.
 
    The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
@@ -160,7 +160,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2023.2** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.1** and click **OK**.
 
    - **DTB File**: Browse to **mydevice/psu_cortexa53_0/device_tree_domain/bsp** and select system.dtb, then click **OK**.
 
@@ -274,6 +274,6 @@ Scripts are provided to create the Vitis platform component. To use these script
 
 In the next step, you will [build some applications on this platform and test them.](./step3.md).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -30,7 +30,7 @@ platforminfo ./zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 Basic Platform Information
 ==========================
 Platform:           zcu104_custom
-File:               /group/bcapps/sven/project/giten/Vitis-Tutorials1/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/GUI/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
+File:               /Vitis-Tutorials1/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/GUI/zcu104_custom/export/zcu104_custom/zcu104_custom.xpfm
 Description:        
 
 =====================================
@@ -40,7 +40,7 @@ Vendor:                           xilinx
 Board:                            ZCU104_Custom_Platform
 Name:                             ZCU104_Custom_Platform
 Version:                          0.0
-Generated Version:                2023.2
+Generated Version:                2024.1
 Hardware:                         1
 Software Emulation:               1
 Hardware Emulation:               0
@@ -57,10 +57,21 @@ Clock Information
   Default Clock Index: 2
   Clock Index:         1
     Frequency:         100.000000
+    Status:            fixed
   Clock Index:         2
     Frequency:         200.000000
+    Status:            fixed
   Clock Index:         3
     Frequency:         400.000000
+    Status:            fixed
+
+========================
+AIE Hardware Information
+========================
+Arch: NO_AIE
+Shim Row Start: -1 # Rows: 0
+Core Row Start: -1 # Rows: 0
+Mem Row Start: -1 # Rows: 0
 
 ==================
 Memory Information
@@ -86,7 +97,7 @@ System Configurations:
   System Config Processor Groups:
     Processor Group Name:      linux_psu_cortexa53
     Processor Group CPU Type:  cortex-a53
-    Processor Group OS Name:   Linux On psu_cortexa53
+    Processor Group OS Name:   xrt
   System Config Boot Images:
     Boot Image Name:           standard
     Boot Image Type:           
@@ -100,7 +111,7 @@ System Configurations:
     Boot Image QEMU Boot:      
     Boot Image QEMU Dev Tree:  
 Supported Runtimes:
-  Runtime: C/C++
+Runtime: C/C++
 ```
 
 </details>
@@ -121,9 +132,9 @@ Vector addition is the simplest acceleration PL kernel. The Vitis Unified IDE ca
       - Input the **System project name** as `vadd` and use the default location for **System project location**. Then click **Next**.
       - Select **zcu104_custom** platform, click **Next**.
          >Note: If the platform component is not in the current workspace user could click **+** button to add the platform component.
-      - Set **Kernel Image** to ```xilinx-zynqmp-common-v2023.2/Image```.
-      - Set **Root FS** to ```xilinx-zynqmp-common-v2023.2/rootfs.ext4```.
-      - Set **Sysroot** to ```zcu104_software_platform/xilinx-zynqmp-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Kernel Image** to ```xilinx-zynqmp-common-v2024.1/Image```.
+      - Set **Root FS** to ```xilinx-zynqmp-common-v2024.1/rootfs.ext4```.
+      - Set **Sysroot** to ```zcu104_software_platform/xilinx-zynqmp-common-v2024.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
    After seconds the vadd system project, vadd host component and vadd kernel component will be ready in the component view.
@@ -255,6 +266,6 @@ Feel free to check more tutorials in this repository.
 
 If user need to do iteration for your project, you could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

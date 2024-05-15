@@ -6,48 +6,164 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=zcu104_custom
 PLATFORM ?= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-SYSROOT=$(ROOT_DIR)/../step2_pfm/sysroot/
-TARGET ?=hw_emu 
-VERSION=2024.1
+TARGET ?=hw_emu
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
-PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
+SRC=$(XILINX_VITIS)/examples/vadd/
+VERSION=2024.1
+SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
+SD_IMAGE_FILE := $(COMMON_IMAGE_ZYNQMP)/Image
+VPP_LDFLAGS :=
 
 
+TEMP_DIR := ./_x.$(TARGET).$(PLATFORM_NAME)
+BUILD_DIR := ./build_dir.$(TARGET)
 
-.PHONY: help
+LINK_OUTPUT := $(BUILD_DIR)/krnl_vadd.link.xclbin
 
-help:
-	@echo "Makefile usage"
-	@echo "make all TARGET=hw_emu/sw_emu	## to build vadd application and run hw/sw emulation on the platform created in former step"
-	@echo "make sd_card 					## to build vadd application and run hw test on the platform created in former step"
+EMU_PS := QEMU
+ifeq ($(TARGET), sw_emu)
+EMU_PS := X86
+endif
 
-all:check-common-image vadd 
-sd_card:check-common-image vadd_hw
+# SoC variables
+RUN_APP_SCRIPT = ./run_app.sh
+PACKAGE_OUT = ./package.$(TARGET)
 
-#target : check  whether the common image is ready 
-check-common-image:
+LAUNCH_EMULATOR = $(PACKAGE_OUT)/launch_$(TARGET).sh
+RESULT_STRING = TEST PASSED
+
+VPP_PFLAGS := 
+CMD_ARGS = $(BUILD_DIR)/krnl_vadd.xclbin
+SD_CARD := $(PACKAGE_OUT)
+
+ifeq ($(EMU_PS), X86)
+CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
+else
+CXXFLAGS += -I$(SYSROOT)/usr/include/xrt -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
+endif
+
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
+VPP_PFLAGS+= --package.emu_ps qemu
+endif
+
+#Check for EMU_PS
+ifeq ($(TARGET), $(filter $(TARGET),hw_emu hw))
+ifeq ($(EMU_PS), X86)
+$(error For hw_emu and hw, the design has to run on QEMU. Thus, please give EMU_PS=QEMU for these targets.)
+endif
+endif
+
+########################## Checking if PLATFORM in allowlist #######################
+PLATFORM_BLOCKLIST += nodma 
+############################## Setting up Host Variables ##############################
+#Include Required Host Source Files
+HOST_SRCS += $(SRC)/vadd.cpp 
+# Host compiler global settings
+CXXFLAGS += -fmessage-length=0
+LDFLAGS += -lrt -lstdc++ 
+ifneq ($(EMU_PS), X86)
+LDFLAGS += --sysroot=$(SYSROOT)
+endif
+############################## Setting up Kernel Variables ##############################
+# Kernel compiler global settings
+VPP_FLAGS += --save-temps 
+
+
+EXECUTABLE = ./simple_vadd
+EMCONFIG_DIR = $(TEMP_DIR)
+
+############################## Setting Targets ##############################
+.PHONY: all clean cleanall emconfig 
+
+ifeq ($(EMU_PS), X86)
+all:  check-common-image $(EXECUTABLE) $(LINK_OUTPUT) emconfig 
+	
+else
+all: check-common-image $(EXECUTABLE) $(LINK_OUTPUT) sd_card
+
+endif
+
+#target : check  whether the common image is ready  and copy source code 
+check-common-image: 
 ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
 	@echo "'COMMON_IMAGE_ZYNQMP' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
 	@make help
 	@echo "exit ....." && exit 1
 endif
 
-Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
 
-vadd: Vitis_Accel_Examples $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=$(TARGET) PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
+.PHONY: host
+host: $(EXECUTABLE)
 
-vadd_hw: Vitis_Accel_Examples $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
+.PHONY: build
+build: check-vitis check-device $(LINK_OUTPUT)
+
+.PHONY: xclbin
+xclbin: build
+
+############################## Setting Rules for Binary Containers (Building Kernels) ##############################
+$(TEMP_DIR)/krnl_vadd.xo: $(SRC)/krnl_vadd.cpp
+	mkdir -p $(TEMP_DIR)
+	v++ -c $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -k krnl_vadd --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
+
+$(LINK_OUTPUT): $(TEMP_DIR)/krnl_vadd.xo
+	mkdir -p $(BUILD_DIR)
+	v++ -l $(VPP_FLAGS) $(VPP_LDFLAGS) -t $(TARGET) --platform $(PLATFORM) --temp_dir $(TEMP_DIR) -o'$(LINK_OUTPUT)' $(+)
+
+ifeq ($(EMU_PS), X86)
+	v++ -p $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -o $(BUILD_DIR)/krnl_vadd.xclbin
+endif
+############################## Preparing sdcard ##############################
+.PHONY: sd_card
+sd_card: emconfig  $(SD_CARD)
+
+$(SD_CARD): $(EXECUTABLE) $(LINK_OUTPUT)
+	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4 --package.sd_file $(SD_IMAGE_FILE)  --package.sd_file $(RUN_APP_SCRIPT) --package.sd_file $(EXECUTABLE) --package.sd_file $(EMCONFIG_DIR)/emconfig.json -o $(BUILD_DIR)/krnl_vadd.xclbin
+
+############################## Setting Rules for Host (Building Host Executable) ##############################
+$(EXECUTABLE): $(HOST_SRCS)
+ifeq ($(EMU_PS), X86)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+else
+	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+endif
+
+emconfig:$(EMCONFIG_DIR)/emconfig.json
+$(EMCONFIG_DIR)/emconfig.json:
+	emconfigutil --platform $(PLATFORM) --od $(EMCONFIG_DIR)
+
+############################## Setting Essential Checks and Running Rules ##############################
+run: all
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+ifeq ($(EMU_PS), X86)
+	cp -rf $(EMCONFIG_DIR)/emconfig.json .
+	XCL_EMULATION_MODE=$(TARGET) $(EXECUTABLE) $(CMD_ARGS)
+else
+	bash -c '$(LAUNCH_EMULATOR) -run-app $(RUN_APP_SCRIPT) | tee run_app.log; exit $${PIPESTATUS[0]}'
+endif
+else
+	$(ECHO) "Please copy the content of sd_card folder and data to an SD Card and run on the board"
+endif
 
 
-platforminfo:
-	$(MAKE) -C platforminfo
+.PHONY: test
+test: $(EXECUTABLE)
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
+ifeq ($(EMU_PS), X86)
+	XCL_EMULATION_MODE=$(TARGET) $(EXECUTABLE) $(CMD_ARGS)
+else
+	bash -c '$(LAUNCH_EMULATOR) -run-app $(RUN_APP_SCRIPT) | tee run_app.log; exit $${PIPESTATUS[0]}'
+endif
+else
+	$(ECHO) "Please copy the content of sd_card folder and data to an SD Card and run on the board"
+endif
 
 clean:
-	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
-	-$(MAKE) -C platforminfo  clean
+	-rm $(EXECUTABLE) _x* *.xclbin/{*sw_emu*,*hw_emu*} tmp *.log logs v++* -rf
+	
 
-ultraclean:clean
-	rm -rf Vitis_Accel_Examples 
+ultraclean: clean
+	-rm build_dir* sd_card* package.* *.py -rf
+	
