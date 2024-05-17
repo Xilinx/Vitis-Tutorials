@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -273,30 +273,72 @@ Now the output of the filter can be displayed. The input being a set of Dirac im
 
 The top graph reflects the real part of the output, the bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.
 
+After simulation the simulator displays the raw throughput at the input and output ports:
+
+```
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+PhaseIn_0_0         | IN                | 5007.824726 MBps  
+PhaseIn_0_1         | IN                | 5007.824726 MBps  
+PhaseIn_1_0         | IN                | 4441.360167 MBps  
+PhaseIn_1_1         | IN                | 5007.824726 MBps  
+PhaseIn_2_0         | IN                | 5007.824726 MBps  
+PhaseIn_2_1         | IN                | 4312.668464 MBps  
+PhaseIn_3_0         | IN                | 4380.561259 MBps  
+PhaseIn_3_1         | IN                | 5007.824726 MBps  
+PhaseIn_4_0         | IN                | 5007.824726 MBps  
+PhaseIn_4_1         | IN                | 5007.824726 MBps  
+PhaseIn_5_0         | IN                | 5007.824726 MBps  
+PhaseIn_5_1         | IN                | 4494.382022 MBps  
+PhaseIn_6_0         | IN                | 5007.824726 MBps  
+PhaseIn_6_1         | IN                | 5007.824726 MBps  
+PhaseIn_7_0         | IN                | 4542.228531 MBps  
+PhaseIn_7_1         | IN                | 4723.247232 MBps  
+PhaseOut_0_0        | OUT               | 4714.548803 MBps  
+PhaseOut_0_1        | OUT               | 4705.882353 MBps  
+PhaseOut_1_0        | OUT               | 4714.548803 MBps  
+PhaseOut_1_1        | OUT               | 4705.882353 MBps  
+PhaseOut_2_0        | OUT               | 4714.548803 MBps  
+PhaseOut_2_1        | OUT               | 4705.882353 MBps  
+PhaseOut_3_0        | OUT               | 4714.548803 MBps  
+PhaseOut_3_1        | OUT               | 4705.882353 MBps  
+PhaseOut_4_0        | OUT               | 4714.548803 MBps  
+PhaseOut_4_1        | OUT               | 4705.882353 MBps  
+PhaseOut_5_0        | OUT               | 4714.548803 MBps  
+PhaseOut_5_1        | OUT               | 4705.882353 MBps  
+PhaseOut_6_0        | OUT               | 4714.548803 MBps  
+PhaseOut_6_1        | OUT               | 4705.882353 MBps  
+PhaseOut_7_0        | OUT               | 4714.548803 MBps  
+PhaseOut_7_1        | OUT               | 4705.882353 MBps  
+--------------------------------------------------------------------------------------------------
+```
+The aggregated ouput port throughput in Msps (cint16) is: `18840.86 Msps`.
+
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput PhaseOut_*`:
 
 ```
-PhaseOut_0_0.txt -->  1174.31 Msps
-PhaseOut_0_1.txt -->  1170.02 Msps
+PhaseOut_0_0.txt -->  1178.64 Msps
+PhaseOut_0_1.txt -->  1176.47 Msps
 PhaseOut_1_0.txt -->  1178.64 Msps
-PhaseOut_1_1.txt -->  1172.16 Msps
-PhaseOut_2_0.txt -->  1174.31 Msps
-PhaseOut_2_1.txt -->  1170.02 Msps
+PhaseOut_1_1.txt -->  1176.47 Msps
+PhaseOut_2_0.txt -->  1178.64 Msps
+PhaseOut_2_1.txt -->  1176.47 Msps
 PhaseOut_3_0.txt -->  1178.64 Msps
-PhaseOut_3_1.txt -->  1172.16 Msps
-PhaseOut_4_0.txt -->  1174.31 Msps
-PhaseOut_4_1.txt -->  1170.02 Msps
+PhaseOut_3_1.txt -->  1176.47 Msps
+PhaseOut_4_0.txt -->  1178.64 Msps
+PhaseOut_4_1.txt -->  1176.47 Msps
 PhaseOut_5_0.txt -->  1178.64 Msps
-PhaseOut_5_1.txt -->  1172.16 Msps
-PhaseOut_6_0.txt -->  1174.31 Msps
-PhaseOut_6_1.txt -->  1170.02 Msps
+PhaseOut_5_1.txt -->  1176.47 Msps
+PhaseOut_6_0.txt -->  1178.64 Msps
+PhaseOut_6_1.txt -->  1176.47 Msps
 PhaseOut_7_0.txt -->  1178.64 Msps
-PhaseOut_7_1.txt -->  1172.16 Msps
+PhaseOut_7_1.txt -->  1176.47 Msps
 
 -----------------------
 
 
-Total Throughput -->   18780.51 Msps
+Total Throughput -->   18840.86 Msps
 ```
 
 This architecture achieves almost 19 Gsps performance. It is less than the maximum expected (20 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length, the performance obtained is:

@@ -41,7 +41,7 @@ aieviz:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 
 clean:
-	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) ${AIE_BUILD_DIR}/aiesim* ${AIE_BUILD_DIR}/ess* ${AIE_BUILD_DIR}/profile* ${AIE_BUILD_DIR}/xnwOut ${AIE_BUILD_DIR}/.Xil
+	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) ${AIE_BUILD_DIR}/aiesim* ${AIE_BUILD_DIR}/ess* ${AIE_BUILD_DIR}/profile* ${AIE_BUILD_DIR}/xnwOut ${AIE_BUILD_DIR}/.Xil .wsdata
 	find ./ -type f | grep -v Makefile | xargs rm -Rf
 
 .PHONY: all clean aie aiesim aieviz

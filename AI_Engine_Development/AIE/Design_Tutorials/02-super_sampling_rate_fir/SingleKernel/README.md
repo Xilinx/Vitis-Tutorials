@@ -9,7 +9,7 @@
 
 # Single-Kernel FIR Filter Implementation
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 In this first part of the tutorial, you will use a basic filtering application and analyze the performance that can be achieved.
 
@@ -250,15 +250,28 @@ As explained earlier, the directory `Utils` contains a number of utilities that 
 
 The top graph reflects the outputs where the abscissa is at the time at which this output occurred. It is much easier to look at the bottom graph where the samples are displayed one after the other. The filter impulse can be easily recognized on this sub-graph. The file `out.txt` contains three columns: (timestamp, real part, and imaginary part) of the output samples.
 
+After simulation the simulator displays the raw throughput at the input and output port:
+
+```
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+64 bits in G1       | IN                | 1168.361959 MBps
+64 bits out G1      | OUT               | 1182.721183 MBps
+--------------------------------------------------------------------------------------------------
+```
+
+As this is expressed in bytes per second this must be divided by 4 to get it in samples per second (cint16 is encoded with 2 bytes for the real part and 2 bytes for the imaginary part). This makes an estimated throughput of `295.68 Msps`.
+
 The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   293.33 Msps
+Output_0.txt -->   295.61 Msps
 
 -----------------------
 
 
-Total Throughput -->     293.33 Msps
+Total Throughput -->     295.61 Msps
 ```
 
 Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 312.5 Msps, which is in line with what was achieved.

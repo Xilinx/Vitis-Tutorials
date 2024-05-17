@@ -23,7 +23,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	void filter(input_stream_cint16*  sin,output_stream_cacc48*  cout);
+	void filter(input_stream<cint16>*  sin,output_cascade<cacc48>*  cout);
 
 	static void registerKernelClass()
 	{
@@ -45,7 +45,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	void filter(input_stream_cint16*  sin,input_stream_cacc48*  cin,output_stream_cacc48*  cout);
+	void filter(input_stream<cint16>*  sin,input_cascade<cacc48>*  cin,output_cascade<cacc48>*  cout);
 
 	static void registerKernelClass()
 	{
@@ -67,7 +67,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	void filter(input_stream_cint16*  sin,input_stream_cacc48*  cin,output_stream_cint16*  sout);
+	void filter(input_stream<cint16>*  sin,input_cascade<cacc48>*  cin,output_stream<cint16>*  sout);
 
 	static void registerKernelClass()
 	{

@@ -9,7 +9,7 @@
 
 # Multi-Kernel FIR Filter Implementation
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 In this second part of the tutorial, you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
 
@@ -272,15 +272,30 @@ Now the output of the filter can be displayed. The input being a set of Dirac im
 
 The top graph reflects the outputs where the abscissa is the time at which this output occured. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.
 
-The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
+After simulation the simulator displays the raw throughput at the input and output ports:
 
 ```
-Output_0.txt -->  1182.99 Msps
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+Stream for block 0  | IN                | 4543.092248 MBps
+Stream for block 1  | IN                | 4536.837570 MBps
+Stream for block 2  | IN                | 4530.647235 MBps
+Stream for block 3  | IN                | 4524.520256 MBps
+64 bits output 0    | OUT               | 4753.946147 MBps
+--------------------------------------------------------------------------------------------------
+```
+The ouput port throughput in Msps (cint16) is: `1188.49 Msps`.
+
+The performance of this architecture can also be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
+
+```
+Output_0.txt -->  1188.49 Msps
 
 -----------------------
 
 
-Total Throughput -->    1182.99 Msps
+Total Throughput -->    1188.49 Msps
 ```
 
 This architecture achieves close to 1.25 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.

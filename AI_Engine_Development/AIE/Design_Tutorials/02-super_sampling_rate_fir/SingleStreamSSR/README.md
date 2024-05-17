@@ -273,18 +273,37 @@ Now the output of the filter can be displayed. The input being a set of Dirac im
 
 The top graph reflects the real part of the output. The bottom graph this is the imaginary part. On both, the filter impulse response is recognizable.
 
+After simulation the simulator displays the raw throughput at the input and output ports:
+
+```
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+Phase 0             | IN                | 5003.909304 MBps  
+Phase 1             | IN                | 5003.909304 MBps  
+Phase 2             | IN                | 5003.909304 MBps  
+Phase 3             | IN                | 5003.909304 MBps  
+64 bits out 0       | OUT               | 4753.946147 MBps  
+64 bits out 1       | OUT               | 4753.946147 MBps  
+64 bits out 2       | OUT               | 4753.946147 MBps  
+64 bits out 3       | OUT               | 4753.946147 MBps  
+--------------------------------------------------------------------------------------------------
+```
+
+The aggregated ouput port throughput in Msps (cint16) is: `4753.95 Msps`.
+
 The performance of this architecture can be measured using the timestamped output. In the same directory (`Emulation-AIE/aiesimulator_output/data`), type `StreamThroughput output_*`:
 
 ```
-output_0.txt -->  1181.90 Msps
-output_1.txt -->  1186.28 Msps
-output_2.txt -->  1181.90 Msps
-output_3.txt -->  1184.09 Msps
+output_0.txt -->  1188.49 Msps
+output_1.txt -->  1188.49 Msps
+output_2.txt -->  1188.49 Msps
+output_3.txt -->  1188.49 Msps
 
 -----------------------
 
 
-Total Throughput -->    4734.18 Msps
+Total Throughput -->    4753.95 Msps
 ```
 
 This architecture achieves close to 5 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.

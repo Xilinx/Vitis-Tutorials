@@ -24,12 +24,12 @@ aieviz:
 	make -C Emulation-AIE PFM_NAME=$(PFM_NAME) aieviz
 
 clean:
-	rm data/*
-	touch data/dummy.txt
+	rm -rf data
 	make -C Emulation-AIE clean
 	rm -f vitis_analyzer*
 
 data:
-	cd ../Utils && ./GenerateStreams cint16 64 4 1 512 4 Dirac ../SingleStreamSSR/data/PhaseIn
+	mkdir -p data
+	../Utils/GenerateStreams cint16 64 4 1 512 4 Dirac data/PhaseIn
 
 .PHONY: all clean aie aiesim aieviz data

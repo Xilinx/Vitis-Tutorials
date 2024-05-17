@@ -145,11 +145,11 @@ std::vector<cint16> taps8p[8] = { PHASE(0,8), PHASE(1,8), PHASE(2,8), PHASE(3,8)
 
                 connect<stream> n0(in[2*col],k[row][col1].in[0]);
                 connect<stream> n1(in[2*col+1],k[row][col1].in[1]);
-                fifo_depth(n0) = 512;
-                fifo_depth(n1) = 512;
+                fifo_depth(n0) = 1024;
+                fifo_depth(n1) = 1024;
 
-                location<fifo>(n0) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x0000, 512);
-                location<fifo>(n1) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x2000, 512);
+                location<fifo>(n0) = dma_fifo(aie_tile, FirstCol+col, fiforow, 0x0000, 1024);
+                location<fifo>(n1) = dma_fifo(aie_tile, FirstCol + col, fiforow, 0x2000, 1024);
             }
         };
     };
