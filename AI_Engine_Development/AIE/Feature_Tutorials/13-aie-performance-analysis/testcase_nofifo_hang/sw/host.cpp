@@ -55,7 +55,7 @@ int run(int argc, char* argv[]){
 	auto ghdl=xrt::graph(device,uuid,"gr");
 	ghdl.run(4);
 	// Wait graph for some cycles
-	ghdl.end(5); // wait for AIE kernel to complete or 5 milliseconds
+	ghdl.end(5000); // wait for AIE kernel to complete or 5000 AIE cycles
 
 	long long data_out_count = handle.read();
 	long long data_in_count = handle2.read();
