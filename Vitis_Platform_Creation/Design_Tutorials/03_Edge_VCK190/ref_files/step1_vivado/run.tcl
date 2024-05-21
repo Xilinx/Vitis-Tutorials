@@ -84,7 +84,7 @@ apply_bd_automation -rule xilinx.com:bd_rule:board -config { Manual_Source {Auto
 set_property -dict [list CONFIG.FREQ_HZ 200321000] [get_bd_intf_ports sys_clk0_1]
 set_property -dict [list CONFIG.FREQ_HZ {200000000}] [get_bd_intf_ports sys_clk0_0]
 
-validate_bd_design
+
 
 add_files -fileset constrs_1 -norecurse ../../ddr.xdc
 import_files -fileset constrs_1 ../../ddr.xdc
@@ -92,6 +92,8 @@ import_files -fileset constrs_1 ../../ddr.xdc
 remove_files ./project_1/project_1.srcs/sources_1/imports/hdl/ext_platform_part_wrapper.v
 file delete -force ./project_1/project_1.srcs/sources_1/imports/hdl/ext_platform_part_wrapper.v
 update_compile_order -fileset sources_1
+assign_bd_address
+validate_bd_design
 make_wrapper -files [get_files ./project_1/project_1.srcs/sources_1/bd/ext_platform_part/ext_platform_part.bd] -top
 add_files -norecurse ./project_1/project_1.gen/sources_1/bd/ext_platform_part/hdl/ext_platform_part_wrapper.v
 

@@ -21,9 +21,9 @@ You will create an acceleration application with PL kernel running on the platfo
       - Input the **System project name** as `vadd` and use the default location for **System project location**. Then click **Next**.
       - Select **custom_platform** platform, click **Next**.
          >Note If the platform component is not in the current workspace user could click **+** button to add the platform component.
-      - Set **Kernel Image** to ```xilinx-versal-common-v2023.2/Image```.
-      - Set **Root FS** to ```xilinx-versal-common-v2023.2/rootfs.ext4```.
-      - Set **Sysroot** to ```xilinx-versal-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Kernel Image** to ```xilinx-versal-common-v2024.1/Image```.
+      - Set **Root FS** to ```xilinx-versal-common-v2024.1/rootfs.ext4```.
+      - Set **Sysroot** to ```xilinx-versal-common-v2024.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
       >Note: In the platform selecting page if the platform you want to use is not in the current list, you can click **+** button to add the platform to the list.
@@ -170,9 +170,9 @@ To verify the platform functionality, you will create a project with AIE + PL ke
       - Use the default setting for **System project name** and **System project location**. Then click **Next**.
       - Select **custom_platform** platform, click **Next**.
          >Note If the platform component is not in the current workspace user could click **+** button to add the platform component.
-      - Set **Kernel Image** to ```xilinx-versal-common-v2023.2/Image```.
-      - Set **Root FS** to ```xilinx-versal-common-v2023.2/rootfs.ext4```.
-      - Set **Sysroot** to ```xilinx-versal-common-v2023.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Kernel Image** to ```xilinx-versal-common-v2024.1/Image```.
+      - Set **Root FS** to ```xilinx-versal-common-v2024.1/rootfs.ext4```.
+      - Set **Sysroot** to ```xilinx-versal-common-v2024.1/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
       >Note: In the platform selecting page if the platform you want to use is not in the current list, you can click **+** button to add the platform to the list.
@@ -337,7 +337,7 @@ If user need to do iteration for your project, you could go through the [Iterati
 [In next chapter](./faq.md), we'll list some frequently encountered problems and frequently asked questions. Please take a look if you'd like to understand more of platform creation.
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
 

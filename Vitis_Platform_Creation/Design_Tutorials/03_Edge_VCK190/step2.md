@@ -34,7 +34,7 @@ As most of the components are extracted from the common image package, we will p
    tree -L 1     # to see the directory hierarchy
    .
    ├── custom_hardware_platform
-   └── xilinx-versal-common-v2023.2.tar.gz
+   └── xilinx-versal-common-v2024.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -43,15 +43,15 @@ As most of the components are extracted from the common image package, we will p
 
    ```bash
    cd WrokSpace
-   tar xvf ../xilinx-versal-common-v2023.2.tar.gz -C .
+   tar xvf ../xilinx-versal-common-v2024.1.tar.gz -C .
    ```
 
-   You can see the **xilinx-versal-common-v2023.2** folder which contains some components located in **WorkSpace** folder as shown below.
+   You can see the **xilinx-versal-common-v2024.1** folder which contains some components located in **WorkSpace** folder as shown below.
 
    ```bash
    tree -L 2
    .
-   ├── xilinx-versal-common-v2023.2
+   ├── xilinx-versal-common-v2024.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -82,7 +82,7 @@ In addition to U-Boot file, lacks default environment variables. So you must upd
 
    ```bash
    createdts -hw ../custom_hardware_platform/custom_hardware_platform.xsa -zocl  -out .  \
-   -platform-name mydevice  -git-branch xlnx_rel_v2023.2  -dtsi system-user.dtsi -compile
+   -platform-name mydevice  -git-branch xlnx_rel_v2024.1  -dtsi system-user.dtsi -compile
    ```
 
    The `createdts` command has the following main input options:
@@ -124,7 +124,7 @@ Following the completion of this step, all the necessary components for platform
 
 1. Install the sysroot
 
-   - Go to common image extracted directory <WorkSpace/xilinx-versal-common-v2023.2/>.
+   - Go to common image extracted directory <WorkSpace/xilinx-versal-common-v2024.1/>.
    - Type `./sdk.sh -d <Install Target Dir>` to install the PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. (This is an example. `.` means current directory) and confirm.
 
    >Note: The environment variable LD_LIBRARY_PATH must not be set when running this command.
@@ -167,7 +167,7 @@ Following the completion of this step, all the necessary components for platform
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-versal-common-v2023.2** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-versal-common-v2024.1** and click **OK**.
 
    - **DTB File**: Browse to **mydevice/psu_cortexa72_0/device_tree_domain/bsp** and select system.dtb, then click **OK**.
 
@@ -281,7 +281,7 @@ Following the completion of this step, all the necessary components for platform
    Board:                            extensible_platform_base
    Name:                             extensible_platform_base
    Version:                          1.0
-   Generated Version:                2023.2
+   Generated Version:                2024.1
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               1
@@ -365,6 +365,6 @@ Scripts are provided to create the Vitis platform. To use these scripts, please 
 Next, try to [build some applications on this platform and test them.](./step3.md)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

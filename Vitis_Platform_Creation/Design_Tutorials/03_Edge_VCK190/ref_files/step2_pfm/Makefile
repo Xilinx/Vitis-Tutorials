@@ -15,6 +15,11 @@ XSA_NAME=custom_hardware_platform
 PLATFORM_NAME=custom_platform
 PLATFORM = $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
+DEVICE_TREE_REPO ?=
+
+#ifndef DEVICE_TREE_REPO
+DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
+#endif
 
 
 .PHONY: help 
@@ -24,7 +29,7 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	
 
-all: check-common-image dtb pfm sysroot 
+all: check-common-image dtb pfm
 sd_card:all
 
 #target : check  whether the common image is ready 
@@ -40,16 +45,9 @@ endif
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
 	@echo "execute createdts to generate dts file"
-	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2024.1 -dtsi system-user.dtsi -compile"
+	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-url $(DEVICE_TREE_REPO) -git-branch xlnx_rel_v2024.1 -dtsi system-user.dtsi -compile"
 
 	
-# Target: sysroot
-# Install sysroot to sw_comp directory
-sysroot: $(SYSROOT)
-
-$(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
-	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d  $(SYSROOT)/ -y
-
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in build/vivado directory
@@ -69,5 +67,5 @@ clean:
 	-$(MAKE) -C platforminfo  clean
 
 ultraclean:clean
-	rm -rf device-tree-xlnx/   $(SYSROOT) 
+	rm -rf device-tree-xlnx/  
 	

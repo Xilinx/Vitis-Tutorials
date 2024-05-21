@@ -8,7 +8,7 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2023.2***
+***Version: 2024.1***
 
 In this module, we treat the VCK190 board as if it were a custom solution tailored to our customer's specific needs. Our approach involves leveraging the AMD Versal™ Adaptive SoC Extensible Part Support Example Design and harnessing the power of a pre-built Linux common image, along with the createdts command, to generate essential software components. These components are then used to construct a dedicated embedded Versal acceleration platform designed exclusively for our customer's board. As the final step, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform) would be a quick choice for you.
 
@@ -66,6 +66,6 @@ Navigate through these steps with the following table of contents links.
 
 - In Step 1, the Vivado project exports the XSA for hardware and hardware emulation seperatedly. When creating the platform in [step3](./step3.md), it is recommended to provide seperate XSA for hardware and hardware emulation.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
