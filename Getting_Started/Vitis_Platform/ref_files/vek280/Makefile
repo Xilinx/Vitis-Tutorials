@@ -93,4 +93,4 @@ clean:
 
 ultraclean:clean
 	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs 
-	rm -rf $(VADD_WORK)
+	rm -rf $(VADD_WORK) tmp 
