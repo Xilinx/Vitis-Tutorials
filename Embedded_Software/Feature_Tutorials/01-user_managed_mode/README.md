@@ -8,7 +8,7 @@
 
 # User Managed Mode in Vitis Unified Embedded IDE
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 This is a new feature with the Vitis Unified Embedded IDE, where users can add a makefile and argument that can be used to create custom builds. This allows the user more control over their project builds instead of letting the tools generate the components.
 
@@ -23,9 +23,9 @@ This tutorial describes three use cases for the **User Managed Mode**.
 
 ### Let’s get started
 
-Launch Vitis 2023.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2024.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
-Select the User Managed Mode
+Select the **Open Explorer View**
 
 ![](./images/user_managed_mode.PNG)
 
@@ -33,7 +33,7 @@ Select the User Managed Mode
 
 In this use case, we shall be using the Python script introduced in the *04-vitis_scripting_flows* to build a workspace and with a simple Hello World application template. However, users can also utilize the Python script `logs/builder.py` that gets generated for every Vitis Unified IDE workspace.
 
-Right click in the **Explorer** view, right-click and select **Edit Build Configurations** and **New Build Configurations** and set as shown below:
+Right click in the **Explorer** view, right-click and select **Edit Build Configurations** and **New Build Configuration** and set similar as shown below. 
 
 ![](./images/ws_build_config.PNG)
 
@@ -71,15 +71,13 @@ The Debug view will be launched, and users can debug as normal
 
 ## Use Case 2 - Running Platform Creation tutorials
 
-In this use case, we can build the example given here [here](https://github.com/Xilinx/Vitis-Tutorials/tree/2023.2/Vitis_Platform_Creation/Design_Tutorials). In particular, we will build the **Edge-AI-ZCU104** Platform.
+In this use case, we can build the example given here [here](https://github.com/Xilinx/Vitis-Tutorials/tree/2024.1/Vitis_Platform_Creation/Design_Tutorials). In particular, we will build the **Edge-AI-ZCU104** Platform.
 
 ### Lets get started
 
-Launch Vitis 2023.2 and select open_workspace and navigate to the <i>Vitis-Tutorials/Vitis_Embedded_Flows/Embedded_Flows/Next_Steps_Embedded/User_Managed_Mode</i> directory
+Launch Vitis 2024.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
-![](./images/open_workspace.PNG)
-
-Select the User Managed Mode
+Select the **Open Explorer View**
 
 ![](./images/user_managed_mode.PNG)
 
@@ -118,11 +116,9 @@ Each section above can be built independently. For example, if users want to mak
 
 ### Lets get started
 
-Launch Vitis 2023.2 and select open_workspace and navigate to the <i>Vitis-Tutorials/Vitis_Embedded_Flows/Embedded_Flows/Next_Steps_Embedded/User_Managed_Mode</i> directory
+Launch Vitis 2024.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
-![](./images/open_workspace.PNG)
-
-Select the User Managed Mode
+Select the **Open Explorer View**
 
 ![](./images/user_managed_mode.PNG)
 

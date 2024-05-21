@@ -1,29 +1,31 @@
-# Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved. 
+#
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
+#
+# Author: Stephen MacMahon
 
 import glob
 from hsi import *
-import argparse
 import vitis
 import os
 import subprocess
 import re
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("echo")
-args = parser.parse_args()
 
-
-def make_platform():
-    xsa = glob.glob("*.xsa")
-    if len(xsa) == 0:
-        print("Error: No XSA files found in [pwd]. Right click in Explorer view, and import -> files and select the XSA ")
-        return ""
-    if len(xsa) > 1:
-        print("Error: More than 1 XSA files found in [pwd].")
-        return ""
-    print("Info: Using " + xsa[0] + " file")
+def make_platform(xsa):
+    extension = os.path.splitext(xsa)[1]
+    if extension != ".xsa":
+        print("Error: file type passed is not an XSA file")
+        xsa = glob.glob("*.xsa")
+        if len(xsa) == 0:
+            print("Error: No XSA files found in [pwd]. Right click in Explorer view, and import -> files and select the XSA ")
+            return ""
+        if len(xsa) > 1:
+            print("Error: More than 1 XSA files found in [pwd].")
+            return ""
+        xsa = xsa[0]
+    print("Info: Using " + xsa + " file")
 
     client = vitis.create_client()
     pwd = os.getcwd()
@@ -31,7 +33,7 @@ def make_platform():
     client.set_workspace(pwd + "/tmp")
     
 
-    HwDesign = HwManager.open_hw_design(xsa[0])
+    HwDesign = HwManager.open_hw_design(xsa)
     arch = HwDesign.FAMILY
     print("Arch detected in XSA is " + arch)
     if arch == "zynquplus":
@@ -41,13 +43,13 @@ def make_platform():
         print("Info: Using " + a53_0.NAME + " for FSBL and " + pmu_0.NAME + " for PMUFW")
         
         print("Info: Creating Platform with build artifacts diasabled")
-        platform = client.create_platform_component(name = "base_platform",hw = xsa[0],os = "standalone",cpu = a53_0.NAME,no_boot_bsp = True)
+        platform = client.create_platform_component(name = "base_platform",hw_design = xsa,os = "standalone",cpu = a53_0.NAME,no_boot_bsp = True)
         print("Info: Creating FSBL Domain")
-        fsbl_domain = platform.add_domain(cpu = a53_0.NAME,os = "standalone",name = "zynqmp_fsbl_domain",display_name = "zynqmp_fsbl_domain",template = "zynqmp_fsbl")
+        fsbl_domain = platform.add_domain(cpu = a53_0.NAME,os = "standalone",name = "zynqmp_fsbl_domain",display_name = "zynqmp_fsbl_domain",support_app = "zynqmp_fsbl")
         print("Info: Creating PMUFW Domain")
-        pmufw_domain = platform.add_domain(cpu = pmu_0.NAME,os = "standalone",name = "psu_pmu_domain",display_name = "psu_pmu_domain",template = "zynqmp_pmufw")
+        pmufw_domain = platform.add_domain(cpu = pmu_0.NAME,os = "standalone",name = "psu_pmu_domain",display_name = "psu_pmu_domain",support_app = "zynqmp_pmufw")
         print("Info: Building Platform")
-        platform = client.get_platform_component(name="base_platform")
+        platform = client.get_component(name="base_platform")
         status = platform.build()
     
         print("Info: Creating FSBL Application")
@@ -71,16 +73,26 @@ def get_arch(xsa):
     #HwDesign.close()
     return(arch)
 
-def build_uboot():
-    xsa = glob.glob("*.xsa")
-    if len(xsa) == 0:
-        print("Error: No XSA files found in [pwd].")
-        return ""
-    if len(xsa) > 1:
-        print("Error: More than 1 XSA files found in [pwd].")
-        return ""
-    print("Info: Using " + xsa[0] + " file. Searching for Arch....")
-    arch = get_arch(xsa[0])
+def get_board(xsa):
+    HwDesign = HwManager.open_hw_design(xsa)
+    board = HwDesign.HwDesign.BOARD
+    #HwDesign.close()
+    return (board)
+
+def build_uboot(xsa):
+    extension = os.path.splitext(xsa)[1]
+    if extension != ".xsa":
+        print("Error: file type passed is not an XSA file")
+        xsa = glob.glob("*.xsa")
+        if len(xsa) == 0:
+            print("Error: No XSA files found in [pwd]. Right click in Explorer view, and import -> files and select the XSA ")
+            return ""
+        if len(xsa) > 1:
+            print("Error: More than 1 XSA files found in [pwd].")
+            return ""
+        xsa = xsa[0]
+    print("Info: Using " + xsa + " file. Searching for Arch....")
+    arch = get_arch(xsa)
     print("Arch detected in XSA is " + arch)
     if arch == "zynquplus":
         print("Using xilinx_zynqmp_virt_defconfig")
@@ -91,16 +103,20 @@ def build_uboot():
     result = subprocess.run(["cd u-boot-xlnx && make "+defconfig+" && make -f Makefile all -j 32"], shell=True, capture_output=True, text=True)
     print(result.stdout)
 
-def build_atf():
-    xsa = glob.glob("*.xsa")
-    if len(xsa) == 0:
-        print("Error: No XSA files found in [pwd].")
-        return ""
-    if len(xsa) > 1:
-        print("Error: More than 1 XSA files found in [pwd].")
-        return ""
-    print("Info: Using " + xsa[0] + " file. Searching for Arch....")
-    arch = get_arch(xsa[0])
+def build_atf(xsa):
+    extension = os.path.splitext(xsa)[1]
+    if extension != ".xsa":
+        print("Error: file type passed is not an XSA file")
+        xsa = glob.glob("*.xsa")
+        if len(xsa) == 0:
+            print("Error: No XSA files found in [pwd]. Right click in Explorer view, and import -> files and select the XSA ")
+            return ""
+        if len(xsa) > 1:
+            print("Error: More than 1 XSA files found in [pwd].")
+            return ""
+        xsa = xsa[0]
+    print("Info: Using " + xsa + " file. Searching for Arch....")
+    arch = get_arch(xsa)
     print("Arch detected in XSA is " + arch)
     if arch == "zynquplus":
         print("Using PLAT zynqmp")
@@ -150,16 +166,21 @@ def read_target_connection():
     return(ret_data)
 
 
-def generate_boot_script():
-    xsa = glob.glob("*.xsa")
-    if len(xsa) == 0:
-        print("Error: No XSA files found in [pwd].")
-        return ""
-    if len(xsa) > 1:
-        print("Error: More than 1 XSA files found in [pwd].")
-        return ""
-    print("Info: Using " + xsa[0] + " file. Searching for Arch....")
-    arch = get_arch(xsa[0])
+def generate_boot_script(xsa):
+    extension = os.path.splitext(xsa)[1]
+    if extension != ".xsa":
+        print("Error: file type passed is not an XSA file")
+        xsa = glob.glob("*.xsa")
+        if len(xsa) == 0:
+            print("Error: No XSA files found in [pwd]. Right click in Explorer view, and import -> files and select the XSA ")
+            return ""
+        if len(xsa) > 1:
+            print("Error: More than 1 XSA files found in [pwd].")
+            return ""
+        xsa = xsa[0]
+
+    print("Info: Using " + xsa + " file. Searching for Arch....")
+    arch = get_arch(xsa)
     print("Arch detected in XSA is " + arch)
     f = open("boot_script.py", "w")
     print("Getting Hardware Server Target Connections")
@@ -257,20 +278,18 @@ def generate_boot_script():
         f.write("a72.con()\n")            
     f.close()
 
-
-
-if args.echo == 'make_platform':
+if sys.argv[1] == 'make_platform':
     print("Info: Creating Platform")
-    make_platform()
+    make_platform(sys.argv[2])
 
-if args.echo == 'generate_boot_script':
+if sys.argv[1] == 'generate_boot_script':
     print("Info: Generate boot script")
-    generate_boot_script()
+    generate_boot_script(sys.argv[2])
 
-if args.echo == 'build_uboot':
+if sys.argv[1] == 'build_uboot':
     print("Info: Generate U-boot")
-    build_uboot()
+    build_uboot(sys.argv[2])
 
-if args.echo == 'build_atf':
+if sys.argv[1] == 'build_atf':
     print("Info: Generate Arm Trusted Firmware")
-    build_atf() 
+    build_atf(sys.argv[2]) 

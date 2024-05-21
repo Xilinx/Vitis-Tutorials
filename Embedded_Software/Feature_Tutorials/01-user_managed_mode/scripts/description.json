@@ -1,0 +1,31 @@
+{
+    "name": "Embedded_F_01-user_managed_mode",
+    "description": "Vitis User Managed Mode Demo",
+    "gui": "false",
+    "flow": "vitis",
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "ES_F_01-Usr-Man",
+        "disable": false,
+        "jobs": [
+            {
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 180
+                }
+            }
+        ],        
+        "targets": [
+            "vitis_hw_build"
+        ],
+		 "custom_build_target": {
+            "all": "all"
+        }, 
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
+            }
+         }       
+    }
+}
