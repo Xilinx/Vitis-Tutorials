@@ -67,7 +67,7 @@ v++ -c --mode aie --target=hw -include="$(XILINX_VITIS)/aietools/include" --incl
 
 ## Step 2 - Clocking the PL Kernels
 
-In this design, you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph, and these are specified when compiling the kernel, and when linking the design together.
+In this design, you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph, and these are specified when compiling the kernel, and when linking the design together. There are different methods to acheive clocking. 
 
 Run the following commands.
 
@@ -81,6 +81,33 @@ Run the following commands.
     v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202410_1 /xilinx_vck190_base_202410_1 .xpfm 
         --freqhz=200000000 --config ./pl_kernels/polar_clip.cfg \
 ```
+
+OR use MHz, for example: 
+
+```bash
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202410_1 /xilinx_vck190_base_202410_1 .xpfm 
+        --freqhz=150MHz --config pl_kernels/mm2s.cfg \
+```
+
+OR prepare a config file and pass it during v++ compile, for example: 
+
+```bash
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202310_1/xilinx_vck190_base_202310_1.xpfm 
+        --config ./pl_kernels/polar_clip.cfg \
+
+   In polar_clip.cfg:
+	[hls]
+	flow_target=vitis
+	syn.file=polar_clip.cpp
+	syn.cflags=-I.
+	syn.top=polar_clip
+	package.ip.name=polar_clip
+	package.output.syn=true
+	package.output.format=xo
+	package.output.file=polar_clip.xo
+	freqhz=200MHz
+```
+
 
 A brief explanation of the `v++` options:
 
@@ -124,13 +151,31 @@ Here you might notice some connectivity and clocking options.
 * `nk`: This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
 * `stream_connect`: This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces.
 
-With the changes made, you can now run the following command:
+With the changes made, you can now run the following command. In v++ link command, we have three ways to direct clocking in linker stage: ```--clock-id=<id_value>``` , ```--freqhz``` and ```–clock.freqHz```
 
 ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/        xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm 
+    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202210_1/xilinx_vck190_base_202210_1.xpfm 
     pl_kernels/s2mm.xo pl_kernels/mm2s.xo pl_kernels/polar_clip.xo ./aie/libadf.a --freqhz=200000000:mm2s.ap_clk --freqhz=200000000:s2mm.ap_clk 
     --config system.cfg --save-temps -o tutorial1.xsa
 ```
+
+OR use system.cfg file to direct the clock using global ```freqhz``` option and using ```[clock]``` directive. 
+
+```bash 	
+    [connectivity]
+	nk=mm2s:1:mm2s
+	nk=s2mm:1:s2mm
+	nk=polar_clip:1:polar_clip
+	sc=mm2s.s:ai_engine_0.DataIn1
+	sc=ai_engine_0.clip_in:polar_clip.in_sample
+	sc=polar_clip.out_sample:ai_engine_0.clip_out
+	sc=ai_engine_0.DataOut1:s2mm.s
+	freqhz=200MHz:s2mm.ap_clk
+
+    [clock]
+	freqHz=100000000:polar_clip.ap_clk
+```
+ 
 | Flag/Switch | Description |
 | --- | ---|
 | `--link` | Tells `v++` that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
