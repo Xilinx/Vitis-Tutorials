@@ -32,7 +32,7 @@
         ],
         "category": "canary",
         "make_options": [
-            "HOST_CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
             "SYSROOT=${SYSROOT}",
 			"SDKTARGETSYSROOT=${SYSROOT}",
 			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",

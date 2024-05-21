@@ -8,8 +8,6 @@ HOST_OBJ   =  host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
 SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/
 
-HOST_CXX      = aarch64-linux-gnu-g++
-
 CXXFLAGS += -std=c++17 -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
 LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -luuid -lrt -ldl -lcrypt -lstdc++ -L${SYSROOT}/usr/lib/ --sysroot=${SYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
@@ -18,10 +16,10 @@ LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -luui
 .PHONY: clean
 
 ${HOST_EXE}: ${HOST_OBJ}
-	${HOST_CXX} -o $@ $^ ${LDFLAGS}
+	${CXX} -o $@ $^ ${LDFLAGS}
 
 %.o: %.cpp
-	${HOST_CXX} ${CXXFLAGS} -o $@ $<
+	${CXX} ${CXXFLAGS} -o $@ $<
 
 #aie_control_xrt.cpp: ${AIE_CTRL_CPP}
 #	cp -f ${AIE_CTRL_CPP} .
