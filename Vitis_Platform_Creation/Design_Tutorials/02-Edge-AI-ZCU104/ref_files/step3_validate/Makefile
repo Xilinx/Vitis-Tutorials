@@ -6,11 +6,13 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=zcu104_custom
 PLATFORM ?= $(ROOT_DIR)/../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-SYSROOT=$(ROOT_DIR)/../step2_pfm/sysroot/
+
 TARGET ?=hw_emu 
 VERSION=2023.2
+
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
-PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
+SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
+VADD_WORK=$(ROOT_DIR)/vadd_work
 
 
 
@@ -32,22 +34,28 @@ ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
 	@echo "exit ....." && exit 1
 endif
 
-Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
+cpVaddCode:
+	mkdir -p vadd_work
+	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp makefile_vadd vadd_work/Makefile
 
-vadd: Vitis_Accel_Examples $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=$(TARGET) PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
 
-vadd_hw: Vitis_Accel_Examples $(PLATFORM)
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=zynquplus  EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)sysroots/cortexa72-cortexa53-xilinx-linux
+vadd_emu: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)/
 
+# vadd_hw is a place-holder for manual build and test on hardware
+vadd_hw: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_ZYNQMP) SYSROOT=$(SYSROOT)/
 
 platforminfo:
 	$(MAKE) -C platforminfo
 
 clean:
-	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
+	-$(MAKE) -C $(VADD_WORK) clean
 	-$(MAKE) -C platforminfo  clean
 
-ultraclean:clean
-	rm -rf Vitis_Accel_Examples 
+
+
+ultraclean:
+	rm -rf logs 
+	rm -rf $(VADD_WORK)
