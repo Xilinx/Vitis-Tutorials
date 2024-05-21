@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -194,17 +194,17 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
     If the application required files are loaded successfully, the following log is expected:
 
     ```bash
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking1
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: irq-xilinx: mismatch in kind-of-intr param
-    Nov  8 06:20:28 xilinx-kv260-starterkit-20232 kernel: zocl-drm axi:zyxclmm_drm: error -ENXIO: IRQ index 32 not found
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/firmware-name
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/pid
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/resets
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /fpga-full/uid
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/afi0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/clocking1
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/axi_intc_0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: OF: overlay: WARNING: memory leak will occur if overlay removed, property: /__symbols__/misc_clk_0
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: irq-xilinx: mismatch in kind-of-intr param
+    Nov  8 06:20:28 xilinx-kv260-starterkit-20241 kernel: zocl-drm axi:zyxclmm_drm: error -ENXIO: IRQ index 32 not found
     vadd: loaded to slot 0
     ```
 
@@ -220,7 +220,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
    - It should show program prints.
 
    ```
-    xilinx-k26-starterkit-20232:~$ ./vadd_host binary_container_1.bin
+    xilinx-k26-starterkit-20241:~$ ./vadd_host binary_container_1.bin
     INFO: Reading binary_container_1.bin
     Loading: 'binary_container_1.bin'
     TEST PASSED
@@ -247,6 +247,6 @@ The command line flow has slight differences comparing to Vitis IDE flow.
 
 If user need to do iteration for your project, you could go through the [Iteration Guidelines](./Iteration_guideline.md) to do iterations.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

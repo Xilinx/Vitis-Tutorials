@@ -11,10 +11,10 @@
         "disable": "true",
         "tasks": {
             "build": {
-                "pre_exec": "./env_setup_zynqmp.sh"
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
             },
             "board": {
-                "pre_exec": "./env_setup_zynqmp.sh"
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
             }
          },
         "jobs": [
@@ -30,7 +30,7 @@
         ],
         "custom_build_target":
         {
-            "all": "all"
+            "all": "build_platform"
         }
     }
 }

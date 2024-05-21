@@ -24,7 +24,7 @@ ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
 endif
 	
 all: step1 step2 step3 
-
+build_platform: step1 step2
 step1:
 	$(MAKE) -C step1_vivado all
 

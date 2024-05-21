@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Vitis™ Platform Creation Tutorials</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.1 Vitis™ Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
     </td>
  </tr>
@@ -18,7 +18,7 @@ In this step, you will create a Vitis platform running a Linux operation system.
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    ├── kv260_hardware_platform
-   └── xilinx-zynqmp-common-v2023.2.tar.gz
+   └── xilinx-zynqmp-common-v2024.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -26,14 +26,14 @@ In this step, you will create a Vitis platform running a Linux operation system.
 
    ```bash
    cd WorkSpace
-   tar xvf ../xilinx-zynqmp-common-v2023.2.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2024.1.tar.gz -C .
    ```
 
-   You can see **xilinx-zynqmp-common-v2023.2** folder which contains the components located in **WrokSpace** folder.
+   You can see **xilinx-zynqmp-common-v2024.1** folder which contains the components located in **WrokSpace** folder.
 
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2023.2
+   ├── xilinx-zynqmp-common-v2024.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -55,7 +55,7 @@ If you need to do system customization, take the following steps as reference. F
 
 <summary><strong>Click for Detailed Steps</strong></summary>  
 
-1. Check the [AMD Kria™ K26 SOM wiki](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM), and download the BSP package from the following link: <https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2023.2-final.bsp>
+1. Check the [AMD Kria™ K26 SOM wiki](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/1641152513/Kria+K26+SOM), and download the BSP package from the following link: <https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-k26-starterkit-v2024.1-final.bsp>
 
    Save it to **WorkSpace** directory.
 
@@ -71,14 +71,14 @@ If you need to do system customization, take the following steps as reference. F
 3. Update the PetaLinux eSDK to enable the recipes needed by the Starter Kit SOM BSP.
 
     ```bash
-    petalinux-upgrade -u 'http://petalinux.xilinx.com/sswreleases/rel-v2023/sdkupdate/' -p 'aarch64'
+    petalinux-upgrade -u 'http://petalinux.xilinx.com/sswreleases/rel-v2004/sdkupdate/' -p 'aarch64'
     ```
 
 4. Create PetaLinux with the Starter Kit SOM BSP, and the XSA export from step 1.
 
     ```bash
-    petalinux-create --type project -s xilinx-kv260-starterkit-v2023.2-final.bsp
-    cd xilinx-kv260-starterkit-2023.2
+    petalinux-create --type project -s xilinx-kv260-starterkit-v2024.1-final.bsp
+    cd xilinx-kv260-starterkit-2024.1
     petalinux-config --get-hw-description=<vivado_design_dir> --silent  
     ```
 
@@ -122,7 +122,7 @@ If you need to do system customization, take the following steps as reference. F
    cd WrokSpace
    xsct
    createdts -hw kv260_hardware_platform/kv260_hardware_platform.xsa -zocl -out . \
-   -platform-name mydevice -git-branch xlnx_rel_v2023.2 -overlay -compile
+   -platform-name mydevice -git-branch xlnx_rel_v2024.1 -overlay -compile
    ```
 
    The `createdts` command has the following input values. Specify them as you need.
@@ -173,7 +173,7 @@ If you need to do system customization, take the following steps as reference. F
 
 1. Install sysroot.
 
-   - Go to `<WorkSpace/xilinx-zynqmp-common-v2023.2>` directory.
+   - Go to `<WorkSpace/xilinx-zynqmp-common-v2024.1>` directory.
    - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. For example: `./sdk.sh -d .`. **.** means the current directory. 
    >**NOTE:** The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
 
@@ -203,7 +203,7 @@ If you need to do system customization, take the following steps as reference. F
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2023.2** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.1** and click **OK**.
 
    - **DTB File**: Browse to **mydevice/psu_cortexa53_0/device_tree_domain/bsp** and select system.dtb, then click **OK**.
       >Note: If the directory you specified for Pre-build image directory already contains DTB file, this DTB field will be automatically updated. 
@@ -236,6 +236,6 @@ If you need to do system customization, take the following steps as reference. F
 
 Next, try to [build applications on this platform and test them.](./step3.md)
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

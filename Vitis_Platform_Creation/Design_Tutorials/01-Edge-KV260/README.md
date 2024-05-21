@@ -8,7 +8,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on KV260
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 The [AMD Kria™ KV260 Vision AI Starter Kit](https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html) is the development platform for Kria K26 SOM. The KV260 is built for advanced vision application development without requiring complex hardware design knowledge. It is based on the AMD UltraScale+™ MPSoC technology similar to ZCU104 evaluation board. In this example, you will extend the [ZCU104 custom embedded platform creation example](../02-Edge-AI-ZCU104/README.md) to KV260 Vision AI Starter Kit.
 
@@ -81,6 +81,6 @@ The platform creation steps are introduced in the following pages. Each page des
 - [Vitis-AI GitHub Repository](https://github.com/Xilinx/Vitis-AI)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
