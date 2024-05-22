@@ -7,7 +7,7 @@
     "platform_blocklist": [],
     
     "testinfo": {
-        "test_name": "AIE_ML_D_03-LeNet",
+        "test_name": "AIE-ML_D_03-LeNet",
         "tasks": {
            "build": {
                "pre_exec": "./env_setup_versal.sh"
