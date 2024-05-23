@@ -21,7 +21,8 @@ else:
     
 platform_path=app_path+"/workspace/"+platform_name+"/export/"+platform_name+"/"+platform_name+".xpfm"
 
-comp = client.create_aie_component(name="simple_aie_application", platform = platform_path, template = "installed_aie_examples/simple")
+if (not os.path.isdir("./workspace/simple_aie_application")):
+    comp = client.create_aie_component(name="simple_aie_application", platform = platform_path, template = "installed_aie_examples/simple")
 
 comp = client.get_component(name="simple_aie_application")
 comp.build(target="hw")

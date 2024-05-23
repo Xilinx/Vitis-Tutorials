@@ -28,7 +28,9 @@ hls_src_loc=app_path+"/../src/"
 #   Create MM2S HLS PL Kernel Component
 #
 
-comp = client.create_hls_component(name="mm2s", cfg_file = ["mm2s_config.cfg"], template = "empty_hls_component")
+if (not os.path.isdir("./workspace/mm2s")):
+    comp = client.create_hls_component(name="mm2s", cfg_file = ["mm2s_config.cfg"], template = "empty_hls_component")
+
 comp = client.get_component(name="mm2s")
 
 hls_comp_cfg = client.get_config_file(comp.component_location+'/mm2s_config.cfg')
@@ -47,7 +49,9 @@ comp.run(operation="PACKAGE")
 #   Create S2MM HLS PL Kernel Component
 #
 
-comp = client.create_hls_component(name="s2mm", cfg_file = ["s2mm_config.cfg"], template = "empty_hls_component")
+if (not os.path.isdir("./workspace/s2mm")):
+    comp = client.create_hls_component(name="s2mm", cfg_file = ["s2mm_config.cfg"], template = "empty_hls_component")
+    
 comp = client.get_component(name="s2mm")
 
 hls_comp_cfg = client.get_config_file(comp.component_location+'/s2mm_config.cfg')

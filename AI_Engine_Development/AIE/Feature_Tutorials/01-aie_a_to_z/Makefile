@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: X11
 #
 
@@ -36,6 +36,9 @@ help::
 	$(ECHO) "      Creates and Builds the AI Engine component"
 	$(ECHO) "      * Depends on vivado_platform and vitis_platform rule to be completed"
 	$(ECHO) ""
+	$(ECHO) "  make all"
+	$(ECHO) "      Generate the full project
+	$(ECHO) ""
 	$(ECHO) "  make clean"
 	$(ECHO) "      Command to remove all the generated files."
 	
@@ -52,10 +55,18 @@ pl_app:
 	$(MAKE) pl_app -C vitis
 
 ps_app:
-	$(MAKE) pl_app -C vitis
+	$(MAKE) ps_app -C vitis
 
 vitis:
 	$(MAKE) vitis -C vitis
+
+run_emu:
+	$(MAKE) run_hw_emu -C vitis
+
+all: vivado_platform vitis
+
+run: all run_emu
+
 
 clean:
 	$(MAKE) clean -C vivado

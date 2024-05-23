@@ -97,6 +97,8 @@ This tutorial targets the VCK190 board (see <https://www.xilinx.com/products/boa
 
 In this step, you created the platform starting with building the hardware platform in the Vivado Design Suite. Then, you built the platform in the Vitis software platform, based on the exported XSA file.
 
+> Note:  The vivado platform creation can be automated by running "make vitis_platform"
+
 In the next step, you will build an AI Engine application using this platform.
 
 <p align="center"><b><a href="./README.md">Return to Start of Tutorial</a> — <a href="./02-aie_application_creation.md">Go to AI Engine Development</a></b></p>

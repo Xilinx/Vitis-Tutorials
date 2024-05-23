@@ -5,6 +5,7 @@
 
 import vitis
 import sys
+import os
 
 cmd_args=len(sys.argv)
 args=str(sys.argv)
@@ -20,7 +21,9 @@ else:
     xsa=sys.argv[2]
     
 
-platform = client.create_platform_component(name = component_name,hw_design = "../vivado/build/xsa_platform/"+xsa,os = "aie_runtime",cpu = "ai_engine")
+if (not os.path.isdir("./workspace/"+component_name)):
+    platform = client.create_platform_component(name = component_name,hw_design = "../vivado/build/xsa_platform/"+xsa,os = "aie_runtime",cpu = "ai_engine")
+
 platform = client.get_component(name=component_name)
 status = platform.build()
 

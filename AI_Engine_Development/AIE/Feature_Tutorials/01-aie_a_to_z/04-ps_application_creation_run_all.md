@@ -87,6 +87,8 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 12. Build the A72 PS component (`A-to-Z_app`).
 
+> Note:  The creation of the Vitis fixed platform and the ps application can be automated running "make ps_app"
+
 ## Step 3: Package the Full System
 
 1. Open the settings file **vitis-sys.json** for the **simple_aie_application_system_project** and click on the **package.cfg** config file under **Package Settings**
@@ -115,6 +117,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 >**NOTE:** This option is used when running the debugger. In our case, we will just run the system without using the debugger
 
 5. Build the **simple_aie_application_system_project** project for Hardware emulation (Click ***Build All*** under **HARDWARE EMULATION** in the Flow navigator).
+
 
 ## Step 4: Run the System in Hardware Emulation
 

@@ -33,15 +33,10 @@ SRC_DIR := src
 XSA_PLATFORM_TCL  := $(SRC_DIR)/xsa_platform_classic.tcl
 
 # =========================================================
-#  BOARD PART SELECTION (ES1/Production)
+#  BOARD PART SELECTION (Production)
 # =========================================================
-ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
   BOARD_LABEL:=vck190
-  BOARD_VER:=3.2
-else ifeq ($(DEVICE_NAME), xcvc1902-vsva2197-2MP-e-S)
-  BOARD_LABEL:=vck190_es
-  BOARD_VER:=1.3
-endif
+  BOARD_VER:=3.3
 
 # =========================================================
 # DEPENDENCIES
