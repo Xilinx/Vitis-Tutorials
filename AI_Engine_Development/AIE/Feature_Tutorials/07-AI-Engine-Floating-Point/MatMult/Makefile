@@ -15,14 +15,19 @@ AIEDIR = aie
 SRCDIR = aie/src
 
 GRAPH    = $(SRCDIR)/graph.cpp
-LIBADF  = $(AIEDIR)/libadf.a
-WORKDIR = $(AIEDIR)/Work
+LIBADFAIE  = libadfaie.a
+LIBADFX86  = libadfx86.a
+WORKDIRAIE = ./WorkAie
+WORKDIRX86 = ./WorkX86
 
-AIE_CMPL_CMD = aiecompiler -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADF)
-X86_CMPL_CMD = aiecompiler --target=x86sim -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM)  --output-archive=$(LIBADF)
+AIE_CMPL_CMD = v++ --compile --mode aie --include=$(SRCDIR) --include=$(SRCDIR)/aie_kernels --aie.workdir $(WORKDIRAIE) ${GRAPH} --platform=$(PLATFORM) --aie.output-archive $(LIBADFAIE) 
+X86_CMPL_CMD = v++ --compile --mode aie --target x86sim --include=$(SRCDIR) --include=$(SRCDIR)/aie_kernels --aie.workdir $(WORKDIRX86) ${GRAPH} --platform $(PLATFORM) --aie.output-archive $(LIBADFX86) 
 
-AIE_SIM_CMD = aiesimulator --pkg-dir=$(WORKDIR) --dump-vcd $(AIEDIR)/foo --output-dir=$(AIEDIR)/aiesimulator_output
-X86_SIM_CMD = x86simulator --pkg-dir=$(WORKDIR) --output-dir=$(AIEDIR)/x86simulator_output
+# AIE_CMPL_CMD = aiecompiler -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM) --output-archive=$(LIBADF)
+# X86_CMPL_CMD = aiecompiler --target=x86sim -include=$(SRCDIR) -include=$(SRCDIR)/aie_kernels -workdir=$(WORKDIR) ${GRAPH} --platform=$(PLATFORM)  --output-archive=$(LIBADF)
+
+AIE_SIM_CMD = aiesimulator --pkg-dir=$(WORKDIRAIE) --dump-vcd $(AIEDIR)/foo --output-dir=$(AIEDIR)/aiesimulator_output
+X86_SIM_CMD = x86simulator --pkg-dir=$(WORKDIRX86) --output-dir=$(AIEDIR)/x86simulator_output
 
 allaie: clean aie aiesim aiecmp aieviz
 
@@ -32,14 +37,15 @@ run: clean aie aiesim aiecmp
 
 run_nocmp: clean aie aiesim
 
-aie: ${LIBADF}
-${LIBADF}: $(SRCDIR)/*.cpp  $(SRCDIR)/*.h  $(SRCDIR)/aie_kernels/*.cpp
+aie: ${LIBADFAIE}
+${LIBADFAIE}: $(SRCDIR)/*.cpp  $(SRCDIR)/*.h  $(SRCDIR)/aie_kernels/*.cpp
 	${AIE_CMPL_CMD}
 
-x86:
+x86: ${LIBADFX86}
+${LIBADFX86}: $(SRCDIR)/*.cpp  $(SRCDIR)/*.h  $(SRCDIR)/aie_kernels/*.cpp
 	${X86_CMPL_CMD}
 
-aiesim: ${LIBADF}
+aiesim: ${LIBADFAIE}
 	${AIE_SIM_CMD}
 
 x86sim:
@@ -67,9 +73,9 @@ aieviz:
 clean: aieclean
 
 aieclean:
-	rm -rf *.log *.csv *.db $(LIBADF) $(WORKDIR) $(AIEDIR)/aiesimulator_output $(AIEDIR)/x86simulator_output
+	rm -rf *.log *.csv *.db $(LIBADFAIE) $(WORKDIRAIE) $(LIBADFX86) $(WORKDIRX86) $(AIEDIR)/aiesimulator_output $(AIEDIR)/x86simulator_output
 	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs
-
+	rm -rf .Xil .AIE_SIM_CMD_LINE_OPTIONS .wsdata plio_throughput_info.json
 
 
 
