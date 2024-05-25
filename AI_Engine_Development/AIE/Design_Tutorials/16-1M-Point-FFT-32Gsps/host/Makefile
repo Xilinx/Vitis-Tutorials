@@ -10,6 +10,8 @@ XSA          = $(PF_STDNAME).xsa
 BUILD_DIR    = build_$(TARGET)
 MAIN_ELF     = main.elf
 
+HOST_GCC 	 ?= aarch64-none-elf-gcc
+
 PLATFORM_SW  = $(PF_STDNAME)/export/$(PF_STDNAME)/sw/$(PF_STDNAME)/
 SW_PLATFORM  = ../link/$(BUILD_DIR)/$(PLATFORM_SW)
 SOURCES      = ../link/$(BUILD_DIR) ../link/$(BUILD_DIR)/$(XSA)
@@ -43,11 +45,11 @@ $(BUILD_DIR)/$(MAIN_ELF):	$(SOURCES)
 	echo "#define NUM_ITE_STP $(NUMITE_STP_HW)" >> ./test_cfg.h; \
 	echo "#define NUM_TST     $(NUMTST_HW)" >> ./test_cfg.h; \
 	echo "#define IS_COSIM    $(IS_COSIM)" >> ./test_cfg.h ; \
-	aarch64-none-elf-gcc -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
+	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
 	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++11 -o main.o ../main.cpp; \
-	aarch64-none-elf-gcc -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
+	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
 	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++11 -o platform.o ../platform.cpp; \
-	aarch64-none-elf-gcc platform.o main.o -mcpu=cortex-a72 -Wl,-T -Wl,../../host/lscript.ld \
+	$(HOST_GCC) platform.o main.o -mcpu=cortex-a72 -Wl,-T -Wl,../../host/lscript.ld \
 		-L../$(SW_PLATFORM)standalone_domain/bsplib/lib -L$(XILINX_VITIS)/aietools/lib/aarchnone64.o \
 	        -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group -o $(MAIN_ELF); }
 

@@ -27,6 +27,9 @@
             "vitis_hw_run"
         ],
         "category": "canary",
+        "make_options": [
+            "HOST_GCC=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-none/bin/aarch64-none-elf-gcc"
+        ],
         "custom_build_target": {
             "all": "all"
         },
