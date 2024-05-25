@@ -1,0 +1,237 @@
+<ENTRY>
+{
+ "thisFile": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/pl_src/mm2s_8_128.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu May 23 23:55:12 2024",
+ "timestampMillis": "1716530112364",
+ "buildStep": {
+  "cmdId": "e4713b17-85b2-4269-a5c0-2301524a9239",
+  "name": "v++",
+  "logFile": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128.steps.log",
+  "commandLine": "/proj/xbuilds/SWIP/2024.1_0522_2023/installs/lin64/Vitis/2024.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -c -t hw_emu --platform /group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/vek280_custom/export/vek280_custom/vek280_custom.xpfm --save-temps -g -k mm2s_8_128 pl_src/mm2s_8_128.cpp -o pl_src/mm2s_8_128.xo ",
+  "args": [
+   "-c",
+   "-t",
+   "hw_emu",
+   "--platform",
+   "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/vek280_custom/export/vek280_custom/vek280_custom.xpfm",
+   "--save-temps",
+   "-g",
+   "-k",
+   "mm2s_8_128",
+   "pl_src/mm2s_8_128.cpp",
+   "-o",
+   "pl_src/mm2s_8_128.xo"
+  ],
+  "iniFiles": [],
+  "cwd": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu May 23 23:55:12 2024",
+ "timestampMillis": "1716530112366",
+ "status": {
+  "cmdId": "e4713b17-85b2-4269-a5c0-2301524a9239",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu May 23 23:55:14 2024",
+ "timestampMillis": "1716530114347",
+ "buildSummary": {
+  "hardwarePlatform": "vek280_custom.xpfm",
+  "hardwareDsa": "vek280_custom.xsa",
+  "platformDirectory": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/vek280_custom/export/vek280_custom",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW_EMU",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "mm2s_8_128",
+     "file": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/pl_src/mm2s_8_128.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/pl_src/mm2s_8_128.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2024.1. SW Build 5074859 on 2024-05-20-23:21:20"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu May 23 23:55:14 2024",
+ "timestampMillis": "1716530114356",
+ "buildStep": {
+  "cmdId": "d2460fb5-01bf-4e04-b3de-90ad98246800",
+  "name": "vitis_hls",
+  "logFile": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/vitis_hls.log",
+  "commandLine": "vitis_hls -f /group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/mm2s_8_128.tcl -messageDb vitis_hls.pb",
+  "args": [
+   "vitis_hls",
+   "-f",
+   "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/mm2s_8_128.tcl",
+   "-messageDb",
+   "vitis_hls.pb"
+  ],
+  "iniFiles": [],
+  "cwd": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu May 23 23:55:14 2024",
+ "timestampMillis": "1716530114357",
+ "status": {
+  "cmdId": "d2460fb5-01bf-4e04-b3de-90ad98246800",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207406",
+ "status": {
+  "cmdId": "d2460fb5-01bf-4e04-b3de-90ad98246800",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207577",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/mm2s_8_128/solution/.autopilot/db/mm2s_8_128.design.xml",
+  "name": "mm2s_8_128",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_REPORT",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207578",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/mm2s_8_128/solution/.autopilot/db/.message_syn.xml",
+  "name": "mm2s_8_128",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_DRC_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207594",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/reports/mm2s_8_128/hls_reports/mm2s_8_128_csynth.rpt",
+  "name": "mm2s_8_128",
+  "fileType": "TEXT",
+  "reportType": "KERNEL_HLS_CSYNTH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207595",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/mm2s_8_128/mm2s_8_128/mm2s_8_128/solution/syn/report/mm2s_8_128_csynth.xml",
+  "name": "mm2s_8_128",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_CSYNTH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207604",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/reports/mm2s_8_128/system_estimate_mm2s_8_128.xtxt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "GLOBAL_SYSTEM_ESTIMATE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207747",
+ "status": {
+  "cmdId": "e4713b17-85b2-4269-a5c0-2301524a9239",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207871",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/reports/mm2s_8_128/v++_compile_mm2s_8_128_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu May 23 23:56:47 2024",
+ "timestampMillis": "1716530207873",
+ "report": {
+  "path": "/group/bcapps/sven/project/update_vek280/Vitis-Tutorials1/Getting_Started/Vitis_Platform/ref_files/vek280/aieml_system_design/_x/v++_compile_mm2s_8_128_guidance.pb3",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>

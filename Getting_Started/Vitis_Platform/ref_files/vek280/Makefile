@@ -21,12 +21,12 @@ PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME
 #PLATFORM ?=$(ROOT_DIR)/test/vek280_custom/export/vek280_custom/vek280_custom.xpfm
 
 VADD_WORK=$(ROOT_DIR)/vadd_work
-AIE_WORK = $(ROOT_DIR)/aie-ml_sys_design/
+AIE_WORK = $(ROOT_DIR)/aieml_system_design/
 
 DEVICE_TREE_REPO ?=
 
-ifdef DEVICE_TREE
-DEVICE_TREE_REPO=$(DEVICE_TREE)
+ifndef DEVICE_TREE_REPO
+DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
 endif
 
 
@@ -37,9 +37,9 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	@echo "make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
-all: check-common-image hw  dtb  pfm vadd_emu 
-sd_card:check-common-image hw  dtb  pfm vadd_hw 
-
+#all: check-common-image hw  dtb  pfm vadd_emu 
+sd_card:check-common-image hw  dtb  pfm vadd_hw aieml_hw
+all: check-common-image hw  dtb  pfm vadd_emu aieml_emu
 #target : check  whether the common image is ready 
 check-common-image:
 ifeq ($(wildcard $(COMMON_IMAGE_VERSAL)/Image),)
@@ -85,20 +85,21 @@ vadd_emu: cpVaddCode
 # vadd_hw is a place-holder for manual build and test on hardware
 vadd_hw: cpVaddCode
 	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
-aie_adder_emu:  $(SYSROOT)/
+aieml_emu:  $(SYSROOT)/
 	cp makefile_aieml $(AIE_WORK)/Makefile
 	$(MAKE) -C $(AIE_WORK) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
-aie_adder_hw:  $(SYSROOT)/
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)
+aieml_hw:  $(SYSROOT)/
+	cp makefile_aieml $(AIE_WORK)/Makefile
+	$(MAKE) -C $(AIE_WORK) clean
+	$(MAKE) -C $(AIE_WORK) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)
 
 
 clean:
 	rm -rf $(DTB_PLT_NAME) $(PLATFORM_NAME) tmp  *journal.py __pycache__ logs ip_cache vitis_journal* 
-	$(MAKE) -C $(VADD_WORK) clean
-	$(MAKE) -C $(AIE_WORK) clean
+	-$(MAKE) -C $(VADD_WORK) clean
+	-$(MAKE) -C $(AIE_WORK) clean
 
 ultraclean: clean
-	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
-	rm -rf $(VADD_WORK) 
-	make clean  -C  $(AIE_WORK) 
+	-rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
+	-rm -rf $(VADD_WORK) 
+	make ultraclean  -C  $(AIE_WORK) 
