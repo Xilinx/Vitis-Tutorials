@@ -12,7 +12,7 @@ HOST_EXE  = main.elf
 
 FIXED_PLATFORM = fixed_platform/export/fixed_platform/fixed_platform.xpfm
 
-AIE_CMPL_CMD =${VCC} -c --mode aie --target hw --platform=${PLATFORM} --config aie.cfg  --config /group/bcapps/sven/project/git_ope/aie_sys_design_aie/aiecompiler.cfg  --work_dir ./Work ${GRAPH} |& tee compiler.log
+AIE_CMPL_CMD =${VCC} -c --mode aie --target hw --platform=${PLATFORM} --config aie.cfg  --work_dir ./Work ${GRAPH} |& tee compiler.log
 AIE_SIM_CMD  = aiesimulator --pkg-dir=./Work 
 
 ##########################################################################################################################################################

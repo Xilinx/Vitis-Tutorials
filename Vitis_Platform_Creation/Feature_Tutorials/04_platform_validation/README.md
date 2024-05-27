@@ -8,7 +8,7 @@
 
 # Versal Extensible Hardware Design Validation
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 In this tutorial, you will learn how to validate an AMD Versal® ACAP extensible platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/README.md). So for each step, there will be a pointer to the corresponding part of that tutorial, as required.
 
@@ -467,6 +467,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
