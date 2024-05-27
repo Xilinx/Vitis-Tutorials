@@ -40,7 +40,7 @@ extern "C" {
 
 ***NEW***
 ```
-typedef ap_axis<15, 0, 0, 0> pkt;
+typedef ap_axis<16, 0, 0, 0> pkt;
 
 static void dss_process( int *wave, hls::stream<pkt> &s_in) {
     for (int i = 0; i < 1024; i++) 

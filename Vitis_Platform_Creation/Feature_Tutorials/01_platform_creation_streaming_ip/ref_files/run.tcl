@@ -54,7 +54,7 @@ xhub::install [xhub::get_xitems *ext_platform_part*]
 
 
 # ------ Create Vivado Project ------
-create_project project_1 ./project_1 -part xcvc1902-vsva2197-2MP-e-S 
+create_project project_1 ./project_1 -part xcvc1902-vsva2197-2MP-e-S -force
 create_bd_design "ext_platform_part" -mode batch
 instantiate_example_design -template xilinx.com:design:ext_platform_part:1.0 -design ext_platform_part -options { Include_AIE.VALUE true Include_DDR.VALUE true}
 # Other options are default
@@ -86,7 +86,7 @@ set_property -dict [list CONFIG.FREQ_HZ {200000000}] [get_bd_intf_ports sys_clk0
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:dds_compiler:6.0 dds_compiler_0
 
-set_property -dict [list CONFIG.DDS_Clock_Rate {300} CONFIG.Spurious_Free_Dynamic_Range {90} CONFIG.Output_Selection {Sine} CONFIG.Output_Frequency1 {10} CONFIG.Frequency_Resolution {0.4} CONFIG.Noise_Shaping {Auto} CONFIG.Phase_Width {30} CONFIG.Output_Width {15} CONFIG.Latency {8} CONFIG.PINC1 {1010001111010111000010100}] [get_bd_cells dds_compiler_0]
+set_property -dict [list CONFIG.DDS_Clock_Rate {300} CONFIG.Spurious_Free_Dynamic_Range {90} CONFIG.Output_Selection {Sine} CONFIG.Output_Frequency1 {10} CONFIG.Frequency_Resolution {0.4} CONFIG.Noise_Shaping {Auto} CONFIG.Phase_Width {30} CONFIG.Output_Width {16} CONFIG.Latency {8} CONFIG.PINC1 {1010001111010111000010100}] [get_bd_cells dds_compiler_0]
 set_property -dict [list CONFIG.Has_Phase_Out {false} CONFIG.M_DATA_Has_TUSER {Not_Required}] [get_bd_cells dds_compiler_0]
 connect_bd_net [get_bd_pins clk_wizard_0/clk_out1] [get_bd_pins dds_compiler_0/aclk]
 
