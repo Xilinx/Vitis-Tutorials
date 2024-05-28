@@ -9,7 +9,7 @@
 
 # Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -34,13 +34,13 @@ After completing the tutorial, you will be able to do the following:
 
 This tutorial uses Python. In addition to AMD tools, you also need a valid installation of Python 3. It is recommended to use Python from Vitis Install Area. 
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up software and installing the VCK190 base platform.
 
 Before starting this tutorial run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2023.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2023.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2023.2/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.1/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2024.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Design Overview
