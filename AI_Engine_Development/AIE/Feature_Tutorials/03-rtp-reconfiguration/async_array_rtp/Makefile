@@ -18,7 +18,7 @@ HOST_EXE = host.exe
 
 GRAPH    = aie/graph.cpp
 LIBADF   = libadf.a
-AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} |& tee log.txt
+AIE_CMPL_CMD = v++ -c --mode aie --platform=${PLATFORM} --include="./aie" --work_dir=./Work ${GRAPH} 2>&1 | tee log.txt
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work
 EMU_CMD = ./launch_hw_emu.sh
 
