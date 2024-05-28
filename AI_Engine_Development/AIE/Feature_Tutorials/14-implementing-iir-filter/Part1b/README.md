@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 1b
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Recap
 
@@ -283,6 +283,6 @@ In Part 1, we focused only on functional verification using `Emulation-SW`. We w
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

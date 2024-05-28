@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2a
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Preliminaries
 
@@ -168,6 +168,6 @@ In Part 2b, we optimize the program further to achieve a multiply-accumulate ope
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
