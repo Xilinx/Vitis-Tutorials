@@ -7,7 +7,7 @@
     </td>
  </tr>
 </table>
-
+ 
 # Multirate AI Engine Graphs
 
 ## Introduction
@@ -140,6 +140,18 @@ make aiesim aieviz
 
 The four iterations (20 runs of the up-converter and 28 runs of the down-converter) take approximately 14 µs.
 
+Input and output have the same throughput as this is shown by the simulator output:
+
+```
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+input64_1           | IN                | 3898.550725 MBps  
+output64_1          | OUT               | 3551.947228 MBps  
+--------------------------------------------------------------------------------------------------
+```
+
+
 ### DownConv then UpConv
 
 In this design the first kernel in the dataflow is the down-converter 5/7 followed by the up-converter.
@@ -168,6 +180,20 @@ make aiesim aieviz
 ```
 
 The four iterations (28 runs of the down-converter and 20 runs of the up-converter) take approximately 14µs.
+
+Input and output have the same throughput as this is shown by the simulator output:
+
+```
+--------------------------------------------------------------------------------------------------
+Port Name           | Type              | Average Throughput
+--------------------------------------------------------------------------------------------------
+input64_1           | IN                | 4973.135738 MBps  
+output64_1          | OUT               | 4943.565168 MBps  
+--------------------------------------------------------------------------------------------------
+```
+
+The throughput is higher than the previous situation because in between the 2 kernels the throughput is much less so the processing is much faster. The result is a much higher throughput at the IO ports of the design.
+
 
 ### Split and Merge
 
@@ -264,7 +290,7 @@ In this new example, two branches are fed with the same PLIO and connected on th
 
 `VERSION=3` of this design stalls almost immediately because this design needs FIFOs set up at the input and output of each branch.
 
-`VERSION=4` sets these FIFOs and the overall simulation lasts approximately 275 µs.
+`VERSION=4` sets these FIFOs and the overall simulation lasts approximately 275 µs. This one does not work for AI Engine-ML as the FIFO is too large for this architecture. 
 
 ## Support
 

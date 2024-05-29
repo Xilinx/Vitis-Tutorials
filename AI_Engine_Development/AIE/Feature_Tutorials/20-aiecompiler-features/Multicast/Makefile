@@ -63,4 +63,4 @@ _help:
 clean:
 	rm -rf _x libadf*.a Work_* .Xil vitis_analyzer* foo.vcd *.log pl_sample* aiesimulator_output
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp
-	rm -rf data logs
+	rm -rf data logs .wsdata plio_throughput_info.json 

@@ -19,7 +19,7 @@ PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 
 GRAPH    = src_$(CASE)/graph.cpp
 LIBADF  = libadf_$(CASE).a
-AIE_CMPL_CMD = v++ --compile --mode aie --include "./src_$(CASE)" --aie.workdir ./Work_$(CASE) ${GRAPH} --platform=$(PLATFORM) --aie.output-archive $(LIBADF)
+AIE_CMPL_CMD = v++ --compile --mode aie --include "./src_$(CASE)" --aie.workdir ./Work_$(CASE) ${GRAPH} --platform=$(PLATFORM) --aie.output-archive $(LIBADF) --aie.swfifo-threshold 160
 AIE_SIM_CMD = aiesimulator --pkg-dir=./Work_$(CASE) --dump-vcd foo
 
 all: clean data aie aieviz
@@ -68,4 +68,4 @@ _help:
 clean:
 	rm -rf _x libadf*.a Work_* .Xil vitis_analyzer* foo.vcd *.log pl_sample* aiesimulator_output
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp
-	rm -rf data logs
+	rm -rf data logs 

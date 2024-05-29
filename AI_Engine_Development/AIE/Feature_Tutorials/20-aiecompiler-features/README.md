@@ -10,15 +10,15 @@
 
 # AI Engine Compiler Features
 
-***Version: Vitis 2023.2***
-
+***Version: Vitis 2024.1***
+ 
 ## Introduction
 
 ## Introduction
 
 The `aiecompiler` is evolving and therefore it may be difficult for you to keep up with new features. This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.
 
->**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the AMD Vitis™ Unified Software Platform 2023.2.  
+>**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the AMD Vitis™ Unified Software Platform 2024.1.  
 
 Data generation for this tutorial requires [Python 3](https://www.python.org/downloads/). The following packages are required:
 
