@@ -70,7 +70,7 @@ createdts -hw <static XSA> \
     -zocl\
     -out . \
     -platform-name vck190_custom_dt \
-    -git-branch xlnx_rel_v2023.2 \
+    -git-branch xlnx_rel_v2024.1 \
     -dtsi system-user.dtsi \
     -board versal-vck190-reva-x-ebm-01-reva \
     -compile
@@ -103,8 +103,8 @@ This tutorial uses the Linux software components provided by the Common Images. 
 1. Download and extract the Common Images for AMD Versal™ devices.
 
    - Visit the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) download page.
-   - Download the Versal common image to `step2_sw/build/common` from the 2023.2 page.
-   - Extract the downloaded package using the `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2023.2.tar.gz` command.
+   - Download the Versal common image to `step2_sw/build/common` from the download page.
+   - Extract the downloaded package using the `cd step2_sw/build/common; tar -xzf xilinx-versal-common-v2024.1.tar.gz` command.
 
 2. Prepare the boot components.
 
@@ -282,6 +282,6 @@ Scripts are provided to generate the device tree and generating the platform. To
    make clean
    ```
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

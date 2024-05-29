@@ -5,55 +5,54 @@
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=vck190_custom_dfx
-PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
-#PLATFORM=/proj/rdi/xbuilds/2024.1_daily_latest/internal_platforms/xilinx_vck190_base_dfx_202410_1/xilinx_vck190_base_dfx_202410_1.xpfm
-COMMON_IMAGE ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/
-SYSROOT ?= $(ROOT_DIR)/../step2_sw/build/sw_comp/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux/
+CUSTOM_PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
+VERSION=2024.1
+COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/
 
 
-PL_EXAMPLE_PATH=Vitis_Accel_Examples/cpp_kernels/simple_vadd/
-AIE_EXAMPLE_PATH=Vitis_Accel_Examples/aie_kernels/aie_adder/
+
+VADD_WORK=$(ROOT_DIR)/vadd_work
+AIE_WORK=$(ROOT_DIR)/aie_work
 
 .PHONY: all vadd aie_adder platforminfo clean ultraclean
 #all: To support emulation
-all: platforminfo vadd  
-sd_card:platforminfo vadd_hw aie_adder_hw 
+all: platforminfo vadd_emu aie_adder_emu  
+sd_card:platforminfo aie_adder_hw 
 
 
-Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
-	cd Vitis_Accel_Examples/  && sed -i "s/vck190_base_dfx/vck190_custom_dfx/g"  aie_kernels/aie_adder/makefile_versal_ps.mk
-# Modify Vitis_Accel_Examples to allow running vadd on DFX platforms
-	
+cpAieCode:
+	mkdir -p aie_work
+	cp $(XILINX_VITIS)//samples/aie_system_examples/aie_sys_design/* aie_work -a
+	cp makefile_aie aie_work/Makefile
 
-vadd: Vitis_Accel_Examples  
-	$(MAKE) -C $(PL_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
+cpVaddCode:
+	mkdir -p vadd_work
+	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp makefile_vadd vadd_work/Makefile
+
+
+
+
+vadd_emu: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) run TARGET=hw_emu PLATFORM=$(CUSTOM_PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
 
 # vadd_hw is a place-holder for manual build and test on hardware
-# In this flow, vadd_hw and vadd are mutually exclusive. 
-# Please run `make clean` before 
-vadd_hw: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
+vadd_hw: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw PLATFORM=$(CUSTOM_PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
+aie_adder_emu: cpAieCode 
+	$(MAKE) -C $(AIE_WORK) run TARGET=hw_emu PLATFORM=$(CUSTOM_PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
 
-vadd_hw_package: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE)
+aie_adder_hw: cpAieCode
+	$(MAKE) -C $(AIE_WORK) sd_card TARGET=hw PLATFORM=$(CUSTOM_PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
 
-vadd_xo: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) xo TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE)
-aie_adder:Vitis_Accel_Examples 
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
-
-aie_adder_hw: Vitis_Accel_Examples 
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE) SYSROOT=$(SYSROOT)
-
-platforminfo: platforminfo.txt
-
-platforminfo.txt: $(PLATFORM)
-	platforminfo $(PLATFORM) > platforminfo.txt
 
 clean:
-	$(MAKE) -C $(PL_EXAMPLE_PATH) cleanall
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) cleanall
+	rm -rf $(DTB_PLT_NAME) $(PLATFORM_NAME)  *journal.py __pycache__ logs ip_cache vitis_journal* 
+	-$(MAKE) -C $(VADD_WORK) clean
+	-$(MAKE) -C $(AIE_WORK) clean
 
-ultraclean:
-	rm -rf Vitis_Accel_Examples
+ultraclean:clean
+	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
+	rm -rf  $(AIE_WORK)
+	rm -rf $(VADD_WORK) 

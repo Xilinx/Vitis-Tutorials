@@ -33,6 +33,13 @@ SW_FILES=$(SD_DIR)/boot.scr $(BOOT_DIR)/u-boot.elf $(BOOT_DIR)/bl31.elf
 PDI_FILE=$(BOOT_BIN_DIR)/boot_static.pdi
 PLATFORM_OUT_PATH=$(ABS_BUILD_PATH)/pfm
 
+
+
+DEVICE_TREE_REPO ?=
+
+ifndef DEVICE_TREE
+DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
+endif
 .PHONY: all sw_comp dtb help pfm bootimage sysroot
 
 # --------------------------------------
@@ -82,12 +89,7 @@ $(SW_FILES): $(DTB_FILE)
 	cp -f $(COMMON_IMAGE_VERSAL)/Image  $(SW_COMP_PATH)
 	cp -f $(COMMON_IMAGE_VERSAL)/rootfs.ext4  $(SW_COMP_PATH)
 
-# Target: sysroot
-# Install sysroot to sw_comp directory
-sysroot: $(SYSROOT)
-
-$(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
-	mkdir -p $(SYSROOT_DIR) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d $(SYSROOT_DIR)/ -y
+ 
 
 #----------
 $(PDI_FILE): $(STATIC_XSA)

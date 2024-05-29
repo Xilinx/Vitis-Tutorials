@@ -47,7 +47,7 @@ You can verify hardware configuration (clocks, memory) and software configuratio
    Board:                            versal_extensible_dfx_platform_base
    Name:                             versal_extensible_dfx_platform_base
    Version:                          1.0
-   Generated Version:                2023.2
+   Generated Version:                2024.1
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               0
@@ -506,6 +506,6 @@ If user need to do iteration for your project, you could go through the [Iterati
 
 [The next chapter](./faq.md) will list some frequently encountered problems and frequently asked questions.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

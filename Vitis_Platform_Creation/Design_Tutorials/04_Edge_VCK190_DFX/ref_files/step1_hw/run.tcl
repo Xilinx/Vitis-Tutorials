@@ -57,7 +57,7 @@ update_compile_order -fileset sim_1
 set_property top vitis_design_wrapper [current_fileset] 
 
 
-#create_pr_configuration -name config_1 -partitions [list versal_dfx_platform_i/VitisRegion:VitisRegion_inst_0 ]
+create_pr_configuration -name config_1 -partitions [list versal_dfx_platform_i/VitisRegion:VitisRegion_inst_0 ]
 #set_property PR_CONFIGURATION config_1 [get_runs impl_1]
 #run implementtation
 launch_runs impl_1 -to_step write_device_image -jobs 10

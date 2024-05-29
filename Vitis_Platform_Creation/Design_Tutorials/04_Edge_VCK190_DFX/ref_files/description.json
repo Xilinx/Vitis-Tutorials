@@ -25,6 +25,7 @@
             }
         ],
         "targets": [
+            "vitis_hw_emu",
             "vitis_hw_build",
             "vitis_hw_run"
         ],
@@ -34,15 +35,17 @@
             "EDGE_COMMON_SW=${EDGE_COMMON_SW}",
 			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
 			"IMAGE=${EDGE_COMMON_SW}/Image",
-            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
-            "EMBEDDED_PACKAGE_OUT=./", 
-            "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
+            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_aie.sh\\\"",
+            "EMBEDDED_PACKAGE_OUT=./step3_validate/aie_work/package.hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./run_aie.sh"
         ],
         "custom_build_target":
         {
             "all": "all",
             "hw" : "sd_card"
-        }
+        },
+        "custom_board_target": "run_test"
         }
     }
+
 

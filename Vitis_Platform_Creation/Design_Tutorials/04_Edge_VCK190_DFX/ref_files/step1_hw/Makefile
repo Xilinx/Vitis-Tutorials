@@ -28,7 +28,7 @@ hw: $(ABS_BD_TCL)
 
 
 clean:
-	$(RM) -r $(ABS_HW_PATH)/project_1 $(ABS_XSA) $(ABS_XSA_RP) $(ABS_XSA_HWEMU)
+	$(RM) -r $(ABS_HW_PATH)/project_1 $(ABS_XSA) $(ABS_XSA_RP) $(ABS_XSA_HWEMU) *.xsa
 
-cleanlog:
-	$(RM) $(ABS_HW_PATH)/vivado*.log $(ABS_HW_PATH)/vivado*.jou 
+cleanall: clean
+	$(RM) $(ABS_HW_PATH)/vivado*.log $(ABS_HW_PATH)/vivado*.jou  vivado.* build -rf
