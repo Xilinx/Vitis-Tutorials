@@ -27,10 +27,10 @@ GCC_C_FLAGS      := -O -Wall -std=c++14 -DXAIE_DEBUG \
                     -pthread \
                     --sysroot=${SYSROOT}
 
-GCC_L_FLAGS      := -L$(SYSROOT)/usr/lib \
+GCC_L_FLAGS      := -L../../${SYSROOT}/usr/lib \
                     -L${XILINX_VITIS}/aietools/lib/aarch64.o \
                     -ladf_api_xrt -lxaiengine -lxrt_core -lxrt_coreutil \
-                    --sysroot=$(SYSROOT)
+                    --sysroot=${SYSROOT}
 
 .PHONY: clean help all
 
@@ -43,10 +43,10 @@ help::
 	$(ECHO) "      Command to remove all the generated files."
 
 
-all: $(APP_EXE)
+all: ${APP_EXE}
 
-$(APP_EXE): $(APP_SRC_DEP) $(APP_SRC_CTRL) ${SYSROOT}
-	${GCC} ${GCC_C_FLAGS} $(APP_SRC) $(APP_SRC_CTRL) ${GCC_INCLUDES} $(GCC_L_FLAGS) -o $(APP_EXE)
+$(APP_EXE): ${APP_SRC_DEP} ${APP_SRC_CTRL} ${SYSROOT}
+	${GCC} ${GCC_C_FLAGS} ${APP_SRC} $(APP_SRC_CTRL) ${GCC_INCLUDES} ${GCC_L_FLAGS} -o ${APP_EXE}
 
 clean:
-	rm -rf *.o $(APP_EXE)
+	rm -rf *.o ${APP_EXE}

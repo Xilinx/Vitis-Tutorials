@@ -69,7 +69,6 @@ ${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS} $
 			$(addprefix --package.sd_file=../,${STIMULUS_IO}) \
 			$(addprefix --package.sd_file=../,embedded_exec.sh) \
 			2>&1 | tee vpp_pack.log
-	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
 clean:
 	rm -rf ${SD_CARD} ${BUILD_DIR}

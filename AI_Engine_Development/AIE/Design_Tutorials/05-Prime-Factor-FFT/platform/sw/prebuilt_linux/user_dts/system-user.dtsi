@@ -1,0 +1,91 @@
+/******************************************************************************
+* Copyright (C) 2020-2022 Xilinx, Inc. All rights reserved.
+* Copyright (C) 2022-2024 Advanced Micro Devices, Inc. All rights reserved.
+* SPDX-License-Identifier: MIT
+******************************************************************************/
+/*
+ * /include/ "system-conf.dtsi"
+ * Adding directly contents of system-conf file until CR-1139794 is fixed
+ */
+/ {
+        chosen {
+                bootargs = "console=ttyAMA0  earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+                stdout-path = "serial0:115200n8";
+        };
+};
+
+/ {
+	chosen {
+		stdout-path = "serial0:115200";
+	};
+
+	reserved-memory {
+                #address-cells = <2>;
+                #size-cells = <2>;
+                ranges;
+                pl_ddr: buffer@0 {
+                        no-map;
+                        reg = <0x08 0x00 0x01 0x80000000>;
+                };
+                lpddr_memory: buffer@1 {
+                        no-map;
+                        reg = <0x500 0x0 0x2 0x0>;
+                };
+        }; 
+};
+
+&amba_pl {
+	/delete-node/ interrupt-controller@a4000000;
+	/delete-node/ interrupt-controller@a5000000;
+};
+
+&amba {
+	zyxclmm_drm {
+		compatible = "xlnx,zocl-versal";
+		status = "okay";
+		interrupts-extended = <&axi_intc_level0 0 4> , <&axi_intc_level0 1 4> , <&axi_intc_level0 2 4>, <&axi_intc_level0 3 4>,
+      <&axi_intc_level0 4 4>, <&axi_intc_level0 5 4>, <&axi_intc_level0 6 4>, <&axi_intc_level0 7 4>,
+      <&axi_intc_level0 8 4>, <&axi_intc_level0 9 4>, <&axi_intc_level0 10 4>, <&axi_intc_level0 11 4>,
+      <&axi_intc_level0 12 4>, <&axi_intc_level0 13 4>, <&axi_intc_level0 14 4>, <&axi_intc_level0 15 4>,
+      <&axi_intc_level0 16 4>, <&axi_intc_level0 17 4>, <&axi_intc_level0 18 4>, <&axi_intc_level0 19 4>,
+      <&axi_intc_level0 20 4>, <&axi_intc_level0 21 4>, <&axi_intc_level0 22 4>, <&axi_intc_level0 23 4>,
+      <&axi_intc_level0 24 4>, <&axi_intc_level0 25 4>, <&axi_intc_level0 26 4>, <&axi_intc_level0 27 4>,
+      <&axi_intc_level0 28 4>, <&axi_intc_level0 29 4>, <&axi_intc_level0 30 4>, <&axi_intc_level0 31 4>,
+      <&axi_intc_parent 0 4> ,<&axi_intc_parent 1 4> , <&axi_intc_parent 2 4>, <&axi_intc_parent 3 4>,
+      <&axi_intc_parent 4 4>, <&axi_intc_parent 5 4>, <&axi_intc_parent 6 4>, <&axi_intc_parent 7 4>,
+      <&axi_intc_parent 8 4>, <&axi_intc_parent 9 4>, <&axi_intc_parent 10 4>, <&axi_intc_parent 11 4>,
+      <&axi_intc_parent 12 4>, <&axi_intc_parent 13 4>, <&axi_intc_parent 14 4>, <&axi_intc_parent 15 4>,
+      <&axi_intc_parent 16 4>, <&axi_intc_parent 17 4>, <&axi_intc_parent 18 4>, <&axi_intc_parent 19 4>,
+      <&axi_intc_parent 20 4>, <&axi_intc_parent 21 4>, <&axi_intc_parent 22 4>, <&axi_intc_parent 23 4>,
+      <&axi_intc_parent 24 4>, <&axi_intc_parent 25 4>, <&axi_intc_parent 26 4>, <&axi_intc_parent 27 4>,
+      <&axi_intc_parent 28 4>, <&axi_intc_parent 29 4>, <&axi_intc_parent 30 4>;
+
+	};
+axi_intc_level0: interrupt-controller@a4000000 {
+			#interrupt-cells = <2>;
+			clock-names = "s_axi_aclk";
+			clocks = <&misc_clk_0>;
+			compatible = "xlnx,axi-intc-4.1", "xlnx,xps-intc-1.00.a";
+			interrupt-controller ;
+			interrupt-names = "irq";
+			interrupt-parent = <&axi_intc_parent>;
+			interrupts = <31 2>;
+			reg = <0x0 0xa4000000 0x0 0x10000>;
+			xlnx,kind-of-intr = <0x0>;
+			xlnx,num-intr-inputs = <0x20>;
+		};
+		axi_intc_parent: interrupt-controller@a5000000 {
+			#interrupt-cells = <2>;
+			clock-names = "s_axi_aclk";
+			clocks = <&misc_clk_0>;
+			compatible = "xlnx,axi-intc-4.1", "xlnx,xps-intc-1.00.a";
+			interrupt-controller ;
+			interrupt-names = "irq";
+			interrupt-parent = <&gic>;
+			interrupts = <0 84 4>;
+			reg = <0x0 0xa5000000 0x0 0x10000>;
+			xlnx,kind-of-intr = <0x0>;
+			xlnx,num-intr-inputs = <0x20>;
+		};
+};
+
