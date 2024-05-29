@@ -9,11 +9,11 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
-The tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2023.2 Vitis unified software platform.
+The tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2024.1 Vitis unified software platform.
 
 The version for AIE is compatible with AIE-ML. Refer to the following tutorial and change the VCK190 to VEK280 for each step the VCK190 board is used:
 [AI Engine A-to-Z](../../../AIE/Feature_Tutorials/01-aie_a_to_z/README.md)
@@ -22,6 +22,6 @@ The version for AIE is compatible with AIE-ML. Refer to the following tutorial a
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
