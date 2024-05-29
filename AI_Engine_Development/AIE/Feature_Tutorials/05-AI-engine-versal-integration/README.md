@@ -120,7 +120,7 @@ Vitis Analyzer is used to view the AI Engine compilation results. Below is the `
 
 To open the summary file, use the following command:
 
-`vitis_analyzer ./Work/graph.aiecompile_summary`
+`vitis_analyzer -a ./Work/graph.aiecompile_summary`
 
 The **Summary** view displays compilation runtime,  version of the compiler used, the platform targeted, kernels created, and the exact command line used for the compilation.
 
@@ -241,7 +241,7 @@ For `ai_engine_0` the names are provided in the `graph.h`. For the design, as an
 
 has the name **DataIn1** which is the interface name.
 
-You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration).
+You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
 
 To build the design run the follow command:
 
@@ -397,7 +397,7 @@ Vitis Analyzer is used to view the AI Engine compilation results. It highlights 
 
 To open the summary file, use the following command:
 
-`vitis_analyzer ./Work/graph.aiecompile_summary`
+`vitis_analyzer -a ./Work/graph.aiecompile_summary`
 
 The **Summary** View displays the compilation runtime, the version of the compiler used, the platform targeted, kernels created, and the exact command line used for the compilation.
 
@@ -474,7 +474,7 @@ After the graph has been compiled, you can simulate your design with the `aiesim
 3. To do this,run the command:
 
     ```bash
-    vitis_analyzer ./aiesimulator_output/default.aierun_summary
+    vitis_analyzer -a ./aiesimulator_output/default.aierun_summary
     ```
 
     With this tool you can use a variety of views to debug and potentially optimize your graph.
@@ -599,7 +599,7 @@ Note: Unlike the software emulation where we used a g++ compiler to compile the 
 To compile the A72 host application, run the command:
 
 ```bash
-make host
+make host TARGET=hw_emu
 ```
 
 Or
@@ -647,6 +647,7 @@ For more details on the packager options, refer to **Section 3**, topic: **Packa
 ### 5.Run Hardware Emulation
 
 After packaging, everything is set to run emulation. Since you ran `aiesimulator` with profiling enabled, you can bring that to hardware emulation. You can pass the `aiesim_options.txt` to the `launch_hw_emu.sh` which will enable the profiling options used in `aiesimulator` to be applied to hardware emulation. To do this, add the `-aie-sim-options ../aiesimulator_output/aiesim_options.txt`.
+Since Profiling is deprecated in Hardware Emulation Flow, comment the line 'AIE_PROFILE=All' in `aiesimulator_output/aiesim_options.txt`
 
 1. To run emulation use the following command:
 
@@ -686,7 +687,7 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 5. To view the profiling results and trace in Vitis Analyzer, run the command:
 
     ```bash
-    vitis_analyzer sw/sim/behav_waveform/xsim/default.aierun_summary
+    vitis_analyzer -a sw/sim/behav_waveform/xsim/default.aierun_summary
     ```
 
     ![hw_emu analyzer](./images/hw_emu_analyzer.png)
@@ -697,15 +698,19 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 
     ![hw_emu trace](./images/hw_emu_trace.png)
 
-7. Click **Profile**. This will bring up the same view as shown for the profiling of the `aiesimulator`, but now it will have information gathered from running hardware emulation.
+7. From the trace information, you can calculate the kernel latency as follows:
 
-8. Click **Total Function Time**. Your display will appear as follows.
+   Click the Trace in the AI Engine simulation run summary, and navigate to the any function to calculate the latency. For example, consider the classifier function. 
+   You can notice the function classifier ran for seven iterations. Zoom into the period of one iteration (between two main() function calls as follows), add a  marker, and drag it to the end of the kernel function as follows:
+    ![hw_emu_trace](./images/latency_calc.png)
+    
+    Notice the difference of 25.093 us as highlighted above. This is the time the kernel took to complete one iteration.
 
-    ![hw_emu profile](./images/hw_emu_profile.png)
+   If you click the AI Engine Simulation Summary, you can notice the AI Engine Frequency as 1250 MHz, i.e., 0.8 ns, i.e., one cycle = 0.8 ns. Now, the classifier function took 23.854 us for one iteration, i.e., 23.854 us / 0.8 ns ~= 29817 cycles. Compare this with the latency you got during the aiesimulation where the AI Engine is a standalone module;
+   
+   This Latency calculated can also be compared against the value(average Latency) displayed in the trace.
 
-    Notice that the values here differ from those in `aiesimulator`.
-
-    The final two views: **Graph** and **Array** are the same as in the `aiesimulator` run summary.
+8. Explore the two reports and take note of any differences and similarities. This will help you debug and optimize your design.
 
 9. Open the `aiesimulator` run Summary by clicking **File** > **Open Summary**, navigating to the `aiesimulator_output` directory, and clicking `default.aierun_summary`.
 

@@ -162,11 +162,18 @@ xsa: guard-PLATFORM_REPO_PATHS $(GRAPH_O) $(KERNEL_XO)
 
 ############################################################################################################################
 # For sw emulation, hw emulation and hardware, compile the PS code and generate the host.exe. This is needed for creating the sd_card.
+ifeq ($(TARGET),sw_emu)
+host: guard-CXX guard-SDKTARGETSYSROOT 
+	cd ./sw
+	g++ -Wall -c -std=c++17 -D__PS_ENABLE_AIE__ -Wno-int-to-pointer-cast -I${XILINX_XRT}/include -I./ -I../aie -I${XILINX_VITIS}/aietools/include  -o host.o host.cpp
+	g++ *.o -lxrt_coreutil -std=c++17 -L${XILINX_XRT}/lib -o ./host_ps_on_x86
+else
 host: guard-CXX guard-SDKTARGETSYSROOT 
 	cd ./sw 
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
 	$(CXX) *.o $(GCC_LIB) -std=c++17 -o ${EXECUTABLE}
 	@echo "COMPLETE: Host application created."
+endif
 ############################################################################################################################
 
 ##################################################################################################

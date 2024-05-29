@@ -9,7 +9,7 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -19,22 +19,22 @@ This tutorial demonstrates creating a system design running on the AI Engine, PS
 
 This tutorial steps through software emulation, hardware emulation, and hardware flow in the context of a complete Versal adaptive SoC system integration. By default, the Makefile is set for `sw_emu`. If you need to build for `hw_emu`,`hw`, use the corresponding TARGET option as described in corresponding sections.
 
-**IMPORTANT**: Before beginning the tutorial ensure you have installed Vitis&trade; 2023.2 software. The software includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+**IMPORTANT**: Before beginning the tutorial ensure you have installed Vitis&trade; 2024.1 software. The software includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
 1. Navigate to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh```.
+2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh```.
 
 **Note** : This tutorial demonstrates how software emulation can run the PS application on an x86 process instead of an Arm process(QEMU). So, you may need to unset the `CXX` variable during the step `Running software emulation`. More information is provided in the software emulation flow section.
 
-3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2023.2``` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm```.
+3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2024.1``` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm```.
 
-This tutorial targets VEK280 ES1 board for 2023.2 version.
+This tutorial targets VEK280 board for 2024.1 version.
 
 ## Objectives
 
@@ -100,7 +100,7 @@ make aie
 Or
 
 ```bash
-v++ -c --mode aie --target x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --work_dir=./Work aie/graph.cpp
+v++ -c --mode aie --target x86sim --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --work_dir=./Work aie/graph.cpp
 ```
 
 | Flag | Description |
@@ -117,11 +117,11 @@ Vitis Analyzer is used to view the AI Engine compilation results. Below is the `
 
 To open the summary file, use the following command:
 
-`vitis_analyzer ./Work/graph.aiecompile_summary`
+`vitis_analyzer -a ./Work/graph.aiecompile_summary`
 
 The **Summary** view displays compilation runtime,  version of the compiler used, the platform targeted, kernels created, and the exact command line used for the compilation.
 
-![Vitis Analyzer Summary](./images/vitis_analyzer_x86.PNG)
+![Vitis Analyzer Summary](./images/vitis_analyzer_x86.png)
 
 The **Graph** view provides an overview of your graph and how the graph is designed in a logical fashion.
 
@@ -168,12 +168,12 @@ After the graph has been compiled, you can simulate your design with the `x86sim
 3. Open the generated `x86sim.aierun_summary` from the `x86simulator_output` directory for Vitis Analyzer. To do this, run the command:
 
     ```bash
-    vitis_analyzer x86simulator_output/x86sim.aierun_summary
+    vitis_analyzer -a x86simulator_output/x86sim.aierun_summary
     ```
 
 This opens the summary view in Vitis Analyzer that displays the simulation run time and the exact command line used for simulation.
 
-![Vitis Analyzer Summary](./images/vitis_analyzer_x86sim.PNG)
+![Vitis Analyzer Summary](./images/vitis_analyzer_x86sim.png)
 
 **Note:** As the x86 simulation runs the design at a functional level, kernels do not physically map and route on the AI engine array. Therefore, the Array view is not available in ```aierun``` summary.
 
@@ -192,8 +192,8 @@ make kernels
 Or
 
 ```bash
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
-v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --save-temps -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c -t sw_emu --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
 ```
 
 Looking at the `v++` command line, you will notice several options. The following table describes each option.
@@ -238,7 +238,7 @@ For `ai_engine_0` the names are provided in the `graph.h`. For the design, as an
 
 has the name **DataIn1** which is the interface name.
 
-You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration).
+You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation]([https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)).
 
 To build the design run the follow command:
 
@@ -249,7 +249,7 @@ make xsa
 or
 
 ```bash
-v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l --platform -t sw_emu $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm s2mm.xo mm2s.xo libadf.a --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 | Flag/Switch | Description |
@@ -267,7 +267,7 @@ When all the new AI Engine outputs are created, you can compile your host applic
 
 a. Open `sw/host.cpp` and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-   **Note:** [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to ["Programming the PS Host Application"](https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/program_ps_host_application.html).
+   **Note:** [XRT](https://xilinx.github.io/XRT/2021.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application refer to ["Programming the PS Host Application"]([https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application]).
 
 b. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS`, `GCC_INCLUDES` which are self-explanatory that you will be compiling this code with C++ 17. More explanation will be provided in the packaging step.
 
@@ -314,7 +314,7 @@ make package
 Or
 
 ```bash
-emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --nd 1
+emconfigutil --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --nd 1
 ```
 
 followed by
@@ -323,7 +323,7 @@ followed by
 cd ./sw
 v++ -p -t sw_emu \
     --package.defer_aie_run \
-    --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm \
+    --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm \
     --package.out_dir ./package.sw_emu \
     ../tutorial.xsa ../libadf.a
 cd ..
@@ -383,7 +383,7 @@ make aie TARGET=hw
 Or
 
 ```bash
-v++ -c --mode aie --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --aie.xlopt=0 --work_dir=./Work aie/graph.cpp
+v++ -c --mode aie --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --aie.xlopt=0 --work_dir=./Work aie/graph.cpp
 ```
 
 The generated output from `aiecompiler` is the `Work` directory, and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
@@ -394,7 +394,7 @@ Vitis Analyzer is used to view the AI Engine compilation results. It highlights 
 
 To open the summary file, use the following command:
 
-`vitis_analyzer ./Work/graph.aiecompile_summary`
+`vitis_analyzer  -a ./Work/graph.aiecompile_summary`
 
 The **Summary** View displays the compilation runtime, the version of the compiler used, the platform targeted, kernels created, and the exact command line used for the compilation.
 
@@ -456,12 +456,11 @@ After the graph has been compiled, you can simulate your design with the `aiesim
    You should see something similar to this:
 
     ```bash
-aiesim_options.txt      memconfig.json          profile_funct_18_1.txt  profile_funct_19_0.xml  profile_instr_18_0.txt  profile_instr_18_1.xml  profile_instr_19_1.txt
-data                    profile_funct_18_0.txt  profile_funct_18_1.xml  profile_funct_19_1.txt  profile_instr_18_0.xml  profile_instr_19_0.txt  profile_instr_19_1.xml
+aiesim_options.txt  memconfig.json  profile_funct_18_1.txt  profile_funct_19_0.xml  profile_instr_18_0.txt  profile_instr_18_1.xml  profile_instr_19_1.txt data  profile_funct_18_0.txt  profile_funct_18_1.xml  profile_funct_19_1.txt  profile_instr_18_0.xml  profile_instr_19_0.txt  profile_instr_19_1.xml
 default.aierun_summary  profile_funct_18_0.xml  profile_funct_19_0.txt  profile_funct_19_1.xml  profile_instr_18_1.txt  profile_instr_19_0.xml
     ```
 
-    The files prefixed with `profile_` are the outputs of the profiling and calculated per tile. In this tutorial, profiling is done for all tiles that are used, but you can limit profiling to specific tiles by providing the row and column of the tile. For more information about profiling with `aiesimulator` see [here](https://www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/simulate_graph_application.html#yfx1512608800495). You can open up these files to see what was calculated, but it is better to view it in Vitis Analyzer where it is curated. The `data` directory is generated here with the output file(s) you have in the `graph.cpp` for the PLIO objects. Finally, the `default.aierun_summary` is generated, which contains all the information generated by `aiesimulator` with profiling and trace information. Opening this file in Vitis Analyzer allows you to browse all the output files, and profile/trace data.
+    The files prefixed with `profile_` are the outputs of the profiling and calculated per tile. In this tutorial, profiling is done for all tiles that are used, but you can limit profiling to specific tiles by providing the row and column of the tile. For more information about profiling with `aiesimulator` see https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulating-an-AI-Engine-Graph-Application. You can open up these files to see what was calculated, but it is better to view it in Vitis Analyzer where it is curated. The `data` directory is generated here with the output file(s) you have in the `graph.cpp` for the PLIO objects. Finally, the `default.aierun_summary` is generated, which contains all the information generated by `aiesimulator` with profiling and trace information. Opening this file in Vitis Analyzer allows you to browse all the output files, and profile/trace data.
 
     **NOTE**: The `tutorial.vcd` is generated on the same level as the `./Work` directory.
 
@@ -470,7 +469,7 @@ default.aierun_summary  profile_funct_18_0.xml  profile_funct_19_0.txt  profile_
 3. To do this,run the command:
 
     ```bash
-    vitis_analyzer ./aiesimulator_output/default.aierun_summary
+    vitis_analyzer -a ./aiesimulator_output/default.aierun_summary
     ```
 
     With this tool you can use a variety of views to debug and potentially optimize your graph.
@@ -517,7 +516,7 @@ default.aierun_summary  profile_funct_18_0.xml  profile_funct_19_0.txt  profile_
       * **Tiles** - Shows tile data (kernels, buffers) of mapped tiles and their grid location.
       * **Interface Channels** - Shows interface channel information with channel number.
 
-    **Tip**: For more detailed information about these tables, see [Chapter 9 - Section: "Viewing Compilation Results in the Vitis Analyzer"](www.xilinx.com/html_docs/xilinx2021.2/vitis_doc/compile_graph_application.html).
+    **Tip**: For more detailed information about these tables, see [Chapter 9 - Section: "Viewing Compilation Results in the Vitis Analyzer"](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Compiling-an-AI-Engine-Graph-Application).
 
     You can zoom into the view to get finer detail of the AI Engine and see how tiles are made up as seen in the following screenshot.
 
@@ -554,8 +553,8 @@ make kernels TARGET=hw_emu
 or
 
 ```bash
-v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --config pl_kernels/s2mm.cfg
-v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm --config pl_kernels/mm2s.cfg
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --config pl_kernels/s2mm.cfg
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm --config pl_kernels/mm2s.cfg
 ```
 
 To get more details about several options of `v++` command line, refer to the **Compiling HLS Kernels Using V++** topic in **Section 3**
@@ -584,7 +583,7 @@ make xsa TARGET=hw_emu
 or
 
 ```bash
-v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 Now you have a generated `.xsa` that will be used to execute your design on the platform.
@@ -627,11 +626,11 @@ Or
 ```bash
 cd ./sw
 v++ --package -t hw_emu \
-    -f $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm \
-    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
+    -f $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm \
+    --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/Image \
+    --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2024.1/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
@@ -644,6 +643,7 @@ For more details on the packager options, refer to **Section 3**, topic: **Packa
 ### 5.Run Hardware Emulation
 
 After packaging, everything is set to run emulation. Since you ran `aiesimulator` with profiling enabled, you can bring that to hardware emulation. You can pass the `aiesim_options.txt` to the `launch_hw_emu.sh` which will enable the profiling options used in `aiesimulator` to be applied to hardware emulation. To do this, add the `-aie-sim-options ../aiesimulator_output/aiesim_options.txt`.
+Since Profiling is deprecated in Hardware Emulation Flow, comment the line 'AIE_PROFILE=All' in `aiesimulator_output/aiesim_options.txt`
 
 1. To run emulation use the following command:
 
@@ -683,7 +683,7 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 5. To view the profiling results and trace in Vitis Analyzer, run the command:
 
     ```bash
-    vitis_analyzer sw/sim/behav_waveform/xsim/default.aierun_summary
+    vitis_analyzer -a sw/sim/behav_waveform/xsim/default.aierun_summary
     ```
 
     ![hw_emu analyzer](./images/hw_emu_analyzer.png)
@@ -694,21 +694,19 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
 
     ![hw_emu trace](./images/hw_emu_trace.png)
 
-7. Click **Profile**. This will bring up the same view as shown for the profiling of the `aiesimulator`, but now it will have information gathered from running hardware emulation.
+From the trace information, you can calculate the kernel latency as follows:
+1. Click the `Trace` in the AI Engine simulation run summary, and navigate to the any function to calculate the latency. For example, consider the `classifier` function.
+2. You can notice the function `classifier` ran for seven iterations. Zoom into the period of one iteration (between two main() function calls as follows), add a marker, and drag it to the end of the kernel function as follows:
+    ![hw_emu_trace](./images/trace_calc.png)
+ 
+ Notice the difference of 25.093 us as highlighted above. This is the time the kernel took to complete one iteration.
 
-8. Click **Total Function Time**. Your display will appear as follows.
+If you click the AI Engine Simulation Summary, you can notice the AI Engine Frequency as 1250 MHz, i.e., 0.8 ns, i.e., one cycle = 0.8 ns. Now, the `classifier` function took 25.093 us for one iteration, i.e., 25.093 us / 0.8 ns ~= 31298 cycles.
+Compare this with the latency you got during the aiesimulation where the AI Engine is a standalone module;
 
-    ![hw_emu profile](./images/hw_emu_profile.png)
+7. Explore the two reports and take note of any differences and similarities. This will help you debug and optimize your design.
 
-    Notice that the values here differ from those in `aiesimulator`.
-
-    The final two views: **Graph** and **Array** are the same as in the `aiesimulator` run summary.
-
-9. Open the `aiesimulator` run Summary by clicking **File** > **Open Summary**, navigating to the `aiesimulator_output` directory, and clicking `default.aierun_summary`.
-
-    Explore the two reports and take note of any differences and similarities. This will help you debug and optimize your design.
-
-10. Close out of the **Vitis Analyzer** and build for hardware.
+8. Close out of the **Vitis Analyzer** and build for hardware.
 
 ## Section 7: Build and Run on Hardware
 
@@ -722,7 +720,7 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
     or
 
     ```bash
-    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
+    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
    ```
 
 2. Then re-run the packaging step with:
@@ -736,11 +734,11 @@ After packaging, everything is set to run emulation. Since you ran `aiesimulator
     ```bash
     cd ./sw
     v++ --package -t hw \
-        -f $PLATFORM_REPO_PATHS/xilinx_vek280_es1_base_202320_1/xilinx_vek280_es1_base_202320_1.xpfm \
-        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
+        -f $PLATFORM_REPO_PATHS/xilinx_vek280_base_202410_1/xilinx_vek280_base_202410_1.xpfm \
+        --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4 \
         --package.image_format=ext4 \
         --package.boot_mode=sd \
-        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2023.2/Image \
+        --package.kernel_image=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2024.1/Image \
         --package.defer_aie_run \
         --package.sd_file host.exe ../tutorial.xsa ../libadf.a
     cd ..
@@ -766,7 +764,7 @@ You should see **TEST PASSED**. You have successfully run your design on hardwar
 In this tutorial you learned the following:
 
 * How to compile PLIO and PL Kernels using `v++ -c`.
-* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vek280_es1_base_202320_1` platform.
+* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vek280_base_202410_1` platform.
 * How to use Vitis Analyzer to explore the various reports generated from compilation and emulation/simulation.
 * How to package your host code, and the generated `xclbin` and `libadf.a` into an SD card directory.
 * How to execute the design for software emulation.

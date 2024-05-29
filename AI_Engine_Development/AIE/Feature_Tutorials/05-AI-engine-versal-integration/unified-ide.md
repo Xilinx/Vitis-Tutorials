@@ -43,7 +43,7 @@ To begin the tutorial, you must create a workspace for your design and launch th
 ```
 cd <tutorial_path>/05-AI-engine-versal-integration/
 mkdir workAIE
-vitis -new -w workAIE
+vitis -w workAIE
 ```
 
 ## Step 2: Create and Build the AI Engine Component
@@ -298,7 +298,7 @@ The System project is now fully defined.
 
 ## Step 6: Building and Running the System Project
 
-The System project has three different build targets: software emulation, hardware emulation, and hardware. As described in [*Build Targets*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Build-Targets), each of these targets has a specific use and each requires progressively more time to build. 
+The System project has three different build targets: software emulation, hardware emulation, and hardware. As described in [*Build Targets*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-Build-Targets), each of these targets has a specific use and each requires progressively more time to build. 
 
 * Software emulation is a functional simulation of the system components for evaluation of the behavior of the system. 
 * Hardware emulation is an RTL based simulation of the system with more accurate resource and performance estimates. 
