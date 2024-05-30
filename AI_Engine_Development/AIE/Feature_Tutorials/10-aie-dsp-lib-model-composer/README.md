@@ -9,7 +9,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -20,11 +20,11 @@ The purpose of this tutorial is to provide hands-on experience for designing AI 
 Install the tools:
 
 * Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * The following MATLAB releases are supported: R2021a, R2021b, R2022a Update 6, R2022b Update 6
+  * The following MATLAB releases are supported: R2022a Update 6, R2022b Update 6, R2023a, R2023b
   * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2023.2](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2024.1](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -154,6 +154,7 @@ These are there to help you if you cannot complete any of the four stages.
     * **Input Window size (Number of samples)**: 2048
     * **Scale output down by 2**: Shift1
     * **Rounding mode**: Floor
+    * **Saturation mode**: 0-None
 
     Leave all other settings at their default values. Click **Apply** and **OK**.
 
@@ -201,7 +202,8 @@ These are there to help you if you cannot complete any of the four stages.
       | Filter Length	| N/A | N/A	| N/A | length(cfi) |
       | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
       | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
-      | Rounding mode	floor	| floor	| floor	| floor | floor |
+      | Rounding mode | floor	| floor	| floor | floor |
+      | Saturation mode | 0-None | 0-None | 0-None | 0-None |
 
 17. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should display like as follows:
 
@@ -266,13 +268,10 @@ In this stage, you will generate the graph code of this design and perform bit-t
 
 1. Select the four AIE FIR Filters and the Frequency shifting block, and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
 2. Double-click the block **Model Composer Hub** and click on the **Code Generation** tab.
-3. Select the **FIRchain** subsystem, and set the following parameters on the **AIE Settings** tab:
-    * Check **Create Testbench**.
-    * Check **Run cycle approximate AIE Simulation (SystemC) after code generation**.
+3. Select the **FIRchain** subsystem, and set the following parameters on the **Analyze** tab:
     * Check **Collect profiling statistics and enable 'printf' for debugging**.
     * Check **Collect trace data for Vitis Analyzer and viewing internal signals**.
-3. Click **Apply**.
-4. Click **Generate**.
+4. Click **Analyze**.
 
 The Simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/ip/FIRchain/src/FIRchain.h``:
 
@@ -346,7 +345,9 @@ Finally, the bit-exact simulation (Emulation-AIE) is performed and the result co
 
 ![missing image](Images/Image_012.png)
 
-Vitis Analyzer is then launched. From here you can see the **Graph View**, the **Array View**, the **Trace View**, and the **Profile** information.
+5. In the Model Composer Hub, click **Open Vitis Analyzer**.
+
+Vitis Analyzer is launched. From here you can see the **Graph View**, the **Array View**, the **Trace View**, and the **Profile** information.
 
 ![missing image](Images/Image_022.png)
 
@@ -354,10 +355,10 @@ Vitis Analyzer is then launched. From here you can see the **Graph View**, the *
 
  Vitis Model Composer can also plot the output of the cycle-approximate AI Engine simulation and calculate a throughput estimate. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received, but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, you can use data cursors to select a specific time region over which to calculate throughput:
 
-1. In the Model Composer Hub, click on **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
-1. Select the `Out1` signal from the list on the left.
-2. Right-click on the plot, and select **Data Cursors**->**Two**.
-3. Position the cursors at the beginning of the first and third signal frames, as shown below. 
+6. In the Model Composer Hub, click on **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
+7. Select the `Out1` signal from the list on the left.
+8. Right-click on the plot, and select **Data Cursors**->**Two**.
+9. Position the cursors at the beginning of the first and third signal frames, as shown below. 
 
    ![missing image](Images/Image_024.png)
 
@@ -375,7 +376,7 @@ Click **OK**. Place the block just after the input port, and a copy of this bloc
 
 ![missing image](Images/Image_025.png)
 
-Re-open the **Model Composer Hub** block, and click **Generate** to re-compile and re-simulate the design.
+Re-open the **Model Composer Hub** block, and click **Analyze** to re-compile and re-simulate the design.
 
 After the AI Engine simulation, the estimated throughput is 126 MSPS. This is computed from the following timestamped (green) output data, calculated for two full frame periods:
 
@@ -389,6 +390,6 @@ Model Composer is a very efficient way to create graphs either using your own ke
 
 This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
