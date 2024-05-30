@@ -11,9 +11,6 @@ SIM_FIFO          := false
 MY_APP            := ifft64k_app
 MY_SOURCES        := ${MY_APP}.cpp ifft64k_graph.h ../ifft256p4_rot/ifft256p4_rot_graph.h ../ifft256p4/ifft256p4_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202410_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
-
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
@@ -64,22 +61,22 @@ gen_vectors:
 	matlab -batch "gen_vectors"
 
 ${AIE_OUTPUT}:	${MY_SOURCES}
-	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
 
 x86com:
-	v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} 2>&1| tee log
 
 sim:
-	aiesimulator |& tee -a log
+	aiesimulator 2>&1| tee -a log
 
 x86sim:
-	x86simulator |& tee -a log
+	x86simulator 2>&1| tee -a log
 
 profile:
-	aiesimulator --profile |& tee -a log
+	aiesimulator --profile 2>&1| tee -a log
 
 trace:
-	aiesimulator --online -wdb -ctf |& tee -a log
+	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
 throughput:
 	@../../scripts/throughput.py aiesimulator_output/data/front_o_0.txt --iscomplex
