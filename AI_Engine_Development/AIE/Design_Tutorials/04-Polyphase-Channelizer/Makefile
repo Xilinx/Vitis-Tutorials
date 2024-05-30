@@ -9,22 +9,16 @@ ECHO                               = @echo
 export TARGET                      = hw_emu
 
 RELEASE=2024.1
-BOARD=vck190
-BASE_NUM=202410_1
 
-# Platform Selection...
-VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
-VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
-export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
+TOP_DIR                   ?= $(shell readlink -f .)
+PLATFORM_NAME              = xilinx_vck190_base_202410_1
+PLATFORM_PATH              = ${TOP_DIR}/platform/platform_repo
 
-# Set SysRoot, RootFS and Image
-export VITIS_SYSROOTS   = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
-export SDKTARGETSYSROOT = ${VITIS_SYSROOTS}
-export KERNEL_IMAGE     = ${COMMON_IMAGE_VERSAL}/Image
-export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
-export XLNX_VERSAL      = ${COMMON_IMAGE_VERSAL}
-export PLATFORM         = ${VITIS_PLATFORM_XPFM}
-export SYSROOT          = ${SDKTARGETSYSROOT}
+export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/export/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
+export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
+export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
+export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
 
 ##############
 # Build Flow #
@@ -42,6 +36,7 @@ help::
 all:	channelizer
 
 channelizer:
+	$(MAKE) all -C platform
 	$(MAKE) all -C aie/m16_ssr8
 	$(MAKE) all -C hls/m16_ssr8_permute_fb_i
 	$(MAKE) all -C hls/m16_ssr8_permute_fb_o
@@ -56,6 +51,7 @@ power:
 	$(MAKE) vitis_xpe -C aie/m16_ssr8
 
 clean:
+	$(MAKE) clean -C platform
 	$(MAKE) clean -C aie/m16_ssr8
 	$(MAKE) clean -C aie/m16_ssr8_dft
 	$(MAKE) clean -C aie/m16_ssr8_filterbank
