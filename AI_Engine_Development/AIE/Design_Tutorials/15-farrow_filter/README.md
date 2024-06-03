@@ -292,46 +292,23 @@ Steady state throughput is 1024/912.8e-6 = 1115 Msps.
 
 ### Setup and Initialization
 
->**IMPORTANT:** Before beginning the tutorial ensure you have installed Vitis 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
-Set the ```COMMON_IMAGE_VERSAL``` environment variable to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value, ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms```.
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html
 
-The remaining environment variables are configured in the top level Makefile ```<path-to-design>/15-farrow-filter/Makefile``` file.
-
-```
-# Platform Selection...
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202410_1
-VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
-export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
-
-# Set SysRoot, RootFS and Image
-export VITIS_SYSROOTS   = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
-export SDKTARGETSYSROOT = ${VITIS_SYSROOTS}
-export KERNEL_IMAGE     = ${COMMON_IMAGE_VERSAL}/Image
-export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
-export XLNX_VERSAL      = ${COMMON_IMAGE_VERSAL}
-export PLATFORM         = ${VITIS_PLATFORM_XPFM}
-export SYSROOT          = ${SDKTARGETSYSROOT}
-```
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-design>/15-farrow_filter/Makefile``` file. The tutorial will build its own custom platform
 
 ### Hardware Emulation
 
 ```
-[shell]% cd <path-to-design>/15-farrow-filter
+[shell]% cd <path-to-design>/15-farrow_filter
 [shell]% make clean all TARGET=hw_emu
 ```
 
-It will take about 45 minutes to run the first time as the build will perform C/RTL verification and AMD Vivado&trade; out-of-context place-and-route runs for all both HLS IPs. This will only be done once but is not strictly required for hardware emulation. To skip this step, alternately run using the following:
+This will take about 90 minutes to run. The build process will generate a folder ```15-farrow_filter/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
 
 ```
-[shell]% cd <path-to-design>/15-farrow-filter
-[shell]% make clean all TARGET=hw_emu DO_COSIM=false
-```
-
-The build process will generate a folder ```<path-to-design>/15-farrow-filter/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
-
-```
-[shell]% cd <path-to-design>/15-farrow-filter/package
+[shell]% cd <path-to-design>/15-farrow_filter/package
 [shell]% ./launch_hw_emu.sh -g -run-app embedded_exec.sh
 ```
 
@@ -349,11 +326,11 @@ Throughput is 1024 x 4 x 4/14.4e-6 = 1138 Msps.
 The design can be built for the VCK190 board using the Makefile as follows:
 
 ```
-[shell]% cd <path-to-design>/15-farrow-filter
+[shell]% cd <path-to-design>/15-farrow_filter
 [shell]% make clean all TARGET=hw
 ```
 
-The build process will generate the SD card image in the ```<path-to-design>/15-farrow-filter/package/sd_card``` folder.
+The build process will generate the SD card image in the ```<path-to-design>/15-farrow_filter/package/sd_card``` folder.
 
 ## Summary and Conclusion
 

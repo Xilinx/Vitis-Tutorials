@@ -6,9 +6,6 @@
 
 AIE_SIM_ONLY      ?= true
 
-PLATFORM_USE	  := xilinx_vck190_base_202410_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
-
 MY_APP             = farrow_app.cpp
 MY_SOURCES         = ${MY_APP} farrow_graph.h farrow_kernel1.cpp farrow_kernel1.h farrow_kernel2.cpp farrow_kernel2.h
 LOG_FILE           = log
