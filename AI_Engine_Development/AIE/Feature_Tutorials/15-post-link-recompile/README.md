@@ -15,7 +15,9 @@
 
 ## Introduction
 
-AI Engine application development can start early in the system development stage. The AI Engine development team and the hardware development team slowly converge on an interface between the Adaptable Engine and the AI Engine array. At some point, this interface is fixed and should not be changed. This tutorial shows you how to modify an AI Engine application after the platform has been frozen while avoiding a complete AMD Vivado&trade; tool run, which might take long if timing closure requires specific attention.
+AI Engine application development can start early in the system development stage. Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
+
+This tutorial shows you how to modify an AI Engine application after the platform has been frozen while avoiding a complete AMD Vivado&trade; tool run, which might take long if timing closure requires specific attention.
 
 There are two ways to perform this operation:
 

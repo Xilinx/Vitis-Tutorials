@@ -1,8 +1,7 @@
 <table class="sphinxhide" width="100%">
-<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ HLS Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-hls.html">See Vitis™ HLS landing page on xilinx.com</a>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis HLS™ Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-hls.html">See Vitis HLS landing page on xilinx.com</a>
     </td>
  </tr>
 </table>
@@ -20,12 +19,14 @@ The tutorial is based on the [Beamformer IP](../../Design_Tutorials/02-Beamforme
 ![Beamformer Diagram](./images/Beamformer_Diagram.png)
 
 That tutorial goes into more depth on the algorithm itself, whereas this tutorial will go into more depth on analysis tools and techniques used for optimization. As such, this tutorial simplifies the application by focusing on just the compute engine portion of the beamformer algorithm. The code is provided in the [reference files](./reference_files) directory:
+
 - [beamformer.cpp](./reference_files/beamformer.cpp): C code for Beamformer design
 - [beamformer.h](./reference_files/beamformer.h): Header file for Beamformer design
 - [beamformer_tb.cpp](./reference_files/beamformer_tb.cpp): Testbench
 - [result.golden_float.dat](./reference_files/result.golden_float.dat): Testbench simulation results used for design verification
 
 After completing this tutorial, you will be able to:
+
 - Build a baseline sequential version of your design that will act as a non-optimized reference point.
 - Analyze the effects of applying the `PIPELINE` pragma to the outer loop of a nested loop structure and observe the automatic UNROLL that occurs to the inner loop(s).
 - Use the Vitis HLS analysis views as guidance for the 'next step' required to improve performance.

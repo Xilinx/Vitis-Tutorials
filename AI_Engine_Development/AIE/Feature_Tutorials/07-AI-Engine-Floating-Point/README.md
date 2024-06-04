@@ -29,12 +29,10 @@ This tutorial targets the VCK190 production board for 2023.2 version.
 
 ## AI Engine Architecture Details
 
-Versal adaptive compute acceleration platforms (Adaptive SoCs) combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
-Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute, and DSP Engines for fixed point, floating point, and complex MAC operations.
+Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
 ![missing image](./images/Versal.png)
 
-The Intelligent Engine comes as an array of AI Engines connected together using AXI-Stream interconnect blocks:
 
 **AI Engine array**
 

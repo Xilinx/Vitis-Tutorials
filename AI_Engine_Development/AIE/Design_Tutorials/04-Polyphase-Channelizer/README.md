@@ -1,9 +1,5 @@
-<!--
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-Author: Mark Rollins
--->
-﻿<table class="sphinxhide" width="100%">
+
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -18,15 +14,30 @@ Author: Mark Rollins
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Channelizer Requirements](#channelizer-requirements)
-3. [Matlab Model](#matlab-model)
-4. [System Partitioning](#system-partitioning)
-5. [Design Overview](#design-overview)
-6. [Polyphase Filterbank Design](#polyphase-filterbank-design)
-7. [Discrete Fourier Transform Design](#discrete-fourier-transform-design)
-8. [Build and Run Design](#build-and-run-design)
-9. [Estimating Power Using the Power Design Manager](#estimating-power-using-the-power-design-manager)
+- [Polyphase Channelizer](#polyphase-channelizer)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Channelizer Requirements](#channelizer-requirements)
+  - [MATLAB Model](#matlab-model)
+  - [System Partitioning](#system-partitioning)
+    - [Clock Rate and SSR Planning](#clock-rate-and-ssr-planning)
+    - [Circular Buffer](#circular-buffer)
+    - [Polyphase Filterbank](#polyphase-filterbank)
+    - [Cyclic Shift Buffer](#cyclic-shift-buffer)
+    - [IDFT](#idft)
+  - [Design Overview](#design-overview)
+  - [Polyphase Filterbank Design](#polyphase-filterbank-design)
+  - [Discrete Fourier Transform Design](#discrete-fourier-transform-design)
+  - [Build and Run Design](#build-and-run-design)
+    - [Setup \& Initialization](#setup--initialization)
+    - [Hardware Emulation](#hardware-emulation)
+    - [Hardware](#hardware)
+  - [Estimating Power Using the Power Design Manager](#estimating-power-using-the-power-design-manager)
+    - [Step 1: Building the Design for VCK190 and Executing Power Targets](#step-1-building-the-design-for-vck190-and-executing-power-targets)
+    - [Step 2: Creating a New Project](#step-2-creating-a-new-project)
+    - [Step 3: Refining the AI Engine Power Estimate Using Simulated Design and Switching Activities](#step-3-refining-the-ai-engine-power-estimate-using-simulated-design-and-switching-activities)
+  - [References](#references)
+  - [Support](#support)
 
 [References](#references)
 
@@ -323,56 +334,6 @@ The following table shows a comparison between power estimates in compilation ve
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-## License
 
-Components: xilinx-images
-
-images in the documentation
-
-Components: xilinx-files
-
-The MIT License (MIT)
-
-Copyright (c) 2023 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-<p class="sphinxhide" align="center">  &copy; Copyright 2023 Advanced Micro Devices, Inc.</p>
-<p class="sphinxhide" align="center">  &copy; Copyright 2021 Xilinx Inc.</p>
-
-Components: xilinx-binary-files
-
-Copyright © 2022 Advanced Micro Devices, Inc.
-Redistribution and use in binary form only, without modification,
-is permitted provided that the following conditions are met:
-1. Redistributions must reproduce the above copyright notice,
-this list of conditions and the following disclaimer in the documentation
-and/or other materials provided with the distribution.
-2. The name of Xilinx, Inc. may not be used to endorse or promote products
-redistributed with this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY XILINX, INC. "AS IS" AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL XILINX, INC. BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<p class="sphinxhide" align="center"><sub>Copyright © 2023-2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

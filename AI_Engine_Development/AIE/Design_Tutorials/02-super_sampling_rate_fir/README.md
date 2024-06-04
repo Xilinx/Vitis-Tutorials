@@ -14,10 +14,7 @@
 
 ## Introduction
 
-AMD Versal&trade; adaptive SoC AI Core Series are heterogeneous devices containing many domains with compute capabilities. With respect to Digital Signal Processing (DSP) and particularly Finite Impulse Response (FIR) filters, the two domains of interest are:
-
-- The Programmable Logic (PL), which is the "classical" domain of AMD devices.
-- The AI Engine Processor Array, which is a new domain within Versal adaptive SoC AMD devices
+Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
 FIR filter architecture is a rich and fruitful electrical engineering domain, especially when the input sampling rate becomes higher than the clock rate of the device (Super Sampling Rate or SSR). For the PL, there exists a number of solutions that are already available using turnkey IP solution (FIR Compiler). The AI Engine array is a completely new processor and processor array architecture with enormous compute capabilities, so an efficient filtering architecture has to be found using all the capabilities of the AI Engine array, but also all the communications that are possible with the PL.
 
@@ -68,13 +65,9 @@ This tutorial is decomposed into multiple steps:
 
 You should have already read the [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), so the purpose of this chapter is simply to highlight the features of the AI Engine that are useful for this tutorial.
 
-Versal adaptive SoCs combine Scalar Engines, Adaptable Engines, and Intelligent Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application.
+Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
 ![missing image](./Images/Versal.jpg)
-
-Intelligent Engines are SIMD VLIW AI Engines for adaptive inference and advanced signal processing compute.
-
-DSP Engines are for fixed point, floating point, and complex MAC operations.
 
 The SIMD VLIW AI Engines come as an array of interconnected processors using the AXI-Stream interconnect blocks as shown in the following figure:
 

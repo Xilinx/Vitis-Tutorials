@@ -39,11 +39,7 @@ SPDX-License-Identifier: MIT
 
 ## Introduction
 
-The AMD Versal™ adaptive SoC is a fully programmable, heterogeneous compute platform that combines the following components:
-
-- Scalar Engines (a processor subsystem (PS) that includes Arm® processors)
-- Adaptable Engines (programmable logic (PL) and memory)
-- Intelligent Engines (including both AI and DSP Engines)
+Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
 This tutorial demonstrates the steps to upgrade a 32-branch digital down-conversion chain so that it is compliant with the latest tools and coding practice. Examples for the following changes with side-by-side view of the original and upgraded code are included in the tutorial.
 
