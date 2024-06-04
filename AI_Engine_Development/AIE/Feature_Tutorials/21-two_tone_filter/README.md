@@ -1,13 +1,13 @@
 # Signal Processing on AI Engine Using Vitis DSP Libraries and Vitis Model Composer
-### *Version: Vitis 2023.2* 
+### *Version: Vitis 2024.1* 
 ## Introduction
 This tutorial guides you to design an FIR filter with an FFT using the DSP library targeting AMD Versal™ AI Engine.
 ## Before You Begin
 Install the tools:
-- Get and install **[MathWorks MATLAB® and Simulink® (R2021a or R2021b)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
-- Get and install **[AMD Vitis 2023.2](https://www.xilinx.com/support/download.html)**
+- Get and install **[MathWorks MATLAB® and Simulink® (R2022a or R2022b)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
+- Get and install **[AMD Vitis 2024.1](https://www.xilinx.com/support/download.html)**
 
-> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2023.2) for setting up software and installing the VCK190 base platform.
+> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2024.1) for setting up software and installing the VCK190 base platform.
 ## Overview
 The algorithm designer creates a MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot.
 ![MATLAB Model](./images/MATLAB_Model.png)
@@ -68,7 +68,7 @@ The below figure shows the FFT parameters for design 1 (SSR<1).
 - TP_SSR sets a parallelism factor which is set to 1. 
 
 #### Passing the Parameters
-Review the **`fir1_graph.h`** located under `two_tone_filter/ssr_lt1/makefile_flow/src` directory. 
+Review the **`fir1_graph.h`** located under `ssr_lt1/makefile_flow/src` directory. 
 - Observe the parameter configurations for FIR and FFT. 
 - Configured parameters are passed as an argument as shown here.
 
@@ -83,14 +83,14 @@ Both the FIR and FFT parameters has been configured and the next step is to conn
 #### Change the Project Path
 Enter the following command to change the project path for SSR<1 design :
 ```
-cd two_tone_filter/ssr_lt1/makefile_flow
+cd ssr_lt1/makefile_flow
 ```
 Make sure to set the PLATFORM_REPO_PATHS environment variable.
 
 #### Source the Vitis tool 
 Enter the following command to source the Vitis tool:
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2023.1/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2024.1/settings.sh
 ```
 
 #### Set the DSP Library Path
@@ -313,7 +313,7 @@ Enter the following command to launch Vitis Unified IDE:
 ```
 vitis -w <PATH_TO_WORKSPACE>
 ```
-Note: <PATH_TO_WORKSPACE> is `two_tone_filter/ssr_lt1/ide_flow` directory
+Note: <PATH_TO_WORKSPACE> is `ssr_lt1/ide_flow` directory
 #### Create AIE Component
 Select **File > New Component > AI Engine**.
 
@@ -322,7 +322,7 @@ Enter the Component name as `aie_ssr_lt1` and click **Next**.
 #### Add the design files
 Add the files by clicking ![Add Files Icon](./images/Add_files_icon.png) button.
 
-Browse to the folder location `two_tone_filter/ssr_lt1/makefile_flow/src` and select the following files and then click **Open**:
+Browse to the folder location `ssr_lt1/makefile_flow/src` and select the following files and then click **Open**:
 - fir1_app.cpp
 - fir1_coeff.h
 - fir1_graph.h
@@ -335,7 +335,7 @@ Add the following folder which contains test vectors by clicking ![Add Folders I
 Click **Next**.
 
 #### Select the Platform
-Select the platform as *xilinx_vck190_base_202320_1*.
+Select the platform as *xilinx_vck190_base_202410_1*.
 
 Click **Next** and review the Summary and then select **Finish**.
 
@@ -421,11 +421,11 @@ We will implement design 1 (SSR<1) using Vitis Model Composer.
 #### Change the Project Path
 Enter the following command to change the project path to vmc flow:
 ```
-cd ../vmc_flow
+cd ssr_lt1/vmc_flow
 ```
 Open MATLAB by typing ```model_composer```.
 
-Browse to the project location `<YOUR_PATH>/two_tone_filer/ssr_lt1/vmc_flow` if required.
+Browse to the project location `<YOUR_PATH>/21-two_tone_filer/ssr_lt1/vmc_flow` if required.
 
 Double-click **`two_tone_filter.slx`**. 
 
@@ -496,16 +496,20 @@ Right-click the FIR-FFT block and select **Create Subsystem from Area**.
 
 Double-click **Vitis Model Composer Hub**. This opens the window where you can configure the code generation options.
 
-Select **FIR-FFT** under *two_tone_filter* from the left window and enable the following options from the AIE Settings tab.
-- Create Testbench
-- Run cycle-approximate AIE simulation (SystemC) after code generation
-- Collect trace data for Vitis Analyzer
+Make sure the *Hardware selection* is proper by selecting the *Hardware Selection*. In this case, Versal AI Core Series device is selected.
 
-After completing the above selections, click **Generate** button.
+In the **Code Generation**, select **FIR-FFT** under *two_tone_filter* from the left window and enable the following option from the *Analyze* tab.
+- Collect trace data for Vitis Analyzer, viewing internal signals, and latency
 
-Note: This may take few minutes (5-7 mins) to complete the aie simulation. You can see the progress in details.
+Review the **Export** tab, user can generate the Testbench and export the AIE subsytem.
 
-Once the simulation is done, it launches the Vitis Analyzer and review the report. Verify the Graph and trace reports.
+Go back to the **Analyze** tab, click **Analyze** button.
+
+Note: This may take few minutes to complete the aie simulation. You can see the progress in details.
+
+You can find the simulation results as *Simulation results MATCH* in the log. Click OK.
+
+Once the simulation is done, click *Open Vitis Analyzer* from the **Analyze** tab to review the report. Verify the Graph and trace reports.
 
 Once the review is done, close the Vitis Anlyzer and Model Composer tool.
 
