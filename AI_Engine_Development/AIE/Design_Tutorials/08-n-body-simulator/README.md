@@ -9,7 +9,7 @@
 
 # N-Body Simulator
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -43,7 +43,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * [Vitis™ Unified Software Development Platform 2023.2](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+      * [Vitis™ Unified Software Development Platform 2024.1](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
       * [Xilinx® Runtime and Platforms (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
       * [Embedded Platform VCK190 Base or VCK190 ES1 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
@@ -72,7 +72,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2023.2 version of the AMD tools.
+Ensure you are using the 2024.1 version of the AMD tools.
 
 ```bash
 which vitis
@@ -285,6 +285,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -37,16 +37,16 @@ Following is an example of how the `mm2s_mp` kernel is compiled.
 ```
 v++ -c                                                                 \
     -t hw                                                              \
-    --platform xilinx_vck190_base_202320_1                             \
+    --platform xilinx_vck190_base_202410_1                             \
     --save-temps --optimize 2                                          \
     --hls.jobs 8 -I$(XFLIB_DIR)/L1/include                            \
     -I$(XFLIB_DIR)/L1/include/hw                                      \
     -I./kernel                                                         \
     -k mm2s_mp                                                          \
     --hls.clock 150000000:mm2s_mp                                       \
-    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202320_1          \
-    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202320_1 \
-    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202320_1/mm2s_mp.xo'  \
+    --temp_dir ./build/_x_temp.hw.xilinx_vck190_base_202410_1          \
+    --report_dir ./build/reports/_x.hw_emu.xilinx_vck190_base_202410_1 \
+    -o './build/_x_temp.hw_emu.xilinx_vck190_base_202410_1/mm2s_mp.xo'  \
     ./kernel/mm2s_mp.cpp                                                 
 ```
 The same compilation options are used to compile the `s2mm_mp`, `packet_sender`, and `packet_receiver` kernels.
@@ -109,6 +109,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

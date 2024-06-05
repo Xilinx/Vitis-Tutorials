@@ -19,9 +19,9 @@ or
 
 ```
 v++ -t hw                                                                         \
-    --platform xilinx_vck190_base_202320_1                                        \
+    --platform xilinx_vck190_base_202410_1                                        \
     --package.defer_aie_run                                                       \
-    -p ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202320_1/hpc.xclbin \
+    -p ../Module_04_xclbin/build/build_dir.hw.xilinx_vck190_base_202410_1/hpc.xclbin \
     ../Module_02_aie/build/libadf.a                                               \
     --package.out_dir ./build                                                     \
     --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4                           \
@@ -148,6 +148,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
