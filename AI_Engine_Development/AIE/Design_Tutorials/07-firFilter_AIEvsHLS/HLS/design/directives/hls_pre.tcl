@@ -1,5 +1,5 @@
 #!/bin/bash
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 #config_dataflow -default_channel fifo -fifo_depth 1024 -start_fifo_depth 8

@@ -1,6 +1,6 @@
 <table class="sphinxhide" width="100%">
  <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
+   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2024.1 Versal AI Engine/HLS FIR Filter Tutorial (AI Engine Implementation)</h1>
    </td>
  </tr>
 </table>
@@ -131,7 +131,7 @@ The individual make steps to build the design with the options applied to them a
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler uses any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and compiles them into their respective XO files.
+In this step, the Vitis compiler uses any kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202410_1`) and compiles them into their respective XO files.
 
 The following command compiles the kernels (default TARGET=hw_emu, N_FIR_FILTERS=1, N_FIR_TAPS=15, FIR_WINDOW_SIZE=256, EN_TRACE=0):
 
@@ -149,7 +149,7 @@ v++ 	--target hw_emu					\
 	--hls.clock 300000000:datamover 		\
         -D N_FIR_TAPS=$(N_FIR_TAPS)                     \
         -D N_FIR_FILTERS=$(N_FIR_FILTERS)               \
-	--platform xilinx_vck190_base_202320_1		\
+	--platform xilinx_vck190_base_202410_1		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x	\
 	--verbose 					\
@@ -207,7 +207,7 @@ aiecompiler     -include=$(DSPLIB_ROOT)/L1/src/aie 		\
 		-include=$(DSPLIB_ROOT)/L1/include/aie 		\
 		-include=$(DSPLIB_ROOT)/L2/include/aie 		\
 		-include=design/aie_src 		\
-		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202320_1/xilinx_vck190_base_202320_1.xpfm 	\
+		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202410_1/xilinx_vck190_base_202410_1.xpfm 	\
 		--workdir=Work 					\
 	        --Xpreproc="-DITER_CNT=$(ITER_CNT)"             \
 		--Xpreproc="-DN_FIR_FILTERS=$(N_FIR_FILTERS)"   \
@@ -270,7 +270,7 @@ The expanded command is as follows:
 cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu
 
 v++ 	-l 						\
-	--platform xilinx_vck190_base_202320_1		\
+	--platform xilinx_vck190_base_202410_1		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x		\
 	--verbose 					\
@@ -454,7 +454,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x	\
-	-f xilinx_vck190_base_202320_1												\
+	-f xilinx_vck190_base_202410_1												\
 	--package.sd_dir $(XRT_ROOT) 									\
 	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 						\
 	--package.kernel_image $(COMMON_IMAGE_VERSAL)/Image 						\
@@ -523,12 +523,12 @@ cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/
 ```
 When launched, the QEMU simulator loads. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt comes up.
 ```bash
-root@versal-rootfs-common-2023_2:~#
+root@versal-rootfs-common-2024_1:~#
 ```
 
 In some cases, the following error might come up on the screen:
 ```
-root@versal-rootfs-common-2023_2:~## xinit: giving up
+root@versal-rootfs-common-2024_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -612,7 +612,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power ON the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2024_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 ```
@@ -874,6 +874,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

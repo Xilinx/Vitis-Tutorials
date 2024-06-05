@@ -9,7 +9,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -137,13 +137,13 @@ filter_AIEvsHLS
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), install the following tools.
 
-* Install the [Vitis Software Platform 2023.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2024.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+* Download and set up the [VCK190 Vitis Platform for 2024.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 * [DSP Library (DSPLib) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
@@ -159,10 +159,10 @@ When the elements of the Vitis software platform are installed, update the shell
 
 Edit `sample_env_setup.sh` script with your file paths:
 ```bash
-export PLATFORM_REPO_PATHS= <YOUR-2023.2-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2023.2-VITIS-DIRECTORY>/2023.2
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2023.2-DIRECTORY>
-export DSPLIBS_VITIS=<YOUR-PATH-TO-2023.2-DSP-LIBRARY>
+export PLATFORM_REPO_PATHS= <YOUR-2024.1-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2024.1-VITIS-DIRECTORY>/2024.1
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2024.1-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2024.1-DSP-LIBRARY>
 
 source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
 source $XILINX_VITIS/settings64.sh
@@ -533,7 +533,7 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
 
