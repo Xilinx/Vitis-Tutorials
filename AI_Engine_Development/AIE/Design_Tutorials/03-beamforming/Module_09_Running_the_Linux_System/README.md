@@ -37,7 +37,7 @@ Transmit delay: 0 msec/char 0 msec/line
 ```
 
 7. Power on the board.
-8. Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+8. Wait until you see the `root@versal-rootfs-common-2024_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 9. Run the following commands into the TeraTerm terminal:
 
 ```
@@ -58,6 +58,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -104,7 +104,7 @@ The first thing this `vck_190_v1_0_xsa.tcl` script does is call the `create_proj
 
 The `vck_190_v1_0_xsa.tcl` script then calls the `dr.bd.tcl` script, which generates the platform block design. Open the block design in the Vivado project located at `hw/build/vck190_v1_0_vivado/vck190_v1_0.xpr`. Note that there are five major components to the hardware platform: the AI Engine, CIPS, NoC (Network-on-Chip), Clocking Wizard IP, Clock Reset IPs, 16 AXI4-LITE SmartConnect interfaces, and a top-level AXI4-Lite SmartConnect (called ``ctrl_sm``).
 
-![Platform Block Design](images/Beamforming_custom_BlockDiagram_2023_2.PNG)
+![Platform Block Design](images/Beamforming_custom_BlockDiagram_2024_1.PNG)
 
 Open the `dr.bd.tcl` file and review the comments. After the `Setup and Error Checking` commands, note that the main function of this file is called `create_root_design`.
 
@@ -308,7 +308,7 @@ Lastly, the `vck_190_v1_0_xsa.tcl` script generates the files necessary to suppo
 
 ### Software Platform
 
-After creating the hardware platform (XSA) with the AI Engine IP through Vivado, import this XSA into the Vitis environment and create the software platform. Then add the aie_runtime, Linux, and standalone (bare-metal) domains into the software platform. The domains are configured with prebuilt Petalinux software components. Review Steps 2 and 3 of the [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/2023.2/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md) if you want to learn how to create the Petalinux software components from scratch.  
+After creating the hardware platform (XSA) with the AI Engine IP through Vivado, import this XSA into the Vitis environment and create the software platform. Then add the aie_runtime, Linux, and standalone (bare-metal) domains into the software platform. The domains are configured with prebuilt Petalinux software components. Review Steps 2 and 3 of the [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/2024.1/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md) if you want to learn how to create the Petalinux software components from scratch.  
 
 Certain software components distributed with this tutorial are licensed under open source licenses, such as the GPL and BSD, source files for these materials are located at the following locations:
 
@@ -403,6 +403,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

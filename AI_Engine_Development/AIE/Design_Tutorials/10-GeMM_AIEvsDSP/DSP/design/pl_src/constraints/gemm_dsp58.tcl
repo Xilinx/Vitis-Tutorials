@@ -1,6 +1,6 @@
 #set_clock_groups -name async_axi_clk -asynchronous -group  {clkout2_primitive}
-set_false_path -from [get_clocks clkout2_primitive] -to [get_clocks clkh]
-set_false_path -from [get_clocks clkh] -to  [get_clocks clkout2_primitive]
+set_false_path -from [get_clocks clk_wizard_0_clk_out4_o1_o3] -to [get_clocks clkh]
+set_false_path -from [get_clocks clkh] -to  [get_clocks clk_wizard_0_clk_out4_o1_o3]
 set_property LOC DSP_X0Y14 [get_cells {vitis_design_i/VitisRegion/gemm_large_ocm_0/inst/gemm_top_inst/fixgemm_wrapper_inst/u1/lj[0].lk[0].ds/i1.i3.ds/DSP58C<0>_INST}]
 set_property LOC DSP_X1Y14 [get_cells {vitis_design_i/VitisRegion/gemm_large_ocm_0/inst/gemm_top_inst/fixgemm_wrapper_inst/u1/lj[1].lk[0].ds/i1.i3.ds/DSP58C<0>_INST}]
 set_property LOC DSP_X2Y14 [get_cells {vitis_design_i/VitisRegion/gemm_large_ocm_0/inst/gemm_top_inst/fixgemm_wrapper_inst/u1/lj[2].lk[0].ds/i1.i3.ds/DSP58C<0>_INST}]

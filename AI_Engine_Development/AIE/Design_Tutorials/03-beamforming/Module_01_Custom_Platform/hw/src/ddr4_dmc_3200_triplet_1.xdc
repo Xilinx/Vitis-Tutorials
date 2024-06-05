@@ -1,6 +1,6 @@
 
 
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 set_property PACKAGE_PIN AF47     [get_ports "ddr4_dimm1_dqs_t[4]"] ;# Bank 700 VCCO - VCC1V2_DDR4 - IO_L0P_XCC_N0P0_M0P0_700

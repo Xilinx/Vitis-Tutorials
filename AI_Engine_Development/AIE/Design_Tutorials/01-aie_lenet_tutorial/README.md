@@ -9,7 +9,7 @@
 
 # Versal™ AI Engine LeNet Tutorial
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 
@@ -115,15 +115,15 @@ Tools Documentation:
 
 To build and run the LeNet tutorial, you will need the following tools downloaded/installed:
 
-* Install the [Vitis Software Platform 2023.2](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2024.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
-* Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202320_1` platform)
+* Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vck190_base_202410_1` platform)
 
 * Obtain licenses for AI Engine tools
 
 * Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
-* Download and set up the [VCK190 Vitis Platform for 2023.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+* Download and set up the [VCK190 Vitis Platform for 2024.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 </details>
 
@@ -161,7 +161,7 @@ platforminfo --list | grep -m 1 -A 9 vck190_base
 ```
 Output of the above command should be as follows:
 ```bash
-"baseName": "xilinx_vck190_base_202320_1",
+"baseName": "xilinx_vck190_base_202410_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -220,7 +220,7 @@ make run TARGET=hw_emu
   <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202410_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. In this design, the `dma_hls` kernel is compiled as an XO file and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
@@ -239,7 +239,7 @@ mkdir -p ./build/hw_emu
 cd ./build/hw_emu
 
 v++       --target hw_emu			     \
-          --platform xilinx_vck190_base_202320_1     \
+          --platform xilinx_vck190_base_202410_1     \
           --save-temps                               \
 	  --temp_dir _x	                             \
           --verbose                                  \
@@ -339,7 +339,7 @@ The expanded command is as follow:
 cd ./build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202320_1            \
+          --platform xilinx_vck190_base_202410_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -359,7 +359,7 @@ If EN_TRACE=1, the command is expanded as follow:
 cd ./build/hw;
 
 v++       -l                                                \
-          --platform xilinx_vck190_base_202320_1            \
+          --platform xilinx_vck190_base_202410_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -433,31 +433,31 @@ or
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
 			-o ../build/app_control.o                   
 
 aarch64-linux-gnu-g++   -O							\
                         -c							\
 			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux \
 			-DXAIE_DEBUG						\
-                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/include/xrt \
 			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/include \
+			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/lib \
 			../design/aie_src/main.cpp                              \
 			-o ../build/lenet_app.o                    
 
 aarch64-linux-gnu-g++   ./build/app_control.o			                \
 			./build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/sysroots/aarch64-xilinx-linux/usr/lib\
+			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux \
+			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/aarch64-xilinx-linux/usr/lib\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
                         -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
                         -ladf_api_xrt                      		        \
@@ -510,10 +510,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202320_1  			\
+	-f xilinx_vck190_base_202410_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/aiesim_data	                \
@@ -537,10 +537,10 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vck190_base_202320_1  			\
+	-f xilinx_vck190_base_202410_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
-	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4 \
-	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image \
+	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4 \
+	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/Image \
 	--package.boot_mode=sd					\
 	--package.out_dir ./build/hw_emu/package	        \
 	--package.sd_dir ./design/aie_src/aiesim_data	                \
@@ -567,8 +567,8 @@ cd ../../;
 |Inputs Sources|Description|
 |  ---  |  ---  |
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/rootfs.ext4|The root filesystem file for Petalinux.|
-|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2023.2/Image|The pre-built Petalinux Image the processor boots from.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/rootfs.ext4|The root filesystem file for Petalinux.|
+|$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/Image|The pre-built Petalinux Image the processor boots from.|
 |design/aie_src/aiesim_data|The data folder that contains the input data stored in DDR memory. It also contains the output golden refernece data the PS host application uses to verify the output data from the AI Engine.|
 |build/hw_emu/lenet_aie_xrt.elf|The PS host application executabled created in the `make application` step.|
 |build/hw_emu/vck190_aie_lenet.hw_emu.xsa|The XSA file created in the `make xsa` step.|
@@ -597,12 +597,12 @@ cd ./build/hw_emu/package
 ```
 When launched, you will see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you will see the root Linux prompt display:
 ```bash
-root@versal-rootfs-common-2023_2:~#
+root@versal-rootfs-common-2024_1:~#
 ```
 
 In some cases, the following error might display:
 ```
-root@versal-rootfs-common-2023_2:~## xinit: giving up
+root@versal-rootfs-common-2024_1:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
 xinit: server error
 Enabling notebook extension jupyter-js-widgets/extension...
@@ -665,7 +665,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2024_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands into the TeraTerm terminal:
 
@@ -949,7 +949,7 @@ auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 Additionally, the `memcpy` and `memset` functions are used to initialize the data in global memory.
 
 #### 5. Open Graph, Obtain Handle, and Execute Graph
-The following registration function was added in 2023.2 for XRT to use ADF API callbacks:
+The following registration function was added in 2024.1 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
 
@@ -1021,7 +1021,7 @@ Throughput = (no of images / Processing time)
 ```
 
 ## Power Measurement Details
-Resource utilization and power are measured using vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2023.2 version) tools.
+Resource utilization and power are measured using vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.1 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1058,7 +1058,7 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2023.2](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://docs.xilinx.com/r/en-US/ug1275-xilinx-power-estimator-versal).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2024.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://docs.xilinx.com/r/en-US/ug1275-xilinx-power-estimator-versal).
 
 3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
 

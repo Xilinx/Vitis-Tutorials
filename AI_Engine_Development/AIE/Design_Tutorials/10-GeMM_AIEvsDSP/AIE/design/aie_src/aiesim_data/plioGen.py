@@ -1,4 +1,4 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 import sys
@@ -98,7 +98,8 @@ for m in range(0,24) :
     else:
         with open(b0, 'w+') as file:
             for q in range(0,MATB_SZ[i]) :
-                if (((q%TOTAL_B_PER_CH[i]) > (NON_ZP_B_PER_CH[i] - 1)) and (q%(TOTAL_SUB_B_PER_CH) > (NON_ZP_SUB_PER_CH - 1))).all():
+                if (((q%TOTAL_B_PER_CH[i]) > (NON_ZP_B_PER_CH[i] - 1)) and (q%(TOTAL_SUB_B_PER_CH[i]) >
+                    (NON_ZP_SUB_PER_CH[i] - 1))).all():
                     file.write(ZP_val+"\n")
                 else:
                     file.write(B_val+"\n")

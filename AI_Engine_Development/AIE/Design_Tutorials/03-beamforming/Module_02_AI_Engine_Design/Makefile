@@ -1,4 +1,4 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 
@@ -84,7 +84,7 @@ sim: $(BUILD_DIR)/aiesimulator_output/$(SIM_LOG)
 
 $(BUILD_DIR)/aiesimulator_output/$(SIM_LOG):
 	cd $(BUILD_DIR); \
-	aiesimulator --pkg-dir=$(WORK_DIR) --output-dir=aiesimulator_output |& tee $(SIM_LOG)
+	aiesimulator --pkg-dir=$(WORK_DIR) --output-dir=aiesimulator_output 2>&1 | tee -a $(SIM_LOG)
 
 vcd: $(XPE_FILE)
 
