@@ -21,7 +21,7 @@ The following are some of the features of the hardware emulation that are covere
 
 <tr>
 <td>
-<a href="./README.md#Build-for-Hardware-Emulation-using-Vitis-IDE">Build for Hardware Emulation Using the Vitis IDE</a>
+<a href="./README.md#Build-for-Hardware-Emulation-Using-the-Vitis-IDE">Build for Hardware Emulation Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to create a system project and build for hardware emulation and run.
@@ -39,7 +39,7 @@ Explains how to use the AMD Vivado&trade; XSIM to debug the PL kernels.
 
 <tr>
 <td>
-<a href="./README.md#Performance-of-the-AI-Engine-using-hardware-emulation-results">Performance of the AI Engine Using the Hardware Emulation Results</a>
+<a href="./README.md#Performance-of-the-AI-Engine-Using-the-Hardware-Emulation-Results">Performance of the AI Engine Using the Hardware Emulation Results</a>
 </td>
 <td>
 This section profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in the AI Engine simulation.
@@ -48,7 +48,7 @@ This section profiles the system for hardware emulation and compares the through
 
 <tr>
 <td>
-<a href="./README.md#Command-line-project-source-code-debug-with-Vitis-IDE">Command Line project Source Code Debug with the Vitis IDE</a>
+<a href="./README.md#Command-Line-Project-Source-Code-Debug-with-the-Vitis-Unified-IDE ">Command Line Project Source Code Debug with the Vitis Unified IDE</a>
 </td>
 <td>
 This section helps you debug your command line project by using the features of the AMD Vitis&trade; IDE debugger without porting your system design to the IDE.
@@ -73,6 +73,9 @@ Besides referring to the link provided above to create a system project, make su
     [connectivity]
     nk=mm2s:1:mm2s_1
     nk=s2mm:2:s2mm_1.s2mm_2
+    sc=mm2s_1.s:ai_engine_0.inx
+    sc=ai_engine_0.data_shuffle:s2mm_1.s
+    sc=ai_engine_0.upscale_out:s2mm_2.s
     ```
 
     If you are porting a command line project to the Vitis IDE environment, make sure to replace the above connectivity statements that start with `nk` in your `system.cfg` file and add as a source to your HW-Link project.
@@ -81,12 +84,17 @@ Besides referring to the link provided above to create a system project, make su
 
 ![package options](./Images/package_options.PNG)
 
-1. To build the system project, in the Flow Navigator -> [system_project] component -> select **Build All**. The top-level project uses an incremental build approach, select the components to be built along with system project.
+1. Steps to build the system project: Go to the Flow Navigator -> [system_project] component (Section: HARDWARE EMULATION): 
+
+    a. Select **Build Binary Container** from `LINK-binary_container_1`. Select the checck box to build the components added in the binary container.
+
+    b. Select **Build Package** from `PACKAGE`.
+    
 2. After packaging, everything is set to run emulation. In the Flow Navigator -> [system_project] component -> select **Start Emulator** -> show waveform -> start :
 
 ![Start Emulator](./Images/environment_variables.PNG)
 
-3. Run the emulation by clicking Flow Navigator -> [system_project] component -> select **Run**, after the following messages are displayed in the 'TASK: EMULATION FOR SYSTEM_PROJECT' console.  
+3. Select the **Run for Time(10us)** in the XSIM GUI taskbar, observe the Linux bootup in the Vitis IDE `TASK: EMULATION FOR SYSTEM_PROJECT`. 
 
 ![emulation console](./Images/emulation_console.PNG)
 
@@ -103,9 +111,8 @@ This section walks you through debugging PL kernels in the Vivado logic simulato
 2. Enable the **Show Waveform** option, and select **Start**.
 3. This invokes the Vivado XSIM in standalone mode. Parallelly, you can observe the messages in the Vitis IDE **Emulation Console**.
 4. Hit the **Run** button in the Vivado XSIM GUI taskbar, and observe the Linux bootup in the Vitis IDE **Emulation Console**.
-5. Once the boot completes in the Vitis IDE, run the application using **Run Configurations** -> **Launch HW Emulator** on the system project.
-6. Observe the data coming up in the XSIM and parallelly, the **Emulation Console** messages gets updated in Vitis IDE GUI.
-7. After processing all the data, you can see the following messages in the Vivado XSIM Tcl Console:
+5. Observe the data coming up in the XSIM and parallelly, the **Emulation Console** messages gets updated in Vitis IDE GUI.
+6. After processing all the data, you can see the following messages in the Vivado XSIM Tcl Console:
 
     ```
     Info: (I804) /IEEE_Std_1666/deprecated: the notify() function is deprecated use sc_event::notify()
@@ -120,7 +127,7 @@ This section walks you through debugging PL kernels in the Vivado logic simulato
 
     ```
 
-    You can also notice the following messages in the Vitis IDE **Emulation Console**.
+    You can also notice the following messages in the Vitis IDE **DEBUG CONSOLE**.
 
     ```
     XAIEFAL: INFO: Resource group Avail is created.
@@ -162,7 +169,7 @@ This section walks you through profiling the AI Engine as part of running the ha
 3. Now the hardware emulation launches and starts the QEMU emulation environment. The Emulation console shows a transcript of the QEMU launch and Linux boot process.
 4. Once the boot completes in the Vitis IDE, run the application using **Run** on the system project.
 5. This runs the application and shows **TEST PASSED** in the output console.
-6. Duble-click the System_Project -> HARDWARE EMULATION -> Reports -> Summary file. This opens the summary file `{PROJECT_PATH}/system_project/build/hw_emu/package/package/sim/behav_waveform/xsim` path in the Vitis Analyzer.
+6. Duble-click the System_Project -> HARDWARE EMULATION -> Reports -> Summary file. This opens the summary file `{PROJECT_PATH}/system_project/build/hw_emu/system_project_hw_emu/xrt.run_summary` path in the Vitis Analyzer.
 7. As you observe, it carry forwards the aiesimulator options specified in `aiesimulator_output/aiesim_options` and provides the results.
 
 ### Calculating the Kernel Latency
@@ -170,13 +177,13 @@ This section walks you through profiling the AI Engine as part of running the ha
 From the Profile information in the Vitis Analyzer, analyze the function time of the kernels as explained in [Section 9](../AIE_Simulation/README.md#Design-performance-debug) in the AIE simulation.
 
 For example, compare the function time of the `data_shuffle` kernel with the standalone AIE simulation result, and calculate the kernel latency.
-![profile hw emulation](./Images/profile_hwemu.PNG)
+![profile hw emulation](./Images/aie_sim_1.png)
 
 From the trace information, you can calculate the kernel latency as follows:
 
 1. Click the `Trace` in the AI Engine simulation run summary, and navigate to the any function to calculate the latency. For example, consider the `data_shuffle` function.
 2. You can notice the function `data_shuffle` ran for seven iterations. Zoom into the period of one iteration (between two `main()` function calls as follows), add a marker, and drag it to the end of the kernel function as follows:
-![kernel latency](./Images/kernel_latency.PNG)
+![kernel latency](./Images/aie_sim_2.png)
 
     Notice the difference of `263.2 ns` as highlighted above. This is the time the kernel took to complete one iteration.
 
@@ -186,15 +193,18 @@ From the trace information, you can calculate the kernel latency as follows:
 
 #### Calculating the Graph Throughput Using the Graph Output
 
-1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (Upscale kernel in this case). Add a marker at the start of the first output sample as highlighted below. Then click the **Go** button to the last time icon, and observe the cursor moves to the end of the last iteration. Now, click the previous transition icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2244.8 ns`.
-![graph throughput](./Images/graph_throughput.PNG)
-2. The number of bytes transferred is, `128` samples * `4` Bytes * `7` iterations = `3584` tes. Throughput = `3584/2244 * e-9 ~= 1.5 GBPS`.
+Ensure the `Enable Trace` is checked in Run settings (Flow Navigator -> aie_component). If it is not checked, you must check and select the `Run`.
+Steps to run the Trace from Vitis IDE, Go to Flow Navigator -> Select AI Engine Component -> Select AIE Simulator/ Hardware -> Go to Reports -> Select Trace.
+
+1. From the trace information in the run_summary in the Vitis Analyzer, navigate to the output port for which you want to calculate the throughput (Upscale kernel in this case). Add a marker at the start of the first output sample as highlighted below. Then click the **Go** button to the last time icon, and observe the cursor moves to the end of the last iteration. Now, click the previous transition icon to go the start of the last iteration. Add one more marker at the end, and observe the time difference as `2254.4 ns`.
+![graph throughput](./Images/trace.png)
+2. The number of bytes transferred is, `128` samples * `4` Bytes * `7` iterations = `3584` tes. Throughput = `3584/2254 * e-9 ~= 1.6 GBPS`.
 
     Compare the throughput with the one you got during `aiesimulation` where the AI Engine is a standalone module; see [Section 9](../AIE_Simulation/README.md#Calculating-Graph-throughput-using-Graph-output) in AIE Simulation.
 
 # Section 4
 
-## Command Line Project Source Code Debug with the Vitis IDE (classic)
+## Command Line Project Source Code Debug with the Vitis Unified IDE 
 
 This section uses the command line flow to build for hardware emulation.
 
@@ -220,99 +230,53 @@ Before starting this tutorial:
             --package.sd_file host.exe ../tutorial.xsa ../libadf.a
     ```
 
-3. Do `make all TARGET=hw_emu`.
+3. Open the workspace in Vitis IDE: {project_path}/cmd_src and select `Open Explorer View`
+   ![open explorer view](./Images/open_explorer_view.png) 
 
-    This step:
-
+4. Right click in the `CMD_SRC` section in EXPLORER and select `Edit Build Configuration`
+   ![Edit Build Config](./Images/edit_build_config.png) 
+   
+   Give the make command to build the system and clean the generated outputs in the `Build command` and `Clean command` respectively.
+   ![new Config](./Images/build_config.png) 
+   
+   Right click in the `CMD_SRC` section in EXPLORER and select `Build`.
+   
+   Build Step does the following:
+   
     * Compiles the AI Engine kernels and generates `libadf.a`.
     * Compiles the PL kernels `s2mm`,`mm2s` and generates `.xo`.
     * Hardware linking step to link AI Engine kernels and PL kernels using the `system.cfg` file. This generates the `.xsa` file.
     * Compiles the host application and generates the executable file `host.exe`.
     * Packages `libadf.a`,`.xsa`, and `host.exe` files.
+   
+   Below message indicates that the emulation package is created and build is successfully done.
+   ```
+   COMPLETE: emulation package created.
+   Build Finished successfully
+   ```
+5. To launch the emulation: Right click in the `CMD_SRC` section in EXPLORER and select `Edit Launch Configurations`
+   ![launh Config](./Images/edit_launch_config.png) 
+   
+   Select the host.exe and a.xclbin paths correctly. Start the Emulator by right clicking in the `CMD_SRC` and select `Start Emulator`.
+   Run the script `embedded_exec.sh` from /mnt as shown below. Check the log to confirm the progress.
+   
+   ![emulation log](./Images/emul_log.png) 
+   
+   Test Result: `TEST PASSED` indicates that launch emulation result. Close the emulation.
+      
+6. Steps to debug the host.cpp in Vitis IDE: 
+   
+   a. Start the Emulator as shown in step 5 and wait for emulation to finish.
+   
+   b. click `Debug` icon in launch.json. This invokes the Vitis IDE in debug mode as follows waiting in the `main` function in `host.cpp`:
+   ![command main function](./Images/host.cpp.png)
+   
+   You can add breakpoints in the host code and observe the values in the **Variable** window by doing **step-in** or **step-over**.
 
-4. To debug the source code in the Vitis IDE, you need three Linux terminals.
-5. From Terminal 1, set the tool path properly, and issue the command to launch the hardware emulator and boot up PetaLinux:
+    ![command aie core breakpoint](./Images/debug_config.png)
+    
+### Refer to Chapter 52: `Debugging the System Project and AI Engine` in UG1393 for more details to debug AI Engine.
 
-    ```
-    ./launch_hw_emu.sh -add-env ENABLE_RDWR_DEBUG=true -add-env RDWR_DEBUG_PORT=10100 -pid-file emulation.pid -no-reboot -forward-port 1440 1534
-    ```
-
-    **Command Option Explanation**
-
-    * `-add-env RDWR_DEBUG_PORT=${aie_mem_sock_port}`: Defines the port for communicating with the AI Engine domain. In the previous example, it is 10100.
-    * `-forward-port ${linux_tcf_agent_port} 1534`: Defines the port for the Linux TCF agent. In the previous example, it is 1440, which is the default.
-
-    >**NOTE:**
-    >
-    >* `launch_hw_emu.sh` is generated properly when the project under debug is built and packaged with the hardware emulator correctly.
-    >* The previous command takes a few minutes to complete due to both the hardware emulator and PetaLinux are required to boot up properly.
-    >* Wait until both the hardware server and PetaLinux boot up *BEFORE* moving to the next steps.
-
-6. From Terminal 2, set up the tool path properly, and issue the following command to launch the XRT server:
-
-    ```
-    xrt_server -I30000 -S -s tcp::4352
-    ```
-
-    **Command Line Options Explanation:**
-
-    * `-I30000`: Defines an idle timeout in seconds, in which the server will quit if there is no response.
-    * `-S`: Specifies the print server properties in JSON format to stdout.
-    * `-s tcp::${xrt_server_port}`: Defines the agent listening protocol and port. It is 4352 in the example but can be any free port.
-
-7. From Terminal 3, navigate to the `sw/` directory where the `host.exe` and `a.xclbin` got generated, and issue the following command to launch the Vitis IDE after setting the tool path properly:
-
-    ```
-    vitis -debug -flow embedded_accel -target hw_emu -exe ./host.exe -program-args a.xclbin -port 1440
-    ```
-
-    **Command Line Options Explanation**
-
-    * `vitis -debug`: Launches the Vitis IDE in standalone debug mode.
-    * `-flow embedded_accel`: Specifies the embedded processor application acceleration flow.
-    * `-target hw_emu`: Indicates the target build being debugged.
-    * `-exe ./host.exe`: Indicates the PS application to run and debug.
-    * `-program-args a.xclbin`: Refers to the location of the xclbin file to be loaded as an argument to the executable.
-    * `-port 1440`: Specifies the ${linux_tcf_agent_port} as discussed previously.
-
-8. The above command invokes the Vitis IDE in debug mode as follows waiting in the `main` function in `host.cpp`:
-   ![command main function](./Images/cmd_mainFunc.PNG)
-
-9. Open the debug configurations as follows:
-
-   ![command debug configuration menu](/.Images/cmd_debugConfigMenu.PNG)
-
-   * Create a new Debug configuration by double-clicking **Single Application Debug**.
-   * Add the Debug type name, **aie_application_debug** and **Debug Type** as **Attach to running target**.
-
-        ![commmand debug configuration](./Images/cmd_debugConfigWin.PNG)
-
-   * Create a new target connection with the **Target Name**, **Host**, and **Port** details as follows, and hit **OK**:
-    ![command target connection](./Images/cmd_TargetConnection.PNG)
-   * Now, again in the **Debug Configurations** window, set up the execute script.(`aie_app_debug_em.tcl`. Check the following **NOTE**) for the newly created debug type by clicking the `Browse` button as highlighted above.
-
-      >**NOTE:** The script, **aie_app_debug_em.tcl**, is provided in this tutorial (under the `HW_Emulation/directory`) and needs to be updated to match your environment settings. For example, the `${PROJECT_PATH}` variable should be the `Work/` folder inside this lab, and similarly the `${XILINX_VITIS_PATH}/` variable should be pointing to your Vitis installation path.
-
-10. Click **Debug** in the **Debug Configurations** window, wait for the **aie_application_debug(xrt_server)** to load in stack trace, and click the **Continue/Resume** button to run the `<Process ID>host.exe (Suspended)` thread.
-![command stack trace](./Images/cmd_StackTrace.PNG)
-
-11. This executes the host code before the AI Engine graph execution and waits at the automatic breakpoint in the AI Engine core `main()` function as follows:
-    ![command console window](./Images/cmd_ConsoleWindow.PNG)
-
-    You can try adding add breakpoints in the host code and observe the values in the **Variable** window by doing **step-in** or **step-over**.
-
-    ![command aie core breakpoint](./Images/cmd_aieCoresbkPoint.PNG)
-
-12. Click each AI Engine core and do **Step-over** to enter the compiler-generated AI Engine source code which in turn calls the actual user source code.
-
-    ![command aie source code](./Images/cmd_aieSourceCode.PNG)
-
-    You can add the breakpoints in this source file, and observe the intermediate values. Once done, you can just hit the **Continue** button to run the complete core.
-
-    ![command aie breakpoint](./Images/cmd_aieBreakPoint.PNG)
-
-13. Similarly, you can select all other cores to debug, and click **Continue**.
-14. Once all cores are done running, you can see all the AI Engine cores in the **Disabled** state and **Test Passed** in the Console. Now select the `<Process ID>host.exe (Signal 10; User-defined signal 1)` thread, and hit **Continue**. This completes the execution of the host code, and you can terminate the debug and disconnect.
 
 ## Support
 
@@ -321,3 +285,5 @@ GitHub issues will be used for tracking requests and bugs. For questions, go to 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
+
+

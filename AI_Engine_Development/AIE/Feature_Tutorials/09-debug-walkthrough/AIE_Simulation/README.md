@@ -106,6 +106,15 @@ Shows how to calculate kernel latency and throughput using profile information.
 </td>
 </tr>
 
+<tr>
+<td>
+<a href="./README.md#Determine-Average-Throughput-of-PLIO">Determine Average Throughput of PLIO</a>
+</td>
+<td>
+Determine the average throughput of input and output PLIO.
+</td>
+</tr>![image](https://media.gitenterprise.xilinx.com/user/2897/files/aaa26a48-dfe7-41d1-b982-ce13d452a10a)
+
 </table>
 
 # Section 1
@@ -427,6 +436,17 @@ Refer to the Section 4 [Enabling the Profile and Trace Options](./README.md#Enab
 
     Theoratically, AI Engine can transfer four bytes per cycle (in this case, 0.8 ns). So, to transfer `3584` bytes of data, it requires 896 cycles (896 * 0.8 = 716 ns). So, the theoratical througput is 5 GBPS.
 
+# Section 10
+
+## Determine Average Throughput of PLIO
+
+The AI Engine simulator reports average throughput of each input and output PLIO. The report is available on the console once the AI Engine simulation run is completed using `aiesimulator` command.
+
+![AIESim PLIO throughput](./Images/aie_sim_throughput1.png)
+
+The Vitis IDE generates the same report after completing the AI Engine simulation. Check the report in the Reports -> Summary -> Graph -> I/O as shown below:
+
+![AIESim PLIO throughput](./Images/aie_sim_throughput2.png)
 
 ## Support
 
