@@ -14,14 +14,21 @@ DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
 DTB=$(DTB_LOCATION)/system.dtb								  
 VERSION=2023.2
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
-SYSROOT=sysroot
+SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/
 XSA_NAME=vck190_custom
 PLATFORM_NAME=vck190_custom
 PLATFORM ?= $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 #PLATFORM ?=$(ROOT_DIR)/test/vck190_custom/export/vck190_custom/vck190_custom.xpfm
-SYSROOTDIR=$(ROOT_DIR)/$(SYSROOT)
-PL_EXAMPLE_PATH = Vitis_Accel_Examples/cpp_kernels/simple_vadd/
-AIE_EXAMPLE_PATH = Vitis_Accel_Examples/aie_kernels/aie_adder/
+
+VADD_WORK=$(ROOT_DIR)/vadd_work
+AIE_WORK=$(ROOT_DIR)/aie_work
+
+DEVICE_TREE_REPO ?=
+
+ifndef DEVICE_TREE
+DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
+endif
+
 
 .PHONY: help 
 
@@ -30,8 +37,8 @@ help:
 	@echo "make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application in software emulation mode"
 	@echo "make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  	## to generate platform with pre-built software components and run vadd application on board"
 
-all: check-common-image hw  dtb sysroot pfm vadd 
-sd_card:check-common-image hw  dtb sysroot pfm vadd_hw 
+all: check-common-image hw  dtb  pfm  vadd_emu aie_adder_emu
+sd_card:check-common-image hw  dtb  pfm vadd_hw aie_adder_hw 
 
 #target : check  whether the common image is ready 
 check-common-image:
@@ -52,47 +59,55 @@ hw: $(ABS_BD_TCL)
 #echo command is to avoid the return error code caused by the createdts command warning
 dtb: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "execute createdts to generate dts file"
-	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -git-branch xlnx_rel_v2023.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
+	-xsct -eval " createdts -hw $(ABS_HW_PATH)/$(XSA_NAME).xsa -out . -zocl  -platform-name $(DTB_PLT_NAME) -git-url $(DEVICE_TREE_REPO) -git-branch xlnx_rel_v2023.2 -board  versal-vck190-reva-x-ebm-02-reva -dtsi system-user.dtsi -compile" 
 	
-	
-# Target: sysroot
-# Install sysroot to sw_comp directory
-sysroot: $(SYSROOT)
-
-$(SYSROOT): $(COMMON_IMAGE_VERSAL)/sdk.sh
-	mkdir -p $(SYSROOT) && sh $(COMMON_IMAGE_VERSAL)/sdk.sh -d  $(SYSROOT)/ -y
-
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in build/vivado directory
+$(PLATFORM): pfm
 pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 	@echo "INFO: Creating Platform $(XSA_NAME)"
 	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(ABS_HW_PATH)/$(XSA_NAME).xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
 
-Vitis_Accel_Examples:
-	git clone https://github.com/Xilinx/Vitis_Accel_Examples.git
+
+cpAieCode:
+	rm aie_work -rf
+	mkdir -p aie_work
+	cp $(XILINX_VITIS)//samples/aie_system_examples/aie_sys_design/* aie_work -a
+	cp makefile_aie aie_work/Makefile
+
+cpVaddCode:
+	mkdir -p vadd_work
+	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp makefile_vadd vadd_work/Makefile
 
 
-$(PL_EXAMPLE_PATH)/krnl_vadd.xclbin: Vitis_Accel_Examples
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
 
-vadd: $(PL_EXAMPLE_PATH)/krnl_vadd.xclbin $(SYSROOT)/
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+
+vadd_emu: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
 
 # vadd_hw is a place-holder for manual build and test on hardware
-vadd_hw: Vitis_Accel_Examples $(SYSROOT)/
-	$(MAKE) -C $(PL_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder: Vitis_Accel_Examples $(SYSROOT)/
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) run TARGET=hw_emu PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
-aie_adder_hw: Vitis_Accel_Examples $(SYSROOT)/
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
-	$(MAKE) -C $(AIE_EXAMPLE_PATH) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOTDIR)/sysroots/cortexa72-cortexa53-xilinx-linux
+vadd_hw: cpVaddCode 
+	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
+aie_adder_emu: cpAieCode 
+	$(MAKE) -C $(AIE_WORK) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
+
+aie_adder_hw: cpAieCode 
+	$(MAKE) -C $(AIE_WORK) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
+
 
 clean:
-	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou 
-	-$(MAKE) -C $(PL_EXAMPLE_PATH) clean
-	-$(MAKE) -C $(AIE_EXAMPLE_PATH) clean
+	rm -rf $(DTB_PLT_NAME) $(PLATFORM_NAME)  *journal.py __pycache__ logs ip_cache vitis_journal* 
+	$(MAKE) -C $(VADD_WORK) clean
+	$(MAKE) -C $(AIE_WORK) clean
 
 ultraclean:clean
-	rm -rf device-tree-xlnx/ $(DTB_PLT_NAME) $(PLATFORM_NAME) $(SYSROOT) Vitis_Accel_Examples *journal.py __pycache__ logs ip_cache vitis_journal* 
-	
+	rm -rf $(ABS_BUILD_PATH) device-tree-xlnx/ logs tmp
+	rm -rf $(VADD_WORK) $(AIE_WORK)
+	rm -rf $(VADD_WORK) $(VADD_WORK)
+
+
+
+
+
