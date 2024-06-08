@@ -1,4 +1,4 @@
-# Cross Triggering in Vitis Unified Embedded IDE
+﻿# Cross Triggering in Vitis Unified Embedded IDE
 
 ***Version: Vitis 2023.2***
 
@@ -44,7 +44,7 @@ Select **Add Item** under the Cross Triggering Breakpoints to setup the cross tr
 <details>
   <summary>Additional Notes</summary>
 
-Refer to [UG1400](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Cross-Triggering-in-Zynq-Devices) for more information on the cross triggering signals
+Refer to [UG1400](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Cross-Triggering-in-Zynq-Devices) for more information on the cross triggering signals
 </details>
 
 ![](./images/cross_trigger_setup.PNG)
@@ -85,7 +85,7 @@ Setup the cross trigger signals by selecting Add Item under the Cross Triggering
 <details>
   <summary>Additional Notes</summary>
 
-Users should refer to [UG1400](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Cross-Triggering-in-Zynq-Devices) For more information on the cross triggering signals
+Users should refer to [UG1400](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Cross-Triggering-in-Zynq-Devices) For more information on the cross triggering signals
 </details>
 
 ![](./images/cross_trigger_setup_ps_pl.PNG)

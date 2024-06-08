@@ -1,4 +1,4 @@
-   <table class="sphinxhide" width="100%">
+﻿   <table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
 
@@ -13,9 +13,9 @@
 
 # 4. Reviewing the DATAFLOW Optimization
 
-As stated in [Abstract Parallel Programming Model for HLS](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=kvc1662736907763.html), in order to achieve high performance hardware the HLS compiler must infer parallelism from sequential code and exploit it to achieve greater performance. The DATAFLOW optimization tries to create task-level parallelism where possible between the various functions in the code, on top of the loop-level parallelism of pipelining.
+As stated in [Abstract Parallel Programming Model for HLS](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=kvc1662736907763.html), in order to achieve high performance hardware the HLS compiler must infer parallelism from sequential code and exploit it to achieve greater performance. The DATAFLOW optimization tries to create task-level parallelism where possible between the various functions in the code, on top of the loop-level parallelism of pipelining.
 
-In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [syn.directive.dataflow](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=nzf1677218684169.html) for more information.
+In the earlier steps, you found different ways to optimize the DCT algortithm so that you could achieve an II=1 with the pipelined loops. In this step, you use the DATAFLOW directive to enable task-level parallelism for functions or loops. For more information, refer to [syn.directive.dataflow](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=nzf1677218684169.html) for more information.
 
 ## Clone Component for Design Exploration
 
@@ -40,9 +40,9 @@ You can specify a new component name to create a clone of the selected component
 
 6. Rerun synthesis and review the reports. 
 
-Notice that the Synthesis Summary report now displays a negative value in the Slack column, indicating a potential timing violation in the generated RTL design. As described in [Running Implementation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=stb1677606118821.html), the HLS compiler reports the results of high-level synthesis providing an estimate of the results with projected clock frequencies, timing, and resource utilization (LUTs, DSPs, BRAMs, etc). However, these results are only estimates because the tool cannot know what optimizations or routing delays will be in the final synthesized or implemented design. A more accurate estimate of the resources and timing of the RTL design can be provided by runing the design through synthesis or implementation in the Vivdao Design Suite. You will do this shortly to check the timing of the design. 
+Notice that the Synthesis Summary report now displays a negative value in the Slack column, indicating a potential timing violation in the generated RTL design. As described in [Running Implementation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=stb1677606118821.html), the HLS compiler reports the results of high-level synthesis providing an estimate of the results with projected clock frequencies, timing, and resource utilization (LUTs, DSPs, BRAMs, etc). However, these results are only estimates because the tool cannot know what optimizations or routing delays will be in the final synthesized or implemented design. A more accurate estimate of the resources and timing of the RTL design can be provided by runing the design through synthesis or implementation in the Vivdao Design Suite. You will do this shortly to check the timing of the design. 
 
-You should also notice the addition of the Dataflow Viewer report as a result of adding the Dataflow directive. However, as explained in [Dataflow Viewer](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=twx1584322463297.html), you must run C/RTL Co-simulation in order to get details from the dataflow design. Examine the Dataflow Viewer report prior to running Co-simulation, and then again after. First you should configure the Co-simulation to perform as you want. 
+You should also notice the addition of the Dataflow Viewer report as a result of adding the Dataflow directive. However, as explained in [Dataflow Viewer](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=twx1584322463297.html), you must run C/RTL Co-simulation in order to get details from the dataflow design. Examine the Dataflow Viewer report prior to running Co-simulation, and then again after. First you should configure the Co-simulation to perform as you want. 
 
 ## Run C/RTL Co-Simulation
 

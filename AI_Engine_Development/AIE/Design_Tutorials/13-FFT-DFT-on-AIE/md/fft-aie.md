@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 Author: Mark Rollins
@@ -24,7 +24,7 @@ code maintenance.
 
 This first design is a Radix-2 DIT 32-pt FFT using the Stockham approach. The design implements
 the complete transform computation using a single AI Engine tile. The code adopts the [C++
-Kernel Class](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/C-Kernel-Class-Support) 
+Kernel Class](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/C-Kernel-Class-Support) 
 programming style that works nicely with the API. The following code block shows the source code for `fft32_r2_kernel.h` 
 that defines the C++ kernel class.
 

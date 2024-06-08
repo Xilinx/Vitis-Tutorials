@@ -1,4 +1,4 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html"> Vitis™ Development Environment</a>
@@ -26,11 +26,11 @@ The Vitis Graph Library provides reference Vitis implementations for a set of gr
    - L1 APIs locate in the ``Vitis_Libraries/graph/L1/include`` directory. They are basic components that are used to compose compute units. The L1 APIs are all well-optimized HLS designs and can fit into various resource constraints.
 </details>
 
-You can find more information on how the Vitis Graph Library works [here](https://docs.xilinx.com/r/en-US/Vitis_Libraries/graph/tutorial.html_1).
+You can find more information on how the Vitis Graph Library works [here](https://docs.amd.com/r/en-US/Vitis_Libraries/graph/tutorial.html_1).
 
 The L2 APIs located in the ```Vitis_Libraries/graph/L2/include``` directory provide a pure FPGA-based graph accelerator. They are used in this tutorial. 
 
-You can find more information on the internel design of the SSSP algorithm,including implementation, interface, and profiling [here](https://docs.xilinx.com/r/en-US/Vitis_Libraries/graph/guide_L2/kernels/ShortestPath.html).
+You can find more information on the internel design of the SSSP algorithm,including implementation, interface, and profiling [here](https://docs.amd.com/r/en-US/Vitis_Libraries/graph/guide_L2/kernels/ShortestPath.html).
 
 <details>  <summary><b> Interface in shortest_path.hpp </b></summary>  
  <br>

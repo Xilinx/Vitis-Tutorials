@@ -590,7 +590,7 @@ vck190-versal:/run/media/BOOT-mmcblk0p1#
 ## References
 The following documents provide supplemental information for this tutorial.
 
-### [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
+### [AI Engine Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
 ### [Xilinx® Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
@@ -602,14 +602,14 @@ The following are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-### [Vitis Unified Software Development Platform 2024.1 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+### [Vitis Unified Software Development Platform 2024.1 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 The following are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis High-Level Synthesis User Guide (UG1399)](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+* [Vitis High-Level Synthesis User Guide (UG1399)](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 ## Revision History
 Click on each item below to see the detailed Revision History:

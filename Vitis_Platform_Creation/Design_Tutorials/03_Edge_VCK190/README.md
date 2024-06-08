@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
@@ -10,7 +10,7 @@
 
 ***Version: 2024.1***
 
-In this module, we treat the VCK190 board as if it were a custom solution tailored to our customer's specific needs. Our approach involves leveraging the AMD Versal™ Adaptive SoC Extensible Part Support Example Design and harnessing the power of a pre-built Linux common image, along with the createdts command, to generate essential software components. These components are then used to construct a dedicated embedded Versal acceleration platform designed exclusively for our customer's board. As the final step, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform) would be a quick choice for you.
+In this module, we treat the VCK190 board as if it were a custom solution tailored to our customer's specific needs. Our approach involves leveraging the AMD Versal™ Adaptive SoC Extensible Part Support Example Design and harnessing the power of a pre-built Linux common image, along with the createdts command, to generate essential software components. These components are then used to construct a dedicated embedded Versal acceleration platform designed exclusively for our customer's board. As the final step, you will run several applications to test this platform. If you merely create a platform to validate your kernels, then the [Vitis Platform Quick Start](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform) would be a quick choice for you.
 
 
 For your reference, the overall structure of this example system closely resembles the following:
@@ -25,7 +25,7 @@ In a general Vitis acceleration platform design, the Vitis platform and applicat
 4. Create applications in Vitis against the platform. Vitis generates a host application, xclbin, and `sd_card.img`.
 5. Write `sd_card.img` to a SD card or update host application and xclbin to an existing SD card.
 
-In this module, you will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. In contrast to the Versal Extensible Design, which is used in [Vitis Platform Quick Start](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform), the part support design takes a slightly different approach. Specifically, it empowers you to handle board-level configurations independently. This includes configuring processing system (PS) side peripherals and fine-tuning parameters related to double data rate (DDR) as needed. This flexibility ensures that you have full control over the configuration process to meet the unique requirements of your application.
+In this module, you will utilize the Versal Extensible Part Support Design (CED) to create a hardware design. In contrast to the Versal Extensible Design, which is used in [Vitis Platform Quick Start](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform), the part support design takes a slightly different approach. Specifically, it empowers you to handle board-level configurations independently. This includes configuring processing system (PS) side peripherals and fine-tuning parameters related to double data rate (DDR) as needed. This flexibility ensures that you have full control over the configuration process to meet the unique requirements of your application.
 
 
 To prepare the software components, you will utilize common image released by AMD and `createdts` command to generate the device tree file. After the whole software and hardware components are ready, you will package the platform.
@@ -46,9 +46,9 @@ Navigate through these steps with the following table of contents links.
 
 ## Reference
 
-- [UG1393: Vitis Acceleration Flow User Guide](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+- [UG1393: Vitis Acceleration Flow User Guide](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
-- [Versal Adaptive SoC Programmable Network on Chip and Integrated Memory Controller LogiCORE IP Product Guide (PG313)](https://docs.xilinx.com/r/en-US/pg313-network-on-chip)
+- [Versal Adaptive SoC Programmable Network on Chip and Integrated Memory Controller LogiCORE IP Product Guide (PG313)](https://docs.amd.com/r/en-US/pg313-network-on-chip)
 
 ## Changelog
 

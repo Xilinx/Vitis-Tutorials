@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 
 Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -694,7 +694,7 @@ versal-rootfs-common-20231:/mnt#
 
 ## References
 
-### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+### [AI Engine Documentation](https://docs.amd.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler and AI Engine simulation, and performance analysis.
 
@@ -712,23 +712,23 @@ Below are the links to the XRT information used by this tutorial:
 
 * [XRT AI Engine API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls.
 
-* [XRT Release Notes](https://docs.xilinx.com/r/en-US/ug1451-xrt-release-notes)
+* [XRT Release Notes](https://docs.amd.com/r/en-US/ug1451-xrt-release-notes)
 
 ### Vitis Unified Software Development Platform 2022.1 Documentation
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+* [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 ### Vitis Model Composer
 
 * [Vitis Model Composer examples](https://github.com/Xilinx/Vitis_Model_Composer)
 
-* [Vitis Model Composer Tutorial](https://docs.xilinx.com/r/en-US/ug1498-model-composer-sys-gen-tutorial/Locating-the-Tutorial-Design-Files)
+* [Vitis Model Composer Tutorial](https://docs.amd.com/r/en-US/ug1498-model-composer-sys-gen-tutorial/Locating-the-Tutorial-Design-Files)
 
 #### Support
 

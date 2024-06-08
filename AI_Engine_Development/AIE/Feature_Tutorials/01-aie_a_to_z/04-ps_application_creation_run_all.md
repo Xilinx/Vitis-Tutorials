@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -107,7 +107,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
       >**NOTE:** The option will add the line --package.defer_aie_run in the package
        configuration file. This is required when running the AI Engine graph from th
-       e PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)).
+       e PS (see the [Versal ACAP AI Engine Programming Environment User Guide (UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)).
       If the user is looking for a free running graph, this option should be disabled
 
 4. In the **AI Engine section** deselect the option **Enable debug**

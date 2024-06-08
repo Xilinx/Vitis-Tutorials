@@ -11,7 +11,7 @@
 
 After the AI Engine graph is compiled and linked with the PL kernels, the PS application is compiled, and all the required outputs are generated, the next step in the build process is to package the required files to configure and boot the AMD Versal™ device. This requires the use of the AMD Vitis™ compiler ``--package`` command. For Versal adaptive SOCs, the programmable device image (PDI) file is used to boot and program the hardware device.
 
-In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging) for more details on this packaging process.
+In this module, you will package the bare-metal system to generate the final bootable image (PDI) for running hardware emulation and for running it on the VCK190 board. Refer to [AI Engine Documentation: Packaging](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Packaging) for more details on this packaging process.
 
 ## Building the Design: Hardware Emulation
 
@@ -144,10 +144,10 @@ NB: HW_emu  run will take long hours to run which makes software collapse , hw 
 
 ## References
 
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Packaging](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Packaging)
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Running the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Deploying the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Deploying-the-System)
-* [Vitis Compiler Command Options](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-General-Options)
+* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Packaging](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Packaging)
+* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Running the System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)
+* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Deploying the System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Deploying-the-System)
+* [Vitis Compiler Command Options](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-General-Options)
 
 ### Support
 

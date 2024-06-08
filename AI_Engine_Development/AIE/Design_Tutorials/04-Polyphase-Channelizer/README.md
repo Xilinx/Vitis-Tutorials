@@ -1,4 +1,4 @@
-
+﻿
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -210,7 +210,7 @@ The build process will generate the SD card image in the ```04-Polyphase-Channel
 
 ## Estimating Power Using the Power Design Manager
 
-The Power Design Manager (PDM) is the new, next-generation power estimation platform designed to bring accurate and consistent power estimation capabilities to the largest Versal and AMD Kria™ SOM products. It is the preferred power estimation tool for the Versal product family. More information can be found on the [Power Design Manager (PDM)](https://www.xilinx.com/products/design-tools/power-design-manager.html) product page and in the Power Design Manager User Guide [(UG1556)](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1556-power-design-manager).
+The Power Design Manager (PDM) is the new, next-generation power estimation platform designed to bring accurate and consistent power estimation capabilities to the largest Versal and AMD Kria™ SOM products. It is the preferred power estimation tool for the Versal product family. More information can be found on the [Power Design Manager (PDM)](https://www.xilinx.com/products/design-tools/power-design-manager.html) product page and in the Power Design Manager User Guide [(UG1556)](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1556-power-design-manager).
 
 The PDM has three modes to estimate power:
 
@@ -218,7 +218,7 @@ The PDM has three modes to estimate power:
 * **Import Compilation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after compiling the design.
 * **Import Simulation Flow**: The file generated from XPE or Vivado Report Power is imported into the PDM after simulating the design.
 
-This example uses the **Import Compilation Flow** mode to perform a Vectorless Power Analysis as defined in the Vivado Design Suite User Guide: Power Analysis and Optimization [(UG907)](https://docs.xilinx.com/r/en-US/ug907-vivado-power-analysis-optimization/Vectorless-Power-Analysis). This estimate is refined by running a simulation of the AI Engine portion of the design and updating the initial estimate.
+This example uses the **Import Compilation Flow** mode to perform a Vectorless Power Analysis as defined in the Vivado Design Suite User Guide: Power Analysis and Optimization [(UG907)](https://docs.amd.com/r/en-US/ug907-vivado-power-analysis-optimization/Vectorless-Power-Analysis). This estimate is refined by running a simulation of the AI Engine portion of the design and updating the initial estimate.
 
 ### Step 1: Building the Design for VCK190 and Executing Power Targets
 

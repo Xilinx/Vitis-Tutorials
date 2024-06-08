@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -21,7 +21,7 @@ Use the following interface requirements to create kernel:
 - Compute 4 words to be computed in parallel with each word requiring two `MurmurHash2` functions 
 - Compute the hash (two `MurmurHash2` functions) functions for 4 words every cycle. 
 
-Refer to [Methodology for Accelerating Applications with the Vitis Software](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Accelerating-Data-Center-Applications-with-the-Vitis-Software-Platform) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+Refer to [Methodology for Accelerating Applications with the Vitis Software](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Methodology-for-Accelerating-Data-Center-Applications-with-the-Vitis-Software-Platform) in the in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ### Macro Architecture Implementation
 
@@ -189,7 +189,7 @@ Now, build the kernel using the Vitis compiler. The Vitis compiler will call the
     vitis_analyzer ../build/single_buffer/kernel_4/hw_emu/runOnfpga_hw_emu.xclbin.link_summary
     ```
 
- >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the link summary as described in [Working with the Analysis View](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
+ >**NOTE:** In the 2023.1 release this command opens the Analysis view of the new Vitis Unified IDE and loads the link summary as described in [Working with the Analysis View](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Working-with-the-Analysis-View). You can navigate to the various reports using the left pane of the Analysis view or by clicking on the links provided in the summary report.
 
 Select the System Estimate report to open it. 
 

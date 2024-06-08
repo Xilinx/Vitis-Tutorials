@@ -98,11 +98,11 @@ Note: This tutorial targets the VEK280 Production board (see https://www.xilinx.
 
 ### *Documentation*: Explore AI Engine-ML Architecture
 
-* [AM020 AI Engine-ML Architecture Manual](https://docs.xilinx.com/r/en-US/am020-versal-aie-ml)
+* [AM020 AI Engine-ML Architecture Manual](https://docs.amd.com/r/en-US/am020-versal-aie-ml)
 
-* [Versal AI Edge Introduction](https://docs.xilinx.com/v/u/en-US/wp518-ai-edge-intro)
+* [Versal AI Edge Introduction](https://docs.amd.com/v/u/en-US/wp518-ai-edge-intro)
 
-* [Tiling Parameters and Buffer Descriptors](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Tiling-Parameters-and-Buffer-Descriptors)
+* [Tiling Parameters and Buffer Descriptors](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Tiling-Parameters-and-Buffer-Descriptors)
 
 </details>
 
@@ -114,17 +114,17 @@ Note: This tutorial targets the VEK280 Production board (see https://www.xilinx.
 
 Tools Documentation:
 
-* [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1603%2522_%2522UG1079%2522&content-lang=en-US)
+* [AI Engine Documentation](https://docs.amd.com/search/all?filters=Document_ID~%2522UG1603%2522_%2522UG1079%2522&content-lang=en-US)
 
 To build and run the LeNet tutorial,the following tools should be downloaded/installed:
 
-* Install the [Vitis Software Platform 2024.1](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2024.1](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
 
 * Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vek280_es1_base_202410_1` platform)
 
 * Obtain licenses for AI Engine-ML tools
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT)
 
 * Download and set up the [VEK280 Vitis Platform for 2024.1](https://www.xilinx.com/support/download/index.html)
 
@@ -560,8 +560,8 @@ cd ../../;
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4`: Linux file system and `fat32`: Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
@@ -782,7 +782,7 @@ The software design in the LeNet tutorial consists of the following sections:
 
 ### AI Engine-ML Kernels and Graph Representation
 
-An AI Engine-ML kernel is a C/C++ program written using specialized intrinsic calls that targets the VLIW vector processor. The AI Engine-ML compiler compiles the kernel code to produce an executable ELF file for each of the AI Engine-MLs being used in the design. Review the [AI Engine-ML Kernel Programming](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Single-Kernel-Programming) section in the AI Engine-ML Documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine-ML graphs written in C++.
+An AI Engine-ML kernel is a C/C++ program written using specialized intrinsic calls that targets the VLIW vector processor. The AI Engine-ML compiler compiles the kernel code to produce an executable ELF file for each of the AI Engine-MLs being used in the design. Review the [AI Engine-ML Kernel Programming](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Single-Kernel-Programming) section in the AI Engine-ML Documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine-ML graphs written in C++.
 
 The AI Engine-ML compiler writes a summary of compilation results called `lenet.aiecompile_summary`. You can view the graph by running the following command:
 
@@ -809,7 +809,7 @@ The Array view offers a comprehensive perspective, illustrating the AI Engine, A
 
 ### Data Flow Graph
 
-This section describes the overall data-flow graph specification of the LeNet design that is compiled by the AI Engine-ML compiler. Refer to [AI Engine-ML Graph Programming](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Introduction-to-Graph-Programming) section in the AI Engine-ML Documentation for information on ADF graphs.
+This section describes the overall data-flow graph specification of the LeNet design that is compiled by the AI Engine-ML compiler. Refer to [AI Engine-ML Graph Programming](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Introduction-to-Graph-Programming) section in the AI Engine-ML Documentation for information on ADF graphs.
 
 The overall graph definition of the design is contained in the `graph.cpp` file. The following steps describe the definition of the graph.
 
@@ -906,7 +906,7 @@ read_access(tensor01.out[0])=tiling({ .buffer_dimension = { 2, 4 ,144},.tiling_d
 				    });
 ```
 
-The write access pattern for the memory tile on the input side as well as the read access pattern on the output side, both follow a 3D linear addressing scheme. These addressing scheme are specifically configured within the graph, ensuring efficient data handling through a defined tiling parameter. Review [Tiling-Parameters-Specification](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Tiling-Parameters-Specification) to understand the tiling parameter for different addressing modes.
+The write access pattern for the memory tile on the input side as well as the read access pattern on the output side, both follow a 3D linear addressing scheme. These addressing scheme are specifically configured within the graph, ensuring efficient data handling through a defined tiling parameter. Review [Tiling-Parameters-Specification](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Tiling-Parameters-Specification) to understand the tiling parameter for different addressing modes.
 
 #### LeNet Top Level Application
 Define a top level application file (`graph.cpp` in this design) 
@@ -945,7 +945,7 @@ The `dma_hls` kernel is an IP, which contains `dma_mm2s` and `dma_s2mm`. `dma_mm
 
 ### PS Host Application
 
-The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine-ML graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine-ML Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) to understand the process to create a host application.
+The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine-ML graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine-ML Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) to understand the process to create a host application.
 
 In addition to the PS host application (`main.cpp`), the AI Engine-ML control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine-ML compiler when compiling the AI Engine-ML design graph and kernel code.
 The AI Engine-ML control code is used by the PS host application to do the following:
@@ -1084,7 +1084,7 @@ vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 
 ```
 
-2. If you do not already have it installed, download and install [PDM for Versal Version 2024.1](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of PDM, see [this page](https://docs.xilinx.com/r/en-US/ug1556-power-design-manager).
+2. If you do not already have it installed, download and install [PDM for Versal Version 2024.1](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of PDM, see [this page](https://docs.amd.com/r/en-US/ug1556-power-design-manager).
 
 3. Create the project and choose the default part as XCVE2802-VSVH1760-2MP-E-S.
 
@@ -1107,7 +1107,7 @@ Due to profiling issues, a script method was employed to calculate vector load a
 
 The following documents provide supplemental information for this tutorial.
 
-#### [AI Engine-ML Documentation](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
+#### [AI Engine-ML Documentation](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
 
 Contains sections on how to develop AI Engine-ML graphs, how to use the AI Engine-ML compiler, AI Engine-ML simulation, and performance analysis.
 
@@ -1121,15 +1121,15 @@ The following are the links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine-ML XRT API calls.
 
-#### [Vitis Unified Software Development Platform Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+#### [Vitis Unified Software Development Platform Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 The following are the links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+* [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>

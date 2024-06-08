@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Application Acceleration Tutorials</h1>
 
@@ -40,7 +40,7 @@ The Vitis unified IDE opens displaying the Welcome page. Use the **File > New Co
 4. For the **Component location** specify the workspace (default value)
 5. Click Next to open the *Configuration File* page
 
-The *Configuration File* lets you specify commands for building and running the HLS component as described in [*HLS Config File Commands*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=azw1690243984459.html). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=yzz1661583719823.html).
+The *Configuration File* lets you specify commands for building and running the HLS component as described in [*HLS Config File Commands*](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=azw1690243984459.html). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=yzz1661583719823.html).
 
  ![HLS Component](./images/unified-hls-component2.png)
 
@@ -61,11 +61,11 @@ In this tutorial, you are working with a simple discrete cosine transform (DCT) 
       * `in.dat` provides the input values to be processed by the kernel. 
       * `out.golden.dat` provides known output results to use for comparing the output of the dct function against.
 
-Writing a good testbench can greatly increase your productivity because C functions execute in orders of magnitude faster than RTL simulations. Using C to develop and validate the algorithm before synthesis is much faster than developing and debugging RTL code. For more information, refer to [*Writing a Testbench*](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=sav1584759936384.html).
+Writing a good testbench can greatly increase your productivity because C functions execute in orders of magnitude faster than RTL simulations. Using C to develop and validate the algorithm before synthesis is much faster than developing and debugging RTL code. For more information, refer to [*Writing a Testbench*](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=sav1584759936384.html).
 
 10. Click **Next** to open the the *Select Part* page to select the default part and click **Next** to open the *Settings* page. 
 
-11.  On the *Settings* page, under `clock` specify `8ns` for the period, and `12%` for the `clock_uncertainty` to override the default values. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=ycw1585572210561.html)
+11.  On the *Settings* page, under `clock` specify `8ns` for the period, and `12%` for the `clock_uncertainty` to override the default values. The default clock uncertainty, when it is not specified, is 27% of the clock period. For more information, refer to [Specifying the Clock Frequency](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=ycw1585572210561.html)
  
 12.  Select the `Vitis Kernel Flow Target`, and specify `Generate a Vitis XO` for the `package.output.format`. 
 

@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ AI Engine</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis Development Environment on xilinx.com</br></a>
@@ -21,13 +21,13 @@ The tutorials under the AI Engine Development help you learn how to target, deve
 
 ### AI Engine Documentation
 
-To easily find the right documentation corresponding to the development stage you are at, we recommend you use the [AI Engine Design Process Hub](https://docs.xilinx.com/p/ai-engine-development).
+To easily find the right documentation corresponding to the development stage you are at, we recommend you use the [AI Engine Design Process Hub](https://docs.amd.com/p/ai-engine-development).
 
 The major documentation for AI Engine includes:
 
-- *Versal ACAP AI Engine Architecture Manual* [AM009](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine)
-- *AI Engine Tools and Flows* [UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)
-- *AI Engine Kernel and Graph Programming Guide* [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding)
+- *Versal ACAP AI Engine Architecture Manual* [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)
+- *AI Engine Tools and Flows* [UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
+- *AI Engine Kernel and Graph Programming Guide* [UG1079](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding)
 
 ### AI Engine Training
 
@@ -39,7 +39,7 @@ If you are new with AI Engine, the following training courses can help you under
 
 ### Environment Settings
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *[Vitis Software Platform Release Notes](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes)* (v2023.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *[Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes)* (v2023.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to setup environment (do **NOT** apply to tutorials that do not use the VCK190 base platform):
 

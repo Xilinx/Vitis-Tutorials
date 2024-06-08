@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr>
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>2023.2 Versal® AI Engine</h1>
    </td>
@@ -97,9 +97,9 @@ Tools Documentation:
 
 * [AI Engine Tools lounge](https://www.xilinx.com/member/versal_ai_tools_ea.html)
 
-* [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Architecture-Overview)
+* [UG1076 Versal ACAP AI Engine Programming Environment](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Architecture-Overview)
 
-* [Vitis Libraries for AI Engine](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
+* [Vitis Libraries for AI Engine](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
 To run through this tutorial, you will need to download and install the following tools:
 
@@ -407,7 +407,7 @@ If additional master and slave traffic generator interfaces are required, change
 
 For `ai_engine_0` the names are provided in the `graph.cpp` when instantiating a `PLIO` object. For this design, as an example, this line `PLIO *in0 = new PLIO("DataIn1", adf::plio_32_bits,"data/input.txt");` has the name **DataIn1** which is the interface name.
 
-You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration).
+You can see the `v++` switches in more detail in the [Vitis Unified Software Platform Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration).
 
 
 To build the design, run the following command:

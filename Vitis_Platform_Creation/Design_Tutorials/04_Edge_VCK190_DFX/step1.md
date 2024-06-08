@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
@@ -12,7 +12,7 @@ This hardware design illustrates how to create a DFX hardware platform. You will
 
 The major differences between the AMD Vitis™ DFX platform and flat Vitis Platform is the AMD Vivado™ design. It needs to define the Block Design Container (BDC) for reconfigurable partition. BDC defines the dynamic region, or Reconfigurable Partition (RP).
 
-Versal devices support partial reconfiguration for almost all component types. Refer to the *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.xilinx.com/r/en-US/ug909-vivado-partial-reconfiguration/Design-Elements-Inside-Reconfigurable-Modules?tocId=zNU4eeS04V2g~W3rO2mHgA) for more details about the supported element types.
+Versal devices support partial reconfiguration for almost all component types. Refer to the *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.amd.com/r/en-US/ug909-vivado-partial-reconfiguration/Design-Elements-Inside-Reconfigurable-Modules?tocId=zNU4eeS04V2g~W3rO2mHgA) for more details about the supported element types.
 
 Here are some common practices for partitioning the IPs in Vitis platform designs.
 
@@ -149,7 +149,7 @@ The Clock Wizard in static region is required so that the device tree generator 
 
    Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
 
-   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
+   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.amd.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
 
       ![Platform Setup - AXI Ports](images/step1/FPD.PNG)
 
@@ -246,8 +246,8 @@ You have completed the Hardware platform creation flow. Next go to [step 2](./st
 
 ## References
 
-- Turn a Block Design Container into a Reconfigurable Partition in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.xilinx.com/r/en-US/ug909-vivado-partial-reconfiguration/Turn-a-Block-Design-Container-into-a-Reconfigurable-Partition)
-- Create a Floorplan for the Reconfigurable Region in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.xilinx.com/r/en-US/ug909-vivado-partial-reconfiguration/Create-a-Floorplan-for-the-Reconfigurable-Region)
+- Turn a Block Design Container into a Reconfigurable Partition in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.amd.com/r/en-US/ug909-vivado-partial-reconfiguration/Turn-a-Block-Design-Container-into-a-Reconfigurable-Partition)
+- Create a Floorplan for the Reconfigurable Region in *Vivado Design Suite User Guide: Dynamic Function eXchange* [(UG909)](https://docs.amd.com/r/en-US/ug909-vivado-partial-reconfiguration/Create-a-Floorplan-for-the-Reconfigurable-Region)
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 

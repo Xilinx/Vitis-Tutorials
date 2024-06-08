@@ -49,8 +49,8 @@ This tutorial is based on matrix multiplication which is a usual algorithm in Ma
 
 To follow this tutorial you need to understand the architecture of the *AI Engine-ML* as well as the art of buffer descriptor programming:
 
-- **AI Engine ML Architecture:**: [am020](https://docs.xilinx.com/r/en-US/am020-versal-aie-ml)
-- **Programming Buffer Descriptors with Tiling parameters:** [UG1603](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-coding)
+- **AI Engine ML Architecture:**: [am020](https://docs.amd.com/r/en-US/am020-versal-aie-ml)
+- **Programming Buffer Descriptors with Tiling parameters:** [UG1603](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding)
 
 A short introduction to **AI Engine-ML** architecture is available [here](AIEngineMLArchitecture.md).
 

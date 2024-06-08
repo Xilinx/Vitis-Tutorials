@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
@@ -84,7 +84,7 @@ Look at [Normalization Version 1 Graph Code](./normalization_v1/aie/graph.h):
   repetition_count(k_norm)=ROW*COL/K_ROW/K_COL;
   ```
 
-* The write access and read access of the memtile is linear. For tiling parameters usage, you may refer to [Tiling Parameters Specification](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Tiling-Parameters-Specification).
+* The write access and read access of the memtile is linear. For tiling parameters usage, you may refer to [Tiling Parameters Specification](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Tiling-Parameters-Specification).
 
   ```
   mtxA = shared_buffer<bfloat16>::create({COL,ROW}, 1, 1);
@@ -147,7 +147,7 @@ However, the design will hang. Hang detection is supported via multiple design f
    make aiesim
    ```
 
-   And Refer to [Lock Stall Analysis](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Lock-Stall-Analysis) for steps to analyze the root cause of the hang. The stalls of the kernels are highlighted as:
+   And Refer to [Lock Stall Analysis](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Lock-Stall-Analysis) for steps to analyze the root cause of the hang. The stalls of the kernels are highlighted as:
 
    ![AIE Stalls in SIM](./images/aie_stalls1.PNG)
 
@@ -157,7 +157,7 @@ However, the design will hang. Hang detection is supported via multiple design f
    make package TARGET=hw
    ```
 
-   And refer to [AIE status report](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Hardware) for steps to analyze the root cause of the hang. The status in hardware is like:
+   And refer to [AIE status report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Hardware) for steps to analyze the root cause of the hang. The status in hardware is like:
 
    ![AIE Status in HW](./images/aie_status1.PNG)
 
@@ -221,7 +221,7 @@ So, the graph throughput via simulation can be computed as:
 
 The kernel execution time can be profiled by multiple ways, for example:
 
-1. By utilizing the tile counter in the kernel code: [Profiling Kernel Code](https://docs.xilinx.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Profiling-Kernel-Code)
+1. By utilizing the tile counter in the kernel code: [Profiling Kernel Code](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Profiling-Kernel-Code)
 2. Use `--profile` option of AIE simulation to get the function time:
 
 ![Version 2 Kernel Profile](./images/kernel_profile2.PNG)

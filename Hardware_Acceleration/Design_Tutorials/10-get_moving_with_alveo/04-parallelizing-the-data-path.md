@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™Hardware Acceleration Introduction Tutorial</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -152,7 +152,7 @@ This chart is figurative but to relative scale.  Looking closely at the numbers,
 Some things to try to build on this experiment:
 
 - Play around with the buffer sizes again. Can you find the inflection point where the CPU becomes faster?
-- Try to capture the Vitis Timeline Trace and view this for yourself. The instructions for doing so are found in the [Vitis Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation).
+- Try to capture the Vitis Timeline Trace and view this for yourself. The instructions for doing so are found in the [Vitis Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation).
 
 ## Key Takeaways
 

@@ -33,18 +33,18 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 
 ### *Documentation*: Explore AI Engine Architecture
 
-* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
+* [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
-* [AI Engine Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+* [AI Engine Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 ### *Tools*: Installing the Tools
 
 1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
-3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
+3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * [Vitis™ Unified Software Development Platform 2024.1](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
-      * [Xilinx® Runtime and Platforms (XRT)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
+      * [Vitis™ Unified Software Development Platform 2024.1](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+      * [Xilinx® Runtime and Platforms (XRT)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
       * [Embedded Platform VCK190 Base or VCK190 ES1 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 ### *Environment*: Setting Up Your Shell Environment
@@ -93,7 +93,7 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.007|
 
 ### PL Data-Mover Kernels
-Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [AMD Vitis Utility Library](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
+Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels from the [AMD Vitis Utility Library](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html). These kernels moves any amount of data from DDR buffers to AXI-Streams.  
 
 ## The N-Body Problem
 The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, we can calculate a particle's velocity and position (`x y z vx vy vz`) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).

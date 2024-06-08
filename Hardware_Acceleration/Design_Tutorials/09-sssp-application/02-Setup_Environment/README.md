@@ -1,4 +1,4 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -20,7 +20,7 @@ To proceed with this tutorial, set up the environment and the tools. Ensure that
 
 ## Setting up the Vitis&trade; Environment
 
-To be able to work with the libraries, you must set up the AMD Vitis™ environment first. For instructions to set up the Vitis environment, refer to the [Vitis online documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform). Following are some example scripts to set up Vitis tools and XRT:
+To be able to work with the libraries, you must set up the AMD Vitis™ environment first. For instructions to set up the Vitis environment, refer to the [Vitis online documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform). Following are some example scripts to set up Vitis tools and XRT:
 
 ```
   $ source <Vitis Tool Installation Path>/Xilinx/Vitis/2023.1/settings64.sh

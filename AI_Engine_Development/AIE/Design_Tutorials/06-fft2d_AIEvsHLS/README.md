@@ -137,7 +137,7 @@ fft2d_AIEvsHLS
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
-* [AM011 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am011-versal-acap-trm)
+* [AM011 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am011-versal-acap-trm)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -158,11 +158,11 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 * Obtain licenses for AI Engine tools.
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
 
 * Download and set up the [VCK190 Vitis Platform](https://www.xilinx.com/member/vck190_headstart.html#docs).
 
-*  [DSP Library(DSPLIB) Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
+*  [DSP Library(DSPLIB) Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
 * Download the [DSP Library] (https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
@@ -173,7 +173,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
 
@@ -265,7 +265,7 @@ These observations give a clear indication of where the AI Engines in Versal can
 * Reduced latency by ~19.054%.
 * Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~88K FFs, ~56K LUTs, and 250 BRAMs are reduced to 72 AI Engines, 11k FFs, and 3K LUTs.
 
-It is important to understand that those 72 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 52 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 52 AI Engine tiles is only 79%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
+It is important to understand that those 72 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 52 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 52 AI Engine tiles is only 79%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
 
 Additionally, increasing the number of instances in the AI Engine design is easier than the HLS design, which runs into timing closure issues, especially for higher FFT point size designs.
 
@@ -279,13 +279,13 @@ For detailed instructions on taking measurements of the parameters, refer to the
 
 ## References
 
-#### [AI Engine Documentation](https://docs.xilinx.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
+#### [AI Engine Documentation](https://docs.amd.com/search/all?filters=Document_ID~%2522UG1076%2522_%2522UG1079%2522&content-lang=en-US)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler, AI Engine simulation, and performance analysis.
 
 #### Vitis DSP Libraries
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html) 
 
 #### Xilinx Runtime (XRT) Architecture
 
@@ -297,17 +297,17 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://docs.xilinx.com/r/en-US/ug1451-xrt-release-notes)
+* [XRT Release Notes](https://docs.amd.com/r/en-US/ug1451-xrt-release-notes)
 
-#### Vitis Unified Software Development Platform 2023.2 Documentation (https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+#### Vitis Unified Software Development Platform 2023.2 Documentation (https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+* [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 ## Known Issues
 

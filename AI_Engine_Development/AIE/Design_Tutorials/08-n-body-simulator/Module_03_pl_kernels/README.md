@@ -93,11 +93,11 @@ The `s2mm_mp` kernel is generated from the `kernel/spec.json` specification. Rev
 
 * [Vitis Libraries Github Repo](https://github.com/Xilinx/Vitis_Libraries)
 
-* [Vitis Utilities Library Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/index.html)
+* [Vitis Utilities Library Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/index.html)
 
-* [Generating PL Data-Mover Kernels](https://docs.xilinx.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html)
+* [Generating PL Data-Mover Kernels](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/datamover/kernel_gen_guide.html)
 
-* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 
 ## Next Steps
 

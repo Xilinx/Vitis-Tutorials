@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -18,7 +18,7 @@ AMD Alveo™ cards have multiple DDR banks, and you can use multiple banks in pi
 * When the host is writing words to DDR bank 1, the kernel is reading flags from DDR bank 2.
 * When host is writing documents to DDR bank 2, the kernel is reading flags from DDR bank 1.
 
-The kernel will read from DDR bank 1 and bank 2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). In this case, the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity.
+The kernel will read from DDR bank 1 and bank 2 alternatively and its `maxi` port is connected to both DDR banks. You must establish the connectivity of kernel arguments to DDR banks in the `v++ --link` command as described in [Mapping Kernel Ports to Memory](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory). In this case, the `$LAB_WORK_DIR/makefile/connectivity.cfg` configuration file specifies the connectivity.
 
     ```
     [connectivity]

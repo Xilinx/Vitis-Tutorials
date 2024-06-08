@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -85,7 +85,7 @@ To run the event trace on hardware, it is required to compile the AI Engine grap
 * Using the `runtime` as an argument, you can compile the AI Engine graph to be set up for event trace, and specify the type of profile data to capture at runtime.
 * The other way is to specify one of the `functions`, `functions_partial_stalls`, or `functions_all_stalls` as a type of profile data during compile time, and recompile the design to capture a different type of data during runtime.
 
-For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Compiler-Options) in *AI Engine Tools and Flows User Guide* (UG1076).
+For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Compiler-Options) in *AI Engine Tools and Flows User Guide* (UG1076).
 
 This tutorial uses the `--event-trace=runtime`, `--event-trace-port=plio`, `--num-trace-streams=8`, and `--xlopt=0` options.
 
@@ -128,7 +128,7 @@ After the design is built, you are ready to run on the hardware board.
       graph_based_aie_tile_metrics = all:all:functions_all_stalls
    ```
 
-   More details about these settings are explained in [XRT Trace Options](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the *AI Engine Tools and Flows User Guide* (UG1076).
+   More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 2. Run the application.
 

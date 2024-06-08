@@ -1,4 +1,4 @@
-#######################################
+﻿#######################################
 AI Engine Development
 #######################################
 
@@ -26,13 +26,13 @@ Getting Started
 AI Engine Documentation
 =============================================================
 
-To easily find the right documentation corresponding to the development stage you are at, we recommend you use the `AI Engine Design Process Hub <https://docs.xilinx.com/p/ai-engine-development>`_.
+To easily find the right documentation corresponding to the development stage you are at, we recommend you use the `AI Engine Design Process Hub <https://docs.amd.com/p/ai-engine-development>`_.
 
 The major documentation for AI Engine includes:
 
-* *Versal ACAP AI Engine Architecture Manual* (`AM009 <https://docs.xilinx.com/r/en-US/am009-versal-ai-engine>`_)
-* *AI Engine Tools and Flows* (`UG1076 <https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment>`_)
-* *AI Engine Kernel and Graph Programming Guide* (`UG1079 <https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment>`_)
+* *Versal ACAP AI Engine Architecture Manual* (`AM009 <https://docs.amd.com/r/en-US/am009-versal-ai-engine>`_)
+* *AI Engine Tools and Flows* (`UG1076 <https://docs.amd.com/r/en-US/ug1076-ai-engine-environment>`_)
+* *AI Engine Kernel and Graph Programming Guide* (`UG1079 <https://docs.amd.com/r/en-US/ug1076-ai-engine-environment>`_)
 
 
 AI Engine Training
@@ -53,7 +53,7 @@ Environment Settings
 
 .. important:: 
 
-   Before beginning a tutorial, read and follow the `Vitis Software Platform Release Notes <https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes>`_ (v2023.2) for setting up software and installing the VCK190 base platform.
+   Before beginning a tutorial, read and follow the `Vitis Software Platform Release Notes <https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes>`_ (v2023.2) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to set up the environment (do **NOT** apply to tutorials that do not use the VCK190 base platform):
 

@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -12,7 +12,7 @@
 
 ## Introduction
 
-The AMD Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the AMD Vivado™ tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Managing-Vivado-Synthesis-and-Implementation-Results) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+The AMD Vitis™ compiler creates kernel objects from the source code, links the kernels with the targeted shell, and runs the assembled design through the AMD Vivado™ tool implementation flows. It generates the platform file (`xclbin`) needed to program the FPGA-based acceleration cards. Sometimes, it is essential to use the advanced Vivado synthesis and implementation options to achieve your desired results, including timing closure. The topics discussed here are documented in [Managing Vivado Synthesis and Implementation Results](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Managing-Vivado-Synthesis-and-Implementation-Results) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 
 ## Tutorial Overview
 
@@ -39,7 +39,7 @@ If necessary, it can be easily ported to other versions and platforms.
 
 >**IMPORTANT:**
 >
->* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
+>* Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416).
 >* If you run applications on AMD Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 >* Before running this lab, you should be familiar with the [Vitis Getting Started](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Getting_Started/Vitis) tutorial.
 
@@ -70,7 +70,7 @@ The `–-vivado` switch is paired with properties or parameters to configure the
 * `object_name`: Specifies the object instance to attach to.
 * `prop_name`: Defines the property_name/value pair which defines both the name and the value to assign.
 
-While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
+While you can use `--vivado` options from the `v++` command line, it makes more sense to do some from configuration files specified by the `--config` option. This is explained in [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1416). In this tutorial, you will use the following options as examples to see how to control Vivado synthesis and implementation:
 
 * Completely flatten the hierarchy during RTL synthesis by specifying the `FLATTEN_HIERARCHY=full` property.
   * `--vivado.prop run.my_rm_synth_1.{STEPS.SYNTH_DESIGN.ARGS.FLATTEN_HIERARCHY}={full}`

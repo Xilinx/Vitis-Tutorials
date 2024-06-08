@@ -298,12 +298,12 @@ If you built from scratch, you can open the block design in the Vivado project t
 
 ## References
 
-* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Linking the System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)  
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System)
-* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
-* [Vitis Compiler Configuration File](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File)
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application) - HW vs HW_EMU
-*  [Vivado Design Suite User Guide: Implementation](https://docs.xilinx.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
+* [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Linking the System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow)  
+* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System)
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
+* [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File)
+* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Build Targets](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-and-Running-the-Application) - HW vs HW_EMU
+*  [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support
 

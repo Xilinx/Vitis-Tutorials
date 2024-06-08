@@ -1,4 +1,4 @@
-# RTL Kernel: krnl_cbc
+﻿# RTL Kernel: krnl_cbc
 
 ## Introduction
 
@@ -60,7 +60,7 @@ One key step for the RTL kernel design for Vitis is to package the RTL design in
 
 In this tutorial, like in the `krnl_aes` kernel case, you will use the Vivado Tcl command to finish the `krnl_cbc` IP packaging and XO file generation in batch mode. The complete kernel generation script for this design is in `~/krnl_cbc/pack_kernel.tcl`. The main steps are summarized below; refer to the details in the script.
 
->**NOTE:** Each step in the script has a counterpart tool in the GUI. Refer to [Packaging RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) for more information.
+>**NOTE:** Each step in the script has a counterpart tool in the GUI. Refer to [Packaging RTL Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) for more information.
 
 ### 1: Create the Vivado project and add design sources
 

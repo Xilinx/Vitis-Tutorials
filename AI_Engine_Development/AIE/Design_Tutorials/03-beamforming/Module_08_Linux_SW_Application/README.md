@@ -23,7 +23,7 @@ The individual commands are explained later on in this module.
 
 A top-level PS application running on the Cortex-A72 processor controls the AI Engine graph and the PL kernels. In Module 05, you created a PS host application for a bare-metal system. In this module, you will create a PS host application that runs on a Linux operating system (built in Module 07).
 
-Detailed descriptions of compiler flags, include directories, and linker flags are available in [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow).
+Detailed descriptions of compiler flags, include directories, and linker flags are available in [AI Engine Documentation: Integrating the Application Using the Vitis Tools Flow, Compile the Embedded Application for the Cortex-A72 Processor](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Integrating-the-Application-Using-the-Vitis-Tools-Flow).
 
 Linux host applications use the Xilinx Runtime (XRT) API to control the PL and AI Engine kernels. In this tutorial, XRT is used to access the AI Engine graph and generic UIO drivers to access the PL kernels.  
 
@@ -75,7 +75,7 @@ else if(reset_done == 0) {
     log_plnx << "[Beamformer] AIE reset done successfully" << std::endl;
 }
 ```
-If the `xrtResetAIEArray` function fails, the AI Engine reset has not been accomplished successfully and a system reboot might be required. See the [API Documentation](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Load-AIE-XCLBIN).
+If the `xrtResetAIEArray` function fails, the AI Engine reset has not been accomplished successfully and a system reboot might be required. See the [API Documentation](https://docs.amd.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Load-AIE-XCLBIN).
 
 This function does not orchestrate system reset but _only_ resets the AI Engine array.
 
@@ -83,7 +83,7 @@ This function does not orchestrate system reset but _only_ resets the AI Engine 
 
 The host application loads the AI Engine with the XCLBIN with the ``xclloadxclbin()`` function.
 
-The following snippet of code shows usage in the application shows how to load AIE. See the [API Documentation](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Load-AIE-XCLBIN).
+The following snippet of code shows usage in the application shows how to load AIE. See the [API Documentation](https://docs.amd.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Load-AIE-XCLBIN).
 
 ```C++
 //In load_xclbin()

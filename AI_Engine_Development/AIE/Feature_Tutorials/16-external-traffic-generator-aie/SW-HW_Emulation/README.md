@@ -87,7 +87,7 @@ out_classifier_data = out_classifier.receive_data_with_size(1024)
 
 This API is a blocking API and it will wait till expected bytes is received at the output port.
 
-For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
+For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
 </details>
 
 <details>
@@ -124,7 +124,7 @@ This API is a blocking API and it will wait till specified data i.e. total 4096 
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. Here, in this design we are dumping the output of a classifier into a file as it is the final output of the design. 
 
-For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
+For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
 </details>
 
 <details>
@@ -159,7 +159,7 @@ In order to get the received data values from the classifier, use receive_data_w
 out_classifier.receive_data_with_size(data_out_cls, 1024)
 ```
 
-This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, `out_data_cls` byte array. You can convert the byte array into user data type using the conversion APIs. For conversion APIs, refer [Writing Traffic Generators in C++](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/General-Purpose-C-API)
+This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, `out_data_cls` byte array. You can convert the byte array into user data type using the conversion APIs. For conversion APIs, refer [Writing Traffic Generators in C++](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/General-Purpose-C-API)
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the classifier is validated against the golden output (classifier_golden.txt). 
 

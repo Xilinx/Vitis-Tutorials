@@ -44,7 +44,7 @@ This tutorial design uses VCK190 production board for demonstration. The methodo
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux.
 
-This tutorial assumes that you are familiar with Vitis platform creation flow. If not, refer to VCK190 Platform Creation Tutorial and *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration) for more information.
+This tutorial assumes that you are familiar with Vitis platform creation flow. If not, refer to VCK190 Platform Creation Tutorial and *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration) for more information.
 
 ## What's Next
 
@@ -52,9 +52,9 @@ Start with [Step 1](./step1.md).
 
 ## Reference
 
-- *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration)
+- *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration)
 
-   - [Creating Embedded Platforms in Vitis](https://docs.xilinx.com/access/sources/dita/topic?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration&resourceid=rjs1596051748503.html)
+   - [Creating Embedded Platforms in Vitis](https://docs.amd.com/access/sources/dita/topic?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration&resourceid=rjs1596051748503.html)
 
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 

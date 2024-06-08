@@ -72,7 +72,7 @@ This results in the aie_component `vitis-comp.json` file being opened. This is t
 
 ![System Diagram](./images/vitis-ide-aie-component.png)
 
-Select the `aiecompiler.cfg` link and open the config file. It contains `include` statements for the added `aie` source code folder, and the `[aie]` section that contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands. 
+Select the `aiecompiler.cfg` link and open the config file. It contains `include` statements for the added `aie` source code folder, and the `[aie]` section that contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands. 
 
 In the Vitis Components explorer, expand the `aie_component` and examine the included sub-folders: Settings, Includes, Sources... Notice the `aie` folder you imported into the Sources folder. 
 
@@ -134,7 +134,7 @@ This opens the Create HLS Component wizard on the *Name and Location* page.
 
 2.  Enter the `Component name` as mm2s, enter the `Component location` as the workspace (default), and click **Next**. 
 
-This opens the *Configuration File* page. The configuration file contains commands for building and running the HLS component as described in [*v++ Mode HLS*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-HLS). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-an-HLS-Component).
+This opens the *Configuration File* page. The configuration file contains commands for building and running the HLS component as described in [*v++ Mode HLS*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-HLS). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Creating-an-HLS-Component).
 
 3.  Select `Empty File` and click **Next**. 
 
@@ -192,7 +192,7 @@ On the *Select Domain* page you will select from the available processor domains
 
 4.  Select the xrt domain and click **Next** to open the *Sysroot* page. 
 
-On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA).
+On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA).
 
 Enter the path to the Sysroot for the selected platform and click **Next** to open the *Summary* page. 
 
@@ -209,17 +209,17 @@ In the Vitis Components Explorer view expand the `host` component, right-click t
 <tutorial_path>/05-AI-engine-versal-integration/sw/data.h
 ```
 
-**NOTE:** If your design uses the ADF API to control the AI Engine then you must also import the `aie_control_xrt.cpp` file into your Application component Sources folder. Refer to [*Host Programming on Linux*](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-on-Linux) for more information. This design uses the XRT native API and so does not require it.
+**NOTE:** If your design uses the ADF API to control the AI Engine then you must also import the `aie_control_xrt.cpp` file into your Application component Sources folder. Refer to [*Host Programming on Linux*](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-on-Linux) for more information. This design uses the XRT native API and so does not require it.
 
 With the files in place, you are now ready to build the Application. 
 
-With the `host` application active in the Flow Navigator, select **Build** under the x86 SIMULATION header. This will build the host application for use in software emulation. Even though the `xilinx_vck190_base_202410_1` is an embedded platform, software emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). The compilation process is reported to the `host::x86sim` Output window. 
+With the `host` application active in the Flow Navigator, select **Build** under the x86 SIMULATION header. This will build the host application for use in software emulation. Even though the `xilinx_vck190_base_202410_1` is an embedded platform, software emulation is run on the x86 processor as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). The compilation process is reported to the `host::x86sim` Output window. 
 
 After the x86sim build completes you can select **Build** under the HARDWARE heading in the Flow Navigator. The compilation process is reported to the `host::hw` Output window. You have now compiled the host application for both the software emulation flow and the hardware emulation/hardware flows of the System project.
 
 ## Step 5: Create the System Project
 
-The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project-for-Heterogeneous-Computing). The AI Engine component, the HLS components, and the Application component are integrated into the system project using the following steps. 
+The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project-for-Heterogeneous-Computing). The AI Engine component, the HLS components, and the Application component are integrated into the system project using the following steps. 
 
 1.  From the main menu select **File > New Component > System Project**
 
@@ -231,14 +231,14 @@ This opens the *Select Platform* page.
 
 3.  On the Select Part page select the `xilinx_vck190_base_202410_1` platform and click **Next** to open the Embedded Component Paths page. 
 
-The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
+The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
 
 ```
 Kernel Image: <path-to-common-files>/Image
 Root FS: <path-to-common-files>/rootfs.ext4
 Sysroot: <path-to-common-files>/sysroots/cortexa72-cortexa53-xilinx-linux
 ```
-**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
+**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
 
 6.  Review the Summary page and click **Finish** to create the defined System project. 
  
@@ -275,8 +275,8 @@ sc=ai_engine_0.DataOut1:s2mm.s
 
 | Option/Flag | Description |
 | --- | --- |
-| `nk` | Specifies the number of instantiations of the kernel as described in [*Creating Multiple Instances of a Kernel*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). |
-| `stream_connect/sc` | Specifies the connections to be made between streaming outputs and inputs as described in [*Specifying Streaming Connections*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Specifying-Streaming-Connections).|
+| `nk` | Specifies the number of instantiations of the kernel as described in [*Creating Multiple Instances of a Kernel*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). |
+| `stream_connect/sc` | Specifies the connections to be made between streaming outputs and inputs as described in [*Specifying Streaming Connections*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Specifying-Streaming-Connections).|
 
 **NOTE:** For `ai_engine_0` the streaming input and output names are provided in the `graph.h`, for example:
 
@@ -309,11 +309,11 @@ The System project has three different build targets: software emulation, hardwa
 
 From the Flow Navigator, select the **Build All** command under the Software Emulation header. The tool will alert you that some components have not been built, and would you like to build them. Select **Yes** to proceed. After the build is complete you can review the **Reports** under the Link and Package headings. The reports offer a summary view as well as additional details of the build process. 
 
-**TIP:** In the Vitis unified IDE the Software Emulation build is specifically designed to run on the x86 processor, regardless of the platform selected as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). 
+**TIP:** In the Vitis unified IDE the Software Emulation build is specifically designed to run on the x86 processor, regardless of the platform selected as described in [*Embedded Processor Emulation Using PS on x86*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Embedded-Processor-Emulation-Using-PS-on-x86). 
 
-The build process involves both linking and packaging the system design. The linking process uses the following command as described in [*Linking the System*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System):
+The build process involves both linking and packaging the system design. The linking process uses the following command as described in [*Linking the System*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System):
 
-The packaging process uses the following command as described in [*Packaging the System*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-the-System). 
+The packaging process uses the following command as described in [*Packaging the System*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-the-System). 
 
 After linking and packaging you are almost set to run emulation. However, the Vitis unified IDE requires a launch configuration to run the system. You can create a launch configuration in one of a number of ways. In the Vitis Components Explorer expand the System project Settings folder and click to open the `launch.json` file.
 
@@ -341,7 +341,7 @@ Scrolling down in the Flow Navigator you will see the **Build** and **Run** comm
 
 ## Step 7: Using the Analysis View
 
-As you build the different components of the system, or build and run the system, the Vitis unified IDE populates each step with a report of the compilation process, or the linking and packaging process, or the simulation run results. Each of these reports appears in the Flow Navigator for the specific component and step of the flow being run. You can review these reports as they become avialable, or you can review all the reports for the system project and the components of the project using the Analysis view as described [*Working with the Analysis View*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Working-with-the-Analysis-View-Vitis-Analyzer). 
+As you build the different components of the system, or build and run the system, the Vitis unified IDE populates each step with a report of the compilation process, or the linking and packaging process, or the simulation run results. Each of these reports appears in the Flow Navigator for the specific component and step of the flow being run. You can review these reports as they become avialable, or you can review all the reports for the system project and the components of the project using the Analysis view as described [*Working with the Analysis View*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Working-with-the-Analysis-View-Vitis-Analyzer). 
 
 Select the Analysis view from the toolbar menu at the left of the Vitis unified IDE. You should see the view as displayed in the figure below. 
 

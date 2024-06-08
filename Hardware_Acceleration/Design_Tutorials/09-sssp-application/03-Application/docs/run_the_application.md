@@ -1,4 +1,4 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html"> Vitis™ Development Environment</a>
@@ -10,7 +10,7 @@
 
 ## Configuring the xrt.ini File
 
-XRT uses various parameters to control the execution flow, debug, profiling, and message logging during host application and kernel execution in software emulation, hardware emulation, and system run on the acceleration board. These control parameters are optionally specified in a runtime initialization file called [xrt. ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File).
+XRT uses various parameters to control the execution flow, debug, profiling, and message logging during host application and kernel execution in software emulation, hardware emulation, and system run on the acceleration board. These control parameters are optionally specified in a runtime initialization file called [xrt. ini](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File).
 
 Following is an ``.ini`` file is for your reference.
 
@@ -30,7 +30,7 @@ debug_mode = batch
 
 ```
 
-Place the [xrt. ini](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) file in the executable directory.
+Place the [xrt. ini](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) file in the executable directory.
 
 ## Compiling the Code and Running the Application
 

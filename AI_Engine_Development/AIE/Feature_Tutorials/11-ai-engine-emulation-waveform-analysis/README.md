@@ -60,7 +60,7 @@ In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
 **Step 2**: Launching Emulation with the XSIM Waveform GUI
 
-**Step 3**: Using XSIM Waveform GUI and [QEMU](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/QEMU)
+**Step 3**: Using XSIM Waveform GUI and [QEMU](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/QEMU)
 
 **Step 4**: Using Vitis Analyzer
 
@@ -92,7 +92,7 @@ In the following diagram, the CIPS, NoC, and AI Engine are modeled in SystemC.
 
 4. Close the text file.
 
-    **NOTE**: To view all the `aiesim_option.txt` values, see [Reusing AI Engine Simulator Options](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Reusing-AI-Engine-Simulator-Options).
+    **NOTE**: To view all the `aiesim_option.txt` values, see [Reusing AI Engine Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Reusing-AI-Engine-Simulator-Options).
 
 5. Run the rest of the build process using the following commands.
 
@@ -230,7 +230,7 @@ After the building and packaging of the design is complete, you can run hardware
 
     **TIP**: The scale can be adjusted when emulation is running to fit your needs.
 
-**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://docs.xilinx.com/r/en-US/ug900-vivado-logic-simulation).
+**NOTE**: For more information about this simulator view and how to use it, see the [UG900 Vivado Design Suite User Guide: Logic Simulation](https://docs.amd.com/r/en-US/ug900-vivado-logic-simulation).
 
 ### Step 3: Using XSIM Waveform GUI and QEMU
 
@@ -468,7 +468,7 @@ The AI Engine status is copied to the following files when the host program is r
 * `aie_status_edge.json`: Status of AI Engine and AI Engine memory.
 * `aieshim_status_edge.json`: AI Engine interface tiles status.
 
-For more details, see [Analyzing AI Engine Status in Hardware Emulation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Hardware-Emulation). 
+For more details, see [Analyzing AI Engine Status in Hardware Emulation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Hardware-Emulation). 
 
 10. Close the Vitis analyzer.
 

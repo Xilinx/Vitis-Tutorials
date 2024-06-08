@@ -1,4 +1,4 @@
-
+﻿
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -32,10 +32,10 @@ DFT using vector-matrix multiplication that can be efficient on AI Engine for sm
 ## References
 
 1. [The Fast Fourier Transform](https://ieeexplore.ieee.org/abstract/document/5217220)
-2. [Vitis Libraries](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html)
+2. [Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 3. [UG1529: AI Engine API User Guide](https://www.xilinx.com/htmldocs/xilinx2023_2/aiengine_api/aie_api/doc/index.html)
 4. [Fast Computation of General Fourier Transforms on GPUs](https://ieeexplore.ieee.org/document/4607357)
-5. [Block-by-Block Configurable Fast Fourier Transform Implementation on AI Engine (XAPP1356)](https://docs.xilinx.com/r/en-US/xapp1356-fft-ai-engine/Summary)
+5. [Block-by-Block Configurable Fast Fourier Transform Implementation on AI Engine (XAPP1356)](https://docs.amd.com/r/en-US/xapp1356-fft-ai-engine/Summary)
 
 ## Support
 

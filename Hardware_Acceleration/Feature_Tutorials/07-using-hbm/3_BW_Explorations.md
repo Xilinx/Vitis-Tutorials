@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -132,7 +132,7 @@ Use the specific example of Row 13; the transaction size is 256 bytes and using 
 
 This step uses the same topologies as the previous step, but now you are using the RAMA IP to improve the overall bandwidth. This step will require the generation of new xclbins.
 
-The `HBM_connectivity.cfg` file that is generated from the Makefile adds the RAMA IP to the config file syntax as described at [Random Access and the RAMA IP](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Random-Access-and-the-RAMA-IP). The `HBM_connectivity.cfg` file will look like the following example:
+The `HBM_connectivity.cfg` file that is generated from the Makefile adds the RAMA IP to the config file syntax as described at [Random Access and the RAMA IP](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Random-Access-and-the-RAMA-IP). The `HBM_connectivity.cfg` file will look like the following example:
 
  ```
  [connectivity]

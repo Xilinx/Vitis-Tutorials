@@ -194,16 +194,16 @@ ULBF Output0: Throughput 6.65915e+08 Samples/s, i.e. 2.66366e+09 Bytes/s
 
 ## References
 
-* [AI Engine Documentation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Overview)
-* [AI Engine Documentation: AI Engine Programming](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
-* [AI Engine Kernel and Graph Programming Guide](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Intrinsics) (lists of all the intrinsic APIs and data types supported in the current release)
-* [AI Engine Documentation: Run Time Graph Control API](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Run-Time-Graph-Control-API)
-* [AI Engine Kernel and Graph Programming Guide](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Graph-Programming-Model)
-* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Adaptive-Data-Flow-Graph-Specification-Reference)
+* [AI Engine Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Overview)
+* [AI Engine Documentation: AI Engine Programming](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment) (to learn more about AI Engine graph and kernels)
+* [AI Engine Kernel and Graph Programming Guide](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Intrinsics) (lists of all the intrinsic APIs and data types supported in the current release)
+* [AI Engine Documentation: Run Time Graph Control API](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Run-Time-Graph-Control-API)
+* [AI Engine Kernel and Graph Programming Guide](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Graph-Programming-Model)
+* [AI Engine Documentation: Adaptive Data Flow Graph Specification](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Adaptive-Data-Flow-Graph-Specification-Reference)
 * [XAPP1352 Beamforming Implementation on AI Engine](https://www.xilinx.com/search/support-keyword-search.html#q=xapp1352)
-* [AI Engine System C Simulator](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator)
-* [AI Engine Profiling Graph Throughput](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Profiling-Graph-Throughput)
-* [Vivado Design Suite User Guide: Implementation](https://docs.xilinx.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
+* [AI Engine System C Simulator](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator)
+* [AI Engine Profiling Graph Throughput](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Profiling-Graph-Throughput)
+* [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support
 

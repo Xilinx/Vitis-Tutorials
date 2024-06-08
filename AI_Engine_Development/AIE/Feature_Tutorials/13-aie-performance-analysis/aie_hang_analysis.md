@@ -92,7 +92,7 @@ If you are using Vitis Analyzer to do stall analysis, run the AI Engine simulato
 
 	aiesimulator --pkg-dir=./Work --online -wdb -ctf
 
-**Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
+**Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
 In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls in the design:
 
@@ -116,7 +116,7 @@ Select the stall in **Lock Stalls** in Trace view, and switch to Graph view. The
 
 From the above analysis, the cause of the hang is given. The direct resolution, without modifying kernel code, is to increase the FIFO size between the two kernels.
 
-For more information about AI Engine stall analysis feature, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
+For more information about AI Engine stall analysis feature, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
 ## AI Engine Deadlock Detection in the Hardware Emulation Flow
 

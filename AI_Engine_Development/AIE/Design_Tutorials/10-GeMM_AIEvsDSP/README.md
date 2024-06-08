@@ -127,7 +127,7 @@ GeMM_AIEvsDSP
 
 * [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
 
-* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Revision-History)
+* [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
@@ -148,7 +148,7 @@ To build and run the GeMM tutorial (AI Engine and HLS implementations), perform 
 
 * Obtain licenses for AI Engine tools.
 
-* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
+* Follow the instructions in [Installing Xilinx Runtime and Platforms](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms) (XRT).
 
 * Download and set up the [VCK190 Vitis Platform]( https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
@@ -159,7 +159,7 @@ To build and run the GeMM tutorial (AI Engine and HLS implementations), perform 
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales team.
 
@@ -259,13 +259,13 @@ For detailed instructions on taking measurements of the parameters, refer to the
 
 ## References
 
-#### [Vitis Unified Software Development Platform Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+#### [Vitis Unified Software Development Platform Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 Contains sections on how to develop AI Engine graphs, how to use the AI Engine compiler and AI Engine simulation, and performance analysis.
 
 #### [Vitis DSP Libraries](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html) 
 
 
 #### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
@@ -281,16 +281,16 @@ Below are links to the XRT information used by this tutorial:
 * [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2023_2/ug1451-xrt-release-notes.pdf)
 
 
-#### [Vitis Unified Software Development Platform 2023.2 Documentation](https://docs.xilinx.com/v/u/en-US/ug1416-vitis-documentation)
+#### [Vitis Unified Software Development Platform 2023.2 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-* [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+* [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 ## Known Issues
 

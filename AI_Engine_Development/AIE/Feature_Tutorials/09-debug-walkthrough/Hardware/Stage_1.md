@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -159,7 +159,7 @@ Clicking each stall highlights the corresponding path in the graph view.
  * `Tile Status - PC`: Shows the current Program Counter value. It can be crossprobed with the  compiler generated source code by clicking on it.
  * `DMA Status`: Shows each tile's DMA input/output channel status.
 
- For more information, refer to [Analyzing AI Engine Status in Vitis Analyzer](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Vitis-Analyzer) in the *AI Engine Tools and Flows User Guide* (UG1076).
+ For more information, refer to [Analyzing AI Engine Status in Vitis Analyzer](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Vitis-Analyzer) in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 ### Manual AI Engine Status Using the XBUtil Utility
 
@@ -252,7 +252,7 @@ To better understand the usage of error handling XRT APIs, an out of bound acces
 	aie aie0: Asserted tile error event 60 at col 25 row 1
 	```
 
-	* Above is the error propogated from the AI Engine array and is used to debug the application specific errors. For the list of error events, refer to the topic [AI Engine Error Events](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Error-Events). Notice the `error event 60` above which represents the **DM address out of range**, and the address out of range is happening in `col 25 row 1`.
+	* Above is the error propogated from the AI Engine array and is used to debug the application specific errors. For the list of error events, refer to the topic [AI Engine Error Events](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Error-Events). Notice the `error event 60` above which represents the **DM address out of range**, and the address out of range is happening in `col 25 row 1`.
 	* You can open the graph compile summary in Vitis Analyzer and identify the kernel corresponding to the tile which is `peak_detect` in this case.
 	* You can debug this out of bound access at AI Engine simulation level - Refer to [Debugging memory access violations](../AIE_Simulation/README.md#Debugging-memory-access-violations) for more information.
 
@@ -283,7 +283,7 @@ It is also possible to report an error using `xbutil`. The error report accumula
 
 ## Using APIs in the Host Application
 
-In this topic, you will walk through using the APIs in the host code to profile the design to get some performance parameters. For more information on different performance metrics and details about the host APIs, refer to [Event Profile APIs for Graph Inputs and Outputs](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Event-Profile-APIs-for-Graph-Inputs-and-Outputs) in the *AI Engine Tools and Flows User Guide* (UG1076).
+In this topic, you will walk through using the APIs in the host code to profile the design to get some performance parameters. For more information on different performance metrics and details about the host APIs, refer to [Event Profile APIs for Graph Inputs and Outputs](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Profile-APIs-for-Graph-Inputs-and-Outputs) in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 ### Profiling Graph Throughput
 

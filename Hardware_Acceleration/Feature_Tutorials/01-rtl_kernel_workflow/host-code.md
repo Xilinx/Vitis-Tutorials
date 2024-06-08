@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -10,7 +10,7 @@
 
 User-managed RTL kernels are only supported in host applications written with the XRT native API, as described in the [XRT documentation](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html). The XRT native API provides a rich set of class objects and functions for XRT-managed kernels, as discussed in the *XRT Native API Host Application* tutorial, and for user-managed kernels as described here.
 
-Open the `reference-files/src/host/user-host.cpp` file to examine its content and structure. As decribed in [Writing the Software Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-the-Software-Application) in the Vitis Application Acceleration Development Flow Documentation (UG1393), there are several key steps the host application must follow:
+Open the `reference-files/src/host/user-host.cpp` file to examine its content and structure. As decribed in [Writing the Software Application](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-the-Software-Application) in the Vitis Application Acceleration Development Flow Documentation (UG1393), there are several key steps the host application must follow:
 
 1. Specifying the accelerator device ID and loading the `.xclbin`
 2. Setting up the kernel and kernel arguments
@@ -34,7 +34,7 @@ This tutorial will walk you through each of these, and discuss the requirements 
 
 The XRT native API requires some `#include` statements to support the various class objects and functions of the different elements of the system. In the code sample above you can see the inclusion of header files for the Xilinx device, the device binary (`.xclbin`), the buffer objects (`xrt_bo`), and the user-managed kernel (`xrt_ip`). This last is an important difference in the XRT native API when working with XRT-managed kernels and user-managed kernels.
 
-XRT-managed kernels (`xrt::kernel`) meet specific requirements of control protocols and interfaces, as described in [Requirements of an RTL Kernel](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Requirements-of-an-RTL-Kernel) and as such, have a richer feature set in the XRT API. User-managed kernels are a bit more unstructured, and so are represented in the IP class with limited features.
+XRT-managed kernels (`xrt::kernel`) meet specific requirements of control protocols and interfaces, as described in [Requirements of an RTL Kernel](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Requirements-of-an-RTL-Kernel) and as such, have a richer feature set in the XRT API. User-managed kernels are a bit more unstructured, and so are represented in the IP class with limited features.
 
 ## Specifying the Device ID and Loading the XCLBIN
 
@@ -62,7 +62,7 @@ In the above code example, taken from the `user-host.cpp` file in this tutorial,
 
 ## Setting up the Kernel and Kernel Arguments
 
-For XRT-managed kernels, the kernel is identified as an xrt::kernel object. However, for user-managed RTL kernels the host application uses the `xrt::ip` object to identify the kernel in the `xclbin`, as shown in the code example below. In addition, the host application identifies any compute units (CUs) of the kernel in the `xclbin`. The CU is an instance of the kernel, as described in [Creating Multiple Instances of a Kernel](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). In the following code example, there are three user-managed kernels identified by the host application: `ip1`, `ip2`, and `ip3`. This enables the host to run multiple instances of the kernel at the same time when available in the `xclbin`.
+For XRT-managed kernels, the kernel is identified as an xrt::kernel object. However, for user-managed RTL kernels the host application uses the `xrt::ip` object to identify the kernel in the `xclbin`, as shown in the code example below. In addition, the host application identifies any compute units (CUs) of the kernel in the `xclbin`. The CU is an instance of the kernel, as described in [Creating Multiple Instances of a Kernel](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). In the following code example, there are three user-managed kernels identified by the host application: `ip1`, `ip2`, and `ip3`. This enables the host to run multiple instances of the kernel at the same time when available in the `xclbin`.
 
 >**NOTE**: `ip2` and `ip3` are added for example purposes, and are not actually used in the host application.
 
@@ -84,7 +84,7 @@ auto ip1_boB = xrt::bo(device, vector_size_bytes, 1);
 
 In XRT-managed kernels, the XRT API can create a buffer for the memory bank used by a specific argument. This is done using the `krnl.group_id(1)` as shown for buffer objects `boA` and `boB` in the example above. Just as with the XRT managed kernels, the `xrt::bo` object is used to create buffers for the function arguments, or ports of the RTL kernel. However, unlike XRT managed kernels, the memory that the kernel argument is mapped to must be manually specified as shown for buffer objects `ip1_boA` and `ip1_boB` in the code example above.
 
-For user-managed kernels, there is no equivalent method to map the kernel argument to the memory bank it uses. However, you either know this information because you built the user-managed kernel, or you can determine the information by examining the `xclbin.info` file produced by the `xclbinutil` command as described in the [Vitis Commands and Utilities](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Commands-and-Utilities).
+For user-managed kernels, there is no equivalent method to map the kernel argument to the memory bank it uses. However, you either know this information because you built the user-managed kernel, or you can determine the information by examining the `xclbin.info` file produced by the `xclbinutil` command as described in the [Vitis Commands and Utilities](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Commands-and-Utilities).
 
 >**TIP:** The `xclbin.info` report is generated by the Vitis compiler while linking the kernels and generating the `xclbin` file.
 

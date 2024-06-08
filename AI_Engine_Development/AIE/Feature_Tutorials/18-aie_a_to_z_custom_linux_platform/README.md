@@ -99,7 +99,7 @@ Next, re-target the design from Step 1 on the custom platform created in Step 2.
 
     [AI Engine Graph Integration and Validation using a Custom Linux Platform](steps_to_run_design_on_cust_plfm.md).
 
-To read more about the AI Engine flow, see the *Versal ACAP AI Engine Programming Environment User Guide* ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment)).
+To read more about the AI Engine flow, see the *Versal ACAP AI Engine Programming Environment User Guide* ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
 
 ### Support

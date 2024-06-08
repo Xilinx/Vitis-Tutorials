@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 -->
@@ -51,7 +51,7 @@ This tutorial demonstrates the steps to upgrade a 32-branch digital down-convers
 - Updating older pragmas
 - Supporting x86 compilation and simulation
 
-You can find the design description in the [Digital Down-conversion Chain Implementation on AI Engine (XAPP1351)](https://docs.xilinx.com/r/en-US/xapp1351-ddc-ai-engine). The codebase associated with the original design can be found in the [Reference Design Files](https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=d3643c02-32f7-407c-b680-59c0b234e703;d=xapp1352-beamforming-ai-engine.zip).
+You can find the design description in the [Digital Down-conversion Chain Implementation on AI Engine (XAPP1351)](https://docs.amd.com/r/en-US/xapp1351-ddc-ai-engine). The codebase associated with the original design can be found in the [Reference Design Files](https://www.xilinx.com/cgi-bin/docs/ctdoc?cid=d3643c02-32f7-407c-b680-59c0b234e703;d=xapp1352-beamforming-ai-engine.zip).
 
 ## Upgrading Tools, Device Speed Grade, and Makefile
 
@@ -90,7 +90,7 @@ When creating the kernel in the upper graph or subgraph, use `kernel::create_obj
 
 ### Migrating from Windows to Buffers
 
-Windows I/O connections between kernels were deprecated in the 2023.2 release of the AMD Vitis™ software platform. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how the source code of a design should change to upgrade it to buffer I/Os. The following figures show the steps required (repeated for every kernel) to upgrade I/O connections from Windows to buffers.
+Windows I/O connections between kernels were deprecated in the 2023.2 release of the AMD Vitis™ software platform. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how the source code of a design should change to upgrade it to buffer I/Os. The following figures show the steps required (repeated for every kernel) to upgrade I/O connections from Windows to buffers.
 
 1. Make the changes shown in the following figure in the ``kernel.cc`` file:
 
@@ -116,7 +116,7 @@ The following example shows a side-by-side comparison of intrinsic-based code co
 
 ### Handling State Variables to Enable x86sim
 
-Move the state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as shown below. More information can be found in the in Memory Model section of the AI Engine Tools and Flows User Guide [(UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Memory-Model).
+Move the state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as shown below. More information can be found in the in Memory Model section of the AI Engine Tools and Flows User Guide [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Memory-Model).
 
 ![figure11](images/handling_state_variables_x86sim.png)
 

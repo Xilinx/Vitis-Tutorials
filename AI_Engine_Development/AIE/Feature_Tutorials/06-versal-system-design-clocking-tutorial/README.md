@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -29,7 +29,7 @@ In the design, the following clocking steps are used:
 | --- | --- |
 | Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1 GHz) |
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
-For detailed information, see the Clocking the PL Kernels section [here](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
+For detailed information, see the Clocking the PL Kernels section [here](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
 **IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2024.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024.1.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
 
@@ -119,7 +119,7 @@ A brief explanation of the `v++` options:
 | `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
 | `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
-For additional information, see [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
+For additional information, see [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
 
 After completion, you will have the `mm2s.xo`, `s2mm.xo`, and `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
@@ -230,7 +230,7 @@ So, for linking, the clock frequency used by Vitis in a following way:
 
     Frequency used by Vitis = 104.17 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).**
+**NOTE: Any change to the `system.cfg` file can also be done on the command line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).**
 
 ## Step 4 - Compiling Host Code
 
@@ -238,7 +238,7 @@ When the `v++` linker is complete, you can compile the host code that will run o
 
 1. Open `./sw/host.cpp`, and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT/2022.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, see [Programming the PS Host Application](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
+    Do take note that Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT/2022.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, see [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp`, look at line 117 and 118 and comment them out. You should have uncommented the following line:
 

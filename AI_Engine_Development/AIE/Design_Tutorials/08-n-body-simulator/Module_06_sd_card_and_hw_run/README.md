@@ -135,7 +135,7 @@ scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data
 
 ## References
 
-* [Vitis Compiler Command](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
 
 ## Next Steps
 

@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -35,7 +35,7 @@ void vadd(
 
 For more information on the kernel source code, refer to `<Project>/reference_files/kernel.cpp`.
 
-The ports to DDR banks connectivity is established with the system port mapping option using the `--sp` switch. This switch allows the developer to map the kernel ports to specific global memory banks. For more information, refer to [Mapping Kernel Ports to Memory](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory) in the Vitis User Guide.
+The ports to DDR banks connectivity is established with the system port mapping option using the `--sp` switch. This switch allows the developer to map the kernel ports to specific global memory banks. For more information, refer to [Mapping Kernel Ports to Memory](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Mapping-Kernel-Ports-to-Memory) in the Vitis User Guide.
 
 The contents of the example connectivity file, `DDR_connectivity.cfg` are shown in the following code. Makefile target will create this file automatically.
 

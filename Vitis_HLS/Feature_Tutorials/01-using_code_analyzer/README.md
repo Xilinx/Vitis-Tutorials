@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis HLS Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -288,7 +288,7 @@ We did all this without having to perform C-Synthesis and C-RTL Co-Simulation, s
 
 <!-- references -->
 [GH_Getting_started_VHLS]: https://github.com/Xilinx/Vitis-Tutorials/tree/2023.2/Getting_Started/Vitis_HLS
-[VHLS_UG1399]: https://docs.xilinx.com/r/en-US/ug1399-vitis-hls
+[VHLS_UG1399]: https://docs.amd.com/r/en-US/ug1399-vitis-hls
 
 </br>
 <hr/>

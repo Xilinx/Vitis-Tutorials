@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 
 Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
@@ -326,7 +326,7 @@ Note that running ``make clean`` from the ``files/examples`` folder cleans all t
 
 In this section, you will analyze a single rate FIR filter design and apply a step-by-step approach through the most important HLS directives to increase the performance - lower latency and higher throughput (happening when **II=1**). The FIR filter has 16 coefficients (or "taps").
 
-The code in this subsection applies [fractional arbitrary precision data types](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Using-Arbitrary-Precision-Data-Types) from the ``ap_fixed.h`` library. The Vitis HLS project ``vhls_fix_fir_prj`` has eight solutions to illustrate the different usage of some HLS compiler directives. More information can be found in the related HLS TCL script named ``fix_fir_filter.tcl``.
+The code in this subsection applies [fractional arbitrary precision data types](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Using-Arbitrary-Precision-Data-Types) from the ``ap_fixed.h`` library. The Vitis HLS project ``vhls_fix_fir_prj`` has eight solutions to illustrate the different usage of some HLS compiler directives. More information can be found in the related HLS TCL script named ``fix_fir_filter.tcl``.
 
 Once you have setup the Vitis HLS environment, launch the following shell commands (they are already included in the [run_all.sh](files/run_all.sh) script):
 
@@ -508,7 +508,7 @@ make hls_kernels
 
 Note that ``make hls_kernels`` processes all nine HLS design examples by launching their appropriate TCL scripts.
 
-The ``dependence directive`` is an advanced HLS concept. Therefore, it is suggested to read  [Managing-Pipeline-Dependencies](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Managing-Pipeline-Dependencies) from UG 1399 carefully to understand the argument better.
+The ``dependence directive`` is an advanced HLS concept. Therefore, it is suggested to read  [Managing-Pipeline-Dependencies](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Managing-Pipeline-Dependencies) from UG 1399 carefully to understand the argument better.
 
 The code to illustrate how to use this directive is just one statement as ``hist[val] = hist[val]+1``. It is normally applied when computing the  histogram of an image.
 
@@ -699,7 +699,7 @@ You can try to manually merge the code of the three subroutines and in this case
 
 ## 6 Square Root  
 
-In this section, you will see how **ANSI-C double** (64-bit) and **single** (32-bit) precision **floating point** datatype can be used to implement a math function like ``sqrt(x^2+x^2)`` and how to improve performance with an alternative algorithm (which is iterative) named [CORDIC](https://en.wikipedia.org/wiki/CORDIC) making use of Vitis HLS [arbitrary precision integer data types](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls/Using-Arbitrary-Precision-Data-Types).
+In this section, you will see how **ANSI-C double** (64-bit) and **single** (32-bit) precision **floating point** datatype can be used to implement a math function like ``sqrt(x^2+x^2)`` and how to improve performance with an alternative algorithm (which is iterative) named [CORDIC](https://en.wikipedia.org/wiki/CORDIC) making use of Vitis HLS [arbitrary precision integer data types](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Using-Arbitrary-Precision-Data-Types).
 
 Once you have setup the Vitis HLS environment, launch the following shell commands (they are already included in the [run_all.sh](files/run_all.sh) script):
 
@@ -932,7 +932,7 @@ In the  ``hls_wrapped_mmult_prj`` design, the two input matrices ``A`` and ``B``
 
 So far, you have seen different examples of how to design a high-performance DSP IP core with HLS. Now you will learn to use DSP IP core and run it on the target board in a real embedded system.
 
-In this section, you will use the [Vitis Acceleration Flow (UG1393)](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow) to build an embedded system that includes:
+In this section, you will use the [Vitis Acceleration Flow (UG1393)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow) to build an embedded system that includes:
 
 - One kernel, designed with HLS, placed in the Programmable Logic (PL).
 
@@ -1397,7 +1397,7 @@ versal-rootfs-common-20231:/mnt#
 
 #### A1.1 SW6 Switch for SD Boot Mode
 
-From the [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) web page, read its user guide ([ug1182-zcu102-eval-bd.pdf](https://docs.xilinx.com/v/u/en-US/ug1182-zcu102-eval-bd)) and make sure that you have followed what is described in **Table 2-4: Switch SW6 Configuration Option Settings** to enable the SD boot mode via the SW6 switch pins (3:0) set as  ``1110``, as illustrated in
+From the [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) web page, read its user guide ([ug1182-zcu102-eval-bd.pdf](https://docs.amd.com/v/u/en-US/ug1182-zcu102-eval-bd)) and make sure that you have followed what is described in **Table 2-4: Switch SW6 Configuration Option Settings** to enable the SD boot mode via the SW6 switch pins (3:0) set as  ``1110``, as illustrated in
 Figures A1-1 and A1-2.
 
 ![figureA1-1](files/images/zcu102_ug_table.png)
@@ -1462,13 +1462,13 @@ If you use an Ubuntu PC, install ``PuTTY`` utility with the command ``sudo apt i
 
 Below are links to Vitis related information referenced in this tutorial:
 
-- [Vitis Application Acceleration Development Flow Documentation](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration)
+- [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
 
 - [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
-- [Vitis Acceleration Flow UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow)
+- [Vitis Acceleration Flow UG1393](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Data-Center-Application-Acceleration-Development-Flow)
 
-- [Vitis HLS](https://docs.xilinx.com/r/en-US/ug1399-vitis-hls)
+- [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
 
 ### Support
 

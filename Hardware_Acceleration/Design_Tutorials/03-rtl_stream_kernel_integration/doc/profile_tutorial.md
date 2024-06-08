@@ -1,8 +1,8 @@
-# Profiling the Application
+﻿# Profiling the Application
 
 Vitis generates various system and kernel resource performance reports during compilation, XRT also collects profiling data during application execution in both software and hardware emulation and system run mode. A run summary report linked lots of reports from compilation and execution is automatically generated after running the active build, and can be viewed in *Vitis Analyzer*. 
 
-Profiling reports and data can be used to isolate performance bottlenecks in the application, identify problems in the system, and optimize the design to improve performance. To obtain profiling reports, make sure associated switches are turned on at the *xrt.ini* file, which should be placed at the same directory as the host executable file. We already delivered a working *xrt.ini* with this tutorial, you can check it under *./sw/build/* directory. For more details, refer to [xrt.ini File](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) from Vitis online documentation.
+Profiling reports and data can be used to isolate performance bottlenecks in the application, identify problems in the system, and optimize the design to improve performance. To obtain profiling reports, make sure associated switches are turned on at the *xrt.ini* file, which should be placed at the same directory as the host executable file. We already delivered a working *xrt.ini* with this tutorial, you can check it under *./sw/build/* directory. For more details, refer to [xrt.ini File](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) from Vitis online documentation.
 
 ```
 [Emulation]
@@ -31,7 +31,7 @@ Guidance includes message for reported violations, a brief suggested resolution,
 
 Enabling profile data capturing for traffic between the kernels and host consumes additional resources and can impact performance, so the pre-built XCLBIN files do not include profiling. 
 
-You can add the `--profile` option during the linking process to enable device data profiling by adding Acceleration Monitors and AXI Performance Monitors to the system design. See the following modification on *./hw/Makefile* as an example. A detailed description can be found in the [--profile Options](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) of the Vitis compiler command. 
+You can add the `--profile` option during the linking process to enable device data profiling by adding Acceleration Monitors and AXI Performance Monitors to the system design. See the following modification on *./hw/Makefile* as an example. A detailed description can be found in the [--profile Options](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) of the Vitis compiler command. 
 
 ```
 rtc_alpha_$(TARGET).xclbin: $(XOS_RTC_ALPHA)
@@ -55,7 +55,7 @@ The Application Timeline collects and displays host and kernel events on a commo
 <img src="./images/hw_timeline.PNG" alt="Application Timeline" >
 </div>
 
-If you are looking for more details of Profiling and how to use *Vitis Analyzer*, check on [Profiling the Application](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-the-Application). 
+If you are looking for more details of Profiling and how to use *Vitis Analyzer*, check on [Profiling the Application](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Profiling-the-Application). 
 
 Return to [Top-Level of Tutorial](../README.md)
 

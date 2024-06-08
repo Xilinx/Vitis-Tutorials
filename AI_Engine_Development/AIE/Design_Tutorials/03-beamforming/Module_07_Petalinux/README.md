@@ -229,7 +229,7 @@ This script uses the XSA from Module 04 and the custom Petalinux image to genera
 * [PetaLinux Tools Documentation](https://www.xilinx.com/search/support-keyword-search.html#q=ug1144)
 * [Bootgen User Guide](https://www.xilinx.com/search/support-keyword-search.html#q=ug1283)
 * [Libmetal and OpenAMP](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2022_2/ug1186-zynq-openamp-gsg.pdf)
-* [Versal Platform Creation Tutorial](https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Vitis-Platform-Creation/Custom-Platform-Creation-Tutorial-on-Versal)
+* [Versal Platform Creation Tutorial](https://docs.amd.com/r/en-US/Vitis-Tutorials-Vitis-Platform-Creation/Custom-Platform-Creation-Tutorial-on-Versal)
 
 ### Support
 

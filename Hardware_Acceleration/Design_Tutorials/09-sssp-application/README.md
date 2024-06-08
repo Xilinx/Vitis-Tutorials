@@ -1,4 +1,4 @@
-<table width="100%">
+﻿<table width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -82,7 +82,7 @@ This tutorial demonstrates how to expand your code with PL Vitis Libraries L2 AP
 
 ## Reference
 
-Documents on [Vitis Libraries Docs](https://docs.xilinx.com/r/en-US/Vitis_Libraries).
+Documents on [Vitis Libraries Docs](https://docs.amd.com/r/en-US/Vitis_Libraries).
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>

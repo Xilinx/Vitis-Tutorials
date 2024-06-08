@@ -1,4 +1,4 @@
-
+﻿
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -91,7 +91,7 @@ Implement the Farrow filter complying with the following requirements:
 
 Based on the specified sampling rate and Figure 2, you need to perform 19 MACs every cycle where each MAC operation involves a `cint16` data with a `int16` coefficient.
 
-Based on the specified data and coefficient types, you should be able to perform 16 `cint16` x `int16` MACs every cycle in a single tile, as described in Table 1 of the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Functional-Overview).
+Based on the specified data and coefficient types, you should be able to perform 16 `cint16` x `int16` MACs every cycle in a single tile, as described in Table 1 of the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Functional-Overview).
 
 ### Bandwidth Analysis
 
@@ -194,11 +194,11 @@ Achieved II dropped from 123 to 82, but you are still not where you need to be, 
 
 ### Second Farrow Optimization
 
-Inspecting design files in the `farrow_optimize1/aie` folder, you can observe that the amount of vector registers you need every cycle (v_buff,f_coeff,del,y3-y0,z2,z1) exceeds the total supported by the chip as specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Register-Files). This leads to "vector register spillage" where the processor must use additional cycles to save intermediate compute results from vector registers to the stack memory (and vice-versa) to manage the vector register hardware resource. Refactoring the code to use fewer register resources can eliminate this additional overhead.
+Inspecting design files in the `farrow_optimize1/aie` folder, you can observe that the amount of vector registers you need every cycle (v_buff,f_coeff,del,y3-y0,z2,z1) exceeds the total supported by the chip as specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files). This leads to "vector register spillage" where the processor must use additional cycles to save intermediate compute results from vector registers to the stack memory (and vice-versa) to manage the vector register hardware resource. Refactoring the code to use fewer register resources can eliminate this additional overhead.
 
 ![figure7](images/AM009_vector_registers.png)
 
-Also, given the AI Engine Fixed-point Vector Unit Multiplication and Upshift Paths also specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/Register-Files) shown below, the multiplication of vector and accumulator registers is not supported.
+Also, given the AI Engine Fixed-point Vector Unit Multiplication and Upshift Paths also specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files) shown below, the multiplication of vector and accumulator registers is not supported.
 
 Therefore, intermediate output z2 shown in Figure 2 needs to pass through Shift-round Saturate (SRS) Path so it is converted from accumulator register into vector register before it gets used in the next `aie::mac()` instruction (same applies to intermediate output z1).
 
@@ -211,7 +211,7 @@ Due to reasons above, breaking the single `for` loop into multiple smaller ones 
 To accomplish this, intermediate compute results need to be stored in scratch pad tile memory before they are read as input to each subsequent `for` loop. Reserving memory for these intermediate outputs is shown in `farrow_kernel.h`, example `alignas(32) TT_SIG y3[BUFFER_SIZE];`.
 Accessing that memory location is done through vector iterator defined in`farrow_kernel.cpp`; for example, `auto p_y3 = aie::begin_restrict_vector<8>(y3);`.
 
-The use of `_restrict` is intended to allow more aggressive compiler optimization, by explicitly stating that no memory dependency will be caused by pointer aliasing. For more information, see *AI Engine Kernel and Graph Programming Guide* (UG1079) - [Restrict Keyword](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Restrict-Keyword?tocId=qE8HLaIwMuwjEVOsjtyQgg).
+The use of `_restrict` is intended to allow more aggressive compiler optimization, by explicitly stating that no memory dependency will be caused by pointer aliasing. For more information, see *AI Engine Kernel and Graph Programming Guide* (UG1079) - [Restrict Keyword](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Restrict-Keyword?tocId=qE8HLaIwMuwjEVOsjtyQgg).
 
 Finally, replace:
 

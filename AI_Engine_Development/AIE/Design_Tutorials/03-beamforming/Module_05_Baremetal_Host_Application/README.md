@@ -42,7 +42,7 @@ generate-platform.sh -name vck190_baremetal             \
                      -domain psv_cortexa72_0:standalone \
                      -out-dir build
 ```
-The options are explained in the [AI Engine Documentation: Building a Bare-Metal System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Building-a-Bare-Metal-System).  
+The options are explained in the [AI Engine Documentation: Building a Bare-Metal System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Building-a-Bare-Metal-System).  
 
 ### Compiling the PS Application Source Code    
 
@@ -225,7 +225,7 @@ The main function then calls the `test_ulbf` function. It starts the ULBF kernel
 ## References
 
 * [Xilinx Standalone Library Documentation OS and Libraries Document Collection](https://www.xilinx.com/search/support-keyword-search.html#q=ug643)
-* [AI Engine Documentation: Building a Bare-Metal System](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Building-a-Bare-Metal-System)
+* [AI Engine Documentation: Building a Bare-Metal System](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Building-a-Bare-Metal-System)
 
 ### Support
 

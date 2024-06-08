@@ -30,7 +30,7 @@ You can create the sender and receiver objects for the AIE that will make sure t
     in_classifier = aie_input_plio("in_classifier", 'int16')
     out_classifier = aie_output_plio("out_classifier", 'int32')
 ```
-Here the first parameter `in_interpolator` is a string value that should match PLIO names in the graph PLIO constructors. The second parameter is the AIE kernel datatype with which sender/receiver is interfaced. For more details on datatype mapping in Python based external traffic generators, see [Writing Traffic Generators in Python](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
+Here the first parameter `in_interpolator` is a string value that should match PLIO names in the graph PLIO constructors. The second parameter is the AIE kernel datatype with which sender/receiver is interfaced. For more details on datatype mapping in Python based external traffic generators, see [Writing Traffic Generators in Python](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
 
 #### 2. Transmitting the data using send_data (data_val, tlast) API
 
@@ -55,7 +55,7 @@ This API is a blocking API and it will wait till specified data i.e. 4096 bytes 
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (golden.txt). 
 
-For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
+For more details on Python based APIs, refer [Writing Traffic Generators in Python](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Python-Traffic-Generators)
 </details>
 
 <details>
@@ -98,7 +98,7 @@ This API is a blocking API and it will wait till specified data i.e. 4096 bytes 
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (classifier_golden.txt). 
 
-For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
+For more details on MATLAB APIs, refer [Writing Traffic Generators in MATLAB](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-Traffic-Generators-in-MATLAB)
 </details>
 
 <details>
@@ -137,7 +137,7 @@ out_classifier.receive_data_with_size(data_out_cls, 1024)
 out_interpolator.receive_data_with_size(data_out, 1024)
 ```
 
-This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_data` and `out_data_cls` byte array. You can convert the byte array into user data type using the conversion APIs. For conversion APIs, refer [Writing Traffic Generators in C++](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/General-Purpose-C-API)
+This API is a blocking API and it will wait till specified data i.e. total 4096 bytes is received in four iterations at the output port. Once received the specified data size, you can see the data values in the `out_data` and `out_data_cls` byte array. You can convert the byte array into user data type using the conversion APIs. For conversion APIs, refer [Writing Traffic Generators in C++](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/General-Purpose-C-API)
 
 Once the data is received in the list, you can dump it in a file for comparing with the golden output or you can process the data further into some other function based on the application. The output of the interpolator is dumped into a file and can be validated against the golden data(interpolator_golden.txt). The output of the classifier is validated against the golden output (classifier_golden.txt). 
 

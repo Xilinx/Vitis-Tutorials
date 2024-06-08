@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -50,7 +50,7 @@ Explains how to debug for software emulation using the Vitis IDE.
 
 ## Build for Software Emulation Using the Vitis IDE
 
-Before getting into this section, you must follow the GCC requirements to build the Software Application from [here.](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application)
+Before getting into this section, you must follow the GCC requirements to build the Software Application from [here.](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application)
 
 Also it is expected that you created an AI Engine application in the Vitis IDE and ran x86simulation [Build and Simulate in Vitis IDE](../X86_Simulation/README.md#Build-and-simulate-in-Vitis-IDE).
 

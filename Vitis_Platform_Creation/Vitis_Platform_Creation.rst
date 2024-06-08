@@ -1,4 +1,4 @@
-##############################################################################
+﻿##############################################################################
 AMD Vitis Platform Creation Tutorials
 ##############################################################################
 
@@ -21,7 +21,7 @@ Briefly speaking, a platform is a package that contains the HPFM (``.xsa``) file
 Platform Creation Example Quick Access
 ==================================================================================
 
-* For a first experience of platforms, refer to `Vitis Platform Quick Start <https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
+* For a first experience of platforms, refer to `Vitis Platform Quick Start <https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
 * For **ZYNQMP** device family, refer to :doc:`ZCU104 platform tutorial <./docs/Design_Tutorials/02-Edge-AI-ZCU104/README>`
 * For **Versal** device family, refer to :doc:`VCK190 platform tutorial <./docs/Design_Tutorials/03_Edge_VCK190/README>`
 * For **:term:`DFX`** platform, refer to :doc:`DFX platform tutorial <./docs/Design_Tutorials/04_Edge_VCK190_DFX/README>`
@@ -66,7 +66,7 @@ Design Tutorials
      - IDE Flow
      - Design Target
 	 
-   * - `Vitis Platform Quick Start <https://docs.xilinx.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
+   * - `Vitis Platform Quick Start <https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
      - Versal AI Core
      - VCK190
      - Flat

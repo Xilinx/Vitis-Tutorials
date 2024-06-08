@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 Author: Mark Rollins
@@ -16,7 +16,7 @@ Due to their ubiquitous nature, the FFT and DFT represent the principal intellec
 components for digital signal processing designs in both hardware and software. No other piece
 of IP is used more broadly. This application note describes how the AMD Versal™ AI Engine
 architecture creates high-performance IP designs for the DFT and FFTs in Versal to use the
-optimized IP designs provided by the Vitis DSP Library [[2]](https://docs.xilinx.com/r/en-US/Vitis_Libraries/dsp/index.html). 
+optimized IP designs provided by the Vitis DSP Library [[2]](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html). 
 The AI Engine API [[3]](https://www.xilinx.com/htmldocs/xilinx2023_2/aiengine_api/aie_api/doc/index.html) can be used to build
 custom FFT designs when circumstances warrant, such as if the FFT IP needs to be coupled
 tightly to other system-specific functions. This document covers both scenarios.

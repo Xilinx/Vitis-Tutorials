@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -73,7 +73,7 @@ With the host application code (`host.cpp`) and the RTL kernel code (`Vadd_A_B.x
 
     >**NOTE:** The RTL kernel does not support software emulation.
 
-   >**IMPORTANT:** You can add a C-model for software emulation to XRT-managed kernels as explained at [Adding C-Models to RTL Kernels](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-C-Models-to-RTL-Kernels). However, this is not supported for user-managed kernels.
+   >**IMPORTANT:** You can add a C-model for software emulation to XRT-managed kernels as explained at [Adding C-Models to RTL Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Adding-C-Models-to-RTL-Kernels). However, this is not supported for user-managed kernels.
 
 2. In the Assistant view, select the top-level system project `kernelTest_system` and click the **Build** command ![Build Command](./images/icon_build.png) to build the active Emulation-HW build configuration.
 

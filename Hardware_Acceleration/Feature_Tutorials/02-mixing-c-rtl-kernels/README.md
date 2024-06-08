@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Hardware Acceleration Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
@@ -36,7 +36,7 @@ This tutorial uses:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure that you have installed the Vitis core development kit as described in [Installation](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vhc1571429852245.html) in the Vitis Unified Software Platform Documentation (UG1393).
+> * Before running any of the examples, make sure that you have installed the Vitis core development kit as described in [Installation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vhc1571429852245.html) in the Vitis Unified Software Platform Documentation (UG1393).
 >* If you run applications on AMD Alveo™ Data Center accelerator cards, ensure that the card and software drivers have been correctly installed by following the instructions on the [Alveo Portfolio page](https://www.xilinx.com/products/boards-and-kits/alveo.html).
 
 Before running any of the examples, ensure that you have set up the Vitis core development kit by running the following commands.
@@ -126,7 +126,7 @@ It sets up the platform and defines global memory buffers and connections to the
     run.wait();
    ```
 
-For complete details on host code programming, refer to [Writing the Software Application](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vpy1519742402284.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1393).
+For complete details on host code programming, refer to [Writing the Software Application](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=vpy1519742402284.html) in the Application Acceleration Development flow of the Vitis Unified Software Platform Documentation (UG1393).
 
 ### Build the Application
 
@@ -197,7 +197,7 @@ vitis -a xrt.run_summary
 
 Now that you have successfully built and run an application with a C++ based kernel, update the hardware design to also include an RTL-based kernel. For this tutorial, the RTL kernel is a simple +1 adder. The packaged RTL kernel is provided for your use in the System project at `./src/rtl_kernel/rtl_kernel_wizard_0.xo`. Similar to the previous section, build, emulate, and review the generated Timeline Trace report. Regardless of how the kernels were designed, as HLS C/C++ kernels or as RTL kernels, the host application accesses the PL kernels through the same XRT native API calls.
 
-For a tutorial on packaging an RTL kernel review the [Getting Started with RTL Kernels](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow) tutorial. For complete details refer to [Packaging RTL Kernels](https://docs.xilinx.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=qnk1504034323350.html) in the Vitis Unified Software Platform Documentation (UG1393).
+For a tutorial on packaging an RTL kernel review the [Getting Started with RTL Kernels](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow) tutorial. For complete details refer to [Packaging RTL Kernels](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=qnk1504034323350.html) in the Vitis Unified Software Platform Documentation (UG1393).
 
 #### Host Code Updates
 

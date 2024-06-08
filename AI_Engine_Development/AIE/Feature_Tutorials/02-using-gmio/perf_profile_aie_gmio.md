@@ -250,7 +250,7 @@ The code to end profiling and calculate performance is as follows:
 
 In this example, `start` of `xrt::aie::profiling` handler is called to configure the AI Engine to count the clock cycles from the stream start event to the event that indicates `BLOCK_SIZE_out_Bytes` bytes have been transferred, assuming that the stream stops right after the specified number of bytes are transferred.
 
-For detailed usage about event API, refer to the *Versal Adaptive SoC AI Engine Programming Environment User Guide* ([UG1076](https://docs.xilinx.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1076-ai-engine-environment)).
+For detailed usage about event API, refer to the *Versal Adaptive SoC AI Engine Programming Environment User Guide* ([UG1076](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1076-ai-engine-environment)).
 
 The code is guarded by macro `__USE_EVENT_PROFILE__`. To use this method of profiling, define `__USE_EVENT_PROFILE__` for g++ cross compiler in `sw/Makefile`:
 

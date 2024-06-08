@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -228,7 +228,7 @@ This section walks you through a debug methodology that uses the Vitis IDE debug
 
 ## x86simulator Options for Debugging
 
-The following table lists some x86simulator options which are used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the *AI Engine Tools and Flows User Guide* (UG1076).
+The following table lists some x86simulator options which are used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 |Option |Description|
 |:----|:----|
@@ -425,7 +425,7 @@ Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) 
 
 7. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many samples of data got processed.
 
-For more details on the kind of events that are recorded, refer to the [Trace Report](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the *AI Engine Tools and Flows User Guide* (UG1076).
+For more details on the kind of events that are recorded, refer to the [Trace Report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 ### Trace Report in the Output Console
 

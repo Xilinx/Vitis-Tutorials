@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
    </td>
@@ -15,7 +15,7 @@
 
 ## Introduction
 
-The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. Refer UG1393 https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
+The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. Refer UG1393 https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
 
 **IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2023.2 and Vivado 2023.2 software.
 
@@ -300,7 +300,7 @@ Here, it can be seen that the open ports in step 1.2.8 are connected using the v
 
 #### Step 4: Changes in the Vivado design after the VMA import
 
-Developer can make the Vivado design changes in the ext_bdc_vma.bd after importing VMA except inside the hierarchy (VitisRegion.v). You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy. Refer to [UG1393](<https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
+Developer can make the Vivado design changes in the ext_bdc_vma.bd after importing VMA except inside the hierarchy (VitisRegion.v). You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy. Refer to [UG1393](<https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
 
  **NOTE:** Any changes related to VitisRegion hierarchy in ext_bdc_vma.bd can only be done through Vitis. It is read-only in Vivado. 
  
@@ -434,7 +434,7 @@ v++ -p -t hw -f ./hw/build/my_project/vck190_prj_fixed_hw.xsa \
 --package.dtb ../boot/system.dtb \
 -o vck190_vitis_design_hw.xclbin 
 ```
-To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
+To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
 
 Use the make command to generate the xcilbin using the v++  package command for HW Emulation flow:
 `make package TARGET=hw_emu`
@@ -478,7 +478,7 @@ In this tutorial, you learned the following after completing the tutorial:
  4. Import the VMA into the Vivado and progress the platform development in the Vivado.
  5. Generate the `fixed.xsa` file from the Vivado to support hardware and hardware emulation flow.
 
-To read more about the flow, refer to [UG1393](https://docs.xilinx.com/search/all?query=Vitis+Unified+Software+Platform+Documentation%253A+Application+Acceleration+Development+(UG1393)&content-lang=en-US) (Chapter 19: Managing Vivado Synthesis, Implementation, and Timing Closure).
+To read more about the flow, refer to [UG1393](https://docs.amd.com/search/all?query=Vitis+Unified+Software+Platform+Documentation%253A+Application+Acceleration+Development+(UG1393)&content-lang=en-US) (Chapter 19: Managing Vivado Synthesis, Implementation, and Timing Closure).
 
 ## Support
 

@@ -23,8 +23,8 @@ Following is the block diagram of Aurora 64B/66B communication channel.
 
 ![Aurora Channel](./images/aurora.png)
 
-For details on Aurora 64B/66B protocol, refer to [Aurora 64B/66B Protocol Specification](https://docs.xilinx.com/v/u/en-US/aurora_64b66b_protocol_spec_sp011).<br/>
-For details on Aurora 64B/66B IP, refer to [Aurora 64B/66B IP Product Guide](https://docs.xilinx.com/r/en-US/pg074-aurora-64b66b).
+For details on Aurora 64B/66B protocol, refer to [Aurora 64B/66B Protocol Specification](https://docs.amd.com/v/u/en-US/aurora_64b66b_protocol_spec_sp011).<br/>
+For details on Aurora 64B/66B IP, refer to [Aurora 64B/66B IP Product Guide](https://docs.amd.com/r/en-US/pg074-aurora-64b66b).
 
 This tutorial provides an example design and step-by-step instruction for integrating Aurora IP into Alveo accelerator cards with Vitis flow. The example design integrates a four-lane Aurora kernel with 10 Gbps lane rate (achieve total 40 Gbps throughput). The complete design steps in this tutorial includes Aurora IP generation, reference RTL top module for Aurora IP, example test system integration, and example x86 host program. Following is the hardware block diagram of the example design.
 

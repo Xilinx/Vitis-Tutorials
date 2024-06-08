@@ -219,7 +219,7 @@ void SecondOrderSection(
 * The kernel code is compiled with a C++20-compliant compiler, while the rest of the code (`graph.hpp` and simulation testbench) is compiled with a C++14-compliant compiler. Since the kernel header is included in `graph.hpp`, it cannot contain any C++20 constructs.
 * The template parameter `id` is used to instantiate multiple instances of the `SecondOrderSection()` function.
 * The function accepts an input buffer containing a predetermined number of elements defined in `graph.hpp`, and generates an output buffer.
-* The input and output use the `__restrict` keyword to facilitate compiler optimization (see [UG1079](https://docs.xilinx.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview?tocId=OerrcATBJkz9SuXKjosb1w) for details).
+* The input and output use the `__restrict` keyword to facilitate compiler optimization (see [UG1079](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Overview?tocId=OerrcATBJkz9SuXKjosb1w) for details).
 * The filter coefficients are passed as a 1-D array via the `C` argument.
 * The filter states (`state_reg`) need to be kept between function calls and thus are declared `static`.
 * Instead of doing a regular matrix-vector multiplication as indicated by (4), each iteration of the `for` loop takes the *n<sup>th</sup>* column of the **C** matrix and multiplies all the elements of that column with the *n<sup>th</sup> element* of the **x** vector, that is, a vector scaling operation.

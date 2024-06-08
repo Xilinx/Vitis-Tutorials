@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -63,13 +63,13 @@ This tutorial targets VCK190 production board for 2024.1 version.
 
 * [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
-* [AM009 AI Engine Architecture Manual](https://docs.xilinx.com/r/en-US/am009-versal-ai-engine/AI-Engine-Architecture)
+* [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/AI-Engine-Architecture)
 
-* [Building the AI Engine Graph](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Building-the-AI-Engine-Graph)
+* [Building the AI Engine Graph](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Building-the-AI-Engine-Graph)
 
 ### Traffic Generator
 
-* [Generating Traffic for Simulation and Emulation](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Generating-Traffic-for-Simulation-and-Emulation)
+* [Generating Traffic for Simulation and Emulation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Generating-Traffic-for-Simulation-and-Emulation)
 
 ### Installing the Tools
 
@@ -200,7 +200,7 @@ You will see the updated hierarchy in Vivado.
 
 ![Alt Text](images/vivado_hierarchy.png)
 
-* If a Vivado project is not created, use ```aie_wrapper_ext_tb_proj.tcl```. You need to update ```aie_wrapper_ext_tb_proj.tcl``` for the choice of simulator you want to use. Set line no. 19 to the choice of simulator xsim/questa/VCS/xcelium/riviera. If SIMULATOR is set to "xsim", comment out line no. 21 to 38. For other third party simulators, you need to update the required paths for SIMULATOR_GCC_PATH, SIMULATOR_CLIBS_PATH and INSTALL_BIN_PATH. For more details on how to set the third party simulators, please refer Vivado Design Suite User Guide: Logic Simulation [(UG900)](https://docs.xilinx.com/r/en-US/ug900-vivado-logic-simulation/Simulating-with-Third-Party-Simulators).
+* If a Vivado project is not created, use ```aie_wrapper_ext_tb_proj.tcl```. You need to update ```aie_wrapper_ext_tb_proj.tcl``` for the choice of simulator you want to use. Set line no. 19 to the choice of simulator xsim/questa/VCS/xcelium/riviera. If SIMULATOR is set to "xsim", comment out line no. 21 to 38. For other third party simulators, you need to update the required paths for SIMULATOR_GCC_PATH, SIMULATOR_CLIBS_PATH and INSTALL_BIN_PATH. For more details on how to set the third party simulators, please refer Vivado Design Suite User Guide: Logic Simulation [(UG900)](https://docs.amd.com/r/en-US/ug900-vivado-logic-simulation/Simulating-with-Third-Party-Simulators).
 
 ![Alt Text](images/Aie_wrapper_ext_proj_tcl.png)
 
@@ -262,13 +262,13 @@ Once you finish to analyze the traffic from PL to AIE and AIE to PL, the AIE sim
 
 This tutorial talks about Verilog/SV based traffic generators and users can also try C-based/Python based traffic generators with AIE. For more details, please refer the tutorial [16-external-traffic-generator-aie](../16-external-traffic-generator-aie)
 
-You can also integrate traffic generators with AIE flows i.e., AIEsim/x86sim or emulation flows i.e., SW emulation or HW emulation. For more details, refer [Adding-Traffic-Generators-to-Your-Design](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Adding-Traffic-Generators-to-Your-Design).
+You can also integrate traffic generators with AIE flows i.e., AIEsim/x86sim or emulation flows i.e., SW emulation or HW emulation. For more details, refer [Adding-Traffic-Generators-to-Your-Design](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Adding-Traffic-Generators-to-Your-Design).
 
 ## Summary
 
 In this tutorial, you learned how to drive traffic from external Verilog/System-Verilog traffic generators/testbenches to the AIE simulator. For the same, you need to make the appropriate port connections between the AIE kernels, the aie wrapper stubs (for internally connecting XTLM IPC stubs) and the RTL kernel.
 
-To read more about the use of Vitis in the AI Engine flow, see Versal Adaptive SoC AI Engine Programming Environment Chapter 14: Generating Traffic for Simulation and Emulation [(UG1076)](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Running-Hardware-Emulation).
+To read more about the use of Vitis in the AI Engine flow, see Versal Adaptive SoC AI Engine Programming Environment Chapter 14: Generating Traffic for Simulation and Emulation [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Running-Hardware-Emulation).
 
 * Note - Supported simulators are Xsim and all the third party simulators (Questa/Riviera/Xcelium/VCS).
 * Note - You must provide the simulator installer path, gcc path and clibs path in `aie_wrapper_ext_tb_proj.tcl` script based on the choice of third party simulator.

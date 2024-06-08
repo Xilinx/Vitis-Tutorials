@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -56,7 +56,7 @@ This results in the aie_component `vitis-comp.json` file being opened. This is t
 7. Select the `aiecompiler.cfg` link and open the config file. It contains `include` statements for the added `aie` source code folder. 
 8. Add a new line `include=<path to/WorkspaceDirectory>/aie/kernels`. 
 
-The `[aie]` section contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands. 
+The `[aie]` section contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands. 
 
 In the Vitis Components explorer, expand the `aie_component` and examine the included sub-folders: Settings, Includes, Sources... Notice the `aie` folder you imported into the Sources folder. 
 
@@ -70,7 +70,7 @@ This opens the Create HLS Component wizard on the *Name and Location* page.
 
 2.  Enter the `Component name` as mm2s, enter the `Component location` as the workspace (default), and click **Next**. 
 
-This opens the *Configuration File* page. The configuration file contains commands for building and running the HLS component as described in [*v++ Mode HLS*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-HLS). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-an-HLS-Component).
+This opens the *Configuration File* page. The configuration file contains commands for building and running the HLS component as described in [*v++ Mode HLS*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-HLS). You can specify a new empty file, an existing config file, or generate a config file from an existing HLS project as described in [*Creating an HLS Component*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Creating-an-HLS-Component).
 
 3.  Select `Empty File` and click **Next**. 
 
@@ -110,7 +110,7 @@ On the *Select Domain* page you will select from the available processor domains
 
 4.  Select the xrt domain and click **Next** to open the *Sysroot* page. 
 
-On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA).
+On the *Sysroot* page you will provide a path to the sysroot as part of the common images for the selected platform. You can find more information on this at [*Installing Embedded Platforms*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA).
 
 Enter the path to the Sysroot for the selected platform and click **Next** to open the *Summary* page. 
 
@@ -127,11 +127,11 @@ In the Vitis Components Explorer view expand the `host` component, right-click t
 <tutorial_path>/09-debug-walkthrough/cmd_src/sw/data.h
 ```
 
-**NOTE:** If your design uses the ADF API to control the AI Engine then you must also import the `aie_control_xrt.cpp` file into your Application component Sources folder. Refer to [*Host Programming on Linux*](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-on-Linux) for more information. This design uses the XRT native API and so does not require it.
+**NOTE:** If your design uses the ADF API to control the AI Engine then you must also import the `aie_control_xrt.cpp` file into your Application component Sources folder. Refer to [*Host Programming on Linux*](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Host-Programming-on-Linux) for more information. This design uses the XRT native API and so does not require it.
 
 ## Step 5: Create the System Project
 
-The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project-for-Heterogeneous-Computing). The AI Engine component, the HLS components, and the Application component are integrated into the system project using the following steps. 
+The System project is where the different components that you have built so far are integrated into a single system as described in [*Creating a System Project for Heterogeneous Computing*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Creating-a-System-Project-for-Heterogeneous-Computing). The AI Engine component, the HLS components, and the Application component are integrated into the system project using the following steps. 
 
 1.  From the main menu select **File > New Component > System Project**
 
@@ -143,14 +143,14 @@ This opens the *Select Platform* page.
 
 3.  On the Select Part page select the `xilinx_vck190_base_20xxx0_1` platform and click **Next** to open the Embedded Component Paths page. 
 
-The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
+The Embedded Component Paths page lets you specify the path to the Sysroot, RootFS, and Image for the embedded processor platform as described at [*Installing Embedded Platforms*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Embedded-Platforms?tocId=9o7rpHmLluJkAdxzCI_2yA). Enter the following choices and click **Next** to proceed: 
 
 ```
 Kernel Image: <path-to-common-files>/Image
 Root FS: <path-to-common-files>/rootfs.ext4
 Sysroot: <path-to-common-files>/sysroots/cortexa72-cortexa53-xilinx-linux
 ```
-**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
+**TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
 
 6.  Review the Summary page and click **Finish** to create the defined System project. 
  
@@ -188,8 +188,8 @@ sc=ai_engine_0.upscale_out:s2mm_2.s
 
 | Option/Flag | Description |
 | --- | --- |
-| `nk` | Specifies the number of instantiations of the kernel as described in [*Creating Multiple Instances of a Kernel*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). |
-| `stream_connect/sc` | Specifies the connections to be made between streaming outputs and inputs as described in [*Specifying Streaming Connections*](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Specifying-Streaming-Connections).|
+| `nk` | Specifies the number of instantiations of the kernel as described in [*Creating Multiple Instances of a Kernel*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Multiple-Instances-of-a-Kernel). |
+| `stream_connect/sc` | Specifies the connections to be made between streaming outputs and inputs as described in [*Specifying Streaming Connections*](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Specifying-Streaming-Connections).|
 
 **NOTE:** For `ai_engine_0` the streaming input and output names are provided in the `graph.h`, for example:
 
@@ -234,7 +234,7 @@ The System project is now fully defined.
 7. Select the `aiecompiler.cfg` link and open the config file. It contains `include` statements for the added `aie` source code folder.
 8. Add a new line `include=<path to/WorkspaceDirectory>/aie/kernels`.
 
-The `[aie]` section contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.xilinx.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands.
+The `[aie]` section contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands.
 
 In the Vitis Components explorer, expand the `aie_component` and examine the included sub-folders: Settings, Includes, Sources, and so forth. Notice the `aie` folder you imported into the Sources folder.
 

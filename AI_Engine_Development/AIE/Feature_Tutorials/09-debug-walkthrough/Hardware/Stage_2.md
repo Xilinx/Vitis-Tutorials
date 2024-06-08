@@ -1,4 +1,4 @@
-<table class="sphinxhide" width="100%">
+﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -62,7 +62,7 @@ In this tutorial, you will learn how to use hardware profiling features to inspe
 
    ```
 
-   For more information on these profile settings, refer to the *AI Engine Tools and Flows User Guide* ([UG1076](https://docs.xilinx.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow)).
+   For more information on these profile settings, refer to the *AI Engine Tools and Flows User Guide* ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow)).
 2. Save the `xrt.ini` file, and it is safe to do power-cycle on the device, whenever you add/edit the `xrt.ini` file to avoid seeing any abnormal results:
 
    ```
