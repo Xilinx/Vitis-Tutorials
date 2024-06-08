@@ -23,7 +23,7 @@ This stage helps you determine the AI Engine kernel or graph construct causing d
 </td>
 <td>
 Explains how to use the different event trace options for compiling and its significance. Also walks through the steps to generate a hardware image.<br />
-<a href="./Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; - Prepare for hardware run</a>
+<a href="./Stage_4.md#Prepare-for-the-Hardware-Run">&nbsp; &nbsp; &nbsp; - Prepare for the Hardware Run</a>
 </td>
 </tr>
 
@@ -33,7 +33,7 @@ Explains how to use the different event trace options for compiling and its sign
 </td>
 <td>
 Explains how to do an AI Engine event trace and analysis by setting up the configuration file,  `xrt.ini`, and run the hardware design to generate the trace data using the XRT flow.<br />
-<a href="./Stage_4.md#Launch-Vitis-Analyzer-to-Examine-Event-Trace-Files">&nbsp; &nbsp; &nbsp; - Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
+<a href="./Stage_4.md#Launch-the-Vitis-Analyzer-to-Examine-the-Event-Trace-Files">&nbsp; &nbsp; &nbsp; - Launch the Vitis Analyzer to Examine the Event Trace Files</a> <br />
 <a href="./Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; - Details of the Event Trace data</a> <br />
 </td>
 </tr>
@@ -61,7 +61,7 @@ This method explains how to use the XSDB-based flow to perform event trace analy
 	
 <tr>
 <td>
-<a href="./Stage_4.md#Debug-host-code-and-kernel-source-code-using-Vitis-IDE"> Debug the Host/Kernel Source Code Using the Vitis IDE</a>
+<a href="./Stage_4.md#Debug-the-Host-Code-and-Kernel-Source-Code-using-the-Vitis-IDE"> Debug the Host/Kernel Source Code Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to set up the target connection for hardware in the Vitis IDE and debug the host code and kernel source code in the Vitis IDE debugger.<br />
@@ -85,7 +85,7 @@ To run the event trace on hardware, it is required to compile the AI Engine grap
 * Using the `runtime` as an argument, you can compile the AI Engine graph to be set up for event trace, and specify the type of profile data to capture at runtime.
 * The other way is to specify one of the `functions`, `functions_partial_stalls`, or `functions_all_stalls` as a type of profile data during compile time, and recompile the design to capture a different type of data during runtime.
 
-For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Compiler-Options) in *AI Engine Tools and Flows User Guide* (UG1076).
+For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Tracing-Options) in *AI Engine Tools and Flows User Guide* (UG1076).
 
 This tutorial uses the `--event-trace=runtime`, `--event-trace-port=plio`, `--num-trace-streams=8`, and `--xlopt=0` options.
 
@@ -125,7 +125,7 @@ After the design is built, you are ready to run on the hardware board.
       periodic_offload = true
       buffer_offload_interval_us = 100
       buffer_size = 16M
-      graph_based_aie_tile_metrics = all:all:functions_all_stalls
+      graph_based_aie_tile_metrics = all:all:all_stalls
    ```
 
    More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the *AI Engine Tools and Flows User Guide* (UG1076).
@@ -168,7 +168,7 @@ After the design is built, you are ready to run on the hardware board.
 
 1. Program the device using the sd_card image, and remove any `xrt.ini` files in the sd_card to avoid misbehavior with the XSDB commands.
 2. *Target connection setup*: Run the hardware server from the computer that connects to the target board. To do so, launch the hardware server from the computer that has a JTAG connection to the VCK190 board.
-   ![launch hardware server](./Images/launch_hwServer.PNG)
+   ![launch hardware server](./Images/launch_hwServer.png)
 3. Go to the directory where the AI Engine compile `Work/directory` is present, and launch XSDB.
 4. From the XSDB terminal, issue the following commands from the XSDB prompt:
 
@@ -178,7 +178,7 @@ After the design is built, you are ready to run on the hardware board.
    %xsdb ta
    %xsdb ta 1
    %xsdb source $::env(XILINX_VITIS)/scripts/vitis/util/aie_trace.tcl
-   %xsdb aietrace start -graphs mygraph -link-summary ./tutorial.xsa.link_summary -base-address 0x900000000 -depth 0x800000 -graph-based-aie-tile-metrics "all:all:functions_all_stalls"
+   %xsdb aietrace start -graphs mygraph -link-summary ./tutorial.xsa.link_summary -base-address 0x900000000 -depth 0x800000 -graph-based-aie-tile-metrics "all:all:all_stalls"
    ```
 
    * `-base-address 0x900000000` is the address that needs to avoid collision with your design.
@@ -229,13 +229,12 @@ Based on the design, select GMIO if the design has limited PL resources left for
 
 This section uses the system project built using the Vitis IDE and launch the IDE debugger to debug the host code and AI Engine kernel source code. Unlike debugging at simulation level, this topic walks you through connecting the harware to the IDE debugger, placing breakpoints in the host code and kernel source code, and observing intermittent values in the Varibale view, register view, and memory inspector.
 
-1. Download the Vitis IDE project from [Download the Vitis IDE project](../README.md#Download-Vitis-IDE-project) and import into the Vitis IDE.
+1. Download the Vitis IDE project from [Download the Vitis IDE project](../README.md#Vitis-IDE-project) and import into the Vitis IDE.
 2. Invoke the Vitis IDE, and select **File** -> **Import** -> **Vitis project exported zip file**.
 3. Browse to the `PeakDetect.ide.zip`, enable the **System Projects** checkbox, and click **Finish**.
-4. Click the arrow button next to the **Manage configurations to the current project** icon in the taskbar, and select **Hardware**.
-5. Right-click the **PeakDetect_system**, and select the **Build Project**. It takes 20-25 minutes to completely build for the hardware target.
-6. Prepare the target hardware by flashing the `sd_card.img` on to the VCK190. (Refer to the following note).
-   >**NOTE:** The `sd_card.img` at the `{Project}/Hardware/package` directory is for regular use, and the `sd_card.img` at the `{Project}/Hardware/package_aie_debug` directory is for the debug run on the board.
+4. In the **Flow** view Flow -> Hardware -> Build All. It takes 20-25 minutes to completely build for the hardware target.
+5. Then generate the sd_card.img by **Flow -> Hardware -> Package -> Build Package **. 
+6. Prepare the target hardware by flashing the `sd_card.img` on to the VCK190. 
 7. Plug in the sd_card into the SD card slot, and power up the board.
 8. Once the boot completes, type `ifconfig` in the hardware console. This is required to set up the Linux TCF agent to connect with the host.
 
@@ -274,28 +273,18 @@ This section uses the system project built using the Vitis IDE and launch the ID
 9. Set up the connection to the target hardware board.
 
    * Run the hardware server from the computer that connects to the target board. To do so, launch the hw_server from the computer that has the JTAG connection to the VCK190 board.
-     ![launch hardware server](./Images/launch_hwServer.PNG)
-   * Create the debug target connection from the Vitis IDE by right-clicking the **PeakDetect_system**, and select the **Debug** -> **Debug configuraions**.
-   * Under the **Main** tab -> **Target** section -> **Hardware server** option -> **Local target** -> **New** as follows.
-     ![target hardware setup](./Images/target_hwsetup.PNG)
-   * In the **Target Connection Details** window, enter the **Target name** and **Host**. The Host name should match with what you see in the launch hardware server window, and hit **Test Connection**.
-   * You should see the following **Connection Successful!** message:
-     ![connection successful](./Images/connection_successful.PNG)
-   * You can also click the **>>Advanced** button to view the details of the VCK190 as follows.
-     ![advanced options](./Images/advanced_option.PNG)
-10. Similarly, set up the Linux TCF Agent. Under the **Main** tab -> **Target** section -> **Linux TCF Agent** option, select **New**, and enter the **Target** and **Host** details. Enter the `inet addr` address you see after issuing the `ifconfig` command in the hardware Linux console in the **Host** field. Click **Test Connection**. You see **Connection Successful** message as shown above.
-11. Now, in the Vitis IDE, right-click the **PeakDetect_system**, and select the **Debug As** -> **Launch Hardware**.
-12. The Vitis IDE switches automatically to the debug mode, and the debugger suspends the host application at an automatic breakpoint in the `host.cpp` as follows.
-    ![host debug](./Images/host_debug.PNG)
-13. Place a breakpoint at line 38 in the `host.cpp`, and click **resume**. Observe the following values of diferent variables in the **Variables view**. This way you can debug the host code.
-    ![host variables](./Images/host_variables.PNG)
-14. You can also debug the AI Engine cores by placing the breakpoints in the kernel source code. Open the `src/kernels/peak_detect.cc` kernel, and place a breakpoint at line 33. Click the  **resume** button, and observe the following values in the register view and variable view.
-15. You can hover your mouse over variables in the editor window and get the memory address. Add that address in the memory inspector, and observe the corresponding values. For more details, refer to the [Debug Using Vitis IDE debugger](../AIE_Simulation/README.md#Debug-using-Vitis-IDE-debugger).
-    ![debug hardware view](./Images/debug_HardwareView.PNG)
-16. You can select each individual core in the AI Engine and debug using the 'step-in','step-over' options, or remove all breakpoints, select the **PeakDetect**, and click the **resume** button to run all the cores. When all cores are completed, you can see status as **Disabled** for all the cores.
-    ![debug stack](./Images/debug_stack.PNG)
-17. When the application run completes in hardware, you can observe the following **TEST PASSED** in the console.
-    ![serial terminal passed](./Images/serial_TerminalPassed.PNG)
+     ![launch hardware server](./Images/launch_hwServer.png)
+   * Create the debug target connection from the Vitis IDE by clicking settings tab in **Flow** -> **Hardware** -> **Debug**.
+   * To setup target connection details, follow the steps as mentioned in [Target Hardware Connection setup](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Component-Based-Flow-Design-Debug?tocId=ljBPBb6sFKPAZ~GwYqjGAg) 
+10. Now, the Vitis IDE switches automatically to the debug mode, and the debugger suspends the host application at an automatic breakpoint in the `host.cpp` as follows.
+    ![host debug](./Images/host_debug.png)
+11. Place a breakpoint at line 38 in the `host.cpp`, and click **resume**. Observe the following values of diferent variables in the **Variables view**. This way you can debug the host code.
+    ![host variables](./Images/host_variables.png)
+12. You can also debug the AI Engine cores by placing the breakpoints in the kernel source code. Open the `src/kernels/peak_detect.cc` kernel, and place a breakpoint at line 33. Click the  **resume** button, and observe the following values in the register view and variable view.
+13. You can hover your mouse over variables in the editor window and get the memory address. Add that address in the memory inspector, and observe the corresponding values. For more details, refer to the [Debug Using Vitis IDE debugger](../AIE_Simulation/README.md#Debug-Using-the-Vitis-IDE-Debugger).
+    ![debug hardware view](./Images/debug_HardwareView.png)
+14. When the application run completes in hardware, you can observe the **TEST PASSED** message in the console.
+
 
 ### Limitations of the Source Code Debug on Hardware
 

@@ -21,8 +21,8 @@ In this stage, you can profile the AI Engine Core, Interface, and Memory modules
 </td>
 <td>
 Explains how to set up the configuration file `xrt.ini` and run the hardware design to generate profile data using the XRT flow.<br />
-<a href="./Stage_2.md#Open-multiple-profile-runs-in-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in the AMD Vitis&trade; Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
-<a href="./Stage_2.md#Profiling-Data-Explaination">&nbsp; &nbsp; &nbsp; - Profiling Data Explanation</a> - This explains how to analyze the AI Engine core, memory, and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
+<a href="./Stage_2.md#Open-Multiple-Profile-Runs-in-the-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in the AMD Vitis&trade; Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
+<a href="./Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explanation</a> - This explains how to analyze the AI Engine core, memory, and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
 </td>
 </tr>
 	
@@ -38,7 +38,7 @@ This method explains how to use the XSDB-based flow to profile for both baremeta
 
 ## Generating the Hardware Image
 
-It is expected that you already generated the hardware image from Stage 1. If not, follow the steps 1-3 from [Stage 1: Running the Design on Hardware](../Stage_1.md#Running-the-design-on-hardware).
+It is expected that you already generated the hardware image from Stage 1. If not, follow the steps 1-3 from [Stage 1: Running the Design on Hardware](./Stage_1.md#Running-the-Design-on-Hardware).
 
 ## Hardware Profiing Features
 
@@ -58,7 +58,7 @@ In this tutorial, you will learn how to use hardware profiling features to inspe
    interval_us = 1000
    graph_based_aie_metrics = all:all:heat_map
    tile_based_aie_memory_metrics = all:conflicts
-   tile_based_interface_tile_metrics = all:input_throughputs:0
+   tile_based_interface_tile_metrics = all:mm2s_throughputs:0
 
    ```
 
@@ -113,7 +113,7 @@ In this section, try to use a different set of metrics in the `xrt.ini` file and
    interval_us = 1000
    graph_based_aie_metrics = all:all:execution
    tile_based_aie_memory_metrics = all:dma_locks
-   tile_based_interface_tile_metrics = all:output_throughputs:0
+   tile_based_interface_tile_metrics = all:s2mm_throughputs:0
    ```
 
 3. Move the obtained profile data in the directory, `profile_2`, in a local workspace.
@@ -143,7 +143,7 @@ The Cumulative Memory Errors Time (ms) indicates the time taken due to ECC error
 #### Interface Profiling Data
 
 From **Profile_summary** -> **Interface Channels**, notice the interface tile throughput values for the input and output channel.
->**NOTE:** Because of a bug, under the heading of **Interface tile input throughput**, you see both the output channel and input channel related information.  
+ 
 
 #### Profiling Data Analysis
 
@@ -157,7 +157,7 @@ It is also possible to profile the AI Engine using XSDB both on Linux and bareme
 
 1. Program the device using the sd_card image, and remove any `xrt.ini` files in the sd_card to avoid any collision with XSDB commands.
 2. Complete the target connection setup. Run the hardware server from computer that connects to the target board. To do so, launch the hw_server from the computer that has the JTAG connection to the VCK190 board.
-![launch hardware server](./Images/launch_hwServer.PNG)
+![launch hardware server](./Images/launch_hwServer.png)
 3. Go to the directory where the AI Engine compile `Work/directory` is present and launch XSDB.
 4. From the XSDB terminal, issue the following commands from the XSDB prompt:
 
@@ -167,7 +167,7 @@ It is also possible to profile the AI Engine using XSDB both on Linux and bareme
    %xsdb ta
    %xsdb ta 1
    %xsdb source $::env(XILINX_VITIS)/scripts/vitis/util/aie_profile.tcl
-   %xsdb aieprofile start -graphs mygraph -work-dir ./Work -graph-based-aie-metrics "mygraph:all:heat_map" -tile-based-aie-memory-metrics "{25,0}:dma_locks" -tile-based-interface-tile-metrics "all:input_throughputs" -interval 20 -samples 100
+   %xsdb aieprofile start -graphs mygraph -work-dir ./Work -graph-based-aie-metrics "mygraph:all:heat_map" -tile-based-aie-memory-metrics "{25,0}:dma_locks" -tile-based-interface-tile-metrics "all:s2mm_throughputs" -interval 20 -samples 100
    ```
 
 5. After the above `aieprofile` command is run, wait until Count: 10, Count: 20, ... is displayed from the XSDB console. This indicates XSDB is ready to collect design profiling data.

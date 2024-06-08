@@ -9,7 +9,7 @@
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -28,16 +28,16 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into the register contents view, variable values view, breakpoints view, and hence, necessitates a GUI. The Vitis integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2023.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html>.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2024.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html>.
 
 The `common image` package contains a prebuilt Linux kernel and root file system that can be used with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms`.
+2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.1` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms`.
 
-This tutorial targets a 2023.2 VCK190 production board.
+This tutorial targets a 2024.1 VCK190 production board.
 
 ## Example Design: Peak Detector
 
@@ -48,14 +48,14 @@ The complete design is shown in the Vitis analyzer.
 
 ## Vitis IDE Project
 
-Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md).
+Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md#Porting-a-Command-Line-Project-to-the-Vitis-IDE-Project).
 
 
 ## Methods
 
 There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodlogies that helps analyzing the design and take decisions to improve.
 
-Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md).
+Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md#Porting-a-Command-Line-Project-to-the-Vitis-IDE-Project).
 
 
 ## Methods
@@ -73,7 +73,7 @@ There are several ways to debug a system design that include the PS, PL, and AI 
 
 <tr>
 <td>
- <a href="./X86_Simulation/README.md#Build-and-simulate-in-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
+ <a href="./X86_Simulation/README.md#Build-and-simulate-in-the-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
 </td>
 <td>
 Demonstrates how to use the Vitis IDE to build and simulate the AI Engine design.
@@ -100,7 +100,7 @@ Demonstrates how to print the vector output data value via `printf()`.
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#Debug-using-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
+<a href="./X86_Simulation/README.md#Debug-using-the-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
 </td>
 <td>
 Demonstrates how to use the Vitis IDE debugger to debug an AI Engine design.
@@ -136,7 +136,7 @@ Demonstrates how to debug deadlock scenarios in an x86simulation.
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#Trace-report-in-file">Trace Report in the File</a>
+<a href="./X86_Simulation/README.md#Trace-Report-in-the-File">Trace Report in the File</a>
 </td>
 <td>
 Demonstrates how to visualize the trace report in the file.
@@ -145,7 +145,7 @@ Demonstrates how to visualize the trace report in the file.
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#Trace-report-in-output-console">Trace Report in the Output Console</a>
+<a href="./X86_Simulation/README.md#Trace-Report-in-the-Output-Console">Trace Report in the Output Console</a>
 </td>
 <td>
 Demonstrates how to visualize the trace report in the output console during runtime.
@@ -163,7 +163,7 @@ Demonstrates how to debug memory access violations in an AI Enigne design using 
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#Using-GDB-debugger-in-command-line">Using the GDB in the Command Line</a>
+<a href="./X86_Simulation/README.md#Using-the-GDB-debugger-in-the-Command-Line">Using the GDB in the Command Line</a>
 </td>
 <td>
 Demonstrates debugging in command line using the GNU Debugger (GDB).
@@ -172,7 +172,7 @@ Demonstrates debugging in command line using the GNU Debugger (GDB).
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#x86simulation-on-command-line">x86simulation on the Command Line</a>
+<a href="./X86_Simulation/README.md#xx86simulation-on-the-Command-Line">x86simulation on the Command Line</a>
 </td>
 <td>
 Demonstrates how to run x86simulation on the command line.
@@ -181,7 +181,7 @@ Demonstrates how to run x86simulation on the command line.
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#x86simulation-with-GDB">x86simulation with the GDB</a>
+<a href="./X86_Simulation/README.md#x86simulation-with-the-GDB">x86simulation with the GDB</a>
 </td>
 <td>
 Demonstrates how to use the GDB during x86simulation.
@@ -190,7 +190,7 @@ Demonstrates how to use the GDB during x86simulation.
 
 <tr>
 <td>
-<a href="./X86_Simulation/README.md#x86simulator-Using-GDB-server">x86simulator Using a GDB Server</a>
+<a href="./X86_Simulation/README.md#x86simulator-Using-the-GDB-server">x86simulator Using a GDB Server</a>
 </td>
 <td>
 Demonstrates how to use a GDB server to debug the design.
@@ -203,7 +203,7 @@ Demonstrates how to use a GDB server to debug the design.
 
 <tr>
 <td>
- <a href="./AIE_Simulation/README.md#Build-and-simulate-in-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
+ <a href="./AIE_Simulation/README.md#Build-and-simulate-in-the-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
 </td>
 <td>
 Demonstrates how to use the Vitis IDE to build and simulate an AI Engine design.
@@ -221,7 +221,7 @@ Explains how to add a `printf()` statement, and view the output in the console.
 
 <tr>
 <td>
-<a href="./AIE_Simulation/README.md#Debug-using-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
+<a href="./AIE_Simulation/README.md#Debug-using-the-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
 </td>
 <td>
 Explores different debugging techniques that use the Vitis IDE debugger.
@@ -248,7 +248,7 @@ Shows a practical deadlock scenario and some simulator options to identify the d
 
 <tr>
 <td>
-<a href="./AIE_Simulation/README.md#Visualizing-deadlock-in-Vitis-Analyzer">Visualizing Deadlock in the Vitis Analyzer</a>
+<a href="./AIE_Simulation/README.md#Visualizing-deadlock-in-the-Vitis-Analyzer">Visualizing Deadlock in the Vitis Analyzer</a>
 </td>
 <td>
 Explains how to visualize deadlock using trace information in the Vitis Analyzer, and identify the root cause.
@@ -266,7 +266,7 @@ Introduces an out of bound read access, and explains how to identify the violati
 
 <tr>
 <td>
-<a href="./AIE_Simulation/README.md#Single-kernel-debug">Single Kernel Debug</a>
+<a href="./AIE_Simulation/README.md#Kernel-debug">Single Kernel Debug</a>
 </td>
 <td>
 Explains how to debug a single kernel design usign a pipeline view in the Vitis IDE.
@@ -290,7 +290,7 @@ Shows how to calculate kernel latency and throughput using profile information.
 
 <tr>
 <td>
-<a href="./SW_Emulation/README.md#Build-for-Software-Emulation-using-Vitis-IDE">Build for Software Emulation Using the Vitis IDE</a>
+<a href="./SW_Emulation/README.md#Build-for-Software-Emulation-using-the-Vitis-IDE">Build for Software Emulation Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to create a system project, build for sofware emulation, and run.
@@ -299,21 +299,13 @@ Explains how to create a system project, build for sofware emulation, and run.
 
 <tr>
 <td>
-<a href="./SW_Emulation/README.md#Using-Vitis-IDE-for-software-emulation-debug">Using the Vitis IDE for Software Emulation Debug</a>
+<a href="./SW_Emulation/README.md#Debug-using-the-Vitis-IDE-Debugger-for-Software-Emulation">Using the Vitis IDE for Software Emulation Debug</a>
 </td>
 <td>
 Explains how to debug for software emulation using the Vitis IDE.
 </td>
 </tr>
 
-<tr>
-<td>
-<a href="./SW_Emulation/README.md#Debug-in-command-line">Debug in the Command Line</a>
-</td>
-<td>
-Explains how to use the GDB to debug in the command line using the option, `-kernel-dbg true`.
-</td>
-</tr>
 
 <tr>
   <td align="center" colspan="2" style="bold" ><b><a href="./HW_Emulation/README.md#Hardware-Emulation-Debug-Walkthrough">Hardware Emulation - Vitis IDE Flow</a></b>
@@ -321,7 +313,7 @@ Explains how to use the GDB to debug in the command line using the option, `-ker
 
 <tr>
 <td>
-<a href="./HW_Emulation/README.md#Build-for-Hardware-Emulation-using-Vitis-IDE">Build for Hardware Emulation Using the Vitis IDE</a>
+<a href="./HW_Emulation/README.md#Build-for-Hardware-Emulation-using-the-Vitis-IDE">Build for Hardware Emulation Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to create a system project, build for hardware emulation, and run.
@@ -339,7 +331,7 @@ Explains how to use the AMD Vivado™ XSIM to debug the PL kernels.
 
 <tr>
 <td>
-<a href="./HW_Emulation/README.md#Performance-of-the-AI-Engine-using-hardware-emulation-results">Performance of the AI Engine Using Hardware Emulation Results</a>
+<a href="./HW_Emulation/README.md#Performance-of-the-AI-Engine-Using-the-Hardware-Emulation-Results">Performance of the AI Engine Using Hardware Emulation Results</a>
 </td>
 <td>
 This section profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in a AI Engine simulation.
@@ -348,7 +340,7 @@ This section profiles the system for hardware emulation and compares the through
 
 <tr>
 <td>
-<a href="./HW_Emulation/README.md#Command-line-project-source-code-debug-with-Vitis-IDE">Command Line Project Source Code Debug with the Vitis IDE</a>
+<a href="./HW_Emulation/README.md#Command-Line-Project-Source-Code-Debug-with-the-Vitis-Unified-IDE">Command Line Project Source Code Debug with the Vitis IDE</a>
 </td>
 <td>
 This section helps you debug your command line project using the features of the Vitis IDE debugger without porting your system design to the IDE.
@@ -370,7 +362,7 @@ Explains how to determine the functional correctness of the design by running on
 
 <tr>
 <td>
-<a href="./Hardware/Stage_1.md#Error-Handling-and-Reporting-in-Host-Application">Error Handling and Reporting in the Host Application</a>
+<a href="./Hardware/Stage_1.md#Error-Handling-and-Reporting-in-the-Host-Application">Error Handling and Reporting in the Host Application</a>
 </td>
 <td>
 Explains how to use error reporting APIs to handle errors in the host code.<br />
@@ -386,14 +378,14 @@ Explains how to use error reporting APIs to handle errors in the host code.<br /
 <td>
 Explains different techniques (XRT, XBUtil, and XSDB) to analyze the design by running on hardware and helps to choose from the following methodologies.<br />
  <a href="./Hardware/Stage_1.md#AI-Engine-status-using-XRT"> &nbsp; &nbsp; &nbsp; - AI Engine status using XRT</a> - Using XRT is fast and host executable can automatically reads the `xrt.ini` file to configure the runtime. - <br />
- <a href="./Hardware/Stage_1.md#Manual-AI-Engine-status-using-XBUtil-utility">&nbsp; &nbsp; &nbsp; * Manual AI Engine status using XBUtil utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
+ <a href="./Hardware/Stage_1.md#Manual-AI-Engine-status-using-the-XBUtil-utility">&nbsp; &nbsp; &nbsp; * Manual AI Engine status using XBUtil utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
  <a href="./Hardware/Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; - Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for baremetal applications in addition to the Linux-based applications.<br />
 </td>
 </tr>
 
 <tr>
 <td>
-<a href="./Hardware/Stage_1.md#Using-APIs-in-host-application">Using APIs in the Host Application</a>
+<a href="./Hardware/Stage_1.md#Using-APIs-in-the-Host-Application">Using APIs in the Host Application</a>
 </td>
 <td>
 Explains how to modify the host code to add APIs in the host application that helps profiling the design for getting throughput, latency, and bandwidth.<br />
@@ -408,8 +400,8 @@ Explains how to modify the host code to add APIs in the host application that he
 </td>
 <td>
 Explains how to set up the configuration file `xrt.ini`, and run the hardware design to generate profile data using the XRT flow.<br />
-<a href="./Hardware/Stage_2.md#Open-multiple-profile-runs-in-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in Vitis Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
-<a href="./Hardware/Stage_2.md#Profiling-Data-Explaination">&nbsp; &nbsp; &nbsp; - Profiling Data Explaination</a> - This explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
+<a href="./Hardware/Stage_2.md#Open-Multiple-Profile-Runs-in-the-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in Vitis Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
+<a href="./Hardware/Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explaination</a> - This explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
 </td>
 </tr>
 
@@ -446,7 +438,7 @@ Explains how to insert one or more integrated logic analyzers (ILAs) to monitor 
 </td>
 <td>
 Explains how to use different event trace options for compiling and its significance. Also walks through the steps to generate the hardware image.<br />
-<a href="./Hardware/Stage_4.md#Prepare-for-hardware-run">&nbsp; &nbsp; &nbsp; - Prepare for the hardware run.</a>
+<a href="./Hardware/Stage_4.md#Prepare-for-the-Hardware-Run">&nbsp; &nbsp; &nbsp; - Prepare for the hardware run.</a>
 </td>
 </tr>
 
@@ -456,7 +448,7 @@ Explains how to use different event trace options for compiling and its signific
 </td>
 <td>
 Explains how to do an AI Engine event trace and analysis by setting up the configuration file `xrt.ini` and run the hardware design to generate trace data using the  XRT flow.<br />
-<a href="./Hardware/Stage_4.md#Launch-Vitis-Analyzer-to-Examine-Event-Trace-Files">&nbsp; &nbsp; &nbsp; * Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
+<a href="./Hardware/Stage_4.md#Launch-the-Vitis-Analyzer-to-Examine-the-Event-Trace-Files">&nbsp; &nbsp; &nbsp; * Launch Vitis Analyzer to Examine Event Trace Files</a> <br />
 <a href="./Hardware/Stage_4.md#Details-of-the-Event-Trace-data">&nbsp; &nbsp; &nbsp; - Details of the Event Trace data</a> <br />
 </td>
 </tr>
@@ -484,7 +476,7 @@ This method explains how to use the XSDB-based flow to perform event trace analy
 
 <tr>
 <td>
-<a href="./Hardware/Stage_4.md#Debug-host-code-and-kernel-source-code-using-Vitis-IDE"> Debug the Host/Kernel Source Code Using the Vitis IDE</a>
+<a href="./Hardware/Stage_4.md#Debug-the-Host-Code-and-Kernel-Source-Code-using-the-Vitis-IDE"> Debug the Host/Kernel Source Code Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to set up the target connection for hardware in the Vitis IDE and debug the host code and kernel source code in the Vitis IDE debugger.<br />

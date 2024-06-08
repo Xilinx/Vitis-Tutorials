@@ -58,7 +58,7 @@ This is a three step process:
 
    The `--profile.data:<arg>` option enables the monitoring of data ports through the monitor IP that are added into the design. In this example, `<arg>` is set to `all:all:all`, i.e, assign the data profile to all CUs; you can find the names from the `system.cfg` file as `s2mm_1`,`s2mm_2` and `mm2s`* and interfaces of all kernels, `s2mm` and `mm2s`.
 3. Do `make all TARGET=hw`, and a hardware image `sd_card.img` gets generated inside the `sw/` directory.
-4. Flash the `sd_card.img` file to the SD card. You can follow step 3 in [Running the Design on Hardware](../Stage-1#Running-the-design-on-hardware) section.
+4. Flash the `sd_card.img` file to the SD card. You can follow step 3 in [Running the Design on Hardware](./Stage_1.md#Running-the-Design-on-Hardware) section.
 5. Create a `xrt.ini` file with content as follows:
 
    ```
@@ -133,7 +133,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 #### Set Up the Connection in Vivado
 
 1. Run the hardware server from the computer that connects to the target board. To do so, launch the hardware server from the computer that has a JTAG connection to the VCK190 board.
-![hardware server](./Images/launch_hwServer.PNG)
+![hardware server](./Images/launch_hwServer.png)
 2. Launch Vivado by issuing the command, `vivado`.
 3. Set up the Vivado Hardware Manager by clicking **Flow** -> **Hardware Manager**, and click  **Open target**.
 4. Select **Open New Target**, and click **Next**.

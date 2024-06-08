@@ -30,7 +30,7 @@ Explains how to determine the functional correctness of the design by running on
 
 <tr>
 <td>
-<a href="./Stage_1.md#Error-Handling-and-Reporting-in-Host-Application">Error Handling and Reporting in the Host Application</a>
+<a href="./Stage_1.md#Error-Handling-and-Reporting-in-the-Host-Application">Error Handling and Reporting in the Host Application</a>
 </td>
 <td>
 Explains how to use error reporting APIs to handle errors in the host code.<br />
@@ -41,19 +41,19 @@ Explains how to use error reporting APIs to handle errors in the host code.<br /
 
 <tr>
 <td>
-<a href="./Stage_1.md#Analyzing-Run-results">Analyzing Run Results</a>
+<a href="./Stage_1.md#Analyzing-Run-Results">Analyzing Run Results</a>
 </td>
 <td>
 Explains different techniques (XRT, XBUtil, and XSDB) to analyze the design by running on hardware and helps to choose from the following methodologies:<br />
  <a href="./Stage_1.md#AI-Engine-status-using-XRT"> &nbsp; &nbsp; &nbsp;- AI Engine status using XRT</a> - Using XRT is fast and the host executable can automatically reads the `xrt.ini` file to configure the runtime. - <br />
-<a href="./Stage_1.md#Manual-AI-Engine-status-using-XBUtil-utility">&nbsp; &nbsp; &nbsp;- Manual AI Engine status using XBUtil utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
+<a href="./Stage_1.md#Manual-AI-Engine-status-using-the-XBUtil-utility">&nbsp; &nbsp; &nbsp;- Manual AI Engine Status Using the XBUtil Utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
  <a href="./Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; - Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for baremetal applications in addition to the Linux-based applications.<br />
 </td>
 </tr>
 
 <tr>
 <td>
-<a href="./Stage_1.md#Using-APIs-in-host-application">Using APIs in the Host Application</a>
+<a href="./Stage_1.md#Using-APIs-in-the-Host-Application">Using APIs in the Host Application</a>
 </td>
 <td>
 Explains how to modify the host code to add APIs in the host application that helps profiling the design for getting througput, latency, and bandwidth.<br />
@@ -65,7 +65,7 @@ Explains how to modify the host code to add APIs in the host application that he
 
 ## Running the Design on Hardware
 
->**NOTE:** Run this step only if you are interested to learn how to run the design and observe `TEST PASSED` in hardware. You can skip to the steps [Analyzing Run Results](./Stage_1.md#Analyzing-run-results) and [Error Handling and Reporting in the Host Application](./Stage_1.md#Error-Handling-and-Reporting-in-Host-Application), where it is required do some code changes, regenerate the hardware image, and run on hardware.
+>**NOTE:** Run this step only if you are interested to learn how to run the design and observe `TEST PASSED` in hardware. You can skip to the steps [Analyzing Run Results](./Stage_1.md#Analyzing-run-results) and [Error Handling and Reporting in the Host Application](./Stage_1.md#Error-Handling-and-Reporting-in-the-Host-Application), where it is required do some code changes, regenerate the hardware image, and run on hardware.
 
 Before starting this tutorial:
 
@@ -146,7 +146,7 @@ It is necessary to analyze the run results to handle the design stalls by tracki
 5. Copy all these files back to the local workspace where the AI Enigne compile `Work/` directory is present, and open the `xrt.run_summary` file in the Vitis Analyzer.
 
  ```
- vitis_analyzer --classic xrt.run_summary`
+ vitis_analyzer -a xrt.run_summary`
  ```
 
 6. Click **Set AI Engine Compile Summary**, point to the `Work/directory` manually, and observe the `graph` view to identify the stalls.
@@ -159,7 +159,7 @@ Clicking each stall highlights the corresponding path in the graph view.
  * `Tile Status - PC`: Shows the current Program Counter value. It can be crossprobed with the  compiler generated source code by clicking on it.
  * `DMA Status`: Shows each tile's DMA input/output channel status.
 
- For more information, refer to [Analyzing AI Engine Status in Vitis Analyzer](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Analyzing-AI-Engine-Status-in-Vitis-Analyzer) in the *AI Engine Tools and Flows User Guide* (UG1076).
+ For more information, refer to [Analyzing AI Engine Status in Vitis Analyzer](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Stall-Analysis-in-the-Vitis-IDE) in the *AI Engine Tools and Flows User Guide* (UG1076).
 
 ### Manual AI Engine Status Using the XBUtil Utility
 
@@ -195,7 +195,7 @@ Clicking each stall highlights the corresponding path in the graph view.
 It is also possible to examine the status of the AI Engine using XSDB both on Linux and baremetal operating systems. This feature allows you to debug applications and detect the status of the AI Engine in situations where the board is in a deadlock or hung state. Unlike the xbutil command which requires XRT, the XSDB command runs independent of XRT.
 
 1. Run the hardware server from the computer that connects to the target board. To do so, launch the hw_server from the computer that has a JTAG connection to the VCK190 board.
-![launch hw server](./Images/launch_hwServer.PNG)
+![launch hw server](./Images/launch_hwServer.png)
 2. Go to the directory where the AI Engine compile `Work/directory` was generated, and launch XSDB.
 3. From the XSDB terminal, issue the following commands from the XSDB prompt:
 
@@ -347,7 +347,7 @@ It can be defined as the average number of bytes produced (or consumed) per seco
 	Throughput of the graph: 1510.96 MB/s
 	```
 
- >**NOTE:** The throughput value you got above matches with the value you got during [AIE Simulation](../AIE_Simulation/README.md#Calculating-Graph-throughput-using-Graph-output) and [Hardware Emulation](../HW_Emulation/README.md#Calculating-Graph-throughput-using-Graph-output).
+ >**NOTE:** The throughput value you got above matches with the value you got during [AIE Simulation](../AIE_Simulation/README.md#Calculating-the-Graph-throughput-using-Graph-output) and [Hardware Emulation](../HW_Emulation/README.md#Calculating-the-Graph-throughput-using-the-Graph-output).
 
 ### Exercise Step
 
