@@ -7,7 +7,7 @@
  </tr>
 </table>
 
-# 2023.2 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
+# 2024.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
 # AI Engine Implementation 
 
@@ -118,7 +118,7 @@ Each `make` step to build the design is specified in the following sections. The
 
 ### make kernels: Compiling PL Kernels
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202320_1`) and the AI Engine kernels and graphs and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`).
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202410_1`) and the AI Engine kernels and graphs and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`).
 
 ```
 make kernels
@@ -131,7 +131,7 @@ mkdir -p $(BUILD_TARGET_DIR); \
 
 cd $(BUILD_TARGET_DIR); \
 
-v++ --target hw_emu --hls.clock 312500000:dma_hls --platform xilinx_vck190_base_202320_1 \
+v++ --target hw_emu --hls.clock 312500000:dma_hls --platform xilinx_vck190_base_202410_1 \
    --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g -c -k dma_hls -D FFT_2D_DT=0 \
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
@@ -188,7 +188,7 @@ aiecompiler -include=$(AIE_SRC_REPO) -include=<DSPLIB_ROOT>/L1/include/aie \
    -include=<DSPLIB_ROOT>/L2/include/aie \
    -include=<DSPLIB_ROOT>/L2/tests/aie/common/inc \
    --verbose --Xpreproc="-DFFT2D_INSTS=1" --Xpreproc="-DMAT_ROWS=1024" --Xpreproc="-DMAT_COLS=2048" --Xpreproc="-DFFT_2D_DT=0" \
-   --platform=<PLATFORM_REPO_PATHS/xilinx_vck190_base_202320_1>/xilinx_vck190_base_202320_1.xpfm \
+   --platform=<PLATFORM_REPO_PATHS/xilinx_vck190_base_202410_1>/xilinx_vck190_base_202410_1.xpfm \
    --log-level=5 --test-iterations=2 --dataflow --heapsize=7000 \
    --Xchess="main:bridge.llibs=softfloat m" --workdir=Work $(AIE_SRC_REPO)/graph.cpp 2>&1 | tee -a aiecompiler.log 
 
@@ -240,7 +240,7 @@ The expanded command is as follows:
 ```
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -l --platform xilinx_vck190_base_202320_1 --save-temps \
+v++ -l --platform xilinx_vck190_base_202410_1 --save-temps \
    --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g --clock.freqHz 312500000:dma_hls_0 \
    --clock.defaultTolerance 0.001 --config $(SYSTEM_CONFIGS_REPO)/x1.cfg \
    --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
@@ -397,7 +397,7 @@ or
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd$(BUILD_TARGET_DIR);	\
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202320_1\
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202410_1\
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4\
    --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd\
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4\
@@ -474,7 +474,7 @@ and do:
 When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
 
 ```bash
-root@versal-rootfs-common-2023_2:~#
+root@versal-rootfs-common-2024_1:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -554,7 +554,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2023_2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2024_1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
 
 **Step 9.** Run the following commands in the TeraTerm terminal:
 
@@ -1134,7 +1134,7 @@ For all applications, designers must work to predefined specifications and build
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for AMD Versal&trade; (2023.2 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for AMD Versal&trade; (2024.1 version) tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 
@@ -1173,7 +1173,7 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(FFT_2D_INSTS).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [PDM for Versal Version 2023.2](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/design-tools/power-design-manager.html).
+2. If you do not already have it installed, download and install [PDM for Versal Version 2024.1](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of XPE, see [this page](https://www.xilinx.com/products/design-tools/power-design-manager.html).
 
 3. AI Engine power comsumption and resource utilization shown in below images for the 32 x 64 point 1-instance design:
 ![Image of 2D-FFT AIE XPE](images/fft_2d_aie_xpe_pow.PNG)
@@ -1457,6 +1457,6 @@ GitHub issues will be used for tracking requests and bugs. For questions go to [
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

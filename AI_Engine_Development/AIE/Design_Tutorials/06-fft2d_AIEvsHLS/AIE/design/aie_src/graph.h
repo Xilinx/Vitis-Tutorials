@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -78,9 +78,16 @@ class FFTrows_graph: public graph
          FFT_2D_TP_FFT_NIFFT, FFT_2D_TP_SHIFT, FFT_2D_TP_ROW_CASC_LEN, FFT_2D_TP_DYN_PT_SIZE, FFT_ROW_TP_WINDOW_VSIZE> FFTrow_gr;
          
          runtime<ratio>(*FFTrow_gr.getKernels()) = 0.8;
+#if FFT_2D_DT==1
 	if(FFT_ROW_TP_POINT_SIZE >= 1024 && FFT_2D_DT==1 && FFT2D_INSTS==10 ){
 	location<graph>(*this) = area_group({{aie_tile, fftRows_grInsts*4, 0, fftRows_grInsts*4+3, 7}, {shim_tile, 0, 0, 49, 0}}); }
-         std::string rows_plioIn_str = "DataIn" + std::to_string(fftRows_grInsts*2) ;
+#else
+	location<graph>(*this) = area_group({{aie_tile, 5 + fftRows_grInsts*2 , 0, 2*fftRows_grInsts+6, 2}, {shim_tile, 0, 0, 31, 0}}); 
+#endif
+
+	
+ 
+ 	std::string rows_plioIn_str = "DataIn" + std::to_string(fftRows_grInsts*2) ;
          const char *rows_plioIn = rows_plioIn_str.c_str();
          std::string rows_In_file_str = "input" + std::to_string(0) + ".txt";
          const char *rows_In_file = rows_In_file_str.c_str();
@@ -112,9 +119,14 @@ class FFTcols_graph: public graph
       FFTcols_graph() {
          dsplib::fft::dit_1ch::fft_ifft_dit_1ch_graph<FFT_2D_TT_DATA, FFT_2D_TT_TWIDDLE, FFT_COL_TP_POINT_SIZE,
          FFT_2D_TP_FFT_NIFFT, FFT_2D_TP_SHIFT, FFT_2D_TP_COL_CASC_LEN, FFT_2D_TP_DYN_PT_SIZE, FFT_COL_TP_WINDOW_VSIZE> FFTcol_gr;
-         if(FFT_COL_TP_POINT_SIZE >= 1024 && FFT_2D_DT==1 && FFT2D_INSTS==10 ){
+#if FFT_2D_DT==1
+	if(FFT_COL_TP_POINT_SIZE >= 1024 && FFT_2D_DT==1 && FFT2D_INSTS==10 ){
 		location<graph>(*this) = area_group({{aie_tile,fftCols_grInsts*4, 0,fftCols_grInsts*4+3, 7}, {shim_tile, 0, 0, 49, 0}}); }
-         runtime<ratio>(*FFTcol_gr.getKernels()) = 0.8;
+#else
+//	location<graph>(*this) = area_group({{aie_tile, 8, 0, 31, 2}, {shim_tile, 0, 0, 31, 0}});
+	location<graph>(*this) = area_group({{aie_tile, 5 + fftCols_grInsts*2 , 0, 2*fftCols_grInsts+6, 2}, {shim_tile, 0, 0, 31, 0}}); 
+#endif	
+ 	runtime<ratio>(*FFTcol_gr.getKernels()) = 0.8;
          std::string cols_plioIn_str = "DataIn" + std::to_string(fftCols_grInsts*2 + 1) ;
          const char *cols_plioIn = cols_plioIn_str.c_str();
          

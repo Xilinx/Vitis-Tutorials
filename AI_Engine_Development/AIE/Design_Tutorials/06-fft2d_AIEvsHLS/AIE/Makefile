@@ -1,4 +1,4 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 %.PHONY: help
@@ -97,10 +97,9 @@ print-%  : ; @echo $* = $($*)
 
 # For SPRITE
 DSPLIB_ROOT=$(DSPLIB_VITIS)/dsp
-
 # =========================================================
 # TARGET can be set as:
-#   hw_emu: Hardware Emulation
+#   hw_emu: Hardware Emulation #define CHK_CTR 16 // (64 * 2) / 4
 #   hw    : Hardware Run
 # =========================================================
 TARGET := hw_emu
@@ -129,10 +128,10 @@ ifeq ($(FFT_2D_PT),64)
        FFT_ROW_WINDOW_SIZE := 32
        FFT_COL_WINDOW_SIZE := 16
     else
-       FFT_ROW_CASCADE_LENGTH := 1
-       FFT_COL_CASCADE_LENGTH := 1 
-       FFT_ROW_WINDOW_SIZE := 64
-       FFT_COL_WINDOW_SIZE := 32
+       FFT_ROW_CASCADE_LENGTH := 2
+       FFT_COL_CASCADE_LENGTH := 2 
+       FFT_ROW_WINDOW_SIZE := 32
+       FFT_COL_WINDOW_SIZE := 16
      endif
 endif
 
@@ -331,6 +330,7 @@ AIE_FLAGS += --pl-freq=$(PL_FREQ)
 #AIE_FLAGS += --dataflow
 # Constraints for same shim solution for all variations
 # aids in timeing closure of the design...
+
 ifeq ($(FFT_2D_DT),1)
   ifeq ($(FFT_2D_PT),2048)
      ifeq ($(FFT_2D_INSTS),5)
@@ -343,9 +343,10 @@ ifeq ($(FFT_2D_DT),1)
       AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
    endif
 else
-  AIE_FLAGS += --Xmapper=BufferOptLevel9
-  AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
+   AIE_FLAGS += --Xmapper=BufferOptLevel9
+ # AIE_FLAGS += --constraints=$(AIE_SRC_REPO)/constraints.aiecst
 endif
+
 AIE_FLAGS += --Xrouter=DMAFIFOsInFreeBankOnly
 #AIE_FLAGS += --heapsize=7000
 AIE_FLAGS += --Xchess="main:bridge.llibs=softfloat m"
@@ -354,9 +355,8 @@ AIE_FLAGS += --workdir=$(WORK_DIR)
 # Aiesimulator flags
 #-i - Alias of --input-dir=<dir> option
 #-o - Alias of --output-dir=<dir> option
-AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
+AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/=AIE_SIM_FLAGS += -i $(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
 AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
-
 # =========================================================
 # Application Compiler and Linker Flags
 # =========================================================

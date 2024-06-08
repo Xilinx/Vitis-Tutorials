@@ -9,7 +9,7 @@
 
 # Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Table of Contents
 
@@ -202,8 +202,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2023.2` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2023.2/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2024.1` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2024.1/sdk.sh` script.
 5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -231,7 +231,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202320_1",
+ "baseName": "xilinx_vck190_base_202410_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -319,6 +319,6 @@ GitHub issues will be used for tracking requests and bugs. For questions, go to 
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
