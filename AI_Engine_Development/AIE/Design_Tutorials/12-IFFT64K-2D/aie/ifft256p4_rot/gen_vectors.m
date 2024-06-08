@@ -110,5 +110,48 @@ for pp = 1 : Nports
   fclose(fid_o);
 end
 
+% ------------------------------------------------------------
+% Generate Twiddles
+% ------------------------------------------------------------
+
+TT = numerictype(1,16,15);
+FF = fimath('RoundingMethod','Convergent','OverflowAction','Saturate');
+
+tw4a = fi(generate_tw(Nfft,4, 64),TT,FF);
+tw4b = fi(generate_tw(Nfft,4, 16),TT,FF);
+tw4c = fi(generate_tw(Nfft,4,  4),TT,FF);
+tw4d = fi(generate_tw(Nfft,4,  1),TT,FF);
+
+fid = fopen('ifft256p4_rot_twiddle.h','w');
+fprintf(fid,'//\n');
+fprintf(fid,'// Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.\n');
+fprintf(fid,'// SPDX-License-Identifier: MIT\n');
+fprintf(fid,'//\n');
+fprintf(fid,'// Author: Mark Rollins\n');
+dump_twiddle(fid,'tw4a',tw4a);
+dump_twiddle(fid,'tw4b',tw4b);
+dump_twiddle(fid,'tw4c',tw4c);
+dump_twiddle(fid,'tw4d',tw4d);
+fclose(fid);
+
+% ------------------------------------------------------------
+% Dump Twiddle
+% ------------------------------------------------------------
+
+function dump_twiddle(fid,name,tw)
+   [num,nsamp] = size(tw);
+   for nn = 1 : num
+     fprintf(fid,'alignas(16) TT_TWID %s_%g[%d] = {',name,nn-1,nsamp);
+     for ii = 1 : nsamp-1
+       fprintf(fid,'{%d,%d}, ',real(tw.int(nn,ii)),imag(tw.int(nn,ii)));
+     end
+     fprintf(fid,'{%d,%d} };\n',real(tw.int(nn,end)),imag(tw.int(nn,end)));
+   end     
+end
 
 
+function [tw] = generate_tw(N,radix,vectorization)
+   nStage = N/vectorization;
+   tw_points = nStage / radix;
+   tw = exp(-2*1i*pi/nStage*[1:radix-1]'*[0:tw_points-1]);
+end

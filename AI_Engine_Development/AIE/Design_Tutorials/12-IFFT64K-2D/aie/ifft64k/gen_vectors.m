@@ -35,7 +35,7 @@ switch (type)
   case 'noise',
   % Random noise:
   tmp = sqrt(0.5)*10^(0.05*backoff_dB)*complex(randn(1,Nfft_all*Ntransform),randn(1,Nfft_all*Ntransform));
-  scale = 1/8;
+  scale = 0.5^12;
   sig_i = fi(reshape(scale*tmp,Nfft_all,Ntransform),TT,FF);
  case 'tone',
   % Tone signal:
