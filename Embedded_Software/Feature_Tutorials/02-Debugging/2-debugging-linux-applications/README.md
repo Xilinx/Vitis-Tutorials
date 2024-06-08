@@ -1,6 +1,6 @@
 ﻿# Debugging Linux Applications
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 The AMD Vitis™ IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
 
@@ -12,81 +12,20 @@ The following diagram illustrates the general Linux application debug flow. The 
 
 ![](images/Linux_debug_flow.png)
 
-
-**Note:** Refer to the [Appendix](#appendix) section for supplementary information about creating a hardware design and building software boot images.  
-
+ 
 ## Limitations
 
-Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2023.2. If you require this feature, then it is recommended that you use Vitis Classic 2023.2.
+Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2024.1. If you require this feature, then it is recommended that you use Vitis Classic 2023.2.
 
 ## Getting Started
 
-Linux debug setup is a mandatory step. Setup allows you to create platform and application projects in the Vitis IDE.
+Linux debug setup is a mandatory step. Setup allows you to create platform and application projects in the Vitis IDE. There is a script attached to this tutorial that users can use to generate a demo XSA, Sysroots and Vitis Workspace.
 
-1. Open a terminal and navigate to your desired work directory.
-2. Copy **scripts/petalinux_build.sh** to your desired working directory; for example, `linux_debug/petalinux_prj`.
-3. Source the PetaLinux tool.
-4. Follow the steps in the [PetaLinux Build](#petalinux-build) section to complete the PetaLinux build and configuration manually.
-1. 
-   **Note:** You can skip the manual steps by using the automated `petalinux_build.sh` script to generate Linux images. However, make sure to select the appropriate configuration whenever prompted.
+1. Open a terminal and navigate to the scripts directory, and source the Petalinux tool.
+2. Run the command <i>make all</i>. This will take some time.
+3. Launch the Vitis IDE **vitis_unified** workspace. 
 
-5. Navigate to `zcu102` in your AMD Vivado™ project and copy `mpsoc_preset_wrapper.xsa` to your desired Vitis work directory (in the following example, it is `vitis_work_dir`) as `zcu102.xsa`.
-
-    ```
-    $ cd zcu102/mpsoc_preset_wrapper.xsa
-    $ cp mpsoc_preset_wrapper.xsa vitis_work_dir/zcu102.xsa
-    ```
-
-    **Note:** If you create a custom ZCU102 XSA by following the steps in [Vivado Design](#vivado-design), you can use it as it is here.
-
-6. Create the sysroot
-
-    ```
-    $ cd xilinx-zcu102-2023.2/images/linux
-    $ ./sdk.sh
-    ```
-**Note:** When prompted for the `Enter target directory for SDK`, enter the path to `vitis_work_dir`
-
-7. Copy **scripts/unified_workspace.py** to your Vitis work directory (in this example, `vitis_work_dir`) as you did for `zcu102.xsa`. Copy **src/linux_test_application.c** to `vitis_work_dir/src`. These files are required to set up the Vitis workspace. Your Vitis work directory should be structured like the example below after downloading these files.
-
-    ```
-    vitis_work_dir
-    |
-    |_ zcu102.xsa
-    |
-    |_ unified_workspace.py
-    |
-    |_ sysroot
-    |  |
-    |  |_ cortexa72-cortexa53-xilinx-linux
-    |  |
-    |  |_ x86_64-petalinux-linux
-    |
-    |_ src
-      |
-      |_ linux_test_application.c
-
-    ```
-
-8. Run the `Vitis-workspace.py` script for workspace setup in Vitis Unified CommandLine Interface (CLI). After successful execution of the script, a Vitis worskpace named `linux_debug_ws` is created with a ZCU102 based platform and a Linux test application.
-
-    ```
-    vitis_work_dir
-    |
-    |_ zcu102.xsa
-    |
-    |_ vitis-workspace.py
-    |
-    |_ src
-    |   |
-    |   |_ linux_test_application.c
-    |
-    |_ linux_debug_ws
-
-    ```
-
-9. Launch the Vitis IDE **linux_debug_ws** workspace. 
-
+**Note:** The scripts above will generate the HW and SW images automaticaslly for a ZCU102 board. However, users can refer to the [Appendix](#appendix) section for supplementary information about creating a hardware design and building software boot images manually.
 
 ## Error 1: Failed in Validating the test connection
 
@@ -119,13 +58,14 @@ Select the settings based on your connection
   ```
 ## Connecting to QEMU
 
-Petalinux supports the Quick EMUlation (QEMU) emulator. This is useful if you do not have access to Physical board. You can use the following steps to boot Linux on the QEMU. You can pass `qemu-args` to pass the network information. The hardware used in this tutorial is for a ZCU102 which has the GEM enabled at GEM3. This command will look slightly different GEM is used.
+Petalinux supports the Quick EMUlation (QEMU) emulator. This is useful if users do not have access to Physical board. Users can use the following steps to boot Linux on QEMU. Users can pass `qemu-args` to pass the network information. The hardware used in this tutorial is for a ZCU102 which has the GEM enabled at GEM3. This command will look slightly different if a different GEM is used.
 
 The hostfwd definitions along with user network arguments, that is ,   `-net nic -net nic -net nic -net nic,vlan=1 -net user,vlan=1) hostfwd=tcp:<host address>:<host port used for forwarding>-<guest address>:<guest port>`
 
 ```
 petalinux-boot --qemu --kernel --qemu-args "-net nic -net nic -net nic -net nic,netdev=gem3 -netdev user,id=gem3,hostfwd=tcp:127.0.0.1:1540-10.0.2.15:1534"
 ```
+**Tip** The Login is <i>petalinux</i> by default.
 
 **Note** Use Ctrl A + x to exit the QEMU
 
@@ -323,7 +263,7 @@ Click **Next** and export the hardware with the **Include bitstream** option. En
 
 #### Automation Steps
 
-Launch the Vivado Tcl console. Source `vivado_design.tcl`. 
+Launch the Vivado Tcl console. Source `scripts/create_xsa.tcl`. 
 
 ### PetaLinux Build
 
@@ -332,13 +272,13 @@ It is required to configure the PetaLinux project to support Linux application d
 1. Create the PetaLinux project:
 
     ```
-    petalinux-create -t project --template -n xilinx-zcu102-2023.2
+    petalinux-create project --template zynqMP -n ./xilinx-zcu102-v2024.1 --tmpdir /tmp/${USER}/zcu102/petalinux
     ```
 
 2. Configure the hardware description:
 
     ```
-    cd xilinx-zcu102-2023.2
+    cd xilinx-zcu102-2024.1
     petalinux-config --get-hw-description <path to XSA>
     ```
 
@@ -425,7 +365,7 @@ It is required to configure the PetaLinux project to support Linux application d
     petalinux-build --sdk
     petalinux-package --sysroot
     ```
-**Note:** You can skip all the above steps by using the `petalinux_build.sh` script to build the Linux images. 
+**Note:** You can skip all the above steps by using the `make sysroots` script to build the Linux images. 
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>

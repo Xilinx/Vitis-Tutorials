@@ -1,6 +1,6 @@
 # Creating a Debuggable First Stage Boot Loader
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 First Stage Boot Loader (FSBL) can initialize the SoC device, load the required application or data to memory, and launch applications on the target the CPU core. FSBL is optimized for size because it must fit in the OCM, which has limited space on the device. Size based optimization introduces some trouble, if you want to debug FSBL when you add customized code into FSBL. This chapter explains how you can use AMD Vitis™ Unified IDE to debug FSBL step by step.
 

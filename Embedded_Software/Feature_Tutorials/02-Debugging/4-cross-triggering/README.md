@@ -1,12 +1,12 @@
 ﻿# Cross Triggering in Vitis Unified Embedded IDE
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 Embedded systems can be complex, that may contain multiple processors. You can also debug across software and hardware domains and can use PS-PL cross triggering. However, In this simple tutorial, you learn how we can debug over multiple processors using cross triggering.
 
 ## Processor to Processor Cross Triggering
 
-Launch AMD Vitis™ unified embedded tool in 2023.2, and create your platform. In this tutorial, you create two `Hello World` applications both on different processors.
+Launch AMD Vitis™ Unified embedded tool in 2024.1, and create your platform. In this tutorial, you create two `Hello World` applications both on different processors.
 
 **Note:** Refer to the Getting Started Embedded tutorial for information on creating a new application.
 

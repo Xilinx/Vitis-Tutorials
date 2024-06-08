@@ -1,6 +1,6 @@
 ﻿# Debugging Bare-Metal Applications
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 This section showcases the different debugging features available within the AMD Vitis™ embedded software development flow for bare-metal applications. Using an example application project with intentional bugs, the debug guide goes through each issue and leverages the different windows and features available in the application debug session to highlight the potential usage of debug features in a real world scenario.
 
@@ -14,7 +14,7 @@ The example design targets the Xilinx® ZCU102 evaluation platform and implement
 
 ## Build XSA
 
-Launch AMD Vivado™ 2023.2 and source run the following command from the TCL console:
+Launch AMD Vivado™ 2024.1 and source run the following command from the TCL console:
 
 ```
 cd scripts

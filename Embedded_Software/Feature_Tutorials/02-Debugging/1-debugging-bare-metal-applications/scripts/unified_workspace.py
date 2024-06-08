@@ -1,3 +1,9 @@
+#
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# Author: Stephen MacMahon
+
 import argparse
 import vitis
 import glob
@@ -12,7 +18,7 @@ xsa = args.echo
 
 if os.path.isfile(xsa):
 
-    workspace = os.path.join(os.getcwd(), "../unified_workspace")
+    workspace = os.path.join(os.getcwd(), "./unified_workspace")
     workspace = os.path.normpath(workspace)
     
     print("Creating workspace at " + workspace)
@@ -23,18 +29,18 @@ if os.path.isfile(xsa):
     client = vitis.create_client()
     client.set_workspace(workspace)
 
-    platform = client.create_platform_component(name = "zcu102_platform",hw = xsa,os = "standalone",cpu = "psu_cortexa53_0")
+    platform = client.create_platform_component(name = "zcu102_platform",hw_design = xsa,os = "standalone",cpu = "psu_cortexa53_0")
 
-    platform = client.get_platform_component(name="zcu102_platform")
+    platform = client.get_component(name="zcu102_platform")
     status = platform.build()
 
-    xpfm = os.path.join(os.getcwd(), "../unified_workspace/zcu102_platform/export/zcu102_platform/zcu102_platform.xpfm")
+    xpfm = os.path.join(os.getcwd(), "./unified_workspace/zcu102_platform/export/zcu102_platform/zcu102_platform.xpfm")
     xpfm = os.path.normpath(xpfm)
     comp = client.create_app_component(name="testapp_a53",platform = xpfm,domain = "standalone_psu_cortexa53_0",template = "empty_application")
 
     comp = client.get_component(name="testapp_a53")
-    comp.import_files(from_loc="../src", files=["main.c"], dest_dir_in_cmp = "src")
-    comp.import_files(from_loc="../src", files=["lscript.ld"], dest_dir_in_cmp = "src")
+    comp.import_files(from_loc="./src", files=["main.c"], dest_dir_in_cmp = "src")
+    comp.import_files(from_loc="./src", files=["lscript.ld"], dest_dir_in_cmp = "src")
     comp.build()
 else:
     print("Error: No XSA passed")
