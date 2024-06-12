@@ -18,7 +18,7 @@ The AI Engine simulator allows stepping through the AI Engine compiler-generated
 Before starting this tutorial:
 
 * It is expected that you have run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
-* Create a system project manually using the steps mentioned in [Port the Command Line project to the Vitis IDE System Project](../CreateIDESystemProj.md), or download the AMD Vitis&trade; exported project as instructed in [Download the Vitis IDE Project](../README.md#Download-Vitis-IDE-project).
+* Create a system project manually using the steps mentioned in [Port the Command Line project to the Vitis IDE System Project](../CreateIDESystemProj.md)
 * Open the Vitis IDE tool by typing `vitis` in the console, set the workspace, and the IDE opens. Click **File**->**Import**, select the **Vitis exported project zip file**, browse to the above zip file, and click `Next`. Enable the check box, **System Projects**, and click **Finish**.
 
 ## Features
@@ -27,7 +27,7 @@ Before starting this tutorial:
 
 <tr>
 <td>
- <a href="./README.md#Build-and-simulate-in-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
+ <a href="./README.md#Build-and-simulate-in-the-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
 </td>
 <td>
 Demonstrates how to use the Vitis IDE to build and simulate an AI Engine design.
@@ -45,7 +45,7 @@ Explains how to add `printf` statement, and view the output in the console.
 
 <tr>
 <td>
-<a href="./README.md#Debug-using-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
+<a href="./README.md#Debug-using-the-Vitis-IDE-debugger">Debug Using the Vitis IDE Debugger</a>
 </td>
 <td>
 Explores different debugging techniques that uses the Vitis IDE debugger.
@@ -72,7 +72,7 @@ Shows a practical deadlock scenario and some simulator options to identify the d
 
 <tr>
 <td>
-<a href="./README.md#Visualizing-deadlock-in-Vitis-Analyzer">Visualizing Deadlock in the Vitis Analyzer</a>
+<a href="./README.md#Visualizing-deadlock-in-the-Vitis-Analyzer">Visualizing Deadlock in the Vitis Analyzer</a>
 </td>
 <td>
 Explains how to visualize deadlock using trace information in the Vitis Analyzer, and identify the root cause.
@@ -90,7 +90,7 @@ Introduces an Out of Bound read access and explains how to identify the violatio
 
 <tr>
 <td>
-<a href="./README.md#Single-kernel-debug">Single Kernel Debug</a>
+<a href="./README.md#Kernel-Debug">Kernel Debug</a>
 </td>
 <td>
 Explains how to debug a single kernel design using a pipeline view in the Vitis IDE.
@@ -113,7 +113,6 @@ Shows how to calculate kernel latency and throughput using profile information.
 <td>
 Determine the average throughput of input and output PLIO.
 </td>
-</tr>![image](https://media.gitenterprise.xilinx.com/user/2897/files/aaa26a48-dfe7-41d1-b982-ce13d452a10a)
 
 </table>
 
@@ -277,7 +276,7 @@ This topic walks you through the practical scenario of deadlock during aiesimula
 
 7. Revert the changes in the source file to exercise other debug features.
 
-More information about how to visualize the deadlock using the stream stalls and lock stalls in the Vitis Analyzer is explained in [Visualizing Deadlock in the Vitis Analyzer](./README.md#Visualizing-deadlock-in-Vitis-Analyzer).
+More information about how to visualize the deadlock using the stream stalls and lock stalls in the Vitis Analyzer is explained in [Visualizing Deadlock in the Vitis Analyzer](./README.md#Visualizing-deadlock-in-the-Vitis-Analyzer).
 
  > **NOTE:**
  >
@@ -386,7 +385,7 @@ Besides using the simulator option, it is necessary to first identify an invalid
 
 7. The **PC** column in the **Memory Violations** tab helps redirecting to the kernel function that has a memory violation.
 
-   >**NOTE:** Currently, if the violation impacts the API, e.g., `aie::mul` in this case, clicking the `PC` might not redirect you to the exact kernel function. A general recommendation in these kind of cases where memory violations cannot be identified is to use the `x86simulator` with the `valgrind` option as explained in [Memory Access Violation and Valgrind Support for the x86simulator](../X86_Simulation/README.md#memory-access-violation-and-valgrind-support).
+   >**NOTE:** Currently, if the violation impacts the API, e.g., `aie::mul` in this case, clicking the `PC` might not redirect you to the exact kernel function. A general recommendation in these kind of cases where memory violations cannot be identified is to use the `x86simulator` with the `valgrind` option as explained in [Memory Access Violation and Valgrind Support](../X86_Simulation/README.md#memory-access-violation-and-valgrind-support).
 
 8. Revert the changes in the source code to exercise other debug features.
 
@@ -399,7 +398,7 @@ The AI Engine Pipeline view in the Vitis IDE allows you to correlate instruction
 1. To get the pipleline view, in the Flow navigator window, under AIE SIMULATION/HARDWARE, select the Run Settings under **aie_component_aiesim_1** Configuration, select the check box **Enable Pipeline View**.
 ![enable_pipeline view](./Images/enable_pipeline.PNG)
 2. Select **Generate Profile** from the Profile Options.
-3. Enter the debug, as explained in the [Debug Using Vitis IDE Debugger](./README.md#Debug-using-Vitis-IDE-debugger) section, to observe only a single core in the **Debug** window. The  **Pipeline View** automatically comes up as soon as IDE enters the debug mode.
+3. Enter the debug, as explained in the [Debug Using Vitis the IDE Debugger](./README.md#Debug-using-the-Vitis-IDE-debugger) section, to observe only a single core in the **Debug** window. The  **Pipeline View** automatically comes up as soon as IDE enters the debug mode.
 ![pipeline view](./Images/pipeline_view.PNG)
 4. Click the **Step Over** button, and observe the changes in the pipeline view as well as the **Cycle Count**,**Program Counter** in Runtime statistics. The main advantage of the pipeline view is when you want to observe how many cycles a particular instruction takes.
 5. Once the debug is done, hit the **Resume** button to complete the simulation or the **Terminate** button to exit the debugger smoothly.
@@ -410,7 +409,7 @@ The AI Engine Pipeline view in the Vitis IDE allows you to correlate instruction
 
 To estimate the design performance during the AI Engine simulation, it is necessary to analyze the profile results carefully. This section walks you through some topics that are most commonly used to assess how your kernel is performing overall.
 
-Refer to the Section 4 [Enabling the Profile and Trace Options](./README.md#Enabling-the-profile-and-trace-options) to understand how to enable profiling in the Vitis IDE.
+Refer to the Section 4 [Enabling Profile and Trace Options](./README.md#Enabling-profile-and-trace-options) to understand how to enable profiling in the Vitis IDE.
 
 1. After running the AI Engine Simulation, open the profile **analysis view -> aie_component -> AIE SIMULATOR/HARDWARE -> Run-aie_component -> Profile**.
 2. You can click the **Summary** corresponding to each tile in the landing page, and observe the cycle count, instruction count, and program memory.

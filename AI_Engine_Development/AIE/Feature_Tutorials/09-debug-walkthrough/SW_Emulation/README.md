@@ -29,7 +29,7 @@ The following are some of the software emulation features this section covers.
 
 <tr>
 <td>
-<a href="./README.md#Build-for-Software-Emulation-using-Vitis-IDE">Build for Software Emulation Using the Vitis IDE</a>
+<a href="./README.md#Build-for-Software-Emulation-using-the-Vitis-IDE">Build for Software Emulation Using the Vitis IDE</a>
 </td>
 <td>
 Explains how to create system project, build for sofware emulation, and run.
@@ -38,7 +38,7 @@ Explains how to create system project, build for sofware emulation, and run.
 
 <tr>
 <td>
-<a href="./README.md#Using-Vitis-IDE-for-software-emulation-debug">Using the Vitis IDE for Software Emulation Debug</a>
+<a href="./README.md#Debug-Using-the-Vitis-IDE-Debugger-for-software-emulation">Debug Using the Vitis IDE Debugger for Software Emulation</a>
 </td>
 <td>
 Explains how to debug for software emulation using the Vitis IDE.
@@ -52,7 +52,7 @@ Explains how to debug for software emulation using the Vitis IDE.
 
 Before getting into this section, you must follow the GCC requirements to build the Software Application from [here.](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Building-the-Software-Application)
 
-Also it is expected that you created an AI Engine application in the Vitis IDE and ran x86simulation [Build and Simulate in Vitis IDE](../X86_Simulation/README.md#Build-and-simulate-in-Vitis-IDE).
+Also it is expected that you created an AI Engine application in the Vitis IDE and ran x86simulation [Build and Simulate in the Vitis IDE](../X86_Simulation/README.md#Build-and-simulate-in-the-Vitis-IDE).
 
 Create a system project manually using the steps mentioned in [Port Command Line Project to the Vitis IDE System Project](../CreateIDESystemProj.md)
 
@@ -68,7 +68,7 @@ Create a system project manually using the steps mentioned in [Port Command Line
 
 ## Debug using the Vitis IDE Debugger for Software Emulation
 
-This section walks you through debugging in the software emulationflow using the Vitis IDE Debugger. Before going through this section, it is expected to complete the [Debug Using the Vitis IDE Debugger](../X86_Simulation/README.md#Debug-using-Vitis-IDE-debugger) section which gives quick idea on how to use the Vitis IDE debugger.
+This section walks you through debugging in the software emulationflow using the Vitis IDE Debugger. Before going through this section, it is expected to complete the [Debug Using the Vitis IDE Debugger](../X86_Simulation/README.md#Debug-using-the-Vitis-IDE-debugger) section which gives quick idea on how to use the Vitis IDE debugger.
 
 1. After the design is built for the SW Emulation target, click on **Flow** Navigator -> **SW Emulation** -> **Debug** option.
 2. This gets you to the debug mode in the Vitis IDE and waits in the host.cpp file
