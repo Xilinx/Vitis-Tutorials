@@ -49,9 +49,9 @@ Another possible optimization is to tell the tool that a function or loop should
 
 This configuration might be an acceptable response to II violations when the loops are not in the critical path of the design, or they represent a small problem relative to some larger problems that must be resolved. In other words, not all violations need to be resolved, and in some cases, not all violations can be resolved. They are simply artifacts of performance.
 
-7.  In the Settings Form of the Config File Editor go to the bottom of the categories on the left side and go to **Design Directives > Pipeline**. This lets you manage the [hls.syn.directive.pipeline](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=tjy1677219494422.html) in your design. 
+7.  In the Settings Form of the Config File Editor go to the bottom of the categories on the left side and go to **Design Directives > Pipeline**. This lets you manage the [hls.syn.directive.pipeline](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=tjy1677219494422.html) in your design. 
 
-8.  Click **Add Item** under Pipeline. This opens the `dct.cpp` source code for the HLS component, and also opens the Directive editor as decribed in [Adding Pragmas and Directives](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=gip1583519972576.html). 
+8.  Click **Add Item** under Pipeline. This opens the `dct.cpp` source code for the HLS component, and also opens the Directive editor as decribed in [Adding Pragmas and Directives](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=gip1583519972576.html). 
 
 9.  In the **HLS Directive** view, select the `dct_2d` function, and click '+' to add a directive or pragma. This opens the **Add Directive** dialog box as shown in the following figure. 
 
@@ -68,7 +68,7 @@ This configuration might be an acceptable response to II violations when the loo
 
 In some designs, a Guidance message `Unable to schedule load operation...` indicates a load/load (or read/read conflict) issue with memory transactions. In these cases rather than accepting the latency, you could try to optimize the implementation to achieve the best performance (II=1).
 
-The specific problem of reading or writing to memory can possibly be addressed by increasing the available memory ports to read from, or to write to. One approach is to use the BIND_STORAGE pragma or directive to specify the type of device resource to use in implementing the storage. BIND_STORAGE defines a specific device resource for use in implementing a storage structure associated with a variable in the RTL. For more information, refer to [BIND_STORAGE](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=imo1677218583234.html). 
+The specific problem of reading or writing to memory can possibly be addressed by increasing the available memory ports to read from, or to write to. One approach is to use the BIND_STORAGE pragma or directive to specify the type of device resource to use in implementing the storage. BIND_STORAGE defines a specific device resource for use in implementing a storage structure associated with a variable in the RTL. For more information, refer to [BIND_STORAGE](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=imo1677218583234.html). 
 
 Looking at the **Storage Report** section of the Synthesis report you can see that the tool has implemented the `buf_2d_in` variable with a `ram_s2p`. This allows reading on one port while writing on the other. But the RAM_2P allows simultaneous reading on both ports, or reading on one and writing on the other. This might offer some performance improvement. 
 
@@ -83,7 +83,7 @@ Looking at the **Storage Report** section of the Synthesis report you can see th
 
 **ACTION:** Back out the prior change before proceeding. 
 
-Another approach to solve memory port conflicts is to use the `Array_Partition` directive to reconfigure the structure of an array. `Array_Partition` lets you partition an array into smaller arrays or into individual registers instead of one large array. This effectively increases the amount of read and write ports for the storage and potentially improves the throughput of the design. However, `Array_Partition` also requires more memory instances or registers, and so increases area and resource consumption. For more information, refer to [ARRAY_PARTITION](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=muz1677218527052.html).
+Another approach to solve memory port conflicts is to use the `Array_Partition` directive to reconfigure the structure of an array. `Array_Partition` lets you partition an array into smaller arrays or into individual registers instead of one large array. This effectively increases the amount of read and write ports for the storage and potentially improves the throughput of the design. However, `Array_Partition` also requires more memory instances or registers, and so increases area and resource consumption. For more information, refer to [ARRAY_PARTITION](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=muz1677218527052.html).
 
 16.  In the Config Editor select **Add Item** for **Array Partition** to open the Directive Editor. In the HLS Directive view navigate to the `dct` function, select the `buf_2d_out` variable, and select **Add Directive**. 
 17.  In the Add Directive dialog box select the **ARRAY_PARTITION** pragma, specify **type** of `cyclic` and **factor** of `8`, and click **OK** to add the directive or pragma to your design.

@@ -5,22 +5,22 @@
  </tr>
 </table>
 
-**Note:** This tutorial has been updated for use with the Vitis unified IDE in the 2023.2 release. To use this tutorial with the classic Vitis and Vitis HLS tools refer to the 2023.1 version of the tutorial. 
+**Note:** This tutorial has been updated for use with the Vitis unified IDE in the 2024.1 release. To use this tutorial with the classic Vitis and Vitis HLS tools refer to the 2023.1 version of the tutorial. 
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
 
 ## Before You Begin
 
 ### Setup Environment
-Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=zks1565446519267.html).
+Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=zks1565446519267.html).
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2023.2/settings64.sh
+$ source <Vitis Tool Installation Path>/Vitis/2024.1/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
@@ -110,7 +110,7 @@ dsp/
 
 In this step, you are going to create an HLS component by using the files provided in the [1Dfix_impluse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impluse) L1 examples of the Vitis `dsp` library. The source files and script file are all located under this folder. Here, it is assumed that you have cloned the Vitis Libraries into *<installdir>/Vitis_Libraries* directory.
 
-1. Go into the `<installdir>/Vitis_libraries/dsp/L1/examples/1Dfix_impluse` folder, create a directory to use as a workspace, and launch the Vitis unified IDE to create an HLS component as described in [Building and Running an HLS Component](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1399-vitis-hls&resourceid=aeg1676136124434.html).
+1. Go into the `<installdir>/Vitis_libraries/dsp/L1/examples/1Dfix_impluse` folder, create a directory to use as a workspace, and launch the Vitis unified IDE to create an HLS component as described in [Building and Running an HLS Component](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1399-vitis-hls&resourceid=aeg1676136124434.html).
 
 ```
  mkdir myProject

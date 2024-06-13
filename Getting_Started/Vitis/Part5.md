@@ -13,7 +13,7 @@
 
 ## Part 5 : Visualizing Results and Analyzing Reports
 
-Now that you have successfully built and run the vector-add example, now you can look at the results and reports generated along the way. This example is configured to generate build and run summaries for all three build targets (software emulation, hardware emulation, and hardware). Any of these summary reports can be viewed and analyzed using the Vitis analyzer tool as described in [Working with the Analysis View](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=bmv1632721179781.html).
+Now that you have successfully built and run the vector-add example, now you can look at the results and reports generated along the way. This example is configured to generate build and run summaries for all three build targets (software emulation, hardware emulation, and hardware). Any of these summary reports can be viewed and analyzed using the Vitis analyzer tool as described in [Working with the Analysis View](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=bmv1632721179781.html).
 
 The results will be different depending on the summary or report you open. The hardware run is fully accurate, hardware emulation is a cycle-approximate simulation, and software emulation should only be used for functional considerations. Also, because the U250 and ZCU102 cards have different characteristics, the results will be different between these two targets. View the results from the platform and build target that you want to analyze:
 
@@ -35,7 +35,7 @@ If you look into the `hw_emu` directory where you built and ran the application,
 * `vadd.xclbin.link_summary`: A summary report of the linking process used to generate the device binary.
 * `xrt.run_summary`: A summary report of the events captured during the application runtime.
 
->**IMPORTANT:** If you targeted the ZCU102 hardware, these files are stored on the SD card and must be copied back to your workstation to continue this lab. Refer to [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=lei1600364954309.html) for more information.
+>**IMPORTANT:** If you targeted the ZCU102 hardware, these files are stored on the SD card and must be copied back to your workstation to continue this lab. Refer to [Running Emulation on an Embedded Processor Platform](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=lei1600364954309.html) for more information.
 
 The generation of these files and reports is controlled by runtime options located in the `xrt.ini` file.  This tutorial contains a pre-existing `xrt.ini` file which enables the generation a timeline of execution, and the profile summary data, with the following content:
 
@@ -55,7 +55,7 @@ vitis -a ./hw_emu
 vitis_analyzer ./hw_emu
 ```
 
->**NOTE:** The vitis_analyzer command has been updated to open the Analysis view of the Vitis Unified IDE, and loads the run summary as described in [Working with the Analysis View](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2023.2%20English&url=ug1393-vitis-application-acceleration&resourceid=bmv1632721179781.html). 
+>**NOTE:** The vitis_analyzer command has been updated to open the Analysis view of the Vitis Unified IDE, and loads the run summary as described in [Working with the Analysis View](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=bmv1632721179781.html). 
 
 The tool examines the specific folder or workspace, and determines the summary reports to display in the Analysis view. It displays a list of the found reports and lets you choose which reports to open, as shown in the following figure. 
 
