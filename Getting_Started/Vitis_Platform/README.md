@@ -36,6 +36,8 @@ This is a quick start for Versal platform creation. If you have queries about so
 
    ![Vivado XHUB download examples](images/vivado_download_example.png)
 
+   >Note: You can click **Refresh** to download the latest version.
+
 3. Create the Versal Extensible Embedded Platform Example project
 
    - Click **File -> Project -> Open Example**.
@@ -51,6 +53,7 @@ This is a quick start for Versal platform creation. If you have queries about so
    - Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view. In this example, we can keep the default settings.
    - Block Design COntainer(BDC) is to support Vitis Export to Vivdao flow. User could enable it accordingly. In this example, keep it disabled.
    - Configure AXI master and Interrupt Settings. You can choose how many interrupt and AXI masters this platform should support. 63 interrupts modes use two AXI_INTC in cascade mode. In this example, we can keep the default setting.
+   - Enbale BDC or not. Block container design is to support Vitis export to vivado flow. You can enbale it according to your project. In this example, we keep the default setting.
    - Enable the AI engine according to your requirement. In this example, we can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.

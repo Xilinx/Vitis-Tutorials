@@ -31,6 +31,8 @@ In this step, you will create a hardware design using the AMD Versal™ Adaptive
 
       ![STEP1](images/step1/vivado_download_example.png)
 
+      >Note: You can click **Refresh** to download the latest version.
+
 3. Create the Versal Extensible Embedded Part Support Platform Example project.
 
    - Click **File -> Project -> Open Example..**.
@@ -47,6 +49,7 @@ In this step, you will create a hardware design using the AMD Versal™ Adaptive
 
    - Configure the Clocks Settings. You can enable more clocks, update output frequency, and define default clock in this view. In this example, you can keep the default settings.
    - Configure the Interrupt Settings. You can choose how many interrupt should this platform supports. 63 interrupts mode will use two `AXI_INTC` in cascade mode. In this example, you can keep the default setting.
+   - Enbale BDC or not. Block container design is to support Vitis export to vivado flow. You can enbale it according to your project. In this example, we keep the default setting.
    - Enable AIE or not. In this example, you can keep the default setting.
    - Click **Next**.
    - Review the new project summary and click **Finish**.
