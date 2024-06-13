@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Super Sampling Rate FIR Filter
 
@@ -312,6 +312,6 @@ This architecture achieves close to 5 Gsps performance. It is slightly less beca
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -10,7 +10,7 @@
 
 # Post-Link Recompile of an AI Engine Application
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 
 ## Introduction
@@ -31,16 +31,16 @@ In the second case, you use the `.xsa` file generated during the link stage as t
 This tutorial details all the steps to perform hardware emulation (`hw_emu`), but it also supports the hardware implementation flow by changing the compilation target.
 
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2023.2 software.  The AMD Vitis&trade; release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html).
+**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2024.1 software.  The AMD Vitis&trade; release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-1.html).
 The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
-3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms/`.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh`.
+3. Set up your `ROOTFS`, and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2024.1` directory.
+4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms/`.
 
-This tutorial targets the VCK190 production board for 2023.2 version.
+This tutorial targets the VCK190 production board for 2024.1 version.
 
 The sub-directory `Files` contains all the source files necessary for this tutorial.
 
@@ -69,13 +69,13 @@ ___
 
  The MIT License (MIT)
 
- Copyright (c) 2023 Advanced Micro Devices, Inc. All rights reserved.
+ Copyright (c) 2024 Advanced Micro Devices, Inc. All rights reserved.
  SPDX-License-Identifier: MIT
 
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub><br><sup>XD039</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD039</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
