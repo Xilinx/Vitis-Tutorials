@@ -9,7 +9,7 @@
 
 # AI Engine A-to-Z Flow for Linux
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
@@ -40,7 +40,7 @@ The foundation of the Vitis environment design methodology is an iterative appro
 
 The steps in this tutorial are tightly coupled with the recommended best practices and introduce you to a complete end-to-end flow for a Linux-based host application for AI Engines and PL kernels using a base platform. You can then create a custom platform and re-target the design using the custom platform.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.1) for setting up software and installing the VCK190 base platform.
 
 ## Objectives
 
@@ -86,7 +86,7 @@ In this step, you will create a custom platform based on the VCK190 Evaluation b
 
    **Note: The link below redirects you to the different tutorial location.**
 
-   [Creating Custom Platfom based on VCK190 Evaluation board](../../../Getting_Started/Vitis_Platform/README.md)
+   [Creating Custom Platfom based on VCK190 Evaluation board](../../../../Getting_Started/Vitis_Platform/README.md)
 
    **Note**: You can either create custom embedded acceleration platforms by building from scratch, or modifing AMD embedded platforms. This module focuses on quickly creating a platform using a Versal adaptive SoC extensible embedded platform example.
 2. When you have completed the step-by-step procedure at the link above, return to this page and proceed to Step 3.

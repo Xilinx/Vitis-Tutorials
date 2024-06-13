@@ -9,9 +9,9 @@
 
 # AI Engine Graph Integration and Validation using a Custom Linux Platform
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
-In this tutorial, you will use the design sources that are used to run the system design on base platform in [Running system design on AI Engine, PS, and PL using base platform](../05-AI-engine-versal-integration/README.md). You will re-target the design to use the custom platform created in [Creating Custom Platfom based on VCK190 Evaluation board](../../../Getting_Started/Vitis_Platform/README.md).
+In this tutorial, you will use the design sources that are used to run the system design on base platform in [Running system design on AI Engine, PS, and PL using base platform](../05-AI-engine-versal-integration/README.md). You will re-target the design to use the custom platform created in [Creating Custom Platfom based on VCK190 Evaluation board](../../../../Getting_Started/Vitis_Platform/README.md).
 
 To read more about the AI Engine flow, see the *Versal ACAP AI Engine Programming Environment User Guide* ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
@@ -21,7 +21,7 @@ As described in [AI Engine A-to-Z Flow for Linux](README.md), two steps (tutoria
 
 *   **Run system design targeting the base platform**. Follow the step-by-step procedure in [Running system design on AI Engine, PS, and PL using base platform](../05-AI-engine-versal-integration/README.md) to complete this step.
 
-*  **Create a custom platform**. Follow the step-by-step procedure in [Creating Custom Platfom based on VCK190 Evaluation board](../../../Getting_Started/Vitis_Platform/README.md) to complete this step.
+*  **Create a custom platform**. Follow the step-by-step procedure in [Creating Custom Platfom based on VCK190 Evaluation board](../../../../Getting_Started/Vitis_Platform/README.md) to complete this step.
 
 After you complete these prerequisite tutorials, you are ready to run AI Engine graph integration and validation using a custom Linux platform. 
 
@@ -38,7 +38,7 @@ First, set up the environment for integrating the subsystem with the custom plat
 
    For example: `BASE_PLATFORM = ${PLATFORM_REPO_PATHS}/vck190_custom.xpfm`
 
-3. Make sure your `ROOTFS` and `IMAGE` are still pointing to the `xilinx-versal-common-v2023.2` directory. 
+3. Make sure your `ROOTFS` and `IMAGE` are still pointing to the `xilinx-versal-common-v2024.1` directory. 
    
    **Note** : The `$PLATFORM_REPO_PATHS` now points to the custom platform and it does not contain the `rootfs.ext4` and `Image` files as pointed in the Makefile.
    
@@ -161,7 +161,7 @@ Next, run the Hardware Emulation targeting the custom platform as follows:
 vitis_analyzer --classic sw/sim/behav_waveform/default.aierun_summary
 ```
 
-9. You can easily compare the results of the custom platform with the one generated using base platform. For example:
+9. You can easily compare the results of the custom platform with the one generated using base platform. Comparison of the trace is supported through classic Vitis™ Analyzer only. For example:
 
 * Select **File > Open Summary** to open the summary file generated for the base platform target. 
 * Once the summary file opens, click **Trace**  to open the VCD data which gives information about kernels, tiles and nets within the AI Engine. 
