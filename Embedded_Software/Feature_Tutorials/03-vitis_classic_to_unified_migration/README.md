@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 # Vitis Classic to Unified Project Migration
 
@@ -15,11 +15,11 @@ While this tutorial take an indepth look at the changes in the filesets and meta
 
 ## Migration Script from Vitis Classic IDE to Vitis Unified IDE
 
-There is also a migration utility in the Vitis Classic that users can use to port the workspace from Vitis Classic IDE to Vitis Unified IDE.  Users can port their workspace to Classic Vitis IDE 2013.2, and then <i>Vitis ->  Export Workspace to Unified IDE</i>. The migration script will generate a script that will rebuild the workspace in the unified Vitis IDE using the Vitis Python API. Users can launch the Unified Vitis IDE and source this script <i>vitis -s script_name.py</i>. Click [here](#Vitis-Classic-workspace-to-Unified-workspace-Migration-Demo) for a demo on how to migrate from Vitis Classic to Unified IDE
+There is also a migration utility in the Vitis Classic that users can use to port the workspace from Vitis Classic IDE to Vitis Unified IDE.  Users can port their workspace to Classic Vitis IDE, and then <i>Vitis ->  Export Workspace to Unified IDE</i>. The migration script will generate a script that will rebuild the workspace in the unified Vitis IDE using the Vitis Python API. Users can launch the Unified Vitis IDE and source this script <i>vitis -s script_name.py</i>. Click [here](#Vitis-Classic-workspace-to-Unified-workspace-Migration-Demo) for a demo on how to migrate from Vitis Classic to Unified IDE
 
 ### Migration Script Limitations
 
-* Only Classic Vitis IDE 2023.2 to Unified Vitis IDE support
+* Only Classic Vitis IDE to Unified Vitis IDE support
 * External repositories will not be reflected. Meaning if you have a custom driver in an external repo, then this driver will not be ported
 * Modification made to BSP will not be reflected
 * Build Configurations are not copied over to Unified. Users will need to generate this via the launnch configuration GUI
@@ -28,7 +28,7 @@ There is also a migration utility in the Vitis Classic that users can use to por
 
 As mentionend above, the methodology to pass the metadata from hardware from Vivado to Vitis IDE has changed. The sections below detail these changes. However, these changes will not affect the users as the AMD baremetal drivers, standalone bsp and libraries have been fully ported to this new methodology. 
 
-Before we proceed to the project migration. There are a few differences in Vitis Unified IDE in how the hardware metadata is extracted and processed. For example, Let's take the BSP (or Domain). This is a collection of drivers and libraries and processor specific files that are tailored to a users hardware specification based on the XSA file. In Classic Vitis the hardware metadata was extracted from the XSA using HSI (Hardware Software Interface) API and cross checked against the MLD in embeddedsw repository, and if found then the driver source files are added. Each driver has a driver_name_g.c. This file initization file is dynamically generated in the TCL file in the drivers data folder. This is used to initialize the driver struct. In Vitis unified flow, this is a little different. The XSA and HSI is still used. However, the HSI is used to create the SDT (System Device Tree), and then lopper uses the SDT to extract the metadata and cross checks the node (or IP) compatility string against the driver YAML file embeddedsw repository. The driver/library naming will still be the same. However, instead of an MLD/MDD (library/driver) there is a YAML file. Users can also reference the porting guide ug1647 [here](https://docs.amd.com/r/en-US/ug1647-porting-embeddedsw-components/Introduction) 
+Before we proceed to the project migration. There are a few differences in Vitis Unified IDE in how the hardware metadata is extracted and processed. For example, Let's take the BSP (or Domain). This is a collection of drivers and libraries and processor specific files that are tailored to a users hardware specification based on the XSA file. In Classic Vitis the hardware metadata was extracted from the XSA using HSI (Hardware Software Interface) API and cross checked against the MLD in embeddedsw repository, and if found then the driver source files are added. Each driver has a driver_name_g.c. This file initization file is dynamically generated in the TCL file in the drivers data folder. This is used to initialize the driver struct. In Vitis unified flow, this is a little different. The XSA and HSI is still used. However, the HSI is used to create the SDT (System Device Tree), and then lopper uses the SDT to extract the metadata and cross checks the node (or IP) compatility string against the driver YAML file embeddedsw repository. The driver/library naming will still be the same. However, instead of an MLD/MDD (library/driver) there is a YAML file. Users can also reference the porting guide [UG1647](https://docs.amd.com/r/en-US/ug1647-porting-embeddedsw-components/Introduction).
 
 ### System Device Tree (SDT)
 
@@ -394,7 +394,7 @@ Open the **Vitis-comp.json** as drop the psu_cortexa53_0 and verify that the **p
 
 ## Summary
 
-As we can see above, we migrated successfully from a Vitis Classic IDE 2023.2 to Vitis Unified IDE 2023.2 workspace using the Migration Utility available in the Vitis Classic IDE. It is recommended that users fully evaluate the migrated workspace to make sure everything was ported correctly. Users should make themselves aware of the limitations discussed at the top of this tutorial.
+As we can see above, we migrated successfully from a Vitis Classic IDE to Vitis Unified IDE workspace using the Migration Utility available in the Vitis Classic IDE. It is recommended that users fully evaluate the migrated workspace to make sure everything was ported correctly. Users should make themselves aware of the limitations discussed at the top of this tutorial.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 

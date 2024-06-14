@@ -8,7 +8,7 @@
 
 # Using Code Analyzer from Vitis Unified IDE
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Tutorial Overview
 
@@ -287,13 +287,13 @@ The `Code Analyzer` view gives us an overview of our design as if it was dataflo
 We did all this without having to perform C-Synthesis and C-RTL Co-Simulation, significantly accelerating our work.
 
 <!-- references -->
-[GH_Getting_started_VHLS]: https://github.com/Xilinx/Vitis-Tutorials/tree/2023.2/Getting_Started/Vitis_HLS
+[GH_Getting_started_VHLS]: ../../../Getting_Started/Vitis_HLS/
 [VHLS_UG1399]: https://docs.amd.com/r/en-US/ug1399-vitis-hls
 
 </br>
 <hr/>
 <p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

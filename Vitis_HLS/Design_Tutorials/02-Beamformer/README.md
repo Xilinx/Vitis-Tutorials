@@ -8,7 +8,7 @@
 
 # Adaptive Beamforming for Radar:<br>Floating-Point QRD+WBS in an FPGA
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## ABSTRACT
 

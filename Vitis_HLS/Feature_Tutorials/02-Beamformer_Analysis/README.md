@@ -8,7 +8,7 @@
 
 # HLS Micro-Optimization Tutorial using Beamformer IP
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Tutorial Overview
 
