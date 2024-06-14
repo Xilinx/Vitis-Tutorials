@@ -92,11 +92,11 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  </tr>
  <tr>
  <td align="center"><a href="./16-1M-Point-FFT-32Gsps/">1 Million Point float FFT @ 32 Gsps on AI Engine</a></td>
- <td>This approach is used in this tutorial to design a 1M-pt FFT for float data types that achieves an impressive throughput rate exceeding 32 Gsps. The design partitions all compute to the AI Engine array and uses URAM resources in programmable logic to implement the sample reordering needed for the "matrix transpose" operation outlined in detail below.</td>
+ <td>This tutorial implements a 1M-point FFT for cfloat data types that achieves an impressive throughput rate exceeding 32 Gsps using a large portion of the AI Engine array for compute and PL URAM resources to implement a matrix transpose operation.</td>
  </tr>
  <tr>
  <td align="center"><a href="./17-Hough-Transform/">System Partitioning of a Hough Transform on AI Engine</a></td>
- <td>This tutorial walks through the process of planning the implementation of a well-known image processing algorithm, mapping and partitioning it to the resources available in a Versal Adaptive SoC device.</td>
+ <td>This tutorial walks through the process of planning the implementation of a well-known image processing algorithm, mapping and partitioning it to the resources available in a Versal Adaptive SoC device. We illustrate this using the Hough Transform -- a feature extraction technique for computer vision & image processing.</td>
  </tr>
  </table>
 
