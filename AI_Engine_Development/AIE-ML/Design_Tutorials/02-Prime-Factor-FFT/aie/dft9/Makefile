@@ -53,25 +53,25 @@ gen_vectors:
 	matlab -batch "gen_vectors"
 
 ${AIE_OUTPUT}:	${MY_SOURCES}
-	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
 
 x86com:
-	v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} 2>&1| tee log
 
 sim:
-	aiesimulator |& tee -a log
+	aiesimulator 2>&1| tee -a log
 
 x86sim:
-	x86simulator |& tee -a log
+	x86simulator 2>&1| tee -a log
 
 profile:
-	aiesimulator --profile |& tee -a log
+	aiesimulator --profile 2>&1| tee -a log
 
 trace:
-	aiesimulator --online -wdb -ctf |& tee -a log
+	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
 trace-hang:
-	aiesimulator --profile --online -wdb -text --hang-detect-time=50000 --simulation-cycle-timeout=40000 |& tee -a log
+	aiesimulator --profile --online -wdb -text --hang-detect-time=50000 --simulation-cycle-timeout=40000 2>&1| tee -a log
 
 throughput:
 	@../../scripts/throughput.py aiesimulator_output/data/sig_o.txt --iscomplex

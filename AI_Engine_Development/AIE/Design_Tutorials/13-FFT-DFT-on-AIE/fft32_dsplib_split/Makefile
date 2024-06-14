@@ -33,25 +33,25 @@ endif
 all: 	${AIE_OUTPUT} sim
 
 ${AIE_OUTPUT}:	 ${MY_SOURCES}
-	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
 
 x86com:
-	v++ --compile --config aie.cfg --mode aie -target=x86sim ${AIE_FLAGS} |& tee log
+	v++ --compile --config aie.cfg --mode aie -target=x86sim ${AIE_FLAGS} 2>&1| tee log
 
 sim:
-	aiesimulator |& tee -a log
+	aiesimulator 2>&1| tee -a log
 
 x86sim:
-	x86simulator |& tee -a log
+	x86simulator 2>&1| tee -a log
 
 trace:
-	aiesimulator --online -wdb -ctf |& tee -a log
+	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
 profile:
-	aiesimulator --profile |& tee -a log
+	aiesimulator --profile 2>&1| tee -a log
 
 vcd:
-	aiesimulator --dump-vcd=hough_tile |& tee -a log
+	aiesimulator --dump-vcd=hough_tile 2>&1| tee -a log
 
 throughput:
 	@../python/throughput.py aiesimulator_output/data/sig0_o.txt --iscomplex
