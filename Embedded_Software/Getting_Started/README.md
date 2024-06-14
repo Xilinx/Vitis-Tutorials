@@ -8,7 +8,7 @@
 
 # Getting Started in Vitis Unified Embedded IDE
 
-***Version: 2023.2***
+***Version: 2024.1***
 
 This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will create the platform, hello world application, setup the target connections and deploy on our target board.
 
@@ -25,7 +25,7 @@ How the hardware metadata has passed between Vivado™ and Vitis has changed in 
 
 ## Get Started
 
-Launch Vitis unified embedded tool in 2023.2, and we will create out first Vitis Embedded project.
+Launch Vitis unified embedded tool in 2024.1, and we will create out first Vitis Embedded project.
 
 ![missing image](./images/welcome_screen.PNG)
 
