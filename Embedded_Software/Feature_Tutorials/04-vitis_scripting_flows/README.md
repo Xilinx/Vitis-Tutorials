@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 # Vitis Embedded Scripting Flows
 
@@ -23,7 +23,7 @@ There are commandline API for creating Vitis components, API for extracting the 
 
 There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial.
 
-Launch Vivado 2023.2 and use the TCL commands below
+Launch Vivado 2024.1 and use the TCL commands below
 
 ```
 cd scripts
@@ -91,7 +91,7 @@ client.set_workspace(pwd + "/vitis_ws")
 The Boot Artifacts will be automatically generated. For Zynq Ultrascale this will be the FSBL. If users dont want this, then use the `no_boot_bsp = True`
 
 ```
-platform = client.create_platform_component(name = "base_platform",hw = "design_1_wrapper.xsa",os = "standalone",cpu = "psu_cortexa53_0")
+platform = client.create_platform_component(name = "base_platform",hw_design = "design_1_wrapper.xsa",os = "standalone",cpu = "psu_cortexa53_0")
 ```
 
 ### Opening an existing Vitis Platform
@@ -708,6 +708,13 @@ If users are debugging remotely where the host machine and target device are not
 session.connect("--symbol", url="TCP:lentinus15:3121")
 ```
 
+### Connect to GDB
+
+Alternatively, users can connect to gdb. This is useful for connecting to an Emulated device such as QEMU
+
+```
+session.gdb_connect("localhost:3121")
+```
 
 ### Get all JTAG Targets
 
@@ -823,6 +830,21 @@ The command below will download the test.bin to address 0x10000000 of the curren
 session.dow("test.bin", "--data", addr=0x10000000)
 ```
 
+### Launching jtagterminal
+
+If users have the STDIN/OUT set to coresight in the BSP settings in Vitis. Then luanch the jtagterminal. For example, below is for Versal
+
+```
+a72 = session.targets("--set", filter="name =~ *Cortex-A72 #0*")
+a72.jtagterminal()
+```
+
+To stop the jtagterminal
+
+```
+a72.jtagterminal(--stop)
+```
+
 ### Memory read/write
 
 For example, to read from address 0x0
@@ -884,17 +906,17 @@ versal.device_program("project_1.pdi")
 
 ### Using example script
 
-There is an example `build_ws.py()` script that users can use as a reference to build a Vitis Unified IDE workspace. The script will create a hello_world application for a target XSA. The script also utilizes the HSI Python API to extract the HW metadata such as the architecture and processors from the XSA. It uses this metadata to control how the workspace is created.
+There is an example `unified_workspace.py()` script that users can use as a reference to build a Vitis Unified IDE workspace. The script will create a hello_world application for a target XSA. The script also utilizes the HSI Python API to extract the HW metadata such as the architecture and processors from the XSA. It uses this metadata to control how the workspace is created.
 
 Use the command below to launch the script
 
 ```
 cd scripts
-vitis -s create_unified_workspace.py path/to/xsa
+vitis -s unified_workspace.py path/to/xsa
 ```
 
 > **Note**: This script is to be used as a reference only.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

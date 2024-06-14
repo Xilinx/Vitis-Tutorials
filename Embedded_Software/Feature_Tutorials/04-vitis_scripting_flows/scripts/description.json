@@ -1,0 +1,31 @@
+{
+    "name": "Embedded_F_04-scripting",
+    "description": "Vitis CLI Scripting Demo",
+    "gui": "false",
+    "flow": "vitis",
+	"platform_allowlist": ["vck190", "zcu102"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "ES_F_04-Scr",
+        "disable": false,
+        "jobs": [
+            {
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 180
+                }
+            }
+        ],        
+        "targets": [
+            "vitis_hw_build"
+        ],
+	"custom_build_target": {
+            "all": "all"
+        }, 
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_zynqmp_notoolchain.sh"
+            }
+         }       
+    }
+}

@@ -1,7 +1,8 @@
-#/*
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: MIT
-#*/
+#
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# Author: Stephen MacMahon
 
 import argparse
 import vitis
@@ -27,7 +28,7 @@ def generate_workspace(**kwargs):
     
     
     if xsa != "":
-        workspace = os.path.join(os.getcwd(), "../workspace")
+        workspace = os.path.join(os.getcwd(), "./unified_workspace")
         workspace = os.path.normpath(workspace)
             
         print("Creating workspace at " + workspace)
@@ -38,7 +39,7 @@ def generate_workspace(**kwargs):
         client = vitis.create_client()
         client.set_workspace(workspace)
         
-        metadata = get_metadata(xsa="design_1_wrapper.xsa", open_xsa="1")
+        metadata = get_metadata(xsa=xsa, open_xsa="1")
         arch = metadata['arch']
         target_proc = metadata['target_proc']
         print("Info: Detected arch: " + arch)
@@ -77,10 +78,11 @@ def generate_workspace(**kwargs):
         # Set compiler flags. Users can set the compiler option using the example below
         #domain_object.set_config(option = 'proc', param = 'proc_extra_compiler_flags', value = '-g -Wall -Wextra')
 
-        platform = client.get_platform_component(name="platform")
+        # Get Platform Object
+        platform = client.get_component(name="platform")
         status = platform.build()
 
-        xpfm = os.path.join(os.getcwd(), "../workspace/platform/export/platform/platform.xpfm")
+        xpfm = os.path.join(os.getcwd(), "./unified_workspace/platform/export/platform/platform.xpfm")
         xpfm = os.path.normpath(xpfm)
         comp = client.create_app_component(name = "{}".format(app),platform = xpfm,domain = platform_domain_name,template = app)
 
