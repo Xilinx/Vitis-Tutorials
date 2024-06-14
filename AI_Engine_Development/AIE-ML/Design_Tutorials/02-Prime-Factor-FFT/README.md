@@ -35,11 +35,11 @@ The Prime Factor Algorithm (PFA) [[1]] is a Fast Fourier Transform (FFT) algorit
 
 A second advantage of the PFA approach is that unlike the popular Cooley-Tukey FFT, no extra multiplications by "twiddle factors" need be performed between stages. This fact falls out of the DFT factorization when $N_1$ and $N_2$ share no common factors. This provides a computational advantage compared to the more traditional Cooley-Tukey formulation, but the PFA incurs a drawback in that a complicated re-indexing or permutation of it's I/O samples is required. For Versal devices with both AI Engines and Programmable Logic (PL), however, this drawback is solved easily by leveraging the PL to implement these permutations as part of a custom data flow tailored to the PFA signal flow graph.
 
-An [earlier tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2023.2/AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT) implemented a PFA-1008 transform on AIE architecture in the VC1902 device. This tutorial maps the PFA-1008 transform to AIE-ML architecture in the VE2802 device. Once again we map the short-length DFT-7, DFT-9 and DFT-16 transforms to AI Engine using vector-matrix DFT's but this time to the AIE-ML architecture. The intermediate "memory transpose" operations mapped earlier to the programmable logic (PL) are instead mapped here to the Memory Tiles contained in the AIE-ML array. This simplifies data flow and keeps most of the graph inside the the array. The input and output permutation blocks remain implemented in the PL as RTL obtained using VItis High Level Synthesis (HLS) from untimed C++ models. These cannot be mapped to Mem Tiles as they require a type of modulo addressing not supported by the Memory Tile buffer descriptors (BDs).
+An [earlier tutorial](../../../AIE/Design_Tutorials/05-Prime-Factor-FFT) implemented a PFA-1008 transform on AIE architecture in the VC1902 device. This tutorial maps the PFA-1008 transform to AIE-ML architecture in the VE2802 device. Once again we map the short-length DFT-7, DFT-9 and DFT-16 transforms to AI Engine using vector-matrix DFT's but this time to the AIE-ML architecture. The intermediate "memory transpose" operations mapped earlier to the programmable logic (PL) are instead mapped here to the Memory Tiles contained in the AIE-ML array. This simplifies data flow and keeps most of the graph inside the the array. The input and output permutation blocks remain implemented in the PL as RTL obtained using VItis High Level Synthesis (HLS) from untimed C++ models. These cannot be mapped to Mem Tiles as they require a type of modulo addressing not supported by the Memory Tile buffer descriptors (BDs).
 
 ## Matlab Models
 
-This tutorial relies on the same Matlab models from the [original tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2023.2/AI_Engine_Development/AIE/Design_Tutorials/05-Prime-Factor-FFT). These models have been replicated here in the `matlab` folder of the repo. These apply to both the signal processing functions as well as the I/O permutations and matrix transpose addressing operations. All remain identical.
+This tutorial relies on the same Matlab models from the [original tutorial](../../../AIE/Design_Tutorials/05-Prime-Factor-FFT). These models have been replicated here in the `matlab` folder of the repo. These apply to both the signal processing functions as well as the I/O permutations and matrix transpose addressing operations. All remain identical.
 
 ## Design Overview
 
@@ -156,18 +156,16 @@ The figure below summarizes the PL resources required to implement the design. T
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2023.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2023-2.html
-
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/lin64/Vitis/2023.2/base_platforms```.
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/lin64/Vitis/2024.1/base_platforms```.
 
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/05-Prime-Factor-FFT/Makefile``` file.
 
 ```
-RELEASE=2023.2
+RELEASE=2024.1
 BOARD=vek280
-BASE_NUM=202320_1
+BASE_NUM=202410_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
@@ -260,6 +258,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-<p class="sphinxhide" align="center">  &copy; Copyright 2023 Advanced Micro Devices, Inc.</p>
-<p class="sphinxhide" align="center">  &copy; Copyright 2021 Xilinx Inc.</p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
 

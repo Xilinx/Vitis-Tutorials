@@ -481,6 +481,6 @@ In this tutorial you have learned:
 * View TLM signals and how they interact with the AI Engine and Versal adaptive SoC blocks.
 * Open and view Trace and Profile information in Vitis Analyzer.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

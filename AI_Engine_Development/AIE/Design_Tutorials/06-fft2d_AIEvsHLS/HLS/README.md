@@ -315,7 +315,7 @@ aarch64-xilinx-linux-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack
    -o $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf
 ```
 
-See [this page](https://xilinx.github.io/XRT/2023.2/html/index.html) for XRT documentation. See [this page]((https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Best-Practices-for-Host-Programming) for details of host application programming.
+See [this page](https://xilinx.github.io/XRT/) for XRT documentation. See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Best-Practices-for-Host-Programming) for details of host application programming.
 
 
 |Switch|Description|

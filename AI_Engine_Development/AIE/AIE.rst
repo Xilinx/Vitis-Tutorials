@@ -53,14 +53,14 @@ Environment Settings
 
 .. important:: 
 
-   Before beginning a tutorial, read and follow the `Vitis Software Platform Release Notes <https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes>`_ (v2023.2) for setting up software and installing the VCK190 base platform.
+   Before beginning a tutorial, read and follow the `Vitis Software Platform Release Notes <https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes>`_ (v2024.1) for setting up software and installing the VCK190 base platform.
 
 Run the following steps to set up the environment (do **NOT** apply to tutorials that do not use the VCK190 base platform):
 
-1. Set up your platform by running the ``xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux`` script as provided in the platform download. 
-   This script sets up the ``SYSROOT`` and ``CXX`` variables. If the script is not present, you **must** run the ``xilinx-versal-common-v2023.2/sdk.sh``.
-2. Set up your ``ROOTFS`` to point to the ``xilinx-versal-common-v2023.2/rootfs.ext4``.
-3. Set up your ``IMAGE`` to point to ``xilinx-versal-common-v2023.2/Image``.
+1. Set up your platform by running the ``xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux`` script as provided in the platform download. 
+   This script sets up the ``SYSROOT`` and ``CXX`` variables. If the script is not present, you **must** run the ``xilinx-versal-common-v2024.1/sdk.sh``.
+2. Set up your ``ROOTFS`` to point to the ``xilinx-versal-common-v2024.1/rootfs.ext4``.
+3. Set up your ``IMAGE`` to point to ``xilinx-versal-common-v2024.1/Image``.
 4. Set up your ``PLATFORM_REPO_PATHS`` environment variable based upon where you downloaded the platform.
 
 

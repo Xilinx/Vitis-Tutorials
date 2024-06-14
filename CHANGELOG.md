@@ -1,5 +1,20 @@
 # Vitis-Tutorials ChangeLog
 
+## 2024.1 (Jun. 14th, 2024)
+### New Tutorials 
+- AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps/
+- AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform/
+- AI_Engine_Development/AIE/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
+- AI_Engine_Development/AIE-ML/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
+
+### Tutorial Updates
+- The tutorials under Hardware_Acceleration category are in "regression" mode, meaning we will run regression tests on 2024.1 and newer versions, but will not make any feature updates other than bug fixes.
+- Update tutorials to use the Vitis Unified CLI
+- Provide equivalent python scripts for GUI-based tutorials
+
+<details open>
+    <summary>2023.2 Release</summary>
+
 ## 2023.2_update (Mar. 22, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting/
@@ -46,8 +61,9 @@
 - Add an additional level under AI_Engine_Development to host tutorials targeting AIE and AIE-ML.
     - AI_Engine_Development/AIE
     - AI_Engine_Development/AIE-ML
+</details>
 
-<details open>
+<details close>
     <summary>2023.1 Release</summary>
 
 ## 2023.1_update (Sep. 21th, 2023)

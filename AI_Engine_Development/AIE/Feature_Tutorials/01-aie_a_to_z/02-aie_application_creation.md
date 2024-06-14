@@ -100,6 +100,6 @@ You can see that this is a simple operation which is doing the sum of the real a
 
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

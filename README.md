@@ -53,10 +53,10 @@ Alternatively, you can also download repository contents as a ZIP file. The down
 To download a ZIP file of a specific branch, do one of the following:
 
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
-- From a terminal, execute the following command. The following uses the 2023.2 branch as an example.
+- From a terminal, execute the following command. The following uses the 2024.1 branch as an example.
 
   ```
-  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2023.2.zip && unzip 2023.2.zip 
+  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2024.1.zip && unzip 2024.1.zip 
   ```
 
 ## Release Notes
@@ -95,7 +95,7 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td>
-                <a href="./Embedded_Software/Getting_Started">Vitis Unified IDE for Embedded Design :new: </a>
+                <a href="./Embedded_Software/Getting_Started">Vitis Unified IDE for Embedded Design</a>
             </td>
             <td>
             </td>
@@ -107,7 +107,7 @@ To download a ZIP file of a specific branch, do one of the following:
     <tbody>
         <tr>
             <td colspan="3" height="24" align="center">
-                <strong> <a href="./AI_Engine_Development/AIE-ML/">AI Engine Development on AIE-ML :new:</a></strong>
+                <strong> <a href="./AI_Engine_Development/AIE-ML/">AI Engine Development on AIE-ML </a></strong>
             </td>
         </tr>
         <tr>
@@ -131,7 +131,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/02-using-gmio">Using GMIO with AIE-ML </a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization">AIE-ML Programming :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/01-AIE-ML-programming-and-optimization">AIE-ML Programming </a>
             </td>
         </tr>
         <tr>
@@ -150,20 +150,21 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/05-AI-engine-versal-integration">Versal Integration for HW Emu and HW</a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features </a>
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML :new:</a>            
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML </a>            
             </td>
         </tr>        
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/13-aie-ml-performance-analysis">AIE-ML Performance Analysis :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/13-aie-ml-performance-analysis">AIE-ML Performance Analysis </a>
             </td>
             <td>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/22-Performance-Validation-in-Analysis-View">Performance Validation in Analysis View :new: </a>   
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial </a>
             </td>
         </tr>   
     </tbody>
@@ -301,10 +302,10 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features :new:</a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features </a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter">Two Tone Filter :new:</a>            
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/21-two_tone_filter">Two Tone Filter </a>            
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/11-Bilinear_Interpolation">Bilinear Interpolation </a>
@@ -312,24 +313,35 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine :new:</a>   
+                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/22-Performance-Validation-in-Analysis-View">Performance Validation in Analysis View :new: </a>   
             </td>                 
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine :new:</a>            
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine </a>            
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture :new:</a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture </a>
             </td>
         </tr>
         <tr>
             <td height="24">
-            </td>                 
-            <td>      
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine </a>                     
             </td>
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter :new:</a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter </a>
             </td>
-        </tr>        
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps">1M Point float FFT @ 32 Gsps :new: </a>
+            </td>            
+        </tr>
+        <tr>
+            <td height="24">                   
+            </td>
+            <td>
+            </td>
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
+            </td>            
+        </tr>                   
     </tbody>
 </table>
 
@@ -337,7 +349,7 @@ To download a ZIP file of a specific branch, do one of the following:
     <tbody>
         <tr>
             <td colspan="3" height="24" align="center">
-                <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development :new: </a></strong>
+                <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development  </a></strong>
             </td>
         </tr>
         <tr>
@@ -355,22 +367,22 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified IDE :new: </a>
+                <a href="./Embedded_Software/Getting_Started">Getting Started in Vitis Unified IDE</a>
             </td>
             <td> 
-                <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode :new: </a>
+                <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode</a>
             </td>
             <td>
-                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE :new: </a> 
+                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE  </a> 
             </td>
         </tr>  
         <tr>
             <td height="24"> </td>
             <td>
-                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide :new: </a>            
+                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide</a>            
             </td>
             <td> 
-                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow :new: </a>
+                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow</a>
             </td>
         </tr>  
     </tbody>
@@ -380,7 +392,7 @@ To download a ZIP file of a specific branch, do one of the following:
     <tbody>
         <tr>
             <td colspan="3" height="24" align="center">
-                <strong> <a href="./Vitis_HLS/">Vitis HLS :new: </a></strong>
+                <strong> <a href="./Vitis_HLS/">Vitis HLS</a></strong>
             </td>
         </tr>
         <tr>
@@ -398,14 +410,14 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE :new: </a>
+                <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE</a>
             </td>
             <td>
-                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP :new: </a>
+                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP</a>
             </td>
             <td>
                 <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar:
-Floating-Point QRD+WBS in an FPGA :new: </a>
+Floating-Point QRD+WBS in an FPGA</a>
             </td>
         </tr>  
     </tbody>
@@ -615,6 +627,14 @@ Floating-Point QRD+WBS in an FPGA :new: </a>
         </tr>
         <tr>
             <td>
+                <a href="https://github.com/Xilinx/Vitis-HLS-Introductory-Examples">Introductory examples for Vitis HLS</a>
+            </td>
+            <td>
+                This repository contains introductory examples for Vitis HLS that demonstrate specific scenarios related to coding styles and optimization methods. They can help you get started with coding and optimization using Vitis HLS.
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <a href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis Acceleration Examples</a>
             </td>
             <td>
@@ -649,6 +669,6 @@ Floating-Point QRD+WBS in an FPGA :new: </a>
 </table>
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

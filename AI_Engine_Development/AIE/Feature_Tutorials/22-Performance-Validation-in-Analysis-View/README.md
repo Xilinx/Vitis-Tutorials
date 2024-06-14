@@ -66,7 +66,7 @@ In the Project Parameters section, the following parameters are defined:
 | Variable | Description |
 | --- | --- |
 | **TARGET** | The target which is either hw_emu or hw. The default is hw|
-| **ARCH** | The architecture which is either aie or aie-ml. The default is aie. <br> Depending on the architecture the platform will be either:<br> &emsp;&emsp; _xilinx_vck190_base_202410_1_ for AI Engine architecture<br> &emsp;&emsp; _xilinx_vek280_es1_base_202410_1_ for AI Engine-ML architecture |
+| **ARCH** | The architecture which is either aie or aie-ml. The default is aie. <br> Depending on the architecture the platform will be either:<br> &emsp;&emsp; _xilinx_vck190_base_202410_1_ for AI Engine architecture<br> &emsp;&emsp; _xilinx_vek280_base_202410_1_ for AI Engine-ML architecture |
 | **MULTIRATE** | The implemented design will have the same input but the output size depends on the antenna index <br> **Multirate Designs won't run on hardware** The host code is not yet adapted to this possibility. |
 |  |  |
 
@@ -517,6 +517,6 @@ Same thing for the VEK280: `make ARCH=aie-ml build_hw`
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

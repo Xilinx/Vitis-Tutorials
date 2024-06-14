@@ -13,7 +13,7 @@
 
 This tutorial targets AIE-ML device, but shares test cases and description files with [AIE 04-packet-switching](../../../AIE/Feature_Tutorials/04-packet-switching).
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ software platform 2024.1. The Vitis release includes all the embedded base platforms including the VEK280 ES1 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ software platform 2024.1. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis tools.
 
@@ -24,7 +24,7 @@ Before starting this tutorial, run the following steps:
 3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the ``/**Common Images Dir**/xilinx-versal-common-v2024.1`` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This tutorial targets VEK280 ES1 board for 2024.1 version.
+This tutorial targets VEK280 board for 2024.1 version.
 
 ## Objectives
 
@@ -91,6 +91,6 @@ Follow instructions in [Packet Stream-Based AI Engine Kernels](../../../AIE/Feat
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

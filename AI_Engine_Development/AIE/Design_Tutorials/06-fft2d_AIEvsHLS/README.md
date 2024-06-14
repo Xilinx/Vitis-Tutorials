@@ -173,7 +173,7 @@ To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perfor
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes (v2023.2)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
+Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software and installing the VCK190 base platform.
 
 This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files from the lounge and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
 
@@ -299,7 +299,7 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT Release Notes](https://docs.amd.com/r/en-US/ug1451-xrt-release-notes)
 
-#### Vitis Unified Software Development Platform 2023.2 Documentation (https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+#### Vitis Unified Software Development Platform Documentation (https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 Below are links to Vitis related information referenced in this tutorial:
 

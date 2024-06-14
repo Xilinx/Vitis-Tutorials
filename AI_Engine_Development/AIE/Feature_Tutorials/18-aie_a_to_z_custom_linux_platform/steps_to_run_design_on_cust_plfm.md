@@ -25,7 +25,7 @@ As described in [AI Engine A-to-Z Flow for Linux](README.md), two steps (tutoria
 
 After you complete these prerequisite tutorials, you are ready to run AI Engine graph integration and validation using a custom Linux platform. 
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2023.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* for setting up software and installing the VCK190 base platform.
 
 
 ## Setting up the environment
@@ -232,6 +232,6 @@ To read more about the AI Engine flow, see the *Versal ACAP AI Engine Programmin
 GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](https://support.xilinx.com/).
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

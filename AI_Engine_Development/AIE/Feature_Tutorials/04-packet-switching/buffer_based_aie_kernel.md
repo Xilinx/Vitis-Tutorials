@@ -471,6 +471,6 @@ In this step, you learned about the following concepts.
 
 Next, review [Buffer Based AI Engine Kernels with Mixed Data Types](./buffer_based_mix_data_type.md).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

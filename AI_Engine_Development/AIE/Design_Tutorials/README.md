@@ -90,9 +90,17 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./15-farrow_filter/">Fractional Delay Farrow Filter</a></td>
  <td>This Versal system example implements a variable fractional delay algorithm using the Farrow Filter structure and walks the user through common AI Engine design optimization techniques. The design uses both AI Engine and PL kernels working cooperatively. AI Engine elements are hand-coded using AIE API. PL elements are implemented using Vitis HLS. System integration in Vitis is managed using the new v++ Unified Command Line flow.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./16-1M-Point-FFT-32Gsps/">1 Million Point float FFT @ 32 Gsps on AI Engine</a></td>
+ <td>This approach is used in this tutorial to design a 1M-pt FFT for float data types that achieves an impressive throughput rate exceeding 32 Gsps. The design partitions all compute to the AI Engine array and uses URAM resources in programmable logic to implement the sample reordering needed for the "matrix transpose" operation outlined in detail below.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./17-Hough-Transform/">System Partitioning of a Hough Transform on AI Engine</a></td>
+ <td>This tutorial walks through the process of planning the implementation of a well-known image processing algorithm, mapping and partitioning it to the resources available in a Versal Adaptive SoC device.</td>
+ </tr>
  </table>
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

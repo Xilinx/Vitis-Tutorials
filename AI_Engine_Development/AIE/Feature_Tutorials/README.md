@@ -106,10 +106,14 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./21-two_tone_filter/">Two Tone Filter on AIE Using DSP libraries and Vitis Model Composer </a></td>
  <td>This tutorial demonstrates how to implement the same MATLAB model design using the Vitis DSP libraries targeting AI Engine. This MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot. This tutorial has four parts. In part 1, the sampling rate requirement is 400 Msps; in part 2, the sampling rate requirement is 2000 Msps, in part 3, implement the part 1 design using Vitis IDE and then finally, in part4, implement the part 1 design using Vitis Model Composer tool.</td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./22-Performance-Validation-in-Analysis-View/">Performance Validation in Analysis View of the Vitis Unified IDE</a></td>
+ <td>This tutorial demonstrates throughput and latency computation after AI Engine Simulation and their analysis in the Analysis View of the Vitis Unified IDE. </td>
+ </tr>  
  </table>
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

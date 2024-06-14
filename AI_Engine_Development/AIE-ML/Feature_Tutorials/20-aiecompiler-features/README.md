@@ -16,11 +16,11 @@
 
 This tutorial targets AIE-ML device, but shares test cases and description files with [AIE 20-aiecompiler-features](../../../AIE/Feature_Tutorials/20-aiecompiler-features).
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2024.1 software. The Vitis release includes all the embedded base platforms including the VEK280 ES1 base platform that is used in this tutorial. 
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2024.1 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. 
 
 Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This tutorial targets VEK280 ES1 board for 2024.1/ version.
+This tutorial targets VEK280 board for 2024.1/ version.
 
 ## Objectives
 

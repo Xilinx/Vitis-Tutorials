@@ -16,22 +16,20 @@ The tutorials under the AI Engine for Machine Learning (AIE-ML) Development help
 
 - The AIE-ML Development <a href="./Design_Tutorials/">**Design Tutorials**</a> showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
->**IMPORTANT**: Before beginning a tutorial, ensure you have installed the AMD Vitis™ 2023.2 software. The Vitis release includes all the embedded base platforms, including the VEK280 ES1 base platform that is used in these tutorials. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from [Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning a tutorial, ensure you have installed the AMD Vitis™ 2024.1 software. The Vitis release includes all the embedded base platforms, including the VEK280 base platform that is used in these tutorials. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from [Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 The `common image` package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis software platform.
 
 Before starting a tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh`.
-3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/Common Images Dir/xilinx-versal-common-v2023.2` directory.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/Common Images Dir/xilinx-versal-common-v2024.1` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
-
-Note: These tutorials target VEK280 ES1 board or build custom board using ES devices, which are subject to a special license. Obtain a license for using Beta Devices in AMD tools, and ensure it is enabled by executing `enable_beta_device` (or add it to the tools initial `.tcl` files).
 
 ### Feature Tutorials
 
-These tutorials target the **VEK280 ES1** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
+These tutorials target the **VEK280** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
  <table style="width:100%">
  <tr>
@@ -154,10 +152,25 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
  <td>Yes</td>
  <td>Yes</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/22-Performance-Validation-in-Analysis-View/">Performance Validation in Analysis View</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ </tr> 
  </table>
 
 ### Design Tutorials
-These tutorials target the **VEK280 ES1** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
+These tutorials target the **VEK280** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
  <table style="width:100%">
  <tr>
@@ -238,6 +251,6 @@ These tutorials target the **VEK280 ES1** board. The table below lists the tutor
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
