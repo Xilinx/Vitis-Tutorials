@@ -40,6 +40,9 @@ DTB_FILE         = $(BOOT_DIR)/system.dtb
 BOOT_IMAGE       = $(BOOT_DIR)/BOOT.BIN
 SW_FILES         = $(IMAGE_DIR)/boot.scr $(BOOT_DIR)/u-boot.elf $(BOOT_DIR)/bl31.elf
 BOOT_FILES       = u-boot.elf bl31.elf
+SDKTARGETSYSROOT ?= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.1/sysroots/cortexa72-cortexa53-xilinx-linux
+CXX		 ?= aarch64-linux-gnu-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$(SDKTARGETSYSROOT)
+
 
 #platform related
 PLATFORM_NAME    = $(PLATFORM)_$(VERSION)

@@ -6,15 +6,22 @@
 
 include platform.mk
 
-TARGET := hw_emu
+TCL_SOURCE=hw/my_project_changes.tcl
+TCL_SOURCE_1=hw/import_vma_hw.tcl
 
-.PHONY: adf xsa xos vma host package run clean
+TARGET := hw
+
+.PHONY: all xsa adf xos vma vma_import host package run clean
+
+all: xsa viv_changes adf xos vma vma_import host package
 
 xsa: $(XSA)
 
 $(XSA):
 	$(MAKE) -C hw all
 
+viv_changes:
+	$(VIVADO) -mode batch -notrace -source $(TCL_SOURCE) 
 
 adf:
 	$(MAKE) -C aie all
@@ -25,15 +32,24 @@ xos:
 vma:
 	$(MAKE) -C vitis_impl vma
 
-HOST_CFLAGS = -Isrc -Isw -Iaie -ladf_api_xrt -lxrt_coreutil -D__SYNCBO_ENABLE__ $(TARGET_FLAGS) -DTARGET_DEVICE=\"$(DEVICE)\"  -std=c++17 -O0 -g -Wall -fmessage-length=0 -I${GITHUB_COMMON_REPO}/common/includes/xcl2 --sysroot=${SYSROOT} -I=/usr/include -I=/usr/include/xrt -L=/usr/lib -ldl -lcrypt -lstdc++ -lxilinxopencl -lpthread -lrt -I$(XILINX_VITIS)/aietools/include -L$(XILINX_VITIS)/aietools/lib/aarch64.o -I${XILINX_VITIS}/include -I${XILINX_HLS}/include
-HOST_SRC = sw/host.cpp aie/Work/ps/c_rts/aie_control_xrt.cpp
+
+vma_import: $(TCL_SOURCE_1)
+	$(VIVADO) -mode batch -notrace -source $(TCL_SOURCE_1) 
+
+
+
+HOST_SRC = sw/host.cpp 
 HOST_EXE = host.exe
+GCC_FLAGS := -Wall -c -std=c++17 -Wno-int-to-pointer-cast --sysroot=${SDKTARGETSYSROOT} 
+GCC_INCLUDES := -I$(SDKTARGETSYSROOT)usr/include/xrt -I$(SDKTARGETSYSROOT)usr/include 
+GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT} 
 
 
-# Host rules
+# Host rules
 host: $(HOST_SRC)
 	mkdir -p host_code_dir
-	$(CXX) $+ -o $(HOST_EXE) $(HOST_CFLAGS)
+	$(CXX)  $(GCC_FLAGS) $(GCC_INCLUDES) $(HOST_SRC)  
+	$(CXX) *.o $(GCC_LIB) -std=c++17 $(GCC_LIB) -o $(HOST_EXE) 
 	@echo "INFO: Compiled Host Executable: $(HOST_EXE)"
 
 EMBEDDED_EXEC_SCRIPT = embedded_exec.sh
@@ -93,5 +109,8 @@ run:
 
 clean:
 	$(MAKE) -C hw clean
-	$(MAKE) -C sw clean
-	${RM} -r $(PLATFORM_DIR)
+	$(MAKE) -C aie clean
+	$(MAKE) -C pl_kernels clean
+	$(MAKE) -C vitis_impl clean
+	rm -rf host_code_dir package.hw package.hw_emu _x *.hwdef
+	rm host.exe host.o *.xclbin *.log *.jou *.package_summary *.pb

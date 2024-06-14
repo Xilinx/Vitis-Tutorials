@@ -6,4 +6,4 @@
 #!/bin/bash
 export XILINX_XRT=/usr
  
-./host.exe vck190_prj_hw_emu.xclbin
+./host.exe vck190_prj_fixed_hw.xclbin

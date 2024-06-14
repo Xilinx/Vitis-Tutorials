@@ -224,7 +224,7 @@ proc create_root_design { parentCell } {
 
 
   # Create instance: cips_noc, and set properties
-  set cips_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 cips_noc ]
+  set cips_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 cips_noc ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {8} \
     CONFIG.NUM_MI {0} \
@@ -323,7 +323,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_pins /cips_noc/aclk7]
 
   # Create instance: noc_ddr4, and set properties
-  set noc_ddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_ddr4 ]
+  set noc_ddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_ddr4 ]
   set_property -dict [list \
     CONFIG.CH0_DDR4_0_BOARD_INTERFACE {ddr4_dimm1} \
     CONFIG.MC_CHAN_REGION1 {DDR_LOW1} \
@@ -369,7 +369,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_intf_pins /noc_ddr4/S07_INI]
 
   # Create instance: noc_lpddr4, and set properties
-  set noc_lpddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 noc_lpddr4 ]
+  set noc_lpddr4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 noc_lpddr4 ]
   set_property -dict [list \
     CONFIG.CH0_LPDDR4_0_BOARD_INTERFACE {ch0_lpddr4_c0} \
     CONFIG.CH0_LPDDR4_1_BOARD_INTERFACE {ch0_lpddr4_c1} \

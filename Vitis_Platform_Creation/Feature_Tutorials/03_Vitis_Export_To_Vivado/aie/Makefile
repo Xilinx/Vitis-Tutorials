@@ -17,5 +17,5 @@ all: graph.cpp graph.h
 clean:
 	rm -rf .Xil Work *.a Map_Report.csv sol.db xcd.log AIECompiler.log
 	rm -rf aiesimlator_output function_wdb_dir trdata.aiesim 
-	rm *.log *.wcfg *.wdb pl_sample_counts
+	rm *.log
 

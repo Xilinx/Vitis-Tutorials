@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
    </td>
@@ -11,13 +11,13 @@
 
 # Vitis Export To Vivado
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 ## Introduction
 
-The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. Refer UG1393 https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
+The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. The flow is supported for project-mode only. Refer UG1393 https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
 
-**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2023.2 and Vivado 2023.2 software.
+**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2024.1 and Vivado 2024.1 software.
 
 ### We are creating the custom BDC based platform using the tcl script. The Vitis Export to Vivado flow supports BDC-based platform only. 
 
@@ -138,7 +138,13 @@ Note: Use the make command in the tutorial from the parent folder `03_Vitis_Expo
 
 #### Step 1 : Create the hardware design in Vivado
 
-Step 1.1 : Create the hardware design in Vivado using the Tcl flow. The Tcl files are shared in directory `hw/xsa_scripts`. 
+Step 1.1 : Creating a BDC based hardware design in Vivado using the Tcl flow. The Tcl files are shared in directory `hw/xsa_scripts`. If you want to use the flow on non-BDC design, you need to convert the non-BDC design to BDC design. Refer the [link](./hw/README.md) to convert non-BDC design to BDC design. 
+
+To run the complete hardware flow for this tuotiral, use the make command:
+
+`make all TARGET=hw`
+
+Below steps help you to go through the flow step by step:
 
 Use the following make command to generate the Vivado project through Tcl:
 
@@ -159,7 +165,7 @@ Open the Vivado project by opening the project file .xpr from the path:  `./hw/b
 
 ![image](./images/my_project_1.png)
 
-Step 1.2: Add the custom RTL IPs in Vivado. Here, we are using stream_in and stream_out RTL IPs which we are adding in ext_bdc.bd. Stream_out RTL IP is a free running RTL block which generates the stream data indefinitely. Stream_in IP receives the data from AIE and status of the received data can be checked by PS through AXI Lite interface. Below steps demonstrates how to add custom RTL IPs in the bd to export the extensible xsa from the Vivado:
+Step 1.2: Add the custom RTL IPs in Vivado. Here, we are using stream_in and stream_out RTL IPs which we are adding in ext_bdc.bd. Stream_out RTL IP is a free running RTL block which generates the stream data indefinitely. Stream_in IP receives the data from AIE and status of the received data can be checked by PS through AXI Lite interface. Below steps demonstrates how to add custom RTL IPs in the bd to export the extensible xsa from the Vivado. This step can also be done by sourcing "my_project_changes.tcl" located in hw folder or by using the make command `make viv_changes`. 
 
 1. Package RTL IPs. (We have placed the packaged RTL IPs in the folder `custom_ip`)
 
@@ -167,7 +173,7 @@ Step 1.2: Add the custom RTL IPs in Vivado. Here, we are using stream_in and str
 
 ![image](./images/add_custom_ip_1.png)
 
-3. Open ext_bd.bd. Source "my_project_changes.tcl" located in hw folder. Source the tcl file to execute following actions:
+3. Open ext_bd.bd. 
 
 ![image](./images/source_tcl.png)
 
@@ -300,7 +306,7 @@ Here, it can be seen that the open ports in step 1.2.8 are connected using the v
 
 #### Step 4: Changes in the Vivado design after the VMA import
 
-Developer can make the Vivado design changes in the ext_bdc_vma.bd after importing VMA except inside the hierarchy (VitisRegion.v). You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy. Refer to [UG1393](<https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
+Developer can make the Vivado design changes in the ext_bdc_vma.bd after importing VMA except inside the hierarchy (VitisRegion.v). You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy. Refer to [UG1393](<https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
 
  **NOTE:** Any changes related to VitisRegion hierarchy in ext_bdc_vma.bd can only be done through Vitis. It is read-only in Vivado. 
  
@@ -394,13 +400,13 @@ Output: The fixed XSA, `vck190_prj_fixed_hw_emu.xsa`, is located in the folder `
 
 #### Step 7: Generate the XCLBIN
 
-The ‘common image’ package (https://www.xilinx.com/member/forms/download/xef.html?filename=xilinx-versal-common-v2023.2_10140544.tar.gz) contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis software platform.
+The ‘common image’ package (https://account.amd.com/en/forms/downloads/xef.html?filename=xilinx-versal-common-v2024.1_05230256.tar.gz) contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis software platform.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2023.2/environment-setup-cortexa72-cortexa53-xilinx-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2023.2/sdk.sh``.
-3. Set up your ROOTFS and IMAGE to point to the ``rootfs.ext4`` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2023.2`` directory.
+2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2024.1/environment-setup-cortexa72-cortexa53-xilinx-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2024.1/sdk.sh``.
+3. Set up your ROOTFS and IMAGE to point to the ``rootfs.ext4`` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2024.1`` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
 Compile the A72 Host Application: The host code uses XRT (Xilinx Run Time) as an API to talk to the AI Engine and PL kernels. Note that to compile the host code, it is required to use the c++17 package. Ensure your gcc or g++ compiler has the necessary packages installed.
@@ -434,7 +440,7 @@ v++ -p -t hw -f ./hw/build/my_project/vck190_prj_fixed_hw.xsa \
 --package.dtb ../boot/system.dtb \
 -o vck190_vitis_design_hw.xclbin 
 ```
-To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
+To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
 
 Use the make command to generate the xcilbin using the v++  package command for HW Emulation flow:
 `make package TARGET=hw_emu`
@@ -478,12 +484,8 @@ In this tutorial, you learned the following after completing the tutorial:
  4. Import the VMA into the Vivado and progress the platform development in the Vivado.
  5. Generate the `fixed.xsa` file from the Vivado to support hardware and hardware emulation flow.
 
-To read more about the flow, refer to [UG1393](https://docs.amd.com/search/all?query=Vitis+Unified+Software+Platform+Documentation%253A+Application+Acceleration+Development+(UG1393)&content-lang=en-US) (Chapter 19: Managing Vivado Synthesis, Implementation, and Timing Closure).
+To read more about the flow, refer to [UG1393](https://docs.xilinx.com/search/all?query=Vitis+Unified+Software+Platform+Documentation%253A+Application+Acceleration+Development+(UG1393)&content-lang=en-US) (Chapter 19: Managing Vivado Synthesis, Implementation, and Timing Closure).
 
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](support.xilinx.com).
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
-
-<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>![image](https://media.gitenterprise.xilinx.com/user/2897/files/e44dbf9c-a23d-454f-a757-437e46fd02f4)

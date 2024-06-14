@@ -18,24 +18,25 @@
             }
         ],
         "targets": [
-            "vitis_hw_build"
+            "vitis_hw_build",
+            "vitis_hw_run"
             ],
         "category": "canary",
         "make_options": [
-           "SYSROOT=${SYSROOT}",
+           "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "SYSROOT=${SYSROOT}",
             "SDKTARGETSYSROOT=${SYSROOT}",
             "ROOTFS=${COMMON_IMAGE_VERSAL}/rootfs.ext4",
-            "IMAGE=${COMMON_IMAGE_VERSAL}/Image"
+            "IMAGE=${COMMON_IMAGE_VERSAL}/Image",
+            "EMBEDDED_PACKAGE_OUT=./package.hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
          ],
         "custom_build_target":
         {
             "all": "all"
         },
-
-        "tasks": {
-            "build": {
-                "pre_exec": "./env_setup_versal.sh"
-            }
+        
+        "custom_board_target": "run_test"
         }
-    }
 }

@@ -286,7 +286,7 @@ proc create_root_design { parentCell } {
   set irq [ create_bd_port -dir O -type intr irq ]
 
   # Create instance: ConfigNoc, and set properties
-  set ConfigNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 ConfigNoc ]
+  set ConfigNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 ConfigNoc ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {1} \
@@ -330,7 +330,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_intf_pins /ai_engine_0/S00_AXI]
 
   # Create instance: DDRNoc, and set properties
-  set DDRNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 DDRNoc ]
+  set DDRNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 DDRNoc ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {0} \
@@ -388,7 +388,7 @@ proc create_root_design { parentCell } {
  ] [get_bd_pins /DDRNoc/aclk0]
 
   # Create instance: LPDDRNoc, and set properties
-  set LPDDRNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.0 LPDDRNoc ]
+  set LPDDRNoc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 LPDDRNoc ]
   set_property -dict [list \
     CONFIG.NUM_CLKS {1} \
     CONFIG.NUM_MI {0} \
