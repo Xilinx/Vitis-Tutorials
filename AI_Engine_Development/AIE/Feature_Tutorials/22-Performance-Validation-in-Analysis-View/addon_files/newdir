@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+
+num=1
+while [ -d ptest$num ]; do
+num=$(($num+1))
+done
+
+echo "Creating ptest$num..."
+mkdir ptest$num
+
+cd ptest$num
+cp -r ../data .
+cp  ../a.xclbin .
+cp  ../host.exe .
+cp ../xrt.ini .
+cp ../embedded_exec.sh .

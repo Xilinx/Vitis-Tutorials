@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+
+
+
+echo "Creating ptest_api..."
+mkdir ptest_api
+
+cd ptest_api
+cp -r ../data .
+cp  ../a.xclbin .
+cp  ../host_api.exe host.exe
+cp ../embedded_exec.sh .
