@@ -119,15 +119,11 @@ When your AI Engine Application meets your expectation (in terms of functionalit
 
 
 
+
+
 ******************************************
-Available Tutorials
-******************************************
-
-
-
-
 Feature Tutorials
-============================================
+******************************************
 
 
 These tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
@@ -138,7 +134,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./Feature_Tutorials/Feature_Tutorials>
+   Feature Tutorials <./Feature_Tutorials/Feature_Tutorials.rst>
 
 
 .. csv-table:: Feature Tutorials
@@ -169,9 +165,9 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 
 
-
+******************************************
 Design Tutorials
-============================================
+******************************************
 
 These tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
@@ -181,7 +177,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
    :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./Design_Tutorials/Design_Tutorials.rst>
 
 
 

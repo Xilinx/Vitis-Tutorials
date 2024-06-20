@@ -12,10 +12,10 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
    :caption: Feature Tutorials
    :hidden:
 
-   ./01-user_managed_mode/README
-   ./03-vitis_classic_to_unified_migration/README
-   ./04-vitis_scripting_flows/README
-   ./02-Debugging/README
+   User Managed Mode in Vitis Unified IDE <./01-user_managed_mode/README.md>
+   Migrating from classic Vitis IDE to Vitis Unified IDE <./03-vitis_classic_to_unified_migration/README.md>
+   Vitis Embedded Scripting Flow <./04-vitis_scripting_flows/README.md>
+   Vitis Embedded Software Debugging Guide <./02-Debugging/README.md>
 
 
 
@@ -26,16 +26,16 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
    * - Feature Tutorial
      - Design Target
 	 
-   * - :doc:`./01-user_managed_mode/README`
+   * - :doc:`User Managed Mode in Vitis Unified IDE <./01-user_managed_mode/README>`
      - Introduces how command line users can make use of Vitis Unified IDE to debug their applications in GUI and how to quickly call makefile actions.
 
-   * - :doc:`./03-vitis_classic_to_unified_migration/README`
+   * - :doc:`Migrating from classic Vitis IDE to Vitis Unified IDE <./03-vitis_classic_to_unified_migration/README>`
      - Demonstrates the migration steps and deep dive into the details about hardware to software handoff metadata, how to migrate libraries and drivers.
 	 
-   * - :doc:`./04-vitis_scripting_flows/README`
+   * - :doc:`Vitis Embedded Scripting Flow <./04-vitis_scripting_flows/README>`
      - Demonstrates how to automate GUI steps with scripts for both project management and debugging.
 	 
-   * - :doc:`./02-Debugging/README`
+   * - :doc:`Vitis Embedded Software Debugging Guide <./02-Debugging/README>`
      - This tutorial demonstrates different debugging features available within the Vitis Embedded software development flow for bare-metal and Linux applications. It also introduces the flow to create a debuggable FSBL and how to do cross triggering in the Vitis Unified IDE.
 
 

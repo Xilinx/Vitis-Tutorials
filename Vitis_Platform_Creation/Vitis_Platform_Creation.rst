@@ -11,7 +11,7 @@ What is a Platform?
 
 
 
-.. image:: ./XPFM.PNG
+.. image:: ./docs/images/XPFM.png
    :alt: Vitis Platform
 
 
@@ -51,7 +51,7 @@ Design Tutorials
    :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials.rst>
 
 
 
@@ -165,7 +165,7 @@ Feature Tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>
+   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials.rst>
 
 
 
@@ -271,3 +271,9 @@ Feature Tutorials
 
     See Vitis Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_.
 
+
+
+
+.. Copyright © 2020–2024 Advanced Micro Devices, Inc
+
+.. `Terms and Conditions <https://www.amd.com/en/corporate/copyright>`_.

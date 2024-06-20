@@ -1,4 +1,11 @@
-﻿# Cross Triggering in Vitis Unified Embedded IDE
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Embedded Software Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a> </td>
+ </tr>
+</table>
+
+# Cross Triggering in Vitis Unified Embedded IDE
 
 ***Version: Vitis 2024.1***
 
@@ -6,7 +13,7 @@ Embedded systems can be complex, that may contain multiple processors. You can a
 
 ## Processor to Processor Cross Triggering
 
-Launch AMD Vitis™ Unified embedded tool in 2024.1, and create your platform. In this tutorial, you create two `Hello World` applications both on different processors.
+Launch AMD Vitis™ Unified embedded tool in 2024.1 and create your platform. In this tutorial, you create two `Hello World` applications on different processors.
 
 **Note:** Refer to the Getting Started Embedded tutorial for information on creating a new application.
 
@@ -14,7 +21,7 @@ Launch AMD Vitis™ Unified embedded tool in 2024.1, and create your platform. I
 
 ### System Project Creation
 
-While a system project is not a requirement for cross probing, it is useful to keep all the applicaiton components maintained in a system project. You can create a system project that has the two hello world applications. To create a system project, select File -> New Component -> System Project
+While a system project is not a requirement for cross probing, it is useful to keep all the application components maintained in a system project. You can create a system project that has the two hello world applications. To create a system project, select File -> New Component -> System Project
 
 ![](./images/system_project.PNG)
 
@@ -67,7 +74,7 @@ Here, you can see that when the breakpoint hit on the first processor, it halted
 
 ## PL to Processor Cross Triggering
 
-Another very useful feature is the ability to debug between the hardware and software domains. To demostrate this, I created a very simple hardware design in Vivado 2023.2 with an AXI GPIO and System ILA with Slot0 on the AXI Interface. I will enable the cross triggering between an System ILA in the PL that will cause a breakpoint on my processor.
+Another very useful feature is the ability to debug between the hardware and software domains. To demonstrate this, I created a very simple hardware design in Vivado 2023.2 with an AXI GPIO and System ILA with Slot0 on the AXI Interface. I will enable the cross triggering between a System ILA in the PL that will cause a breakpoint on my processor.
 
 ### Hardware Design
 
@@ -94,7 +101,7 @@ Users can click on the debug icon, and the device will configure and stop at the
 
 ### Setup the Trigger in ILA 
 
-Open the hardware manager, and add the trigger condition. For example, here I added a trigger on the RDATA as shown below
+Open the hardware manager and add the trigger condition. For example, here I added a trigger on the RDATA as shown below
 
 ![](./images/ila_trigger.PNG)
 
@@ -115,13 +122,13 @@ I used the VIO to write to the DATA register of the AXI GPIO
 
 ![](./images/vio_update.PNG)
 
-This will cause the ILA to trigger and this trigger will cause the processor (Cortex A53 #0) to suspend on a breakpoint
+This will cause the ILA to trigger, and this trigger will cause the processor (Cortex A53 #0) to suspend on a breakpoint
 
 ![](./images/read_breakpoint.PNG)
 
 ## Processor to PL Cross Triggering
 
-Alternatively, users can setup the cross triggering to trigger the System ILA when the processor is suspended. This is useful to validate a hardware fuctionality in the PL by stepping through a software application in Vitis Unified IDE and view the corresponding PL transaction.
+Alternatively, users can setup the cross triggering to trigger the System ILA when the processor is suspended. This is useful to validate a hardware functionality in the PL by stepping through a software application in Vitis Unified IDE and view the corresponding PL transaction.
 
 For example, I used the same hardware design as above. However, I updated the software application to write to the AXI GPIO
 
@@ -154,7 +161,7 @@ Users can also Re-Arm the ILA and step through the code. This will trigger the I
 
 ## Summary
 
-In the brief tutorial above, we explore the power debug feature avaialable in the Vitis Unified IDE that allows users to cross probe across different processors and even across software and hardware domains.
+In the brief tutorial above, we explore the power debug feature available in the Vitis Unified IDE that allows users to cross probe across different processors and even across software and hardware domains.
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>

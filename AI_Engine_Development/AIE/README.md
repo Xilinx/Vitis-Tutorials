@@ -52,40 +52,39 @@ Run the following steps to setup environment (do **NOT** apply to tutorials that
 
 ![missing image](AI_Engine_dev_flow.png)
 
-If you are new with the AI Engine Architecture and tools, we recommend that you start with the <a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a>, which will guide you through the entire flow from platform creation in AMD Vivado™ to AI Engine application creation, system integration and testing on Hardware using the Vitis IDE.
+If you are new with the AI Engine Architecture and tools, we recommend that you start with the [A to Z Bare-metal Flow](./Feature_Tutorials/01-aie_a_to_z/), which will guide you through the entire flow from platform creation in AMD Vivado™ to AI Engine application creation, system integration and testing on Hardware using the Vitis IDE.
 
 #### AI Engine Application Development
 
 To get started with AI Engine application development, we recommend that you look at the following tutorials:
-- <a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a> which will guide you to create an AI Engine using application using the AMD provided DSP library
-- <a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a> which will also guide you to create an AI Engine using application using the AMD provided DSP library but using the ModelComposer tool which enables easy designs through a MATLAB Simulink environment.
-- <a href="./Feature_Tutorials/02-using-gmio/">Using GMIO with AIE</a> which goes through using the GMIOs for connectivity between the AI Engine and the DDR (through the NoC)
-- <a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AIE</a> will guide you into custom kernel coding using a IIR application
+
+- [DSP Library Tutorial](./Feature_Tutorials/08-dsp-library/) which will guide you to create an AI Engine using application using the AMD provided DSP library
+- [AIE DSPLib and Model Composer](./Feature_Tutorials/10-aie-dsp-lib-model-composer/) which will also guide you to create an AI Engine using application using the AMD provided DSP library but using the ModelComposer tool which enables easy designs through a MATLAB Simulink environment.
+- [Using GMIO with AIE](./Feature_Tutorials/02-using-gmio/) which goes through using the GMIOs for connectivity between the AI Engine and the DDR (through the NoC)
+- [Implementing an IIR Filter on the AIE](./Feature_Tutorials/14-implementing-iir-filter/) will guide you into custom kernel coding using a IIR application
 
 The following tutorials describe some features of the AI Engine, which might be useful for your application:
 
-- <a href="./Feature_Tutorials/03-rtp-reconfiguration/">Runtime Parameter Reconfiguration</a>
-- <a href="./Feature_Tutorials/04-packet-switching/">Packet Switching</a>
-- <a href="./Feature_Tutorials/07-AI-Engine-Floating-Point/">Using Floating-Point in the AIE</a>
-
+- [Runtime Parameter Reconfiguration](./Feature_Tutorials/03-rtp-reconfiguration/)
+- [Packet Switching](./Feature_Tutorials/04-packet-switching/)
+- [Using Floating-Point in the AIE](./Feature_Tutorials/07-AI-Engine-Floating-Point/)
 
 #### AI Engine Application Debug and Optimization
 
 After you have written your first AI Engine application you might want to verify the correct functionality of your graphs and kernels using x86 simulation and AI Engine simulation. In this regards, the following tutorials will be useful for you:
 
-- <a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a> will guide you to analyze the performance of your AI Engine application and help you with debugging functional issues.
+- [Debug Walkthrough Tutorial](./Feature_Tutorials/09-debug-walkthrough/) will guide you to analyze the performance of your AI Engine application and help you with debugging functional issues.
 
-- <a href="./Feature_Tutorials/13-aie-performance-analysis/">AIE Performance and Deadlock Analysis</a> which introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution.
-- <a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a>: This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.
+- [AIE Performance and Deadlock Analysis](./Feature_Tutorials/13-aie-performance-analysis/) which introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution.
+- [Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows](./Feature_Tutorials/16-external-traffic-generator-aie/): This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.
 
 #### System Integration
 
 When your AI Engine Application meets your expectation (in terms of functionality and performances), it will be the right time to integrate it with the rest of the Versal System. At this stage, the following tutorials will be useful for you:
 
-- <a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AIE Versal Integration</a>. This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable Logic (PL).
-- <a href="./Feature_Tutorials/06-versal-system-design-clocking-tutorial/">Versal System Design Clocking</a>. In this tutorial, you will learn clocking concepts for the Vitis compiler and how to define clocking for an ADF Graph, as well as PL kernels using clocking automation functionality.
-- <a href="./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/">Versal Emulation Waveform Analysis</a> which demonstrates how you can use the Vivado Design Suite logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design.
-
+- [AIE Versal Integration](./Feature_Tutorials/05-AI-engine-versal-integration/). This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable Logic (PL).
+- [Versal System Design Clocking](./Feature_Tutorials/06-versal-system-design-clocking-tutorial/). In this tutorial, you will learn clocking concepts for the Vitis compiler and how to define clocking for an ADF Graph, as well as PL kernels using clocking automation functionality.
+- [Versal Emulation Waveform Analysis](./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/) which demonstrates how you can use the Vivado Design Suite logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design.
 
 ## Available Tutorials
 

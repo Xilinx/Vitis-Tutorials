@@ -14,10 +14,10 @@ AI Engine Development: Feature Tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Incorporating Stream Interfaces <./01_platform_creation_streaming_ip/README>
-   PetaLinux Building and System Customization <./02_petalinux_customization/README>
-   Hardware Design Fast Iteration with Vitis Export to Vivado <./03_Vitis_Export_To_Vivado/README>
-   Versal Extensible Hardware Design Validation <./04_platform_validation/README>
+   Incorporating Stream Interfaces <./01_platform_creation_streaming_ip/README.md>
+   PetaLinux Building and System Customization <./02_petalinux_customization/README.md>
+   Hardware Design Fast Iteration with Vitis Export to Vivado <./03_Vitis_Export_To_Vivado/README.md>
+   Versal Extensible Hardware Design Validation <./04_platform_validation/README.md>
 
 
 

@@ -21,16 +21,16 @@ The :doc:`landing page <../../Hardware_Acceleration>` of Hardware Acceleration c
    :caption: Design Tutorials
    :hidden:
 
-   Bloom Filter Example <./02-bloom/README>
-   Convolution Example <./01-convolution-tutorial/README>
-   RTL Systems Integration Example <./03-rtl_stream_kernel_integration/README>
-   Traveling Salesperson Problem <./04-traveling-salesperson/README>
-   Bottom RTL Kernel Design Flow Example <./05-bottom_up_rtl_kernel/README>
-   Choleskey Algorithm Acceleration <./06-cholesky-accel/README>
-   XRT Host Code Optimization <./07-host-code-opt/README>
-   Aurora Kernel on Alveo <./08-alveo_aurora_kernel/README>
-   Single Source Shortest Path Application <./09-sssp-application/README>
-   Get Moving with Alveo <./10-get_moving_with_alveo/README>
+   Bloom Filter Example <./02-bloom/README.md>
+   Convolution Example <./01-convolution-tutorial/README.md>
+   RTL Systems Integration Example <./03-rtl_stream_kernel_integration/README.md>
+   Traveling Salesperson Problem <./04-traveling-salesperson/README.md>
+   Bottom RTL Kernel Design Flow Example <./05-bottom_up_rtl_kernel/README.md>
+   Choleskey Algorithm Acceleration <./06-cholesky-accel/README.md>
+   XRT Host Code Optimization <./07-host-code-opt/README.md>
+   Aurora Kernel on Alveo <./08-alveo_aurora_kernel/README.md>
+   Single Source Shortest Path Application <./09-sssp-application/README.md>
+   Get Moving with Alveo <./10-get_moving_with_alveo/README.md>
 
 
 

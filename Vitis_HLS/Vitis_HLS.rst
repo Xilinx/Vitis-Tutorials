@@ -21,21 +21,21 @@ Feature tutorials illustrate specific features of Vitis HLS development flow. So
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>
+   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials.rst>
 
 
-************************************************
-Design Tutorials
-************************************************
+************************************************************************************************
+:doc:`Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>`
+************************************************************************************************
 
 Design tutorials illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and describe more complex and complete designs or applications.
 
 .. toctree::
    :maxdepth: 3
-   :caption: Feature Tutorials
+   :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials.rst>
 
 
 

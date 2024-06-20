@@ -11,7 +11,7 @@ AI Engine Development: Feature Tutorials
 
 The AI Engine Development Feature Tutorials highlight specific features and flows that help develop AI Engine applications.
 
-The :doc:`landing page <../../AIE>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
+The :doc:`landing page <../AIE>` of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
 
 
 
@@ -21,25 +21,36 @@ The :doc:`landing page <../../AIE>` of AI Engine Development contains important 
    :caption: Feature Tutorials
    :hidden:
 
-   AI Engine A-to-Z Flow for Linux <./18-aie_a_to_z_custom_linux_platform/README>
-   A to Z Bare-metal Flow <./01-aie_a_to_z/README>
-   Using GMIO with AIE <./02-using-gmio/README>
-   Runtime Parameter Reconfiguration <./03-rtp-reconfiguration/README>
-   Packet Switching <./04-packet-switching/README>
-   Versal Integration for Hardware Emulation and Hardware <./05-AI-engine-versal-integration/README>
-   Versal System Design Clocking <./06-versal-system-design-clocking-tutorial/README>
-   Using Floating-Point in the AI Engine <./07-AI-Engine-Floating-Point/README>
-   DSP Library Tutorial <./08-dsp-library/README>
-   Debug Walkthrough <./09-debug-walkthrough/README>
-   AI Engine DSP Library and Model Composer Tutorial <./10-aie-dsp-lib-model-composer/README>
-   Versal Emulation Waveform Analysis <./11-ai-engine-emulation-waveform-analysis/README>
-   AXIS External Traffic Generator <./12-axis-traffic-generator/README>
-   AI Engine Performance and Deadlock Analysis Tutorial <./13-aie-performance-analysis/README>
-   Implementing an IIR Filter on the AI Engine <./14-implementing-iir-filter/README>
-   Post-Link Recompile of an AI Engine Application <./15-post-link-recompile/README>
-   Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./16-external-traffic-generator-aie/README>
-   Using RTL IP with AI Engines <./17-RTL-IP-with-AIE-Engines/README>
-   Using Verilog Traffic Generators in AIE Simulation <./19-aie_external_io_sv/README>
+   AI Engine A-to-Z Flow for Linux <./18-aie_a_to_z_custom_linux_platform/README.md>
+   A to Z Bare-metal Flow <./01-aie_a_to_z/README.md>
+   Using GMIO with AIE <./02-using-gmio/README.md>
+   Runtime Parameter Reconfiguration <./03-rtp-reconfiguration/README.md>
+   Packet Switching <./04-packet-switching/README.md>
+   Versal Integration for Hardware Emulation and Hardware <./05-AI-engine-versal-integration/README.md>
+   Versal System Design Clocking <./06-versal-system-design-clocking-tutorial/README.md>
+   Using Floating-Point in the AI Engine <./07-AI-Engine-Floating-Point/README.md>
+   DSP Library Tutorial <./08-dsp-library/README.md>
+   Debug Walkthrough <./09-debug-walkthrough/README.md>
+   AI Engine DSP Library and Model Composer Tutorial <./10-aie-dsp-lib-model-composer/README.md>
+   Versal Emulation Waveform Analysis <./11-ai-engine-emulation-waveform-analysis/README.md>
+   AXIS External Traffic Generator <./12-axis-traffic-generator/README.md>
+   AI Engine Performance and Deadlock Analysis Tutorial <./13-aie-performance-analysis/README.md>
+   Implementing an IIR Filter on the AI Engine <./14-implementing-iir-filter/README.md>
+   Post-Link Recompile of an AI Engine Application <./15-post-link-recompile/README.md>
+   Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows <./16-external-traffic-generator-aie/README.md>
+   Using RTL IP with AI Engines <./17-RTL-IP-with-AIE-Engines/README.md>
+   Using Verilog Traffic Generators in AIE Simulation <./19-aie_external_io_sv/README.md>
+   AIE Compiler Features <./20-aiecompiler-features/README.md>
+   Two Tone Filter on AIE Using DSP libraries and Vitis Model Composer <./21-two_tone_filter/README.md>
+   Performance Validation in Analysis View of the Vitis Unified IDE <./22-Performance-Validation-in-Analysis-View/README.md>
+
+
+
+
+
+
+
+
 
 
 
@@ -108,3 +119,22 @@ The :doc:`landing page <../../AIE>` of AI Engine Development contains important 
 
    * - :doc:`Using Verilog Traffic Generators in AIE Simulation <./19-aie_external_io_sv/README>`
      - This tutorial demonstrates how to use Verilog or System Verilog modules to drive traffic in and out of an ADF graph running in the AIE Simulator.
+
+   * - :doc:`AIE Compiler Features <./20-aiecompiler-features/README>`
+     - This tutorial shares a variety of features that are useful for AI Engine and AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.
+
+   * - :doc:`Two Tone Filter on AIE Using DSP libraries and Vitis Model Composer <./21-two_tone_filter/README>`
+     - This tutorial demonstrates how to implement the same MATLAB model design using the Vitis DSP libraries targeting AI Engine. This MATLAB model design, which has a two tone input signal. The FIR suppresses 1-tone from a 2-tone input signal. The output of the FIR filter connects to the FFT block. This FFT block acts as a monitor to display a spectrum plot. This tutorial has four parts. In part 1, the sampling rate requirement is 400 Msps. In part 2, the sampling rate requirement is 2000 Msps. In part 3, implement part 1 of the design using Vitis IDE. In part 4, implement part 1 of the design using Vitis Model Composer tool.
+
+   * - :doc:`Performance Validation in Analysis View of the Vitis Unified IDE <./22-Performance-Validation-in-Analysis-View/README>`
+     - This tutorial demonstrates throughput and latency computation after AI Engine Simulation and their analysis in the Analysis View of the Vitis Unified IDE.
+
+
+
+
+
+
+
+
+
+

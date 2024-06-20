@@ -11,7 +11,7 @@ Design tutorials illustrate higher-level concepts or design flows, walk through 
    :caption: Design Tutorials
    :hidden:
 
-   Adaptive Beamforming for Radar <./02-Beamformer/README>
+   Adaptive Beamforming for Radar <./02-Beamformer/README.md>
 
 
 

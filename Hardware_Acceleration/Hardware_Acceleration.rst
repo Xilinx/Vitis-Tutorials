@@ -2,11 +2,16 @@
 Hardware Acceleration
 #######################################
 
-.. sidebar:: More Information
-
-    See AMD Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
 
 
+
+
+.. important:: 
+
+   **Hardware Acceleration** tutorials are in "regression" mode, meaning we will run regression tests on 2024.1 and newer versions, but will not make any feature updates other than bug fixes.
+
+
+**Version: Vitis 2023.2**
 
 The tutorials under the Hardware Acceleration category help you learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even low-level hardware description languages (HDLs) like Verilog and VHDL. You may also learn how to optimize the CPU side of your application for efficient memory allocation, how to sequence system-level events, and more. 
 
@@ -30,9 +35,7 @@ Feature Tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>
-
-
+   Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials.rst>
 
 
 
@@ -68,7 +71,7 @@ Design Tutorials
    :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./docs/Design_Tutorials/Design_Tutorials.rst>
 
 
 
@@ -87,3 +90,18 @@ Design Tutorials
    ":doc:`Aurora Kernel on Alveo <./docs/Design_Tutorials/08-alveo_aurora_kernel/README>`","U50 / 55C / U200 / U250 / U280","RTL + C/C++","Native","","GT kernel",""
    ":doc:`Single Source Shortest Path Application <./docs/Design_Tutorials/09-sssp-application/README>`","U50","C/C++","OpenCL","Graph","Vitis Library","Vitis IDE"
    ":doc:`Get Moving with Alveo <./docs/Design_Tutorials/10-get_moving_with_alveo/README>`","U200","C/C++","OpenCL","Vision","System Optimization",""
+
+
+
+
+
+
+
+
+
+
+
+.. sidebar:: More Information
+
+    See AMD Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
+

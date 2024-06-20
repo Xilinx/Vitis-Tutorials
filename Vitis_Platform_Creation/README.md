@@ -10,11 +10,11 @@
 
 ## What is a Platform
 
-Before going to platform creation, Let's get an initial idea of platform.
+Before going to platform creation, let's get an initial idea of platform.
 
 ![image](XPFM.PNG)
 
-Briefly speaking, a platform is a package that contains the HPFM（`.xsa`）file and SPFM (software components). When you input the `.xsa` file and software components, the Vitis IDE tool will package them together and generate a platform `.xpfm` file, while the `.xsa` file is designed and exported from the AMD Vivado tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
+Briefly speaking, a platform is a package that contains the HPFM (`.xsa`) file and SPFM (software components). When you input the `.xsa` file and software components, the Vitis IDE tool will package them together and generate a platform `.xpfm` file, while the `.xsa` file is designed and exported from the AMD Vivado tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
 
 ### Platform Creation Example Quick Access
 
@@ -27,7 +27,7 @@ Briefly speaking, a platform is a package that contains the HPFM（`.xsa`）file
 
 ## Platform Creation Tutorials
 
-The tutorials under the Vitis Platform Creation category help you learn how to develop an extensible platform for your own board, or customize the Vitis platform on Xilinx demo boards.
+The tutorials under the Vitis Platform Creation category help you learn how to develop an extensible platform for your own board or customize the Vitis platform on Xilinx demo boards.
 
 - The **[Design Tutorials](./Design_Tutorials/)** showcase end-to-end workflow for creating the Vitis extensible platforms from scratch for different device families and boards.
 - The **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop the platform.
@@ -53,7 +53,7 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
   <td>Vivado &<br>Vitis Unified IDE</td>
   <td><b>Highlights</b>: simplest Vitis Platform creation and usage flow.
       <ul>
-        <li><b>Hardware design</b>: Using Vivado Customizable Example Design tempalte to quick start.  </li>
+        <li><b>Hardware design</b>: Using Vivado Customizable Example Design template to quick start.  </li>
         <li><b>Software design</b>: Using `createdts` and Common Image to quick start. </li>
         <li><b>Verification</b>: Vector Addition.  </li>
       </ul>
@@ -212,6 +212,6 @@ These tutorials illustrate various platform features and how you can incorporate
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -1,3 +1,10 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Embedded Software Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a> </td>
+ </tr>
+</table>
+
 # Creating a Debuggable First Stage Boot Loader
 
 ***Version: Vitis 2024.1***
@@ -6,7 +13,7 @@ First Stage Boot Loader (FSBL) can initialize the SoC device, load the required 
 
 ## Where is the FSBL built
 
-You can create the FSBL automatically if you select the **Generate Boot Artifacts** when creating the platform in either the Vitis Classic IDE or the Vitis Unified IDE. You can also generate the FSBL manually using the application template available in the Vitis IDE. The FSBL source code supports the enabling of debug metadata in the `xfsbl_debug.h` file. You can directly add a #define to enable the debug, or you can pass this thorugh a symbol in the C/C++ build settings. In this tutorial, the FSBL is created manually, and not by enabling the boot components/artifacts during the platform creation. 
+You can create the FSBL automatically if you select the **Generate Boot Artifacts** when creating the platform in either the Vitis Classic IDE or the Vitis Unified IDE. You can also generate the FSBL manually using the application template available in the Vitis IDE. The FSBL source code supports the enabling of debug metadata in the `xfsbl_debug.h` file. You can directly add a #define to enable the debug, or you can pass this through a symbol in the C/C++ build settings. In this tutorial, the FSBL is created manually, and not by enabling the boot components/artifacts during the platform creation. 
 
 If you desire more detailed information during the boot process but are not planning to modify the FSBL source code, you can set FSBL to print more information - but it is not necessary to run FSBL in the Vitis debugger. In this example, you create an FSBL image targeted for ARM™ Cortex-A53 core 0 and update its properties to enable detailed print info. 
 
@@ -132,7 +139,7 @@ FSBL is built with size optimization and link time optimization flags (such as `
    |                               | Processor                                 | psu_cortexa53_0            |
    |                               | Generate boot Artifacts                   | Uncheck                    |
 
-4. The platform generates a default BSP (Domain) called "standalone_psu_cortexa53_0". However, this domain does not have the required libraries needed for the AMD Zynq™ MP FSBL. You caan create the Zynq MP FSBL from the application template and allow the tools to generate the domain.
+4. The platform generates a default BSP (Domain) called "standalone_psu_cortexa53_0". However, this domain does not have the required libraries needed for the AMD Zynq™ MP FSBL. You can create the Zynq MP FSBL from the application template and allow the tools to generate the domain.
 
 5. Select **Zynq MP FSBL** from the **Examples**.
 

@@ -10,8 +10,8 @@ AI Engine for Machine Learning Development
 The tutorials under the AI Engine for Machine Learning (AIE-ML) Development help you learn how to target, develop, and deploy advanced algorithms using a Versal AIE-ML array in conjunction with PL IP/kernels and software applications running on the embedded processors.
 
 
-* :doc:`Feature Tutorials <./docs/Feature_Tutorials/Feature_Tutorials>` highlight specific features and flows that help develop AI Engine-ML applications.
-* :doc:`Design Tutorials <./docs/Design_Tutorials/Design_Tutorials>` showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
+* :doc:`Feature Tutorials <./Feature_Tutorials/Feature_Tutorials>` highlight specific features and flows that help develop AI Engine-ML applications.
+* :doc:`Design Tutorials <./Design_Tutorials/Design_Tutorials>` showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
 
 .. important:: 
@@ -41,19 +41,19 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
    :caption: Feature Tutorials
    :hidden:
 
-   Feature Tutorials <./Feature_Tutorials/Feature_Tutorials>
+   Feature Tutorials <./Feature_Tutorials/Feature_Tutorials.rst>
 
 .. csv-table:: Feature Tutorials
    :header: "Tutorial","Platform","OS","IDE Flow","Libraries Used","HLS Kernel","x86 simulator","aie simulator","SW Emu","HW Emu","HW","Event Trace in HW","Profile in HW"
    :widths: 22, 8, 8, 6, 7, 8, 7, 7, 5, 6, 4, 6, 6
 
-   ":doc:`A to Z Bare-metal Flow <./docs/Feature_Tutorials/01-aie_a_to_z/README>`","Custom","Baremetal","Vivado, Vitis IDE","","MM2S / S2MM","","Yes","","Yes","Yes","",""
-   ":doc:`Using GMIO with AIE <./docs/Feature_Tutorials/02-using-gmio/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
-   ":doc:`Runtime Parameter Reconfiguration <./docs/Feature_Tutorials/03-rtp-reconfiguration/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
-   ":doc:`Packet Switching <./docs/Feature_Tutorials/04-packet-switching/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
-   ":doc:`AIE Versal Integration <./docs/Feature_Tutorials/05-AI-engine-versal-integration/README>`","Base","Linux","CLI, Vitis Unified IDE","","MM2S / S2MM","Yes","Yes","Yes","Yes","Yes","",""
-   ":doc:`AIE-ML Performance Analysis <./docs/Feature_Tutorials/13-aie-ml-performance-analysis/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
-   ":doc:`AIE Compiler Features <./docs/Feature_Tutorials/20-aiecompiler-features/README>`","Base","Linux","","","MM2S / S2MM","Yes","Yes","","Yes","Yes","Yes","Yes"
+   ":doc:`A to Z Bare-metal Flow <./Feature_Tutorials/01-aie_a_to_z/README>`","Custom","Baremetal","Vivado, Vitis IDE","","MM2S / S2MM","","Yes","","Yes","Yes","",""
+   ":doc:`Using GMIO with AIE <./Feature_Tutorials/02-using-gmio/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
+   ":doc:`Runtime Parameter Reconfiguration <./Feature_Tutorials/03-rtp-reconfiguration/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
+   ":doc:`Packet Switching <./Feature_Tutorials/04-packet-switching/README>`","Base","Linux","","","MM2S / S2MM","","Yes","","Yes","Yes","",""
+   ":doc:`AIE Versal Integration <./Feature_Tutorials/05-AI-engine-versal-integration/README>`","Base","Linux","CLI, Vitis Unified IDE","","MM2S / S2MM","Yes","Yes","Yes","Yes","Yes","",""
+   ":doc:`AIE-ML Performance Analysis <./Feature_Tutorials/13-aie-ml-performance-analysis/README>`","Base","Linux","","","","","Yes","","Yes","Yes","","Yes"
+   ":doc:`AIE Compiler Features <./Feature_Tutorials/20-aiecompiler-features/README>`","Base","Linux","","","MM2S / S2MM","Yes","Yes","","Yes","Yes","Yes","Yes"
 
 
 ******************************************
@@ -67,7 +67,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
    :caption: Design Tutorials
    :hidden:
 
-   Design Tutorials <./Design_Tutorials/Design_Tutorials>
+   Design Tutorials <./Design_Tutorials/Design_Tutorials.rst>
 
 
 
@@ -75,6 +75,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
    :header: "Tutorial","Platform","OS","IDE Flow","Libraries Used","HLS Kernel","x86 simulator","aie simulator","SW Emu","HW Emu","HW","Event Trace in HW","Profile in HW"
    :widths: 22, 8, 8, 6, 7, 8, 7, 7, 5, 6, 4, 6, 6
 
-   ":doc:`Versal Custom Thin Platform Extensible System <./docs/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/README>`","Custom","Linux","","","MM2S / S2MM / VADD","","","","Yes","Yes","",""
-   ":doc:`AIE-ML Programming <./docs/Design_Tutorials/01-AIE-ML-programming-and-optimization/README>`","Base","Linux","","","","Yes","Yes","","","","",""
+   ":doc:`Versal Custom Thin Platform Extensible System <./Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/README>`","Custom","Linux","","","MM2S / S2MM / VADD","","","","Yes","Yes","",""
+   ":doc:`AIE-ML Programming <./Design_Tutorials/01-AIE-ML-programming-and-optimization/README>`","Base","Linux","","","","Yes","Yes","","","","",""
 

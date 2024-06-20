@@ -21,16 +21,16 @@ The :doc:`landing page <../../Hardware_Acceleration>` of Hardware Acceleration c
    :caption: Feature Tutorials
    :hidden:
 
-   Getting Started with RTL Kernels <./01-rtl_kernel_workflow/README>
-   Mixing C and RTL <./02-mixing-c-rtl-kernels/README>
-   Dataflow Debug and Optimization <./03-dataflow_debug_and_optimization/README>
-   Using Multiple DDR Banks <./04-mult-ddr-banks/README>
-   Using Multiple Compute Units <./05-using-multiple-cu/README>
-   Controlling Vivado Implementation <./06-controlling-vivado-implementation/README>
-   Optimizing for HBM <./07-using-hbm/README>
-   Host Memory Access <./08-using-hostmem/README>
-   Using GT Kernels and Ethernet IPs on Alveo <./09-using-ethernet-on-alveo/README>
-   Enabling FPGA to FPGA P2P Transfer <./10-p2p-card-to-card/README>
+   Getting Started with RTL Kernels <./01-rtl_kernel_workflow/README.md>
+   Mixing C and RTL <./02-mixing-c-rtl-kernels/README.md>
+   Dataflow Debug and Optimization <./03-dataflow_debug_and_optimization/README.md>
+   Using Multiple DDR Banks <./04-mult-ddr-banks/README.md>
+   Using Multiple Compute Units <./05-using-multiple-cu/README.md>
+   Controlling Vivado Implementation <./06-controlling-vivado-implementation/README.md>
+   Optimizing for HBM <./07-using-hbm/README.md>
+   Host Memory Access <./08-using-hostmem/README.md>
+   Using GT Kernels and Ethernet IPs on Alveo <./09-using-ethernet-on-alveo/README.md>
+   Enabling FPGA to FPGA P2P Transfer <./10-p2p-card-to-card/README.md>
 
 
 

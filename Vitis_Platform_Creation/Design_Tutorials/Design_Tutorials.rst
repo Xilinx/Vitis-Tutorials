@@ -15,10 +15,10 @@ Vitis Platform Creation: Design Tutorials
    :caption: Design Tutorials
    :hidden:
 
-   Custom Platform Creation Tutorial on MPSoC <./02-Edge-AI-ZCU104/README>
-   Custom Platform Creation Tutorial on Versal <./03_Edge_VCK190/README>
-   Custom Versal DFX Platform Creation Tutorial <./04_Edge_VCK190_DFX/README>
-   Custom Kria SOM Platform Creation Example <./01-Edge-KV260/README>
+   Custom Platform Creation Tutorial on MPSoC <./02-Edge-AI-ZCU104/README.md>
+   Custom Platform Creation Tutorial on Versal <./03_Edge_VCK190/README.md>
+   Custom Versal DFX Platform Creation Tutorial <./04_Edge_VCK190_DFX/README.md>
+   Custom Kria SOM Platform Creation Example <./01-Edge-KV260/README.md>
 
 
 

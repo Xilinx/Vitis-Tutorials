@@ -16,14 +16,14 @@ Learn how to target, develop, and deploy advanced algorithms using Versal AIE-ML
    :caption: AI Engine Development on AIE-ML
    :hidden:
 
-   AI Engine Development on AIE-ML <./docs/AIE-ML/AIE-ML>
+   AI Engine Development on AIE-ML <./docs/AIE-ML/AIE-ML.rst>
 
 
 
 
 
 ******************************************************************************************************************
-:doc:`AI Engine Development on AIE-ML <./docs/AIE/AIE>`
+:doc:`AI Engine Development on AIE <./docs/AIE/AIE>`
 ******************************************************************************************************************
 
 
@@ -36,5 +36,5 @@ Learn how to target, develop, and deploy advanced algorithms using a Versal AI E
    :caption: AI Engine Development on AIE
    :hidden:
 
-   AI Engine Development on AIE <./docs/AIE/AIE>
+   AI Engine Development on AIE <./docs/AIE/AIE.rst>
 

@@ -11,8 +11,8 @@ Feature tutorials illustrate specific features of Vitis HLS development flow. So
    :caption: Feature Tutorials
    :hidden:
 
-   Using Code Analyzer <./01-using_code_analyzer/README>
-   Beamformer Analysis <./02-Beamformer_Analysis/README>
+   Using Code Analyzer <./01-using_code_analyzer/README.md>
+   Beamformer Analysis <./02-Beamformer_Analysis/README.md>
 
 
 

@@ -1,11 +1,8 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-   </td>
- </tr>
- <tr>
- <td>
- </td>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis Platform Creation Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See AMD Vitis™ Development Environment on xilinx.com</br></a>
+    </td>
  </tr>
 </table>
 
@@ -15,11 +12,11 @@
 
 ## Introduction
 
-The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. The flow is supported for project-mode only. Refer UG1393 https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow for more details. 
+The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. The flow is supported for project-mode only. Refer [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Export-to-Vivado-Flow) for more details. 
 
 **IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2024.1 and Vivado 2024.1 software.
 
-### We are creating the custom BDC based platform using the tcl script. The Vitis Export to Vivado flow supports BDC-based platform only. 
+### We are creating the custom BDC based platform using the tcl script. The Vitis Export to Vivado flow supports BDC-based platform only.
 
 ## Objectives
 
@@ -31,7 +28,7 @@ After completing this tutorial, you will be able to do the following:
  4. Import the VMA in Vivado using `vitis::import_archive` Tcl API.
  5. Generate `fixed.xsa` from Vivado, and from there, the xclbin file is needed to test the design in hardware or hardware emulation.
 
-##  Recommended design development flow steps:
+## Recommended design development flow steps
 
 The recommended steps are as follows: 
 1. Develop hardware design in Vivado.
@@ -84,7 +81,7 @@ vitis:: remove_archive
 
 ## DESIGN FILES
 
---------------
+
 
 1. Vivado design tcl scripts are located in `hw\xsa_scripts` folder:
 
@@ -489,3 +486,9 @@ To read more about the flow, refer to [UG1393](https://docs.xilinx.com/search/al
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](support.xilinx.com).
+
+
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

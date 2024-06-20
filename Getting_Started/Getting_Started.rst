@@ -11,10 +11,10 @@ Welcome to AMD Vitis™ Getting Started to explore beginner-friendly tutorials. 
    :caption: Getting Started
    :hidden:
 
-   Vitis Introduction and Getting Started <./docs/Vitis/README>
-   Vitis HLS <./docs/Vitis_HLS/README>
-   Vitis Libraries <./docs/Vitis_Libraries/README>
-   Vitis Platform <./docs/Vitis_Platform/README>
+   Vitis Introduction and Getting Started <./docs/Vitis/README.md>
+   Vitis HLS <./docs/Vitis_HLS/README.md>
+   Vitis Libraries <./docs/Vitis_Libraries/README.md>
+   Vitis Platform <./docs/Vitis_Platform/README.md>
 
 
 
@@ -40,33 +40,6 @@ Welcome to AMD Vitis™ Getting Started to explore beginner-friendly tutorials. 
 
    * - :doc:`Vitis Platform <./docs/Vitis_Platform/README>`
      - This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on AMD Versal™ by using the Versal Extensible Platform from AMD Vivado™ Customizable Example Design and pre-built Linux common images.
-
-
-
-
-
-* :doc:`Vitis Introduction and Getting Started <./docs/Vitis/README>`
-
-  * An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into separate flows:
-
-    * Data Center
-    * Embedded Processor
-    * Vitis Unified IDE
-
-* :doc:`Vitis HLS <./docs/Vitis_HLS/README>`
-
-  * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment.
-  * This tutorial uses Vitis Unified IDE.
-
-* :doc:`Vitis Libraries <./docs/Vitis_Libraries/README>`
-
-  * Learn how to leverage a L1 Vitis library element to build your own design. The FFT example is selected for explanation, and you may follow similar flow to use other library elements.
-
-* :doc:`Vitis Platform <./docs/Vitis_Platform/README>`
-
-  * This tutorial shows how to quickly create and validate a Vitis embedded acceleration platform on Versal by using the Versal Extensible Platform from Vivado Customizable Example Design and pre-built Linux common images.
-  * This tutorial uses Vitis Unified IDE.
-
 
 
 

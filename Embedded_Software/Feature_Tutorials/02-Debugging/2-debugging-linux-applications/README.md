@@ -1,4 +1,11 @@
-﻿# Debugging Linux Applications
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Embedded Software Tutorials</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a> </td>
+ </tr>
+</table>
+
+# Debugging Linux Applications
 
 ***Version: Vitis 2024.1***
 
@@ -21,11 +28,11 @@ Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2024.1. I
 
 Linux debug setup is a mandatory step. Setup allows you to create platform and application projects in the Vitis IDE. There is a script attached to this tutorial that users can use to generate a demo XSA, Sysroots and Vitis Workspace.
 
-1. Open a terminal and navigate to the scripts directory, and source the Petalinux tool.
-2. Run the command <i>make all</i>. This will take some time.
+1. Open a terminal and navigate to the script’s directory, and source the Petalinux tool.
+2. Run the command *make all*. This will take some time.
 3. Launch the Vitis IDE **vitis_unified** workspace. 
 
-**Note:** The scripts above will generate the HW and SW images automaticaslly for a ZCU102 board. However, users can refer to the [Appendix](#appendix) section for supplementary information about creating a hardware design and building software boot images manually.
+**Note:** The scripts above will generate the HW and SW images automatically for a ZCU102 board. However, users can refer to the [Appendix](#appendix) section for supplementary information about creating a hardware design and building software boot images manually.
 
 ## Error 1: Failed in Validating the test connection
 
@@ -65,7 +72,7 @@ The hostfwd definitions along with user network arguments, that is ,   `-net nic
 ```
 petalinux-boot --qemu --kernel --qemu-args "-net nic -net nic -net nic -net nic,netdev=gem3 -netdev user,id=gem3,hostfwd=tcp:127.0.0.1:1540-10.0.2.15:1534"
 ```
-**Tip** The Login is <i>petalinux</i> by default.
+**Tip** The Login is *petalinux* by default.
 
 **Note** Use Ctrl A + x to exit the QEMU
 
@@ -236,13 +243,13 @@ The first step is to create a block design. You can create this according to you
 
    ![](images/Install-Update_Example-Designs.PNG)
  
-4. You will now be able to see the **Zynq Ultrascale+ MPSoC Design Presets** template. Select the template and click **Next**.
+4. You will now be able to see the **Zynq UltraScale+ MPSoC Design Presets** template. Select the template and click **Next**.
 
    ![](images/ZynqMPSoC-Preset-Template.PNG)
 
 6. Update the Project Name to "zcu102" and update the path.
 
-7. In the next window, select **Zynq UltraScale+ MPSoC ZCU102 Evaluation Board** and click **Next**. Here, you can see two preset designs. Select the second option, **Processing System and Programmable Logic (PS+PL) with GPIO and Block RAM**, and click **Finish**.
+7. In the next window, select **Zynq UltraScale+ MPSoC ZCU102 Evaluation Board** and click **Next**. Here, you can see two preset designs. Select the second option (**Processing System and Programmable Logic (PS+PL) with GPIO and Block RAM**) and click **Finish**.
 
    ![](images/PS-PL.PNG)
 
@@ -255,7 +262,7 @@ The preset example creates an HDL wrapper and also generates output products. Yo
 
 #### Exporting the XSA
 
-After successful bitsream generation, navigate to **File > Export > Export Hardware** to launch the Export Hardware Platform wizard. 
+After successful bitstream generation, navigate to **File > Export > Export Hardware** to launch the Export Hardware Platform wizard. 
 Click **Next** and export the hardware with the **Include bitstream** option. Enter the desired XSA name and complete the wizard.
 
 ![](images/Include-Bitstream.PNG)
