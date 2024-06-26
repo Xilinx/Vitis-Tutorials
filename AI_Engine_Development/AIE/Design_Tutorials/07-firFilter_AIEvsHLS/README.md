@@ -233,10 +233,10 @@ For the filter sizes selected in this tutorial cascade length of 1 and window_si
 
 | Taps |  Throughput     |
 |------|-----------------|
-|   15 |  994.577 MSPS(*)|
-|   64 |  344.057 MSPS   |
-|  129 |  200.964 MSPS   |
-|  240 |  116.908 MSPS   |
+|   15 |  996.795 MSPS(*)|
+|   64 |  344.274 MSPS   |
+|  129 |  201.063 MSPS   |
+|  240 |  116.928 MSPS   |
 
 ***Note***: This result is I/O bound.
 
@@ -253,14 +253,14 @@ The AI Engine reduces the overall requirement on the PL and DSPs in a design wit
 
 | Impl | Filters | Taps | Param        | Throughput    | LUTS  | Flops | DSP   | AIE   |
 |------|---------|------|--------------|---------------|-------|-------|-------|-------|
-| AIE  |     1   |   64 | win=2048     | 511.573  MSPS |   189 |   568 |     0 |   2   |
-| HLS  |     1   |   64 | ck_per_sam=1 | 497.22   MSPS |  1868 |  5932 |    64 |   0   |
-| AIE  |    10   |   64 | win=2048     | 5041.74  MSPS |   189 |   568 |     0 |   20  |
-| HLS  |    10   |   64 | ck_per_sam=1 | 4776.32  MSPS | 11396 | 46027 |   640 |   0   |
-| AIE  |     1   |  240 | win=2048     | 116.91   MSPS |   190 |   568 |     0 |   1   |
-| HLS  |     1   |  240 | ck_per_sam=4 | 124.8439 MSPS |  2403 |  7549 |    60 |   0   |
-| AIE  |    10   |  240 | win=2048     | 1167.45  MSPS |   190 |   568 |    0  |   10  |
-| HLS  |    10   |  240 | ck_per_sam=4 | 1234.78  MSPS | 16749 | 62435 |   600 |   0   |
+| AIE  |     1   |   64 | win=2048     | 511.733  MSPS |   191 |   568 |     0 |   2   |
+| HLS  |     1   |   64 | ck_per_sam=1 | 497.32   MSPS |  1757 |  5718 |    64 |   0   |
+| AIE  |    10   |   64 | win=2048     | 5042.78  MSPS |   191 |   568 |     0 |   20  |
+| HLS  |    10   |   64 | ck_per_sam=1 | 4781.32  MSPS | 10140 | 44906 |   640 |   0   |
+| AIE  |     1   |  240 | win=2048     | 116.92   MSPS |   189 |   568 |     0 |   1   |
+| HLS  |     1   |  240 | ck_per_sam=4 | 124.845  MSPS |  2283 |  7292 |    60 |   0   |
+| AIE  |    10   |  240 | win=2048     | 1167.61  MSPS |   189 |   568 |    0  |   10  |
+| HLS  |    10   |  240 | ck_per_sam=4 | 1235.10  MSPS | 15481 | 60622 |   600 |   0   |
 
 It is clear that the AI Engine implementation offers significant savings of PL resources, especially as the design size increases.
 
@@ -278,8 +278,8 @@ Below table shows power utilization of FIR AIE and HLS for 240-taps
 
 | No of Filters | AIE FIR    |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |   0.785    |   0.489      |
-|      10       |   2.359    |   4.314      |
+|      1        |   0.618    |   0.44       |
+|      10       |   1.887    |   4.031      |
 
 ![Image of 240 Tap FIR filter dynamic power](images/FIR_240Taps_POWER_v_NoOfFilters.png)
 
@@ -296,8 +296,8 @@ Below table shows computational efficiency of FIR AIE and HLS for 240-taps
 
 | No of Filter  |   AIE FIR  |   HLS FIR    |
 |---------------|------------|--------------|
-|      1        |  148.928   |   255.299    |
-|      10       |  494.891   |   286.294    |
+|      1        |  189.203   |   283.738    |
+|      10       |  618.768   |   306.401    |
 
 
 ![Image of 240 Tap FIR computational efficiency](images/FIR_240Taps_ComputationalEfficiency_v_NoOfFilters.png)
@@ -318,18 +318,18 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 
 | Cascade length | Throughput (MSPS)       |
 |----------------|-------------------------|
-|      1         |     154.39              | 
-|      2         |     266.65              | 
-|      4         |     390.40              | 
+|      1         |     154.98              | 
+|      2         |     267.98              | 
+|      4         |     395.08              | 
 
 
 ![Image of 129 Tap FIR filter metrics - Throughput vs Casc Length](images/FIR_129Taps_Throughput_v_CascLen.png)
 
 | Cascade length | Dynamic power(W)        |
 |----------------|-------------------------|
-|      1         |    0.769                |
-|      2         |    0.892                |
-|      4         |    1.098                |
+|      1         |    0.749                |
+|      2         |    0.743                |
+|      4         |    1.102                |
 
 
 ![Image of 129 Tap FIR filter metrics - Power vs Casc Length](images/FIR_129Taps_Power_v_CascLen.png)
@@ -338,9 +338,9 @@ For the AI Engine DSPLib FIR filter kernels, the kernels provide a parameter cal
 
 | CASCADE LENGTH |  Performance(MSPS/W)  |
 |----------------|-----------------------|
-|      1         |  200.768              |
-|      2         |  298.934              |
-|      4         |  355.555              |
+|      1         |  206.915              |
+|      2         |  360.685              |
+|      4         |  358.439              |
 
 
 
@@ -355,10 +355,10 @@ The following table provides some additional information on data on throughput f
 
 | Filters | Taps | Throughput (CASC_LEN=1) | Throughput (CASC_LEN=2) | Throughput (CASC_LEN=4) |
 |---------|------|-------------------------|-------------------------|-------------------------|
-|     1   |   15 |  952.37MSPS(*)          |  952.558 MSPS           | Too small to cascade    |
-|     1   |   64 |  277.11MSPS             |  425.37 MSPS            | 524.56    MSPS          |
-|     1   |  129 |  154.39MSPS             |  266.65 MSPS            | 390.4      MSPS         |
-|     1   |  240 |  89.634MSPS             |  168.374MSPS            | 258.87     MSPS         |
+|     1   |   15 |  970.23MSPS(*)          |  970.232 MSPS           | Too small to cascade    |
+|     1   |   64 |  278.30MSPS             |  427.40 MSPS            | 534.50    MSPS          |
+|     1   |  129 |  154.98MSPS             |  267.98 MSPS            | 395.08      MSPS        |
+|     1   |  240 |  89.734MSPS             |  169.058MSPS            | 261.19     MSPS         |
 
 (*)Note: this result is I/O bound.
 
@@ -376,10 +376,10 @@ The following is data for the AI Engine with one 64-tap FIR filter example for v
 
 | Impl | Filters | Taps | Window Size | Latency  | Execution Time  | Throughput   |
 |------|---------|------|-------------|----------|-----------------|--------------|
-| AIE  |     1   |   64 |       64    |  0.4 us  |  75.29 us       |  217.60 MSPS |
-| AIE  |     1   |   64 |      256    |  1.2 us  |  59.12 us       |  277.11 MSPS |
-| AIE  |     1   |   64 |     1024    |  4.4 us  |  53.29 us       |  307.43 MSPS |
-| AIE  |     1   |   64 |     2048    |  8.3 us  |  47.62 us       |  344.05 MSPS |
+| AIE  |     1   |   64 |       64    |  0.4 us  |  74.27 us       |  220.59 MSPS |
+| AIE  |     1   |   64 |      256    |  1.19 us |  58.86 us       |  278.30 MSPS |
+| AIE  |     1   |   64 |     1024    |  4.39 us |  53.23 us       |  307.79 MSPS |
+| AIE  |     1   |   64 |     2048    |  8.29 us |  47.59 us       |  344.27 MSPS |
 
 If, for example, our throughput requirements were 200 MSPS, a window size of 64 would satisfy that performance requirement with the least amount of latency.
 
@@ -404,28 +404,28 @@ The utilization and power observations are shown in the following table.
 #### AIE
 |Filters|Taps|Throughput(MSPS)|AI Engine Cores |Vector Load | Number Of Active Memory Banks | Memory R/W Rate | AI Engine Tiles | Interconnect Load | Power (W) | Performance (MSPS/Watt) |
 |-------|----|----------------|----------------|------------|-------------------------------|-----------------|-----------------|-------------------|-----------|-------------------------|
-|     1 | 15 |   994.577      |      2         |   12.00%   |     14                        |    1.74%        |    2            |     5.90    %     |  0.56     |   1776.03               |
-|     1 | 64 |   511.573      |      2         |   25.29%   |     20                        |    9.31%        |    5            |     3.54    %     |  0.86     |   589.370               |
-|     1 |129 |   266.652      |      2         |   45.43%   |     14                        |    19.09%       |    3            |     4.30    %     |  0.89     |   298.937               |
-|     1 |240 |   116.908      |      1         |   62.16%   |     14                        |    10.79%       |    2            |     5.90    %     |  0.78     |   148.928               |
-|    10 | 15 |   9941.74      |      20        |   12%      |     104                       |    17.40%       |    18           |     3.58    %     |  1.16     |   8570.47               |
-|    10 | 64 |   5041.74      |      20        |   25.29%   |     104                       |    9.31%        |    27           |     3.54    %     |  2.65     |   1901.11               |
-|    10 |129 |   2889.59      |      20        |   45.43%   |     104                       |    19.09%       |    29           |     3.68    %     |  3.34     |   863.596               |
-|    10 |240 |   1167.45      |      10        |   62.16%   |     104                       |    10.79%       |    20           |     3.68    %     |  2.35     |   494.891               |
+|     1 | 15 |   996.795      |      1         |   13.48%   |     14                        |    2.51%        |    2            |     5.90    %     |  0.45     |   2185.95               |
+|     1 | 64 |   511.733      |      2         |   23.54%   |     20                        |    9.92%        |    5            |     3.54    %     |  0.72     |   701.965               |
+|     1 |129 |   267.989      |      2         |   40.22%   |     14                        |    20.09%       |    3            |     4.30    %     |  0.74     |   360.685               |
+|     1 |240 |   116.928      |      1         |   38.47%   |     14                        |    11.02%       |    2            |     5.90    %     |  0.61     |   189.203               |
+|    10 | 15 |   9965.93      |      10        |   13.48%   |     104                       |    2.51%        |    18           |     3.58    %     |  1.07     |   9305.26               |
+|    10 | 64 |   5042.78      |      20        |   23.54%   |     164                       |    9.92%        |    27           |     3.54    %     |  2.46     |   2045.75               |
+|    10 |129 |   2674.35      |      20        |   40.22%   |     104                       |    20.09%       |    29           |     3.68    %     |  3.04     |   877.125               |
+|    10 |240 |   1167.61      |      10        |   38.47%   |     104                       |    11.02%       |    20           |     3.68    %     |  1.88     |   618.768               |
 
 *Note: The vector load, Number of memory banks and Memory R/w Rate are measured from script based method and then imported the values manually in pdm to get the power.
 
 #### HLS
 |Filters|Taps| Throughput(MSPS)|LUTs  | FF (Regs) | DSPs | Dynamic Power(W) | Performance (MSPS/Watt) |   
 |-------|----|-----------------|------|-----------|------|------------------|-------------------------| 
-|     1 | 15 |   993.622       |1935  |  4351     |  32  |   0.295          |   3368.210              |      
-|     1 | 64 |   497.275       |1868  |  5923     |  64  |   0.399          |   1246.305              | 
-|     1 |129 |   249.300       |2446  |  13057    |  66  |   0.524          |   475.7634              | 
-|     1 |240 |   124.841       |2403  |  7549     |  60  |   0.489          |   255.2997              | 
-|    10 | 15 |   9588.29       |8526  |  26683    |  320 |   2.141          |   4478.419              | 
-|    10 | 64 |   4776.32       |11396 |  46027    |  640 |   3.323          |   1437.354              | 
-|    10 |129 |   2438.00       |22926 |  117480   |  660 |   5.526          |   441.1879              | 
-|    10 |240 |   1234.78       |16749 |  62435    |  600 |   4.313          |   286.2946              | 
+|     1 | 15 |   993.822       |1582  |  4004     |  32  |   0.204          |   4871.676              |      
+|     1 | 64 |   497.326       |1757  |  5718     |  64  |   0.333          |   1493.471              | 
+|     1 |129 |   249.306       |2323  |  12798    |  66  |   0.48           |   519.387               | 
+|     1 |240 |   124.845       |2283  |  7292     |  60  |   0.44           |   283.738               | 
+|    10 | 15 |   9607.97       |6244  |  24671    |  320 |   1.626          |   5908.960              | 
+|    10 | 64 |   4781.32       |10140 |  44906    |  640 |   3.004          |   1591.651              | 
+|    10 |129 |   2439.27       |15963 |  115610   |  660 |   5.325          |   458.079               | 
+|    10 |240 |   1235.10       |15481 |  60622    |  600 |   4.031          |   306.401               | 
 
 To facilitate a performance/watt analysis, we achieved comparable throughput between AIE and HLS by employing different sample period, cascade lengths and window sizes for the comparison. Specifically, for 240 taps, a cascade length of 1 was used, while other taps utilized a cascade length of 2. Additionally, a window size of 256 was employed for 129 taps, and a window size of 2048 was applied for all other taps. In the HLS implementation, a sample period of 1 was utilized for less than 64 taps, 2 for 129 taps, and 4 for 240 taps.
 
@@ -436,14 +436,14 @@ Upon analysis, it was observed that the computation efficiency is high in a sing
 **AIE**
 |Filters|Taps| xpe Load(in W) | HW Load(in W) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      12.14     |    3.750      |
-|    10 |240 |      11.957    |    2.124      |
+|    10 | 64 |      3.89      |    3.750      |
+|    10 |240 |      1.94      |    2.124      |
 
 **HLS**
 |Filters|Taps| xpe Load(in W) | HW Load(in W) |
 |-------|----|----------------|---------------|
-|    10 | 64 |      13.04     |    2.994      |
-|    10 |240 |      13.93     |    3.815      |
+|    10 | 64 |      3.30      |    2.994      |
+|    10 |240 |      4.30      |    3.815      |
 
 </details>
 
@@ -474,23 +474,18 @@ The time reported by trace is with the dat mover kernel running at 156.250MHz. S
 To measure throughput, the cursors are lined up with the start and end of the read (datamover_0.strmInpFromFIR) stream (cursor times with us resolution can be obtained by zooming in further):
 ```
 	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
-	
-	Processing time (with 156.250MHz) = 103.084us
-	Processing time (scaled to 300MHz)= (103.084 * (156.25/300)) us
-					  = 53.6896 us
+			= 29.400 us
 
-	Throughput = (Input Sample * Iterations) /(Processing time)
-          	   = (2048 x 8 ) / 53.6896 us
-         	   =  305.1615 Msamples / sec
+	Throughput (300MHz)= (Input Sample * Iterations) /(Processing time)
+          	   = (2048 x 8 ) / 29.400 us
+         	   =  557.2789 Msamples / sec
 ```
 
 To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
 ```
 	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
 
-	Latency (with 156.250MHz)  = 2.144us
-	Latency (scaled to 300MHz) = (2.144 * (156.25/300)) us
-				   = 1.1167 us
+	Latency (300MHz) = 5.730 us
 
 
 
@@ -503,11 +498,11 @@ A trace of the AI Engine implementation with N_FIR_FILTERS=1 and N_FIR_TAPS=64 o
 To measure throughput, the cursors are lined up with the start and end of the read (datamover_0.strmInpFromFIR) stream (cursor times with us resolution can be obtained by zooming in further):
 ```
 	Processing time = (End Timestamp of strmInpFromFIR - Start Timestamp of strmInpFromFIR)
-			=  136.5333us
+			=  32.530us
 
 	Throughput = (Input Sample * Iterations) /(Processing time)
-          	   = (2048 x 8 ) / 136.5333 us
-     	           = 120.0 Msamples / sec
+          	   = (2048 x 8 ) / 32.530 us
+     	           = 503.658 Msamples / sec
 
 ```
 ## Latency calculation of 64 Taps, 1 Filter is below.
@@ -515,7 +510,7 @@ To measure throughput, the cursors are lined up with the start and end of the re
 To measure latency, the measurement is made from the start of the write (datamover_0.strmOutToFIR) stream to the start of the read (datamover_0.strmInpFromFIR) stream:
 ```
 	Latency = (Start Timestamp of strmInpFromFIR - Start Timestamp of strmOutToFIR)
-		= 3.333 us
+		= 6.076 us
 ```
 
 </details>
