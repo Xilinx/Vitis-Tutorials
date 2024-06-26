@@ -995,16 +995,12 @@ The following is the snapshot of the time trace for the LeNet design run in hw.
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 2136.679 us
+					 = 1056.919 us
 Throughput = (no of images / processing time)
 
-Throughput (with 156.25 MHz) = 100 / 2136.679us
-		             = 46801.6019  images/s
+Throughput (in 312.50 MHz) = 100 / 1056.919us
+		             = 94614.62988  images/s
 
-The processing time reported by trace is with the data mover kernel running at 156.250MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
-Throughput (scaled to 312.5 MHz),
-	  = 46801.6019 images/s x (312.5 / 156.25 ) 
-	  = 93,603.2038 images/s
 ```
 The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
@@ -1013,10 +1009,10 @@ The following is the snapshot of the time trace for the LeNet design run in Emul
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 1067.641 us
+					 = 1056.2912 us
 Throughput = (no of images / Processing time)
-           = 100 / 1067.641  us
-           = 93,664.4434 images/s
+           = 100 / 1056.2912  us
+           = 94670.86349 images/s
 
 ```
 
@@ -1058,7 +1054,7 @@ cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe
 ```
 
-2. If you do not already have it installed, download and install [XPE for Versal Version 2024.1](https://www.xilinx.com/products/technology/power/xpe.html). For full documentation of XPE, see [this page](https://docs.amd.com/r/en-US/ug1275-xilinx-power-estimator-versal).
+2. If you do not already have it installed, download and install [XPE for Versal Version 2024.1](https://www.xilinx.com/products/technology/power/xpe.html). 
 
 3. Load the `graph.xpe` into XPE to see the AI Engine power comsumption and resource utilization for  lenet design:
 
@@ -1068,7 +1064,7 @@ A summary of resource utilization and power is given in the following table.
 
 | Number of Compute Cores | Vector Load | Number of Active Memory Banks | Mem R/W Rate | Active AI Engine Tiles | Interconnect Load | Dynamic Power<br/>(in mW) | 
 |:-----------------------:|:-----------:|:-----------------------------:|:------------:|:----------------:|:-----------------:|:-------------------------------:|
-| 5                       | 36%         | 52                            | 20%          | 14               | 7%                | 1524                            |
+| 5                       | 29.92%         | 52                            | 14.3%          | 14               | 6.83%                | 1423                            |
 
 ## References
 
@@ -1100,6 +1096,7 @@ The following are links to Vitis related information referenced in this tutorial
 
 ##### Revision History
 
+* Jun 2024 - Updated for 2024.1
 * Apr 2023 - Updated for 2023.2
 * Jan 2023 - Updated for 2022.2
 * May 2022 - Updated for 2022.1
