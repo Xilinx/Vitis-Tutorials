@@ -1044,16 +1044,10 @@ The following is the snapshot of the time trace for the LeNet design run in hw.
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 1544.568 us
+					 = 741.441 us
 Throughput = (no of images / processing time)
-
-Throughput (with 150.00 MHz) = 100 / 1544.568 us
-		             = 64743.022  images/s
-
-The processing time reported by trace is with the data mover kernel running at 150.00MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
-Throughput (scaled to 312.5 MHz),
-	  = 64743.022 images/s x (312.5 / 150.00 ) 
-	  = 134881.2958 images/s
+           = 100 / 741.441 us 
+	  = 134872.4982 images/s
 ```
 The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
@@ -1062,10 +1056,10 @@ The following is the snapshot of the time trace for the LeNet design run in Emul
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 741.542 us
+					 = 741.462 us
 Throughput = (no of images / Processing time)
-           = 100 / 741.542  us
-           = 134854.1283 images/s
+           = 100 / 741.462  us
+           = 134868.678 images/s
 
 ```
 
@@ -1097,7 +1091,7 @@ A summary of resource utilization and power is given in the following table.
 				
 | Number of Compute Cores|Vector Load|Number of Active Memory Banks|Mem R/W Rate|Memory Tiles|Memory Tile Memory Banks|Memory Tile Memory R/W Rate|AIE-ML Mem Tiles|Interconnect Load|Dynamic Power<br/>(in W)| 
 |:----------------------:|:---------:|:---------------------------:|:----------:|:----------:|:----------------------:|:-------------------------:|:--------------:|:---------------:|:-----------------------|
-|       5                |  32.08%   |          60                 |    16.48%  |     2      |        6               |          20.00%           |      2         |     9.53%       |         1.451          |
+|       5                |  31.75%   |          60                 |    16.07%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.117          |
 
 ## Note
 
