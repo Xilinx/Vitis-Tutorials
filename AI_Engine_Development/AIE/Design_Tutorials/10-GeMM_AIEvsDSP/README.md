@@ -61,10 +61,10 @@ After completing the tutorial, you should be able to:
 ### Design Overview
 
 #### AIE
-In this design, the multiplication of 2 square matrices (MatA and MatB) is done using a 32-AIE core overlay. MatA is
-divided into 8 x 4 blocks and MatB into 4 x 8 blocks. MatA input is provided 1x4 block at a time, using 4 input streams,
-and MatB is provided using 32 input streams for each 4x8 blocks. Output Matrix MatC is divided into 8x8 blocks and is given out
-as 1x8block at a time using 8 output streams. 32 core overlay is chosen to keep the core overlay same across all Matrx
+In this design, the multiplication of 2 square matrices (MatA and MatB) is done using a 24-AIE core overlay. MatA is
+divided into 3 x 8 blocks and MatB into 8 x 3 blocks. MatA input is provided 1x8 block at a time, using 8 input streams,
+and MatB is provided using 24 input streams for each 8x3 blocks. Output Matrix MatC is divided into 3x3 blocks and is given out
+as 1x3block at a time using 3 output streams. 24 core overlay is chosen to keep the core overlay same across all Matrx
 Dimensions, 32x32x32-64x64x64 onwards to 1024x1024x1024 and keep the performance high.
 
 #### DSP
@@ -243,11 +243,11 @@ The following table shows a comparison between a 1024 x 1024 x1024 GeMM design i
 
 | Design Target | TOPS<br/> | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | TOPS per Watt<br/>(in TOPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 2.406     | 11.251                  | 32               | 95%             | 608 /<br/>6%                         | 144              | 15940 /<br/> 3680        |0       | 0    | 10132                      |  0.237                         |    
-| DSP           | 1.499     |   1398.106              | NA               | NA              | NA                                   | NA               | 80480 /<br/> 25231       | 64     | 1024  | 4765.4                   | 0.186                            |
+| AIE           | 1.576     | 3.315                  | 24               | 84.63%             | 252 /<br/>14.24%                         | 46              | 26478 /<br/> 13548        |66       | 0    | 4924                      |  0.320                         |    
+| DSP           | 1.434     |   1497.971              | NA               | NA              | NA                                   | NA               | 73346 /<br/> 20534       | 64     | 1024  | 9188                   | 0.156                            |
 
 
-It is important to understand that those 144 AI Engines tiles are not all required for the GeMM compute: 32 AI Engines/vector cores are required for computation, and 112 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 112 AI Engine tiles is 95%.
+It is important to understand that those 46 AI Engines tiles are not all required for the GeMM compute: 24 AI Engines/vector cores are required for computation, and 22 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 22 AI Engine tiles is 84.63%.
 
 Measurement:
 

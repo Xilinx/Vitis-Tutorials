@@ -561,7 +561,7 @@ Then we will move to the next row of Matrix A and all these steps are repeated. 
 can start receiving data for next submatrix. Thus for 32 clocks, there is overlap of previous and new submatrix calculations. So the total
 number of clocks required for large matix multiplication is 64 * No. of Sbumatrices + 32.
 
-In this design, DSP clock is operating at 750MHz (1.33ns). 
+In this design, DSP clock is operating at 700MHz (1.42ns). 
 
 The following figure shows block diagram of the design. 
 
@@ -578,7 +578,7 @@ GeMM DSP RTL design can be divided into 2 main parts -
  First one is the core matrix mutliplication functionality, gemm_top module is the top level module that implements this functionality.
  Second part involves data mover logic for writing Matrix A and B data and to read the matrix output from host application. This is implemented in ps_slave module.
 
- In this design, core DSP logic operates at 750MHz while rest of the logic operates at 375 MHz. There is synchronizer module to handle synchronization of signals going across these 2 clock domains
+ In this design, core DSP logic operates at 700MHz while rest of the logic operates at 350 MHz. There is synchronizer module to handle synchronization of signals going across these 2 clock domains
 
  gemm_large_ocm \
  |-gemm_top \
@@ -855,12 +855,12 @@ Resource Utilization for 32x32x32 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 50554 |     0 |          0 |   1799680 |  2.81 |
-| CLB LUTs                   | 11935 |     0 |          0 |    899840 |  1.33 |
+| Registers                  | 50470 |     0 |          0 |   1799680 |  2.80 |
+| CLB LUTs                   | 11919 |     0 |          0 |    899840 |  1.32 |
 | LOOKAHEAD8                 |   140 |     0 |          0 |    112480 |  0.12 |
 | RAMB36E5                   |     0 |     0 |          0 |       967 |  0.00 |
 | URAM                       |   192 |     0 |          0 |       463 | 41.47 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 Resource Utilization for 64x64x64 matrix is as follows -
@@ -870,12 +870,12 @@ Resource Utilization for 64x64x64 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 73483 |     0 |          0 |   1799680 |  4.08 |
-| CLB LUTs                   | 20449 |     0 |          0 |    899840 |  2.77 |
+| Registers                  | 73449 |     3 |          0 |   1799680 |  4.08 |
+| CLB LUTs                   | 20491 |     0 |          0 |    899840 |  2.28 |
 | LOOKAHEAD8                 |   652 |     0 |          0 |    112480 |  0.58 |
 | RAMB36E5                   |    64 |     0 |          0 |       967 |  6.62 |
 | URAM                       |   192 |     0 |          0 |       463 | 41.47 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 Resource Utilization for 128x128x128 matrix is as follows -
@@ -885,12 +885,12 @@ Resource Utilization for 128x128x128 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 73749 |     0 |          0 |   1799680 |  4.10 |
-| CLB LUTs                   | 20522 |     0 |          0 |    899840 |  2.28 |
+| Registers                  | 73337 |     0 |          0 |   1799680 |  4.08 |
+| CLB LUTs                   | 20521 |     0 |          0 |    899840 |  2.28 |
 | LOOKAHEAD8                 |   652 |     0 |          0 |    112480 |  0.58 |
 | RAMB36E5                   |    64 |     0 |          0 |       967 |  6.62 |
 | URAM                       |   192 |     0 |          0 |       463 | 41.47 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 Resource Utilization for 256x256x256 matrix is as follows -
@@ -900,12 +900,12 @@ Resource Utilization for 256x256x256 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 73514 |     0 |          0 |   1799680 |  4.08 |
-| CLB LUTs                   | 20519 |     0 |          0 |    899840 |  2.28 |
+| Registers                  | 73566 |     1 |          0 |   1799680 |  4.09 |
+| CLB LUTs                   | 20623 |     0 |          0 |    899840 |  2.29 |
 | LOOKAHEAD8                 |   652 |     0 |          0 |    112480 |  0.58 |
 | RAMB36E5                   |    64 |     0 |          0 |       967 |  6.62 |
 | URAM                       |   192 |     0 |          0 |       463 | 41.47 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 Resource Utilization for 512x512x512 matrix is as follows -
@@ -915,12 +915,12 @@ Resource Utilization for 512x512x512 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 70591 |     0 |          0 |   1799680 |  3.92 |
-| CLB LUTs                   | 19459 |     0 |          0 |    899840 |  2.16 |
+| Registers                  | 70237 |     0 |          0 |   1799680 |  3.90 |
+| CLB LUTs                   | 19483 |     0 |          0 |    899840 |  2.17 |
 | LOOKAHEAD8                 |   652 |     0 |          0 |    112480 |  0.58 |
 | RAMB36E5                   |    64 |     0 |          0 |       967 |  6.62 |
 | URAM                       |   144 |     0 |          0 |       463 | 31.10 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 Resource Utilization for 1024x1024x1024 matrix is as follows -
@@ -930,12 +930,12 @@ Resource Utilization for 1024x1024x1024 matrix is as follows -
 +----------------------------+-------+-------+------------+-----------+-------+
 |          Site Type         |  Used | Fixed | Prohibited | Available | Util% |
 +----------------------------+-------+-------+------------+-----------+-------+
-| Registers                  | 73846 |     0 |          0 |   1799680 |  4.10 |
-| CLB LUTs                   | 20543 |     0 |          0 |    899840 |  2.28 |
+| Registers                  | 73346 |     2 |          0 |   1799680 |  4.08 |
+| CLB LUTs                   | 20534 |     0 |          0 |    899840 |  2.28 |
 | LOOKAHEAD8                 |   652 |     0 |          0 |    112480 |  0.58 |
 | RAMB36E5                   |    64 |     0 |          0 |       967 |  6.62 |
 | URAM                       |   192 |     0 |          0 |       463 | 41.47 |
-| DSP58                      |  1024 |     0 |          0 |      1968 | 52.03 |
+| DSP58                      |  1024 |  1024 |          0 |      1968 | 52.03 |
 +----------------------------+-------+-------+------------+-----------+-------+
 ```
 
@@ -958,12 +958,12 @@ A summary of power utilization is given in the following table.
 +--------------------+-------------------+
 | GeMM Configuration | Dynamic Power (W) |
 +--------------------+-------------------+
-|        32x32x32    |     6.55          |  
-|        64x64x64    |     6.55          |
-|     128x128x128    |     6.55          |
-|     256x256x256    |     6.55          |
-|     512x512x512    |     6.55          |
-|  1024x1024x1024    |     6.55          |
+|        32x32x32    |     8.459         |  
+|        64x64x64    |     9.222         |
+|     128x128x128    |     9.196         |
+|     256x256x256    |     9.226         |
+|     512x512x512    |     9.062         |
+|  1024x1024x1024    |     9.188         |
 +--------------------+-------------------+
 ```
 
@@ -1026,12 +1026,12 @@ TOPS and power utilization for DSP based martix multiplication is more or less i
 +--------------------+---------------+
 | GeMM Configuration | TOPs/W        |
 +--------------------+---------------+
-|        32x32x32    |  0.20599551   |
-|        64x64x64    |  0.215502995  |
-|     128x128x128    |  0.218443581  |
-|     256x256x256    |  0.218816807  |
-|     512x512x512    |  0.21886355   |
-|  1024x1024x1024    |  0.218869394  |
+|        32x32x32    |  0.159507     |
+|        64x64x64    |  0.153063     |
+|     128x128x128    |  0.155590     |
+|     256x256x256    |  0.155349     |
+|     512x512x512    |  0.158194     |
+|  1024x1024x1024    |  0.156029     |
 +--------------------+---------------+
 
 ```
@@ -1049,12 +1049,12 @@ A summary of throughput and latency for all variations is shown in the following
 +--------------------+-------------------+------------------+---------------+-----------+--------------------+-------------+-------------------------+--------------+------------------+--------------------+----------------+
 | GeMM Configuration |  perf (in MSPS)   | Latency(us)      |  Matrices/s   |    TOPs   | No.of Active Cores | Vector Load | No. of Active mem Banks | Mem R/W Rate | Active AIE Tiles | Dynamic Power (mW) | TOPs per Watt  |
 +--------------------+-------------------+------------------+---------------+-----------+--------------------+-------------+-------------------------+--------------+------------------+--------------------+----------------+
-|        32x32x32    |   10541.176       |  0.097           | 10.29 x 10^6  | 1.34927   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.05996     | 
-|        64x64x64    |   11027.692       |  0.371           | 2.69 x 10^6   | 1.41154   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.15503     |
-|     128x128x128    |    5589.083       |  2.931           | 3.41 x 10^5   | 1.43081   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.18444     |
-|     256x256x256    |    2799.316       |  23.411          | 4.27 x 10^4   | 1.43325   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.18817     |
-|     512x512x512    |    1399.957       |  187.25          | 5.34 x 10^3   | 1.43356   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.18864     |
-|  1024x1024x1024    |     699.997       |  1497.9          | 6.67 x 10^2   | 1.43359   |        NA          |    NA       |         NA              |    NA        |      NA          |      6550          |    2.18869     |
+|        32x32x32    |   10541.176       |  0.097           | 10.29 x 10^6  | 1.34927   |        NA          |    NA       |         NA              |    NA        |      NA          |      8459          |    0.159507    | 
+|        64x64x64    |   11027.692       |  0.371           | 2.69 x 10^6   | 1.41154   |        NA          |    NA       |         NA              |    NA        |      NA          |      9222          |    0.153063    |
+|     128x128x128    |    5589.083       |  2.931           | 3.41 x 10^5   | 1.43081   |        NA          |    NA       |         NA              |    NA        |      NA          |      9196          |    0.155590    |
+|     256x256x256    |    2799.316       |  23.411          | 4.27 x 10^4   | 1.43325   |        NA          |    NA       |         NA              |    NA        |      NA          |      9226          |    0.155349    |
+|     512x512x512    |    1399.957       |  187.25          | 5.34 x 10^3   | 1.43356   |        NA          |    NA       |         NA              |    NA        |      NA          |      9062          |    0.158194    |
+|  1024x1024x1024    |     699.997       |  1497.9          | 6.67 x 10^2   | 1.43359   |        NA          |    NA       |         NA              |    NA        |      NA          |      9188          |    0.156029    |
 +--------------------+-------------------+------------------+---------------+-----------+--------------------+-------------+-------------------------+--------------+------------------+--------------------+----------------+
 
 ```
