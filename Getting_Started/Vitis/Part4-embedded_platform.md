@@ -15,7 +15,10 @@
 
  In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=pkl1657651602103.html), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
-![img](./images/embedded_processor_flow.png)
+<img width="650" alt="image" src="https://media.gitenterprise.xilinx.com/user/3118/files/8ca2869a-85f6-46e8-913b-0f9c82d0eebe">
+
+>
+> Note: The above flow diagram is only valid for non-Versal devices.
 
 * Software Emulation: The kernel code is compiled to run on an emulation environment (QEMU) version of the embedded processor. The software emulation target allows quick iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system. Refer to [Software Emulation](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=using-software-emulation-xvc1504034328357.html) for more information.
 
@@ -65,9 +68,9 @@ Then, after changing into the target build directory, enter the following comman
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c -t sw_emu --platform xilinx_zcu102_base_202320_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
-v++ -l -t sw_emu --platform xilinx_zcu102_base_202320_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
-v++ -p -t sw_emu --platform xilinx_zcu102_base_202320_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
+v++ -c -t sw_emu --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg -k vadd -I../../src ../../src/vadd.cpp -o ./vadd.xo 
+v++ -l -t sw_emu --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./vadd.xo -o ./vadd.xclbin
+v++ -p -t sw_emu --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_sw_emu.sh
 ```
 
 Here is a brief explanation of each of these four commands:
@@ -138,7 +141,7 @@ This command must be run from a Linux shell, outside of the QEMU environment. Fo
 scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
 ```
 
-Press **Ctrl+a+x** to exit QEMU and return to your bash shell.
+Press **Ctrl+A then press C to get to qemu console then enter `quit` to exist.** to exit QEMU and return to your bash shell.
 
 >**TIP:** If you have trouble exiting the QEMU environment, you can use `kill -9 <qemu_pid>` to kill the process from another terminal window.
 
@@ -151,23 +154,22 @@ cd <Path to the cloned repo>/Getting_Started/Vitis/example/zcu102
 mkdir hw_emu
 cp xrt.ini hw_emu
 cp run_hw_emu.sh hw_emu
+cd hw_emu
 ```
 
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c --mode hls --platform xilinx_zcu102_base_202320_1 --config ./zcu102_hls.cfg --work_dir hw_emu
-v++ -l -t hw_emu --platform xilinx_zcu102_base_202320_1 --config ../src/zcu102.cfg ./hw_emu/vadd.xo -o ./hw_emu/vadd.xclbin
-cd hw_emu
-v++ -p -t hw_emu --platform xilinx_zcu102_base_202320_1 --config ../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
---package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw_emu.sh
+v++ -c --mode hls --platform xilinx_zcu102_base_202410_1 --config ../../src/hls_config.cfg --work_dir hw_emu
+v++ -l -t hw_emu --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./hw_emu/vadd.xo -o ./hw_emu/vadd.xclbin
+v++ -p -t hw_emu --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./hw_emu/vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+--package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./hw_emu/vadd.xclbin --package.sd_file ./run_hw_emu.sh
 ```
 
 Building for hardware emulation takes more time than for software emulation, but still much less than when targeting the hardware accelerator card. Notice that the `v++ -c --mode hls` command replaces the `v++ -c -k vadd` command from the software emulation flow. After the build process completes, you can launch the hardware emulation run by using the launch script generated during the packaging step.
 
 ```bash
-cd hw_emu
 ./package/launch_hw_emu.sh 
 ```
 
@@ -189,7 +191,7 @@ This command must be run from a Linux shell, outside of the QEMU environment. Fo
 scp -P 1440 root@127.0.0.1:/run/media/mmcblk0p1/xrt.run_summary ./xrt.run_summary
 ```
 
-Press **Ctrl+a x** to exit QEMU and return to your bash shell.
+Press **Ctrl+A then press C to get to qemu console then enter `quit` to exist.** to exit QEMU and return to your bash shell.
 
 >**TIP:** If you have trouble exiting the QEMU environment, you can use `kill -9 <qemu_pid>` to kill the process from another terminal window.
 
@@ -202,16 +204,16 @@ cd <Path to the cloned repo>/Getting_Started/Vitis/example/zcu102
 mkdir hw
 cp xrt.ini hw
 cp run_hw.sh hw
+cd hw
 ```
 
 Then, after changing into the target build directory, enter the following commands to build the host application and device binary:
 
 ```bash
 $CXX -g -std=c++17 -Wall -O0 -fmessage-length=0 ../../src/host.cpp -o ./app.exe -I$SYSROOT/usr/include/xrt -LSYSROOT/usr/lib -lxrt_coreutil -pthread --sysroot=$SYSROOT
-v++ -c --mode hls --platform xilinx_zcu102_base_202320_1 --config ./zcu102_hls.cfg --work_dir hw
-v++ -l -t hw --platform xilinx_zcu102_base_202320_1 --config ../src/zcu102.cfg ./hw/vadd.xo -o ./hw/vadd.xclbin
-cd hw
-v++ -p -t hw --platform xilinx_zcu102_base_202320_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
+v++ -c --mode hls --platform xilinx_zcu102_base_202410_1 --config ../../src/hls_config.cfg --work_dir hw
+v++ -l -t hw --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./hw/vadd.xo -o ./hw/vadd.xclbin
+v++ -p -t hw --platform xilinx_zcu102_base_202410_1 --config ../../src/zcu102.cfg ./vadd.xclbin --package.out_dir ./package --package.rootfs ${ROOTFS}/rootfs.ext4 \
 --package.sd_file ${ROOTFS}/Image --package.sd_file ./xrt.ini --package.sd_file ./app.exe --package.sd_file ./vadd.xclbin --package.sd_file ./run_hw.sh
 ```
 

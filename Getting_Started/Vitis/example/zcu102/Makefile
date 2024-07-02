@@ -1,5 +1,5 @@
 ndef = $(if $(value $(1)),,$(error $(1) must be set prior to running))
-
+MK_PATH= $(shell git rev-parse --show-toplevel)
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/Getting_Started/Vitis/example/src/*}')
 CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
