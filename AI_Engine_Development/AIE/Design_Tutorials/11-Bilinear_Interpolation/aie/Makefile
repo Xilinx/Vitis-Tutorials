@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 # Author: Richard Buz
@@ -15,7 +15,7 @@ COMPILE_OPTS      := --aie.pl-freq=625 --aie.adf-api-log-level=2 --aie.kernel-li
 					 --aie.Xmapper=BufferOptLevel9
 
 X86_SIM_OPTS      := --pkg-dir=./Work --i=./ --o=./x86simulator_output
-AIE_SIM_OPTS      := --pkg-dir=./Work --i=./ --o=./aiesimulator_output --display-run-interval=1000
+AIE_SIM_OPTS      := --pkg-dir=./Work --input-dir=./ --output-dir=./aiesimulator_output --display-run-interval=1000
 
 .PHONY: help x86com aiesim x86sim profile trace gen_vectors check_aiesim check_x86sim analyze clean
 
@@ -84,9 +84,12 @@ check_x86sim:
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 
+loop_ii:
+	./get_loop_II.py ./Work/aie
+
 clean:
 	rm -rf .Xil Work libadf.a
-	rm -rf *.log *.csv *.db *.vcd logs
+	rm -rf *.log *.csv *.db *.vcd *.json logs
 	rm -rf x86simulator_output aiesimulator_output pl_sample_counts
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS ISS_RPC_SERVER_PORT
-	rm -rf pl_sample_count*
+	rm -rf pl_sample_count* .wsdata

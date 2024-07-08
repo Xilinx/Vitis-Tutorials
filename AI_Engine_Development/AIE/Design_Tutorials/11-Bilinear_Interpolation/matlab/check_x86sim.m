@@ -1,5 +1,5 @@
 %
-% Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+% Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 % SPDX-License-Identifier: MIT
 %
 % Author: Richard Buz
@@ -20,7 +20,9 @@ load golden_ref.mat;
 aie_sim_img = zeros(ysz*xsz, 1);
 tv_img = zeros(ysz*xsz, 1);
 max_idx = ysz*xsz - 1;
-slack = 2;    % floating point values won't match exactly
+pxl_rem = max_idx + 1;
+core_pxl_cnt = 0;
+slack = 0;    % floating point values won't match exactly
 
 % compare the files for each core
 for idx = 1:num_core
@@ -30,47 +32,28 @@ for idx = 1:num_core
     tv_data = int32(fscanf(fid,'%d'));
     fclose(fid);
 
-    % find entries with index values out of range and delete
-    pxl_idx = int32(tv_data(1:2:end));
-    pxl_val = int32(tv_data(2:2:end)); 
-    I = find(pxl_idx > max_idx);
-    pxl_idx(I) = [];
-    pxl_val(I) = [];
-    tv_data = [pxl_idx pxl_val]';
-    tv_data = tv_data(:);
-
-    % place test vector data into image
-    pxl_idx = tv_data(1:2:end);
-    interp_pxl = typecast(tv_data(2:2:end), 'single');
-    tv_img(pxl_idx+1) = interp_pxl;
-
     % get simulator output data
     sim_file = sprintf('../aie/x86simulator_output/data/output_%d_aie.txt',idx);
     fid = fopen(sim_file,'r');
     sim_data = int32(fscanf(fid,'%d'));
     fclose(fid);
 
-    % find entries with index values out of range and delete
-    pxl_idx = int32(sim_data(1:2:end));
-    pxl_val = int32(sim_data(2:2:end)); 
-    I = find(pxl_idx > max_idx);
-    pxl_idx(I) = [];
-    pxl_val(I) = [];
-    sim_data = [pxl_idx pxl_val]';
-    sim_data = sim_data(:);
-
-    % place simulator data into image
-    pxl_idx = sim_data(1:2:end);
-    interp_pxl = typecast(sim_data(2:2:end), 'single');
-    aie_sim_img(pxl_idx+1) = interp_pxl;
+    % check and removed extra pixels
+    tv_data = tv_data(1:min(length(tv_data), pxl_rem));
+    sim_data = sim_data(1:min(length(tv_data), pxl_rem));
+    pxl_rem = pxl_rem - length(tv_data);
+    
+    % place data into image
+    tv_img((core_pxl_cnt+1):(core_pxl_cnt+length(tv_data))) = typecast(tv_data, 'single');
+    aie_sim_img((core_pxl_cnt+1):(core_pxl_cnt+length(sim_data))) = typecast(sim_data, 'single');
+    core_pxl_cnt = core_pxl_cnt+ length(tv_data);
 
     % compare the test vectors
-    max_diff_even = max(abs(sim_data(1:2:end)-tv_data(1:2:end)));
-    max_diff_odd = max(abs(sim_data(2:2:end)-tv_data(2:2:end)));
-    if max_diff_even == 0 && max_diff_odd <= slack
+    max_diff = max(abs(sim_data-tv_data));
+    if max_diff <= slack
         fprintf('MATCH: Test vector %d\n', idx);
     else
-        fprintf('MISMATCH: Test vector %d, index diff = %d, pixel diff = %d\n', idx, max_diff_even, max_diff_odd);
+        fprintf('MISMATCH: Test vector %d, pixel diff = %d\n', idx, max_diff);
     end
 end
 

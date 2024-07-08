@@ -16,11 +16,12 @@
 1. [Introduction](#introduction)
 2. [Computing Interpolated Values](#computing-interpolated-values)
 3. [Design Assumptions](#design-assumptions)
-4. [Programmable Logic Interface](#programmable-logic-interface)
-5. [AI Engine Code Vectorization](#ai-engine-code-vectorization)
-6. [Running the Example](#running-the-example)
-7. [Analyzing Results](#analyzing-results)
-8. [Customizing the Example](#customizing-the-example)
+4. [AI Engine Code Vectorization](#ai-engine-code-vectorization)
+5. [Data Interface](#data-interface)
+6. [AI Engine Kernel Processing](#ai-engine-kernel-processing)
+7. [Running the Example](#running-the-example)
+8. [Analyzing Results](#analyzing-results)
+9. [Customizing the Example](#customizing-the-example)
 
 [References](#references)
 
@@ -116,237 +117,111 @@ f(x_2,y_1) \\
 f(x_2,y_2) \end{bmatrix}.
 $$
 
-## Programmable Logic Interface
-
-When considering system partitioning, tasks such as retrieving data from lookup tables and extracting integer and fractional parts of floating-point numbers are better suited to be performed in programmable logic. Efficient use of AI Engines is realized when they are programmed to continually perform vector processing on a steady stream of input data.
-
-Data necessary to process a single pixel is comprised of four reference pixels and fractional parts of the $x_q$ and $y_q$ coordinates. Each of these six data values is assumed to be represented as 32-bit, single precision, floating-point values. Due to a constraint of the AI Engine API, the smallest vector size available to accommodate pixel data is a vector of eight values. Since two extra 32-bit values are available, one of them is used for specifying the index of the interpolated pixel in the output image. This allows each pixel to be processed individually with no dependence on order and makes multicore processing simple. The output pixel index is assumed to be an int32 value and is not processed by the AI Engine, but simply passed through to label the output pixel value.
-
-An illustration of the input vector generated for each pixel is shown in Figure 5.
-
-![figure5](images/vin_fmt.png)
-
-*Figure 5 - Input Vector Format for Pixel Data*
-
-Input to the AI Engine consists of a sequence of these vectors. Output from the AI Engine consists of a sequence of two values for each pixel. The first value is the output pixel index, which is followed by the interpolated pixel value.  Data stream formats at the PL/AIE interface, from the perspective of the AI Engine, are shown in Figure 6.
-
-![figure6](images/pl_if_streams.png)
-
-*Figure 6 - Data Streams at the PL/AIE Interface*
-
-### PLIO Interface
-
-Considering the format of both input and output data streams, it is apparent that the input stream places a limit on achievable pixel processing rate. For the lowest speed AMD Versal™ parts, the PLIO interface supports a rate of 4 GBps. Each input vector consists of 32 bytes (four bytes per element times eight elements). Therefore, the PLIO interface limits peak pixel rate to 125 MP/s. For the fastest Versal devices, this limit becomes 156.25 MP/s.
-
-### AI Engine Test Vectors
-
-When AI Engines graphs are simulated apart from programmable logic and processing systems, text files are used to provide input data. This example uses MATLAB® to generate test vectors, which are sequences of int32 numbers. Although actual data is single precision floating-point, it is difficult to express such numbers in text format. In order to capture full precision, the 32 bits used to represent a floating-point number (sign, exponent, mantissa) are written as equivalent int32 values. A similar format is used for files containing output data.
-
 ## AI Engine Code Vectorization
 
-To realize advantages of AI Engine processing, code must be vectorized. Applying this to pixel interpolation, the calculation may be restated as:
+To realize advantages of AI Engine processing, computations must be vectorized. Applying this to pixel interpolation, the calculation may be restated as
 
-$$
-\begin{bmatrix}
-1 - x_{frac} \\
-1 - x_{frac} \\
-x_{frac} \\
-x_{frac}
-\end{bmatrix}
-.*
-\begin{bmatrix}
-1 - y_{frac} \\
-y_{frac} \\
-1 - y_{frac} \\
-y_{frac}
-\end{bmatrix}
-.*
-\begin{bmatrix}
-f(x_1,y_1) \\
-f(x_1,y_2) \\
-f(x_2,y_1) \\
-f(x_2,y_2)
-\end{bmatrix}
-\rightarrow \sum ( \cdot ) \rightarrow f(x_q,y_q).
-$$
-
-The .* operator denotes element-wise products of vectors, which corresponds to AI Engine vector multiplication. Two vector multiplications are performed, where weights derived from $x_{frac}$ are multiplied with weights derived from $y_{frac}$ and then multiplied by corresponding pixel values. The summation denotes addition of vector product elements, resulting in an interpolated pixel value.
-
-While the vector containing pixel values is acquired directly from kernel input, the other two need to be constructed from values $x_{frac}$ and $y_{frac}$. Assigning individual components of the vectors would involve the scalar processor and impact performance, so a vector formulation is used instead. Restating the weight vectors as
-
-$$
-\begin{bmatrix}
-1 - x_{frac} \\
-1 - x_{frac} \\
-x_{frac} \\
-x_{frac}
-\end{bmatrix} = 
-\begin{bmatrix}
-1 \\
-1 \\
-0 \\
-0
-\end{bmatrix} +
-\begin{bmatrix}
--1 \\
--1 \\
-1 \\
-1
-\end{bmatrix} .*
-\begin{bmatrix}
-x_{frac} \\
-x_{frac} \\
-x_{frac} \\
-x_{frac}
-\end{bmatrix}
-$$
+$$f(x_q,y_1) = x_{frac}f(x_2,y_1) + f(x_1,y_1) - x_{frac}f(x_1,y_1)$$
 
 and
 
-$$
-\begin{bmatrix}
-1 - y_{frac} \\
-y_{frac} \\
-1 - y_{frac} \\
-y_{frac}
-\end{bmatrix} = 
-\begin{bmatrix}
-1 \\
-0 \\
-1 \\
-0
-\end{bmatrix} +
-\begin{bmatrix}
--1 \\
-1 \\
--1 \\
-1
-\end{bmatrix} .*
-\begin{bmatrix}
-y_{frac} \\
-y_{frac} \\
-y_{frac} \\
-y_{frac}
-\end{bmatrix},
-$$
+$$f(x_q,y_2) = x_{frac}f(x_2,y_2) + f(x_1,y_2) - x_{frac}f(x_1,y_2)$$
 
-shows they are efficiently constructed using vector multiply-accumulate operations.
+for the first two interpolations in the x coordinate, and
 
-### AI Engine Floating-Point Vector Unit
+$$f(x_q,y_q) = y_{frac}f(x_q,y_2) + f(x_q,y_1) - y_{frac}f(x_q,y_1)$$
 
-Figure 7 shows the floating-point vector unit of an AI Engine, where it may be observed that the multiply and accumulator units are designed to process eight lanes in parallel. Since pixel interpolation calculations require four lanes, pixels are processed in pairs to fully utilize the AI Engine.
+for the final interpolation in the y coordinate. By reformulating the computation in this way, the first two terms in each equation represent a multiply-accumulate (MAC) operation which may be used in a follow-on multiply and subtract from accumulator (MSC) operation to obtain the result. Each interpolated pixel requires 3 MAC plus 3 MSC operations.
 
-![figure7](images/fp_vector_unit.png)
+This example uses single precision floating-point for computation. Figure 5 shows the floating-point vector unit of an AI Engine, where it may be observed that the multiply and accumulator units are designed to process eight lanes in parallel. SIMD parallelism is realized by using a pixel-per-lane approach. Since each pixel requires 3 MAC plus 3 MSC operations, each of which may be executed in a single clock cycle, a lower limit on computation requirement would be 0.75 cycles per pixel. This bound on computation should be viewed as a ballpark estimate on expected performance, which is likely unachievable due to overhead, bandwidth limitations, and pipelining inefficiencies.
 
-*Figure 7 - Floating-Point Vector Unit*
+![figure5](images/fp_vector_unit.png)
 
-### AI Engine Kernel Processing
+*Figure 5 - Floating-Point Vector Unit*
 
-In order to take advantage of software pipelining, kernel code is created to take advantage of VLIW instructions that perform simultaneous vector multiply, load, and store operations. Each invocation of the kernel processes 256 pixels using a sequence of four code loops.
+## Data Interface
 
-The first loop uses the $x_{frac}$ and $y_{frac}$ values from the input vector to construct a set of weight vectors and stores them in intermediate memory.
+When mapping algorithms to AI Engines, the process often becomes a tradeoff between computational efficiency, data bandwidth, and memory utilization. In the previous section, a value of 0.75 cycles per pixel was derived as a lower bound on computational efficiency. Data interfaces are examined next to determine limitations they impose and to provide guidance on a suitable choice.
 
-```cpp
-// iterator for input buffer with vector length 8
-auto pIn8 = aie::begin_vector<8>(in);
+### Programmable Logic Component
 
-// iterator for large work buffer with vector length 8
-auto pLbuf8 = aie::begin_restrict_vector<8>(lgbuf);     
-		
-// get constant data vectors used to compute x,y vectors
-aie::vector<float,8> mi = aie::load_v<8>(mul_init);
-aie::vector<float,8> ai = aie::load_v<8>(acc_init);
+When considering system partitioning, tasks such as retrieving data from lookup tables and extracting integer and fractional parts of floating-point numbers are better suited to be performed in programmable logic. Efficient use of AI Engines is realized when they are programmed to continually perform vector processing on a steady stream of input data.
 
-for (unsigned i = 0; i < PXLPERGRP; i++)
-	chess_prepare_for_pipelining
-	chess_loop_range(PXLPERGRP,PXLPERGRP)
-{
-	// get data for a single pixel from input
-	auto vin = (*pIn8++).cast_to<float>();
+Data necessary to process a single pixel is comprised of four reference pixels and fractional parts of the $x_q$ and $y_q$ coordinates. Each of these six data values is assumed to be represented as 32-bit, single precision, floating-point values. A conceptual illustration of how input data is derived in programmable logic for each pixel is shown in Figure 6. This example design does not include a programmable logic component but assumes such a component has been used to generate test input data for AI Engine processing.
 
-	// compute and store x,y vectors
-	*pLbuf8++ = fpmac(ai,vin,0,0x55554444,mi,0,0x76543210);
-}
+![figure6](images/vin_fmt.png)
 
-pLbuf8 -= PXLPERGRP;           // reset iterator for next loop
-```
+*Figure 6 - Derivation of Input Pixel Data*
 
-The second loop multiplies together weight vectors derived from $x_{frac}$ and $y_{frac}$ in the previous loop, and stores products in intermediate memory.
+### PLIO Interface
+
+Considering that input requires 6 floating-point values per pixel while output is a single floating-point value, it is apparent that the input stream places a more restrictive limit on achievable pixel processing rate. The PLIO interface supports transfer rates of 1 floating-point value per cycle, which depending on speed grade of the AMD Versal™ device, amounts to transfer rates of 1.0 to 1.25 billion floating-point values per second. Since the input requires 6 floating-point values per pixel, the input PLIO would restrict the rate to 6.0 cycles per pixel. In order to match the input limitation more closely to computational efficiency, 3 input PLIO interfaces are used, which brings the limitation down to 2.0 cycles per pixel. The data format for each of the input PLIO interfaces is shown in Figure 7.
+
+![figure7](images/pl_if_streams.png)
+
+*Figure 7 - Input PLIO Data Format*
+
+### AI Engine Test Vectors
+
+When AI Engines graphs are simulated apart from programmable logic and processing systems, text files are used to provide input data. This example uses MATLAB® to generate test vectors, which are sequences of `int32` numbers. Although actual data is single precision floating-point, it is difficult to express such numbers in text format. In order to capture full precision, the 32 bits used to represent a floating-point number (sign, exponent, mantissa) are written as equivalent `int32` values. A similar format is used for files containing output data.
+
+## AI Engine Kernel Processing
+
+### Kernel Data Interface
+
+The kernel example presented here uses buffered I/O for input and output. This allows for more efficient VLIW parallelism, where load and store instructions can be executed in the same clock cycle as vector processor instructions. The tradeoff is that there is an increased initial latency. Also, the compiler inserts ping pong buffers for each I/O allocated from AI Engine tile memory. Since this example has three inputs and a single output, a total of eight memory banks will be required. This means additional AI Engine tiles are used to accommodate the memory requirement.
+
+Another option for I/O is to use direct streaming to or from the AI Engine. There are two 32-bit input and two 32-bit output streams available. Although this would eliminate the need for ping pong buffers, additional cycles would be used in the kernel code to shift vector data. For example, if a `float` vector of size 8 is sent to an output stream, eight clock cycles would be required.
+
+A final option for kernel I/O is possible if the source or destination of data is another AI Engine tile. In this case, the cascade interface may be used. A `float` vector of size 8 could be transferred each clock cycle using the cascade interface.
+
+### Kernel Code
+
+To improve compute efficiency, kernel code is created to take advantage of VLIW instructions that perform simultaneous vector multiply, load, and store operations. Each invocation of the kernel processes 256 pixels, but this may be changed when generating test vectors for simulation. The kernel code shown here processes two interpolations over the x coordinate followed by an interpolation over the y coordinate for each loop using vectors of size 8. Computation is performed using AI Engine vector instrinsic functions.
 
 ```cpp
-// iterators for small work buffer with vector length 8 and large work 
-// buffer with vector length 16
-auto pSbuf8 = aie::begin_restrict_vector<8>(smbuf);     
-auto pLbuf16 = aie::begin_restrict_vector<16>(lgbuf);     
-
-for (unsigned i = 0; i < (PXLPERGRP/2); i++)
-	chess_prepare_for_pipelining
-	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
+void bilinear_kernel::interp(input_buffer<int32, extents<BUFFER_SIZE_IN>>& __restrict in_A, 
+                             input_buffer<int32, extents<BUFFER_SIZE_IN>>& __restrict in_B, 
+                             input_buffer<int32, extents<BUFFER_SIZE_IN>>& __restrict in_C, 
+                             output_buffer<int32, extents<BUFFER_SIZE_OUT>>& __restrict out)
 {
-	// get two pixels worth of data from large buffer
-	auto xyin = *pLbuf16++;
+    // iterators for input & output buffers
+    auto pInA = aie::begin_vector<8>(in_A);
+    auto pInB = aie::begin_vector<8>(in_B);
+    auto pInC = aie::begin_vector<8>(in_C);
+    auto pOut = aie::begin_vector<8>(out);
 
-	// compute and store xy product vector
-	*pSbuf8++ = fpmul(xyin,0,0xBA983210,0,0xFEDC7654);
-}
+    for (unsigned i = 0; i < PXLPERGRP/8; i++)
+        chess_prepare_for_pipelining
+        chess_loop_count(PXLPERGRP/8)
+    {
+        // get data for first x interpolation
+        auto xfrac = (*pInA++).cast_to<float>();
+        auto p11 = (*pInB++).cast_to<float>();
+        auto p21 = (*pInC++).cast_to<float>();
 
-pSbuf8 -= (PXLPERGRP/2);       // reset iterator for next loop
-```
+        // compute first x interpolation
+        auto tempy1 = fpmac(p11,xfrac,0,0x76543210,p21,0,0x76543210);
+        auto pxy1 = fpmsc(tempy1,xfrac,0,0x76543210,p11,0,0x76543210);
 
-The third loop retrieves vector products derived from $x_{frac}$ and $y_{frac}$ computed in the previous loop and multiplies them with pixel values from the input vector. This final vector product is written to memory.
+        // get data for second x interpolation
+        auto p12 = (*pInB++).cast_to<float>();
+        auto p22 = (*pInC++).cast_to<float>();
 
-```cpp
-// iterator for input buffer with vector length 16
-auto pIn16 = aie::begin_vector<16>(in);
+        // compute second x interpolation
+        auto tempy2 = fpmac(p12,xfrac,0,0x76543210,p22,0,0x76543210);
+        auto pxy2 = fpmsc(tempy2,xfrac,0,0x76543210,p12,0,0x76543210);
 
-for (unsigned i = 0; i < (PXLPERGRP/2); i++)
-	chess_prepare_for_pipelining
-	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
-{
-	// retrieve xy products
-	auto xy = *pSbuf8++;
+        // get data for y interpolation
+        auto yfrac = (*pInA++).cast_to<float>();
 
-	// get two pixels worth of data from input
-	auto vin = (*pIn16++).cast_to<float>();
+        // compute y interpolation
+        auto tempxy = fpmac(pxy1,yfrac,0,0x76543210,pxy2,0,0x76543210);
+        auto pxy = fpmsc(tempxy,yfrac,0,0x76543210,pxy1,0,0x76543210);
 
-	// compute and store weighted pixel values
-	*pLbuf8++ = fpmul(vin,0,0xBA983210,xy,0,0x76543210);
-}
-
-pIn16 -= (PXLPERGRP/2);        // reset input iterator for next loop
-pLbuf8 -= (PXLPERGRP/2);       // reset iterator for next loop
-```
-
-The final loop retrieves vector products, adds elements together to get interpolated pixel values, and inserts them into the output buffer along with pixel indexes.
-
-```cpp
-// iterator for output buffer
-auto pOut = aie::begin_vector<4>(out);
-
-// compute interpolated pixel values and insert into output along with pixel index
-aie::vector<float,4> vout;     // output vector
-aie::vector<float,8> red_sum;  // vector for computing summation of terms
-
-for (unsigned i = 0; i < (PXLPERGRP/2); i++)
-	chess_prepare_for_pipelining
-	chess_loop_range(PXLPERGRP/2,PXLPERGRP/2)
-{
-	// get output pixel index from input
-	auto vin = (*pIn16++).cast_to<float>();
-
-	// get x*y*p products and compute sum of terms
-	auto pxlp = *pLbuf8++;
-	red_sum = fpadd(pxlp,pxlp,0,0x67452301);
-	red_sum = fpadd(red_sum,red_sum,0,0x54761032);
-
-        // assign values to output
-	vout[0] = vin[6];
-	vout[2] = vin[14];
-	vout[1] = red_sum[0];
-	vout[3] = red_sum[4];
-
-	// send to output buffer
-	*pOut++ = vout.cast_to<int32>();
+        // write interpolated pixels to output
+        *pOut++ = as_v8int32(pxy);
+    }
 }
 ```
 
@@ -402,33 +277,39 @@ Vitis Analyzer is an essential tool for accessing information on compilation, si
 $ make analyze
 ```
 
-The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in Figure 8. This simple example shows the kernel, ping pong buffers on input and output ports, and two buffers for holding intermediate results.
+The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in Figure 8. This simple example shows the kernel along with ping pong buffers associated with input and output ports.
 
 ![figure8](images/va_graph.png)
 
 *Figure 8 - Vitis Analyzer Graph View*
 
-The Array view displays how the AI Engine graph is mapped to the AI Engine array for the device specified. This example uses a VC1902 Versal AI Core device which contains 400 AI Engine tiles. As shown in Figure 9, this example only utilizes two tiles.
+The Array view displays how the AI Engine graph is mapped to the AI Engine array for the device specified. This example uses a VC1902 Versal AI Core device which contains 400 AI Engine tiles. As shown in Figure 9, this example utilizes one tile for kernel processing and two additional tiles for ping pong buffer and system memory. If more control over placement of memory is desired, design constraints may be specified.
 
 ![figure9](images/va_array.png)
 
 *Figure 9 - Vitis Analyzer Array View*
 
-Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 2251 cycles to process 256 pixels of data. For lowest speed Versal devices, this would translate to a peak processing rate of ~113.7 MP/s. Highest speed devices would have a peak processing rate of ~142.1 MP/s.
+Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 537 cycles to process 256 pixels of data. For lowest speed Versal devices, this would translate to a peak processing rate of ~476.7 MP/s. Highest speed devices would have a peak processing rate of ~595.9 MP/s. Kernel computation can be further improved by coding to take advantage of more efficient software pipelining, which has shown that a rate of 667 MP/s is achievable.
 
 ![figure10](images/va_profile.png)
 
 *Figure 10 - Vitis Analyzer Profile View*
 
+This specific example does not achieve the rates mentioned because it is limited by data bandwidth. Figure 11 shows part of the Vitis Analyzer trace view. The cursors show that the time between the end of one kernel invocation to the end of the next is 484.0 ns. During this duration 256 pixels are processed, resulting in a rate of 528.9 MP/s.
+
+![figure11](images/va_analyze.png)
+
+*Figure 11 - Vitis Analyzer Trace View*
+
 ### Test Vector Comparison
 
-When comparing simulation results against test vectors, a MATLAB script is invoked to perform the processing. An example of a successful comparison is shown in Figure 11.
+When comparing simulation results against test vectors, a MATLAB script is invoked to perform the processing. An example of a successful comparison is shown in Figure 12.
 
-![figure11](images/check_sim.png)
+![figure12](images/check_sim.png)
 
-*Figure 11 - Simulation Verification*
+*Figure 12 - Simulation Verification*
 
-The output provides three different indications of simulation performance. The first is an indication of whether the simulation output matched the corresponding test vector. There will be one comparison for each kernel simulated. The script compares int32 values which represent either output pixel indexes or floating-point interpolated pixel values. Since there will be slight variations in floating point calculations, the comparison allows for a difference in the two least significant mantissa bits of the floating-point number.
+The output provides three different indications of simulation performance. The first is an indication of whether the simulation output matched the corresponding test vector. There will be one comparison for each kernel simulated. The script compares `int32` values which represent floating-point interpolated pixel values. Since there may be slight variations in floating point calculations, the comparison allows for mismatch in the least significant mantissa bits of the floating-point number and may be specified in the comparison script.
 
 The second comparison indicates maximum pixel value difference between AIE simulation results and single precision MATLAB generated vectors. Pixels take on values in the range [0, 255], and this result provides the maximum of the differences between all pairs of corresponding pixels.
 
@@ -480,27 +361,27 @@ As an example, specifying four kernels should result in the MATLAB Console Windo
 ```
 >> genvectors_bilinear_interp(4)
 Number of output pixels interpolated = 453221 out of 1048576 (43.22252 %)
-Maximum pixel error is 0.000035322
+Maximum pixel error is 0.000052940
 Mean square pixel error is 0.000000000
 ```
 
-along with the image shown in Figure 12.
+along with the image shown in Figure 13.
 
-![figure12](images/gen_vec.png)
+![figure13](images/gen_vec.png)
 
-*Figure 12 - MATLAB genvectors_bilinear_interp Output*
+*Figure 13 - MATLAB genvectors_bilinear_interp Output*
 
-Once these MATLAB scripts are run, the rest of the AI Engine build and simulation process proceeds in the same manner. Figure 13 shows how four kernels are assigned to tiles in the AI Engine array.
+Once these MATLAB scripts are run, the rest of the AI Engine build and simulation process proceeds in the same manner. Figure 14 shows how four kernels are assigned to tiles in the AI Engine array.
 
-![figure13](images/va_array_4.png)
+![figure14](images/va_array_4.png)
 
-*Figure 13 - Multicore Kernel Placement in AI Engine Array*
+*Figure 14 - Multicore Kernel Placement in AI Engine Array*
 
-Figure 14 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels will support peak processing rates in the range of approximately 453 to 568 MP/s, depending on device speed.
+Figure 15 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels will support peak processing rates in the range of approximately 1.7 to 2.1 GP/s, depending on device speed grade.
 
-![figure14](images/check_sim_4.png)
+![figure15](images/check_sim_4.png)
 
-*Figure 14 - Multicore Simulation Verification*
+*Figure 15 - Multicore Simulation Verification*
 
 ## References
 
