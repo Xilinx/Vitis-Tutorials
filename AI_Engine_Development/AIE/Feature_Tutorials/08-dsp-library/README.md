@@ -25,7 +25,9 @@ Before starting this tutorial, run the following steps.
 2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.1/rootfs.ext4`.
 3. Set up your IMAGE to point to `xilinx-versal-common-v2024.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
-
+5. Download the Vitis Libraries from https://github.com/Xilinx/Vitis_Libraries
+   For example: `git clone https://github.com/Xilinx/Vitis_Libraries.git` into your desired directory.
+6. Set the DSPLIB_ROOT to the downloaded Vitis Libraries path. For example, `export DSPLIB_ROOT=/<DSP_LIBRARY_PATH>/Vitis_Libraries/dsp`
 
 ## Table of Contents
 
@@ -49,7 +51,7 @@ After completing the tutorial, you should be able to:
 
 ### Tutorial Overview
 
-This tutorial shows how to construct a simple two-stage decimation filter. This filter is not targeted at a specific real-life application, but is used to show how to use the DSP Library to construct filter chains.
+This tutorial shows how to construct a simple two-stage interpolator by 2 filter. This filter is not targeted at a specific real-life application, but is used to show how to use the DSP Library to construct filter chains.
 
 * Part 1 shows how to use create an AI Engine project and instantiate a parameterized FIR filter from DSPLib
 * Part 2 shows how to cascade filters together into a chain
