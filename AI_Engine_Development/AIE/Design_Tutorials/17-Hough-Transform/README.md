@@ -254,5 +254,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 <p class="sphinxhide" align="center">  &copy; Copyright 2024 Advanced Micro Devices, Inc.</p>
-<p class="sphinxhide" align="center">  &copy; Copyright 2021 Xilinx Inc.</p>
+
 
