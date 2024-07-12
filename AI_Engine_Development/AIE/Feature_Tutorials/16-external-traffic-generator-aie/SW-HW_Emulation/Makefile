@@ -28,7 +28,7 @@ EXTIO ?= true
 # PYTHON: A Python based traffic generator is used
 # CPP: A C++ traffic generator is used
 # MATLAB: A MATLAB based traffic generator is used
-TRAFFIC_GEN ?= 
+TRAFFIC_GEN ?= CPP 
 
 # necessary settings to run the python ETG
 PYTHON_INSTALL ?= $(XILINX_VIVADO)/tps/lnx64/python-3.8.3/bin/
@@ -115,7 +115,7 @@ endif
 CONFIG_FILE ?= system_etg.cfg
 else # WITHOUT External Traffic Generator
 KERNEL := $(wildcard pl_kernels/*.cpp)
-ifeq ifeq (${TARGET}, sw_emu)
+ifeq (${TARGET}, sw_emu)
 KERNEL_XO := mm2s.xo s2mm.xo polar_clip.xo
 else
 KERNEL_XO := pl_kernels/mm2s.xo pl_kernels/s2mm.xo pl_kernels/polar_clip.xo
@@ -134,7 +134,8 @@ LDCLFLAGS :=
 ifeq ($(TARGET),sw_emu)
 	VPP_XO_FLAGS := -c --platform $(BASE_PLATFORM) -t $(TARGET) --save-temps -g -DDATA_WIDTH=32
 else
-	VPP_XO_FLAGS := -c --mode hls --platform $(BASE_PLATFORM) 
+	VPP_XO_FLAGS := -c --mode hls --platform $(BASE_PLATFORM)
+
 endif
 			 
 ifeq (${EXTIO}, true)
@@ -271,7 +272,7 @@ endif
 HW_EMU := cd sw; ./launch_hw_emu.sh -no-reboot -run-app embedded_exec.sh
 SW_EMU := cd sw; ./host.exe a.xclbin 
 
-all: disp aie host kernels xsa package 
+all: disp aie host kernels xsa package
 ifeq (${TRAFFIC_GEN}, PYTHON)
 #For Python External Traffic Generator
 HW_EMU_ETG := ./scripts/etg_py.sh & $(HW_EMU)
