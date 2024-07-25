@@ -670,7 +670,9 @@ Transmit delay: 0 msec/char 0 msec/line
 **Step 9.** Run the following commands into the TeraTerm terminal:
 
 ```
-cd /mnt/
+sudo su
+mount /dev/mmcblk0p1 /mnt 
+cd /mnt
 ./lenet_aie_xrt.elf a.xclbin
 ```
 
