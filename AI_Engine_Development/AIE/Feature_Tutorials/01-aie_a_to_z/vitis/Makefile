@@ -23,6 +23,7 @@ help::
 	$(ECHO) "      Command to remove all the generated files."
 
 pfm:../vivado/build/xsa_platform/${XSA}
+	mkdir workspace
 	vitis -s vitis_pfm.py ${VITIS_PLATFORM} ${XSA}
 
 pl_app: hls_comp vpp_link
