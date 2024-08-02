@@ -27,7 +27,10 @@ LOCAL_LIB          := $(MODULE_02_DIR)/src/inc
 LOCAL_UTILS        := ./src/utils
 
 #EXE_INCLUDE     := -I$(LOCAL_INC) -I$(LOCAL_SRC) -I$(LOCAL_LIB) 
-EXE_INCLUDE     := -I$(LOCAL_UTILS)
+EXE_INCLUDE     := -I$(LOCAL_INC)
+EXE_INCLUDE     += -I$(LOCAL_SRC)
+EXE_INCLUDE     += -I$(LOCAL_LIB)
+EXE_INCLUDE     += -I$(LOCAL_UTILS)
 
 DLBF_UTILS      := $(LOCAL_UTILS)/utils_linux.cpp $(LOCAL_UTILS)/utils_dlbf.cpp $(LOCAL_UTILS)/dlbf_gold0.cpp $(LOCAL_UTILS)/dlbf_gold1.cpp $(LOCAL_UTILS)/dlbf_din.cpp $(LOCAL_UTILS)/dlbf_cin.cpp
 ULBF_UTILS      := $(LOCAL_UTILS)/utils_ulbf.cpp $(LOCAL_UTILS)/ulbf_gold0.cpp $(LOCAL_UTILS)/ulbf_din.cpp $(LOCAL_UTILS)/ulbf_cin.cpp
@@ -53,7 +56,7 @@ CFLAGS          := -O -g -Wall -DXAIE_DEBUG
 exe: ${AIE_APP_EXE}
 
 ${AIE_APP_EXE}: ${AIE_APP}
-	$(CXX) $(CFLAGS) $(AIE_APP) $(AIE_APP_CTRL) -o $(AIE_APP_EXE) --sysroot=$(PFM_SYSROOT) -I$(SYSROOT_INCLUDE) -I$(XILINX_VITIS)/aietools/include/ -I$(AIE_INCLUDE) -I$(XRT_INCLUDE) $(EXE_INCLUDE) -Xlinker -rpath-link=$(PFM_SYSROOT) -ladf_api_xrt -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(PFM_SYSROOT)/../ -lxrt_coreutil -L$(AIE_LINKER)
+	$(CXX) $(CFLAGS) $(AIE_APP) $(AIE_APP_CTRL) -o $(AIE_APP_EXE) --sysroot=$(PFM_SYSROOT) -I$(SYSROOT_INCLUDE) -I$(GRAPH_INCLUDE) -I$(LOCAL_LIB) -I$(XILINX_VITIS)/aietools/include/ -I$(AIE_INCLUDE) -I$(XRT_INCLUDE) $(EXE_INCLUDE) -Xlinker -rpath-link=$(PFM_SYSROOT) -ladf_api_xrt -L$(XILINX_VITIS)/aietools/lib/aarch64.o -L$(PFM_SYSROOT)/../ -lxrt_coreutil -L$(AIE_LINKER)
 
 clean:
 	rm -rf ${AIE_APP_EXE}

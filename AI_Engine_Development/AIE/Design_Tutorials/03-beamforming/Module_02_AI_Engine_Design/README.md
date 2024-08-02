@@ -184,8 +184,8 @@ Additionally, in the AI Engine application, the `event::start_profiling` and `ev
 Open the `build/aiesim.log` file to view the following throughput calculations for two of the output PLIOs:
 
 ```
-DLBF Output0: Throughput 6.63442e+08 Samples/s, i.e. 2.65377e+09 Bytes/s
-ULBF Output0: Throughput 6.65915e+08 Samples/s, i.e. 2.66366e+09 Bytes/s
+DLBF Output0: Throughput 6.5714e+08 Samples/s, i.e. 2.62856e+09 Bytes/s
+ULBF Output0: Throughput 6.59511e+08 Samples/s, i.e. 2.63804e+09 Bytes/s
 ```
 
 ## Conclusion

@@ -1,7 +1,7 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-*/
+   Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+   SPDX-License-Identifier: MIT
+   */
 
 #include "test_bf_app.h" 
 
@@ -10,35 +10,30 @@ SPDX-License-Identifier: MIT
 #include "utils_dlbf.h"
 #include "utils_ulbf.h"
 
-#include "xrt.h"
-#include "experimental/xrt_aie.h"
-#include "xrt/experimental/xrt_kernel.h"
-
-#include "adf/adf_api/XRTConfig.h"
 
 
-static std::vector<char>
- load_xclbin(xrtDeviceHandle device, const std::string& fnm)
- {
-   if (fnm.empty())
-     throw std::runtime_error("No xclbin speified");
+    static std::vector<char>
+load_xclbin(xrtDeviceHandle device, const std::string& fnm)
+{
+    if (fnm.empty())
+        throw std::runtime_error("No xclbin speified");
 
-   //load bit stream
-   std::ifstream stream(fnm);
-   stream.seekg(0,stream.end);
-   size_t size = stream.tellg();
-   stream.seekg(0,stream.beg);
+    //load bit stream
+    std::ifstream stream(fnm);
+    stream.seekg(0,stream.end);
+    size_t size = stream.tellg();
+    stream.seekg(0,stream.beg);
 
-   std::vector<char> header(size);
-   stream.read(header.data(),size);
+    std::vector<char> header(size);
+    stream.read(header.data(),size);
 
-   auto top = reinterpret_cast<const axlf*>(header.data());
-   char *xcb = (char*)top;
-   printf("xcb is %s\n", xcb);
-   //if (xclLoadXclBin(device, top))
-   if (xrtDeviceLoadXclbin(device, top))
-     throw std::runtime_error("Bitstream download failed");
-   return header;
+    auto top = reinterpret_cast<const axlf*>(header.data());
+    char *xcb = (char*)top;
+    printf("xcb is %s\n", xcb);
+    //if (xclLoadXclBin(device, top))
+    if (xrtDeviceLoadXclbin(device, top))
+        throw std::runtime_error("Bitstream download failed");
+    return header;
 }
 
 int main(int argc, char ** argv) {
@@ -65,8 +60,8 @@ int main(int argc, char ** argv) {
         flag_all = 0;   perf_sample =  MAX_TP_MEASUREMENT_SAMPLES;
     } else if (arg1 ==1){    //FUNC TEST, PERF TEST
         func = 1;        perf = 1;
-	iterFlag = 1;    check = 1; // 100K iters, data check every N iters
-	flag_all = 1;    perf_sample =  MAX_TP_MEASUREMENT_SAMPLES;   // All PLIO PERF TEST
+        iterFlag = 1;    check = 1; // 100K iters, data check every N iters
+        flag_all = 1;    perf_sample =  MAX_TP_MEASUREMENT_SAMPLES;   // All PLIO PERF TEST
     } else if (arg1 == 2){   // All PLIO PERF TEST every 1-2mins
         perf = 1;
         flag_all = 0;    perf_sample =  100;
@@ -77,11 +72,12 @@ int main(int argc, char ** argv) {
 
     printf("[main]  Beamformer Init... \n");
     log_plnx << "[main]  Beamformer Init... " << std::endl;
-				    
+
     log_plnx << "[DLBF] dlbf get_addr status: "<< dlbf_assign_addr() << std::endl;
     log_plnx << "[ULBF] ulbf get_addr status: "<< ulbf_assign_addr() << std::endl;
 
-    auto dhdl   = xrtDeviceOpen(0);
+    auto device = xrt::device(0); //device index 0
+    auto dhdl = xrtDeviceOpenFromXcl(device);
     auto xclbin = load_xclbin(dhdl, argv[2]);
     auto top = reinterpret_cast<const axlf*>(xclbin.data());
     adf::registerXRT(dhdl, top->m_header.uuid);
@@ -113,7 +109,7 @@ int main(int argc, char ** argv) {
     if (func){
         dlbf_resulta = test_dlbf(iterFlag, check);
         ulbf_resulta = test_ulbf(iterFlag, check);
-        
+
         if (!iterFlag) {
             // Reset AIE - Reload AIE, run  Beamformer func again
             reset_done = xrtResetAIEArray(dhdl);
@@ -128,7 +124,7 @@ int main(int argc, char ** argv) {
                 log_plnx << "[Beamformer] AIE reset done successfully" << std::endl;
             }
             xclbin = load_xclbin(dhdl, argv[2]);
-	    
+
             dlbf_resultb = test_dlbf(iterFlag, check);
             ulbf_resultb = test_ulbf(iterFlag, check);
         }
@@ -165,9 +161,9 @@ int main(int argc, char ** argv) {
         xclbin = load_xclbin(dhdl, argv[2]);
 
         enable_graphs(0, 0);  //niter is set to 0 for infinite loop
-        test_perf_all(flag_all, perf_sample);   
+        test_perf_all(flag_all, perf_sample, device);   
         if (arg1 == 2) {
-            while(1)   test_perf_all(flag_all, perf_sample);
+            while(1)   test_perf_all(flag_all, perf_sample, device);
         }
         stop_run();
     }

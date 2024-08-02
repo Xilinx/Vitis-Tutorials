@@ -155,7 +155,7 @@ Scroll down to the Design Timing Summary section in the timing summary report. Y
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-     0.000     0.000                   0             644155        0.000        0.000                      0               634939        0.000        0.000                       0                274428  
+     0.001     0.000                   0             644174        0.000        0.000                      0               634958        0.000        0.000                       0                274422  
 ...
 ```
 
@@ -172,7 +172,7 @@ Scroll down to the Design Timing Summary section in the timing summary report. Y
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.069        0.000                      0              801171        0.000        0.000                      0              791955        0.000        0.000                       0                353397  
+      0.019        0.000                      0              800980        0.000        0.000                      0              791764        0.000        0.000                       0                353192  
 ...
 ```
 

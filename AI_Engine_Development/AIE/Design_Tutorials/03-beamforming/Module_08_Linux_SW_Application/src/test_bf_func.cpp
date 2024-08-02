@@ -1,8 +1,8 @@
 
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-*/
+   Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+   SPDX-License-Identifier: MIT
+   */
 
 #include "test_bf_app.h"
 #include "utils_linux.h"
@@ -29,14 +29,14 @@ int dlbf_func(unsigned int niter, int debug){
     dlbf_slave_config_ips(niter, debug);
     //dlbf_coeffs_write(1, niter);    //writing to dlbf_coeff ip ram
     dlbf_start(debug);
-	
+
     // Display configuration of PL IPs
     if (debug) {
         dlbf_data_get_all_ip_status();
         dlbf_coeffs_get_all_ip_status();
         dlbf_slave_get_all_ip_status();
         dlbf_data_check_ram(1, dlbf_din0, dlbf_din1, dlbf_din2, dlbf_din3);
-    	dlbf_coeffs_check_ram(1, dlbf_cin0, dlbf_cin1, dlbf_cin2, dlbf_cin3);
+        dlbf_coeffs_check_ram(1, dlbf_cin0, dlbf_cin1, dlbf_cin2, dlbf_cin3);
     }
 
     // Wait for all dlbf data port masters to be done for 200us
@@ -49,7 +49,7 @@ int dlbf_func(unsigned int niter, int debug){
         printf("[ERROR] Not all DLBF masters are done ... Application exitted...\n");
         log_plnx << "[ERROR] Not all DLBF masters are done ... Application exitted..." << std::endl;
         if (debug) dlbf_data_get_all_ip_status();
-            return 0;     
+        return 0;     
     }
 
     sleepTime = 2;  // sleep for 2us
@@ -101,7 +101,7 @@ int test_dlbf(int iterFlag, int dataCheck){
     int *goldArr[NUM_DLBF_SLAVES] = {dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0, dlbf_gold0};
     int result = 1;
     int debugPrint = !iterFlag;
-    
+
     if (iterFlag) niter_loop = 25000; //iterFlag = 1 => niter = 100k iter = 25000 *DLBF_NITER
     else          niter_loop = 1;     //iterFlag = 0 => niter = DLBF_NITER
 
@@ -130,7 +130,7 @@ int test_dlbf(int iterFlag, int dataCheck){
 int ulbf_func(unsigned int niter, int debug){
 
     int timeout_counter_ulbf_data=0;
-	int timeout_counter_ulbf_coeffs=0;
+    int timeout_counter_ulbf_coeffs=0;
     int timeout_counter_ulbf_slave=0;
     unsigned int sleepTime = 1000;
     int slave_done = 0;
@@ -162,7 +162,7 @@ int ulbf_func(unsigned int niter, int debug){
         printf("[ERROR] Not all ULBF masters are done ... Application exitted...\n");
         log_plnx << "[ERROR] Not all ULBF masters are done ... Application exitted..." << std::endl;
         if (debug) ulbf_data_get_all_ip_status();
-            return 0;
+        return 0;
     }
 
     sleepTime = 1;  // sleep for 1us
@@ -176,7 +176,7 @@ int ulbf_func(unsigned int niter, int debug){
         log_plnx << "[ERROR] Not all ULBF coeffs are done ... Application exitted..." << std::endl;
         if (debug) ulbf_data_get_all_ip_status();
         if (debug) ulbf_coeffs_get_all_ip_status();
-            return 0;
+        return 0;
     }
 
     sleepTime = 1;  // sleep for 1us
@@ -234,7 +234,7 @@ int test_ulbf(int iterFlag, int dataCheck){
 
     printf("[ULBF] Functional Test Completed...\n");
     log_plnx << "[ULBF] Functional Test Completed..." << std::endl ;
-  
+
     return result;
 
 }
