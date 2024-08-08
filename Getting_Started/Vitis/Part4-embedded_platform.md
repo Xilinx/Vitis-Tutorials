@@ -15,7 +15,7 @@
 
  In this fourth part of the Introduction to Vitis tutorial, you will compile and run the vector-add example using each of three build targets supported in the Vitis flow as described below. The overall flow is described in [Introduction to Vitis Tools for Embedded System Designers](https://docs.amd.com/access/sources/dita/topic?Doc_Version=2024.1%20English&url=ug1393-vitis-application-acceleration&resourceid=pkl1657651602103.html), and includes the image flow diagram shown below. From the image you can see the G++ cross-compiler  for building the host application for the Arm processor, and the use of the Vitis compiler (`v++`) for building the AMD device binary (`xclbin`). These are the steps you will be working through in this lab. 
 
-<img width="650" alt="image" src="https://media.gitenterprise.xilinx.com/user/3118/files/8ca2869a-85f6-46e8-913b-0f9c82d0eebe">
+![image](https://github.com/user-attachments/assets/ab05271a-0ead-4a75-b5ec-9b19b140ca94)
 
 >
 > Note: The above flow diagram is only valid for non-Versal devices.
