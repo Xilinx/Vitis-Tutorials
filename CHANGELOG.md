@@ -1,6 +1,10 @@
 # Vitis-Tutorials ChangeLog
 
-## 2024.1 (Jun. 14th, 2024)
+## 2024.1_update (Aug. 8, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications/
+
+## 2024.1 (Jun. 14, 2024)
 ### New Tutorials 
 - AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps/
 - AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform/
