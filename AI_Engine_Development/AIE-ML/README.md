@@ -219,7 +219,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  </tr>
  <tr>
-  <td align="center"><a href="./Design_Tutorials/02-Prime-Factor-FFT/">Prime Factor FFT-1008 on AIE-ML</a></td>
+ <td align="center"><a href="./Design_Tutorials/02-Prime-Factor-FFT/">Prime Factor FFT-1008 on AIE-ML</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
@@ -233,6 +233,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
+ <tr>
  <td align="center"><a href="./Design_Tutorials/03-AIE-ML-lenet_tutorial/">AIE-ML LeNet Tutorial</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -246,6 +247,21 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>Yes</td>
  <td> </td>
  <td>Yes</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications/">AIE API based FFT for Many Instances Applications</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>CLI / Vitis Unified IDE</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  </table>
 

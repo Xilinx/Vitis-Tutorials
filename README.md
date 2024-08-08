@@ -167,6 +167,15 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial </a>
             </td>
         </tr>   
+        <tr>
+            <td height="24">
+            </td>
+            <td>
+            </td>                
+            <td>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications">AIE API based FFT for Many Instances Applications :new:</a>
+            </td>
+        </tr>           
     </tbody>
 </table>
 

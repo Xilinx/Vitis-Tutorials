@@ -31,6 +31,11 @@ The AI Engine Development Design Tutorials showcase the two major phases of AI E
  <td align="center"><a href="./03-AIE-ML-lenet_tutorial/">AIE-ML LeNet Tutorial</a></td>
  <td>This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AIE-ML architecture and PL logic, including block RAM (BRAM). The design demonstrates functional partitioning between the AIE-ML and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (BRAM), Memory tile and AI Engine memory. </td>
  </tr>
+ <tr>
+ <td align="center"><a href="./04-AIE-API-based-FFT-for-many-instances-applications/">AIE API based FFT for Many Instances Applications</a></td>
+ <td>This tutorial walks the user through the design and the implementation of an FFT for many parallel signals on a Real-Time system, using the AI Engine APIs. The design performance objective is minimizing power and utilization, maintaining a high throughput to at least match the Real-Time acquisition bandwidth. Moreover, the design leverages the AIE-ML Memory Tiles to minimize programmable logic utilization. The considered case study comprises 128 parallel signals, each with a 125MSa/s sample rate and CINT16 datatype, with a total aggregated bandwidth of 64GBytes/s.
+ </td>
+ </tr>
 </table>
 
 
