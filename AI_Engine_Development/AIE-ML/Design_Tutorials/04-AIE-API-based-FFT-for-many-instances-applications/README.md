@@ -65,8 +65,8 @@ The proposed design has been carried out with the intents of minimizing resource
 ### Required Background Knowledge
 To thoroughly understand the content of this tutorial, it is necessary to know at least some background concepts about the Versal Adaptive SoC, the AI Engine ML architecture, and the basics of its programming methodology. Moreover, it is advisable to have some background knowledge about the Fast Fourier Transform algorithm and its variants.
 
-- Versal technology basic introduction: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/VersalBasics.md)
-- Fast Fourier Transform algorithm introduction: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/FourierBasics.md)
+- Versal technology basic introduction: [click here](./VersalBasics.md)
+- Fast Fourier Transform algorithm introduction: [click here](./FourierBasics.md)
 
 For further information, please refer to the following documentation:
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
@@ -141,7 +141,7 @@ In this section it is explained the rationale of the kernel and graph implementa
 
 ### Designing the Kernel with the AI Engine API
 #### Understanding the APIs
-The AIE API has a particular set of stage-based functions to compute the Fast Fourier Transform through the Stockham variant of the Cooley-Tukey algorithm. As explained in the [FFT background document](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/FourierBasics.md), such variant is a not in place algorithm, thus generally requires a *temporary buffer* to save intermediate calculations. However, it has the big advantage of being self-sorting and efficiently vectorizable.
+The AIE API has a particular set of stage-based functions to compute the Fast Fourier Transform through the Stockham variant of the Cooley-Tukey algorithm. As explained in the [FFT background document](./FourierBasics.md), such variant is a not in place algorithm, thus generally requires a *temporary buffer* to save intermediate calculations. However, it has the big advantage of being self-sorting and efficiently vectorizable.
 
 To understand the FFT API usage it is important to consider that the FFT algorithms rely on the concept of decimation, for which an N point Discrete Fourier Transform can be divided into the sum of multiple smaller transforms, multiplied by complex rotation parameters called Twiddle Factors. 
 The number of the resulting transforms depends linearly on the radix parameter: a radix-2 FFT stage will thus divide the original transform into two transforms, a radix-3 into three, and so on. Usually, the decimation process is repeated recursively until the discrete transform to be performed has a number of points equal to the radix of the last stage.
@@ -572,7 +572,7 @@ To create the AIE-ML project in Vitis Unified IDE, follow those steps:
 
 4. Perform a functional verification using the Python script in the ``support/verification`` folder of this repository.
    - This script analyzes the text files inside the "v_inputs" and "v_outputs" folder and creates some functional verification charts. 
-   For more information refer to [this document](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/tree/main/support/verification).
+   For more information refer to [this document](./support/verification/Readme.md).
    - If you did not modify the input files, you can just run the ```Basic_verification``` Python script with the following terminal command, while being located into the ```support/verification``` directory: ```python -i ./Basic_verification```
    -  If you replaced the simulator input files, replace also the text files inside the ```support/verification/v_inputs``` folder with the ones you used, keeping the same names. Then, copy the output files from ```[project-folder]/build/x86sim/x86simulato_output/verif_o_128``` into the ```support/verification/v_outputs``` folder and run the python script with the aforementioned command.
 5. Look at the generated charts and make sure that the comparison graphs are superimposed, and the error is fairly low, as shown in the following figure.

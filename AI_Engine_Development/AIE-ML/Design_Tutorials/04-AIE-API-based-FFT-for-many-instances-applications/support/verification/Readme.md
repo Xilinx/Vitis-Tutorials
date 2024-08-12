@@ -47,25 +47,6 @@ To use the verification script, use the following command while being located in
 The script will run for some moments and generate the graph one after the other.
 Once all the graph have been analyzed and closed, type ```quit()``` to close the python terminal.
 
-## Navigating the tutorial
-
-This tutorial is divided into three steps plus the introduction and the appendices. 
-Click on the links in the following list to navigate it.
-- The first document serves as an introduction to state the Design objectives, strategy and outcomes.
-  - [AIE API based FFT for many instances applications on AIE-ML](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML) 
-- In the first step, it shows how to design the FFT application on the AI Engine, using 3D buffering in the memory tiles.
-  - [Designing the FFT application with the AIE-ML](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/Step1.md)
-- In the second step, it shows how to build and evaluate the design using Vitis Unified IDE.
-  - [Implementing and evaluating the AIE-ML design with Vitis Unified IDE](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/Step2.md)
-- In the third step, it shows how to use the evaluations to optimize the design, using 4D buffering in the memory tiles.
-  - [Optimizing the AIE-ML design](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/Step3.md)
-
-Appendices:
-- Versal technology basic introduction: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/VersalBasics.md)
-- Fast Fourier Transform algorithm introduction: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/blob/main/FourierBasics.md)
-- Twiddle header file generation script: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/tree/main/support/twiddles)
-- Simple verification script: [click here](https://gitenterprise.xilinx.com/dgiorgio/AIE-API-based-FFT-for-many-instances-applications-on-AIE-ML/tree/main/support/verification)
-
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).

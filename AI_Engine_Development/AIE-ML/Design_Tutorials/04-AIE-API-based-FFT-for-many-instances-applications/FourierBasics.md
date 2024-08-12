@@ -12,11 +12,13 @@
 ## From the basics to the FFT
 The Fourier Transform allows to transform a function from the time domain to the frequency domain, enabling various analysis and manipulation on the function itself through the exploitation of transform's properties.
 From a mathematical standpoint, the Fourier Transform is defined as:
-$$\mathcal{F}\left[x(t)\right]=X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2j\pi f t}$$ Where $x(t)$ is a generic function in time domain, $X(f)$ is the same function in the frequency domain, and $j$ is the immaginary number.
+$$\mathcal{F}\left[x(t)\right]=X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2j\pi f t}$$ 
+Where $x(t)$ is a generic function in time domain, $X(f)$ is the same function in the frequency domain, and $j$ is the immaginary number.
 Since computers work with *discrete* bits in *finite* memories, those limitations need to be taken into account when porting the transform operation to the digital world.
 To this aim, the first step is to use a summation instead of an integral because in there is *no continuity*. In this case, the Fourier Transform is called is called Discrete Time Fourier Transform (DTFT). The second step is to adjust the summation interval to a *finite time window*, since it is impossible to acquire a signal for infinite time.
 Performing those two modifications, the Discrete Fourier Transform (DFT) is obtained:
-$$\mathbf{DFT}[x(nT_s)]=X(kf_s)=\sum_{n=0}^N x(nT_s)e^{-2j\pi\frac{n}{N}k}$$  Where $N$ is the total number of samples, $T_s$ is the sampling time, that is the time spanning from a sample to the subsequent one, that for simplicity we can assume to be constant, and $f_s$ is the sample frequency, that is the dual of the sampling time in the frequency domain, as it is the distance between the samples in frequency.
+$$\mathbf{DFT}[x(nT_s)]=X(kf_s)=\sum_{n=0}^N x(nT_s)e^{-2j\pi\frac{n}{N}k}$$  
+Where $N$ is the total number of samples, $T_s$ is the sampling time, that is the time spanning from a sample to the subsequent one, that for simplicity we can assume to be constant, and $f_s$ is the sample frequency, that is the dual of the sampling time in the frequency domain, as it is the distance between the samples in frequency.
 The obtained frequency-domain sequence $X(kf_s)$ has the same number of samples N of the starting time-domain sequence $x(nT_s)$. This results in a complexity that is $O(N^2)$, as it requires $N$ multiply-and-accumulate operations for each of the $N$ points.
 For this reason, in most cases computing the DFT of signal acquisitions comprising a large amount of points is an highly demanding task for the processors. To overcome this issue, it is introduced the Fast Fourier Transform, that drastically reduces the complexity, allowing most of the times a more efficient computation.
 
