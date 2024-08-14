@@ -46,7 +46,7 @@ cfg_obj.set_value('',key = 'part', value='xcvp1202-vsva2785-1LP-i-L')
 source_dir = os.path.join(cwd, "reference_files")
 cfg_obj.add_lines('hls',['syn.file='+source_dir+'/beamformer.cpp'])
 cfg_obj.add_lines('hls',['tb.file='+source_dir+'/beamformer_tb.cpp'])
-cfg_obj.add_lines('hls',['tb.file='+source_dir+'/result.golden_float.cpp'])
+cfg_obj.add_lines('hls',['tb.file='+source_dir+'/result.golden_float.dat'])
 
 # Set options
 cfg_obj.set_value('hls',key='syn.top', value='beamformer')
