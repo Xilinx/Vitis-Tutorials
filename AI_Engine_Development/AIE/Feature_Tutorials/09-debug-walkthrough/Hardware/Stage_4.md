@@ -49,6 +49,16 @@ This method explains how to use the XSDB-based flow to perform event trace analy
 
 <tr>
 <td>
+<a href="./Stage_4.md#Event-Trace-Analysis-Using-HSDP"> Event Trace Analysis - HSDP</a>
+</td>
+<td>
+This method explains how to use the XSDB-based flow using HSDP to perform event trace analysis on an AI Engine design.<br />
+</td>
+</tr>
+	
+	
+<tr>
+<td>
 <a href="./Stage_4.md#Event-trace-considerations"> Event Trace Considerations</a>
 </td>
 <td>
@@ -225,6 +235,79 @@ Based on the design, select GMIO if the design has limited PL resources left for
 2. It is required that the `--broadcast-enable-core` option is used to compile the design. This is to eliminate time sync issues where the start time of each tile is off by ~100 ns or more.
 3. Run forever applications are supported by the XSDB flow only.
 
+
+### Event Trace Analysis Using HSDP
+In the traditional hardware event trace, the trace information is stored in DDR memory available in the Versal device initially, and offloaded to SD card after the application run completes. This imposes limitations on the amount of trace information that can be stored and analyzed. AI Engine trace offload via HSDP(High Speed Debug Port)  has more DDR memory in the SmartLynq+ module and supports analyzing large quantities of trace information for complex designs. 
+
+	1. To run the event trace on hardware, it is required to compile the AI Engine graph with  `-event-trace-port=plio` option. This sets the event tracing port to PLIO. 
+       Note: If the event tracing port is set to GMIO, the AI Engine trace cannot be offloaded via HSDP.
+
+      Add `--aie.event-trace-port=plio` to AIE_FLAGS in Makefile 
+
+	2. After the AI Engine graph and the C/C++ kernels are compiled, and any RTL kernels are packaged, the Vitis v++ --link command links them with the target platform to build the platform file (XSA). For offloading the AI Engine trace via HSDP, it is required to add the `–profile.aie_trace_offload=HSDP` option to the v++ -link command. Add below lines in system.cfg file
+	```
+	[profile]
+	aie_trace_offload=HSDP
+	```
+	With this, a new HSDP IP gets instantiated for AI Engine trace offload and all the PLIO event trace streams are connected to the HSDP IP.  You can see System_DPA getting instantiated in VitisRegion.
+![debug_hub](./Images/debug_hub_insertion.png)
+	
+	3. Only the host program with XRT APIs controlling the AI Engine graph should be used for offloading AI Engine trace via HSDP.
+	
+	4. Package the HSDP enabled XSA file generated during linking step and libadf.a to generate a sd_card image.
+
+
+#### Setup SmartLynq+ Module, and Connect to Versal Device
+
+	• You must download and install the latest microSD card image and SmartLynq+ application package to set up the SmartLynq+ module correctly. For more information on this installation process, see Downloading and Installing SW Tools. Once the setup of SmartLynq+ is done, you need to connect the Versal device evaluation board.
+	
+	• The SmartLynq+ module can be accessed by a host system using the USB 3.0 connection. The driver setup information for both Windows and Linux environments is provided in the USB 3.0 Host Connection.
+	
+	• For more information on connecting the Versal device evaluation board, see Connection to Versal Evaluation Boards SmartLynq+ Module User Guide (UG1514).
+	Note: Embedded Design Tutorial walks you through a system design example for High-Speed Debug Port with SmartLynq+ module.
+	
+	• Additional information on overview of the SmartLynq+ module for the Versal adaptive SoCs is available in SmartLynq+ Module User Guide (UG1514).
+
+#### Launch XSDB, and Offload Trace Information
+
+After loading the HSDP enabled Linux image on Versal Evaluation board:
+
+	1. Power on the Versal Evaluation board and SmartLynq+ module.
+	
+	2. Observe the Linux boot messages in the minicom application (SmartLynq+ module can be used as a serial terminal to remotely view the UART output from the  Versal board using the pre-installed minicom application).
+	
+	3. Launch XSDB from your local directory, where the AI Engine design Work/ directory is located.
+
+	``` xsdb
+		%xsdb connect -url TCP:${COMPUTER NAME/IP}:3121
+		%xsdb ta
+		%xsdb ta 1
+		%xsdb source $::env(XILINX_VITIS)/scripts/vitis/util/aie_trace.tcl
+		%xsdb  `aietrace start -graphs mygraph -work-dir Work/ -link-summary tutorial.xsa.link_summary -graph-based-aie-tile-metrics "all:all:all_stalls"`
+	```
+	Note: You should be able to use all the options specified in XSDB Flow. However, the options -baseaddress and -depth are not applicable for HSDP offload. XSDB issues an error if you try to use these options.
+	
+	6. Run the application on the hardware. Make sure xrt.ini file does not contain any AI Engine trace configurations which conflicts with the configuration given by XSDB.
+	7. Stop AI Engine trace using the command `aietrace stop`. You should see the file hsdp_event_trace0.txt corresponding to the AI Engine trace and a JSON file that contains event configuration.
+	8. Now, the dumped trace should be processed using the hw_analyze command to generate the .wdb file which can be used in Vitis IDE.
+	`hwanalyze --pkg-dir=<WORK_DIR> --trace=hsdp_event_trace_aie.txt --trace_config=<PATH_TO_JSON> -wdb`
+	9. Launch the Vitis IDE and open the .wdb file to analyze the event trace.
+
+You can calculate the execution time of one iteration as follows. Place the marker at the start and end of the iteration and (1) - (2) gives 262.4 ns which is ~= 329 cycles. This matches with the Function time in the profile data from both the AI Engine simulation 
+
+![image](./Images/HSDP_all_functions_trace.png)
+
+#### Limitations
+
+• The AI Engine trace offload via HSDP is supported only in Hardware and not for Hardware emulation. 
+
+• Supported only for non-DFX platform.
+
+• Supports only when the -event-trace-port is set to PLIO and not GMIO.
+
+• XRT-based trace offload is not supported.
+
+ 
 ## Debug the Host Code and Kernel Source Code using the Vitis IDE
 
 This section uses the system project built using the Vitis IDE and launch the IDE debugger to debug the host code and AI Engine kernel source code. Unlike debugging at simulation level, this topic walks you through connecting the harware to the IDE debugger, placing breakpoints in the host code and kernel source code, and observing intermittent values in the Varibale view, register view, and memory inspector.
