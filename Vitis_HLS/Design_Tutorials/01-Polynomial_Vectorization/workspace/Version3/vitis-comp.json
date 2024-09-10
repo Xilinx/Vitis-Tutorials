@@ -1,0 +1,10 @@
+{
+  "name": "Version3",
+  "type": "HLS",
+  "configuration": {
+    "componentType": "HLS",
+    "configFiles": [
+      "hls_config.cfg"
+    ]
+  }
+}

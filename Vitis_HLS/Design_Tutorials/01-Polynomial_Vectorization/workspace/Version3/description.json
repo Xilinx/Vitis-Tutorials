@@ -1,0 +1,30 @@
+{
+    "name": "VHLS_D_01-polyvec",
+    "description": "VHLS_D_01-polyvec",
+    "gui": "false",
+    "flow": "hls",
+
+    "platform_allowlist": [ "u200"],
+     
+    "testinfo": {
+        "test_name": "VHLS_D_01-polyvec_ver3",
+        "disable": false, 
+        "jobs": [
+            {
+                "max_memory_MB": 76800, 
+                "max_time_min": {
+                    "vitis_sw_emu": 60
+                }
+            }
+        ], 
+        "targets": [
+            "hls_csim", 
+            "hls_csynth"
+        ],
+        "category": "canary", 
+        "custom_build_target":
+        {
+            "all": "all"
+        }
+    }
+}
