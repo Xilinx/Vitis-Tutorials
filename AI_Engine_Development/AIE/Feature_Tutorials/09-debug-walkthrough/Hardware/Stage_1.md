@@ -150,7 +150,7 @@ It is necessary to analyze the run results to handle the design stalls by tracki
  ```
 
 6. Click **Set AI Engine Compile Summary**, point to the `Work/directory` manually, and observe the `graph` view to identify the stalls.
-![xrt status](./Images/xrt_status.PNG)
+![xrt status](./Images/xrt_status.png)
 The highlighted path in the graph indicates the stalls in the design. You can also look at the following **Tile Status** table to get status of each tile, stalled port, etc.
 Clicking each stall highlights the corresponding path in the graph view.
 
