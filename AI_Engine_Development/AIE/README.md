@@ -437,6 +437,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Yes</td>
  <td>Yes</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
+ <td>Custom</td>
+ <td>N/A</td>
+ <td>Vivado & Vitis IDE </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> Yes </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
 ### Design Tutorials

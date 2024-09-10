@@ -1,5 +1,10 @@
 # Vitis-Tutorials ChangeLog
 
+## 2024.1_update (Sep. 10, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface/
+- Vitis_HLS/Design_Tutorials/01-Polynomial_Vectorization/
+
 ## 2024.1_update (Aug. 8, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE-ML/Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications/

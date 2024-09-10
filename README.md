@@ -346,6 +346,7 @@ To download a ZIP file of a specific branch, do one of the following:
             <td height="24">                   
             </td>
             <td>
+                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples :new: </a>            
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
@@ -425,10 +426,19 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP</a>
             </td>
             <td>
+                <a href="./Vitis_HLS/Design_Tutorials/01-Polynomial_Vectorization">Polyvec NTT Tutorial using Code Analyzer :new: </a>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+            </td> 
+            <td>
+            </td> 
+            <td>
                 <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar:
 Floating-Point QRD+WBS in an FPGA</a>
             </td>
-        </tr>  
+        </tr>          
     </tbody>
 </table>
 

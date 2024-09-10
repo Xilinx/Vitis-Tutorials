@@ -110,6 +110,10 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <td align="center"><a href="./22-Performance-Validation-in-Analysis-View/">Performance Validation in Analysis View of the Vitis Unified IDE</a></td>
  <td>This tutorial demonstrates throughput and latency computation after AI Engine Simulation and their analysis in the Analysis View of the Vitis Unified IDE. </td>
  </tr>  
+ <tr>
+ <td align="center"><a href="./24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
+ <td>This tutorial shows ways of interfacing user RTL logic to the AI Engine using the Vitis acceleration flow. </td>
+ </tr>  
  </table>
 
 
