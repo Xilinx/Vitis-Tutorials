@@ -36,7 +36,7 @@ set_directive_pipeline "func4_process_magnitude/L4"
 #csim_design -ldflags {{-Wl,--stack=268435456}} -clean #ONLY FOR WINDOWS
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 #cosim_design -ldflags {{-Wl,--stack=268435456}} -rtl systemc #ONLY FOR WINDOWS
 close_project
 
@@ -66,7 +66,7 @@ set_directive_pipeline "func4_process_magnitude/L4"
 #csim_design -ldflags {{-Wl,--stack=268435456}} -clean
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 #cosim_design -ldflags {{-Wl,--stack=268435456}} -rtl systemc
 close_project
 
@@ -95,7 +95,7 @@ set_directive_pipeline "func4_process_magnitude/L4"
 csim_design -clean
 #csim_design -ldflags {{-Wl,--stack=268435456}} -clean
 csynth_design
-cosim_design
+#cosim_design
 #cosim_design -ldflags {{-Wl,--stack=268435456}} -rtl systemc
 close_project
 
@@ -124,7 +124,7 @@ set_directive_pipeline "func4_process_magnitude/L4"
 csim_design -clean
 #csim_design -ldflags {{-Wl,--stack=268435456}} -clean
 csynth_design
-cosim_design
+#cosim_design
 #cosim_design -ldflags {{-Wl,--stack=268435456}} -rtl systemc
 close_project
 
@@ -153,7 +153,7 @@ set_directive_pipeline "func4_process_magnitude/L4"
 csim_design -clean
 #csim_design -ldflags {{-Wl,--stack=268435456}} -clean
 csynth_design
-cosim_design
+#cosim_design
 #cosim_design -ldflags {{-Wl,--stack=268435456}} -rtl systemc
 close_project
 }

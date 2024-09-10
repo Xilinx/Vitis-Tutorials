@@ -28,7 +28,7 @@ set_clock_uncertainty 1
 source "./float_fir_directives/directives0.tcl"
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 #export_design -rtl vhdl -format ip_catalog
 close_project
 

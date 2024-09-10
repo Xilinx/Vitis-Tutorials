@@ -5,10 +5,9 @@
 .PHONY: help kernels clean all
 
 clean:
-			rm -rf *_prj *.log *~
+			rm -rf *_prj *.log* *~ .Xil .wsdata ./logs 
 
-kernels:
-			vitis_hls ./fix_fir_script.tcl
+kernels:		
+			vitis-run --mode hls --tcl ./fix_fir_script.tcl
+#vitis_hls ./fix_fir_script.tcl
 
-
-all:	kernels

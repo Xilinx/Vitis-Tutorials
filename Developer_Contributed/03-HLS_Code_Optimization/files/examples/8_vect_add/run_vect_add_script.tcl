@@ -22,7 +22,7 @@ set_clock_uncertainty 0.5
 #source "./hls_vadd_prj/solution1/directives.tcl"
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 
 open_solution "solution_vitis" -flow_target vitis
 set_part xczu9eg-ffvb1156-2-e
@@ -38,6 +38,6 @@ config_interface -m_axi_addr64
 config_interface -m_axi_auto_max_ports=0
 config_export -format xo -ipname krnl_vadd
 csynth_design
-cosim_design
+#cosim_design
 #export_design
 close_project

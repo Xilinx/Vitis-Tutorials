@@ -10,8 +10,30 @@ puts "* EXAMPLE 1) FIXED POINT FIR FILTER DEMO"
 puts "************************************************************************"
 puts "\n"
 
+puts " "
+puts "Solution8: Using ANSI-C Integers Datatypes instead of HLS Fractional Fixed Point"
+puts " "
+open_project vhls_fix_fir_prj
+set_top fir_filter
+add_files src/fir.cpp
+add_files -tb src/fir_test.cpp -cflags "-Wno-unknown-pragmas" -csimflags "-Wno-unknown-pragmas"
+add_files -tb src/data
+open_solution "sol8_integers" -flow_target vivado
+set_part {xczu9eg-ffvb1156-2-i}
+create_clock -period 5 -name default
+config_interface -m_axi_latency 0
+config_export -format ip_catalog -rtl vhdl
+set_clock_uncertainty 1
+source "./fix_fir_directives/directives8_integers.tcl"
+csim_design -clean
+csynth_design
+#cosim_design
+#export_design -format ip_catalog
+close_project
 
-if 1 {
+
+
+
 
 puts " "
 puts "Solution1: Baseline"
@@ -30,10 +52,11 @@ set_clock_uncertainty 1
 source "./fix_fir_directives/directives1.tcl"
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 #export_design -rtl vhdl -format ip_catalog
 close_project
 
+if 1 {
 
 puts " "
 puts "Solution2: as 1 + Pipelining the Loop"
@@ -226,26 +249,3 @@ csynth_design
 close_project
 }
 
-
-
-
-puts " "
-puts "Solution8: Using ANSI-C Integers Datatypes instead of HLS Fractional Fixed Point"
-puts " "
-open_project vhls_fix_fir_prj
-set_top fir_filter
-add_files src/fir.cpp
-add_files -tb src/fir_test.cpp -cflags "-Wno-unknown-pragmas" -csimflags "-Wno-unknown-pragmas"
-add_files -tb src/data
-open_solution "sol8_integers" -flow_target vivado
-set_part {xczu9eg-ffvb1156-2-i}
-create_clock -period 5 -name default
-config_interface -m_axi_latency 0
-config_export -format ip_catalog -rtl vhdl
-set_clock_uncertainty 1
-source "./fix_fir_directives/directives8_integers.tcl"
-csim_design -clean
-csynth_design
-#cosim_design
-#export_design -format ip_catalog
-close_project

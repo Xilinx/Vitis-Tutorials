@@ -21,7 +21,7 @@ RM = rm -f
 RMDIR = rm -rf
 
 # host compiler global settings
-CXXFLAGS += -std=c++14 -DVITIS_PLATFORM=$(VERSAL_VITIS_PLATFORM) -D__USE_XOPEN2K8 \
+CXXFLAGS += -std=c++17 -DVITIS_PLATFORM=$(VERSAL_VITIS_PLATFORM) -D__USE_XOPEN2K8 \
 	-I$(XILINX_VITIS)/aietools/include -I$(XILINX_HLS)/include -I$(XILINX_VITIS)/include \
 	-I$(DSPLIB_ROOT)/L1/src/aie -I$(DSPLIB_ROOT)/L1/include/aie -I$(DSPLIB_ROOT)/L2/include/aie \
 	-I$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/xrt/ \

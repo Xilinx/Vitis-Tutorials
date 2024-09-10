@@ -1,6 +1,3 @@
-% Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
-% SPDX-License-Identifier: MIT
-
 clear all; close all; clc;
 %%
 dat = load('vector.dat');

@@ -66,12 +66,12 @@ hls_kernels:
 	$(MAKE) -C ./1_fix_fir_filter    kernels
 	$(MAKE) -C ./2_float_fir_filter  kernels
 	$(MAKE) -C ./3_img_median_filter kernels
-	$(MAKE) -C ./4_dependency        kernels
 	$(MAKE) -C ./5_img_histEq        kernels
 	$(MAKE) -C ./6_sqrt              kernels
 	$(MAKE) -C ./7_atan2             kernels
 	$(MAKE) -C ./8_vect_add          kernels
 	$(MAKE) -C ./9_matrix_mult_z     kernels
+#$(MAKE) -C ./4_dependency        kernels
 
 hls_kernels2:
 		$(MAKE) -C ./8_vect_add          hls_kernels

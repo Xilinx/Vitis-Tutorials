@@ -61,7 +61,7 @@ hls_clean:
 	rm -rf *_prj *.log *~
 
 hls_kernels:
-	vitis_hls ./run_matrix_mult_script_vck190.tcl
+	vitis-run --mode hls --tcl ./run_matrix_mult_script_vck190.tcl
 
 # REMEMBER THAT VCK190 NEEDS DIFFERENT ENV FROM ZCU102
 vck190_all:

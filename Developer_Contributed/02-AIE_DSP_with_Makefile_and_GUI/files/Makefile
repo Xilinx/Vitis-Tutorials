@@ -1,5 +1,9 @@
+# 
 # Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
+#
+# Author: Daniele Bagni
+# Date:   10 Sep 2024
 
 SHELL := /bin/bash
 
@@ -30,11 +34,18 @@ SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd
 # =======================================================
 # global variables for this tutorial
 # =======================================================
-#RELEASE=2022.2
-RELEASE=2024.1
+
+#BOARD=${XLNX_BOARD}
 BOARD=vck190
+
+#RELEASE=${XLNX_RELEASE} 
+RELEASE=2024.1
+#RELEASE=2023.2
+
+#BASE_NUM=${XLNX_BASE_NUM}
 BASE_NUM=202410_1
-#BASE_NUM=202220_1
+#BASE_NUM=202320_1
+
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
@@ -47,8 +58,6 @@ export KERNEL_IMAGE     = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS           = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
 export XLNX_VERSAL      = ${COMMON_IMAGE_VERSAL}
 export PLATFORM         = ${VITIS_PLATFORM_XPFM}
-
-
 
 # =========================================================
 # commands directories

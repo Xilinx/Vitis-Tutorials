@@ -5,10 +5,10 @@
 .PHONY: help kernels clean all
 
 clean:
-			rm -rf *_prj *.log *~
+			rm -rf *_prj *.log *~ ./logs
 
 kernels:
-			vitis_hls ./run_sqrt_script.tcl
+			vitis-run --mode hls --tcl  ./run_sqrt_script.tcl
 
 
 all:	kernels

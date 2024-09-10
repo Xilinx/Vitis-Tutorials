@@ -5,10 +5,10 @@
 .PHONY: help kernels clean all
 
 clean:
-			rm -rf *_prj *.log *~
+			rm -rf *_prj *.log *~ ./src/test_data/c_out_*.bmp ./src/*~
 
 kernels:
-			vitis_hls ./run_median_script.tcl
+			vitis-run --mode hls --tcl ./run_median_script.tcl
 
 
 all:	kernels

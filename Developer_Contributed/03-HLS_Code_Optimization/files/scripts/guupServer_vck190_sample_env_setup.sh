@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:   12 Oct 20223
+# Date:   03 Sep 2024
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR VCK190 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -15,7 +15,7 @@
 # set Platform, Vitis and Petalinux repo
 # =======================================================
 #ts 2024.1_daily_latest -petalinux petalinux-v2024.1_daily_latest
-#ts 2024.1_daily_latest -petalinux petalinux-v2024.1_daily_latest
+#ts 2024.1_released     -petalinux petalinux-v2024.1_daily_latest
 
 
 export CUR_DIR=$PWD
@@ -29,17 +29,17 @@ BOARD=vck190
 BASE_NUM=202410_1
 #BASE_NUM=202410_1
 
-export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Developer_Contributed
-
+export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Vitis-Tutorials/Developer_Contributed
 export TUTORIAL=03-HLS_Code_Optimization
+
 
 # =======================================================
 # to emulate SPRITE regression env in GUUP Servers
 # =======================================================
-cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2024.1_next
-source env_setup_versal.sh
-#back to the wrk dir
-cd ${WRK_DIR}/${TUTORIAL}/files/
+#cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2024.1_next
+source ./env_setup_petalinux_versal.sh
+##back to the wrk dir
+#cd ${WRK_DIR}/${TUTORIAL}/files/
 
 #==================================================================================
 # Set Versal Common Image repo (OR eventually install it into /tmp)
@@ -54,6 +54,7 @@ export TMPDIR=/tmp/danieleb
 export COMMON_IMAGE_VERSAL=${HOME}/common/xilinx-versal-common-v2024.1
 
 : '
+# do it only once
 # clean versal folder content
 rm -rf ${COMMON_IMAGE_VERSAL}
 # install SDK
@@ -61,16 +62,16 @@ export VERSAL_COMMON_2023v2=$PETALINUX/../../bsp/internal/xilinx-versal-common-v
 cd ${VERSAL_COMMON_2023v2}
 bash ./sdk.sh -y -p -d ${COMMON_IMAGE_VERSAL}
 cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${COMMON_IMAGE_VERSAL}/
-
-cd ${WRK_DIR}/${TUTORIAL}/files
 '
+cd ${WRK_DIR}/${TUTORIAL}/files
+
 
 # ========================================================
 # Set DSP Library for Vitis
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
 #export DSPLIB_ROOT=<Path to 2024.1 DSP Libs - Directory>
-export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.1/Vitis_Libraries_internal
+export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.1/Vitis_Libraries
 #export DSPLIB_VITIS=/group/xirguup/danieleb/ide2022.2/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 

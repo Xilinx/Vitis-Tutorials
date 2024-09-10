@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 
 # Author: Daniele Bagni
-# Date:   12 Oct 20223
+# Date:   03 Sep 2024
 
 ######################################################################################
 # WARNING: THIS SCRIPT IS VALID ONLY FOR ZCU102 on AMD/XILINX GUUP (LINUX) SERVERS
@@ -14,7 +14,6 @@
 # GUUP Environment Setup:
 # set Platform, Vitis and Petalinux repo
 # =======================================================
-#ts 2024.1_daily_latest -petalinux petalinux-v2024.1_daily_latest
 #ts 2024.1_daily_latest -petalinux petalinux-v2024.1_daily_latest
 
 export CUR_DIR=$PWD
@@ -28,17 +27,16 @@ BOARD=zcu102
 BASE_NUM=202410_1
 #BASE_NUM=202410_1
 
-export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Developer_Contributed
-
+export WRK_DIR=/group/xirguup/danieleb/ide2024.1/Vitis-Tutorials/Developer_Contributed
 export TUTORIAL=03-HLS_Code_Optimization
 
 # =======================================================
 # to emulate SPRITE regression env in GUUP Servers
 # =======================================================
-cd ${WRK_DIR}/../Vitis-Tutorials-Admin-2024.1_next
-source env_setup_petalinux_zynqmp.sh
-#back to the wrk dir
-cd ${WRK_DIR}/${TUTORIAL}/files/
+#cd ${WRK_DIR}/../../Vitis-Tutorials-Admin
+source ./env_setup_petalinux_zynqmp.sh
+##back to the wrk dir
+#cd ${WRK_DIR}/${TUTORIAL}/files
 
 #==================================================================================
 # Set ZCU102 Common Image repo (OR eventually install it into /tmp)
@@ -71,7 +69,7 @@ cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${C
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
 #export DSPLIB_ROOT=<Path to 2024.1 DSP Libs - Directory>
-export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.1/Vitis_Libraries_internal
+export DSPLIB_VITIS=/group/xirguup/danieleb/ide2024.1/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 
 

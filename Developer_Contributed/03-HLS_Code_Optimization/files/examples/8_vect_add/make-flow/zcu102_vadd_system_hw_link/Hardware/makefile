@@ -38,7 +38,7 @@ all: $(BINARY_CONTAINERS)
 
 clean:
 	-$(RM) $(BINARY_CONTAINERS) $(ALL_MESSAGE_FILES)
-	-$(RM) *.xclbin.sh *.xclbin.info *.xclbin.link_summary*
+	-$(RM) *.xclbin.sh *.xclbin.info *.xclbin.link_summary* *.log *~
 	-$(RMDIR) $(BUILD_SUBDIRS)
 	-$(RMDIR) .Xil
 

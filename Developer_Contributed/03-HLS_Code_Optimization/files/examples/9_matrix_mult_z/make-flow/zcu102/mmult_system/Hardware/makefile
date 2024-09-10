@@ -80,7 +80,7 @@ package:
 
 clean:
 	${RMDIR} $(EMBEDDED_PACKAGE_OUT)
-	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build ./logs .Xil
 	${RM} *.xclbin *.log *~ $(SYS_XCLBIN)*
 
 .PHONY: all package clean show_dir

@@ -1,9 +1,13 @@
 ﻿<!--
-
 Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
+
 SPDX-License-Identifier: MIT
 
 Author: Daniele Bagni, Xilinx Inc
+
+STATUS:
+  - build on ``xirengwts08`` machine with Ubuntu 22.04 OS
+
 -->
 
 
@@ -16,17 +20,11 @@ Author: Daniele Bagni, Xilinx Inc
 
 # Optimization Techniques for Vitis HLS and HW Acceleration on Embedded Boards
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
 - Target boards: ZCU102 and VCK190
 
-- Last update: 13 Oct. 2023
-
-- STATUS:
-  - build on ``xirengwts08`` is OK
-  - 2023.2-related hyperlinks and archives yet to be updated
-  - test on VCK190 is OK
-  - test on ZCU102 not done yet
+- Last update: 06 Sep 2024
 
 
 ## Table of Contents
@@ -67,7 +65,7 @@ Author: Daniele Bagni, Xilinx Inc
 
 This tutorial explains how to properly optimize C/C++ code suitable for DSP designs and algorithms to get the maximum performance in terms of **lowest latency with maximum throughput** with the AMD  Vitis&trade; HLS design flow.
 
-You will also see how to create an embedded system running on either [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) or [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) embedded board, which includes one of the IP cores (acknowledged as "kernel") designed with Vitis HLS, by applying the so called [Vitis Acceleration Flow](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0088-vitis-acceleration.html) with either makefile- or GUI-based flow.
+You will also see how to create an embedded system running on either [ZCU102](https://www.xilinx.com/products/boards-and-kits/ek-u1-zcu102-g.html) or [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) embedded board, which includes one of the IP cores (acknowledged as "kernel") designed with Vitis HLS, with either makefile- or GUI-based flow.
 
 Within a "simplified" HLS terminology:
 
@@ -76,7 +74,7 @@ Within a "simplified" HLS terminology:
 
 In some cases, the maximum performance can be obtained just with Vitis HLS compiler directives without touching the code. In other cases, this might also require some code change to "help" the compiler do a better job. There is not a single solution that fits for all possible applications as each application is a world in itself. But the examples illustrated here cover a large variety of cases seen in recent years across the globe, as the most representative to illustrate "good" coding style for HLS.
 
-In the following document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it in a certain working directory ``${WRK_DIR}`` (for example, in this case, ``export WRK_DIR=/media/danieleb/DATA/2023.2/Vitis-Tutorials-2023.2/Developer_Contributed``).
+In the following document, it is assumed you have named this tutorial repository ``03-HLS_Code_Optimization`` and placed it in a certain working directory ``${WRK_DIR}`` (for example, in this case, ``export WRK_DIR=/media/danieleb/DATA/2024.1/Vitis-Tutorials/Developer_Contributed``).
 
 The organization of the folders tree of this tutorial is illustrated here:
 
@@ -128,17 +126,34 @@ The fourth step, known as Implementation (known as **imp**), is applied transpar
 
 ### Warnings
 
-1. Everything shown in this project used an Ubuntu 18.04 Desktop with related Vitis 2023.2 release (with or without updates).
+1. Everything shown in this project used an Ubuntu 22.04 Desktop with related Vitis 2024.1 release.
 
 2. It is recommended to write the SD card that boots the VCK190 board with the Windows OS utility called [Win32 Disk Imager 1.0](https://sourceforge.net/projects/win32diskimager/).
 
 3. Some figures are screenshots related to the earlier release of Vitis and there might be a few differences, although minimal, with the current one.
 
-4. It is recommended that you set up the environment correctly before running any script, as described in details in the next subsection. The ``*_sample_env_seytup.sh`` [scripts](files/scripts) contain a template to be adopted by the user, based on the AMD desktop settings adopted to develop this tutorial.  
+4. It is recommended that you set up the environment correctly before running any script, as described in details in the next subsection. The ``*_sample_env_seytup.sh`` [scripts](files/scripts) contain a template to be customized for your needs.  
 
 5. The [run_all.sh](files/run_all.sh) must always be launched **only after** all the variables of previous script have been set at least once, and **only from** the [files](files) folder, which has to be your current directory.
 
 6. Read the entire README.md document carefully before launching any script or Makefile.
+
+### Vitis HLS Classic IDE
+
+According to the [000036339 2024.1](https://support.xilinx.com/s/article/000036339?language=en_US) article the Vitis HLS 2024.1
+release adopts a new GUI, therefore the "classic" command:
+```
+vitis_hls your_script_file.tcl
+```
+is now deprecated and should be replaced by the new command:
+```
+vitis-run --mode hls --tcl your_script_file.tcl
+```
+To call the old, classic HLS GUI you have to use this new command:
+```
+vitis_hls --classic
+```
+
 
 ### Dos-to-Unix Conversion
 
@@ -156,37 +171,48 @@ for file in $(find . -name "*.c*" );     do dos2unix ${file}; done
 for file in $(find . -name "*akefile" ); do dos2unix ${file}; done
 ```
 
+### Cleaning the Project 
+
+To clean the project files launch the following commands:
+
+```
+cd /${WRK_DIR}/03-HLS_Code_Optimization/files/examples 
+make clean 
+make vck190_clean 
+make zcu102_clean
+```
+
 ## Project Setup
 
 ### 0.1 Archives Download
 
 You need the following archives, in particular:
 
-- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2023.2 Vitis Installer** (it makes the Vitis install process easy) and the **2023.2 Vitis Update**.
+- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2024.1 Vitis Installer** (it makes the Vitis install process easy) and the **2024.1 Vitis Update** (if any).
 
-- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2023.2**.
+- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2024.1**.
 
-- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2023.2 PetaLinux Tools Installer**.
+- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2024.1 PetaLinux Tools Installer**.
 
-- Go to the bottom of [PetaLinux 2023.2 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.2_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
+- Go to the bottom of [PetaLinux 2024.1- Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000036178?language=en_US) and take **2024.1_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
 
-- Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials).
+- Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials) with branch related to this 2024.1 release.
 
-- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.2 and Ubuntu 18.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
+- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2024.1 and Ubuntu 22.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
 
 
-At the end, you should have the following files:
+At the end, you should have something like the following files:
 
 ```text
-Xilinx_Unified_2023.2_*_Lin64.bin
-Xilinx_Vivado_Vitis_Update_2023.2_*.tar.gz
-xilinx-versal-common-v2023.2_*.tar.gz
+Xilinx_Unified_2024.1_*_Lin64.bin
+Xilinx_Vivado_Vitis_Update_2024.1_*.tar.gz
+xilinx-versal-common-v2024.1_*.tar.gz
 Vitis_Libraries-main.zip
-Vitis-Tutorials-2023.2.zip
-xrt_202310.*_18.04-amd64-xrt.deb
+Vitis-Tutorials-2024.1.zip
+xrt_202410.*-amd64-xrt.deb
 ```
 
-First, install the basic version of Vitis 2023.2 via its installer ``Xilinx_Unified_2023.2_*_Lin64.bin``, and then its update ``Xilinx_Vivado_Vitis_Update_2023.2_*.tar.gz``.
+First, install the basic version of Vitis 2024.1 via its installer ``Xilinx_Unified_2024.1_*_Lin64.bin``, and then its update ``Xilinx_Vivado_Vitis_Update_2024.1_*.tar.gz``.
 Everything is placed in the  ``/tools/Xilinx/`` folder.
 
 ### 0.2 Sudo or not Sudo?
@@ -232,15 +258,15 @@ In conclusion, either the installation is done with root privileges (``sudo``), 
 
 ### 0.3  Installing Common for Target Boards
 
-Install the two archives ``xilinx-*-common-v2023.2_*.tar.gz`` in the ``/opt/xilinx/common/`` folder.
+Install the two archives ``xilinx-*-common-v2024.1_*.tar.gz`` in the ``/opt/xilinx/common/`` folder (which has to be into an ``ext4`` file system, not on an ``NTFS`` one).
 
 Then execute the following commands as a normal user, according to what discussed is in the previous sub-section:
 
 ```shell
-cd /opt/xilinx/common/xilinx-versal-common-v2023.2/
+cd /opt/xilinx/common/xilinx-versal-common-v2024.1/
 chmod 777 sdk.h # only if needed
 ./sdk.sh -p -y -d .
-cd /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/
+cd /opt/xilinx/common/xilinx-zynqmp-common-v2024.1/
 chmod 777 sdk.h # only if needed
 ./sdk.sh -p -y -d .
 ```
@@ -251,7 +277,7 @@ If you want to save storage space, you can remove both ``sdk.sh`` files as they 
 ### 0.4 Install XRT
 
 The easiest way to download XRT is from the [ALVEO](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) site.
-Select the ALVEO U200 card and then the Ubuntu 18 OS to arrive at this [link](https://www.xilinx.com/bin/public/openDownload?filename=xrt_202220.2.14.354_18.04-amd64-xrt.deb).
+Select the ALVEO U200 card and then the Ubuntu 22.04 OS to arrive at this [link](https://www.xilinx.com/bin/public/openDownload?filename=xrt_202410.2.17.319_22.04-amd64-xrt.deb).
 
 Then install the archive via the following command:
 
@@ -269,31 +295,31 @@ which was also put in the scripts  ``*_sample_env_setup.sh``.
 
 ### 0.5 Petalinux
 
-> **IMPORTANT!**: You cannot install PetaLinux into an NFS driver; otherwise, the install process ends with a non-predictable error message.
+**WARNING: You cannot install PetaLinux into an NFS driver; otherwise, the install process ends with a non-predictable error message**.
 
-Before installing ``petalinux``, check in the Excel foil ``2023.2_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
+Before installing ``petalinux``, check in the Excel foil ``2024.1_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
 
 ```
 #create the destination folder   
-sudo mkdir /petalinux_2023.2
+sudo mkdir /petalinux_2024.1
 #change permissions
-$ chmod 777 ~/Downloads/petalinux-v2023.2-*-installer.run
-$ ~/Downloads/petalinux-v2023.2-*-installer.run  -d /petalinux_2023.2
+$ chmod 777 ~/Downloads/petalinux-v2024.1-*-installer.run
+$ ~/Downloads/petalinux-v2024.1-*-installer.run  -d /petalinux_2024.1
 
 . . .
 
 INFO: Installing PetaLinux...
 INFO: Checking PetaLinux installer integrity...
-INFO: Installing PetaLinux to "/petalinux_2023.2/."
-INFO: Installing buildtools in /petalinux_2023.2/./components/yocto/buildtools
-INFO: Installing buildtools-extended in /petalinux_2023.2/./components/yocto/buildtools_extended
-INFO: PetaLinux has been installed to /petalinux_2023.2/.
+INFO: Installing PetaLinux to "/petalinux_2024.1/."
+INFO: Installing buildtools in /petalinux_2024.1/./components/yocto/buildtools
+INFO: Installing buildtools-extended in /petalinux_2024.1/./components/yocto/buildtools_extended
+INFO: PetaLinux has been installed to /petalinux_2024.1/.
 ```
 
 To set ``petalinux`` into your terminal, you need the following command:
 
 ```shell
-source /petalinux_2023.2/settings.sh
+source /petalinux_2024.1/settings.sh
 ```
 
 which was also placed in the script  ``*_sample_env_setup.sh``.
@@ -316,7 +342,7 @@ source scripts/*_vck190_sample_env_setup.sh  ## valid for VCK190 only
 ### 0.7 Makefiles and TCL scripts
 
 Each of the nine [examples](files/example) illustrated in this tutorial comes with their own ``*_script.tcl`` and ``Makefile`` and you can use one of them alternatively to run the three HLS design flow steps (cism, syn, sim), with commands like these:
-`vitis_hls *_script.tcl` (if you want to use TCL scripts) or ``make all`` if you want to apply the related makefiles.
+``vitis-run --mode hls --tcl *_script.tcl`` if you want to use the TCL scripts or ``make all`` if you want to apply the related makefiles.
 It is recommended that you read the source code of these files carefully to understand their applications.
 
 Note that running ``make clean`` from the ``files/examples`` folder cleans all the nine HLS designs and the three Vitis embedded designs.
@@ -333,7 +359,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 ```bash
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files/examples
 cd 1_fix_fir_filter
-vitis_hls fix_fir_script.tcl
+vitis-run --mode hls --tcl fix_fir_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -407,7 +433,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/2_float_fir_filter
-vitis_hls float_fir_script.tcl
+vitis-run --mode hls --tcl float_fir_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -450,7 +476,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/3_img_median_filter
-vitis_hls run_median_script.tcl
+vitis-run --mode hls --tcl run_median_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -496,7 +522,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/4_dependency
-vitis_hls run_dependence_script.tcl
+vitis-run --mode hls --tcl run_dependence_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -614,8 +640,8 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/5_img_histEq
-vitis_hls run_src3_hls_script.tcl
-vitis_hls run_src4_hls_script.tcl
+vitis-run --mode hls --tcl run_src3_hls_script.tcl
+vitis-run --mode hls --tcl run_src4_hls_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -707,7 +733,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/6_sqrt
-vitis_hls run_sqrt_script.tcl
+vitis-run --mode hls --tcl run_sqrt_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -749,7 +775,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/6_sqrt
-vitis_hls run_atan2_script.tcl
+vitis-run --mode hls --tcl run_atan2_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -828,7 +854,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/8_vect_add
-vitis_hls run_vect_add_script.tcl
+vitis-run --mode hls --tcl run_vect_add_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -888,7 +914,7 @@ Once you have setup the Vitis HLS environment, launch the following shell comman
 cd /${WRK_DIR}/03-HLS_Code_Optimization/files
 #source ./run_all.sh
 cd examples/9_matrix_ mult
-vitis_hls run_matrix_mult_script.tcl
+vitis-run --mode hls --tcl run_matrix_mult_script.tcl
 ```
 
 Alternatively, you can execute the following commands:
@@ -910,8 +936,8 @@ Open these projects with the following commands (they are valid in both Windows 
 
 ```
 cd ..
-vitis_hls -p hls_mmult_prj
-vitis_hls -p hls_wrapped_mmult_prj
+vitis_hls --classic -p hls_mmult_prj
+vitis_hls --classic -p hls_wrapped_mmult_prj
 ```
 
 and use the HLS GUI to visualize the following reports:
@@ -1053,9 +1079,10 @@ The makefiles here adopted were automatically generated by Vitis (Eclipse) GUI a
 
 At the end of the Vitis build process, you will find the ``sd_card.img`` file (~4.2GB size) to boot the ZCU102 board in the folder ``wrk/zcu102_vadd_system/Hardware/package``.
 
-Once you have booted the ZCU102 board, at the prompt, launch the following commands:
+Once you have booted the ZCU102 board, at the prompt,  login with ``petalinux`` username and choose one password (for example ``root``), then launch the following commands:
 
 ```
+sudo su
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
 ./zcu102_vadd_prj ./binary_container_1.xclbin
@@ -1244,12 +1271,13 @@ The makefiles here adopted were automatically generated by Vitis (Eclipse) GUI a
 
 At the end of the Vitis build process, you will find the ``sd_card.img`` file (~4.2GB size) to boot the ZCU102 board in the folder ``wrk/zcu102_mmult_system/Hardware/package``.
 
-Once you have booted the ZCU102 board, at the prompt, launch the following commands:
+Once you have booted the ZCU102 board, at the prompt,  login with ``petalinux`` username and choose one password (for example ``root``), then launch the following commands:
 
 ```
+sudo su
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
-./mtrx_mult ./binary_container_1.xclbin
+./embedded_exec.sh 
 ```
 
 The runtime execution on ZCU102  works correctly:

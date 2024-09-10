@@ -38,7 +38,7 @@ all: $(HW_KERNEL_OBJS)
 
 
 clean:
-	-$(RM) $(SRC_KERNEL_OBJS) $(ALL_MESSAGE_FILES)
+	-$(RM) $(SRC_KERNEL_OBJS) $(ALL_MESSAGE_FILES) *.log *~
 	-$(RMDIR) $(BUILD_SUBDIRS)
 	-$(RMDIR) .Xil
 

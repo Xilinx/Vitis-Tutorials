@@ -40,7 +40,7 @@ then
    ##############################################################################
    # design with Makefile flow
    # build everything
-   #make all
+   # make all
 
    ##############################################################################
    # design with the THIN PLATFORM

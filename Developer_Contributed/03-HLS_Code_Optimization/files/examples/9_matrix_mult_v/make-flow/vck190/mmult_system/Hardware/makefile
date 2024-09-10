@@ -68,7 +68,7 @@ package:
 
 clean:
 	${RMDIR} $(EMBEDDED_PACKAGE_OUT)
-	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build
+	${RMDIR} $(EMBEDDED_PACKAGE_OUT).build .Xil
 	${RM} $(SYS_XCLBIN)*
 	${RM} *.xclbin *.log *~
 

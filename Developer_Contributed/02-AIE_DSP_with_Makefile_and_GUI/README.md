@@ -3,6 +3,9 @@
 Copyright © 2023 Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 
+STATUS:
+  - build on ``xirengwts08`` machine with Ubuntu 22.04 OS
+
 -->
 
 <table class="sphinxhide" width="100%">
@@ -14,15 +17,11 @@ SPDX-License-Identifier: MIT
 
 # DSP Design on AI Engine Technology with GUI and Makefile Flows
 
-***Version: Vitis 2023.2***
+***Version: Vitis 2024.1***
 
-- Board: VCK190
-- Last update: 13 Oct 2023
+- Target board: VCK190
+- Last update:  06 Sep. 2024
 
-- STATUS:
-  - build on ``xirengwts08``: OK
-  - 2023.2-related hyperlinks and archives yet to be updated
-  - test on VCK190: OK
 
 ## Table of Contents
 
@@ -46,24 +45,24 @@ Developing a DSP algorithm with the AI Engine technology is only one part of the
 
 Building a system from scratch like this is not trivial and it is better to have a good starting point that could be adapted with few changes, a sort of "system design template" or "toolbox" to use some improper terminology.
 
-This tutorial explains how to design a DSP algorithm and implement it into the AI Engine domain of the AMD Versal&trade; device, using the production [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) target board and the [Vitis 2023.2 Unified software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) design tools.
+This tutorial explains how to design a DSP algorithm and implement it into the AI Engine domain of the AMD Versal&trade; device, using the production [VCK190](https://www.xilinx.com/products/boards-and-kits/vck190.html) target board and the AMD Vitis 2024.1 [Unified software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) design tools.
 
-The DSP algorithm is a decimation FIR filter taken from the [Vitis DSP Libraries (for AI Engine)](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp).
+The DSP algorithm is a decimation FIR filter taken from the Vitis 2024.1 [DSP Libraries (for AI Engine)](https://github.com/Xilinx/Vitis_Libraries/tree/2024.1/dsp).
 
 You will build a system running on the VCK190 board having:
 
 - A DSP kernel implemented on AI Engine domain (the decimation FIR filter)
-- Two PL datamover kernels, designed with [HLS](https://www.xilinx.com/support/documentation-navigation/design-hubs/dh0090-vitis-hls-hub.html)
+- Two PL datamover kernels, designed with [HLS](https://docs.amd.com/v/u/en-US/dh0090-vitis-hls-hub)
 - Software application for the ARM host processor using the [XRT](https://www.xilinx.com/products/design-tools/vitis/xrt.html) APIs
 - An SD card with PetaLinux OS for booting
 
 As you use this document, it is assumed that you have named this tutorial repository ``02-AIE_DSP_with_Makefile_and_GUI`` and placed it in a certain working directory ``${WRK_DIR}``. For example, in this case:
-`export WRK_DIR=/media/danieleb/DATA/2023.2/Vitis-Tutorials-2023.2/Developer_Contributed`.
+``export WRK_DIR=/media/danieleb/DATA/2024.1/Vitis-Tutorials/Developer_Contributed``.
 
 The organization of the folders tree of this tutorial is illustrated here (with emphasis on the folder related to AI Engine; otherwise, the tree would explode):
 
 ```
-/media/danieleb/DATA/2023.2
+/media/danieleb/DATA/2024.1
     |
     ├── Vitis_Libraries
     │   ├── dsp
@@ -76,8 +75,8 @@ The organization of the folders tree of this tutorial is illustrated here (with 
     │   │       ├── include
     │   │       ├── meta
     │   │       └── tests/aie
-
-    ├── Vitis-Tutorials-2023.2
+    │   │
+    ├── Vitis-Tutorials
     │   ├── AI_Engine_Development
     │   │   ├── Design_Tutorials
     │   │   ├── Feature_Tutorials
@@ -95,13 +94,13 @@ The organization of the folders tree of this tutorial is illustrated here (with 
 
 ### 2.1 Warnings
 
-1. Everything shown in this project used an Ubuntu 18.04 Desktop with related Vitis 2023.2 release (with or without updates).
+1. Everything shown in this project used an Ubuntu 22.04 Desktop with related Vitis 2024.1 release.
 
 2. It is recommended to write the SD card that boots the VCK190 board with the Windows OS utility called [Win32 Disk Imager 1.0](https://sourceforge.net/projects/win32diskimager/).
 
 3. Some figures are screenshots related to the earlier release of Vitis and there might be a few differences, although minimal, with the current one.
 
-4. It is recommended that you set correctly the environment before running any script, as described in details in the next subsection 2.3.6. The ``*_sample_env_setup.sh`` [scripts](files/scripts) contain a template to be adapted for your needs, based on the (AMD internal network) Ubuntu server or on a standalone Linux desktop settings adopted in developing this tutorial.  
+4. It is recommended that you set correctly the environment before running any script, as described in details in the next subsection 2.3.6. The ``*_sample_env_setup.sh`` [scripts](files/scripts) contain a template to be customized for your needs.  
 
 5. The [run_all.sh](files/run_all.sh) must always be launched **only after** all the variables of previous script have been set at least once, and **only from** the [files](files) folder, which has to be your current directory.
 
@@ -125,31 +124,30 @@ source scripts/dos2unix_all.sh
 
 You need the following archives from either AMD/Xilinx Download or GitHub websites, in particular:
 
-- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2023.2 Vitis Installer** (it makes the Vitis install process easy) and the **2023.2 Vitis Update**.
+- From [Vitis (SW Developer) Downloads](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vitis.html) area, take the **2024.1 Vitis Installer** (it makes the Vitis install process easy) and the **2024.1 Vitis Update** (if any).
 
-- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2023.2**.
+- From [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html) area, take the **Common Images for Embedded Vitis Platforms 2024.1**.
 
-- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2023.2 PetaLinux Tools Installer**.
+- From [PetaLinux](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) area, take the **2024.1 PetaLinux Tools Installer**.
 
-- Go to the bottom of [PetaLinux 2023.2 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2023.2_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
+- Go to the bottom of [PetaLinux 2024.1 - Product Update Release Notes and Known Issues](https://support.xilinx.com/s/article/000034483?language=en_US) and take **2024.1_PetaLinux_Package_List.xlsx** file, which contains all the packages needed by PetaLinux into your Ubuntu OS computer (install all of them before installing PetaLinux).
 
-- Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials).
+- Go to the [Xilinx GitHub page](www.github,com/Xilinx) and zip both the [Vitis Libraries](https://github.com/Xilinx/Vitis_Libraries) and [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials) with branch related to this 2024.1 release.
 
-- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2023.2 and Ubuntu 18.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
+- Go to the [AMD Alveo™ Packages](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) area, select release 2024.1 and Ubuntu 22.04 OS, and then  take the **Xilinx Runtime (XRT)** archive.
 
 At the end, you should have the following files:
 
 ```text
-(permissions)   (#bytes)  (archive name)
--rwxrwxrwx                 Xilinx_Unified_2023.2_*_Lin64.bin
--rwxrwxrwx                 Xilinx_Vivado_Vitis_Update_2023.*.tar.gz
--rwxrwxrwx                 xilinx-versal-common-v2023.2_*.tar.gz
--rwxrwxrwx                 Vitis_Libraries-main.zip
--rwxrwxrwx                 Vitis-Tutorials-2023.2.zip
--rwxrwxrwx                 xrt_202310.*-amd64-xrt.deb
+Xilinx_Unified_2024.1_*_Lin64.bin
+Xilinx_Vivado_Vitis_Update_2024.1_*.tar.gz
+xilinx-versal-common-v2024.1_*.tar.gz
+Vitis_Libraries-main.zip
+Vitis-Tutorials-2024.1.zip
+xrt_202410.*-amd64-xrt.deb
 ```
 
-First, install the basic version of Vitis 2023.2 via the installer ``Xilinx_Unified_2023.2_*_Lin64.bin``. Then add the update ``Xilinx_Vivado_Vitis_Update_2023.2*.tar.gz``. Everything is placed in the folder ``/tools/Xilinx/``.
+First, install the basic version of Vitis 2024.1 via the installer ``Xilinx_Unified_2024.1_*_Lin64.bin``. Then add the update ``Xilinx_Vivado_Vitis_Update_2024.1*.tar.gz``. Everything is placed in the folder ``/tools/Xilinx/``.
 
 #### 2.3.2 Sudo or not Sudo?
 
@@ -195,17 +193,12 @@ In conclusion, either the installation had root privileges (``sudo``) and the ``
 
 #### 2.3.3 Install Versal Common
 
-You have to install this archive ``xilinx-versal-common-v2023.2_*.tar.gz`` in the folder  ``/opt/xilinx/common/`` (which has to be into an ``ext4`` file system, not on an ``NTFS`` one), as reported here:
-
-```text
-$ ls -l /opt/xilinx/common/
-drwxr-xr-x 3 root  root  4096 gen 29 15:01 xilinx-versal-common-v2023.2
-```
+You have to install this archive ``xilinx-versal-common-v2024.1_*.tar.gz`` in the folder  ``/opt/xilinx/common/`` folder (which has to be into an ``ext4`` file system, not on an ``NTFS`` one).
 
 Then, you have to execute the following commands as a normal user, according to what is discussed in the previous subsection:
 
 ```shell
-cd /opt/xilinx/common/xilinx-versal-common-v2023.2/
+cd /opt/xilinx/common/xilinx-versal-common-v2024.1/
 chmod 777 ./sdk.sh # if needed
 ./sdk.sh -p -y -d .
 ```
@@ -215,7 +208,8 @@ You can then remove the ``sdk.sh`` file to save storage space.
 
 #### 2.3.4 Install XRT
 
-The easiest way to download XRT was from the [Alveo Packages ](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) site. As already discussed, select the Alveo U200 card and then the Ubuntu 18.04 OS to get the ``xrt_202310.*-amd64-xrt.deb`` file.
+The easiest way to download XRT was from the [ALVEO](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/alveo.html) site. 
+Select the ALVEO U200 card and then the Ubuntu 22.04 OS to arrive at this [link](https://www.xilinx.com/bin/public/openDownload?filename=xrt_202410.2.17.319_22.04-amd64-xrt.deb).
 
 Then install the archive via the following command:
 
@@ -233,35 +227,34 @@ which is also in the ``*_sample_env_setup.sh`` scripts.
 
 #### 2.3.5 Install Petalinux
 
-> **WARNING: You cannot install PetaLinux into an NFS driver; otherwise, the install process ends with a non-predictable error message**.
+**WARNING: You cannot install PetaLinux into an NFS driver; otherwise, the install process ends with a non-predictable error message**.
 
-Before installing ``petalinux``, check in the Excel foil ``2023.2_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
+Before installing ``petalinux``, check in the Excel foil ``2024.1_PetaLinux_Package_List.xlsx`` what all packages ``petalinux`` requires. Once done, install the missing ones.
 
 ```
 #create the destination folder   
-sudo mkdir /tools/Xilinx/PetaLinux/2023.2
+sudo mkdir /petalinux_2024.1
 #change permissions
+$ chmod 777 ~/Downloads/petalinux-v2024.1-*-installer.run
+$ ~/Downloads/petalinux-v2024.1-*-installer.run  -d /petalinux_2024.1
 
-$ chmod 777 ~/Downloads/petalinux-v2023.2-10141622-installer.run  
-$ ~/Downloads/petalinux-v2023.2-10141622-installer.run -d /tools/Xilinx/PetaLinux/2023.2
-
-...
+. . .
 
 INFO: Installing PetaLinux...
 INFO: Checking PetaLinux installer integrity...
-INFO: Installing PetaLinux to "/tools/Xilinx/PetaLinux/2023.2/."
-INFO: Installing buildtools in /tools/Xilinx/PetaLinux/2023.2/./components/yocto/buildtools
-INFO: Installing buildtools-extended in /petalinux_2023.2/./components/yocto/buildtools_extended
-INFO: PetaLinux has been installed to /tools/Xilinx/PetaLinux/2023.2/.
+INFO: Installing PetaLinux to "/petalinux_2024.1/."
+INFO: Installing buildtools in /petalinux_2024.1/./components/yocto/buildtools
+INFO: Installing buildtools-extended in /petalinux_2024.1/./components/yocto/buildtools_extended
+INFO: PetaLinux has been installed to /petalinux_2024.1/.
 ```
 
 To set ``petalinux`` into your terminal, you need the following command:
 
 ```shell
-source /tools/Xilinx/PetaLinux/2023.2/settings.sh
+source /petalinux_2024.1/settings.sh
 ```
 
-which is also in the ``*_sample_env_setup.sh`` scripts.
+which was also placed in the script  ``*_sample_env_setup.sh``.
 
 #### 2.3.6 Set Environmental Variables
 
@@ -283,7 +276,7 @@ In this section, you will build the decimation FIR filter DSP system using the V
 
 ### 3.1 GUI-based Flow
 
-Now launch the commands:
+Note that the **classic Vitis IDE (Eclipse-based)** has been deprecated and will be removed in a future release, being it replaced by the **new Vitis Unified IDE**.  If you want to use the classic IDE you have to call it with ``vitis --classic`` command as in the following:
 
 ```shell
 cd <WRK_DIR> #your working directory
@@ -292,30 +285,30 @@ cd 02-AIE_DSP_with_Makefile_and_GUI/files
 #source files/scripts/<YOUR_OWN>_sample_env_setup.sh
 # call the Vitis GUI
 cd gui-flow/fir-dsplib_prj
-vitis --workspace ./xrt_wrk
+vitis --classic --workspace ./classic_xrt_wrk
 ```
 
 Follow the following steps:
 
-1. Select ``File -> New -> Application Project -> Next`` from the GUI and then select the ``xilinx_vck190_base_202310_1`` platform for your project.
+1. Select ``File -> Application Project -> Next`` from the GUI and then select the ``xilinx_vck190_base_202410_1`` platform for your project.
 
-1. Click ``Next`` and give a name to your application project and your system project. For example, ``dsplib_fir_AIE`` and ``aie_L2dsplib_system``, respectively.
+2. Click Next and give a name to your application project and your system project. For example, ``dsplib_fir_AIE`` and ``dsplib_fir_system``, respectively.
 
-1. Select ``aie_engine`` as the target processor and click ``Next`` twice.
+3. Select ``aie_engine`` as the target processor and click ``Next`` twice.
 
-1. Select an ``Empty application`` template and click ``Finish``. Following the above steps, you have created the folder for the AI Engine subsystem.  
+4. Select an ``Empty application`` template and click ``Finish``. Following the above steps, you have created the folder for the AI Engine subsystem.  
 
-1. Select ``File -> New -> HW Kernel Project -> Next`` from the GUI, select again, and then select the ``xilinx_vck190_base_202310_1`` platform for your project.
+5. Select ``File -> New -> HW Kernel Project -> Next`` from the GUI and then select the ``xilinx_vck190_base_202310_1`` platform again for your project. Click ``Next``.
 
-1. Give a name to your PL HW kernel project. For example, ``dsplib_fir_PL``. Ensure that you are still using the  ``aie_L2dsplib_system``. Click ``Finish``. With steps 5 and 6,  you have created the folder for the PL subsystem.
+6. Give a name to your PL HW kernel project, for example ``dsplib_fir_PL``. Ensure that you are still using the ``dsplib_fir_system``. Click ``Finish``. With these steps 5 and 6, you have created the folder for the PL subsystem.
 
-1. Select ``File -> New -> Application Project -> Next`` from the GUI and then select the ``xilinx_vck190_base_202310_1`` platform for your project.
+7. Select ``File -> New -> Application Project -> Next`` from the GUI and then select the ``xilinx_vck190_base_202310_1`` platform for your project.
 
-1. Click ``Next`` and give a name to your application project  and ensure that you are still using the  ``aie_L2dsplib_system``.
+8. Click ``Next`` and give ``dsplib_fir_PS`` as name to your application project  and ensure that you are still using the  ``dsplib_fir_system``.
 
-1. Select ``cortexA72`` as the target processor and click ``Next``. Then select the ``xrt domain``.
+9. Select ``cortexA72`` as the target processor and click ``Next``. Then select the ``xrt domain``.
 
-1. Set the path names for the  ``Sysroot, Root FS, Kernel Image`` of the embedded OS. Then click ``Next``. Here are the environment settings for your reference:
+10. Set the path names for the  ``Sysroot, Root FS, Kernel Image`` of the embedded OS. Then click ``Next``. Here are the environment settings for your reference:
 
     ```text
     - /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
@@ -323,19 +316,19 @@ Follow the following steps:
     - /opt/xilinx/common/xilinx-versal-common-v2023.2/Image        #Kernel Image
     ```
 
-1. Select an ``Empty application`` template and click ``Finish``. With steps 7 to 11, you have created the folder for the PS subsystem.  Now it is time to import all the source files into the Vitis project (still empty at the moment).
+11. Select an ``Empty application`` template and click ``Finish``. With steps 7 to 11, you have created the folder for the PS subsystem.  Now it is time to import all the source files into the Vitis project (still empty at the moment).
 
-1. From Vitis GUI, right-click on the ``dsplib_fir_AIE [aiengine]`` folder, select ``Import Sources`` and take all the source files from ``files/src/ip/aie/src`` and put them into ``dsplib_fir_AIE/src``. Copy the entire subfolder ``files/src/ip/aie/src/graphs`` into ``dsplib_fir_AIE/src/``. Repeat the step for all the data files from ``files/src/ip/aie/data`` to ``dsplib_fir_AIE/data``.
+12. From Vitis GUI, right-click on the ``dsplib_fir_AIE [aiengine]`` folder, select ``Import Sources`` and take all the source files from ``files/src/ip/aie/src`` and put them into ``dsplib_fir_AIE/src``. Copy the entire subfolder ``files/src/ip/aie/src/graphs`` into ``dsplib_fir_AIE/src/``. Repeat the step for all the data files from ``files/src/ip/aie/data`` to ``dsplib_fir_AIE/data``.
 
-1. From Vitis GUI, right-click on the ``dsplib_fir_PL`` folder, select ``Import Sources`` and take all the source files from the two folders ``files/src/ip/mm2s_aie/src`` and ``files/src/ip/s2mm_aie/src`` and put them into ``dsplib_fir_PL/src``.
+13. From Vitis GUI, right-click on the ``dsplib_fir_PL`` folder, select ``Import Sources`` and take all the source files from the two folders ``files/src/ip/mm2s_aie/src`` and ``files/src/ip/s2mm_aie/src`` and put them into ``dsplib_fir_PL/src``.
 
-1. From Vitis GUI, right-click on the ``dsplib_fir_PS [xrt]`` folder, select ``Import Sources`` and take all the source files from ``files/src/ps_apps/aie_test/src`` and put them into ``dsplib_fir_PS/src``.
+14. From Vitis GUI, right-click on the ``dsplib_fir_PS [xrt]`` folder, select ``Import Sources`` and take all the source files from ``files/src/ps_apps/aie_test/src`` and put them into ``dsplib_fir_PS/src``.
 
-1. From Vitis GUI, right-click on the ``aie_L2dsplib_system_hw_link [pl]``, select ``Import Sources`` and take the ``files/src/vitis/src/system.cfg`` file and put it into ``aie_L2dsplib_system_hw_link [pl]`` itself.  Now that all the source files have been imported, you should see something like in Figure 3.1-1. Now set up all the settings to finally build the entire project.
+15. From Vitis GUI, right-click on the ``dsplib_fir_system_hw_link [pl]``, select ``Import Sources`` and take the ``files/src/vitis/src/system.cfg`` file and put it into ``dsplib_fir_system_hw_link [pl]`` itself.  Now that all the source files have been imported, you should see something like in Figure 3.1-1. Now set up all the settings to finally build the entire project.
 
-1. Select the ``dsplib_fir_AIE.prj`` file and select the ``Top-Level File`` file named ``fir_graph.cpp``.
+16. Select the ``dsplib_fir_AIE.prj`` file and select the ``Top-Level File`` file named ``fir_graph.cpp``.
 
-1. From Vitis GUI, right-click on the ``dsplib_fir_AIE [aiengine]`` domain and select ``C/C++ Build Settings``. Make sure to select ``Configuration [All Configurations]``. Add the following directories to the default ones in ``Input Spec``, then click ``Apply and Close``. You should see something like in Figure 3.2-2.
+17. From Vitis GUI, right-click on the ``dsplib_fir_AIE [aiengine]`` domain and select ``C/C++ Build Settings``. Make sure to select ``Configuration [All Configurations]``. Add the following directories to the default ones in ``Input Spec``, then click ``Apply and Close``. You should see something like in Figure 3.2-2.
 
   ```text
   ${env_var:XILINX_VITIS}/aietools/include
@@ -348,24 +341,24 @@ Follow the following steps:
   ${workspace_loc:/${ProjName}/data}
   ```
 
-1. Click on ``aie_L2dsplib_system_hw_link.prj`` file, right-click on ``binary_container_1``, select ``Edit V++ Options settings``, and add ``--config=../system.cfg`` as illustrated in Figure 3.2-3.
+18. Click on ``dsplib_fir_system_hw_link.prj`` file, right-click on ``binary_container_1``, select ``Edit V++ Options settings``, and add ``--config=../system.cfg`` as illustrated in Figure 3.2-3.
 
-1. The ``system.cfg`` file for ``aie_L2dsplib_system_hw_link [pl]`` domain is set as in the following (see Figure 3.2-4):
+19. The ``system.cfg`` file for ``aie_L2dsplib_system_hw_link [pl]`` domain is set as in the following (see Figure 3.2-4):
 
   ```
   [connectivity]
   stream_connect=mm2s_1.s:ai_engine_0.DataIn1
   stream_connect=ai_engine_0.DataOut1:s2mm_1.s
-```
+  ```
 
-1. Click on the ``dsplib_fir_PL.prj`` file. Push the ``Add the HW functions`` button and select the ``mm2s`` and ``s2mm`` functions, as illustrated in Figure 3.2.5.
+20. Click on the ``dsplib_fir_PL.prj`` file. Push the ``Add the HW functions`` button and select the ``mm2s`` and ``s2mm`` functions, as illustrated in Figure 3.2.5.
 
-1. From Vitis GUI, right-click on the ``dsplib_fir_PS [xrt]`` domain and select ``C/C++ Build Settings``.  Make sure to select ``Configuration [All Configurations]``.
+21. From Vitis GUI, right-click on the ``dsplib_fir_PS [xrt]`` domain and select ``C/C++ Build Settings``.  Make sure to select ``Configuration [All Configurations]``.
 
   - As illustrated in Figure 3.2-6,  for the GCC host compiler, the other dialect flag has to be set to
 
   ```
-  -std=c++14
+  -std=c++17
   ```
 
   Then click ``Apply and Close``.
@@ -374,7 +367,7 @@ Follow the following steps:
 
   ```text
   ${env_var:XILINX_VITIS)/aietools/lib/aarch64.o
-    ${SYSROOT}/usr/lib
+  ${SYSROOT}/usr/lib
   ```
 
   - and libraries (``-l`` flag):
@@ -448,8 +441,6 @@ cd 02-AIE_DSP_with_Makefile_and_GUI/files
 cd make-flow
 make all
 ```
-
-The makefiles here adopted were automatically generated by Vitis (Eclipse) GUI in the previous section and then manually modified to use the environmental variables and avoid absolute path names.  
 
 ### 3.3 Test on VCK190 Target Board
 

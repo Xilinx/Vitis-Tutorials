@@ -38,7 +38,7 @@ BUILD_SUBDIRS += src/
 all:  $(HOST_EXE)
 
 clean:
-	-$(RM) $(HOST_EXE) $(HOST_OBJECTS)
+	$(RM) -rf $(HOST_EXE) $(HOST_OBJECTS) ./src *~
 
 .PHONY: incremental
 incremental: all

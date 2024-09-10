@@ -8,7 +8,7 @@ clean:
 			rm -rf *_prj *.log *~
 
 kernels:
-			vitis_hls ./float_fir_script.tcl
+			vitis-run --mode hls --tcl ./float_fir_script.tcl
 
 
 all:	kernels

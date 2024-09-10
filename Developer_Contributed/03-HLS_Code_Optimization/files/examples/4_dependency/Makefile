@@ -8,7 +8,7 @@ clean:
 			rm -rf *_prj *.log *~
 
 kernels:
-			vitis_hls ./run_dependence_script.tcl
+			vitis-run --mode hls --tcl ./run_dependence_script.tcl
 
 
 all:	kernels

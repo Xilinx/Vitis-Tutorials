@@ -61,10 +61,10 @@ export PLATFORM         = ${VITIS_PLATFORM_XPFM}
 
 
 hls_clean:
-	rm -rf *_prj *.log *~
+	rm -rf *_prj *.log *~ ./logs
 
 hls_kernels:
-	vitis_hls  ./run_matrix_mult_script_zcu102.tcl
+	vitis-run --mode hls --tcl ./run_matrix_mult_script_zcu102.tcl
 
 zcu102_all:
 	$(MAKE) -C ./make-flow/zcu102 all

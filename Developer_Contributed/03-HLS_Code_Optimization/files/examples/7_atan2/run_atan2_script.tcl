@@ -24,7 +24,7 @@ config_export -format ip_catalog -rtl vhdl
 set_clock_uncertainty 0.5
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 close_project
 
 ################## SOLUTION1_FLOAT: 32-bit floating point ####################
@@ -42,7 +42,7 @@ config_export -format ip_catalog -rtl vhdl
 set_clock_uncertainty 0.5
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 close_project
 
 ################## SOLUTION1_CORDIC: cordic algorithm ####################
@@ -80,7 +80,7 @@ config_export -format ip_catalog -rtl vhdl
 set_clock_uncertainty 0.5
 csim_design -clean
 csynth_design
-cosim_design
+#cosim_design
 #export_design -evaluate verilog -format ip_catalog
 close_project
 

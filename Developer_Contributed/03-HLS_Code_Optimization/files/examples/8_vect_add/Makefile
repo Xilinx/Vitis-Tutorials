@@ -5,10 +5,10 @@
 .PHONY: help hls_kernels hls_clean zcu102_all zcu102_clean all clean
 
 hls_clean:
-	rm -rf *_prj *.log *~
+	rm -rf *_prj *.log *~ ./logs 
 
 hls_kernels:
-	vitis_hls ./run_vect_add_script.tcl
+	vitis-run --mode hls --tcl  ./run_vect_add_script.tcl
 
 zcu102_all:
 	$(MAKE) -C ./make-flow all
