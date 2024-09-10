@@ -1,0 +1,38 @@
+{
+    "name": "AI_Engine_Development-24-aie_pl_interface",
+    "description": "24-aie_pl_interface",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vck190"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "AIE_F_24-aie_pl_interface",
+        "disable": false,
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_build": 470
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_build"
+        ],
+        "category": "canary",
+        "custom_build_target":
+        {
+            "all": "all_designs"
+        },
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+        }
+    }
+}
