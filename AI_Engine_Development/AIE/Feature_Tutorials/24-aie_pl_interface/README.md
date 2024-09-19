@@ -59,8 +59,8 @@ In this example, you have an AI Engine application (simple FIR filter) with one 
 
 In the AI Engine application, you can see the two PLIOs declared as follows:
 ```
-sig_i =  input_plio::create("PLIO_i",plio_64_bits, "data/sig_i.txt" );
-sig_o = output_plio::create("PLIO_o",plio_64_bits, "data/sig_o.txt" );
+sig_i =  input_plio::create("PLIO_i_0",plio_64_bits, "data/sig_i.txt" );
+sig_o = output_plio::create("PLIO_o_0",plio_64_bits, "data/sig_o.txt" );
 ```
 You can see that the input and output PLIOs are called PLIO_i_0 and PLIO_o_0, respectively.
 
