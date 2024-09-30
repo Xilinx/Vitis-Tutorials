@@ -355,7 +355,7 @@ AIE_FLAGS += --workdir=$(WORK_DIR)
 # Aiesimulator flags
 #-i - Alias of --input-dir=<dir> option
 #-o - Alias of --output-dir=<dir> option
-AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/=AIE_SIM_FLAGS += -i $(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
+AIE_SIM_FLAGS := --pkg-dir $(WORK_DIR)/
 AIE_SIM_FLAGS += -i=$(AIE_SRC_REPO)/aiesim_data/$(FFT_2D_DT_DIR_VAL)_IOfiles/fft2d_$(MAT_ROWS)x$(MAT_COLS)_ioFiles
 # =========================================================
 # Application Compiler and Linker Flags

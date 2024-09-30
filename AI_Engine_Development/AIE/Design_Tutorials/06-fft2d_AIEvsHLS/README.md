@@ -257,8 +257,8 @@ The following table compares a 1024 x 2048 point 10-instance FFT-2D design imple
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in W) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6225.187                           | 3537.296                | 20              | 79%              | 364 /<br/>44%                        | 72               | 11360 /<br/> 3647         | 0     | 0    | 5.486                      | 1134.740773                              |
-| HLS           | 6277.483                           | 4211.296                | NA              | NA               | NA                                   | NA               | 88447 /<br/> 56429        | 250   | 180  | 6.819                      | 920.587051                               |
+| AIE           | 6229.350                           | 3537.296                | 20              | 78.62%           | 420 /<br/>46.92%                     | 60               | 11360 /<br/> 3647         | 0     | 0    | 5.486                      | 1162.626                               |
+| HLS           | 6277.483                           | 4211.296                | NA              | NA               | NA                                   | NA               | 88447 /<br/> 56429        | 250   | 180  | 6.819                      | 920.587051                             |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
