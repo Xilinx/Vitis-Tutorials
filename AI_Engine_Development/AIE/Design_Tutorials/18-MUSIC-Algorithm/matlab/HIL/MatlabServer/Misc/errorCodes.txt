@@ -1,0 +1,17 @@
+% Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+% SPDX-License-Identifier: MIT
+%
+% Author: Bachir Berkane, Fidus Systems
+
+%  - Error  1:  Number of Bytes Received = 0
+
+                Server is up  and running, a Link to client is established.
+                Did not receive any bytes through the TCP/IP link
+
+%  - Error  2:  No TCP Server Up and Running
+%  - Error  3:  Received Nbr of Bytes is not Consistent with the Frame Length
+%  - Error  41: Start of Frame Identifier is NOT NaN
+%  - Error  42: Frame # Serial Number is out of Sequence
+%  - Error  43: 1st Frame Position-Identifier is NOT CORRECT
+%  - Error  44: Last Frame Position-Identifier is NOT CORRECT
+%  - Error  45: Middle Frame # Position-Identifier is NOT CORRECT

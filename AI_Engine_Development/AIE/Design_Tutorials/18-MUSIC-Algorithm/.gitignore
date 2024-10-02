@@ -1,0 +1,11 @@
+#
+# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# Author: Mark Rollins
+
+**/Work/**
+hls/mm2s/mm2s/**
+hls/s2mm/s2mm/**
+vitis/build_hw/**
+package/**

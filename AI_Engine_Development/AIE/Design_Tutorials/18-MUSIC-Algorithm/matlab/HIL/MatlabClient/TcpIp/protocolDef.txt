@@ -1,0 +1,74 @@
+% Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+% SPDX-License-Identifier: MIT
+%
+
+% TCP/IP Payload structure  
+% Author: Bachir Berkane, Fidus Systems
+
+
+%%== Egress Direction 
+%%== TCP/IP payload "Host Client >>>> VCK190 Server" 
+%%== TCP/IP Payload = header + flattenned "snaphshot"  
+%%== Header  = 16 Single values = 64 bytes
+%%== Payload = 2K single Values = 8kB            
+    
+%% Header is 64 bytes ; each h<i> below is 4-bytes single float
+h1     = NaN; Pkt Identifer ... NaN := 'ffc00000'
+
+h2     = k;   Snapshot serial number .. monotone from 1 to number of 
+              snapshots
+
+h3     = 5;   unique snapshot
+       = 1;   1st snapshot
+       = 4;   last snapshot             
+       = 2;   Middle snapshot
+                
+h4     = nSource; Number of Sources
+
+h5     = nUla;    Number of antenna elements
+
+h6     = dUla; antenna spacingnUla;  
+
+h7     = mSamp; mSamp Number of samples/Antenna in a snapshot
+
+h8     = noiseSS selection Method;  0 or 1,
+         0:= use Number of sources, 1:=use Noise Floor
+
+h9     = Noise Floor
+
+h10    = Null Threshold; 
+
+h11 - h16 = Reserved.(Set all Zeros, can be changed to any value)
+            
+%% Payload
+Reshape snapshot A = mSamp x nUla = 128 x 8 cfloats into format to be  
+written and read efficiently from DDR. Since First stage of MUSIC is  
+row-based GSSR, A is sent I/Q interleaved column-wise to VCK190. 
+
+% Format data into 2 streams to ease Line app implmentation on VC190
+        tmp           = reshape(snapshotIQ,8, []);
+        toBlueStream  = reshape (tmp(:,1:2:end), [], 1);
+        toGreenStream = reshape (tmp(:,2:2:end), [], 1);
+        snapshotBlueGreenConcat(:,s) = [toBlueStream; toGreenStream];
+% ------------------------------------------------------------------------
+
+
+%% == Ingress Direction
+%% == TCP/IP payload  VCK190 Server >>> "Host Client  
+%  ==  TCP/IP Payload = header + payload   
+
+%% Header is 64 bytes; each frame  same as egress direction. Shall be 1 to 
+% 1 map to Egress headers
+
+%% Payload
+Two concatenated vectors:
+ - Pseudo spectrum that consists of 256x2 single values
+ - doa angles that consists of 32x2 single values. 
+    Note 1: The returned Values represent cfloat with complex part (Q) always 0
+    Note 2: The returned values for real part (I) range from 8 to 247  
+% ------------------------------------------------------------------------
+
+
+
+
+ 
