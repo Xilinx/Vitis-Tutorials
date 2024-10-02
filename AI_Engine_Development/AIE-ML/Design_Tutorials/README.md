@@ -33,9 +33,12 @@ The AI Engine Development Design Tutorials showcase the two major phases of AI E
  </tr>
  <tr>
  <td align="center"><a href="./04-AIE-API-based-FFT-for-many-instances-applications/">AIE API based FFT for Many Instances Applications</a></td>
- <td>This tutorial walks the user through the design and the implementation of an FFT for many parallel signals on a Real-Time system, using the AI Engine APIs. The design performance objective is minimizing power and utilization, maintaining a high throughput to at least match the Real-Time acquisition bandwidth. Moreover, the design leverages the AIE-ML Memory Tiles to minimize programmable logic utilization. The considered case study comprises 128 parallel signals, each with a 125MSa/s sample rate and CINT16 datatype, with a total aggregated bandwidth of 64GBytes/s.
- </td>
+ <td>This tutorial walks the user through the design and the implementation of an FFT for many parallel signals on a Real-Time system, using the AI Engine APIs. The design performance objective is minimizing power and utilization, maintaining a high throughput to at least match the Real-Time acquisition bandwidth. Moreover, the design leverages the AIE-ML Memory Tiles to minimize programmable logic utilization. The considered case study comprises 128 parallel signals, each with a 125MSa/s sample rate and CINT16 datatype, with a total aggregated bandwidth of 64GBytes/s. </td>
  </tr>
+ <tr>
+ <td align="center"><a href="./05-Softmax-Function/">Softmax Function on AIE-ML</a></td>
+ <td>Softmax is an activation function often used in the output layer of a neural network designed for multi-class classification. This tutorial provides an example of how the softmax function might be implemented for those desiring to develop custom machine learning inference applications on AI Engines. </td>
+ </tr> 
 </table>
 
 

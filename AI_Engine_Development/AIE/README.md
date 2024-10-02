@@ -744,7 +744,37 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- </tr>  
+ </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/18-MUSIC-Algorithm/">MUSIC Algorithm on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td>MM2S / S2MM</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/18-Softmax-Function/">Softmax Function on AI Engine</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr>   
  </table>
 
 

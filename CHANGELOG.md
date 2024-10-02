@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2024.1_update (Oct. 2, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm/
+- AI_Engine_Development/AIE/Design_Tutorials/19-Softmax-Function/
+- AI_Engine_Development/AIE-ML/Design_Tutorials/05-Softmax-Function/
+
 ## 2024.1_update (Sep. 10, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface/

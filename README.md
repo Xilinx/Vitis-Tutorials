@@ -142,7 +142,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/04-packet-switching">Packet Switching</a>
             </td>                
             <td> 
-                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>               
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML </a>               
             </td>
         </tr>
         <tr>
@@ -153,7 +153,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features </a>
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/02-Prime-Factor-FFT">Prime Factor FFT-1008 on AIE-ML </a>            
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial </a>
             </td>
         </tr>        
         <tr>
@@ -164,16 +164,17 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/22-Performance-Validation-in-Analysis-View">Performance Validation in Analysis View :new: </a>   
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/03-AIE-ML-lenet_tutorial">AIE-ML LeNet Tutorial </a>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications">AIE API based FFT for Many Instances Applications :new:</a>
             </td>
         </tr>   
         <tr>
             <td height="24">
             </td>
             <td>
+                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>              
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications">AIE API based FFT for Many Instances Applications :new:</a>
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/05-Softmax-Function">Softmax Function on AIE-ML :new:</a>
             </td>
         </tr>           
     </tbody>
@@ -325,33 +326,48 @@ To download a ZIP file of a specific branch, do one of the following:
                  <a href="./AI_Engine_Development/AIE/Feature_Tutorials/22-Performance-Validation-in-Analysis-View">Performance Validation in Analysis View :new: </a>   
             </td>                 
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine </a>            
+                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples :new: </a>          
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D">64K IFFT Using 2D Architecture </a>
             </td>
         </tr>
         <tr>
+            <td colspan="3" height="24" align="center">
+                <strong> Design Tutorials </strong>
+            </td>
+        </tr>        
+        <tr>
             <td height="24">
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/13-FFT-DFT-on-AIE">FFT and DFT on AI Engine </a>                    
+            </td>
+            <td >
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/14-Bitonic-Sorting">Bitonic SIMD Sorting on AI Engine </a>                     
             </td>
             <td>
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter">Fractional Delay Farrow Filter </a>
-            </td>
-            <td>
+            </td>          
+        </tr>
+        <tr>
+            <td height="24">                   
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/16-1M-Point-FFT-32Gsps">1M Point float FFT @ 32 Gsps :new: </a>
+            </td>                
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
+            </td>              
+            <td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm">MISIC Algorithm :new: </a>
             </td>            
         </tr>
         <tr>
             <td height="24">                   
-            </td>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/19-Softmax-Function"> Softmax Function on AI Engine :new: </a>
+            </td>                
             <td>
-                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples :new: </a>            
-            </td>
+            </td>              
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
             </td>            
-        </tr>                   
+        </tr>                             
     </tbody>
 </table>
 

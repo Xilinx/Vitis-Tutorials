@@ -98,6 +98,14 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <td align="center"><a href="./17-Hough-Transform/">System Partitioning of a Hough Transform on AI Engine</a></td>
  <td>This tutorial walks through the process of planning the implementation of a well-known image processing algorithm, mapping and partitioning it to the resources available in a Versal Adaptive SoC device. We illustrate this using the Hough Transform -- a feature extraction technique for computer vision & image processing.</td>
  </tr>
+ <tr>
+ <td align="center"><a href="./18-MUSIC-Algorithm/">MUSIC Algorithm on AI Engine</a></td>
+ <td>This tutorial implements the Multiple Signal Classification (MUSIC) Algorithm on the AI Engine. MUSIC is a popular algorithm for Direction of Arrival (DOA) estimation in antenna array systems. </td>
+ </tr>  
+ <tr>
+ <td align="center"><a href="./19-Softmax-Function/">Softmax Function on AIE Engine</a></td>
+ <td>Softmax is an activation function often used in the output layer of a neural network designed for multi-class classification. This tutorial provides an example of how the softmax function might be implemented for those desiring to develop custom machine learning inference applications on AI Engines. </td>
+ </tr>  
  </table>
 
 
