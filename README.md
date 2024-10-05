@@ -356,7 +356,7 @@ To download a ZIP file of a specific branch, do one of the following:
                  <a href="./AI_Engine_Development/AIE/Design_Tutorials/17-Hough-Transform">System Partitioning of a Hough Transform :new: </a>
             </td>              
             <td>
-                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm">MISIC Algorithm :new: </a>
+                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm">MUSIC Algorithm :new: </a>
             </td>            
         </tr>
         <tr>
