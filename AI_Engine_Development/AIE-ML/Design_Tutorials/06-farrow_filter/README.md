@@ -10,7 +10,7 @@ The *Fractional Delay Farrow Filter* design has already been implemented for the
 
 Before starting this tutorial on migrating the design from AIE to AIE-ML architecture, it is essential to understand the Farrow Filter and its implementation details with the AIE architecture. This understanding will lay a foundation for grasping the differences and considerations involved in the migration process.
 
-Please study this tutorial **[Fractional Delay Forrow Filter Targeting AIE Architecture](https://github.com/Xilinx/Vitis-Tutorials/tree/2024.1/AI_Engine_Development/AIE/Design_Tutorials/15-farrow_filter)** to understand the following:
+Please study this tutorial **[Fractional Delay Forrow Filter Targeting AIE Architecture](../../../AIE/Design_Tutorials/15-farrow_filter/README.md)** to understand the following:
 
 1. What is a Farrow Filter? 
 2. Requirements and AIE System Partitioning 

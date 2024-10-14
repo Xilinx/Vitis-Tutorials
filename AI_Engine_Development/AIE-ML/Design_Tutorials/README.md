@@ -39,6 +39,10 @@ The AI Engine Development Design Tutorials showcase the two major phases of AI E
  <td align="center"><a href="./05-Softmax-Function/">Softmax Function on AIE-ML</a></td>
  <td>Softmax is an activation function often used in the output layer of a neural network designed for multi-class classification. This tutorial provides an example of how the softmax function might be implemented for those desiring to develop custom machine learning inference applications on AI Engines. </td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./06-farrow_filter/">Migrating Farrow Filter from AIE to AIE-ML</a></td>
+ <td>A fractional delay filter is a common digital signal processing (DSP) algorithm found in many applications including digital receivers in modems and is required for timing synchronization. The Fractional Delay Farrow Filter design has already been implemented for the AIE architecture. This tutorial guides how to migrate the existing Fractional Delay Farrow Filter design from AIE to AIE-ML architecture. </td>
+ </tr> 
 </table>
 
 

@@ -1,5 +1,10 @@
 # Vitis-Tutorials ChangeLog
 
+## 2024.1_update (Oct. 14, 2024)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Design_Tutorials/06-farrow_filter/
+
+
 ## 2024.1_update (Oct. 2, 2024)
 ### New Tutorials
 - AI_Engine_Development/AIE/Design_Tutorials/18-MUSIC-Algorithm/

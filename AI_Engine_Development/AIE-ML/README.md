@@ -278,6 +278,21 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>  
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/06-farrow_filter/">Migrating Farrow Filter from AIE to AIE-ML</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr>  
  </table>
 
 

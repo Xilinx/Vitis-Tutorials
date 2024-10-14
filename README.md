@@ -169,9 +169,10 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>   
         <tr>
             <td height="24">
+                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>    
             </td>
             <td>
-                <a href="./Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>              
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/06-farrow_filter/">Migrating Farrow Filter from AIE to AIE-ML :new:</a>              
             </td>                
             <td>
                 <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/05-Softmax-Function">Softmax Function on AIE-ML :new:</a>
