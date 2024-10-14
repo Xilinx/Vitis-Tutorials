@@ -23,7 +23,7 @@ connect_bd_net [get_bd_pins stream_in_0/ap_clk] [get_bd_pins clk_wizard_0/clk_ou
 connect_bd_net [get_bd_pins stream_out_0/ap_rst_n] [get_bd_pins psr_104mhz/peripheral_aresetn]
 connect_bd_net [get_bd_pins stream_in_0/ap_rst_n] [get_bd_pins psr_104mhz/peripheral_aresetn]
 connect_bd_intf_net [get_bd_intf_pins stream_in_0/s_axi_control] [get_bd_intf_pins axi_smc_vip_hier/icn_ctrl/M06_AXI]
-
+set_property -name {xsim.simulate.runtime} -value {all} -objects [get_filesets sim_1]
 assign_bd_address -target_address_space /S00_AXI [get_bd_addr_segs stream_in_0/s_axi_control/Reg] -force
 update_compile_order -fileset sources_1
 update_compile_order -fileset sim_1 

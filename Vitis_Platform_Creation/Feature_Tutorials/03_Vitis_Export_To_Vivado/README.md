@@ -375,9 +375,10 @@ In this step, generate the fixed xsa for hardware (testing design on hardware) f
 
 Steps to generate fixed xsa for hardware flow:
 1. Regenerate the target for ext_bdc_vma.bd. 
-2. Run the design synthesis, implementation run and timing closure. 
-3. Address timing violations and other implementation issues with the design. 
-4. Generate the fixed xsa using the TCL API: `write_hw_platform -fixed ./hw/build/my_project/vck190_prj_fixed_hw.xsa`. 
+2. Run the design synthesis, implementation run and timing closure.
+3. Close timing violations and other implementation issues of the design.  
+4. Generate the PDI.
+5. Generate the fixed xsa using the Tcl command: `write_hw_platform -fixed ./hw/build/my_project/vck190_prj_fixed_hw.xsa`. 
 
 ![image](./images/export_fixed_hw_xsa.png)
 
@@ -435,7 +436,7 @@ v++ -p -t hw -f ./hw/build/my_project/vck190_prj_fixed_hw.xsa \
 --package.sd_file ../xrt/image/boot.scr \
 --package.sd_file host.exe \
 --package.dtb ../boot/system.dtb \
--o vck190_vitis_design_hw.xclbin 
+-o vck190_prj_fixed_hw.xclbin 
 ```
 To run the design on hardware, refer to the Building and Packaging section in [UG1393](https://docs.xilinx.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-Images).
 
@@ -459,10 +460,12 @@ v++ -p -t hw_emu -f ./hw/build/my_project/vitis_design_fixed_hw_emu.xsa \
 --package.sd_file host.exe \
 --package.defer_aie_run \
 --package.dtb ../boot/system.dtb \
--o vck190_vitis_design_hw_emu.xclbin 
+-o vck190_prj_fixed_hw_emu.xclbin 
 ```
 
 To run the hardware emulation, execute the below steps after .xclbin generation:
+
+Update the xclbin name `vck190_prj_fixed_hw_emu.xclbin` in the embedded_exec.sh to run the host application on the board.
 
 ```bash
 make run
