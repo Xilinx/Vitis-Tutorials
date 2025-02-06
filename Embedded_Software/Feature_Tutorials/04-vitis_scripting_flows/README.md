@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 # Vitis Embedded Scripting Flows
 
@@ -23,7 +23,7 @@ There are commandline API for creating Vitis components, API for extracting the 
 
 There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial.
 
-Launch Vivado 2024.1 and use the TCL commands below
+Launch Vivado 2024.2 and use the TCL commands below
 
 ```
 cd scripts
@@ -48,7 +48,7 @@ vitis -s path/to/python_script.py
 
 ## Component creation using the Vitis commands
 
-The Vitis Unified IDE will compile a `builder.py` script with all the Vitis Python API commands to rebuild a workspace in the logs directory in the workspace. This can be used as a reference to generating the Vitis Python API script.
+The Vitis Unified IDE will compile a `workspace_journal.py` script with all the Vitis Python API commands to rebuild a workspace in the logs directory in the workspace. This can be used as a reference to generating the Vitis Python API script.
 
 ### Create Vitis Client
 
@@ -429,7 +429,7 @@ PATH             string   true       design_1.hwh
 SPEEDGRADE       string   true       -2
 SW_REPOSITORIES  string*  true       
 TIMESTAMP        string   true       Wed Aug 16 16:42:32 2023
-VIVADO_VERSION   string   true       2023.2
+VIVADO_VERSION   string   true       2024.2
 ```
 
 Users can return a specific property, such as the `FAMILY`
