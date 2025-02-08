@@ -35,6 +35,8 @@ Select your components
 
 ![](./images/all_components.PNG)
 
+Build your system project
+
 <details>
   <summary>Additional Notes</summary>
 

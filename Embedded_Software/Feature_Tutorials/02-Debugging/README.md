@@ -7,7 +7,7 @@
 
 # Vitis Embedded Software Debugging Guide (UG1515)
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 ## [Debugging Bare-Metal Applications](./1-debugging-bare-metal-applications/README.md)
 

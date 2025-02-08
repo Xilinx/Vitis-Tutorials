@@ -80,13 +80,12 @@ Medium level verbose printing is good for most designs. Enable `FSBL_DEBUG_INFO`
    
 7. Click **Next** and **Finish**. The Vitis IDE creates the FSBL application component. This uses the zynqmp_fsbl domain template that includes the required libraries.
 
+8. Select the zcu102_platform under **FLOW and Build**
+
 
 ## Modifying the FSBL BSP 
 
 The FSBL application is capable of performing numerous tasks. The tasks it executes are based on the user definition in header files. Some functions are not executed by default. GCC includes these functions into the compiled executable by default. Since the OCM only has a capacity of 128 KB and the FSBL runs on the OCM, unused functions must be stripped out to make FSBL fit into the OCM. Fortunately, the **zynqmp_fsbl** application template available in the Vitis Unified IDE uses compiler option `-Os -flto -ffat-lto-objects` by default. You do not need to take any action here.
- 
-
-8. Select the zcu102_platform under **FLOW and Build**
 
 Next, set the verbose level in the FSBL. Medium level verbose printing is good for most designs. Enable `FSBL_DEBUG_INFO` by performing the following steps:
 
@@ -109,7 +108,7 @@ Select the fsbl_a53 under FLOW and Build.
 
 ![](./media/003.png)
 
-The FSBL executable is now saved as ``fsbl_a53/debug/fsbl_a53.elf``. In this tutorial, the application name ``fsbl_a53`` is to identify that the FSBL is targeted for the APU (the Arm Cortex-A53 core).
+The FSBL executable is now saved as ``fsbl_a53/build/fsbl_a53.elf``. In this tutorial, the application name ``fsbl_a53`` is to identify that the FSBL is targeted for the APU (the Arm Cortex-A53 core).
 
 **Note:** If the system design demands, you can target the FSBL to run on the RPU.
 
