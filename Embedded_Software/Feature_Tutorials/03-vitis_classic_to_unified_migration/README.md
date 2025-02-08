@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2024.2***
 
 >**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Advancing Embedded Development: Migrating to AMD Vitis™ Unified IDE and Exploring Backend Innovations"](https://webinar.amd.com/Advancing-Embedded-Development-Migrating-to-AMD-Vitis-tm-Unified-IDE-and-Exploring-Backend-Innovations/en) webinar.
 
@@ -188,7 +188,8 @@ type: library
 version: 1.0
 
 description: |-
-  lwip213 library lwIP (light weight IP) is an open source TCP/IP stack configured for AMD hard and soft Ethernet MACs.
+  lwip220 library lwIP (light weight IP) is an open source TCP/IP stack configured for AMD hard and soft Ethernet MACs.
+
 properties:
   reg:
     description: Physical base address and size of the controller register map
@@ -204,24 +205,24 @@ properties:
     description: Child phy-node phandle property
 
 supported_processors:
-  - psxl_cortexa78
-  - psxl_cortexr52
+  - psx_cortexa78
+  - cortexa78
+  - psx_cortexr52
+  - cortexr52
   - psu_cortexa53
   - psu_cortexr5
   - psv_cortexa72
   - psv_cortexr5
   - ps7_cortexa9
-  - psu_pmu
-  - psv_pmc
-  - psv_psm
   - microblaze
+  - microblaze_riscv
 
 supported_os:
   - standalone
   - freertos10_xilinx
 
 depends:
-    emaclite:
+    emacps:
         - reg
         - interrupts
     axiethernet:
@@ -230,10 +231,9 @@ depends:
         - xlnx,txcsum
         - xlnx,rxcsum
         - axistream-connected
-    emacps:
+    emaclite:
         - reg
         - interrupts
-        - phy-handle
 ```
 
 The <i>properties</i> keyword is used to extract Hardware metadata using Lopper Framework and is populated in an <library>Example.cmake. For example, the phy-handle property. The Lopper Framework will read the System Device Tree to extract this node property and if found will populate this in the cmake file above. 
@@ -285,7 +285,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contrib/ports/xilinx/include/lwipopts
 
 Another popular question is how to make changes to a Library delivered in Vitis Unified IDE. If users make changes to the local sources in the library in the BSP, then these will be lost upon a regeneration of the BSP. To maintain the modifications in the Library, then user will need to make a local copy of the library in the Vitis install to a local drive and point to this in the <i>Vitis -> Embedded SW Repositories..</i>.
 
-In the example below, I added a local copy of the LwIP library to the folder structure repo/ThirdParty/sw_services/lwip213_v1_1, and added this to the Local Repositories in Embedded SW repositories
+In the example below, I added a local copy of the LwIP library to the folder structure repo/ThirdParty/sw_services/lwip220_v1_1, and added this to the Local Repositories in Embedded SW repositories
 
 ![](./images/embedded_sw_repo.PNG)
 
@@ -297,7 +297,7 @@ I updated the yaml file description to hightlight, that this is a customer versi
 
 ```
 description: |-
-  Custom lwip213 library lwIP (light weight IP) is an open source TCP/IP stack configured for AMD hard and soft Ethernet MACs.
+  Custom lwip220 library lwIP (light weight IP) is an open source TCP/IP stack configured for AMD hard and soft Ethernet MACs.
 ```
 
 This can be seen in the Board Support settings
@@ -308,13 +308,13 @@ Users can see the existing Configuration options for the Libary below
 
 ![](./images/config_options.PNG)
 
-If users want to add custom options, then create the cmake CACHE variable first in the lwip213.cmake. For example, here I added a <i>ENABLE_DNS</i> config option.
+If users want to add custom options, then create the cmake CACHE variable first in the lwip220.cmake. For example, here I added a <i>ENABLE_DNS</i> config option.
 
 ```
-set(lwip213_enable_dns 0 CACHE STRING "Enable DNS")
+set(lwip220_enable_dns 0 CACHE STRING "Enable DNS")
 set_property(CACHE lwip213_enable_dns PROPERTY STRINGS 0 1)
 ...
-if (${lwip213_enable_dns})
+if (${lwip220_enable_dns})
     set(ENABLE_DNS 1)
 endif()
 ```
@@ -325,7 +325,7 @@ Next, users need to add that in lwipopts.h.in file with the defined cmake variab
 #cmakedefine01 ENABLE_DNS 		@ENABLE_DNS@
 ```
 
-If users do a Regenerate BSP and review the library Configuration options, then the new <i>lwip213_enable_dns</i> option should be added.
+If users do a Regenerate BSP and review the library Configuration options, then the new <i>lwip220_enable_dns</i> option should be added.
 
 
 ![](./images/new_option.PNG)
@@ -343,10 +343,10 @@ Launch XSCT, and use the command below
 
 ```
 cd scripts
-source ./vitis_classic.tcl
+make all
 ```
 
-This will create the **classic_workspace** workspace. Launch Vitis Classic, and navigate to the workspace created above.
+This will create the platform xsa file and the **classic_workspace** workspace. Launch Vitis Classic, and navigate to the workspace created above.
 
 The script above will set the app C/C++ build settings with an **EXAMPLE_SYMBOL**.
 

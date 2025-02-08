@@ -17,6 +17,10 @@ platform create -name zcu102_platform -hw ./zcu102/design_1_wrapper.xsa
 domain create -name a53_domain -os standalone -proc psu_cortexa53_0
 domain active a53_domain
 
+# Add extra compiler flag and library
+bsp config -append extra_compiler_flags "-pg"
+bsp setlib -name "xilffs"
+
 platform write
 platform generate
 
