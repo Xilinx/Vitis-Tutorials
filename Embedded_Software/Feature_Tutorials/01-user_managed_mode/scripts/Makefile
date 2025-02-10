@@ -7,7 +7,7 @@
 .PHONY: all clean_all clean_atf clean_dtb clean_boot_script clean_platform clean_uboot create_xsa dtb make_platform
 
 SHELL := /bin/bash
-VERSION ?= 2024.2
+VERSION ?= 2025.1
 BOARD ?= zcu102-rev1.0
 XSA ?= ./zcu102/design_1_wrapper.xsa
 
@@ -16,7 +16,7 @@ ATF_CHECKOUT ?= xilinx-v2024.2
 UBOOT_REPO ?= https://github.com/Xilinx/u-boot-xlnx.git
 UBOOT_CHECKOUT ?= xilinx-v2024.2
 DEVICE_TREE_REPO ?= https://github.com/Xilinx/device-tree-xlnx.git
-DEVICE_TREE_CHECKOUT ?= xlnx_rel_v2024.1
+DEVICE_TREE_CHECKOUT ?= xlnx_rel_v2024.2
 
 all: create_xsa make_platform dtb atf uboot
 

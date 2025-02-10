@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
 
 XSA_NAME=kv260_hardware_platform
-VERSION=2024.2
+VERSION=2025.1
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 
 

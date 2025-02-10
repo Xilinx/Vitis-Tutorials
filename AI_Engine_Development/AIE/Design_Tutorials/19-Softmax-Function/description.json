@@ -1,6 +1,6 @@
 {
-    "name": "Design_Tutorials-18-Softmax-Function",
-    "description": "18-Softmax-Function",
+    "name": "Design_Tutorials-19-Softmax-Function",
+    "description": "Softmax-Function",
     "gui": "false",
     "flow": "versal",
 
@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "AIE_D_18-Softmax-Function",
+        "test_name": "AIE_D_19-Softmax-Function",
         "jobs": [
             {
                 "max_memory_MB": 65536,

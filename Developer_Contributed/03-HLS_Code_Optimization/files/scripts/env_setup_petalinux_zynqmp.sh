@@ -27,7 +27,7 @@ source env_setup_petalinux.sh
 # Versal Common Image Path 
 # -------------------------------
 
-export COMMON_IMAGE_ZYNQMP=/proj/xbb/xrt-embedded/2024.2/sw/latest/sysroot/zynqmp/xilinx-zynqmp-common-v2024.2
+export COMMON_IMAGE_ZYNQMP=/proj/xbb/xrt-embedded/2025.1/sw/latest/sysroot/zynqmp/xilinx-zynqmp-common-v2025.1
 echo Setting Up COMMON_IMAGE_ZYNQMP=$COMMON_IMAGE_ZYNQMP
 
 

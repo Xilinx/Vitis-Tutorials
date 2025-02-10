@@ -14,28 +14,28 @@
 # =======================================================
 # global variables for this tutorial
 # =======================================================
-RELEASE=2024.2
+RELEASE=2025.1
 BOARD=vck190
-#BASE_NUM=202420_1
-BASE_NUM=202420_1
+#BASE_NUM=202510_1
+BASE_NUM=202510_1
 
 #TUTORIAL=AIE_DSP_with_Makefile_and_GUI_2023
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 
 #export WRK_DIR=/media/danieleb/DATA/${RELEASE}/Vitis-Tutorials-${RELEASE}/Developer_Contributed
-export WRK_DIR=/media/danieleb/DATA/2024.2/Vitis-Tutorials_2024.2/Developer_Contributed
+export WRK_DIR=/media/danieleb/DATA/2025.1/Vitis-Tutorials_2025.1/Developer_Contributed
 
 
 # =======================================================
 # Set Platform, Vitis and Petalinux repo
 # =======================================================
-#export PLATFORM_REPO_PATHS = <YOUR-2024.2-PLATFORM-DIRECTORY>
+#export PLATFORM_REPO_PATHS = <YOUR-2025.1-PLATFORM-DIRECTORY>
 export PLATFORM_REPO_PATHS=/media/danieleb/DATA/${RELEASE}/tools/Xilinx/Vitis/${RELEASE}/base_platforms
 
-#export XILINX_VITIS = <YOUR-2024.2-VITIS-DIRECTORY>
+#export XILINX_VITIS = <YOUR-2025.1-VITIS-DIRECTORY>
 export XILINX_VITIS=/media/danieleb/DATA/${RELEASE}/tools/Xilinx/Vitis/${RELEASE}
 
-#export PETALINUX = <YOUR-2024.2-PETALINUX-DIRECTORY>
+#export PETALINUX = <YOUR-2025.1-PETALINUX-DIRECTORY>
 export PETALINUX=/tools/Xilinx/PetaLinux/${RELEASE}
 
 # ==================================================================================
@@ -48,7 +48,7 @@ mkdir -p /tmp/danieleb
 export TMPDIR=/tmp/danieleb
 
 # PETALINUX and VERSAL COMMON IMAGE
-##export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2024.2-DIRECTORY>
+##export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2025.1-DIRECTORY>
 export COMMON_IMAGE_VERSAL=${HOME}/common/xilinx-versal-common-v${RELEASE}
 
 : ' # do it only once
@@ -80,7 +80,7 @@ source ${XILINX_VITIS}/settings64.sh
 # ========================================================
 # Set DSP Library for Vitis
 # ========================================================
-#export DSPLIB_ROOT=<Path to 2024.2 DSP Libs - Directory>
+#export DSPLIB_ROOT=<Path to 2025.1 DSP Libs - Directory>
 export DSPLIB_VITIS=/media/danieleb/DATA/${RELEASE}/Vitis_Libraries-main
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp
 

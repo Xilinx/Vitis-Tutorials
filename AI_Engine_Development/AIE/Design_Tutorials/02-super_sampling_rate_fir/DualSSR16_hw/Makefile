@@ -24,7 +24,7 @@ ADDON_DIR := ./addon_files
 # hw_emu|hw
 
 TARGET   ?= hw
-PFM_NAME := xilinx_vck190_base_202420_1
+PFM_NAME := xilinx_vck190_base_202510_1
 PFM_NAME := $(strip $(PFM_NAME))
 PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 PNAME := vck190_aie_base_graph_${TARGET}

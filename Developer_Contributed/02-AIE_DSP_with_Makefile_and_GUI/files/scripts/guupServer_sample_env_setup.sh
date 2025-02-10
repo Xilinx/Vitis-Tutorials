@@ -16,7 +16,7 @@
 # =======================================================
 #ts 2023.1_released -petalinux petalinux-v2023.1_daily_latest
 #ts 2023.2_released -petalinux petalinux-v2023.2_daily_latest
-#ts 2024.2_released -petalinux petalinux-v2024.2_daily_latest
+#ts 2025.1_released -petalinux petalinux-v2025.1_daily_latest
 
 # =======================================================
 # global variables for this tutorial
@@ -25,13 +25,13 @@ export XLNX_BOARD=vck190
 
 #export XLNX_RELEASE=2023.2
 #export XLNX_BASE_NUM=202320_1
-export XLNX_RELEASE=2024.2
-export XLNX_BASE_NUM=202420_1
+export XLNX_RELEASE=2025.1
+export XLNX_BASE_NUM=202510_1
 
 export TUTORIAL=02-AIE_DSP_with_Makefile_and_GUI
 export GUUP_DIR=/group/xirguup
 #export WRK_DIR=${GUUP_DIR}/danieleb/ide${XLNX_RELEASE}/Developer_Contributed
-export WRK_DIR=${GUUP_DIR}/danieleb/ide2024.2/Vitis-Tutorials/Developer_Contributed
+export WRK_DIR=${GUUP_DIR}/danieleb/ide2025.1/Vitis-Tutorials/Developer_Contributed
 
 # =======================================================
 # to emulate SPRITE regression env in GUUP Servers
@@ -74,7 +74,7 @@ cp bl31.elf boot.scr Image README.txt rootfs.ext4 rootfs.manifest u-boot.elf ${C
 # Set DSP Library for Vitis
 # ========================================================
 ## already set in "env_setup.sh" but not yet available in EMEA servers
-#export DSPLIB_ROOT=<Path to 2024.2 DSP Libs - Directory>
+#export DSPLIB_ROOT=<Path to 2025.1 DSP Libs - Directory>
 
 export DSPLIB_VITIS=/group/xirguup/danieleb/ide${XLNX_RELEASE}/Vitis_Libraries
 export DSPLIB_ROOT=${DSPLIB_VITIS}/dsp

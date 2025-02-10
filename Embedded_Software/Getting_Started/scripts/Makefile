@@ -6,7 +6,7 @@
 # Author: Stephen MacMahon
 
 SHELL := /bin/bash
-VERSION ?= 2024.2
+VERSION ?= 2025.1
 
 all: clean unified_workspace
 

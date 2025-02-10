@@ -10,7 +10,7 @@
 # make TARGET=hw_emu EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>
 #   -->  Runs hw_emu with external TG. 
 
-PLATFORM := xilinx_vck190_base_202420_1
+PLATFORM := xilinx_vck190_base_202510_1
 
 # Makefile input options if not defined from top-level stage
 
@@ -41,11 +41,11 @@ endif
 
 #Check environment setup
 ifndef ROOTFS
-  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.2/rootfs.ext4
+  ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/rootfs.ext4
   export ROOTFS
 endif
 ifndef IMAGE
-  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.2/Image
+  IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/Image
   export IMAGE
 endif
 

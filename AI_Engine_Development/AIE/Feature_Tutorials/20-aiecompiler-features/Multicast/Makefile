@@ -5,10 +5,10 @@ CASE ?= 1
 ARCH ?= aie
 
 ifeq ($(ARCH), aie)
-PFM_NAME := xilinx_vck190_base_202420_1
+PFM_NAME := xilinx_vck190_base_202510_1
 $(info "ARCH set for AI Engine Architecture   (ARCH = $(ARCH))")
 else ifeq ($(ARCH), aie-ml)
-PFM_NAME := xilinx_vek280_base_202420_1
+PFM_NAME := xilinx_vek280_base_202510_1
 $(info "ARCH set for AI Engine ML Architecture   (ARCH = $(ARCH))")
 else
 $(error "ARCH should be either aie for AI Engine or aie-ml for AI Engine ML   (ARCH = $(ARCH))")

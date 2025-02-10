@@ -18,7 +18,7 @@
 #   -->  AIE simulation using a Python/CPP based External Traffic Generator
 #
 
-PLATFORM := xilinx_vck190_base_202420_1
+PLATFORM := xilinx_vck190_base_202510_1
 
 # Makefile input options if not defined from top-level stage
 

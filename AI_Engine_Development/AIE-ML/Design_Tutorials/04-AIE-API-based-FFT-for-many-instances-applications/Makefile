@@ -8,7 +8,7 @@ ECHO = @echo
 ################################################################################
 # Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2024.2
+REQUIRED_VERSION                   = 2025.1
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 
 ##############

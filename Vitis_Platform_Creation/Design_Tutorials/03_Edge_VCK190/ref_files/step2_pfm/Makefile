@@ -4,7 +4,7 @@
 #*/
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-VERSION=2024.2
+VERSION=2025.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT=$(ROOT_DIR)/sysroot
 XSA_PATH=$(ROOT_DIR)/../step1_vivado/build/vivado/

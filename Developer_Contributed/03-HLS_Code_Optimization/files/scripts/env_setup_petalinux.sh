@@ -13,8 +13,8 @@
 
 # A tutorial either uses the pre-built SDK toolchain or the PetaLinux to build things from scratch.
 
-export BSP_DIR=/proj/petalinux/2024.2/petalinux-v2024.2_daily_latest/bsp/release
-export PETALINUX=/proj/petalinux/2024.2/petalinux-v2024.2_daily_latest/tool/petalinux-v2024.2-final
+export BSP_DIR=/proj/petalinux/2025.1/petalinux-v2025.1_daily_latest/bsp/release
+export PETALINUX=/proj/petalinux/2025.1/petalinux-v2025.1_daily_latest/tool/petalinux-v2025.1-final
 
 
 source $PETALINUX/settings.sh

@@ -18,7 +18,7 @@ BOARD    = versal-vck190-reva-x-ebm-01-reva
 CORE     = psv_cortexa72_0
 
 #versioning
-VERSION          ?= 202420_1
+VERSION          ?= 202510_1
 VER              ?= 202410.1
 
 #common
@@ -40,7 +40,7 @@ DTB_FILE         = $(BOOT_DIR)/system.dtb
 BOOT_IMAGE       = $(BOOT_DIR)/BOOT.BIN
 SW_FILES         = $(IMAGE_DIR)/boot.scr $(BOOT_DIR)/u-boot.elf $(BOOT_DIR)/bl31.elf
 BOOT_FILES       = u-boot.elf bl31.elf
-SDKTARGETSYSROOT ?= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux
+SDKTARGETSYSROOT ?= $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.1/sysroots/cortexa72-cortexa53-xilinx-linux
 CXX		 ?= aarch64-linux-gnu-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong  -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$(SDKTARGETSYSROOT)
 
 
@@ -50,9 +50,9 @@ PLATFORM_SW_SRC  = $(TOP_DIR)/platform
 PLATFORM_DIR      = $(TOP_DIR)/platform_repo
 
 #flow related
-PREBUILT_LINUX_PATH ?= /opt/xilinx/platform/xilinx-versal-common-v2024.2
-ifneq ($(wildcard $(TOP_DIR)/xilinx-versal-common-v2024.2),)
-	PREBUILT_LINUX_PATH ?= $(TOP_DIR)/xilinx-versal-common-v2024.2
+PREBUILT_LINUX_PATH ?= /opt/xilinx/platform/xilinx-versal-common-v2025.1
+ifneq ($(wildcard $(TOP_DIR)/xilinx-versal-common-v2025.1),)
+	PREBUILT_LINUX_PATH ?= $(TOP_DIR)/xilinx-versal-common-v2025.1
 endif
 
 #Absolute paths

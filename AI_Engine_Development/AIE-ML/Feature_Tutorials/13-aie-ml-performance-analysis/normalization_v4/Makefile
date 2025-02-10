@@ -3,7 +3,7 @@
 #SPDX-License-Identifier: MIT
 
 TARGET   = hw
-PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202420_1/xilinx_vek280_base_202420_1.xpfm
+PLATFORM = ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202510_1/xilinx_vek280_base_202510_1.xpfm
 XSA   = vek280_aie_base_graph_${TARGET}.xsa
 HOST_EXE = host.exe
 
