@@ -8,7 +8,7 @@
 
     "testinfo": {
         "test_name": "PFM_F_03_vitis_to_vivado",
-        "disable": true,
+        "disable": false,
         "jobs": [
             {
                 "max_memory_MB": 32768,
@@ -18,8 +18,7 @@
             }
         ],
         "targets": [
-            "vitis_hw_build",
-            "vitis_hw_run"
+            "vitis_hw_emu"
             ],
         "category": "canary",
         "make_options": [
@@ -29,9 +28,17 @@
             "SDKTARGETSYSROOT=${SYSROOT}",
             "ROOTFS=${COMMON_IMAGE_VERSAL}/rootfs.ext4",
             "IMAGE=${COMMON_IMAGE_VERSAL}/Image",
-            "EMBEDDED_PACKAGE_OUT=./package.hw/", 
-            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+            "EMBEDDED_PACKAGE_OUT=./package.hw_emu/", 
+            "EMBEDDED_EXEC_SCRIPT=./embedded_hw_emu.sh"
          ],
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
         "custom_build_target":
         {
             "all": "all"

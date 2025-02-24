@@ -1,7 +1,9 @@
+
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
+SPDX-License-Identifier: X11
 */
+
 //#include "adf/wrapper/wrapper.h"
 #include<iostream>
 
@@ -116,20 +118,13 @@ void cos_sin_mag (
 
 }
 
-
-
-
 extern "C" {
 void polar_clip(hls::stream<ap_axis<32, 0, 0, 0> > &in_sample, hls::stream<ap_axis<32, 0, 0, 0> > &out_sample) {
-//#pragma HLS PIPELINE II=1
 #pragma HLS INTERFACE ap_ctrl_none port=return
 #pragma HLS INTERFACE axis port=out_sample
 #pragma HLS INTERFACE axis port=in_sample
 
   //std::cerr << "Waiting for a value" << "\n";
-  #ifndef __SYNTHESIS__
-  while(1) {
-  #endif
   ap_cint16 sample;
 
   ap_axis<32, 0, 0, 0> out_x;
@@ -192,9 +187,6 @@ void polar_clip(hls::stream<ap_axis<32, 0, 0, 0> > &in_sample, hls::stream<ap_ax
 
   //****out_x.keep_all();
   out_sample.write(out_x);
-  #ifndef __SYNTHESIS__
-  }
-  #endif
 };
 
 }
