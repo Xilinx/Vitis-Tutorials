@@ -1,6 +1,6 @@
 #******************************************************************************
 # Copyright (C) 2020-2022 Xilinx, Inc. All rights reserved.
-# Copyright (C) 2022-2023 Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2024 Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #******************************************************************************
 ################################################################
@@ -43,6 +43,6 @@ set VER [lindex $argv 1]
 
 # CHANGE DESIGN NAME HERE
 variable design_name
-set design_name ext_bdc
+set design_name vitis_design
 create_bd_design $design_name
 set_property PREFERRED_SIM_MODEL "tlm" [current_project]

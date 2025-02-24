@@ -1,6 +1,6 @@
 /*
 Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
+SPDX-License-Identifier: X11
 */
 
 #ifndef __INCLUDE_H__
@@ -19,4 +19,4 @@ SPDX-License-Identifier: MIT
 #define CLASSIFIER_OUTPUT_SAMPLES (POLAR_CLIP_OUTPUT_SAMPLES)
 #define CLASSIFIER_OUTPUT_BLOCK_SIZE (CLASSIFIER_OUTPUT_SAMPLES * 4)
 
-#endif /* __INCLUDE_H__ */
+#endif /**********__INCLUDE_H__**********/
