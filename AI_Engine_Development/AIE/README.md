@@ -440,6 +440,21 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
+ <tr>
+ <td align="center"><a href="../AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr> 
  </table>
 
 ### Design Tutorials
