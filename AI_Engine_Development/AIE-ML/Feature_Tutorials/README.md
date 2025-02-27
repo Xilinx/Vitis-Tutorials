@@ -43,6 +43,10 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
  </tr> 
+ <tr>
+ <td align="center"><a href="./06-gemm/">Matrix Compute with Vitis Libraries</a></td>
+ <td>In this tutorial, we explore how to use matrix multiplication/General Matrix Multiply (GEMM) from the DSP Vitis library. We will examine various design requirements and configure the parameters accordingly. Finally, we will migrate the design to the AIE-ML architecture and compare its performance with AIE architecture.</td>
+ </tr>  
  </table>
 
 

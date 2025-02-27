@@ -179,6 +179,17 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/08-MNIST-ConvNet">MNIST ConvNet on AIE-ML :new:</a>              
             </td>             
         </tr>            
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries :new: </a>
+            </td>
+            <td>   
+            </td>                
+            <td>
+            </td>
+            <td>        
+            </td>             
+        </tr>           
     </tbody>
 </table>
 
@@ -351,6 +362,17 @@ To download a ZIP file of a specific branch, do one of the following:
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer :new: </a>
+            </td> 
+            <td>            
+            </td>
+        </tr>  
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries :new: </a>
+            </td>
+            <td>       
+            </td>
+            <td>
             </td> 
             <td>            
             </td>

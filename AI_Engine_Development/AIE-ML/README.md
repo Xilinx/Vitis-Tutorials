@@ -77,7 +77,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td>Yes</td>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/03-rtp-reconfiguration/">Runtime Parameter Reconfiguration</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -92,7 +92,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
-  <tr>
+ <tr>
  <td align="center"><a href="./Feature_Tutorials/04-packet-switching/">Packet Switching</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -151,6 +151,21 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
  </tr>
  </table>
 

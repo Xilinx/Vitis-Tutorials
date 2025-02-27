@@ -108,7 +108,11 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <tr>
  <td align="center"><a href="./25-AIE-kernel-optimization/">AIE Kernel Optimization</a></td>
  <td>This tutorial teaches how to diagnose and improve compute efficiency of algorithms implemented as AI Engine kernels by analyzing generated microcode. Fundamentals of interpreting microcode are presented, and two example labs are provided to encourage hands-on experience with the process of using microcode to optimize AI Engine kernel performance. </td>
- </tr>   
+ </tr>
+ <tr>
+ <td align="center"><a href="../../AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a></td>
+ <td>In this tutorial, we explore how to use matrix multiplication/General Matrix Multiply (GEMM) from the DSP Vitis library. We will examine various design requirements and configure the parameters accordingly. Finally, we will migrate the design to the AIE-ML architecture and compare its performance with AIE architecture.</td>
+ </tr>  
  </table>
 
 
