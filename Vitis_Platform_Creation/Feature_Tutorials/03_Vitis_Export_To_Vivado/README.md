@@ -257,7 +257,7 @@ After exporting VMA file in step-2, import the VMA file in the Vivado project.
 
     ![image](./images/step3_2.png)
 
-3. After running the Tcl API to import the VMA, a BDC will be created and named as `vmaHier`
+3. After running the Tcl API to import the VMA, a hierarchy will be created and named as `vmaHier`
 
       ![image](./images/after_vma_import_2.png)
 
@@ -433,20 +433,26 @@ Steps to generate fixed xsa for hardware flow:
     b. In Tcl Console Remove the VMA by TCl API `vitis::remove_archive`
     c. Set the vitis_design_wrapper as top by `set_property top vitis_design_wrapper [current_fileset]`
     d. Export the platform for hardware by File -> Export -> Export Platform -> hardware -> pre-synthesis, provide the settings of the platform and mention the name of the XSA `hw`.
-3. Generate libadf.a with hw.xsa file using make command : make TARGET=hw XSA=hw.xsa graph
-4. Generate .xo files with hw.xsa file using make command : make TARGET=hw XSA=hw.xsa kernels
-5. Generate new VMA using make command : make TARGET=hw XSA=hw.xsa export
-6. Import the VMA into the platform 
-7. Run the design synthesis, implementation run and timing closure. 
-8. Address timing violations and other implementation issues with the design. 
-9. Generate the fixed xsa using the TCL API: `write_hw_platform -fixed ./hw_fixed.xsa`. 
+2. Generate libadf.a with hw.xsa file using make command : make TARGET=hw XSA=hw.xsa graph
+3. Generate .xo files with hw.xsa file using make command : make TARGET=hw XSA=hw.xsa kernels
+4. Generate new VMA using make command : make TARGET=hw XSA=hw.xsa export
+5. Import the VMA into the platform 
+6. Run the design synthesis, implementation run and timing closure. 
+7. Address timing violations and other implementation issues with the design. 
+8. Generate the fixed xsa using the TCL API: `write_hw_platform -fixed ./hw_fixed.xsa`. 
 
-All the steps 6-9 can be done by make command : `make TARGET=hw import`
+All the steps 6-8 can be done by make command : `make TARGET=hw import`
 
-10. Generate xclbin for the target hw using make command : `make TARGET=hw package`
+9. Generate xclbin for the target hw using make command : `make TARGET=hw package`
 
 
-Run the design on hw and you can see in the terminal, that data is received well in stream_in IP. Reading the register to check the number of packets received, it is random as we are checking status through PS randomly. Reading the error register to confirm, any error is occurred during transaction. Message: "TEST IS PASSED" concludes the hardware flow.
+When running the VCK190 board, make sure you have the right onboard switches flipped for booting from the SD card.
+  1. Insert the SD card and turn ON the board.
+  2. Wait for the Linux command prompt to be available on an attached monitor and keyboard.
+  3. To run your application enter the command: ./host.exe krnl_lab8.xclbin.
+  4. You should see a **TEST PASSED** which means that the application ran successfully!
+
+**IMPORTANT:** To re-run the application, you must power cycle the board.
 
 
 ## Summary
