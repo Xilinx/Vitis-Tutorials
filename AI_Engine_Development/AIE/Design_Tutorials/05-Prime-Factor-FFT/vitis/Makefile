@@ -19,7 +19,7 @@ XO                    := ../hls/pfa1008_dma_src/pfa1008_dma_src_wrapper.xo \
 GRAPH_O               := ${IP_DIR}/libadf.a
 XSA                   := my.xsa
 STIMULUS_IO           := ${IP_DIR}/data/sig_i.txt ${IP_DIR}/data/sig_o.txt
-PS_EXE                := ../ps_apps/hw_emu/host.exe
+PS_EXE                := ../ps_apps/host.exe
 
 SD_CARD               := $(abspath ../package)
 BUILD_DIR             := build_${TARGET}

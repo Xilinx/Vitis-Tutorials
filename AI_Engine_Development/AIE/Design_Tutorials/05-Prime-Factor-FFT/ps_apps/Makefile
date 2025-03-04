@@ -10,7 +10,7 @@ APP_NAME         := host
 APP_EXE          := ${APP_NAME}.exe
 APP_SRC          := ${APP_NAME}.cpp
 APP_SRC_DEP      := ./*
-APP_SRC_CTRL     := ./../../aie/pfa1008/Work/ps/c_rts/aie_control_xrt.cpp
+APP_SRC_CTRL     := ./../aie/pfa1008/Work/ps/c_rts/aie_control_xrt.cpp
 
 GCC              := ${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
 
@@ -18,10 +18,10 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include \
                     -I${SYSROOT}/usr/include/xrt \
                     -I${SYSROOT}/usr/include/xaiengine \
                     -I${XILINX_VITIS}/aietools/include \
-                    -I../../aie/pfa1008 \
-                    -I../../aie/dft7w \
-                    -I../../aie/dft9w \
-                    -I../../aie/dft16
+                    -I../aie/pfa1008 \
+                    -I../aie/dft7w \
+                    -I../aie/dft9w \
+                    -I../aie/dft16
 
 GCC_C_FLAGS      := -O -Wall -std=c++17 -DXAIE_DEBUG \
                     -pthread \
@@ -29,8 +29,7 @@ GCC_C_FLAGS      := -O -Wall -std=c++17 -DXAIE_DEBUG \
 
 GCC_L_FLAGS      := -L../../${SYSROOT}/usr/lib \
                     -L${XILINX_VITIS}/aietools/lib/aarch64.o \
-                    -ladf_api_xrt -lxaiengine -lxrt_core -lxrt_coreutil \
-                    --sysroot=${SYSROOT}
+                    -ladf_api_xrt -lxaiengine -lxrt_core -lxrt_coreutil
 
 .PHONY: clean help all
 

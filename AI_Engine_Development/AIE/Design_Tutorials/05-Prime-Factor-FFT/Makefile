@@ -42,7 +42,7 @@ pfa1008:
 	$(MAKE) all -C hls/pfa1008_transpose2
 	$(MAKE) all -C hls/pfa1008_permute_o
 	$(MAKE) all -C hls/pfa1008_dma_snk
-	$(MAKE) all -C ps_apps/hw_emu
+	$(MAKE) all -C ps_apps
 	$(MAKE) all -C vitis
 
 clean:
@@ -53,7 +53,7 @@ clean:
 	$(MAKE) clean -C hls/pfa1008_transpose2
 	$(MAKE) clean -C hls/pfa1008_permute_o
 	$(MAKE) clean -C hls/pfa1008_dma_snk
-	$(MAKE) clean -C ps_apps/hw_emu
+	$(MAKE) clean -C ps_apps
 	$(MAKE) clean -C vitis
 	@/bin/rm -rf .crashReporter*
 
