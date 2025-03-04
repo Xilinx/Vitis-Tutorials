@@ -554,109 +554,6 @@ Floating-Point QRD+WBS in an FPGA</a>
         </tbody>
     </table>
 
-<table border="0" width="100%">
-    <tbody>
-        <tr>
-            <td colspan="2" height="24" align="center">
-                <strong> <a href="./Hardware_Acceleration">Hardware Acceleration</a> </strong>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" height="48">
-                Learn how to use the Vitis core development kit to build, analyze, and optimize an accelerated algorithm developed in C++, OpenCL, and even Verilog and VHDL.
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <strong>Feature Tutorials</strong>
-            </td>
-            <td height="24">
-                <strong>Design Tutorials</strong>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/01-rtl_kernel_workflow">Getting Started with RTL Kernels</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/01-convolution-tutorial">Convolution Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/02-mixing-c-rtl-kernels">Mixing C and RTL</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/02-bloom">Bloom Filter Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/03-dataflow_debug_and_optimization">Dataflow Debug and Optimization</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/03-rtl_stream_kernel_integration">RTL Systems Integration Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/04-mult-ddr-banks">Using Multiple DDR Banks</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/04-traveling-salesperson">Traveling Salesperson Problem</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/05-using-multiple-cu">Using Multiple Compute Units</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/05-bottom_up_rtl_kernel">Bottom RTL Kernel Design Flow Example</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/06-controlling-vivado-implementation">Controlling Vivado Implementation</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/06-cholesky-accel">Cholesky Algorithm Acceleration</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/07-using-hbm">Optimizing for HBM</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/07-host-code-opt">XRT Host Code Optimization</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/08-using-hostmem">Host Memory Access</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/08-alveo_aurora_kernel">Aurora Kernel on Alveo</a>
-            </td>
-        </tr>
-        <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/09-using-ethernet-on-alveo">Using GT Kernels and Ethernet IPs on Alveo</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/09-sssp-application">Single Source Shortest Path Application</a>
-            </td>
-        </tr>
-    <tr>
-            <td height="24">
-                <a href="./Hardware_Acceleration/Feature_Tutorials/10-p2p-card-to-card">P2P Transfer using Native XRT C++ API</a>
-            </td>
-            <td>
-                <a href="./Hardware_Acceleration/Design_Tutorials/10-get_moving_with_alveo">Get Moving with Alveo</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
 ## Other Vitis Tutorial Repositories
 
 <table border="0" width="100%">
@@ -675,14 +572,6 @@ Floating-Point QRD+WBS in an FPGA</a>
             </td>
             <td>
                 This repository contains introductory examples for Vitis HLS that demonstrate specific scenarios related to coding styles and optimization methods. They can help you get started with coding and optimization using Vitis HLS.
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="https://github.com/Xilinx/Vitis_Accel_Examples">Vitis Acceleration Examples</a>
-            </td>
-            <td>
-                This repository illustrates specific scenarios related to host code and kernel programming through small working examples. They can get you started with Vitis acceleration application coding and optimization.
             </td>
         </tr>
         <tr>
