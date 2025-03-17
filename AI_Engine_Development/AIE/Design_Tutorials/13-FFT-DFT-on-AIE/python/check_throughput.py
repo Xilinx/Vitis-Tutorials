@@ -21,7 +21,7 @@ def check_throughput(args):
     accuracy = float(args.accuracy[0])
     with open("AIESimulator.log") as file:
         for line in file:
-            match = re.search('plio .* ([\d.]+)',line)
+            match = re.search('plio .* ([\\d.]+)',line)
             if match:
                 actual = float(match.group(1))
                 diff = 100*(target-actual)/target
