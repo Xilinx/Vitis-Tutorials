@@ -150,6 +150,8 @@ For example, after running individual partitions with preceding command, you can
 ./host_all.exe a.xclbin
 ```
 
+Note: Rerunning the host application or reloading the AIE graph is not supported in this release. It's planed to be enhanced in future releases.
+
 ## Summary
 
 After completing this tutorial, you learned:
