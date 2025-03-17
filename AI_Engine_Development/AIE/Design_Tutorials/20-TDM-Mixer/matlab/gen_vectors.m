@@ -56,11 +56,11 @@ sig_o = fi(sig_o,TT,FF);
 % Vitis Functional Simulation
 % ------------------------------------------------------------
 
-run(sprintf('%s/%s',getenv("XILINX_VITIS"),'vfs/matlab/addVfsToPath.m'));
 vfs_model = vfs.aieGraph(input_file="../aie/tdm_mixer_app.cpp",...
-                         include_paths = {"../aie"});
+                         include_paths = {"../aie"},...
+                         part="xcvc1902-vsva2197-2MP-e-S");
 
-vfs_i = vfs.cint16(sig_i.int);
+vfs_i = varray.cint16(sig_i.int);
 vfs_o = vfs_model.run(vfs_i);
 vfs_o = reshape(vfs_o,1,numel(vfs_o));
 

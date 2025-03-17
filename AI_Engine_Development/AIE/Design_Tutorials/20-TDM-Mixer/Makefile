@@ -29,6 +29,7 @@ tdm_mixer:
 
 clean:
 	$(MAKE) clean -C aie
+	@/bin/rm -rf matlab/vfs_work
 	@/bin/rm -rf .crashReporter*
 
 
