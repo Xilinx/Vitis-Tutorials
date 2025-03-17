@@ -9,7 +9,7 @@
 
 # Bitonic SIMD Sorting on AI Engine for `float` Datatypes
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
