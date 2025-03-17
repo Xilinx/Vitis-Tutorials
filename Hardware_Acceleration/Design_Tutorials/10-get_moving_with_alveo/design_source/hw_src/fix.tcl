@@ -1,1 +1,0 @@
-route_design -nets [get_nets { level0_i/ulp/resize_accel_rgb_1/inst/resize_2_16_2160_3840_2160_3840_8_7_2_2_U0/grp_xFResizeAreaDownScale_2160_3840_3_16_8_2_2_39_2160_3840_480_480_s_fu_86/grp_xFResizeAreaDownScale_Pipeline_LOOP_ROW_LOOP_COL_fu_269/PB_out_50_reg_25687[11] }]
