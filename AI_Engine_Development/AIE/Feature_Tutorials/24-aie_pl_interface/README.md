@@ -9,10 +9,10 @@
 
 # RTL / AI Engine interfacing Examples 
 
-***Version: Vivado / Vitis 2024.2***
+***Version: Vivado / Vitis 2025.1***
 
 ## Introduction
-The AI Engine can be connected to the Programmable Logic (PL) using AXI compliant AXI4-Stream interfaces. In most availabe examples, the connectivity between the PL and the AI Engine is shown using HLS kernels connected to the DDR as the default VCK190 base platform does not include any other blocks than the infrastructure blocks. To accelerate part of an application, connecting the AI Engine to a user's existing RTL requires knowledge of the AXI-Stream protocol and how it can be used to connect with the AI Engines using the AMD Vitis&trade; Acceleration flow.  It might require some modification or bridging from the existing RTL.
+The AI Engine can be connected to the Programmable Logic (PL) using AXI compliant AXI4-Stream interfaces. In most availabe examples, the connectivity between the PL and the AI Engine is shown using HLS kernels connected to the DDR as the default VCK190 base platform does not include any other blocks than the infrastructure blocks. To accelerate part of an application, connecting the AI Engine to a user's existing RTL requires knowledge of the AXI-Stream protocol and how it can be used to connect with the AI Engines using the AMD Vitis&trade; Acceleration flow. It might require some modification or bridging from the existing RTL. For example, to communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interace (for example, it needs to be able to handle back pressure when tready is low).
 This tutorial shows multiple examples on how to connect RTL blocks with AXI4-Stream present in a custom platform to the AI Engine using the Vitis Acceleration flow.
   
 ---
@@ -53,6 +53,7 @@ The Vivado Platorm can be generated using the following make command:
 ```
 make vivado_platform
 ```
+The Vivado project is generated under Vivado/build/custom_pfm_strmIn_strmOut
 
 ### Vitis V++ Link
 In this example, you have an AI Engine application (simple FIR filter) with one input PLIO and one output PLIO. Connect these two PLIOs to the custom RTL AXI4-Stream interfaces using the V++ linker as part of the Vitis acceleration flow. 
@@ -77,7 +78,7 @@ The Vitis project can be generated using the following make command:
 make vitis_project
 ```
 
-If you open the generated Vivado project, which is located under Vitis/workspace_/system_project/build/hw_emu/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/, you can see that the RTL AXI4-Stream interfaces have been connected to the AI Engine.
+If you open the generated Vivado project, which is located under Vitis/workspace_1/system_project/build/hw_emu/hw_link/binary_container_1/binary_container_1/vivado/vpl/prj/, you can see that the RTL AXI4-Stream interfaces have been connected to the AI Engine.
 
 ![VPP Link Result](./images/vpp_link_phase_1.jpg)
 
@@ -106,7 +107,7 @@ vitis -w Vitis/workspace_1/
 
 5. After ~10us of simulation time, you see transactions on the AXI4-Stream interfaces from and to the AI Engine demonstrating the good behaviour of the design.
 
-![Waveforms](./images/hw_emu_1.jpg)
+![Waveforms](./images/251_hw_emu_1.jpg)
 
 > ***Note***: In the Vitis workspace, you can see an application called `dummy_ps_app`. This application is just a simple hello_world application, which is running on the A72 processors. Running this application runs the PMC, which is loading the AI Engine. The application is added to the packaged file using the option ps_elf in `package.cfg`.
 
@@ -114,7 +115,7 @@ vitis -w Vitis/workspace_1/
 
 ---
 ## Part 2 - Connecting RTL AXI4-Stream interfaces (NOT included in Block Design) to the AI Engine
-In this part, a design is replicated in which all the RTL sending and receiving data to and from the AI Engine is outside the Block Design (BD). To communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interace (for example, it needs to be able to handle back pressure when tready is low). The AXI4S_Counter and the dummy Sink used in the previous part are instantiated in an RTL top-level, which also instantiates the Block Design that contains the AI Engine.
+In this part, the design from **Part 1** is replicated but the AXI4S_Counter and the dummy Sink used in the previous part are now instantiated in an RTL top-level, which also instantiates the Block Design that contains the AI Engine.
 As the V++ linker is only able to work inside a BD, add an IP block inside it to which the linker can connect.
 
 ### Hardware Platform
@@ -136,6 +137,7 @@ To build the HW design, run the following command:
 ```
 make vivado_platform RTL_OUT_BD=1
 ```
+The Vivado project is generated under Vivado/build/custom_pfm_strmIn_strmOut_RTL_out
 
 ### Vitis V++ Link
 As the sptag for the master and slave interfaces are the same to what was used in **Part 1**, there is no change to the Vitis project. It can be built using the following command:
@@ -169,7 +171,7 @@ vitis -w Vitis/workspace_2/
 
 5. After ~10us of simulation time, you see transactions on the AXI4-Stream interfaces from and to the AI Engine demonstrating the good behaviour of the design.
 
-![simulation waveform](./images/hw_emu_RTL_out.jpg)
+![simulation waveform](./images/251_hw_emu_RTL_out.jpg)
 ---
 ## Part 3 - Connecting Monitored RTL Interfaces to AI Engine
 
@@ -227,7 +229,7 @@ set_property PFM.AXIS_PORT {S00_AXIS {type "S_AXIS" sptag "slave_axi_1" is_range
 
 To build the full project including the Vivado HW design and the Vitis project, run the following command:
 ```
-make vitis_project AXI4S_BROADCAST=1
+make all AXI4S_BROADCAST=1
 ```
 
 ### Hardware Emulation
@@ -250,6 +252,6 @@ vitis -w Vitis/workspace_4/
 
 ![HW emulation waveforms](./images/hw_emu_AXIS_broadcast.jpg)
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2024 - 2025 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
