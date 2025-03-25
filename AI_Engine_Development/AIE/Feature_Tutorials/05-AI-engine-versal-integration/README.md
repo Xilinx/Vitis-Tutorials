@@ -455,7 +455,9 @@ Since Profiling is deprecated in Hardware Emulation Flow, comment the line 'AIE_
 
     ```bash
     dmesg -n 4 && echo "Hide DRM messages..."
-    cd /run/media/*1
+    sudo -i
+    enter password 'root'
+    cd /run/media/mmcblk0p1
     export XILINX_XRT=/usr
     ./host.exe a.xclbin
     ```
