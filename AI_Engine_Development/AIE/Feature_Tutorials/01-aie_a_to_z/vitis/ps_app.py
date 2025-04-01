@@ -10,7 +10,7 @@ import os
 app_path= os.getcwd()
 
 client = vitis.create_client()
-client.set_workspace(path="./workspace")
+client.update_workspace(path="./workspace")
 
 platform_name="AIE_A-to-Z_pfm_vck190"
 platform_path=app_path+"/workspace/"+platform_name+"/export/"+platform_name+"/"+platform_name+".xpfm"
@@ -26,8 +26,10 @@ if (not os.path.isdir("./workspace/A-to-Z_app")):
     status = comp.import_files(from_loc="../src", files=["main.cpp"], dest_dir_in_cmp = "src")
     status = comp.import_files(from_loc="./workspace/simple_aie_application/build/hw/Work/ps/c_rts", files=["aie_control.cpp"], dest_dir_in_cmp = "src")
 
-    comp.set_app_config(key = 'USER_INCLUDE_DIRECTORIES', values = ['../../../workspace/simple_aie_application/src', '$ENV{XILINX_VITIS}/aietools/include'])
+    comp.set_app_config(key = 'USER_COMPILE_DEFINITIONS', values = "__PS_BARE_METAL__")
+    comp.set_app_config(key = 'USER_INCLUDE_DIRECTORIES', values = ['../../../workspace/simple_aie_application/src','../../../workspace/simple_aie_application/build/hw/Work/ps/c_rts/','$ENV{XILINX_VITIS}/aietools/include'])
     comp.set_app_config(key = 'USER_LINK_LIBRARIES', values = 'adf_api')
     comp.set_app_config(key = 'USER_LINK_DIRECTORIES', values = '$ENV{XILINX_VITIS}/aietools/lib/aarchnone64.o')
+    
 
 vitis.dispose()

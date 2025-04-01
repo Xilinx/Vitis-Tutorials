@@ -21,9 +21,9 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 ![missing image](images/232_ps_pfm.jpg)
 
-4. Set **standalone** as the **Operating system** and **psv_cortexa72_0** as the **Processor**, and click **Finish**.
+4. Set **standalone** as the **Operating system**, **psv_cortexa72_0** as the **Processor** and **GCC Compiler** as the **Compiler**, and click **Finish**.
 
-![missing image](images/232_ps_os.jpg)
+![missing image](images/252_ps_os.jpg)
 
 5. Build the platform.
 
@@ -63,6 +63,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 8. Under the **A-to-Z_app component** open **UserConfig.cmake** under **Settings**. In the **Directories** section add the following directories under **Include Paths (-I)**.
       * `<workspace>/simple_aie_application/src`
+      * `../../../workspace/simple_aie_application/build/hw/Work/ps/c_rts/`
       * `$ENV{XILINX_VITIS}/aietools/include`
 
 ![missing image](images/232_ps_app_cfg1.jpg)
@@ -75,7 +76,10 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 ![missing image](images/232_ps_app_cfg2.jpg)
 
 
-11. Modify the Linker Script to increase the heap size for AIE library.
+11. in the **Symbols** section add **"__PS_BARE_METAL__"**
+![missing image](images/251_ps_app_cfg3.jpg)
+
+12. Modify the Linker Script to increase the heap size for AIE library.
 
       * In the Project Explorer, expand the A-to-z_app component.
 
@@ -85,7 +89,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
     ![missing image](images/232_heapsize.jpg)
 
-12. Build the A72 PS component (`A-to-Z_app`).
+13. Build the A72 PS component (`A-to-Z_app`).
 
 > Note:  The creation of the Vitis fixed platform and the ps application can be automated running "make ps_app"
 
@@ -210,6 +214,6 @@ To run the system in HW using JTAG through the Vitis IDE, as this is a baremetal
 
 In this tutorial, you have performed an end-to-end flow to create a platform based on the VCK190 board, added an AI Engine kernel and PL kernels into the system, and built a PS bare-metal application to control the system. Then you have run the system is hardware emulation and hardware.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

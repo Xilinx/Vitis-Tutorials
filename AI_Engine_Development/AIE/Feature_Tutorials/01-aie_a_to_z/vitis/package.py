@@ -9,7 +9,7 @@ import sys
 cmd_args=len(sys.argv)
 
 client = vitis.create_client()
-client.set_workspace(path="./workspace")
+client.update_workspace(path="./workspace")
 
 if cmd_args == 1:
         target_sys="hw"

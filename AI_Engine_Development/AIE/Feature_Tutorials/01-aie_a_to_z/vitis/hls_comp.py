@@ -14,7 +14,7 @@ args=str(sys.argv)
 part="xcvc1902-vsva2197-2MP-e-S"
 
 client = vitis.create_client()
-client.set_workspace(path="./workspace")
+client.update_workspace(path="./workspace")
 
 if cmd_args == 1:
     platform_name="base_pfm_vck190"

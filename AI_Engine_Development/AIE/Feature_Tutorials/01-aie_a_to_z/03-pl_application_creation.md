@@ -54,7 +54,7 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 
 6. In the **Select Platform** Page:
 * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created.
-* If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002320_1) which is part of the Vitis installation.
+* If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis installation.
 
  Click ***Next***
 

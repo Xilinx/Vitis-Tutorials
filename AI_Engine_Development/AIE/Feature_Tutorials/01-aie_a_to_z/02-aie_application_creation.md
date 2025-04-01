@@ -34,10 +34,9 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 6. On the platform page, select the platform you want to use:
 
       * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
-      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_002420_1) which is part of the Vitis installation.
+      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis installation.
 
-      >**NOTE 1:** Make sure to read, and follow the Vitis Software Platform Release Notes (v2024.2) for setting up software and installing the VCK190 base platform.
-      >**NOTE 2:** There is a current limitation in the Vitis IDE when using the base platform (xilinx_vck190_base_002420_1). Recommendation is to follow step 1 to create a custom platform from vivado
+      >**NOTE 1:** There is a current limitation in the Vitis IDE when using the base platform (xilinx_vck190_base_202510_1). Recommendation is to follow step 1 to create a custom platform from vivado
 
       ![missing image](images/232_aie_app_pg2.jpg)
 
@@ -101,6 +100,6 @@ You can see that this is a simple operation which is doing the sum of the real a
 
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
