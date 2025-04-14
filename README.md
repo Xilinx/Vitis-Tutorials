@@ -6,20 +6,9 @@
  </tr>
 </table>
 
-
-
-<div align="center">
-    <a href="http://www.youtube.com/watch?v=4JijWoV6lH4">
-    <img src="./Getting_Started/Vitis/images/intro_video_new.png">
-    </a>
-</div>
-<p align="center">
-Visit more Vitis developer videos on <a href="https://www.youtube.com/channel/UCkzIS3hJplxSbVRxRQJW4Ow">Adaptive Computing Developer YouTube Channel</a>
-</p>
-
 ## Unlocking a New Design Experience For All Developers
 
-The [Vitis software platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
+The AMD [Vitis™ Unified Software Platform](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html) is a development environment for developing designs that include FPGA fabric, Arm® processor subsystems, and AI Engines. The Vitis tools work in conjunction with AMD Vivado™ ML Design Suite to provide a higher level of abstraction for design development. Learn how to use Vitis to implement a fully end-to-end application using software-defined flows.
 
 ## Where to Start
 
