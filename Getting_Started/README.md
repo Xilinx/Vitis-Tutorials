@@ -7,11 +7,9 @@
 
 # Getting Started
 
-* **[Vitis Introduction and Getting Started](./Vitis)**:
-  * An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into separate flows:
-    * Data Center
-    * Embedded Processor
-    * Vitis Unified IDE
+* **[Vitis System Design Flow](./Vitis)**:
+  * Demonstrate the important concepts of the Vitis tool flow, building the components, building the design and running the design on the hardware and hardware emulation.
+  * This tutorial uses Vitis Unified IDE.
 
 * **[Vitis HLS](./Vitis_HLS)**:
   * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment.
@@ -28,6 +26,6 @@
   * This tutorial shows the basic steps of the Vitis Embedded design flow and uses the Vitis Unified IDE. Users will be able to navigate the capabilities of the IDE using a minimum number of steps.
   * The steps include creating the platform, adding hello world application, setting up the target connection and deploying to the target board.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
