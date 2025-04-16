@@ -7,99 +7,32 @@
 
 # Vitis Getting Started Tutorial
 
-***Version: Vitis 2024.2***
-
-![img](./images/vitis_101.png)
-
-Welcome to the Vitis Getting Started tutorial. The Vitis tool provides a unified flow for developing FPGA accelerated application targeted to either Data Center accelerator cards or Embedded Processor platforms. If you are looking to learn more about the Vitis application acceleration development flow in order to get started with FPGA acceleration, you have come to the right place.
-
-This tutorial is divided into three separate flows: 
-* The [Embedded System Design](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Vitis-Tools-for-Embedded-System-Designers)
-* The [Data Center Acceleration](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-Data-Center-Acceleration-for-Software-Programmers)
-* The [Vitis Unified IDE](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Introduction-to-the-Vitis-Unified-IDE)
-
-These flows use the same host applications and accelerated kernel source code, but have differences in the build and implementation of the systems. Use the Embedded System design flow if you are working with an AMD Adaptive SoC device such as AMD Versal™, or Data Center Acceleration if you are working with an AMD Alveo™ accelerator card, and use the Vitis unified IDE flow if you are interested in working with the latest version of the Vitis tools. 
-
-This tutorial provides instructions for building and running on both the Alveo U250 Data Center accelerator card, and the AMD Zynq™ Ultrascale™ MPSoC ZCU102 platform. These instructions can be easily adapted to other AMD cards.
-
-The two flows in this tutorial are both organized into five parts and are designed to walk you through all the key aspects of the Vitis flow.
-
-* **Part 1** covers all the essential concepts of the Vitis FPGA acceleration flow in under 10 minutes.
-
-* **Part 2** guides you through the process of installing the Vitis tools, platforms, and runtime library.
-
-* **Part 3** explains the source code of vector-add example used in the rest of the tutorial.
-
-* **Part 4** has three parts that describe the Embedded System flow and the Data Center acceleration flow as command line flows, and presents the new Vitis unified IDE. Each flow includes the commands required to compile, link, and run the example design.
-
-* **Part 5** gives an overview of the Analysis view and shows how to open and analyze reports.
-
-## Part 1 : Essential Concepts
-
-The Vitis unified software platform provides a framework for developing and delivering Adaptive SoC and FPGA accelerated applications using standard programming languages like C and C++. The Vitis flow offers all of the features of a standard software development environment, including:
-
-* Compiler or cross-compiler for host applications running on x86 or Arm® processors
-* Cross-compilers for building the FPGA binary
-* Debugging environment to help identify and resolve issues in the code
-* Performance profilers to identify bottlenecks and help you optimize the application
-
-### Understanding the Vitis Programming and Execution Model
-
-A Vitis accelerated application consists of two distinct components: a software program running on a standard processor such as an X86 processor, or ARM embedded processor, and a AMD device binary (`xclbin`) containing hardware accelerated functions, or kernels.
-
-* The software program, or host application, is written in C/C++ and runs on a conventional CPU. The software program uses the [XRT native API](https://xilinx.github.io/XRT/master/html/index.html) implemented by the AMD Runtime library (XRT) to interact with the acceleration kernel in the AMD device. A description of the host application and required API calls can be found in the Vitis documentation under [Writing the Software Application](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Writing-the-Software-Application).
-
-* The hardware accelerated kernels can be written in C/C++ or RTL (Verilog or VHDL) and run within the programmable logic part of the AMD device. Refer to [Developing PL Kernels using C++](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Developing-PL-Kernels-using-C), or [Packaging RTL Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels) in the Vitis documentation for coding requirements. The kernels are integrated with a Vitis hardware platform using standard AXI interfaces.
-
-![img](./images/part1_execution_model.png)
-
-Vitis accelerated applications can execute on either Data Center or Embedded Processor acceleration platforms:
-
-* On Data Center accelerator cards, the software program runs on an x86 server and the kernels run in the FPGA on a PCIe®-attached acceleration card.
-
-* On Embedded Processor platforms, the software program runs on an Arm processor of an AMD MPSoC device and the kernels run within the same device.
+***Version: Vitis 2025.1***
 
 
-Because the software and hardware components of a Vitis application use standardized interfaces (XRT APIs and AXI protocols) to interact with each other, the user's source code remains mostly agnostic of platform-specific details and can be easily ported across different acceleration platforms.
+Welcome to Vitis Getting Started!
 
-There are multiple ways by which the software program can interact with the hardware kernels. The simplest method can be decomposed into the following steps:
+This tutorial discusses the important concepts of the Vitis tool flow, building the components, building the design and running the design on the hardware and hardware emulation.
 
-1. The host application writes the data needed by a kernel into the global memory of the FPGA device.
-2. The host program sets up the input parameters of the kernel.
-3. The host program triggers the execution of the kernel.
-4. The kernel performs the required computation, accessing global memory to read or write data, as necessary. Kernels can also use streaming connections to communicate with other kernels, passing data from one kernel to the next.
-5. The kernel notifies the host that it has completed its task.
-6. The host program transfers data from global memory back into host memory, or can give ownership of the data to another kernel.
+Please read the tutorial in the same order as listed here to better understand the Vitis tool flow. At the end of each section, a link to the next chapter is included.
+1. [Understanding the Vitis Tool Flow](./Vitis_ToolFlow.md)
+2. [Getting Started with Designing using the Vitis Tool](./Design_Overview.md)
+3. [Running the Hardware Emulation](./Running_the_Hardware_Emulation.md)
+4. [Running the design on VCK190 Evaluation Board](./Hardware_Run.md)
 
-### Understanding the Vitis Build Process
+## Prerequisites
 
-The Vitis build process follows a standard compilation and linking process for both the host program and the kernel code:
+1. Source the Vitis 2025.1
+```
+source <path_to_vitis_install>/settings64.sh
+```
+2. Export below variable
+```
+export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2025.1>
+```
 
-* The host program is built using the GNU C++ compiler (g++) for Data Center applications or the GNU C++ Arm cross-compiler for Embedded Processor devices.
+Please ensure you have the Vitis tools, Versal AI Core Series VCK190 Evaluation Kit and Commom Image installed on your machine.
 
-* The FPGA binary is built using the Vitis compiler (v++). First the kernels are compiled into a AMD object (.xo) file. Then, the .xo files are linked with the hardware platform to generate the AMD device binary (.xclbin) file. As described in [V++ Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command), the Vitis compiler and linker accepts a wide range of options to tailor and optimize the results.
 
-![img](./images/part1_build_flow.png)
-
-### Understanding Vitis Build Targets
-
-The Vitis compiler provides three different build targets: two emulation targets used for debug and validation purposes, and the default hardware target used to generate the actual FPGA binary:
-
-* Software Emulation: The kernel code is compiled to run on the host processor. This allows iterative algorithm refinement through fast build-and-run loops. This target is useful for identifying syntax errors, performing source-level debugging of the kernel code running together with application, and verifying the behavior of the system.
->**Deprecation Note**  
-> * We are announcing the deprecation of the software emulation (sw_emu) feature in the Vitis Software Platform, which will affect all use cases, including embedded acceleration and data center applications.
-> * Check the [AR000036790 - Deprecation of Software Emulation in Vitis Software Platform](https://adaptivesupport.amd.com/s/article/000036790?language=en_US) for detailed timelines and alternative solutions.
-
-* Hardware Emulation: The kernel code is compiled into a hardware model (RTL), which is run in a dedicated simulator. This build-and-run loop takes longer but provides a detailed, cycle-accurate view of kernel activity. This target is useful for testing the functionality of the logic that will go in the FPGA and getting initial performance estimates.
-
-* Hardware: The kernel code is compiled into a hardware description language (RTL), and then synthesized and implemented for a target AMD device, resulting in a binary (`xclbin`) file that will run on the actual FPGA.
-
->**TIP**: As described in [Simulating the Application with the Emulation Flow](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Simulating-the-Application-with-the-Emulation-Flow), there are significant differences in the build and runtime environments between Data Center and Embedded Processor platforms. These two flows will be discussed in detail in the following sections.
-
-## Next Steps
-
-  **Click here for [Installation and Setup Instructions](./Part2.md)**
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
-
+<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
