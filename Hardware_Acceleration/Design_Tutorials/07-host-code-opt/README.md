@@ -211,6 +211,7 @@ In this case, the code schedules all the buffers and lets them execute. Only at 
 5. Recompile the application, rerun the program, and review the run_summary in the Vitis analyzer:
 
    ```
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=pipeline
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=pipeline
    vitis_analyzer pipeline/xrt.run_summary
    ```
@@ -300,6 +301,7 @@ To alleviate these issues, the OpenCL framework provides two methods of synchron
 5. Recompile the application, rerun the program, and review the run_summary in the Vitis analyzer:
 
    ```
+   make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=sync
    make run TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 LAB=sync
    vitis_analyzer sync/xrt.run_summary
    ```
@@ -363,7 +365,7 @@ A second command line option (`SIZE=`) has also been added to specify the buffer
    ```
    make TARGET=hw DEVICE=xilinx_u200_gen3x16_xdma_2_202110_1 bufRunSweep
    ```
-   >**NOTE**: The sweeping script (`auxFiles/run.py`) requires a Python installation, which is available in most systems.
+   >**NOTE**: The sweeping script (`auxFiles/run.py`) requires a Python installation, which is available in most systems. You may need to change the permisson for your downloaded .py if enountered issue when executing the command. 
    
    Executing the sweep will run and record the FPGA throughput for buffer SIZE arguments from 8 to 19. The measured throughput values are recorded together with the actual number of bytes per transfer in the `buf/results.csv` file, which is printed at the end of the makefile execution.
 
