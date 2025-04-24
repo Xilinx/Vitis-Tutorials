@@ -1,13 +1,13 @@
-﻿##############################################################################
+###########################################
 AMD Vitis Platform Creation Tutorials
-##############################################################################
+###########################################
 
 
 
 
-******************************************
+*************************
 What is a Platform?
-******************************************
+*************************
 
 
 
@@ -15,18 +15,22 @@ What is a Platform?
    :alt: Vitis Platform
 
 
-Briefly speaking, a platform is a package that contains the HPFM (``.xsa``) file and SPFM (software components). When you input the ``.xsa`` file and software components, the AMD Vitis™ IDE tool will package them together and generate a platform ``.xpfm`` file, while the ``.xsa`` file is designed and exported from the AMD Vivado™ tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
+Briefly speaking, a platform is a package that contains the HPFM (:term:`XSA`) file and software components (SPFM). When you input the :term:`XSA` file and software components, the AMD Vitis™ IDE tool will package them together and generate a platform ``.xpfm`` file, while the :term:`XSA` file is designed and exported from the AMD Vivado™ tool. Software components are prepared by AMD and ready to use for evaluation. Software components customization is also supported with Petalinux, if needed.
 
 
 Platform Creation Example Quick Access
-==================================================================================
+===============================================
 
 * For a first experience of platforms, refer to `Vitis Platform Quick Start <https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-Platform>`_
 * For **ZYNQMP** device family, refer to :doc:`ZCU104 platform tutorial <./docs/Design_Tutorials/02-Edge-AI-ZCU104/README>`
 * For **Versal** device family, refer to :doc:`VCK190 platform tutorial <./docs/Design_Tutorials/03_Edge_VCK190/README>`
-* For **:term:`DFX`** platform, refer to :doc:`DFX platform tutorial <./docs/Design_Tutorials/04_Edge_VCK190_DFX/README>`
-* For **SOM** series, refer to :doc:`KV260 platform tutorial <./docs/Design_Tutorials/01-Edge-KV260/README>`
+* For :term:`DFX`, refer to :doc:`DFX platform tutorial <./docs/Design_Tutorials/04_Edge_VCK190_DFX/README>`
+* For :term:`SOM` series, refer to :doc:`KV260 platform tutorial <./docs/Design_Tutorials/01-Edge-KV260/README>`
 * For **PetaLinux** customization, refer to :doc:`PetaLinux Customization <./docs/Feature_Tutorials/02_petalinux_customization/README>`
+
+
+
+
 
 
 
@@ -41,9 +45,9 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
 
 
 
-******************************************
+***************************
 Design Tutorials
-******************************************
+***************************
 
 
 .. toctree::
@@ -155,9 +159,9 @@ Design Tutorials
 
 
 
-******************************************
+***********************
 Feature Tutorials
-******************************************
+***********************
 
 
 .. toctree::
@@ -245,23 +249,20 @@ Feature Tutorials
 
 .. glossary::
 
-    XSA
-      Vivado exported archive file that contains hardware information required for Vitis and PetaLinux
-
-    DFX
+   DFX
       Dynamic Function eXchange
 
-    SOM
-      System-on-Modules
+   XSA
+      Vivado exported archive file (``.xsa``) that contains hardware information required for Vitis and PetaLinux
 
-    DTB
+   SOM
+      System-on-Module
+
+   DTB
       Device Tree Binary
 
-    DTBO
+   DTBO
       Device Tree Binary Overlay
-
-
-
 
 
 
@@ -274,6 +275,6 @@ Feature Tutorials
 
 
 
-.. Copyright © 2020–2024 Advanced Micro Devices, Inc
+.. Copyright © 2020–2025 Advanced Micro Devices, Inc
 
 .. `Terms and Conditions <https://www.amd.com/en/corporate/copyright>`_.
