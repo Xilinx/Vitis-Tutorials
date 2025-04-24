@@ -9,7 +9,7 @@
 
 # Implementing an IIR Filter on the AI Engine - Part 2b
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Preliminaries
 
@@ -314,6 +314,6 @@ Can the throughput be improved even further?
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
