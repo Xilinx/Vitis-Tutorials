@@ -1,8 +1,3 @@
-<!--
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-Author: Richard Buz
--->
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -39,15 +34,10 @@ Author: Richard Buz
     - [Test Vector Comparison](#test-vector-comparison)
   - [References](#references)
   - [Support](#support)
-  - [License](#license)
 
-[References](#references)
-
-[Support](#support)
-
-[License](#license)
 
 ## Introduction
+
 Machine Learning is pervasive in just about any modern application. Whereas machine learning tends to infer processing of structured data, the sub-class of deep learning is often applied to unstructured data where more abstraction is required to extract significant features from a data set. Some applications which have proven to benefit from the application of deep learning are natural language processing and image classification, where the relationship between input data and desired output can be exceedingly complex.
 
 Deep learning solutions are often created in the form of a neural network, as depicted in the following figure.
@@ -91,7 +81,9 @@ $$
 which is attractive because no division is required. However, it has been shown that in practice this formula tends to produce larger computational errors [[1]].
 
 ## Computing the Exponential Function
+
 ### IEEE 754 Format Trick
+
 In addition to basic arithmetic operations, softmax computation depends on efficient evaluation of the exponential function. While there are several ways to accomplish this, an attractive alternative is to estimate the exponential function using a trick based on IEEE 754 floating-point format [[2]]. A double-precision, floating-point number represented by IEEE 754 format is shown in the following figure.
 
 ![figure3](images/ieee754_format.png)
@@ -106,9 +98,10 @@ $$
 I_{upper} = \left\lfloor \frac{2^{20}y}{log(2)} + 2^{20}x_0 - C \right\rfloor .
 $$
 
-A factor of $2^{20}$ represents a binary shift necessary to align with the exponent field of the IEEE 754 format. Residual mantissa bits help provide a degree of interpolation between exponent values. The parameter $C$ is a correction factor meant to mitigate estimation error. It was found that a value of $C=60801$ minimizes RMS error [[2]]. This estimation method may be adapted for other variations of floating-point number representations, such as 32-bit single-precision floating-point. 
+A factor of $2^{20}$ represents a binary shift necessary to align with the exponent field of the IEEE 754 format. Residual mantissa bits help provide a degree of interpolation between exponent values. The parameter $C$ is a correction factor meant to mitigate estimation error. It was found that a value of $C=60801$ minimizes RMS error [[2]]. This estimation method may be adapted for other variations of floating-point number representations, such as 32-bit single-precision floating-point.
 
 ### Improving Accuracy
+
 While this trick is computationally very efficient, it can result in an estimation error as large as 4% of the true value. To reclaim lost accuracy, a method was proposed in [[3]] where all 64 bits are used in computation and a correction function $F$ is defined. To derive the solution, begin by expressing the exponential function in the form
 
 $$
@@ -126,6 +119,7 @@ $$
 as a 64-bit signed integer then reinterpreting the result as a double-precision floating-point value. Since all 64 bits are used, a factor $2^{52}$ is necessary to align to the exponent field of the IEEE 754 format.
 
 ### Adapting for Single-Precision Floating-Point
+
 AMD Versal&trade; Core Adaptive SoCs primarily contain a variant of AI Engine processor which has single-precision floating-point as a native data type. A single-precision floating-point format, known as binary32, is specified by the IEEE 754 standard as shown in Figure 4.
 
 ![figure4](images/ieee754_float_format.png)
@@ -168,6 +162,7 @@ While this kernel is designed for single-precision floating-point processing, th
 ```cpp
 void softmax_kernel::softmax(input_stream<int32>* in, output_stream<int32>* out)
 ```
+
 Each of these `int32` values represents the 32-bits of a single-precision floating-point value in IEEE 754 format. When used by the kernel, values are reinterpreted as floating-point for processing. The reason for this is that when performing AI Engine simulation, text files are used for input and output of data. Use of `int32` preserves all bits of the floating-point number when read from or written to a text file and allows for test vector matching at the bit level.
 
 Also of note is that streaming interfaces are used for input and output, which reduces latency and eliminates the need for ping pong buffers in data memory.
@@ -519,38 +514,9 @@ The second comparison indicates the maximum difference between AI Engine simulat
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-## License
 
-Components: xilinx-images
+<hr class="sphinxhide"></hr>
 
-images in the documentation
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
 
-Components: xilinx-files
-
-The MIT License (MIT)
-
-Copyright (c) 2024 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-<p class="sphinxhide" align="center">  &copy; Copyright 2024 Advanced Micro Devices, Inc.</p>
-
-
-
-
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

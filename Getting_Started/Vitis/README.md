@@ -34,5 +34,5 @@ export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2025.1>
 Please ensure you have the Vitis tools, Versal AI Core Series VCK190 Evaluation Kit and Commom Image installed on your machine.
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

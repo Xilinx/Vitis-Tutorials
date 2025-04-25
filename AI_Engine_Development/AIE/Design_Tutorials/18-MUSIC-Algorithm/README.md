@@ -1,9 +1,4 @@
-<!--
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-Author: Mark Rollins
--->
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -35,7 +30,6 @@ Author: Mark Rollins
 
 [Support](#support)
 
-[License](#license)
 
 ## Introduction
 
@@ -60,6 +54,7 @@ This MUSIC tutorial was co-developed by AMD and our third party partner, [Fidus 
 ## System Model
 
 The system model consists of:
+
 * A uniform linear array (ULA) with $N$ equally $d$-spaced antenna elements and,
 * A set of $S$ sources emitting or echoing narrow-band independent signals $\textbf{x}_1,\ldots,\textbf{x}_S$.
 * The direction of arrival (in azimuth) of these signals at the ULA are $\theta_1,\ldots,\theta_S$.
@@ -467,12 +462,12 @@ This tutorial has presented a high-performance AI Engine implementation of the p
 Follow the steps below to deploy the SD card image to the VCK190 board:
 
 1. Install the following tools (for Windows):
-    - SD Card formatter: (https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download)
-    - Win32 Disk Imager: (https://win32diskimager.org)
-    - Putty serial terminal: (https://www.putty.org)
+   * SD Card formatter: (https://www.sdcard.org/downloads/formatter/sd-memory-card-formatter-for-windows-download)
+   * Win32 Disk Imager: (https://win32diskimager.org)
+   * Putty serial terminal: (https://www.putty.org)
 2. Obtain the latest SD card image from the build process outlined above.
 
-Refer to the image below for the following steps:
+   Refer to the image below for the following steps:
 
 3. Connect the board power cord (connector 31).
 4. Power down the board (switch 30) and eject the microSD card from slot 10.
@@ -480,9 +475,9 @@ Refer to the image below for the following steps:
 6. Dismiss any Windows Explorer pop-up prompts regarding formatting the card.
 7. Run the SD card formatter tool, select the card disk letter from a drop-down list and perform a quick format (if the card shows up as several logical disks -- select the first disk letter).
 8. Run the Win32DiskImager tool and specify:
-   - Image file: path to the SD card image
-   - Device: the formatted card disk letter
-   - Click write button and wait for the process to complete
+   * Image file: path to the SD card image
+   * Device: the formatted card disk letter
+   * Click write button and wait for the process to complete
 9. Eject the card from your computer and insert it into slot 10 on the VCK190 board.
 
 ![figure](images/appendix-vck190.png)
@@ -530,43 +525,43 @@ For remote testing through a corporate VPN connection, configure your network to
 
 * Assuming two remote laptops are connected to the same VPN network, one is running MATLAB (1) and another is locally connected to the VCK190 board (2).
 * No additional configuration is needed for laptop 1 because it already can establish outgoing connections to IP addresses within the VPN network.
-  - You can also use onboard Ethernet port if is not occupied and the original VPN connection is established through WiFi.
+  * You can also use onboard Ethernet port if is not occupied and the original VPN connection is established through WiFi.
 * Assuming a Windows 10 system, share the VPN connection with the spare Ethernet on laptop 2.
-  - Open Control Panel, Network and Internet, Network and Sharing Center, and on the left side click `Change Adapter Settings`.
-  - Locate the virtual network adapter representing your VPN connection.
-  - Locate the spare Ethernet adapter and note its name.
-  - Check `Allow other network users to connect through this computer's Internet connection` and select the spare Ethernet network adapter name from the drop-down menu.
-  - Apply the changes.
+  * Open Control Panel, Network and Internet, Network and Sharing Center, and on the left side click `Change Adapter Settings`.
+  * Locate the virtual network adapter representing your VPN connection.
+  * Locate the spare Ethernet adapter and note its name.
+  * Check `Allow other network users to connect through this computer's Internet connection` and select the spare Ethernet network adapter name from the drop-down menu.
+  * Apply the changes.
 
 ![figure](images/appendix-sharing-VPN.png)
 
 * Connect VCK190 board Ethernet port 17 (the top one) directly to the laptop 2 spare Ethernet port.
 * The board will obtain an IP address automatically through DHCP. On the board console, find out its IP address.
-   - ifconfig eth0
-   - For example, the address is 192.168.137.79
-   - NOTE: subnet 137 is automatically assigned by Windows
-•	Again open the VPN network adapter Properties, Sharing tab.
-•	Click the Settings… button and add a port forwarding rule such that the incoming TCP connections to a certain port are forwarded to the VCK190 board. Port 8888 is selected as an example; it must be the same port number the VCK190 host application is listening to.
+  * ifconfig eth0
+  * For example, the address is 192.168.137.79
+  * NOTE: subnet 137 is automatically assigned by Windows
+* Again open the VPN network adapter Properties, Sharing tab.
+* Click the Settings… button and add a port forwarding rule such that the incoming TCP connections to a certain port are forwarded to the VCK190 board. Port 8888 is selected as an example; it must be the same port number the VCK190 host application is listening to.
 
 ![figure](images/appendix-port-forwarding.png)
 
-*	Apply the changes. At this point, any TCP connection originated from the VPN network to specified port will be forwarded to the board.
-*	Note the IP address you will need for establishing the TCP connection. In this case, it is not the board IP address, but the VPN adapter IP address.
-   - Right-click the VPN network adapter, select Status, click Details…
-   - Note the IPv4 address, which will belong to your VPN subnet.
-   - Use this IP address when connecting from MATLAB.
+* Apply the changes. At this point, any TCP connection originated from the VPN network to specified port will be forwarded to the board.
+* Note the IP address you will need for establishing the TCP connection. In this case, it is not the board IP address, but the VPN adapter IP address.
+  * Right-click the VPN network adapter, select Status, click Details…
+  * Note the IPv4 address, which will belong to your VPN subnet.
+  * Use this IP address when connecting from MATLAB.
 
 ### Running the PS Application
 
 Follow the below steps to test the Fidus MUSIC algorithm with MATLAB:
 
-*	Run the host application on VCK190 board:
-  - `sudo su`
-  - `cd /run/media/mmcblk0p1/`
-  - `./host_app -c binary_container_1.xclbin -p 8888`
-     * -c specifies the platform configuration binary
-     * -p specifies the TCP port the application is going to listen to
-*	The application will load the platform configuration and start a TCP server on the given port:
+* Run the host application on VCK190 board:
+  * `sudo su`
+  * `cd /run/media/mmcblk0p1/`
+  * `./host_app -c binary_container_1.xclbin -p 8888`
+   * -c specifies the platform configuration binary
+   * -p specifies the TCP port the application is going to listen to
+* The application will load the platform configuration and start a TCP server on the given port:
 
 ![figure](images/appendix-host-app-connecting.png)
 
@@ -582,43 +577,15 @@ Follow the below steps to test the Fidus MUSIC algorithm with MATLAB:
 * The application also reports the average AIE execution time measured over the series of input snapshots (997.257202 ns in the above screenshot). This value is also sent back to MATLAB and presented on the visualization.
 * Without disconnecting the MATLAB TCP client, send another batch of input snapshots to execute the algorithm again.
 * Terminate the MATLAB TCP client and the application on the board will exit automatically.
-   - NOTE: if the application is terminated abruptly amid ongoing TCP exchange, the next time it starts, it may fail to bind its listening socket to the network   interface. In this case, terminate the MATLAB client connection, and allow 1-2 minutes timeout before restarting the application to clean up the stale connection.
+  * NOTE: if the application is terminated abruptly amid ongoing TCP exchange, the next time it starts, it may fail to bind its listening socket to the network   interface. In this case, terminate the MATLAB client connection, and allow 1-2 minutes timeout before restarting the application to clean up the stale connection.
 * Restart the application on the board and connect MATLAB client again to perform another algorithm run.
 
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-## License
+<hr class="sphinxhide"></hr>
 
-Components: xilinx-images
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
 
-images in the documentation
-
-Components: xilinx-files
-
-The MIT License (MIT)
-
-Copyright (c) 2024 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-<p class="sphinxhide" align="center">  &copy; Copyright 2024 Advanced Micro Devices, Inc.</p>
-
-
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

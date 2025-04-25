@@ -1,3 +1,12 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table>
+
 # Matrix Compute with Vitis Libraries on AIE and AIE-ML
 
 ***Version: Vitis 2024.2***
@@ -656,7 +665,7 @@ The **AIE** architecture supports ***8 MACs*** for ``int32 x int32`` operations,
 
 The improvement is attributed to the greater number of multipliers in AIE-ML compared to AIE, with the mmul() intrinsics designed specifically for matrix multiplication.
 
-# Conclusion
+## Conclusion
 
 This tutorial has demonstrated the following:
 - A list of GEMM parameters and their usage.
@@ -665,3 +674,9 @@ This tutorial has demonstrated the following:
 - Migrated the design from AI Engine to AIE-ML architecture.
 - Compared the performance of the designs with AIE vs AIE-ML.
 
+
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

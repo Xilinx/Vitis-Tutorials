@@ -1,3 +1,12 @@
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Host Application Compilation
 
 To write an application code for A72 targeting the Linux OS, we can make use of [AMD Runtime Library (XRT)](../Keywords.md). 
@@ -119,5 +128,8 @@ The above command will generate an executable host.exe that we will use in the V
 Next Chapter: [Use Vitis Linker and Packager to build the design](../vitis_dir/README.md)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -302,6 +302,6 @@ For simple designs, interrupt signals can be sourced by processor's **pl_ps_irq*
 
 Now you finish the Hardware platform creation flow, then you should go to the [Step 2: Vitis Platform Creation](./step2.md)
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

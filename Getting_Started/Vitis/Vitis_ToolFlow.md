@@ -1,10 +1,19 @@
+﻿<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Understanding the Vitis Tool Flow
 
 This tutorial helps to kickstart your journey with Vitis tool flows. Before we deep dive into the Vitis flows, it is important we make base line understanding to start.
 
 > **Important Note:** This tutorial does not discuss all the feature and flow offered by Vitis. Please use the user guide links provided in the reference section to read about each tool and flow in detail. 
 
-#### What is Vitis? 
+## What is Vitis? 
 
 Vitis is a software platform development tool that helps to configure and develop the designs targeting Programmable Logic (PL), AI Engines and Processor Subsystem (PS). 
 AMD Vitis Unified Software Platform offers range of libraries along with compilers, simulators and analysis tools that can be used as standalone and also in conjunction with other Vitis tools to design, develop, simulate and analyze the functionality on the hardware. 
@@ -149,5 +158,8 @@ Vitis Tool: Detailed summary of available Vitis tools and its usages
 Next Chapter: [Getting Started with Designing using the Vitis Tool](./Design_Overview.md)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

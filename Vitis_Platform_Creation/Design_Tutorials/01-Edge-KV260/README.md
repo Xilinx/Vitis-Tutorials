@@ -80,6 +80,6 @@ The platform creation steps are introduced in the following pages. Each page des
 - [Vitis-AI GitHub Repository](https://github.com/Xilinx/Vitis-AI)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -84,6 +84,6 @@ cd /run/media/mm*1
 
 Follow instructions in [AIE GMIO Performance Profile](../../../AIE/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md). But, **run all make commands with `ARCH=aie-ml`**. See run commands in step 1.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

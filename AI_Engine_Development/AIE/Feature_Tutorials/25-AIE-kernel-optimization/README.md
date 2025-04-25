@@ -1,8 +1,3 @@
-<!--
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-Author: Richard Buz
--->
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
@@ -41,13 +36,6 @@ Author: Richard Buz
   - [Hands-On Application](#hands-on-application)
   - [References](#references)
   - [Support](#support)
-  - [License](#license)
-
-[References](#references)
-
-[Support](#support)
-
-[License](#license)
 
 ## Introduction
 
@@ -522,34 +510,15 @@ As you gain experience working with AI Engine architecture and applying these pr
 
 [[2]]: Vitis Accelerated Flow Reference Guide ([UG1702](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference)).
 
-[[3]]: Bilinear interpolation. 16 Dec 2024, 22:13 UTC. In Wikipedia: The Free Encyclopedia. Wikimedia Foundation Inc. Encyclopedia on-line. Available from https://en.wikipedia.org/wiki/Bilinear_interpolation. Internet. Retrieved 19 December 2024.
+[[3]]: Bilinear interpolation. 16 Dec 2024, 22:13 UTC. In Wikipedia: The Free Encyclopedia. Wikimedia Foundation Inc. Encyclopedia on-line. Available from [wikipedia.org/wiki/Bilinear_interpolation](https://en.wikipedia.org/wiki/Bilinear_interpolation). Internet. Retrieved 19 December 2024.
 
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-## License
 
-Components: xilinx-images
+<hr class="sphinxhide"></hr>
 
-images in the documentation
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
 
-Components: xilinx-files
-
-The MIT License (MIT)
-
-Copyright (c) 2025 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-<p class="sphinxhide" align="center">  &copy; Copyright 2025 Advanced Micro Devices, Inc.</p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

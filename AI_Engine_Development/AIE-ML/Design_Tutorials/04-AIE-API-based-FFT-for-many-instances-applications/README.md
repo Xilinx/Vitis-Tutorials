@@ -12,11 +12,15 @@
 ***Version: Vitis 2024.2***
 
 ## Introduction
+
 This tutorial intends to show how to design a complex Digital Signal Processing application using the AI Engine ML with its exclusive features through Vitis Unified IDE. In the tutorial the GUI flow is used. 
 Moreover, Python scripts are provided to automate project creation and build. To run such Python scripts, first set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms`, then clone this repository, locate inside it, and run the following commands:
+
 - ``vitis -s Step1_3Dbuf.py`` to automate the first hands-on part of the tutorial.
 - ``vitis -s Step2_4Dbuf.py`` to automate the second hands-on part of the tutorial.
+
 ### Table of Contents <!-- omit from toc -->
+
 - [Introduction](#introduction)
   - [Objectives](#objectives)
   - [Required Background Knowledge](#required-background-knowledge)
@@ -45,10 +49,12 @@ Moreover, Python scripts are provided to automate project creation and build. To
   - [x86 Simulation and Functional Validation](#x86-simulation-and-functional-validation-1)
   - [AI Engine Simulation, Array and Trace analysis](#ai-engine-simulation-array-and-trace-analysis-1)
 - [Support](#support)
-- [License](#license)
+
 
 ### Objectives
+
 This tutorial has the objective to show:
+
 - how to code Fast Fourier Transform kernels using the AI Engine APIs, 
 - how to create a graph that uses multiple replicated kernels connected to the memory tiles,
 - how to use the memory tiles and program their access pattern,
@@ -63,12 +69,14 @@ The proposed design has been carried out with the intents of minimizing resource
 
 
 ### Required Background Knowledge
+
 To thoroughly understand the content of this tutorial, it is necessary to know at least some background concepts about the Versal Adaptive SoC, the AI Engine ML architecture, and the basics of its programming methodology. Moreover, it is advisable to have some background knowledge about the Fast Fourier Transform algorithm and its variants.
 
 - Versal technology basic introduction: [click here](./VersalBasics.md)
 - Fast Fourier Transform algorithm introduction: [click here](./FourierBasics.md)
 
 For further information, please refer to the following documentation:
+
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
 - [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc)
 - [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
@@ -80,6 +88,7 @@ For further information, please refer to the following documentation:
 ### Considered Case Study
 
 The considered case study for this tutorial is a real-time system comprising:
+
 - 128 parallel signals, at a
 - 125 MSa/s sample rate each, with
 - CINT16 datatype (16 bits for the real part and 16 bits for the imaginary part) for both twiddle factors and data.
@@ -87,15 +96,21 @@ The considered case study for this tutorial is a real-time system comprising:
 The total required I/O bandwidth, thus minimum throughput, is thus 16 GSa/s or 64 GByte/s.
 
 ### Design Strategy
+
 The considered case study requires the computation of the FFT of 128 concurrent signals. To do so, an efficient strategy is to create a basic FFT computing block and replicate it in the top graph to run more FFT calculations in parallel, matching the required throughput.
 Moreover, to optimize the AI Engine resources, it is beneficial to maximize the local memory usage and to serialize the data and the computation, as this decreases the interface and compute tiles utilization.
 For how the FFT algorithm works, the buffering of at least half the samples of each signal is required. To avoid using programmable logic memory resources, the chosen strategy is to perform such buffering inside the AIE-ML using the memory tiles.
-<p align="center"><img src="./images/Dataflow_prototype_0.png" width="90%"></p>
-<p align="center">Fig. 1: Preliminary Data Flow Block Diagram.</p>
-</br>
+
+> *Fig. 1: Preliminary Data Flow Block Diagram*
+
+![Preliminary Data Flow Block Diagram](./images/Dataflow_prototype_0.png)
+
 
 The resulting system follows the diagram shown in figure 1, where 128 instances are acquired in parallel, then they are routed from the programmable logic to the AIE-ML though a certain number **N** of interface tile I/O channels. The samples are then routed to a certain number **K** of kernels to compute the FFTs in parallel, and their output is eventually routed back to PL.
-</br>
+
+
+> *Table 1: Preliminary Design Strategy Summary*
+
 <table>
       <tbody>
          <tr>
@@ -129,18 +144,19 @@ The resulting system follows the diagram shown in figure 1, where 128 instances 
          </tr>
       </tbody>
 </table>
-<p align="center">Table 1: Preliminary Design Strategy Summary.</p>
-</br>
-
 
 
 ## Designing the FFT Application with the AI Engine ML
+
 In this section it is explained the rationale of the kernel and graph implementation, that has been done following the coding guidelines found in:
+
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
 - [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc)
 
 ### Designing the Kernel with the AI Engine API
+
 #### Understanding the APIs
+
 The AIE API has a particular set of stage-based functions to compute the Fast Fourier Transform through the Stockham variant of the Cooley-Tukey algorithm. As explained in the [FFT background document](./FourierBasics.md), such variant is a not in place algorithm, thus generally requires a *temporary buffer* to save intermediate calculations. However, it has the big advantage of being self-sorting and efficiently vectorizable.
 
 To understand the FFT API usage it is important to consider that the FFT algorithms rely on the concept of decimation, for which an N point Discrete Fourier Transform can be divided into the sum of multiple smaller transforms, multiplied by complex rotation parameters called Twiddle Factors. 
@@ -150,6 +166,7 @@ The number of the resulting transforms depends linearly on the radix parameter: 
 </br>
 
 The FFT staged API functions are C++ templatized functions. The API used for this work is the radix-4 stage function, whose declaration is the following:
+
 ```
 void aie::fft_dit_r4_stage <unsigned Vectorization, 
                            typename Input , typename Output , typename Twiddle>
@@ -163,7 +180,9 @@ void aie::fft_dit_r4_stage <unsigned Vectorization,
       bool                              inv,
       Output *__restrict   out)
 ```
+
 The template parameters are:
+
 - The **input datatype**;
 - The **output datatype**;
 - The **twiddles datatype**;
@@ -192,6 +211,7 @@ This happens because every alternated sequence of two elements terminates on the
 
 
 #### Coding the Kernel
+
 Before coding the kernel, it is important to choose the best API function to carry out the computation. Since $1024=4^5$, a radix-4 only implementation that comprehends five stages, therefore five API calls, is a suitable choice for this design. This API not only requires less API calls with respect to radix-2, thus less program execution control overhead, but it also requires less computations because of the increased number of trivial complex multiplications.
 Another important consideration to keep in mind is that the memory used to compute one FFT is equal to four times the memory needed to store the 1024 CINT16 samples, that is 16 kilobytes, plus the memory reserved for the twiddle tables. Such factor of four is due to the fact that ping-pong buffers are needed both at the input and at the output to avoid creating backpressure.
 This means that, since it has a 64 kilobytes local memory, multiple signals can be batched together to be computed into the same AIE-ML tile. In this design, we are batching two signals for each kernel.
@@ -682,35 +702,9 @@ Note now that the kernels are running for more than 90% of the time at steady st
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-## License
 
-Components: xilinx-images
+<hr class="sphinxhide"></hr>
 
-images in the documentation
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
 
-Components: xilinx-files
-
-The MIT License (MIT)
-
-Copyright (c) 2024 Advanced Micro Devices, Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-<p class="sphinxhide" align="center">  &copy; Copyright 2024 Advanced Micro Devices, Inc.</p>
-<p class="sphinxhide" align="center">  &copy; Copyright 2021 Xilinx Inc.</p>
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

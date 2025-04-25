@@ -1,3 +1,12 @@
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AIE-ML Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</br></a>
+    </td>
+ </tr>
+</table>
+
 # Migrating Fractional Delay Farrow Filter from AIE to AIE-ML Architecture
 
 ***Version: Vitis 2024.2***
@@ -36,13 +45,13 @@ Before starting this tutorial, run the following steps:
 3. Set up your IMAGE to point to `xilinx-versal-common-v2024.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
-# Table of Contents
+## Table of Contents
 - [Migrating the Design from AIE to AIE-ML architecture](#migrating-the-design-from-aie-to-aie-ml-Architecture)
 - [Optimizing the Design for Performance](#optimizing-the-design-for-performance)
 - [Changing the Interface to GMIO](#changing-the-plio-interface-to-gmio-interface)
 - [Running the Design on the Board](#building-and-running-the-design-on-the-board)
 
-## Objectives
+### Objectives
 - Migrate the farrow filter from AIE to AIE-ML architecture
 - Optimize the design to meet the required performance
 - Modify the interface to GMIO
@@ -50,8 +59,8 @@ Before starting this tutorial, run the following steps:
 - Implement the design using the Vitis tool
 - Run the design on the board 
 
-## Migrating the Design from AIE to AIE-ML Architecture
-### Change the Project Path
+### Migrating the Design from AIE to AIE-ML Architecture
+#### Change the Project Path
 Switch the device from AIE to AIE-ML and then compile the design to ensure it compiles without errors.  \
 Enter the following command to navigate to the project path of the final AIE design:
 ```
@@ -59,18 +68,18 @@ cd <path-to-tutorial>/designs/farrow_final_aie
 ```
 Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 
-### Source the Vitis Tool
+#### Source the Vitis Tool
 Enter the following command to source the Vitis tool:
 ```
 source /<TOOL_INSTALL_PATH>/Vitis/2024.2/settings.sh
 ```
-### Update the Makefile to switch the device from AIE to AIE-ML.
+#### Update the Makefile to switch the device from AIE to AIE-ML.
 Open the Makefile and modify the device from AIE to AIE-ML as shown below:
 ```
 PLATFORM_USE	  := xilinx_vek280_base_202420_1
 ```
 Save the file.
-### Compile the Design for x86 Simulation
+#### Compile the Design for x86 Simulation
 Enter the following command to compile for x86 simulation:
 ```
 make x86compile
@@ -85,25 +94,25 @@ Notice the compilation error as shown below:
     requires(arch::is(arch::AIE))
 `
 ```
-#### What does the compile error indicate?
+##### What does the compile error indicate?
 The error message indicates that the AIE API **sliding_mul_sym_xy_ops<>** only supports the AIE architecture and not AIE-ML. You can see the error as `'arch::is(arch::AIE)' evaluated to false`
 
-#### Why is the AIE API **sliding_mul_sym_xy_ops<>** not supported for AIE-ML?
+##### Why is the AIE API **sliding_mul_sym_xy_ops<>** not supported for AIE-ML?
 This API uses only half the tap values because it uses the pre-adder to compute the rest of the samples.  
 
 Based on the comparison provided between the AIE and AIE-ML architectures regarding fixed-point multiplication paths, it appears that the AIE architecture utilizes a pre-adder mechanism that is absent in the AIE-ML architecture.
 
 ![Pipeline Diagram for AIE and AIE-ML](./images/Pipeline_Diagram_of_AIE_and_AIE-ML.png)
 
-#### How to fix this for AIE-ML?
+##### How to fix this for AIE-ML?
 Additional AIE APIs that can make full use of the tap values for computation need to be identified. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. You should now adjust the parameter values according to the API details provided in the documentation in the this link **[AIE APIs Special Multiplication](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
 
 The following figure shows the supported parameters type (coeff x data) for AIE and AIE-ML architecture. **coeff** is *int16* and **data** is *cint16*.
 
 ![AIE API Parameters](./images/AIE_API_Parameters.png)
 
-## Initial Porting of Farrow Filter to AIE-ML
-### Modify the Kernel code using AIE API aie::sliding_mul_ops<>
+### Initial Porting of Farrow Filter to AIE-ML
+#### Modify the Kernel code using AIE API aie::sliding_mul_ops<>
 
 The parameters for **aie:sliding_mul_ops<>** are Lanes, Points, CoeffStep, DataStepX, DataStepY, CoeffType, DataType, AccumTag.
 
@@ -141,7 +150,7 @@ No changes to the `farrow_kernel2.cpp` file.
 
 After finishing the review of the kernel code, proceed to compile and then simulate the design.
 
-### Compile and Simulate the Design
+#### Compile and Simulate the Design
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
 ```
 $ make x86compile
@@ -168,7 +177,7 @@ After the final command execution, the console should output as below:
 Raw Throughput = 450.8 MSPS
 Max error LSB = 1
 ```
-### Analyze the Reports
+#### Analyze the Reports
 
 Enter the following command to launch the Vitis Analyzer and review the reports.
 ```
@@ -191,7 +200,7 @@ The design requirement is to reach 1 GSPS, but the current performance is only *
 
 Close the Vitis Analyzer.
 
-#### How to find the bottleneck in the design? 
+##### How to find the bottleneck in the design? 
 Begin by examining the compiler report for each kernel to assess its performance.
 
 In the context of AI Engine processors, Initiation Interval (II) is defined as how often (in cycles) a new iteration of the loop can start.
@@ -200,16 +209,16 @@ For example, if a new iteration of the loop can start every II=16 cycles, and ea
 
 Assuming your AI Engine clock is 1.25 GHz, that means your throughput can potentially reach 1.25 GSPS excluding any processor overhead. Output throughput is defined as the number of samples produced from your kernel per second.
 
-#### How to determine the II required for farrow_kernel1?
+##### How to determine the II required for farrow_kernel1?
 Navigate to the compiler reports for each tile located at `designs/farrow_port_initial/Work/aie`.
 
 The *farrow_kernel1* is specifically implemented on tile `19_2`. Locate the `19_2.log` file within the `19_2` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=105 cycles*.
 
 In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the loop is implemented. This loop processes 32 samples per iteration, equivalent to BUFFER_SIZE/32 = 1024 samples/32 => 32 samples. Therefore, the goal is to achieve an II of 32.
 
-## Optimizing the Design For Performance 
+### Optimizing the Design For Performance 
 
-### First Optimization 
+#### First Optimization 
 
 After reviewing the previous analysis, it is evident that the kernel requires II=105 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
 
@@ -220,7 +229,7 @@ Compare the code below. The initial version using four filter operations versus 
 ![Farrow_Inital_and_opt_1](./images/Farrow_inital_and_opt_1.png)
 
 
-#### Enhancing Performance Through Computation Split Across Multiple Tiles
+##### Enhancing Performance Through Computation Split Across Multiple Tiles
 By dividing the computations across multiple tiles, each kernel is tasked with fewer operations. Instead of handling four filters, each kernel now manages only two filter operations. This adjustment has the potential to enhance the II, thereby improving overall performance.
 
 Enter the following command to change project path:
@@ -240,7 +249,7 @@ Review the graph code `farrow_graph.h` located under the `farrow_opt_1` director
 - Kernel `farrow_kernel1` is instantiated twice (`farrow_kernel1_ins` and `farrow_kernel2_ins`) to perform four filters in two tiles
 - Observe the connections made between the kernels
 
-### Compile and Simulate the Design
+#### Compile and Simulate the Design
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
 ```
 $ make x86compile
@@ -282,7 +291,7 @@ The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_4 to p
 
 Close the Vitis Analyzer.
 
-### Second Optimization 
+#### Second Optimization 
 The previous setup employs three tiles: two tiles for filters and another for final computations.
 
 As you noticed, the performance has been improved from 371.5 MSPS to 667.1 MSPS. The II has been reduced from 105 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
@@ -303,7 +312,7 @@ Review the graph code `farrow_graph.h` located under the `farrow_opt_2` director
 - Kernel `farrow_kernel1` is instantiated four times (`farrow_kernel1_ins`, `farrow_kernel2_ins`, `farrow_kernel3_ins` and `farrow_kernel4_ins`) to perform four filters in four tiles
 - Observe the connections made between the kernels
 
-### Compile and Simulate the Design
+#### Compile and Simulate the Design
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
 ```
 $ make x86compile
@@ -323,7 +332,7 @@ The console should output as below:
 Raw Throughput = 1062.2 MSPS
 Max error LSB = 1
 ```
-### Analyze the Reports
+#### Analyze the Reports
 Enter the following command to launch the Vitis Analyzer and review the reports.
 
 ```
@@ -363,7 +372,7 @@ The console should output as below:
 
 The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, and 19_4. Based on the results above, these tiles successfully achieved an II of 29 for each of their respective for loops, meeting the desired performance targets.
 
-## Comparison of the Optimizations
+### Comparison of the Optimizations
 
 | Design              | Number of Tiles | Throughput  |
 |---------------------|-----------------|-------------|
@@ -373,7 +382,7 @@ The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, 
 
 Note: Throughput values are measured from Trace.
 
-## Changing the PLIO Interface to GMIO Interface
+### Changing the PLIO Interface to GMIO Interface
 A `input_gmio` or `output_gmio` object is used to make external memory-mapped connections to or from the global memory. These connections are made between an AI Engine graph and the logical global memory ports of a hardware platform design. 
 
 Now, we will change the PLIO interface to GMIO interface and do the necessary changes to the graph and test bench (`farrow_graph.h` and `farrow_app_adf.cpp`).
@@ -431,7 +440,7 @@ aie_dut.sig_o.aie2gm(sig_o_Array, BLOCK_SIZE_out_Bytes);
   GMIO::free(sig_o_Array);
 ```
 
-### Compile and Simulate the Design
+#### Compile and Simulate the Design
 
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
 ```
@@ -455,21 +464,21 @@ The console should output as below:
 Max error LSB = 1
 ```
 
-## Building and Running the Design on the Board
+### Building and Running the Design on the Board
 
-### Review of Tool Flow 
+#### Review of Tool Flow 
 The diagram below illustrates the entire Vitis tool flow, encompassing the development stages for AI kernels, PL kernels, and PS code. Once the development of AIE kernels and PL kernels is completed, the subsequent step involves linking `libadf.a` and all `.xo` kernels with the designated platform. Following the linking stage, the output of the linker, which includes `.xsa` and `host.exe`, is packaged together to generate `.xclbin` and the `SD card image` required for programming the SD card.
   
 ![Tool_Flow](./images/Tool_Flow.png)
 
-### Setup and Initialization
+#### Setup and Initialization
 IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
 https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2024-2.html
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-tutorial>/designs/farrow_gmio/Makefile```. 
 
-#### Host Code with XRT APIs
+##### Host Code with XRT APIs
 It is recommended to use the XRT APIs for the host code. The host code has been modified with XRT API. Review the code and then build the project and run it on board.
 
 Enter the following command to change project path:
@@ -480,7 +489,7 @@ Review the `host.cpp` file.
 
 The XRT APIs are used and XRT profiling is also used to measure the throughput of the design.
 
-##### Hardware Emulation
+###### Hardware Emulation
 Enter the following command to build the design for hardware emulation:
 ```
 $ cd <path-to-tutorial>/designs/farrow_gmio/
@@ -516,7 +525,7 @@ Note: You can safely ignore the warnings.
 To exit the QEMU, press Ctrl A + X.
 After the hardware emulation run is complete, you can analyze the reports in Vitis Analyzer. 
 
-##### Hardware Run
+###### Hardware Run
 
 Enter the following command to build the design for hardware emulation:
 ```
@@ -547,7 +556,7 @@ GMIO transactions finished
 
 Note: You can safely ignore the warnings.
 
-# Comparison of AIE vs AIE-ML Farrow Filter Design Implementation
+## Comparison of AIE vs AIE-ML Farrow Filter Design Implementation
 The following table compares the implementation of a farrow filter in AIE and AIE-ML architectures.
 This indicates that approximately twice the number of tiles is required for kernel computation in AIE_ML compared to the AIE architecture to achieve the same performance.
 | Design                 | Tiles for AIE Kernels | Tiles for Buffers | Total Tiles |  Throughput         | Relative MSPS per tile |
@@ -557,7 +566,7 @@ This indicates that approximately twice the number of tiles is required for kern
 
 ```* Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.```
 
-# Conclusion
+## Conclusion
 
 This tutorial has demonstrated the following:
 - How to migrate the design from AI Engine to AIE-ML architecture.
@@ -565,3 +574,9 @@ This tutorial has demonstrated the following:
 - Using the GMIO interface and host code with XRT APIs.
 - Running the design on the board.
 
+
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

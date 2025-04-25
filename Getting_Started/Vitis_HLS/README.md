@@ -80,7 +80,7 @@ This tutorial describes how to create an HLS component using the Vitis Unified I
 <p align="center" class="sphinxhide"><b><a href="./README.md">Return to Main Page</a> — <a href="./../README.md">Return to Getting Started Pathway</a></b></p>
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
 

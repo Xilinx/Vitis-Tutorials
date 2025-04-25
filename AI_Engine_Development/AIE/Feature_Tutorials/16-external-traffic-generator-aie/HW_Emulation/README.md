@@ -1,3 +1,13 @@
+</table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Step-by-Step integration to run External Traffic Generators with Emulation Flow 
 
 ## Step-1:  ADF Graph Modifications
@@ -183,3 +193,10 @@ setenv XCL_EMULATION_MODE sw_emu
 3. To compile and run hw_emu with external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 4. To compile and run hw_emu without external traffic generators --> ``make run TARGET=hw_emu PLATFORM=<vck190> EXTIO=true TRAFFIC_GEN=<PYTHON/CPP>``
 
+
+
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

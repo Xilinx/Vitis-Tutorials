@@ -1,0 +1,4 @@
+C:\Users\ryanv\GH\GHE\Vitis-Tutorials\AI_Engine_Development\AIE\Feature_Tutorials\09-debug-walkthrough\License.md
+C:\Users\ryanv\GH\GHE\Vitis-Tutorials\AI_Engine_Development\AIE\Feature_Tutorials\20-aiecompiler-features\License.md
+C:\Users\ryanv\GH\GHE\Vitis-Tutorials\AI_Engine_Development\AIE-ML\Design_Tutorials\01-AIE-ML-programming-and-optimization\License.md
+C:\Users\ryanv\GH\GHE\Vitis-Tutorials\Vitis_Platform_Creation\Feature_Tutorials\03_Vitis_Export_To_Vivado\LICENSE.md

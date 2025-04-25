@@ -166,7 +166,7 @@ Users can also Re-Arm the ILA and step through the code. This will trigger the I
 In the brief tutorial above, we explore the power debug feature available in the Vitis Unified IDE that allows users to cross probe across different processors and even across software and hardware domains.
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
 

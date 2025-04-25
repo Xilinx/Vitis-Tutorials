@@ -1,3 +1,13 @@
+</table>
+<table class="sphinxhide" width="100%">
+ <tr width="100%">
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    </td>
+ </tr>
+</table>
+
 # Step-by-Step integration to run traffic generators with AI Engine simulation
 
 ## Step-1:  ADF Graph Modifications
@@ -136,3 +146,11 @@ x86simulator --pkg-dir=aie/Work
 You need to run the aiesimulator with ``--dump-vcd`` option to generate the input and output data trace results. To view the results in the Vitis Analyzer, run the command ``vitis_analyzer aiesimulator_output/default.aierun_summary``. This opens the Vitis Analyzer with Trace view as below: 
 
 ![Trace Data](./images/trace_data.png)
+
+
+
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

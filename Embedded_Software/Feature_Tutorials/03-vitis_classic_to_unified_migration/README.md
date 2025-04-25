@@ -398,6 +398,6 @@ Open the **Vitis-comp.json** as drop the psu_cortexa53_0 and verify that the **p
 
 As we can see above, we migrated successfully from a Vitis Classic IDE to Vitis Unified IDE workspace using the Migration Utility available in the Vitis Classic IDE. It is recommended that users fully evaluate the migrated workspace to make sure everything was ported correctly. Users should make themselves aware of the limitations discussed at the top of this tutorial.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
