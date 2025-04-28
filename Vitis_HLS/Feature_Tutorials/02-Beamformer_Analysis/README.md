@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis HLS™ Tutorials</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-hls.html">See Vitis HLS landing page on xilinx.com</a>
@@ -14,7 +14,9 @@
 
 This tutorial demonstrates the micro-optimization techniques used to increase performance for Vitis HLS designs.  The fundamental HLS pragmas used for micro-optimization are `PIPELINE`, `UNROLL`, and `ARRAY_RESHAPE` or `ARRAY_PARTITION`. This tutorial walks through the HLS analysis tools which can be used to guide the optimization process by highlighting inefficiencies and recommending pragmas.
 
-The tutorial is based on the [Beamformer IP](../../Design_Tutorials/02-Beamformer) that is discussed in more depth in the [Design Tutorials](../../Design_Tutorials) section of the [Vitis HLS Tutorials](../../../Vitis_HLS).
+This tutorial is based on the [Adaptive Beamforming for Radar Tutorial](../../Design_Tutorials/02-Beamformer) that is discussed in more depth in the [Design Tutorials](../../Design_Tutorials) section of the [Vitis HLS Tutorials]
+
+Adaptive Beamforming for Radar
 
 ![Beamformer Diagram](./images/Beamformer_Diagram.png)
 
@@ -51,48 +53,50 @@ To begin, we'll create a new Vitis workspace and create an HLS component with th
 
 5. Run and verify the results of C Simulation by pressing Run under C SIMULATION in the FLOW panel. The output should resemble the following:
 
-``` 
-  beamso_i   beamso_q
-  -225.000000 1865.000000 
-  -300.000000 1970.000000 
-  -375.000000 2105.000000 
-  beamso_i   beamso_q
-  -150.000000 1790.000000 
-  -225.000000 1865.000000 
-  -300.000000 1970.000000 
-  beamso_i   beamso_q
-  -75.000000 1745.000000 
-  -150.000000 1790.000000 
-  -225.000000 1865.000000 
- Test passed !
- INFO: [SIM 211-1] CSim done with 0 errors.
- INFO: [SIM 211-3] *************** CSIM finish ***************
- INFO: [HLS 200-111] Finished Command csim_design CPU user time: 1 seconds. CPU system time: 1 seconds. Elapsed time: 20.18 seconds; current allocated memory: 1.480 MB.
- INFO: [HLS 200-1510] Running: close_project 
- INFO: [HLS 200-112] Total CPU user time: 3 seconds. Total CPU system time: 4 seconds. Total elapsed time: 24.896 seconds; peak allocated memory: 187.500 MB.
- INFO: [Common 17-206] Exiting vitis_hls at Wed Dec 13 15:14:09 2023...
- INFO: [vitis-run 60-791] Total elapsed time: 0h 0m 32s
- C-simulation finished successfully
- ```
+   ```
+     beamso_i   beamso_q
+     -225.000000 1865.000000 
+     -300.000000 1970.000000 
+     -375.000000 2105.000000 
+     beamso_i   beamso_q
+     -150.000000 1790.000000 
+     -225.000000 1865.000000 
+     -300.000000 1970.000000 
+     beamso_i   beamso_q
+     -75.000000 1745.000000 
+     -150.000000 1790.000000 
+     -225.000000 1865.000000 
+    Test passed !
+    INFO: [SIM 211-1] CSim done with 0 errors.
+    INFO: [SIM 211-3] *************** CSIM finish ***************
+    INFO: [HLS 200-111] Finished Command csim_design CPU user time: 1 seconds. CPU system time: 1 seconds. Elapsed time: 20.18 seconds; current allocated memory: 1.480 MB.
+    INFO: [HLS 200-1510] Running: close_project 
+    INFO: [HLS 200-112] Total CPU user time: 3 seconds. Total CPU system time: 4 seconds. Total elapsed time: 24.896 seconds; peak allocated memory: 187.500 MB.
+    INFO: [Common 17-206] Exiting vitis_hls at Wed Dec 13 15:14:09 2023...
+    INFO: [vitis-run 60-791] Total elapsed time: 0h 0m 32s
+    C-simulation finished successfully
+   ```
 
-By default, HLS does many optimizations to ensure a good balance of performance versus resource utilization. So, before we run C Synthesis, we want to ensure all optimizations are turned off. This can be done by editing directly in the code or by using the `HLS Directive` panel on the right hand side.
+   By default, HLS does many optimizations to ensure a good balance of performance versus resource utilization. So, before we run C Synthesis, we want to ensure all optimizations are turned off. This can be done by editing directly in the code or by using the `HLS Directive` panel on the right hand side.
 
 6. Open `./reference_files/beamformer.cpp` and add `#pragma HLS PIPELINE off` to loops `L1:`, `L2:`, and `L3:`, as shown here:
-```
-   L1:for (i=0; i<SAMPLES; i++) {
-#pragma HLS LOOP_FLATTEN off
-#pragma HLS PIPELINE off      
-      L2: for (j=0; j<BEAMS; j++) {
-#pragma HLS LOOP_FLATTEN off
-#pragma HLS PIPELINE off
-         si=0;
-         sq=0;
 
-         L3: for (k=0; k<CHANNELS; k++) {
-#pragma HLS LOOP_FLATTEN off
-#pragma HLS PIPELINE off
-```
-The loop flatten pragmas are already included in the unoptimized code provided, so you don't have to add them manually.
+   ```
+      L1:for (i=0; i<SAMPLES; i++) {
+   #pragma HLS LOOP_FLATTEN off
+   #pragma HLS PIPELINE off      
+         L2: for (j=0; j<BEAMS; j++) {
+   #pragma HLS LOOP_FLATTEN off
+   #pragma HLS PIPELINE off
+            si=0;
+            sq=0;
+   
+            L3: for (k=0; k<CHANNELS; k++) {
+   #pragma HLS LOOP_FLATTEN off
+   #pragma HLS PIPELINE off
+   ```
+
+   The loop flatten pragmas are already included in the unoptimized code provided, so you don't have to add them manually.
 
 7. Run C Synthesis and open the Synthesis Report. Expand the Performance and Resource Estimates section to reveal all three nested loops:
 
@@ -109,17 +113,17 @@ The overall performance of this unoptimized design is best measured by its inter
 
 In this section, we'll start to optimize the design. Before we do this, we'll create a new component. The advantage to this is that we can apply our optimizations to the new component while keeping the existing component open and unchanged to make for easier comparisons.
 
-8. In the VITIS COMPONENTS panel, right-click the HLS Component you created in the previous section and select `Clone Component`. 
+1. In the VITIS COMPONENTS panel, right-click the HLS Component you created in the previous section and select `Clone Component`.
 
-9. Inside the newly created component, expand `Sources`, then open `beamformer.cpp`.
+2. Inside the newly created component, expand `Sources`, then open `beamformer.cpp`.
 
-Note that this file is actually the same file that is being referenced by the original component. This happens when the source file is included by reference. To copy and keep separate copies of code, the code needs to be copied into the component directory and referenced locally. This is helpful if your optimizations might include code changes as well as changes to compiler. In our case, we happen to know that we won't be changing the code, so our preference is to keep just one copy of the code that all components will reference. But, that means we need to move our pragmas from the source file to the config file of the original component before optimizing the new component:
+   > **Note**: This file is actually the same file that is being referenced by the original component. This happens when the source file is included by reference. To copy and keep separate copies of code, the code needs to be copied into the component directory and referenced locally. This is helpful if your optimizations might include code changes as well as changes to compiler. In our case, we happen to know that we won't be changing the code, so our preference is to keep just one copy of the code that all components will reference. But, that means we need to move our pragmas from the source file to the config file of the original component before optimizing the new component:
 
-10. In the FLOW Panel, set the Component to the original component.
+3. In the FLOW Panel, set the Component to the original component.
 
-11. In the HLS DIRECTIVE Panel hover over one of the `HLS PIPELINE off` pragmas to highlight it, then click the pencil icon. 
+4. In the HLS DIRECTIVE Panel hover over one of the `HLS PIPELINE off` pragmas to highlight it, then click the pencil icon.
 
-12. In the Edit Directive window that opens up, select the radio icon next to `Config File`. Repeat this for all three `PIPELINE` directives.
+5. In the Edit Directive window that opens up, select the radio icon next to `Config File`. Repeat this for all three `PIPELINE` directives.
 
 If you wish to inspect the new location of the directives, press the gear next the the Component in the FLOW panel. That will show you the config file, `hls_config.cfg`. The compiler directives are now in that file and they will be visible in the Design Directives section of the Settings window. In addition, there is an icon at the top of that window to inspect the config file text directly. Now these compiler directives apply only to the original component because they are in a local config file instead of the shared source file. Here is a snippet of the directives in your config file for the original component:
 
@@ -135,15 +139,15 @@ Now, when you return to the `beamformer.cpp` file, the pragmas will be removed. 
 
 Before optimizing any IP, one should start with a design goal. In the case of this Beamformer IP, the design goal is to process the Pulse Repetition Interval (PRI) of 2500 samples within 9 us. At a 3 ns clock period, or approximately 333.3 Mhz, that calculates to a maximum interval of 3000 clock cycles. If we look at the loop bounds of loop `L1` in the code, we can see that it iterates from `int i = 0` to `i = SAMPLES`, and `SAMPLES` is defined in the header as `2500`. Because the function must have an interval of less than or equal to 3000 clock cycles, we know that the loop must also have an interval of less than 3000 clock cycles. With 2500 iterations, we know that if each iteration takes 2 clock cycles, the loop interval will take at minimum 5000 iterations. Thus, in this loop, we know that each iteration must be able to execute in the very next clock cycle after the previous iteration. This metric is called the `Initiation Interval`, or `II`: the measure of the number of clock cycles in between successive iterations of the loop So, our strategy for achieving the specified performance will be to apply a `PIPELINE II=1` pragma to loop `L1` and then ensure the HLS C Synthesizer is able to meet the requested `II`.
 
-13. In the HLS DIRECTIVE Panel, select loop `L1`, and press `+`. In the drop-down, choose the PIPELINE pragma. Switch the pragma location to Config File, and set II to `1`. Press OK. 
+1. In the HLS DIRECTIVE Panel, select loop `L1`, and press **+**. In the drop-down, choose the PIPELINE pragma. Switch the pragma location to Config File, and set **II** to `1`. Click **OK**.
 
-14. Run C Synthesis again and open the Synthesis Report. Expand the Performance and Resource Estimates section.
+2. Run C Synthesis again and open the Synthesis Report. Expand the Performance and Resource Estimates section.
 
-First, note that only one level of loop hierarchy exists. When a `PIPELINE` directive is used, Vitis HLS will infer an `UNROLL` directive on all loops within that loop scope. This is necessary to achieve the requested initiation interval. Second, notice that there is a new column called "ISSUE TYPE". In loop `L1`, the level where the Pipeline target II of 1 was applied, there is an issue labeled "II Violation", with a "Timing Violation" in the level above. We can use analysis tools to help guide us on the next steps for resolving these issues.
+   First, note that only one level of loop hierarchy exists. When a `PIPELINE` directive is used, Vitis HLS will infer an `UNROLL` directive on all loops within that loop scope. This is necessary to achieve the requested initiation interval. Second, notice that there is a new column called "ISSUE TYPE". In loop `L1`, the level where the Pipeline target II of 1 was applied, there is an issue labeled "II Violation", with a "Timing Violation" in the level above. We can use analysis tools to help guide us on the next steps for resolving these issues.
 
-![Synthesis Report showing II Violation and Timing Violation on Loop L1](./images/II_Timing_Violation.PNG)
+   ![Synthesis Report showing II Violation and Timing Violation on Loop L1](./images/II_Timing_Violation.PNG)
 
-15. Right-click on the II violation and select "Go To II Violation"
+3. Right-click on the II violation, and then select **Go To II Violation**.
 
 This will bring you to the II Violation view of the Schedule Viewer. This view shows us a series of loads that were scheduled on the variable `rx_q`:
 
@@ -159,23 +163,23 @@ In the previous section, we learned that 16 loads need to occur in one clock cyc
 
 The solution to this problem is to increase the size of the interface for the variable `rx_q`. By default, the interface is the size of the datatype of the array, which in this case is a `float`, or a 32-bit floating point number. The design now requires that multiple `float`s are read in one clock cycle, and this bandwidth can be provided with either the `ARRAY_RESHAPE` or `ARRAY_PARTITION` pragma, which either widen or duplicate the interface, respectively. The choice is mostly a matter of preference. In this case, we'll use the `ARRAY_RESHAPE` pragma:
 
-16. Add the compiler directive `#pragma HLS ARRAY_RESHAPE variable=rx_q dim=2 type=complete`
+1. Add the compiler directive `#pragma HLS ARRAY_RESHAPE variable=rx_q dim=2 type=complete`
 
-By inspection of the code, we can tell that the same optimization will be required for the imaginary portion of `rx`, contained in `rx_i`, so we'll add the corresponding pragma as well:
+   By inspection of the code, we can tell that the same optimization will be required for the imaginary portion of `rx`, contained in `rx_i`, so we'll add the corresponding pragma as well:
 
-17. Add the compiler directives `#pragma HLS ARRAY_RESHAPE variable=rx_i dim=2 type=complete`
+2. Add the compiler directives `#pragma HLS ARRAY_RESHAPE variable=rx_i dim=2 type=complete`
 
-18. Run C Synthesis once more and open the Synthesis Report to confirm the II Violation is gone, albeit replaced by another, similar II violation:
+3. Run C Synthesis once more and open the Synthesis Report to confirm the II Violation is gone, albeit replaced by another, similar II violation:
 
-![Synthesis Report showing II Violation on Loop L1](./images/II_Violation.PNG)
+   ![Synthesis Report showing II Violation on Loop L1](./images/II_Violation.PNG)
 
-At this point, you should be familiar with the process for investigating and solving this issue. From the synthesis report, right-click the II violation to view the schedule viewer. The schedule viewer shows the load or store which causes the II violation, in this case `beamso_i`. Referencing the source code shows us a `store` operation that requires multiple stores due to an unrolled loop. 
+   At this point, you should be familiar with the process for investigating and solving this issue. From the synthesis report, right-click the II violation to view the schedule viewer. The schedule viewer shows the load or store which causes the II violation, in this case `beamso_i`. Referencing the source code shows us a `store` operation that requires multiple stores due to an unrolled loop. 
 
-19. Add the compiler directives `#pragma HLS ARRAY_RESHAPE variable=beamso_i dim=2 type=complete` and `#pragma HLS ARRAY_RESHAPE variable=beamso_q dim=2 type=complete`
+4. Add the compiler directives `#pragma HLS ARRAY_RESHAPE variable=beamso_i dim=2 type=complete` and `#pragma HLS ARRAY_RESHAPE variable=beamso_q dim=2 type=complete`
 
-20. Again, run C Synthesis and open the Synthesis Report to confirm the II Violation is gone and that there are no other II violations.
+5. Again, run C Synthesis and open the Synthesis Report to confirm the II Violation is gone and that there are no other II violations.
 
-## Compare results 
+## Compare results
 
 Now that we've made a couple optimizations to the code, let's compare the results of those optimizations. If you have been creating new HLS components for each optimization, it's easy to pull up the performance numbers of each component by referencing the existing synthesis report. Otherwise, you can reference this chart:
 
@@ -202,15 +206,15 @@ In this tutorial, we'll be comparing the highest performance version of the beam
 
 To target the new device and generate the results shown:
 
-21. Select the desired HLS component in the FLOW panel.
+1. Select the desired HLS component in the FLOW panel.
 
-22. Click the gear to the right of the component selection drop-down.
+2. Click the gear to the right of the component selection drop-down.
 
-23. Select `hls_config.cfg`
+3. Select `hls_config.cfg`
 
-24. Under 'General', go to 'part', and either Browse to or type in `xczu28dr-ffve1156-1L-i`
+4. Under 'General', go to 'part', and either Browse to or type in `xczu28dr-ffve1156-1L-i`
 
-25. Run C Synthesis and view the Synthesis Report
+5. Run C Synthesis and view the Synthesis Report
 
 Here is a summary of the pertinent information from the two reports:
 
@@ -223,11 +227,12 @@ With no change to the HLS C code or compiler directives, we can a significant in
 
 The performance decrease comes from the increase in latency of the complex multiply. In both cases, the II of loop `L1` remains equal to 1. However, the iteration latency increases due the to less efficient DSP48 architecture. The latency of the loop is then equal to the quantity loop Trip Count multiplied by II, plus the iteration latency incurred waiting for the last iteration of the loop to finish. This causes the overall decrease in performance of the application. Note - the `PIPELINE` pragma does have the ability to start the next loop transaction without waiting for the pipeline to flush; this is possible with the `rewind` option. The rewind option will have no affect on latency but will decrease II, thus increasing the throughput.
 
-Targeting the Ultrascale+ part had a larger impact on utilization. As you can see, the resources required by the ZU28 are on average 4x more than for Versal: DSP utilization increased by about 2X, FF utilization increased by about 4X and LUT utilization increase by almost 10X. This is due to the more efficient DSP58 primitive on the Versal Premium device compared to the DSP48 primitive on the Zynq Ultrascale+ device. In the native floating-point mode, the DSP58 can compute a floating point multiply accumulate with just one DSP primitive. The DSP48 in ZU+ has only a fixed-point mode and must, therefore, use significantly more resources to implement complex multiple of  data type. On average, DSP58 devices are 4 times more compute efficient compared to DSP48 devices. 
+Targeting the Ultrascale+ part had a larger impact on utilization. As you can see, the resources required by the ZU28 are on average 4x more than for Versal: DSP utilization increased by about 2X, FF utilization increased by about 4X and LUT utilization increase by almost 10X. This is due to the more efficient DSP58 primitive on the Versal Premium device compared to the DSP48 primitive on the Zynq Ultrascale+ device. In the native floating-point mode, the DSP58 can compute a floating point multiply accumulate with just one DSP primitive. The DSP48 in ZU+ has only a fixed-point mode and must, therefore, use significantly more resources to implement complex multiple of  data type. On average, DSP58 devices are 4 times more compute efficient compared to DSP48 devices.
 
 ## Summary
 
 In this tutorial, we have explored advanced micro-optimization techniques in Vitis HLS, focusing on the Beamformer IP. The key takeaways are:
+
 - Demonstrating a step-by-step process for enhancing performance in HLS designs, using the Beamformer IP as a practical example.
 - Understanding and applying crucial HLS pragmas: `PIPELINE`, `UNROLL`, and `ARRAY_RESHAPE` or `ARRAY_PARTITION`.
 - Leveraging HLS analysis tools for identifying optimization opportunities and applying pragmas effectively.
@@ -238,9 +243,7 @@ In this tutorial, we have explored advanced micro-optimization techniques in Vit
 
 By the end of this tutorial, you should be adept at applying these HLS directives to enhance the performance of your designs, understand the impact of each optimization, and be capable of migrating designs across different hardware platforms.
 
-</br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

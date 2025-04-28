@@ -7,9 +7,9 @@
  </tr>
 </table>
 
-# Keywords
+# Important Terms
 
-### What is XSA?
+## What is XSA?
 
 XSA is a Shell Archive, a container containing below information:
 
@@ -25,25 +25,24 @@ XSA is a Shell Archive, a container containing below information:
 
 Please refer to [UG1725](https://docs.amd.com/r/en-US/ug1725-xsdb-reference-guide/XSA) for more details.
 
-### What is Kernel?
+## What is a Kernel?
 
-Kernel = Computational Unit = Hardware Accelerators 
-Kernels can be AI Engine kernels or PL (HLS) kernels. 
+Kernel = Computational Unit = Hardware Accelerators
+Kernels can be AI Engine kernels or PL (HLS) kernels.
 To explain in simple language, a kernel is a computational function offloaded to the AI Engine or to a PL logic using AI Engine and HLS tools.
 
 Please refer to [AIE-Kernel](https://docs.amd.com/v/u/en-US/aie-kernel) for more details.
 
+## What is XRT/AMD Runtime Library?
 
-### What is XRT/AMD Runtime Library?
-
-XRT is the AMD Runtime Library to help application development. 
-The XRT helps to facilitate the hardware commumication from the user application development. The XRT manages the hardware access using API and keeps the hardwarwe complexities away from the application developer. 
+XRT is the AMD Runtime Library to help application development.
+The XRT helps to facilitate the hardware commumication from the user application development. The XRT manages the hardware access using API and keeps the hardwarwe complexities away from the application developer.
 Helps the application developer to bridge the gap between the software and hardware. Supports Linux only.
-ForExample: Kernel Management, Memory Management, Profiling and Debugging. 
+ForExample: Kernel Management, Memory Management, Profiling, and Debugging.
 
-How does it help? 
+How does it help?
 Take an example of accessing memory in Baremetal application, the user need to open the platform to make a note of memory addres to manually manage the memory.
-Use of XRT APIs can help to allocate and manage the memory without getting into the low-leve hardware details. 
+Use of XRT APIs can help to allocate and manage the memory without getting into the low-leve hardware details.
 
 Please refer [link](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-runtime-library.html) to better understand the XRT.
 

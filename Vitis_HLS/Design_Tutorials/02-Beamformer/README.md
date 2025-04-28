@@ -6,7 +6,7 @@
  </tr>
 </table>
 
-# Adaptive Beamforming for Radar:<br>Floating-Point QRD+WBS in an FPGA
+# Adaptive Beamforming for Radar: Floating-Point QRD+WBS in an FPGA
 
 ***Version: Vitis 2024.2***
 
@@ -18,7 +18,7 @@ Adaptive beamforming algorithms have pushed the signal processing world into the
 
 The modified Gram-Schmidt (MGS) QR decomposition (QRD) and weight back substitution (WBS), key algorithms for radar DSP, allow a radar to form beams while suppressing side lobes, noise, and jamming. These applications require a very high number of FLOPS (floating-point operations per second).
 
-AMD™ FPGAs and adaptive SoCs have an orders of magnitude advantage in floating-point performance compared to commercial GPUs, DSPs, and multi-core CPUs. Power consumption can also be greatly decreased compared to existing GPU and multi-core processor designs. 
+AMD™ FPGAs and adaptive SoCs have an orders of magnitude advantage in floating-point performance compared to commercial GPUs, DSPs, and multi-core CPUs. Power consumption can also be greatly decreased compared to existing GPU and multi-core processor designs.
 
 AMD Vitis™ High-Level Synthesis (HLS) supports native C language design, therefore the design can be coded at the algorithmic level using C or C++ and synthesized into RTL for implementation on the device. HLS can accelerate design times by 10 to 20 times. The design described in this white paper was completed in about four hours. Hand coding a VHDL or Verilog version of this design and verifying it using RTL could take weeks or even months, depending on various factors.
 
@@ -37,10 +37,13 @@ A critical part of element-level processing is adaptive digital beamforming. Thi
 Using the technology and AMD components described in this white paper, a beam-agile radar can be created by calculating complex floating point adaptive weights. These weights are sampled from a previous pulse repetition interval (PRI). The challenge of calculating these weights is contained within the need to perform a complex matrix inversion that solves Equation 1 before the next PRI of data is received:
 
 Equation 1:
+
 ```math
 Ax = b
 ```
+
 Where:
+
 - $A$ = the complex matrix, size $\[m,n\]$ where $m \geq n$ ; these are receive samples.
 - $x$ = the complex vector being solved for, which becomes the adaptive weights, size $\[n,1\]$.
 - $b$ = the desired response or steering vector, size $\[m,1\]$.
@@ -64,34 +67,42 @@ In addition, the C/C++ based design framework can contribute to faster design ti
 The QRD converts the complex matrix $A$ into:
 
 Equation 2:
+
 ```math
 A = QR
 ```
 
 Where:
+
 - $Q$, size $\[m,n\]$, is an orthogonal matrix, which yields the identity matrix when:
 
 Equation 3:
+
 ```math
 Q^H Q = I
 ```
 
 Where:
+
 - $Q^H$ is the complex conjugate transpose for complex systems
 - $Q^T$ is the transpose for real systems.
 
 $R$, size $\[n,n\]$, is an upper triangular matrix, or right triangular matrix, meaning the lower triangle is all zeros. This makes for fast arithmetic when solving for $x$. Equation 4 follows from substituting the QR relationship back into Equation 1.
 
 Equation 4:
+
 ```math
 QRx = b
 ```
+
 ```math
 Q^HQRx = Q^Hb
 ```
+
 ```math
 IRx = Q^Hb
 ```
+
 ```math
 Rx = Q^Hb
 ```
@@ -99,6 +110,7 @@ Rx = Q^Hb
 The last step is to solve for $x$ using back-substitution. Let $c = Q^Hb$.
 
 Equation 5:
+
 ```math
 x_j = \frac{1}{R_{j,j}} \left(c_j - \sum_{k=j+1}^{n} R_{j,k} \cdot x_k\right)
 ```
@@ -113,21 +125,21 @@ Implementing algorithms using C/C++ and Vitis HLS creates portable and flexible 
 
 Design time, when compared to writing VHDL/Verilog code by hand, is reduced by orders of magnitude, normally from months to days. This reduction of design time comes from 5 main areas:
 
-1. The design is captured in C/C++  models, meaning the design is easy to translate from other algorithm language and remains  portable, flexible, and scalable. The designer is not locked down to a particular FPGA or family. 
+1. The design is captured in C/C++  models, meaning the design is easy to translate from other algorithm language and remains  portable, flexible, and scalable. The designer is not locked down to a particular FPGA or family.
 
-2. The functionality of the design is verified with C/C++ simulation runs. Software-based simulations can be run earlier and more often. Thus, errors can be found faster and corrected earlier. The design from Vitis HLS synthesis is correct the first time, so the RTL simulation, which is up to 10,000 times slower, only needs to be run once. 
+2. The functionality of the design is verified with C/C++ simulation runs. Software-based simulations can be run earlier and more often. Thus, errors can be found faster and corrected earlier. The design from Vitis HLS synthesis is correct the first time, so the RTL simulation, which is up to 10,000 times slower, only needs to be run once.
 
-3. The user can quickly approximate performance and utilization via the Vitis HLS Synthesis Report, which documents the synthesized IP's achieved clock, resource usage, and performance metrics. 
+3. The user can quickly approximate performance and utilization via the Vitis HLS Synthesis Report, which documents the synthesized IP's achieved clock, resource usage, and performance metrics.
 
 4. An overview of available performance versus utilization trade-offs can be determined by making small adjustments to the code or by inserting compiler directives to customize the synthesis results.
 
 5. Analysis capabilities can help to guide and advise on how to write better HLS code. Well formatted reports and visualizations allow the user additional insights into their code to help them write better HLS C.
 
-This tutorial will focus on the process and results; to get a more in depth look at these Analysis features and a discussion why certain pragmas are utilized in this design, refer to the [Beamformer Analysis tutorial](../../Feature_Tutorials/02-Beamformer_Analysis) in the [HLS Feature Tutorials](../../Feature_Tutorials) section.
+This tutorial will focus on the process and results; to get a more in depth look at these Analysis features and a discussion why certain pragmas are utilized in this design, refer to the [Beamformer Analysis tutorial](../../Feature_Tutorials/02-Beamformer_Analysis) (a Feature Tutorial).
 
 ## Results
 
-In this section, we will use Vitis to create an HLS Component with the [provided C code](./reference_files/) before synthesizing and comparing the reuslts on a Zynq™ Ultrascale+™ RFSoC and a Versal™ Premium series adaptive SoC.
+In this section, we will use Vitis to create an HLS Component with the `.cpp` files ([mgs_qrd_wbs.cpp](./reference_files/mgs_qrd_wbs.cpp) and [mgs_qrd_wbs_tb.cpp](./reference_files/mgs_qrd_wbs_tb.cpp)), and then synthesize and compare the reuslts on a Zynq™ Ultrascale+™ RFSoC and a Versal™ Premium series adaptive SoC.
 
 1. Open the Vitis Unified IDE and specify a new or existing workspace.
 
@@ -135,39 +147,39 @@ In this section, we will use Vitis to create an HLS Component with the [provided
 
 3. Name the component `mgs_qrd_wbs_usplus`
 
-3. In the `Source Files` step, add the file `./reference_files/mgs_qrd_wbs.cpp` as a Design File, add the file `./reference_files/mgs_qrd_wbs_tb.cpp` as a Test Bench File, set the `Top Function` to `mgs_qrd`, and press Next.
+4. In the `Source Files` step, add the file `./reference_files/mgs_qrd_wbs.cpp` as a Design File, add the file `./reference_files/mgs_qrd_wbs_tb.cpp` as a Test Bench File, set the `Top Function` to `mgs_qrd`, and press Next.
 
-4. Either Browse to or type in `xczu28dr-ffve1156-1L-i`, press next, set the clock target to `3ns`, then finish the Wizard.
+5. Either Browse to or type in `xczu28dr-ffve1156-1L-i`, press next, set the clock target to `3ns`, then finish the Wizard.
 
-5. Run and verify the results of C Simulation by pressing Run under C SIMULATION in the FLOW panel. The output should resemble the following:
+6. Run and verify the results of C Simulation by pressing Run under C SIMULATION in the FLOW panel. The output should resemble the following:
 
-``` 
- INFO: [SIM 211-1] CSim done with 0 errors.
- INFO: [HLS 200-111] Finished Command csim_design CPU user time: 0 seconds. CPU system time: 2 seconds. Elapsed time: 83.491 seconds; current allocated memory: 1.836 MB.
- INFO: [HLS 200-1510] Running: close_project 
- INFO: [HLS 200-112] Total CPU user time: 3 seconds. Total CPU system time: 5 seconds. Total elapsed time: 89.947 seconds; peak allocated memory: 192.961 MB.
- INFO: [Common 17-206] Exiting vitis_hls at Thu Dec 14 11:29:08 2023...
- INFO: [vitis-run 60-791] Total elapsed time: 0h 1m 37s
- C-simulation finished successfully
- ```
+   ```
+    INFO: [SIM 211-1] CSim done with 0 errors.
+    INFO: [HLS 200-111] Finished Command csim_design CPU user time: 0 seconds. CPU system time: 2 seconds. Elapsed time: 83.491 seconds; current allocated memory: 1.836 MB.
+    INFO: [HLS 200-1510] Running: close_project 
+    INFO: [HLS 200-112] Total CPU user time: 3 seconds. Total CPU system time: 5 seconds. Total elapsed time: 89.947 seconds; peak allocated memory: 192.961 MB.
+    INFO: [Common 17-206] Exiting vitis_hls at Thu Dec 14 11:29:08 2023...
+    INFO: [vitis-run 60-791] Total elapsed time: 0h 1m 37s
+    C-simulation finished successfully
+    ```
 
-6. Run C Synthesis and open the Synthesis Report. 
+7. Run C Synthesis and open the Synthesis Report.
 
-![Figure 4: Adaptive Beamformer Results on Zynq Ultrascale+](./images/Results_Zynq.PNG)
+   ![Figure 4: Adaptive Beamformer Results on Zynq Ultrascale+](./images/Results_Zynq.PNG)
 
-Now, we want to create a new HLS Component so we can analyze the results of the design on a Versal Premium series device without touching our existing results.
+   Now, we want to create a new HLS Component so we can analyze the results of the design on a Versal Premium series device without touching our existing results.
 
-7. Right-click component `mgs_qrd_wbs_usplus` in the VITIS COMPONENTS panel and select Clone Component. Name the new component `mgs_qrd_wbs_versal`
+8. Right-click component `mgs_qrd_wbs_usplus` in the VITIS COMPONENTS panel and select Clone Component. Name the new component `mgs_qrd_wbs_versal`
 
-8. Select `mgs_qrd_wbs_versal` in the Component dropdown of the FLOW panel.
+9. Select `mgs_qrd_wbs_versal` in the Component dropdown of the FLOW panel.
 
-9. Click the gear to the right of the component selection drop-down.
+10. Click the gear to the right of the component selection drop-down.
 
-10. Select `hls_config.cfg`
+11. Select `hls_config.cfg`
 
-11. Under 'General', go to 'part', and either Browse to or type in `vp1202-vsva2785-1LP-i-L`
+12. Under 'General', go to 'part', and either Browse to or type in `vp1202-vsva2785-1LP-i-L`
 
-12. Run C Synthesis and view the Synthesis Report
+13. Run C Synthesis and view the Synthesis Report
 
 ![Figure 5: Adaptive Beamformer Results on Versal Premium](./images/Results_Versal.PNG)
 
@@ -188,13 +200,11 @@ Table 1:
 
 The table shows that with a comparable amount of resources, the Versal Premium device was able to greatly increase performance by two key factors. First, the Versal Premium device was able to achieve a 7.9% greater maximum  clock. In addition, throughput of the design, as measured by cycles, was improved by over 3X. A key reason for this improvement is due to the more efficient DSP58 primitive on the Versal Premium device compared to the DSP48 primitive on the Zynq Ultrascale+ device. In the native floating-point mode, the DSP58 can compute a floating point multiply accumulate with just one DSP primitive, compared to the emulated DSP48 floating-point arithmetic provided by the parts in the Ultrascale+ family.
 
-## Conclusion 
+## Conclusion
 
 This tutorial has demonstrated that AMD FPGAs can be programmed in C/C++ using Vitis HLS by using a challenging portion of any wireless system as an example. The benefits of developing AMD FPGAs on Vitis HLS are clear. AMD FPGAs are a performance and power advantage versus other acceleration platforms, and developing in C/C++ with Vitis HLS accelerates algorithm coding, testing, deployment, and design migration.
 
-</br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

@@ -14,11 +14,11 @@
 
 This tutorial shows you how to use the pre-synthesis feature called Code Analyzer for the Vitis High-Level Synthesis tool flow.
 
-It is assumed that you are familiar with the Vitis High-Level Synthesis (shortened Vitis HLS or VHLS) tool flow. Code Analyzer requires the same setup as for C-Simulation for an HLS component so you can follow the [getting started with Vitis HLS Components tutorial][GH_Getting_started_VHLS] to familiarize yourself with this process.
+It is assumed that you are familiar with the Vitis High-Level Synthesis (shortened Vitis HLS or VHLS) tool flow. Code Analyzer requires the same setup as for C-Simulation for an HLS component so you can follow the [getting started with Vitis HLS Components tutorial](https://docs.amd.com/access/sources/ftml/topic?isLatest=true&url=Vitis-Tutorials-Getting-Started&resourceid=docs_Vitis_HLS_README_Vitis_HLS&ft:locale=en-US) to familiarize yourself with this process.
 
 Vitis Code Analyzer helps you investigate your design efficiency and get a performance estimation before running the VHLS C-Synthesis compilation. It uses a C-Testbench from the C-Simulation setup to dynamically analyze your design and extract data volume and movement as well as estimate transaction interval to investigate the performance; the data is presented as a graph.
 
-The documentation about Code Analyzer can be found in the [VHLS User Guide UG1399][VHLS_UG1399].
+The documentation about Code Analyzer can be found in the *Vitis High-Level Synthesis User Guide* ([UG1399](https://docs.amd.com/access/sources/dita/map?isLatest=true&url=ug1399-vitis-hls&ft:locale=en-US)).
 
 ## Before You Begin
 
@@ -37,7 +37,6 @@ The labs in this tutorial use:
 1. You need an Vitis Unified IDE workspace. If you don't have one yet, you can create a new one, for example `$ mkdir ~/myworkspace`; that's the name we're going to use in this tutorial: change to match your preference.
 1. Copy the 2 components into your Vitis Unified IDE workspace. `$ cp -r tutorial_example/ tutorial_example_final/ ~/myworkspace`
 1. You are now ready. We will start the Vitis Unified IDE in the next section.
-
 
 ## Investigate `tutorial_example` using Code Analyzer
 
@@ -73,7 +72,7 @@ Your C/C++ code is represented here as a dataflow design even if it is currently
 
 With this graph view you get a lot of information immediately:
 
-- Nodes represent dataflow processes with their names being function names or loops labels (unnamed loops are named “Process #N”). Estimated Transaction Intervals are also presented next to the node name. When you expand the node using the arrow-head button, you can see a snippet of the function call site or loop code.
+- Nodes represent dataflow processes with their names being function names or loops labels (unnamed loops are named "Process #N"). Estimated Transaction Intervals are also presented next to the node name. When you expand the node using the arrow-head button, you can see a snippet of the function call site or loop code.
 - Edges are the communication channel extracted from the variables of the design. You can see their names, the volume of data and the average throughout, expressed by default in bits per second, both estimated from the C-TB run.
 
 Transaction Interval is the minimal delay between two executions of a process.
@@ -103,7 +102,6 @@ More complex code might have more processes on the graph than what you might exp
 
 Let’s look at the process table which shows process names and their pre-synthesis Transaction Interval estimation value. Recall that the Transaction Interval is the minimal delay between two executions of a process. It's worth investigating processes with the largest values because they are the bottle neck but in the context of this tutorial let’s take 2 other examples.
 
-
 ![Code Analyzer process-table only](./images/CA_process_table_only.png "Code Analyzer process-table only")
 
 #### `Process 2` analysis
@@ -116,7 +114,7 @@ On the node representing `Process 2`, use the down pointing arrow on the left to
 
 We can make the following observations:
 
-1. The code is using a double nested loop to clear array `C[16][16]`. 
+1. The code is using a double nested loop to clear array `C[16][16]`.
 1. The performance analysis of Code Analyzer is overlaid in the code snippet, here this is shown between lines 1 and 2 and lines 2 and 3, right at the start of the regions defined by the for-loops. Let's look into the numbers.
 1. Code Analyzer estimates the performance of the innermost-loop first: Initiation Interval of 1 clock cycle can be achieved to start the next iteration, so `II=1` is reported.
 1. Each for-loop is counting from 0 to 15 because constant N=16 is used, so `TRIPCOUNT=16` is reported.
@@ -148,7 +146,7 @@ A similar analysis and computation to the previous section can be performed and 
 
 #### Pipelining `loop3` and new analysis
 
-Let's try to improve the performance of `loop3` by using a pipeline pragma on the innermost-loop: on the graph, right click on the process and select “goto source”, this brings you to the call site.
+Let's try to improve the performance of `loop3` by using a pipeline pragma on the innermost-loop: on the graph, right click on the process and select "goto source", this brings you to the call site.
 
 ![Code Analyzer process loop3 goto source](./images/CA_process_loop3_goto_source.png "Code Analyzer process loop3 goto source")
 
@@ -220,9 +218,9 @@ On the graph, right-click the process, and then select **goto source**. This bri
 &rarr;
 ![Code Analyzer goto source 3](./images/CA_goto_source_step3.png "Code Analyzer goto source 3")
 
-We can see this behavior: “acc” is always cleared as we enter the i-j double loop nest and is updated only at the end of the t-loop before starting a new iteration. But it is cleared again at the start of a new t-loop iteration, so we can see 2 issues:
+We can see this behavior: "acc" is always cleared as we enter the i-j double loop nest and is updated only at the end of the t-loop before starting a new iteration. But it is cleared again at the start of a new t-loop iteration, so we can see 2 issues:
 
-1. Despite being updated, “acc” is never different from zero when it is read, so it has no effects and can be removed from the code.
+1. Despite being updated, "acc" is never different from zero when it is read, so it has no effects and can be removed from the code.
 2. The t-loop is unnecessary because the array D[][] is just updated 4 times with the same values. We can remove the t-loop as well.
 
 We can rerun c-simulation for the design to confirm it’s still functionally correct.
@@ -247,9 +245,10 @@ We can notice:
 
 Only loop4 makes sense and the path is START -> loop4 -> END for A.
 
-If you look more closely at what happens in loop4 you can see that A is incremented by the value 5 for 15 times – because inner j-loop iterates from 1 to 15. So, this could be further simplified as A[i][0] += 15 * 5 without using the “buffer” array.
+If you look more closely at what happens in loop4 you can see that A is incremented by the value 5 for 15 times – because inner j-loop iterates from 1 to 15. So, this could be further simplified as A[i][0] += 15 * 5 without using the "buffer" array.
 
 #### Focus on C
+
 ![Code Analyzer focus on C](./images/CA_focus_C.png "Code Analyzer focus on C")
 
 Similarly, we can see that something is not right with C because this top-level argument is used in 4 communication channels between processes. This is the observed behavior:
@@ -258,11 +257,10 @@ Similarly, we can see that something is not right with C because this top-level 
 2. Loop3 does accumulation on each individual location
 3. In short, if we were to merge the 2 loops then each location is cleared and is followed by a single addition, not an accumulation
 
-Consequences:
+   Consequences:
 
 4. loop2 is not necessary
-5. loop3 can do C[i][j] = B[i][j] * E[i][j]; 
-
+5. loop3 can do C[i][j] = B[i][j] * E[i][j];
 
 We can simplify the code to solve these issues.
 
@@ -270,29 +268,24 @@ After the code updates we can check the new version.
 
 ## Compare optimized with original version
 
-For this tutorial, we have the version of the updated code in the component named `tutorial_example_final`. We can select this component and run `C SIMULATION`. After a few moments, the console reports “C_simulation finished successfully”. Expand the `REPORTS` and click on `Code Analyzer`.
-It contains the updates previously mentioned and pipelines directives for the innermost-loops, and a pragma dataflow at the top to make sure that we are using dataflow. `C-Synthesis` will confirm that when we run it. 
+For this tutorial, we have the version of the updated code in the component named `tutorial_example_final`. We can select this component and run `C SIMULATION`. After a few moments, the console reports "C_simulation finished successfully". Expand the `REPORTS` and click on `Code Analyzer`.
+It contains the updates previously mentioned and pipelines directives for the innermost-loops, and a pragma dataflow at the top to make sure that we are using dataflow. `C-Synthesis` will confirm that when we run it.
 
-The screenshot below shows the Code Analyzer graph for `tutorial_example` on the left and the Code Analyzer graph for `tutorial_example_final` on the right. 
+The screenshot below shows the Code Analyzer graph for `tutorial_example` on the left and the Code Analyzer graph for `tutorial_example_final` on the right.
 
-At a glance, we can see that we have fewer processes and fewer channels as predicted by our investigations. 
+At a glance, we can see that we have fewer processes and fewer channels as predicted by our investigations.
 
 We also show the `Dataflow Viewer` output on the bottom right after running `C SYNTHESIS`: you can notice the process extracted are the same.
 
 ![Code Analyzer side-by-side compare of original vs final](./images/CA_side_by_side_compare.png "Code Analyzer side-by-side compare of original vs final")
 
 ## Conclusion
+
 The `Code Analyzer` view gives us an overview of our design as if it was dataflow: we identified and fixed problems related to performance and legality, and now, we can now run C-synthesis.
 
 We did all this without having to perform C-Synthesis and C-RTL Co-Simulation, significantly accelerating our work.
 
-<!-- references -->
-[GH_Getting_started_VHLS]: ../../../Getting_Started/Vitis_HLS/
-[VHLS_UG1399]: https://docs.amd.com/r/en-US/ug1399-vitis-hls
-
-</br>
 <hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a></b></p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
