@@ -5,6 +5,7 @@
 # Author: Mark Rollins
 
 DO_COSIM        := false
+DO_PAR          := false
 ECHO            := @echo
 
 KERNEL          := m16_ssr8_cyclic_shift_wrapper
@@ -28,6 +29,8 @@ ${XO}: ${KERNEL_SRC}
 ifeq (${DO_COSIM},true)
 	vitis-run --mode hls --config hls.cfg --csim --work_dir ${KERNEL}
 	vitis-run --mode hls --config hls.cfg --cosim --work_dir ${KERNEL}
+endif
+ifeq (${DO_PAR},true)
 	vitis-run --mode hls --config hls.cfg --impl --work_dir ${KERNEL}
 endif
 

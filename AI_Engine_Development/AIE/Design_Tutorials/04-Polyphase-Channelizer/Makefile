@@ -6,7 +6,7 @@
 
 ECHO                               = @echo
 
-export TARGET                      = hw_emu
+export TARGET                      = hw
 
 RELEASE=2025.1
 

@@ -16,10 +16,9 @@ m16_ssr8_graph aie_dut;
 #include <unistd.h>
 #include <xrt/xrt_device.h>
 #include <xrt/xrt_kernel.h>
-
-#include <experimental/xrt_aie.h>
-#include <experimental/xrt_graph.h>
-#include <experimental/xrt_ip.h>
+#include <xrt/xrt_aie.h>
+#include <xrt/xrt_graph.h>
+#include <xrt/experimental/xrt_ip.h>
 
 static const char*    STR_ERROR  = "ERROR:   ";
 static const char*    STR_PASSED = "PASSED:  ";
@@ -48,14 +47,13 @@ static constexpr unsigned    NUM_SAMPLES_O = DDR_WORD_DEPTH_O * 4; // 32-bit (ci
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES = NUM_SAMPLES_I * 4; // Each sample is 4 bytes (32-bits)
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each sample is 4 bytes (32-bits)
 
-
 // ------------------------------------------------------------
 // Main
 // ------------------------------------------------------------
 
 int main(int argc, char* argv[])
 {
-  //TARGET_DEVICE macro needs to be passed from gcc command line
+  // TARGET_DEVICE macro needs to be passed from gcc command line
   if (argc != 2) {
     std::cout << STR_USAGE << argv[0] <<" <xclbin>" << std::endl;
     return 1;
@@ -82,9 +80,6 @@ int main(int argc, char* argv[])
 
   my_graph.reset();
   std::cout << STR_PASSED << "my_graph.reset()" << std::endl;
-
-  my_graph.run(NUM_ITER);
-  std::cout << STR_PASSED << "my_graph.run( NUM_ITER=" << NUM_ITER << " )" << std::endl;
 
   // ------------------------------------------------------------
   // Load and Start DDR Source/Sink PL Kernels
@@ -159,25 +154,23 @@ int main(int argc, char* argv[])
   dma_snk_run.set_arg( 3, DFT_PERM );
   std::cout << STR_PASSED << "dma_snk_run.set_arg( 3, DFT_PERM=" << DFT_PERM << " )" << std::endl;
 
-  dma_src_run.start();
-  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
+  // ------------------------------------------------------------
+  // Run Channelizer
+  // ------------------------------------------------------------
+
+  my_graph.run(NUM_ITER);
+  std::cout << STR_PASSED << "my_graph.run( NUM_ITER=" << NUM_ITER << " )" << std::endl;
 
   dma_snk_run.start();
   std::cout << STR_PASSED << "dma_snk_run.start()" << std::endl;
 
+  dma_src_run.start();
+  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
 
-  // Wait for all kernels to end:
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
-
-  // We only wait for the SNK that is setup for 1 iteration. The SRC and graph are setup to run 2 iterations.
-  // dma_src_run.wait();
-  // std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
-
-  // my_graph.end();
-  // std::cout << STR_PASSED << "my_graph.end()" << std::endl;
 
   // ------------------------------------------------------------
   // Retrieve Results
@@ -212,16 +205,18 @@ int main(int argc, char* argv[])
     ss_a << val_a_re << " " << val_a_im << std::endl;
     int16_t err_re = abs(val_g_re - val_a_re);
     int16_t err_im = abs(val_g_im - val_a_im);
-    flag |= ( err_re > 1 ) || ( err_im > 1 );
-    std::cout << ss << "\t:Gold\t" << val_g_re << "\t" << val_g_im << "\t:Actual\t" << val_a_re << "\t" << val_a_im << std::endl;
+    bool this_flag = ( err_re > 1 ) || ( err_im > 1 );
+    flag |= this_flag;
+    if (this_flag)
+      std::cout << ss << "\t:Gold\t" << val_g_re << "\t" << val_g_im << "\t:Actual\t" << val_a_re << "\t" << val_a_im << std::endl;
   }
   ss_o.close();
   ss_a.close();
 
   // Done:
   if ( flag == 0 )
-    std::cout << std::endl << "--- PASSED ---" << std::endl;
+    std::cout << STR_INFO << "--- PASSED ---" << std::endl;
   else
-    std::cout << std::endl << "*** FAILED ***" << std::endl;
+    std::cout << STR_INFO << "*** FAILED ***" << std::endl;
   return(flag);
 }

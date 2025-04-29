@@ -25,7 +25,7 @@ ALL_INCLUDE       := --include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} 
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -54,7 +54,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all: 	${AIE_OUTPUT}
+all: 	${AIE_OUTPUT} sim throughput_ok
 
 ${AIE_OUTPUT}:	 ${MY_APP}.cpp $(SOURCES)
 	v++ -c --mode aie --target=hw $(AIE_FLAGS) 2>&1 | tee ${LOG_FILE}
@@ -71,15 +71,15 @@ x86sim:
 profile:
 	aiesimulator --profile --online -wdb -text 2>&1 | tee -a ${LOG_FILE}
 
-throughput:
-	@../common/throughput.py aiesimulator_output/data/sig0_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig1_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig2_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig3_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig4_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig5_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig6_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig7_o.txt --iscomplex
+throughput_ok:
+	../common/check_throughput.py PLIO_dft_o_0 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_1 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_2 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_3 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_4 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_5 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_6 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_7 4993.30 5.0
 
 loopII:
 	@../common/get_loop_II.py Work/aie

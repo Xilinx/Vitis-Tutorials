@@ -10,7 +10,7 @@
 
 # Polyphase Channelizer
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -175,9 +175,25 @@ The polyphase channelizer design can be built easily from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms.
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-design>/04-Polyphase-Channelizer/Makefile``` file. The tutorial will build its own custom platform
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
+
+The remaining environment variables are configured in the top level Makefile ```<path-to-design>/04-Polyphase-Channelizer/Makefile``` file.
+
+```
+RELEASE=2025.1
+
+TOP_DIR                   ?= $(shell readlink -f .)
+PLATFORM_NAME              = xilinx_vck190_base_202510_1
+PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
+
+export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
+export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
+export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
+export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
+```
 
 ### Hardware Emulation
 
@@ -188,10 +204,10 @@ The channelizer design can be built for hardware emulation using the Makefile as
 [shell]% make all TARGET=hw_emu
 ```
 
-This will take about 90 minutes to run. The build process will generate a folder ```04-Polyphase-Channelizer/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
+This will take about 90 minutes to run. The build process will generate a folder ```04-Polyphase-Channelizer/package_hw_emu``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
 
 ```
-[shell]% cd <path-to-design>/04-Polyphase-Channelizer/package
+[shell]% cd <path-to-design>/04-Polyphase-Channelizer/package_hw_emu
 [shell]% ./launch_hw_emu.sh -run-app embedded_exec.sh
 ```
 
@@ -204,7 +220,7 @@ The channelizer design can be built for the VCK190 board using the Makefile as f
 [shell]% make all TARGET=hw
 ```
 
-The build process will generate the SD card image in the ```04-Polyphase-Channelizer/package/sd_card``` folder.
+The build process will generate the SD card image in the ```04-Polyphase-Channelizer/package_hw/sd_card``` folder.
 
 ## Estimating Power Using the Power Design Manager
 

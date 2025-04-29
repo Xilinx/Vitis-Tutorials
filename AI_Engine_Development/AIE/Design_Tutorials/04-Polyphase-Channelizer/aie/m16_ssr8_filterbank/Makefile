@@ -52,7 +52,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all: 	${AIE_OUTPUT}
+all: 	${AIE_OUTPUT} sim throughput_ok
 
 ${AIE_OUTPUT}:	 ${MY_APP}.cpp $(SOURCES)
 	v++ -c --mode aie --target=hw $(AIE_FLAGS) 2>&1 | tee ${LOG_FILE}
@@ -72,15 +72,15 @@ profile:
 loopII:
 	@../common/get_loop_II.py Work/aie
 
-throughput:
-	@../common/throughput.py aiesimulator_output/data/sig0_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig1_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig2_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig3_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig4_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig5_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig6_o.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/sig7_o.txt --iscomplex
+throughput_ok:
+	../common/check_throughput.py PLIO_fbank_o_0 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_1 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_2 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_3 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_4 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_5 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_6 4985.00 5.0
+	../common/check_throughput.py PLIO_fbank_o_7 4985.00 5.0
 
 clean:
 	rm -rf Work Work*

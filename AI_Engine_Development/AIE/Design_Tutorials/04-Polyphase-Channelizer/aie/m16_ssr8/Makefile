@@ -19,6 +19,8 @@ SOURCES	          := ../m16_ssr8_filterbank/m16_ssr8_filterbank_graph.h \
 		     m16_ssr8_graph.h
 
 PL_FREQ           := --aie.pl-freq=625.0
+PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 LOG_FILE          := log
 
@@ -67,23 +69,23 @@ x86sim:
 profile:
 	aiesimulator --profile --online -wdb -text 2>&1 | tee -a ${LOG_FILE}
 
-throughput:
-	@../common/throughput.py aiesimulator_output/data/fir_o_0.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_1.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_2.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_3.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_4.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_5.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_6.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/fir_o_7.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_0.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_1.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_2.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_3.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_4.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_5.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_6.txt --iscomplex
-	@../common/throughput.py aiesimulator_output/data/dft_o_7.txt --iscomplex
+throughput_ok:
+	../common/check_throughput.py PLIO_fir_o_0 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_1 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_2 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_3 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_4 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_5 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_6 4985.00 5.0
+	../common/check_throughput.py PLIO_fir_o_7 4985.00 5.0
+	../common/check_throughput.py PLIO_dft_o_0 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_1 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_2 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_3 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_4 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_5 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_6 4993.30 5.0
+	../common/check_throughput.py PLIO_dft_o_7 4993.30 5.0
 
 vitis_xpe: ${VCD_FILE_NAME}.vcd
 
