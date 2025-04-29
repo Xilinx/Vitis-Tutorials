@@ -21,20 +21,23 @@ DFT16_SOURCE      := dft16_graph.h dft16_compute.h dft16_compute.cpp dft16_combi
 MY_SOURCES        := ${MY_APP}.cpp pfa1008_graph.h ${DFT7_SOURCE:%=../dft7w/%} ${DFT9_SOURCE:%=../dft9w/%} \
                      ${DFT16_SOURCE:%=../dft16/%}
 
-PL_FREQ           := --pl-freq=625
-OTHER_OPTS        := --kernel-linting -Xchess="-std=c++17" -xlopt=1
-MAP_OPT           := -Xmapper=BufferOptLevel9
+PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
-CHECK_FIFO        := --evaluate-fifo-depth -Xrouter=disablePathBalancing
+PL_FREQ           := --aie.pl-freq=625
+OTHER_OPTS        := --aie.kernel-linting --aie.Xchess="-std=c++17" --aie.xlopt=1
+MAP_OPT           := --aie.Xmapper=BufferOptLevel9
 
-DSPLIB_OPTS 	  := -include=${DSPLIB_ROOT}/L2/include/aie \
-		     -include=${DSPLIB_ROOT}/L1/include/aie \
-		     -include=${DSPLIB_ROOT}/L1/src/aie \
-		     -include=../dft7w -include=../dft9w -include=../dft16
+CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
+
+DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
+		     --include=${DSPLIB_ROOT}/L1/include/aie \
+		     --include=${DSPLIB_ROOT}/L1/src/aie \
+		     --include=../dft7w --include=../dft9w --include=../dft16
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${OTHER_OPTS} ${DSPLIB_OPTS} ${MAP_OPT} ${PL_FREQ} -platform=${PLATFORM} ${MY_APP}.cpp --output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${OTHER_OPTS} ${DSPLIB_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -73,10 +76,10 @@ gen_vectors:
 	matlab -batch "gen_vectors"
 
 ${AIE_OUTPUT}:	${MY_SOURCES}
-	aiecompiler --target=hw ${AIE_FLAGS} 2>&1| tee log
+	v++ --compile --mode aie --target=hw ${AIE_FLAGS} 2>&1| tee log
 
 x86com:
-	aiecompiler -target=x86sim ${AIE_FLAGS} 2>&1| tee log
+	v++ --compile --mode aie --target=x86sim ${AIE_FLAGS} 2>&1| tee log
 
 sim:
 	aiesimulator 2>&1| tee -a log
