@@ -3,7 +3,7 @@ export PATH=$PATH:/sbin
 export XILINX_XRT=/usr
 export XILINX_VITIS=$PWD
 export XCL_EMULATION_MODE=hw_emu
-./simple_vadd krnl_vadd.xclbin
+./simple_vadd -x krnl_vadd.xclbin -d 0
 return_code=$?
 if [ $return_code -ne 0 ]; then
 echo "ERROR: host run failed, RC=$return_code"

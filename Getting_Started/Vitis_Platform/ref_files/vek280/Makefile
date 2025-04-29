@@ -58,7 +58,7 @@ pfm: $(ABS_HW_PATH)/$(XSA_NAME).xsa
 
 cpVaddCode:
 	mkdir -p vadd_work
-	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp $(XILINX_VITIS)/samples/vadd/* vadd_work -r
 	cp makefile_vadd vadd_work/Makefile
 
 

@@ -8,7 +8,7 @@ PLATFORM_NAME=zcu104_custom
 PLATFORM ?= $(ROOT_DIR)/../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 TARGET ?=hw_emu
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
-SRC=$(XILINX_VITIS)/examples/vadd/
+SRC=$(XILINX_VITIS)/samples/vadd/
 VERSION=2025.1
 SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
 SD_IMAGE_FILE := $(COMMON_IMAGE_ZYNQMP)/Image
@@ -26,7 +26,7 @@ EMU_PS := X86
 endif
 
 # SoC variables
-RUN_APP_SCRIPT = ./run_app.sh
+RUN_APP_SCRIPT = run_app.sh
 PACKAGE_OUT = ./package.$(TARGET)
 
 LAUNCH_EMULATOR = $(PACKAGE_OUT)/launch_$(TARGET).sh
@@ -36,12 +36,16 @@ VPP_PFLAGS :=
 CMD_ARGS = $(BUILD_DIR)/krnl_vadd.xclbin
 SD_CARD := $(PACKAGE_OUT)
 
+
 ifeq ($(EMU_PS), X86)
 CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
 LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
 else
-CXXFLAGS += -I$(SYSROOT)/usr/include/xrt -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
-LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
+CXXFLAGS += -I$(XILINX_VITIS)/include -Wall -O0 -g -std=c++1y
+CXXFLAGS += -I$(SYSROOT)/usr/include/xrt
+CXXFLAGS += -I$(SYSROOT)/usr/include -Wall -Wextra -O0 -g3 -std=c++17 -MD -MT
+CXXFLAGS += -Isrc/ 
+LDFLAGS += -L$(SYSROOT)/usr/lib -luuid -lxrt_coreutil -lxilinxopencl -lpthread -lrt -lstdc++
 endif
 
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
@@ -59,7 +63,9 @@ endif
 PLATFORM_BLOCKLIST += nodma 
 ############################## Setting up Host Variables ##############################
 #Include Required Host Source Files
-HOST_SRCS += $(SRC)/vadd.cpp 
+HOST_SRCS += $(SRC)/src/host.cpp 
+HOST_SRCS += $(SRC)/src/cmdlineparser.cpp 
+HOST_SRCS += $(SRC)/src/logger.cpp 
 # Host compiler global settings
 CXXFLAGS += -fmessage-length=0
 LDFLAGS += -lrt -lstdc++ 
@@ -75,49 +81,36 @@ EXECUTABLE = ./simple_vadd
 EMCONFIG_DIR = $(TEMP_DIR)
 
 ############################## Setting Targets ##############################
-.PHONY: all clean cleanall emconfig 
-
+.PHONY: all clean cleanall docs emconfig
 ifeq ($(EMU_PS), X86)
-all:  check-common-image $(EXECUTABLE) $(LINK_OUTPUT) emconfig 
-	
+all:   $(EXECUTABLE) $(LINK_OUTPUT) emconfig
 else
-all: check-common-image $(EXECUTABLE) $(LINK_OUTPUT) sd_card
-
+all:    $(EXECUTABLE) $(LINK_OUTPUT) sd_card
 endif
-
-#target : check  whether the common image is ready  and copy source code 
-check-common-image: 
-ifeq ($(wildcard $(COMMON_IMAGE_ZYNQMP)/Image),)
-	@echo "'COMMON_IMAGE_ZYNQMP' is not accessible, please download common image from Xilinx Downloads website and set this flag to specify the common image path."
-	@make help
-	@echo "exit ....." && exit 1
-endif
-
 
 .PHONY: host
 host: $(EXECUTABLE)
 
 .PHONY: build
-build: check-vitis check-device $(LINK_OUTPUT)
+build:  $(LINK_OUTPUT)
 
 .PHONY: xclbin
 xclbin: build
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
-$(TEMP_DIR)/krnl_vadd.xo: $(SRC)/krnl_vadd.cpp
+$(TEMP_DIR)/vadd.xo: $(SRC)/src/vadd.cpp
 	mkdir -p $(TEMP_DIR)
-	v++ -c $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -k krnl_vadd --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
+	v++ -c $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -k vadd --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
 
-$(LINK_OUTPUT): $(TEMP_DIR)/krnl_vadd.xo
+$(LINK_OUTPUT): $(TEMP_DIR)/vadd.xo
 	mkdir -p $(BUILD_DIR)
 	v++ -l $(VPP_FLAGS) $(VPP_LDFLAGS) -t $(TARGET) --platform $(PLATFORM) --temp_dir $(TEMP_DIR) -o'$(LINK_OUTPUT)' $(+)
-
 ifeq ($(EMU_PS), X86)
 	v++ -p $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -o $(BUILD_DIR)/krnl_vadd.xclbin
 endif
 ############################## Preparing sdcard ##############################
 .PHONY: sd_card
-sd_card: emconfig  $(SD_CARD)
+sd_card:  emconfig $(SD_CARD)
 
 $(SD_CARD): $(EXECUTABLE) $(LINK_OUTPUT)
 	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(COMMON_IMAGE_ZYNQMP)/rootfs.ext4 --package.sd_file $(SD_IMAGE_FILE)  --package.sd_file $(RUN_APP_SCRIPT) --package.sd_file $(EXECUTABLE) --package.sd_file $(EMCONFIG_DIR)/emconfig.json -o $(BUILD_DIR)/krnl_vadd.xclbin
@@ -147,7 +140,6 @@ else
 	$(ECHO) "Please copy the content of sd_card folder and data to an SD Card and run on the board"
 endif
 
-
 .PHONY: test
 test: $(EXECUTABLE)
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
@@ -159,6 +151,15 @@ endif
 else
 	$(ECHO) "Please copy the content of sd_card folder and data to an SD Card and run on the board"
 endif
+
+check_edge_sw:
+ifndef EDGE_COMMON_SW
+	$(error EDGE_COMMON_SW variable is not set, please download and use the pre-built image from https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+endif
+
+############################## Cleaning Rules ##############################
+# Cleaning stuff
+
 
 clean:
 	-rm $(EXECUTABLE) _x* *.xclbin/{*sw_emu*,*hw_emu*} tmp *.log logs v++* -rf
