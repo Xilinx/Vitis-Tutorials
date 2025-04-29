@@ -8,7 +8,7 @@
 
 # Getting Started in Vitis Unified Embedded IDE
 
-***Version: 2024.2***
+***Version: 2025.1***
 
 This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will accomplish the following tasks in this tutorial:
 
@@ -23,7 +23,7 @@ The example design in this tutorial is based on ZCU102 evaluation board, which u
 
 ## Get Started
 
-Launch Vitis IDE, and we will create out first Vitis Embedded project.
+Launch Vitis IDE, and we will create our first Vitis Embedded project.
 
 * On Windows, click Windows start menu, go to Xilinx Design Tools, launch Vitis.
 * On Linux, open a terminal, `source <VITIS_Install_Path>/settings64.sh`, then launch `vitis` from the terminal.
@@ -133,7 +133,7 @@ Select New Launch Configuration.
 
 The Launch configuration will be auto-populated with the boot artifact components in the platform.
 
-![missing image](./images/launch_config.PNG)
+![missing image](./images/debug_config.PNG)
 
 If using a remote target connection, then this should be used here. Then, select debug icon to debug on the target.
 
@@ -149,7 +149,7 @@ Users can then use the debug options such as continue, step into/over, and so fo
 
 ## Viewing all Vitis IDE CLI commands
 
-The Vitis IDE  will keep a log of all the Vitis Python CLI commands that users can use to rebuild the workspace via the Vitis CommandLine Interface (CLI). This log file can be found in `logs/builder.py`
+The Vitis IDE  will keep a log of all the Vitis Python CLI commands that users can use to rebuild the workspace via the Vitis CommandLine Interface (CLI). This python file can be found in `_ide/worksapce_journal.py` or it can be viewed within the IDE by selecting **Vitis** -> **Workspace Journal**.
 
 
 ## Program Flash
