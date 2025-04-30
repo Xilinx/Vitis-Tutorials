@@ -41,13 +41,13 @@ farrow_design:
 	$(MAKE) compile -C aie/farrow_final
 	$(MAKE) all     -C hls/farrow_dma_snk
 	$(MAKE) all     -C hls/farrow_dma_src
-	$(MAKE) all     -C ps_apps/hw_emu
+	$(MAKE) all     -C ps_apps
 	$(MAKE) all     -C vitis
 
 clean:
 	$(MAKE) clean -C aie/farrow_final
 	$(MAKE) clean -C hls/farrow_dma_snk
 	$(MAKE) clean -C hls/farrow_dma_src
-	$(MAKE) clean -C ps_apps/hw_emu
+	$(MAKE) clean -C ps_apps
 	$(MAKE) clean -C vitis
-	@/bin/rm -rf .crashReporter* .Xil vivado.jou vivado.log
+	@/bin/rm -rf .crashReporter* .Xil vivado.jou vivado.log vfs_work AIECompiler.log

@@ -8,14 +8,9 @@
 % A continuously variable digital delay element https://ieeexplore.ieee.org/document/15483
 clear all;close all;
 rng(1);
-vfs_use=0;          % Vitis Functional Simulation, EA. For more information, register in EA Lounge: 
-                    % https://account.amd.com/en/member/vitis-functional-simulation.html
-if (vfs_use==1)
-    run(sprintf('%s/%s',getenv("XILINX_VITIS"),'vfs/matlab/addVfsToPath.m'))
-    if( exist('vfs_work', 'dir') )
-        system("rm -rf vfs_work");
-    end
-end
+vfs_use=0;          % Vitis Functional Simulation, more information in UG1701.
+                    % To use, source `${XILINX_VITIS}/settings64.sh before starting MATLAB session
+
 %% Create signal
 Nsamp=1024*4;
 TT = numerictype(1,16,14);
@@ -52,7 +47,10 @@ sig_o = fi(z,TT,FF);
 %% Vitis Functional Simulation
 if (vfs_use==1)
     % Initialize AIE Graphs and HLS Kernel objects
-    farrow_vfs_object = vfs.aieGraph(input_file="aie/farrow_final/farrow_app.cpp", include_paths={'aie/farrow_final'});
+    farrow_vfs_object = vfs.aieGraph(...
+        input_file="aie/farrow_final/farrow_app.cpp",...
+        part="xcvc1902-vsva2197-2MP-e-S",...
+        include_paths={'aie/farrow_final'});
 
     % Massage input data to match kernel assumptions
     del_i_model = zeros(size(del_i));
@@ -64,7 +62,7 @@ if (vfs_use==1)
     end
 
     % Functionally simulate design
-    sig_o_actual = farrow_vfs_object.run(vfs.cint16(sig_i.int),vfs.int32(del_i_model)).';
+    sig_o_actual = farrow_vfs_object.run(varray.cint16(sig_i.int),varray.int32(del_i_model)).';
 
     % Compare actual output vs expected
     error = double(sig_o.int) - double(sig_o_actual);

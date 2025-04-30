@@ -10,7 +10,7 @@
 
 # Fractional Delay Farrow Filter
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -147,8 +147,8 @@ The first command compiles graph code for the SystemC simulator, the second comm
 Alternatively, you can issue `make all`. The console should output:
 
 ```
-*** LOOP_II *** Tile: 24_0	minII: 43	beforeII: 123	afterII: 123	Line: 77	File: farrow_kernel.cpp
-Raw Throughput = 204.7 MSPS
+*** LOOP_II *** Tile: 24_0	minII: 46	beforeII: 116	afterII: 116	Line: 77	File: farrow_kernel.cpp
+Raw Throughput = 216.3 MSPS
 Max error LSB = 1
 ```
 
@@ -162,10 +162,10 @@ Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary
 
 *Figure 6 - Farrow Filter Initial Implementation Array View*
 
-Because every loop iteration produces 16 samples, you need II=16 to achieve your desired throughput. Your first design achieved II=123, so this version of the implementation clearly has no chance of achieving the desired throughput. You can get a rough estimate of the expected throughput using the expected versus achieved II.
+Because every loop iteration produces 16 samples, you need II=16 to achieve your desired throughput. Your first design achieved II=116, so this version of the implementation clearly has no chance of achieving the desired throughput. You can get a rough estimate of the expected throughput using the expected versus achieved II.
 
-In this case, 16/123 x 1.25 GHz = 163 Msps. Indeed, this is confirmed by the reported Raw Throughput, which is measured across all graph iterations. A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration.
-In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/6.398 $us$ = 160 Msps.
+In this case, 16/116 x 1.25 GHz = 172 Msps. Indeed, this is confirmed by the reported Raw Throughput, which is measured across all graph iterations. A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration.
+In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/6.038 $us$ = 170 Msps.
 
 ![figure7](images/farrow_initial_trace_view.png)
 
@@ -186,11 +186,11 @@ After running `make all`, the console should display:
 
 ```
 *** LOOP_II *** Tile: 24_0	minII: 28	beforeII: 91	afterII: 82	Line: 62	File: farrow_kernel.cpp
-Raw Throughput = 300.8 MSPS
+Raw Throughput = 301.1 MSPS
 Max error LSB = 1
 ```
 
-Achieved II dropped from 123 to 82, but you are still not where you need to be, so further optimization is needed.
+Achieved II dropped from 116 to 82, but you are still not where you need to be, so further optimization is needed.
 
 ### Second Farrow Optimization
 
@@ -237,7 +237,7 @@ After running `make all`, the console should display:
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 94	File: farrow_kernel.cpp
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 110	File: farrow_kernel.cpp
 *** LOOP_II *** Tile: 25_0	minII: 3	beforeII: 16	afterII: 3	Line: 126	File: farrow_kernel.cpp
-Raw Throughput = 768.1 MSPS
+Raw Throughput = 768.3 MSPS
 Max error LSB = 1
 ```
 
@@ -262,7 +262,7 @@ Once those changes are implemented into design files in the `farrow_final/aie` f
 *** LOOP_II *** Tile: 24_1	minII: 3	beforeII: 16	afterII: 3	Line: 66	File: farrow_kernel2.cpp
 *** LOOP_II *** Tile: 24_1	minII: 3	beforeII: 16	afterII: 3	Line: 82	File: farrow_kernel2.cpp
 *** LOOP_II *** Tile: 25_0	minII: 16	beforeII: 29	afterII: 16	Line: 53	File: farrow_kernel1.cpp
-Raw Throughput = 1151.1 MSPS
+Raw Throughput = 1150.0 MSPS
 Max error LSB = 1
 ```
 
@@ -286,15 +286,15 @@ Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary
 
 *Figure 13 - Farrow Filter Final Implementation Trace View*
 
-Steady state throughput is 1024/912.8e-6 = 1115 Msps.
+Steady state throughput is 1024/913.6e-6 = 1121 Msps.
 
 ## Build and Run Design
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms.
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile ```<path-to-design>/15-farrow_filter/Makefile``` file. The tutorial will build its own custom platform
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
 
 ### Hardware Emulation
 
@@ -317,7 +317,12 @@ After hardware emulation run is complete, you can measure throughput in Vivado b
 
 *Figure 14 - Farrow Filter Final Implementation Hardware Emulation*
 
-Throughput is 1024 x 4 x 4/14.4e-6 = 1138 Msps.
+Throughput measured through the traces is 1024 x 4 x 4/14.5e-6 = 1130 Msps.
+
+After hardware emulation run is complete, the following is displayed on the terminal. Here, throughput is measured using XRT APIs. For more information, refer to *AI Engine Tools and Flows User Guide* [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Support-for-Event-APIs).
+
+![figure15](images/farrow_hw_emu_terminal.png)
+
 
 ### Hardware
 
@@ -328,7 +333,9 @@ The design can be built for the VCK190 board using the Makefile as follows:
 [shell]% make clean all TARGET=hw
 ```
 
-The build process will generate the SD card image in the ```<path-to-design>/15-farrow_filter/package/sd_card``` folder.
+The build process will generate the SD card image in the ```<path-to-design>/15-farrow_filter/package/sd_card``` folder. After flashing sd_card.img into the sd card, power on the board and run the design. The following is displayed on the terminal.
+
+![figure16](images/farrow_hw_terminal.png)
 
 ## Summary and Conclusion
 

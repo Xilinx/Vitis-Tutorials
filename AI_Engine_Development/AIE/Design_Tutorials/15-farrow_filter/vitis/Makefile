@@ -16,7 +16,7 @@ XO                    := ../hls/farrow_dma_src/farrow_dma_src_wrapper.xo \
 GRAPH_O               := ${IP_DIR}/libadf.a
 XSA                   := my.xsa
 STIMULUS_IO           := ${DATA_DIR}/sig_i.txt ${DATA_DIR}/del_i_optimized.txt ${DATA_DIR}/sig_o.txt
-PS_EXE                := ../ps_apps/hw_emu/host.exe
+PS_EXE                := ../ps_apps/host.exe
 
 SD_CARD               := $(abspath ../package)
 BUILD_DIR             := build_${TARGET}

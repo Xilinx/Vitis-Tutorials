@@ -6,15 +6,14 @@
 
 AIE_SIM_ONLY      ?= true
 
-PLATFORM_USE	  := xilinx_vck190_base_202510_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART              := xcvc1902-vsva2197-2MP-e-S
 
 MY_APP             = farrow_app.cpp
 MY_SOURCES         = ${MY_APP} farrow_graph.h farrow_kernel.cpp farrow_kernel.h
 LOG_FILE           = log
 OTHER_OPTS         = --aie.pl-freq=625.0 --aie.Xchess="-std=c++17"
 ALL_INCLUDE       := --include=${PWD}
-AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} --platform=${PLATFORM} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
+AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} --part=${PART} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
 
 ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"
