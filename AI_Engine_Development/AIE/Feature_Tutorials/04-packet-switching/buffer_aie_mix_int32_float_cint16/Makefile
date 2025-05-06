@@ -56,10 +56,10 @@ guard-IMAGE:
 	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2025.1/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux)
 
 ###
 

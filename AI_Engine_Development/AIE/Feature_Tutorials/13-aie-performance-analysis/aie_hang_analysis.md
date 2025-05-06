@@ -10,7 +10,7 @@
 
 # AI Engine Deadlock Analysis
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 This tutorial introduces you to some common deadlock scenarios and shows you how to detect deadlocks (design hangs) in different tool flows. The methods introduced to detect and analyze deadlock issues include:
 

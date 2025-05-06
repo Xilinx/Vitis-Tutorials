@@ -6,7 +6,7 @@ HOST_EXE     = ../host.exe
 HOST_INC   = -I../ -I../aie
 HOST_OBJ   =  host.o
 AIE_CTRL_CPP = ../Work/ps/c_rts/aie_control_xrt.cpp
-SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/sysroots/aarch64-xilinx-linux/
+SYSROOT = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/sysroots/aarch64-amd-linux/
 
 CXXFLAGS += -std=c++17 -I$(XILINX_HLS)/include/ -I${SYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC}
 
