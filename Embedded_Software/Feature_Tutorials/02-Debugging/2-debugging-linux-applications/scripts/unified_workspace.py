@@ -32,7 +32,7 @@ if os.path.isfile(xsa):
     platform = client.get_component(name="zcu102_platform")
     status = platform.build()
 
-    sysroots = os.path.join(os.getcwd(), "./sysroot/sysroots/cortexa72-cortexa53-xilinx-linux")
+    sysroots = os.path.join(os.getcwd(), "./sysroot/sysroots/cortexa72-cortexa53-amd-linux")
     sysroots = os.path.normpath(sysroots)
 
     status = client.set_preference(level = "WORKSPACE", device = "ZynqMP", key = "Sysroot", value = sysroots)

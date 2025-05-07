@@ -9,7 +9,7 @@ TOOLS ?= ""
 VERSION ?= 2025.1
 LINUX_TMP_DIR ?= /tmp/${USER}/${VERSION}/zcu102/petalinux
 
-all: create_xsa sysroots classic_workspace unified_workspace
+all: create_xsa sysroots unified_workspace
 
 create_xsa:
 	$(RM) -rf ./zcu102
@@ -23,10 +23,6 @@ sysroots:
 	cd ./xilinx-zcu102-v2025.1 && petalinux-build
 	cd ./xilinx-zcu102-v2025.1 && petalinux-build --sdk
 	./xilinx-zcu102-v2025.1/images/linux/sdk.sh -y -d sysroot
-
-classic_workspace:
-	$(RM) -rf ./classic_workspace
-	xsct -eval "source classic_workspace.tcl"
 
 unified_workspace:
 	$(RM) -rf ./unified_workspace

@@ -7,7 +7,7 @@
 
 # Debugging Linux Applications
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2025.1***
 
 The AMD Vitis™ IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
 
@@ -19,18 +19,14 @@ The following diagram illustrates the general Linux application debug flow. The 
 
 ![](images/Linux_debug_flow.png)
 
- 
-## Limitations
-
-Xen aware and OS aware debugging is not supported in Vitis Unified IDE 2024.1. If you require this feature, then it is recommended that you use Vitis Classic 2023.2.
 
 ## Getting Started
 
-Linux debug setup is a mandatory step. Setup allows you to create platform and application projects in the Vitis IDE. There is a script attached to this tutorial that users can use to generate a demo XSA, Sysroots and Vitis Workspace.
+Linux debug setup is a mandatory step. Setup allows you to create platform and application projects in the Vitis Unified IDE. There is a script attached to this tutorial that users can use to generate a demo XSA, Sysroots and Vitis Workspace.
 
 1. Open a terminal and navigate to the script’s directory, and source the Petalinux tool.
 2. Run the command *make all*. This will take some time.
-3. Launch the Vitis IDE **vitis_unified** workspace. 
+3. Launch the Vitis IDE **unified_workspace** workspace. 
 
 **Note:** The scripts above will generate the HW and SW images automatically for a ZCU102 board. However, users can refer to the [Appendix](#appendix) section for supplementary information about creating a hardware design and building software boot images manually.
 
@@ -82,9 +78,8 @@ petalinux-boot --qemu --kernel --qemu-args "-net nic -net nic -net nic -net nic,
 ## Physical Board Linux Agent
 
 - **Vitis -> Target Connections**.
-- Right click on **Linux TCF Agent** option and select **New Target**.
-- Change the host IP address to localhost or 127.0.0.1. 
-- change the Port to 1540
+- Right click on **Linux TCF Agent** option and select **New Target**. 
+- Change the host IP address to 192.168.1.11.
 - Click **OK**.
 
 ![](images/Linux-Agent.PNG)
@@ -93,7 +88,8 @@ petalinux-boot --qemu --kernel --qemu-args "-net nic -net nic -net nic -net nic,
 
 - **Vitis -> Target Connections**.
 - Right click on **Linux TCF Agent** option and select **New Target**.
-- Change the host IP address to 192.168.1.11. 
+- Change the host IP address to localhost or 127.0.0.1.
+- change the Port to 1540
 - Click **OK**.
 
 ![](images/Linux-Agent-QEMU.PNG)
@@ -279,13 +275,13 @@ It is required to configure the PetaLinux project to support Linux application d
 1. Create the PetaLinux project:
 
     ```
-    petalinux-create project --template zynqMP -n ./xilinx-zcu102-v2024.1 --tmpdir /tmp/${USER}/zcu102/petalinux
+    petalinux-create project --template zynqMP -n ./xilinx-zcu102-v2025.1 --tmpdir /tmp/${USER}/zcu102/petalinux
     ```
 
 2. Configure the hardware description:
 
     ```
-    cd xilinx-zcu102-2024.1
+    cd xilinx-zcu102-2025.1
     petalinux-config --get-hw-description <path to XSA>
     ```
 
