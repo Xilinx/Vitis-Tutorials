@@ -9,7 +9,7 @@
 
 # AIE API based FFT for Many Instances Applications on AIE-ML <!-- omit from toc -->
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -78,7 +78,7 @@ To thoroughly understand the content of this tutorial, it is necessary to know a
 For further information, please refer to the following documentation:
 
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
-- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc)
+- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2025_1/aiengine_api/aie_api/doc)
 - [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
 - [Versal Adaptive SoC AIE-ML Architecture Manual (AM020)](https://docs.amd.com/r/en-US/am020-versal-aie-m)
 - [Versal Adaptive SoC Technical Reference Manual (AM011)](https://docs.amd.com/r/en-US/am011-versal-acap-trm)
@@ -100,17 +100,12 @@ The total required I/O bandwidth, thus minimum throughput, is thus 16 GSa/s or 6
 The considered case study requires the computation of the FFT of 128 concurrent signals. To do so, an efficient strategy is to create a basic FFT computing block and replicate it in the top graph to run more FFT calculations in parallel, matching the required throughput.
 Moreover, to optimize the AI Engine resources, it is beneficial to maximize the local memory usage and to serialize the data and the computation, as this decreases the interface and compute tiles utilization.
 For how the FFT algorithm works, the buffering of at least half the samples of each signal is required. To avoid using programmable logic memory resources, the chosen strategy is to perform such buffering inside the AIE-ML using the memory tiles.
-
-> *Fig. 1: Preliminary Data Flow Block Diagram*
-
-![Preliminary Data Flow Block Diagram](./images/Dataflow_prototype_0.png)
-
+<p align="center"><img src="./images/Dataflow_prototype_0.png" width="90%"></p>
+<p align="center">Fig. 1: Preliminary Data Flow Block Diagram.</p>
+</br>
 
 The resulting system follows the diagram shown in figure 1, where 128 instances are acquired in parallel, then they are routed from the programmable logic to the AIE-ML though a certain number **N** of interface tile I/O channels. The samples are then routed to a certain number **K** of kernels to compute the FFTs in parallel, and their output is eventually routed back to PL.
-
-
-> *Table 1: Preliminary Design Strategy Summary*
-
+</br>
 <table>
       <tbody>
          <tr>
@@ -144,6 +139,9 @@ The resulting system follows the diagram shown in figure 1, where 128 instances 
          </tr>
       </tbody>
 </table>
+<p align="center">Table 1: Preliminary Design Strategy Summary.</p>
+</br>
+
 
 
 ## Designing the FFT Application with the AI Engine ML
@@ -151,7 +149,7 @@ The resulting system follows the diagram shown in figure 1, where 128 instances 
 In this section it is explained the rationale of the kernel and graph implementation, that has been done following the coding guidelines found in:
 
 - [AI Engine-ML Kernel and Graph Programming Guide (UG1603)](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
-- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc)
+- [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/xilinx2025_1/aiengine_api/aie_api/doc)
 
 ### Designing the Kernel with the AI Engine API
 
@@ -198,6 +196,7 @@ From the figure above, note that the vectorization follows the equations above, 
 </br>
 
 The function’s arguments are:
+
 - The **pointers to the twiddle tables**, that are in number equal to the used stage radix minus one, thus three pointers for a radix-4 stage implementation, as observable from figure 2;
 - The **input data memory pointer**;
 - The **output data memory pointer**; 
@@ -226,7 +225,7 @@ The file structure of choice to write the kernels is:
 ##### Twiddles Header File
 
 The first header file, that contains all the twiddle factor entries, is a rather long file. Because of the regular structure of the code, and because the mathematical formula to compute the twiddles is well known, the better choice is to generate the header file using a script.
-The twiddle generation script, written in Python following the [AIE API](https://www.xilinx.com/htmldocs/xilinx2024_1/aiengine_api/aie_api/doc/group__group__fft.html) guidelines, along with an explanation of its functionalities can be found in the [support twiddles folder](./support/twiddles/) of this repository.
+The twiddle generation script, written in Python following the [AIE API](https://www.xilinx.com/htmldocs/xilinx2025_1/aiengine_api/aie_api/doc/group__group__fft.html) guidelines, along with an explanation of its functionalities can be found in the [support twiddles folder](./support/twiddles/) of this repository.
 
 In particular, the defined twiddles vectors are organized with two subscripts, the first indicating the FFT stage, and the second indicating the stage entry. Thus for instance, the third entry of the fifth stage of a radix-4 FFT stage will be named *TWID4_2*. Because this project is about a radix-4 staged implementation, the generated header file contains 15 twiddle tables, three per each of the five stages.
 
@@ -330,6 +329,7 @@ It is also worth noting that in the following code block are used two chess comp
 For this implementation, the REPEAT parameter is set to 2. Thus two FFTs are batched together in one kernel. Therefore, in first instance, it must be replicated 64 times to perform all FFTs in parallel.
 
 ### Designing the Graph
+
 After writing the kernels, the last coding step is to write the adaptive flow graph of the AI Engine application, that is planing the data movement, the kernel replication, the memory tiles buffers, the connectivity, and the mapping. To do so, it is paramount to understand how this AI Engine application interacts with the external world, that is the input and output data flow.
 
 #### Data Movement Design
@@ -387,6 +387,7 @@ The tiling parameters regulate the access to the shared buffer by dividing it in
     -   Wrap: the number of tiles to be accessed in the chosen dimension.
 
 #### Coding the Graph
+
 After designing the data flow, and understanding the constructs to be used to make it possible, the next step is to code the actual graph.
 For this tutorial, the graph files are just the header and the implementation file.
 
@@ -556,6 +557,7 @@ Now that the design of the AIE-ML FFT implementation is complete, the next step 
 ## Implementing and Evaluating the AIE-ML Design with Vitis Unified IDE 
 
 ### Creating the AI Engine ML Project in Vitis
+
 To create the AIE-ML project in Vitis Unified IDE, follow those steps:
 1. Clone this repository.
 2. Open Vitis Unified IDE.
@@ -629,6 +631,7 @@ To look into the optimization step, see the final step of this tutorial.
 
 
 ## Optimizing the AIE-ML Design
+
 After gathering the performance data of the first 3D buffer implementation, we can proceed refining the design through a rework on the Adaptable Flow Graph code. In this section is shown that a much more power efficient implementation can be achieved with a second design iteration by leveraging the results gathered in the first one and applying some basic architectural knowledge. 
 
 ### Graph Optimizations 
@@ -673,6 +676,7 @@ To use the new graph, open the ``"fft1k_128_graph.cpp"`` graph source code file 
  ``#include "fft1k_128_graph.h"`` with ``#include "fft1k_128_new_graph.h"``
 
 ### x86 Simulation and Functional Validation
+
 The steps for building and verifying the project are the same as those for the second part of the tutorial.
 1. Build the x86 simulation for the graph by clicking "Build" under the "X86 SIMULATION" tab on the "FLOW" menu located on the bottom left corner of the GUI.
 2. Make sure that all the required verification text files are under the ``./src/verif_i_128`` folder, and run the simulation by clicking "Run", under the same tab of the previous step.
@@ -680,6 +684,7 @@ The steps for building and verifying the project are the same as those for the s
 4. Run the Python verification script while being located into the ```support/verification``` directory with the following command ```python -i ./Basic_verification``` and make sure that the results are correct.
 
 ### AI Engine Simulation, Array and Trace analysis
+
 The steps for building the hardware and analyzing the reports are the as those for the second part of the tutorial.
 1. Build the Hardware project for the graph by clicking "Build" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu located on the bottom left corner of the GUI.
 2. When the build finishes, under the reports in the "FLOW" menu, click "array" and check the AI Engine utilization.
