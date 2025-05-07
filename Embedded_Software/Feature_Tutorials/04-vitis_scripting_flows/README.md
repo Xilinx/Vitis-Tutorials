@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 # Vitis Embedded Scripting Flows
 
@@ -23,7 +23,7 @@ There are commandline API for creating Vitis components, API for extracting the 
 
 There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial.
 
-Launch Vivado 2024.2 and use the TCL commands below
+Launch Vivado 2025.1 and use the TCL commands below
 
 ```
 cd scripts
@@ -91,7 +91,7 @@ client.set_workspace(pwd + "/vitis_ws")
 The Boot Artifacts will be automatically generated. For Zynq Ultrascale this will be the FSBL. If users dont want this, then use the `no_boot_bsp = True`
 
 ```
-platform = client.create_platform_component(name = "base_platform",hw_design = "design_1_wrapper.xsa",os = "standalone",cpu = "psu_cortexa53_0")
+platform = client.create_platform_component(name = "base_platform",hw_design = "../zcu102/design_1_wrapper.xsa",os = "standalone",cpu = "psu_cortexa53_0")
 ```
 
 ### Opening an existing Vitis Platform
@@ -193,13 +193,6 @@ This will be delivered as a list. Users can iterate through this
 ```
 for os in domain_object.get_os():
     print(os)
-```
-
-Each object in the list will be delivered as a dictionary with keys; 'os', 'current_path', 'possibleOptions'. For example, users can return all the OS
-
-```
-for os in domain_object.get_os():
-    print(os['os'])
 ```
 
 ### get_drivers
@@ -321,6 +314,7 @@ apps = client.get_templates(type = "EMBD_APP")
 This will list of all the Embedded Application templates:
 
 ```
+ 'asufw',
  'ddr_self_refresh',
  'dhrystone',
  'empty_application',
@@ -331,12 +325,15 @@ This will list of all the Embedded Application templates:
  'freertos_lwip_udp_perf_client',
  'freertos_lwip_udp_perf_server',
  'hello_world',
+ 'img_rcvry',
+ 'imgsel',
  'libmetal_echo_demo',
  'lwip_echo_server',
  'lwip_tcp_perf_client',
  'lwip_tcp_perf_server',
  'lwip_udp_perf_client',
  'lwip_udp_perf_server',
+ 'mba_fs_boot',
  'memory_tests',
  'openamp_echo_test',
  'openamp_matrix_multiply',
@@ -353,6 +350,7 @@ This will list of all the Embedded Application templates:
  'zynqmp_fsbl',
  'zynqmp_pmufw',
  'linux_hello_world'
+ 'linux_empty_application',
 ```
 
 ### Creating Vitis Application
@@ -360,7 +358,7 @@ This will list of all the Embedded Application templates:
 The API below will create an application built upon the domain created above. Users can use the `platform.list_domains` API to get a list of domains within the platform. The platform should be built `platform.build()` before this API is ran.
 
 ```
-app = client.create_app_component(name="hello_world",platform = "base_platform/base_platform.xpfm",domain = "my_domain",template = "hello_world")
+app = client.create_app_component(name="hello_world",platform = "base_platform/export/base_platform/base_platform.xpfm",domain = "my_domain",template = "hello_world")
 ```
 
 ### Setting Application Compiler option
@@ -369,7 +367,7 @@ Users can set the application compiler options. For exmaple
 
 ```
 app.set_app_config(key='USER_COMPILE_DEBUG_LEVEL', values=['-g3'])
-app.set_app_config(key='USER_COMPILE_OTHER_FLAGS', values='"-fmessage-length=0 -MT"$@" -k"')
+app.set_app_config(key='USER_COMPILE_OTHER_FLAGS', values='"-fmessage-length=0 -MT"$$@" -k"')
 ```
 
 ### Building Vitis Application
@@ -398,7 +396,7 @@ Users need to import the XSA container file exported from Vivado, and create a `
 > **Note**: This created a Hardware Manager Object called "HwDesign" that users can use to extract the required HW metadata needed for their software system.
 
 ```
-HwDesign = hsi.HwManager.open_hw_design("design_1_wrapper.xsa")
+HwDesign = hsi.HwManager.open_hw_design("../zcu102/design_1_wrapper.xsa")
 ```
 
 ### Close Hardware Design
@@ -417,19 +415,25 @@ Vitis [0]: HwDesign.report_property()
 
 ```
 Property         Type     Read-only  Value
-ADDRESS_TAG      string*  true       
 BOARD            string   true       xilinx.com:zcu102:part0:3.4
 CLASS            string   true       hw_design
+DESIGN_ID        string   true       0
 DEVICE           string   true       xczu9eg
 FAMILY           string   true       zynquplus
-NAME             string   true       design_1_wrapper
+IS_RM            string   true       True
+IS_STATIC        string   true       False
+NAME             string   true       mpsoc_preset_0
+NODE_ID          string   true       0
 PACKAGE          string   true       ffvb1156
+PARENT_ID        string   true       0
 PART             string   true       xczu9eg-ffvb1156-2-e
-PATH             string   true       design_1.hwh
+PATH             string   true       mpsoc_preset.hwh
+RP_ID_INFO       string   true       
+RP_INST_NAME     string   true       
 SPEEDGRADE       string   true       -2
-SW_REPOSITORIES  string*  true       
-TIMESTAMP        string   true       Wed Aug 16 16:42:32 2023
-VIVADO_VERSION   string   true       2024.2
+SW_REPOSITORIES  string*  true       []
+TIMESTAMP        string   true       Mon Apr 28 16:18:04 2025
+VIVADO_VERSION   string   true       2025.1
 ```
 
 Users can return a specific property, such as the `FAMILY`
@@ -470,55 +474,68 @@ cells[0].report_property()
 This will look similar to below
 ```
 Property                      Type     Read-only  Value
-ADDRESS_TAG                   string   true       
-BD_TYPE                       string   true       
-CLASS                         string   true       cell
-CONFIG_C_ALL_INPUTS           string   true       0
-CONFIG_C_ALL_INPUTS_2         string   true       0
-CONFIG_C_ALL_OUTPUTS          string   true       1
-CONFIG_C_ALL_OUTPUTS_2        string   true       0
-CONFIG_C_BASEADDR             string   true       0xA0000000
-CONFIG_C_DOUT_DEFAULT         string   true       0x00000000
-CONFIG_C_DOUT_DEFAULT_2       string   true       0x00000000
-CONFIG_C_FAMILY               string   true       zynquplus
-CONFIG_C_GPIO2_WIDTH          string   true       32
-CONFIG_C_GPIO_WIDTH           string   true       8
-CONFIG_C_HIGHADDR             string   true       0xA000FFFF
-CONFIG_C_INTERRUPT_PRESENT    string   true       0
-CONFIG_C_IS_DUAL              string   true       0
-CONFIG_C_S_AXI_ADDR_WIDTH     string   true       9
-CONFIG_C_S_AXI_DATA_WIDTH     string   true       32
-CONFIG_C_TRI_DEFAULT          string   true       0xFFFFFFFF
-CONFIG_C_TRI_DEFAULT_2        string   true       0xFFFFFFFF
-CONFIG_Component_Name         string   true       design_1_axi_gpio_0_0
-CONFIG_EDK_IPTYPE             string   true       PERIPHERAL
-CONFIG_GPIO2_BOARD_INTERFACE  string   true       Custom
-CONFIG_GPIO_BOARD_INTERFACE   string   true       led_8bits
-CONFIG_USE_BOARD_FLOW         string   true       true
-CONFIGURABLE                  bool     true       0
-CORE_REVISION                 string   true       30
-DRIVER_MODE                   string   true       
-HIER_NAME                     string   true       
-IP_NAME                       string   true       axi_gpio
-IP_TYPE                       enum     true       PERIPHERAL
-ISPDEFINST                    bool     true       0
-IS_HIERARCHICAL               bool     true       0
-IS_PL                         bool     true       1
-MULTISOCKETSMP                string   true       
-NAME                          string   true       axi_gpio_0
-PRODUCT_GUIDE                 string   true       http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_gpio;v=v2_0;d=pg144-axi-gpio.pdf
-SLAVES                        string*  true       
-SLR_NUMBER                    int      true       -1
-VLNV                          string   true       xilinx.com:ip:axi_gpio:2.0
+ADDRESS_TAG                           string   true       
+BD_TYPE                               string   true       
+CLASS                                 string   true       cell
+CONFIG_BMG_INSTANCE                   string   true       EXTERNAL
+CONFIG_C_BRAM_ADDR_WIDTH              string   true       11
+CONFIG_C_BRAM_INST_MODE               string   true       EXTERNAL
+CONFIG_C_ECC                          string   true       0
+CONFIG_C_ECC_ONOFF_RESET_VALUE        string   true       0
+CONFIG_C_ECC_TYPE                     string   true       0
+CONFIG_C_FAMILY                       string   true       zynquplus
+CONFIG_C_FAULT_INJECT                 string   true       0
+CONFIG_C_MEMORY_DEPTH                 string   true       2048
+CONFIG_C_RD_CMD_OPTIMIZATION          string   true       0
+CONFIG_C_READ_LATENCY                 string   true       1
+CONFIG_C_SINGLE_PORT_BRAM             string   true       0
+CONFIG_C_S_AXI_ADDR_WIDTH             string   true       13
+CONFIG_C_S_AXI_BASEADDR               string   true       0xA0010000
+CONFIG_C_S_AXI_CTRL_ADDR_WIDTH        string   true       32
+CONFIG_C_S_AXI_CTRL_DATA_WIDTH        string   true       32
+CONFIG_C_S_AXI_DATA_WIDTH             string   true       32
+CONFIG_C_S_AXI_HIGHADDR               string   true       0xA0011FFF
+CONFIG_C_S_AXI_ID_WIDTH               string   true       1
+CONFIG_C_S_AXI_PROTOCOL               string   true       AXI4
+CONFIG_C_S_AXI_SUPPORTS_NARROW_BURST  string   true       1
+CONFIG_Component_Name                 string   true       mpsoc_preset_axi_bram_ctrl_0_0
+CONFIG_DATA_WIDTH                     string   true       32
+CONFIG_ECC_ONOFF_RESET_VALUE          string   true       0
+CONFIG_ECC_TYPE                       string   true       0
+CONFIG_EDK_IPTYPE                     string   true       PERIPHERAL
+CONFIG_EDK_SPECIAL                    string   true       BRAM_CTRL
+CONFIG_FAULT_INJECT                   string   true       0
+CONFIG_ID_WIDTH                       string   true       0
+CONFIG_MEM_DEPTH                      string   true       2048
+CONFIG_PROTOCOL                       string   true       AXI4
+CONFIG_RD_CMD_OPTIMIZATION            string   true       0
+CONFIG_READ_LATENCY                   string   true       1
+CONFIG_SINGLE_PORT_BRAM               string   true       0
+CONFIG_SUPPORTS_NARROW_BURST          string   true       1
+CONFIG_USE_ECC                        string   true       0
+CONFIGURABLE                          bool     true       0
+CORE_REVISION                         string   true       13
+DRIVER_MODE                           string   true       
+HIER_NAME                             string   true       
+IP_NAME                               string   true       axi_bram_ctrl
+IP_TYPE                               enum     true       MEMORY_CNTLR
+ISPDEFINST                            bool     true       0
+IS_HIERARCHICAL                       bool     true       0
+IS_PL                                 bool     true       1
+MULTISOCKETSMP                        string   true       
+NAME                                  string   true       axi_bram_ctrl_0
+PRODUCT_GUIDE                         string   true       http://www.xilinx.com/cgi-bin/docs/ipdoc?c=axi_bram_ctrl;v=v4_1;d=pg078-axi-bram-ctrl.pdf
+SLAVES                                string*  true       []
+SLR_NUMBER                            int      true       -1
+VLNV                                  string   true       xilinx.com:ip:axi_bram_ctrl:4.1
 ```
 
 Again, users can print a specific cell object property
 
 ```
-Vitis [0]: print(cells[0].CONFIG_C_BASEADDR)
-0xA0000000
+Vitis [0]: print(cells[0].CONFIG_C_S_AXI_HIGHADDR)
+0xA0011FFF
 ```
-
 
 Users can also just use the filter the cells. For example, if users wanted to find a specific cell with IP_NAME as axi_gpio
 
@@ -556,7 +573,7 @@ Here, users can see the list of all the IP on the memory map
 
 ```
 Vitis [0]: print(memmap)
-axi_gpio_0 psu_acpu_gic psu_adma_0 psu_adma_1 psu_adma_2 psu_adma_3 psu_adma_4 psu_adma_5 psu_adma_6 psu_adma_7 psu_afi_0 psu_afi_1 psu_afi_2 psu_afi_3 psu_afi_4 psu_afi_5 psu_afi_6 psu_ams psu_apm_0 psu_apm_1 psu_apm_2 psu_apm_5 psu_apu psu_can_1 psu_cci_gpv psu_cci_reg psu_coresight_0 psu_crf_apb psu_crl_apb psu_csu_0 psu_csudma psu_ctrl_ipi psu_ddr_0 psu_ddr_1 psu_ddr_phy psu_ddr_qos_ctrl psu_ddr_xmpu0_cfg psu_ddr_xmpu1_cfg psu_ddr_xmpu2_cfg psu_ddr_xmpu3_cfg psu_ddr_xmpu4_cfg psu_ddr_xmpu5_cfg psu_ddrc_0 psu_dp psu_dpdma psu_efuse psu_ethernet_3 psu_fpd_gpv psu_fpd_slcr psu_fpd_slcr_secure psu_fpd_xmpu_cfg psu_fpd_xmpu_sink psu_gdma_0 psu_gdma_1 psu_gdma_2 psu_gdma_3 psu_gdma_4 psu_gdma_5 psu_gdma_6 psu_gdma_7 psu_gpio_0 psu_gpu psu_i2c_0 psu_i2c_1 psu_iou_scntr psu_iou_scntrs psu_iousecure_slcr psu_iouslcr_0 psu_ipi_0 psu_lpd_slcr psu_lpd_slcr_secure psu_lpd_xppu psu_lpd_xppu_sink psu_mbistjtag psu_message_buffers psu_ocm psu_ocm_ram_0 psu_ocm_xmpu_cfg psu_pcie psu_pcie_attrib_0 psu_pcie_dma psu_pcie_high1 psu_pcie_high2 psu_pcie_low psu_pmu_global_0 psu_qspi_0 psu_qspi_linear_0 psu_r5_0_atcm_global psu_r5_0_btcm_global psu_r5_1_atcm_global psu_r5_1_btcm_global psu_r5_tcm_ram_global psu_rcpu_gic psu_rpu psu_rsa psu_rtc psu_sata psu_sd_1 psu_serdes psu_siou psu_smmu_gpv psu_smmu_reg psu_ttc_0 psu_ttc_1 psu_ttc_2 psu_ttc_3 psu_uart_0 psu_uart_1 psu_usb_0 psu_usb_xhci_0 psu_wdt_0 psu_wdt_1
+'axi_gpio_0','axi_bram_ctrl_0','psu_acpu_gic','psu_adma_0','psu_adma_1','psu_adma_2','psu_adma_3','psu_adma_4','psu_adma_5','psu_adma_6','psu_adma_7','psu_afi_0','psu_afi_1','psu_afi_2','psu_afi_3','psu_afi_4','psu_afi_5','psu_afi_6','psu_ams','psu_apm_0','psu_apm_1','psu_apm_2','psu_apm_5','psu_apu'
 ```
 
 ### Get Pins on an IP
@@ -569,7 +586,7 @@ Vitis [0]: pins = HwDesign.get_pins(hierarchical='true')
 
 ```
 Vitis [0]: print(pins)
-s_axi_aclk s_axi_aresetn s_axi_awaddr s_axi_awvalid s_axi_awready s_axi_wdata s_axi_wstrb s_axi_wvalid s_axi_wready s_axi_bresp s_axi_bvalid s_axi_bready s_axi_araddr s_axi_arvalid s_axi_arready s_axi_rdata s_axi_rresp s_axi_rvalid s_axi_rready gpio_io_o ACLK ARESETN ...
+'bram_addr_a','bram_addr_b','bram_clk_a','bram_clk_b','bram_en_a','bram_en_b','bram_rddata_a','bram_rddata_b','bram_rst_a','bram_rst_b','bram_we_a','bram_we_b','bram_wrdata_a','bram_wrdata_b','s_axi_aclk','s_axi_araddr','s_axi_arburst','s_axi_arcache','s_axi_aresetn','s_axi_arlen','s_axi_arlock'
 ```
 
 Similar to the cells object previously, users can return the pin properties
@@ -581,17 +598,18 @@ Vitis [0]: pins[0].report_property()
 ```
 Property      Type    Read-only  Value
 CLASS         string  true       port
-CLK_FREQ      string  true       99990005
-DIRECTION     string  true       I
-INTERFACE     bool    true       0
-IRQID         string  true       
+CLK_FREQ      string  true
+DIRECTION     string  true       O
+INTERFACE     bool    true       1
+IRQID         string  true
 IS_CONNECTED  bool    true       1
-LEFT          string  true       
-NAME          string  true       s_axi_aclk
-POLARITY      enum    true       
-RIGHT         string  true       
-SENSITIVITY   enum    true       
-TYPE          enum    true       clk
+LEFT          string  true       12
+NAME          string  true       bram_addr_a
+POLARITY      enum    true
+RIGHT         string  true       0
+SENSITIVITY   enum    true
+TYPE          enum    true       undef
+
 ```
 
 Users can use this to make a better filter. For example, if users wantred to return all clk pins
@@ -602,14 +620,14 @@ Vitis [0]: clk_pins = HwDesign.get_pins(hierarchical='true',filter='TYPE==clk')
 
 ```
 Vitis [0]: print(clk_pins)
-s_axi_aclk ACLK S00_ACLK M00_ACLK slowest_sync_clk maxihpm0_fpd_aclk pl_clk0
+'bram_clk_a','bram_clk_b','s_axi_aclk','clka','clkb','s_axi_aclk','ACLK','M00_ACLK','M01_ACLK','S00_ACLK','S01_ACLK','slowest_sync_clk','maxihpm0_fpd_aclk','maxihpm1_fpd_aclk','pl_clk0'
 ```
 
 Users can return the pins on a specfic object such as the axi_gpio cell used above
 
 ```
 Vitis [0]: print(cells[0])
-axi_gpio_0
+axi_bram_ctrl_0
 ```
 
 ```
@@ -618,7 +636,7 @@ Vitis [0]: axi_gpio_pins = HwDesign.get_pins(of_object=cells[0],filter='TYPE==cl
 
 ```
 Vitis [0]: print(axi_gpio_pins)
-s_axi_aclk
+'bram_clk_a','bram_clk_b','s_axi_aclk'
 ```
 
 Filtering on the `TYPE` pin property is also useful to find all interrupt pins
@@ -648,7 +666,7 @@ Vitis [0]: axi_gpio_intf_pins = HwDesign.get_intf_pins(of_object=cells[0])
 
 ```
 Vitis [0]: print(axi_gpio_intf_pins)
-S_AXI GPIO
+'S_AXI','BRAM_PORTA','BRAM_PORTB'
 ```
 
 Again, users can read the interface pin properties to read the downstream AXI interface of the axi_gpio cell object
@@ -659,7 +677,7 @@ Vitis [0]: ds_axi_gpio_intf_pins = HwDesign.get_intf_pins(of_object=cells[0],fil
 
 ```
 Vitis [0]: print(ds_axi_gpio_intf_pins)
-S_AXI_0
+S_AXI
 ```
 
 Similar API are shown below
@@ -832,7 +850,7 @@ session.dow("test.bin", "--data", addr=0x10000000)
 
 ### Launching jtagterminal
 
-If users have the STDIN/OUT set to coresight in the BSP settings in Vitis. Then luanch the jtagterminal. For example, below is for Versal
+If users have the STDIN/OUT set to coresight in the BSP settings in Vitis. Then launch the jtagterminal. For example, below is for Versal
 
 ```
 a72 = session.targets("--set", filter="name =~ *Cortex-A72 #0*")
