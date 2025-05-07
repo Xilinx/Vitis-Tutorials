@@ -10,7 +10,7 @@
 
 # Polyphase Channelizer on AIE-ML using Vitis Libraries
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -33,8 +33,8 @@
 ## Introduction
 
 AMD Vitis™ Libraries introduced two new IP elements to simplify building Channelizers.
-* [TDM FIR](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/rst/class_xf_dsp_aie_fir_tdm_fir_tdm_graph.html)
-* [2D FFT/IFFT Vitis subsystem](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/rst/class_xf_dsp_aie_fft_ifft_2d_aie_pl_fft_ifft_dit_2d_graph.html)
+* [TDM FIR](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fir-TDM.html)
+* [2D FFT/IFFT Vitis subsystem](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fft-vss.html)
 
 This tutorial explains how you can leverage these IP blocks to build high performance channelizers using a combination of AIE-ML and programmable logic (PL) resources in AMD Versal™ adaptive SoC devices.
 The content of this tutorial is also available as an on-demand video, second session of [AMD Versal™ AI Engine for DSP Webinar Series](https://webinar.amd.com/AMD-Versal-tm-AI-Engine-for-DSP-Webinar-Series/en).
@@ -153,7 +153,7 @@ This causes the storage requirement to increase beyond the predicted 32 tiles. T
 
 ![figure6](images/filterbank_characterize_array_view_zoom.png)
 
-We also observe that the achieved throughput is higher than the requirement, 4096/1.253 = 3270 MSPS.
+We also observe that the achieved throughput is higher than the requirement, 4096/1.256 = 3261 MSPS.
 
 ![figure7](images/filterbank_characterize_trace_view.png)
 
@@ -190,7 +190,7 @@ Compile and simulate the design to confirm it works as expected.
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
 
-Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tiles with a throughput = 4096/1.837us = 2230 MSPS.
+Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tiles with a throughput = 4096/1.836us = 2231 MSPS.
 
 ![figure8](images/filterbank_array_view.png)
 
@@ -199,12 +199,26 @@ Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tile
 
 ### IFFT-2D System Partitioning
 
-In this tutorial, we explore the use of 2D IFFT IP to implement a 4K-pt IFFT @ 2 GSPS. The resources span AIE + PL.
-We need to characterize a single instance of the IP and measure throughput to understand how many instances we need to meet performance.
+In this tutorial, we explore the use of 2D IFFT IP to implement a 4K-pt IFFT @ 2 GSPS. The resources span AIE + PL. To learn more about this IP, refer to [Vitis Libraries - 2D FFT/IFFT Vitis subsystem](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fft-vss.html).
 
-![figure10](images/2D_4k_IFFT.png)
+The IP offers two modes to implement the IFFT set via VSS_MODE parameter: Mode 1 and Mode 2. 
+
+Mode 1 implements the row and column transforms in AI Engine while implementing the tranpose operations in PL.
+![figure10](images/2D_4k_IFFT_VSS_MODE_1.png)
+
+Mode 2 splits the IFFT into a front section mapped to AI Engine and a back section mapped to PL. This architecture results in less memory requirements in PL but requires some DSPs.
+![figure10](images/2D_4k_IFFT_VSS_MODE_2.png)
+
+#### Available Workflows for IFFT-2D IP
+
+There are two entry points when using the IFFT-2D IP.
+
+1) Instantiate IP as a Vitis subsystem (VSS) -> Recommended flow, IP takes care of leaf block connectivity producing a .vss. Example of this shown in [Vitis Libraries IFFT-2D VSS example](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L2/examples/vss_fft_ifft_1d)
+2) Instantiate leaf blocks of IFFT-2D -> User responsible for leaf blocks connectivity. This tutorial walks through this flow.
 
 #### IFFT-2D Library Characterization
+
+We need to characterize a single instance of the IP and measure throughput to understand how many instances we need to meet performance.
 
 The first step is to characterize the 2D IFFT AI Engine IP, that is, vss_fft_ifft_1d_graph, to understand the optimal configuration to meet our requirements.
 
@@ -244,8 +258,8 @@ The next step is to characterize its performance.
 ```
 
 Inspecting vitis_analyzer, we can read two throughput numbers:
-First,  4096/8.914us = 460 MSPS, corresponding to the tile performing front 64-point IFFT + point-wise twiddle multiplication.
-Second, 4096/7.604us = 539 MSPS, corresponding to the tile performing the back 64-point IFFT.
+First,  4096/9.232us = 444 MSPS, corresponding to the tile performing front 64-point IFFT + point-wise twiddle multiplication.
+Second, 4096/7.604us = 537 MSPS, corresponding to the tile performing the back 64-point IFFT.
 
 ![figure11](images/ifft4096_2d_characterize_trace_view.png)
 
@@ -264,8 +278,8 @@ For this reason, we proceed with SSR=8. We can also apply the `single_buffer` co
 
 Inspecting vitis_analyzer, we observe a resource count of 16 AIE-ML tiles.
 Achieved throughput for:
-* Front 64-point IFFT + point-wise twiddle multiplication = 2295 MSPS
-* Back 64-pint IFFT = 2288 MSPS
+* Front 64-point IFFT + point-wise twiddle multiplication = 2300 MSPS
+* Back 64-pint IFFT = 2300 MSPS
 
 ![figure12](images/ifft4096_2d_array_view.png)
 
@@ -302,7 +316,7 @@ You can build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial, ensure you have installed AMD Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, ensure you have installed AMD Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```.
 
@@ -323,7 +337,7 @@ An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch 
 
 ```
 [shell]% cd <path-to-design>/package
-[shell]% ./launch_hw_emu.sh -g -run-app embedded_exec.sh
+[shell]% ./launch_hw_emu.sh -run-app embedded_exec.sh
 ```
 After hardware emulation run is complete, the following is displayed on the terminal.
 
@@ -331,7 +345,7 @@ After hardware emulation run is complete, the following is displayed on the term
 
 ### Hardware
 
-You can nuild the channelizer design for the VEK280 board using the Makefile as follows:
+You can build the channelizer design for the VEK280 board using the Makefile as follows:
 
 ```
 [shell]% cd <path-to-design>

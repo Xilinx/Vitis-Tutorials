@@ -23,7 +23,7 @@ XO                    := ../hls/channelizer_dma_src/channelizer_dma_src_wrapper.
 GRAPH_O               := ${IP_DIR}/libadf.a
 XSA                   := my.xsa
 STIMULUS_IO           := ${DATA_DIR}/sig_o.txt ${DATA_DIR}/sig_i.txt
-PS_EXE                := ../ps_apps/hw_emu/host.exe
+PS_EXE                := ../ps_apps/host.exe
 
 VSS                   := channelizer
 VSSFILE               := ${VSS}/${VSS}.vss

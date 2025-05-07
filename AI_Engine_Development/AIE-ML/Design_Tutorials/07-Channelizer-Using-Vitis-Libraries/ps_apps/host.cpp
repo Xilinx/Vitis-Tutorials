@@ -14,10 +14,9 @@
 #include <unistd.h>
 #include <xrt/xrt_device.h>
 #include <xrt/xrt_kernel.h>
-
-#include <experimental/xrt_aie.h>
-#include <experimental/xrt_graph.h>
-#include <experimental/xrt_ip.h>
+#include <xrt/xrt_aie.h>
+#include <xrt/xrt_graph.h>
+#include <xrt/experimental/xrt_ip.h>
 
 static const char*    STR_ERROR  = "ERROR:   ";
 static const char*    STR_PASSED = "PASSED:  ";

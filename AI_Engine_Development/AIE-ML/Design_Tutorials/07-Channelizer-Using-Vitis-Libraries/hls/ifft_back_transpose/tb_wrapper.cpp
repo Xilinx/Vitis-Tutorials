@@ -17,8 +17,8 @@ using namespace std;
 
 int main( void )
 {
-  using TT_STREAM = backTransposeCls<POINT_SIZE, SSR>::TT_STREAM;
-  using TT_SAMPLE = backTransposeCls<POINT_SIZE, SSR>::TT_SAMPLE;
+  using TT_STREAM = backTransposeCls<POINT_SIZE, SSR, VSS_MODE>::TT_STREAM;
+  using TT_SAMPLE = backTransposeCls<POINT_SIZE, SSR, VSS_MODE>::TT_SAMPLE;
 
   // Create DDR4 contents:
   TT_STREAM sig_i[SSR];

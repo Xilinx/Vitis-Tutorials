@@ -35,22 +35,22 @@ gen_vectors:
 	matlab -batch "gen_vectors"
 
 compile:	${MY_SOURCES}
-	time v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} |& tee log
+	time v++ --compile --config aie.cfg --mode aie --target=hw ${AIE_FLAGS} 2>&1 |  tee log
 
 x86com:
-	time v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} |& tee log
+	time v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} 2>&1 |  tee log
 
 sim:
-	time aiesimulator |& tee -a log
+	time aiesimulator 2>&1 |  tee -a log
 
 x86sim:
-	time x86simulator |& tee -a log
+	time x86simulator 2>&1 |  tee -a log
 
 profile:
-	time aiesimulator --profile --online -wdb -text |& tee -a log
+	time aiesimulator --profile --online -wdb -text 2>&1 |  tee -a log
 
 trace:
-	time aiesimulator --online -wdb -text |& tee -a log
+	time aiesimulator --online -wdb -text 2>&1 |  tee -a log
 
 throughput:
 	@for z in `seq 0 31`; do \

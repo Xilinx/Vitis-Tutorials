@@ -50,7 +50,7 @@ channelizer:
 	$(MAKE) all -C hls/ifft_back_transpose
 	$(MAKE) all -C hls/merge_8x4
 	$(MAKE) all -C hls/channelizer_dma_snk
-	$(MAKE) all -C ps_apps/hw_emu
+	$(MAKE) all -C ps_apps
 	$(MAKE) all -C vitis
 
 clean:
@@ -63,6 +63,6 @@ clean:
 	$(MAKE) clean -C hls/ifft_back_transpose
 	$(MAKE) clean -C hls/merge_8x4
 	$(MAKE) clean -C hls/channelizer_dma_snk
-	$(MAKE) clean -C ps_apps/hw_emu
+	$(MAKE) clean -C ps_apps
 	$(MAKE) clean -C vitis
 	@/bin/rm -rf .crashReporter* _ide vivado.jou vivado.log vivado_*
