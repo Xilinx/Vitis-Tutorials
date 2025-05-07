@@ -22,6 +22,7 @@ function regression(x86,settings)
    for pp = 1 : Nports
      tmp = load_aiesim(sprintf('%s/data/sig_o.txt',base),'int',1);
      tmp = reshape(tmp,[],Ntransform);
+     
      act_o(pp,:,:) = tmp;
      tmp = load_aiesim(sprintf('data/sig_o.txt'),'int',1);
      tmp = reshape(tmp,[],Ntransform);

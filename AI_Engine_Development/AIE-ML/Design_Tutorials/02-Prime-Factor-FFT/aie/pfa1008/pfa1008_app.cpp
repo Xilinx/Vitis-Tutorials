@@ -16,7 +16,7 @@ int main(void)
   std::cout << "*** pfa1008_app ***" << std::endl;
 
   aie_dut.init();
-  aie_dut.run(8);
+  aie_dut.run(8);               // Four 1008-pt iterations per graph iteration
   aie_dut.end();
 
   return 0;

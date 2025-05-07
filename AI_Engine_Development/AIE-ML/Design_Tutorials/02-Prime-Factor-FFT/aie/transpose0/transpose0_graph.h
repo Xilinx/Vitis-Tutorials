@@ -53,7 +53,7 @@ public:
     write_access(MT_buff.in[0]) = tiling(write_bd);
     read_access(MT_buff.out[0]) = tiling(read_bd);
     num_buffers(MT_buff) = 2;
-    repetition_count(MT_buff) = 8;
+    repetition_count(MT_buff) = 4;
 
     connect<>( sig_i,          MT_buff.in[0] );
     connect<>( MT_buff.out[0], sig_o         );

@@ -34,7 +34,7 @@ dut_graph<18,0> aie_dut;
 int main(void)
 {
   aie_dut.init();
-  aie_dut.run(8);
+  aie_dut.run(8);               // Four 1008-pt transforms per graph iteration
   aie_dut.end();
 
   return 0;

@@ -87,7 +87,7 @@ sim:
 	aiesimulator 2>&1| tee -a log
 
 x86sim:
-	x86simulator --trace 2>&1| tee -a log
+	x86simulator 2>&1| tee -a log
 
 profile:
 	aiesimulator --profile 2>&1| tee -a log
@@ -98,9 +98,6 @@ trace:
 trace-hang:
 	aiesimulator --profile --online -wdb -text --hang-detect-time=50000 --simulation-cycle-timeout=40000 2>&1| tee -a log
 
-throughput:
-	@../../scripts/throughput.py aiesimulator_output/data/sig_o_aie.txt --iscomplex
-
 loop_II:
 	@../../scripts/get_loop_II.py Work/aie
 
@@ -109,6 +106,9 @@ regression:
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
+
+throughput_ok:
+	../../scripts/check_throughput.py PLIO_sig_o 4135.60 5.0
 
 clean:
 	rm -rf .Xil Work libadf.a

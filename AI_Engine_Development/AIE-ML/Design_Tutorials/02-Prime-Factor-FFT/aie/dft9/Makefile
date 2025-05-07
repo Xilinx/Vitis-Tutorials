@@ -45,7 +45,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT} profile throughput
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -73,8 +73,8 @@ trace:
 trace-hang:
 	aiesimulator --profile --online -wdb -text --hang-detect-time=50000 --simulation-cycle-timeout=40000 2>&1| tee -a log
 
-throughput:
-	@../../scripts/throughput.py aiesimulator_output/data/sig_o.txt --iscomplex
+throughput_ok:
+	../../scripts/check_throughput.py PLIO_o 1105.0 5.0
 
 loop_II:
 	@../../scripts/get_loop_II.py Work/aie

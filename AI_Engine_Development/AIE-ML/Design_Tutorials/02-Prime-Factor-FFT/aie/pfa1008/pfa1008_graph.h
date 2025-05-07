@@ -45,6 +45,16 @@ public:
     connect<>( transpose1.sig_o,  dft16.sig_i      );
     connect<>( dft16.sig_o,       sig_o.in[0]      );
 
+    // Stack sizes:
+    stack_size(dft7.kk0) = 1536;
+    stack_size(dft7.kk1) = 1536;
+    stack_size(dft7.kk2) = 1536;
+
+    stack_size(dft9.kk0) = 1536;
+    stack_size(dft9.kk1) = 1536;
+    stack_size(dft9.kk2) = 1536;
+    stack_size(dft9.kk3) = 1536;
+
     // Location Constraints:
     location<kernel>(dft7.kk0) = tile(X+0,Y+0);
     location<kernel>(dft7.kk1) = tile(X+1,Y+0);

@@ -48,6 +48,9 @@ public:
     connect<>       (kk2.out[0],sig_o);
     fifo_depth(n0) = 32;
     fifo_depth(n1) = 32;
+    stack_size(kk0) = 1536;
+    stack_size(kk1) = 1536;
+    stack_size(kk2) = 1536;
   }
 };
 
