@@ -6,7 +6,7 @@
 set currpath [pwd]
 
 create_project custom_pfm_vck190 $currpath/custom_pfm_vck190 
-set_property board_part xilinx.com:vck190:part0:3.3 [current_project]
+set_property board_part xilinx.com:vck190:part0:* [current_project]
 create_bd_design "ext_platform" -mode batch
 instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Clock_Options.VALUE {clk_out1 104.16667 0 false clk_out2 156.25 1 false clk_out3 312.5 2 true clk_out4 520.83333 3 false clk_out5 625 4 false} Include_AIE.VALUE true Include_BDC.VALUE false Include_DDR.VALUE true}
 update_compile_order -fileset sources_1
