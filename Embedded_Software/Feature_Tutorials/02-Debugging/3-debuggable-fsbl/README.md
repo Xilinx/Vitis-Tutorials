@@ -7,7 +7,7 @@
 
 # Creating a Debuggable First Stage Boot Loader
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 First Stage Boot Loader (FSBL) can initialize the SoC device, load the required application or data to memory, and launch applications on the target the CPU core. FSBL is optimized for size because it must fit in the OCM, which has limited space on the device. Size based optimization introduces some trouble, if you want to debug FSBL when you add customized code into FSBL. This chapter explains how you can use AMD Vitis™ Unified IDE to debug FSBL step by step.
 
@@ -63,7 +63,7 @@ Medium level verbose printing is good for most designs. Enable `FSBL_DEBUG_INFO`
 
 ![](./media/001.png) 
 
-**Note:** Here, you can see the required libraries; xilffs, xilsecure and xilpm
+**Note:** Here, you can see the required libraries; xiltimer, xilffs, xilsecure and xilpm
  
 6. Select **Create Application Component from Template** and follow the steps below
 
@@ -81,6 +81,8 @@ Medium level verbose printing is good for most designs. Enable `FSBL_DEBUG_INFO`
 7. Click **Next** and **Finish**. The Vitis IDE creates the FSBL application component. This uses the zynqmp_fsbl domain template that includes the required libraries.
 
 8. Select the zcu102_platform under **FLOW and Build**
+
+9. Select the fsbl_a53 under **FLOW and Build**
 
 
 ## Modifying the FSBL BSP 
@@ -168,7 +170,7 @@ FSBL is built with size optimization and link time optimization flags (such as `
 
 
 1. Under the Vitis Components, select the zcu102_platform -> Settings -> vitis_comp.json.
-2. Then select zcu102_platform -> psu_cortexa53_0 -> standalone_psu_cortexa53_0 -> Board support package.
+2. Then select zcu102_platform -> psu_cortexa53_0 -> standalone_psu_cortexa53_0 -> Board support package -> psu_cortexa53_0.
 3. Edit **proc_extra_compiler_flags** to ensure **extra compiler** only has this value `-g -Wall -Wextra -Os` as shown below.
 4. Regenerate BSP
 
