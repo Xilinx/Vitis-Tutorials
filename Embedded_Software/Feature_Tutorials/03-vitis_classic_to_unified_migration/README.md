@@ -5,7 +5,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 >**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Advancing Embedded Development: Migrating to AMD Vitis™ Unified IDE and Exploring Backend Innovations"](https://webinar.amd.com/Advancing-Embedded-Development-Migrating-to-AMD-Vitis-tm-Unified-IDE-and-Exploring-Backend-Innovations/en) webinar.
 
@@ -48,7 +48,7 @@ The CMake framework is now used in all baremetal drivers, libraries and applicat
 
 To repeat, a BSP (or Domain) is a collection of drivers, libraries and processor specific configuration that users can use to base their application project upon. In Vitis Classic, the non-default BSP settings where contained in a MSS (Microprocessor Software Specification) file such as the OS settings, drivers, and (or) libraries. As mentioned above, the non-default settings are contained in the MSS file. The metadata was compiled from a few different source files. For example, the OS settings where populated from the standalone bsp MDD file, and any non-default settings (ie user settings in GUI) where contained in the MSS under the OS section. The same flow was used in the driver, where each driver had its parameters maintained in the MDD file, and if user changed these from default it would be stored in the MSS file. Same for the Libraries. In Vitis Unified IDE, the MSS/MDD/MLD are no longer used. Instead of the MSS the bsp.yaml created by the Lopper framework using the SDT will contain this information. The bsp.yaml will contain the os_info, os_config, proc, proc_config, drv_info, library_info, library_config. The metadata here is used to populate BSP GUI in Vitis Unified GUI. Any changes made to the bsp.yaml will be reflected in the GUI.
 
-In Vitis Unified the parameters are all CMake driven. So, intead of the MSS/MDD/MLD each standalone bsp, driver or library will have a CMake file with cache variables and their options. Vitis Unified IDE is using those CMake cache data to populate the bsp.yaml. The bsp.yaml will be dynamically generated every time the Domain is built. Any modifications to the bsp.yaml will be overwritten.
+In Vitis Unified the parameters are all CMake driven. So, instead of the MSS/MDD/MLD each standalone bsp, driver or library will have a CMake file with cache variables and their options. Vitis Unified IDE is using those CMake cache data to populate the bsp.yaml. The bsp.yaml will be dynamically generated every time the Domain is built. Any modifications to the bsp.yaml will be overwritten.
 
 ## How is Hardware Metadata passed to baremetal driver
 
@@ -285,7 +285,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contrib/ports/xilinx/include/lwipopts
 
 Another popular question is how to make changes to a Library delivered in Vitis Unified IDE. If users make changes to the local sources in the library in the BSP, then these will be lost upon a regeneration of the BSP. To maintain the modifications in the Library, then user will need to make a local copy of the library in the Vitis install to a local drive and point to this in the <i>Vitis -> Embedded SW Repositories..</i>.
 
-In the example below, I added a local copy of the LwIP library to the folder structure repo/ThirdParty/sw_services/lwip220_v1_1, and added this to the Local Repositories in Embedded SW repositories
+In the example below, I added a local copy of the LwIP library to the folder structure repo/ThirdParty/sw_services/lwip220_v1_2, and added this to the Local Repositories in Embedded SW repositories
 
 ![](./images/embedded_sw_repo.PNG)
 
@@ -312,7 +312,7 @@ If users want to add custom options, then create the cmake CACHE variable first 
 
 ```
 set(lwip220_enable_dns 0 CACHE STRING "Enable DNS")
-set_property(CACHE lwip213_enable_dns PROPERTY STRINGS 0 1)
+set_property(CACHE lwip220_enable_dns PROPERTY STRINGS 0 1)
 ...
 if (${lwip220_enable_dns})
     set(ENABLE_DNS 1)
@@ -337,7 +337,44 @@ If i set this from 0 to 1 then this will now be added in the lwipopts.h file
 
 ## Vitis Classic workspace to Unified workspace Migration Demo
 
-There is a script supplied in this tutorial that will build a Vitis Classic Workspace. Follow the steps below to generate this workspace
+The Vitis Classic IDE is now deprecated from the 2025.1 release and therefore the Classic IDE to Vitis Unified IDE migration utility is no longer available as of 2025.1. You can either use the migration utility from a previous release (2024.2, 2024.1 or 2023.2) and then upgrade the project, or perform the migration manually. Follow the steps below for manual migration.
+
+### Manual Migration
+
+1. Update the XSA file​ using the latest Vivado tools
+2. Re-create the platform based on the updated XSA file​
+3. Re-create the application based on the updated platform​
+4. Import your application source​ code
+5. Build the application and fix any issues encountered
+
+#### Updating the XSA
+
+Below I have a trivial Block Design for the Zynq Ultrascale+ MPSoC which was created using Vivado 2023.2 tools. I have exported the hardware and used the .xsa file within Vitis Classic to create a platform and build applications on top of it. However, now I am in this situation were I want to migrate to the latest version of Vitis Unified. Here we will look at how we can upgrade our vivado deisgn in the latest vivado tools before exporting it to vitis. 
+
+![](./images/2023.2_block_design.PNG)
+
+1. Load Vivado 2025.1 tools
+2. Select 'Open Project' and choose the 2023.2 project to be migrated
+
+![](./images/open_project.PNG)
+
+3. When you select your older project you will receive the below pop up message asking you if you would like to automaitcally upgrade or open the project in read only mode. Select 'Automatically Upgrade to the current version'.
+
+![](./images/upgrade_pop_up_message.PNG)
+
+4. Next after the project has loaded in vivado you may see the below warning message explaining that some of the IP used in your project have been upgraded.
+
+![](./images/upgrade_warning_message.PNG)
+
+To upgrade the IP select 'Report IP Status' and then scroll to the bottom of the screen and select the 'IP Status' tab which will display all avaliable IP in your design. Then Select all of the IP's that require upgrades and click 'Upgrade Selected'.
+
+![](./images/upgradable_ip.PNG)
+
+5. Export the hardware (XSA) and use it to recreate your platform in Vitis Unified 2025.1
+
+### Vitis Classic to Unified Migration Utility
+
+However if your project is from a previous release (2024.2, 2024.1 or 2023.2) you can follow the tutorial on this page for using the migration utility. There is a script supplied in this tutorial that will build a Vitis Classic Workspace. Follow the steps below to generate this workspace
 
 Launch XSCT, and use the command below
 
@@ -377,7 +414,7 @@ This will generate a **migration.py** python script that can be opened in the Vi
 
 ```
 cd path/to/unified_workspace
-vitis -s migration.py
+vitis -s migrate.py
 ```
 
 Once the script is complete, launch the Vitis Unified IDE and set the workspace to the newly generate **unified_workspace**.
