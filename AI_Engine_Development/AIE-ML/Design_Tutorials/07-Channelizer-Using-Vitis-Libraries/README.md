@@ -204,9 +204,11 @@ In this tutorial, we explore the use of 2D IFFT IP to implement a 4K-pt IFFT @ 2
 The IP offers two modes to implement the IFFT set via VSS_MODE parameter: Mode 1 and Mode 2. 
 
 Mode 1 implements the row and column transforms in AI Engine while implementing the tranpose operations in PL.
+
 ![figure10](images/2D_4k_IFFT_VSS_MODE_1.png)
 
 Mode 2 splits the IFFT into a front section mapped to AI Engine and a back section mapped to PL. This architecture results in less memory requirements in PL but requires some DSPs.
+
 ![figure10](images/2D_4k_IFFT_VSS_MODE_2.png)
 
 #### Available Workflows for IFFT-2D IP
