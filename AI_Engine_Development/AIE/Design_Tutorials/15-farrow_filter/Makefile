@@ -14,7 +14,7 @@ VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
 export PLATFORM            = ${VITIS_PLATFORM_XPFM}
-export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
 export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
 export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
