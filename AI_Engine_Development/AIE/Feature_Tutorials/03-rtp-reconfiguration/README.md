@@ -113,6 +113,15 @@ The RTP calls for `aiesimulator` can be found in `aie/graph.cpp`:
 gr.run(4);
 gr.update(gr.value,10);
 ```
+From 2025.1 onwards, AI Engine compiler supports compiling testbench only that is inside main() or graph.cpp. If RTP value is further updated, no need to compile the complete AI Engine graph. By using --compile-testbench-only option during AIE compilation, compiles only graph.cpp with the updated values. For example, make changes in graph.cpp as 
+```
+gr.update(gr.value,20);
+```
+Recompile using compile-testbench-only-option inside Makefile line number 21: 
+```
+v++ -c --mode aie --aie.compile-testbench-only --platform=${PLATFORM} --include="./aie" --work_dir=./Work
+```
+This finishes compilation pretty fast and seeing simulation results, RTP port values are updated to 20. 
 
 **Note:** It requires at least one update of the RTP input. Otherwise, the kernel execution will be stalled. A way to bypass initial RTP update is to set following constraints in the graph code (`aie/graph.h`). Thus, kernel can start execution asynchronously with the specified initial value.
 
