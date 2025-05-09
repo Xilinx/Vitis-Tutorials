@@ -103,6 +103,9 @@ regression:
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 
+throughput_ok:
+	../../python/check_throughput.py PLIO_o 2.49 5.0
+
 clean:
 	rm -rf .Xil Work libadf.a
 	rm -rf aiesimulator_output* aiesimulator*.log

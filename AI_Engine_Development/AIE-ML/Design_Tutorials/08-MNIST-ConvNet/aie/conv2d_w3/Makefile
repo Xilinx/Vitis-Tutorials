@@ -24,6 +24,8 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 AIE_OUTPUT := libadf.a
 
 AIE_FLAGS :=	${DSPLIB_OPTS} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+# Timeout due to run(-1) in app (to workaround CR-1236063)
+AIE_SIM_FLAGS :=    --simulation-cycle-timeout=200000
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -31,7 +33,6 @@ endif
 ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"
 endif
-
 
 .PHONY: help clean x86com x86sim sim profile throughput
 
@@ -55,7 +56,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -69,22 +70,25 @@ x86com:
 	v++ --compile --config aie.cfg --mode aie --target=x86sim ${AIE_FLAGS} |& tee log
 
 sim:
-	aiesimulator |& tee -a log
+	aiesimulator ${AIE_SIM_FLAGS} |& tee -a log
 
 x86sim:
-	x86simulator |& tee -a log
+	x86simulator ${AIE_SIM_FLAGS} |& tee -a log
 
 profile:
-	aiesimulator --online -wdb -text --profile |& tee -a log
+	aiesimulator ${AIE_SIM_FLAGS} --online -wdb -text --profile |& tee -a log
 
 trace:
-	aiesimulator --online -wdb -text |& tee -a log
+	aiesimulator ${AIE_SIM_FLAGS} --online -wdb -text |& tee -a log
 
 regression:
 	matlab -batch regression
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
+
+throughput_ok:
+	../../python/check_throughput.py PLIO_o 1904.47 5.0
 
 clean:
 	rm -rf .Xil Work libadf.a

@@ -86,6 +86,7 @@ void conv2d_w1::filter_3x3( input_buffer<bfloat16>&       ifm_i,
     buffd[2].insert(0,*(itrA+4));     buffd[2].insert(1,*(itrB+5));
 
     // Loop over output image columns taking two at a time:
+    unsigned c = 0;
     for (unsigned cc=0; cc < 26; cc++)
       chess_prepare_for_pipelining
     {
@@ -93,23 +94,24 @@ void conv2d_w1::filter_3x3( input_buffer<bfloat16>&       ifm_i,
       buffw[0].insert(0,*(itapA+0));
       buffw[1].insert(0,*(itapB+1));
       buffw[2].insert(0,*(itapA+2));
-      acc[0] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(cc  )),buffw[0]);
-      acc[1] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(cc+1)),buffw[1]);
-      acc[2] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(cc+2)),buffw[2]);
+      acc[0] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(c  )),buffw[0]);
+      acc[1] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(c+1)),buffw[1]);
+      acc[2] = mul_elem_16_2(aie::broadcast<bfloat16,32>(buffd[0].get(c+2)),buffw[2]);
       // 2nd iteration w3, w4, w5
       buffw[0].insert(0,*(itapA+3));
       buffw[1].insert(0,*(itapB+4));
       buffw[2].insert(0,*(itapA+5));
-      acc[0] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(cc  )),buffw[0],acc[0]);
-      acc[1] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(cc+1)),buffw[1],acc[1]);
-      acc[2] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(cc+2)),buffw[2],acc[2]);
+      acc[0] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(c  )),buffw[0],acc[0]);
+      acc[1] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(c+1)),buffw[1],acc[1]);
+      acc[2] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[1].get(c+2)),buffw[2],acc[2]);
       // 3rd iteration w6, w7, w8
       buffw[0].insert(0,*(itapA+6));
       buffw[1].insert(0,*(itapB+7));
       buffw[2].insert(0,*(itapA+8));
-      acc[0] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(cc  )),buffw[0],acc[0]);
-      acc[1] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(cc+1)),buffw[1],acc[1]);
-      acc[2] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(cc+2)),buffw[2],acc[2]);
+      acc[0] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(c  )),buffw[0],acc[0]);
+      acc[1] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(c+1)),buffw[1],acc[1]);
+      acc[2] = mac_elem_16_2(aie::broadcast<bfloat16,32>(buffd[2].get(c+2)),buffw[2],acc[2]);
+      c = chess_copy(c+2)-1;
 
       // Add bias and RELU:
       acc[0] = aie::add(aie::add(acc[0],acc[2]),aie::add(acc[1],bias));

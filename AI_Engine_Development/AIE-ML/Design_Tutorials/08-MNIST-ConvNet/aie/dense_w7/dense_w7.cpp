@@ -103,7 +103,11 @@ void dense_w7::fully_connected( input_async_buffer<bfloat16>& wts_i )
     acc[0] = aie::add(acc[0],acc[1]);
     acc[2] = aie::add(acc[2],acc[3]);
     acc[0] = aie::add(acc[0],acc[2]);
-    *itw++ = bias + aie::reduce_add(acc[0].to_vector<bfloat16>());
+    // The 'chess_separator_scheduler()' below avoid a back-end compiler scheduling issue that introduces
+    // functional errors in the output. Filed CRVO-12023. This temporary workaround may have a
+    // throughput impact.
+    *itw++ = chess_copy(bias + aie::reduce_add(acc[0].to_vector<bfloat16>()));
+    chess_separator_scheduler();
   } // oc
 }
 

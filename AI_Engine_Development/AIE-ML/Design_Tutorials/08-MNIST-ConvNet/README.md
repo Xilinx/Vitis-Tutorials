@@ -14,7 +14,7 @@ Author: Mark Rollins
 
 # MNIST ConvNet on AIE-ML
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -144,9 +144,7 @@ This tutorial adopts a simple design approach to building the MNIST ConvNet clas
 
 ### Vitis Functional Simulation
 
-This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature generates executable "shared objects" of the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose.
-
-Vitis Functional Simulation is an EA tool feature in 2024.2. To obtain instructions and design examples, request access to the [Vitis Functional Simulation Early Access Secure Site](https://account.amd.com/en/member/vitis-functional-simulation.html).
+This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the MNIST ConvNet classifier AI Engine implementation against its Python behavioral models. The VFS feature generates executable "shared objects" of the AI Engine and PL portions of your heterogenous Versal design, allowing it to be brought into familiar simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose. Vitis Functional Simulation is an production tool feature in 2025.1.
 
 The Python version of Vitis Functional Simulation is used to validate each network layer in the MNIST ConvNet design. The screen capture below shows how the `conv2d_w1()` layer is called from the Jupyter notebook [gen_vectors.ipynb](aie/conv2d_w1/gen_vectors.ipynb) used to validate that layer. A similar notebook is built for each layer in the design. The VFS infrastructure compiles the AI Engine graph automatically under the hood when any source code files change, and then passes the I/O vectors between the Jupyter notebook and the x86 functional simulator. 
 
@@ -292,7 +290,7 @@ Components: xilinx-files
 
 The MIT License (MIT)
 
-Copyright (c) 2024 Advanced Micro Devices, Inc.
+Copyright (c) 2024-2025 Advanced Micro Devices, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

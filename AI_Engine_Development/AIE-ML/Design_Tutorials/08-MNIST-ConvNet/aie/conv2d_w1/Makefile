@@ -56,7 +56,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -80,6 +80,9 @@ profile:
 
 trace:
 	aiesimulator --hang-detect-time=5000 --online -wdb -text |& tee -a log
+
+throughput_ok:
+	../../python/check_throughput.py PLIO_o 3169.90 5.0
 
 clean:
 	rm -rf .Xil Work libadf.a

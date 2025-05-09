@@ -58,7 +58,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -88,6 +88,9 @@ regression:
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
+
+throughput_ok:
+	../../python/check_throughput.py PLIO_o 1408.21 5.0
 
 clean:
 	rm -rf .Xil Work libadf.a

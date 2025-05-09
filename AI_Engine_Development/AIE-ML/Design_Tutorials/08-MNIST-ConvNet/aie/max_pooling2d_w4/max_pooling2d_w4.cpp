@@ -63,6 +63,10 @@ void max_pooling2d_w4::run( input_buffer<bfloat16>& ifm_i, output_buffer<bfloat1
       idx += 8; // Advance by 2 input pixels
     } // pp
     off = off + 128; // Advance by 2 input rows
+    // The 'chess_separator_scheduler()' below avoid a back-end compiler scheduling issue that introduces
+    // functional errors in the output. Filed CRVO-12023. This temporary workaround may have a
+    // throughput impact.
+    chess_separator_scheduler();
   } // rr
 }
 

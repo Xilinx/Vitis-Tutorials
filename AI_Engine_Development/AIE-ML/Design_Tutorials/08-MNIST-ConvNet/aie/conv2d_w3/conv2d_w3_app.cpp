@@ -32,7 +32,8 @@ dut_graph aie_dut;
 int main(void)
 {
   aie_dut.init();
-  aie_dut.run(1);               // 1 iteration = 4 images
+  // Use '-1' instead of '1' to workaround CR-1236063:
+  aie_dut.run(-1);               // 1 iteration = 4 images
   aie_dut.end();
 
   return 0;
