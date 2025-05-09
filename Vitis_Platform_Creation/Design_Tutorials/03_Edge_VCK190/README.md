@@ -8,7 +8,7 @@
 
 # Versal Custom Platform Creation Tutorial
 
-***Version: 2024.2***
+***Version: 2025.1***
 
 In this module, we treat the VCK190 board as a customized solution tailored to our customer's specific needs. We leverage the AMD Versal™ Adaptive SoC Extensible Part Support Example Design, a pre-built Linux common image, and the Device Tree Blob generated during the platform creation process to produce essential software components. These components form the foundation of a dedicated embedded Versal acceleration platform tailored for the customer’s board. Finally, you will test this platform by running several applications.
 
