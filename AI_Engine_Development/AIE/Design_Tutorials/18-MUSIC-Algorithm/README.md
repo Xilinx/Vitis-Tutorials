@@ -9,7 +9,7 @@
 
 # MUltiple SIgnal Classification (MUSIC) Algorithm on AI Engine
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -285,9 +285,24 @@ Timing closure of the top-level device is achieved automatically with the standa
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2024.2 software. Ensure you have downloaded the Common Images and the Embedded Vitis Platforms.
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the environment variable `COMMON_IMAGE_VERSAL` to the full path where you have downloaded the Common Images. Set the environment variable `PLATFORM_REPO_PATHS` to the full path where you have downloaded the embedded base platforms. The remaining environment variables are configured in the top-level Makefile `<path-to-repo>/Makefile`.
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
+
+The remaining environment variables are configured in the top level Makefile ```<path-to-design>/18-MUSIC-Algorithm/Makefile``` file.
+
+```
+RELEASE=2025.1
+
+PLATFORM_NAME              = xilinx_vck190_base_202510_1
+PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
+
+export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
+export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
+export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
+export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
+export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
+```
 
 ### Hardware Emulation
 

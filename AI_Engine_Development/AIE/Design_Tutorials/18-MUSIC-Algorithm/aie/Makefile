@@ -29,6 +29,8 @@ INCLUDES 	  := --include=doa --include=finder --include=io_adapter --include=qrd
 AIE_OUTPUT := libadf.a
 
 AIE_FLAGS :=	${INCLUDES} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_SIM_FLAGS := 
+#AIE_SIM_FLAGS :=    --hang-detect-time=10000 --display-run-interval=1000
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -57,7 +59,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT} sim throughput_ok
+all:		${AIE_OUTPUT}
 
 x86all: 	clean x86com x86sim
 
@@ -69,17 +71,17 @@ x86com:
 
 sim:
 	@python3 ../python/setup.py aiesim 0
-	time aiesimulator 2>&1| tee -a log
+	time aiesimulator ${AIE_SIM_FLAGS} 2>&1| tee -a log
 
 x86sim:
 	@python3 ../python/setup.py x86sim 0
 	time x86simulator 2>&1| tee -a log
 
 profile:
-	time aiesimulator --online -wdb -text --profile 2>&1| tee -a log
+	time aiesimulator ${AIE_SIM_FLAGS} --online -wdb -text --profile 2>&1| tee -a log
 
 trace:
-	time aiesimulator --online -wdb -text 2>&1| tee -a log
+	time aiesimulator ${AIE_SIM_FLAGS} --online -wdb -text 2>&1| tee -a log
 
 throughput_ok:
 	@../python/check_throughput.py PLIO_o 2619.372442 5.0

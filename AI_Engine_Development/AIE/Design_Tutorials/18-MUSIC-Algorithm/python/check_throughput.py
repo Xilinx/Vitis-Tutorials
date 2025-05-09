@@ -21,7 +21,7 @@ def check_throughput(args):
     accuracy = float(args.accuracy[0])
     with open("AIESimulator.log") as file:
         for line in file:
-            regexp = plio + " .* ([\d.]+)"
+            regexp = plio + " .* ([\\d.]+)"
             match = re.search(regexp,line)
             if match:
                 actual = float(match.group(1))

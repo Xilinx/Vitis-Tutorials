@@ -19,8 +19,8 @@
 #include "server.hpp"
 #include "serial_processor.hpp"
 
-#include "experimental/xrt_kernel.h"
-#include "experimental/xrt_graph.h"
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_graph.h"
 #include "xrt/xrt_aie.h"
 
 #define INPUT_DATA_SIZE_PER_ITER 4096
@@ -215,17 +215,17 @@ int main(int argc, char** argv)
         throw std::runtime_error("usage: -c container.xclbin -p port_number");
 
     app->device = xrt::device(0);
-    
+
     if (app->device == nullptr)
 		throw std::runtime_error("No valid device handle found. Make sure using right xclOpen index.");
-    
+
     app->xclbin_uuid = app->device.load_xclbin(app->xclbin_file);
 
-    pl_dma_init(app, "mm2s:{mm2s_1}", INPUT_BUF_SIZE, 
+    pl_dma_init(app, "mm2s:{mm2s_1}", INPUT_BUF_SIZE,
         DMA_WORD_BYTES, &app->mm2s_1);
-    pl_dma_init(app, "mm2s:{mm2s_2}", INPUT_BUF_SIZE, 
+    pl_dma_init(app, "mm2s:{mm2s_2}", INPUT_BUF_SIZE,
         DMA_WORD_BYTES, &app->mm2s_2);
-    pl_dma_init(app, "s2mm", OUTPUT_BUF_SIZE, 
+    pl_dma_init(app, "s2mm", OUTPUT_BUF_SIZE,
         DMA_WORD_BYTES, &app->s2mm_1);
 
     aie_init(app, "aie_dut");
@@ -244,6 +244,6 @@ int main(int argc, char** argv)
 
     server.start();
     io_context.run();
- 
+
     return 0;
 }

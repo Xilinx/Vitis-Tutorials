@@ -7,7 +7,7 @@
  
 function cfg     = hilCfg ()
 
-cfg.demoData     = 'archived'; % 'archived' | 'generated'
+cfg.demoData     = 'generated'; % 'archived' | 'generated'
 
 cfg.demoDataSet  = 'Demo1';     % Select a set under ./Snaphots/Archive
                                 % when demoDataSet configured to 'archived'
