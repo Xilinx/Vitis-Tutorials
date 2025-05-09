@@ -187,10 +187,10 @@ guard-IMAGE:
 	$(call check_defined, IMAGE, Set to: xilinx-versal-common-v2021.2/Image)
 
 guard-CXX:
-	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, CXX, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-amd-linux)
 
 guard-SDKTARGETSYSROOT:
-	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-xilinx-linux)
+	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2021.2/environment-setup-aarch64-amd-linux)
 
 ######################################################
 # This step compiles the HLS C kernels and creates an ADF Graph
