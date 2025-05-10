@@ -65,10 +65,6 @@ bitonic_fp1024::stage0_all( void )
   auto itr = aie::begin_restrict_vector<8>(data);
   auto itw = aie::begin_restrict_vector<8>(data);
   aie::vector<float,32> vec;
-  aie::vector<float,8> v_top;
-  aie::vector<float,8> v_bot;
-  aie::vector<float,8> v_mx;
-  aie::vector<float,8> v_mn;
   for (unsigned ii=0; ii < SIZE/32; ii++) // Process two groups of 16 samples per loop body
     chess_prepare_for_pipelining
     chess_unroll_loop(1)
@@ -77,18 +73,16 @@ bitonic_fp1024::stage0_all( void )
     vec.insert(1,*itr++);
     vec.insert(2,*itr++);
     vec.insert(3,*itr++);
-    v_top = aie::filter_even(vec.extract<16>(0));
-    v_bot = aie::filter_odd(vec.extract<16>(0));
-    v_mx = aie::max(v_top,v_bot);
-    v_mn = aie::min(v_top,v_bot);
-    std::tie(v_mn,v_mx) = aie::interleave_zip(v_mn,v_mx,1);
-    vec.insert(0,aie::concat(v_mn,v_mx));
-    v_top = aie::filter_even(vec.extract<16>(1));
-    v_bot = aie::filter_odd(vec.extract<16>(1));
-    v_mx = aie::max(v_top,v_bot);
-    v_mn = aie::min(v_top,v_bot);
-    std::tie(v_mn,v_mx) = aie::interleave_zip(v_mn,v_mx,1);
-    vec.insert(1,aie::concat(v_mn,v_mx));
+    vec.insert<16>(0,fpshuffle16(vec, 0,0xECA86420,0xFDB97531));              // Evens in lower 8, Odds in upper 8
+    vec.insert<16>(1,fpshuffle16(vec,16,0xECA86420,0xFDB97531));              // Evens in lower 8, Odds in upper 8
+    auto mn = aie::min(vec.extract<8>(0),vec.extract<8>(1)); // Min's in lower 8
+    auto mx = aie::max(vec.extract<8>(0),vec.extract<8>(1)); // Max's in upper 8
+    vec.insert<16>(0,aie::concat(mn,mx));
+    mn = aie::min(vec.extract<8>(2),vec.extract<8>(3)); // Min's in lower 8
+    mx = aie::max(vec.extract<8>(2),vec.extract<8>(3)); // Max's in upper 8
+    vec.insert<16>(1,aie::concat(mn,mx));
+    vec.insert<16>(0,fpshuffle16(vec, 0,0xB3A29180,0xF7E6D5C4));
+    vec.insert<16>(1,fpshuffle16(vec,16,0xB3A29180,0xF7E6D5C4));
     *itw++ = vec.extract<8>(0);
     *itw++ = vec.extract<8>(1);
     *itw++ = vec.extract<8>(2);

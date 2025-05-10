@@ -86,5 +86,5 @@ clean:
 	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
 	rm -rf vitis_analyzer* pl_sample_counts* pl_sample_count_*
 	rm -rf temp ISS_RPC_SERVER_PORT .crashReporter .AIE_SIM_CMD_LINE_OPTIONS
-	rm -rf system*.* trdata.aiesim function_wdb_dir
+	rm -rf system*.* trdata.aiesim function_wdb_dir _ide
 
