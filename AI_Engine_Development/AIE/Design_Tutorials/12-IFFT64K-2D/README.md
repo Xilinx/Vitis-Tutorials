@@ -168,7 +168,7 @@ This will take about 90 minutes to run. The build process will generate a folder
 
 ### Hardware
 
-The design can be built for the VEK280 board using the Makefile as follows:
+The design can be built for the VCK190 board using the Makefile as follows:
 
 ```
 [shell]% cd <path-to-design>/12-IFFT64K-2D
