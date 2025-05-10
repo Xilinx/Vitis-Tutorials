@@ -8,7 +8,7 @@
 
 # User Managed Mode in Vitis Unified Embedded IDE
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 This is a new feature with the Vitis Unified Embedded IDE, where users can add a makefile and argument that can be used to create custom builds. This allows the user more control over their project builds instead of letting the tools generate the components.
 
@@ -23,7 +23,7 @@ This tutorial describes three use cases for the **User Managed Mode**.
 
 ### Let’s get started
 
-Launch Vitis 2024.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
 Select the **Open Explorer View**
 
@@ -31,7 +31,11 @@ Select the **Open Explorer View**
 
 ### Generating Build Configuration
 
-In this use case, we shall be using the Python script introduced in the *04-vitis_scripting_flows* to build a workspace and with a simple Hello World application template. However, users can also utilize the Python script `logs/workspace_journal.py` that gets generated for every Vitis Unified IDE workspace.
+In this use case, we shall be using the Python script introduced in the *04-vitis_scripting_flows* to build a workspace and with a simple Hello World application template. However, users can also utilize the Python script `logs/workspace_journal.py` that gets generated for every Vitis Unified IDE workspace. Make sure you have copied the **unified_workspace.py** python file to your workspace.
+
+On the left hand side you should see the **User Managed Mode View**. If the **User Managed Mode View** is not there then select the three dots in the explorer view and select **folders** which will load the **User Managed Mode View**. 
+
+![](./images/three_dots.png)
 
 Right click in the **Explorer** view, right-click and select **Edit Build Configurations** and **New Build Configuration** and set similar as shown below. 
 
@@ -49,7 +53,7 @@ This will generate the Vitis Unified IDE workspace based on the XSA.
 
 Next, we can create a **Launch Configuration** to test the application created above on our hardware target.
 
-Right click in the **Explorer** view, and select **Edit Launch Configurations** and **New Launch Configurations** and select **Baremetal** and browse to your XSA file used to create the workspace above.
+First you will need to launch the **unified_workspace** that was created in the previous step. Next right click in the **Explorer** view, and select **Edit Launch Configurations** and **New Launch Configuration** and select **Embedded Baremetal Application**. In **Debug Options** select **Configure the device and start debugging** and browse to your XSA file used to create the workspace above..
 
 ![](./images/create_launch_config.PNG)
 
@@ -75,7 +79,7 @@ In this use case, we can build the example using the scripts given [here](https:
 
 ### Lets get started
 
-Launch Vitis 2024.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
 Select the **Open Explorer View**
 
@@ -116,7 +120,7 @@ Each section above can be built independently. For example, if users want to mak
 
 ### Lets get started
 
-Launch Vitis 2024.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
 Select the **Open Explorer View**
 
@@ -134,7 +138,7 @@ jtag_boot:
 
 **Note:** You must run `make generate_boot_script` before running `make jtag_boot`
 
-Create the build configuration as follows
+The build files we are using are within the **scripts** directory therefore you will need to append 'cd scripts &&' before calling the make command. Create the build configuration as follows
 
 ![](./images/jtag_boot_build_config.PNG)
 

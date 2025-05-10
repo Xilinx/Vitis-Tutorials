@@ -15,8 +15,8 @@ ATF_REPO ?= https://github.com/Xilinx/arm-trusted-firmware.git
 ATF_CHECKOUT ?= xilinx-v2024.2
 UBOOT_REPO ?= https://github.com/Xilinx/u-boot-xlnx.git
 UBOOT_CHECKOUT ?= xilinx-v2024.2
-DEVICE_TREE_REPO ?= https://github.com/Xilinx/device-tree-xlnx.git
-DEVICE_TREE_CHECKOUT ?= xlnx_rel_v2024.2
+SDT_OUT ?= sdt_out 
+USER_DTSI ?= prebuilt_linux/user_dts/system-user.dtsi 
 
 all: create_xsa make_platform dtb atf uboot
 
@@ -36,12 +36,12 @@ make_platform: $(XSA)
 	rm -rf tmp/base_platform tmp/zynqmp_fsbl tmp/zynqmp_pmufw
 	vitis -s ./xsct_script.py make_platform $(XSA)
 
-dtb: system.dtb
+dtb: gen_sdt 
 
-system.dtb:
-	$(RM) -rf mydevice
-	xsct -eval " createdts -hw $(XSA) -board $(BOARD) -git-url $(DEVICE_TREE_REPO) -git-branch $(DEVICE_TREE_CHECKOUT) -out . -platform-name mydevice -compile"
-	cp mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb .
+gen_sdt:
+	$(RM) -rf $(SDT_OUT)
+	$(info "DTB generation started using stdgen+lopper")
+	sdtgen -eval "sdtgen set_dt_param -dir $(SDT_OUT) -xsa $(XSA) -board_dts $(BOARD) -zocl enable -include_dts $(USER_DTSI); sdtgen generate_sdt"
 
 atf: arm-trusted-firmware $(XSA) xsct_script.py
 	$(MAKE) -C arm-trusted-firmware clean
