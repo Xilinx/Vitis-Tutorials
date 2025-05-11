@@ -20,7 +20,7 @@ XSA                   := my.xsa
 STIMULUS_IO           := ${IP_DIR}/data/sig_i.txt ${IP_DIR}/data/sig_o.txt
 PS_EXE                := ../../ps_apps/hw_emu/host.exe
 
-SD_CARD               := $(abspath ../../package_${TARGET})
+SD_CARD               := $(abspath ../../package)
 BUILD_DIR             := build_${TARGET}
 
 SYSTEM_CFG            := system.cfg
