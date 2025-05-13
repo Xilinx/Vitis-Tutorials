@@ -35,7 +35,7 @@ PETALINUX_DIR := vck190_linux
 # PetaLinux Config: Use EXT4 as rootfs format
 update_config:
 	echo "CONFIG_SUBSYSTEM_ROOTFS_EXT4=y" >> $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
-	echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"' >> $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
+	#echo 'CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"' >> $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 
 # Edit the vck190_linux/project-spec/configs/rootfs_config
 # PetaLinux Rootfs: Enable XR

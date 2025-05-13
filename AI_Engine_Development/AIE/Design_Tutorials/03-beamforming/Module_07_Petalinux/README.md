@@ -72,15 +72,6 @@ Lastly, the `config` file specifies the machine name as follows:
 ```
 CONFIG_SUBSYSTEM_MACHINE_NAME="versal-vck190-reva-x-ebm-02-reva"
 ```
-
-Next, add user packages by appending the CONFIG\_\* lines to the `build/vck190_linux/project-spec/configs/rootfs_config` file. By default, most config options are set to "is not set." Update the following config options to ``=y``:  
-
-- **Packages for base XRT support:** This is required for the AMD Vitis™ application acceleration development flow. It includes XRT and ZOCL.   
-
-```
-CONFIG_packagegroup-petalinux-xrt=y
-```
-
 - **Packages for easy system management (recommended):**
 
 ```
