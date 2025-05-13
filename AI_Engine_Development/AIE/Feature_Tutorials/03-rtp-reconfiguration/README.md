@@ -41,7 +41,7 @@ const T & | Input
 const T (&)[ …] | Input
 T(&)[…] | Inout
 
-**Known issue in 2024.2**: There may exist hardware execution issue in asynchronous array RTP update & read. When it happens, please wait for an update in the tool or a patch. Otherwise, you may continue to use 2024.1 instead.
+**Known issue in 2024.2**: There may exist hardware execution issue in asynchronous array RTP update & read. Please refer to https://adaptivesupport.amd.com/s/article/000037419?language=en_US
 
 ## Steps
 
