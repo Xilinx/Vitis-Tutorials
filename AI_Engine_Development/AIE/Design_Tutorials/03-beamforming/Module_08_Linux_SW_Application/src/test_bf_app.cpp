@@ -110,7 +110,7 @@ int main(int argc, char ** argv) {
         dlbf_resulta = test_dlbf(iterFlag, check);
         ulbf_resulta = test_ulbf(iterFlag, check);
 
-        if (!iterFlag) {
+       /* if (!iterFlag) {
             // Reset AIE - Reload AIE, run  Beamformer func again
             reset_done = xrtResetAIEArray(dhdl);
             if (reset_done == -1){
@@ -122,7 +122,7 @@ int main(int argc, char ** argv) {
             } else if(reset_done == 0) {
                 printf("[Beamformer] AIE reset done successfully\n");
                 log_plnx << "[Beamformer] AIE reset done successfully" << std::endl;
-            }
+            }*/
             xclbin = load_xclbin(dhdl, argv[2]);
 
             dlbf_resultb = test_dlbf(iterFlag, check);
@@ -147,7 +147,7 @@ int main(int argc, char ** argv) {
     int fail_p = 0;
     if (perf){
         // Reset AIE - Reload AIE, run  Beamformer func again
-        reset_done = xrtResetAIEArray(dhdl);
+     /* reset_done = xrtResetAIEArray(dhdl);
         if (reset_done == -1){
             printf("[Beamformer] AIE reset FAILS \n");
             log_plnx << "[Beamformer] AIE reset FAILS" <<std::endl;
@@ -157,7 +157,7 @@ int main(int argc, char ** argv) {
         } else if(reset_done == 0) {
             printf("[Beamformer] AIE reset done successfully\n");
             log_plnx << "[Beamformer] AIE reset done successfully" << std::endl;
-        }
+        }*/
         xclbin = load_xclbin(dhdl, argv[2]);
 
         enable_graphs(0, 0);  //niter is set to 0 for infinite loop
