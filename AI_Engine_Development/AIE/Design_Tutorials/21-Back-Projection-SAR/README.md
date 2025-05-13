@@ -2,8 +2,8 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on amd.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
  </tr>
 </table>
@@ -14,7 +14,7 @@
 
 ## Abstract
 
-Synthetic Aperture Radar (SAR) [[1]] creates a 2D or 3D image of stationary objects or landscapes from a moving platform such as an airplane or spacecraft. The distance travelled over the target by the platform creates a large synthetic antenna aperture that mimics a much larger antenna array yielding superior image resolution. Signal processing combines coherently many radar pulses collected from multiple platform positions above the target. Many algorithms exist to perform SAR. The Back-Projection (BP) algorithm for SAR is one of the easiest to understand and has $O(N^3)$ operations for an $N\times N$ image. While this computational cost is high, BP lends itself naturally to parallel processing [[2]] and finds use in practical systems. This tutorial builds a reference design for BP-based SAR on AI Engines. Using the GOTCHA data set [[3]] with 586 radar pulses, the SAR engine achieves ~2.5 frames per second for a $512\times 512$ image with fewer than 32 tiles. With eight instances of the engine, the design achieves close to 19 frames per second using around 224 tiles. 
+Synthetic Aperture Radar (SAR) [[1]] creates a 2D or 3D image of stationary objects or landscapes from a moving platform such as an airplane or spacecraft. The distance travelled over the target by the platform creates a large synthetic antenna aperture that mimics a much larger antenna array yielding superior image resolution. Signal processing combines coherently many radar pulses collected from multiple platform positions above the target. Many algorithms exist to perform SAR. The Back-Projection (BP) algorithm for SAR is one of the easiest to understand and has $O(N^3)$ operations for an $N\times N$ image. While this computational cost is high, BP lends itself naturally to parallel processing [[2]] and finds use in practical systems. This tutorial builds a reference design for BP-based SAR on AI Engines. Using the GOTCHA data set [[3]] with 586 radar pulses, the SAR engine achieves ~2.5 frames per second for a $512\times 512$ image with fewer than 32 tiles. With eight instances of the engine, the design achieves close to 19 frames per second using approximately 224 tiles. 
 
 
 

@@ -2,8 +2,8 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on amd.com</br></a>
+    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
  </tr>
 </table>
@@ -16,16 +16,16 @@ This tutorial implements the Back-Projection (BP) algorithm for Synthetic Apertu
 
 * Using system partitioning methodology to plan and de-risk a larger system design example.
 * Using multi-rate AI Engine scheduling to coordinate processing of different workloads at the system level.
-* Implementing vectorized function approximation kernels for `cos()`, `sin()` and `sqrt()` using new Vitis DSP Library IP's.
-* Managing dynamic range across several AI Engine kernels & compute workloads.
+* Implementing vectorized function approximation kernels for `cos()`, `sin()` and `sqrt()` using new Vitis DSP Library IPs.
+* Managing dynamic range across several AI Engine kernels and compute workloads.
 * Optimizing the throughput performance of a single AI Engine compute engine.
 * Illustrating how to parallelize the system level application across multiple compute engines to increase throughput.
 
 ### GOTCHA Volumetric SAR Data Set
 
-This tutorial uses the "GOTCHA Volumetric SAR Data Set" [[1]] to develop, validate, test & characterize the performance of the BP algorithm on AI Engines. This data set was captured by the U.S. Air Force Sensor Data Management System and is made available for public download using the link below. The repository consists of SAR phase history data collected at X-band with a 640 MHz bandwidth with full azimuth coverate at 8 different elevation angles with full polarization. The target scene consists of many civilian vehicles and calibration targets. 
+This tutorial uses the "GOTCHA Volumetric SAR Data Set" [[1]] to develop, validate, test, and characterize the performance of the BP algorithm on AI Engines. This data set was captured by the U.S. Air Force Sensor Data Management System and is available for public download from the link below. The repository consists of SAR phase history data collected at X-band with a 640 MHz bandwidth with full azimuth coverate at 8 different elevation angles with full polarization. The target scene consists of many civilian vehicles and calibration targets. 
 
-In order to run the design examples provided in this tutorial, please download the GOTCHA data set to the folder `<path-to-tutorial>/GOTCHA-CP` such that each of its 8 different elevation angle folders appear as `<path-to-tutorial>/GOTCHA-CP/DATA/pass1` through `<path-to-tutorial>/GOTCHA-CP/DATA/pass8`, respectively.
+In order to run the design examples provided in this tutorial, download the GOTCHA data set to the folder `<path-to-tutorial>/GOTCHA-CP` such that each of its eight different elevation angle folders appear as `<path-to-tutorial>/GOTCHA-CP/DATA/pass1` through `<path-to-tutorial>/GOTCHA-CP/DATA/pass8`, respectively.
 
 
 ### References
