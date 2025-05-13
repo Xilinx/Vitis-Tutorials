@@ -82,7 +82,7 @@ package:
 	--package.dtb ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_bdc_202510_1/sw/xilinx_vck190_base_bdc_202510_1/boot/system.dtb \
 	-o vck190_prj_hw_emu.xclbin 
 =======
-HOST_CFLAGS = -Isrc -Isw -Iaie -ladf_api_xrt -lxrt_coreutil -D__SYNCBO_ENABLE__ $(TARGET_FLAGS) -DTARGET_DEVICE=$(DEVICE) -std=c++14 -O0 -g -Wall -fmessage-length=0 -I${GITHUB_COMMON_REPO}/common/includes/xcl2 --sysroot=${SYSROOT} -I=/usr/include -I=/usr/include/xrt -L=/usr/lib -ldl -lcrypt -lstdc++ -lxilinxopencl -lpthread -lrt -I$(XILINX_VITIS)/aietools/include -L$(XILINX_VITIS)/aietools/lib/aarch64.o -I${XILINX_VITIS}/include -I${XILINX_HLS}/include
+HOST_CFLAGS = -Isrc -Isw -Iaie -ladf_api_xrt -lxrt_coreutil -D__SYNCBO_ENABLE__ $(TARGET_FLAGS) -DTARGET_DEVICE=$(DEVICE) -std=c++17 -O0 -g -Wall -fmessage-length=0 -I${GITHUB_COMMON_REPO}/common/includes/xcl2 --sysroot=${SYSROOT} -I=/usr/include -I=/usr/include/xrt -L=/usr/lib -ldl -lcrypt -lstdc++ -lxilinxopencl -lpthread -lrt -I$(XILINX_VITIS)/aietools/include -L$(XILINX_VITIS)/aietools/lib/aarch64.o -I${XILINX_VITIS}/include -I${XILINX_HLS}/include
 >>>>>>> 139a170b (PFM/F/03_Vitis_Export_To_Vivado: Updated Tutorial for 24.2 )
 
 ifeq ($(TARGET),$(filter $(TARGET),hw_emu))

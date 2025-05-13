@@ -8,7 +8,7 @@ XSA_NAME=vck190_custom_dfx
 CUSTOM_PLATFORM=$(ROOT_DIR)/../step2_sw/build/pfm/$(XSA_NAME)/export/$(XSA_NAME)/$(XSA_NAME).xpfm
 VERSION=2025.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
-SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/
+SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
 
 
 

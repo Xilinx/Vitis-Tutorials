@@ -303,7 +303,7 @@ Follow the following steps:
 10. Set the path names for the  ``Sysroot, Root FS, Kernel Image`` of the embedded OS. Then click ``Next``. Here are the environment settings for your reference:
 
     ```text
-    - /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+    - /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-amd-linux  #Sysroot path
     - /opt/xilinx/common/xilinx-versal-common-v2023.2/rootfs.ext4  #Root FS
     - /opt/xilinx/common/xilinx-versal-common-v2023.2/Image        #Kernel Image
     ```

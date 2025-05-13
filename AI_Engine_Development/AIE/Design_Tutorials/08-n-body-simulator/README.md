@@ -58,7 +58,7 @@ export DSPLIB_VITIS=<Path to Vitis Libs - Directory>
 
 
 source $(XILINX_VITIS)/settings64.sh
-source $(COMMON_IMAGE_VERSAL)/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $(COMMON_IMAGE_VERSAL)/environment-setup-cortexa72-cortexa53-amd-linux
 
 ```
 2. Source the environment script:

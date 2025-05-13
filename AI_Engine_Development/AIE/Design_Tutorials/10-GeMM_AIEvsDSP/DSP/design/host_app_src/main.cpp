@@ -10,6 +10,7 @@ SPDX-License-Identifier: MIT
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <unistd.h>
 #include "experimental/xrt_aie.h"
 #include "experimental/xrt_kernel.h"
 #include "experimental/xrt_bo.h"

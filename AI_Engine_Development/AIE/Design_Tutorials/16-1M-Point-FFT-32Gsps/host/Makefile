@@ -46,9 +46,9 @@ $(BUILD_DIR)/$(MAIN_ELF):	$(SOURCES)
 	echo "#define NUM_TST     $(NUMTST_HW)" >> ./test_cfg.h; \
 	echo "#define IS_COSIM    $(IS_COSIM)" >> ./test_cfg.h ; \
 	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
-	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++11 -o main.o ../main.cpp; \
+	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++17 -o main.o ../main.cpp; \
 	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
-	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++11 -o platform.o ../platform.cpp; \
+	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++17 -o platform.o ../platform.cpp; \
 	$(HOST_GCC) platform.o main.o -mcpu=cortex-a72 -Wl,-T -Wl,../../host/lscript.ld \
 		-L../$(SW_PLATFORM)standalone_domain/bsplib/lib -L$(XILINX_VITIS)/aietools/lib/aarchnone64.o \
 	        -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group -o $(MAIN_ELF); }

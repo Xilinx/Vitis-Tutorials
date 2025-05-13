@@ -143,14 +143,14 @@ endif
 
 ifeq (${TARGET}, sw_emu)
 GCC_FLAGS += -Wall -c \
-		-std=c++14 \
+		-std=c++17 \
 		-Wno-int-to-pointer-cast 
 GCC_INCLUDES := -I${XILINX_XRT}/include
 GCC_LIB := -lxrt_coreutil \
     		-L${XILINX_XRT}/lib
 else
 GCC_FLAGS += -Wall -c \
-			 -std=c++14 \
+			 -std=c++17 \
 			 -Wno-int-to-pointer-cast \
 			 --sysroot=${SDKTARGETSYSROOT} 
 
@@ -239,7 +239,7 @@ endif
 host: guard-CXX guard-SDKTARGETSYSROOT
 	cd ./sw
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o host.cpp
-	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
+	$(CXX) *.o $(GCC_LIB) -std=c++17 -o host.exe
 
 ############################################################################################################################
 

@@ -84,7 +84,7 @@ In the `[project-root]` you can start the full build with `make all` or `make al
             - Enter target directory for Petalinux tools (default: `/opt/petalinux/2024.2`)
           - Make sure sourcing Vivado `settingsXY.sh` and/or Vitis `settingsXY.sh` first!
           - `xilinx-versal-common-v2024.2 $ unset LD_LIBRARY_PATH`
-          - `xilinx-versal-common-v2024.2 $ source environment-setup-cortexa72-cortexa53-xilinx-linux`
+          - `xilinx-versal-common-v2024.2 $ source environment-setup-cortexa72-cortexa53-amd-linux`
           - **Note**: The latter 3 items must be executed each time you start in a new terminal or when changing versions!
       - **Note**: Following `LINUX_X_Y` exports are ignored and do not need setup when `export LINUX_PRE_BUILDS := true`.
       - **Note**: If `export XPFM_PRE_BUILDS := false` then a device-tree will be generated from the generated xsa. It could be - depending on the generated base platform (xsa) - that changes are needed in the `[project-root]/linux/dtg/src/system-user.dtsi` for a successfull build/boot. 

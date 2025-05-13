@@ -3,7 +3,7 @@
 
 ECHO             := @echo
 
-export SYSROOT  := ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export SYSROOT  := ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
 APP_NAME         := host
 APP_EXE          := ./${APP_NAME}.exe
 APP_SRC          := ./${APP_NAME}.cpp

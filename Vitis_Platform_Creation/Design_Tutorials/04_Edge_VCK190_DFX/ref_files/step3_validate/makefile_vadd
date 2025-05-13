@@ -7,7 +7,7 @@
 ############################## Setting up Project Variables ##############################
 
 TARGET := hw
-SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux
 SD_IMAGE_FILE := $(EDGE_COMMON_SW)/Image
 VPP_LDFLAGS :=
 
@@ -34,10 +34,10 @@ CMD_ARGS = $(BUILD_DIR)/krnl_vadd.xclbin
 SD_CARD := $(PACKAGE_OUT)
 
 ifeq ($(EMU_PS), X86)
-CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
 LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
 else
-CXXFLAGS += -I$(SYSROOT)/usr/include/xrt -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+CXXFLAGS += -I$(SYSROOT)/usr/include/xrt -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
 LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
 endif
 

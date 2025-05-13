@@ -197,7 +197,7 @@ The script sets up the environment variables and sources scripts explained below
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
 3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2024.2` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2024.2/sdk.sh` script.
+4. The platform is set up by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2024.2/sdk.sh` script.
 5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.

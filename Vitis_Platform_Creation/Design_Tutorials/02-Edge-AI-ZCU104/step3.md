@@ -134,7 +134,7 @@ Vector addition is the simplest acceleration PL kernel. The Vitis Unified IDE ca
          >Note: If the platform component is not in the current workspace user could click **+** button to add the platform component.
       - Set **Kernel Image** to ```xilinx-zynqmp-common-v2024.2/Image```.
       - Set **Root FS** to ```xilinx-zynqmp-common-v2024.2/rootfs.ext4```.
-      - Set **Sysroot** to ```zcu104_software_platform/xilinx-zynqmp-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Sysroot** to ```zcu104_software_platform/xilinx-zynqmp-common-v2024.2/sysroots/cortexa72-cortexa53-amd-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
    After seconds the vadd system project, vadd host component and vadd kernel component will be ready in the component view.

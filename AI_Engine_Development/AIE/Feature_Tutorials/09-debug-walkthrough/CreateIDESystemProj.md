@@ -148,7 +148,7 @@ The Embedded Component Paths page lets you specify the path to the Sysroot, Root
 ```
 Kernel Image: <path-to-common-files>/Image
 Root FS: <path-to-common-files>/rootfs.ext4
-Sysroot: <path-to-common-files>/sysroots/cortexa72-cortexa53-xilinx-linux
+Sysroot: <path-to-common-files>/sysroots/cortexa72-cortexa53-amd-linux
 ```
 **TIP:** You can enable the `Update Workspace Preference` checkbox to add the settings to any component or project that uses the specified platform as explained in [*Embedded Component Paths*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/Embedded-Component-Paths).
 

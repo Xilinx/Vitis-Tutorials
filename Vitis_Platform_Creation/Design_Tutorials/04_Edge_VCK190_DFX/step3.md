@@ -166,7 +166,7 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
 
       ![missing image](./images/step4/vitis_create_vadd.png)
 
-   5. Input **Sysroot** path (`step2_sw/build/sw_comp/sysroots/cortexa72-cortexa53-xilinx-linux`)
+   5. Input **Sysroot** path (`step2_sw/build/sw_comp/sysroots/cortexa72-cortexa53-amd-linux`)
    6. Input **RootFS** path (`step2_sw/build/sw_comp/rootfs.ext4`)
    7. Input **Kernel Image** path (`step2_sw/build/sw_comp/Image`). These components were prepared in [step 2](./step2.md). Click **Next**.
    8. Select template **Vector Addition**. Click **Finish**.

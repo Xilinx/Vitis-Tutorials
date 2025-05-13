@@ -33,9 +33,9 @@ RM = rm -f
 RMDIR = rm -rf
 
 # compiler flags
-CXXFLAGS = -std=c++1y -DVITIS_PLATFORM=$(ZYNQMP_VITIS_PLATFORM) -D__USE_XOPEN2K8 -I$(XILINX_HLS)/include -I$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/xrt -O2 -g -Wall -c -fmessage-length=0 --sysroot=$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
+CXXFLAGS = -std=c++17 -DVITIS_PLATFORM=$(ZYNQMP_VITIS_PLATFORM) -D__USE_XOPEN2K8 -I$(XILINX_HLS)/include -I$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux/usr/include/xrt -O2 -g -Wall -c -fmessage-length=0 --sysroot=$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux
 
-LDFLAGS = -lxilinxopencl -lxrt_core -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib --sysroot=$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
+LDFLAGS = -lxilinxopencl -lxrt_core -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux/usr/lib --sysroot=$(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux
 
 
 #

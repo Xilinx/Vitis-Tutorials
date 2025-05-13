@@ -160,7 +160,7 @@ export XILINX_VITIS = <YOUR-2024.2-VITIS-DIRECTORY>/2024.2
 export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2024.2-DIRECTORY>
 export DSPLIBS_VITIS=<YOUR-PATH-TO-2024.2-DSP-LIBRARY>
 
-source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-amd-linux
 source $XILINX_VITIS/settings64.sh
 
 ```

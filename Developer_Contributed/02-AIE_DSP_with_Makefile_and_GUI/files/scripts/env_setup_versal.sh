@@ -12,7 +12,7 @@ echo Setting Up COMMON_IMAGE_VERSAL=$COMMON_IMAGE_VERSAL #DB: this works also fo
 
 # Run Environment setup to get SDKTARGETSYSROOT and CXX
 unset LD_LIBRARY_PATH
-source ${COMMON_IMAGE_VERSAL}/environment-setup-cortexa72-cortexa53-xilinx-linux
+source ${COMMON_IMAGE_VERSAL}/environment-setup-cortexa72-cortexa53-amd-linux
 
 
 # -------------------------

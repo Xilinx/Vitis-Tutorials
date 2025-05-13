@@ -18,7 +18,7 @@ XSA_NAME=custom_hardware_platform
 XSA=$(XSA_PATH)/$(XSA_NAME)_hw.xsa
 PLATFORM_NAME=custom_platform
 CUSTOM_PLATFORM = $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-SYSROOT := $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT := $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux
 
 DEVICE_TREE_REPO ?=
 

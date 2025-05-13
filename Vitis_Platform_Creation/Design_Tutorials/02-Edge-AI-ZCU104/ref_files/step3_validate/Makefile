@@ -10,7 +10,7 @@ TARGET ?=hw_emu
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 SRC=$(XILINX_VITIS)/samples/vadd/
 VERSION=2025.1
-SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux
 SD_IMAGE_FILE := $(COMMON_IMAGE_ZYNQMP)/Image
 VPP_LDFLAGS :=
 
@@ -38,10 +38,10 @@ SD_CARD := $(PACKAGE_OUT)
 
 
 ifeq ($(EMU_PS), X86)
-CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++1y
+CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
 LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
 else
-CXXFLAGS += -I$(XILINX_VITIS)/include -Wall -O0 -g -std=c++1y
+CXXFLAGS += -I$(XILINX_VITIS)/include -Wall -O0 -g -std=c++17
 CXXFLAGS += -I$(SYSROOT)/usr/include/xrt
 CXXFLAGS += -I$(SYSROOT)/usr/include -Wall -Wextra -O0 -g3 -std=c++17 -MD -MT
 CXXFLAGS += -Isrc/ 

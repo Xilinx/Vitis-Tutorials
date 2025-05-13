@@ -161,7 +161,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
 
       >Note: If you target VEK280, please select `vek280_custom` platform.
 
-   - Input **Sysroot** path: `xilinx-versal-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux`
+   - Input **Sysroot** path: `xilinx-versal-common-v2024.2/sysroots/cortexa72-cortexa53-amd-linux`
    - Input **RootFS** path: `xilinx-versal-common-v2024.2/rootfs.ext4`
    - Input **Kernel Image** path: `xilinx-versal-common-v2024.2/Image` and click **Next**.
    - Review the project summary and click **Finish**.

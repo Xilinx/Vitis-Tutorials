@@ -161,14 +161,14 @@ tree -L 3 --charset ascii
 |-- sd_dir
 |   `-- boot.scr
 |-- sw_comp
-|   |-- environment-setup-cortexa72-cortexa53-xilinx-linux
+|   |-- environment-setup-cortexa72-cortexa53-amd-linux
 |   |-- Image
 |   |-- rootfs.ext4
-|   |-- site-config-cortexa72-cortexa53-xilinx-linux
+|   |-- site-config-cortexa72-cortexa53-amd-linux
 |   |-- sysroots
-|   |   |-- cortexa72-cortexa53-xilinx-linux
+|   |   |-- cortexa72-cortexa53-amd-linux
 |   |   `-- x86_64-petalinux-linux
-|   `-- version-cortexa72-cortexa53-xilinx-linux
+|   `-- version-cortexa72-cortexa53-amd-linux
 ```
 
 >**Note:** If you run the fast track script, the boot directory only has ``linux.bif`` file because the platform creation script `xsct_create_pfm.tcl` uses the `<petalinux_project>/images/linux` directory as boot directory for components of the BIF file. To make the GUI flow easier, copy these components to the boot directory for preparation.

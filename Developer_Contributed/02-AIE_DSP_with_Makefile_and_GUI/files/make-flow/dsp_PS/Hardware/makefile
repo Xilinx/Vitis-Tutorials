@@ -24,16 +24,16 @@ RMDIR = rm -rf
 CXXFLAGS += -std=c++17 -DVITIS_PLATFORM=$(VERSAL_VITIS_PLATFORM) -D__USE_XOPEN2K8 \
 	-I$(XILINX_VITIS)/aietools/include -I$(XILINX_HLS)/include -I$(XILINX_VITIS)/include \
 	-I$(DSPLIB_ROOT)/L1/src/aie -I$(DSPLIB_ROOT)/L1/include/aie -I$(DSPLIB_ROOT)/L2/include/aie \
-	-I$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/xrt/ \
+	-I$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/usr/include/xrt/ \
 	-O2 -g -Wall -c -fmessage-length=0 \
-	--sysroot=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux \
+	--sysroot=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux \
 	-I$(PROJECT_AIE_DIR)/src -I$(PROJECT_AIE_DIR)/src/graphs -I$(PROJECT_PS_DIR)/src \
 #	-I../../dsp_AIE/src -I../../dsp_AIE/src/graphs -I../dsp_PS/src \
 
 LDFLAGS = -lxilinxopencl -lxaiengine -ladf_api_xrt -lxrt_core -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ \
 	-L$(XILINX_VITIS)/aietools/lib/aarch64.o \
-	-L$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib \
-	--sysroot=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux
+	-L$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/usr/lib \
+	--sysroot=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux
 
 
 #

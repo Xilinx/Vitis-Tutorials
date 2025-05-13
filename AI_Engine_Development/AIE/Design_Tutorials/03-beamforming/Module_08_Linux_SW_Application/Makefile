@@ -36,7 +36,7 @@ DLBF_UTILS      := $(LOCAL_UTILS)/utils_linux.cpp $(LOCAL_UTILS)/utils_dlbf.cpp 
 ULBF_UTILS      := $(LOCAL_UTILS)/utils_ulbf.cpp $(LOCAL_UTILS)/ulbf_gold0.cpp $(LOCAL_UTILS)/ulbf_din.cpp $(LOCAL_UTILS)/ulbf_cin.cpp
 
 
-PFM_SYSROOT     := $(MODULE_07_DIR)/build/vck190_linux/images/linux/sdk/sysroots/cortexa72-cortexa53-xilinx-linux/
+PFM_SYSROOT     := $(MODULE_07_DIR)/build/vck190_linux/images/linux/sdk/sysroots/cortexa72-cortexa53-amd-linux/
 SYSROOT_INCLUDE := ${PFM_SYSROOT}/usr/include
 CPP_INCLUDE      := ${SYSROOT_INCLUDE}/c++/13.3.0
 CPP_AARCH64_INCLUDE := ${CPP_INCLUDE}/aarch64-xilinx-linux

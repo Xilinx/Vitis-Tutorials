@@ -36,7 +36,7 @@ VPP_FLAGS := $(VPP_LINK_FLAGS)
 LDCLFLAGS :=
 
 GCC_FLAGS := -Wall -c \
-			 -std=c++14 \
+			 -std=c++17 \
 			 -Wno-int-to-pointer-cast \
 			 --sysroot=${SDKTARGETSYSROOT}
 
@@ -49,7 +49,7 @@ GCC_LIB := -lxrt_coreutil --sysroot=${SDKTARGETSYSROOT}
 .PHONY: clean all kernels aie xclbin host package run_emu
 
 guard-%:
-	@#$(or ${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-xilinx-linux))
+	@#$(or ${$*}, $(error $* is not set. Run: environment-setup-cortexa72-cortexa53-amd-linux))
 
 run: all
 all: kernels aie xclbin host package
@@ -88,7 +88,7 @@ xclbin: $(GRAPH_O) $(KERNEL_XO)
 host: guard-SYSROOT guard-CXX
 	cd ./sw
 	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ $(GCC_FLAGS) $(GCC_INCLUDES) -o host.o host.cpp
-	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ *.o $(GCC_LIB) -std=c++14 -o host.exe
+	$(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ *.o $(GCC_LIB) -std=c++17 -o host.exe
 ############################################################################################################################
 
 ##################################################################################################

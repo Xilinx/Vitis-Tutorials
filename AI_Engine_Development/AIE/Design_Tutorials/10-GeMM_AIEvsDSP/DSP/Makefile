@@ -152,7 +152,7 @@ APP_SRC_CPP := $(HOST_APP_SRC)/main.cpp
 # =========================================================
 GCC_FLAGS := -O
 GCC_FLAGS += -c
-GCC_FLAGS += -std=c++14
+GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -DM_LARGE=$(GEMM_SIZE)
 GCC_FLAGS += -DN_LARGE=$(GEMM_SIZE)

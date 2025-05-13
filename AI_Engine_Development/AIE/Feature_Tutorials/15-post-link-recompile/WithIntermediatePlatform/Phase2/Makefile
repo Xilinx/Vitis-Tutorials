@@ -115,7 +115,7 @@ $(GRAPH2_O): $(GRAPH2)
 # either in hw/sw_emu or directly hw
 
 GCC_FLAGS := -Wall -c \
-			 -std=c++14 \
+			 -std=c++17 \
 			 -Wno-int-to-pointer-cast \
 			 --sysroot=$(SDKTARGETSYSROOT)
 
@@ -138,7 +138,7 @@ endif
 
 host: guard-CXX
 	$(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o main.o $(PS)/src/host.cpp
-	$(CXX) *.o $(GCC_LIB) -std=c++14 -o host.exe
+	$(CXX) *.o $(GCC_LIB) -std=c++17 -o host.exe
 
 # $(CXX) $(GCC_FLAGS) $(GCC_INCLUDES) -o aie_control_xrt.o Work2/ps/c_rts/aie_control_xrt.cpp
 

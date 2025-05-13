@@ -5,7 +5,7 @@
 
 ############################## Setting up Project Variables ##############################
 TARGET := hw_emu
-SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux
 SD_IMAGE_FILE := $(EDGE_COMMON_SW)/Image
 
 EMU_PS := QEMU
@@ -71,7 +71,7 @@ VPP_XO_FLAGS := -c -t $(TARGET) --platform $(PLATFORM) --save-temps -g
 VPP_LINK_FLAGS := -l --platform $(PLATFORM) $(KERNEL_XO) $(GRAPH_O) -t $(TARGET) --save-temps -g --config $(CONFIG_FILE) -o $(LINK_OUTPUT)
 
 GCC_FLAGS := -Wall -c \
-			 -std=c++14 \
+			 -std=c++17 \
 			 -Wno-int-to-pointer-cast \
 			 --sysroot=$(SYSROOT) \
 
@@ -90,7 +90,7 @@ GCC_LIB := -lxrt_core -lxrt_coreutil \
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
 ifeq ($(EMU_PS), X86)
        GCC_LIB := -lxrt_coreutil -L${XILINX_VITIS}/aietools/lib/lnx64.o -L${XILINX_XRT}/lib
-       GCC_FLAGS := -Wall -c -std=c++14 -Wno-int-to-pointer-cast -I${XILINX_XRT}/include
+       GCC_FLAGS := -Wall -c -std=c++17 -Wno-int-to-pointer-cast -I${XILINX_XRT}/include
        GCC_INCLUDES := -I./src/ -I./ -I${XILINX_VITIS}/aietools/include
 else
        GCC_LIB := -lxrt_coreutil -L$(SYSROOT)/usr/lib --sysroot=$(SYSROOT) -L${XILINX_VITIS}/aietools/lib/aarch64.o

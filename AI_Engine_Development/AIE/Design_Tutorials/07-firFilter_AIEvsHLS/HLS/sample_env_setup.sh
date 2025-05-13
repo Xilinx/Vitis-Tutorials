@@ -14,7 +14,7 @@ export DSPLIBS_VITIS=<YOUR-PATH-TO-2025.1-DSP-LIBRARY>
 # Source Versal Image ,Vitis and Aietools
 # ====================================================
 # Run the below command to setup environment and CXX
-source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-amd-linux
 source $XILINX_VITIS/settings64.sh
 # =========================================================
 # Platform Selection...

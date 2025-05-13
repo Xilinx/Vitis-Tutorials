@@ -27,7 +27,7 @@ The 'common image' package contains a prebuilt Linux kernel and root file system
 Before starting this tutorial run the following steps:
 
 1. Navigate to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2024.2/sdk.sh```.
+2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2024.2/sdk.sh```.
 3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2024.2``` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/base_platforms/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm```.
 

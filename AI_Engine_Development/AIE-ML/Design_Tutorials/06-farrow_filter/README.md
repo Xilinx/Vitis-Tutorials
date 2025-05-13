@@ -40,7 +40,7 @@ The design requirements are identical here as you are simply migrating the desig
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.2/sdk.sh`.
+1. Set up your platform by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.2/sdk.sh`.
 2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.2/rootfs.ext4`.
 3. Set up your IMAGE to point to `xilinx-versal-common-v2024.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.

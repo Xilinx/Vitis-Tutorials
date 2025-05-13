@@ -16,7 +16,7 @@ export BSP_DIR=<PATH TO xilinx-petalinux-DIRECTORY>/bsp/release
 export BSP=xilinx-vck190-v2025.1-final.bsp
 
 # Setup SDKTARGETSYSROOT and CXX...
-source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-amd-linux
 
 # Source VITIS ...
 source $XILINX_VITIS/settings64.sh

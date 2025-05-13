@@ -123,7 +123,7 @@ Vector addition is the simplest acceleration PL kernel. Vitis Unified IDE can cr
       - Input the **System project name** as `vadd` and use the default location for **System project location**. Then click **Next**.
       - Select **kv260_custom** platform, click **Next**.
          >Note: If the platform component is not in the current workspace user could click **+** button to add the platform component.
-      - Set **Sysroot** to ```xilinx-zynqmp-common-v2024.2/sysroots/cortexa72-cortexa53-xilinx-linux```. Then click **Next**.
+      - Set **Sysroot** to ```xilinx-zynqmp-common-v2024.2/sysroots/cortexa72-cortexa53-amd-linux```. Then click **Next**.
       - Review the summary of your `vadd` system project and click **Finish**.
 
   >**NOTE:** In this step, the addition of the kernel image and rootfs is omitted since it is recommended to use the official sd_card.img from AMD's download center. Furthermore, V++ does not incorporate the kernel image and rootfs in the generation of the sd_card.img for the SOM.

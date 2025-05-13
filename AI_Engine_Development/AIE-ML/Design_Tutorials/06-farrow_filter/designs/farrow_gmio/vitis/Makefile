@@ -15,7 +15,7 @@ VITIS_PLATFORM_XPFM    = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
 # Set SysRoot, RootFS and Image
 # COMMON_IMAGE_VERSAL  = " This path is setup in the designs > farrow_gmio > Makefile " << To run this file separately, set the path here. >> 
-VITIS_SYSROOTS   	= ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+VITIS_SYSROOTS   	= ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
 SDKTARGETSYSROOT 	= ${VITIS_SYSROOTS}
 KERNEL_IMAGE     	= ${COMMON_IMAGE_VERSAL}/Image
 ROOTFS           	= ${COMMON_IMAGE_VERSAL}/rootfs.ext4

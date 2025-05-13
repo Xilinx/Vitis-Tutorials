@@ -289,7 +289,7 @@ AIE_SIM_FLAGS += -i=$(AIE_SIM_IO_DIR)
 # =========================================================
 GCC_FLAGS := -O
 GCC_FLAGS += -c
-GCC_FLAGS += -std=c++14
+GCC_FLAGS += -std=c++17
 GCC_FLAGS += -D__linux__
 GCC_FLAGS += -D__PS_ENABLE_AIE__
 GCC_FLAGS += -DXAIE_DEBUG

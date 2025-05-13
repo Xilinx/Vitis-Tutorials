@@ -12,7 +12,7 @@ export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2025.1-DIRECTORY>
 # Source Versal Image ,Vitis and Aietools
 # ====================================================
 # Run the below command to setup environment and CXX
-source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-xilinx-linux
+source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-amd-linux
 source $XILINX_VITIS/settings64.sh
 # ========================================================
 # Set DSP Library for Vitis

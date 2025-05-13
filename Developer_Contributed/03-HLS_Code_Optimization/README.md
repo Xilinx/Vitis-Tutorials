@@ -984,7 +984,7 @@ Note the  following screenshots of Figures 10.1-1, 10.1-2, 10.1-3, 10.1-4, 10.1-
 If you import the zip archive directly in Vitis, all you have to do is **changing these three environmental variables** (``Sysroot path``, ``Root File System``, ``Kernel Image``):
 
 ```text
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-amd-linux  #Sysroot path
     - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/rootfs.ext4  #Root FS
     - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/Image        #Kernel Image
 ```
@@ -1244,7 +1244,7 @@ vitis -workspace ./wrk
 Make sure to check these three environmental variables (``Sysroot path``, ``Root File System``, ``Kernel Image``). See the following case:
 
 ```text
-    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+    - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/sysroots/cortexa72-cortexa53-amd-linux  #Sysroot path
     - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/rootfs.ext4  #Root FS
     - /opt/xilinx/common/xilinx-zynqmp-common-v2023.2/Image        #Kernel Image
 ```
@@ -1329,7 +1329,7 @@ vitis -workspace ./vck190_wrk
 Make sure to check these three environmental variables (``Sysroot path``, ``Root File System``, ``Kernel Image``). See the following case:
 
 ```text
-- /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-xilinx-linux  #Sysroot path
+- /opt/xilinx/common/xilinx-versal-common-v2023.2/sysroots/cortexa72-cortexa53-amd-linux  #Sysroot path
 - /opt/xilinx/common/xilinx-versal-common-v2023.2/rootfs.ext4  #Root FS
 - /opt/xilinx/common/xilinx-versal-common-v2023.2/Image        #Kernel Image
 ```

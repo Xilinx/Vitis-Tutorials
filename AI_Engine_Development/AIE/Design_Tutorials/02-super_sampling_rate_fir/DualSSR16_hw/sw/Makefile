@@ -8,7 +8,7 @@ HOST_INC   = -I../ -I$(AIE_DIR)/src
 HOST_OBJ   = aie_control_xrt.o host.o
 AIE_CTRL_CPP = $(AIE_DIR)/Work/ps/c_rts/aie_control_xrt.cpp
 
-CXXFLAGS += -std=c++14 -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC} -I${AIE_DIR}
+CXXFLAGS += -std=c++17 -I$(XILINX_HLS)/include/ -I${SDKTARGETSYSROOT}/usr/include/xrt/ -g -Wall -c -fmessage-length=0 --sysroot=${SDKTARGETSYSROOT} -I${XILINX_VITIS}/aietools/include ${HOST_INC} -I${AIE_DIR}
 
 LDFLAGS += -ladf_api_xrt -lgcc -lc -lxilinxopencl -lxrt_coreutil -lpthread -lrt -ldl -lcrypt -lstdc++ -L${SDKTARGETSYSROOT}/usr/lib/ --sysroot=${SDKTARGETSYSROOT} -L$(XILINX_VITIS)/aietools/lib/aarch64.o
 

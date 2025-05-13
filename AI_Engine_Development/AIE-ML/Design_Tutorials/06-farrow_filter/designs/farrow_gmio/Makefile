@@ -14,7 +14,7 @@ PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 export COMMON_IMAGE_VERSAL = < PATH to xilinx-versal-common-v2025.1 >
 export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/export/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm
-export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export SYSROOT             = ${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
 export KERNEL_IMAGE        = ${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS              = ${COMMON_IMAGE_VERSAL}/rootfs.ext4
 export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}

@@ -40,7 +40,7 @@ NUM_SAMPLES ?= 512
 NFRAMES ?= 16
 
 SYSTEM_VAR_D := -DNUM_SAMPLES=$(NUM_SAMPLES) -DNFRAMES=$(NFRAMES)
-AIE_FLAGS += --aie.Xpreproc "\"$(SYSTEM_VAR_D)\""
+AIE_FLAGS += --aie.Xpreproc "$(SYSTEM_VAR_D)"
 
 NSamples := $(NUM_SAMPLES)
 NFrames := $(shell echo " $(NFRAMES) + 1" | bc)

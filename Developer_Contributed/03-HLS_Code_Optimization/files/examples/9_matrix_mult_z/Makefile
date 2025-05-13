@@ -50,7 +50,7 @@ ZYNQMP_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${ZYNQMP_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${ZYNQMP_VITIS_PLATFORM}.xpfm
 # Set SysRoot, RootFS and Image
-export VITIS_SYSROOTS   = ${COMMON_IMAGE_ZYNQMP}/sysroots/cortexa72-cortexa53-xilinx-linux
+export VITIS_SYSROOTS   = ${COMMON_IMAGE_ZYNQMP}/sysroots/cortexa72-cortexa53-amd-linux
 export SDKTARGETSYSROOT = ${VITIS_SYSROOTS}
 export KERNEL_IMAGE     = ${COMMON_IMAGE_ZYNQMP}/Image
 export ROOTFS           = ${COMMON_IMAGE_ZYNQMP}/rootfs.ext4

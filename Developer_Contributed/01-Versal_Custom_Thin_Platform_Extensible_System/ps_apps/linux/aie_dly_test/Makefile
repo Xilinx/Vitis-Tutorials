@@ -5,7 +5,7 @@
 
 ECHO             := @echo
 
-SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-amd-linux
 
 APP_NAME         := aie_dly_test
 APP_EXE          := ../exe/${APP_NAME}.exe

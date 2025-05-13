@@ -86,7 +86,7 @@ export VITIS_PLATFORM_XPFM=${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 # ========================================================
 # Set SysRoot, RootFS and Image
 # ========================================================
-export VITIS_SYSROOTS=${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-xilinx-linux
+export VITIS_SYSROOTS=${COMMON_IMAGE_VERSAL}/sysroots/cortexa72-cortexa53-amd-linux
 export SDKTARGETSYSROOT=${VITIS_SYSROOTS}
 export KERNEL_IMAGE=${COMMON_IMAGE_VERSAL}/Image
 export ROOTFS=${COMMON_IMAGE_VERSAL}/rootfs.ext4

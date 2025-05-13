@@ -12,7 +12,7 @@ ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
 							  
 VERSION=2025.1
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
-SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-xilinx-linux/
+SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
 XSA_NAME=vck190_custom
 PLATFORM_NAME=vck190_custom
 PLATFORM = $(ROOT_DIR)/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm

@@ -5,7 +5,7 @@
 
 ECHO             := @echo
 
-SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-xilinx-linux
+SYSROOT          := ../../../linux/sysroot/sysroots/cortexa72-cortexa53-amd-linux
 
 APP_NAME         := vadd_s
 APP_EXE          := ../exe/${APP_NAME}.exe
@@ -18,7 +18,7 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include/xrt \
                     -I${SYSROOT}/usr/include \
                     -I${XILINX_VITIS}/include
 
-GCC_C_FLAGS      := -O -Wall -std=c++14 \
+GCC_C_FLAGS      := -O -Wall -std=c++17 \
                     --sysroot=${SYSROOT}
 
 GCC_L_FLAGS      := -lxrt_core -lxrt_coreutil \
