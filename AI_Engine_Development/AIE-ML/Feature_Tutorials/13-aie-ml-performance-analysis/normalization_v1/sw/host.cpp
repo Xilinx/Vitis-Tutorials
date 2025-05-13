@@ -56,7 +56,9 @@ int run_plio_graph(const xrt::device &device,const xrt::uuid &id,int iter_graph)
 	Timer timer;
 
 	auto mm2s1_run = mm2s1(nullptr, OUTPUT_SIZE);
-	s2ss1_run.wait();
+	//Instead of waiting PL kernel to complete (because it will hang), just sleep for some seconds
+	//s2ss1_run.wait();
+	sleep(10);
 	
 	double timer_stop=timer.stop();
 	double throughput=output_size_in_bytes/timer_stop;

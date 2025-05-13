@@ -163,6 +163,14 @@ However, the design will hang. Hang detection is supported via multiple design f
 
 From the  above hang status in HW, you can see how each kernel is stalled. The kernel `mean` cannot generate "mean” because it does not receive 6 input buffers. Memtile cannot multicast all the data to multiple kernels, because `deviation` and `norm` are only capable to store 2 input buffers and then stalled.
 
+Note: For testing purposes, the host code (sw/host.cpp) has been modified to sleep for a few seconds instead of waiting indefinitely for the PL kernel to complete.
+
+```
+//Instead of waiting PL kernel to complete (because it will hang), just sleep for some seconds
+//s2ss1_run.wait();
+sleep(10);
+```
+
 To break down the dependency of the input data of the kernels, it's able to utilize 3 different channels of the memtile. See the solution in next version.
 
 ## Steps - Version 2
