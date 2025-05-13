@@ -1,0 +1,75 @@
+{
+  "NodeConstraints": {
+    "engine0.ifft.ifft": {
+      "tile": {
+        "column": 1,
+        "row": 7,
+        "tile_type": "core"
+      }
+    },
+    "engine0.ifft.lut": {
+      "tile": {
+        "column": 2,
+        "row": 7,
+        "tile_type": "core"
+      }
+    }
+  },
+  "GlobalConstraints": {
+    "isomorphicGraphGroup": {
+      "name": "isoGroup",
+      "referenceGraph": "engine0",
+      "stampedGraphs": ["engine1", "engine2", "engine3","engine4", "engine5", "engine6","engine7"] 
+    },
+    "areaGroup": {
+      "name": "Engine0",
+      "nodeGroup": ["engine0*"],
+      "tileGroup": ["(0,0):(3,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine1",
+      "nodeGroup": ["engine1*"],
+      "tileGroup": ["(4,0):(7,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine2",
+      "nodeGroup": ["engine2*"],
+      "tileGroup": ["(8,0):(11,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine3",
+      "nodeGroup": ["engine3*"],
+      "tileGroup": ["(12,0):(15,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine4",
+      "nodeGroup": ["engine4*"],
+      "tileGroup": ["(16,0):(19,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine5",
+      "nodeGroup": ["engine5*"],
+      "tileGroup": ["(20,0):(23,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine6",
+      "nodeGroup": ["engine6*"],
+      "tileGroup": ["(24,0):(27,7)"],
+      "shimGroup": ["0:49"]
+    },
+    "areaGroup": {
+      "name": "Engine7",
+      "nodeGroup": ["engine7*"],
+      "tileGroup": ["(28,0):(31,7)"],
+      "shimGroup": ["0:49"]
+    }
+  }
+}
+
+

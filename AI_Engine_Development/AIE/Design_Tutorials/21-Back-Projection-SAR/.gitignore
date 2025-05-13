@@ -1,0 +1,16 @@
+#
+# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# Author: Mark Rollins
+
+**/package1_hw_emu/*
+**/package8_hw_emu/*
+**/package1_hw/*
+**/package8_hw/*
+**/image_buffer_*engine_wrapper/*
+**/save*/*
+**/Work/*
+**/build_hw/*
+**/build_hw_emu/*
+

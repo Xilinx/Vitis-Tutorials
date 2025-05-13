@@ -1,0 +1,894 @@
+{
+  "NodeConstraints": {
+    "engine0.ifft.ifft": {
+      "tile": {
+        "column": 2,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 2,
+        "row": 0,
+        "bankId": 0,
+        "offset": 0
+      }
+    },
+    "engine0.ifft.lut": {
+      "tile": {
+        "column": 1,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 1,
+        "row": 1,
+        "bankId": 0,
+        "offset": 0
+      }
+    },
+    "engine0.engine.interp1_real.kk": {
+      "tile": {
+        "column": 1,
+        "row": 3,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 1,
+        "row": 4,
+        "bankId": 0,
+        "offset": 6720
+      }
+    },
+    "engine0.engine.interp1_imag.kk": {
+      "tile": {
+        "column": 2,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 2,
+        "row": 2,
+        "bankId": 2,
+        "offset": 0
+      }
+    },
+    "engine0.engine.bp_update.kk": {
+      "tile": {
+        "column": 3,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 3,
+        "row": 1,
+        "bankId": 0,
+        "offset": 0
+      }
+    },
+    "engine0.engine.bp_update.cc": {
+      "tile": {
+        "column": 2,
+        "row": 3,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 2,
+        "row": 4,
+        "bankId": 1,
+        "offset": 3392
+      }
+    },
+    "GMIO_i_ifft_0": {
+      "shim": {
+        "column": 2
+      }
+    },
+    "PLIO_i_image_0": {
+      "shim": {
+        "column": 6,
+        "channel": 0
+      }
+    },
+    "PLIO_o_image_0": {
+      "shim": {
+        "column": 6,
+        "channel": 0
+      }
+    },
+    "engine0.engine.range.kk": {
+      "tile": {
+        "column": 1,
+        "row": 7,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 1,
+        "row": 6,
+        "bankId": 0,
+        "offset": 0
+      }
+    },
+    "engine0.engine.diff3d.kk": {
+      "tile": {
+        "column": 0,
+        "row": 7,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 0,
+        "row": 7,
+        "bankId": 2,
+        "offset": 0
+      }
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0]": {
+      "tile": {
+        "column": 0,
+        "row": 5,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 0,
+        "row": 5,
+        "bankId": 1,
+        "offset": 3328
+      }
+    },
+    "engine0.engine.dR_comp.kk": {
+      "tile": {
+        "column": 1,
+        "row": 4,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 0,
+        "row": 4,
+        "bankId": 2,
+        "offset": 0
+      }
+    },
+    "engine0.engine.fmod.kk": {
+      "tile": {
+        "column": 1,
+        "row": 5,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 1,
+        "row": 6,
+        "bankId": 1,
+        "offset": 0
+      }
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0]": {
+      "tile": {
+        "column": 3,
+        "row": 6,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 3,
+        "row": 7,
+        "bankId": 1,
+        "offset": 3328
+      }
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0]": {
+      "tile": {
+        "column": 2,
+        "row": 5,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 2,
+        "row": 6,
+        "bankId": 3,
+        "offset": 0
+      }
+    },
+    "engine0.engine.expjx.kk": {
+      "tile": {
+        "column": 3,
+        "row": 4,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 3,
+        "row": 4,
+        "bankId": 0,
+        "offset": 0
+      }
+    }
+  },
+  "PortConstraints": {
+    "engine0.engine.dR_comp._dma[0].in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 3,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.interp1_real._dma[0].out[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag._dma[0].out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.fmod._dma[0].in[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 5,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 5,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp._dma[0].out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 6,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 6,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp._dma[0].out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 5,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.ifft.in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.ifft.out[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.ifft.param[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.ifft.param[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_real.kk.param[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 4,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_real.kk.param[2]": {
+      "buffers": [{
+          "column": 1,
+          "row": 2,
+          "bankId": 3,
+          "offset": 4096
+        }]
+    },
+    "engine0.engine.interp1_real.kk.param[1]": {
+      "buffers": [{
+          "column": 1,
+          "row": 4,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_real.kk.in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_real.kk.in[1]": {
+      "buffers": [{
+          "column": 1,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_real.kk.out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 3,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.param[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 1,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.param[2]": {
+      "buffers": [{
+          "column": 1,
+          "row": 2,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.param[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 2,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.in[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.in[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.interp1_imag.kk.out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 2,
+          "bankId": 0,
+          "offset": 4096
+        }, {
+          "column": 2,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.kk.in[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 1,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.kk.in[1]": {
+      "buffers": [{
+          "column": 3,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.kk.in[2]": {
+      "buffers": [{
+          "column": 3,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.kk.out[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 2,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.cc.in[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 3,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.bp_update.cc.in[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 2,
+          "bankId": 0,
+          "offset": 4096
+        }, {
+          "column": 2,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.bp_update.cc.out[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft_i.out[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.lut.in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.lut.out[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.ifft.lut.out[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.diff3d.kk.in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 7,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 7,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.diff3d.kk.in[1]": {
+      "buffers": [{
+          "column": 0,
+          "row": 7,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 7,
+          "bankId": 0,
+          "offset": 576
+        }, {
+          "column": 0,
+          "row": 7,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.diff3d.kk.out[0]": {
+      "buffers": [{
+          "column": 0,
+          "row": 6,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 6,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].param[0]": {
+      "buffers": [{
+          "column": 0,
+          "row": 6,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].param[1]": {
+      "buffers": [{
+          "column": 0,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].param[3]": {
+      "buffers": [{
+          "column": 0,
+          "row": 5,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].param[2]": {
+      "buffers": [{
+          "column": 0,
+          "row": 5,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].in[0]": {
+      "buffers": [{
+          "column": 0,
+          "row": 6,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 6,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.sqrt.sqrt_dsp.m_kernel[0].out[0]": {
+      "buffers": [{
+          "column": 0,
+          "row": 4,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 4,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.dR_comp.kk.in[0]": {
+      "buffers": [{
+          "column": 0,
+          "row": 4,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 4,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.dR_comp.kk.in[1]": {
+      "buffers": [{
+          "column": 1,
+          "row": 5,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 0,
+          "row": 4,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.dR_comp.kk.out[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 1,
+          "row": 3,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.dR_comp.kk.out[1]": {
+      "buffers": [{
+          "column": 1,
+          "row": 5,
+          "bankId": 1,
+          "offset": 4096
+        }, {
+          "column": 1,
+          "row": 5,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.fmod.kk.in[0]": {
+      "buffers": [{
+          "column": 1,
+          "row": 5,
+          "bankId": 1,
+          "offset": 4096
+        }, {
+          "column": 1,
+          "row": 5,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.fmod.kk.out[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 5,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 5,
+          "bankId": 0,
+          "offset": 2048
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].param[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 6,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].param[1]": {
+      "buffers": [{
+          "column": 3,
+          "row": 7,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].param[3]": {
+      "buffers": [{
+          "column": 3,
+          "row": 7,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].param[2]": {
+      "buffers": [{
+          "column": 3,
+          "row": 7,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].in[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 6,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 6,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_cos.cos_dsp.m_kernel[0].out[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 5,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 5,
+          "bankId": 2,
+          "offset": 1376
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].param[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 6,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].param[1]": {
+      "buffers": [{
+          "column": 2,
+          "row": 4,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].param[3]": {
+      "buffers": [{
+          "column": 2,
+          "row": 4,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].param[2]": {
+      "buffers": [{
+          "column": 2,
+          "row": 4,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].in[0]": {
+      "buffers": [{
+          "column": 2,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 2,
+          "row": 5,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.dut_sin.sin_dsp.m_kernel[0].out[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 5,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.kk.in[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 5,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 5,
+          "bankId": 2,
+          "offset": 1376
+        }]
+    },
+    "engine0.engine.expjx.kk.in[1]": {
+      "buffers": [{
+          "column": 3,
+          "row": 5,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 5,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "engine0.engine.expjx.kk.out[0]": {
+      "buffers": [{
+          "column": 3,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 3,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }]
+    }
+  }
+}

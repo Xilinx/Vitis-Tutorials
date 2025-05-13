@@ -1,0 +1,28 @@
+{
+  "NodeConstraints": {
+    "engine0.ifft.ifft": {
+      "tile": {
+        "column": 1,
+        "row": 7,
+        "tile_type": "core"
+      }
+    },
+    "engine0.ifft.lut": {
+      "tile": {
+        "column": 2,
+        "row": 7,
+        "tile_type": "core"
+      }
+    }
+  },
+  "GlobalConstraints": {
+    "areaGroup": {
+      "name": "Engine",
+      "nodeGroup": ["engine0*"],
+      "tileGroup": ["(0,0):(3,7)"],
+      "shimGroup": ["0:49"]
+    }
+  }
+}
+
+
