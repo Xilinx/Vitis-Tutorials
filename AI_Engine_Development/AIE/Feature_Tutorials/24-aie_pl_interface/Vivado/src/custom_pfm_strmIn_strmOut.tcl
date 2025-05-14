@@ -18,7 +18,7 @@ if { ${include_ilas} == "1" } {
 	set pfm_name custom_pfm_strmIn_strmOut
 }
 create_project ${pfm_name} ./build/${pfm_name} -part xcvc1902-vsva2197-2MP-e-S
-set_property board_part xilinx.com:vck190:part0:3.3 [current_project]
+set_property board_part xilinx.com:vck190:part0:3.4 [current_project]
 set_property target_language Verilog [current_project]
 
 # Create Block Design
