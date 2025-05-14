@@ -103,6 +103,7 @@ package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 		--package.sd_file ${HOST_EXE1} \
 		--package.sd_file ${HOST_EXE2} \
 		--package.sd_file ${HOST_ALL} \
+		--package.sd_file embedded_exec.sh \
 		${XSA} \
 		${LIBADF}
 

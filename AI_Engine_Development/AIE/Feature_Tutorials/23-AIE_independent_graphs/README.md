@@ -147,7 +147,7 @@ AI Engine graphs cannot be re-executed a second time if built on top of non-DFX 
 For example, after running individual partitions with preceding command, you can reboot the board and run the following command to test multiple partitions in a single application:
 
 ```
-./host_all.exe a.xclbin
+./host.exe a.xclbin
 ```
 
 Note: Rerunning the host application or reloading the AIE graph is not supported in this release. It's planed to be enhanced in future releases.
