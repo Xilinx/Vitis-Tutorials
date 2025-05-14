@@ -3,7 +3,7 @@
     "description": "Vitis Migration demo",
     "gui": "false",
     "flow": "vitis",
-	"platform_allowlist": ["zcu102"],
+	"platform_allowlist": ["zcu104"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "ES_F_03-Mig",
@@ -17,7 +17,7 @@
             }
         ],        
         "targets": [
-            "vitis_hw_build"
+            "vitis_hw_emu"
         ],
 	"custom_build_target": {
             "all": "all"
