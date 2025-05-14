@@ -36,7 +36,7 @@ XSA_PLATFORM_TCL  := $(SRC_DIR)/xsa_platform_classic.tcl
 #  BOARD PART SELECTION (Production)
 # =========================================================
   BOARD_LABEL:=vck190
-  BOARD_VER:=3.3
+  BOARD_VER:=3.4
 
 # =========================================================
 # DEPENDENCIES

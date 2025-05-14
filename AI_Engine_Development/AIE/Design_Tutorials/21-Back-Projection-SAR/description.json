@@ -33,7 +33,7 @@
             "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
 	    ],
         "custom_build_target": {
-            "dev8": "dev8"
+            "all": "dev8"
         },
         "custom_board_target": "run_test",
         "tasks": {
