@@ -66,5 +66,5 @@ clean: aieclean
 
 aieclean:
 	rm -rf *.log *.csv *.db $(LIBADFAIE) $(WORKDIRAIE) $(LIBADFX86) $(WORKDIRX86) $(AIEDIR)/aiesimulator_output $(AIEDIR)/x86simulator_output
-	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs
+	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs throughput_info.json
 	rm -rf .Xil .AIE_SIM_CMD_LINE_OPTIONS .wsdata plio_throughput_info.json
