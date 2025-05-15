@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -23,8 +23,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	__attribute__((noinline))
-    void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,output_stream_cacc48*  cout);
+	void filter(input_stream<cint16>*  restrict sin1,input_stream<cint16>*  restrict sin2,output_cascade<cacc48>*  cout);
 
 	static void registerKernelClass()
 	{
@@ -46,8 +45,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	__attribute__((noinline))
-    void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,input_stream_cacc48*  cin,output_stream_cacc48*  cout);
+	void filter(input_stream<cint16>*  restrict sin1,input_stream<cint16>*  restrict sin2,input_cascade<cacc48>*  cin,output_cascade<cacc48>*  cout);
 
 	static void registerKernelClass()
 	{
@@ -69,8 +67,7 @@ public:
 		for(int i=0;i<16;i++) delay_line[i] = (cint16){0,0};
 	};
 
-	__attribute__((noinline))
-    void filter(input_stream_cint16*  restrict sin1,input_stream_cint16*  restrict sin2,input_stream_cacc48*  cin,output_stream_cint16*  restrict sout1, output_stream_cint16*  restrict sout2);
+	void filter(input_stream<cint16>*  restrict sin1,input_stream<cint16>*  restrict sin2,input_cascade<cacc48>*  cin,output_stream<cint16>*  restrict sout1, output_stream<cint16>*  restrict sout2);
 
 	static void registerKernelClass()
 	{

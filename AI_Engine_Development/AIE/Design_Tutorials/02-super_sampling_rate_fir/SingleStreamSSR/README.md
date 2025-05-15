@@ -9,7 +9,7 @@
 
 # Single-Stream Interface
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Super Sampling Rate FIR Filter
 
@@ -289,20 +289,21 @@ After simulation the simulator displays the raw throughput at the input and outp
 |             | 64 bits out 3                      | OUT   | 4691.867125       |
 ```
 
-The aggregated ouput port throughput in Msps (cint16) is: `4691.87 Msps`.
+The aggregated ouput port throughput in Msps (cint16) is: `4753.9 Msps`.
 
 The performance of this architecture can be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput output_*`:
 
 ```
-output_0.txt -->  1172.97 Msps
-output_1.txt -->  1172.97 Msps
-output_2.txt -->  1172.97 Msps
-output_3.txt -->  1172.97 Msps
+output_0.txt -->  1188.49 Msps
+output_1.txt -->  1188.49 Msps
+output_2.txt -->  1188.49 Msps
+output_3.txt -->  1188.49 Msps
 
 -----------------------
 
 
-Total Throughput -->    4691.87 Msps
+Total Throughput -->    4753.95 Msps
+
 ```
 
 This architecture achieves close to 5 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased.
@@ -311,6 +312,6 @@ This architecture achieves close to 5 Gsps performance. It is slightly less beca
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

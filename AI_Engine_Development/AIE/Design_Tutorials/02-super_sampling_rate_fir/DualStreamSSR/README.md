@@ -9,7 +9,7 @@
 
 # Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 The purpose of this fourth part of the tutorial is to understand how to improve upon the performance already achieved using the two input and output stream connections to the AI Engine.
 
@@ -313,32 +313,33 @@ After simulation the simulator displays the raw throughput at the input and outp
 |             | PhaseOut_7_1                       | OUT   | 4455.079400       |
 ```
 
-The aggregated ouput port throughput in Msps (cint16) is: `17824.19 Msps`.
+The aggregated ouput port throughput in Msps (cint16) is: `17102.45 Msps`.
 
 The performance of this architecture can be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput PhaseOut_*`:
 
 ```
-PhaseOut_0_0.txt -->  1114.01 Msps
-PhaseOut_0_1.txt -->  1114.01 Msps
-PhaseOut_1_0.txt -->  1114.01 Msps
-PhaseOut_1_1.txt -->  1114.01 Msps
-PhaseOut_2_0.txt -->  1114.01 Msps
-PhaseOut_2_1.txt -->  1114.01 Msps
-PhaseOut_3_0.txt -->  1114.01 Msps
-PhaseOut_3_1.txt -->  1114.01 Msps
-PhaseOut_4_0.txt -->  1114.01 Msps
-PhaseOut_4_1.txt -->  1114.01 Msps
-PhaseOut_5_0.txt -->  1114.01 Msps
-PhaseOut_5_1.txt -->  1114.01 Msps
-PhaseOut_6_0.txt -->  1114.01 Msps
-PhaseOut_6_1.txt -->  1114.01 Msps
-PhaseOut_7_0.txt -->  1114.01 Msps
-PhaseOut_7_1.txt -->  1114.01 Msps
+PhaseOut_0_0.txt -->  1066.67 Msps
+PhaseOut_0_1.txt -->  1064.89 Msps
+PhaseOut_1_0.txt -->  1072.03 Msps
+PhaseOut_1_1.txt -->  1072.03 Msps
+PhaseOut_2_0.txt -->  1066.67 Msps
+PhaseOut_2_1.txt -->  1064.89 Msps
+PhaseOut_3_0.txt -->  1072.03 Msps
+PhaseOut_3_1.txt -->  1072.03 Msps
+PhaseOut_4_0.txt -->  1066.67 Msps
+PhaseOut_4_1.txt -->  1064.89 Msps
+PhaseOut_5_0.txt -->  1072.03 Msps
+PhaseOut_5_1.txt -->  1072.03 Msps
+PhaseOut_6_0.txt -->  1066.67 Msps
+PhaseOut_6_1.txt -->  1064.89 Msps
+PhaseOut_7_0.txt -->  1072.03 Msps
+PhaseOut_7_1.txt -->  1072.03 Msps
 
 -----------------------
 
 
-Total Throughput -->   17824.19 Msps
+Total Throughput -->   17102.45 Msps
+
 ```
 
 This architecture achieves almost 19 Gsps performance. It is less than the maximum expected (20 Gsps) because of the number of cycles spent for initialization when the kernels are called. This performance increases when the frame length is increased. For a 32K sample frame length, the performance obtained is:
@@ -354,6 +355,6 @@ which is almost the expected maximum.
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

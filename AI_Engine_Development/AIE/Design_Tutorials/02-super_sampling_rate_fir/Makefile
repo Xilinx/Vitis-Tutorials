@@ -14,8 +14,17 @@ run:
 	make -C SingleStreamSSR PFM_NAME=$(PFM_NAME) run
 	make -C DualStreamSSR PFM_NAME=$(PFM_NAME) run
 
+performance:
+	cd SingleKernel ; make throughput
+	cd MultiKernel ; make throughput
+	cd SingleStreamSSR ; make throughput
+	cd DualStreamSSR ; make throughput
+
+
 clean:
 	make -C SingleKernel clean
 	make -C MultiKernel  clean
 	make -C SingleStreamSSR  clean
 	make -C DualStreamSSR  clean
+	make -C DualSSR16_hw clean
+	rm -rf Utils/__pycache__

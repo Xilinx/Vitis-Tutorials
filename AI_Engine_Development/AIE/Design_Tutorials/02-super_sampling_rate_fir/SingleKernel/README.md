@@ -9,7 +9,7 @@
 
 # Single-Kernel FIR Filter Implementation
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 In this first part of the tutorial, you will use a basic filtering application and analyze the performance that can be achieved.
 
@@ -266,8 +266,8 @@ After simulation the simulator displays the raw throughput at the input and outp
 --------------------------------------------------------------------------------
 | Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
 --------------------------------------------------------------------------------
-| plio        | 64 bits in G1                      | IN    | 1170.608444       |
-|             | 64 bits out G1                     | OUT   | 1168.766318       |
+| plio        | 64 bits in G1                      | IN    | 1189.923578       |
+|             | 64 bits out G1                     | OUT   | 1173.235564       |
 ```
 
 As this is expressed in bytes per second this must be divided by 4 to get it in samples per second (cint16 is encoded with 2 bytes for the real part and 2 bytes for the imaginary part). This makes an estimated throughput of `292.17 Msps`.
@@ -275,12 +275,13 @@ As this is expressed in bytes per second this must be divided by 4 to get it in 
 The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->   292.17 Msps
+Output_0.txt -->   293.24 Msps
 
 -----------------------
 
 
-Total Throughput -->     292.17 Msps
+Total Throughput -->     293.24 Msps
+
 ```
 
 Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum throughput attainable is 312.5 Msps, which is in line with what was achieved.
@@ -291,6 +292,6 @@ Each four output samples need 16 `mul4`/`mac4` instructions, so the maximum thro
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

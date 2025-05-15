@@ -9,7 +9,7 @@
 
 # Multi-Kernel FIR Filter Implementation
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 In this second part of the tutorial, you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
 
@@ -278,24 +278,24 @@ After simulation the simulator displays the raw throughput at the input and outp
 --------------------------------------------------------------------------------
 | Intf Type   | Port Name                          | Type  | Throughput(MBps)  |
 --------------------------------------------------------------------------------
-| plio        | Stream for block 0                 | IN    | 4691.484517       |
-|             | Stream for block 1                 | IN    | 4688.565583       |
-|             | Stream for block 2                 | IN    | 4686.719637       |
-|             | Stream for block 3                 | IN    | 4684.878712       |
-|             | 64 bits output 0                   | OUT   | 4691.867125       |
+| plio        | Stream for block 0                 | IN    | 4738.030714       |
+|             | Stream for block 1                 | IN    | 4726.211849       |
+|             | Stream for block 2                 | IN    | 4718.750000       |
+|             | Stream for block 3                 | IN    | 4711.367673       |
+|             | 64 bits output 0                   | OUT   | 4753.946147       |
 ```
 
-The ouput port throughput in Msps (cint16) is: `1172.97 Msps`.
+The ouput port throughput in Msps (cint16) is: `1188.49 Msps`.
 
 The performance of this architecture can also be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
-Output_0.txt -->  1172.97 Msps
+Output_0.txt -->  1188.49 Msps
 
 -----------------------
 
 
-Total Throughput -->    1172.97 Msps
+Total Throughput -->    1188.49 Msps
 ```
 
 This architecture achieves close to 1.25 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.
@@ -305,6 +305,6 @@ This architecture achieves close to 1.25 Gsps performance. It is slightly less b
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2024 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

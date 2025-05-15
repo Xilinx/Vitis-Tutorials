@@ -1,15 +1,18 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
+
  #include <adf.h>
+#include <aie_api/aie.hpp>
+#include <aie_api/aie_adf.hpp>
+#include <aie_api/utils.hpp>
 
 #include "FirDoubleStream.h"
 
-//__attribute__((noinline))
 template <int NSamples,int ShiftAcc,bool DiscardSample,bool SwapRead>
-void DoubleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream_cint16* restrict sin1,input_stream_cint16* restrict sin2,output_stream_cacc48* cout)
+void DoubleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream<cint16>* restrict sin1,input_stream<cint16>* restrict sin2,output_cascade<cacc48>* cout)
 {
 	v8cint16 taps =  *(v8cint16*) weights;
 	v16cint16 *ptr_delay_line = (v16cint16 *)delay_line;
@@ -39,11 +42,11 @@ void DoubleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,DiscardSample,SwapRead
 
 		acc = mul4(data,Start_1,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_3,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 		acc = mul4(data,Start_5,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_7,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 
 		if(SwapRead)
@@ -53,11 +56,11 @@ void DoubleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,DiscardSample,SwapRead
 
 		acc = mul4(data,Start_9,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_11,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 		acc = mul4(data,Start_13,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_15,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 	}
 
@@ -67,9 +70,8 @@ void DoubleStream::FIR_MultiKernel_cout<NSamples,ShiftAcc,DiscardSample,SwapRead
 
 
 
-// __attribute__((noinline))
 template <int NSamples,int ShiftAcc,bool DiscardSample,bool SwapRead>
-void DoubleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream_cint16* restrict sin1,input_stream_cint16* restrict sin2,input_stream_cacc48* cin,output_stream_cacc48* cout)
+void DoubleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream<cint16>* restrict sin1,input_stream<cint16>* restrict sin2,input_cascade<cacc48>* cin,output_cascade<cacc48>* cout)
 {
 
 	v8cint16 taps =  *(v8cint16*) weights;
@@ -101,12 +103,12 @@ void DoubleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc,DiscardSample,SwapR
 
 		acc = mac4(acc,data,Start_1,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_3,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 		acc = readincr_v4(cin);
 		acc = mac4(acc,data,Start_5,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_7,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 
 		acc = readincr_v4(cin);
@@ -117,21 +119,20 @@ void DoubleStream::FIR_MultiKernel_cincout<NSamples,ShiftAcc,DiscardSample,SwapR
 
 		acc = mac4(acc,data,Start_9,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_11,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 
 		acc = readincr_v4(cin);
 		acc = mac4(acc,data,Start_13,0x3210,1,taps,0,0x0000,1);
 		acc = mac4(acc,data,Start_15,0x3210,1,taps,2,0x0000,1);
-		writeincr_v4(cout,acc);
+		writeincr(cout,acc);
 	}
 
 	*ptr_delay_line = data;
 }
 
 
-// __attribute__((noinline))
 template <int NSamples,int ShiftAcc,bool DiscardSample,bool SwapRead>
-void DoubleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream_cint16* restrict sin1,input_stream_cint16* restrict sin2,input_stream_cacc48* cin,output_stream_cint16* restrict sout1,output_stream_cint16* restrict sout2)
+void DoubleStream::FIR_MultiKernel_cin<NSamples,ShiftAcc,DiscardSample,SwapRead>::filter(input_stream<cint16>* restrict sin1,input_stream<cint16>* restrict sin2,input_cascade<cacc48>* cin,output_stream<cint16>* restrict sout1,output_stream<cint16>* restrict sout2)
 {
 
 	v8cint16 taps =  *(v8cint16*) weights;
