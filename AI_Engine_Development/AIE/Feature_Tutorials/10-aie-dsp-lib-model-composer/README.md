@@ -9,7 +9,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -20,11 +20,11 @@ The purpose of this tutorial is to provide hands-on experience for designing AI 
 Install the tools:
 
 * Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * The following MATLAB releases are supported: R2023a, R2023b, R2024a.
+  * The following MATLAB releases are supported: R2024a, R2024b, R2025a.
   * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2024.2](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2025.1](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2025.1) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -96,7 +96,7 @@ These are there to help you if you cannot complete any of the four stages.
     * Click the **Callbacks** tab.
     * Click **PreLoadFcn**, and type `CreateFilter;` in the edit window on the right.
     * Click **InitFcn**, and type `CreateFilter;` in the edit window on the right.
-    * Click **Apply**.
+    * Click **Apply** and **OK**.
 
       ![missing image](Images/Image_003.png)
 
@@ -104,7 +104,7 @@ These are there to help you if you cannot complete any of the four stages.
 
    ![missing image](Images/Image_004.png)
 
-   * Double-click the new block, and remove all blocks inside (**CTRL-A** and **Del**).
+   * Double-click the subsystem, and remove all blocks inside (**CTRL-A** and **Del**).
    * Go back to the top level by clicking on the Up-arrow.
 
    ![missing image](Images/Image_005.png)
@@ -240,7 +240,7 @@ When creating a DSP design, one of the most important parameters to consider is 
 
       ![missing image](Images/Image_018.png)
 
-6. Click **Import**. A new GUI displays. **FRAME_LENGTH** is the template parameter. Its value is ``256`` because at this stage this is the size of the data frames. The input and output ports have also the same size: ``256`` samples. Click **OK**.
+6. Click **Import**. A new GUI will appear. **FRAME_LENGTH** is a template parameter, set its value to ``256``, as this is the size of the data frames at this stage. Set the window size for both the input and output ports to ``256`` samples. Then, click **OK**.
 
    ![missing image](Images/Image_019.png)
 
@@ -357,8 +357,11 @@ Vitis Analyzer is launched. From here you can see the **Graph View**, the **Arra
 
 6. In the Model Composer Hub, click on **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
 7. Select the `Out1` signal from the list on the left.
-8. Right-click on the plot, and select **Data Cursors**->**Two**.
-9. Position the cursors at the beginning of the first and third signal frames, as shown below. 
+8. Click on the drop-down of a plot icon, then select the **Two cursors** option.
+
+   ![missing image](Images/CursorSelection.PNG)
+
+10. Position the cursors at the beginning of the first and third signal frames, as shown below. 
 
    ![missing image](Images/Image_024.png)
 
