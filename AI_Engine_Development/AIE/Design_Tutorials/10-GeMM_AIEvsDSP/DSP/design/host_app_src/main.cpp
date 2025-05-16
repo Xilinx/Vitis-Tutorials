@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -11,9 +11,9 @@ SPDX-License-Identifier: MIT
 #include <string>
 #include <cmath>
 #include <unistd.h>
-#include "experimental/xrt_aie.h"
-#include "experimental/xrt_kernel.h"
-#include "experimental/xrt_bo.h"
+#include "xrt/xrt_aie.h"
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_bo.h"
 #include "matrix_A_data.h"
 #include "matrix_B_data.h"
 #include "output_data.h"

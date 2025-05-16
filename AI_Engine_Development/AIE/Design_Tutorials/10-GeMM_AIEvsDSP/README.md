@@ -9,7 +9,7 @@
 
 ## Versal GeMM Implementation Using Vitis Acceleration Library and DSP58 Tutorial
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Table of Contents
 
@@ -182,8 +182,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the AMD tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2024.2` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2024.2/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2025.1` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2025.1/sdk.sh` script.
 5. `DSPLIB_VITIS` is the path to the downloaded Vitis Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -211,7 +211,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202420_1",
+ "baseName": "xilinx_vck190_base_202510_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -272,10 +272,10 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2024_2/ug1451-xrt-release-notes.pdf)
+* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2025_1/ug1451-xrt-release-notes.pdf)
 
 
-#### [Vitis Unified Software Development Platform 2024.2 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+#### [Vitis Unified Software Development Platform 2025.1 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 
 Below are links to Vitis related information referenced in this tutorial:
