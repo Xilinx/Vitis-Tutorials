@@ -294,11 +294,11 @@ The following table shows a comparison between power estimates in compilation ve
   <tr>
     <td>PL</td>
     <td>7.5</td>
-    <td>2.8</td>
-    <td>10.3</td>
+    <td>1.9</td>
+    <td>9.4</td>
     <td>7.5</td>
-    <td>2.8</td>
-    <td>10.3</td>
+    <td>1.9</td>
+    <td>9.4</td>
   </tr>
   <tr>
     <td>AI Engine</td>
@@ -306,8 +306,8 @@ The following table shows a comparison between power estimates in compilation ve
     <td>4.3</td>
     <td>9.1</td>
     <td>4.8</td>
-    <td>4.2</td>
-    <td>9.0</td>
+    <td>1.7</td>
+    <td>6.5</td>
   </tr>
   <tr>
     <td>PS+PMC</td>
@@ -320,21 +320,21 @@ The following table shows a comparison between power estimates in compilation ve
   </tr>
   <tr>
     <td>Everything else (NoC, DDRMC, GTY, etc)</td>
-    <td>1.0</td>
-    <td>8.1</td>
-    <td>9.1</td>
-    <td>1.0</td>
-    <td>8.1</td>
-    <td>9.1</td>
+    <td>1.1</td>
+    <td>8.7</td>
+    <td>9.8</td>
+    <td>1.1</td>
+    <td>8.7</td>
+    <td>9.8</td>
   </tr>
   <tr>
     <td>Total (W)</td>
-    <td>13.5</td>
-    <td>16.4</td>
-    <td>29.9</td>
-    <td>13.5</td>
+    <td>13.6</td>
     <td>16.3</td>
-    <td>29.8</td>
+    <td>29.9</td>
+    <td>13.6</td>
+    <td>13.7</td>
+    <td>27.3</td>
   </tr>
 </table>
 
