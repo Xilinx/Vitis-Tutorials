@@ -30,11 +30,6 @@
         "custom_build_target":
         {
         "all": "run"
-        },
-        "tasks": {
-            "build": {
-                "pre_exec": "./env_setup_versal.sh"
-            }
         }
     }
 }
