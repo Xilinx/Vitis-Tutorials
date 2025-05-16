@@ -37,7 +37,7 @@
 			"IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
             "EMBEDDED_PACKAGE_OUT=./step3_application/vadd_work/package.hw/", 
-            "EMBEDDED_EXEC_SCRIPT=./step3_application/run_vadd.sh"
+            "EMBEDDED_EXEC_SCRIPT=./run_vadd.sh"
         ],
         "custom_build_target":
         {
