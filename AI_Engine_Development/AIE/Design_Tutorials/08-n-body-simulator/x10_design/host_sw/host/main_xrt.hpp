@@ -1,4 +1,4 @@
-/*Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+/*Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -9,13 +9,13 @@ SPDX-License-Identifier: MIT
 #include <chrono>
 #include <map>
 #include <cstring>
-
+#include <unistd.h>
 #include "log.hpp" 
 #include "nbody.hpp" 
 
 // This is used for the PL Kernels
 //#include "xrt/xrt.h"
-#include "experimental/xrt_kernel.h"
+#include "xrt/xrt_kernel.h"
 
 // Using the ADF API that call XRT API
 #include "adf/adf_api/XRTConfig.h"

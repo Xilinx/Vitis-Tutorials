@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 #include <sstream>
 #include <fstream> 
 
-#include "experimental/xrt_kernel.h"
+#include "xrt/xrt_kernel.h"
 
 namespace NBodySimulator {
 

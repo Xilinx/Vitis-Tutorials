@@ -9,7 +9,7 @@
 
 # N-Body Simulator
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -41,7 +41,7 @@ This tutorial can be run on the [VCK190 Board](https://www.xilinx.com/products/b
 2. Obtain licenses for AI Engine tools.
 3. Follow the instructions for the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Installation) and ensure you have the following tools:
 
-      * [Vitis™ Unified Software Development Platform 2024.2](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+      * [Vitis™ Unified Software Development Platform 2025.1](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
       * [Embedded Platform VCK190 Base or VCK190 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 ### *Environment*: Setting Up Your Shell Environment
@@ -69,7 +69,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Ensure you are using the 2024.2 version of the AMD tools.
+Ensure you are using the 2025.1 version of the AMD tools.
 
 ```bash
 which vitis
