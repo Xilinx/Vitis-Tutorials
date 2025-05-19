@@ -9,18 +9,18 @@
 
 # AI Engine Compiler Features
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 
 ## Introduction
 
 This tutorial targets AIE-ML device, but shares test cases and description files with [AIE 20-aiecompiler-features](../../../AIE/Feature_Tutorials/20-aiecompiler-features).
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2024.2 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. 
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2025.1 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. 
 
 Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
-This tutorial targets VEK280 board for 2024.2/ version.
+This tutorial targets VEK280 board for 2025.1/ version.
 
 ## Objectives
 
