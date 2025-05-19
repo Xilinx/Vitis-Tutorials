@@ -1,4 +1,4 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 CASE ?= 1
@@ -24,6 +24,16 @@ AIE_SIM_CMD = aiesimulator --pkg-dir=./Work_$(CASE) --dump-vcd foo
 
 all: clean data aie aieviz
 
+allcases:
+	make ARCH=aie CASE=1 run
+	make ARCH=aie CASE=2 run
+	make ARCH=aie CASE=3 run
+	make ARCH=aie CASE=4 run
+	make ARCH=aie-ml CASE=1 run
+	make ARCH=aie-ml CASE=2 run
+	make ARCH=aie-ml CASE=3 run
+	make ARCH=aie-ml CASE=4 run
+
 run: clean data aie aiesim
 
 
@@ -31,11 +41,9 @@ run: clean data aie aiesim
 
 data:
 	mkdir -p data
-	CreateLinearData.py int16 32 4096 > data/input0.txt
-	CreateLinearData.py int16 32 4096 > data/input1.txt
-	CreateLinearData.py int16 32 4096 > data/input2.txt
-	CreateLinearData.py int16 32 4096 > data/input3.txt
-	CreateLinearData.py int16 32 4096 > data/input.txt
+	CreateLinearData.py int32 32 4096 > data/in1.txt
+	CreateLinearData.py int16 32 4096 > data/in2.txt
+	CreateLinearData.py int8 32 4096 > data/in4.txt
 
 
 aie: ${LIBADF}
@@ -68,4 +76,4 @@ _help:
 clean:
 	rm -rf _x libadf*.a Work_* .Xil vitis_analyzer* foo.vcd *.log pl_sample* aiesimulator_output
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp
-	rm -rf data logs 
+	rm -rf data logs throughput_info.json

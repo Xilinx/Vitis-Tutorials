@@ -53,7 +53,7 @@ struct MyGraph: public graph
 
     MyGraph()
     {
-        _plioI = input_plio::create("plio_I"+std::to_string(ID), plio_32_bits, "data/input"+std::to_string(ID)+".txt");
+        _plioI = input_plio::create("plio_I"+std::to_string(ID), plio_32_bits, "data/in1.txt");
         _plioO = output_plio::create("plio_O"+std::to_string(ID), plio_64_bits, "data/output"+std::to_string(ID)+".txt");
         if constexpr (hasSub0() && hasSub1())
         {

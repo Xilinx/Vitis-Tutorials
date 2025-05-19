@@ -1,4 +1,4 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 CASE ?= 1
@@ -27,6 +27,11 @@ all: clean data aie aieviz
 
 run: clean data aie aiesim
 
+allcases:
+	make CASE=1 ARCH=aie run
+	make CASE=2 ARCH=aie run
+	make CASE=1 ARCH=aie-ml run
+	make CASE=2 ARCH=aie-ml run
 
 .PHONY: data help _help
 
@@ -63,4 +68,4 @@ _help:
 clean:
 	rm -rf _x libadf*.a Work_* .Xil vitis_analyzer* foo.vcd *.log pl_sample* aiesimulator_output
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp
-	rm -rf data logs .wsdata plio_throughput_info.json 
+	rm -rf data logs .wsdata plio_throughput_info.json throughput_info.json

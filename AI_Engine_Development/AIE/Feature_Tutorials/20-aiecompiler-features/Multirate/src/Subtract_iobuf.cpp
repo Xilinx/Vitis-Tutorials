@@ -15,7 +15,7 @@ void Subtract_iobuf(adf::input_buffer<int32, adf::extents<adf::inherited_extent>
     for (i = 0; i < FrameLengthOut/VECTOR_LENGTH ; i++)
 	chess_prepare_for_pipelining
     {
-        *po1++ = *pi1++ - *pi2++;
+        *po1++ = aie::sub(*pi1++,*pi2++);
     }
 
 }

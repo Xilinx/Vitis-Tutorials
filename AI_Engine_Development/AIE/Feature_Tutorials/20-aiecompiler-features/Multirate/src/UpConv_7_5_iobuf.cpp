@@ -3,7 +3,7 @@
 
 #include "kernels.h"
 
-int dinit[] = {0, 1, 2, 3, 4, 5, 6, 7};
+int dinit[] = {0, 1, 2, 3, 4, 5, 6, 7,0, 1, 2, 3, 4, 5, 6, 7};
 
 void UpConv_7_5_iobuf(adf::input_buffer<int32, adf::extents<adf::inherited_extent>> &__restrict in, adf::output_buffer<int32, adf::extents<adf::inherited_extent>> &__restrict out)
 {
@@ -13,7 +13,7 @@ void UpConv_7_5_iobuf(adf::input_buffer<int32, adf::extents<adf::inherited_exten
 
     auto pi1 = aie::begin_vector<VECTOR_LENGTH>(in);
     auto po1 = aie::begin_vector<VECTOR_LENGTH>(out);
-    aie::vector<int,VECTOR_LENGTH> d = aie::load_v<8>(dinit);
+    aie::vector<int,VECTOR_LENGTH> d = aie::load_v<VECTOR_LENGTH>(dinit);
 
     // Copy input
     for (i = 0; i < FrameLengthIn/VECTOR_LENGTH ; i++)

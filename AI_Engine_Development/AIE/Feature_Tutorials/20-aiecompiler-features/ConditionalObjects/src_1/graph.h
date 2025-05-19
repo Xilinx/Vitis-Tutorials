@@ -65,7 +65,7 @@ struct TestGraph1: public graph
     TestGraph1()
     {
         for(int i=0;i<4;i++)
-            plioIns[i] = input_plio::create("plio_ins"+std::to_string(i), plio_32_bits, "data/input"+std::to_string(i)+".txt", 100, true);
+            plioIns[i] = input_plio::create("plio_ins"+std::to_string(i), plio_32_bits, "data/in2.txt", 100, true);
         plioOuts[0] = output_plio::create("plio_outs0", plio_64_bits, "data/output0.txt", 125.5);
         plioOuts[1] = output_plio::create("plio_outs1", plio_64_bits, "data/output1.txt", 125.5);
 

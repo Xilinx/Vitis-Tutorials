@@ -37,6 +37,23 @@ BUFFER_vs_STREAM ?= 1
 run:
 	make clean data aie aiesim
 
+
+allcases:
+	make ARCH=aie VERSION=1 clean buffer aie
+	make ARCH=aie VERSION=2 clean buffer aie 
+	make ARCH=aie VERSION=3 clean buffer aie
+	make ARCH=aie VERSION=0 clean stream aie
+	make ARCH=aie VERSION=1 clean stream aie 
+	make ARCH=aie VERSION=2 clean stream aie 
+	make ARCH=aie VERSION=3 clean stream aie
+	make ARCH=aie VERSION=4 clean stream aie 
+	make ARCH=aie-ml VERSION=1 clean buffer aie
+	make ARCH=aie-ml VERSION=2 clean buffer aie 
+	make ARCH=aie-ml VERSION=3 clean buffer aie
+	make ARCH=aie-ml VERSION=0 clean stream aie
+	make ARCH=aie-ml VERSION=1 clean stream aie 
+	make ARCH=aie-ml VERSION=2 clean stream aie 
+
 data:
 	mkdir -p data
 	CreateData.py 2 100000 1 100000 > data/Input_64.txt

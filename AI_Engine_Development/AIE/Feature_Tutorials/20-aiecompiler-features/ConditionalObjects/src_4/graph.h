@@ -56,7 +56,7 @@ struct MyGraph: public graph
     MyGraph()
     {
         {
-            _plioI0 = input_plio::create(adf::plio_32_bits, "data/i0.txt");
+            _plioI0 = input_plio::create(adf::plio_32_bits, "data/in1.txt");
             _plioO0 = output_plio::create(adf::plio_32_bits, nextOutputFilename().c_str());
 
             connect(_plioI0.out[0], _sub._in0);

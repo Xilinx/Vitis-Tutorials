@@ -74,12 +74,12 @@ clean: aieclean
 
 aieclean:
 	rm -rf *.log *.csv *.db $(LIBADFAIE) $(WORKDIRAIE) $(LIBADFX86) $(WORKDIRX86) $(AIEDIR)/aiesimulator_output $(AIEDIR)/x86simulator_output
-	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs
+	rm -rf pl_sample_counts $(AIEDIR)/foo.vcd logs throughput_info.json
 	rm -rf .Xil .AIE_SIM_CMD_LINE_OPTIONS .wsdata plio_throughput_info.json
 
 
 
 otherclean:
 	rm -rf _x ${LIBADF} $(WORKDIR) .Xil vitis_analyzer* foo.vcd *.log pl_sample*
-	rm -rf  vitis_design_wrapper*
+	rm -rf  vitis_design_wrapper* 
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db temp *.txt

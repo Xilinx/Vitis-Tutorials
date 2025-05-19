@@ -43,12 +43,10 @@ struct MyGraph: public graph
     {
         for (int ind = 0; ind < getNum(ID); ++ind)
         {
-            char iName[40];
             char oName[40];
-            sprintf(iName, "data/i_%d_%d.txt", ID, ind);
             sprintf(oName, "data/o_%d_%d.txt", ID, ind);
 
-            _plioIs[ind] = input_plio::create(adf::plio_32_bits, iName);
+            _plioIs[ind] = input_plio::create(adf::plio_32_bits, "data/in1.txt");
             _plioOs[ind] = output_plio::create(adf::plio_32_bits, oName);
 
             connect(_plioIs[ind].out[0], _subs[ind]._in);
