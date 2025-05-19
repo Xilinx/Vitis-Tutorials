@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 ////////////////////////////////////////////////////////////
 // Input to FIR...
 ////////////////////////////////////////////////////////////
+
 void mm2s(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOutToFIR,
    int size
@@ -15,7 +16,7 @@ void mm2s(
 {
    MM2S:for(int i = 0; i < size; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=64
+      #pragma HLS loop_tripcount min=64 max=1000
       
       ap_axiu<128, 0, 0, 0> firInp;
       
@@ -43,7 +44,7 @@ void s2mm(
 {
    S2MM:for(int i = 0; i < size; ++i) {
       #pragma HLS PIPELINE II=1
-      #pragma HLS loop_tripcount min=64
+      #pragma HLS loop_tripcount min=64 max=1000
 
       ap_axiu<128, 0, 0, 0> firOut = strmInpFromFIR.read();
 
@@ -80,36 +81,43 @@ void s2mm(
 // in pl itself. Done to see the max FIR throughput
 // without any NoC/DDR bandwidth bottlenecks...
 ////////////////////////////////////////////////////////////
-int datamover(
-      hls::stream<ap_axiu<128, 0, 0, 0>> &strmOutToFIR,
-      hls::stream<ap_axiu<128, 0, 0, 0>> &strmInpFromFIR,
-      int size, int iterCnt
-     )
-{
-   #pragma HLS INTERFACE axis port=strmOutToFIR
-   #pragma HLS INTERFACE axis port=strmInpFromFIR
-   
-   #pragma HLS INTERFACE s_axilite port=size bundle=control
-   #pragma HLS INTERFACE s_axilite port=iterCnt bundle=control
-   #pragma HLS INTERFACE s_axilite port=return bundle=control  
-   
-   #pragma HLS DATAFLOW
-   
-   int errCnt = 0;
-   
-   ITER_MM2S:for(int i = iterCnt; i ; --i)
-   {
-      #pragma HLS loop_tripcount min=1 max=8
-      
-      mm2s(strmOutToFIR, size);
-   }
-   
-   ITER_S2MM:for(int j = iterCnt; j ; --j)
-   {
-      #pragma HLS loop_tripcount min=1 max=8
-      
-      s2mm(strmInpFromFIR, size, errCnt);
-   }
+void extracted1(hls::stream<ap_axiu<128, 0, 0, 0>> &strmOutToFIR, int &size,
+               int &iterCnt) {
+  {
+  ITER_MM2S:
+    for (int i = iterCnt; i; --i) {
+#pragma HLS loop_tripcount min = 1 max = 8
 
-   return errCnt;
+      mm2s(strmOutToFIR, size);
+    }
+  }
+}
+void extracted2(hls::stream<ap_axiu<128, 0, 0, 0>> &strmInpFromFIR, int &size,
+               int &iterCnt, int &errCnt) {
+  {
+  ITER_S2MM:
+    for (int j = iterCnt; j; --j) {
+#pragma HLS loop_tripcount min = 1 max = 8
+
+      s2mm(strmInpFromFIR, size, errCnt);
+    }
+  }
+}
+int datamover(hls::stream<ap_axiu<128, 0, 0, 0>> &strmOutToFIR,
+              hls::stream<ap_axiu<128, 0, 0, 0>> &strmInpFromFIR, int size,
+              int iterCnt) {
+#pragma HLS INTERFACE axis port = strmOutToFIR
+#pragma HLS INTERFACE axis port = strmInpFromFIR
+
+#pragma HLS INTERFACE s_axilite port = size bundle = control
+#pragma HLS INTERFACE s_axilite port = iterCnt bundle = control
+#pragma HLS INTERFACE s_axilite port = return bundle = control
+
+#pragma HLS DATAFLOW
+
+  extracted1(strmOutToFIR, size, iterCnt);
+  int errCnt = 0;
+  extracted2(strmInpFromFIR, size, iterCnt, errCnt);
+
+  return errCnt;
 }
