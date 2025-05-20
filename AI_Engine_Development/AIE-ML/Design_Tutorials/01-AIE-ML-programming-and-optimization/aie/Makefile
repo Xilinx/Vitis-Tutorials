@@ -40,7 +40,7 @@ GRAPH    = src/graph.cpp
 LIBADF  = libadf$(OPT).a
 AIE_CMPL_CMD := v++ --compile --mode aie --include "./src" --aie.workdir $(WORKDIR) ${GRAPH}
 AIE_FLAGS +=  --aie.log-level 5
-AIE_FLAGS += --aie.Xpreproc "\"$(SIZES_D)\""
+AIE_FLAGS += --aie.Xpreproc "$(SIZES_D)"
 AIE_FLAGS += --aie.Xchess "ClassicMatMult:backend.mist2.xargs=+Omodo"
 AIE_FLAGS += --aie.output-archive $(LIBADF)
 
@@ -111,7 +111,7 @@ clean:
 	rm -rf temp
 	rm -rf .AIE_SIM_CMD_LINE_OPTIONS *.csv *.db *.soln
 	rm -rf ISS_RPC_SERVER_PORT *.wdb *.wcfg trdata.aiesim
-	rm -rf data logs
+	rm -rf data logs throughput_info.json
 
 clean-all:
 	make clean

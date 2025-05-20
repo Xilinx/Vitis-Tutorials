@@ -52,6 +52,7 @@ PLIOW ?= 128
 
 SIZES := sizeM=$(sizeM) sizeK=$(sizeK) sizeN=$(sizeN) subM=$(subM) subK=$(subK) subN=$(subN) NIterations=$(NIterations) PLIOW=$(PLIOW)
 
+
 FREQ_HZ := 250000000 # PL Frequency (PL kernels)
 
 
@@ -108,7 +109,16 @@ guard-SDKTARGETSYSROOT:
 	$(call check_defined, SDKTARGETSYSROOT, Run: xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux)
 
 ###
-.PHONY: all_hw all_hw_emu run upd_host_hw aie postaie data aiesim aieviz aiesim-fifo compareaie x86 x86sim comparex86
+.PHONY: all_hw all_hw_emu run upd_host_hw aie postaie data aiesim aieviz aiesim-fifo compareaie x86 x86sim comparex86 allcases
+
+allcases:
+	# make clean-all OPT=0 data x86 x86sim comparex86
+	# make sizeK=128 clean-all OPT=0 data x86 x86sim comparex86
+	# make clean-all OPT=0 data aie aiesim compareaie
+	# make clean-all OPT=1 data x86 x86sim comparex86
+	make   clean-all OPT=1  data aie aiesim compareaie
+	make   clean-all OPT=1  data build_hw
+
 
 build_hw:
 	make TARGET=hw  clean-all OPT=$(OPT) data aie kernels xclbin host package
