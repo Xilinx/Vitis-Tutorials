@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+   Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
    SPDX-License-Identifier: MIT
    */
 
@@ -9,8 +9,8 @@
 
 #include <adf.h>
 #include "xrt.h"
-#include "experimental/xrt_aie.h"
-#include "xrt/experimental/xrt_kernel.h"
+#include "xrt/xrt_aie.h"
+#include "xrt/xrt_kernel.h"
 
 #include "adf/adf_api/XRTConfig.h"
 

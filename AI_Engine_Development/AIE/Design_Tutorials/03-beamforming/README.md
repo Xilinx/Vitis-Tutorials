@@ -9,7 +9,7 @@
 
 # Beamforming Tutorial
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -59,13 +59,13 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 
 1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
-3. Download and set up the [VCK190 Vitis Platform for 2024.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+3. Download and set up the [VCK190 Vitis Platform for 2025.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 5. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
-6. Download the [VCK190 PetaLinux 2024.2 BSP](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) from the Versal AI Core Series VCK190 HeadStart Early Access Site.
+6. Download the [VCK190 PetaLinux 2025.1 BSP](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) from the Versal AI Core Series VCK190 HeadStart Early Access Site.
 
 To build and run the Beamforming tutorial, download and install the following tools:
 
-* [Vitis™ Unified Software Development Platform 2024.2](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+* [Vitis™ Unified Software Development Platform 2025.1](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 * [The Xilinx RunTime (XRT)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
 * [PetaLinux Tools](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 
@@ -76,9 +76,9 @@ When the elements of the Vitis software platform are installed, update the shell
 1. Edit the `sample_env_setup.sh` script with your file paths:
 
 ```bash
-export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2024.2-final.bsp)
+export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2025.1-final.bsp)
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2024.2/settings64.sh
+source <XILINX-INSTALL-LOCATION>/Vitis/2025.1/settings64.sh
 source <path-to-installed-PetaLinux>/settings.sh
 ```
 2. Source the environment script in bash shell:
@@ -97,7 +97,7 @@ source sample_env_setup.sh
 
 ### *Validation*: Confirming Tool Installation
 
-Make sure you are using the 2024.2 version of the Xilinx tools.
+Make sure you are using the 2025.1 version of the Xilinx tools.
 
 ```bash
 which vitis

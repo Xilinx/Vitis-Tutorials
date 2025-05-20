@@ -1,6 +1,6 @@
 
 
-#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 set IP_NAME "axi4s_regslice_64b"

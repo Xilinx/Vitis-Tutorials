@@ -1,6 +1,6 @@
 
 /*
-   Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+   Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
    SPDX-License-Identifier: MIT
    */
 
@@ -9,7 +9,7 @@
 #include "params.h"
 #include "utils_dlbf.h"
 #include "utils_ulbf.h"
-
+#include <unistd.h>
 
 int dlbf_func(unsigned int niter, int debug){
 
