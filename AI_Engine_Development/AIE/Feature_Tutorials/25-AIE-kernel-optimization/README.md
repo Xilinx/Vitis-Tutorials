@@ -262,15 +262,15 @@ Bilinear interpolation is a method of interpolating functions of two variables b
 
 *Figure 19 - Computing Bilinear Interpolation*
 
-A two-step process is performed by first interpolating in one dimension then the other. The first step, shown in the center, computes intermediate values (blue dots) using linear interpolation in the x-coordinate. The second step, shown on the right, uses intermediate results to perform a linear interpolation in the y-coordinate and derive the final interpolated value. Simplification of the interpolation equations shown may be realized by assuming spacing between reference pixels in a given dimension has a value of 1. This sets `$x_1 = y_1 = 0$, $x_2 = y_2 = 1$`, and the query point coordinates `$(x_q, y_q)$` specified by the fractional values `$(x_{frac}, y_{frac})$`. This results in the complete interpolation process being represented by a single dot product equation shown at the top of Figure 20.
+A two-step process is performed by first interpolating in one dimension then the other. The first step, shown in the center, computes intermediate values (blue dots) using linear interpolation in the x-coordinate. The second step, shown on the right, uses intermediate results to perform a linear interpolation in the y-coordinate and derive the final interpolated value. Simplification of the interpolation equations shown may be realized by assuming spacing between reference pixels in a given dimension has a value of 1. This sets $x_1 = y_1 = 0$, $x_2 = y_2 = 1$, and the query point coordinates $(x_q, y_q)$` specified by the fractional values $(x_{frac}, y_{frac})$. This results in the complete interpolation process being represented by a single dot product equation shown at the top of Figure 20.
 
 ![figure20](images/bli_vect_1.png)
 
 *Figure 20 - Initial Attempt at Vectorization of Bilinear Interpolation*
 
-To realize advantages of AI Engine processing, equations must be efficiently mapped to operations performed by a vector processor. An initial attempt is shown in the center of Figure 20, where a vector multiplication (MUL) is used twice. This is an element-wise vector multiplication that is first performed between a vector depending on `$x_{frac}$` and another depending on `$y_{frac}$`. The resulting product is then used in a second vector multiplication with the reference pixel values. Finally, a summing operation over all vector elements is performed to obtain the interpolated pixel value.
+To realize advantages of AI Engine processing, equations must be efficiently mapped to operations performed by a vector processor. An initial attempt is shown in the center of Figure 20, where a vector multiplication (MUL) is used twice. This is an element-wise vector multiplication that is first performed between a vector depending on $x_{frac}$ and another depending on $y_{frac}$. The resulting product is then used in a second vector multiplication with the reference pixel values. Finally, a summing operation over all vector elements is performed to obtain the interpolated pixel value.
 
-Another issue to consider is how to obtain the first two vectors from values of `$x_{frac}$` and `$y_{frac}$`. Modifying individual elements of a vector has a negative impact on performance, as it likely involves the scalar processor. The bottom of Figure 20 shows how these vectors may be derived using a multiply-accumulate (MAC) vector operation.
+Another issue to consider is how to obtain the first two vectors from values of $x_{frac}$ and $y_{frac}$. Modifying individual elements of a vector has a negative impact on performance, as it likely involves the scalar processor. The bottom of Figure 20 shows how these vectors may be derived using a multiply-accumulate (MAC) vector operation.
 
 AI Engines can utilize either a fixed-point or floating-point vector processor. For this example, floating-point data types are used. As shown in the Versal Adaptive SoC AI Engine Architecture Manual ([AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)), the floating-point vector processor can perform eight parallel multiplications. Also, a vector of eight floating-point values is 256-bits wide, which is a natural match to the memory interface. Due to these reasons, vectors of size 8 are used in kernel processing. Since the vectors shown in Figure 20 are of size 4, two pixel interpolations can be performed simultaneously using the floating-point vector processor. To get data into the kernel for processing, the format shown in Figure 21 is assumed.
 
@@ -278,13 +278,13 @@ AI Engines can utilize either a fixed-point or floating-point vector processor. 
 
 *Figure 21 - Data Input for Bilinear Interpolation Kernel*
 
-Each interpolated pixel requires six numbers for computation, namely `$x_{frac}$`, `$y_{frac}$`, and four reference pixel values. Since the smallest vector size that accommodates this is eight, two of the vector lanes are unused. Based on this mapping of the equation to the vector processor and memory interfaces, kernel code was created. The kernel header file is shown in Figure 22.
+Each interpolated pixel requires six numbers for computation, namely $x_{frac}$, $y_{frac}$, and four reference pixel values. Since the smallest vector size that accommodates this is eight, two of the vector lanes are unused. Based on this mapping of the equation to the vector processor and memory interfaces, kernel code was created. The kernel header file is shown in Figure 22.
 
 ![Figure 22](images/bli_kernel_h_v1.png)
 
 *Figure 22 - Initial Bilinear Interpolation Kernel Header File*
 
-The header file defines the kernel class along with a member function that performs interpolation. It also defines constants used to compute vectors from `$x_{frac}$` and `$y_{frac}$` using a vector MAC operation, as shown in Figure 20. Implementation of the kernel function which performs interpolation is shown in Figure 23.
+The header file defines the kernel class along with a member function that performs interpolation. It also defines constants used to compute vectors from $x_{frac}$ and $y_{frac}$ using a vector MAC operation, as shown in Figure 20. Implementation of the kernel function which performs interpolation is shown in Figure 23.
 
 ![Figure 23](images/bli_kernel_v1.png)
 
@@ -293,13 +293,13 @@ The header file defines the kernel class along with a member function that perfo
 A summary of the kernel code is as follows:
 
 - Lines 19-20: Iterators are defined for input and output buffers. The input iterator is used to read vectors of size 16 which comprise two rows of the input format shown in Figure 21 and allows two pixels to be interpolated at a time. The output iterator is used to write a single interpolated pixel at a time.
-- Lines 24-27: Load constant arrays defined in the header file into registers to be used to compute vectors from `$x_{frac}$` and `$y_{frac}$`.
+- Lines 24-27: Load constant arrays defined in the header file into registers to be used to compute vectors from $x_{frac}$ and $y_{frac}$.
 - Line 29: Loop through input array, computing two interpolated pixels per loop invocation.
 - Line 34: Read input data used to compute two interpolated pixels.
-- Line 37: Compute vector based on `$x_{frac}$`. This is done using a floating-point MAC intrinsic function. Hex strings specify which vector lanes are used in computation. In this case, value `0xCCCC4444` extracts `$x_{frac}$` values from input for each pixel and assigns them to vector lanes for multiplication.
-- Line 40: Similar computation as line 37 to derive vector based on `$y_{frac}$`.
-- Line 43: Multiplication of vectors derived from `$x_{frac}$` and `$y_{frac}$` to compute `$xy$` product.
-- Line 44: Multiplication of `$xy$` product with reference pixels.
+- Line 37: Compute vector based on $x_{frac}$. This is done using a floating-point MAC intrinsic function. Hex strings specify which vector lanes are used in computation. In this case, value `0xCCCC4444` extracts $x_{frac}$ values from input for each pixel and assigns them to vector lanes for multiplication.
+- Line 40: Similar computation as line 37 to derive vector based on $y_{frac}$.
+- Line 43: Multiplication of vectors derived from $x_{frac}$ and $y_{frac}$ to compute $xy$ product.
+- Line 44: Multiplication of $xy$ product with reference pixels.
 - Lines 47-48: Extract half of vector corresponding to a single pixel and sum values. Resulting interpolated pixel value is written to output.
 
 Simulation of this kernel with profiling was performed, and resulting microcode is examined in the following section.
@@ -312,7 +312,7 @@ Microcode generated from bilinear kernel C++ source code is displayed in Figure 
 
 *Figure 24 - Microcode Indicating Register Spilling*
 
-Examining the execution and cycle count columns, a computational loop is easily identified and determined to have an II of 41. Since two pixels are processed per loop invocation, computational efficiency can be specified as 20.5 cycles/pixel. Also highlighted is evidence of register spilling indicated by the `VLDA.SPIL` mnemonic in one of the move slots of the VLIW instruction. In this case, it's moving data from the stack to a vector register. Notice there is no store register spilling operation. Referring back to the C++ source code, one might deduce that the constant arrays used in computing vectors from `$x_{frac}$` and `$y_{frac}$` using a vector MAC operation might be the cause. Since register capacity is limited, each loop iteration these vectors are retrieved as needed for computation. Since register spilling is occurring, it is worth examining the source code, which is shown again in Figure 25.
+Examining the execution and cycle count columns, a computational loop is easily identified and determined to have an II of 41. Since two pixels are processed per loop invocation, computational efficiency can be specified as 20.5 cycles/pixel. Also highlighted is evidence of register spilling indicated by the `VLDA.SPIL` mnemonic in one of the move slots of the VLIW instruction. In this case, it's moving data from the stack to a vector register. Notice there is no store register spilling operation. Referring back to the C++ source code, one might deduce that the constant arrays used in computing vectors from $x_{frac}$ and $y_{frac}$ using a vector MAC operation might be the cause. Since register capacity is limited, each loop iteration these vectors are retrieved as needed for computation. Since register spilling is occurring, it is worth examining the source code, which is shown again in Figure 25.
 
 ![figure25](images/bli_kernel_reg_spil.png)
 
@@ -334,7 +334,7 @@ Notice that a vector floating-point multiplication is being executed with the re
 
 *Figure 27 - AI Engine Floating-Point Vector Processor*
 
-This diagram illustrates a 7-stage pipeline. Recall that for each pixel the kernel first computes the product `xy` between vectors derived from `$x_{frac}$` and `$y_{frac}$`, then uses this result in a follow-on multiplication with the reference pixel values. Therefore, 7-cycle gaps observed in microcode are due to the vector processor waiting for the first product to make it through the pipeline before computing the next product. So, when you observe lines containing `NOP` between successive vector operations, it is likely an indication of pipeline delays. Many time this will be seven cycles for the floating-point processor. When using the fixed-point vector processor, there is a 6-stage pipeline.
+This diagram illustrates a 7-stage pipeline. Recall that for each pixel the kernel first computes the product `xy` between vectors derived from $x_{frac}$ and $y_{frac}$, then uses this result in a follow-on multiplication with the reference pixel values. Therefore, 7-cycle gaps observed in microcode are due to the vector processor waiting for the first product to make it through the pipeline before computing the next product. So, when you observe lines containing `NOP` between successive vector operations, it is likely an indication of pipeline delays. Many time this will be seven cycles for the floating-point processor. When using the fixed-point vector processor, there is a 6-stage pipeline.
 
 To fill the pipeline, one tactic is to perform partial computation of your result for many input values and store them in a temporary buffer in local data memory. A follow-on loop would read that data and use it in the next stage of computation of the algorithm. Not only does this improve compute efficiency, but it often reduces the amount of register space used which eliminates register spilling.
 
@@ -346,7 +346,7 @@ Sometimes input data is required multiple times during kernel processing. If thi
 
 Some changes to make note of are:
 
-- Lines 18-19: The constant vectors are changed so that a single `MAC` operation uses `$x_{frac}$` and `$y_{frac}$` values for a single pixel instead one `MAC` using `$x_{frac}$` for two pixels and another `MAC` using `$y_{frac}$` values for two pixels.
+- Lines 18-19: The constant vectors are changed so that a single `MAC` operation uses $x_{frac}$ and $y_{frac}$ values for a single pixel instead one `MAC` using $x_{frac}$ for two pixels and another `MAC` using $y_{frac}$ values for two pixels.
 - Lines 21-22: Buffers are created in local data memory to hold intermediate results.
 
 Kernel code up to the end of the first computational loop is shown in Figure 29.
@@ -360,7 +360,7 @@ Points to note are:
 - Line 19: The input iterator is of size 8 instead of 16. It will now read input data for a single pixel and use less register space.
 - Line 22: An iterator is defined to access a memory buffer to hold intermediate data.
 - Line 28: This loop processes one pixel per iteration.
-- Line 36: The `fpmac` intrinsic function computes vectors derived from `$x_{frac}$` and `$y_{frac}$` and writes the result to local memory.
+- Line 36: The `fpmac` intrinsic function computes vectors derived from $x_{frac}$ and $y_{frac}$ and writes the result to local memory.
 
 Kernel processing up to the end of the second loop is shown in Figure 30.
 
@@ -451,7 +451,7 @@ One of the most important things to consider is how algorithms get mapped to tak
 
 *Figure 38 - Original Vectorization for Bilinear Interpolation*
 
-This approach attempts to use SIMD processing so that individual interpolated pixels are computed faster. To do so, data is first expanded across lanes (`$x_{frac}$`, `$y_{frac}$`) then SIMD processing is used for computation. To obtain the final result, data must be combined across lanes. In this example, the expansion of data didn't have much of an impact but the addition across lanes at the end did.
+This approach attempts to use SIMD processing so that individual interpolated pixels are computed faster. To do so, data is first expanded across lanes ($x_{frac}$, $y_{frac}$) then SIMD processing is used for computation. To obtain the final result, data must be combined across lanes. In this example, the expansion of data didn't have much of an impact but the addition across lanes at the end did.
 
 An alternative approach is to use individual vector lanes to process individual pixels. This pixel per lane approach would not speed up the processing for an individual pixel, but instead, several pixels would be computed at once. Mapping the bilinear interpolation equations to a pixel per lane approach is shown in Figure 39.
 
@@ -465,7 +465,7 @@ The top three equations are the original linear interpolations performed over x 
 
 *Figure 40 - Pixel Per Lane Input Format*
 
-This format uses six 256-bit vectors for a group of eight pixels. Each group consists of a row for `$x_{frac}$`, a row for `$y_{frac}$`, and a row for each of the reference pixels. Note that this input format is also more efficient that the one introduced in Figure 21 since none of the vector elements are unused. Kernel code based on the pixel per lane approach is shown below with the first set of interpolations over the x coordinate shown in Figure 41.
+This format uses six 256-bit vectors for a group of eight pixels. Each group consists of a row for $x_{frac}$, a row for $y_{frac}$, and a row for each of the reference pixels. Note that this input format is also more efficient that the one introduced in Figure 21 since none of the vector elements are unused. Kernel code based on the pixel per lane approach is shown below with the first set of interpolations over the x coordinate shown in Figure 41.
 
 ![figure41](images/kernel_pxlperlane_1.png)
 
@@ -515,7 +515,6 @@ As you gain experience working with AI Engine architecture and applying these pr
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
-
 
 <hr class="sphinxhide"></hr>
 

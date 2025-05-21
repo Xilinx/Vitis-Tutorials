@@ -43,11 +43,11 @@ The figure below shows a block diagram of a 2D PFA transform. It's corresponding
 * A second set of 1D FFT's are performed along the columns of the original matrix.
 * An output permutation is applied to the output data after being read column-wise out of its 2D matrix form. The specific output permutation depends on the values of $N_1$ and $N_2$ as outlined below.
 
-The Matlab code below shows all of these five steps clearly. The routine `compute_perm_2d()` computes the input permutation `P_i` and output permutation `P_o` applied based on the values of $N_1$ and $N_2$. 
+The Matlab code below shows all of these five steps clearly. The routine `compute_perm_2d()` computes the input permutation `P_i` and output permutation `P_o` applied based on the values of $N_1$ and $N_2$.
 
 ![figure1](images/pfa-2d-block-diagram.png)
 
-```
+```cpp
 function [sig_o] = fft_pfa_2d( sig_i, N1, N2 )
     [P_i,P_o,N] = compute_perm_2d(N1,N2);
     % Input permutation
@@ -67,13 +67,14 @@ end
 ```
 
 The figure below shows a block diagram of a 3D PFA transform. It's corresponding Matlab model is shown immediately below. The algorithm consists of the same steps similar to the 2D case above with the following differences:
+
 * The I/O permutations now depend on three relatively prime factors $N_1$, $N_2$ and $N_3$. The mathematics specific to these 2D and 3D permutations is given in detail below.
 * The data is now organized in a $N_1 \times N_2 \times N_3$ cube instead of an $N_1 \times N_2$ rectangle. Transforms are taken in 1D along each of these dimensions in order, first along $N_1$, then along $N_2$ and finally along $N_3$.
 * The "matrix transpose" operations required to extract data in the $N_2$ and $N_3$ dimensions involve slightly more complicated "stride" patterns. These patterns are computed by the Matlab routine `compute_addr_3d.m`.
 
 ![figure2](images/pfa-3d-block-diagram.png)
 
-```
+```cpp
 function [sig_o] = fft_pfa_3d( sig_i, N1, N2, N3 )
     [P_i,P_o,N] = compute_perm_3d(N1,N2,N3);
     % Input permutation:
@@ -99,13 +100,14 @@ function [sig_o] = fft_pfa_3d( sig_i, N1, N2, N3 )
     sig_o(1+P_o) = data_o;
 end
 ```
+
 The full suite of Matlab models illustrating the operation of the PFA transforms is given in the `matlab` folder of the repo.
 
 ### I/O Permutations (2D Case)
 
-The figure below illustrates how to compute the I/O permutations required for a 2D PFA solution. The input permutation relies on a simple modulo computation with the relatively prime factors $N_1$ and $N_2$. The figure gives a specific sample with $N_1=3% and $N_2=5$. The input index mapping may be written in a 2D matrix form, or as a 1D address permutation $P_i$. 
+The figure below illustrates how to compute the I/O permutations required for a 2D PFA solution. The input permutation relies on a simple modulo computation with the relatively prime factors $N_1$ and $N_2$. The figure gives a specific sample with $N_1=3% and $N_2=5$. The input index mapping may be written in a 2D matrix form, or as a 1D address permutation $P_i$.
 
-The output permutation mapping relies on a similar modulo computation but with factors $K_3$ and $K_4$ computed from $N_1$ and $N_2$ and their "multiplicative modulo inverses". Such an inverse $\(a^{-1}\)_N\equiv I$ is defined such that $mod\(a\times I,N\)=1$. Using this to solve for $\(N_2^{-1}\)\_{N_1}$ and $\(N_1^{-1}\)\_{N_2}$ yields the solution of $K_3=10$ and $K_4=6$ shown in the figure. Once again, the output index mapping may be written in a 2D matrix form, or as a 1D address permutation $P_o$.
+The output permutation mapping relies on a similar modulo computation but with factors $K_3$ and $K_4$ computed from $N_1$ and $N_2$ and their "multiplicative modulo inverses". Such an inverse $\{(a^{-1}\})_N\equiv I$ is defined such that $mod\{(a\times I,N\})=1$. Using this to solve for $\{(N_2^{-1}\})\_{N_1}$ and $\{(N_1^{-1}\})\_{N_2}$ yields the solution of $K_3=10$ and $K_4=6$ shown in the figure. Once again, the output index mapping may be written in a 2D matrix form, or as a 1D address permutation $P_o$.
 
 ![figure3](images/pfa-permutations-2D.png)
 
@@ -118,7 +120,7 @@ The I/O permutations for a 3D PFA solution are solved in a manner similar to the
 
 ## Design Overview
 
-The figure below shows a block diagram of a 3D PFA-1008 hardware design implemented in Versal using AI Engines and PL. The design targets a 2 Gsps throughput (SSR=2). AI Engines implement the three DFT kernels, specifically DFT-7, DFT-9 and DFT-16, using a vector-matrix multiplication approach. The design implements the I/O permutation and matrix transpose kernels using Vitis HLS targeting in PL.
+The figure below shows a block diagram of a 3D PFA-1008 hardware design implemented in Versal using AI Engines and PL. The design targets a 2 GSPS throughput (SSR=2). AI Engines implement the three DFT kernels, specifically DFT-7, DFT-9 and DFT-16, using a vector-matrix multiplication approach. The design implements the I/O permutation and matrix transpose kernels using Vitis HLS targeting in PL.
 
 ![figure5](images/pfa-1008-block-diagram.png)
 
@@ -146,7 +148,7 @@ This AI Engine kernel implements the DFT-9 using a similar approach to the DFT-7
 
 ### TRANSPOSE2 Kernel
 
-This PL kernel implements in PL the matrix transpose operation required to feed the proper 16-point input samples to the DFT-16 on the third dimension of the 3D cube. The design uses HLS @ 312.5 MHz (SSR=8). The 9-pt transforms arrive on alternate streams. Samples are written into a ping/pong buffer. Samples are read back in a transposed (stride-63) order. The kernel produces 4 samples alternately on two output streams. The design has a latency of 1008/8+1 cycles. 
+This PL kernel implements in PL the matrix transpose operation required to feed the proper 16-point input samples to the DFT-16 on the third dimension of the 3D cube. The design uses HLS @ 312.5 MHz (SSR=8). The 9-pt transforms arrive on alternate streams. Samples are written into a ping/pong buffer. Samples are read back in a transposed (stride-63) order. The kernel produces four samples alternately on two output streams. The design has a latency of 1008/8+1 cycles.
 
 ### FFT-16 Kernel
 
@@ -190,14 +192,14 @@ export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
 
 ### Hardware Emulation
 
-```
+```sh
 [shell]% cd <path-to-design>/05-Prime-Factor-FFT
 [shell]% make all TARGET=hw_emu
 ```
 
 This will take about 90 minutes to run. The build process will generate a folder ```05-Prime-Factor-FFT/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
 
-```
+```sh
 [shell]% cd <path-to-design>/05-Prime-Factor-FFT/package
 [shell]% ./launch_hw_emu.sh -run-app embedded_exec.sh
 ```
@@ -206,7 +208,7 @@ This will take about 90 minutes to run. The build process will generate a folder
 
 The design can be built for the VCK190 board using the Makefile as follows:
 
-```
+```sh
 [shell]% cd <path-to-design>/05-Prime-Factor-FFT
 [shell]% make all TARGET=hw
 ```

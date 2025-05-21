@@ -36,8 +36,9 @@ A Makefile is provided for each implementation. It can be used to create the des
 The design documentation demonstrates hardware and software design details, including the methodology for each implementation, elaborating on the functional partitioning. The compilation, execution, measurement steps, and observations are given.
 
 <details>
-  <summary>Objectives</summary> 
-	
+  <summary>Objectives</summary>
+
+
 ### Objectives
 
 After completing the tutorial, you should be able to:
@@ -57,8 +58,8 @@ After completing the tutorial, you should be able to:
 </details>
 
 <details>
-  <summary>Design Overview</summary> 
- 
+  <summary>Design Overview</summary>
+
 ### Design Overview
 
 This design aims to implement a 2D-FFT algorithm performed on (for example) a 1024 x 2048 matrix using 1024- and 2048-point 1D-FFT kernels. The pseudo-code to implement the algorithm is shown in the following example:
@@ -90,8 +91,8 @@ A similar set of harnesses is developed and maintained between the two implement
 </details>
 
 <details>
-  <summary>Directory Structure</summary> 
-	
+  <summary>Directory Structure</summary>
+
 ### Directory Structure
 
 ```
