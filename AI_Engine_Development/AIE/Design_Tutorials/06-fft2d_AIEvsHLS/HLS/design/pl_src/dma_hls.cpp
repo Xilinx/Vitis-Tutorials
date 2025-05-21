@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -35,47 +35,35 @@ SPDX-License-Identifier: MIT
 ////////////////////////////////////////////////////////////
 void mm2s0(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,
-   ap_uint<25> matSz, ap_int<16> iterCnt
+   int matSz
   )
 {
-   MM2S0_ITER:while(iterCnt--) {
-      #pragma HLS loop_tripcount min=1 max=16
+   MM2S0:for(int i = 0; i < matSz; ++i) {
+      #pragma HLS PIPELINE II=1
       
-      MM2S0:for(ap_uint<25> i = 0; i < matSz; ++i) {
-         #pragma HLS PIPELINE II=1
-         
-         #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
-            #pragma HLS loop_tripcount min=512 max=524288
-         
-         #else   //cfloat - 32x64/2 to 1024x2048/2
-            #pragma HLS loop_tripcount min=1024 max=1048576
-         
-         #endif
-         
-         ap_axiu<128, 0, 0, 0> fftRow_inp;
-         
-         if(i == 0)
-         {
-            fftRow_inp.data = INP_DATA;
-         }
-         else
-         {
-            fftRow_inp.data = 0;
-         }
-          
-         fftRow_inp.keep=-1;
-         strmOut_to_rowiseFFT.write(fftRow_inp);
-      }
-      // If iterCnt is -1 keeping running the design infinitely...
-      if(iterCnt == -2) {
-         iterCnt = -1;
-      }
-      else {
-         continue;
-      }
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
       
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
+      
+      ap_axiu<128, 0, 0, 0> fftRow_inp;
+      
+      if(i == 0)
+      {
+         fftRow_inp.data = INP_DATA;
       }
+      else
+      {
+         fftRow_inp.data = 0x0;
+      }
+       
+      fftRow_inp.keep=-1;
+      strmOut_to_rowiseFFT.write(fftRow_inp);
    }
+}
 
 ////////////////////////////////////////////////////////////
 // Datamover From Rowise FFT output to Colwise FFT Input...
@@ -83,76 +71,64 @@ void mm2s0(
 void dmaHls_rowsToCols(
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
-      ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
-      ap_uint<25> &stg0_errCnt, ap_uint<128> goldenVal,
-      ap_int<16> iterCnt
+      int matSz, int rows, int cols, int &stg0_errCnt,
+      ap_uint<128> goldenVal
      )
 {
-   S2MM0_TO_MM2S1_ITER:while(iterCnt--) {
-      #pragma HLS loop_tripcount min=1 max=16
-      
-      S2MM0:for(ap_uint<25> i = 0; i < matSz; ++i) {
-         #pragma HLS PIPELINE II=1
+   S2MM0:for(int i = 0; i < matSz; ++i) {
+      #pragma HLS PIPELINE II=1
 
-         #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
-            #pragma HLS loop_tripcount min=512 max=524288
-         
-         #else   //cfloat - 32x64/2 to 1024x2048/2
-            #pragma HLS loop_tripcount min=1024 max=1048576
-         
-         #endif
-         
-         ap_axiu<128, 0, 0, 0> fftRow_out = strmInp_from_rowiseFFT.read();
-         
-         // First row in the matrix should be all 1s and remaining 0s...
-         if(i < cols)
-         {
-            if(fftRow_out.data != goldenVal)
-            {
-               ++stg0_errCnt;
-            }
-         }
-         else if(fftRow_out.data != 0)
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
+      
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
+      
+      ap_axiu<128, 0, 0, 0> fftRow_out = strmInp_from_rowiseFFT.read();
+      
+      // First row in the matrix should be all 1s and remaining 0s...
+      if(i < cols)
+      {
+         if(fftRow_out.data != goldenVal)
          {
             ++stg0_errCnt;
          }
       }
+      else if(fftRow_out.data != 0)
+      {
+         ++stg0_errCnt;
+      }
+   }
+   
+   MM2S1:for(int i = 0, idx = 0; i < matSz; ++i) {
+      #pragma HLS PIPELINE II=1
+
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
       
-      MM2S1:for(ap_uint<25> i = 0, idx = 0; i < matSz; ++i) {
-         #pragma HLS PIPELINE II=1
-
-         #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
-            #pragma HLS loop_tripcount min=512 max=524288
-         
-         #else   //cfloat - 32x64/2 to 1024x2048/2
-            #pragma HLS loop_tripcount min=1024 max=1048576
-         
-         #endif
-
-         
-         ap_axiu<128, 0, 0, 0> fftCol_inp;
-
-         if(i == idx)
-         {
-            fftCol_inp.data = INP_DATA;
-            idx += rows;
-         }
-         else
-         {
-            fftCol_inp.data = 0;
-         }
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
       
-         fftCol_inp.keep=-1;
-         strmOut_to_colwiseFFT.write(fftCol_inp);
+      #endif
+
+      
+      ap_axiu<128, 0, 0, 0> fftCol_inp;
+
+      if(i == idx)
+      {
+         fftCol_inp.data = INP_DATA;
+         idx += rows;
       }
-      // If iterCnt is -1 keeping running the design infinitely...
-      if(iterCnt == -2) {
-         iterCnt = -1;
+      else
+      {
+         fftCol_inp.data = 0;
       }
-      else {
-         continue;
-      }
-    }  
+   
+      fftCol_inp.keep=-1;
+      strmOut_to_colwiseFFT.write(fftCol_inp);
+   }
 }
 
 ////////////////////////////////////////////////////////////
@@ -160,42 +136,70 @@ void dmaHls_rowsToCols(
 ////////////////////////////////////////////////////////////
 void s2mm1(
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
-      ap_uint<25> matSz, ap_uint<25> &stg1_errCnt, ap_uint<128> goldenVal,
-      ap_int<16> iterCnt
+      int matSz, int &stg1_errCnt, ap_uint<128> goldenVal
      )
 {
-   S2MM1_ITER:while(iterCnt--) {
-      #pragma HLS loop_tripcount min=1 max=16
-      
-      S2MM1:for(ap_uint<25> i = 0; i < matSz; ++i) {
-         #pragma HLS PIPELINE II=1
+   S2MM1:for(int i = 0; i < matSz; ++i) {
+      #pragma HLS PIPELINE II=1
 
-         #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
-            #pragma HLS loop_tripcount min=512 max=524288
-         
-         #else   //cfloat - 32x64/2 to 1024x2048/2
-            #pragma HLS loop_tripcount min=1024 max=1048576
-         
-         #endif
-
-         ap_axiu<128, 0, 0, 0> fftCol_out = strmInp_from_colwiseFFT.read();
-         
-         // All Values should 1...
-         if(fftCol_out.data != goldenVal)
-         {
-            ++stg1_errCnt;
-         }
-      }
-      // If iterCnt is -1 keeping running the design infinitely...
-      if(iterCnt == -2) {
-         iterCnt = -1;
-      }
-      else {
-         continue;
-      }
+      #if FFT_2D_DT == 0   //cint16 - 32x64/4 to 1024x2048/4
+         #pragma HLS loop_tripcount min=512 max=524288
       
+      #else   //cfloat - 32x64/2 to 1024x2048/2
+         #pragma HLS loop_tripcount min=1024 max=1048576
+      
+      #endif
+
+      ap_axiu<128, 0, 0, 0> fftCol_out = strmInp_from_colwiseFFT.read();
+      
+      // All Values should 1...
+      if(fftCol_out.data != goldenVal)
+      {
+         ++stg1_errCnt;
+      }
    }
 }
+
+
+////////////////////////////////////////
+///////////Exctract function/////////////////
+////////////////////////////////////////
+
+void extracted1(hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,int &matSz, int &iterCnt){
+ {
+    ITER_MM2S0:for(int i = iterCnt; i ; --i)
+    {
+      #pragma HLS loop_tripcount min=1 max=8
+      
+      mm2s0(strmOut_to_rowiseFFT, matSz);
+    }
+ }
+}
+
+void extracted2(hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,int &stg0_errCnt,ap_uint<128> goldenVal,int &iterCnt,int &matSz, int &rows, int &cols){
+	{
+		ITER_S2MM0_TO_MM2S1:for(int j=iterCnt; j ; --j)
+   		{
+     		 #pragma HLS loop_tripcount min=1 max=8
+      
+      			dmaHls_rowsToCols(strmInp_from_rowiseFFT, strmOut_to_colwiseFFT, \
+                        		matSz, rows, cols, stg0_errCnt, goldenVal);
+   		}
+        }
+
+}
+
+void extracted3(hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,int &matSz,int &stg1_errCnt,ap_uint<128> goldenVal,int &iterCnt){
+	{
+		   ITER_S2MM1:for(int k=iterCnt ; k ; --k)
+  		 {
+      		#pragma HLS loop_tripcount min=1 max=8
+      
+     		 s2mm1(strmInp_from_colwiseFFT, matSz, stg1_errCnt, goldenVal);
+   		}
+	}
+}
+	  	
 
 ////////////////////////////////////////////////////////////
 // Top Function of Final Datamover unit for design without
@@ -208,8 +212,7 @@ int dma_hls(
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,
       hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,
-      ap_uint<25> matSz, ap_uint<13> rows, ap_uint<13> cols,
-      ap_int<16> iterCnt
+      int matSz, int rows, int cols, int iterCnt
      )
 {
    #pragma HLS INTERFACE axis port=strmOut_to_rowiseFFT
@@ -225,17 +228,16 @@ int dma_hls(
    
    #pragma HLS DATAFLOW
    
-   ap_uint<25> stg0_errCnt = 0, stg1_errCnt = 0;
+   int stg0_errCnt = 0, stg1_errCnt = 0;
    
    ap_uint<128> goldenVal;
 
    goldenVal.range(127, 64) = GOLDEN_DATA;
    goldenVal.range( 63,  0) = GOLDEN_DATA;
 
-   mm2s0(strmOut_to_rowiseFFT, matSz, iterCnt);
-   dmaHls_rowsToCols(strmInp_from_rowiseFFT, strmOut_to_colwiseFFT, \
-                     matSz, rows, cols, stg0_errCnt, goldenVal, iterCnt);
-   s2mm1(strmInp_from_colwiseFFT, matSz, stg1_errCnt, goldenVal, iterCnt);
-
-   return (stg0_errCnt + stg1_errCnt);
+   extracted1(strmOut_to_rowiseFFT,matSz,iterCnt);
+   extracted2(strmInp_from_rowiseFFT,strmOut_to_colwiseFFT,stg0_errCnt,goldenVal,iterCnt,matSz,rows,cols);
+   extracted3(strmInp_from_colwiseFFT,matSz,stg1_errCnt,goldenVal,iterCnt);
+   
+  return (stg0_errCnt + stg1_errCnt);
 }

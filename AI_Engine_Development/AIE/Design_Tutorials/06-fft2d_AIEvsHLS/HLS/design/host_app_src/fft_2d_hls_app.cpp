@@ -1,8 +1,8 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
-
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -11,9 +11,9 @@ SPDX-License-Identifier: MIT
 #include <string>
 #include <cstring>
 
-#include "experimental/xrt_aie.h"
-#include "experimental/xrt_kernel.h"
-#include "experimental/xrt_bo.h"
+#include "xrt/xrt_aie.h"
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_bo.h"
 
 #define MAT_SIZE (MAT_ROWS * MAT_COLS)
 

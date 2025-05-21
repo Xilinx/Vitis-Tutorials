@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -160,6 +160,47 @@ void s2mm1(
    }
 }
 
+
+////////////////////////////////////////
+///////////Exctract function/////////////////
+////////////////////////////////////////
+
+void extracted1(hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_rowiseFFT,int &matSz, int &iterCnt){
+ {
+    ITER_MM2S0:for(int i = iterCnt; i ; --i)
+    {
+      #pragma HLS loop_tripcount min=1 max=8
+      
+      mm2s0(strmOut_to_rowiseFFT, matSz);
+    }
+ }
+}
+
+void extracted2(hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_rowiseFFT,hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_colwiseFFT,int &stg0_errCnt,ap_uint<128> goldenVal,int &iterCnt,int &matSz, int &rows, int &cols){
+	{
+		ITER_S2MM0_TO_MM2S1:for(int j=iterCnt; j ; --j)
+   		{
+     		 #pragma HLS loop_tripcount min=1 max=8
+      
+      			dmaHls_rowsToCols(strmInp_from_rowiseFFT, strmOut_to_colwiseFFT, \
+                        		matSz, rows, cols, stg0_errCnt, goldenVal);
+   		}
+        }
+
+}
+
+void extracted3(hls::stream<ap_axiu<128, 0, 0, 0>> &strmInp_from_colwiseFFT,int &matSz,int &stg1_errCnt,ap_uint<128> goldenVal,int &iterCnt){
+	{
+		   ITER_S2MM1:for(int k=iterCnt ; k ; --k)
+  		 {
+      		#pragma HLS loop_tripcount min=1 max=8
+      
+     		 s2mm1(strmInp_from_colwiseFFT, matSz, stg1_errCnt, goldenVal);
+   		}
+	}
+}
+	  	
+
 ////////////////////////////////////////////////////////////
 // Top Function of Final Datamover unit for design without
 // ddr, it provides impulse input and checks for the output
@@ -194,27 +235,9 @@ int dma_hls(
    goldenVal.range(127, 64) = GOLDEN_DATA;
    goldenVal.range( 63,  0) = GOLDEN_DATA;
 
-   ITER_MM2S0:for(int i = iterCnt; i ; --i)
-   {
-      #pragma HLS loop_tripcount min=1 max=8
-      
-      mm2s0(strmOut_to_rowiseFFT, matSz);
-   }
+   extracted1(strmOut_to_rowiseFFT,matSz,iterCnt);
+   extracted2(strmInp_from_rowiseFFT,strmOut_to_colwiseFFT,stg0_errCnt,goldenVal,iterCnt,matSz,rows,cols);
+   extracted3(strmInp_from_colwiseFFT,matSz,stg1_errCnt,goldenVal,iterCnt);
    
-   ITER_S2MM0_TO_MM2S1:for(int j=iterCnt; j ; --j)
-   {
-      #pragma HLS loop_tripcount min=1 max=8
-      
-      dmaHls_rowsToCols(strmInp_from_rowiseFFT, strmOut_to_colwiseFFT, \
-                        matSz, rows, cols, stg0_errCnt, goldenVal);
-   }
-   
-   ITER_S2MM1:for(int k=iterCnt ; k ; --k)
-   {
-      #pragma HLS loop_tripcount min=1 max=8
-      
-      s2mm1(strmInp_from_colwiseFFT, matSz, stg1_errCnt, goldenVal);
-   }
-
-   return (stg0_errCnt + stg1_errCnt);
+  return (stg0_errCnt + stg1_errCnt);
 }

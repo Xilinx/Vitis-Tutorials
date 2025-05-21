@@ -1,5 +1,5 @@
 #######################################################
-Version: Vitis 2022.2
+Version: Vitis 2025.1
 #######################################################
 
-To view the source files for this tutorial, click `here <https://github.com/Xilinx/Vitis-Tutorials/tree/2022.2/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS>`_.
+To view the source files for this tutorial, click `here <https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/AI_Engine_Development/Design_Tutorials/06-fft2d_AIEvsHLS>`_.
