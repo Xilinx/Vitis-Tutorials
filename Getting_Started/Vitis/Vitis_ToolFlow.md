@@ -45,8 +45,8 @@ Vitis components are like mini projects targetted to build important Vitis compo
 
 #### AI Engine Graph Creation Overview:
 
-aiecompiler (v++ -c --mode aie) is used to compile the AI Engine graph and kernel files. The compiler settings can be driven by using a configuration (<>.cfg) file. 
-The aiecompiler generates AI Engine graph applications (libadf.a) and a Work directory as an output. 
+The Vitis AIE compiler (v++ -c --mode aie) is used to compile the AI Engine graph and kernel files. The compiler settings can be driven by using a configuration (<>.cfg) file. 
+The AIE compiler generates AI Engine graph applications (libadf.a) and a Work directory as an output. 
 
 ```mermaid
 graph TD;
@@ -147,7 +147,7 @@ Vitis Tool: Detailed summary of available Vitis tools and its usages
 | -------------------- | -----------------------  | ------------------ | --------- | ------------------------------------ |
 | Vitis Embedded      | &#x2611;                 | &#x2612;           | &#x2612;  | Consists of Compiler and Debuggers targeting PS                |
 | Vitis HLS            | &#x2612;                 | &#x2611;           | &#x2612;  | To create PL kernels using C/C++ files                |
-| AI Engine Tools      | &#x2612;                 | &#x2612;           | &#x2611;  | aiecompiler, x86sim, and aiesimulator for AI Engine designing. <br> **aiecompiler** uses AI Engine targeted C/C++ source files to output libadf.a (AIE Kernels). <br> **x86sim** is the functional simulator for AI Engines that helps to test, debug, and verify the functionality. <br> **aiesimulator** simulates a cycle approximate SystemC model of AI Engine. |
+| AI Engine Tools      | &#x2612;                 | &#x2612;           | &#x2611;  | Vitis AIE compiler, x86sim, and aiesimulator for AI Engine designing. <br> **Vitis AIE compiler** uses AI Engine targeted C/C++ source files to output libadf.a (AIE Kernels). <br> **x86sim** is the functional simulator for AI Engines that helps to test, debug, and verify the functionality. <br> **aiesimulator** simulates a cycle approximate SystemC model of AI Engine. |
 | Vitis Linker         | &#x2612;                       | &#x2611;                | &#x2611;       | Works on existing platform and provides connection between AI Engine, PL and NoC. Also takes care of clock connections and data width conversions.               |
 | Vitis Packager       | &#x2611;                      | &#x2611;                 | &#x2611;      | Pack all necessaey hardware and software components and also to configure boot of the device              |
 | Hardware Emulation   | &#x2611;                      | &#x2611;                 | &#x2611;      | To simulate the PS+PL+AIE, where PS gets simulated using QEMU and PL and AIE with simulators like XSIM             |

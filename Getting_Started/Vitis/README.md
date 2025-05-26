@@ -34,6 +34,14 @@ Please read the tutorial in the same order as listed here to better understand t
    export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2025.1>
    ```
 
+3. To compile the binaries:
+
+   ```
+   cd <path_to_Tutorial>/Getting_Started/Vitis
+   make all
+   ```
+   Please refer [Makefile](./Makefile) for more details on the commands.
+
 Ensure you have the following installed on your machine:
 
 * Vitis tools

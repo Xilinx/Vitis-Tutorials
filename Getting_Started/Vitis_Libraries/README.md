@@ -7,7 +7,7 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
 >**Note:** This tutorial has been updated for use with the Vitis Unified IDE, reflecting the enhancements introduced in the 2023.2 and 2024.1 releases. For guidance on using this tutorial with the classic Vitis and Vitis HLS tools, please refer to the earlier version by accessing the `2023.1` branch or earlier.
@@ -19,7 +19,7 @@ Before playing with the libraries, set up the Vitis environment first. For instr
 Below are the example scripts to set up Vitis and XRT:
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2024.2/settings64.sh
+$ source <Vitis Tool Installation Path>/Vitis/2025.1/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 

@@ -117,7 +117,7 @@ Let's get started with the host code application development.
 
 ## Compilation of Host Code:
 
-Once the application code is ready and verified, we will now compile the host code using the "**aarch64-linux-gnu-g++**". Please refer to the Host_srcs/Makefile to access the full command.
+Once the application code is ready and verified, we will now compile the host code using the "**aarch64-linux-gnu-g++**". Please refer to the [Host_srcs/Makefile](./Makefile) to access the full command.
 ```
 aarch64-linux-gnu-g++ host.cpp -I<required_include> <gcc_flags> <sysroot> -o host.exe
 ```

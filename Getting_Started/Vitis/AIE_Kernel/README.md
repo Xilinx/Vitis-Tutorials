@@ -9,7 +9,7 @@
 
 # AI Engine Kernel Compilation
 
-In this chapter, we will start with a basic Matrix Multiplication example to understand the kernel code and its compilation using **aiecompiler**
+In this chapter, we will start with a basic Matrix Multiplication example to understand the kernel code and its compilation using **Vitis AIE compiler**
 
 > **Important Note:** This tutorial aims to explain the Vitis tool flow and uses a very simple AI Engine kernel. Please use the https://github.com/Xilinx/Vitis-Tutorials/ AI Engine designs to better leverage the AI Engine tiles.
 
@@ -95,10 +95,10 @@ Simple_Graph()
 
 ### 3. AI Engine Standalone Compilation:
  
-AI Engine Compier (aiecompiler) takes the graph.cpp as an input, breaks the logic into smaller pieces, and assigns these pieces to different AI Engine cores to work simultaneously. It also optimizes how data moves between cores and memory, and generates a libadf.a file and Work directory as an output. 
+AI Engine Compiler (v++ -c --mode aie) takes the graph.cpp as an input, breaks the logic into smaller pieces, and assigns these pieces to different AI Engine cores to work simultaneously. It also optimizes how data moves between cores and memory, and generates a libadf.a file and Work directory as an output. Below is a sample reference command. Please refer [AIE_Kernel/Makefile](./Makefile) to access the full command.
 
 ```
-v++ --compile --mode aie --target=hw graph.cpp
+v++ --compile --mode aie --target=hw /<path_to_Graph>/graph.cpp --part=<fpga_part_for_DUT> -I <data_srcs> -I <aie_srcs>
 ```
 ### 4. AI Engine Standalone Simulation:
 AI Engine Simulator (aiesimulator) uses the Work directory to simulate the design.

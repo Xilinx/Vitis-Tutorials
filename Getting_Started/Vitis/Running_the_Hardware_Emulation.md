@@ -30,7 +30,7 @@ In previous chapters, we used the Vitis Linker and Packager to generate the "emu
 - Launch the Hardware Emulation using launch_hw_emu.sh script
 
 ```
-cd pack_out_dir
+cd /<path_to_tutorial>/Getting_Started/Vitis/vitis_dir/pack_out_dir
 ./launch_hw_emu.sh -g
 ```
 **-g** options helps to launch the XSIM in GUI mode.
