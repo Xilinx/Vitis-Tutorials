@@ -9,7 +9,7 @@
 
 # DSP Library Tutorial
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -17,13 +17,14 @@ Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS),
 
 This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up the software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.1) for setting up the software and installing the VCK190 base platform.
 
 Before starting this tutorial, run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2024.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2024.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2024.2/Image`.
+
+1. Set up your platform by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.1/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2025.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 5. Download the Vitis Libraries from https://github.com/Xilinx/Vitis_Libraries
    For example: `git clone https://github.com/Xilinx/Vitis_Libraries.git` into your desired directory.
@@ -194,7 +195,7 @@ Selecting **Graph** on the navigation bar shows a diagram of the filter implemen
 
 ![Vitis Analyzer Graph](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Graph.png)
 
-Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in pink, the AI Engine tile that implements the kernel in blue, and the ping-pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_graph.h`. Clicking on the components on the diagram takes you to the appropriate tab below, which provides a description of the element. Conversely, you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels) and click on a component to see where it is located on the array.
+Selecting **Array** on the navigation bar shows the physical implementation of the design on the AI Engine array. Here you can see the PLIO interfaces in purple (in the bottom of the AI Engine array), the AI Engine tile that implements the kernel in blue, and the ping-pong buffers in purple. Note the kernel is located in tile (18,0), which was specified in `fir_graph.h`. Clicking on the components on the diagram takes you to the appropriate tab below, which provides a description of the element. Conversely, you can select the various element tabs (Kernels / I/O / Buffers / Ports / Nets / Tiles / Interface Channels / DMA Channels) and click on a component to see where it is located on the array.
 
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Array.png)
 
@@ -218,7 +219,7 @@ Type `make aiesim` to run the AI Engine simulation, and it automatically generat
 
 Type `make aieviz` to visualize the output of the simulation in `vitis_analyzer`.
 
-Selecting **Trace** on the navigation bar shows the simulation trace. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, and so on.
+Selecting **Trace** on the navigation bar shows the simulation trace. In **Process Waveform Data window**, click `OK`. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, and so on.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Trace.png)
 
@@ -283,6 +284,7 @@ Selecting the **Array** option on the navigation bar shows the physical implemen
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Array.png)
 
 Selecting the **Trace** option on the navigation bar shows the tile (18,0) (the chan_FIR kernel) spending most of its time running kernel code, while tile (19,0) (hb_FIR) spends significant time being idle in _main. chan_FIR is the bottleneck in this datapath, which is not surprising because it has many more taps to compute.
+Note: Please ensure that when using trace view, you examine the waveform within the 0 to 50 us range.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_2_Vitis_Analyzer_Trace.png)
 
@@ -339,6 +341,8 @@ Selecting the **Array** option on the navigation bar shows the physical implemen
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_3_Vitis_Analyzer_Array.png)
 
 Selecting the **Trace** option on the navigation bar now shows the channel filter tiles ((18,0) through (22,0)) almost fully occupied with processing the data; the computational load between the channel filter's constituent engines now matching that of the halfband filter (23,0). The design now completes in 8 iterations in ~20 microseconds, compared to ~43.
+
+Note: Please ensure that when using trace view, you examine the waveform within the 0 to 25 us range.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_3_Vitis_Analyzer_Trace.png)
 
