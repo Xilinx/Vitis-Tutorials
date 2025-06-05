@@ -66,7 +66,7 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 To build and run the Beamforming tutorial, download and install the following tools:
 
 * [Vitis™ Unified Software Development Platform 2025.1](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
-* [The Xilinx RunTime (XRT)](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installing-Xilinx-Runtime-and-Platforms)
+* [The Xilinx RunTime (XRT)](https://docs.amd.com/r/en-US/ug1700-vitis-accelerated-data-center/Installing-Xilinx-Runtime-and-Platforms)
 * [PetaLinux Tools](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 
 ### *Environment*: Setting Up Your Shell Environment

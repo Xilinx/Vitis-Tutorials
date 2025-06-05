@@ -379,13 +379,13 @@ Finally, software platform is generated with the `platform generate` command. Th
 
 ## References
 
-* [Creating Embedded Platforms in Vitis](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Creating-Embedded-Platforms-in-Vitis)
+* [Creating Embedded Platforms in Vitis](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Creating-and-Using-Vitis-Platforms)
 * [Vitis Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 * [Vitis Tutorials: Platform Creation](https://github.com/Xilinx/Vitis-Tutorials/tree/master/Vitis_Platform_Creation)
 * [Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/master/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/README.md)
 * [Vivado Design Suite Tcl Command Reference](https://docs.amd.com/access/sources/dita/map?url=ug835-vivado-tcl-commands&ft:locale=en-US
 )
-* [Software Command-Line Tool (XSCT)](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Software-Command-Line-Tool)
+* [Software Command-Line Tool (XSCT)](https://docs.amd.com/r/en-US/ug1400-vitis-embedded)
 * [AI Engine Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Overview)
 * [AI Engine Product Guide](https://docs.amd.com/access/sources/dita/map?url=pg358-versal-ai-engine&ft:locale=en-US)
 * [AXI Debug Hub IP](https://www.xilinx.com/products/intellectual-property/axi_dbg_hub.html#overview)

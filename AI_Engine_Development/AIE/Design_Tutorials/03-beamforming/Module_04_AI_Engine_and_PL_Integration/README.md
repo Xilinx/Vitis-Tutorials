@@ -299,9 +299,9 @@ If you built from scratch, you can open the block design in the Vivado project t
 ## References
 
 
-* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System)
-* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command)
-* [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File)
+* [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.amd.com/r/en-US/ug1700-vitis-accelerated-data-center/Linking-the-System)
+* [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-Command)
+* [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Vitis-Compiler-Configuration-File)
 *  [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support

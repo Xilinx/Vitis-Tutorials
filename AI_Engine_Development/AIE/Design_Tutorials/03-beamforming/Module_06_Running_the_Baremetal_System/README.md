@@ -145,7 +145,7 @@ NB: HW_emu  run will take long hours to run which makes software collapse , hw 
 ## References
 
 
-* [Vitis Compiler Command Options](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-General-Options)
+* [Vitis Compiler Command Options](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-General-Options)
 
 ### Support
 
