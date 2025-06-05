@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
@@ -166,7 +166,7 @@ These are there to help you if you cannot complete any of the four stages.
 
    | Name to Type | Block Name to Select | Parameters |
    | :--- | :--- | :--- |
-   | random   | Random Source  |  Source Type: Uniform <br> Minimum: -30000  <br> Maximum: 30000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex|
+   | random   | Random Source  |  Source Type: Uniform <br> Minimum: -20000  <br> Maximum: 20000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex|
    | cast  | Cast  | Output data type: int16  |
 
 10. Cascade the three blocks: **Random Source**, **Cast**, **AIE FIR Filter**.
@@ -195,10 +195,10 @@ These are there to help you if you cannot complete any of the four stages.
 
       | Parameter |HB1 |	HB2	| HB3	| Channel Filter |
       | :--- | :--- |  :--- | :--- | :--- |
-      | Filter Block	| FIR Halfband Decimator | FIR Halfband Decimator	| FIR Halfband Decimator	| FIR Symmetric Filter |
+      | Filter Block	| FIR Halfband Decimator | FIR Halfband Decimator	| FIR Halfband Decimator	| FIR Asymmetric Filter |
       | Input Output data type	| cint16	| cint16	| cint16	| cint16 |
       | Filter Coefficients Data Type	| int16	| int16	| int16	| int16 |
-      | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi_aie |
+      | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi |
       | Filter Length	| N/A | N/A	| N/A | length(cfi) |
       | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
       | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
@@ -244,7 +244,7 @@ When creating a DSP design, one of the most important parameters to consider is 
 
    ![missing image](Images/Image_019.png)
 
-7. Place this new block between the **'AIE FIR Channel'** and **'To Fixed Size'** blocks. Grab the **'FreqShift'** block from the **Reference Chain** Simulink design, and place it after the **ChannelFilter** Simulink block. Your design should now look as follows:
+7. Place this new block between the **'FIR Asymmetric'** and **'To Fixed Size'** blocks. Grab the **'FreqShift'** block from the **Reference Chain** Simulink design, and place it after the **ChannelFilter** Simulink block. Your design should now look as follows:
 
    ![missing image](Images/Image_020.png)
 
@@ -280,18 +280,18 @@ The Simulink design is run to generate the testbench, then the graph code is gen
 #define __XMC_FIRCHAIN_H__
 
 #include <adf.h>
-#include "./FIR_Halfband_Decimator_b6bb9f39/FIR_Halfband_Decimator_b6bb9f39.h"
-#include "./FIR_Halfband_Decimator_c797d059/FIR_Halfband_Decimator_c797d059.h"
-#include "./FIR_Halfband_Decimator_714ce49a/FIR_Halfband_Decimator_714ce49a.h"
-#include "./FIR_Symmetric_00c44acd/FIR_Symmetric_00c44acd.h"
+#include "./FIR_Halfband_Decimator_7c26216f/FIR_Halfband_Decimator_7c26216f.h"
+#include "./FIR_Halfband_Decimator_c4185433/FIR_Halfband_Decimator_c4185433.h"
+#include "./FIR_Halfband_Decimator_69968948/FIR_Halfband_Decimator_69968948.h"
+#include "./FIR_Asymmetric_4303455c/FIR_Asymmetric_4303455c.h"
 #include "aiecode_src/FreqShift.h"
 
 class FIRchain_base : public adf::graph {
 public:
-   FIR_Halfband_Decimator_b6bb9f39 FIR_Halfband_Decimator;
-   FIR_Halfband_Decimator_c797d059 FIR_Halfband_Decimator1;
-   FIR_Halfband_Decimator_714ce49a FIR_Halfband_Decimator2;
-   FIR_Symmetric_00c44acd FIR_Symmetric;
+   FIR_Halfband_Decimator_7c26216f FIR_Halfband_Decimator;
+   FIR_Halfband_Decimator_c4185433 FIR_Halfband_Decimator1;
+   FIR_Halfband_Decimator_69968948 FIR_Halfband_Decimator2;
+   FIR_Asymmetric_4303455c FIR_Asymmetric;
    adf::kernel FreqShift_0;
 
 public:
@@ -304,14 +304,14 @@ public:
       adf::source(FreqShift_0) = "aiecode_src/FreqShift.cpp";
 
       // create kernel constraints FreqShift_0
-      adf::runtime<ratio>( FreqShift_0 ) = 0.9;
+      adf::runtime<ratio>(FreqShift_0) = 0.9;
 
       // create nets to specify connections
-      adf::connect<  > net0 (In1, FIR_Halfband_Decimator.in);
-      adf::connect<  > net1 (FIR_Halfband_Decimator.out, FIR_Halfband_Decimator1.in);
-      adf::connect<  > net2 (FIR_Halfband_Decimator1.out, FIR_Halfband_Decimator2.in);
-      adf::connect<  > net3 (FIR_Halfband_Decimator2.out, FIR_Symmetric.in);
-      adf::connect< adf::window<1024> > net4 (FIR_Symmetric.out, FreqShift_0.in[0]);
+      adf::connect net0 (In1, FIR_Halfband_Decimator.in[0]);
+      adf::connect net1 (FIR_Halfband_Decimator.out[0], FIR_Halfband_Decimator1.in[0]);
+      adf::connect net2 (FIR_Halfband_Decimator1.out[0], FIR_Halfband_Decimator2.in[0]);
+      adf::connect net3 (FIR_Halfband_Decimator2.out[0], FIR_Asymmetric.in[0]);
+      adf::connect< adf::window<1024> > net4 (FIR_Asymmetric.out[0], FreqShift_0.in[0]);
       adf::connect< adf::window<1024> > net5 (FreqShift_0.out[0], Out1);
    }
 };
@@ -339,6 +339,7 @@ public:
 };
 
 #endif // __XMC_FIRCHAIN_H__
+
 ```
 
 Finally, the bit-exact simulation (Emulation-AIE) is performed and the result compared to the Simulink simulation:

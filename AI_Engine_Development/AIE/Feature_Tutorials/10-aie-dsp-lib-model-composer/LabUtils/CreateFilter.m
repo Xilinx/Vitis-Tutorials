@@ -57,7 +57,7 @@ ShiftCF = 15;
 Kcf =2^ShiftCF;
 cf = ChannelFilter;
 cfi = NormalizeCoef(cf.Numerator,Kcf);
-cfi_aie = cfi(1:(length(cfi)+1)/2);
+% cfi_aie = cfi(1:(length(cfi)+1)/2);
 
 disp('CF');
 disp(['Channel Filter Norm: ' num2str(sum(cfi))]);
