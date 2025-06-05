@@ -18,9 +18,9 @@ CONFIG := vitis_impl/system.cfg
 #CONFIG := vitis_impl/system_new.cfg
 
 SDKTARGETSYSROOT ?= $(SYSROOT)
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm
-ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.2/rootfs.ext4
-IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2024.2/Image
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm
+ROOTFS ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/rootfs.ext4
+IMAGE ?=  ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/Image
 
 
 GRAPH_O := libadf.a
@@ -83,7 +83,7 @@ package:
 	-o vck190_prj_hw_emu.xclbin 
 =======
 HOST_CFLAGS = -Isrc -Isw -Iaie -ladf_api_xrt -lxrt_coreutil -D__SYNCBO_ENABLE__ $(TARGET_FLAGS) -DTARGET_DEVICE=$(DEVICE) -std=c++17 -O0 -g -Wall -fmessage-length=0 -I${GITHUB_COMMON_REPO}/common/includes/xcl2 --sysroot=${SYSROOT} -I=/usr/include -I=/usr/include/xrt -L=/usr/lib -ldl -lcrypt -lstdc++ -lxilinxopencl -lpthread -lrt -I$(XILINX_VITIS)/aietools/include -L$(XILINX_VITIS)/aietools/lib/aarch64.o -I${XILINX_VITIS}/include -I${XILINX_HLS}/include
->>>>>>> 139a170b (PFM/F/03_Vitis_Export_To_Vivado: Updated Tutorial for 24.2 )
+>>>>>>> 139a170b (PFM/F/03_Vitis_Export_To_Vivado: Updated Tutorial for 25.1 )
 
 ifeq ($(TARGET),$(filter $(TARGET),hw_emu))
 package_config := --package.sd_file $(EMCONFIG_FILE)
@@ -109,7 +109,7 @@ package:
 =======
 package_config :=
 TARGET_FLAGS := -DTARGET_FLOW_HW=1 -DTARGET_FLOW_HW_EMU=0 -DTARGET_FLOW_SW_EMU=0
->>>>>>> 139a170b (PFM/F/03_Vitis_Export_To_Vivado: Updated Tutorial for 24.2 )
+>>>>>>> 139a170b (PFM/F/03_Vitis_Export_To_Vivado: Updated Tutorial for 25.1 )
 
 endif
 xsa:
@@ -164,7 +164,7 @@ else
 package: 
 	echo "INFO: Generating $(EMCONFIG_FILE)";\
 	$(EMCONFIGUTIL) --platform $(fixed_xsa) --nd 1;\
-	$(VPP) -p $(VPP_FLAGS) -t $(TARGET) --platform $(fixed_xsa) --temp_dir $(TEMP_DIR) --package.out_dir $(EMBEDDED_PACKAGE_OUT) --package.rootfs ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.defer_aie_run --package.sd_file $(EMBEDDED_EXEC_SCRIPT) --package.sd_file $(HOST_EXE) ./$(GRAPH_O) -o $(XCLBIN) $(package_config) --package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202420_1/sw/boot/u-boot.elf --package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/boot.scr --package.bl31_elf $(EDGE_COMMON_SW)/sw/boot/bl31.elf --package.dtb $(EDGE_COMMON_SW)/sw/boot/system.dtb
+	$(VPP) -p $(VPP_FLAGS) -t $(TARGET) --platform $(fixed_xsa) --temp_dir $(TEMP_DIR) --package.out_dir $(EMBEDDED_PACKAGE_OUT) --package.rootfs ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.defer_aie_run --package.sd_file $(EMBEDDED_EXEC_SCRIPT) --package.sd_file $(HOST_EXE) ./$(GRAPH_O) -o $(XCLBIN) $(package_config) --package.uboot ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202510_1/sw/boot/u-boot.elf --package.sd_file ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal/boot.scr --package.bl31_elf $(EDGE_COMMON_SW)/sw/boot/bl31.elf --package.dtb $(EDGE_COMMON_SW)/sw/boot/system.dtb
 
 endif
 

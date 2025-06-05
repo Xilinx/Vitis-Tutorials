@@ -8,13 +8,13 @@
 
 # Vitis Export To Vivado
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
 The Vitis Export to Vivado enables bidirectional hardware hand-offs between the Vitis tools and the Vivado Design Suite to improve developer productivity in vivado. Hardware design development which includes synthesis, implementation, and timing closure can be done in Vivado Design Suite and Vitis tool can be used to do the software development, such as AI Engine (AIE) development, programmable logic (PL) kernels development and host application. This flow supports hardware emulation and testing the design on hardware. The flow is supported for project-mode only. Refer [UG1701](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-to-Vivado-Flow) for more details. 
 
-**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2024.2, XRT 2024.2 and Vivado 2024.2 software. Follow the steps to set up the Vitis and XRT environment as documented in [Vitis environment setup](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform) .
+**IMPORTANT:** Before beginning the tutorial, make sure you have installed the Vitis 2025.1, XRT 2025.1 and Vivado 2025.1 software. Follow the steps to set up the Vitis and XRT environment as documented in [Vitis environment setup](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform) .
 
 ## Objectives
 
@@ -421,8 +421,8 @@ The ‘common image’ package (https://account.amd.com/en/forms/downloads/xef.h
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2024.2/environment-setup-cortexa72-cortexa53-amd-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2024.2/sdk.sh``.
-3. Set up your ROOTFS and IMAGE to point to the ``rootfs.ext4`` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2024.2`` directory.
+2. In a Bash shell, run the ``/Common Images Dir/xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/Common Images Dir/xilinx-versal-common-v2025.1/sdk.sh``.
+3. Set up your ROOTFS and IMAGE to point to the ``rootfs.ext4`` and Image files located in the ``/Common Images Dir/xilinx-versal-common-v2025.1`` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
 Following steps helps to generate the fixed xsa successfully:
