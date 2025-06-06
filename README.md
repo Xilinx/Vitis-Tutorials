@@ -171,8 +171,9 @@ To download a ZIP file of a specific branch, do one of the following:
         <tr>
             <td height="24">
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries :new: </a>
-            </td>
+            </td>         
             <td>   
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters/">Tiling Parameter Programming :new: </a>   
             </td>                
             <td>
             </td>
