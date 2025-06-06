@@ -167,6 +167,21 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/07-tiling-parameters/">Tiling Parameter Programming</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ </tr>
  </table>
 
 ### Design Tutorials

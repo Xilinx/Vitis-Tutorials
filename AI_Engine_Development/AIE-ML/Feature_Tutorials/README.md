@@ -46,7 +46,11 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <tr>
  <td align="center"><a href="./06-gemm/">Matrix Compute with Vitis Libraries</a></td>
  <td>In this tutorial, we explore how to use matrix multiplication/General Matrix Multiply (GEMM) from the DSP Vitis library. We will examine various design requirements and configure the parameters accordingly. Finally, we will migrate the design to the AIE-ML architecture and compare its performance with AIE architecture.</td>
- </tr>  
+ </tr>
+ <tr>
+ <td align="center"><a href="./07-tiling-parameters/">Tiling Parameter Programming</a></td>
+ <td>In this tutorial you will learn how to use a major feature of AI Engine-ML devices: tiling parameters.These parameters can be used at all memory levels of the AI Engine-ML: Local memory (memory modules) with the kernel io-buffers, memory tiles (shared memory in adf language) which are used as large intermediate memories in the system and external memory for DDR access.</td>
+ </tr>    
  </table>
 
 
