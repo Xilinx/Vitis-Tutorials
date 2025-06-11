@@ -24,7 +24,6 @@ The labs in this tutorial use:
 >**IMPORTANT:**  
 >
 > * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393).
->* If you run applications on the AMD Alveo™ Data Center accelerator cards, ensure the card and software drivers have been correctly installed. Check the tools support and platform functionality including lifecycle information in the [UG1120](https://docs.amd.com/r/en-US/ug1120-alveo-platforms).
 
 ### Setup the environment to run Vitis
 
@@ -37,25 +36,17 @@ source /opt/xilinx/xrt/setup.sh
 
 *NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*
 
-To specify the location of any Data-Center or Embedded platforms you have installed, set the following environment variable:
+To specify the location of any platforms you have installed, set the following environment variable:
 
 ```bash
 export PLATFORM_REPO_PATHS=<path to platforms>
 ```
 
-*NOTE: On some Ubuntu distributions, you must also export LIBRARY_PATH to properly set up Vitis.*
-
-```bash
-export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
-```
-
-For more information see [AMD AR 73698](https://www.xilinx.com/support/answers/73698.html).
-
 ### Accessing the Tutorial Reference Files
 
 1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
 2. Navigate to the `Getting_Started/Vitis_HLS` directory, and then access the `reference-files` directory.
-3. You may open the HLS project by the following command if you've already sourced the settings script to setup Vitis.  But we strongly recommend that you read each step in [Next Steps](#next-steps) carefully to clearly understand how to create a project from scratch and perform simulation, synthesis and optimization.
+3. You may open the HLS project by the following command if you've already sourced the settings script to setup Vitis (Click **Update** if a **Update Workspace** window pops up after executing the command). But we strongly recommend that you read each step in [Next Steps](#next-steps) carefully to clearly understand how to create a project from scratch and perform simulation, synthesis and optimization. 
 ```code
 vitis -w workspace
 ```

@@ -10,13 +10,12 @@
 ***Version: Vitis 2025.1***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
->**Note:** This tutorial has been updated for use with the Vitis Unified IDE, reflecting the enhancements introduced in the 2023.2 and 2024.1 releases. For guidance on using this tutorial with the classic Vitis and Vitis HLS tools, please refer to the earlier version by accessing the `2023.1` branch or earlier.
 
 ## Before You Begin
 
 ### Setup Environment
 Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Vitis-Environment).
-Below are the example scripts to set up Vitis and XRT:
+Below are the example scripts to set up Vitis and XRT, and to specify the location of the platforms you have installed. 
 
 ```
 $ source <Vitis Tool Installation Path>/Vitis/2025.1/settings64.sh
@@ -329,6 +328,8 @@ At this point the tutorial is complete. You can `Run Implementation` from Flow N
 ## Summary
 
 In this tutorial, you learned how to leverage a L1 Vitis library element to build your own HLS component and export a Vivado IP. The FFT example is selected for explanation, and you can follow a similar flow to use other library elements.
+
+**Note:** The [Makefile](./Makefile) is provided as a reference if you'd like to explore the CLI flow. 
 
 ## Reference
 

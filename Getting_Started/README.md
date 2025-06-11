@@ -8,10 +8,7 @@
 # Getting Started
 
 * **[Vitis Introduction and Getting Started](./Vitis)**:
-  * An overview of the Vitis workflow including kernel development, host software creation, emulation, implementation, and analysis. This tutorial is divided into separate flows:
-    * Data Center
-    * Embedded Processor
-    * Vitis Unified IDE
+  * This tutorial discusses the important concepts of the Vitis tool flow, building the components, building the design and running the design on the hardware and hardware emulation.
 
 * **[Vitis HLS](./Vitis_HLS)**:
   * See In-Depth how to optimize, implement, and unit test individual hardware accelerators from within the Vitis High-Level Synthesis environment.

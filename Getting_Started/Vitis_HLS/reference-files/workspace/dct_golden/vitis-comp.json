@@ -7,6 +7,5 @@
       "hls_config.cfg"
     ],
     "work_dir": "dct"
-  },
-  "template": "empty_hls_component"
+  }
 }
