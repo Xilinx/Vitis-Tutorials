@@ -21,8 +21,7 @@ This tutorial demonstrates how to use kernels provided by the DSP Library for a 
 
 Before starting this tutorial, run the following steps.
 
-
-1. Set up your platform by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-xilinx-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.1/sdk.sh`.
+1. Set up your platform by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.1/sdk.sh`.
 2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.1/rootfs.ext4`.
 3. Set up your IMAGE to point to `xilinx-versal-common-v2025.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
@@ -219,7 +218,7 @@ Type `make aiesim` to run the AI Engine simulation, and it automatically generat
 
 Type `make aieviz` to visualize the output of the simulation in `vitis_analyzer`.
 
-Selecting **Trace** on the navigation bar shows the simulation trace. In **Process Waveform Data window**, click `OK`. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, and so on.
+Selecting **Trace** on the navigation bar shows the simulation trace. In **Process Waveform Data window**, click `OK`. Here you can see kernel activity, the DMA transfer activity, locks for the ping-pong buffers, and so on. Note: Please ensure that when using trace view, you examine the waveform within the 0 to 50 us range.
 
 ![Vitis Analyzer Trace](images/DSPLib_tutorial_part_1_Vitis_Analyzer_Trace.png)
 
