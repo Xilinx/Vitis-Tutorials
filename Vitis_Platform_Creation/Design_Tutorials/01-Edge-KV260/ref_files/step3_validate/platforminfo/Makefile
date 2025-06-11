@@ -5,7 +5,7 @@
 
 PLATFORM_NAME=kv260_custom
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-PLATFORM=$(ROOT_DIR)/../../step2_pfm/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+PLATFORM=$(ROOT_DIR)/../../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 
 .PHONY: help 
 

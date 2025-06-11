@@ -25,7 +25,7 @@ getplatforminfo:
 	$(MAKE) -C platforminfo/ all
 cpVaddCode:
 	mkdir -p vadd_work
-	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp $(XILINX_VITIS)/samples/vadd/* vadd_work -a
 	cp makefile_vadd vadd_work/Makefile
 
 # vadd_hw is a place-holder for manual build and test on hardware
@@ -41,16 +41,16 @@ $(VADD_WORK)/shell.json:
 vadd_hw_package: $(VADD_WORK)/simple_vadd  $(VADD_WORK)/shell.json
 	@echo "INFO: Packaging Completed"
 	mkdir -p vadd
-	cp ../step2_pfm//ws/kv260_custom/export/kv260_custom/hw/sdt/pl.dtbo vadd/
+	cp ../step2_pfm//ws/kv260_custom/export/kv260_custom/sw/boot/pl.dtbo vadd/
 	cp $(VADD_WORK)/shell.json vadd/
-	cp $(VADD_WORK)/build_dir.hw/krnl_vadd.link.xclbin vadd/krnl_vadd.bin
+	cp $(VADD_WORK)/build_dir.hw//vadd.link.xclbin vadd//vadd.bin
 	cp $(VADD_WORK)/simple_vadd vadd/
 	@echo "Please  copy vadd to /lib/firmware/xilinx/ on target board"
 	@echo "then use xmutil to load hardware."
 	@echo "xmutil unloadapp"
 	@echo "xmutil loadapp vadd"
 	@echo "Go to /lib/firmware/xilinx/vadd directory and run application"
-	@echo "$ ./simple_vadd ./krnl_vadd.bin"
+	@echo "$ ./simple_vadd .//vadd.bin"
 
 getplatforminfo:
 	$(MAKE) -C platforminfo/ all

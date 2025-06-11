@@ -14,7 +14,7 @@ VPP_LDFLAGS :=
 TEMP_DIR := ./_x.$(TARGET)
 BUILD_DIR := ./build_dir.$(TARGET)
 
-LINK_OUTPUT := $(BUILD_DIR)/krnl_vadd.link.xclbin
+LINK_OUTPUT := $(BUILD_DIR)/vadd.link.xclbin
 
 EMU_PS := QEMU
 ifeq ($(TARGET), sw_emu)
@@ -29,7 +29,7 @@ LAUNCH_EMULATOR = $(PACKAGE_OUT)/launch_$(TARGET).sh
 RESULT_STRING = TEST PASSED
 
 VPP_PFLAGS := 
-CMD_ARGS = $(BUILD_DIR)/krnl_vadd.xclbin
+CMD_ARGS = $(BUILD_DIR)/vadd.xclbin
 SD_CARD := $(PACKAGE_OUT)
 
 
@@ -37,8 +37,11 @@ ifeq ($(EMU_PS), X86)
 CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
 LDFLAGS += -L$(XILINX_XRT)/lib -pthread -lOpenCL
 else
-CXXFLAGS += -I$(SYSROOT)/usr/include/xrt -I$(XILINX_VIVADO)/include -Wall -O0 -g -std=c++17
-LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
+CXXFLAGS += -I$(XILINX_VITIS)/include -Wall -O0 -g -std=c++17
+CXXFLAGS += -I$(SYSROOT)/usr/include/xrt
+CXXFLAGS += -I$(SYSROOT)/usr/include -Wall -Wextra -O0 -g3 -std=c++17 -MD -MT
+CXXFLAGS += -Isrc/ 
+LDFLAGS += -L$(SYSROOT)/usr/lib -luuid -lxrt_coreutil -lxilinxopencl -lpthread -lrt -lstdc++
 endif
 
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
@@ -56,7 +59,9 @@ endif
 PLATFORM_BLOCKLIST += nodma 
 ############################## Setting up Host Variables ##############################
 #Include Required Host Source Files
-HOST_SRCS += vadd.cpp 
+HOST_SRCS += src/host.cpp 
+HOST_SRCS += src/cmdlineparser.cpp 
+HOST_SRCS += src/logger.cpp 
 # Host compiler global settings
 CXXFLAGS += -fmessage-length=0
 LDFLAGS += -lrt -lstdc++ 
@@ -90,23 +95,23 @@ xclbin: build
 
 
 ############################## Setting Rules for Binary Containers (Building Kernels) ##############################
-$(TEMP_DIR)/krnl_vadd.xo: krnl_vadd.cpp
+$(TEMP_DIR)/vadd.xo: src/vadd.cpp
 	mkdir -p $(TEMP_DIR)
-	v++ -c $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -k krnl_vadd --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
+	v++ -c $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -k vadd --temp_dir $(TEMP_DIR)  -I'$(<D)' -o'$@' '$<'
 
-$(LINK_OUTPUT): $(TEMP_DIR)/krnl_vadd.xo
+$(LINK_OUTPUT): $(TEMP_DIR)/vadd.xo
 	mkdir -p $(BUILD_DIR)
 	v++ -l $(VPP_FLAGS) $(VPP_LDFLAGS) -t $(TARGET) --platform $(PLATFORM) --temp_dir $(TEMP_DIR) -o'$(LINK_OUTPUT)' $(+)
 
 ifeq ($(EMU_PS), X86)
-	v++ -p $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -o $(BUILD_DIR)/krnl_vadd.xclbin
+	v++ -p $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) -o $(BUILD_DIR)/vadd.xclbin
 endif
 ############################## Preparing sdcard ##############################
 .PHONY: sd_card
 sd_card:  emconfig $(SD_CARD)
 
 $(SD_CARD): $(EXECUTABLE) $(LINK_OUTPUT)
-	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(SD_IMAGE_FILE)  --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file $(EXECUTABLE) --package.sd_file $(EMCONFIG_DIR)/emconfig.json -o $(BUILD_DIR)/krnl_vadd.xclbin
+	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(SD_IMAGE_FILE)  --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file $(EXECUTABLE) --package.sd_file $(EMCONFIG_DIR)/emconfig.json -o $(BUILD_DIR)/vadd.xclbin
 
 
 ############################## Setting Rules for Host (Building Host Executable) ##############################

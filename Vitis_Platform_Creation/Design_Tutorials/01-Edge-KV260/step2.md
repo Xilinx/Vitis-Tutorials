@@ -18,7 +18,7 @@ In this step, you will create a Vitis platform running a Linux operation system.
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    ├── kv260_hardware_platform
-   └── xilinx-zynqmp-common-v2024.2.tar.gz
+   └── xilinx-zynqmp-common-v2025.1.tar.gz
    ```
 
 2. Extract the common image.
@@ -26,14 +26,14 @@ In this step, you will create a Vitis platform running a Linux operation system.
 
    ```bash
    cd WorkSpace
-   tar xvf ../xilinx-zynqmp-common-v2024.2.tar.gz -C .
+   tar xvf ../xilinx-zynqmp-common-v2025.1.tar.gz -C .
    ```
 
-   You can see **xilinx-zynqmp-common-v2024.2** folder which contains the components located in **WrokSpace** folder.
+   You can see **xilinx-zynqmp-common-v2025.1** folder which contains the components located in **WrokSpace** folder.
 
    ```bash
    tree -L 2
-   ├── xilinx-zynqmp-common-v2024.2
+   ├── xilinx-zynqmp-common-v2025.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -106,7 +106,7 @@ If you need to do system customization, take the following steps as reference. F
 
 1. Install sysroot.
 
-   - Go to `<WorkSpace/xilinx-zynqmp-common-v2024.2>` directory.
+   - Go to `<WorkSpace/xilinx-zynqmp-common-v2025.1>` directory.
    - Type `./sdk.sh -d <Install Target Dir>` to install PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory. For example: `./sdk.sh -d .`. **.** means the current directory. 
    >**NOTE:** The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
 
@@ -144,7 +144,7 @@ If you need to do system customization, take the following steps as reference. F
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.2** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2025.1** and click **OK**.
 
    - **DTB File**: It will be generated automatically and populated in this area. Then click **OK**.
       >Note: If the directory you specified for Pre-build image directory already contains DTB file, this DTB field will be automatically updated. 
