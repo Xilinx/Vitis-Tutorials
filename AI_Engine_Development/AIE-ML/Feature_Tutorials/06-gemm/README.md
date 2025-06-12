@@ -9,7 +9,7 @@
 
 # Matrix Compute with Vitis Libraries on AIE and AIE-ML
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Introduction
 
@@ -280,7 +280,7 @@ For the output port **NPORT_O**, it is set to ```TP_SSR```, which means there wi
 ### Change the Project Path
 Enter the following command to navigate to the project path of the design variant 1:
 ```
-$ cd <path-to-tutorial>/aie/gemm_16_32x8
+$ cd <path-to-tutorial>/aie/gemm_16x32x8
 ```
 
 ### Review the gemm_16x32x8_graph.h file
@@ -301,7 +301,7 @@ Similarly, using NPORT_O as the loop counter, the output ports are named PLIO_0_
 
 Close the ```gemm_16x32x8_graph.h``` file after complete your review.
 
-Similarly, review the ```gemm_16x32x8_graph.cpp``` file. After completing the review, close this file.
+Similarly, review the ```gemm_16x32x8_app.cpp``` file. After completing the review, close this file.
 
 ### Compile and Simulate the Design Variant 1: Single Tile
 
@@ -332,7 +332,7 @@ $ make profile
 $ make check_sim_output_aie
 ```
 The first first command deletes all the previously generated files, the second command compiles graph code for the SystemC simulator, the third command runs the AIE simulation, and the final command invokes MATLAB to compare the simulation output with the golden test vectors. The average throughput for the IO ports is displayed at the end of AIE simulation.
-The output port PLIO_0_o throughput (MBps) is 1137.78.
+The output port PLIO_0_o throughput (MBps) is 1112.56.
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -358,7 +358,7 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS   |
+| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
 
 
 ## Design Variant 2: 4-tile design with TP_CASC_LEN=4
@@ -402,7 +402,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The output port PLIO_0_o throughput (MBps) is 2578.05.
+The output port PLIO_0_o throughput (MBps) is 2452.11.
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -430,8 +430,8 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS   |
+| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2452 MBPS   |
 
 ## Design Variant 3: 8-tile design with TP_CASC_LEN=4 and TP_SSR=2
 
@@ -472,7 +472,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The throughput for the output port is approximately 3935 MBYTES/S (i.e., PLIO_0_o + PLIO_1_o).
+The throughput for the output port is approximately 3815.2 MBYTES/S (i.e., PLIO_0_o + PLIO_1_o).
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -505,9 +505,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS   |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS   |
+| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2452 MBPS   |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3815 MBPS   |
 
 
 ## Migrate the Design from AIE to AIE-ML and Evalute the Performance Differences
@@ -526,7 +526,7 @@ cd ../../aie-ml/gemm_16x32x8
 Open the ```Makefile``` file and review the code. The only modification is the updated platform name.
 
 ```
-PLATFORM_USE      := xilinx_vek280_base_202410_1
+PLATFORM_USE      := xilinx_vek280_base_202510_1
 ```
 
 ### Design Variant 1: Single Tile (AIE-ML)
@@ -583,7 +583,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The throughput for the output port is approximately 3080 MB/s.
+The throughput for the output port is approximately 3029 MB/s.
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -607,7 +607,7 @@ Close the Vitis Analyzer.
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
 | Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3080 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3029 MBPS         |
 | Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       |                   |
 
 ## Design Variant 3: 8-tile design with TP_CASC_LEN=4 and TP_SSR=2 (AIE-ML)
@@ -627,7 +627,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The throughput for the output port is approximately 6481 MB/s (i.e., PLIO_0_o + PLIO_1_o).
+The throughput for the output port is approximately 6702 MB/s (i.e., PLIO_0_o + PLIO_1_o).
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -651,15 +651,15 @@ Close the Vitis Analyzer.
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
 | Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3080 MBPS         |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       | 6481 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3029 MBPS         |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       | 6702 MBPS         |
 
 
-From the preceding table, for **Design Variant 3**, the AIE-ML architecture achieves a performance that is roughly **1.6** times faster than the AIE architecture.
+From the preceding table, for **Design Variant 3**, the AIE-ML architecture achieves a performance that is roughly **1.7** times faster than the AIE architecture.
 
 **Why does the AIE-ML architecture outperform the AIE architecture?**
 
-The **AIE** architecture supports ***8 MACs*** for ``int32 x int32`` operations, whereas the **AIE-ML** architecture supports ***32 MACs*** for ``int32 x int16`` operations. However, for a 32x32 multiplication in AIE-ML, two of these operations are needed, resulting in an overall capacity of 16 MACs. This theoretically provides a 2X benefit, but due to emulation performance, a 1.6X improvement is observed.
+The **AIE** architecture supports ***8 MACs*** for ``int32 x int32`` operations, whereas the **AIE-ML** architecture supports ***32 MACs*** for ``int32 x int16`` operations. However, for a 32x32 multiplication in AIE-ML, two of these operations are needed, resulting in an overall capacity of 16 MACs. This theoretically provides a 2X benefit, but due to emulation performance, a 1.7X improvement is observed.
 
 ![AIE vs AIE-ML](./images/19_Vector_Data_Path_AIE_AIE-ML.png)
 
