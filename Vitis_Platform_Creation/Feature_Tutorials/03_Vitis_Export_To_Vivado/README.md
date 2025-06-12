@@ -269,7 +269,7 @@ Here, it can be seen that the open ports in step 1.2 are connected using the v++
 
 #### Step 4: Changes in the Vivado design after the VMA import
 
-This section shows steps to be followed,if the Vivado design has changes after importing vma. You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy `vmaHier`. Refer to [UG1701](<[https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-to-Vivado-Flow](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-Flow-Guidelines-and-Limitations)>) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
+This section shows steps to be followed,if the Vivado design has changes after importing vma. You can view connnection between HLS kernels to AIE inside the VitisRegion hierarchy `vmaHier`. Refer to [UG1701](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-Flow-Guidelines-and-Limitations) to understand the design guidelines and limitations under the section "Vitis Export Flow Guidelines and Limitations".
 
  #### step 4.1 : Remove VMA from the design
  
@@ -470,7 +470,7 @@ To read more about the flow, refer to [UG1701](https://docs.amd.com/r/en-US/ug17
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](support.xilinx.com).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](https://support.xilinx.com).
 
 
 

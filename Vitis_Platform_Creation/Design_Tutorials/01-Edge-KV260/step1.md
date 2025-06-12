@@ -29,7 +29,7 @@ In this step, you will create the hardware design for the KV260 Vitis accelerati
    - In Project Name dialog, set Project name to **kv260_hardware_platform**, and keep **Create project subdirectory** checked. Then, click **Next**.
    - Enable **Project is an extensible Vitis platform**. Click **Next**.
 
-      ![vivado_project_type.png](images/vivado_project_type.png)
+      ![vivado_project_type.png](./images/vivado_project_type.png)
 
    - Select **Boards** tab.
    - Click **Refresh** button to load the latest list of boards.
