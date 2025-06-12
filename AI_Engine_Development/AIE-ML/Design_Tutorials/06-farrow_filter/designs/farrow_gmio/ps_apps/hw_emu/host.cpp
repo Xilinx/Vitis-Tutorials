@@ -24,6 +24,9 @@ static const char*    STR_PASSED = "PASSED:  ";
 static const char*    STR_USAGE  = "USAGE:   ";
 static const char*    STR_INFO   = "INFO:    ";
 
+static constexpr double      TARGET_THROUGHPUT = 1061;   // Measured in HW_EMU 2025.1 - 1061
+// TARGET_THROUGHPUT = 1124;   // Measured in HW 2025.1 // Keep this as reference for future tool performance
+
 typedef int TDATA;
 
 // ------------------------------------------------------------
@@ -126,16 +129,23 @@ int main(int argc, char* argv[])
   std::cout<<"Throughput of the graph: "<<throughput<<" MB/s"<<std::endl;
   std::cout<<"Throughput of the graph: "<<throughput/4<<" MSPS"<<std::endl;
 #endif
+
+bool flag_tp = ( abs(throughput/4 - TARGET_THROUGHPUT) > 0.1*TARGET_THROUGHPUT ) ? 1 : 0;
+
+
   // ------------------------------------------------------------
   // Post-processing     
   // ------------------------------------------------------------
   int count=0;
+  bool flag = 0;
+
   for(int i=0; i<SAMPLES_PER_ITERATION*8; i++)
   {
     if(sig_o_Array[i] != output_sig_o[i]){
       // std::cout<<"ERROR:sig_o_Array["<<i<<"]="<<sig_o_Array[i]<<",output_sig_o="<<output_sig_o[i]<<std::endl;
       Output_File << sig_o_Array[i];
       Output_File << " ";
+      // flag = 1;
     } else{
       // std::cout<<"CORRECT:sig_o_Array["<<i<<"]="<<sig_o_Array[i]<<",output_sig_o="<<output_sig_o[i]<<std::endl;
       Output_File << sig_o_Array[i];
@@ -150,6 +160,13 @@ int main(int argc, char* argv[])
   }
 
   Output_File.close();
+
+  // Done:
+  if ( flag == 0 && flag_tp == 0 )
+    std::cout << "--- PASSED ---" << std::endl;
+  else
+    std::cout << "*** FAILED ***" << std::endl;
+
 
   std::cout<<"GMIO transactions finished"<<std::endl;
 

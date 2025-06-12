@@ -9,7 +9,7 @@ ECHO                  := @echo
 TARGET                ?= hw
 
 # Platform Selection...
-VERSAL_VITIS_PLATFORM  = xilinx_vek280_base_202410_1
+VERSAL_VITIS_PLATFORM  = xilinx_vek280_base_202510_1
 VITIS_PLATFORM_DIR     = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 VITIS_PLATFORM_XPFM    = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 
