@@ -166,15 +166,15 @@ The FFT staged API functions are C++ templatized functions. The API used for thi
 ```cpp
 void aie::fft_dit_r4_stage <unsigned Vectorization, 
                            typename Input , typename Output , typename Twiddle>
-   (  const Input *__restrict 	        x,
+   (  const Input *__restrict 	    x,
       const Twiddle *__restrict 	tw0,
       const Twiddle *__restrict 	tw1,
       const Twiddle *__restrict 	tw2,
-      unsigned                          n_points,
-      unsigned                          shift_tw,
-      unsigned                          shift,
-      bool                              inv,
-      Output *__restrict   out)
+      unsigned                      n_points,
+      unsigned                      shift_tw,
+      unsigned                      shift,
+      bool                          inv,
+      Output *__restrict            out)
 ```
 
 The template parameters are:
@@ -232,19 +232,21 @@ In particular, the defined twiddles vectors are organized with two subscripts, t
 The following step is to write the kernel's header file. Inside such file the *aie_api/aie.hpp* and the *adf.h* API header files are included along with the one containing the twiddles. Then, the *fft1k_kernel* class is created. 
 It has the following public attributes:
 
+```cpp
     static constexpr unsigned N = POINTS;
     static constexpr unsigned SHIFT_TW = 15;
     static constexpr unsigned SHIFT_DT = 15;
     static constexpr bool     INVERSE  = false;
     static constexpr unsigned REPEAT   = REPS;
     static constexpr unsigned BUF_SIZE = N * REPEAT;
+```
 
 Those attributes define the number of points (N), the shifts to be applied between stages for twiddles and data (SHIFT_DT and SHIFT_TW), and the IFFT/FFT flag to be passed to the API calls (INVERSE). Moreover, they define the number of FFT instances to batch together in one kernel (REPEAT), and the buffer size (BUF_SIZE).
 
 As private attributes, the kernel class has the twiddle tables, defined as *static constexpr* CINT16 arrays aligned to the AIE-ML core vector registers lane boundaries. The alignment is important to avoid cycle waste when loading the values into the vector processor's registers, whereas the *static constexpr* directive is used to instruct the compiler that the declared variable is a read-only constant (static) that has to be available at compile-time as well as runtime for optimization.
 The twiddle array size has a trend that is opposite to the vectorization one. Therefore, in a 1024 points radix-4 implementation, the first stage will have a vectorization equal to 256, and each of the twiddle entries will have just one element. Those trends are clearly visible in the butterfly diagram of the 3-stages, radix-2, 8-points example shown in figure 3, where the index stride between summed factors decreases through the stages, while the number of used different twiddle factors increases.
 
-```
+```cpp
     ...
         alignas(aie::vector_decl_align) static constexpr TT_TWID	tw0_0[1]	= TWID0_0;
         alignas(aie::vector_decl_align) static constexpr TT_TWID	tw0_1[1]	= TWID0_1;
@@ -414,20 +416,20 @@ For this tutorial, the graph files are just the header and the implementation fi
 In the graph header file, the *fft1k_128_graph* class is defined, with all the kernel and buffer objects and connection inside it.
 As a first step, the ADF library and kernel header file are included, then six variables are defined through #define compiler directives:
 
--   the number of signal instances $\text{N\_INST}=128$;
--   the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\_WIDTH} = 2$;
--   the time interleaving $\theta$ factor $\text{IO\_ILV}=4$;
--   the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\_KERS}=\frac{\text{N\_INST}}{\text{REPS}}=64$;
--   the number of I/O channels, that is $\text{N\_IO}=\frac{\text{N\_INST}}{\text{IO\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\_WIDTH}}=16$.
--   the maximum number $\text{MAX\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
-    -   Note that the formulas suggested in the code are calculated for ping-pong shared buffers and considering input and output buffers packed together (as it spares mem tile interface resources).
-        $$\text{MAX\_BUF} = min\left[ \frac{512kB}{\text{BUF\_SIZE}\cdot\text{DATATYPE\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\_KERS}}{\text{N\_IOs}}} \right]$$
+-   the number of signal instances $\text{N\\_INST}=128$;
+-   the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\\_WIDTH} = 2$;
+-   the time interleaving $\theta$ factor $\text{IO\\_ILV}=4$;
+-   the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\\_KERS}=\frac{\text{N\\_INST}}{\text{REPS}}=64$;
+-   the number of I/O channels, that is $\text{N\\_IO}=\frac{\text{N\\_INST}}{\text{IO\\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\\_WIDTH}}=16$.
+-   the maximum number $\text{MAX\\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
+    -   Note that the formulas suggested in the code are calculated for ping-pong shared buffers and considering input and output buffers packed together (as it spares mem tile interface resources). 
+        $$\text{MAX\\_BUF} = min\left[ \frac{512kB}{\text{BUF\\_SIZE}\cdot\text{DATATYPE\\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\\_KERS}}{\text{N\\_IOs}}} \right]$$
     -   For this reason, the build will work even if MAX_BUF = 0 in the case the design is port-limited, as in such case the buffers are left unconstrained.
 
 In the private section of the class there are only attributes, that are an array of N_IO kernels and two arrays of N_IO shared buffers, one for the inputs and one for the outputs.
 In the public section of the graph class, the attributes are just two arrays of N_IO ports, one for the input and one for the output.
 
-```
+```cpp
     ...
     class fft1k_128_graph : public graph {
     private:
@@ -437,12 +439,13 @@ In the public section of the graph class, the attributes are just two arrays of 
         port<input>     din[N_IO];
         port<output>    dout[N_IO];
     ...
+    }
 ```
 
 The choice of creating one tensor for each I/O has been made to facilitate the job of the placer of the aiecompiler in binding the memory and routing hardware resources to the constructs.
 The graph class constructor is where all the kernels, buffers and connections are created and configured. The constructor code is divided in three for loops.
 
-```
+```cpp
     ...
     fft1k_128_graph(void)
     {
@@ -455,16 +458,16 @@ The graph class constructor is where all the kernels, buffers and connections ar
             location<buffer>(k_kernel[i].in[0]) = location<kernel>(k_kernel[i]);
             location<buffer>(k_kernel[i].out[0]) = location<kernel>(k_kernel[i]);
         }
-    ...
+        ...
+    }
 ```
 
 In the first loop, all the kernels are instantiated one by one specifying the kernel name, the kernel source file and its expected runtime ratio (i.e., its reserved cycle budget on the compute tile with respect to the entire one).
 
 Moreover, to lighten the job of the placer of aiecompiler, and to ensure minimizing resource usage, three relative location constraints are used to state that the input and output buffers and the program memory (that contains the twiddles) must be binded to the same tile in which the computation is carried out.
 
-```
-    ...
-    // LOOP 2
+```cpp
+    ... LOOP 2
     for(int i=0; i<N_IO; i++){
         // Creating the input and output shared buffers
         in_mem[i] = shared_buffer<cint16>::create({PLIO_WIDTH,IO_ILV,POINTS}, 1, int(PLIO_WIDTH*IO_ILV/REPS));
@@ -479,15 +482,15 @@ Moreover, to lighten the job of the placer of aiecompiler, and to ensure minimiz
                         location<buffer>(out_mem[i]) = location<buffer>(out_mem[i-1]) + relative_offset({.col_offset = 0, .row_offset = 0});}
                     location<buffer>(out_mem[i]) = location<buffer>(in_mem[i]) + relative_offset({.col_offset = 0, .row_offset = 0});}
 
-    ...
+   ...
 ```
 
 The second loop is used to instantiate the input and output shared buffers. As a first operation, the buffers are created to match a slice of the 3D tensor, that has a length equal to PLIO_WIDTH, a depth equal to IO_ILV, and a height equal to the number of samples.
-The ports of such buffers are configured to be connected to one I/O from the side facing the PL. On the other side, instead, they are configured to connect one kernel for every two instances they contain. Therefore, since they contain $\text{PLIO\_WIDTH} \cdot \text{IO\_ILV}$ instances, the number of ports on the buffer side facing the kernels is equal to 4, meaning that every buffer serves four kernels with two instances each.
+The ports of such buffers are configured to be connected to one I/O from the side facing the PL. On the other side, instead, they are configured to connect one kernel for every two instances they contain. Therefore, since they contain $\text{PLIO\\_WIDTH} \cdot \text{IO\\_ILV}$ instances, the number of ports on the buffer side facing the kernels is equal to 4, meaning that every buffer serves four kernels with two instances each.
 In the following lines, it is required that the shared buffers are instantiated as ping-pong buffers, thus to reserve double the memory for each. 
 Moreover, the buffers are location constrained to pack together as many input and output buffers per memory tile as possible, being the limitation either the number of ports or the memory size.
 
-```
+```cpp
     ...LOOP 2...
     write_access(in_mem[i].in[0]) =
         tiling(
@@ -508,8 +511,8 @@ Moreover, the buffers are location constrained to pack together as many input an
 The second and third code blocks of the second loop regulate the access policies that the PLIOs will have with respect to the buffers, and connects them. In particular, the tiling size is set equal to the buffer size, and the tile traversal is set to occur in the natural order in which the PLIOs feed the data, thus filling the buffer tensor vertically, slice by slice. This means that the first filling dimension is the length, then the depth, and finally the height of the tensor, resetting the previous dimensions every time there is a change of dimension caused by the reach of the end of the stride (because the .wrap parameter is set to 1). After defining the tiling and the buffer access policy, each buffer is connected to their respective port.
 The code shown above is only related to the input management because the output management one is analogous.
 
-    ...
-    LOOP 3
+```cpp
+    ... LOOP 3
     for(int i=0; i<N_IO; i++){
         int cur = 0;
         for(int k=0; k<IO_ILV; k++)
@@ -531,7 +534,8 @@ The code shown above is only related to the input management because the output 
                 ...
                 cur++;
             }
-    ...
+    }
+```
 
 The third and last loop configures the interfacing between the shared buffers inside the memory tiles and the kernels inside the AIE-ML tiles. To this end, three nested loops are created: the top one to iterate through the shared buffers, and the two inner ones to loop though the instances in a ordered manner. Indeed, the tiling is unidimensional and makes the kernel read and write to the 3D shared buffers in the third dimension (the height), that constitutes the entire ensemble of points of a given instance inside the tensor. After reading one instance, the tiling wraps to the first dimension to select the second part of the PLIO (i.e., the second instance, that is paired to the first one in the 64bit PLIO channel), that is also the second kernel repetition. After that, to take into account also time interleaving, the tile moves to the second dimension to perform the same access pattern. This complete pattern is then repeated until the shared buffer has been fully traversed.
 The connections are then made to feed each kernel with contiguous instances from the input shared buffer, and then in a specular way to fill the output shared buffer keeping the data indexes in the same order of the input one, making the output PLIO return data in the same exact order of the input PLIOs.
@@ -542,6 +546,7 @@ As for the second loop, the code shown for the third one is only related to the 
 The graph source code is composed of a top level graph class declaration and definition, and the main function. The new graph is used to encapsulate the actual graph and facilitate testing.
 After the graph header file is included, the new class *dut_graph* is defined.
 
+```cpp
     class dut_graph : public graph {
     public:
         input_plio  din[N_IO];
@@ -565,10 +570,12 @@ After the graph header file is included, the new class *dut_graph* is defined.
             }
         }
     };
+```
 
 The new class instantiates the *fft1k_128_graph* and connects each of its ports to the PLIOs that are also created though a for loop. In this case, the PLIOs are connected to files for simulation purposes.
 The second part of the graph source code is the main function
 
+```cpp
     int main(void)
     {
         fft1k_128_dut.init();
@@ -577,6 +584,7 @@ The second part of the graph source code is the main function
 
         return 0;
     }
+```
 
 Inside the main there are basic APIs that control the graph runtime execution. As easly understandable looking at the code, the API purpose is to initialize the graph, make it run for three times, and terminate the execution.
 
@@ -666,18 +674,19 @@ After gathering the performance data of the first 3D buffer implementation, we c
 
 After gathering the performance data of the first 3D buffer implementation, because the profiling results showed that the kernels are locked for more than $75\%$ of the time, an idea is to further exploit the capacity and features of the memory tiles to buffer more data and use a quarter of the kernels through data serialization. 
 To do so, a further dimension that represents time, can be added for the shared buffer. This fourth dimension will make possible that the number of kernels is less affected by the input time interleaving, by moving a selectable amount of instances from the second dimension (depth) to the fourth one.
-The resulting code restructuring is minimal and involves the aforementioned reshaping of the shared buffer tensor though a new parameter $\text{KER\_ILV}$, that expresses the number of times that a kernel must run during the acquisition time, at steady state.
-The $\text{KER\_ILV}$ parameter effectively counteracts the $\text{IO\_ILV}$ effect, decoupling the spatial-temporal interleaving done for the IOs and the one done inside the AIE-ML, enabling seralization.
+The resulting code restructuring is minimal and involves the aforementioned reshaping of the shared buffer tensor though a new parameter $\text{KER\\_ILV}$, that expresses the number of times that a kernel must run during the acquisition time, at steady state.
+The $\text{KER\\_ILV}$ parameter effectively counteracts the $\text{IO\\_ILV}$ effect, decoupling the spatial-temporal interleaving done for the IOs and the one done inside the AIE-ML, enabling seralization.
 
 The graph header file ``fft1k_128_new_graph.h`` contains the new modified code. Note that the only changes done to the code are the following:
 
 - The shared buffer now has four dimensions: the time dimesion has been added as the third one, and the dimension of the samples (previously the third) is now the fourth.
-- Every time that $\text{IO\_ILV}$ appears in the code, it has to be divided by $\text{KER\_ILV}$.
-- The $\text{MAX\_BUF}$ variable can be now set to three, according to the formulas in the code.
+- Every time that $\text{IO\\_ILV}$ appears in the code, it has to be divided by $\text{KER\\_ILV}$.
+- The $\text{MAX\\_BUF}$ variable can be now set to three, according to the formulas in the code.
   - The number of shared buffers that can fit in a memory tile is still port-limited, but since each shared buffer now serves just one kernel instead of four, the number of required active ports lowers to just one for each ping-pong buffer. This means that three input and three output memory shared buffers can be packed together.
 
 In the following code block shows an excerpt of the third loop. Note the differences with the previous design iterations.
 
+```cpp
     ...
     for(int i=0; i<N_IO; i++){
         int cur = 0;
@@ -699,7 +708,10 @@ In the following code block shows an excerpt of the third loop. Note the differe
                         });
                 connect(in_mem[i].out[cur], k_kernel[
                     int(i*(PLIO_WIDTH*IO_ILV/(REPS*KER_ILV))+cur)].in[0]);
-    ...
+                ...
+            }
+    }
+```
 
 To use the new graph, open the ``"fft1k_128_graph.cpp"`` graph source code file and change the first line:
  ``#include "fft1k_128_graph.h"`` with ``#include "fft1k_128_new_graph.h"``
