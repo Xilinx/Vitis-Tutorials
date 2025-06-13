@@ -1,0 +1,67 @@
+//
+// Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
+// Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+// SPDX-License-Identifier: X11
+//
+
+/ {
+  compatible = "xlnx,versal";
+  model = "Xilinx custom-vck190";
+  chosen {
+bootargs = "console=ttyAMA0  earlycon=pl011,mmio32,0xFF000000,115200n8 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+		stdout-path = "serial0:115200";
+  };
+
+	aliases {
+			serial0 = &serial0;
+			ethernet0 = &gem0;
+			i2c0 = &i2c0;
+			i2c1 = &i2c1;
+			mmc0 = &sdhci1;
+			usb0 = &usb0;
+  };
+
+  reserved-memory {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    ranges;
+    lpddr_memory: buffer@0 {
+      no-map;
+      reg = <0x500 0x0 0x2 0x0>;
+    };
+  };
+};
+
+&gem0 { /* PMC_MIO_48, LPD_MIO0-11/24/25 */
+	phy-handle = <&phy1>; /* u128 */
+	phy-mode = "rgmii-id";
+	phy1: phy@1 {
+		reg = <1>;
+		ti,rx-internal-delay = <0xb>;
+		ti,tx-internal-delay = <0xa>;
+		ti,fifo-depth = <1>;
+		ti,dp83867-rxctrl-strap-quirk;
+	};
+};
+
+&sdhci1 { /* emmc MIO 0-13 - MTFC8GAKAJCN */
+	non-removable;
+	disable-wp;
+	bus-width = <8>;
+	xlnx,mio-bank = <0>;
+	no-1-8-v;
+};
+
+&i2c0 { /* PMC_MIO46/47 */
+	clock-frequency = <400000>;
+};
+
+&i2c1 { /* PMC_MIO44/45 */
+	clock-frequency = <400000>;
+};
+
+&usb0 { /* PMC_MIO13_500 - PMC_MIO25 USB 2.0 */
+	xlnx,usb-polarity = <0x0>;
+	xlnx,usb-reset-mode = <0x0>;
+};
+

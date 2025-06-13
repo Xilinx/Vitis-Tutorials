@@ -1,0 +1,59 @@
+{
+  "NodeConstraints": {
+    "mygraph_top.my_dm_graph.dmove_i[0]": {
+      "tile": {
+        "column": 24,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 23,
+        "row": 0,
+        "bankId": 0,
+        "offset": 0
+      }
+    },
+    "mygraph_top.my_dm_graph.dmove_i[1]": {
+      "tile": {
+        "column": 26,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 26,
+        "row": 0,
+        "bankId": 0,
+        "offset": 0
+      }
+    }
+  },
+  "PortConstraints": {
+    "mygraph_top.my_dm_graph.dmove_i[0].in[0]": {
+      "buffers": [{
+          "column": 24,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 24,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "mygraph_top.my_dm_graph.dmove_i[0].out[0]": {
+      "buffers": [{
+          "column": 24,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 24,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    }
+  }
+}
+

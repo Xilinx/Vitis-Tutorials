@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="\$unit_vss_top_ai_engine_0_0_stub_sv_786215222 " />
+            <top_module name="glbl" />
+            <top_module name="tb_top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="495.744 ns"></ZoomStartTime>
+      <ZoomEndTime time="648.937 ns"></ZoomEndTime>
+      <Cursor1Time time="5,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="409"></NameColumnWidth>
+      <ValueColumnWidth column_width="69"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="12" />
+   <wave_markers>
+      <marker label="" time="536001" />
+      <marker label="" time="598001" />
+   </wave_markers>
+   <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/aclk">
+      <obj_property name="ElementShortName">aclk</obj_property>
+      <obj_property name="ObjectShortName">aclk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/aresetn">
+      <obj_property name="ElementShortName">aresetn</obj_property>
+      <obj_property name="ObjectShortName">aresetn</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tready">
+      <obj_property name="ElementShortName">m00_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">m00_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata">
+      <obj_property name="ElementShortName">m00_axis_tdata[63:0]</obj_property>
+      <obj_property name="ObjectShortName">m00_axis_tdata[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus381">
+      <obj_property name="label">counter_lower_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[15]">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">[15]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[14]">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">[14]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[13]">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">[13]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[12]">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">[12]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[11]">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">[11]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[10]">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">[10]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[9]">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">[9]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[8]">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">[8]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[7]">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">[7]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[6]">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">[6]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[5]">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">[5]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[4]">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">[4]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[3]">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">[3]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[2]">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">[2]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[1]">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">[1]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[0]">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus347">
+      <obj_property name="label">counter_upper_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[47]">
+         <obj_property name="ElementShortName">[47]</obj_property>
+         <obj_property name="ObjectShortName">[47]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[46]">
+         <obj_property name="ElementShortName">[46]</obj_property>
+         <obj_property name="ObjectShortName">[46]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[45]">
+         <obj_property name="ElementShortName">[45]</obj_property>
+         <obj_property name="ObjectShortName">[45]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[44]">
+         <obj_property name="ElementShortName">[44]</obj_property>
+         <obj_property name="ObjectShortName">[44]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[43]">
+         <obj_property name="ElementShortName">[43]</obj_property>
+         <obj_property name="ObjectShortName">[43]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[42]">
+         <obj_property name="ElementShortName">[42]</obj_property>
+         <obj_property name="ObjectShortName">[42]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[41]">
+         <obj_property name="ElementShortName">[41]</obj_property>
+         <obj_property name="ObjectShortName">[41]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[40]">
+         <obj_property name="ElementShortName">[40]</obj_property>
+         <obj_property name="ObjectShortName">[40]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[39]">
+         <obj_property name="ElementShortName">[39]</obj_property>
+         <obj_property name="ObjectShortName">[39]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[38]">
+         <obj_property name="ElementShortName">[38]</obj_property>
+         <obj_property name="ObjectShortName">[38]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[37]">
+         <obj_property name="ElementShortName">[37]</obj_property>
+         <obj_property name="ObjectShortName">[37]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[36]">
+         <obj_property name="ElementShortName">[36]</obj_property>
+         <obj_property name="ObjectShortName">[36]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[35]">
+         <obj_property name="ElementShortName">[35]</obj_property>
+         <obj_property name="ObjectShortName">[35]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[34]">
+         <obj_property name="ElementShortName">[34]</obj_property>
+         <obj_property name="ObjectShortName">[34]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[33]">
+         <obj_property name="ElementShortName">[33]</obj_property>
+         <obj_property name="ObjectShortName">[33]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m00_axis_tdata[32]">
+         <obj_property name="ElementShortName">[32]</obj_property>
+         <obj_property name="ObjectShortName">[32]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m01_axis_tready">
+      <obj_property name="ElementShortName">m01_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">m01_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_top/DUT/vss_top_i/counter_0/m02_axis_tready">
+      <obj_property name="ElementShortName">m02_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">m02_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus479">
+      <obj_property name="label">AIE_DM_lower_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[15]">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">[15]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[14]">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">[14]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[13]">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">[13]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[12]">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">[12]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[11]">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">[11]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[10]">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">[10]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[9]">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">[9]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[8]">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">[8]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[7]">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">[7]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[6]">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">[6]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[5]">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">[5]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[4]">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">[4]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[3]">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">[3]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[2]">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">[2]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[1]">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">[1]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[0]">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus462">
+      <obj_property name="label">AIE_DM_upper_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[47]">
+         <obj_property name="ElementShortName">[47]</obj_property>
+         <obj_property name="ObjectShortName">[47]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[46]">
+         <obj_property name="ElementShortName">[46]</obj_property>
+         <obj_property name="ObjectShortName">[46]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[45]">
+         <obj_property name="ElementShortName">[45]</obj_property>
+         <obj_property name="ObjectShortName">[45]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[44]">
+         <obj_property name="ElementShortName">[44]</obj_property>
+         <obj_property name="ObjectShortName">[44]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[43]">
+         <obj_property name="ElementShortName">[43]</obj_property>
+         <obj_property name="ObjectShortName">[43]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[42]">
+         <obj_property name="ElementShortName">[42]</obj_property>
+         <obj_property name="ObjectShortName">[42]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[41]">
+         <obj_property name="ElementShortName">[41]</obj_property>
+         <obj_property name="ObjectShortName">[41]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[40]">
+         <obj_property name="ElementShortName">[40]</obj_property>
+         <obj_property name="ObjectShortName">[40]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[39]">
+         <obj_property name="ElementShortName">[39]</obj_property>
+         <obj_property name="ObjectShortName">[39]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[38]">
+         <obj_property name="ElementShortName">[38]</obj_property>
+         <obj_property name="ObjectShortName">[38]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[37]">
+         <obj_property name="ElementShortName">[37]</obj_property>
+         <obj_property name="ObjectShortName">[37]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[36]">
+         <obj_property name="ElementShortName">[36]</obj_property>
+         <obj_property name="ObjectShortName">[36]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[35]">
+         <obj_property name="ElementShortName">[35]</obj_property>
+         <obj_property name="ObjectShortName">[35]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[34]">
+         <obj_property name="ElementShortName">[34]</obj_property>
+         <obj_property name="ObjectShortName">[34]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[33]">
+         <obj_property name="ElementShortName">[33]</obj_property>
+         <obj_property name="ObjectShortName">[33]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT0_tdata[32]">
+         <obj_property name="ElementShortName">[32]</obj_property>
+         <obj_property name="ObjectShortName">[32]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus577">
+      <obj_property name="label">AIE_STREAM_DM_lower_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[15]">
+         <obj_property name="ElementShortName">[15]</obj_property>
+         <obj_property name="ObjectShortName">[15]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[14]">
+         <obj_property name="ElementShortName">[14]</obj_property>
+         <obj_property name="ObjectShortName">[14]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[13]">
+         <obj_property name="ElementShortName">[13]</obj_property>
+         <obj_property name="ObjectShortName">[13]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[12]">
+         <obj_property name="ElementShortName">[12]</obj_property>
+         <obj_property name="ObjectShortName">[12]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[11]">
+         <obj_property name="ElementShortName">[11]</obj_property>
+         <obj_property name="ObjectShortName">[11]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[10]">
+         <obj_property name="ElementShortName">[10]</obj_property>
+         <obj_property name="ObjectShortName">[10]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[9]">
+         <obj_property name="ElementShortName">[9]</obj_property>
+         <obj_property name="ObjectShortName">[9]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[8]">
+         <obj_property name="ElementShortName">[8]</obj_property>
+         <obj_property name="ObjectShortName">[8]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[7]">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">[7]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[6]">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">[6]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[5]">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">[5]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[4]">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">[4]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[3]">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">[3]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[2]">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">[2]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[1]">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">[1]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[0]">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">[0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="vbus" fp_name="vbus560">
+      <obj_property name="label">AIE_STREAM_DM_upper_real</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[47]">
+         <obj_property name="ElementShortName">[47]</obj_property>
+         <obj_property name="ObjectShortName">[47]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[46]">
+         <obj_property name="ElementShortName">[46]</obj_property>
+         <obj_property name="ObjectShortName">[46]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[45]">
+         <obj_property name="ElementShortName">[45]</obj_property>
+         <obj_property name="ObjectShortName">[45]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[44]">
+         <obj_property name="ElementShortName">[44]</obj_property>
+         <obj_property name="ObjectShortName">[44]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[43]">
+         <obj_property name="ElementShortName">[43]</obj_property>
+         <obj_property name="ObjectShortName">[43]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[42]">
+         <obj_property name="ElementShortName">[42]</obj_property>
+         <obj_property name="ObjectShortName">[42]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[41]">
+         <obj_property name="ElementShortName">[41]</obj_property>
+         <obj_property name="ObjectShortName">[41]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[40]">
+         <obj_property name="ElementShortName">[40]</obj_property>
+         <obj_property name="ObjectShortName">[40]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[39]">
+         <obj_property name="ElementShortName">[39]</obj_property>
+         <obj_property name="ObjectShortName">[39]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[38]">
+         <obj_property name="ElementShortName">[38]</obj_property>
+         <obj_property name="ObjectShortName">[38]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[37]">
+         <obj_property name="ElementShortName">[37]</obj_property>
+         <obj_property name="ObjectShortName">[37]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[36]">
+         <obj_property name="ElementShortName">[36]</obj_property>
+         <obj_property name="ObjectShortName">[36]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[35]">
+         <obj_property name="ElementShortName">[35]</obj_property>
+         <obj_property name="ObjectShortName">[35]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[34]">
+         <obj_property name="ElementShortName">[34]</obj_property>
+         <obj_property name="ObjectShortName">[34]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[33]">
+         <obj_property name="ElementShortName">[33]</obj_property>
+         <obj_property name="ObjectShortName">[33]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_top/DUT/AI_ENGINE_0_DM_OUT1_tdata[32]">
+         <obj_property name="ElementShortName">[32]</obj_property>
+         <obj_property name="ObjectShortName">[32]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

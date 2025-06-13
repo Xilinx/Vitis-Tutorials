@@ -1,0 +1,66 @@
+# /*
+# Copyright (C) 2021-2022, Xilinx, Inc. All rights reserved.
+# Copyright (C) 2022-2025, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: X11
+# */
+
+log
+*.asv
+*.log
+*.vcd
+*.wdb
+*.bin
+*.o
+*.elf
+*.xpe
+*.pdi
+*.mmi
+*.str
+*.xo
+*.xsa
+*.xclbin
+*.pb
+*.jou
+.Xil
+ultra96_x
+zcu10?_x
+build*/
+sd_card*/
+.vscode
+*.ltx
+*.str
+*.xclbin
+*.info
+*_summary
+*.cdo
+*vfs_work/
+*.venv*/
+packaged_kernel*
+tmp_kernel_pack*
+release_build
+linux/*-versal
+linux/*-versal-meta
+linux/sysroot
+linux/dtg/dts
+linux/dtg/device-tree-xlnx
+package_*_*
+ps_apps/linux/exe
+vivado/.gen/*
+vitis/ip/*/*.xml
+vitis/ip/*/.ipcache
+vitis/ip/*/_x
+vitis/ip/xo_*
+vitis/ws/*
+vitis/xpfm_export/vck190_thin_wrapper*
+vss/build_*
+vss/ip/aie/*.a
+vss/ip/aie/*.csv
+vss/ip/aie/*.db
+vss/ip/aie/*.soln
+vss/ip/aie/*_ws
+vss/ip/aie/Work
+vss/ip/aie/vck190_thin_wrapper*
+vss/ip/counter/counter.xml
+vss/ip/vadd_s/vadd_s
+vss/ip/axis1to2/axis1to2
+vss/ip/xo_*

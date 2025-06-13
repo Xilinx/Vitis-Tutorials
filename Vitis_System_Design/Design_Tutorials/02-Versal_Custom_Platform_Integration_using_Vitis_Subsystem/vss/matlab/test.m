@@ -1,0 +1,19 @@
+
+
+% Define the path to xf_dsp
+%xf_dsp_path = '/proj/xbuilds/2024.2_daily_latest/installs/lin64/Model_Composer/2024.2/tps/xf_dsp';
+src_paths = {...
+    "../src", ...
+    "../src/kernels", ...
+    "../src/graphs"};
+
+% Concatenate the paths to the include directories
+%include_paths = {...
+%    fullfile(xf_dsp_path, 'L2', 'include', 'aie'), ...
+%    fullfile(xf_dsp_path, 'L1', 'include', 'aie'), ...
+%    fullfile(xf_dsp_path, 'L1', 'src', 'aie')};
+
+% Create an aieGraph object using the vfs library
+myGraph = vfs.aieGraph(input_file = '../ip/aie/src/datamove_app.cpp', include_paths = src_paths);
+
+
