@@ -1,20 +1,20 @@
 <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis HLS™ Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-hls.html">See Vitis HLS landing page on xilinx.com</a>
+    <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-hls.html">See Vitis HLS landing page on amd.com</a>
     </td>
  </tr>
 </table>
 
 # HLS Micro-Optimization Tutorial using Beamformer IP
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Tutorial Overview
 
 This tutorial demonstrates the micro-optimization techniques used to increase performance for Vitis HLS designs.  The fundamental HLS pragmas used for micro-optimization are `PIPELINE`, `UNROLL`, and `ARRAY_RESHAPE` or `ARRAY_PARTITION`. This tutorial walks through the HLS analysis tools which can be used to guide the optimization process by highlighting inefficiencies and recommending pragmas.
 
-This tutorial is based on the [Adaptive Beamforming for Radar Tutorial](../../Design_Tutorials/02-Beamformer) that is discussed in more depth in the [Design Tutorials](../../Design_Tutorials) section of the [Vitis HLS Tutorials]
+This tutorial is based on the [Adaptive Beamforming for Radar Tutorial](../../Design_Tutorials/02-Beamformer) that is discussed in more depth in the [Design Tutorials](../../Design_Tutorials) section of the [Vitis HLS Tutorials](../../README.md)
 
 Adaptive Beamforming for Radar
 

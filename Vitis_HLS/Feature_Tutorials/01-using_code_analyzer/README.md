@@ -1,24 +1,24 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis HLS Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</a>
+    <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-hls.html">See Vitis HLS landing page on amd.com</a> </td>
     </td>
  </tr>
 </table>
 
 # Using Code Analyzer from Vitis Unified IDE
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 ## Tutorial Overview
 
 This tutorial shows you how to use the pre-synthesis feature called Code Analyzer for the Vitis High-Level Synthesis tool flow.
 
-It is assumed that you are familiar with the Vitis High-Level Synthesis (shortened Vitis HLS or VHLS) tool flow. Code Analyzer requires the same setup as for C-Simulation for an HLS component so you can follow the [getting started with Vitis HLS Components tutorial](https://docs.amd.com/access/sources/ftml/topic?isLatest=true&url=Vitis-Tutorials-Getting-Started&resourceid=docs_Vitis_HLS_README_Vitis_HLS&ft:locale=en-US) to familiarize yourself with this process.
+It is assumed that you are familiar with the Vitis High-Level Synthesis (shortened Vitis HLS or VHLS) tool flow. Code Analyzer requires the same setup as for C-Simulation for an HLS component so you can follow the [getting started with Vitis HLS Components tutorial](https://docs.amd.com/r/en-US/Vitis-Tutorials-Getting-Started/Vitis-HLS) to familiarize yourself with this process.
 
 Vitis Code Analyzer helps you investigate your design efficiency and get a performance estimation before running the VHLS C-Synthesis compilation. It uses a C-Testbench from the C-Simulation setup to dynamically analyze your design and extract data volume and movement as well as estimate transaction interval to investigate the performance; the data is presented as a graph.
 
-The documentation about Code Analyzer can be found in the *Vitis High-Level Synthesis User Guide* ([UG1399](https://docs.amd.com/access/sources/dita/map?isLatest=true&url=ug1399-vitis-hls&ft:locale=en-US)).
+The documentation about Code Analyzer can be found in the *Vitis High-Level Synthesis User Guide* ([UG1399](https://docs.amd.com/r/en-US/ug1399-vitis-hls)).
 
 ## Before You Begin
 

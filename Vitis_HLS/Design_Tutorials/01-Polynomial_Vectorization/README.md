@@ -1,14 +1,14 @@
 ﻿<table class="sphinxhide" width="100%">
  <tr width="100%">
     <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ HLS Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-hls.html">See Vitis™ HLS landing page on xilinx.com</a>
+    <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-hls.html">See Vitis™ HLS landing page on amd.com</a>
     </td>
  </tr>
 </table>
 
 # Polynomial Vectorization using Number Theoretic Transforms: A Real World Case Study Using Vitis HLS Code Analyzer
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.1***
 
 >**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the [Adapt Your C++ Algorithms for Outstanding Results with Vitis™ HLS](https://webinar.amd.com/Adapt-Your-C-Algorithms-for-Outstanding-Results-with-Vitis-tm-HLS/en) webinar.
 
@@ -66,10 +66,11 @@ The HLS Code Analyzer can help to optimize HLS C by generating a visualization o
 
 Before beginning, [download](https://www.xilinx.com/support/download.html) the Vitis Unified Installer, [install](https://docs.xilinx.com/r/en-US/ug1400-vitis-embedded/Installation) the Vitis Software Platform, and [acquire](https://www.xilinx.com/support/licensing_solution_center.html) the Vitis HLS license.
 
-In this tutorial, we'll be using a snippet of code from the [Kyber GitHub project](https://github.com/pq-crystals/kyber/tree/main). The code in the Vitis Tutorials has been trimmed down to just the Polyvec and NTT functions and made synthesizable for HLS. To start, open the workspace `<Relative_Path>/Vitis-Tutorials/Vitis_HLS/Design_Tutorials/01_Polynomial_Vectorization/Workspace` . If you've already sourced the settings script to setup Vitis, the following command will bring up this workspace:
+In this tutorial, we'll be using a snippet of code from the [Kyber GitHub project](https://github.com/pq-crystals/kyber/tree/main). The code in the Vitis Tutorials has been trimmed down to just the Polyvec and NTT functions and made synthesizable for HLS. To start, if you've already sourced the settings script to setup Vitis, the following command will bring up this workspace (Click **Update** if a **Update Workspace** window pops up after executing the command):
 
 ```
-vitis -w <Relative_Path>/Vitis-Tutorials/Vitis_HLS/Design_Tutorials/01_Polynomial_Vectorization/Workspace
+cd <Relative_Path>/Vitis-Tutorials/Vitis_HLS/Design_Tutorials/01_Polynomial_Vectorization
+vitis -w workspace
 ```
 
 1. Open the workspace `Workspace` in the `01_Polynomial_Vectorization` directory.
