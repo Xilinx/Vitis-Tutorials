@@ -209,35 +209,6 @@ Finally, you can add the host application to the System project. Select the **Ad
 
 The System project is now fully defined. 
 
-1. From the main menu select **File > New Component > AI Engine**
-
-   This opens the Create AI Engine Component wizard on the *Name and Location* page.
-
-2. Enter the `Component name` as aie_component (default), enter the `Component location` as the workspace (default), and click **Next**.
-
-   This opens the *Add Source Files* page.
-
-3. Select `Import Sources > Add Folder` and navigate to `<tutorial_path>/09-debug-walkthrough/cmd_src/aie` and click **OK**. Repeat the process to add the `data/` directory also.
-
-4. Under `Select top-level file` confirm that `graph.cpp` has been selected and click **Next**.
-
-   The tool automatically selects the top-level graph from imported files. You just need to make sure it has chosen correctly. Clicking **Next** opens the *Select Part* page.  
-
-5. Select the `xilinx_vck190_base_20XXX0_1` platform and click **Next** to open the *Summary* page.
-
-6. Review the *Summary* page and click **Finish** to create the defined AI Engine component.
-
-   This results in the aie_component `vitis-comp.json` file being opened. This is the file associated with the component in the Vitis unified IDE as shown in the following image. The tab at the top will display `vitis-comp.json`, but it is the aie_component you just created.
-
-   ![System Diagram](./Images/vitis-ide-aie-component.png)
-
-7. Select the `aiecompiler.cfg` link and open the config file. It contains `include` statements for the added `aie` source code folder.
-8. Add a new line `include=<path to/WorkspaceDirectory>/aie/kernels`.
-
-The `[aie]` section contains configuration commands such as the `xchess` statement. Refer to [*v++ Mode AI Engine*](https://docs.amd.com/r/en-US/ug1553-vitis-ide/v-Mode-AI-Engine) for more information on these configuration commands.
-
-In the Vitis Components explorer, expand the `aie_component` and examine the included sub-folders: Settings, Includes, Sources, and so forth. Notice the `aie` folder you imported into the Sources folder.
-
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
