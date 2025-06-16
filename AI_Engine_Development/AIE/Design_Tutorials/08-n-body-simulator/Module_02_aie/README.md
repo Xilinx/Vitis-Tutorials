@@ -124,7 +124,7 @@ make sim
 
 ## References
 
-* [Packet Switching AI Engine Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching)
+* [Packet Switching AI Engine Tutorial](../../../Feature_Tutorials/04-packet-switching)
 
 * [AI Engine Documentation - Explicit Packet Switching](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Explicit-Packet-Switching)
 
