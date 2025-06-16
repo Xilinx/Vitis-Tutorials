@@ -32,7 +32,7 @@ class fir_graph : public adf::graph {
       fir16_i     = adf::kernel::create_object<my_fir16<cint16, IN_SIZE, IN_MARGIN> >();
       adf::source(fir16_i)    = "kernels/my_fir16.cpp";
 
-      adf::runtime<ratio>(fir16_i)   = 0.40;  // With 250Msps input data, both FIR filters can be located on same AIE tile
+      adf::runtime<ratio>(fir16_i)   = 0.80;
       adf::connect< adf::parameter > (coeff, async(fir16_i.in[0]));
       adf::connect< > (in, fir16_i.in[1]);
       adf::connect< > (fir16_i.out[0], out);

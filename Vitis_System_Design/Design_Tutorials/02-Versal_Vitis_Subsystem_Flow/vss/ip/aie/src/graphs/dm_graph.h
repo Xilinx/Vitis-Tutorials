@@ -16,7 +16,7 @@
 template <int IN_SIZE, int NUM>
 class dm_graph : public adf::graph {
 
-  static_assert(NUM == 4, "Currently this graph only support exactly 2 kernels");
+  static_assert(NUM == 4, "Currently this graph only support exactly 4 kernels");
 
   private:
     adf::kernel  dmove_i[NUM];
@@ -48,7 +48,7 @@ class dm_graph : public adf::graph {
           adf::runtime<ratio>(dmove_i[i])   = 0.99;
           adf::connect< adf::stream > dummy_net (in[i], dmove_i[i].in[0]);
           adf::connect< adf::stream > (dmove_i[i].out[0], out[i]);
-          fifo_depth(dummy_net) = 4;
+          fifo_depth(dummy_net) = 8;
         }
       }
     }

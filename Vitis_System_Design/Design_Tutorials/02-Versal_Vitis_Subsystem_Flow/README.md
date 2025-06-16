@@ -29,34 +29,34 @@ The tutorial follow the Vitis subsystem flow to completely build to hardware. Th
 
 #### DSP development - AI Engine and Vitis Subsystem development
 
-| Feature                        | Example in this tutorial   | User guide reference
-| ---------------------------------|--------|-------------------------------------------------
-| AIE Kernel programming using AIE API     | [Datamover examples and 16 tap FIR filter with sliding mul ops](./vss/ip/aie/README.md)     | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Multiple-Lanes-Multiplication-sliding_mul)
-| Optimizing loops for AIE Kernel     | [AIE Optimizations](./vss/ip/aie/README_AIE_OPTIMIZATIONS.md)     | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Multiple-Lanes-Multiplication-sliding_mul)
-| AIE Graph programming with subgraphs     | [Graph with subgraphs](./vss/ip/aie/src/graphs/mygraph2.h)        | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Introduction-to-Graph-Programming)
-| Vitis Functional Simulation in Matlab     | [Simulate AIE graph in Matlab](./vss/matlab/README.md)     | [Functional Simulation and Verification in Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis)
-| Vitis Functional Simulation in Python     | [Simulate HLS kernel in Python](./vss/python/README.md)     | [Functional Simulation and Verification in Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis)
-| AIE Kernel performance with Vitis Analyzer  | [Checking datamovers with AIE simulation](./vss/ip/aie/README_AIESIM.md)     |  [Vitis Reference Guide (UG1702)](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Working-with-the-Analysis-View-Vitis-Analyzer)
-| Creating a Vitis Subsystem      | [Design and compile a VSS component](./vss/README.md)     | [Linking a VSS component with Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-a-VSS-Component)
-| Vitis Subsystem Simulation     | [Simulate AIE+PL in XSIM with RTL testbench](./vss/cosim/README.md)     | Early Access Feature, may be subject to change. Contact your AMD FAE for details.
-| VSS performance with Vitis Analyzer  | [Checking AIE FIR filter after VSS simulation](./vss/cosim/README_VCD.md)     |  [Vitis Reference Guide (UG1702)](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Working-with-the-Analysis-View-Vitis-Analyzer)
+| Category | Feature                        | Example in this tutorial   | User guide reference
+| -------- | -------------------------------|--------|-------------------------------------------------
+| AIE Development | AIE Kernel programming using AIE API     | [Datamover examples and 16 tap FIR filter with sliding mul ops](./vss/ip/aie/README.md)     | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Multiple-Lanes-Multiplication-sliding_mul)
+| AIE Development | Optimizing loops for AIE Kernel     | [AIE Optimizations](./vss/ip/aie/README_AIE_OPTIMIZATIONS.md)     | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Multiple-Lanes-Multiplication-sliding_mul)
+| AIE Development | AIE Graph programming with subgraphs     | [Graph with subgraphs](./vss/ip/aie/src/graphs/mygraph2.h)        | [AI Engine Kernel and Graph Programming Guide (UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Introduction-to-Graph-Programming)
+| Vitis Application | Vitis Functional Simulation in Matlab     | [Simulate AIE graph in Matlab](./vss/matlab/README.md)     | [Functional Simulation and Verification in Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis)
+| Vitis Application | Vitis Functional Simulation in Python     | [Simulate HLS kernel in Python](./vss/python/README.md)     | [Functional Simulation and Verification in Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis)
+| Vitis Application | AIE Kernel performance with Vitis Analyzer  | [Checking datamovers with AIE simulation](./vss/ip/aie/README_AIESIM.md)     |  [Vitis Reference Guide (UG1702)](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Working-with-the-Analysis-View-Vitis-Analyzer)
+| VSS Linking  | Creating a Vitis Subsystem      | [Design and compile a VSS component](./vss/README.md)     | [Linking a VSS component with Vitis (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-a-VSS-Component)
+| VSS Verification | Vitis Subsystem Simulation     | [Simulate AIE+PL in XSIM with RTL testbench](./vss/cosim/README.md)     | Early Access Feature, may be subject to change. Contact your AMD FAE for details.
+| VSS Verification | VSS performance with Vitis Analyzer  | [Checking AIE FIR filter after VSS simulation](./vss/cosim/README_VCD.md)     |  [Vitis Reference Guide (UG1702)](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Working-with-the-Analysis-View-Vitis-Analyzer)
 
 #### Hardware development - Creating, linking, and implementing the hardware platform
 
-| Feature                        | Example in this tutorial   | User guide reference
-| ---------------------------------|--------|-------------------------------------------------
-| Creating a custom extensible platform | [Vivado extensible platform](./vivado/README.md)     |  [Extensible hardware platforms (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Extensible-Hardware-Platforms)
-| Linking the subsystem to extensible platform  | [Vitis Linking](./vitis/README.md)     |  [Linking the VSS component to the platform (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-the-VSS-Component-to-the-Platform)
-| Importing VMA and implementing the hardware platform | [Implement design Vivado](./vivado/Finalize_Vivado.md)     |  [Vitis export to Vivado flow detailed example (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-to-Vivado-Flow-Detailed-Example)
+| Category | Feature                        | Example in this tutorial   | User guide reference
+| -------- | ---------------------------------|--------|-------------------------------------------------
+| Vivado Design | Creating a custom extensible platform | [Vivado extensible platform](./vivado/README.md)     |  [Extensible hardware platforms (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Extensible-Hardware-Platforms)
+| Vitis Linking | Linking the subsystem to extensible platform  | [Vitis Linking](./vitis/README.md)     |  [Linking the VSS component to the platform (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-the-VSS-Component-to-the-Platform)
+| Vivado Optimizations | Importing VMA and implementing the hardware platform | [Implement design Vivado](./vivado/Finalize_Vivado.md)     |  [Vitis export to Vivado flow detailed example (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-to-Vivado-Flow-Detailed-Example)
 
 #### Embedded development - Adding custom Linux, devicetree overlays, and cross-compile host application
 
-| Feature                        | Example in this tutorial   | User guide reference
-| ---------------------------------|--------|-------------------------------------------------
-| Prepare and build custom Linux with Petalinux | [Preparing a custom Linux environment](./linux/README.md)     |  [PetaLinux reference guide (UG1144)](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)
-| Create Vitis platform component including devicetree overlay  | [Vitis platform component](./vitis/README.md)     |  [Create a platform component from XSA](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Creating-a-Platform-Component-from-XSA)
-| Create host application | [Create and crosscompile host applications](./ps_apps/README.md)     |  [Host application development overview (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Host-Application-Development)
-| Integrate the system and package to SD card | [Package the design with Vitis](./vitis/Package.md)     |  [Integrating the System (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Integrating-the-System)
+| Category | Feature                        | Example in this tutorial   | User guide reference
+| -------- | -------------------------------|--------|-------------------------------------------------
+| Prepare OS | Prepare and build custom Linux with Petalinux | [Preparing a custom Linux environment](./linux/README.md)     |  [PetaLinux reference guide (UG1144)](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)
+| Vitis SW Platform | Create Vitis platform component including devicetree overlay  | [Vitis platform component](./vitis/README.md)     |  [Create a platform component from XSA](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/Creating-a-Platform-Component-from-XSA)
+| Vitis SW Application | Create host application | [Create and crosscompile host applications](./ps_apps/README.md)     |  [Host application development overview (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Host-Application-Development)
+| Vitis Package | Integrate the system and package to SD card | [Package the design with Vitis](./vitis/Package.md)     |  [Integrating the System (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Integrating-the-System)
 
 
 ## Detailed design description
@@ -209,13 +209,160 @@ Execute the following after you went though the previous explained login-step so
   - In the logging below you find all results/responses that you should get after every Linux command line input you should give.
   
 ```
-vck190-versal:/run/media/BOOT-mmcblk0p1# ./aie_dly_test.exe a.xclbin 
+vck190-versal:/run/media/BOOT-mmcblk0p1# ./aie_dly_test.exe my.xclbin 512
+Initializing ADF API...
+INFO:    argc: 3
+INFO:    Number of samples: 512
+PASSED:  auto my_device = xrt::device(0)
+XAIEFAL: INFO: Resource group Avail is created.
+XAIEFAL: INFO: Resource group Static is created.
+XAIEFAL: INFO: Resource group Generic is created.
+PASSED:  auto xclbin_uuid = my_device.load_xclbin(my.xclbin)
+PASSED:  auto my_rtl_ip = xrt::ip(my_device, xclbin_uuid, "subtractor:{subtractor_0}")
+PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "mygraph_top")
+PASSED:  Create my_mm2s instance
+PASSED:  Create my_s2mm instance
+PASSED:  Setup input buffer objects
+PASSED:  Setup output buffer objects
+PASSED:  Mapping input buffer objects
+PASSED:  auto out_0_bo_mapped = out_0_bo.map<TYPE_DATAO*>()
+PASSED:  Declare in_ref with 1024 samples
+INFO:    Missing input data file, will generate default data
+PASSED:  Generating input stimuli as ramp
+in0 = 0+i0
+in0 = 0+i1
+in0 = 1+i0
+in0 = 0+i2
+in0 = 2+i0
+in0 = 0+i3
+in0 = 3+i0
+in0 = 0+i4
+in0 = 4+i0
+in0 = 0+i5
+in0 = 5+i0
+in0 = 0+i6
+in0 = 6+i0
+in0 = 0+i7
+in0 = 7+i0
+in0 = 0+i8
+in0 = 8+i0
+in0 = 0+i9
+in0 = 9+i0
+in0 = 0+i10
+PASSED:  in_0_bo.sync(XCL_BO_SYNC_BO_TO_DEVICE)
+PASSED:  auto in_0_run = in_0(in_0_bo, nullptr, 512)
+PASSED:  auto out_run = out(out_0_bo, nullptr, 512)
+PASSED:  my_graph.reset()
+PASSED:  my_graph.run(-1)
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  4f80
+  Value Reg2:  19e
+  Value Reg3:  cf
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  4c40
+  Value Reg2:  1a6
+  Value Reg3:  d7
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  4200
+  Value Reg2:  152
+  Value Reg3:  ab
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  3208
+  Value Reg2:  1a2
+  Value Reg3:  b3
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  2680
+  Value Reg2:  1aa
+  Value Reg3:  d5
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  15cc
+  Value Reg2:  19c
+  Value Reg3:  a9
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  a70
+  Value Reg2:  1ac
+  Value Reg3:  af
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  f70c
+  Value Reg2:  1a0
+  Value Reg3:  d7
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  e808
+  Value Reg2:  1a0
+  Value Reg3:  d5
+Poll subtractor register
+  Value Reg0:  240
+  Value Reg1:  dacc
+  Value Reg2:  1aa
+  Value Reg3:  d7
 
-***To be updated!***
+INFO:    Waiting for DMA end...
 
+PASSED:  in_0_run.wait()
+PASSED:  out_0_run.wait()
+PASSED:  out_0_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE)
+out_0_bo_mapped[0] = b5+i0out_0_bo_mapped[1] = b6+i0out_0_bo_mapped[2] = b6+i0out_0_bo_mapped[3] = b7+i0out_0_bo_mapped[4] = b8+i0out_0_bo_mapped[5] = b9+i0out_0_bo_mapped[6] = b9+i0out_0_bo_mapped[7] = ba+i0out_0_bo_mapped[8] = bb+i0out_0_bo_mapped[9] = bc+i0out_0_bo_mapped[a] = bc+i0out_0_bo_mapped[b] = bd+i0out_0_bo_mapped[c] = 7e+i0out_0_bo_mapped[d] = 7f+i0out_0_bo_mapped[e] = 7f+i0out_0_bo_mapped[f] = 0+i0out_0_bo_mapped[10] = 1+i0out_0_bo_mapped[11] = 2+i0out_0_bo_mapped[12] = 2+i0out_0_bo_mapped[13] = 3+i0PASSED:  my_graph.end()
+
+PASSED:  ./aie_dly_fast.exe
 vck190-versal:/run/media/BOOT-mmcblk0p1# 
 ```
+The values presented when polling the registers show the propagation delay in clock cycles (hex value) for each data mover path.
+When buffer API is used, the buffer size affects the delay. In the tutorial the buffer size is set to 256 samples.
 
+| Poll number | Register | Value (hex) | Value (dec)
+| ---- | ----- | ----- | -----
+| 1 |   Value Reg0 | 240 | 576
+| 1 |   Value Reg1 | e92c | 59692
+| 1 |   Value Reg2 | 164 | 356
+| 1 |   Value Reg3 | cd | 205
+| 2 |   Value Reg0 | 240 | 576
+| 2 |   Value Reg1 | c894 | 51348
+| 2 |   Value Reg2 | 1a2 | 418
+| 2 |   Value Reg3 | d1 | 209
+| 3 |   Value Reg0 | 240 | 576
+| 3 |   Value Reg1 | 9dfc | 40444
+| 3 |   Value Reg2 | 1a2 | 418
+| 3 |   Value Reg3 | d1 | 209
+| 4 |   Value Reg0 | 240 | 576
+| 4 |   Value Reg1 | 3088 | 12424
+| 4 |   Value Reg2 | 19e | 414
+| 4 |   Value Reg3 | db | 219
+| 5 |   Value Reg0 | 240 | 576
+| 5 |   Value Reg1 | 4E54 | 20052
+| 5 |   Value Reg2 | 1aa | 426
+| 5 |   Value Reg3 | ad | 173
+| 6 |   Value Reg0 | 240 | 576
+| 6 |   Value Reg1 | b414 | 46100
+| 6 |   Value Reg2 | 1a6 | 422
+| 6 |   Value Reg3 | d7 | 215
+| 7 |   Value Reg0 | 240 | 576
+| 7 |   Value Reg1 | 8628 | 34344
+| 7 |   Value Reg2 | 1ae | 430
+| 7 |   Value Reg3 | d3 | 211
+| 8 |   Value Reg0 | 240 | 576
+| 8 |   Value Reg1 | 5184 | 20868
+| 8 |   Value Reg2 | 1b0 | 432
+| 8 |   Value Reg3 | d7 | 215
+| 9 |   Value Reg0 | 240 | 576
+| 9 |   Value Reg1 | ceb8 | 52920
+| 9 |   Value Reg2 | 1a4 | 420
+| 9 |   Value Reg3 | d3 | 211
+| 10 |   Value Reg0 | 240 | 576
+| 10 |   Value Reg1 | 2ea8 | 11944
+| 10 |   Value Reg2 | 19a | 410
+| 10 |   Value Reg3 | cf | 207
+
+
+***Note:*** The value for Reg1 is changing significantly between the polling, indicating that this path is not working as intended. This is a known bug and is being investigated.
 
 
 ## Notes

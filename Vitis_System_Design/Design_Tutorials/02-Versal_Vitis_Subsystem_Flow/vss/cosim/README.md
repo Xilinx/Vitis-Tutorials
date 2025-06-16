@@ -80,8 +80,8 @@ As the AIE datamover graphs get AXI Stream data from the counter, you can follow
 
 For the AIE FIR filters, an impulse response is injected, allowing for identifying the filter coefficients used by the filter.
 
-When VSS simulation has stopped, the waveforms will show `80µs` simulation time before the AI Engine graphs starts to execute. This is caused by the loading time of the AIE simulator thread.<br>
-If the simulation is restarted consecutive times, the AIE simulator is already running and will start responding in roughly `100ns`.<br>
+When VSS simulation has stopped, the waveforms will show `5µs` simulation time.<br>
+To simulate further, change the value in the time control and press run to. Alternatively type `run <time>` in tcl console to continue the simulator.<br>
 **Note:** The RTL counter values indicate time from reset up to ***2<sup>15</sup>-1*** clock cycles before wrapping around to ***-2<sup>15</sup>***.
 
 ### Check simulation results in XSIM waveform
@@ -95,8 +95,13 @@ The output data is represented by `cint16` values packed on a 64-bit interface, 
 At the start of the datamover processing, the receiving kernels signal when they can accept data using `TREADY` flags.<br>
 **Note:** The counter values will be sampled by the datamover only when `TREADY` is high.<br>
 
-To highlight the startup effects, the screenshots below is ***after restarting*** the simulation.
-Notice there are two stall events occuring for the vector multiplication datamover and three stalls for the stream based datamover.
+To highlight the startup effects, the screenshots below show waveforms zoomed to interesting events in the simulation.
+Notice there are two stall events occuring for the vector multiplication datamover and three stalls for the stream based datamovers.
+Pay attention to the counter values when the TREADY signals toggle as this will be reflected by the datamovers sampling the signal.<br>
+**Note:** Initially the pipeline registers in respective data paths are filled with incoming samples.
+During this sequence the values will be continuous until the design starts throttling due to the rate difference between the counter clock and AI Engine clock.<br>
+Once steady state occurs, the data movers will try to keep up with the PL side rates and insert stalls to compensate for the cycle difference.
+This is fine, but to avoid stalling the AXI Stream network inside AI Engine array, a FIFO is needed on the input stream ports.
 
 ![](./doc_files/datamover_first_tready.png)
 
@@ -130,9 +135,17 @@ Launch Vitis Analyzer using:
 vitis_analyzer ./vss/cosim/build/vss_top_cosim/vss_top.sim/sim_1/behav/xsim/default.aierun_summary
 ```
 
-With the Trace view, the signal values is observable with the figure below showing the two FIR filters:
+With the Trace view, the signal values is observable with the figure below showing the signals around the data movers.
+
+![](./doc_files/vitis_analyzer_stream_dm.png)
+
+
+The response of the two FIR filters:
+
 ![](./doc_files/vitis_analyzer_fir_output.png)
 
+**Note:** The stream datamover timeline for `my_stream_dm` show the steady state with 4 AI Engine clock cycles processing data and 1 stall clock cycle.
+This match the expected PLIO throughput of 1000 Msps.
 
 ### Modifying the FIR filter coefficients
 To change the filter coefficients, the AIE top graph testbench needs to be modified and recompiled.
