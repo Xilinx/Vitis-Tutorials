@@ -118,7 +118,7 @@ Tools Documentation:
 
 To build and run the LeNet tutorial,the following tools should be downloaded/installed:
 
-* Install the [Vitis Software Platform 2025.1](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation)
+* Install the [Vitis Software Platform 2025.1](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation)
 
 * Obtain a license to enable Beta Devices in AMD tools (to use the `xilinx_vek280_es1_base_202510_1` platform)
 
@@ -1040,17 +1040,13 @@ The following is the snapshot of the time trace for the LeNet design run in hw.
 Throughput calculation is as follows:
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
-					 = 772.337 us
+					 = 741.447 us
+
+The processing time reported by trace is with the data mover kernel running at 312.5MHz. 
 Throughput = (no of images / processing time)
+           = 100 / 741.447 us
+           = 134871.407 images/s
 
-Throughput (with 300.00 MHz) = 100/772.337 us
-
-           = 100 / 772.337 us 
-	   = 129477.1582 images/s
-The processing time reported by trace is with the data mover kernel running at 300.00MHz. Since the data mover kernel is running at 312.5MHz, we need to scale the execution time. Hence,
-Throughput (scaled to 312.5 MHz),
-           = 129477.1582 images/s x (312.5 / 300.00)
-           = 134872.0397 images/s
 ```
 The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
@@ -1094,7 +1090,7 @@ A summary of resource utilization and power is given in the following table.
 				
 | Number of Compute Cores|Vector Load|Number of Active Memory Banks|Mem R/W Rate|Memory Tiles|Memory Tile Memory Banks|Memory Tile Memory R/W Rate|AIE-ML Mem Tiles|Interconnect Load|Dynamic Power<br/>(in W)| 
 |:----------------------:|:---------:|:---------------------------:|:----------:|:----------:|:----------------------:|:-------------------------:|:--------------:|:---------------:|:-----------------------|
-|       5                |  31.61%   |          60                 |    16.02%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.116          |
+|       5                |  31.61%   |          60                 |    16.05%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.116          |
 
 ## Note
 
