@@ -43,7 +43,7 @@ As most of the components are extracted from the common image package, we will p
    cd WorkSpace
    tree -L 1     # to see the directory hierarchy
    .
-   ├── xilinx-zynqmp-common-v2024.2.tar.gz
+   ├── xilinx-zynqmp-common-v2025.1.tar.gz
    └── zcu104_custom_platform
    ```
 
@@ -53,14 +53,14 @@ As most of the components are extracted from the common image package, we will p
 
    ```bash
    cd WorkSpace
-   tar xvf xilinx-zynqmp-common-v2024.2.tar.gz -C .
+   tar xvf xilinx-zynqmp-common-v2025.1.tar.gz -C .
    ```
 
-You can see the ``xilinx-zynqmp-common-v2024.2`` folder which contains some components located in the ``WorkSpace`` folder as shown below:
+You can see the ``xilinx-zynqmp-common-v2025.1`` folder which contains some components located in the ``WorkSpace`` folder as shown below:
 
 ```
    tree -L 2
-   ├── xilinx-zynqmp-common-v2024.2
+   ├── xilinx-zynqmp-common-v2025.1
    │   ├── bl31.elf
    │   ├── boot.scr
    │   ├── Image
@@ -78,7 +78,7 @@ From the above directory structure, you can see that the boot file, kernel image
 
 1. Install the sysroot 
 
-   - Go to common image extracted directory `<WorkSpace/xilinx-zynqmp-common-v2024.2/>`.
+   - Go to common image extracted directory `<WorkSpace/xilinx-zynqmp-common-v2025.1/>`.
    - Type ``./sdk.sh -d <Install Target Dir>`` to install the PetaLinux SDK. Use the `-d` option to provide a full pathname to the output directory  **.** (This is an example. **.** means current directory. ) and confirm.
 
    The environment variable **LD_LIBRARY_PATH** must not be set when running this command.
@@ -119,7 +119,7 @@ From the above directory structure, you can see that the boot file, kernel image
 
      >**Note:** The filenames in `<>` are placeholders in the bif file. Vitis will replace the placeholders with the relative path to platform during platform packaging. V++ packager, which runs when building the final application#, would expand it further to the full path during image packaging. Filename placeholders point to the files in boot components directory. The filenames in boot directory need to match with placeholders in BIF file. `<bitstream>` is a reserved keyword. V++ packager will replace it with the final system bit file.
 
-   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2024.2** and click **OK**.
+   - **Pre-Built Image Directory**: Browse to **xilinx-zynqmp-common-v2025.1** and click **OK**.
 
    - **DTB File**: It will be generated automatically and populated in this area.
 

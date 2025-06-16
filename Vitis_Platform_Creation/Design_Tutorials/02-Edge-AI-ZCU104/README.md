@@ -8,7 +8,7 @@
 
 # Vitis Custom Embedded Platform Creation Example on ZCU104
 
-***Version: Vitis 2024.2 and Vivado 2024.2***
+***Version: Vitis 2025.1 and Vivado 2025.1***
 
 
 In this module, you will create a custom Vitis embedded platform for ZCU104 capable of running ***Vitis acceleration applications***. Additionally, this platform is versatile enough to support general **embedded software applications**. The diagram below illustrates the structure of this example system.
