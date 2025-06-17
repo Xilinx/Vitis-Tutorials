@@ -380,7 +380,8 @@ To download a ZIP file of a specific branch, do one of the following:
             </td>
         </tr>
         <tr>
-            <td height="24">     
+            <td height="24">
+                <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation :new: </a>            
             </td>
             <td>
                 <a href="./Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a>
@@ -513,7 +514,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260">Custom Platform Creation on KV260</a>
                 </td>
                 <td height="24">
-                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation</a>
+                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/">Vitis Export to Vivado Flow :new: </a>
                 </td>
             </tr>
             <tr>
@@ -521,6 +522,7 @@ To download a ZIP file of a specific branch, do one of the following:
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
                 </td>
                 <td height="24">
+                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation</a>             
                 </td>
             </tr>
         </tbody>

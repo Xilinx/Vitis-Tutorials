@@ -5,15 +5,16 @@
 - AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters/
 - AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/
 - Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/
+- Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/
 
 ### Tutorial Updates
-- Revamped the Vitis Getting Started tutorial to include new features  
+- Revamped 2 tutorials to include new features  
     - Getting_Started/Vitis/
+    - Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
 - Relocated a tutorial for better organization 
     - New location: Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/ 
-- Removed 2 tutorials to steamline content. The new tutorial Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/ now covers the same features using an updated flow.  
+- Removed a tutorial to steamline content. 
     - AI_Engine_Development/AIE/Feature_Tutorials/16-external-traffic-generator-aie/
-    - Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
 
 ### EoU Improvements
 - Introduce a new category `Vitis_System_Design` to host new tutorials focused on system design flows.

@@ -16,6 +16,10 @@ Feature tutorials illustrate specific features of Vitis development flow, some f
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
  </tr>
+ <tr>
+ <td align="center"><a href="./02-Vitis_Subsystem_Simulation/"> Vitis Subsystem Simulation </a></td>
+ <td>This tutorial demostrates a new feature Vitis Subsystem Simulation, which enables user to simulate AI Engine + PL designs in a RTL testbench environment. By running the AI Engine simulation encapsulated in a VSS component, the interaction between AI Engine PLIO and custom RTL can be analyzed and verified without having to go through the full system emulation flow. </td>
+ </tr> 
  </table>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

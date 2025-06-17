@@ -163,7 +163,22 @@ These tutorials illustrate various platform features and how you can incorporate
     <td>
       <b>Highlights</b>: Customize the software components with PetaLinux
     </td>
-  </tr>   
+  </tr> 
+  <tr>
+    <td align="center"><a href="./Feature_Tutorials/03_Vitis_Export_To_Vivado/">Hardware Design Fast Iteration with Vitis Export to Vivado</a></td>
+    <td>Versal AI Core</td>
+    <td>VCK190</td>
+    <td>Block Design Container</td>
+    <td>Vivado &<br>Vitis IDE</td>
+    <td>
+      <b>Highlights</b>:
+      <ul>
+        <li>Skip creating the platform before v++ linking</li>
+        <li>Using Vivado to do design implementation and timing closure</li>
+        <li>Fast iteration for hardware design</li>
+      </ul>
+    </td>
+  </tr>  
   <tr>
     <td align="center"><a href="./Feature_Tutorials/04_platform_validation/">Hardware Design Validation</a></td>
     <td>Versal AI Core</td>
