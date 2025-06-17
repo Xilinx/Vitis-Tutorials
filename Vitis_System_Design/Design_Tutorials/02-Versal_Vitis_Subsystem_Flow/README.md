@@ -113,17 +113,6 @@ This figure describe the order of which the hardware design components are arran
 
 
 ## Getting Started
-Makefiles are provided to build everything from the lab top folder. It will automatically compile all required RTL, AIE and HLS components as required by VSS during linking.
-
-From top folder, run:
-```
-make all
-```
-Alternatively run step by step, by choosing from the following:
-```
-make vss vivado_platform vitis_ip vma_export vivado_fixed linux vitis_platform ps_apps package
-```
-
 
 ### Prerequisites
 Setup the Vitis 2025.1 tools
@@ -137,8 +126,21 @@ Below is an example:
 export SDKTARGETSYSROOT=<install_path>
 ```
 
-### Steps
-The example is composed in 4 major steps as show in the figure below. All steps are supported with scripts and pre-built sources to give user time to inspect the results and explore the results.
+### Build instructions
+Makefiles are provided to build everything from the lab top folder. It will automatically compile all required RTL, AIE and HLS components as required by VSS during linking.
+
+From top folder, run:
+```
+make all
+```
+Alternatively run step by step, by choosing from the following:
+```
+make vss vivado_platform vitis_ip vma_export vivado_fixed linux vitis_platform ps_apps package
+```
+
+#### Navigation helper to the makefile steps
+
+All steps are supported with scripts and pre-built sources to give user time to inspect the results and explore the results.
 The user is encouraged to modify/change/replace parts after first running through these steps once.
  - [1. Create a Vitis Subsystem component](./vss/README.md)
  - [2. Develop a custom Vivado extensible platform](./vivado/Vivado.md)
@@ -151,13 +153,7 @@ The user is encouraged to modify/change/replace parts after first running throug
  - [9. Package design to SD card](./vitis/Package.md)
  - [10. Run the design on hardware](#run-on-hardware)
 
-![](./documentation/readme_files/lab1_workflow.svg)
 
-
-**optional** All steps can be built using Makefile and command line tools:
-```
-make vss vivado_platform vitis_ip vma_export vivado_fixed linux vitis_platform ps_apps package
-```
 
 ## Testing the design on a board
 
