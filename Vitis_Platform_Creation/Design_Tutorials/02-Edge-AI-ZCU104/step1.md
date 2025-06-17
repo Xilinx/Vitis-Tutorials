@@ -30,9 +30,6 @@ Use the AMD Vivado™ tools to create the hardware design for the ZCU104 AMD Vit
    1. Select **File->Project->New**, and click **Next**.
    2. In Project Name dialog box, set Project name to **zcu104_custom_platform**. Uncheck **Create project subdirectory**, and click **Next**.
    3. Enable **Project is an extensible Vitis platform** and click **Next**.
-
-      ![missing image](images/vivado_project_type.png)
-
    4. Select the **Boards** tab, then select **Zynq UltraScale+ ZCU104 Evaluation Board**, and click **Next**.
    5. Review the project summary and click **Finish**.
 

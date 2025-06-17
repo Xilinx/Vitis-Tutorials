@@ -11,15 +11,15 @@
 
 ***Board: VCK190 VEK280***
 
-In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 or VEK280 evaluation board in short. 
+In this module, we will get started with three steps to quickly create a platform and run applications to validate this platform based on VCK190 or VEK280 evaluation board in short.
 
-This time, we will utilize the AMD Versal™ extensible platform from the CED example, using a pre-built Linux common image and a device tree file generated with the Platform Creation. Next, we will create an embedded Versal acceleration platform using the AMD Vitis™ Unified IDE. Finally, we will validate this platform using the Vector Addition example. 
+This time, we will utilize the AMD Versal™ extensible platform from the CED example, using a pre-built Linux common image and a device tree file generated with the Platform Creation. Next, we will create an embedded Versal acceleration platform using the AMD Vitis™ Unified IDE. Finally, we will validate this platform using the Vector Addition example.
 
-This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](../../Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization/README.md) for reference.
+This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
-1. Create a workspace and launch AMD Vivado™ 
+1. Create a workspace and launch AMD Vivado™
 
    - mkdir WorkSpace
    - cd WorkSpace
@@ -27,7 +27,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
    - Run Vivado by typing `vivado` in the console.
 
 2. Download the Versal Extensible Embedded Platform Example
-   
+
    - Click menu **Tools -> Vivado Store.**
    - Click **OK** to agree to download open source examples from web.
    - Select **Platform -> Versal Extensible Embedded Platform** and click the download button on the tool bar.
@@ -63,17 +63,17 @@ This is a quick start guide for Versal platform creation. If you have questions 
    ![Vivado Design Block Diagram](images/vivado_design_diagram.png)
 
 
-   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190 or VEK280. 
+   At this stage, the Vivado block automation has added a Control, Interface & Processing System (shorten with CIPS in the future) block, AXI NOC block, AI Engine, and all supporting logic blocks to the diagram, and applied all board presets for the VCK190 or VEK280.
 
    >Note: The block design of the VEk280 is slightly different from that of the VCK190. While the VCK190 incorporates one DDR4 and one LPDDR4, the VEK280 elevates its performance with the inclusion of two LPDDR4s.
-   
+
 4. Generate Block Diagram
 
    - Click **Generate Block Diagram** from the Flow Navigator window.
 
    ![missing image](images/vivado_generate_bd.png)
 
-   - Select **Synthesis Options** to **Global** to save generation time. 
+   - Select **Synthesis Options** to **Global** to save generation time.
 
    ![missing image](images/vivado_generate_bd_global.png)
 
@@ -106,7 +106,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
    tar xvf ../xilinx-versal-common-v2025.1.tar.gz .
    ```
 
-3. Create Vitis platform
+2. Create Vitis platform
 
    - Install SDK tool by typing `sh xilinx-versal-common-v2025.1/sdk.sh -d xilinx-versal-common-v2025.1/ -y` in console. Option `-d` is to specify the directory where to install. Option `-y` means confirmation. So it gets installed in `xilinx-versal-common-v2025.1/` folder.
 
@@ -143,39 +143,39 @@ This is a quick start guide for Versal platform creation. If you have questions 
    - **FAT32 Partition Directory**: if you have additional file to be stored in FAT32 partition diretory you can browse to the file. If not please omit this.
    - **QEMU Data**: This Directory is used to add additional file for emulation. User can set it according to your requirement.
    - In the flow navigator, click the drop-down button to select the component. In this case, select **vck190_custom** component and click the **Build** button to build the platform.
-   - 
+
    >Note: If there are additional QEMU settings, update `qemu_args.txt` accordingly.
-   
+
    After this step2, the platform creation process is completed. Next, run an application to validate this platform.
 
 ## Step 3: Validate this Vitis PLatform
 
-   - Run Vitis by typing `vitis -w .` in the console (If you have launched Vitis, omit this step).
-   - In the view, Click **Example** button and expand the **Installed Examples Repository** directory like the following:
+- Run Vitis by typing `vitis -w .` in the console (If you have launched Vitis, omit this step).
+- In the view, Click **Example** button and expand the **Installed Examples Repository** directory like the following:
 
-   ![missing image](./images/vitis_examples.PNG)
+  ![missing image](./images/vitis_examples.PNG)
 
-   - Select **Simple Vector Addition**, and click **Create application from template**.
-   - Input the **System project name**: `vadd` and click **Next**.
-   - Select the platform we created in previous step. In this case, it is `vck190_custom` platform.
+- Select **Simple Vector Addition**, and click **Create application from template**.
+- Input the **System project name**: `vadd` and click **Next**.
+- Select the platform we created in previous step. In this case, it is `vck190_custom` platform.
 
-      >Note: If you target VEK280, please select `vek280_custom` platform.
+  >Note: If you target VEK280, please select `vek280_custom` platform.
 
-   - Input **Sysroot** path: `xilinx-versal-common-v2025.1/sysroots/cortexa72-cortexa53-amd-linux`
-   - Input **RootFS** path: `xilinx-versal-common-v2025.1/rootfs.ext4`
-   - Input **Kernel Image** path: `xilinx-versal-common-v2025.1/Image` and click **Next**.
-   - Review the project summary and click **Finish**.
+- Input **Sysroot** path: `xilinx-versal-common-v2025.1/sysroots/cortexa72-cortexa53-amd-linux`
+- Input **RootFS** path: `xilinx-versal-common-v2025.1/rootfs.ext4`
+- Input **Kernel Image** path: `xilinx-versal-common-v2025.1/Image` and click **Next**.
+- Review the project summary and click **Finish**.
 
-   After seconds, the project is created.
-   ![missing image](./images/vitis_create_vadd.png)
+  After seconds, the project is created.
+  ![missing image](./images/vitis_create_vadd.png)
 
-   - Select Component **vadd** in flow navigator. Click **Build all** under **HARDWARE** target. A window pops up prompting to choose which modules to compile. Select all and click OK.
+- Select Component **vadd** in flow navigator. Click **Build all** under **HARDWARE** target. A window pops up prompting to choose which modules to compile. Select all and click **OK**.
 
-   ![missing image](./images/vitis_system_component_select.PNG)
+  ![missing image](./images/vitis_system_component_select.PNG)
 
-   - It takes some time to build hardware. Finally, Vitis generates **sd_card.img** in `vadd/build/hw/package/package/` directory.
+- It takes some time to build hardware. Finally, Vitis generates **sd_card.img** in `vadd/build/hw/package/package/` directory.
 
-#### Run the Application on Hardware
+### Run the Application on Hardware
 
 1. Copy `vadd/build/hw/package/package/sd_card.img` to local if you build the project on a remote server or virtual machine.
 
@@ -269,7 +269,6 @@ TEST PASSED
 </details>
 
 
-
 ### Fast Track
 
 Scripts are provided to package and test the Vitis platform.
@@ -283,16 +282,16 @@ To use these scripts, download Versal common image from [AMD website download pa
    cd ref_files/<board>
    make all COMMON_IMAGE_VERSAL=<path/to/common_image/>  #Specify the path of the common image
    ```
+
    This command is to generate platform with pre-built software components and do sw emulation by running vadd application to test this platform.
 
    ```
    make sd_card COMMON_IMAGE_VERSAL=<path/to/common_image/>  #Specify the path of the common image
    ```
+
    This command is to generate platform with pre-built software components and do hw test on board by running vadd application to test this platform.
 
-
-
-2. To clean the generated files, run
+2. To clean the generated files, run the following:
 
    ```bash
    make clean

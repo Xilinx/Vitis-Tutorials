@@ -93,10 +93,12 @@ These are the elements of building and accelerating applications and functions u
 
 You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an earlier step of this tutorial. You can remove the HLS kernel object and add this optimized C++ code in the Vitis application project if you prefer. In this case, the Vitis IDE will call Vitis HLS as part of the build process when compiling the C++ kernel code.  
 
-</br>
-<hr/>
-<p align="center" class="sphinxhide"><b><a href="/README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a></b></p>
 
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center">
+<a href="../README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a>
+</p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
