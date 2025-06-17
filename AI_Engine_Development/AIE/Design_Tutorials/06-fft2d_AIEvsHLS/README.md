@@ -252,7 +252,7 @@ The following table compares a 1024 x 2048 point 10-instance FFT-2D design imple
 
 | Design Target | Aggregate Throughput<br/>(in MSPS) | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in W) | Performance per Watt<br/>(in MSPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 6229.350                           | 3537.296                | 20              | 78.47%           | 420 /<br/>44%                        | 60               | 11360 /<br/> 3647         | 0     | 0    | 5.542                      | 1134.740773                              |
+| AIE           | 6216.973                           | 3537.296                | 20              | 78.47%           | 420 /<br/>44%                        | 60               | 11360 /<br/> 3647         | 0     | 0    | 5.545                      | 1121.185                                 |
 | HLS           | 6277.483                           | 4211.296                | NA              | NA               | NA                                   | NA               | 88447 /<br/> 56429        | 250   | 180  | 6.819                      | 920.587051                               |
 
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
@@ -298,7 +298,7 @@ Below are links to the XRT information used by this tutorial:
 
 Below are links to Vitis related information referenced in this tutorial:
 
-* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration)
+* [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/v/u/en-US/ug1393-vitis-application-acceleration)
 
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
