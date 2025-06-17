@@ -79,7 +79,6 @@ After you have written your first AI Engine application you might want to verify
 - [Debug Walkthrough Tutorial](./Feature_Tutorials/09-debug-walkthrough/) will guide you to analyze the performance of your AI Engine application and help you with debugging functional issues.
 
 - [AIE Performance and Deadlock Analysis](./Feature_Tutorials/13-aie-performance-analysis/) which introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution.
-- [Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows](./Feature_Tutorials/16-external-traffic-generator-aie/): This tutorial demonstrates how to create external traffic generators as Python scripts or C++ applications to exercise the AI Engine kernels in the x86 simulator, AI Engine simulator, and in hardware emulation.
 
 #### System Integration
 
