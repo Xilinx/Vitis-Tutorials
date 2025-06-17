@@ -15,6 +15,14 @@ Design tutorials illustrate higher-level concepts or design flows, walk through 
  <td width="35%" align="center"><b>Tutorial</b>
  <td width="65%" align="center"><b>Description</b>
  </tr>
+ <tr>
+ <td align="center"><a href="./01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
+ <td>Versal VCK190 System Example Design based on a thin custom platform (Minimal clocks and AXI exposed to PL) including HLS/RTL kernels and AI Engine kernel using a full Makefile build-flow.</td>
+ </tr>
+ <tr>
+ <td align="center"><a href="./02-Versal_Vitis_Subsystem_Flow/">Versal Custom Platform Integration using Vitis Subsystem</a></td>
+ <td>An end to end system design tutorial using Vitis Subsystem design and Vitis Export to Vivado Flow as described in UG1701. Check out the <a href="./02-Versal_Vitis_Subsystem_Flow/README.md#features-demonstrated-in-this-tutorial">features demonstrated in this tutorial</a>. </td>
+ </tr>
  </table>
  
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

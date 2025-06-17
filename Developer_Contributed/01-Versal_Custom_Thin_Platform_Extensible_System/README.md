@@ -7,10 +7,10 @@
 
 # Versal Custom Thin Platform Extensible System
 
-This tutorial has been relocated to [Vitis System Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/](../../Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/README.md).
+This tutorial has been relocated to [Vitis System Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/](../../Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/).
 
 The examples used in this tutorial have also been reused and refitted into a new tutorial that demonstrate new features like Vitis Subsystem and Vitis Export to Vivado flows.<br>
-You can find the new tutorial here: [Vitis System Design/Design_Tutorials/02-Versal_Custom_Platform_Integration_using_Vitis_Subsystem](../../Vitis_System_Design/Design_Tutorials/02-Versal_Custom_Platform_Integration_using_Vitis_Subsystem/README.md).
+You can find the new tutorial here: [Vitis System Design/Design_Tutorials/02-Versal_Custom_Platform_Integration_using_Vitis_Subsystem](../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/).
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

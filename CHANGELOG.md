@@ -1,5 +1,33 @@
 ﻿# Vitis-Tutorials ChangeLog
 
+## 2025.1 (Jun. 16, 2025)
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters/
+- AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/
+- Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/
+
+### Tutorial Updates
+- Revamped the Vitis Getting Started tutorial to include new features  
+    - Getting_Started/Vitis/
+- Relocated a tutorial for better organization 
+    - New location: Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/ 
+- Removed 2 tutorials to steamline content. The new tutorial Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/ now covers the same features using an updated flow.  
+    - AI_Engine_Development/AIE/Feature_Tutorials/16-external-traffic-generator-aie/
+    - Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
+
+### EoU Improvements
+- Introduce a new category `Vitis_System_Design` to host new tutorials focused on system design flows.
+- Remove tutorials from the `Hardware_Acceleration` category in this branch. These tutorials are still available in previous branches. 
+
+
+
+<details open>
+    <summary>2024.2 Release</summary>
+
+## 2024.2_update (Feb. 25, 2025) 
+### New Tutorials
+- AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/
+
 ## 2024.2_update (Jan. 23, 2025)
 ### New Tutorials
 - AI_Engine_Development/AIE/Feature_Tutorials/25-AIE-kernel-optimization/
@@ -21,8 +49,9 @@
     - AI_Engine_Development/AIE/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
     - AI_Engine_Development/AIE-ML/Feature_Tutorials/22-Performance-Validation-in-Analysis-View/ 
 - The Hardware_Acceleration category tutorials are now in `deprecation` mode. These tutorials will be officially removed from the repository in 2025. However, users can continue accessing them by checking out a branch corresponding to an earlier version of the tools.
+</details>
 
-<details open>
+<details close>
     <summary>2024.1 Release</summary>
 
 ## 2024.1_update (Oct. 14, 2024)

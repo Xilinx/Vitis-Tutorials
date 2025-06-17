@@ -109,7 +109,11 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <tr>
  <td align="center"><a href="./20-TDM-Mixer/">Time-Division Multiplexed Mixer Example</a></td>
  <td>This tutorial implements a time-division multiplexed (TDM) Mixer design on AI Engine. The design illustrates how a "corner-turning" operation can be performed using the DMA hardware resources inside the AI Engine local tile, leaving core capacity available for compute workloads. The tutorial also shows how to vectorize workloads involving phase or frequency generation without lookup tables.</td>
- </tr>     
+ </tr>
+ <tr>
+ <td align="center"><a href="./21-Back-Projection-SAR/">Back-Projection Synthetic Aperture Radar on AIE</a></td>
+ <td>This tutorial builds an example design for Synthetic Aperture Radar using Vitis Libraries and custom API coding for use with the GOTCHA data set. The design achieves ~2.5 frames per second for 512 x 512 images and 586 radar pulses with fewer than 32 tiles. A large design with 8 engine instances achieves close to 20 frames per second.</td>
+ </tr>        
  </table>
 
 

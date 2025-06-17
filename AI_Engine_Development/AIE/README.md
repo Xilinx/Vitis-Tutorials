@@ -336,20 +336,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
-  <td align="center"><a href="./Feature_Tutorials/16-external-traffic-generator-aie/">Python and C++ External Traffic Generators for AI Engine Simulation and Emulation Flows</a></td>
- <td>Base</td>
- <td>Linux</td>
- <td> </td>
- <td> </td>
- <td>MM2S / S2MM / PolarClip</td>
- <td>Yes</td>
- <td>Yes</td>
- <td>Yes</td>
- <td>Yes</td>
- <td> </td>
- <td> </td>
- <td> </td>
- </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/17-RTL-IP-with-AIE-Engines/">Using RTL IP with AI Engines</a></td>
  <td>Custom</td>
@@ -778,6 +764,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  </tr>
+ <tr>
  <td align="center"><a href="./Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer</a></td>
  <td>Base</td>
  <td>Linux</td>
@@ -791,7 +778,22 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- </tr>   
+ </tr>
+ <tr>
+ <td align="center"><a href="./Design_Tutorials/21-Back-Projection-SAR/">Back-Projection SAR on AIE</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td> </td>
+ <td>DSPLib</td>
+ <td>Data Movers & Image Buffering</td>
+ <td>Yes</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td> </td>
+ <td>Yes</td>
+ </tr>      
  </table>
 
 

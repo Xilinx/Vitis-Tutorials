@@ -8,14 +8,11 @@
 
 ## Vitis System Design Tutorials
 
-Before diving into the Vitis™ system design tutorials, beginner users may prefer to start with the <a href="../Getting_Started/Vitis/"> Vitis Getting Started tutorial</a> under Getting Started category. The tutorials under this category offer a broader introduction to the Vitis Unified IDE, in addition to describing the System design flows and use cases.
-
-The tutorials under the Vitis HLS category help you learn the Vitis Design Flows.
+Before diving into the Vitis™ system design tutorials, beginner users may prefer to start with the <a href="../Getting_Started/Vitis/"> Vitis getting started tutorial</a>. The tutorials under this category offer a broader introduction to the Vitis Unified IDE, in addition to describing the System design flows and use cases.
 
 - The <a href="./Feature_Tutorials/">**Feature Tutorials**</a> illustrate specific features of Vitis development flow, some features may not be required by all designs but are still useful for some use cases.
 
 - The <a href="./Design_Tutorials/">**Design Tutorials**</a> illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
-
 
 
 

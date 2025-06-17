@@ -6,9 +6,7 @@
  </tr>
 </table>
 
-***Version: Vitis 2023.2***
-
->**NOTE**: The tutorials under **[Hardware_Acceleration](./)** category are in "regression" mode, meaning we will run regression tests on 2024.1 and newer versions, but will not make any feature updates other than bug fixes. Starting with the 2025.1 release, we will no longer publish updates or new tutorials in this category. If you need to access existing content, please refer to previous branches.
+**IMPORTANT**: The tutorials under **[Hardware_Acceleration](./)** category are in `regression` mode, meaning we will run regression tests on **2024.1** and newer versions, but will not make any feature updates other than bug fixes. Starting with the **2025.1** release, we will no longer publish updates or new tutorials in this category. If you need to access existing content, please refer to previous branches.
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
