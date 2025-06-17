@@ -237,8 +237,8 @@ The following table shows a comparison between a 1024 x 1024 x1024 GeMM design i
 
 | Design Target | TOPS<br/> | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | TOPS per Watt<br/>(in TOPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 1.575     | 3.315                  | 24               | 84.60%             | 252 /<br/>14.245%                        | 43              | 26478 /<br/> 13548        |66       | 0    | 4911                      |  0.320                         |    
-| DSP           | 1.433     |   1497.971              | NA               | NA              | NA                                   | NA               | 74674 /<br/> 20700       | 64     | 1024  | 8709                   | 0.164                            |
+| AIE           | 1.551     | 3.331                  | 24               | 842.98%             | 252 /<br/>14.245%                        | 43              | 26478 /<br/> 13548        |66       | 0    | 4911                      |  0.320                         |    
+| DSP           | 1.433     |   1497.971              | NA               | NA              | NA                                   | NA               | 70986 /<br/> 17340       | 64     | 1024  | 8758                   | 0.163                            |
 
 
 It is important to understand that those 46 AI Engines tiles are not all required for the GeMM compute: 24 AI Engines/vector cores are required for computation, and 22 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 22 AI Engine tiles is 84.63%.
