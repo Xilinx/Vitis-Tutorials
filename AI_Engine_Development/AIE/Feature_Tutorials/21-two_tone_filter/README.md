@@ -540,6 +540,8 @@ cd ssr_lt1/vmc_flow
 
 Open MATLAB by typing ```model_composer```.
 
+> Known Issue in 2025.1: Please follow the instructions given in the [Answer Record](https://adaptivesupport.amd.com/s/article/000038190?language=en_US) before running the below steps.
+
 Browse to the project location `<YOUR_PATH>/21-two_tone_filer/ssr_lt1/vmc_flow` if required.
 
 Double-click **`two_tone_filter.slx`**. 
@@ -615,7 +617,7 @@ Double-click **Vitis Model Composer Hub**. This opens the window where you can c
 
 Make sure the *Hardware selection* is proper by selecting the *Hardware Selection*. In this case, Versal AI Core Series device is selected.
 
-In the **Code Generation**, select **FIR-FFT** under *two_tone_filter* from the left window and enable the following option from the *Analyze* tab.
+In the **Code Generation**, select **Subsystem** under *two_tone_filter* from the left window and enable the following option from the *Analyze* tab.
 
 - Collect trace data for Vitis Analyzer, viewing internal signals, and latency
 
