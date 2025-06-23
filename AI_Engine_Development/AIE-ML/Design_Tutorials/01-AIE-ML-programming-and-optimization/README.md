@@ -68,8 +68,7 @@ $$ \left( c_{ij} \right)_{\substack{0\leq i \lt M \\ 0 \leq j \lt N}}  =  \sum_{
 
 ![Matrix Multiplication](images/MatrixMult.png)
 
-Natural storage for a matrix is column major: all columns of row 0 are stored csequentially in memory, then
-row 1 and so on up to last row o the matrix.
+Natural storage for a matrix is column major: all columns of row 0 are stored sequentially in memory, then row 1 and so on up to last row of the matrix.
 In the following image, index in the boxes shows the increasing address:
 
 ![Matrix Storage](images/DataStorage.png)
