@@ -1,5 +1,11 @@
 ﻿# Vitis-Tutorials ChangeLog
 
+## 2025.1_update (Jun. 27, 2025)
+### New Tutorials
+- Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/
+### Tutorial Updates
+- AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/
+
 ## 2025.1 (Jun. 16, 2025)
 ### New Tutorials
 - AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters/

@@ -17,6 +17,10 @@ Feature tutorials illustrate specific features of Vitis development flow, some f
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
+ <td align="center"><a href="./01-Vitis_Functional_Simulation/"> Vitis Functional Simulation </a></td>
+ <td>This tutorial introduces Vitis Functional Simulation (VFS), a new feature that allows user to functionally simulate AI Engine graphs and/or HLS kernels in both MATLAB® and Python™ environments on Linux. Simple examples are provided to show users how to get started. For more information on Vitis Functional Simulation, refer to Chapter 6 of <a href="https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis">Embedded Design Development Using Vitis User Guide (UG1701)</a> . </td>
+ </tr> 
+ <tr>
  <td align="center"><a href="./02-Vitis_Subsystem_Simulation/"> Vitis Subsystem Simulation </a></td>
  <td>This tutorial demostrates a new feature Vitis Subsystem Simulation, which enables user to simulate AI Engine + PL designs in a RTL testbench environment. By running the AI Engine simulation encapsulated in a VSS component, the interaction between AI Engine PLIO and custom RTL can be analyzed and verified without having to go through the full system emulation flow. </td>
  </tr> 

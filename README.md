@@ -331,7 +331,7 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/">AIE Independent Graphs </a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/">AIE Independent Graphs :new: </a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples</a>   
@@ -362,17 +362,17 @@ To download a ZIP file of a specific branch, do one of the following:
 <table border="0" width="100%">
     <tbody>
         <tr>
-            <td colspan="3" height="24" align="center">
+            <td colspan="4" height="24" align="center">
                 <strong> <a href="./Vitis_System_Design/">Vitis System Design :new: </a></strong>
             </td>
         </tr>
         <tr>
-            <td colspan="3" height="48">
+            <td colspan="4" height="48">
                 Learn how to develop applications using the Vitis Unified IDE and CLI with tutorials that focus on System design flows and their use cases.
             </td>
         </tr>
         <tr>
-            <td height="24">
+            <td colspan="2" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
             <td colspan="2" height="24">
@@ -381,6 +381,9 @@ To download a ZIP file of a specific branch, do one of the following:
         </tr>
         <tr>
             <td height="24">
+                <a href="./Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/">Vitis Functional Simulation :new: </a>            
+            </td>
+            <td>
                 <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation :new: </a>            
             </td>
             <td>
