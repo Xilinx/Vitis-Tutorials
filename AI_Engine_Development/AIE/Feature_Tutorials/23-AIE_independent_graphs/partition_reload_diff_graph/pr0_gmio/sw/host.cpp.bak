@@ -1,0 +1,136 @@
+/*
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
+*/
+#include <unistd.h>
+#include <fstream>
+#include "xrt/xrt_kernel.h"
+#include "xrt/xrt_graph.h"
+#include "xrt/xrt_aie.h"
+
+void ref_func(int* din,int c[8],int* dout,int size){
+	static int d[8]={0,0,0,0,0,0,0,0};
+	for(int i=0;i<size;i++){
+		for(int j=0;j<7;j++){
+			d[j]=d[j+1];
+		}
+		d[7]=*(din+i);
+		int tmp=0;
+		for(int j=0;j<8;j++){
+			tmp+=d[j]*c[j];
+		}
+		*(dout+i)=tmp;
+	}
+}
+const int ITERATION=1;
+const int BLOCK_SIZE_in_Bytes=ITERATION*1024;
+int main(int argc, char ** argv) {
+    // Create XRT device handle for ADF API
+   	int error=0;
+	auto device = xrt::device(0); //device index=0
+	try{
+		{//Local scope 1
+			// Open xclbin
+			std::cout<<"Open device successfully"<<std::endl;
+    		std::string xclbinFilename = argv[1];
+			auto xclbin_1 = xrt::xclbin(xclbinFilename);
+			auto uuid = device.register_xclbin(xclbin_1);
+			xrt::hw_context hwctx_1{device, uuid};
+			std::cout<<"Load XCLBIN successfully"<<std::endl;
+	
+			auto din_buffer = xrt::aie::bo (hwctx_1, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+			int* dinArray= din_buffer.map<int*>();
+			auto dout_buffer = xrt::aie::bo (hwctx_1, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+			int* doutArray= dout_buffer.map<int*>();
+	    	int* doutRef=(int*)malloc(BLOCK_SIZE_in_Bytes);
+	    	std::cout<<"Allocate buffer completed"<<std::endl;
+	
+	    	int coeff[8]={1,2,3,4,5,6,7,8};
+		
+	    	for(int i=0;i<ITERATION*1024/4;i++){
+				dinArray[i]=i;
+	    	}
+	
+			auto ghdl=xrt::graph(hwctx_1,"gr");
+			std::cout<<"Open graph pr0 successfully"<<std::endl;
+			xrt::aie::buffer bufIn(hwctx_1, "gr.gmioIn");
+			bufIn.async(din_buffer, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
+	    	ghdl.run(ITERATION);
+			xrt::aie::buffer bufOut(hwctx_1, "gr.gmioOut");
+			bufOut.async(dout_buffer, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
+	    	//PS can do other tasks here when data is transferring
+	    	std::cout<<"Waiting for graph to be completed"<<std::endl;
+			bufOut.wait();
+	
+	    	ref_func(dinArray,coeff,doutRef,ITERATION*1024/4);
+	    	for(int i=0;i<ITERATION*1024/4;i++){
+				if(doutArray[i]!=doutRef[i]){
+					std::cout<<"ERROR:dout["<<i<<"]="<<doutArray[i]<<",gold="<<doutRef[i]<<std::endl;
+					error++;
+				}
+	    	}
+	    
+	    	std::cout<<"GMIO transactions finished"<<std::endl;
+	
+			ghdl.end();
+	    	if(error==0){
+				std::cout<<"TEST PASSED!"<<std::endl;
+	    	}else{
+				std::cout<<"ERROR!"<<std::endl;
+	    	}
+		}
+
+		if(argc==3){//Local Scope 2
+			error=0;
+			std::cout<<"start testing pr0 graph2"<<std::endl;
+			std::string xclbinFilename2 = argv[2];
+			std::cout<<"xclbin file name:"<<xclbinFilename2<<std::endl;
+			auto xclbin_2 = xrt::xclbin(xclbinFilename2);
+			auto uuid2 = device.register_xclbin(xclbin_2);
+			xrt::hw_context hwctx_2{device, uuid2};
+			std::cout<<"Load XCLBIN2 successfully"<<std::endl;
+			
+			auto din_buffer2 = xrt::aie::bo (hwctx_2, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+			int* dinArray2 = din_buffer2.map<int*>();
+			auto dout_buffer2 = xrt::aie::bo (hwctx_2, BLOCK_SIZE_in_Bytes,xrt::bo::flags::normal, /*memory group*/0); //Only non-cacheable buffer is supported
+			int* doutArray2= dout_buffer2.map<int*>();
+    		std::cout<<"Allocate buffer2 completed"<<std::endl;
+			for(int i=0;i<ITERATION*1024/4;i++){
+				dinArray2[i]=i;
+    		}		
+	
+			auto ghdl2=xrt::graph(hwctx_2,"gr");
+			std::cout<<"Open pr0 graph2 successfully"<<std::endl;
+			xrt::aie::buffer bufIn2(hwctx_2, "gr.gmioIn");
+			bufIn2.async(din_buffer2, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
+    		ghdl2.run(ITERATION);
+			xrt::aie::buffer bufOut2(hwctx_2, "gr.gmioOut");
+			bufOut2.async(dout_buffer2, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
+    		//PS can do other tasks here when data is transferring
+    		std::cout<<"Waiting for graph to be completed"<<std::endl;
+			bufOut2.wait();
+
+    		for(int i=0;i<ITERATION*1024/4;i++){
+				if(doutArray2[i]!=dinArray2[i]+1){
+					std::cout<<"ERROR:dout["<<i<<"]="<<doutArray2[i]<<",gold="<<dinArray2[i]+1<<std::endl;
+					error++;
+				}
+			}
+    		std::cout<<"GMIO transactions finished"<<std::endl;
+			ghdl2.end();
+
+			if(error==0){
+				std::cout<<"TEST PR0 Graph2 PASSED!"<<std::endl;
+	    	}else{
+				std::cout<<"TEST PR0 Graph2 ERROR!"<<std::endl;
+	    	}
+
+		}
+
+	}catch(std::exception const& e){  
+		std::cout<<"Execution Error:"<<e.what()<<std::endl;  
+		return 1;	
+	}
+
+    return error;
+};
