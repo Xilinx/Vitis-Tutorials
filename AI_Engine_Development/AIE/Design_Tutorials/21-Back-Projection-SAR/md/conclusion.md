@@ -1,14 +1,20 @@
-﻿
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on amd.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Back-Projection for Synthetic Aperture Radar on AI Engines
+
 ## Conclusion
 
 This tutorial has presented a detailed design of a Back-Projection engine for Synthetic Aperture Radar on AI Engines. Using the GOTCHA data set with 586 radar pulses, the design achieves ~2.5 frames per second for a $512\times 512$ target image with fewer than 32 AI Engine tiles. Eight instances of the engine achieves almost an 8-fold increase in throughput. 

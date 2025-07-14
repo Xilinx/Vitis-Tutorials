@@ -1,14 +1,20 @@
-﻿
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on amd.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Back-Projection for Synthetic Aperture Radar on AI Engines
+
 ## System Partitioning
 
 The previous section developed a baseline MATLAB model for the SAR BP algorithm and identified certain algorithm adaptations to make the compute workloads better suited to AI Engine implementation. The performance of this new BP algorithm was evaluated using the system model context with Vitis Functional Simulation of some early AI Engine implementation models. Having confirmed the system performance is acceptable, the next step requires system partitioning work to identify a feasible architecture, data flow, and kernel partitioning that leads to a workable design with attractive performance characteristics and cost effective resource profile. That is the subject of this section.

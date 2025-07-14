@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Recap
@@ -28,13 +34,17 @@ Building the XCLBINs from scratch takes about 16 hours to complete. To create th
 ```bash
 make xsa_all
 ```
+
 or
+
 ```
 make xclbin TARGET=hw REV=rev0          #fails timing
 make xclbin TARGET=hw REV=rev1          #passes timing
 make xclbin TARGET=hw_emu REV=rev1      #create for hardware emulation
 ```
+
 or
+
 ```bash
 mkdir build/rev0/hw
 cd build/rev0/hw
@@ -208,6 +218,7 @@ nk=ulbf_data:1:ulbf_data_00
 nk=ulbf_coeffs:4:ulbf_coeffs_00.ulbf_coeffs_01.ulbf_coeffs_02.ulbf_coeffs_03
 nk=ulbf_slave:4:ulbf_o00.ulbf_o01.ulbf_o02.ulbf_o03
 ```
+
 The ``config.ini`` file repeats this three times because there are three instances of the uplink subgraph. Each uplink subgraph requires one ``ulbf_data`` kernel, four ``ulbf_coeff`` kernels, and four ``ulbf_slave`` kernels.
 
 #### Streaming Connections
@@ -241,6 +252,7 @@ Notice the new XSA hardware platform built on top of the custom platform you bui
 Each AXI4-Lite SmartConnect interface can have up to 15 AXI4-Lite master interfaces. Four of the AXI4-Lite SmartConnect interfaces have 15 AXI4-Lite master interfaces instantiated, one of them has 14, and one of them has four. This is total of 78 AXI4-Lite master interfaces which are connected to the newly linked PL kernels (three ``dlbf_data``, 24 ``dlbf_coeff``, three ``ulbf_data``, 12 ``ulbf_coeff``, 24 ``dlbf_slave``, and 12 ``ulbf_slave`` kernels). The AI Engine is also connected to all the PL kernels through their AXI4-Stream interfaces.
 
 ## Timing Closure
+
 We know that the straightforward configuration file for the Vitis compiler linker did not meet timing. This was because this design is a high resource utilization design, running at a high frequency clock rate (400 MHz). The Vivado tool cannot perform timing closure without user intervention. This is solved by adding two ``axi4s-register slice`` IPs between the PL kernels and the AI Engine, updating the connections in the configuration file, and applying timing closure strategies during placement and routing.
 
 ### Timing Closure Strategy
@@ -257,13 +269,14 @@ In addition to adding the AXI register slices, we also explored timing closure s
 
 The next step is to review the configuration file that contains the timing closure strategy that created rev1, which met timing. Open the `config_2regslice.ini` file, review the comments, and follow the next sections of this module.
 
-### \[connectivity\] Section
+### `[connectivity]` Section
 
 An additional ``nk`` switch is added, which creates 528 ``axi4s_regslice`` PL kernels. In Module 03, you compiled the XO for the ``axi4s_regslice`` PL kernel definition.  
 
 ```
 nk=axi4s_regslice_64b:528
 ```
+
 The ``sc`` switches are also altered so that there are two ``axi4s_regslice_64b`` kernels between the PL kernels and AI Engine. The following snippet is an example of how this is done.
 
 ```
@@ -272,11 +285,11 @@ sc=axi4s_regslice_64b_1.M_AXIS:axi4s_regslice_64b_2.S_AXIS
 sc=axi4s_regslice_64b_2.M_AXIS:ai_engine_0.dlbfid0
 ```
 
-### \[clock\] Section
+### `[clock]` Section
 
 All the ``axi4s_regslice-64b`` kernels are clocked by id=3 (400 MHz).
 
-### \[vivado\] Section
+### `[vivado]` Section
 
 At the end of the ``config_2regslice.ini`` file, there are additional Vivado options given to the Vitis compiler linker.  
 
@@ -298,17 +311,14 @@ If you built from scratch, you can open the block design in the Vivado project t
 
 ## References
 
-
 * [Vitis Application Acceleration Development Flow Documentation: Building and Running the Application, Building the Device Binary, Linking the Kernels](https://docs.amd.com/r/en-US/ug1700-vitis-accelerated-data-center/Linking-the-System)
 * [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-Command)
 * [Vitis Compiler Configuration File](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Vitis-Compiler-Configuration-File)
-*  [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
+* [Vivado Design Suite User Guide: Implementation](https://docs.amd.com/r/en-US/ug904-vivado-implementation/Implementing-the-Design)
 
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

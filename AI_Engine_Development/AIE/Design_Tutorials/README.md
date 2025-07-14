@@ -1,16 +1,23 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
-## Design Tutorials
+# Design Tutorials
 
 The AI Engine Development Design Tutorials showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
-The <a href="../README.md">**README**</a> of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
+The **[README](../README.md)** of AI Engine Development contains important information including tool version, environment settings, and a table describing the platform, operating system, and supported features or flows of each tutorial. It is strongly recommended that you review details before starting to use the AIE tutorials.
 
  <table style="width:100%">
  <tr>
@@ -113,7 +120,7 @@ The <a href="../README.md">**README**</a> of AI Engine Development contains impo
  <tr>
  <td align="center"><a href="./21-Back-Projection-SAR/">Back-Projection Synthetic Aperture Radar on AIE</a></td>
  <td>This tutorial builds an example design for Synthetic Aperture Radar using Vitis Libraries and custom API coding for use with the GOTCHA data set. The design achieves ~2.5 frames per second for 512 x 512 images and 586 radar pulses with fewer than 32 tiles. A large design with 8 engine instances achieves close to 20 frames per second.</td>
- </tr>        
+ </tr>
  </table>
 
 

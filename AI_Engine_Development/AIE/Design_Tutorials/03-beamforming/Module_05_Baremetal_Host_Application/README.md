@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Building the Design
@@ -15,6 +21,7 @@ Next, we will create two bare-metal PS host applications:
 make application MAIN=main_partial
 make application MAIN=main_full
 ```
+
 The individual commands are explained later on in this module.
 
 ## Introduction: Building a Bare-Metal System
@@ -44,7 +51,7 @@ generate-platform.sh -name vck190_baremetal             \
 ```
 
 
-### Compiling the PS Application Source Code    
+### Compiling the PS Application Source Code
 
 You now need to compile your PS host application (``main_partial.cpp`` or ``main_full.cpp``) and the additional source code your PS host applications need. The source code is stored in the ``baremetal_src/`` folder. This bare-metal PS host application only controls the PL kernels, so you do not need to compile the ``aie_control.cpp`` file in this design.  
 
@@ -226,12 +233,9 @@ The main function then calls the `test_ulbf` function. It starts the ULBF kernel
 
 * [Xilinx Standalone Library Documentation OS and Libraries Document Collection](https://www.xilinx.com/search/support-keyword-search.html#q=ug643)
 
-
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

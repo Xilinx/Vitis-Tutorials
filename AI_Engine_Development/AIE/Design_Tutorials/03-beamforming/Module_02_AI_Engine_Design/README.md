@@ -1,20 +1,28 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Building the Design
 
-Create the AI Engine graph application by running the ``make`` step as follows:
+Create the AI Engine graph application by running the `make` step as follows:
 
 ```bash
 make graph
 ```
+
 or
+
 ```bash
 mkdir build
 cd build
@@ -26,8 +34,9 @@ aiecompiler -v                      \
             -include=src/inc        \
             --platform=../Module_01_Custom_Platform/sw/build/vck190_v1_0/export/vck190_v1_0/vck190_v1_0.xpfm \
             -workdir=Work
-```     
-### Options Table
+```
+
+## Options Table
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -68,19 +77,19 @@ AI Engine kernels are computation functions that work together to build data flo
 
 The fundamental beamforming kernel computes a complex matrix multiplication on a (8x8) coefficient matrix times a (8x1) input data matrix which results in a (8x1) output data matrix. The beamforming kernel repeats the matrix multiplication computation on as many (8x1) input data matrices as are fed into it.
 
-When the beamforming kernel computes the matrix multiplication, the results are only partial summations. The beamforming kernel then sends the partial results to identical kernels in a cascade chain for further accumulation and multiplication into a final accumulated (8x1) output data matrix. A real 5G system is determined by the number of layers (M) and number of antennas (N). For this beamforming tutorial, M is determined by the number of inputs into the chain (that is, the length of the input data matrix (8) times the number of kernels in a cascade chain). N is determined by the number of final accumulated outputs at the end of the chain (8) times the number of chains in your design.    
+When the beamforming kernel computes the matrix multiplication, the results are only partial summations. The beamforming kernel then sends the partial results to identical kernels in a cascade chain for further accumulation and multiplication into a final accumulated (8x1) output data matrix. A real 5G system is determined by the number of layers (M) and number of antennas (N). For this beamforming tutorial, M is determined by the number of inputs into the chain (that is, the length of the input data matrix (8) times the number of kernels in a cascade chain). N is determined by the number of final accumulated outputs at the end of the chain (8) times the number of chains in your design.  
 
 This beamforming kernel comes in three flavors: `bf8x8_fst`, `bf8x8_mid`, and `bf8x8_lst`. Review the source files defined in the `src/kernels/` folder.
 
 ![Beamforming Kernels](images/beamforming_kernels.PNG)
 
-The kernels are strung together into a cascading chain, and they are named first, middle, and last depending on their location in the cascading chain. All three of these kernels implement the matrix multiplication function and only differ in the input and output interfaces. The first kernel in the cascading chain does not have a cascading input because it is the first kernel in a chain. The middle kernel has both a cascading input and a cascading output. The last kernel has both a cascading input and output, but writes the output to local memory instead of the cascading bus. 
+The kernels are strung together into a cascading chain, and they are named first, middle, and last depending on their location in the cascading chain. All three of these kernels implement the matrix multiplication function and only differ in the input and output interfaces. The first kernel in the cascading chain does not have a cascading input because it is the first kernel in a chain. The middle kernel has both a cascading input and a cascading output. The last kernel has both a cascading input and output, but writes the output to local memory instead of the cascading bus.
 
-All three beamforming kernel types start by loading the input data and input coefficient data from PL kernels. The first beamforming kernel computes the matrix multiplication, computes the first partial summation, and sends it to a middle kernel using an output cascade. The middle kernel reads the partial summation from the previous kernel, computes its own matrix multiplication on the accumulated data, and generates its own output cascade. This output cascade becomes the input cascade to either another middle kernel or the last kernel. The last kernel does the final matrix multiplication on the accumulated data and writes the final results to a PL kernel. The entire chain of beamforming kernels repeats these calculations on new input data for 12 subcarriers in total.    
+All three beamforming kernel types start by loading the input data and input coefficient data from PL kernels. The first beamforming kernel computes the matrix multiplication, computes the first partial summation, and sends it to a middle kernel using an output cascade. The middle kernel reads the partial summation from the previous kernel, computes its own matrix multiplication on the accumulated data, and generates its own output cascade. This output cascade becomes the input cascade to either another middle kernel or the last kernel. The last kernel does the final matrix multiplication on the accumulated data and writes the final results to a PL kernel. The entire chain of beamforming kernels repeats these calculations on new input data for 12 subcarriers in total.
 
 ### Cascading Chain Subgraph
 
-The subgraph `bfCascadingChain` is used to create a cascading chain of beamforming kernels. Review the graph definition in the `src/inc/subsys.h`. It is a templated subgraph with parameters `xoff`, `yoff`, and `len`. The `xoff` and `yoff` parameters define the coordinate of the leftmost AI Engine. The `len` parameter specifies the length of the cascading chain (`len-2` = the number of middle kernels in a chain). The port arrays `din[len]` and `cin[len]` are the data input and coefficient input ports. The size of these arrays is determined by the `len` parameter (so we need one data input port and one coefficient input port for each kernel in the cascade chain). Additionally, there is one output port `out` for the final output in the last kernel. 
+The subgraph `bfCascadingChain` is used to create a cascading chain of beamforming kernels. Review the graph definition in the `src/inc/subsys.h`. It is a templated subgraph with parameters `xoff`, `yoff`, and `len`. The `xoff` and `yoff` parameters define the coordinate of the leftmost AI Engine. The `len` parameter specifies the length of the cascading chain (`len-2` = the number of middle kernels in a chain). The port arrays `din[len]` and `cin[len]` are the data input and coefficient input ports. The size of these arrays is determined by the `len` parameter (so we need one data input port and one coefficient input port for each kernel in the cascade chain). Additionally, there is one output port `out` for the final output in the last kernel.
 
 You can create subgraphs that contains multiple cascading chains where each chain can be customized to contain any number of beamforming kernels.
 ![Multiple cascading chains in a subgraph](images/cascading_chains.PNG)
@@ -132,6 +141,7 @@ void bf8x8_lst(                                     \
             );
 
 ```
+
 ### AI Engine Subgraph Window Connections
 
 The size of the window (in bytes) is declared with the ``connect<window<WINDOOW_SIZE>>`` construct. The ``bfCascadeChain`` data flow graph establishes the window connections between the input and output ports of the graph and the input ports of the beamforming kernels.
@@ -146,6 +156,7 @@ for(unsigned i=0;i<len;i++){
 // Connect Output
 connect<window<OUT_DATA_WINSZ>>(core[(len-1)*(1-(yoff&1))].out[0], out);
 ```
+
 The window sizes of the coefficient, data, and output ports are as follows:
 
 |Window Size Name|Window Size (bytes)| Number of 32-bit complex data samples|
@@ -153,7 +164,6 @@ The window sizes of the coefficient, data, and output ports are as follows:
 |IN_DATA_WINSZ | 3072 | 768 |
 |IN_COEF_WINSZ | 2048  | 512 |
 |OUT_DATA_WINSZ | 3072  | 768 |
-
 
 ### AI Engine Application Data Files
 
@@ -170,16 +180,19 @@ Next, conduct a System C simulation of your AI Engine application using the AI E
 ```
 make sim
 ```
+
 or
+
 ```
 cd build;
 aiesimulator –pkg-dir Work –output-dir aiesimulator-output |& tee aiesimulator-output/aiesim.log
 ```
-The ``aiesimulator`` executes the AI Engine application where the AI Engine graph is initialized, run, and terminated by the control thread expressed in the `main` function. By default, the ``dut.run()`` option specifies a graph that runs forever. In our AI Engine application, dut.run(NITER) is specified, where NITER = 1. This runs the graph for one iteration. This means the simulation has the AI Engine receiving “one block” of data samples through the input ports, and the AI Engine outputs “one block” of data samples through the output ports. The block size of the data input, coefficient input, and data output ports is specified by the ``IN_DATA_WINSZ``, ``IN_COEF_WINSZ``, and ``OUT_DATA_WINSZ`` global variables.
+
+The `aiesimulator` executes the AI Engine application where the AI Engine graph is initialized, run, and terminated by the control thread expressed in the `main` function. By default, the `dut.run()` option specifies a graph that runs forever. In our AI Engine application, dut.run(NITER) is specified, where NITER = 1. This runs the graph for one iteration. This means the simulation has the AI Engine receiving “one block” of data samples through the input ports, and the AI Engine outputs “one block” of data samples through the output ports. The block size of the data input, coefficient input, and data output ports is specified by the `IN_DATA_WINSZ`, `IN_COEF_WINSZ`, and `OUT_DATA_WINSZ` global variables.
 
 ### Run-Time Event API for Performance Profiling
 
-Additionally, in the AI Engine application, the `event::start_profiling` and `event::read_profiling` API calls are specified. These calls configure the AI Engine to count the accumulated number of clock cycles. Because we know how much data is coming out of the AI Engine (``OUT_DATA_WINSZ``), and using this API gets us the number of clock cycles its takes to receive all the output data, we can calculate the port throughput (bytes per second). This calculation is done in the AI Engine application and printed to the console during simulation. Note that the longer the data is simulated, the higher the throughput accuracy. Currently, the number of iterations is chosen as 20.
+Additionally, in the AI Engine application, the `event::start_profiling` and `event::read_profiling` API calls are specified. These calls configure the AI Engine to count the accumulated number of clock cycles. Because we know how much data is coming out of the AI Engine (`OUT_DATA_WINSZ`), and using this API gets us the number of clock cycles its takes to receive all the output data, we can calculate the port throughput (bytes per second). This calculation is done in the AI Engine application and printed to the console during simulation. Note that the longer the data is simulated, the higher the throughput accuracy. Currently, the number of iterations is chosen as 20.
 
 Open the `build/aiesim.log` file to view the following throughput calculations for two of the output PLIOs:
 
@@ -190,7 +203,7 @@ ULBF Output0: Throughput 6.59284e+08 Samples/s, i.e. 2.63714e+09 Bytes/s
 
 ## Conclusion
 
-5G NR massive MIMO systems require intensive computation for matrix multiplication. It is shown that three 100 MHz 32-layer-64-antenna 5G NR beamforming systems can be implemented on 192 AI Engines with three kernels with slight differences. The proposed matrix multiplication implementation on AI Engine has a flexible and scalable architecture applicable to a wide range of use cases including but not limited to 5G wireless. 
+5G NR massive MIMO systems require intensive computation for matrix multiplication. It is shown that three 100 MHz 32-layer-64-antenna 5G NR beamforming systems can be implemented on 192 AI Engines with three kernels with slight differences. The proposed matrix multiplication implementation on AI Engine has a flexible and scalable architecture applicable to a wide range of use cases including but not limited to 5G wireless.
 
 ## References
 
@@ -208,7 +221,6 @@ ULBF Output0: Throughput 6.59284e+08 Samples/s, i.e. 2.63714e+09 Bytes/s
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

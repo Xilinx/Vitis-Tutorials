@@ -1,13 +1,19 @@
-﻿<table class="sphinxhide" width="100%">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-   </td>
- </tr>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ Platform Creation Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+    </td>
+  </tr>
 </table>
 
 This tutorial lists the changes required for the vadd kernel. Note that this is only one example and there are also other ways to implement the same functions.
 
-#### 1. Include necessary file headers.
+# 1. Include necessary file headers.
 
 Add following 'include' commands at the beginning of the file, right before the 'define' command.
 

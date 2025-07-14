@@ -1,33 +1,38 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ Platform Creation Tutorials</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ Platform Creation Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
-## Frequently Asked Questions
+# Frequently Asked Questions
 
-### Why can't my platform boot on hardware?
+## Why can't my platform boot on hardware?
 
 The AMD Versal™ adaptive SoC platform has various boot stages. You need to isolate the failing stage to find more details of trouble shooting.
 
 - For ***Xilinx Versal Platform Loader and Manager*** stage issues, it loads PDI file and initialize each components. Check the the AMD Vivado™ Design Sutie settings if this step halts or report errors.
 - If the boot hangs at the U-boot stage, check the device tree configuration. If SD card circuit does not support high-speed, add no-1-8-v for the SD controller node. U-boot will look for `boot.scr` and `system.dtb` on the fat32 partition of SD card if it is in the SD boot mode. Make sure these two files are available.
 
-### Why can't my platform boot on hardware emulation?
+## Why can't my platform boot on hardware emulation?
 
 Make sure the SELECTED_SIM_MODEL is set to TLM for CIPS, NOC and AI Engine.
 
-### Why can't my platform support hardware emulation?
+## Why can't my platform support hardware emulation?
 
 Select hardware emulation when you export the XSA file.
 
-### PLM IPI Issue
+## PLM IPI Issue
 
 If you encounter a PLM IPI issue, check whether you add any peripherals which are not enabled in the CPIS PS side.
 
-### When is the AIE app and PL kernel being programmed?
+## When is the AIE app and PL kernel being programmed?
 
 Because the platform you create is not a DFX platform, PL kernels are implemented and packaged with platform all the times. They are included in `BOOT.BIN`. They are downloaded to hardware during boot time.
 
@@ -35,7 +40,7 @@ When the host application is launched, it reads the kernel metadata from xclbin 
 
 AI Engine has two run methods: configure during boot or load graph in host application.
 
-### Why does my AIE system application hang?
+## Why does my AIE system application hang?
 
 If you test the platform with the PL+AIE system application and it hangs on the board with following error message, pressing Ctrl+C reports command stall, you are probably using the **sd_card.img** in **package_aie_debug** directory rather than **package** directory. The application in the package directory is used for debugging. It will stop after loading and wait for debugger to connect to it.
 

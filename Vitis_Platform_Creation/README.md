@@ -1,10 +1,15 @@
-﻿<table class="sphinxhide" width="100%">
- <tr>
-   <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AMD Vitis™ Platform Creation Tutorials</h1>
-   </td>
- </tr>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ Platform Creation Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+    </td>
+  </tr>
 </table>
-
 
 # Vitis Platform Creation Tutorials
 
@@ -19,11 +24,11 @@ Briefly speaking, a platform is a package that contains the HPFM (`.xsa`) file a
 ### Platform Creation Example Quick Access
 
 - For a first experience of platforms, refer to [Vitis Platform Quick Start](../Getting_Started/Vitis_Platform/)
-- For **ZYNQMP** device family, refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
-- For **Versal** device family, refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
-- For **DFX** platform, refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
-- For **SOM** series, refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260/)
-- For **PetaLinux** customization, refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization/)
+- For the **ZYNQMP** device family, refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
+- For the **Versal** device family, refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
+- For the **DFX** platform, refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
+- For the **SOM** series, refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260/)
+- For the **PetaLinux** customization, refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization/)
 
 ## Platform Creation Tutorials
 

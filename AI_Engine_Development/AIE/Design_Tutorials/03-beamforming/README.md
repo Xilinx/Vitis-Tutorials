@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Beamforming Tutorial
@@ -54,14 +60,13 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 
 * [AI Engine Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Overview)
 
-
 ### *Tools*: Installing the Tools
 
 1. Obtain a license to enable beta devices in AMD tools (to use the VCK190 platform).
 2. Obtain licenses for AI Engine tools.
 3. Download and set up the [VCK190 Vitis Platform for 2025.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
-5. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
-6. Download the [VCK190 PetaLinux 2025.1 BSP](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) from the Versal AI Core Series VCK190 HeadStart Early Access Site.
+4. Follow the instructions to install PetaLinux tools in the PetaLinux Tools Documentation ([UG1144](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide)).
+5. Download the [VCK190 PetaLinux 2025.1 BSP](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) from the Versal AI Core Series VCK190 HeadStart Early Access Site.
 
 To build and run the Beamforming tutorial, download and install the following tools:
 
@@ -75,25 +80,27 @@ When the elements of the Vitis software platform are installed, update the shell
 
 1. Edit the `sample_env_setup.sh` script with your file paths:
 
-```bash
-export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2025.1-final.bsp)
+   ```bash
+   export PATH_TO_BSP=<path-to-bsps> #(the folder that contains xilinx-vck190-v2025.1-final.bsp)
+   
+   source <XILINX-INSTALL-LOCATION>/Vitis/2025.1/settings64.sh
+   source <path-to-installed-PetaLinux>/settings.sh
+   ```
 
-source <XILINX-INSTALL-LOCATION>/Vitis/2025.1/settings64.sh
-source <path-to-installed-PetaLinux>/settings.sh
-```
 2. Source the environment script in bash shell:
 
-To get bash shell, use the below command
+   To get bash shell, use the following command:
 
-```bash
-export SHELL=/bin/bash
-echo $SHELL
-```
-Source the environment script
+   ```bash
+   export SHELL=/bin/bash
+   echo $SHELL
+   ```
 
-```bash
-source sample_env_setup.sh
-```  
+3. Source the environment script
+
+   ```bash
+   source sample_env_setup.sh
+   ```
 
 ### *Validation*: Confirming Tool Installation
 
@@ -114,7 +121,7 @@ If you are a novice user, review the following tutorials to understand the basic
 
 ### System Design Overview
 
-This tutorial showcases a beamforming system with 32 layers and 64 antennas implemented on an XCVC1902 Versal ACAP device in the VCK190 board. The beamforming system consists of a downlink subsystem which contains the DL64A32L AI Engine subgraph and the ``dlbf_data``, ``dlbf_coeff``, and ``dlbf_slave`` PL RTL kernels. The beamforming system also consists of the uplink subsystem, which contains the UL64A32L AI Engine subgraph and the ``ulbf_data``, ``ulbf_coeff``, and ``ulbf_slave`` PL RTL kernels. Together, the downlink and uplink subsystems implement the uplink and downlink matrix multiplication equations for M=32 layers and N=64 antennas and compute sample data. The results are compared to reference downlink and uplink result data for verification. The entire beamforming system is copied three times to make full use of the available AI Engine and PL resources.
+This tutorial showcases a beamforming system with 32 layers and 64 antennas implemented on an XCVC1902 Versal ACAP device in the VCK190 board. The beamforming system consists of a downlink subsystem which contains the DL64A32L AI Engine subgraph and the `dlbf_data`, `dlbf_coeff`, and `dlbf_slave` PL RTL kernels. The beamforming system also consists of the uplink subsystem, which contains the UL64A32L AI Engine subgraph and the `ulbf_data`, `ulbf_coeff`, and `ulbf_slave` PL RTL kernels. Together, the downlink and uplink subsystems implement the uplink and downlink matrix multiplication equations for M=32 layers and N=64 antennas and compute sample data. The results are compared to reference downlink and uplink result data for verification. The entire beamforming system is copied three times to make full use of the available AI Engine and PL resources.
 
 #### Block Diagram
 
@@ -143,9 +150,9 @@ The module shows when to create a custom platform rather than a base platform. I
 
 This module shows RTL designers how to:
 
-  * Map data storage and data capture functions to Custom RTL PL kernels, which will connect to the AI Engine and custom platform.
-  * Design PL kernels with the beamforming PL source RTL as an example.
-  * Package RTL PL kernels in to XO files.
+* Map data storage and data capture functions to Custom RTL PL kernels, which will connect to the AI Engine and custom platform.
+* Design PL kernels with the beamforming PL source RTL as an example.
+* Package RTL PL kernels in to XO files.
 
 [Read more...](Module_03_PL_Design)
 
@@ -153,8 +160,8 @@ This module shows RTL designers how to:
 
 This module shows developers how to:
 
- * Combine an AI Engine graph (``libadf.a``) and ``*.xo`` PL kernels into an XCLBIN.
- * Guide the Vivado tool to close timing on a high utilization design.
+* Combine an AI Engine graph (`libadf.a`) and `*.xo` PL kernels into an XCLBIN.
+* Guide the Vivado tool to close timing on a high utilization design.
 
 [Read more...](Module_04_AI_Engine_and_PL_Integration)
 
@@ -168,9 +175,9 @@ This module shows software developers how to create a bare-metal application for
 
 This module shows developers how to:
 
-  * Package their design using the Vitis compiler for hardware or hardware emulation.
-  * Run hardware emulation.
-  * Run their bare metal design on hardware (VCK190 board).
+* Package their design using the Vitis compiler for hardware or hardware emulation.
+* Run hardware emulation.
+* Run their bare metal design on hardware (VCK190 board).
 
 [Read more...](Module_06_Running_the_Baremetal_System)
 
@@ -178,8 +185,8 @@ This module shows developers how to:
 
 This module shows developers how to:
 
-  * Build a custom PetaLinux software platform.
-  * Package the linked XSA and custom Petalinux software platform into a new Versal Custom Platform (``.xpfm``).
+* Build a custom PetaLinux software platform.
+* Package the linked XSA and custom Petalinux software platform into a new Versal Custom Platform (`.xpfm`).
 
 [Read more...](Module_07_Petalinux)
 
@@ -222,9 +229,9 @@ The example and generalized downlink matrix multiplication formulas are given be
 
 #### Uplink Beamforming
 
-At the receiving end, the antenna data (Y<sub>0,0</sub>-Y<sub>0,5</sub>) can be demultiplexed back into their original layers (X<sub>0,0</sub>-Y<sub>0,3</sub>) because of their orthogonal feature.   
+At the receiving end, the antenna data (Y<sub>0,0</sub>-Y<sub>0,5</sub>) can be demultiplexed back into their original layers (X<sub>0,0</sub>-Y<sub>0,3</sub>) because of their orthogonal feature.
 
-###### Generalized Uplink Beamforming Equations
+##### Generalized Uplink Beamforming Equations
 
 ![Uplink Generalized Formulas](images/uplink_generalized_formulas.PNG)
 

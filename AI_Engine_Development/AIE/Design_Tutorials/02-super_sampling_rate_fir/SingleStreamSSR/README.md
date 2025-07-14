@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Single-Stream Interface
@@ -48,6 +54,7 @@ Also take a look at how **y2** is computed:
 ![Y2Compute2Phases](../Images/Y2Compute2Phases.jpg)
 
 For the even output stream, the data and coefficient phases should match:
+
 - Even data phase sent through a filter built with the even phase coefficients
 - Odd data phase sent through a filter built with the odd phase coefficients
 
@@ -56,6 +63,7 @@ Take a look at how this is modified for the odd outputs:
 ![YoddCompute](../Images/YoddCompute.jpg)
 
 In this case, the phases of the data and coefficients should be mixed:
+
 - Even data phase sent through a filter built with the odd phase coefficients
 - Odd data phase sent through a filter built with the even phase coefficients
 
@@ -64,36 +72,26 @@ There is a further difference between the two. In the odd output case, they (eve
 In the previous section, the balance between data transfer and compute performance of the AI Engine was obtained for a 1.25 Gsps data stream going through an eight tap filter. The balance is identical here. As we have eight different filters, we can process 4x 1.25 Gsps streams in parallel.
 
 The data stream and the coefficients must be split into four phases and then recombined. In the following figures, the various colors correspond to a different phase for the data (blue) and the coefficients(red):
+
 - Output phase 0, will be split and recombined as follows:
-
-![Phase0Out](../Images/Phase0Out.jpg)
-
-![Phase0OutDetail](../Images/Phase0OutDetail.jpg)
-
+  ![Phase0Out](../Images/Phase0Out.jpg)
+  ![Phase0OutDetail](../Images/Phase0OutDetail.jpg)
 - Output phase 1, will be split and recombined as follows:
-
-![Phase1Out](../Images/Phase1Out.jpg)
-
-![Phase1OutDetail](../Images/Phase1OutDetail.jpg)
-
+  ![Phase1Out](../Images/Phase1Out.jpg)
+  ![Phase1OutDetail](../Images/Phase1OutDetail.jpg)
 - Output phase 2, will be split and recombined as follows:
-
-![Phase2Out](../Images/Phase2Out.jpg)
-
-![Phase2OutDetail](../Images/Phase2OutDetail.jpg)
-
-
+  ![Phase2Out](../Images/Phase2Out.jpg)
+  ![Phase2OutDetail](../Images/Phase2OutDetail.jpg)
 - Output phase 3, will be split and recombined as follows:
-
-![Phase3Out](../Images/Phase3Out.jpg)
-
-![Phase3OutDetail](../Images/Phase3OutDetail.jpg)
+  ![Phase3Out](../Images/Phase3Out.jpg)
+  ![Phase3OutDetail](../Images/Phase3OutDetail.jpg)
 
 The Data and the Coefficients being split into *N* Phases (four in this case), the resulting architecture requires *N*Phases x *N*Phases (4x4 = 16) to be implemented.
 
 ## Designing the Graph
 
 The kernels created in the previous section can be reused here as the only difference is the way that thay are connected together. In the preceding images, you can see that there are 16 associations **(Data Phase, Coefficient Phase)**. Also, it can clearly be seen that some of the data streams have the data discarded before the computation starts:
+
 - Output phase 0: No input data phase will have discarded samples.
 - Output phase 1: Input data phase 0 will have 1 discarded sample.
 - Output phase 2: Input data phase 0 and 1 will have 1 discarded sample.
@@ -131,10 +129,6 @@ A first possibility is to have these FIFOs implemented in the PL, and have two s
 ![FourPhasesDualStreams](../Images/FourPhasesDualStreams.jpg)
 
 Another possibility is to have them inside the AI Engine array. A latency of less than 32 colock cycle usually gets implemented into the FIFOs included in the AXI-Stream interconnect. Above that number, it gets implemented in a memory module as a DMA FIFO. Either you can share one DMA FIFO for the odd rows and another one for the even rows, or you dedicate one FIFO for each AI Engine. The latter choice that has been done here, and they are constrained to be placed right beside the kernel.
-
-
-
-
 
 ## C++ Code Analysis
 
@@ -180,6 +174,7 @@ FIRGraph_SSR4()
     k[3][2] = kernel::create_object<SingleStream::FIR_MultiKernel_cincout<NUM_SAMPLES,SHIFT>>(taps4_p2);
     k[3][3] = kernel::create_object<SingleStream::FIR_MultiKernel_cin<NUM_SAMPLES,SHIFT>>(taps4_p1);
 ```
+
 The source and header locations are then defined for the AI Engine. The location of the first AI Engine in each row must also be constrained to facilitate the placer work:
 
 ```C++
@@ -202,7 +197,6 @@ All kernels need to discard a specific number of elements, this is handled by th
 
 - `SingleStream::FIRinit<0>`
 - `SingleStream::FIRinit<1>`
-
 
 Finally, the kernels must be connected together with the cascade stream in between them, and the input streams for all of them.
 
@@ -229,8 +223,8 @@ for(int row = 0;row<NPhases;row++)
 
 ## Compilation and Analysis
 
-
 Navigate to the `MultiKernel` directory. In the `Makefile`, three methods are defined:
+
 - `aie`
   - Compiles the graph and the kernels
 - `aiesim`
@@ -312,6 +306,6 @@ This architecture achieves close to 5 Gsps performance. It is slightly less beca
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br><sup>XD020</sup></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

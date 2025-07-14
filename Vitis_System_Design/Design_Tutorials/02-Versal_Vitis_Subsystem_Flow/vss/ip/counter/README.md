@@ -1,12 +1,18 @@
-
-<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
+<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ System Design Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # RTL Subtractor
+
 This counter example demonstrate how to use Vivado to create a packaged RTL kernel in `xo` format which can be integrated to a system with Vitis.<br>
 It also serve the purpose of creating input data stimuli to measure the propagation delay in clock cycles for
 dataflow signal processing paths in AI Engine.

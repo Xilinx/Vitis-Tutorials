@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Building the Design
@@ -26,37 +32,36 @@ For the hardware build, the ``–-package`` command creates an ``sd_card.img`` f
 5. Connect your computer to the VCK190 board using the included USB cable.
 6. Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
 
-```
-Port: <COMMXX>
-Speed: 115200
-Data: 8 bit
-Parity: none
-Stop Bits: 1 bit
-Flow control: none
-Transmit delay: 0 msec/char 0 msec/line
-```
+   ```
+   Port: <COMMXX>
+   Speed: 115200
+   Data: 8 bit
+   Parity: none
+   Stop Bits: 1 bit
+   Flow control: none
+   Transmit delay: 0 msec/char 0 msec/line
+   ```
 
 7. Power on the board.
 8. Wait until you see the `root@versal-rootfs-common-2025_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 9. Run the following commands into the TeraTerm terminal:
 
-```
-cd /mnt/sd-mmcblk0p1
-./test_bf_app.exe 0 aie.xclbin
-```
-The `test_bf_app.exe` should execute functional and performance tests. At the end of the application, the following final output is generated:
+   ```
+   cd /mnt/sd-mmcblk0p1
+   ./test_bf_app.exe 0 aie.xclbin
+   ```
 
-```
-[ULBF] Read first 4 iterations of Slave-11 errCount:0...
-[DLBF+ULBF] - ***** TEST PASSED *****
- ***** END TEST *****
-```
+   The `test_bf_app.exe` should execute functional and performance tests. At the end of the application, the following final output is generated:
+
+   ```
+   [ULBF] Read first 4 iterations of Slave-11 errCount:0...
+   [DLBF+ULBF] - ***** TEST PASSED *****
+    ***** END TEST *****
+   ```
 
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

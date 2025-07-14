@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Introduction: PS Application Creation and Run
@@ -19,11 +25,11 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 3. Use the XSA generated in the previous step that you can find in `simple_aie_application_system_project/build/hw/hw_link/binary_container_1.xsa`
 
-![missing image](images/232_ps_pfm.jpg)
+   ![missing image](images/232_ps_pfm.jpg)
 
 4. Set **standalone** as the **Operating system**, **psv_cortexa72_0** as the **Processor** and **GCC Compiler** as the **Compiler**, and click **Finish**.
 
-![missing image](images/252_ps_os.jpg)
+   ![missing image](images/252_ps_os.jpg)
 
 5. Build the platform.
 
@@ -66,20 +72,20 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
       * `../../../workspace/simple_aie_application/build/hw/Work/ps/c_rts/`
       * `$ENV{XILINX_VITIS}/aietools/include`
 
-![missing image](images/232_ps_app_cfg1.jpg)
+   ![missing image](images/232_ps_app_cfg1.jpg)
 
 9. Still in the **UserConfig.cmake** file, in the **Libraries** section add
 
       * `adf_api` under **Libraries (-l)**
       * `$ENV{XILINX_VITIS}/aietools/lib/aarchnone64.o` under **Library search path (-L)**
 
-![missing image](images/232_ps_app_cfg2.jpg)
+   ![missing image](images/232_ps_app_cfg2.jpg)
 
 
-11. in the **Symbols** section add **"__PS_BARE_METAL__"**
+10. in the **Symbols** section add **"__PS_BARE_METAL__"**
 ![missing image](images/251_ps_app_cfg3.jpg)
 
-12. Modify the Linker Script to increase the heap size for AIE library.
+11. Modify the Linker Script to increase the heap size for AIE library.
 
       * In the Project Explorer, expand the A-to-z_app component.
 
@@ -89,7 +95,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
     ![missing image](images/232_heapsize.jpg)
 
-13. Build the A72 PS component (`A-to-Z_app`).
+12. Build the A72 PS component (`A-to-Z_app`).
 
 > Note:  The creation of the Vitis fixed platform and the ps application can be automated running "make ps_app"
 
@@ -97,17 +103,17 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 1. Open the settings file **vitis-sys.json** for the **simple_aie_application_system_project** and click on the **package.cfg** config file under **Package Settings**
 
-![missing image](images/232_package_option_1.jpg)
+   ![missing image](images/232_package_option_1.jpg)
 
 2. In the **General** Section, in the Baremetal Elf setting add the following to tell the packager to add the application executable and run it on the A72 processor
 
       `../../../../A-to-Z_app/build/A-to-Z_app.elf,a72-0`
 
-![missing image](images/232_package_option_2.jpg)
+   ![missing image](images/232_package_option_2.jpg)
 
 3. In the **AI Engine section** select the option **Do not enable cores**
 
-![missing image](images/232_package_option_3.jpg)    
+   ![missing image](images/232_package_option_3.jpg)    
 
       >**NOTE:** The option will add the line --package.defer_aie_run in the package
        configuration file. This is required when running the AI Engine graph from th
@@ -116,9 +122,9 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 4. In the **AI Engine section** deselect the option **Enable debug**
 
-![missing image](images/232_package_option_4.jpg)
+   ![missing image](images/232_package_option_4.jpg)
 
->**NOTE:** This option is used when running the debugger. In our case, we will just run the system without using the debugger
+   >**NOTE:** This option is used when running the debugger. In our case, we will just run the system without using the debugger
 
 5. Build the **simple_aie_application_system_project** project for Hardware emulation (Click ***Build All*** under **HARDWARE EMULATION** in the Flow navigator).
 
@@ -148,7 +154,7 @@ Now that the system is built, you can test it in hardware emulation.
 
 Before you run the system in hardware, you need to rebuild the system to target the hardware.
 
-   1.  Build the **simple_aie_application_system_project** project for Hardware  (Click ***Build All*** under **HARDWARE** in the Flow navigator).
+   1. Build the **simple_aie_application_system_project** project for Hardware  (Click ***Build All*** under **HARDWARE** in the Flow navigator).
 
 
 ## Step 6A: Run the System in Hardware via SD Boot
@@ -159,7 +165,7 @@ Use the SD card to run the application.
 
    2. Under the  **simple_aie_application_system_project** component expand **Output > hw > package**. In the `package` directory, you will find a `sd_card.img` file.
 
-  ![missing image](images/232_package_sd_card.jpg)
+      ![missing image](images/232_package_sd_card.jpg)
 
         > **NOTE:** You can find the `sd_card.img` file in **package** and **package_aie_debug** directories. The `sd_card.img` in **package_aie_debug** directory is for hardware debug purpose. It stops AI Engine after loading and waits for the run instruction from the debugger. The one in the **package** directory is for free running. So choose `sd_card.img` in **package** directory for SD card free running.
 

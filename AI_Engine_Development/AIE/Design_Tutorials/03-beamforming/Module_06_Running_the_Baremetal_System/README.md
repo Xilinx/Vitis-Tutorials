@@ -1,10 +1,16 @@
-﻿<table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>AI Engine Development</h1>
-    <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis™ Development Environment on xilinx.com</br></a>
-    <a href="https://www.xilinx.com/products/design-tools/vitis/vitis-ai.html">See Vitis™ AI Development Environment on xilinx.com</a>
+﻿<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ AI Engine Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+        </br>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Introduction: Packaging and Running the System  
@@ -20,11 +26,13 @@ For hardware emulation, the ``–-package`` command adds the PDI and EMULATION_D
 ```bash
 make package
 ```
+
 or
 
 ```bash
 make package TARGET=hw_emu MAIN=main_partial
 ```
+
 or
 
 ```bash
@@ -52,6 +60,7 @@ Notice the absence of the ``-D__PS_ENABLE_AIE__`` (Module 05) and ``–package.d
 |libadf.a|The AI Engine application created in Module 02.|
 
 ### Build Products
+
 |Filename|Description|
 |  ---  |  ---  |
 |build/hw_emu_main_partial/hw_emu_main_partial.package/|Package directory containing the files needed to run hardware emulation.|
@@ -65,11 +74,14 @@ Use the following command to launch hardware emulation from the command line.
 ```
 make run_emu
 ```
+
 or
+
 ```
 cd build/hw_emu_main_partial/hw_emu_main_partial.package
 ./launch_hw_emu.sh
 ```
+
 You can open a new shell and continue with the next section while hardware emulation completes.  
 
 To exit QEMU simulation, press **Ctrl+A**, let go of the keyboard, and then press **x**.
@@ -81,6 +93,7 @@ For hardware builds, the package process creates an XCLBIN file containing the E
 ```bash
 make package TARGET=hw MAIN=main_full
 ```
+
 or
 
 ```bash
@@ -95,6 +108,7 @@ v++ -p                                                                          
     ../Module_04_AI_Engine_and_PL_Integration/build/rev1/hw_emu/beamforming.rev1.hw_emu.xclbin   \
     ../Module_02_AI_Engine_Design/build/libadf.a                                                     
 ```
+
 ### Dependencies
 
 |Filename|Description|
@@ -105,6 +119,7 @@ v++ -p                                                                          
 |libadf.a|The AI Engine application created in Module 02.|
 
 ### Build Products
+
 |Filename|Description|
 |  ---  |  ---  |
 |build/hw_main_full/hw_main_full.package/|Package directory containing files needed to run hardware (VCK190 board).|
@@ -121,37 +136,36 @@ Perform the following steps to run the `hw_main_full_ps.elf` excutable on your V
 4. Set the switch SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON.
 5. Connect your computer to the VCK190 board using the included USB cable.
 6. Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
-```
-Port: <COMMXX>
-Speed: 115200
-Data: 8 bit
-Parity: none
-Stop Bits: 1 bit
-Flow control: none
-Transmit delay: 0 msec/char 0 msec/line
-```
+
+   ```
+   Port: <COMMXX>
+   Speed: 115200
+   Data: 8 bit
+   Parity: none
+   Stop Bits: 1 bit
+   Flow control: none
+   Transmit delay: 0 msec/char 0 msec/line
+   ```
 
 7. Power on the board.
 
 8. Output of bare-metal PS host application: the `*.elf` should execute immediately after booting and you should see output on the console for each phase in the PS host application execution flow. At the end of the application, you should see the following final output:
 
-```
-[ULBF] Read first 4 iterations of Slave-11 errCount:0...
-[DLBF+ULBF] - ***** TEST PASSED *****
- ***** END TEST *****
-```
-NB: HW_emu  run will take long hours to run which makes software collapse , hw run can be successfully done.
+   ```
+   [ULBF] Read first 4 iterations of Slave-11 errCount:0...
+   [DLBF+ULBF] - ***** TEST PASSED *****
+    ***** END TEST *****
+   ```
+
+   NB: HW_emu  run will take long hours to run which makes software collapse , hw run can be successfully done.
 
 ## References
-
 
 * [Vitis Compiler Command Options](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-General-Options)
 
 ### Support
 
 GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
