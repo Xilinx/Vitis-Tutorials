@@ -1,19 +1,30 @@
-﻿# Vitis-Tutorials ChangeLog
+# Vitis-Tutorials ChangeLog
+
+## 2025.1_update (Jul. 13, 2025)
+
+- Updated headers for all non-licensing Markdown files.
 
 ## 2025.1_update (Jun. 27, 2025)
+
 ### New Tutorials
+
 - Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/
+
 ### Tutorial Updates
+
 - AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/
 
 ## 2025.1 (Jun. 16, 2025)
+
 ### New Tutorials
+
 - AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters/
 - AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/
 - Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/
 - Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/
 
 ### Tutorial Updates
+
 - Revamped 2 tutorials to include new features  
     - Getting_Started/Vitis/
     - Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/
@@ -23,6 +34,7 @@
     - AI_Engine_Development/AIE/Feature_Tutorials/16-external-traffic-generator-aie/
 
 ### EoU Improvements
+
 - Introduce a new category `Vitis_System_Design` to host new tutorials focused on system design flows.
 - Remove tutorials from the `Hardware_Acceleration` category in this branch. These tutorials are still available in previous branches. 
 

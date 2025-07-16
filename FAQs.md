@@ -1,9 +1,15 @@
-﻿<p align="right"><a>English</a> | <a href="docs-jp/README.md">日本語</a></p>
-<table width="100%">
- <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Vitis™ In-Depth Tutorials</h1>
+<p class="sphinxhide" align="right"><a>English</a> | <a href="docs-jp/README.md">日本語</a></p>
+<table class="sphinxhide" style="width:100%;">
+  <tr>
+    <td align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/logo-white-text.png">
+        <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
+      </picture>
+      <h1>AMD Vitis™ In-Depth Tutorials</h1>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
     </td>
- </tr>
+  </tr>
 </table>
 
 # Frequently Asked Questions
@@ -37,6 +43,6 @@ Contributions to Vitis-Tutorials are welcome. Create Pull Requests to the branch
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
