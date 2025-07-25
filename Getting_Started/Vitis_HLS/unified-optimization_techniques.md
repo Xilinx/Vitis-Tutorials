@@ -104,7 +104,7 @@ Now that you have examined different optimizations for different issues in the d
 <hr class="sphinxhide"></hr>
 
 <p class="sphinxhide" align="center">
-<a href="../README.md">Return to Main Page</a> — <a href="./README.md">Return to Start of Tutorial</a>
+<a class="sphinxhide" href="../README.md">Return to Main Page</a> — <a class="sphinxhide" href="./README.md">Return to Start of Tutorial</a>
 </p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

@@ -162,7 +162,7 @@ Now you have completed the hardware design. In the coming steps, you will review
 
    Next, we will use the example of modifying the interrupt controller IP address to illustrate how to modify the IP address in the address editor.
 
-   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the [Versal Technical Reference Manual](https://docs.amd.com/r/en-US/am011-versal-acap-trm/High-level-Address-Map). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
+   - As the interrupt controller is connected with **M_AXI_FPD** domain, we need check FPD domain supported address space. Please check the Versal Adaptive SoC Technical Reference Manual ([AM011](https://docs.amd.com/go/en-US/am011-versal-acap-trm)). You could find following address range. That means the IP connected to FPD domain could be placed in 0xA400_0000-0xAFFF_FFFF or 0xB000_0000-0xBFFF_FFFF address space. But conflict is not allowed.
 
       ![Platform Setup - AXI Ports](images/step1/FPD.PNG)
 

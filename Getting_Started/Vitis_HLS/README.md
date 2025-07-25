@@ -11,15 +11,13 @@
   </tr>
 </table>
 
-
 # Vitis HLS Analysis and Optimization
 
 ***Version: Vitis 2025.1***
 
 ## Introduction
 
-Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code for implementation in the programmable logic (PL) region of AMD devices. It is the tool that performs high-level synthesis of the C/C++ code and exports it as either a Vivado IP (.zip) for use in the Vivado Design Suite and the Embedded Software development flow, or as a Vitis kernel (.xo) for use in the Vitis acceleration flow and heterogeneous system designs. Although the Vitis kernel and Vivadp IP flows are similar, there are some fundamental differences as explained in [Introduction to Vitis HLS Components](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Introduction-to-Vitis-HLS-Components). This tutorial demonstrates the Vitis unified IDE flow for the bottom-up development of HLS designs.
-
+Vitis High-Level Synthesis (HLS) enables you to compile C/C++ code into RTL code for implementation in the programmable logic (PL) region of AMD devices. It is the tool that performs high-level synthesis of the C/C++ code and exports it as either a Vivado IP (`.zip`) for use in the Vivado Design Suite and the Embedded Software development flow, or as a Vitis kernel (`.xo`) for use in the Vitis acceleration flow and heterogeneous system designs. Although the Vitis kernel and Vivado IP flows are similar, there are some fundamental differences as explained in [Introduction to Vitis HLS Components](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Introduction-to-Vitis-HLS-Components). This tutorial demonstrates the Vitis unified IDE flow for the bottom-up development of HLS designs.
 
 ### Before You Begin
 
@@ -41,7 +39,7 @@ source <Vitis_install_path>/Vitis/2025.1/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
-*NOTE: .csh scripts are also provided but this tutorial assumes a bash shell is used.*
+> **Note**: `.csh` scripts are also provided, but this tutorial assumes a bash shell is used.
 
 To specify the location of any platforms you have installed, set the following environment variable:
 
@@ -73,7 +71,7 @@ This tutorial describes how to create an HLS component using the Vitis Unified I
 <hr class="sphinxhide"></hr>
 
 <p class="sphinxhide" align="center">
-<a href="./README.md">Return to Main Page</a> — <a href="./../README.md">Return to Getting Started Pathway</a>
+<a class="sphinxhide" href="./README.md">Return to Main Page</a> — <a class="sphinxhide" href="./../README.md">Return to Getting Started Pathway</a>
 </p>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

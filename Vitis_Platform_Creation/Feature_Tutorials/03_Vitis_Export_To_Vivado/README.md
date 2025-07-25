@@ -11,28 +11,29 @@
   </tr>
 </table>
 
-
 # Vitis Export to Vivado Flow
 
 ***Version: Vivado and Vitis 2025.1***
 
 This tutorial has been subject to change for the last couple of releases following the updates and improvements of the tools.
 
-To align the flow and methodology with closely related tutorials, this tutorial is now replaced to be an instruction how to modify the new [02-Versal_Vitis_Subsystem_Flow](../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow) into a pure Vitis Export to Vivado.<br>
+To align the flow and methodology with closely related tutorials, this tutorial is now replaced to be an instruction how to modify the new [02-Versal_Vitis_Subsystem_Flow](../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow) into a pure Vitis Export to Vivado.
+
 The design structure is already prepared for this activity and will be explained in this guide.
 
 
 ## Introduction
 
-The Vitis Export to Vivado flow is intended for users preferring to handle synthesis, implementation and timing closure of the hardware design in Vivado.<br>
+The Vitis Export to Vivado flow is intended for users preferring to handle synthesis, implementation and timing closure of the hardware design in Vivado.
+
 More details and comparison between the flows is available in [Vitis Export to Vivado Flow (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Export-to-Vivado-Flow)
 
 The purpose for this tutorials is to prepare a design following the steps in this figure:
 
 ![](./doc_files/vitis_export_to_vivado_flow.svg)
 
-
 ### Modifications needed on the Vitis subsystem flow
+
 The Vitis subsystem flow tutorial starts by adding AIE, HLS and RTL blocks to a Vitis Subsystem, then uses Vitis export to Vivado flow to put the VSS into a full design context.
 In addition the tutorial adds more HLS example blocks to the extensible platform using Vitis linking and then exports the contribution, including VSS and AIE to a VMA which Vivado can import.
 
@@ -46,10 +47,10 @@ Start with a clone of Vitis-Tutorials and change directory to `Vitis_System_Desi
 
 **Note:** To keep track of the changes, it's recommended to use Git commands when moving files. By committing the changes it is easy to revert and redo changes if needed. This also avoids moving generated output files if the design has already been built.
 
-
 In this tutorial, there are no conflicting IP names used, so the move can be done directly. The Makefiles in both IP folders are designed to pick up blocks based on folder names and each block folder have their own Makefiles.
 
 Move instructions:
+
 ```
 git move vss/ip/aie vitis/ip/aie
 git move vss/ip/axis1to2 vitis/ip/axis1to2
@@ -67,13 +68,12 @@ Start with inspecting the VSS and Vitis linker configurations.
 
 Then edit the `vitis/src/system.cfg` and do the following changes:
 
-  - 1. Adding all statements from `vss_conn.cfg` except the line with `vss=` declaration.
-  - 2. Cut any `vss_top_` from concatenate names.
-  - 3. Remove any redundant statements like `freqhz` for `counter_0` instance.
-
-
+1. Add all statements from `vss_conn.cfg`, *except* the line with `vss=` declaration.
+2. Cut any `vss_top_` from concatenate names.
+3. Remove any redundant statements, such as `freqhz` for `counter_0`.
 
 The result should look like this:
+
 ```
 #
 # Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
