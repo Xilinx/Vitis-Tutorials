@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2025.1_update (Jul. 28, 2025)
+
+### New Tutorials
+
+- AI_Engine_Development/AIE/Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/
+
 ## 2025.1_update (Jul. 13, 2025)
 
 - Updated headers for all non-licensing Markdown files.

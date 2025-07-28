@@ -110,7 +110,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td width="7%" align="center"><b>HLS Kernel</b>
  <td width="7%" align="center"><b>x86 simulator</b>
  <td width="7%" align="center"><b>aie simulator</b>
- <td width="7%" align="center"><b>SW Emu</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
@@ -127,7 +126,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
- <td>Yes</td>
  <td> </td>
  <td> </td>
  </tr>
@@ -135,12 +133,11 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
  <td>Custom</td>
  <td>Baremetal</td>
- <td>Vivado &<br>Vitis IDE</td>
+ <td>Yes</td>
  <td> </td>
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -155,7 +152,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -170,7 +166,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -185,7 +180,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -195,10 +189,9 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AIE Versal Integration</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>CLI / Vitis Unified IDE</td>
+ <td>Yes</td>
  <td></td>
  <td>MM2S / S2MM</td>
- <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
@@ -215,7 +208,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -234,7 +226,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
   <tr>
  <td align="center"><a href="./Feature_Tutorials/08-dsp-library/">DSP Library Tutorial</a></td>
@@ -242,10 +233,9 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Linux</td>
  <td> </td>
  <td>DSPLib</td>
- <td>MM2S / S2MM Variant</td>
+ <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -255,10 +245,9 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Vitis IDE</td>
- <td> </td>
- <td> </td>
  <td>Yes</td>
+ <td> </td>
+ <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
@@ -270,12 +259,11 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/10-aie-dsp-lib-model-composer/">AIE DSPLib and Model Composer</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Simulink</td>
+ <td>Yes</td>
  <td>DSPLib</td>
  <td>MM2S / S2MM</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -287,8 +275,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Linux</td>
  <td> </td>
  <td> </td>
- <td>Traffic Generators</td>
- <td> </td>
+ <td>Traffic Gen</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -305,7 +292,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -315,12 +301,11 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/14-implementing-iir-filter/">Implementing an IIR Filter on the AIE</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Vitis IDE</td>
+ <td>Yes</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
  <td>Yes</td>
- <td></td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -335,7 +320,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -350,7 +334,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td> </td>
  <td> </td>
@@ -365,7 +348,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
@@ -384,7 +366,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/23-AIE_independent_graphs/">Compiling AIE Graphs for Independent Partitions</a></td>
@@ -395,7 +376,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> Yes </td>
  <td> Yes </td>
- <td> </td>
  <td> Yes </td>
  <td> Yes </td>
  <td> Yes </td>
@@ -405,8 +385,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/24-aie_pl_interface/">RTL / AI Engine interfacing Examples</a></td>
  <td>Custom</td>
  <td>N/A</td>
- <td>Vivado & Vitis IDE </td>
- <td> </td>
+ <td>Yes</td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -429,7 +408,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="../AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a></td>
@@ -441,6 +419,19 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td>Yes</td>
  <td> </td>
+ <td> </td>
+ <td> </td>
+ <td> </td>
+ </tr> 
+ <tr>
+ <td align="center"><a href="./Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/">A Gentle Introduction to AI Engine Kernel Programming</a></td>
+ <td>Base</td>
+ <td>Linux</td>
+ <td>Yes</td>
+ <td> </td>
+ <td> </td>
+ <td>Yes</td>
+ <td>Yes</td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -462,20 +453,18 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td width="7%" align="center"><b>HLS Kernel</b>
  <td width="7%" align="center"><b>x86 simulator</b>
  <td width="7%" align="center"><b>aie simulator</b>
- <td width="7%" align="center"><b>SW Emu</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
  <td width="7%" align="center"><b>Profile in HW</b>
  </tr>
  <tr>
- <td align="center"><a href="../../Developer_Contributed/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
+ <td align="center"><a href="../../Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a></td>
  <td>Custom</td>
  <td>Linux</td>
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM / VADD</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -492,7 +481,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td></td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -511,7 +499,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/03-beamforming/">Beamforming Design</a></td>
@@ -522,7 +509,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -535,7 +521,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -552,7 +537,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td> </td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -567,7 +551,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>PL Data Generator and Checker</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -582,7 +565,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>PL Data Generator and Checker</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -597,7 +579,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>PL Datamover</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -616,7 +597,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr> 
  <tr>
  <td align="center"><a href="./Design_Tutorials/10-GeMM_AIEvsDSP/">Versal GeMM Implementation</a></td>
@@ -627,7 +607,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Datamover</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -645,10 +624,8 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  <td></td>
  </tr>
- <tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/12-IFFT64K-2D/">64K IFFT Using 2D Architecture</a></td>
  <td>Base</td>
@@ -656,7 +633,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -677,7 +653,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr> 
  <tr>
  <td align="center"><a href="./Design_Tutorials/14-Bitonic-Sorting/">Bitonic SIMD Sorting on AI Engine</a></td>
@@ -692,7 +667,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr> 
  <tr>
  <td align="center"><a href="./Design_Tutorials/15-farrow_filter/">Fractional Delay Farrow Filter</a></td>
@@ -703,7 +677,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Data Movers</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -718,7 +691,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td> </td>
  <td>Yes</td>
  <td> </td>
@@ -737,7 +709,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr> 
  <tr>
  <td align="center"><a href="./Design_Tutorials/18-MUSIC-Algorithm/">MUSIC Algorithm on AI Engine</a></td>
@@ -746,7 +717,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -767,7 +737,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer</a></td>
@@ -782,7 +751,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/21-Back-Projection-SAR/">Back-Projection SAR on AIE</a></td>
@@ -793,7 +761,6 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td>Data Movers & Image Buffering</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td> </td>
  <td>Yes</td>
  <td> </td>

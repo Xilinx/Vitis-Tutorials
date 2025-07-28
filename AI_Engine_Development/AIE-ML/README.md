@@ -48,7 +48,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td width="7%" align="center"><b>HLS Kernel</b>
  <td width="7%" align="center"><b>x86 simulator</b>
  <td width="7%" align="center"><b>aie simulator</b>
- <td width="7%" align="center"><b>SW Emu</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
@@ -58,12 +57,11 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
  <td>Custom</td>
  <td>Baremetal</td>
- <td>Vivado &<br>Vitis IDE</td>
+ <td>Yes</td>
  <td> </td>
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -78,7 +76,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -93,7 +90,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -108,7 +104,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -118,10 +113,9 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td align="center"><a href="./Feature_Tutorials/05-AI-engine-versal-integration/">AIE Versal Integration</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>CLI / Vitis Unified IDE</td>
+ <td>Yes</td>
  <td></td>
  <td>MM2S / S2MM</td>
- <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
@@ -138,7 +132,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -153,7 +146,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td>Yes</td>
@@ -172,7 +164,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Feature_Tutorials/07-tiling-parameters/">Tiling Parameter Programming</a></td>
@@ -184,7 +175,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
- <td> </td>
  <td>Yes</td>
  <td> </td>
  <td> </td>
@@ -192,6 +182,7 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  </table>
 
 ### Design Tutorials
+
 These tutorials target the **VEK280** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
 
  <table style="width:100%">
@@ -204,7 +195,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td width="7%" align="center"><b>HLS Kernel</b>
  <td width="7%" align="center"><b>x86 simulator</b>
  <td width="7%" align="center"><b>aie simulator</b>
- <td width="7%" align="center"><b>SW Emu</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
@@ -217,7 +207,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM / VADD</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -238,7 +227,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>
  <tr>
  <td align="center"><a href="./Design_Tutorials/02-Prime-Factor-FFT/">Prime Factor FFT-1008 on AIE-ML</a></td>
@@ -247,7 +235,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td>MM2S / S2MM</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
@@ -264,7 +251,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>MM2S / S2MM</td>
  <td> </td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -274,12 +260,11 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td align="center"><a href="./Design_Tutorials/04-AIE-API-based-FFT-for-many-instances-applications/">AIE API based FFT for Many Instances Applications</a></td>
  <td>Base</td>
  <td>Linux</td>
- <td>Vitis Unified IDE</td>
+ <td>Yes</td>
  <td> </td>
  <td> </td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td> </td>
  <td> </td>
  <td> </td>
@@ -298,7 +283,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>  
  <tr>
  <td align="center"><a href="./Design_Tutorials/06-farrow_filter/">Migrating Farrow Filter from AIE to AIE-ML</a></td>
@@ -309,7 +293,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -324,7 +307,6 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td>DataMover</td>
  <td>Yes</td>
  <td>Yes</td>
- <td> </td>
  <td>Yes</td>
  <td>Yes</td>
  <td> </td>
@@ -343,11 +325,8 @@ These tutorials target the **VEK280** board. The table below lists the tutorials
  <td> </td>
  <td> </td>
  <td> </td>
- <td> </td>
  </tr>  
  </table>
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

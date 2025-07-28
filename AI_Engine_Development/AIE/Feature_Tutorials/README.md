@@ -116,7 +116,11 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <tr>
  <td align="center"><a href="../../AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a></td>
  <td>In this tutorial, we explore how to use matrix multiplication/General Matrix Multiply (GEMM) from the DSP Vitis library. We will examine various design requirements and configure the parameters accordingly. Finally, we will migrate the design to the AIE-ML architecture and compare its performance with AIE architecture.</td>
- </tr>  
+ </tr>
+ <tr>
+ <td align="center"><a href="./26-gentle_intro_to_aie_kernel_programming/">A Gentle Introduction to AI Engine Kernel Programming</a></td>
+ <td>In this tutorial, we will guide you on how to get data into and out of a kernel using a simple contrived example.</td>
+ </tr>    
  </table>
 
 

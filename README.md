@@ -22,10 +22,10 @@ If you are new to the Vitis software platform and want to start with the basics,
 
 Otherwise, if you are looking for a specific tutorial for the desired device or platform, or are interested in a special application or feature, you can select a tutorial from the topics as listed under the [Tutorials](#tutorials).
 
-In this repository, tutorials are divided into different topics by function and application with each topic containing 2 sections.
+In this repository, tutorials are organized by topic based on function and application. Each topic includes two sections:
 
-- **Feature Tutorials** illustrate specific features or flows of Vitis, Libraries, XRT and platforms, some features may not be required by all designs but are still useful for some use cases.
-- **Design Tutorials** illustrate higher-level concepts or design flows, walk through specific examples or reference designs, and more complex and complete designs or applications.
+- **Feature Tutorials** focus on specific features or flows, such as AI Engine, embedded software, HLS, or platform creation. These features may not be essential for every design but are valuable for certain use cases.
+- **Design Tutorials** cover higher-level concepts and design flows. They guide you through detailed examples or reference designs and showcase more complex, complete applications.
 
 ## How to Get Help
 
@@ -41,18 +41,17 @@ To get a local copy of the [Vitis-Tutorials](https://github.com/Xilinx/Vitis-Tut
 git clone https://github.com/Xilinx/Vitis-Tutorials.git
 ```
 
-The default branch is always consistent with the most recently released version of the Vitis software platform. If you need to run a tutorial on a different version, after you clone the repository, use the `git checkout <branch>` command to specify a branch that matches the tool version you are using.
+The default branch always reflects the latest Vitis release. If you need a different version, run `git checkout <branch>` after cloning the repository to switch to the appropriate branch.
 
-Alternatively, you can also download repository contents as a ZIP file. The downloaded ZIP file will contain *only* the selected branch, and its overall size will be smaller than a cloned repository.
-
-To download a ZIP file of a specific branch, do one of the following:
-
+Alternatively, you can download the repository as a ZIP file. This includes only the selected branch and is smaller than a full clone. To download a ZIP file of a specific branch, do one of the following:
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
 - From a terminal, execute the following command. The following uses the 2025.1 branch as an example.
 
-  ```code
-  wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2025.1.zip && unzip 2025.1.zip 
-  ```
+```code
+wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2025.1.zip && unzip 2025.1.zip 
+```
+
+If you already know exactly which tutorials or folders you need, `git sparse-checkout` is an option to download only those parts. Please refer to Git documentation for usage details.
 
 ## Release Notes
 
@@ -354,6 +353,7 @@ To download a ZIP file of a specific branch, do one of the following:
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/25-AIE-kernel-optimization/">AIE Kernel Optimization :new: </a>         
             </td>
             <td>   
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/">AI Engine Kernel Programming :new: </a>                
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer :new: </a>
