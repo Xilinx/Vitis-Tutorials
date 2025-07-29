@@ -14,36 +14,29 @@
 </table>
 
 # A "Gentle" Introduction to AI Engine Kernel Programming
+
 ***Version: Vitis 2025.1***
 
 ## Overview
 
-This tutorial contains the code presented in the [webinar](https://webinar.amd.com/A-Gentle-Introduction-to-AI-Engine-Kernel-Programming/en) of the same name, and will show in detail how an [AI engine](https://www.amd.com/en/products/adaptive-socs-and-fpgas/technologies/ai-engine.html) kernel program gets data from, and outputs data to its environment. A *contrived* task is proposed which will utilize all the port types. Unit tests for each component kernel to be used in the task are designed with [Julia](https://julialang.org) scripts to create stimulus and reference to verify the functionality of the kernels. The components are then assembled to complete the task. Makefiles are provided to build the program and run simulations so that the reader can focus on the programming aspects of AI engine kernel design.
+This tutorial contains the code presented in the [webinar](https://webinar.amd.com/A-Gentle-Introduction-to-AI-Engine-Kernel-Programming/en) of the same name. It shows you how an [AI Engine](https://www.amd.com/en/products/adaptive-socs-and-fpgas/technologies/ai-engine.html) kernel program gets data from, and outputs data to its environment. A *contrived* task, which utilizes all the port types, is proposed. [Julia](https://julialang.org) scripts are used to design unit tests for each component kernel to create stimulus and reference to verify the functionality of the kernels. The components are then assembled to complete the task. Makefiles are provided to build the program and run simulations so that the reader can focus on the programming aspects of AI engine kernel design.
 
 ## Introduction
 
-A new computing resource was introduced in the [Versal Adaptive SoC](https://www.amd.com/en/products/adaptive-socs-and-fpgas/versal.html) product family. This computing resource consists of a 2D array of independently running scalar and vector processors called "AI engines" (sometimes abbreviated as "AIE"), capable of running at a maximum clock frequency of 1.3 GHz [[ref](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics)]. 
-
+The [Versal Adaptive SoC](https://www.amd.com/en/products/adaptive-socs-and-fpgas/versal.html) product family introduced a new computing resource. This computing resource consists of a 2D array of independently running scalar and vector processors called "AI Engines" (AIE), capable of running at a maximum clock frequency of 1.3 GHz [[DS957](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics)].
 
 ## A Brief Overview of AI Engine Tiles and Kernels
 
-Each AI engine is located on a "tile" which contains the processors, local memory, and a programmable [AXI stream](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). The interconnect allows communication with non-adjacent tiles, programmable logic (PL), the processor system (PS), and external memory (see Fig.1). This tutorial focuses on the 1st generation AIE architecture described in [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine).
+Each AI Engine is located on a "tile" which contains the processors, local memory, and a programmable [AXI Stream Interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). The interconnect allows communication with non-adjacent tiles, programmable logic (PL), the processor system (PS), and external memory (see Fig.1). This tutorial focuses on the first generation AIE architecture described in [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/aie_array.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 1: AI engine array</td>
- </tr>
-</table>
-<br />
+![Fig. 1: AI engine array](./images/aie_array.png)
+*Fig. 1: AI Engine Array*
 
-Each AIE tile has 16KB of program memory and 32KB of data memory. Data memory may be shared with adjacent tiles.
+Each AIE tile has 16 KB of program memory and 32 KB of data memory. Data memory may be shared with adjacent tiles.
 
-AXI stream connections are defined by an adaptive dataflow (ADF) graph created by the user.
+AXI Stream connections are defined by an adaptive dataflow (ADF) graph that is created by the user.
 
-A C++ program running on the AI engine (referred to as a "kernel") will read in data (e.g., sampled signals from multiple antennas), process the data (e.g., perform beamforming), and output the results for possible further processing.
+A C++ program running on the AI Engine (referred to as a "kernel") reads data (for example, sampled signals from multiple antennas), processes the data (for examplw, perform beamforming), and outputs the results for possible further processing.
 
 An adaptive SoC may have tens to hundreds of these AIE tiles in [hard IP cores](https://en.wikipedia.org/wiki/Semiconductor_intellectual_property_core), depending on the device (see [Versal AI Core Series Product Selection Guide (XMP452)
 ](https://docs.amd.com/v/u/en-US/versal-ai-core-product-selection-guide)).
@@ -52,29 +45,23 @@ This arrangement of multiple independent processors has huge potential for paral
 
 ## Scalar and Vector Processors
 
-The AI engine is a VLIW (very long instruction word) processor with separate slots for scalar and vector instructions.
+The AI Engine is a VLIW (very long instruction word) processor with separate slots for scalar and vector instructions.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/scalar_and_vector.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 2: Scalar and vector units</td>
- </tr>
-</table>
-<br />
+![Fig. 2: Scalar and vector units](./images/scalar_and_vector.png)
+*Fig. 2: Scalar and vector units*
 
-AIE intrinsics (i.e., special functions recognized by the compiler) are used to access the SIMD (single instruction multiple data) capabilities of the vector processor. A high-level API (application programming interface) is also available to allow the creation of architecture-agnostic programs which can abstract away the low-level details of intrinsics [see [AI Engine Intrinsics and API User Guides](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html)]. [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) provides a graphical design environment to create AI engine designs.
+Use AIE intrinsics (special functions recognized by the compiler) to access the SIMD (single instruction multiple data) capabilities of the vector processor. You can also use the available high-level API to create architecture-agnostic programs which can abstract away from the low-level details of intrinsics [see [AI Engine Intrinsics and API User Guides](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html)]. [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) provides a graphical design environment to create AI Engine designs.
 
-## AVX vs. AI Engine APIs
+## AVX Versus AI Engine APIs
 
-If one is familiar with using AVX (Advanced Vector eXtensions) on an x86 processor, using AIE APIs should be straightforward.
+If you are familiar with using AVX (Advanced Vector eXtensions) on an x86 processor, using AIE APIs should be straightforward.
 
 ### Vector Addition with AVX Intrinsics
 
-On an x86 CPU with AVX support, the code to add the elements of two vectors would look something like this:
+On an x86 CPU with AVX support, the code to add the elements of two vectors looks something like this:
 
 #### vadd_avx.cpp
+
 ```C++
 #include <iostream>
 #include <immintrin.h>
@@ -108,10 +95,13 @@ int main() {
 
 } // end main()
 ```
+
 ### Vector Addition with AIE API
 
-Using the high-level APIs on an AI engine, it would look something like this:
+Using the high-level APIs on an AI engine, it looks something like this:
+
 #### vadd_aie.cpp
+
 ```C++
 #include <aie_api/aie.hpp>
 #include <aie_api/aie_adf.hpp>
@@ -138,6 +128,7 @@ void vadd() {
 
 } // end vadd()
 ```
+
 Comparing the relevant lines side-by-side:
 
 |**AVX CPU**|**AIE API**|**Notes**|
@@ -147,11 +138,12 @@ Comparing the relevant lines side-by-side:
 | __m256 vz = _m256_add_ps(vx, vy); | v8f vz = aie::add(vx, vy); | add the elements of the vector registers |
 | __m256_storeu_ps(z, vz); | aie::store(z, vz); | store vector regsiter to memory |
 
-For this specific example, it may be seen that there is a one-to-one correspondence between the instructions for AVX on an x86 CPU and the high-level API on an AI engine.
+For this specific example, you can see that there is a one-to-one correspondence between the instructions for AVX on an x86 CPU and the high-level API on an AI Engine.
 
 #### Building and Running the AVX CPU Program
 
-Before building the AVX CPU program, check whether your machine supports AVX instructions by running the <span style="color:orange; font-family:Courier New">chk_avx.sh</span> script.
+Before building the AVX CPU program, check whether your machine supports AVX instructions by running the ``chk_avx.sh`` script.
+
 ```
 $ cd avx_aie/avx
 $ ./chk_avx.sh
@@ -160,7 +152,9 @@ Checking for AVX capabilities on this machine by looking at /proc/cpuinfo...
 
 This machine supports AVX!
 ```
-Only if the result, "This machine supports AVX!" appears should the program be built and executed.
+
+Only if the result, "This machine supports AVX!", appears should you build and execute the program.
+
 ```
 $ make
 
@@ -170,6 +164,7 @@ z = 10, 12, 14, 16, 18, 20, 22, 24
 #### Building and Running the AIE API Program
 
 Make sure that the Vitis environment has been setup and AIE licenses are available (see [AR#76792](https://adaptivesupport.amd.com/s/article/76792?language=en_US) on how to setup AIE licenses).
+
 ```
 $ cd ../aie
 $ make
@@ -187,110 +182,75 @@ Simulation completed successfully returning zero
 
 ## AI Engine APIs
 
-The AI engine APIs are provided as header files allowing a higher level of abstraction than intrinsics. They are also architecture-agnostic, that is, the generated intrinsics will match the selected target device. Browse through the [AI Engine API User Guide](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html) to view the available functions (see Fig. 3).
+The AI engine APIs are provided as header files allowing a higher level of abstraction than intrinsics. They are also architecture-agnostic, that is, the generated intrinsics match the selected target device. Browse through the [AI Engine API User Guide](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html) to view the available functions (see Fig. 3).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/api_user_guide.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 3: AI Engine API User Guide</td>
- </tr>
-</table>
-<br />
+![Fig. 3: AI Engine API User Guide](./images/api_user_guide.png)
+*Fig. 3: AI Engine API User Guide*
 
-Fig. 4 shows how an intrinsic and an API with the same basic functionaliy, i.e., a multiply-accumulate, operation may differ.
+The following figure shows how an intrinsic and an API with the same basic operation, such as multiply-accumulate, may differ.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/intrinsic_vs_api.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 4: Intrinsic vs. API</td>
- </tr>
-</table>
-<br />
+![Fig. 4: Intrinsic vs. API](./images/intrinsic_vs_api.png)
+*Fig. 4: Intrinsic vs. API*
 
-Note that intrinsics have more parameters, allowing more flexibility, but require more detailed knowledge of the architecture. APIs assume a specific use-case, allowing the use of fewer parameters.
+>**Note:** Intrinsics have more parameters, allowing more flexibility, but require more detailed knowledge of the architecture. APIs assume a specific use-case, allowing the use of fewer parameters.
 
-The use of APIs is highly recommended, and only utilize intrinsics to optimize critical portions of the code. Note that intrinsics and APIs may be mixed together in the same kernel code. 
-
+The use of APIs is highly recommended, and only utilize intrinsics to optimize critical portions of the code. Note that intrinsics and APIs may be mixed together in the same kernel code.
 
 ## Modfied Kahn Process Network (KPN)
 
-One way to implement a system capable of parallel computing is with a Kahn Process Network (KPN). From Wikipedia: "A Kahn process network (KPN, or process network) is a distributed model of computation in which a group of deterministic sequential processes communicate through *unbounded* first in, first out channels. The model requires that reading from a channel is blocking while writing is non-blocking. Due to these key restrictions, the resulting process network exhibits deterministic behavior that does not depend on the timing of computation nor on communication delays." 
-
+One way to implement a system capable of parallel computing is with a Kahn Process Network (KPN). Wikipedia states that "A Kahn process network (KPN, or process network) is a distributed model of computation in which a group of deterministic sequential processes communicate through *unbounded* first in, first out channels. The model requires that reading from a channel is blocking while writing is non-blocking. Due to these key restrictions, the resulting process network exhibits deterministic behavior that does not depend on the timing of computation nor on communication delays."
 
 Fig. 5 shows an example of a KPN. Note that all the nodes T1 through T4 may run simultaneously as they are separate processes. The key contribution of Kahn's proposal was defining *when* a node would execute.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/kpn.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 5: Example of a Kahn Process Network (KPN)</td>
- </tr>
-</table>
-<br />
+![Fig. 5: Example of a Kahn Process Network (KPN)](./images/kpn.png)
+*Fig. 5: Example of a Kahn Process Network (KPN)*
 
-As *unbounded* FIFO (first-in, first-out) channels are physically unrealizable, the AI engine array implements a *modified* KPN where the channels are bounded. A well-designed system where all delays have been balanced is still deterministic as possible stalls (caused by empty input buffers, full output buffers, or resource contention) will always consume the same number of cycles.
+As *unbounded* FIFO (first-in, first-out) channels are physically unrealizable, the AIE array implements a *modified* KPN where the channels are bounded. A well-designed system where all delays are balanced is still deterministic as possible stalls (caused by empty input buffers, full output buffers, or resource contention) always consume the same number of cycles.
 
-A modified Kahn Process Network (KPN) desribed in an ADF (advanced data flow) graph encapsulates how the AIE tiles (the "nodes" in the modified KPN) exchange data with the "outside world". In an AI engine array, the buffers (also called "edges") are implemented as streams or shared memories. Note that a sequential process (also called a "node") will *stall*, i.e., halt execution, when: 
-  * an input stream is empty
-  * an output stream is full
-  * a shared memory bank is being accessed by another tile
+A modified Kahn Process Network (KPN) desribed in an ADF (advanced data flow) graph encapsulates how the AIE tiles (the "nodes" in the modified KPN) exchange data with the "outside world". In an AI engine array, the buffers (also called "edges") are implemented as streams or shared memories. Note that a sequential process (also called a "node") *stalls* that is, halts execution, when:
 
-Stalls may be minimized by allocating FIFOs of sufficient depth, or dedicating a memory bank to a kernel.
+* an input stream is empty
+* an output stream is full
+* a shared memory bank is being accessed by another tile
 
-<img src="./images/kpn.gif">
+You can minimize stalls by allocating FIFOs of sufficient depth, or dedicating a memory bank to a kernel.
+
+![](./images/kpn.gif)
 
 See [AI Engine Programming: A Kahn Process Network Evolution (WP552)](https://docs.amd.com/r/en-US/wp552-ai-kpn/Kahn-Process-Network) for more information.
 
-
 ## Which Applications are Best Suited for AI Engines?
 
-The vector unit in the 1st generation AI engine architecture supports the datatypes shown in Fig. 6.
+The vector unit in the first generation AI engine architecture supports the datatypes shown in Fig. 6.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/dtypes.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 6: Datatypes supported in the vector unit of the 1st generation AIE architecture</td>
- </tr>
-</table>
-<br />
+![Fig. 6: Datatypes supported in the vector unit of the 1st generation AIE architecture](./images/dtypes.png)
+*Fig. 6: Datatypes supported in the vector unit of the 1st generation AIE architecture*
 
 Note that the rightmost column shows the number of MAC (multiply-accumulate) operations that one tile can perform in one cycle. Thus, with 8-bit operands, one AIE tile can perform 128 MACs/cycle. Fig. 7 shows what calculation is actually performed in one cycle.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/macs_per_cycle.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 7: Int8 MACs/cycle for 1st generation AIE architecture</td>
- </tr>
-</table>
-<br />
+![Fig. 7: Int8 MACs/cycle for 1st generation AIE architecture](./images/macs_per_cycle.png)
+*Fig. 7: Int8 MACs/cycle for 1st generation AIE architecture*
 
-Thus, applications utilizing matrix-matrix or matrix-vector multipliations such as polyphase filters (also called channelizers), FIR/IIR filters, FFTs, beamforming, MIMO signal processing and many others can benefit greatly from using AI engines.
+Thus, applications utilizing matrix-matrix or matrix-vector multipliations such as polyphase filters (also called channelizers), FIR/IIR filters, FFTs, beamforming, MIMO signal processing and many others can benefit greatly from using AI Engines.
 
-Other tasks like image, video, audio procecssing, scientific simulations, data compression, networking, speech recognition, machine learning, cryptography and others may also be able to take advantage of the SIMD capabilities of the AI engine.
+Other tasks like image, video, audio procecssing, scientific simulations, data compression, networking, speech recognition, machine learning, cryptography and others may also be able to take advantage of the SIMD capabilities of the AI Engine.
 
-Note that "peak theoretical compute capability" mentioned in Fig. 7 is an *upper bound*, and can *never* be realized when solving a *practical* problem. There will be periods during which no calculations can be performed to allow data ingress and egress, or when the compute units need to wait for the results of a previous operation to become available.
+Note that "peak theoretical compute capability" mentioned in Fig. 7 is an *upper bound*, and can *never* be realized when solving a *practical* problem. There are periods during which no calculations can be performed to allow data ingress and egress, or when the compute units need to wait for the results of a previous operation to become available.
 
 ## Code Required to Create a Program to Run on an AI Engine
 
-Three "pieces" of code are required to use an AI engine:
-  * Kernel code: C/C++ code that will run on the AI engine.
-  * ADF graph code: C++ code describing how the kernel communicates with the outside world. This code sets the connections in the AXI-S interconnect on the AIE tile.
-  * Testbench/Control code: C/C++ code to load, initialize, run and terminate kernel code. In a practical application, this will run on an APU (application processing unit) in the processing system.
+You require three "pieces" of code to use an AI Engine:
+
+* Kernel code: C/C++ code that runs on the AI engine.
+* ADF graph code: C++ code that describes how the kernel communicates with the outside world. This code sets the connections in the AXI-S interconnect on the AIE tile.
+* Testbench/Control code: C/C++ code to load, initialize, run and terminate kernel code. In a practical application, this runs on an APU (application processing unit) in the processing system.
 
 ### Kernel Code Structure
 
-Optionally templated functions or C++ classes may be used as kernel programs.
+You can use optionally templated functions or C++ classes as kernel programs.
 
 Optionally templated function:
+
 ```C++
 // func_name.cpp
 template <…>	// optional
@@ -300,7 +260,9 @@ void func_name( /* I/O arguments */ ) {
   // 3. write outputs
 }
 ```
+
 Optionally templated C++ class:
+
 ```C++
 // some_class.hpp
 template <…>	 // optional
@@ -319,7 +281,7 @@ public:
 
 ### Graph Code Structure
 
-The ADF graph (or sometimes, simply, "graph") contains information on how the AIE kernel "communicates" with the outside world. The tools use the information in this file to manage the resources (i.e., memory, ports, stream connections, etc.) used by the kernel.
+The ADF graph (or sometimes, simply, "graph") contains information on how the AIE kernel "communicates" with the outside world. The tools use the information in this file to manage the resources (memory, ports, stream connections, etc.) that are used by the kernel.
 
 ```C++
 class theGraph : public graph {   // inherit properties of adf::graph
@@ -338,9 +300,10 @@ public:
   }
 };
 ```
-### Testbench/Control Code Structure  
 
-This is the "top-level file" referred to in the Vitis GUI. When running simulations, this program runs on the host PC, not on the AI engine, and not on the processing system (PS).
+### Test Bench/Control Code Structure  
+
+This is the "top-level file" referred to in the AMD Vitis™ GUI. When running simulations, this program runs on the host PC, not on the AI Engine, and not on the processing system (PS).
 
 ```C++
 #include graph.hpp  // include ADF graph header file
@@ -358,21 +321,15 @@ int main() {
 ```
 
 ## AI Engine Kernel Input and Output Types
+
 There are four input and output types (see Fig. 8):
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/port_types.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 8: AIE kernel port types</td>
- </tr>
-</table>
-<br />
+![Fig. 8: AIE kernel port types](./images/port_types.png)
+*Fig. 8: AIE Kernel Port Types*
 
 * **Stream**
   
-  Streams use an [AXI-4 stream interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). A stream is 32 bits wide. Streams may come from and go to programmable logic (PL) or another AIE tile. Depending on the architecture, an AIE tile may have one or two input streams, and one or two output streams. Streams are useful when data needs to be processed sequentially and has the potential to provide the lowest latency at the expense of lower throughput. Using the 1st generation AI engine architecture as an example, an AIE tile can receive 64 bits of data through 2 input streams in one cycle.
+  Streams use an [AXI-4 stream interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). A stream is 32 bits wide. Streams may come from and go to programmable logic (PL) or another AIE tile. Depending on the architecture, an AIE tile may have one or two input streams, and one or two output streams. Streams are useful when data has to be processed sequentially and has the potential to provide the lowest latency at the expense of lower throughput. Using the first generation AI Engine architecture as an example, an AIE tile can receive 64 bits of data through two input streams in one cycle.
 
 * **Buffer**
 
@@ -382,76 +339,59 @@ There are four input and output types (see Fig. 8):
 
   Several algorithms require a sum-of-products calculation. A long sum may be distributed across multiple AIE tiles, with each tile calculating a partial sum and cascading (or passing) a partial sum to an adjacent tile (see Fig. 9).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/acc_cascade.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 9: Accumulator cascade intuition</td>
- </tr>
-</table>
-<br />
+  ![Fig. 9: Accumulator cascade intuition](./images/acc_cascade.png)
+  *Fig. 9: Accumulator Cascade iIntuition*
 
-  For example, instead of summing 32 products in 4 cycles (8 sum-of-products calculated in 1 cycle), splitting the operation into 4 partial sums of 8 products and cascading the partial sums may allow a result in 1 cycle. This reduces latency at the expense of using more AIE tiles.
+  For example, instead of summing 32 products in four cycles (eight sum-of-products calculated in one cycle), splitting the operation into four partial sums of eight products and cascading the partial sums may provide a result in one cycle. This reduces latency at the expense of using more AIE tiles.
 
 * **Runtime parameter (RTP)**
 
-  Having the processor system (PS) modify the behavior of a kernel program or obtain state and status information is made possible by the use of runtime parameters.
+  Use runtime parameters to have the processor system (PS) modify the behavior of a kernel program or obtain state and status information.
 
   Runtime parameters are specified as scalar function arguments
+
   * Input RTP: pass-by-value
   * Output RTP: pass-by-reference
 
   In the ADF graph, they may be specified as:
-  * Asynchronous - RTP must be provided at least once and reused on every function invocation until updated
-  * Synchronous - RTP must be provided on every function invocation
+
+  * **Asynchronous**: You must provide the RTP at least once and reuse on every function invocation until updated
+  * **Synchronous**: You must provide the RTP on every function invocation
 
   Fig. 10 shows a kernel function using input and output RTPs.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/rtp.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 10: Function with input and output RTPs</td>
- </tr>
-</table>
-<br />
+  ![Fig. 10: Function with input and output RTPs](./images/rtp.png)
+  *Fig. 10: Function with Input and Output RTPs*
 
 ## A **_Contrived_** Task to Illustrate How to Access AIE Kernel I/O Ports
 
-The *contrived* task shown in Fig. 11 will allow us to show how to access the input and output ports available to an AIE tile within a kernel program.
+The *contrived* task shown in Fig. 11 shows how to access the input and output ports available to an AIE tile within a kernel program.
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/gentle_example.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 11: A <i>contrived</i> task to illustrate the different I/O ports on the AI engine</td>
- </tr>
-</table>
-<br />
+![Fig. 11: A contrived task to illustrate the different I/O ports on the AI engine](./images/gentle_example.png)
+*Fig. 11: A Contrived Task to Illustrate the Different I/O Ports on the AI Engine*
 
-The mathematical description is shown in the left part of the figure. Bold uppercase variables denote matrices, with the subscripts denoting the matrix sizes. Bold lowercase variables denote vectors, with the subscripts denoting the vector sizes. Italicized variables denote scalars.
+The left side of the figure shows the mathematical description. Bold uppercase variables denote matrices, with the subscripts denoting the matrix sizes. Bold lowercase variables denote vectors, with the subscripts denoting the vector sizes. Italicized variables denote scalars.
 
 Calculation steps:
-1. Calculate the squared magnitude of the input complex vector <span style="font-family:Times New Roman;">**x**</span>
-2. Calculate the products of the 4x4 input matrices <span style="font-family:Times New Roman;">**AC**</span>, <span style="font-family:Times New Roman;">**DF**</span>, <span style="font-family:Times New Roman;">**BC**</span> and <span style="font-family:Times New Roman;">**EF**</span>
+
+1. Calculate the squared magnitude of the input complex vector **``x``**
+2. Calculate the products of the 4x4 input matrices **``AC``**, **``DF``**, **``BC``**, and **``EF``**
 3. Concatenate the resulting matrix products into an 8x8 matrix
-4. Calculate the vector <span style="font-family:Times New Roman;">**u**</span> as the product of the 8x8 matrix and the squared magnitude of <span style="font-family:Times New Roman;">**x**</span>
-5. If the input scalar is zero, calculate the output vector as the sum of <span style="font-family:Times New Roman;">**u**</span> and the input vector <span style="font-family:Times New Roman;">**y**</span>; otherwise, the output vector will be the difference <span style="font-family:Times New Roman;">**u**</span> - <span style="font-family:Times New Roman;">**y**</span>
+4. Calculate the vector **``u``** as the product of the 8x8 matrix and the squared magnitude of **``x``**
+5. If the input scalar is zero, calculate the output vector as the sum of **``u``** and the input vector **``y``**; otherwise, the output vector is the difference **``u``** - **``y``**
 
 The block diagram on the right shows the required calculations more clearly. Note that it also shows the dependencies between calculations, which as a bonus, also shows which calculations can be done in parallel.
 
-In this *contrived* task, the input matrices will be provided through buffers, and the input vectors through streams. The resultant vector <span style="font-family:Times New Roman;">**u**</span> will be handled as an accumulator cascade, and the scalar <span style="font-family:Times New Roman;">w</span> as an input RTP.
+In this *contrived* task, the input matrices are provided through buffers, and the input vectors through streams. The resultant vector **u** is handled as an accumulator cascade, and the scalar `w` as an input RTP.
 
 Note that two simulation modes are available when developing AIE kernels:
-  * Functional: source code is compiled to run on the x86 host development platform. This allows fast simulations to check the veracity of the code.
-  * Emulation: source code is compiled to run on the AI engine. It will be slower than functional simulation but provides cycle approximate information to estimate throughput and latency when using real hardware.
+
+* Functional: Source code is compiled to run on the x86 host development platform. This allows fast simulations to check the veracity of the code.
+* Emulation: Source code is compiled to run on the AI engine. It is slower than functional simulation but provides cycle approximate information to estimate throughput and latency when using real hardware.
 
 ## Sample Code for Stream Input and Output
 
-The code segment below shows how to calculate the squared magnitude of a complex vector using streams for input and output.
+The following code segment shows how to calculate the squared magnitude of a complex vector using streams for input and output.
 
 ```C++
 template  <typename Ti, typename To, unsigned vlen, unsigned burst_count>
@@ -474,25 +414,27 @@ void sqmag(input_stream<Ti>  *istrm,	// input stream
 } // end sqmag()
 ```
 
-The input stream port is declared as <span style="color: orange; font-family: Consolas;">input_stream\<T\></span>, where <span style="color: orange; font-family: Consolas;">T</span> is the typename specified in the template parameter list. Similarly, the output stream port is declared as <span style="color: orange; font-family: Consolas;">output_stream\<T\></span>.
+The input stream port is declared as ``input_stream\<T\>``, where ``T`` is the typename specified in the template parameter list. Similarly, the output stream port is declared as ``output_stream\<T\>``.
 
-<span style="color: orange; font-family: Consolas;">readincr_v\<N\>( )</span> is an API which takes <span style="color: orange; font-family: Consolas;">N</span> values from an input stream and places them into a vector register. Note that:
-  * The AIE tile stream is 32 bits wide running at 1.25GHz on the [VCK190 platform](https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vck190.html)
-  * The PL stream may be 32, 64 or 128 bits wide (defined in the ADF graph) running at a slower clock (usually half or a quarter of the AIE clock)
-  * There are FIFO and [clock domain crossing](https://www.maven-silicon.com/blog/clock-domain-crossing) circuits at the AIE array and PL boundary such that:
-    * a 32-bit PL stream running at half the AIE clock will provide 32-bit data to the AIE tile at half the AIE tile rate, potentially resulting in stalls (with the AIE tile waiting for data to be available)
-    * a 64-bit PL stream running at half the AIE clock can provide 32-bit data to the AIE tile at the AIE tile rate
-    * a 128-bit PL stream running at a *quarter* of the AIE clock can provide 32-bit data to the AIE tile at the AIE tile rate
+``readincr_v\<N\>( )`` is an API which takes **N** values from an input stream and places them into a vector register. Note that:
 
-<span style="color: orange; font-family: Consolas;">aie::abs_square\<T\>( )</span> is an API which calculates the squared magnitude of the input.
+* The AIE tile stream is 32 bits wide running at 1.25 GHz on the [VCK190 platform](https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vck190.html)
+* The PL stream may be 32, 64, or 128 bits wide (defined in the ADF graph) running at a slower clock (usually half or a quarter of the AIE clock)
+* There are FIFO and [clock domain crossing](https://www.maven-silicon.com/blog/clock-domain-crossing) circuits at the AIE array and PL boundary such that:
+  * a 32-bit PL stream running at half the AIE clock will provide 32-bit data to the AIE tile at half the AIE tile rate, potentially resulting in stalls (with the AIE tile waiting for data to be available)
+  * a 64-bit PL stream running at half the AIE clock can provide 32-bit data to the AIE tile at the AIE tile rate
+  * a 128-bit PL stream running at a *quarter* of the AIE clock can provide 32-bit data to the AIE tile at the AIE tile rate
 
-<span style="color: orange; font-family: Consolas;">writeincr( )</span> is an API which writes values from a vector register to an output stream. The number of elements to write is determined by the size of the vector register.
+``aie::abs_square\<T\>( )`` is an API which calculates the squared magnitude of the input.
+
+``writeincr( )`` is an API which writes values from a vector register to an output stream. The number of elements to write is determined by the size of the vector register.
 
 <img src="./images/stream.gif">
 
 ### Unit Test for Squared Magnitude Module
 
 Directory structure:
+
 ```sh
 $ cd ../../unit_tests/sqmag
 $ tree
@@ -513,9 +455,10 @@ $ tree
     └── tb.cpp      # simulation code
 ```
 
-Examine the stimulus generation script <span style="color: orange; font-family: Consolas;">julia/sqmag.jl</span>. Examine the source code in the <span style="color: orange; font-family: Consolas;">src</span> directory.
+Examine the stimulus generation script ``julia/sqmag.jl``. Examine the source code in the ``src`` directory.
 
 Build and run the design in both functional (x86sim) and cycle-approximate (aiesim) modes. Note the results of the comparison between DUT and reference results.
+
 ```sh
 $ make all | tee build.log
 
@@ -540,50 +483,31 @@ $
 ```
 
 Examine the input and output streams with [Vitis Analyzer](https://docs.amd.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Vitis-Analyzer?tocId=9E_R9voq2EICc36D6pgoIg):
+
 ```sh
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary &
 ```
-Click on <span style="color: orange; font-family: Consolas;">Trace</span> in the <span style="color: orange; font-family: Consolas;">Analysis</span> pane (see Fig. 12).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/trace_menu.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 12: Vitis Analyzer: Trace menu</td>
- </tr>
-</table>
-<br />
+Click on **Trace** in the **Analysis** pane (see Fig. 12).
 
-Double-click on the <span style="color: orange; font-family: Consolas;">Run - default - AIE SIMULATION</span> window to maximize it (see Fig. 13).
+![Vitis Analyzer: Trace Menu](./images/trace_menu.png)
+*Fig. 12: Vitis Analyzer: Trace Menu*
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/default_aiesim.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 13: default - AIE SIMULATOR window</td>
- </tr>
-</table>
-<br />
+Double-click on the **Run - default - AIE SIMULATION** window to maximize it (see Fig. 13).
+
+![Fig. 13: default - AIE SIMULATOR window](./images/default_aiesim.png)
+*Fig. 13: Default - AIE SIMULATOR Window*
 
 Double-click on the Vitis Analyzer window to maximize it (double-click again to restore).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/trace_data.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 14: Stream trace data</td>
- </tr>
-</table>
-<br />
+![Stream Trace Data](./images/trace_data.png)
+*Fig. 14: Stream Trace Data*
 
-The function is executed twice (as specified in <span style="color: orange; font-family: Consolas;">src/tb.cpp</span>), processing 8 vectors per invocation. Note that there are no spaces between the data in the input stream, but the output stream is "bursty". This code is not optimized, and we will *not* cover optimization in this tutorial.
+The function is executed twice (as specified in ``src/tb.cpp``), processing eight vectors per invocation. Note that there are no spaces between the data in the input stream, but the output stream is "bursty". This code is not optimized. Optimization in outside the scope of this tutorial.
 
 ## Sample Code for Buffer Input and Output
 
-The code segment below shows how to calculate the product of two matrices. For this tutorial, the matrices are 4x4 with <span style="color: orange; font-family: Consolas;">int16</span> elements (constrained to <span style="color: orange; font-family: Consolas;">int8</span> to avoid overflow). Note that although the function uses a template, using other values for the template parameters has not been tested.
+The following code segment shows how to calculate the product of two matrices. For this tutorial, the matrices are 4x4 with ``int16`` elements (constrained to ``int8`` to avoid overflow). Note that although the function uses a template, using other values for the template parameters has not been tested.
 
 ```C++
 template <typename Ta, typename Tb, typename Tp, unsigned Arows, unsigned Acols, unsigned Bcols, unsigned burst_count>
@@ -616,13 +540,13 @@ void matmul(
 } // end matmul()
 ```
 
-The input ports for the two input matrices are declared as <span style="color: orange; font-family: Consolas;">input_buffer\<T\></span>, where <span style="color: orange; font-family: Consolas;">T</span> is the typename specified in the template parameter list. Similarly, the output port is declared as <span style="color: orange; font-family: Consolas;">output_buffer\<T\></span>. <span style="color: orange; font-family: Consolas;">adf::extents\<num_elems\></span> is an *optional* template parameter which declares how many elements will be placed in the buffer.
+The input ports for the two input matrices are declared as ``input_buffer\<T\>``, where ``T`` is the typename specified in the template parameter list. Similarly, the output port is declared as ``output_buffer\<T\>``. ``adf::extents\<num_elems\>`` is an *optional* template parameter which declares how many elements can be placed in the buffer.
 
-<span style="color: orange; font-family: Consolas;">aie::begin_vector\<N\>( )</span> is an API which returns an iterator used to access <span style="color: orange; font-family: Consolas;">N</span> elements in the buffer.
+``aie::begin_vector\<N\>( )`` is an API which returns an iterator used to access ``N`` elements in the buffer.
 
-<span style="color: orange; font-family: Consolas;">aie::mmul\<\></span> is a class used for matrix multiplication. The actual multiplication is performed using the member function <span style="color: orange; font-family: Consolas;">mul( )</span>.
+``aie::mmul\<\>`` is a class used for matrix multiplication. The actual multiplication is performed using the member function ``mul( )``.
 
-The <span style="color: orange; font-family: Consolas;">to_vector\<T\></span> API is used to copy the product in the accumulator to a vector register.
+The ``to_vector\<T\>`` API is used to copy the product in the accumulator to a vector register.
 
 <img src="./images/buffer.gif">
 
@@ -653,9 +577,10 @@ $ tree
     └── tb.cpp
 ```
 
-Examine the stimulus generation script <span style="color: orange; font-family: Consolas;">julia/matmul.jl</span>. Examine the source code in the <span style="color: orange; font-family: Consolas;">src</span> directory.
+Examine the stimulus generation script ``julia/matmul.jl``. Examine the source code in the ``src`` directory.
 
 Build and run the design in both functional (x86sim) and cycle-approximate (aiesim) modes. Note the results of the comparison between DUT and reference results.
+
 ```sh
 $ make all | tee build.log
 
@@ -678,7 +603,9 @@ Files ./Emulation-HW/aiesimulator_output/Pout_new.dat and ./julia/Pout.dat are i
 ***************************** aiesim completed! *****************************
 $
 ```
+
 Examine the placement of the input and output buffers in the AIE array with Vitis Analyzer:
+
 ```sh
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary &
 ```
@@ -696,7 +623,7 @@ Click on <span style="color: orange; font-family: Consolas;">Array</span> in the
 
 Note that the purple blocks in the PL (marked "Input" and "Output") are simulation artifacts. In an actual design, circuits have to placed in PL to achieve the desired functionality (provide or receive data).
 
-Location constraints in the ADF graph (see <span style="color: orange; font-family: Consolas;">src/graph.hpp</span>) direct the mapping tool to place the buffers in the same tile as the kernel.
+Location constraints in the ADF graph (see ``src/graph.hpp``) direct the mapping tool to place the buffers in the same tile as the kernel.
 
 ```C++
       // location constraints on buffers
@@ -708,7 +635,7 @@ Location constraints in the ADF graph (see <span style="color: orange; font-fami
 
 ## Sample Code for Accumulator Cascade
 
-The code segment below shows how to concatenate four 4x4 submatrices into an 8x8 matrix and multiply that with an 8x1 vector, with the result going through an accumulator cascade.
+The following code segment shows how to concatenate four 4x4 submatrices into an 8x8 matrix and multiply that with an 8x1 vector, with the result going through an accumulator cascade.
 
 ```C++
 template<typename Ti, typename Tacc, unsigned mrows, unsigned mcols, unsigned burst_count>
@@ -749,15 +676,15 @@ void mtxvec(
 } // end mtxvec()
 ```
 
-In the example above, the output accumulator cascade is declared as <span style="color: orange; font-family: Consolas;">output_cascade\<Tacc\></span>. It is accessed in the same way as regular streams. Thus, writing to the output cascade stream uses <span style="color: orange; font-family: Consolas;">writeincr( )</span>.
+In the example above, the output accumulator cascade is declared as ``output_cascade\<Tacc\>``. It is accessed in the same way as regular streams. Thus, writing to the output cascade stream uses ``writeincr( )``.
 
-The 8x8 matrix is formed using <span style="color: orange; font-family: Consolas;">aie::interleave_zip( )</span> and <span style="color: orange; font-family: Consolas;">aie::concat( )</span>. For details on these APIs, please see [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html).
+The 8x8 matrix is formed using ``aie::interleave_zip( )`` and ``aie::concat( )``. For details on these APIs, see [AI Engine API User Guide (UG1529)](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html).
 
 ### Unit Test for Matrix-Vector Multiplication Module
 
-Currently, Vitis does not handle unit tests with "dangling" input or output accumulator cascades (note however, that [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) can). "Dummy" input or output kernels must be provided to act as sources or sinks for cascade streams.
+Currently, Vitis does not handle unit tests with "dangling" input or output accumulator cascades (note however, that [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) can). You must provide "Dummy" input or output kernels to act as sources or sinks for cascade streams.
 
-Examine the stimulus generation script <span style="color: orange; font-family: Consolas;">julia/mtxvec.jl</span>. Examine the source code in the <span style="color: orange; font-family: Consolas;">src</span> directory, especially the <span style="color: orange; font-family: Consolas;">graph.hpp</span> file.
+Examine the stimulus generation script ``julia/mtxvec.jl``. Examine the source code in the ``src`` directory, especially the ``graph.hpp`` file.
 
 Build and run the design in both functional (x86sim) and cycle-approximate (aiesim) modes. Note the results of the comparison between DUT and reference results.
 
@@ -787,7 +714,7 @@ $
 
 ## Sample Code for Runtime Parameter (RTP)
 
-The code segment below shows how a runtime parameter is used to generate a sum or difference of the cascade input and an input vector.
+The following code segment shows how a runtime parameter is used to generate a sum or difference of the cascade input and an input vector.
 
 ```C++
 template<unsigned nelems, unsigned burst_count>
@@ -826,11 +753,11 @@ void sumdiff(
 } // end sumdiff()
 ```
 
-The input RTP is declared as <span style="color: orange; font-family: Consolas;">const int8 mode</span> in the function argument list. Within the code, a simple <span style="color: orange; font-family: Consolas;">if</span> statement is used to select whether a sum or difference will be output.
+The input RTP is declared as ``const int8 mode`` in the function argument list. Within the code, a simple ``if`` statement selects whether a sum or difference is output.
 
 ### Unit Test for SumDiff Module
 
-Examine the stimulus generation script <span style="color: orange; font-family: Consolas;">julia/sumdiff.jl</span>. Examine the source code in the <span style="color: orange; font-family: Consolas;">src</span> directory, especially the <span style="color: orange; font-family: Consolas;">graph.hpp</span> file.
+Examine the stimulus generation script ``julia/sumdiff.jl``. Examine the source code in the ``src`` directory, especially the ``graph.hpp`` file.
 
 Build and run the design in both functional (x86sim) and cycle-approximate (aiesim) modes. Note the results of the comparison between DUT and reference results.
 
@@ -860,10 +787,11 @@ $
 
 ## Create the **_Contrived_** Task
 
-We now have all the kernels required to create the *contrived* task.
+You now have all the kernels required to create the *contrived* task.
 
 ### Advanced Dataflow Graph
-The code for the advanced dataflow (ADF) graph is divided into segments below for easier perusal.
+
+The code for the advanced dataflow (ADF) graph is divided into the following segments for easier perusal.
 
 ```C++
 #pragma once
@@ -886,7 +814,7 @@ private:
     kernel k_sumdiff;                                   // sum-difference
 ```
 
-The ADF graph is a header file and inherits from the <span style="color: orange; font-family: Consolas;">adf::graph</span> class. The kernels are declared as <span style="color: orange; font-family: Consolas;">private</span> members. All other members are <span style="color: orange; font-family: Consolas;">public</span>.
+The ADF graph is a header file and inherits from the ``adf::graph`` class. The kernels are declared as ``private`` members. All other members are ``public``.
 
 ```C++
 public:
@@ -903,7 +831,7 @@ public:
     using Tacc = acc48;
 ```
 
-The input RTP is declared as an <span style="color: orange; font-family: Consolas;">input_port</span>. All other ports will be coming from or going to the PL, and are declared as <span style="color: orange; font-family: Consolas;">input_plio</span> or <span style="color: orange; font-family: Consolas;">output_plio</span>.
+The input RTP is declared as an ``input_port``. All other ports are coming from or going to the PL, and are declared as ``input_plio`` or ``output_plio``.
 
 ```C++
     theGraph() {
@@ -937,7 +865,7 @@ Other declarations must be placed within the graph constructor. In the code segm
         runtime<ratio>(k_sumdiff) = 1.0;
 ```
 
-The runtime ratio is a value > 0.0 and <= 1.0 used by the tools to determine whether it can fit more than one kernel into an AIE tile. It is obtained as the actual number of cycles used for computation divided by the total number of cycles available for a computation. A value of 1.0 implies that no other kernels will be placed on that tile.
+The runtime ratio is a value > 0.0 and <= 1.0 used by the tools to determine whether it can fit more than one kernel into an AIE tile. It is the actual number of cycles used for computation divided by the total number of cycles available for a computation. A value of 1.0 implies that no other kernels are placed on that tile.
 
 ```C++
         // note that this system uses the VCK190 evaluation board as a platform
@@ -954,7 +882,7 @@ The runtime ratio is a value > 0.0 and <= 1.0 used by the tools to determine whe
         zvec = output_plio::create("zvec", plio_64_bits, "z.dat",      625);
 ```
 
-The <span style="color: orange; font-family: Consolas;">create</span> function for the PLIO ports declare names to identify the ports in reports and how wide the interface for each port will be. Source or destination files used during simulation are also declared here. The clock frequency (in MHz) used by the port may also be decared here.
+The ``create`` function for the PLIO ports declare names to identify the ports in reports and the width of the interface for each port. Source or destination files used during simulation are also declared here. The clock frequency (in MHz) used by the port may also be decared here.
 
 ```C++
         // establish connections
@@ -985,7 +913,7 @@ The <span style="color: orange; font-family: Consolas;">create</span> function f
         connect(k_sumdiff.out[0], zvec.in[0]);
 ```
 
-The <span style="color: orange; font-family: Consolas;">connect</span> API establishes connections between graph elements. Note that all inputs and outputs are treated as arrays. The array index refers to the order in which the port was declared in the function prototype. A template parameter is required for <span style="color: orange; font-family: Consolas;">parameter</span> and <span style="color: orange; font-family: Consolas;">cascade</span> connections.
+The ``connect`` API establishes connections between graph elements. Note that all inputs and outputs are treated as arrays. The array index refers to the order in which the port was declared in the function prototype. A template parameter is required for ``parameter`` and ``cascade`` connections.
 
 ```C++
         // placement constraints
@@ -1016,11 +944,12 @@ The <span style="color: orange; font-family: Consolas;">connect</span> API estab
     
 }; // end class theGraph    
 ```
+
 Placement constraints direct the tool on how to map resources.
 
 ## Top-level File for **_Contrived_** Design
 
-The top-level file acts as a simulation testbench during code development. 
+The top-level file acts as a simulation testbench during code development.
 
 ```C++
 #include "graph.hpp"
@@ -1051,7 +980,7 @@ int main() {
 
 ```
 
-It instantiates the ADF graph, initializes it, and runs it in addition mode for 1 iteration. It then updates the RTP to use subtraction mode for another iteration.
+It instantiates the ADF graph, initializes it, and runs it in addition mode for one iteration. It then updates the RTP to use subtraction mode for another iteration.
 
 ### Build the *Contrived* Design
 
@@ -1062,47 +991,26 @@ $ make all | tee build.log
 
 Note that the DUT and reference results match.
 
-Use Vitis Analyzer to examine the placement of the kernels in the AIE tile array (see Fig. 16).
+Use the Vitis Analyzer to examine the placement of the kernels in the AIE tile array (see Fig. 16).
 
 ```sh
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary
 ```
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/contrived_array.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 16: <i>Contrived</i> task kernels in the AIE tile array</td>
- </tr>
-</table>
-<br />
+![Contrived Task Kernels in the AIE Tile Array](./images/contrived_array.png)
+*Fig. 16: Contrived Task Kernels in the AIE Tile Array*
 
-Note that the <span style="color: orange; font-family: Consolas;">k_mtxvec</span> and <span style="color: orange; font-family: Consolas;">k_sumdiff</span> kernels share a cascade stream connection (highlighted in the figure) and hence must be placed adjacent to each other.
+Note that the ``k_mtxvec`` and ``k_sumdiff`` kernels share a cascade stream connection (highlighted in the figure) and hence you must place them adjacent to each other.
 
-In Vitis Analyzer, double-click on "Graph" in the Analysis pane to see the connections between kernels (see Fig. 17).
+In the Vitis Analyzer, double-click on "Graph" in the Analysis pane to see the connections between kernels (see Fig. 17).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/contrived_graph.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 17: <i>Contrived</i> task graph</td>
- </tr>
-</table>
-<br />
+![Fig. 17: Contrived task graph](./images/contrived_graph.png)
+*Fig. 17: Contrived Task Graph*
 
-Open the trace view and check whether the matrix multipliers start roughly at the same time (see Fig. 18)
+Open the trace view and check whether the matrix multipliers start roughly at the same time (see Fig. 18).
 
- <table class="sphinxhide" width="100%">
- <tr width="100%">
-    <td><img src="./images/contrived_trace.png" width="100%"/></td>
- </tr>
- <tr width="100%">
-    <td align="center">Fig. 18: <i>Contrived</i> task matrix multiplier kernels trace</td>
- </tr>
-</table>
-<br />
+![Contrived Task Matrix Multiplier Kernels Trace](./images/contrived_trace.png)
+*Fig. 18: Contrived Task Matrix Multiplier Kernels Trace*
 
 ## Conclusion
 
@@ -1110,21 +1018,19 @@ Any practical program requires inputs and outputs to perform computation. This t
 
 ## Learning Resources for AI Engine Kernel Programming
 
-### [AMD University Program AI Engine Tutorial](https://xilinx.github.io/xup_aie_training/)
+1. [AMD University Program AI Engine Tutorial](https://xilinx.github.io/xup_aie_training/)
 
-[N.B.: This requires Vitis 2022.2]
+    [N.B.: This requires Vitis 2022.2]
 
-### [Vitis Tutorials: AI Engine Development (XD100)](https://docs.amd.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Vitis-Tutorials-AI-Engine-Development-XD100)
+2. [Vitis Tutorials: AI Engine Development (XD100)](https://docs.amd.com/r/en-US/Vitis-Tutorials-AI-Engine-Development/Vitis-Tutorials-AI-Engine-Development-XD100): Contains basic tutorials as well as examples for specific applications.
 
-Contains basic tutorials as well as examples for specific applications.
-
-### [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US)
+3. [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US)
 
 Ask questions on the forum!
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to the [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US).
+GitHub issues are used for tracking requests and bugs. For questions go to the [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
 
