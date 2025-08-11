@@ -107,7 +107,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
 
 ## Step 2: Create Vitis Platform
 
-1. Download Versal common image from [AMD website download page](https://www.xilinx.com/support/download.html), place it under your `WorkSpace` directory, and extract the common image.
+1. Download Versal common image from [AMD website download page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html), place it under your `WorkSpace` directory, and extract the common image.
 
    ```bash
    tar xvf ../xilinx-versal-common-v2025.1.tar.gz .
