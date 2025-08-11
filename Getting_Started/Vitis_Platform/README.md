@@ -131,7 +131,7 @@ This is a quick start guide for Versal platform creation. If you have questions 
 
       - SDT Source Repo: This is used to replace the built-in SDT tool. For this tutorial, leave it empty.
       - Board DTSI: Specify the board machine name, which is used to retrieve the board-level DTSI file. For this tutorial, leave it empty. To check the board machine name, refer to [UG1144 Machine Name Checking](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Importing-a-Hardware-Configuration)
-      - User DTSI: Allows you to specify a custom DTSI file. Click **Browse** and select the the `system-suer.dtsi` file located in the corresponding board folder.
+      - User DTSI: Allows you to specify a custom DTSI file. Click **Browse** and select the the `system-suer.dtsi` file located in the corresponding board folder. [Example path for vck190](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Getting_Started/Vitis_Platform/ref_files/vck190)
       - DT ZOCL: Enables Zocl node generation for the XRT driver. Ensure this option is enabled, then click **Next**.
 
    - Set the **Operating System** to `Linux` and the **Processor** to `psv_cortexa72`. Enable the `Generate Device Tree Blob (DTB)` option, then click **Next**.
