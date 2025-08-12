@@ -82,7 +82,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
    ![missing image](images/232_ps_app_cfg2.jpg)
 
 
-10. in the **Symbols** section add **"__PS_BARE_METAL__"**
+10. in the **Symbols** section add `__PS_BARE_METAL__`
 ![missing image](images/251_ps_app_cfg3.jpg)
 
 11. Modify the Linker Script to increase the heap size for AIE library.
