@@ -429,7 +429,7 @@ The input stream port is declared as ``input_stream\<T\>``, where ``T`` is the t
 
 ``writeincr( )`` is an API which writes values from a vector register to an output stream. The number of elements to write is determined by the size of the vector register.
 
-<img src="./images/stream.gif">
+![stream](./images/stream.gif)
 
 ### Unit Test for Squared Magnitude Module
 
@@ -548,7 +548,7 @@ The input ports for the two input matrices are declared as ``input_buffer\<T\>``
 
 The ``to_vector\<T\>`` API is used to copy the product in the accumulator to a vector register.
 
-<img src="./images/buffer.gif">
+![buffer](./images/buffer.gif)
 
 Note that buffers are implemented as double buffers by default. This allows reading from one while the other is being written to.
 

@@ -83,10 +83,10 @@ ok
 
 Following are animations created from running the Python N-Body Simulator for 300 timesteps.
 
-| 128 Particles  | 1,280 Particles | 12,800 Particles |
-| -------------  | -------------  |-------------    |
-|![alt text](images/animation_128_particles.gif)|![alt text](images/animation_1280_particles_rb.gif)|![alt text](images/animation_12800_particles_rb.gif)|
-|x,y,z scale=+-1800|x,y,z scale=+-2300|x,y,z scale=+-63256|
+| 128 Particles                                         | 1,280 Particles                                            | 12,800 Particles                                             |
+|-------------------------------------------------------|------------------------------------------------------------|--------------------------------------------------------------|
+| ![128 particles](images/animation_128_particles.gif)  | ![1280 particles](images/animation_1280_particles_rb.gif)  | ![12800 particles](images/animation_12800_particles_rb.gif)  |
+| x,y,z scale=+-1800                                    | x,y,z scale=+-2300                                         | x,y,z scale=+-63256                                          |
 
 ## (Optional) Creating Animation GiFs
 

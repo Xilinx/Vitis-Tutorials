@@ -125,7 +125,7 @@ This tutorial showcases a beamforming system with 32 layers and 64 antennas impl
 
 #### Block Diagram
 
-![Beamforming Block Diagram](images/beamforming_block%20_diagram.png)
+![Beamforming Block Diagram](images/beamforming_block_diagram.png)
 
 ## Modules
 

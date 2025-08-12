@@ -16,6 +16,7 @@
 # Fast Fourier Transform
 
 ## From the basics to the FFT
+
 The Fourier Transform allows to transform a function from the time domain to the frequency domain, enabling various analysis and manipulation on the function itself through the exploitation of transform's properties.
 From a mathematical standpoint, the Fourier Transform is defined as:
 $$\mathcal{F}\left[x(t)\right]=X(f)=\int_{-\infty}^{+\infty}x(t)e^{-2j\pi f t}$$ 
@@ -47,14 +48,15 @@ Where:
 - The decimaton done in the second equation is called **decimation in frequency** (**DIF**).
 
 ### Power-of-B/Radix-B and mixed radix FFT algorithms
+
 The power-of-B algorithms (also known as radix-B argorithms) are certainly the most known application of Cooley-Tukey's results.
 Those algorithms are obtained when the number of samples of the acquired signal is a *prime power* of a number B, that means that $N=B^p$ with $B,p\in\mathbb{N}$. In those cases, the algorithm can be applied recursively, because the DFTs obtained in the Cooley-Tukey decimation equations (shown above) can be decimated as well if $\frac{N_1}{N_2} \in \mathbb{N}$, and, if the chosen decimation order $N_2=B$, the DFT can be decimated upto $p$ times.
 After applying this algebraic ploy, the resulting operations are just small DFTs that have $B$ points and are faster to be computed, obtaining the $O(N\cdot log_B(N))$ computational complexity that Cooley and Tukey highlighted in their paper.
-A well-known representation of this category of algorithms is the **butterfly diagram**, that is a diagram where the nodes are the operations to be performed during a certaing step of the algorithm, and the edges connect the samples and the temporary results to the aforementioned nodes or to the final results. 
-<p align="center"><img src="./images/Butterfly_DIT_8.png" width="80%">
-</p>
-<p align="center">Fig. 1: Butterfly diagram of an 8-point, radix-2 DIT FFT
-</p></br>
+A well-known representation of this category of algorithms is the **butterfly diagram**, that is a diagram where the nodes are the operations to be performed during a certaing step of the algorithm, and the edges connect the samples and the temporary results to the aforementioned nodes or to the final results.
+
+![Butterfly diagram of an 8-point, radix-2 DIT FFT](./images/Butterfly_DIT_8.png)
+> *Fig. 1*: Butterfly diagram of an 8-point, radix-2 DIT FFT
+
 
 Those diagram are useful because they highlight the steps to perform while using the FFT algorithm as well as the data dependencies, making thus the designer able to visualize the pipeline and the data flow that the implementation needs to have.
 Observing the indexes of the inputs and outputs of the decimation in time and decimation in frequency butterfly diagrams shown above, it is visible that this is a **not self-sorting** algorithm because the indexes, either at the inputs or the outputs are indexed in **bit-reversed order**.
@@ -65,26 +67,30 @@ Another category of FFT algorithms that comes from the radix-B class of FFT algo
 From a mathematical standpoint, to use those algorithm is sufficient to perform first the wanted decimations of one order, and then perform the other decimations on the resulting FFTs. However, this family of algorithms have in most cases quite complex indexing and are harder to implement in hardware. Nevertheless, this does not apply for every type of mixed-radix algorithms, as the Stockham variant of the FFT algorithm, that is used by the AI Engine APIs, have little to none indexing overhead for mixed-radixes.
 
 ## The Stockham FFT algorithm
+
 To adapt the Cooley-Tuckey algorithm to vector computers that are equipped with local memory, such as the AI Engine, the concepts of *in-place computation*, *constant geometry* and *self-sorting* are introduced.
+
 - **In-place computation**: an algorithm has the property of being computed in-place if the memory space occupied by the data is the same along all the algorithm steps, i.e. there is no buffer memory overhead for the data computation.
 - **Constant geometry**: an FFT algorithm has the constant geometry property if the indexes of the data are unchanged stage by stage, increasing the parallelization for SIMD machines thanks to the avoidance of indexes book-keeping.
 - **Self-sorting**: an FFT algorithm is self-sorting if the output data stored output data address is not bit-reversed, i.e. the output data is ordered. This may spare quite some computation since there would be no need for a bit-reverse stride permutation matrix to be used to order the data.
 
 Unfortunately, research has not found an FFT algorithm that possesses all those properties yet. 
 Among the possible solutions, AI Engine API employs the Stockham variant of the FFT algorithm. Such variant sacrifies the in-place computation property to gain the self-sorting one.
-<p align="center"><img src="./images/Stockham_DIT_butterfly.png" width="50%"></p>
-<p align="center">Fig. 2: Butterfly diagram of an 8-point, radix-2 Stockham DIT FFT</p>
-</br>
+
+![Butterfly diagram of an 8-point, radix-2 Stockham DIT FFT](./images/Stockham_DIT_butterfly.png)
+> *Fig. 2*: Butterfly diagram of an 8-point, radix-2 Stockham DIT FFT
+
 As observable from the figure above, the Stockham variant of the FFT is obtained through re-indexing the stage's computational nodes, done by adding a given increasing offset to the indexes, as explicited in the example figure here below.
-<br></br>
-<p align="center"><img src="./images/Stockham_explicit.png" width="100%"></p>
-<p align="center">Fig. 3: Butterfly diagram of an 8-point, radix-2 Stockham DIF FFT with explicit re-indexing.</p>
-</br>
+
+![Butterfly diagram of an 8-point, radix-2 Stockham DIF FFT with explicit re-indexing](./images/Stockham_explicit.png)
+> *Fig. 3*: Butterfly diagram of an 8-point, radix-2 Stockham DIF FFT with explicit re-indexing
+
 In conclusion, the Stockham variant of the FFT sacrifices the in-place computation property not only to acquire the self-sorting one, but also to be efficiently vectorizable.
 
 Such features make this algorithm to be a suitable choice for performing the FFT on SIMD machines as the AI Engine ML
 
 ## Bibliography
+
 - [F. Franchetti - Fast Fourier Transform](https://users.ece.cmu.edu/~franzf/papers/fft-enc11.pdf)
 - [J. W. Cooley et al. - What Is the Fast Fourier Transform?](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1447887)
 - [J. W. Cooley, J. W. Tukey - An Algorithm for the Machine Calculation of Complex Fourier Series](https://www.ams.org/journals/mcom/1965-19-090/S0025-5718-1965-0178586-1/S0025-5718-1965-0178586-1.pdf)

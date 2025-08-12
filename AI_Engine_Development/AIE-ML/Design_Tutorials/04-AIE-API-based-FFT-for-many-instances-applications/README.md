@@ -103,9 +103,8 @@ The considered case study requires the computation of the FFT of 128 concurrent 
 Moreover, to optimize the AI Engine resources, it is beneficial to maximize the local memory usage and to serialize the data and the computation, as this decreases the interface and compute tiles utilization.
 For how the FFT algorithm works, the buffering of at least half the samples of each signal is required. To avoid using programmable logic memory resources, the chosen strategy is to perform such buffering inside the AIE-ML using the memory tiles.
 
-<p align="center"><img src="./images/Dataflow_prototype_0.png" width="90%"></p>
-<p align="center">Fig. 1: Preliminary Data Flow Block Diagram.</p>
-</br>
+![Preliminary Data Flow Block Diagram](./images/Dataflow_prototype_0.png)
+> *Fig. 1*: Preliminary Data Flow Block Diagram
 
 The resulting system follows the diagram shown in figure 1, where 128 instances are acquired in parallel, then they are routed from the programmable logic to the AIE-ML though a certain number **N** of interface tile I/O channels. The samples are then routed to a certain number **K** of kernels to compute the FFTs in parallel, and their output is eventually routed back to PL.
 </br>
@@ -163,9 +162,8 @@ To understand the FFT API usage it is important to consider that the FFT algorit
 
 The number of the resulting transforms depends linearly on the radix parameter: a radix-2 FFT stage will thus divide the original transform into two transforms, a radix-3 into three, and so on. Usually, the decimation process is repeated recursively until the discrete transform to be performed has a number of points equal to the radix of the last stage.
 
-<p align="center"><img src="./images/radix-4_stage_diagram.png" width="80%"></p>
-<p align="center">Fig. 2: Diagram of a radix-4 Stage Decimation.</p>
-</br>
+![Diagram of a radix-4 Stage Decimation](./images/radix-4_stage_diagram.png)
+> *Fig. 2*: Diagram of a radix-4 Stage Decimation
 
 The FFT staged API functions are C++ templatized functions. The API used for this work is the radix-4 stage function, whose declaration is the following:
 
@@ -192,19 +190,17 @@ The template parameters are:
 
 $$\text{vec}(\text{stage}_ 0)=\frac{N_ {\text{points}}}{\text{radix}_ {\text{stage}_ 0}}, \quad \text{vec}(\text{stage}_ m)=\frac{\text{vec}(\text{stage}_ {m-1})}{\text{radix}_ {\text{stage}_ m}}$$
 
-<p align="center"><img src="./images/Butterfly_DIT_8_vect.png" width="60%"></p>
-<p align="center">Fig. 3: Example of vectorization of the three stages of an 8 points radix-2 DIT FFT.</p>
-</br>
+![Example of vectorization of the three stages of an 8 points radix-2 DIT FFT](./images/Butterfly_DIT_8_vect.png)
+> *Fig. 3*: Example of vectorization of the three stages of an 8 points radix-2 DIT FFT
+
 From the figure above, note that the vectorization follows the equations above, where the stride in index (shown at the left of the image) between samples is 4-2-1.
-<br>
-</br>
 
 The function’s arguments are:
 
 - The **pointers to the twiddle tables**, that are in number equal to the used stage radix minus one, thus three pointers for a radix-4 stage implementation, as observable from figure 2;
 - The **input data memory pointer**;
-- The **output data memory pointer**; 
-- The **total number of points** of the signal; 
+- The **output data memory pointer**;
+- The **total number of points** of the signal;
 - The **twiddle shift parameter** to handle the fixed-point graularity of the twiddles;
 - The **stage shift parameter** to handle the fixed-point graularity of the FFT stage;
 - The **inverse flag**, that sets the function to compute the FFT or its inverse function.
@@ -212,19 +208,18 @@ The function’s arguments are:
 Note moreover that having an odd number of stages eliminates the need for a temporary buffer, because the output ping-pong buffers can be used as the auxiliary memory to compute the not in-place algorithm. 
 This happens because every alternated sequence of two elements terminates on the second element only if the number of repetitions is odd. For example, if the three repetitions are done the sequence will be {in-out, out-in, in-out}, whereas with four repetitions it is {in-out, out-in, in-out, out-in}, thus a third auxiliary element would be needed to terminate the sequence on the "out" element.
 
-
 #### Coding the Kernel
 
 Before coding the kernel, it is important to choose the best API function to carry out the computation. Since $1024=4^5$, a radix-4 only implementation that comprehends five stages, therefore five API calls, is a suitable choice for this design. This API not only requires less API calls with respect to radix-2, thus less program execution control overhead, but it also requires less computations because of the increased number of trivial complex multiplications.
 Another important consideration to keep in mind is that the memory used to compute one FFT is equal to four times the memory needed to store the 1024 CINT16 samples, that is 16 kilobytes, plus the memory reserved for the twiddle tables. Such factor of four is due to the fact that ping-pong buffers are needed both at the input and at the output to avoid creating backpressure.
 This means that, since it has a 64 kilobytes local memory, multiple signals can be batched together to be computed into the same AIE-ML tile. In this design, we are batching two signals for each kernel.
 
-
 Keeping in mind the design considerations, the next step is to code the AI Engine kernels.
 The file structure of choice to write the kernels is:
-1.  One header file containing all the twiddle factor tables defined as macros with the #define compiler directive.
-2.  One highly parametric header file where the *fft1k_kernel* class is defined.
-3.  One .cpp file where the kernel class *run* method is defined with the AIE API functions.
+
+1. One header file containing all the twiddle factor tables defined as macros with the #define compiler directive.
+2. One highly parametric header file where the *fft1k_kernel* class is defined.
+3. One .cpp file where the kernel class *run* method is defined with the AIE API functions.
 
 ##### Twiddles Header File
 
@@ -276,9 +271,9 @@ Note that the CINT16 twiddle datatype is parametrized through the TT_TWID *typed
 
 The last section of the class is reserved to declare the public methods, those are:
 
--   the class constructor;
--   the *run* method, that will be the actual kernel code;
--   the *registerKernelClass* method that calls the *REGISTER_FUNCTION* macro, that registers the run method to be used on the AIE-ML tile core to perform the kernel function.
+- the class constructor;
+- the *run* method, that will be the actual kernel code;
+- the *registerKernelClass* method that calls the *REGISTER_FUNCTION* macro, that registers the run method to be used on the AIE-ML tile core to perform the kernel function.
 
 The run method has for arguments the input and output buffers data structures, that are declared with the *\_\_restrict* pointer qualifier, that enable aggressive compiler optimizations by explicitly stating that there will not be pointer aliasing, i.e., the pointed memory space will be accessed only by such pointer.
 
@@ -353,8 +348,9 @@ The data comes from all the 128 instances with a rate $r=125MSa/s$. Assuming tha
 
 The data is sent through the PLIO channels that are 64-bit wide, and can thus accomodate two samples per channel, allowing also time interleaving. The instances can be assigned to the channels in a round-robin fashion, as shown in the following table.
 
-<p align="center"><img src="./images/PLIO_mapping.png" width="100%"></p>
-<p align="center">Table 2: PLIO Channels Mapping with Temporal and Spatial Interleaving.</p></br>
+![PLIO Channels Mapping with Temporal and Spatial Interleaving](./images/PLIO_mapping.png)
+> *Table 2*: PLIO Channels Mapping with Temporal and Spatial Interleaving
+
 
 A not trivial design challenge to face when performing time interleaving is the management of the kernels' buffers. In fact, each single kernel that computes the FFT expects its input data to be contiguous inside the buffer. If for instance we set the batching parameter $\text{REPEAT} = 2$ in the kernels' header file, the input buffer size will increase, but the data is expected to be ordered with the first N samples coming from one signal instance, followed by the second N samples coming from another instance. This is not possible, since the data will be inputted as interleaved, as visible from Table 2.
 
@@ -374,8 +370,8 @@ The main idea is to employ the AIE-ML memory tiles ability to perform matrix tra
 
 To do so, consider the input data as a matrix where the rows represent the n-th samples of every instance, and the columns represent the instances. A visualization of such a matrix is shown in the following table, where the instances $i$ go from 0 to $I$, while the samples $n$ go from 0 to $N$.
 
-<p align="center"><img src="./images/Instance_mapping_0.png" width="100%"></p>
-<p align="center">Table 3: Memory tile Buffering Matrix.</p></br>
+![Memory tile Buffering Matrix](./images/Instance_mapping_0.png)
+> *Table 3*: Memory tile Buffering Matrix
 
 In this way, it is possible to write inside the memory tile row-by-row with the inputs coming from every instance at their sample rate of 125MSa/s, so that a row of the memory tile will be filled at every sample cycle. Eventually, all the columns of the matrix will be filled when the last sample of every instance will be written to the memory tile, i.e. the last row of the matrix, at the last sampling cycle.
 
@@ -383,8 +379,8 @@ Now, the memory tile reading operation done by the kernels can proceed in the op
 
 To apply time interleaving to such matrix, Table 2 and Table 3 need to be merged. To do so, observe that the rows of Table 2 are filled at a rate $r=125MSa/s$, while the rows of Table 2 are filled every $f_{PL}=500MHz$, thus Table 3 is filled with an rate equal to the sample rate $r$ for each row, because the wanted temporal interleaving makes the PL rate $\theta$ times bigger than $r$. This means that Table 3 can be folded $\theta$ times to form a three-dimensional tensor, where each vertical slice contains all the time interleaved samples with the order of Table 2, while each horizontal slice is composed of contiguous instances spanning though rows, and contiguous samples spanning though columns, as shown in the following animation.
 
-<p align="center"><img src="./images/video.gif" width="100%"></p>
-<p align="center">Animation 1: Memory tile 3D buffering mechanism.</p></br>
+![Memory tile 3D buffering mechanism](./images/video.gif)
+> *Animation 1*: Memory tile 3D buffering mechanism
 
 #### Using the Shared Buffers
 
@@ -392,25 +388,25 @@ The digital construct used to program the access of both the interface tiles and
 
 This buffer is parametrized with:
 
--   Data type, chosen in the template parameters.
--   Size, as a 1,2,3 or 4 values vector where each of those values expresses the sizes of the dimensions of the buffer, in terms of samples.
--   Number of input ports, that are maximum six per Memory Tile.
--   Number of output ports, that are maximum six per Memory Tile.
+- Data type, chosen in the template parameters.
+- Size, as a 1,2,3 or 4 values vector where each of those values expresses the sizes of the dimensions of the buffer, in terms of samples.
+- Number of input ports, that are maximum six per Memory Tile.
+- Number of output ports, that are maximum six per Memory Tile.
 
 This buffer has various settings that are controlled through specific APIs. Some of the most important ones are:
 
--   Read and write access patterns, that are set through tiling parameters.
--   Repetition count, that sets the amount of times the access pattern to the buffer must be done for every graph call.
--   Number of buffers, that enable the usage of ping-pong buffers if set to two.
+- Read and write access patterns, that are set through tiling parameters.
+- Repetition count, that sets the amount of times the access pattern to the buffer must be done for every graph call.
+- Number of buffers, that enable the usage of ping-pong buffers if set to two.
 
 The tiling parameters regulate the access to the shared buffer by dividing it into \"tiles\" that have dimensions lesser or equal to the ones of shared buffer, being thus subsets of the memory tensor. Those parameters give freedom to the developer to traverse the tiles with various patterns. Some important features set by those parameters are:
 
--   Tile dimensions, that is a vector having the same dimensionality of the shared buffer, where each element contains the size of the tile in such dimension.
--   Offset, that is vector having the same dimensionality of the shared buffer, where each element contains the offset with respect to the first element of the buffer.
--   Traversing parameters, that is a vector having the same dimensionality of the shared buffer, where each element is a data structure that defines:
-    -   Dimension: the dimension (i, j, k...) of the shared buffer tensor to be traversed;
-    -   Stride: the distance between consecutive elements accessed in the tile, in terms of samples;
-    -   Wrap: the number of tiles to be accessed in the chosen dimension.
+- Tile dimensions, that is a vector having the same dimensionality of the shared buffer, where each element contains the size of the tile in such dimension.
+- Offset, that is vector having the same dimensionality of the shared buffer, where each element contains the offset with respect to the first element of the buffer.
+- Traversing parameters, that is a vector having the same dimensionality of the shared buffer, where each element is a data structure that defines:
+  - Dimension: the dimension (i, j, k...) of the shared buffer tensor to be traversed;
+  - Stride: the distance between consecutive elements accessed in the tile, in terms of samples;
+  - Wrap: the number of tiles to be accessed in the chosen dimension.
 
 #### Coding the Graph
 
@@ -422,15 +418,15 @@ For this tutorial, the graph files are just the header and the implementation fi
 In the graph header file, the *fft1k_128_graph* class is defined, with all the kernel and buffer objects and connection inside it.
 As a first step, the ADF library and kernel header file are included, then six variables are defined through #define compiler directives:
 
--   the number of signal instances $\text{N\\_INST}=128$;
--   the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\\_WIDTH} = 2$;
--   the time interleaving $\theta$ factor $\text{IO\\_ILV}=4$;
--   the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\\_KERS}=\frac{\text{N\\_INST}}{\text{REPS}}=64$;
--   the number of I/O channels, that is $\text{N\\_IO}=\frac{\text{N\\_INST}}{\text{IO\\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\\_WIDTH}}=16$.
--   the maximum number $\text{MAX\\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
-    -   Note that the formulas suggested in the code are calculated for ping-pong shared buffers and considering input and output buffers packed together (as it spares mem tile interface resources). 
-        $$\text{MAX\\_BUF} = min\left[ \frac{512kB}{\text{BUF\\_SIZE}\cdot\text{DATATYPE\\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\\_KERS}}{\text{N\\_IOs}}} \right]$$
-    -   For this reason, the build will work even if MAX_BUF = 0 in the case the design is port-limited, as in such case the buffers are left unconstrained.
+- the number of signal instances $\text{N\\_INST}=128$;
+- the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\\_WIDTH} = 2$;
+- the time interleaving $\theta$ factor $\text{IO\\_ILV}=4$;
+- the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\\_KERS}=\frac{\text{N\\_INST}}{\text{REPS}}=64$;
+- the number of I/O channels, that is $\text{N\\_IO}=\frac{\text{N\\_INST}}{\text{IO\\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\\_WIDTH}}=16$.
+- the maximum number $\text{MAX\\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
+  - Note that the formulas suggested in the code are calculated for ping-pong shared buffers and considering input and output buffers packed together (as it spares mem tile interface resources). 
+    $$\text{MAX\\_BUF} = min\left[ \frac{512kB}{\text{BUF\\_SIZE}\cdot\text{DATATYPE\\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\\_KERS}}{\text{N\\_IOs}}} \right]$$
+  - For this reason, the build will work even if MAX_BUF = 0 in the case the design is port-limited, as in such case the buffers are left unconstrained.
 
 In the private section of the class there are only attributes, that are an array of N_IO kernels and two arrays of N_IO shared buffers, one for the inputs and one for the outputs.
 In the public section of the graph class, the attributes are just two arrays of N_IO ports, one for the input and one for the output.
@@ -596,33 +592,28 @@ Inside the main there are basic APIs that control the graph runtime execution. A
 
 Now that the design of the AIE-ML FFT implementation is complete, the next step is to build it.
 
-## Implementing and Evaluating the AIE-ML Design with Vitis Unified IDE 
+## Implementing and Evaluating the AIE-ML Design with Vitis Unified IDE
 
 ### Creating the AI Engine ML Project in Vitis
 
 To create the AIE-ML project in Vitis Unified IDE, follow those steps:
+
 1. Clone this repository.
 2. Open Vitis Unified IDE.
 3. Select "Set Workspace" and choose a folder for the project.
 4. Create a new AI engine component by either clicking on "Create Component" under the "AI Engine Graph Development" menu, or opening the "File" &rarr; "New Component" menu, and clicking on AI Engine, as shown in the following figure.
-  <p align="center"><img src="./images/2_1_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 4: AI Engine Component Creation in Vitis Unified IDE.</p>
-  </br>
-
-5. Select the project name and component directory and press "next".
-6. Select "Add folder" and import the ```src``` folder of this repository. Make sure that ``fft1k_128_graph.cpp`` is the top-level file and press "next".
-  <p align="center"><img src="./images/2_2_Vitis.png" width="80%"></p>
-  <p align="center">Fig. 5: AIE Component Creation - Source Files Selection.</p>
-  </br>
-    
+   ![AI Engine Component Creation in Vitis Unified IDE](./images/2_1_Vitis.png)
+   > *Fig. 4*: AI Engine Component Creation in Vitis Unified IDE
+5. Select the project name and component director and press "next".
+6. Select "Add folder" and import the `src` folder of this repository. Make sure that `fft1k_128_graph.cpp` is the top-level file and press "next".
+   ![AIE Component Creation - Source Files Selection](./images/2_2_Vitis.png)
+   > *Fig. 5*: AIE Component Creation - Source Files Selection
 7. When chosing the hardware, select the VEK280 board-based platform, as shown in the following figure, and press "next", and then "finish".
-  <p align="center"><img src="./images/2_3_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 6: AIE Component Creation - Platform Selection.</p>
-  </br>
-
+   ![AIE Component Creation - Platform Selection](./images/2_3_Vitis.png)
+   > *Fig. 6*: AIE Component Creation - Platform Selection
 8. Open the compiler configuration clicking on ```aiecompiler.cfg``` under the AI Engine Component's setting folder on the left hand side of the GUI, then click on AI Engine and set the PL frequency to 500MHz, as decided in the design phase of the tutorial.
-  <p align="center"><img src="./images/2_4_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 7: Selecting the Programmable Logic Frequency in the AI Engine Compile Settings.</p>
+   ![Selecting the Programmable Logic Frequency in the AI Engine Compile Settings](./images/2_4_Vitis.png)
+   > *Fig. 7*: Selecting the Programmable Logic Frequency in the AI Engine Compile Settings
 
 ### x86 Simulation and Functional Validation
 
@@ -630,55 +621,44 @@ To create the AIE-ML project in Vitis Unified IDE, follow those steps:
 2. Open the ```launch.json``` simulation configuration file under the "settings" folder of the workspace.
 3. Create a new x86 simulation by clicking on "New Launch Configuration", and then "x86sim".
 4. Run the simulation by clicking "Run" under the "X86 SIMULATION" tab in the "FLOW" menu. This functional simulation takes the input data from the text files present in the ```./src/verif_i_128```, that represent the 16 PLIOs.
-    - Note: By default the input data is a set of three rectangular waves per each instance. Those files can be replaced the text files present in the three folders in the ``verification/v_inputs`` folder to test also random signals.
+   > **Note**: By default the input data is a set of three rectangular waves per each instance. Those files can be replaced the text files present in the three folders in the ``verification/v_inputs`` folder to test also random signals.
 5. Check the execution outputs under the ``Output/x86sim/x86simulator_output/verif_o_128`` in the GUI, as shown in the following figure.
-  <p align="center"><img src="./images/2_5_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 8: Visualizing the x86 Simulation Output Files.</p>
-  </br>
-
-6. Perform a functional verification using the Python script in the ``support/verification`` folder of this repository.
-   - This script analyzes the text files inside the "v_inputs" and "v_outputs" folder and creates some functional verification charts. 
+   ![Visualizing the x86 Simulation Output Files](./images/2_5_Vitis.png)
+6. Perform a functional verification using the Python script in the `support/verification` folder of this repository.
+   - This script analyzes the text files inside the `v_inputs` and `v_outputs` folder and creates some functional verification charts.
    For more information refer to [this document](./support/verification/Readme.md).
-   - If you did not modify the input files, you can just run the ```Basic_verification``` Python script with the following terminal command, while being located into the ```support/verification``` directory: ```python -i ./Basic_verification```
-   -  If you replaced the simulator input files, replace also the text files inside the ```support/verification/v_inputs``` folder with the ones you used, keeping the same names. Then, copy the output files from ```[project-folder]/build/x86sim/x86simulato_output/verif_o_128``` into the ```support/verification/v_outputs``` folder and run the python script with the aforementioned command.
+   - If you did not modify the input files, you can just run the `Basic_verification` Python script with the following terminal command, while being located into the `support/verification` directory: `python -i ./Basic_verification`.
+   - If you replaced the simulator input files, replace also the text files inside the `support/verification/v_inputs` folder with the ones you used, keeping the same names. Then, copy the output files from `[project-folder]/build/x86sim/x86simulato_output/verif_o_128` into the `support/verification/v_outputs` folder and run the python script with the aforementioned command.
 7. Look at the generated charts and make sure that the comparison graphs are superimposed, and the error is fairly low, as shown in the following figure.
 Note that, since this is a fixed point implementation and Numpy performs the FFT with a float datatype, the error could spike when the transform approaches zero.
-<p align="center"><img src="./images/2_6_1_Vitis.png" width="100%"></p>
-  <p align="center"><img src="./images/2_6_2_Vitis.png" width="50%"></p>
-  <p align="center">Fig. 9: Validation Script Graphs.</p>
-  </br>
+   ![Validation Script Graph](./images/2_6_1_Vitis.png)
+   ![Validation Script Graph](./images/2_6_2_Vitis.png)
+
 
 ### AI Engine Simulation, Array and Trace Analysis
 
 1. Build the Hardware project for the graph by clicking on "Build" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu located on the bottom left corner of the GUI.
 2. When the build finishes, under the "REPORTS" tab in the "FLOW" menu, click "array" and check the AI Engine utilization. Observe in particular the mapping and routing for the 64 kernels and of the shared buffers.
-<p align="center"><img src="./images/2_7_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 7: Vitis AI Engine array view of the implemented graph.</p>
-  </br>
-
-3. Create a new "AIESim" run in the ```launch.json``` file, by clicking on the "+" ("Add Configuration") icon at the top of the interface. 
+   ![Vitis AI Engine array view of the implemented graph](./images/2_7_Vitis.png)
+3. Create a new "AIESim" run in the `launch.json` file, by clicking on the "+" ("Add Configuration") icon at the top of the interface.
 4. Enable tracing for the simulation, selecting the "aiesim" run and clicking "Enable Trace".
-<p align="center"><img src="./images/2_8_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 8: Creating a new run and enabling trace for AI Engine simulation.</p>
-  </br>
-
+   ![Creating a new run and enabling trace for AI Engine simulation](./images/2_8_Vitis.png)
 5. Run the AI Engine simulation by clicking "Run" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu.
 6. When the simulation ends, open the Trace reports and collapse all the signals, as shown in the following figure.
-<p align="center"><img src="./images/2_9_Vitis.png" width="100%"></p>
-  <p align="center">Fig. 9: Opening and analyzing the AIE simulator trace report.</p>
-  </br>
-Note that the kernels are running for less than 25% of the time, being locked for the remaining time. Moreover, the memory tiles are almost empty because each shared buffer serves four kernels, thus the shared buffer mapping to the memory tiles is highly port-limited.
+   ![Opening and analyzing the AIE simulator trace report](./images/2_9_Vitis.png)
+
+> **Note**: The kernels are running for less than 25% of the time, being locked for the remaining time. Moreover, the memory tiles are almost empty because each shared buffer serves four kernels, thus the shared buffer mapping to the memory tiles is highly port-limited.
 Considering the previous validation steps, it can be concluded that the design is functionally correct, but a further optimization can be performed. Indeed, because the AIE-ML is much faster than the data rate, the computation can be serialized, reducing utilization and power consumption.
 To look into the optimization step, see the final step of this tutorial.
 
 
 ## Optimizing the AIE-ML Design
 
-After gathering the performance data of the first 3D buffer implementation, we can proceed refining the design through a rework on the Adaptable Flow Graph code. In this section is shown that a much more power efficient implementation can be achieved with a second design iteration by leveraging the results gathered in the first one and applying some basic architectural knowledge. 
+After gathering the performance data of the first 3D buffer implementation, we can proceed refining the design through a rework on the Adaptable Flow Graph code. In this section is shown that a much more power efficient implementation can be achieved with a second design iteration by leveraging the results gathered in the first one and applying some basic architectural knowledge.
 
 ### Graph Optimizations
 
-After gathering the performance data of the first 3D buffer implementation, because the profiling results showed that the kernels are locked for more than $75\%$ of the time, an idea is to further exploit the capacity and features of the memory tiles to buffer more data and use a quarter of the kernels through data serialization. 
+After gathering the performance data of the first 3D buffer implementation, because the profiling results showed that the kernels are locked for more than $75\%$ of the time, an idea is to further exploit the capacity and features of the memory tiles to buffer more data and use a quarter of the kernels through data serialization.
 To do so, a further dimension that represents time, can be added for the shared buffer. This fourth dimension will make possible that the number of kernels is less affected by the input time interleaving, by moving a selectable amount of instances from the second dimension (depth) to the fourth one.
 The resulting code restructuring is minimal and involves the aforementioned reshaping of the shared buffer tensor though a new parameter $\text{KER\\_ILV}$, that expresses the number of times that a kernel must run during the acquisition time, at steady state.
 The $\text{KER\\_ILV}$ parameter effectively counteracts the $\text{IO\\_ILV}$ effect, decoupling the spatial-temporal interleaving done for the IOs and the one done inside the AIE-ML, enabling seralization.
@@ -737,20 +717,13 @@ The steps for building the hardware and analyzing the reports are the as those f
 
 1. Build the Hardware project for the graph by clicking "Build" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu located on the bottom left corner of the GUI.
 2. When the build finishes, under the reports in the "FLOW" menu, click "array" and check the AI Engine utilization.
-    Observe that the number of kernels is 16 instead of 64, and that there are six well-filled memory tiles, instead of 23 mostly empty. Note that this great reduction in utilization also translates to a huge reduction in dynamic power.
-    <p align="center"><img src="./images/3_1_Vitis.png" width="90%"></p>
-    <p align="center">Fig. 10: 4D Buffer Implementation's AI Engine Array Report.</p>
-    </br>
-
-4. Enable tracing for the simulation by opening the ```launch.json``` configuration file, selecting the "aiesim" run and clicking "Enable Trace". If you modified the ``launch.json`` settings in the second part of the tutorial, skip this step.
-5. Launch the AIE simulation by clicking "Run" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu.
-6. When the simulation ends, open the Trace reports and collapse all the signals.
-
-Note now that the kernels are running for more than 90% of the time at steady state, as expected.
-
-<p align="center"><img src="./images/3_2_Vitis.png" width="90%"></p>
-  <p align="center">Fig. 11: 4D buffer Implementation's Trace Report.</p>
-  </br>
+   Observe that the number of kernels is 16 instead of 64, and that there are six well-filled memory tiles, instead of 23 mostly empty. Note that this great reduction in utilization also translates to a huge reduction in dynamic power.
+   ![4D Buffer Implementation's AI Engine Array Report](./images/3_1_Vitis.png)
+3. Enable tracing for the simulation by opening the ```launch.json``` configuration file, selecting the "aiesim" run and clicking "Enable Trace". If you modified the ``launch.json`` settings in the second part of the tutorial, skip this step.
+4. Launch the AIE simulation by clicking "Run" under the "AIE SIMULATOR / HARDWARE" tab on the "FLOW" menu.
+5. When the simulation ends, open the Trace reports and collapse all the signals.
+   > **Note**: The kernels are now running for more than 90% of the time at steady state, as expected.
+   ![4D buffer Implementation's Trace Report](./images/3_2_Vitis.png)
 
 ## Support
 

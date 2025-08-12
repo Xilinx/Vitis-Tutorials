@@ -11,9 +11,11 @@
   </tr>
 </table>
 
+# Kernel Code Modifications
+
 This tutorial lists the changes required for the vadd kernel. Note that this is only one example and there are also other ways to implement the same functions.
 
-# 1. Include necessary file headers.
+## 1. Include necessary file headers
 
 Add following 'include' commands at the beginning of the file, right before the 'define' command.
 
@@ -30,7 +32,7 @@ Add following 'include' commands at the beginning of the file, right before the 
 #define DATA_SIZE 4096
 ```
 
-#### 2. Define the AXI stream data type and add the dds process function
+## 2. Define the AXI stream data type and add the dds process function
 This function simply read the data into the kernel and then sends it out through another port. 
 
 Define a new 'pkt' type before the kernel function definition.
@@ -62,7 +64,7 @@ extern "C" {
     ...
 ```
 
-#### 3. Add more ports to the kernel functions
+## 3. Add more ports to the kernel functions
 
 Modify the kernel function to include more ports for interacting with the IP inside platform.
 
@@ -85,7 +87,7 @@ extern "C" {
 void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
 ```
 
-#### 4. Add the declaration of the two ports
+## 4. Add the declaration of the two ports
 
 ***OLD**
 ```
@@ -104,7 +106,7 @@ void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_
 #pragma HLS INTERFACE axis port = dds_in
 ```
 
-#### 4. Add a piece of logic to call the dds process function
+## 5. Add a piece of logic to call the dds process function
 
 
 
@@ -121,6 +123,6 @@ dss_process(wave_out,dds_in);
 }
 ```
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

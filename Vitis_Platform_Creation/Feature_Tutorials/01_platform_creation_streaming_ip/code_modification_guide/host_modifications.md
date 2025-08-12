@@ -11,9 +11,11 @@
   </tr>
 </table>
 
+# Host Modifications
+
 This tutorial lists the changes required for the vadd host application for this tutorial. Note that this is only one example and there are also other ways to implement the same functions.
 
-# 1. Include necessary file headers.
+## 1. Include necessary file headers
 
 Add the new 'include' commands at the beginning of the file around the same place of other 'include' commands that already exists.
 
@@ -36,7 +38,7 @@ Add the new 'include' commands at the beginning of the file around the same plac
 #include <stdio.h>
 ```
 
-#### 2. Create a new cl_mem buffer
+## 2. Create a new cl_mem buffer
 
 Create a new buffer to communicate with the data from the newly added port of kernel.
 
@@ -56,7 +58,7 @@ OCL_CHECK(err, cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_byte
 cl::Buffer buffer_waveout(context, CL_MEM_WRITE_ONLY, 1024*sizeof(int));
 ```
 
-#### 3. Bond the buffer with new arguments of the kernel
+## 3. Bond the buffer with new arguments of the kernel
 
 ***OLD***
 ```
@@ -76,7 +78,7 @@ OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, DATA_SIZE));
 krnl_vector_add.setArg(narg++,buffer_waveout);
 ```
 
-#### 4. Map the new buffer to a pointer
+## 4. Map the new buffer to a pointer
 
 ***OLD***
 ```
@@ -100,7 +102,7 @@ OCL_CHECK(err, ptr_result = (int*)q.enqueueMapBuffer(buffer_result, CL_TRUE, CL_
 int *ptr_waveout = (int *) q.enqueueMapBuffer (buffer_waveout , CL_TRUE , CL_MAP_READ , 0, 1024*sizeof(int));
 ```
 
-#### 5. Read data from DDR
+## 5. Read data from DDR
 
 ***OLD***
 ```
@@ -113,7 +115,7 @@ OCL_CHECK(err, q.enqueueMigrateMemObjects({buffer_result}, CL_MIGRATE_MEM_OBJECT
 q.enqueueMigrateMemObjects({buffer_waveout},CL_MIGRATE_MEM_OBJECT_HOST);
 ```
 
-#### 6. Save the data into a file
+## 6. Save the data into a file
 
 This can be added right after the piece of result verification that already exists.
 
@@ -152,7 +154,7 @@ int match = 0;
  fclose(fp_dout);
 ```
 
-#### 7. Unmap the buffer object
+## 7. Unmap the buffer object
 
 ***OLD***
 ```
@@ -171,6 +173,6 @@ q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
 ```
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
