@@ -66,10 +66,10 @@ class myGraph : public graph {
 //          adf::dimensions(m_k[ind].out[0]) = { NUM_SAMPLES };
 
          location<kernel>(core01) = tile(8,0);
-	 location<kernel>(core02) = tile(8,1);
-	 location<kernel>(core03) = tile(8,2);
-	 location<kernel>(core05) = tile(8,4);
-	 location<kernel>(core04) = tile(8,3);
+	 location<kernel>(core02) = tile(7,0);
+	 location<kernel>(core03) = tile(7,1);
+	 location<kernel>(core05) = tile(8,1);
+	 location<kernel>(core04) = tile(7,2);
 
          core01lut = parameter::array(B);      
          core02lut = parameter::array(B02);

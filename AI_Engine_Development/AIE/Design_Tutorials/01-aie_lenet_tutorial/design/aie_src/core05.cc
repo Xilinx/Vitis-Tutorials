@@ -106,16 +106,44 @@ INLINE_DECL void core05(
     int num_iterations = (COL_B_5/tileX_C) - 2;
     int r,c;
 
-    for(r=0;r<num_iterations;r++) {
-      for(c=0;c<tileX_C;c++) {
-        if (*ptrC_relu < 0) {
-          *ptrC_relu = 0;
-        }
-        ptrC_relu++;
-      }
-      ptrC_relu += tileX_C * (tileY_C - 1);
+	constexpr int VECTOR_SIZE = 16;
+int VECTORS_PER_ROW = tileX_C / VECTOR_SIZE;
+int REMAINDER = tileX_C % VECTOR_SIZE;
+
+for(r = 0; r < num_iterations; r++) {
+    int8_t* row_ptr = ptrC_relu;
+    
+    // Process full vectors
+    for(c = 0; c < VECTORS_PER_ROW; c++) {
+        // Load 32 int8 values into vector
+        aie::vector<int8_t, VECTOR_SIZE> data_vec = aie::load_v<VECTOR_SIZE>(row_ptr);
+        
+        // Create zero vector for comparison
+        aie::vector<int8_t, VECTOR_SIZE> zero_vec = aie::zeros<int8_t, VECTOR_SIZE>();
+        
+        // Apply ReLU: max(data, 0)
+        aie::vector<int8_t, VECTOR_SIZE> relu_vec = aie::max(data_vec, zero_vec);
+        
+        // Store result back
+        aie::store_v(row_ptr, relu_vec);
+        
+        row_ptr += VECTOR_SIZE;
     }
-    *ptrC_relu = 8;
+    
+    // Handle remainder elements (if tileX_C is not divisible by VECTOR_SIZE)
+    if(REMAINDER > 0) {
+        for(int i = 0; i < REMAINDER; i++) {
+            if(*row_ptr < 0) {
+                *row_ptr = 0;
+            }
+            row_ptr++;
+        }
+    }
+    
+    // Move to next row with stride
+    ptrC_relu += tileX_C * tileY_C;
+}
+*ptrC_relu = 8;
 }
 #endif
 
