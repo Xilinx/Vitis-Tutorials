@@ -132,7 +132,7 @@ The figure below shows a screen capture of the application when run on the VCK19
 
 [1]: <https://en.wikipedia.org/wiki/Fast_Fourier_transform> "Fast Fourier Transform"
 
-[[1]] Wikipedia, "[Fast Fourier Transform]([https://en.wikipedia.org/wiki/Fast_Fourier_transform])"
+[[1]] Wikipedia, "[Fast Fourier Transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform)"
 
 ## Support
 

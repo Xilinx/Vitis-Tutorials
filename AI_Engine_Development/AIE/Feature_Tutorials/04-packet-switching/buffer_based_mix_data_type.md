@@ -19,10 +19,10 @@ This example is similar to the previous [Buffer-based AI Engine Kernels](./buffe
 
 The following topics are already covered in [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md).
 
-* [Construct Graph with Packet Switching Capability](./buffer_based_aie_kernel.md/#Construct-Graph-with-Packet-Switching-Capability)
-* [Packet Format](./buffer_based_aie_kernel.md/#Packet-Format)
-* [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
-* [Example PS code for Packet Switching](./buffer_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
+* [Construct Graph with Packet Switching Capability](./buffer_based_aie_kernel.md#construct-graph-with-packet-switching-capability)
+* [Packet Format](./buffer_based_aie_kernel.md#packet-format)
+* [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md#example-pl-kernels-for-packet-switching)
+* [Example PS code for Packet Switching](./buffer_based_aie_kernel.md#example-ps-code-for-packet-switching)
 
 ## Prepare Data for AI Engine Simulator
 

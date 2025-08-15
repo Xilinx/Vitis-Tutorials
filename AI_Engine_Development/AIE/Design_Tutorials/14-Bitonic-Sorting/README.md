@@ -270,11 +270,11 @@ Once again we compare Bitonic SIMD Sorting against the `std::sort()` routine pro
 
 [1]: <https://en.wikipedia.org/wiki/Bitonic_sorter> "Bitonic Sorter"
 
-[[1]] Wikipedia, "[Bitonic Sorter]([https://en.wikipedia.org/wiki/Bitonic_sorter])"
+[[1]] Wikipedia, "[Bitonic Sorter](https://en.wikipedia.org/wiki/Bitonic_sorter)"
 
 [2]: <https://en.wikipedia.org/wiki/Introsort> "Introsort"
 
-[[2]] Wikipedia, "[Introsort]([https://en.wikipedia.org/wiki/Introsort])"
+[[2]] Wikipedia, "[Introsort](https://en.wikipedia.org/wiki/Introsort)"
 
 ## Support
 

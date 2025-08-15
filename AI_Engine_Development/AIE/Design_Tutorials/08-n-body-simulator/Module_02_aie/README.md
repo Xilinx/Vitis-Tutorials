@@ -64,7 +64,7 @@ The `nbody()` kernel is sectioned into two major `for` loops. The first major `f
 
 Next, review the `src/nbody_subsystem.h` graph. This graph creates four N-Body kernels, a packet splitter kernel, and a packet merger kernel. Review the packet switching feature tutorial to learn more about the packet switching feature in the AI Engine: [04-packet-switching](https://github.com/Xilinx/Vitis-Tutorials/tree/master/AI_Engine_Development/Feature_Tutorials/04-packet-switching).  
 
-![alt text](images/nbody_subsystem.PNG)
+![alt text](images/nbody_subsystem.png)
 
 The `nbody_subsystem` graph has two inputs: `input_i` and `input_j`. The `input_i` port is a packet stream that connects to the packet splitter. The packet splitter redirects packets of data to the `w_input_i` port of each `nbody()` kernel. Each `input_i` packet contains a packet header, 224 32-bit data values, and TLAST asserted with the `m31` data value. The `input_j` port is a data stream that is broadcast to all the `nbody()` kernels (i.e., all `nbody()` kernels receive the same `input_j` data). The `nbody()` kernels perform their computations and generate the new `w_output_i` data which is merged into a single stream of packets, resulting in the output of the `nbody_subsystem` graph `output_i`.
 

@@ -225,11 +225,11 @@ The build process will generate the SD card image in the ```<path-to-design>/05-
 
 [1]: <https://en.wikipedia.org/wiki/Prime-factor_FFT_algorithm> "Prime Factor FFT Algorithm"
 
-[[1]] Wikipedia, "[Prime Factor FFT Algorithm]([https://en.wikipedia.org/wiki/Prime-factor_FFT_algorithm])"
+[[1]] Wikipedia, "[Prime Factor FFT Algorithm](https://en.wikipedia.org/wiki/Prime-factor_FFT_algorithm)"
 
 [2]: <https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Signal_Processing_and_Modeling/Fast_Fourier_Transforms_(Burrus)> "Fast Fourier Transforms"
 
-[[2]] C. Sidney Burrus, "[Fast Fourier Transforms]([https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Signal_Processing_and_Modeling/Fast_Fourier_Transforms_(Burrus)])"
+[[2]] C. Sidney Burrus, "[Fast Fourier Transforms](https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Signal_Processing_and_Modeling/Fast_Fourier_Transforms_(Burrus))"
 
 ## Support
 
