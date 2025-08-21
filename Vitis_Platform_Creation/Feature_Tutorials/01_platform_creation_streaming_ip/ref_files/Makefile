@@ -1,5 +1,5 @@
 #/*
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
@@ -8,36 +8,25 @@ ABS_BUILD_PATH=$(ROOT_DIR)/build
 ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
 BD_TCL=run.tcl
 ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)
-DTB_PLT_NAME=mydevice
-DTB_LOCATION=$(ROOT_DIR)/$(DTB_PLT_NAME)/psv_cortexa72_0/device_tree_domain/bsp
-DTB=$(DTB_LOCATION)/system.dtb
 VERSION=2025.1
-COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)
 XSA_PATH=$(ROOT_DIR)/build/vivado/
 XSA_NAME=custom_hardware_platform
 XSA=$(XSA_PATH)/$(XSA_NAME)_hw.xsa
 PLATFORM_NAME=custom_platform
-CUSTOM_PLATFORM = $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
+CUSTOM_PLATFORM = $(ROOT_DIR)/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 SYSROOT := $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux
+SDKTARGETSYSROOT ?= ${SYSROOT}
 
-DEVICE_TREE_REPO ?=
-
-#ifndef DEVICE_TREE_REPO
-DEVICE_TREE_REPO=https://github.com/Xilinx/device-tree-xlnx.git
-#endif
-
-
-SRC=$(ROOT_DIR)/src
+SRC=$(ROOT_DIR)/vadd
 TARGET=hw_emu
-
-
 
 EXECUTABLE = ./simple_vadd
 EMCONFIG_DIR = $(TEMP_DIR)
 .PHONY: help
 
-all: hw check-common-image  dtb pfm vadd_emu
-sd_card:clean hw check-common-image  dtb pfm vadd_hw
+all: ultraclean hw check-common-image pfm vadd_emu
+sd_card: ultraclean hw check-common-image pfm vadd_hw
 
 help:
 	@echo "Makefile usage"
@@ -60,16 +49,6 @@ ifeq ($(wildcard $(COMMON_IMAGE_VERSAL)/Image),)
 	@echo "exit ....." && exit 1
 endif
 
-
-# target: dtb
-#generate the DTB file
-#echo command is to avoid the return error code caused by the createdts command warning
-$(DTB): dtb
-dtb: $(XSA_PATH)/$(XSA_NAME)_hw.xsa
-	@echo "execute createdts to generate dts file"
-	xsct -eval " createdts -hw $(XSA_PATH)/$(XSA_NAME)_hw.xsa -out . -zocl  -platform-name $(DTB_PLT_NAME)  -dtsi system-user.dtsi -git-branch xlnx_rel_v2024.2 -compile" 
-	
-
 # Target: pfm
 # Generate the Vitis platform with XSCT
 # Input: vck190_custom.xsa in build/vivado directory
@@ -77,20 +56,17 @@ $(CUSTOM_PLATFORM): pfm
 pfm:  
 	@echo "INFO: Creating Final Platform $(PLATFORM_NAME)"
 	@echo "set place for vitis configuration file "
-	rm -rf $(PLATFORM_NAME)
-	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(XSA_PATH)/$(XSA_NAME)_hw.xsa --xsa-emu_path $(XSA_PATH)/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_VERSAL) --dtb $(DTB)
+	rm -rf ./ws/$(PLATFORM_NAME)
+	mkdir -p tmp && export XILINX_VITIS_DATA_DIR="./tmp" && vitis -s platform_creation.py --platform_name $(PLATFORM_NAME) --xsa_path $(XSA_PATH)/$(XSA_NAME)_hw.xsa --xsa-emu_path $(XSA_PATH)/$(XSA_NAME)_hwemu.xsa --boot $(COMMON_IMAGE_VERSAL)
 	@echo "INFO: Checking created platforms:" && find . -name "*.xpfm"
 	echo "Platform created:" && \
 	find . -name "*.xpfm"
 
-
-
 cpCode:
-	mkdir -p src
-	cp $(XILINX_VITIS)/examples/vadd/* src
-	cd src && patch -p1  < ../code_modified.patch
-	cp makefile_vadd src/Makefile
-
+	mkdir -p vadd
+	cp -r $(XILINX_VITIS)/samples/vadd/* vadd
+	cp makefile_vadd vadd/Makefile
+	cd vadd && patch -p2  < ../code_modified.patch
 
 vadd_emu: cpCode 
 	$(MAKE) -C $(SRC) run TARGET=hw_emu PLATFORM=$(CUSTOM_PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
@@ -101,7 +77,7 @@ vadd_hw: cpCode
 
 
 clean:
-	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.log 
+	-$(RM) -r $(ABS_BUILD_PATH) vivado*.log vivado*.jou *.log ./ws/$(PLATFORM_NAME) system.dtb
 	-$(RM) -r  $(DTB_PLT_NAME) $(PLATFORM_NAME) vivado*.log vivado*.jou IDE*
 	
 ultraclean: clean

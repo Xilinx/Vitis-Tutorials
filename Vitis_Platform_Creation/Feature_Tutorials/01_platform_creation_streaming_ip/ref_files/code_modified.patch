@@ -1,21 +1,111 @@
-diff -urN src/krnl_vadd.cpp src_modified/krnl_vadd.cpp
---- src/krnl_vadd.cpp	2024-05-22 23:45:35.915164000 -0600
-+++ src_modified/krnl_vadd.cpp	2024-05-22 23:46:06.848988000 -0600
-@@ -82,7 +82,8 @@
- // Includes
+From c0f64f2fe5eee1462761f1ac039d4fb43c3ede05 Mon Sep 17 00:00:00 2001
+From: Kunal Rane <kunal.rane@amd.com>
+Date: Mon, 11 Aug 2025 15:04:03 +0530
+Subject: [EMBEDDEDSW PATCH] code_modified
+
+Signed-off-by: Kunal Rane <kunal.rane@amd.com>
+---
+ vadd/src/host.cpp | 31 ++++++++++++++++++++++++++++---
+ vadd/src/vadd.cpp | 17 ++++++++++++++++-
+ 2 files changed, 44 insertions(+), 4 deletions(-)
+
+diff --git a/vadd/src/host.cpp b/vadd/src/host.cpp
+index 281ee4a..39f33d7 100755
+--- a/vadd/src/host.cpp
++++ b/vadd/src/host.cpp
+@@ -18,7 +18,8 @@
+ #include "cmdlineparser.h"
+ #include <iostream>
+ #include <cstring>
+-
++#include <stdio.h>
++#include "ap_int.h"
+ // XRT includes
+ #include "experimental/xrt_bo.h"
+ #include "experimental/xrt_device.h"
+@@ -51,6 +52,8 @@ int main(int argc, char** argv) {
+     auto uuid = device.load_xclbin(binaryFile);
+ 
+     size_t vector_size_bytes = sizeof(int) * DATA_SIZE;
++    static const int WAVE_DATA_SIZE = 1024;
++    size_t wave_size_bytes = sizeof(int) * WAVE_DATA_SIZE;
+ 
+     auto krnl = xrt::kernel(device, uuid, "vadd");
+ 
+@@ -58,14 +61,20 @@ int main(int argc, char** argv) {
+     auto bo0 = xrt::bo(device, vector_size_bytes, krnl.group_id(0));
+     auto bo1 = xrt::bo(device, vector_size_bytes, krnl.group_id(1));
+     auto bo_out = xrt::bo(device, vector_size_bytes, krnl.group_id(2));
++    // Allocate new buffer for wave_out (mapped to gmem2 in kernel)
++    auto bo_wave_out = xrt::bo(device, wave_size_bytes, krnl.group_id(4)); 
+ 
+     // Map the contents of the buffer object into host memory
+     auto bo0_map = bo0.map<int*>();
+     auto bo1_map = bo1.map<int*>();
+     auto bo_out_map = bo_out.map<int*>();
++    // Map new wave_out buffer to host memory
++    auto bo_wave_out_map = bo_wave_out.map<int*>();
++
+     std::fill(bo0_map, bo0_map + DATA_SIZE, 0);
+     std::fill(bo1_map, bo1_map + DATA_SIZE, 0);
+     std::fill(bo_out_map, bo_out_map + DATA_SIZE, 0);
++    std::fill(bo_wave_out_map, bo_wave_out_map + WAVE_DATA_SIZE, 0);
+ 
+     // Create the test data
+     int bufReference[DATA_SIZE];
+@@ -82,17 +91,33 @@ int main(int argc, char** argv) {
+     bo1.sync(XCL_BO_SYNC_BO_TO_DEVICE);
+ 
+     std::cout << "Execution of the kernel\n";
+-    auto run = krnl(bo0, bo1, bo_out, DATA_SIZE);
++    auto run = krnl(bo0, bo1, bo_out, DATA_SIZE, bo_wave_out);
+     run.wait();
+ 
+     // Get the output;
+     std::cout << "Get the output data from the device" << std::endl;
+     bo_out.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
+ 
++    // Synchronize wave_out buffer from device to host
++    bo_wave_out.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
++
+     // Validate our results
+-    if (std::memcmp(bo_out_map, bufReference, DATA_SIZE))
++    if (std::memcmp(bo_out_map, bufReference, vector_size_bytes))
+         throw std::runtime_error("Value read back does not match reference");
+ 
++    
++    // Write wave_out data to file, similar to your OpenCL host code
++    FILE *fp_dout;
++    fp_dout = fopen("wave_out.txt","w");
++    if (fp_dout == NULL) {
++        std::cerr << "Error opening wave_out.txt for writing.\n";
++       return EXIT_FAILURE;
++    }
++    for (int i = 0; i < WAVE_DATA_SIZE; i++) {
++        fprintf(fp_dout,"%d\n", bo_wave_out_map[i] << 17); // Use bo_wave_out_map
++    }
++    fclose(fp_dout);
++
+     std::cout << "TEST PASSED\n";
+     return 0;
+ }
+diff --git a/vadd/src/vadd.cpp b/vadd/src/vadd.cpp
+index 7db0b5f..7b21dce 100755
+--- a/vadd/src/vadd.cpp
++++ b/vadd/src/vadd.cpp
+@@ -56,6 +56,8 @@ Input Vector 2 from Global Memory --->|             |      |__|
+ 
  #include <stdint.h>
  #include <hls_stream.h>
--
 +#include "ap_int.h"
 +#include "ap_axi_sdata.h"
+ 
  #define DATA_SIZE 4096
  
- // TRIPCOUNT identifier
-@@ -116,7 +117,15 @@
-         out[i] = out_stream.read();
+@@ -92,6 +94,15 @@ mem_wr:
      }
  }
--
+ 
 +typedef ap_axis<16, 0, 0, 0> pkt;
 +static void dss_process( int *wave, hls::stream<pkt> &s_in) {
 +   for (int i = 0; i < 1024; i++) 
@@ -26,97 +116,34 @@ diff -urN src/krnl_vadd.cpp src_modified/krnl_vadd.cpp
 +    }
 +}
  extern "C" {
- 
  /*
-@@ -129,11 +138,12 @@
-         size (input)  --> Number of elements in vector
- */
- 
--void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size) {
-+void krnl_vadd(uint32_t* in1, uint32_t* in2, uint32_t* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
+     Vector Addition Kernel Implementation using dataflow
+@@ -101,7 +112,8 @@ extern "C" {
+         out  (output) --> Output Vector
+         size (input)  --> Size of Vector in Integer
+    */
+-void vadd(unsigned int* in1, unsigned int* in2, unsigned int* out, int size) {
++void vadd(unsigned int* in1, unsigned int* in2, unsigned int* out, int size, int *wave_out, hls::stream<pkt> &dds_in) {
++//void vadd(unsigned int* in1, unsigned int* in2, unsigned int* out, int size) {
+     static hls::stream<unsigned int> inStream1("input_stream_1");
+     static hls::stream<unsigned int> inStream2("input_stream_2");
+     static hls::stream<unsigned int> outStream("output_stream");
+@@ -109,6 +121,8 @@ void vadd(unsigned int* in1, unsigned int* in2, unsigned int* out, int size) {
  #pragma HLS INTERFACE m_axi port = in1 bundle = gmem0
  #pragma HLS INTERFACE m_axi port = in2 bundle = gmem1
  #pragma HLS INTERFACE m_axi port = out bundle = gmem0
--
 +#pragma HLS INTERFACE m_axi port = wave_out bundle = gmem2
 +#pragma HLS INTERFACE axis port = dds_in
-     static hls::stream<uint32_t> in1_stream("input_stream_1");
-     static hls::stream<uint32_t> in2_stream("input_stream_2");
-     static hls::stream<uint32_t> out_stream("output_stream");
-@@ -144,5 +154,6 @@
-     load_input(in2, in2_stream, size);
-     compute_add(in1_stream, in2_stream, out_stream, size);
-     store_result(out, out_stream, size);
+ 
+ #pragma HLS dataflow
+     // dataflow pragma instruct compiler to run following three APIs in parallel
+@@ -116,5 +130,6 @@ void vadd(unsigned int* in1, unsigned int* in2, unsigned int* out, int size) {
+     read_input(in2, inStream2, size);
+     compute_add(inStream1, inStream2, outStream, size);
+     write_result(out, outStream, size);
 +    dss_process(wave_out,dds_in);
  }
  }
-diff -urN src/vadd.cpp src_modified/vadd.cpp
---- src/vadd.cpp	2024-05-22 23:45:35.919144000 -0600
-+++ src_modified/vadd.cpp	2024-05-22 23:43:27.379340000 -0600
-@@ -53,7 +53,8 @@
- #include <fstream>
- #include <iostream>
- #include <stdlib.h>
--
-+#include "ap_int.h"
-+#include <stdio.h>
- static const int DATA_SIZE = 4096;
- 
- static const std::string error_message =
-@@ -149,14 +150,14 @@
-     OCL_CHECK(err, cl::Buffer buffer_a(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
-     OCL_CHECK(err, cl::Buffer buffer_b(context, CL_MEM_READ_ONLY, size_in_bytes, NULL, &err));
-     OCL_CHECK(err, cl::Buffer buffer_result(context, CL_MEM_WRITE_ONLY, size_in_bytes, NULL, &err));
--
-+    cl::Buffer buffer_waveout(context, CL_MEM_WRITE_ONLY, 1024*sizeof(int));
-     // set the kernel Arguments
-     int narg = 0;
-     OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_a));
-     OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_b));
-     OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, buffer_result));
-     OCL_CHECK(err, err = krnl_vector_add.setArg(narg++, DATA_SIZE));
--
-+    krnl_vector_add.setArg(narg++,buffer_waveout);
-     // We then need to map our OpenCL buffers to get the pointers
-     int* ptr_a;
-     int* ptr_b;
-@@ -173,7 +174,7 @@
-         ptr_a[i] = rand() % DATA_SIZE;
-         ptr_b[i] = rand() % DATA_SIZE;
-     }
--
-+    int *ptr_waveout = (int *) q.enqueueMapBuffer (buffer_waveout , CL_TRUE , CL_MAP_READ , 0, 1024*sizeof(int));
-     // Data will be migrated to kernel space
-     OCL_CHECK(err, err = q.enqueueMigrateMemObjects({buffer_a, buffer_b}, 0 /* 0 means from host*/));
- 
-@@ -184,7 +185,7 @@
-     // order to view the results. This call will transfer the data from FPGA to
-     // source_results vector
-     OCL_CHECK(err, q.enqueueMigrateMemObjects({buffer_result}, CL_MIGRATE_MEM_OBJECT_HOST));
--
-+    q.enqueueMigrateMemObjects({buffer_waveout},CL_MIGRATE_MEM_OBJECT_HOST);
-     OCL_CHECK(err, q.finish());
- 
-     // Verify the result
-@@ -197,12 +198,19 @@
-             break;
-         }
-     }
--
-+     FILE *fp_dout;
-+    fp_dout=fopen("wave_out.txt","w");
-+ 
-+     for (int i = 0; i < 1024; i++) {
-+     fprintf(fp_dout,"%d\n",ptr_waveout[i]<<17);
-+     }
-+ 
-+    fclose(fp_dout);
-     OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_a, ptr_a));
-     OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_b, ptr_b));
-     OCL_CHECK(err, err = q.enqueueUnmapMemObject(buffer_result, ptr_result));
-     OCL_CHECK(err, err = q.finish());
--
-+    q.enqueueUnmapMemObject(buffer_waveout , ptr_waveout);
-     std::cout << "TEST " << (match ? "FAILED" : "PASSED") << std::endl;
-     return (match ? EXIT_FAILURE : EXIT_SUCCESS);
- }
+-- 
+2.43.0
+

@@ -2,24 +2,19 @@
     "name": "Vitis_Platform_Creation-Feature_Tutorials-01_platform_creation_streaming_ip",
     "description": "Petalinux customization for Versal Board",
     "gui": "false",
-    "flow": "vitis",
+    "flow": "versal",
+    
     "platform_allowlist": ["vck190"],
     "platform_blocklist": [],
     "testinfo": {
         "test_name": "PFM_F_01-streamingip",
-        "tasks": {
-            "build": {
-                "pre_exec": "./env_setup_versal.sh"
-            },
-            "board": {
-                "pre_exec": "./env_setup_versal.sh"
-            }
-         },
         "jobs": [
             {
-                "max_memory_MB": 32768,
+                "max_memory_MB": 65536,
                 "max_time_min": {
-                    "vitis_hw_emu": 200
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_build": 300,
+                    "vitis_hw_run": 30
                 }
             }
         ],
@@ -28,6 +23,7 @@
             "vitis_hw_build",
             "vitis_hw_run"
         ],
+        "category": "canary",        
         "make_options": [
             "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
             "HOST_ARCH=aarch64",
@@ -35,13 +31,22 @@
 			"ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4",
 			"IMAGE=${EDGE_COMMON_SW}/Image",
             "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_app.sh\\\"",
-            "EMBEDDED_PACKAGE_OUT=./", 
+            "EMBEDDED_PACKAGE_OUT=./vadd/package.hw", 
             "EMBEDDED_EXEC_SCRIPT=./run_app.sh"
         ],
         "custom_build_target":
         {
             "all": "all",
-            "hw" : "sd_card"
+            "hw": "sd_card"
+        },
+        "custom_board_target": "run_test",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_versal.sh"]
+            },
+           "build": {
+                "pre_exec": ["./env_setup_versal.sh"]
+           }
         }
     }
 }
