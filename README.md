@@ -405,12 +405,12 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
 <table border="0" width="100%">
     <tbody>
         <tr>
-            <td colspan="3" height="24" align="center">
+            <td colspan="4" height="24" align="center">
                 <strong> <a href="./Embedded_Software/">Vitis Embedded Software Development  </a></strong>
             </td>
         </tr>
         <tr>
-            <td colspan="3" height="48">
+            <td colspan="4" height="48">
                 Introduce Vitis embedded design flows, learn the Vitis Unified IDE for developing embedded software applications targeted towards AMD embedded processors.
             </td>
         </tr>
@@ -418,7 +418,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             <td height="24">
                 <strong>Getting Started</strong>
             </td>
-            <td colspan="2" height="24">
+            <td colspan="3" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
         </tr>
@@ -430,17 +430,22 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./Embedded_Software/Feature_Tutorials/01-user_managed_mode">User Managed Mode</a>
             </td>
             <td>
-                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE  </a> 
+                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide</a> 
+            </td>
+            <td>
+                <a href="./Embedded_Software/Feature_Tutorials/03-vitis_classic_to_unified_migration">Migrating from classic Vitis IDE to Vitis Unified IDE  </a>            
             </td>
         </tr>  
         <tr>
             <td height="24"> </td>
             <td>
-                <a href="./Embedded_Software/Feature_Tutorials/02-Debugging">Vitis Embedded Software Debugging Guide</a>            
-            </td>
+                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow</a>            
+            </td>            
             <td> 
-                <a href="./Embedded_Software/Feature_Tutorials/04-vitis_scripting_flows">Vitis Embedded Scripting Flow</a>
+                <a href="./Embedded_Software/Feature_Tutorials/05-vitis_version_control/">Vitis Version Control :new: </a>
             </td>
+            <td>           
+            </td>            
         </tr>  
     </tbody>
 </table>

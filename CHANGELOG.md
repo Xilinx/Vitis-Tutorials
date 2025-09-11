@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2025.1_update (Sep. 10, 2025)
+
+### New Tutorials
+
+- Embedded_Software/Feature_Tutorials/05-vitis_version_control/
+
 ## 2025.1_update (Jul. 28, 2025)
 
 ### New Tutorials

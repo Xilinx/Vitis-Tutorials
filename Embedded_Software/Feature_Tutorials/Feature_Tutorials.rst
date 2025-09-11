@@ -16,6 +16,7 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
    Migrating from classic Vitis IDE to Vitis Unified IDE <./03-vitis_classic_to_unified_migration/README.md>
    Vitis Embedded Scripting Flow <./04-vitis_scripting_flows/README.md>
    Vitis Embedded Software Debugging Guide <./02-Debugging/README.md>
+   Vitis Version Control Guide <./05-vitis_version_control/README.md>
 
 
 
@@ -38,7 +39,9 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
    * - :doc:`Vitis Embedded Software Debugging Guide <./02-Debugging/README>`
      - This tutorial demonstrates different debugging features available within the Vitis Embedded software development flow for bare-metal and Linux applications. It also introduces the flow to create a debuggable FSBL and how to do cross triggering in the Vitis Unified IDE.
 
-
+   * - :doc:`Vitis Version Control Guide <./05-vitis_version_control/README>`
+     - This tutorial demonstrates the available version control features in the Vitis Unified IDE. It introduces how you can use git to manage your Vitis workspace and share your projects between teams.
+     
 .. sidebar:: More Information
 
    See AMD Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_

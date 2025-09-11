@@ -37,6 +37,9 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
  <td align="center"><a href="./02-Debugging/">Vitis Embedded Software Debugging Guide</a></td>
  <td>This tutorial demonstrates different debugging features available within the Vitis Embedded software development flow for bare-metal and Linux applications. It also introduces the flow to create a debuggable FSBL and how to do cross triggering in the Vitis Unified IDE.</td>
  </tr>
+ <td align="center"><a href="./05-vitis_version_control/">Vitis Version Control Guide</a></td>
+ <td>This tutorial demonstrates the available version control features in the Vitis Unified IDE. It introduces how you can use git to manage your Vitis workspace and share your projects between teams.</td>
+ </tr>
  </table>
 
 
