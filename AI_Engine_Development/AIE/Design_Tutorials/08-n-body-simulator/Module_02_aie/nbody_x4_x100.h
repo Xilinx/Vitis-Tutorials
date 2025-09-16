@@ -126,11 +126,11 @@ public:
 		in_j  = input_plio::create("in_j",  adf::plio_32_bits, "../../data/input_j.txt",400);
 		for(unsigned k=0;k<100;k++){      
 			//input i PLIOs
-			in_i[k]=input_plio::create("in_i"+std::to_string(k), adf::plio_32_bits, "data/input_i"+std::to_string(k)+".txt",400);
+			in_i[k]=input_plio::create("in_i"+std::to_string(k), adf::plio_32_bits, "../../data/input_i"+std::to_string(k)+".txt",400);
 		  }
                 for(unsigned l=0;l<100;l++){
 			//output PLIOs
-			out_i[l] = output_plio::create("out_i"+std::to_string(l),adf::plio_32_bits, "data/output_i"+std::to_string(l)+".txt",400);
+			out_i[l] = output_plio::create("out_i"+std::to_string(l),adf::plio_32_bits, "../../data/output_i"+std::to_string(l)+".txt",400);
     		}
 
 		//Connect all input j ports
