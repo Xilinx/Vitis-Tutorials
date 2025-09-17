@@ -11,9 +11,9 @@ PLATFORM_CUSTOM            ?= ${BOARD_NAME}_thin
 LINUX_MACHINE              ?= ${BOARD_NAME}-versal
 LINUX_ETH_CONFIG           ?= DHCP
 LINUX_BUILD_SOURCES        ?= network
-LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/${USER}/2025.1/${BOARD_NAME}/plnx-workspace/downloads
-LINUX_LOCAL_SSTATE_DIR     ?= /tmp/${USER}/2025.1/${BOARD_NAME}/plnx-workspace/sstate_aarch64_2024.1/aarch64
-LINUX_TMP_DIR              ?= /tmp/${USER}/2025.1/${BOARD_NAME}/petalinux
+LINUX_LOCAL_DOWNLOADS_DIR  ?= /tmp/${USER}/2025.2/${BOARD_NAME}/plnx-workspace/downloads
+LINUX_LOCAL_SSTATE_DIR     ?= /tmp/${USER}/2025.2/${BOARD_NAME}/plnx-workspace/sstate_aarch64_2024.1/aarch64
+LINUX_TMP_DIR              ?= /tmp/${USER}/2025.2/${BOARD_NAME}/petalinux
 
 CURR_DIR                   := $(shell pwd)
 PROJ_DIR                   := ${CURR_DIR}/../${LINUX_MACHINE}

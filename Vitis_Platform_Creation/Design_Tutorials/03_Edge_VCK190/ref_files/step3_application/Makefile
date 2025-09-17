@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 
 PLATFORM_NAME=custom_platform
 PLATFORM = $(ROOT_DIR)/../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-VERSION=2025.1
+VERSION=2025.2
 COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
 

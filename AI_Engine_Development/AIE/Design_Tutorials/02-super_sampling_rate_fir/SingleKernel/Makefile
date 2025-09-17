@@ -18,7 +18,7 @@ AIE_HW_DIR = ${AIE_BUILD_DIR}/hw
 RM = rm -f
 RMDIR = rm -rf
 
-PFM_NAME ?= xilinx_vck190_base_202510_1
+PFM_NAME ?= xilinx_vck190_base_202520_1
 PLATFORM ?= $(PLATFORM_REPO_PATHS)/$(PFM_NAME)/$(PFM_NAME).xpfm
 
 # AIE compiler settings

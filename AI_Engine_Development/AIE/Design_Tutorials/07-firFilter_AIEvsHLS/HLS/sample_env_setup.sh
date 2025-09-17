@@ -6,10 +6,10 @@
 # =======================================================
 # Set Platform ,Vitis and Versal Image repo
 # =======================================================
-export PLATFORM_REPO_PATHS= <YOUR-2025.1-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2025.1-VITIS-DIRECTORY>/2025.1
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2025.1-DIRECTORY>
-export DSPLIBS_VITIS=<YOUR-PATH-TO-2025.1-DSP-LIBRARY>
+export PLATFORM_REPO_PATHS= <YOUR-2025.2-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2025.2-VITIS-DIRECTORY>/2025.2
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-common-v2025.2-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2025.2-DSP-LIBRARY>
 # ====================================================
 # Source Versal Image ,Vitis and Aietools
 # ====================================================
@@ -19,7 +19,7 @@ source $XILINX_VITIS/settings64.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202510_1
+tgt_plat=xilinx_vck190_base_202520_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 # ==========================================================
 # Validating Tool Installation

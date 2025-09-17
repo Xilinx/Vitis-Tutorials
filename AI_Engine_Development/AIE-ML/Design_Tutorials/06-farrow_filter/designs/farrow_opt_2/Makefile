@@ -7,7 +7,7 @@
 AIE_SIM_ONLY      ?= true
 
 # PLATFORM_USE	  := xilinx_vck190_base_202410_1
-PLATFORM_USE	  := xilinx_vek280_base_202510_1
+PLATFORM_USE	  := xilinx_vek280_base_202520_1
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 MY_APP             = farrow_app.cpp

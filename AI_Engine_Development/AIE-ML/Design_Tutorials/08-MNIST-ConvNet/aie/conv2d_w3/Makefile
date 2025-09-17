@@ -11,7 +11,7 @@ SIM_FIFO          := false
 MY_APP            := conv2d_w3_app
 MY_SOURCES        := ${MY_APP}.cpp conv2d_w3_graph.h conv2d_w3.h conv2d_w3.cpp ../wts_init/wts_init_graph.h
 
-PLATFORM_USE      := xilinx_vek280_base_202510_1
+PLATFORM_USE      := xilinx_vek280_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

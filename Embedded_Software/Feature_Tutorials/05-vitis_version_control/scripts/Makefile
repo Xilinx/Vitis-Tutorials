@@ -5,7 +5,7 @@
 # Author: Luke Millar
 
 SHELL := /bin/bash
-VERSION ?= 2025.1
+VERSION ?= 2025.2
 
 all: clean create_git_repo create_working_folder push_working_folder clone_and_rebuild
 

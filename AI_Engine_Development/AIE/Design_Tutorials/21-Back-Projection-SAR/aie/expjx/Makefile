@@ -13,7 +13,7 @@ MY_SOURCES        := ${MY_APP}.cpp expjx_graph.h expjx.h expjx.cpp \
                      ../cos_lib/cos_lib_graph.h ../cos_lib/cos_lib_lut_init.h \
 		     ../sin_lib/sin_lib_graph.h ../sin_lib/sin_lib_lut_init.h
 
-PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM_USE      := xilinx_vck190_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

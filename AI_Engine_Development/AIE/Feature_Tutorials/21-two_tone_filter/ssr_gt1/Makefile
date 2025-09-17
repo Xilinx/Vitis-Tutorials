@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: X11
 # */
 
-PLATFORM_VER	:= xilinx_vck190_base_202510_1
+PLATFORM_VER	:= xilinx_vck190_base_202520_1
 PLATFORM	:= platform=${PLATFORM_REPO_PATHS}/${PLATFORM_VER}/${PLATFORM_VER}.xpfm
 PROJECT_PATH	:= $(shell pwd)
 SIM_OUTPUT  	:= aiesimulator_output

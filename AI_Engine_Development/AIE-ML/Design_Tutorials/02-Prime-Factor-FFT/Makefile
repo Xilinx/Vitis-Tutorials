@@ -7,9 +7,9 @@
 ECHO                               = @echo
 export TARGET                      ?= hw
 
-RELEASE=2025.1
+RELEASE=2025.2
 BOARD=vek280
-BASE_NUM=202510_1
+BASE_NUM=202520_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}

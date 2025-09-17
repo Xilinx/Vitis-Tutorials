@@ -18,7 +18,7 @@ MY_SOURCES        := ${MY_APP}.cpp doa/doa.cpp doa/doa.h \
                      scanner/scanner_graph.h scanner/scanner.cpp scanner/scanner.h \
                      svd/svd_graph.h svd/svd.cpp svd/svd.h
 
-PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM_USE      := xilinx_vck190_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

@@ -7,7 +7,7 @@
 .PHONY: all clean_all clean_atf clean_dtb clean_boot_script clean_platform clean_uboot create_xsa dtb make_platform
 
 SHELL := /bin/bash
-VERSION ?= 2025.1
+VERSION ?= 2025.2
 BOARD ?= zcu102-rev1.0
 XSA ?= ./zcu102/design_1_wrapper.xsa
 

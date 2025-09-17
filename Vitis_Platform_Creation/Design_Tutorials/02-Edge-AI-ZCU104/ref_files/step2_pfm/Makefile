@@ -6,7 +6,7 @@
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 XSA_NAME=zcu104_custom_platform
 PLATFORM_NAME=zcu104_custom
-VERSION=2025.1
+VERSION=2025.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 DTB=$(ROOT_DIR)/mydevice/psu_cortexa53_0/device_tree_domain/bsp/system.dtb
 SYSROOT=$(ROOT_DIR)/sysroot

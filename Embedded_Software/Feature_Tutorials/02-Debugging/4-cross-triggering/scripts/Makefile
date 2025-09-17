@@ -5,7 +5,7 @@
 # Author: Stephen MacMahon
 
 SHELL := /bin/bash
-VERSION ?= 2025.1
+VERSION ?= 2025.2
 REMOTE ?= localhost
 PREBUILT ?= 0
 LAB ?= 1

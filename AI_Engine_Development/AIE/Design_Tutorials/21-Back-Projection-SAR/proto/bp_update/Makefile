@@ -11,7 +11,7 @@ SIM_FIFO          := false
 MY_APP            := bp_update_app
 MY_SOURCES        := ${MY_APP}.cpp bp_update_graph.h bp_update.h bp_update.cpp
 
-PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM_USE      := xilinx_vck190_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

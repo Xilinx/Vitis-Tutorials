@@ -7,7 +7,7 @@ ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 PLATFORM_NAME=kv260_custom
 PLATFORM= $(ROOT_DIR)/../step2_pfm/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
 
-VERSION=2025.1
+VERSION=2025.2
 COMMON_IMAGE_ZYNQMP ?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 SYSROOT := $(COMMON_IMAGE_ZYNQMP)/sysroots/cortexa72-cortexa53-amd-linux
 VADD_WORK=$(ROOT_DIR)/vadd_work

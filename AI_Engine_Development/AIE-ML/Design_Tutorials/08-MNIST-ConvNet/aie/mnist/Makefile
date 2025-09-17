@@ -22,7 +22,7 @@ MY_SOURCES        := ${MY_APP}.cpp mnist_graph.h \
 		     ../dense_w7/dense_w7.h ../dense_w7/dense_w7.cpp ../dense_w7/dense_w7_graph.h \
 		     ../wts_init/wts_init.h ../wts_init/wts_init.cpp ../wts_init/wts_init_graph.h
 
-PLATFORM_USE      := xilinx_vek280_base_202510_1
+PLATFORM_USE      := xilinx_vek280_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

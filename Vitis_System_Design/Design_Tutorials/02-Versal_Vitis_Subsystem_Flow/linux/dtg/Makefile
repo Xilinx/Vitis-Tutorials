@@ -11,7 +11,7 @@ BOARD_NAME                         ?= vck190
 PLATFORM_CUSTOM                    ?= ${BOARD_NAME}_thin
 
 DTG                                := device-tree-xlnx
-#DTG_VERSION                        := xlnx_rel_v2025.1
+#DTG_VERSION                        := xlnx_rel_v2025.2
 DTG_VERSION                        := master
 
 DTC                                := dtc
@@ -71,7 +71,7 @@ build_xsct:
 build_sdt:
 	$(ECHO) "dtg/build_sdt: Generating the system device tree with zocl enabled"
 	rm -rf sdt_out
-	xsct -eval "source src/xsct_utils.tcl; run_sdtgen -version 2025.1 -xsa $(XSA_FILE) -sdt_dt_zocl 1"
+	xsct -eval "source src/xsct_utils.tcl; run_sdtgen -version 2025.2 -xsa $(XSA_FILE) -sdt_dt_zocl 1"
 
 lop_procs:
 	$(ECHO) "dtg/lop_procs: Extract the procs from SDT using Lopper"

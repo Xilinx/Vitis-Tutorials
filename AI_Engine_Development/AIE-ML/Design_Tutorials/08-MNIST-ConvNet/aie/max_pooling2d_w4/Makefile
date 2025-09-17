@@ -11,7 +11,7 @@ SIM_FIFO          := false
 MY_APP            := max_pooling2d_w4_app
 MY_SOURCES        := ${MY_APP}.cpp max_pooling2d_w4_graph.h max_pooling2d_w4.h max_pooling2d_w4.cpp
 
-PLATFORM_USE      := xilinx_vek280_base_202510_1
+PLATFORM_USE      := xilinx_vek280_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

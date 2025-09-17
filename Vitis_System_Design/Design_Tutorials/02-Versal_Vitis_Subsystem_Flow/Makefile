@@ -11,7 +11,7 @@ ECHO                               = @echo
 ################################################################################
 # Variables needed for AMD tools version checking, PLEASE DO NOT MODIFY #
 ################################################################################
-REQUIRED_VERSION                   = 2025.1
+REQUIRED_VERSION                   = 2025.2
 VIVADO_VERSION                    := $(shell vivado -version 2>/dev/null | grep "vivado ")
 VITIS_VERSION                     := $(shell vitis -version 2>/dev/null | grep "Vitis " | sed 's/\*//g')
 

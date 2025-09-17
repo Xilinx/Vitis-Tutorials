@@ -24,8 +24,8 @@ static const char*    STR_PASSED = "PASSED:  ";
 static const char*    STR_USAGE  = "USAGE:   ";
 static const char*    STR_INFO   = "INFO:    ";
 
-static constexpr double      TARGET_THROUGHPUT = 1061;   // Measured in HW_EMU 2025.1 - 1061
-// TARGET_THROUGHPUT = 1124;   // Measured in HW 2025.1 // Keep this as reference for future tool performance
+static constexpr double      TARGET_THROUGHPUT = 1061;   // Measured in HW_EMU 2025.2 - 1061
+// TARGET_THROUGHPUT = 1124;   // Measured in HW 2025.2 // Keep this as reference for future tool performance
 
 typedef int TDATA;
 

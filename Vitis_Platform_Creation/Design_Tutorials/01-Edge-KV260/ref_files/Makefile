@@ -3,7 +3,7 @@
 #SPDX-License-Identifier: MIT
 #*/
 
-VERSION				?=2025.1
+VERSION				?=2025.2
 COMMON_IMAGE_ZYNQMP 	?=${PLATFORM_REPO_PATHS}/sw/zynqmp/xilinx-zynqmp-common-v$(VERSION)/
 
 .PHONY: help

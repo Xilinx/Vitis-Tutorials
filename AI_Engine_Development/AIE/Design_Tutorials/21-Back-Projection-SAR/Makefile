@@ -6,7 +6,7 @@
 
 export TARGET        ?= hw
 
-PLATFORM_NAME		= xilinx_vck190_base_202510_1
+PLATFORM_NAME		= xilinx_vck190_base_202520_1
 PLATFORM_PATH		= ${PLATFORM_REPO_PATHS}
 
 export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm

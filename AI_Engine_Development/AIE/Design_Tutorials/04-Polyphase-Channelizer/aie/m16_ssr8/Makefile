@@ -19,7 +19,7 @@ SOURCES	          := ../m16_ssr8_filterbank/m16_ssr8_filterbank_graph.h \
 		     m16_ssr8_graph.h
 
 PL_FREQ           := --aie.pl-freq=625.0
-PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM_USE      := xilinx_vck190_base_202520_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 LOG_FILE          := log

@@ -7,7 +7,7 @@
 SRC_DIR           := ./src
 MY_SOURCES        := $(shell find $(SRC_DIR) -name *.cpp) $(shell find $(SRC_DIR) -name *.h)
 
-PLATFORM_USE      := xilinx_vck190_base_202510_1
+PLATFORM_USE      := xilinx_vck190_base_202520_1
 
 PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 

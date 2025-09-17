@@ -37,7 +37,7 @@ static constexpr unsigned    NUM_SAMPLES_O = 4 * 4096; // 4 transforms worth of 
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES =     NUM_SAMPLES_I * 4; // Each real/imag sample is 4 bytes
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES =     NUM_SAMPLES_O * 8; // Each real/imag sample is 8 bytes
 static constexpr unsigned        TOTAL_O_BYTES = DDR_BUFFSIZE_O_BYTES * LOOP_CNT_O;
-static constexpr double      TARGET_THROUGHPUT = 2394;                  // Measured in hw_emu 2025.1
+static constexpr double      TARGET_THROUGHPUT = 2394;                  // Measured in hw_emu 2025.2
 
 
 // ------------------------------------------------------------
