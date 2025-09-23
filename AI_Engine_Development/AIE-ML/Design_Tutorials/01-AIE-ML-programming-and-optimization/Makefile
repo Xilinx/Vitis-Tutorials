@@ -194,10 +194,11 @@ package_${TARGET}: ${LIBADF} ${XCLBIN} ${HOST_EXE}
 
 
 clean:
-	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.*  \
+	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.*  analyzer_input\
 	       vek280*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil *bin *BIN *.bif launch_hw_emu.sh cfg emu_qemu_scripts \
-				 [!d]*.json  *.txt *.wdb *.wcfg *.pdi v++.package_summary sim qemu_dts_files sd_card sd_card.img \
+				 [!d]*.json  *.txt *.wdb *.wcfg *.pdi v++.package_summary sim qemu_dts_files \
+				 sd_card sd_card.img \
 				 dtb_creation.sh .ipcache *summary *.sh .AIE_SIM_CMD_LINE_OPTIONS .crashReporter
 	make -C ${AIE_DIR} clean
 	make -C ${KERNELS_DIR} clean

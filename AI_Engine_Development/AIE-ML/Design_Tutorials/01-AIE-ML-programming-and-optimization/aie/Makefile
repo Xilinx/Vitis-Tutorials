@@ -31,6 +31,8 @@ OPT ?= 0
 SIZES := sizeM=$(sizeM) sizeK=$(sizeK) sizeN=$(sizeN) subM=$(subM) subK=$(subK) subN=$(subN) NIterations=$(NIterations) PLIOW=$(PLIOW) OPT=$(OPT)
 SIZES_D := -DsizeM=$(sizeM) -DsizeK=$(sizeK) -DsizeN=$(sizeN) -DsubM=$(subM) -DsubK=$(subK) -DsubN=$(subN) -DNIterations=$(NIterations) -DPLIOW=$(PLIOW) -DOPTIMIZED_SOURCE=$(OPT)
 
+SIZES_D_Preproc := $(foreach word,$(SIZES_D),--aie.Xpreproc $(word))
+
 WORKDIR := ./Work$(OPT)
 AIEOUTDIR := aiesimulator_output$(OPT)
 X86OUTDIR := x86simulator_output$(OPT)
@@ -40,7 +42,7 @@ GRAPH    = src/graph.cpp
 LIBADF  = libadf$(OPT).a
 AIE_CMPL_CMD := v++ --compile --mode aie --include "./src" --aie.workdir $(WORKDIR) ${GRAPH}
 AIE_FLAGS +=  --aie.log-level 5
-AIE_FLAGS += --aie.Xpreproc "$(SIZES_D)"
+AIE_FLAGS += $(SIZES_D_Preproc)
 AIE_FLAGS += --aie.Xchess "ClassicMatMult:backend.mist2.xargs=+Omodo"
 AIE_FLAGS += --aie.output-archive $(LIBADF)
 
