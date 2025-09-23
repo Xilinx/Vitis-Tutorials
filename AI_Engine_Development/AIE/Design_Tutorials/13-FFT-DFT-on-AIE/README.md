@@ -15,7 +15,7 @@
 
 # Implementing FFT and DFT Designs on AI Engines
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Abstract
 

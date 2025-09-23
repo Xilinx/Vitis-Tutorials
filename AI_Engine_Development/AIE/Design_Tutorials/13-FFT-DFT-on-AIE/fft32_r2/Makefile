@@ -10,14 +10,13 @@ SIM_FIFO          := false
 MY_APP            := fft32_r2_app
 MY_SOURCES        := {$MY_APP}.cpp fft32_r2_graph.h fft32_r2_kernel.h fft32_r2_kernel.cpp fft32_r2_twiddle.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := ${MY_APP}.cpp --platform=${PLATFORM} --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS         := ${MY_APP}.cpp --part=${PART_USE} --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -47,7 +46,7 @@ profile:
 	aiesimulator --online -wdb -text --profile 2>&1| tee -a log
 
 throughput_ok:
-	@../python/check_throughput.py PLIO_o_0 1519.316011 5.0
+	@../python/check_throughput.py PLIO_o_0 1477.42 5.0
 
 loopII:
 	@../python/get_loop_II.py Work/aie

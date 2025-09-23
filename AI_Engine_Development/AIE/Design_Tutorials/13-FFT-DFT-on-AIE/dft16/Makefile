@@ -11,14 +11,13 @@ MY_APP            := dft16_app
 MY_SOURCES        := ${MY_APP}.cpp dft16_graph.h dft_1xN_widget_graph.h dft_1xN_widget.h dft_1xN_widget.cpp \
 	             twiddle_dft16.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS         := --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -48,14 +47,14 @@ profile:
 	aiesimulator --online -wdb -text --profile --profile 2>&1| tee -a log
 
 throughput_ok:
-	@../python/check_throughput.py PLIO_dft_o_0 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_1 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_2 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_3 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_4 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_5 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_6 4309.0 5.0
-	@../python/check_throughput.py PLIO_dft_o_7 4309.0 5.0
+	@../python/check_throughput.py PLIO_dft_o_0 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_1 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_2 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_3 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_4 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_5 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_6 4309.31 5.0
+	@../python/check_throughput.py PLIO_dft_o_7 4309.31 5.0
 
 clean:
 	rm -rf Work Work* ${WORK_DIR}

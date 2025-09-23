@@ -10,8 +10,7 @@ SIM_FIFO          := false
 MY_APP            := fft32_dsplib_app
 MY_SOURCES        := ${MY_APP}.cpp fft32_dsplib_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
@@ -21,7 +20,7 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 		     --include=${DSPLIB_ROOT}/L1/include/aie \
 		     --include=${DSPLIB_ROOT}/L1/src/aie
 
-AIE_FLAGS         := ${MY_APP}.cpp --platform=${PLATFORM} --aie.output-archive=${AIE_OUTPUT} ${DSPLIB_OPTS}
+AIE_FLAGS         := ${MY_APP}.cpp --part=${PART_USE} --aie.output-archive=${AIE_OUTPUT} ${DSPLIB_OPTS}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -52,10 +51,10 @@ profile:
 	aiesimulator --online -wdb -text --profile 2>&1| tee -a log
 
 throughput_ok:
-	@../python/check_throughput.py PLIO_o_0 683.509662 5.0
-	@../python/check_throughput.py PLIO_o_1 683.509662 5.0
-	@../python/check_throughput.py PLIO_o_2 683.509662 5.0
-	@../python/check_throughput.py PLIO_o_3 683.509662 5.0
+	@../python/check_throughput.py PLIO_o_0 683.99 5.0
+	@../python/check_throughput.py PLIO_o_1 683.99 5.0
+	@../python/check_throughput.py PLIO_o_2 683.99 5.0
+	@../python/check_throughput.py PLIO_o_3 683.99 5.0
 
 loopII:
 	@../python/get_loop_II.py Work/aie
