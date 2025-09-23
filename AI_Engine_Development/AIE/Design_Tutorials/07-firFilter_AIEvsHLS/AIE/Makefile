@@ -439,7 +439,7 @@ aiesim: graph
 	
 aiesim_profile: graph
 	cd $(BUILD_TARGET_DIR); \
-	aiesimulator $(AIE_SIM_FLAGS)--profile 2>&1 | tee -a aiesim.log
+	aiesimulator $(AIE_SIM_FLAGS) --profile 2>&1 | tee -a aiesim.log
 	@echo ""
 	@echo "AIE Simulation, With Profiling, Complete..."
 	@echo "####################################"
