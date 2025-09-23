@@ -4,11 +4,6 @@
 #
 # Author: Mark Rollins
 
-RELEASE=2025.2
-
-PLATFORM_NAME              = xilinx_vck190_base_202520_1
-PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
-
 ##############
 # Build Flow #
 ##############
