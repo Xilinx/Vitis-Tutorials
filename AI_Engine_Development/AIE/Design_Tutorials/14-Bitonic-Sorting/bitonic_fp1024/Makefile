@@ -11,14 +11,13 @@ SIM_FIFO          := false
 MY_APP            := bitonic_fp1024_app
 MY_SOURCES        := ${MY_APP}.cpp bitonic_fp1024.h bitonic_fp1024.cpp bitonic_fp1024_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	--platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	--part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -73,7 +72,7 @@ trace:
 	aiesimulator --online -wdb -text 2>&1| tee -a log
 
 throughput_ok:
-	@../scripts/check_throughput.py PLIO_o 127.647374 5.0
+	@../scripts/check_throughput.py PLIO_o 122.51 5.0
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary

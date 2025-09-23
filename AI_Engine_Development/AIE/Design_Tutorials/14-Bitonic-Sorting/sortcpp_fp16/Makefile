@@ -11,14 +11,13 @@ SIM_FIFO          := false
 MY_APP            := sortcpp_fp16_app
 MY_SOURCES        := ${MY_APP}.cpp sortcpp_fp16.h sortcpp_fp16.cpp sortcpp_fp16_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	--platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	--part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -73,7 +72,7 @@ trace:
 	aiesimulator --online -wdb -text 2>&1| tee -a log
 
 throughput_ok:
-	@../scripts/check_throughput.py PLIO_o 16.858076 5.0
+	@../scripts/check_throughput.py PLIO_o 17.28 5.0
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
