@@ -9,7 +9,7 @@ import numpy as np
 
 myHlsKernel = vfs.hlsKernel(input_files = ["../src/kernels.cpp"], part = "xcvc1902-vsva2197-2MP-e-S", hls_function = "hls_array_of_stream")
 
-input = [np.random.randint(2**-30, 2**30, 1024) for _ in range(4)]
+input = [np.random.randint(2**-28, 2**28, 1024) for _ in range(4)]
 
 input_data = [va.array(input[i], va.int32) for i in range(4)]
 
