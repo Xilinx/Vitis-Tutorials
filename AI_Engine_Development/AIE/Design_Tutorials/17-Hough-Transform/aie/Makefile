@@ -9,14 +9,13 @@ SIM_FIFO          := false
 MY_APP            := hough_tile_app
 MY_SOURCES        := ${MY_APP}.cpp hough_tile.h hough_tile.cpp hough_tile_shared.h hough_tile_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         := --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS         := --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
@@ -65,7 +64,7 @@ profile:
 
 throughput_ok:
 	@for ii in {0..31}; do \
-		../scripts/check_throughput.py PLIO_o_$$ii 5007.633588 5.0; \
+		../scripts/check_throughput.py PLIO_o_$$ii 5007.63 5.0; \
 	done
 
 loop_II:

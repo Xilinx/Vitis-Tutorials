@@ -15,7 +15,7 @@
 
 # System Partitioning of a Hough Transform on AI Engine
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
