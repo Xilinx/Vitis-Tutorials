@@ -6,9 +6,10 @@ SPDX-License-Identifier: MIT
 
  #pragma once
 
+ // defined in Makefile
 // Number of samples in a data frame
-#define NUM_SAMPLES 512
+// #define NUM_SAMPLES 512
 
 
 // Number of frames in the simulation
-#define NFRAMES 4
+// #define NFRAMES 4

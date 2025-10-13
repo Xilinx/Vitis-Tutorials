@@ -121,12 +121,24 @@ std::vector<cint16> taps8p[8] = { PHASE(0,8), PHASE(1,8), PHASE(2,8), PHASE(3,8)
             }
 
             // Constraints: location of the first kernel in the cascade
+            // for(int i=0;i<NPhases;i++)
+            // {
+            //     int j = (i%2?LastCol:FirstCol); // 23 on even rows and 230on odd rows
+            //     location<kernel>(k[i][0]) = tile(j,i);
+            // }
             for(int i=0;i<NPhases;i++)
             {
-                int j = (i%2?LastCol:FirstCol); // 23 on even rows and 230on odd rows
-                location<kernel>(k[i][0]) = tile(j,i);
+                int j0 = (i%2?LastCol:FirstCol); // 23 on even rows and 230on odd rows
+                int step = (i%2?-1:+1); // 23 on even rows and 230on odd rows
+                for(int l=0;l<NPhases; l++)
+                {
+                    int j=j0+l*step;
+                    location<kernel>(k[i][l]) = tile(j,i);
+                    location<stack>(k[i][l]) = adf::bank(j,i,2);
+                }
             }
 
+            
 
             // Cascade Connections
             for(int row=0;row<NPhases;row++)

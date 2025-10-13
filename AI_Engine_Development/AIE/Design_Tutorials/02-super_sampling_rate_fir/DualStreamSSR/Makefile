@@ -39,10 +39,12 @@ all: clean  data aie aiesim aieviz throughput waveform
 run: clean data aie aiesim
 
 NUM_SAMPLES ?= 512
-NFRAMES ?= 16
+NFRAMES ?= 4
 
 SYSTEM_VAR_D := -DNUM_SAMPLES=$(NUM_SAMPLES) -DNFRAMES=$(NFRAMES)
-AIE_FLAGS += --aie.Xpreproc "$(SYSTEM_VAR_D)"
+SYSTEM_VAR_D_Preproc := $(foreach word,$(SYSTEM_VAR_D),--aie.Xpreproc $(word))
+
+AIE_FLAGS += $(SYSTEM_VAR_D_Preproc)
 
 NSamples := $(shell echo " $(NUM_SAMPLES) / 2" | bc)
 NFrames := $(shell echo " $(NFRAMES) + 1" | bc)
