@@ -23,6 +23,8 @@ GCC_INCLUDES     := -I${SYSROOT}/usr/include \
                     -I../aie/tdm_fir \
                     -I${DSPLIB_ROOT}/L2/include/aie \
 		    -I${DSPLIB_ROOT}/L1/include/aie \
+		    -I${DSPLIB_ROOT}/L1/include/vss/common \
+		    -I${DSPLIB_ROOT}/L1/include/vss/vss_fft_ifft_1d \
 		    -I${DSPLIB_ROOT}/L1/src/aie \
                     -I${DSPLIB_ROOT}/L1/tests/aie/inc \
                     -I${DSPLIB_ROOT}/L1/tests/aie/src \

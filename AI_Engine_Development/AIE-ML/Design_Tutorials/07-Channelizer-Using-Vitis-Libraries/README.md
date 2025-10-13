@@ -158,7 +158,7 @@ This causes the storage requirement to increase beyond the predicted 32 tiles. T
 
 ![figure6](images/filterbank_characterize_array_view_zoom.png)
 
-We also observe that the achieved throughput is higher than the requirement, 4096/1.256 = 3261 MSPS.
+We also observe that the achieved throughput is higher than the requirement, 4096/1.257 = 3258 MSPS.
 
 ![figure7](images/filterbank_characterize_trace_view.png)
 
@@ -195,7 +195,7 @@ Compile and simulate the design to confirm it works as expected.
 [shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
 
-Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tiles with a throughput = 4096/1.836us = 2231 MSPS.
+Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tiles with a throughput = 4096/1.837us = 2230 MSPS.
 
 ![figure8](images/filterbank_array_view.png)
 
@@ -265,16 +265,17 @@ The next step is to characterize its performance.
 ```
 
 Inspecting vitis_analyzer, we can read two throughput numbers:
-First,  4096/9.232us = 444 MSPS, corresponding to the tile performing front 64-point IFFT + point-wise twiddle multiplication.
-Second, 4096/7.604us = 537 MSPS, corresponding to the tile performing the back 64-point IFFT.
+* First,  4096/8.192us = 500 MSPS, corresponding to the tile performing front 64-point IFFT + point-wise twiddle multiplication.
+* Second, 4096/7.073us = 579 MSPS, corresponding to the tile performing the back 64-point IFFT.
 
 ![figure11](images/ifft4096_2d_characterize_trace_view.png)
 
-This means, we need SSR=5 to meet our target throughput of 2 GSPS.
+This means, we need SSR=4 to meet our target throughput of 2 GSPS.
 
 #### IFFT-2D Library Optimization
 
-While an SSR=5 should be sufficient from a resource count perspective, using a SSR that is a power of 2 simplifies the overall design and allows thr direct mapping of TDM FIR outputs into 2D IFFT input.
+While an SSR=4 should be sufficient from a resource count perspective, it would be a design with 0 margin. Using a higher SSR would be advisable at this stage as we could lose a bit of margin elsewhere resulting in not meeting the target spec.
+Using a SSR that is a power of 2 simplifies the overall design and allows the direct mapping of TDM FIR outputs into 2D IFFT input.
 For this reason, we proceed with SSR=8. We can also apply the `single_buffer` constraint on the input and output buffer to reduce the storage requirements at the expense of some degradation in throughput.
 
 ```
@@ -285,8 +286,8 @@ For this reason, we proceed with SSR=8. We can also apply the `single_buffer` co
 
 Inspecting vitis_analyzer, we observe a resource count of 16 AIE-ML tiles.
 Achieved throughput for:
-* Front 64-point IFFT + point-wise twiddle multiplication = 2300 MSPS
-* Back 64-pint IFFT = 2300 MSPS
+* Front 64-point IFFT + point-wise twiddle multiplication = 2387 MSPS
+* Back 64-pint IFFT = 2376 MSPS
 
 ![figure12](images/ifft4096_2d_array_view.png)
 

@@ -8,11 +8,8 @@ export AIE_SIM_ONLY                := false
 ECHO                               = @echo
 export TARGET                      ?= hw_emu
 
-BOARD=vek280
-BASE_NUM=202520_1
-
 # Platform Selection...
-VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}_base_${BASE_NUM}
+VERSAL_VITIS_PLATFORM      = xilinx_vek280_base_202520_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export VITIS_PLATFORM_XPFM = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

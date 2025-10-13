@@ -15,6 +15,8 @@ CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancin
 
 DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 		     --include=${DSPLIB_ROOT}/L1/include/aie \
+		     --include=${DSPLIB_ROOT}/L1/include/vss/common \
+		     --include=${DSPLIB_ROOT}/L1/include/vss/vss_fft_ifft_1d \
 		     --include=${DSPLIB_ROOT}/L1/src/aie
 
 AIE_OUTPUT := libadf.a

@@ -47,6 +47,7 @@ ${HLS_CFG}:
 	@echo "clock=3.2ns"                                                                                                           >> ${HLS_CFG}
 	@echo "# C-Synthesis:"                                                                                                        >> ${HLS_CFG}
 	@echo "syn.top=${KERNEL}"                                                                                                     >> ${HLS_CFG}
+	@echo "syn.cflags= -I${DSPLIB_ROOT}/L1/include/vss/common -I${DSPLIB_ROOT}/L1/include/vss/vss_fft_ifft_1d"                    >> ${HLS_CFG}
 	@echo "syn.file=${KERNEL_SRC}"                                                                                                >> ${HLS_CFG}
 	@echo "syn.file_cflags=${KERNEL_SRC}, -DSSR=${SSR} -DPOINT_SIZE=${POINT_SIZE}"                                                >> ${HLS_CFG}
 	@echo "syn.file_csimflags=${KERNEL_SRC}"                                                                                      >> ${HLS_CFG}
@@ -68,7 +69,7 @@ ${HLS_CFG}:
 	@echo "tb.file=data/stream5_o.txt"                                                                                            >> ${HLS_CFG}
 	@echo "tb.file=data/stream6_o.txt"                                                                                            >> ${HLS_CFG}
 	@echo "tb.file=data/stream7_o.txt"                                                                                            >> ${HLS_CFG}
-	@echo "tb.file_cflags=tb_wrapper.cpp,-I${DSPLIB_ROOT}/L1/src/hw/ifft_front_transpose -DSSR=${SSR} -DPOINT_SIZE=${POINT_SIZE}" >> ${HLS_CFG}
+	@echo "tb.file_cflags=tb_wrapper.cpp,-I${DSPLIB_ROOT}/L1/src/hw/ifft_front_transpose  -I${DSPLIB_ROOT}/L1/include/vss/common -I${DSPLIB_ROOT}/L1/include/vss/vss_fft_ifft_1d -DSSR=${SSR} -DPOINT_SIZE=${POINT_SIZE}" >> ${HLS_CFG}
 	@echo "# C-Simulation:"                                                                                                       >> ${HLS_CFG}
 	@echo "csim.clean=true"                                                                                                       >> ${HLS_CFG}
 	@echo "csim.setup=false"                                                                                                      >> ${HLS_CFG}
