@@ -224,4 +224,4 @@ clean:
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
 	rm -rf *.json *.pdi drivers extracted .crashReporter
-	rm -rf ./plkernels vpl_gen_fixed.isd
+	rm -rf ./plkernels vpl_gen_fixed.isd analyzer_input baremetal_metadata_package.cpp

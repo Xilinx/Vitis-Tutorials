@@ -138,4 +138,4 @@ clean:
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
 	rm -rf aie_primitive.json  drivers  vpl_gen_fixed_presynth.pdi
-	rm -rf .crashReporter extracted plkernels vpl_gen_fixed.isd
+	rm -rf .crashReporter extracted plkernels vpl_gen_fixed.isd analyzer_input

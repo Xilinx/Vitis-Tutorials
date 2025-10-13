@@ -176,4 +176,4 @@ clean:
 	rm -rf aiesimulator_output pl_sample*
 	rm -rf *.bin *.BIN cfg emu_qemu_scripts launch* *.txt *.sh
 	rm -rf sd_card aiesim *.wcfg *.wdb *.bif *.exe *.img  sim temp
-	rm -rf .crashReporter
+	rm -rf .crashReporter baremetal_metadata_package.cpp
