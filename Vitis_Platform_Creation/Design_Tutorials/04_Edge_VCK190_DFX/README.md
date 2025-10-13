@@ -13,7 +13,7 @@
 
 # AMD Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2024.2***
+***Version: 2025.1***
 
 In this module, you will create a custom Dynamic Function eXchange (DFX) platform to run acceleration applications for VCK190 evaluation board. Platforms that support DFX features allows you to reload acceleration kernels during runtime.
 
@@ -21,7 +21,7 @@ You can define one reconfigurable partition (RP) region and create multiple reco
 
 ![DFX Diagram](./images/dfx_rp_rm.svg)
 
-This tutorial assumes that you understand the basics of the AMD Versal™ Custom Platform creation steps, for example, creating AMD Vivado™ designs from Vivado Customizable Example Design template, setting up software components with common images or PetaLinux, creating AMD Vitis™ platforms, and creating basic acceleration applications for platform validation. This tutorial will focus on the differences between the DFX platforms and the normal flat platforms.
+This tutorial assumes that you understand the basics of the AMD Versal™ Custom Platform creation steps, for example, creating AMD Vivado™ designs from Vivado Customizable Example Design template, setting up software components with common images, creating AMD Vitis™ platforms, and creating basic acceleration applications for platform validation. This tutorial will focus on the differences between the DFX platforms and the normal flat platforms.
 
 In a general Vitis acceleration platform design, you start from building a base bootable design, then add platform required components and properties to it. You must validate each step before going to the next step to prevent error propagating. This workflow is described in the following diagram.
 
@@ -49,7 +49,7 @@ This tutorial design uses VCK190 production board for demonstration. The methodo
 
 This design requires a Linux host machine with Internet access. The Linux OS needs to support the Vitis software and PetaLinux.
 
-This tutorial assumes that you are familiar with Vitis platform creation flow. If not, refer to VCK190 Platform Creation Tutorial and *Vitis Acceleration Flow User Guide* [(UG1393)](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1393-vitis-application-acceleration) for more information.
+This tutorial assumes that you are familiar with Vitis platform creation flow. If not, refer to VCK190 Platform Creation Tutorial and *Vitis Acceleration Flow User Guide* [(UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Getting-Started-with-Vitis-Unified-Software-Platform) for more information.
 
 ## What's Next
 
@@ -64,6 +64,12 @@ Start with [Step 1](./step1.md).
 - [Vitis Embedded Platform Source Github Repository](https://github.com/Xilinx/Vitis_Embedded_Platform_Source)
 
 ## Changelog
+
+### 2025.1
+
+- Update system-user.dtsi as per CED design.
+- Update Makefile as per mew VADD applications.
+- Update platform settings to change selection of default clock to 156.25Mhz
 
 ### 2023.1
 

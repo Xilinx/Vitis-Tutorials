@@ -18,7 +18,7 @@ AIE_WORK=$(ROOT_DIR)/aie_work
 .PHONY: all vadd aie_adder platforminfo clean ultraclean
 #all: To support emulation
 all: platforminfo vadd_emu aie_adder_emu  
-sd_card:platforminfo aie_adder_hw 
+sd_card:platforminfo vadd_hw aie_adder_hw 
 
 
 cpAieCode:
@@ -28,7 +28,7 @@ cpAieCode:
 
 cpVaddCode:
 	mkdir -p vadd_work
-	cp $(XILINX_VITIS)/examples/vadd/* vadd_work
+	cp -rf $(XILINX_VITIS)/samples/vadd/* vadd_work/
 	cp makefile_vadd vadd_work/Makefile
 
 

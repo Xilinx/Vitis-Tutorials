@@ -64,7 +64,7 @@ Use the static XSA to generate the base device tree with device tree generator (
 };
 ```
 
-A prepared [system-user.dtsi](ref_file/step2_sw/system-user.dtsi) file is ready for use.
+A prepared [system-user.dtsi](./ref_file/step2_sw/system-user.dtsi) file is ready for use.
 
 If you updated the AI Engine clock frequency, please update the `clock-frequency` of `aie_core_ref_clk_0`.
   

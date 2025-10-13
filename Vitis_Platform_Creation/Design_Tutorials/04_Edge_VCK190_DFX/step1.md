@@ -74,7 +74,7 @@ You will create the hardware design in Vivado first and then explain the details
    4. Input **project name** and **project location**. Keep **Create project subdirectory** checked. Click **Next**.
    5. Select target board in Default Part window. In this example, **Versal VCK190 Evaluation Platform** is used. Click **Next**.
   
-      ![CED Configuration](./images/step1/vivado_ced_config.png)
+      ![CED Configuration](./images/step1/vivado_ced_config.svg)
 
    6. Configure Clocks Settings. You can enable more clocks, update output frequency and define default clock in this view for the static region. In this example, you can retain the default settings.
    7. Configure Interrupt Settings. You can choose the number of interrupts. 63 interrupts will use two AXI_INTC in cascade mode. In this example, you can retain the default setting.
@@ -89,6 +89,11 @@ The generated design is shown in the following figure:
 ![Vivado Design Block Diagram](images/step1/vivado_dynamic_region_diagram.PNG)
 
 At this stage, the Vivado block automation has already created a top block design and a dynamic region block. It added the CIPS, AXI NOC block, dfx_decoupler, and supporting logic blocks to the top diagram. It also added the AI engine, AXI NOC and clock in dynamic region (`VitisRegion.bd`) and also applied all board presets for the VCK190. Block generation and address aperture setting has also been done. In the following sections, we will delve into the sub-modules within this CED DFX platform. The sub-module design methodology is a fundamental aspect applied to all DFX designs.
+
+Open the VitisRegion block design from Flow Navigator. Open IP Integrator-> Open Block design
+Go to Platform Setup -> Clock and make clk_out2 which is 156.25Mhz clock output as default clock.
+![Platform Setup](./images/step1/vitis_region_platorm_setup.svg)
+
 
 ### DFX Platform Design Submodule Explanation
 

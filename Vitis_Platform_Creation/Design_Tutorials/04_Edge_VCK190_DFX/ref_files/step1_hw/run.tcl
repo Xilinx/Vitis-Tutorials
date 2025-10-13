@@ -49,7 +49,7 @@ set my_board [get_board_parts *${BOARD}:part0* -latest_file_version]
 create_project project_1 ./project_1 -part xcvc1902-vsva2197-2MP-e-S -force 
 set_property board_part $my_board [current_project]
 create_bd_design "versal_dfx_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_dfx_platform:1.0 -design versal_dfx_platform -options { Include_AIE.VALUE true Include_DDR.VALUE true}
+instantiate_example_design -template xilinx.com:design:versal_dfx_platform:1.0 -design versal_dfx_platform -options { Clock_Options.VALUE {clk_out1 104.167 0 false clk_out2 156.250 1 true clk_out3 312.500 2 false clk_out4 78.125 3 false clk_out5 208.330 4 false clk_out6 416.670 5 false clk_out7 625.000 6 false} Include_AIE.VALUE true Include_DDR.VALUE true IRQS.VALUE 63 Include_LPDDR.VALUE true}
 update_compile_order -fileset sources_1
 generate_target all [get_files  project_1/project_1.srcs/sources_1/bd/versal_dfx_platform/versal_dfx_platform.bd]
 update_compile_order -fileset sources_1
