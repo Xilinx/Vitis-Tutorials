@@ -14,7 +14,7 @@
 
 # Getting Started in Vitis Unified Embedded IDE
 
-***Version: 2025.1***
+***Version: 2025.2***
 
 This tutorial should act as the start point, or a refresher to the AMD Vitis™ Unified Embedded flows. The concepts will be kept simple to allow the user to navigate through the IDE with minimal steps to get started. We will accomplish the following tasks in this tutorial:
 
@@ -24,8 +24,25 @@ This tutorial should act as the start point, or a refresher to the AMD Vitis™ 
 
 **Note**
 
-The example design in this tutorial is based on ZCU102 evaluation board, which uses MPSoC UltraScale+. The concept can apply to all SoC devices such as ZYNQ-7000 and Versal.
+The example design in this tutorial is based on ZCU102 evaluation board, which uses MPSoC UltraScale+. The concept can apply to all SoC devices such as ZYNQ-7000 and Versal. You can also carry out this tutorial for versal boards such as:
 
+* vck190
+* vek280
+* vek385
+
+Furthermore, you can also automate the workspace build (HW and SW) by using the Makefile included in this tutorial.
+
+```
+make <board_name>
+```
+## Board Setup
+
+Documentation on preparing the hardware for each board can be found here:
+
+* <a href="https://docs.amd.com/r/en-US/ug1209-embedded-design-tutorial/Setting-Up-the-ZCU102-Board">ZCU102</a>
+* <a href="https://docs.amd.com/r/en-US/ug1366-vck190-eval-bd">VCK190</a>
+* <a href="https://docs.amd.com/r/en-US/ug1612-vek280-eval-bd/Introduction">VEK280</a>
+* <a href="https://docs.amd.com/r/en-US/ug1304-versal-acap-ssdg/Boot-and-Configuration">VEK385</a>
 
 ## Get Started
 
@@ -129,15 +146,21 @@ We are now ready to build our application. To do this, select the Build icon in 
 
 ![missing image](./images/build_application.PNG)
 
+You will be prompted with the below build options to choose from:
+
+1. Always build platform with application
+- Platform build will always take place automatically before application build
+
+2. Only build application (manually build platform if needed)
+- Platform build wont take place automatically before application build
+
+![missing image](./images/build_settings.PNG)
+
 Select Debug in the Flow view, and user will be prompted to create a new configuration (if one does not previously exist).
-
-![missing image](./images/debug_config.PNG)
-
-Select New Launch Configuration.
 
 ![missing image](./images/new_config.PNG)
 
-The Launch configuration will be auto-populated with the boot artifact components in the platform.
+Select New Launch Configuration. The Launch configuration will be auto-populated with the boot artifact components in the platform.
 
 ![missing image](./images/debug_config.PNG)
 
@@ -180,7 +203,7 @@ Make sure that the Program Flash is successful. We can verify, by setting the bo
 The Vitis Unified IDE will capture all the Vitis Python API used to create or modify the Vitis workspace in a python file in the logs folder. This can be then source in the Vitis CLI to rebuild the workspace. For example, the script that was generated in Vitis using the steps above is attached to this git repository with minimal changes to set the PWD.
 
 ```
-vitis -s build_workspace.py
+vitis -s build_workspace.py -b zcu102
 ```
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2023 Advanced Micro Devices, Inc.</sub></p>
