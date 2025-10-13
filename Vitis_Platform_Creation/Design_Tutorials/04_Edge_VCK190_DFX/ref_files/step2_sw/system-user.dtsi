@@ -9,6 +9,10 @@ chosen {
       };
    };
 
+&cpm_pciea {
+	status = "disabled";
+};
+
 &amba_pl {
 	ai_engine@20000000000 {
 		#address-cells = <0x02>;

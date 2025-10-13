@@ -52,7 +52,7 @@ You can verify hardware configuration (clocks, memory) and software configuratio
    Board:                            versal_extensible_dfx_platform_base
    Name:                             versal_extensible_dfx_platform_base
    Version:                          1.0
-   Generated Version:                2024.2
+   Generated Version:                2025.1
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               0
@@ -150,7 +150,7 @@ The user flow for configuring the XCLBIN to DFX platforms and flat platforms are
    ```bash
    mkdir -p ref_files/step3_verify
    cd ref_files/step3_verify
-   vitis -workspace ./ &
+   vitis -w .
    ```
 
    Close the welcome tab after Vitis launches.
