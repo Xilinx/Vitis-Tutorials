@@ -15,7 +15,7 @@
 
 # Using Floating-Point in the AI Engine
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
