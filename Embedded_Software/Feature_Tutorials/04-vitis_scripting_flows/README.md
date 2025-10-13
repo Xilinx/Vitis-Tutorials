@@ -11,7 +11,7 @@
   </tr>
 </table>
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 # Vitis Embedded Scripting Flows
 
@@ -170,7 +170,7 @@ domain = platform.add_domain(cpu = "psu_cortexa53_0",os = "standalone",name = "m
 When we generate a platform, the metadata is extracted from the XSA, and this is used to generate the S-DT. This will also rebuild any domains within the platform
 
 ```
-platform.update_hw(hw = "path to new XSA")
+platform.update_hw(hw_design = "path to new XSA")
 ```
 
 ### Building Platform
@@ -438,8 +438,8 @@ RP_ID_INFO       string   true
 RP_INST_NAME     string   true       
 SPEEDGRADE       string   true       -2
 SW_REPOSITORIES  string*  true       []
-TIMESTAMP        string   true       Mon Apr 28 16:18:04 2025
-VIVADO_VERSION   string   true       2025.1
+TIMESTAMP        string   true       Thu Sep 25 05:38:26 2025
+VIVADO_VERSION   string   true       2025.2
 ```
 
 Users can return a specific property, such as the `FAMILY`
@@ -747,9 +747,9 @@ Vitis [0]: jtag = session.jtag_targets()
 ```
 
 ```
- 1  Digilent JTAG-SMT2NC 210308A7B222 ()
-  2  xczu9 (idcode 24738093 irlen 12 fpga)
-  3  arm_dap (idcode 5ba00477 irlen 4)
+1  Digilent JTAG-SMT2NC 210308A46CA1
+    2  xczu9 (idcode 24738093 irlen 12 fpga)
+    3  arm_dap (idcode 5ba00477 irlen 4)
 ```
 
 Users can filter on the JTAG Targets
