@@ -15,7 +15,7 @@
 
 # Matrix Compute with Vitis Libraries on AIE and AIE-ML
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -31,7 +31,7 @@ For example, value at c11, is the product of  a11  * b11 + a12 * b21. Similarly,
 
 ![Matrix Product](./images/2_Matrix_Product.png)
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up the software and installing the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.2) for setting up the software and installing the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
@@ -41,7 +41,7 @@ Before starting this tutorial, run the following steps:
 
 # AMD Versal Devices with AI Engine Variants
 
-AMD Versal™ AI Core and Versal AI Edge devices come in both AIE and AIE-ML variants. You need to choose your device carefully. The following table lists the devices that have AIE and AIE-ML variants.
+AMD Versal™ AI Core and Versal AI Edge devices come in AIE, AIE-ML and AIE-MLv2 variants. You need to choose your device carefully. The following table lists the devices that have AIE and AIE-ML variants.
 
 ![AIE Variants](./images/0_AMD_Versal_Devices.png)
 
@@ -75,7 +75,7 @@ The data type of both input matrices can be configured, and the data type of the
 
 The Matrix Multiply supports a matrix of elements of integer type (int16, cint16, int32, or cint32) multiplied by a matrix of elements of integer type. It also supports a matrix of elements of float type (float, cfloat) multiplied by a matrix of elements of float type. However, a mix of integer types and float types is not supported.
 
-The Matrix Multiply for AIE-ML supports integer types (int16, int32, cint16, and cint32) but does not support floating-point types (float, cfloat).
+The Matrix Multiply for AIE-ML and AIE-MLv2 support integer types (int16, int32, cint16, and cint32) but does not support floating-point types (float, cfloat).
 
 The graph entry point as follows: ```xf::dsp::aie::blas::matrix_mult::matrix_mult_graph```
 
@@ -364,7 +364,7 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS   |
 
 
 ## Design Variant 2: 4-tile design with TP_CASC_LEN=4
@@ -436,8 +436,8 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2452 MBPS   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS   |
 
 ## Design Variant 3: 8-tile design with TP_CASC_LEN=4 and TP_SSR=2
 
@@ -511,9 +511,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1112 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2452 MBPS   |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3815 MBPS   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS   |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS   |
 
 
 ## Migrate the Design from AIE to AIE-ML and Evalute the Performance Differences
@@ -532,7 +532,7 @@ cd ../../aie-ml/gemm_16x32x8
 Open the ```Makefile``` file and review the code. The only modification is the updated platform name.
 
 ```
-PLATFORM_USE      := xilinx_vek280_base_202510_1
+PLATFORM_USE      := xilinx_vek280_base_202520_1
 ```
 
 ### Design Variant 1: Single Tile (AIE-ML)
@@ -568,9 +568,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       |                   |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       |                   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS       | 1529 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS       |                   |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS       |                   |
 
 ## Design Variant 2: 4-tile design with TP_CASC_LEN=4 (AIE-ML)
 
@@ -612,9 +612,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3029 MBPS         |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       |                   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS       | 1529 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS       | 3033 MBPS         |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS       |                   |
 
 ## Design Variant 3: 8-tile design with TP_CASC_LEN=4 and TP_SSR=2 (AIE-ML)
 
@@ -656,9 +656,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      2      |    1   |    1    |    1    | 1137 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2578 MBPS       | 3029 MBPS         |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3935 MBPS       | 6702 MBPS         |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS       | 1529 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS       | 3033 MBPS         |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS       | 6754 MBPS         |
 
 
 From the preceding table, for **Design Variant 3**, the AIE-ML architecture achieves a performance that is roughly **1.7** times faster than the AIE architecture.

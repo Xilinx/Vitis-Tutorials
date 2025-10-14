@@ -70,7 +70,7 @@ public:
       sig_o[ii] = output_plio::create(pname, plio_64_bits, fname);
       connect<>(gemm.out[ii],sig_o[ii].in[0]);
     }
-    location<graph>(gemm) = bounding_box(18,0,21,0);
+    adf::location<adf::graph>(*this) = adf::area_group({{adf::aie_tile, 18, 0, 21, 0},{adf::shim_tile,18,0,21,0}});
   }
 };
 

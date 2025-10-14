@@ -51,7 +51,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT} profile
+all:		${AIE_OUTPUT} 
 
 x86all: 	clean x86com x86sim
 
