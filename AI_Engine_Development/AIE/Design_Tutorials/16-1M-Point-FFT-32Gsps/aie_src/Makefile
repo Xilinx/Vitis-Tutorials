@@ -9,7 +9,13 @@ PLATFORMNAME ?= $(PLATFORMDIR)/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).
 
 INCLUDES           = --include=./ --include=./inc --include=./kernels
 TEST_BENCH         = ./test_ssrfft_1m.cpp
-OTHER_OPTS         = --aie.constraints=./shim_loc.json --aie.xlopt=1
+
+# The Xchess option disables "automatic chess_separator insertion" which compromises
+# throughput by introducing artifical scheduling boundaries for blocks exceeding the
+# default threshold (default can be changed with the "+Olbb" option).
+OTHER_OPTS         = --aie.constraints=./shim_loc.json --aie.xlopt=1 \
+                     --aie.Xchess=main:backend.mist2.xargs="+Olbb=0"
+
 ROUTER_OPTS        = --aie.Xmapper=disableFloorplanning --aie.Xrouter=disablepathbalancing \
 	             --aie.Xrouter=disableSSFifoSharing --aie.disable-multirate
 NUM_ITERATION      = 4
