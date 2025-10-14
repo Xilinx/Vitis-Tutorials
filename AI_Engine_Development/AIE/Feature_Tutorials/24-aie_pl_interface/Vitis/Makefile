@@ -24,15 +24,22 @@ ifeq ($(INCLUDE_ILAS), 0)
 		TARGET 				:= hw_emu
 	else
 		ifeq ($(AXI4S_BROADCAST), 1)
-			DESIGN_PART			:= 4
+			DESIGN_PART			:= 5
 			XSA					:= custom_pfm_strmIn_strmOut_AXIS_Broadcast.xsa
 			VITIS_PLATFORM		:= custom_pfm_strmIn_strmOut_AXIS_Broadcast_0_1
 			TARGET 				:= hw_emu
 		else
-			XSA					:= custom_pfm_strmIn_strmOut.xsa
-			VITIS_PLATFORM		:= custom_pfm_strmIn_strmOut_0_1
-			DESIGN_PART			:= 1
-			TARGET 				:= hw_emu
+			ifeq ($(ILA_VPP), 1)
+				XSA					:= custom_pfm_strmIn_strmOut.xsa
+				VITIS_PLATFORM		:= custom_pfm_strmIn_strmOut_0_1
+				DESIGN_PART			:= 4
+				TARGET 				:= hw
+			else
+				XSA					:= custom_pfm_strmIn_strmOut.xsa
+				VITIS_PLATFORM		:= custom_pfm_strmIn_strmOut_0_1
+				DESIGN_PART			:= 1
+				TARGET 				:= hw_emu
+			endif
 		endif
 
 	endif

@@ -26,3 +26,5 @@ if (not os.path.isdir("./workspace_"+design_part+"/"+component_name)):
 
 platform = client.get_component(name=component_name)
 status = platform.build()
+
+vitis.dispose()
