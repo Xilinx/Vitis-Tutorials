@@ -26,6 +26,7 @@ linker: $(s2mm) $(mm2s) $(libadf)
  
 packager:
 	v++ --package --target ${TARGET}  \
+	--platform  ${PLATFORM} \
 	--config pack.cfg \
 	--package.defer_aie_run \
 	--package.kernel_image=${IMAGE} \
