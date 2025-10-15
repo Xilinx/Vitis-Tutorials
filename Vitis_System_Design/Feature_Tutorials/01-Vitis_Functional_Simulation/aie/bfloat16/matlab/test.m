@@ -33,7 +33,7 @@ out_data = myGraph.run(in_data_2);
 % The output buffer is now full, as the kernel has been triggered.
 % The kernel operates on both in_data_1 (that was stored internally 
 % from the first call to the run method) and in_data_2. No data is lost. 
-assert(all(out_data - ([in_data_1; in_data_2]) == 0))
+assert(all(double(out_data) - double([in_data_1; in_data_2]) == 0))
 assert(size(out_data,1) == 64)
 
 disp('Test Passed')

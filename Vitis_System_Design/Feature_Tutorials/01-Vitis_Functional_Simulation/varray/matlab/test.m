@@ -41,6 +41,5 @@ assert(all(v3.bytes == v4.bytes)); % The byte representation should be the same
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Some other supported operations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s = sum(v3)     % Sum of all elements
 v5 = [v3, v3];  % Concatenate two varrays of the same type
 c = isreal(v3)

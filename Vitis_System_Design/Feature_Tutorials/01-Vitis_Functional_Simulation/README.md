@@ -13,7 +13,7 @@
 
 # Vitis Functional Simulation
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ Vitis Functional Simulation (VFS) leverages "varray" (Vitis array), a module sup
 
 ![Varray Introduction](images/varray_intro.png)
 
-For more information on Vitis Functional Simulation and Vitis array, refer to Chapter 6 of *Embedded Design Development Using Vitis User Guide* ([UG1701](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.1%20English&url=ug1701-vitis-accelerated-embedded)).
+For more information on Vitis Functional Simulation and Vitis array, refer to Chapter 6 of *Embedded Design Development Using Vitis User Guide* ([UG1701](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Functional-Simulation-and-Verification-in-Vitis)).
 
 ## Setup Instructions
 
@@ -76,7 +76,7 @@ This directory contains simple AI Engine Graphs and HLS kernels to show how to g
 | [`hls/array_pointer_data_type`](hls/array_pointer_data_type) | Demonstrates a kernel with array and pointer inputs |
 | [`hls/arrayOfHlsStreams`](hls/arrayOfHlsStreams) | Demonstrates using an HLS kernel where the ports are arrays of streams |
 | [`hls/kernel_invert`](hls/kernel_invert) | Demonstrates usage of the fixed-point varray data type |
-| [`aie_hls/64kifft`](aie_hls/64kifft) | 64k-point IFFT implemented using a 2D breakdown containing resources in both AI Engine and PL. Also includes a Jupyter notebook version. [Link](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D) to original design. |
+| [`aie_hls/64kifft`](aie_hls/64kifft) | 64k-point IFFT implemented using a 2D breakdown containing resources in both AI Engine and PL. Also includes a Jupyter notebook version. [Link](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D) to original design. |
 
 ## Support
 

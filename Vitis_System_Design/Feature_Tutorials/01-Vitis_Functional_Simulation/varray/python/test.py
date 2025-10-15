@@ -49,8 +49,7 @@ assert(np.all(v3.bytes == v4.bytes))  # The byte representation should be the sa
 #################################################################
 # Some numpy functions are supported on varray
 #################################################################
-s = np.sum(v3)  # Sum of all elements
-v5 = np.concatenate((v1, v2))  # Concatenate two varrays, output is a varray
+v5 = np.concatenate((v3, v3))  # Concatenate two varrays, output is a varray
 m = np.max(v3)  # Maximum element
 c = np.isreal(v3)
 

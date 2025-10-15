@@ -22,7 +22,7 @@ in_data = va.array(list(range(64)), dtype = va.bfloat16)
 
 out_data = myGraph.run(in_data)
 
-assert(all(out_data-in_data == 0))
+assert(all(np.asarray(out_data)-np.asarray(in_data) == 0))
 assert(out_data.size == 64)
 
 # Now we pass only an areay of 32 samples to the input port.
@@ -40,6 +40,6 @@ out_data = myGraph.run(in_data_2)
 # The output buffer is now full, as the kernel has been triggered.
 # The kernel operates on both in_data_1 (that was stored internally 
 # from the first call to the run method) and in_data_2. No data is lost. 
-assert(all(out_data - np.concatenate((in_data_1, in_data_2)) == 0))
+assert(all(np.asarray(out_data) - np.asarray(np.concatenate((in_data_1, in_data_2))) == 0))
 assert(out_data.size == 64)
 print('Test Passed')
