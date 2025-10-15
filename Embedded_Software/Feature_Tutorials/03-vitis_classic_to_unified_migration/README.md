@@ -13,7 +13,7 @@
 
 # Vitis Classic to Unified Project Migration
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 >**Note**: The content of this tutorial is also available as an on-demand video, featuring a demo walkthrough from the ["Advancing Embedded Development: Migrating to AMD Vitis™ Unified IDE and Exploring Backend Innovations"](https://webinar.amd.com/Advancing-Embedded-Development-Migrating-to-AMD-Vitis-tm-Unified-IDE-and-Exploring-Backend-Innovations/en) webinar.
 
@@ -31,6 +31,7 @@ There is also a migration utility in the Vitis Classic that users can use to por
 * External repositories will not be reflected. Meaning if you have a custom driver in an external repo, then this driver will not be ported
 * Modification made to BSP will not be reflected
 * Build Configurations are not copied over to Unified. Users will need to generate this via the launnch configuration GUI
+* Only works for version's untill 2024.2 (Manual migration is recommended)
 
 ## Metadata transfer Methodology change from Hardware to Software
 
@@ -271,11 +272,11 @@ In Vitis Classic, the bsp parameters were populated for the MLD and MSS file. In
 cmake_minimum_required(VERSION 3.3)
 
 find_package(common)
-set(lwip213_api_mode RAW_API CACHE STRING "Mode of operation for lwIP (RAW API/Sockets API)")
-set_property(CACHE lwip213_api_mode PROPERTY STRINGS RAW_API SOCKET_API)
-option(lwip213_no_sys_no_timers "Drops support for sys_timeout when NO_SYS==1" ON)
-set(lwip213_socket_mode_thread_prio 2 CACHE STRING "Priority of threads in socket mode")
-option(lwip213_tcp_keepalive "Enable keepalive processing with default interval" OFF)
+set(lwip220_api_mode RAW_API CACHE STRING "Mode of operation for lwIP (RAW API/Sockets API)")
+set_property(CACHE lwip220_api_mode PROPERTY STRINGS RAW_API SOCKET_API)
+option(lwip220_no_sys_no_timers "Drops support for sys_timeout when NO_SYS==1" ON)
+set(lwip220_socket_mode_thread_prio 2 CACHE STRING "Priority of threads in socket mode")
+option(lwip220_tcp_keepalive "Enable keepalive processing with default interval" OFF)
 set(sgmii_fixed_link 0 CACHE STRING "Enable fixed link for GEM SGMII at 1Gbps")
 set_property(CACHE sgmii_fixed_link PROPERTY STRINGS 0 1)
 ...
@@ -359,7 +360,7 @@ Below I have a trivial Block Design for the Zynq Ultrascale+ MPSoC which was cre
 
 ![](./images/2023.2_block_design.PNG)
 
-1. Load Vivado 2025.1 tools
+1. Load Vivado 2025.2 tools
 2. Select 'Open Project' and choose the 2023.2 project to be migrated
 
 ![](./images/open_project.PNG)
@@ -376,7 +377,7 @@ To upgrade the IP select 'Report IP Status' and then scroll to the bottom of the
 
 ![](./images/upgradable_ip.PNG)
 
-5. Export the hardware (XSA) and use it to recreate your platform in Vitis Unified 2025.1
+5. Export the hardware (XSA) and use it to recreate your platform in Vitis Unified 2025.2
 
 ### Vitis Classic to Unified Migration Utility
 
@@ -388,6 +389,7 @@ Launch XSCT, and use the command below
 cd scripts
 make all
 ```
+**Note:** The scripting flow provided in the tutorial will only work in versions (2023.2 - 2024.2) as the classic IDE is no longer provided in the install from version 2025.1.
 
 This will create the platform xsa file and the **classic_workspace** workspace. Launch Vitis Classic, and navigate to the workspace created above.
 
