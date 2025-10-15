@@ -31,7 +31,10 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
    ![missing image](images/252_ps_os.jpg)
 
-5. Build the platform.
+5. Open the platform configuration file **vitis-comp.json** and go to the Boad Support Package section for the standalone_psv_coterxa72_0 domain. Enable the **aiebaremetal** library
+   ![missing image](images/252_bsp.jpg)
+
+6. Build the platform.
 
 ## Step 2. Build the Baremetal AI Engine Control Application
 
@@ -45,47 +48,26 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
 5. Right-click the `src` folder under the **A-to-Z_app** project, and click ***Import → Files***.
 
-6. Import the `aie_control.cpp` file from the AI Engine application project (`simple_application/build/hw/Work/ps/c_rts/aie_control.cpp`).
+6. Import the `baremetal_metadata_compile.cpp` file from the AI Engine application project (`simple_application/build/hw/Work/baremetal_metadata_compile.cpp`).
 
 7. Import `main.cpp` from the `src` folder from the git repository.
 
-      Go through the `main.cpp` file. You can see that the code is initializing the input data and the memory space for the output data. One thing to note is the use of the `.init()` and `.run()` APIs to control the AI Engine.
+      Go through the `main.cpp` file. You can see that the code is initializing the input data and the memory space for the output data. One thing to note is the use of the `.run()` and `.end()` APIs to control the AI Engine.
 
       ```
-      printf("Starting AIE Graph\n");
-      printf("Graph Initialization\n");
-      mygraph.init();
-      printf("Done \n");
-      printf("- \n");
-
       printf("Running Graph for 4 iterations\n");
-      mygraph.run(4);
+      gr.run(4);
       ```
 
       There are two options to enable an AI Engine graph from a system:
 
       * Enable the graph in the PDI. This means that the graph will be started during BOOT and will run forever.
-      * Enable the AI Engine graph from the PS program using the `<graph>.init()` and `<graph>.run()` APIs. This is what you are using in this case.
+      * Enable the AI Engine graph from the PS program using `<graph>.run()` APIs. This is what you are using in this case.
 
-8. Under the **A-to-Z_app component** open **UserConfig.cmake** under **Settings**. In the **Directories** section add the following directories under **Include Paths (-I)**.
-      * `<workspace>/simple_aie_application/src`
-      * `../../../workspace/simple_aie_application/build/hw/Work/ps/c_rts/`
-      * `$ENV{XILINX_VITIS}/aietools/include`
-
-   ![missing image](images/232_ps_app_cfg1.jpg)
-
-9. Still in the **UserConfig.cmake** file, in the **Libraries** section add
-
-      * `adf_api` under **Libraries (-l)**
-      * `$ENV{XILINX_VITIS}/aietools/lib/aarchnone64.o` under **Library search path (-L)**
-
-   ![missing image](images/232_ps_app_cfg2.jpg)
-
-
-10. in the **Symbols** section add `__PS_BARE_METAL__`
+8. Under the **A-to-Z_app component** open **UserConfig.cmake** under **Settings**. In the **Symbols** section add `__PS_BARE_METAL__`
 ![missing image](images/251_ps_app_cfg3.jpg)
 
-11. Modify the Linker Script to increase the heap size for AIE library.
+9. Modify the Linker Script to increase the heap size for AIE library.
 
       * In the Project Explorer, expand the A-to-z_app component.
 
@@ -95,7 +77,7 @@ In this section of the tutorial, you will learn how to build a PS bare-metal app
 
     ![missing image](images/232_heapsize.jpg)
 
-12. Build the A72 PS component (`A-to-Z_app`).
+10. Build the A72 PS component (`A-to-Z_app`).
 
 > Note:  The creation of the Vitis fixed platform and the ps application can be automated running "make ps_app"
 

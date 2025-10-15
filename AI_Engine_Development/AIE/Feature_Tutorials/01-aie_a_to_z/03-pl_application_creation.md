@@ -64,9 +64,9 @@ In this example, HLS kernels are used which bridge between memory and the AXI4-S
 
  Click ***Next***
 
-7. In the **Edit Settings** page select ***Vitis Kernel Flow Target*** under **flow_target** and ***Generate a Vitis XO*** under **package.output_format** and click ***Next***
+7. In the **Edit Settings** page select ***vitis*** under **flow_target** and ***xo*** under **package.output_format** and click ***Next***
 
-      ![missing image](images/232_mm2s_comp4.jpg)
+      ![missing image](images/251_mm2s_comp4.jpg)
 
 8. Click ***Finish***
 

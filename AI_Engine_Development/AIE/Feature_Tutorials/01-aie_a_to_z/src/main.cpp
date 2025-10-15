@@ -41,12 +41,10 @@
 #include "xil_printf.h"
 #include "xil_cache.h"
 #include "xil_io.h"
-#include "sleep.h"
 
 #include "xparameters.h"
-
-#include "project.cpp"
-
+#include "xaiengine.h"
+#include "aeg_baremetal_api.h"
 
 #define MM2S_BASE XPAR_XMM2S_0_BASEADDR
 #define S2MM_BASE XPAR_XS2MM_0_BASEADDR
@@ -57,6 +55,8 @@
 
 #define INPUT_SIZE 128
 #define OUTPUT_SIZE 128
+
+BaremetalGraph gr("mygraph");
 
 int InitInputData(int32_t** in, int size)
 {
@@ -156,14 +156,8 @@ int main()
     printf("Done \n");
     printf("- \n");
 
-    printf("Starting AIE Graph\n");
-    printf("Graph Initialization\n");
-    mygraph.init();
-    printf("Done \n");
-    printf("- \n");
-
     printf("Running Graph for 4 iterations\n");
-    mygraph.run(4);
+    gr.run(4);
 
     int checks = 1;
 
@@ -178,6 +172,8 @@ int main()
     }
     printf("Done \n");
     printf("- \n");
+
+	gr.end();
 
     printf("Checking Output Data: \n");
     int err = 0;

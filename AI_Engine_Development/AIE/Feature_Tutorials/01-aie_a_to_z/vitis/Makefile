@@ -55,6 +55,8 @@ build_ps:
 package:
 	vitis -s package.py ${TARGET}
 
+all: vitis
+
 vitis: pfm aie_app hls_comp vpp_link ps_app package
 
 run_hw_emu: ${WORKSPACE}/${HW_EMU_PKG}/launch_hw_emu.sh
