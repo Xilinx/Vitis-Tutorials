@@ -9,8 +9,7 @@ SIM_FIFO          := false
 MY_APP            := permute_i_app
 MY_SOURCES        := ${MY_APP}.cpp permute_i_graph.h permute_i_bd.h
 
-PLATFORM_USE	  := xilinx_vek280_base_202520_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcve2802-vsvh1760-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
@@ -20,8 +19,7 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${DSPLIB_OPTS} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
-
+AIE_FLAGS :=	${DSPLIB_OPTS} --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
 endif

@@ -25,8 +25,7 @@ MY_SOURCES        := ${MY_APP}.cpp pfa1008_graph.h ${DFT7_SOURCE:%=../dft7/%} ${
 	             ${DFT16_SOURCE:%=../dft16/%} \
 	             ${TRANSPOSE0_SOURCE:%=../transpose0/%} ${TRANSPOSE1_SOURCE:%=../transpose1/%}
 
-PLATFORM_USE	  := xilinx_vek280_base_202520_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcve2802-vsvh1760-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
@@ -38,7 +37,7 @@ MY_INCLUDES 	  := --include=../dft7 \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${MY_INCLUDES} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${MY_INCLUDES} --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
