@@ -15,7 +15,7 @@
 
 # Polyphase Channelizer on AIE-ML using Vitis Libraries
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
@@ -324,7 +324,7 @@ You can build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial, ensure you have installed AMD Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, ensure you have installed AMD Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```.
 
