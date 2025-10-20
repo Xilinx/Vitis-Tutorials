@@ -199,7 +199,7 @@ clean:
 	       ilpProblem* sol.db drivers .Xil *bin *BIN *.bif launch_hw_emu.sh cfg emu_qemu_scripts \
 				 [!d]*.json  *.txt *.wdb *.wcfg *.pdi v++.package_summary sim qemu_dts_files \
 				 sd_card sd_card.img \
-				 dtb_creation.sh .ipcache *summary *.sh .AIE_SIM_CMD_LINE_OPTIONS .crashReporter
+				 dtb_creation.sh .ipcache *summary *.sh .AIE_SIM_CMD_LINE_OPTIONS .crashReporter baremetal_metadata_package.cpp
 	make -C ${AIE_DIR} clean
 	make -C ${KERNELS_DIR} clean
 	make -C ${HOST_DIR} clean
