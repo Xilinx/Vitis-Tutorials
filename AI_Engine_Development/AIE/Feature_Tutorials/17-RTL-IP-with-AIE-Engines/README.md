@@ -15,28 +15,28 @@
 
 # Using RTL IP with AI Engines
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
 This tutorial demonstrates the following two features of the Vitis™ unified software platform flow:
 
-1. Ability to reuse any AXI-based IP you have created as an RTL IP.
-2. The ability to control your platform, and convert your RTL IP to an RTL kernel allows for a more streamlined process for creating the design you need.
+1. Reusing an AXI-based IP initially created as an RTL IP.
+2. Controlling the platform, and converting an RTL IP to a kernel to allow for a more streamlined process for creating the design you need.
 
-**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2025.1 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
+**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis 2025.2 software.  The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, do ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link 
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.1.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html
 
 The 'common image' package contains a prebuilt Linux kernel and root file system that can be used with the Versal™ board for embedded design development using Vitis.
 Before starting this tutorial run the following steps:
 
 1. Goto the directory where you have unzipped the Versal Common Image package
-2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2025.1/sdk.sh.
-3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2025.1 directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/base_platforms/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm
+2. In a Bash shell run the /Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the /Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh.
+3. Set up your ROOTFS, and IMAGE to point to the rootfs.ext4 and Image files located in the /Common Images Dir/xilinx-versal-common-v2025.2 directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to $XILINX_VITIS/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
 
-This tutorial targets VCK190 production board for 2025.1 version.
+This tutorial targets VCK190 production board for 2025.2 version.
 
 ## Objectives
 
@@ -168,7 +168,7 @@ For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL
 3. Compile the graph using the following command:
 
    ```bash
-   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm aie/graph.cpp
+   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm aie/graph.cpp
    ```
 
    or
@@ -193,7 +193,7 @@ Because there is no HLS kernel in the ADF graph, the `system.cfg` file, which is
 3. Build the emulation design using the following command:
 
     ```bash
-    v++ -l --platform ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
+    v++ -l --platform ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
     ```
 
     or
@@ -232,11 +232,11 @@ To package the design run:
 ```bash
 cd ./sw
 v++ -p -t hw_emu \
-    -f ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm \
-    --package.rootfs=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/rootfs.ext4 \
+    -f ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm \
+    --package.rootfs=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
-    --package.kernel_image=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.1/Image \
+    --package.kernel_image=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/Image \
     --package.defer_aie_run \
     --package.sd_file host.exe ../tutorial.xsa ../libadf.a
 cd ..
