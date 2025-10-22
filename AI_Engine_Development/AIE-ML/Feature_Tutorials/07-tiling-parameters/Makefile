@@ -30,7 +30,7 @@ VPP_SPEC = $(ADDON_DIR)/system_ExtBuf.cfg
 
 # Targets
 
-.PHONY: data disp_repetition full_extbuf_hw full_extbuf_hwemu full_extbuf_sim_hwemu run_hw_emu clean preprocessor run_tests
+.PHONY: data disp_repetition full_extbuf_hw full_extbuf_hwemu full_extbuf_sim_hwemu run_hw_emu clean preprocessor run_tests aie_run
 
 run_tests: 
 	make SECTION=doc clean_all data aie aiesim 
@@ -126,6 +126,8 @@ aie: ${LIBADFAIE}
 ${LIBADFAIE}: $(SRC_DIR)/* preprocessor
 	${AIE_CMPL_CMD} $(PreProc)
 
+aie_run: $(SRC_DIR)/* preprocessor
+	${AIE_CMPL_CMD} --aie.compile-testbench-only $(PreProc) 
 
 
 
@@ -249,6 +251,7 @@ clean:
 	rm  -f *.zip *.img *.wcfg *.wdb plm.bin pmc_cdo.bin qemu_resize_img.sh v++.package_summary
 	rm -f *.xclbin aie.merged.cdo.bin BOOT* boot_image.bif ExtBuf.* launch_hw_emu.sh
 	rm -rf sd_card .ipcache emu_qemu_scripts cfg sim sw_extbuf/host.exe sw_extbuf/host.o
+	rm -rf analyzer_input baremetal_metadata_package.cpp
 
 clean_all: clean
 	rm -rf data

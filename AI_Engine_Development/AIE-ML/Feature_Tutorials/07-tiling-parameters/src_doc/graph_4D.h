@@ -12,7 +12,7 @@ private:
 
 public:
     adf::kernel k1;
-    adf::port<input> din;
+    adf::port<input> din[1];
     adf::port<output> dout[1];
     
     adf::shared_buffer<int32> mtxin;
@@ -31,7 +31,7 @@ public:
         adf::location<adf::kernel>(k1) = adf::tile(COL,0);
 
         // Connections
-        adf::connect (din,mtxin.in[0]);
+        adf::connect (din[0],mtxin.in[0]);
         adf::write_access(mtxin.in[0]) = adf::tiling({
             .buffer_dimension = {4,4,4,4},
             .tiling_dimension = {4,4,4,4},

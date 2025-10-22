@@ -4,6 +4,7 @@ SPDX-License-Identifier: MIT
 */
 
 
+#include <iostream>
 #include <fstream>
 #include <cstring>
 #include <iomanip>
@@ -50,8 +51,8 @@ int load_data_file(std::string fname,T * data,int L)
 int run(int argc, char *argv[])
 {
 
-    int NGraphs = 1;
-    int NIter = 1;
+    // int NGraphs = 1;
+    int NIter = 2;
     
     if(argc != 2 && argc != 3) {
         std::cout << "Usage: " << argv[0] <<" <xclbin> [Number of iterations]" << std::endl;
@@ -87,37 +88,35 @@ int run(int argc, char *argv[])
     const int REPETITION = Dim2*Dim3;
     const int FRAME_LENGTH = TILE_SIZE*REPETITION;
     
-    xrt::aie::bo *InputBufferObject[NGraphs];
-    xrt::aie::bo *OutputBufferObject[NGraphs];
+    xrt::aie::bo *InputBufferObject;
+    xrt::aie::bo *OutputBufferObject;
 
-    int32_t* InputMem[NGraphs];
-    int32_t* OutputMem[NGraphs];
+    int32_t* InputMem;
+    int32_t* OutputMem;
 
-    xrt::aie::buffer *outbuf[NGraphs];
-    xrt::aie::buffer *inbuf[NGraphs];
+    xrt::aie::buffer *outbuf;
+    xrt::aie::buffer *inbuf;
 
-    for(int g=0;g<NGraphs;g++)
-    {
-        // xrt::bo(device, DATA_SIZE , flag,bank_id)
-        // <device>: xrt::device object of the accelerator card.
-        // <DATA_SIZE>: Size of the buffer in bytes
-        // <flag>: xrt::bo::flags:: normal | cacheable | device_only | host_only | p2p | svm
-        // <bank_id>: Defines the memory bank on the device where the buffer should be allocated for IP access. The memory bank specified must match with the corresponding IP port's connection inside the .xclbin file. Otherwise you will get bad_alloc when running the application.
-        
-        InputBufferObject[g] = new xrt::aie::bo(device, FRAME_LENGTH * sizeof(int), xrt::bo::flags::normal, 0);
-        InputMem[g] = InputBufferObject[g]->map<int32_t *>();
-        for(int k=0;k<FRAME_LENGTH;k++)
-            InputMem[g][k] = (k+1)*(g+1);
-        printf("Graph %d Input memory virtual addr 0x%px\n",g, InputMem[g]);
+    // xrt::bo(device, DATA_SIZE , flag,bank_id)
+    // <device>: xrt::device object of the accelerator card.
+    // <DATA_SIZE>: Size of the buffer in bytes
+    // <flag>: xrt::bo::flags:: normal | cacheable | device_only | host_only | p2p | svm
+    // <bank_id>: Defines the memory bank on the device where the buffer should be allocated for IP access. The memory bank specified must match with the corresponding IP port's connection inside the .xclbin file. Otherwise you will get bad_alloc when running the application.
+    
+    InputBufferObject = new xrt::aie::bo(device, FRAME_LENGTH * sizeof(int), xrt::bo::flags::normal, 0);
+    InputMem = InputBufferObject->map<int32_t *>();
+    printf("Input memory virtual addr 0x%px\n",InputMem);
+    inbuf = new xrt::aie::buffer(device, xclbin_uuid, "G1.ddrin");
 
-        OutputBufferObject[g] = new xrt::aie::bo(device, FRAME_LENGTH * sizeof(int), 0, 0);
-        OutputMem[g] = OutputBufferObject[g]->map<int32_t *>();
-        for (int k = 0; k < FRAME_LENGTH; k++)
-            OutputMem[g][k] = -999;
-        printf("Graph %d Input memory virtual addr 0x%px\n",g, OutputMem[g]);
-    }    
+    OutputBufferObject = new xrt::aie::bo(device, FRAME_LENGTH * sizeof(int), 0, 0);
+    OutputMem = OutputBufferObject->map<int32_t *>();
+    printf("Output memory virtual addr 0x%px\n",OutputMem);
+    outbuf = new xrt::aie::buffer(device, xclbin_uuid, "G1.ddrout");
 
 
+    // Storage for final comparison
+    int OverallInput[NIter*FRAME_LENGTH];
+    int OverallOutput[NIter*FRAME_LENGTH];
 
 
     //////////////////////////////////////////
@@ -128,105 +127,112 @@ int run(int argc, char *argv[])
     auto cghdl = xrt::graph(device,xclbin_uuid,"G1");
     cghdl.reset();
 
-    printf("graph run\n");
-    cghdl.run(NIter);
-
-    
-    // Start the output buffers DMAs
-    for (int g = 0; g < NGraphs; g++)
+    for(int iter=0; iter<NIter;iter++)
     {
-        outbuf[g] = new xrt::aie::buffer(device, xclbin_uuid, "G" + std::to_string(g+1) + ".ddrout");
-        outbuf[g]->async(*OutputBufferObject[g], XCL_BO_SYNC_BO_AIE_TO_GMIO, FRAME_LENGTH * sizeof(int), /*offset*/ 0);
-    }
-
-    // Start the input buffers DMAs
-    for (int g = 0; g < NGraphs; g++)
-    {
-        inbuf[g] = new xrt::aie::buffer(device, xclbin_uuid, "G" + std::to_string(g + 1) + ".ddrin");
-        inbuf[g]->async(*InputBufferObject[g], XCL_BO_SYNC_BO_GMIO_TO_AIE, FRAME_LENGTH * sizeof(int), /*offset*/ 0);
-    }
-
-    // Wait for the end of Output buffer DMAs
-    for (int g = 0; g < NGraphs; g++)
-    {
-        outbuf[g]->wait();
-    }
-    
-        // Graph end
-        cghdl.end(0);
-        printf("graph end\n");
-
-        int match = 0;
-        std::cout << "Compare Input and Output" << std::endl;
-        for (int g = 0; g < NGraphs; g++)
+        // Input/Output array initialization
+        int offset = iter*FRAME_LENGTH;
+        for(int k=0;k<FRAME_LENGTH;k++)
         {
-            int iter_offset = 0;
-            for (int it = 0; it < NIter; it++,iter_offset+=FRAME_LENGTH)
-            {
-                int rep_offset = 0;
-                for(int rep=0;rep<REPETITION;rep++,rep_offset+=TILE_SIZE)
-                {
-                    for(int k=0;k<TILE_SIZE;k++)
-                    {
-                        // Extract input (row,col)
-                        int inrow = k/Dim0;
-                        int incol = k%Dim0;
-                        // output is input transposition
-                        int outcol = inrow;
-                        int outrow = incol;
-
-                        int insample = iter_offset + rep_offset + inrow * Dim0 + incol;
-                        int outsample = iter_offset + rep_offset + outrow * Dim1 + outcol;
-
-                        if (OutputMem[g][outsample] != InputMem[g][insample])
-                        {
-                            if (match <= 10)
-                            {
-                                cout << "Graph=" << g << "  Iter=" << it << "  Rep=" << rep << "  k=" << k;
-                                cout << "  -->  (" << inrow << "," << incol << ")";
-                                cout << "  insample=k=" << insample << " [" << InputMem[g][insample] << "]  -->  (" << outrow << "," << outcol << ")" ;
-                                cout << "  outsample=" << outsample << "  [" << OutputMem[g][outsample] << "]" << endl;
-                            }
-                            if(match==11)
-                                cout << "..." << endl;
-                            match++;
-                        }
-                    }
-                }
-                
-            }
+            InputMem[k] = (k+offset+1);
+            OutputMem[k] = -999;
         }
 
-        std::cout << "\n\nDisplays Input and Output" << std::endl;
-        for (int g = 0; g < NGraphs; g++)
+        printf("graph runs for 1 iteration\n");
+        cghdl.run(1);
+
+        // Start the output buffers DMAs
+        outbuf->async(*OutputBufferObject, XCL_BO_SYNC_BO_AIE_TO_GMIO, FRAME_LENGTH * sizeof(int), /*offset*/ 0);
+        
+        // Start the input buffers DMAs
+        inbuf->async(*InputBufferObject, XCL_BO_SYNC_BO_GMIO_TO_AIE, FRAME_LENGTH * sizeof(int), /*offset*/ 0);
+
+        // Wait for the end of Input and Output buffer DMAs
+        inbuf->wait();
+        memcpy(&OverallInput[iter*FRAME_LENGTH],InputMem,FRAME_LENGTH*sizeof(int));
+
+        outbuf->wait();
+        memcpy(&OverallOutput[iter*FRAME_LENGTH],OutputMem,FRAME_LENGTH*sizeof(int));
+
+        for (int k=0;k<FRAME_LENGTH;k++)
         {
-            int iter_offset = 0;
-            for (int it = 0; it < NIter; it++, iter_offset += FRAME_LENGTH)
+            std::cout << setw(6) << OutputMem[k];
+            if(k%8==7) std::cout << endl;
+        }
+        cghdl.wait();
+    }
+    
+    
+    // Graph end
+    cghdl.end(0);
+    printf("graph end\n");
+
+    int match = 0;
+    std::cout << "Compare Input and Output" << std::endl;
+    int iter_offset = 0;
+    for (int it = 0; it < NIter; it++,iter_offset+=FRAME_LENGTH)
+    {
+        int rep_offset = 0;
+        for(int rep=0;rep<REPETITION;rep++,rep_offset+=TILE_SIZE)
+        {
+            for(int k=0;k<TILE_SIZE;k++)
             {
-                int rep_offset = 0;
-                for (int rep = 0; rep < REPETITION; rep++, rep_offset += TILE_SIZE)
+                // Extract input (row,col)
+                int inrow = k/Dim0;
+                int incol = k%Dim0;
+                // output is input transposition
+                int outcol = inrow;
+                int outrow = incol;
+
+                int insample = iter_offset + rep_offset + inrow * Dim0 + incol;
+                int outsample = iter_offset + rep_offset + outrow * Dim1 + outcol;
+
+                if (OverallOutput[outsample] != OverallInput[insample])
                 {
-                    int L = 8;
-                    for (int k = 0; k < TILE_SIZE; k+=L)
+                    if (match <= 40)
                     {
-                        for (int j = 0; j < L; j++)
-                            cout << setw(5) << InputMem[g][k + j + iter_offset + rep_offset];
-                        cout << "          ";
-                        for (int j = 0; j < L; j++)
-                            cout << setw(5) << OutputMem[g][k + j + iter_offset + rep_offset];
-
-                        cout << std::endl;
-
-                        if (k % TILE_SIZE == TILE_SIZE - L)
-                            cout << std::endl;
-
+                        cout << "  Iter=" << it << "  Rep=" << rep << "  k=" << k;
+                        cout << "  -->  (" << inrow << "," << incol << ")";
+                        cout << "  insample=" << insample << " [" << OverallInput[insample] << "]  -->  (" << outrow << "," << outcol << ")" ;
+                        cout << "  outsample=" << outsample << "  [" << OverallOutput[outsample] << "]" << endl;
                     }
+                    if(match==11)
+                        cout << "..." << endl;
+                    match++;
                 }
             }
         }
+            
+        
+    }
+
+    std::cout << "\n\nDisplays Input and Output" << std::endl;
+    iter_offset = 0;
+    for (int it = 0; it < NIter; it++, iter_offset += FRAME_LENGTH)
+    {
+        int rep_offset = 0;
+        for (int rep = 0; rep < REPETITION; rep++, rep_offset += TILE_SIZE)
+        {
+            int L = 8;
+            for (int k = 0; k < TILE_SIZE; k+=L)
+            {
+                for (int j = 0; j < L; j++)
+                    cout << setw(5) << OverallInput[k + j + iter_offset + rep_offset];
+                cout << "          ";
+                for (int j = 0; j < L; j++)
+                    cout << setw(5) << OverallOutput[k + j + iter_offset + rep_offset];
+
+                cout << std::endl;
+
+                if (k % TILE_SIZE == TILE_SIZE - L)
+                    cout << std::endl;
+
+            }
+        }
+    }
+        
 
         return ((match) != 0);
-    }
+}
 
 int main(int argc, char* argv[])
 {

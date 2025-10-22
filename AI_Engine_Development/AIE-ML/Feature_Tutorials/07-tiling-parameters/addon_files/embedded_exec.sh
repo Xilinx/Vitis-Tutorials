@@ -7,5 +7,5 @@
 
 export XILINX_XRT=/usr
 
-./host.exe a.xclbin 1
+./host.exe a.xclbin 2
 

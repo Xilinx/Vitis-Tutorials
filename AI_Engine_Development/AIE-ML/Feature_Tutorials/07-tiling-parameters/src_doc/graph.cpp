@@ -3,7 +3,8 @@
 
 #include "graph.h"
 
-TopGraph<1,1,1,1, 1,1,1,1, 1,1,1> TG;
+// TopGraph<1,1,1,1, 1,1,1,1, 1,1,1> TG;
+TopGraph<0,0,0,0,0,0,0,1, 0,0,0> TG;
 
 int main(int argc, char ** argv) {
 

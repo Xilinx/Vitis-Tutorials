@@ -12,7 +12,7 @@
     private:
     public:
         adf::kernel k1, k2;
-        adf::port<input> din;
+        adf::port<input> din[1];
         adf::port<output> dout[2];
 
         adf::shared_buffer<int32> mtxin;
@@ -37,7 +37,7 @@
 
 
             // Connections
-            adf::connect(din, mtxin.in[0]);
+            adf::connect(din[0], mtxin.in[0]);
             adf::write_access(mtxin.in[0]) = adf::tiling({.buffer_dimension = {128, 2},
                                                           .tiling_dimension = {128, 2},
                                                           .offset = {0,0}});
@@ -70,7 +70,7 @@
     private:
     public:
         adf::kernel k1;
-        adf::port<input> din;
+        adf::port<input> din[1];
         adf::port<output> dout[1];
 
         adf::shared_buffer<int32> mtxin;
@@ -90,7 +90,7 @@
 
 
             // Connections
-            adf::connect(din, mtxin.in[0]);
+            adf::connect(din[0], mtxin.in[0]);
             adf::write_access(mtxin.in[0]) = adf::tiling({.buffer_dimension = {128, 2},
                                                           .tiling_dimension = {128, 2},
                                                           .offset = {0, 0}});
@@ -114,7 +114,7 @@
     private:
     public:
         adf::kernel k1;
-        adf::port<input> din;
+        adf::port<input> din[1];
         adf::port<output> dout[1];
 
         adf::shared_buffer<int32> mtxin;
@@ -133,7 +133,7 @@
             adf::location<adf::kernel>(k1) = adf::tile(COL, 0);
 
             // Connections
-            adf::connect(din, mtxin.in[0]);
+            adf::connect(din[0], mtxin.in[0]);
             adf::write_access(mtxin.in[0]) = adf::tiling({.buffer_dimension = {16, 4},
                                                           .tiling_dimension = {16, 4},
                                                           .offset = {0, 0}});
@@ -156,7 +156,7 @@
     private:
     public:
         adf::kernel k1,k2;
-        adf::port<input> din;
+        adf::port<input> din[2];
         adf::port<output> dout[2];
 
         adf::shared_buffer<int32> mtxin1,mtxin2;
@@ -184,7 +184,7 @@
             adf::location<adf::kernel>(k2) = adf::tile(COL, 1);
 
             // k1 Connections
-            adf::connect(din, mtxin1.in[0]);
+            adf::connect(din[0], mtxin1.in[0]);
             adf::write_access(mtxin1.in[0]) = adf::tiling({.buffer_dimension = {32,1},
                                                           .tiling_dimension = {32,1},
                                                           .offset = {0, 0}});
@@ -199,7 +199,7 @@
             adf::connect(k1.out[0], dout[0]);
 
             // k2 Connections
-            adf::connect(din, mtxin2.in[0]);
+            adf::connect(din[1], mtxin2.in[0]);
             adf::write_access(mtxin2.in[0]) = adf::tiling({.buffer_dimension = {32, 8},
                                                           .tiling_dimension = {32, 8},
                                                           .offset = {0, 0}});

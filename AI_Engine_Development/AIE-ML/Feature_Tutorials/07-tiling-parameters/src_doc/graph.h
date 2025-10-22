@@ -16,6 +16,7 @@ public:
     // I do not use index 0 for the sake of simplicity:  1 --> G1, ...
     static constexpr int NGraphs = 11;
     static constexpr int noutput[NGraphs + 1] = {0, 3, 1, 1, 1, 2, 1, 1,2,1,1,1};
+    static constexpr int ninput[NGraphs + 1] = {0, 1, 1, 1, 1, 1, 1, 1,2,1,1,1};
 
     adf::input_plio plin[50];
     adf::output_plio plout[50];
@@ -47,10 +48,12 @@ public:
     {
         // Input PLIO
         std::string filename = "data/Input" + ext + ".txt";
-        plin[idxin] = adf::input_plio::create("input_" + std::to_string(idxin), adf::plio_64_bits, filename, 625);
-        adf::connect(plin[idxin].out[0], G.din);
-        idxin++;
-
+        for(int i=0;i<ninput[Gidx];i++)
+        {
+            plin[idxin] = adf::input_plio::create("input_" + std::to_string(idxin), adf::plio_64_bits, filename, 625);
+            adf::connect(plin[idxin].out[0], G.din[i]);
+            idxin++;
+        }
         // Output PLIO
         for (int i = 0; i < noutput[Gidx]; i++)
         {

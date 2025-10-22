@@ -12,7 +12,7 @@ private:
 
 public:
     adf::kernel k1,k2,k3;
-    adf::port<input> din;
+    adf::port<input> din[1];
     adf::port<output> dout[3];
     
     adf::shared_buffer<int32> mtxin;
@@ -41,7 +41,7 @@ public:
         adf::location<adf::kernel>(k3) = adf::tile(COL, 2);
 
         // Connections
-        adf::connect (din,mtxin.in[0]);
+        adf::connect (din[0],mtxin.in[0]);
         adf::write_access(mtxin.in[0]) = adf::tiling({
             .buffer_dimension = {256},
             .tiling_dimension = {256},
@@ -81,7 +81,7 @@ class Graph2_1D : public adf::graph
 private:
 public:
     adf::kernel k1;
-    adf::port<input> din;
+    adf::port<input> din[1];
     adf::port<output> dout[1];
 
     adf::shared_buffer<int32> mtxin;
@@ -102,7 +102,7 @@ public:
         adf::location<adf::kernel>(k1) = adf::tile(COL, 0);
 
         // Connections
-        adf::connect(din, mtxin.in[0]);
+        adf::connect(din[0], mtxin.in[0]);
         adf::write_access(mtxin.in[0]) = adf::tiling({
             .buffer_dimension = {256},
             .tiling_dimension = {256},
@@ -128,7 +128,7 @@ class Graph3_1D : public adf::graph
 private:
 public:
     adf::kernel k1;
-    adf::port<input> din;
+    adf::port<input> din[1];
     adf::port<output> dout[1];
 
     adf::shared_buffer<int32> mtxin;
@@ -149,7 +149,7 @@ public:
         adf::location<adf::kernel>(k1) = adf::tile(COL, 0);
 
         // Connections
-        adf::connect(din, mtxin.in[0]);
+        adf::connect(din[0], mtxin.in[0]);
         adf::write_access(mtxin.in[0]) = adf::tiling({.buffer_dimension = {256},
                                                       .tiling_dimension = {256},
                                                       .offset = {0}});
@@ -174,7 +174,7 @@ public:
     private:
     public:
         adf::kernel k1;
-        adf::port<input> din;
+        adf::port<input> din[1];
         adf::port<output> dout[1];
 
         adf::shared_buffer<int32> mtxin;
@@ -195,7 +195,7 @@ public:
         adf::location<adf::kernel>(k1) = adf::tile(COL, 0);
 
         // Connections
-        adf::connect(din, mtxin.in[0]);
+        adf::connect(din[0], mtxin.in[0]);
         adf::write_access(mtxin.in[0]) = adf::tiling({
         .buffer_dimension = {256},
         .tiling_dimension = {256},
