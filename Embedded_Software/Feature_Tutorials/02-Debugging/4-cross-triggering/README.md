@@ -13,7 +13,7 @@
 
 # Cross Triggering in Vitis Unified Embedded IDE
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 Embedded systems can be complex, that may contain multiple processors. You can also debug across software and hardware domains and can use PS-PL cross triggering. However, In this simple tutorial, you learn how we can debug over multiple processors using cross triggering.
 
@@ -22,7 +22,7 @@ Embedded systems can be complex, that may contain multiple processors. You can a
 There is a script delivered with this tutorial to build the the HW from scratch, or use the prebuilt hardware (default). To do this use the command below
 
 ```
-cd Vitis_Cross_Probing/scripts
+cd scripts
 make build_hw
 ```
 ## Processor to Processor Cross Triggering
@@ -30,7 +30,7 @@ make build_hw
 In this Lab, we will learn how we can Cross Trigger across two processors. To build use the command below
 
 ```
-cd Vitis_Cross_Probing/scripts
+cd scripts
 make build_sw LAB=1
 ```
 
@@ -62,7 +62,7 @@ int main()
 }
 ```
 
-Launch AMD Vitis™ Unified embedded tool in 2025.1 and open the **lab1** workspace.
+Launch AMD Vitis™ Unified embedded tool in 2025.2 and open the **lab1** workspace.
 
 ![](./images/applications.PNG)
 
@@ -87,7 +87,7 @@ Launch AMD Vitis™ Unified embedded tool in 2025.1 and open the **lab1** worksp
 Another very useful feature is the ability to debug between the hardware and software domains. To build use the command below
 
 ```
-cd Vitis_Cross_Probing/scripts
+cd scripts
 make build_sw LAB=2
 ```
 
@@ -150,7 +150,7 @@ Alternatively, users can setup the cross triggering to trigger the System ILA wh
 For example, I used the same hardware design as above. However, I updated the software application to write to the AXI GPIO. To build use the command below
 
 ```
-cd Vitis_Cross_Probing/scripts
+cd scripts
 make build_sw LAB=3
 ```
 
