@@ -50,6 +50,8 @@ update_compile_order -fileset sources_1
 #break
 add_files -fileset sim_1 -norecurse ${script_folder}/driver_axis.sv
 add_files -fileset sim_1 -norecurse ${script_folder}/monitor_axis.sv
+add_files -fileset sim_1 -norecurse ${script_folder}/my_diff.v
+add_files -fileset sim_1 -norecurse ${script_folder}/my_sub.v
 add_files -fileset sim_1 -norecurse ${script_folder}/testbench.sv
 set_property top tb_top [get_filesets sim_1]
 update_compile_order -fileset sim_1
@@ -60,7 +62,6 @@ update_compile_order -fileset sim_1
 #set_property generate_scripts_only 1 [current_fileset -simset]
 set_property -name {xsim.simulate.runtime} -value {0us} -objects [get_filesets sim_1]
 set_property -name {xsim.simulate.xsim.more_options} -value {-testplusarg VERBOSITY_FATAL_TO_WARN} -objects [get_filesets sim_1]
-set_property -name {xsim.elaborate.xelab.more_options} -value {-debug sc} -objects [get_filesets sim_1]
 
 ## ===================================================================================
 ## Launch simulation
@@ -69,6 +70,7 @@ launch_simulation
 open_wave_config ${script_folder}/tb_top_behav.wcfg
 open_wave_config ${script_folder}/datamovers.wcfg
 open_wave_config ${script_folder}/datamovers2.wcfg
+open_wave_config ${script_folder}/subtractor.wcfg
 open_wave_config ${script_folder}/fir_filters.wcfg
 log_wave -r *
 run 5us
