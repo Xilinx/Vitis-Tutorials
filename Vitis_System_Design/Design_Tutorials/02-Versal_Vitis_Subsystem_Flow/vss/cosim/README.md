@@ -30,6 +30,10 @@ With the simulation project, we can control and run the design under test and us
 
 In addition to the simulation testbench, this example adds basic AXI Stream driver and monitor to exercise data through the design under test.
 
+For the datamover path, in order to verify the subtraction IP outside the VSS, a model is added in the testbench.
+To keep the testbench simple, the AXI4-Lite registers is removed from the subtractor IP model, keeping the my_diff instances for subtraction and buffer at the results.
+This allow a quick way to check what to expect on hardware.
+
 
 Advanced testbench design and automatic checkers is up to the user to adapt to be used with this feature.
 
@@ -41,14 +45,19 @@ Advanced testbench design and automatic checkers is up to the user to adapt to b
 | [testbench.sv](./src/testbench.sv)            |  RTL    | Testbench
 | [driver_axis.sv](./src/driver_axis.sv)        |  RTL    | Simple driver for AXI Stream testbench stimuli, creates an impulse respone
 | [monitor_axis.sv](./src/monitor_axis.sv)      |  RTL    | Simple monitor terminating AXI Stream traffic
+| [my_diff.v](./src/my_diff.v)                  |  RTL    | Code to infer DSP58 subtraction borrowed from [vitis/ip/subtractor](../../vitis/ip/subtractor/src/my_diff.v)
+| [my_sub.v](./src/my_sub.v)                    |  RTL    | Model to mimic the subtractor from [vitis/ip/subtractor](../../vitis/ip/subtractor)
 | [tb_top_behav.wcfg](./src/tb_top_behav.wcfg)  |  Config | Xsim waveform configuration
-| [aiesim.txt](./src/aiesim.txt)  |  Config | Enable VCD dump from connected AIE Simulator.
+| [datamovers.wcfg](./src/datamovers.wcfg)      |  Config | Xsim waveform configuration
+| [datamovers2.wcfg](./src/datamovers2.wcfg)    |  Config | Xsim waveform configuration
+| [subtractors.wcfg](./src/subtractors.wcfg)    |  Config | Xsim waveform configuration
+| [fir_filters.wcfg](./src/fir_filters.wcfg)    |  Config | Xsim waveform configuration
+| [aiesim.txt](./src/aiesim.txt)                |  Config | Enable VCD dump from connected AIE Simulator.
 
 
 **Note:** To let the RTL simulator testbench connect to the AIE Sim and VCD dump, these additional environment variables are set by the makefile:
 ```
 export AIE_WORK_DIR = <path to AIE work folder>
-export ENABLE_AIE_DBG_TRACE=true
 export AIESIM_OPTIONS=<path to aiesim.txt>
 ```
 

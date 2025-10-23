@@ -141,6 +141,40 @@ module tb_top();
   );
 
 
+  // Subtractor
+  my_sub #(
+    .DWIDTH(64)
+  ) my_sub_i0 (
+    .aresetn            (aresetn),
+    .aclk               (aclk_x2),
+    .s00_axi_aclk       (aclk_x1),
+    .s00_axis_tdata     (COUNTER_0_M00_AXIS_tdata),
+    .s00_axis_tlast     (COUNTER_0_M00_AXIS_tlast),
+    .s00_axis_tready    (COUNTER_0_M00_AXIS_tready),
+    .s00_axis_tvalid    (COUNTER_0_M00_AXIS_tvalid),
+    .s01_axis_tdata     (AI_ENGINE_0_DM_OUT0_tdata),
+    .s01_axis_tlast     (AI_ENGINE_0_DM_OUT0_tlast),
+    .s01_axis_tready    (AI_ENGINE_0_DM_OUT0_tready),
+    .s01_axis_tvalid    (AI_ENGINE_0_DM_OUT0_tvalid),
+    .s02_axis_tdata     (AI_ENGINE_0_DM_OUT1_tdata),
+    .s02_axis_tlast     (AI_ENGINE_0_DM_OUT1_tlast),
+    .s02_axis_tready    (AI_ENGINE_0_DM_OUT1_tready),
+    .s02_axis_tvalid    (AI_ENGINE_0_DM_OUT1_tvalid),
+    .s03_axis_tdata     (AI_ENGINE_0_DM_OUT2_tdata),
+    .s03_axis_tlast     (AI_ENGINE_0_DM_OUT2_tlast),
+    .s03_axis_tready    (AI_ENGINE_0_DM_OUT2_tready),
+    .s03_axis_tvalid    (AI_ENGINE_0_DM_OUT2_tvalid),
+    .s04_axis_tdata     (AI_ENGINE_0_DM_OUT3_tdata),
+    .s04_axis_tlast     (AI_ENGINE_0_DM_OUT3_tlast),
+    .s04_axis_tready    (AI_ENGINE_0_DM_OUT3_tready),
+    .s04_axis_tvalid    (AI_ENGINE_0_DM_OUT3_tvalid),
+    .subtract_val0      (),
+    .subtract_val1      (),
+    .subtract_val2      (),
+    .subtract_val3      ()
+  );
+
+
   // Testbench
 
   // Force tready to enable remaining AXIS masters to send data

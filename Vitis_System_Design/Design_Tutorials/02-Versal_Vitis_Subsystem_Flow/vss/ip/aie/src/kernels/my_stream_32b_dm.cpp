@@ -31,7 +31,7 @@ void __attribute__ ((noinline)) my_stream_32b_dm<TT_DATA>::run(input_stream<TT_D
   TT_DATA tmp_data;
 
   // For comparing scalar stream datamover.
-  // This will no be able to keep up with data due to register spilling.
+  // This will not be able to keep up with data due to register spilling.
   while (true)
   chess_prepare_for_pipelining
   {

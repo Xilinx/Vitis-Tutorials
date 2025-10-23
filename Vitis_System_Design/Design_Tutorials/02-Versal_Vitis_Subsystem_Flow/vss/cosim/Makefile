@@ -24,7 +24,6 @@ SRC_DIR := src
 # Paths needed by xsim
 # =========================================================
 export AIE_WORK_DIR :=$(AIE_WORK)
-export ENABLE_AIE_DBG_TRACE=true
 export AIESIM_OPTIONS=$(shell pwd)/$(SRC_DIR)/aiesim.txt
 #export LD_LIBRARY_PATH :=$(XILINX_VITIS)/aietools/lib/lnx64.o:$(LD_LIBRARY_PATH)
 
