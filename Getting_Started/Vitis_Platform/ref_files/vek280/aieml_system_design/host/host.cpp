@@ -10,6 +10,7 @@ SPDX-License-Identifier: X11
 #include "experimental/xrt_kernel.h"
 #include "experimental/xrt_graph.h"
 #include "../aie_src/src/system_settings.h"
+#include <iostream>
 
 template<typename T>
 int load_data_file(std::string fname,T * data,int L)
@@ -30,7 +31,7 @@ int load_data_file(std::string fname,T * data,int L)
 }
 
 
-void MatrixMultiply(int8_t* A,int8_t * B, int * C, int M, int K, int N,int Display)
+void MatrixMultiply(int8_t* A,int8_t * B, int * C, int M, int K, int N)
 {
     for(int i=0;i<M;i++)
     for(int j=0;j<N;j++)
