@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 #include <aie_api/aie_adf.hpp>
 #include <aie_api/utils.hpp>
 using namespace adf;
-alignas(aie::vector_decl_align) static float accum_zero[32]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+alignas(aie::vector_decl_align) /*static*/ float accum_zero[32]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 static bfloat16 mean_val=0;
 static bfloat16 dev_val=0;
 

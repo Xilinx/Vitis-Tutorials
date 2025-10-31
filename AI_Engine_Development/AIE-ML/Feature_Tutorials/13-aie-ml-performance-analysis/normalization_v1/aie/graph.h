@@ -56,9 +56,9 @@ public:
 		connect(k_norm.out[0], out.in[0]);
 
 		dimensions(k_mean.in[0])={K_ROW*K_COL};//elements
-		dimensions(k_mean.out[0])={1};//elements
+		dimensions(k_mean.out[0])={2};//elements
 		dimensions(k_deviation.in[0])={K_ROW*K_COL};//elements
-		dimensions(k_deviation.in[1])={1};//elements
+		dimensions(k_deviation.in[1])={2};//elements
 		dimensions(k_deviation.out[0])={2};//elements
 		dimensions(k_norm.in[0])={K_ROW*K_COL};//elements
 		dimensions(k_norm.in[1])={2};//elements
