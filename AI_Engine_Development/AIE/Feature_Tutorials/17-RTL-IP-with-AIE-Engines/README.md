@@ -84,20 +84,20 @@ Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
     Note the following points:
 
     * The script creates a Vivado Design Suite project; this is required to create any IP because all source and constraint files need to be local to the IP.
-    * Lines 40 and 41 are used to associate the correct clock pins to the interfaces. This is required for the Vitis compiler which links those interfaces to the platform clocking.
+    * Lines 34 and 35 are used to associate the correct clock pins to the interfaces. This is required for the Vitis compiler which links those interfaces to the platform clocking.
 
         ```tcl
         ipx::associate_bus_interfaces -busif in_sample -clock ap_clk [ipx::current_core]
         ipx::associate_bus_interfaces -busif out_sample -clock ap_clk [ipx::current_core]
         ```
-    * On lines 44 and 45 the `FREQ_HZ` bus parameter is removed. This parameter is used in IP integrator, and is to make sure the associated clock of the interface is used correctly. However, the Vitis compiler sets this during the compilation process, and having it set in the IP will cause the compiler to incorrectly link the clocks.
+    * On lines 38 and 39 the `FREQ_HZ` bus parameter is removed. This parameter is used in Vivado IP integrator to ensure corrent association of the clock interface. The Vitis compiler sets this during the compilation process, and having it set in the IP may cause the compiler to incorrectly link the clocks.
 
         ```tcl
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces in_sample -of_objects [ipx::current_core]]
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces out_sample -of_objects [ipx::current_core]]
         ```
 
-    * At the end of the script there is the `package_xo` command. This command analyzes the IP that was created to make sure proper AXI interfaces are used and other rule checks are followed. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on [RTL kernels and their requirements](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels).
+    * At the end of the script notice the `package_xo` command. This command analyzes the newly created IP to make sure it contains the proper AXI interfaces. It then creates the XO file in the same location as the IP repository. A key function used in this command is the `-output_kernel_xml`. The `kernel.xml` file is key to the RTL kernel as it describes to the Vitis tool how the kernel should be controlled. You can find more information on [RTL kernels and their requirements](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Packaging-RTL-Kernels).
 
         ```tcl
         package_xo -kernel_name $kernelName \
@@ -120,13 +120,13 @@ Package your RTL code as a Vivado IP and generate a Vitis RTL kernel.
     ```
 
 ## Step 2 - Creating HLS kernels with Vitis compiler
-The `mm2s` and `s2mm` kernels are HLS-based and use the Vitis compiler to compile them into XO files. 
+The `mm2s` and `s2mm` are HLS-based kernels that the Vitis compiler packages into XO files. 
 
 To build these kernels run the following commands:
 
 ```bash
-v++ -c --platform <path_to_platform/platform.xpfm> -g --save-temps -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
-v++ -c --platform <path_to_platform/platform.xpfm> -g --save-temps -k mm2s pl_kernels/s2mm.cpp -o s2mm.xo
+v++ -c --platform <path_to_platform/platform.xpfm> -k mm2s pl_kernels/mm2s.cpp -o mm2s.xo
+v++ -c --platform <path_to_platform/platform.xpfm> -k s2mm pl_kernels/s2mm.cpp -o s2mm.xo
 ```
 
 or
@@ -136,7 +136,7 @@ make kernels
 ```
 
 ## Step 3 - Interfacing ADF graph to Programmable Logic
-To set up the ADF graph to interface with the `polar_clip` RTL kernel and the `mm2s` and `s2mm` HLS kernels, you must add connections to PLIOs that represent the respective PL kernels.
+To interface the ADF graph to the `polar_clip` RTL kernel and the `mm2s` and `s2mm` HLS kernels, you must add connections between PLIOs and the corresponding PL kernels IOs.
 
 1. The following `graph.h` shows how to connect to the RTL kernel.
 
@@ -160,10 +160,10 @@ To set up the ADF graph to interface with the `polar_clip` RTL kernel and the `m
     ```
 
 2. Note the following:
-   * Two additional `PLIO` objects `clip_in` and `clip_out` are added. These are to hook up to the `polar_clip` RTL kernel.
+   * Two additional `PLIO` objects `clip_in` and `clip_out` are added. These hook up to the `polar_clip` RTL kernel.
    * There are additional net objects to hook up the RTL kernel to the rest of the platform object.
 
-For more information on RTL kernels in the AI Engine see: [Design Flow Using RTL Programmable Logic](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Development-Flow-for-RTL-Designers).
+For more information on RTL kernels in the AI Engine see: [Integrating AIE and PL Components](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Integrating-AIE-and-PL-Components).
 
 3. Compile the graph using the following command:
 
