@@ -2,7 +2,7 @@
 #Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202510_1/xilinx_vck190_base_202510_1.xpfm
 
 .PHONY: clean
 
