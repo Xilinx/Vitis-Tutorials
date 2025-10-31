@@ -1,9 +1,10 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: X11
 */
 
 #include <fstream>
+#include <iostream>
 #include <cstring>
 
 #include "experimental/xrt_kernel.h"
