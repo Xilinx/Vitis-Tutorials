@@ -50,7 +50,7 @@ ${XO}: ${KERNEL_SRC}
 		--hls.syn.top   ${KERNEL} \
 		--hls.syn.file  ${KERNEL_TOP} \
 		--hls.package.ip.name   ${KERNEL} \
-		--hls.package.output.file ${XO} \
+		--hls.package.output.file   $(addprefix ../../, ${XO}) \
 		--config hls.cfg \
 		${KERNEL_TOP}
 

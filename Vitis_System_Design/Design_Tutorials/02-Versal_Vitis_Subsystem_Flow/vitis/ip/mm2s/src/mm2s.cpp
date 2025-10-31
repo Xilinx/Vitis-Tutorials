@@ -8,7 +8,7 @@
 #include <hls_stream.h>
 #include <ap_axi_sdata.h>
 
-#define WORD_SIZE 16
+#define WORD_SIZE 32
 
 void mm2s(ap_int<WORD_SIZE>* mem, hls::stream<hls::axis<ap_int<WORD_SIZE>, 0, 0, 0>>& s, int size) {
   #pragma HLS INTERFACE m_axi port=mem offset=slave bundle=gmem
