@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 #include "xrt/xrt_kernel.h"
 #include "xrt/xrt_graph.h"
 #include "xrt/xrt_aie.h"
-
+#include <iostream>
 void ref_func(int* din,int c[8],int* dout,int size){
 	static int d[8]={0,0,0,0,0,0,0,0};
 	for(int i=0;i<size;i++){

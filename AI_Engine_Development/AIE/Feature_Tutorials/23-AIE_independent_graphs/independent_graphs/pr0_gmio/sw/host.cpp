@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 #include "xrt/xrt_kernel.h"
 #include "xrt/xrt_graph.h"
 #include "xrt/xrt_aie.h"
-
+#include <iostream>
 using namespace adf;
 
 void ref_func(int32* din,int32 c[8],int32* dout,int size){

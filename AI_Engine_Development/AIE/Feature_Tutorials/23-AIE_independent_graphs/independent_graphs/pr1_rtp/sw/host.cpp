@@ -9,7 +9,6 @@ SPDX-License-Identifier: MIT
 #include <math.h>
 #include "xrt/xrt_kernel.h"
 #include "xrt/xrt_graph.h"
-
 const int ITERATION=4;
 const int ELEM_per_iter=256;
 int run(int argc, char* argv[]){

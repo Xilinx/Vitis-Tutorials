@@ -8,6 +8,7 @@ SPDX-License-Identifier: MIT
 #include "xrt/xrt_aie.h"
 #include <chrono>
 #include <ctime>
+#include <iostream>
 class Timer {
 	std::chrono::high_resolution_clock::time_point mTimeStart;
     public:
