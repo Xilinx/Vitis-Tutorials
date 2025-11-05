@@ -15,7 +15,7 @@
 
 # Prime Factor FFT-1008 on AIE-ML
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
@@ -157,16 +157,16 @@ The figure below summarizes the PL resources required to implement the design. T
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
 
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/02-Prime-Factor-FFT/Makefile``` file.
 
 ```
-RELEASE=2025.1
+RELEASE=2025.2
 BOARD=vek280
-BASE_NUM=202510_1
+BASE_NUM=202520_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}
