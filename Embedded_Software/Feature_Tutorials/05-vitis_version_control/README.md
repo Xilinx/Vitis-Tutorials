@@ -8,7 +8,7 @@
 
 # Version Control in Vitis Unified IDE
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 This guide is designed to help you understand and efficently use the built-in version control tools integrated within the Vitis Unified IDE. Version control among different teams is a key concept and therefore this tutorial will guide you through the essential workflows to streamline the development process within your own team. We will look at three different version control techniques within the Vitis Unified IDE
 
@@ -101,7 +101,7 @@ Note: You can see what git commands are being executed under the hood by selecti
 
 ### Step 1: Initialising the Git Repository
 
-Launch Vitis 2025.1, select **open workspace**, and select the workspace we have just created. Then we will need to intialise our workspace as a Git workspace. So once the workspace has loaded select **Terminal** -> **New Terminal** 
+Launch Vitis 2025.2, select **open workspace**, and select the workspace we have just created. Then we will need to intialise our workspace as a Git workspace. So once the workspace has loaded select **Terminal** -> **New Terminal** 
 
 ![](./images/select_terminal.PNG)
 
@@ -196,7 +196,7 @@ Now that we have created a project and pushed it to Git we can clone that reposi
 
 3. Select the version control icon on the left side, select the three dots beside Git and select **clone**.
 
-![](./images/select_git_clone.PNG)
+![](./images/git_clone.PNG)
 
 4. You will be prompted to enter the URL of your remote repository.
 5. After entering the URL you will be prompted to enter your Git credentials./
