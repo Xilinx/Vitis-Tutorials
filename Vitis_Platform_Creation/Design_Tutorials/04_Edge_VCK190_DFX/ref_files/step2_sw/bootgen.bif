@@ -7,7 +7,7 @@
 the_ROM_image:
 {
 image {
-	{ type=bootimage, file=build/boot_bin/boot_static.pdi }
+	{ type=bootimage, file=./vck190_custom_dfx/hw/sdt/vck190_custom_dfx_static.pdi }
 }
 image {
 	id = 0x1c000000, name=apu_subsystem 

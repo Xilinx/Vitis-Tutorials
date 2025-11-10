@@ -24,14 +24,14 @@ VPP_PFLAGS :=
 CMD_ARGS = $(BUILD_DIR)/vadd.xclbin
 SD_CARD := $(PACKAGE_OUT)
 
-CXXFLAGS += --sysroot=${SDKTARGETSYSROOT} -I${SDKTARGETSYSROOT}/usr/include/xrt/ -I$(XILINX_VIVADO)/include -I$(XILINX_VITIS)/include -I${XILINX_VITIS}/aietools/include ${HOST_INC} -Wall -O0 -g -std=c++17
+CXXFLAGS += --sysroot=${SYSROOT} -I${SDKTARGETSYSROOT}/usr/include/xrt/ -I$(XILINX_VIVADO)/include -I$(XILINX_VITIS)/include -I${XILINX_VITIS}/aietools/include ${HOST_INC} -Wall -O0 -g -std=c++17
 LDFLAGS += -L$(SYSROOT)/usr/lib -pthread -lxilinxopencl
 
 ########################## Checking if PLATFORM in allowlist #######################
 PLATFORM_BLOCKLIST += nodma 
 ############################## Setting up Host Variables ##############################
 #Include Required Host Source Files
-HOST_SRCS += ./src/cmdlineparser.cpp ./src/logger.cpp ./src/host.cpp
+HOST_SRCS += ./src/host.cpp ./src/cmdlineparser.cpp ./src/logger.cpp
 # Host compiler global settings
 CXXFLAGS += -fmessage-length=0
 LDFLAGS += -lrt -lstdc++ -luuid -lxrt_coreutil
