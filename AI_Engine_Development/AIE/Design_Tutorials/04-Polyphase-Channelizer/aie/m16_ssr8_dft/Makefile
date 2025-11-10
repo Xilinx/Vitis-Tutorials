@@ -10,10 +10,8 @@ MY_APP            := m16_ssr8_dft_app
 SOURCES           := m16_ssr8_dft_graph.h dft_1xN_widget_graph.h dft_1xN_widget.h dft_1xN_widget.cpp \
 			twiddle_m16_ssr8_dft.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 PL_FREQ           := --aie.pl-freq=625
-
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 LOG_FILE          := log
 
@@ -25,7 +23,7 @@ ALL_INCLUDE       := --include=${PWD}
 
 AIE_OUTPUT        := libadf.a
 
-AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM}
+AIE_FLAGS         :=  --aie.verbose ${ALL_INCLUDE} ${MY_APP}.cpp ${OTHER_OPTS} ${MAP_OPT} ${PL_FREQ} --part=${PART_USE}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

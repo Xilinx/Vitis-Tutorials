@@ -70,7 +70,7 @@ void m16_ssr8_permute_fb_i::align_latency( TT_DATA (&data_i_0)[M], TT_DATA (&dat
   static TT_DATA buff0[M][LATENCY] = { TT_DATA(0) };
   static TT_DATA buff1[M][LATENCY] = { TT_DATA(0) };
   static ap_uint<2> cnt = 0;
-#pragma HLS reset variable=cnt;
+#pragma HLS reset variable=cnt
 #pragma HLS array_partition variable=buff0 dim=0
 #pragma HLS array_partition variable=buff1 dim=0
  DELAY: for (unsigned mm=0; mm < M; mm++) {

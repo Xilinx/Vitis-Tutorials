@@ -4,11 +4,6 @@
 //
 // Author: Mark Rollins
 
-#include "m16_ssr8_graph.h"
-
-// Instantiate AIE graph:
-m16_ssr8_graph aie_dut;
-
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
