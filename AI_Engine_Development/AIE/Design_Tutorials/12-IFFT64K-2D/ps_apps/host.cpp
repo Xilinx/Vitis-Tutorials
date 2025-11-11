@@ -4,11 +4,6 @@
 //
 // Author: Mark Rollins
 
-#include "ifft64k_graph.h"
-
-// Instantiate AIE graph:
-ifft64k_graph aie_dut;
-
 #include <cstdlib>
 #include <cmath>
 #include <fstream>
@@ -49,8 +44,6 @@ static constexpr unsigned    NUM_SAMPLES_O = 2*DDR_WORD_DEPTH_O; // 2 x 32-bit (
 
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES = NUM_SAMPLES_I * 4; // Each real/imag sample is 4 bytes
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each real/imag sample is 4 bytes
-
-static constexpr unsigned TOTAL_O_BYTES = LOOP_CNT_O*260*52*8; // Includes overhead on a single PLIO
 
 // ------------------------------------------------------------
 // Main
@@ -165,10 +158,6 @@ int main(int argc, char* argv[])
   dma_snk_run.set_arg( 2, LOOP_CNT_O );
   std::cout << STR_PASSED << "dma_snk_run.set_arg( 2, LOOP_CNT_O=" << LOOP_CNT_O << " )" << std::endl;
 
-  // Start profiling:
-  hdl_prof.start(xrt::aie::profiling::profiling_option::io_stream_start_to_bytes_transferred_cycles,
-                 "aie_dut.back_o[0]","",TOTAL_O_BYTES);
-
   dma_src_run.start();
   std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
 
@@ -180,26 +169,6 @@ int main(int argc, char* argv[])
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
-
-  // Stop profiling:
-  uint64_t cycle_count = hdl_prof.read();
-  hdl_prof.stop();
-
-  // ------------------------------------------------------------
-  // Check Throughput
-  // ------------------------------------------------------------
-
-  float total_time  = float(cycle_count) * (0.8e-9);
-  float rate_gsps   = (5.0/8.0)*(1e-9)*float(TOTAL_O_BYTES)/total_time; // 5 PLIOs and 8B/sample
-  float target_gsps = 2.4;                                              // Based on HW_EMU
-  float target_err  = 5.0;
-  float rate_err    = 100.0*fabs(target_gsps-rate_gsps)/target_gsps;
-  bool  rate_flag   = ( rate_err > target_err );
-  std::cout << STR_INFO << "cycle_count: " << cycle_count << " (cycles)" << std::endl;
-  std::cout << STR_INFO << "total_time:  " << total_time << " (sec)" << std::endl;
-  std::cout << STR_INFO << "throughput:  " << rate_gsps << " (Gsps)" << std::endl;
-  std::cout << STR_INFO << "target:      " << target_gsps << " (Gsps)" << std::endl;
-  std::cout << STR_INFO << "rate_err:    " << rate_err << "%" << std::endl;
 
   // ------------------------------------------------------------
   // Retrieve Results
@@ -251,13 +220,9 @@ int main(int argc, char* argv[])
   ss_a.close();
 
   // Done:
-  if ( flag == 0 && rate_flag == 0)
+  if ( flag == 0 )
     std::cout << STR_INFO << "--- PASSED ---" << std::endl;
-  else if ( flag == 0 && rate_flag == 1 )
-    std::cout << STR_INFO << "*** FAILED THROUGHPUT ***" << std::endl;
-  else if ( flag == 1 && rate_flag == 0 )
-    std::cout << STR_INFO << "*** FAILED FUNCTIONAL ***" << std::endl;
   else
-    std::cout << STR_INFO << "*** FAILED FUNCTIONAL & THROUGHPUT ***" << std::endl;
-  return(flag | rate_flag);
+    std::cout << STR_INFO << "*** FAILED ***" << std::endl;
+  return(flag);
 }

@@ -26,13 +26,8 @@ public:
       std::string fname_o = "data/front_o_" + std::to_string(ff) + ".txt";
       std::string pname_i = "PLIO_front_i_" + std::to_string(ff);
       std::string pname_o = "PLIO_front_o_" + std::to_string(ff);
-#ifdef AIE_SIM_ONLY
       front_i[ff] =  input_plio::create(pname_i,plio_64_bits,fname_i);
       front_o[ff] = output_plio::create(pname_o,plio_64_bits,fname_o);
-#else
-      front_i[ff] =  input_plio::create(pname_i,plio_64_bits);
-      front_o[ff] = output_plio::create(pname_o,plio_64_bits);
-#endif
       connect( front_i[ff].out[0],  dut.front_i[ff]   );
       connect( dut.front_o[ff],  front_o[ff].in[0] );
     }
@@ -41,13 +36,8 @@ public:
       std::string fname_o = "data/back_o_" + std::to_string(bb) + ".txt";
       std::string pname_i = "PLIO_back_i_" + std::to_string(bb);
       std::string pname_o = "PLIO_back_o_" + std::to_string(bb);
-#ifdef AIE_SIM_ONLY
       back_i[bb] =  input_plio::create(pname_i,plio_64_bits,fname_i);
       back_o[bb] = output_plio::create(pname_o,plio_64_bits,fname_o);
-#else
-      back_i[bb] =  input_plio::create(pname_i,plio_64_bits);
-      back_o[bb] = output_plio::create(pname_o,plio_64_bits);
-#endif
       connect( back_i[bb].out[0],  dut.back_i[bb]   );
       connect( dut.back_o[bb],     back_o[bb].in[0] );
     }

@@ -4,12 +4,12 @@
 #
 # Author: Mark Rollins
 
-AIE_SIM_ONLY      := false
-
 SIM_FIFO          := false
 
 MY_APP            := ifft64k_app
 MY_SOURCES        := ${MY_APP}.cpp ifft64k_graph.h ../ifft256p4_rot/ifft256p4_rot_graph.h ../ifft256p4/ifft256p4_graph.h
+
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
@@ -21,15 +21,11 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${DSPLIB_OPTS} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${DSPLIB_OPTS} --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}
 endif
-ifeq (${AIE_SIM_ONLY},true)
-	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"
-endif
-
 
 .PHONY: help clean x86com x86sim sim profile throughput
 
@@ -53,7 +49,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -78,17 +74,17 @@ profile:
 trace:
 	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
-throughput:
-	@../../scripts/throughput.py aiesimulator_output/data/front_o_0.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/front_o_1.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/front_o_2.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/front_o_3.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/front_o_4.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/back_o_0.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/back_o_1.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/back_o_2.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/back_o_3.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/back_o_4.txt --iscomplex
+throughput_ok:
+	@../../scripts/check_throughput.py PLIO_front_o_0 3987.50 5.0
+	@../../scripts/check_throughput.py PLIO_front_o_1 3987.50 5.0
+	@../../scripts/check_throughput.py PLIO_front_o_2 3987.50 5.0
+	@../../scripts/check_throughput.py PLIO_front_o_3 3987.50 5.0
+	@../../scripts/check_throughput.py PLIO_front_o_4 3987.50 5.0
+	@../../scripts/check_throughput.py PLIO_back_o_0 4926.04 5.0
+	@../../scripts/check_throughput.py PLIO_back_o_1 4926.04 5.0
+	@../../scripts/check_throughput.py PLIO_back_o_2 4926.04 5.0
+	@../../scripts/check_throughput.py PLIO_back_o_3 4926.04 5.0
+	@../../scripts/check_throughput.py PLIO_back_o_4 4926.04 5.0
 
 regression:
 	matlab -batch regression
