@@ -10,8 +10,7 @@ MY_APP            := dft16_app
 MY_SOURCES        := ${MY_APP}.cpp dft16_graph.h dft16_compute.h dft16_compute.cpp dft16_combine.h \
 	             dft16_combine.cpp dft16_twiddle.h
 
-PLATFORM_USE	  := xilinx_vck190_base_202520_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing
 
@@ -21,7 +20,7 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${DSPLIB_OPTS} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${DSPLIB_OPTS} --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

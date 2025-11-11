@@ -21,8 +21,7 @@ DFT16_SOURCE      := dft16_graph.h dft16_compute.h dft16_compute.cpp dft16_combi
 MY_SOURCES        := ${MY_APP}.cpp pfa1008_graph.h ${DFT7_SOURCE:%=../dft7w/%} ${DFT9_SOURCE:%=../dft9w/%} \
                      ${DFT16_SOURCE:%=../dft16/%}
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
-PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART_USE          := xcvc1902-vsva2197-2MP-e-S
 
 PL_FREQ           := --aie.pl-freq=625
 OTHER_OPTS        := --aie.kernel-linting --aie.Xchess="-std=c++17" --aie.xlopt=1
@@ -37,7 +36,7 @@ DSPLIB_OPTS 	  := --include=${DSPLIB_ROOT}/L2/include/aie \
 
 AIE_OUTPUT := libadf.a
 
-AIE_FLAGS :=	${OTHER_OPTS} ${DSPLIB_OPTS} ${MAP_OPT} ${PL_FREQ} --platform=${PLATFORM} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
+AIE_FLAGS :=	${OTHER_OPTS} ${DSPLIB_OPTS} ${MAP_OPT} ${PL_FREQ} --part=${PART_USE} ${MY_APP}.cpp --aie.output-archive=${AIE_OUTPUT}
 
 ifeq (${SIM_FIFO}, true)
 	AIE_FLAGS := ${AIE_FLAGS} ${CHECK_FIFO}

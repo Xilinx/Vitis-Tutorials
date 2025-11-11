@@ -4,11 +4,6 @@
 //
 // Author: Mark Rollins
 
-#include "pfa1008_graph.h"
-
-// Instantiate AIE graph:
-pfa1008_graph aie_dut;
-
 #include <stdlib.h>
 #include <fstream>
 #include <iostream>
