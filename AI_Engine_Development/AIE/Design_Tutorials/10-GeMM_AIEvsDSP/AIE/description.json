@@ -13,8 +13,7 @@
                "pre_exec": "./env_setup_versal.sh"
            },
            "board": {
-               "pre_exec": "./env_setup_versal.sh",
-               "post_exec": "./addon/copy_perf_files.sh"
+               "pre_exec": "./env_setup_versal.sh"
            }
         },
         "user": {
@@ -50,7 +49,6 @@
             "all": "run",
             "hw": "sd_card"
         },
-        "custom_board_target": "run_test",
-        "customized_params": "multi_params.json"
+        "custom_board_target": "run_test"
     }
 }
