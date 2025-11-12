@@ -13,8 +13,7 @@
               "pre_exec": "./env_setup_versal.sh"
            },
            "board": {
-              "pre_exec": "./env_setup_versal.sh",
-              "post_exec": "./addon/copy_perf_files.sh"
+              "pre_exec": "./env_setup_versal.sh"
            }
         },
         "user": {
@@ -33,7 +32,7 @@
                     "vitis_aie_x86sim": 50,
                     "vitis_hw_build": 470,
                     "vitis_hw_emu": 470,
-                    "vitis_hw_run": 60
+                    "vitis_hw_run": 600
                 }
             }
         ],
@@ -43,10 +42,11 @@
             "vitis_hw_run"
         ],
         "category": "canary",
-	"custom_build_target":
-        {
-            "all": "build",
-            "hw" : "run"
-        }
+        "custom_board_target": "run_test",
+        "custom_build_target":
+            {
+                "all": "build",
+                "hw" : "run"
+            }
     }
 }
