@@ -266,7 +266,7 @@ VPP_LINK_FLAGS += --vivado.prop run.synth_1.STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_
 ifeq ($(EN_TRACE),1)
    ifeq ($(TARGET),hw)
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_TOP):all:all
-      VPP_LINK_FLAGS += --profile.trace_memory LPDDR
+      VPP_LINK_FLAGS += --profile.trace_memory LPDDR1
    
    endif
 endif
