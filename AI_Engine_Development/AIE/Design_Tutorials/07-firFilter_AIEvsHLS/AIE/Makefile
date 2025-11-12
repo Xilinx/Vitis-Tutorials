@@ -326,8 +326,8 @@ ifeq ($(EN_TRACE),1)
    ifeq ($(TARGET),hw)
       VPP_LINK_FLAGS += --profile.trace_memory DDR
       VPP_LINK_FLAGS += --profile.data $(DATAMOVER_KERNEL_NAME):$(DATAMOVER_KERNEL_NAME)_0:all
-      VPP_LINK_FLAGS += --profile.data ai_engine_0.DataIn
-      VPP_LINK_FLAGS += --profile.data ai_engine_0.DataOut
+      VPP_LINK_FLAGS += --profile.aie ai_engine_0.DataIn
+      VPP_LINK_FLAGS += --profile.aie ai_engine_0.DataOut
    
    endif
 endif

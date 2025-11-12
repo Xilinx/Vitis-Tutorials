@@ -15,7 +15,7 @@
 
 # Versal AI Engine/HLS FIR Filter Tutorial
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 [Introduction](#introduction)
@@ -141,11 +141,11 @@ filter_AIEvsHLS
 
 To build and run the FIR filter tutorial (AI Engine and DSP implementations), install the following tools.
 
-* Install the [Vitis Software Platform 2025.1](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation)
+* Install the [Vitis Software Platform 2025.2](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation)
 
 * Obtain licenses for AI Engine tools
 
-* Download and set up the [VCK190 Vitis Platform for 2025.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
+* Download and set up the [VCK190 Vitis Platform for 2025.2](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 * [DSP Library (DSPLib) Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
@@ -161,10 +161,10 @@ When the elements of the Vitis software platform are installed, update the shell
 
 Edit `sample_env_setup.sh` script with your file paths:
 ```bash
-export PLATFORM_REPO_PATHS= <YOUR-2025.1-PLATFORM-DIRECTORY>
-export XILINX_VITIS = <YOUR-2025.1-VITIS-DIRECTORY>/2025.1
-export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2025.1-DIRECTORY>
-export DSPLIBS_VITIS=<YOUR-PATH-TO-2025.1-DSP-LIBRARY>
+export PLATFORM_REPO_PATHS= <YOUR-2025.2-PLATFORM-DIRECTORY>
+export XILINX_VITIS = <YOUR-2025.2-VITIS-DIRECTORY>/2025.2
+export COMMON_IMAGE_VERSAL=<YOUR-XILINX-VERSAL-COMMON-V2025.2-DIRECTORY>
+export DSPLIBS_VITIS=<YOUR-PATH-TO-2025.2-DSP-LIBRARY>
 
 source $COMMON_IMAGE_VERSAL/environment-setup-cortexa72-cortexa53-amd-linux
 source $XILINX_VITIS/settings64.sh
