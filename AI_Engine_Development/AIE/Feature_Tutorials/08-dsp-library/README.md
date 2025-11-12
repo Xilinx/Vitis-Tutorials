@@ -15,7 +15,7 @@
 
 # DSP Library Tutorial
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -23,13 +23,13 @@ Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS),
 
 This tutorial demonstrates how to use kernels provided by the DSP Library for a filtering application, how to analyze the design results, and how to use filter parameters to optimize the design's performance using simulation. It does not take the design to a hardware implementation, however.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.1) for setting up the software and installing the VCK190 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.2) for setting up the software and installing the VCK190 base platform.
 
 Before starting this tutorial, run the following steps.
 
-1. Set up your platform by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.1/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.1/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2025.1/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2025.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 5. Download the Vitis Libraries from https://github.com/Xilinx/Vitis_Libraries
    For example: `git clone https://github.com/Xilinx/Vitis_Libraries.git` into your desired directory.
@@ -345,7 +345,7 @@ Selecting the **Array** option on the navigation bar shows the physical implemen
 
 ![Vitis Analyzer Array](images/DSPLib_tutorial_part_3_Vitis_Analyzer_Array.png)
 
-Selecting the **Trace** option on the navigation bar now shows the channel filter tiles ((18,0) through (22,0)) almost fully occupied with processing the data; the computational load between the channel filter's constituent engines now matching that of the halfband filter (23,0). The design now completes in 8 iterations in ~20 microseconds, compared to ~43.
+Selecting the **Trace** option on the navigation bar now shows the channel filter tiles ((18,0) through (22,0)) almost fully occupied with processing the data; the computational load between the channel filter's constituent engines now matching that of the halfband filter (23,0). The design now completes in 8 iterations in ~20 microseconds, compared to ~44.
 
 Note: Please ensure that when using trace view, you examine the waveform within the 0 to 25 us range.
 
