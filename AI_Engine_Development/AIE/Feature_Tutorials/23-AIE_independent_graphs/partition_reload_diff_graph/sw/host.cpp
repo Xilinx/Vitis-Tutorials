@@ -60,7 +60,7 @@ int run_gmio(xrt::device &device, std::string &xclbinfile_gr1, std::string &xclb
     	//PS can do other tasks here when data is transferring
     	std::cout<<"Waiting for graph to be completed"<<std::endl;
 		bufOut->wait();
-
+		bufIn->wait();
     	ref_func(dinArray,coeff,doutRef,ITERATION*1024/4);
     	for(int i=0;i<ITERATION*1024/4;i++){
 			if(doutArray[i]!=doutRef[i]){
@@ -115,7 +115,7 @@ int run_gmio(xrt::device &device, std::string &xclbinfile_gr1, std::string &xclb
     	//PS can do other tasks here when data is transferring
     	std::cout<<"Waiting for graph to be completed"<<std::endl;
 		bufOut2->wait();
-
+		bufIn2->wait();
     		for(int i=0;i<ITERATION*1024/4;i++){
 			if(doutArray2[i]!=dinArray2[i]+1){
 				std::cout<<"ERROR:dout["<<i<<"]="<<doutArray2[i]<<",gold="<<dinArray2[i]+1<<std::endl;
