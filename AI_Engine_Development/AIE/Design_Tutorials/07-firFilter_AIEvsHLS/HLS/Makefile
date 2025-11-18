@@ -360,7 +360,7 @@ VPP_LINK_FLAGS += --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIV
 ##VPP_LINK_FLAGS += --vivado.impl.lsf '{bsub -R "select[type=X86_64] rusage[mem=65536]" -N -q medium}'
 #VPP_LINK_FLAGS += --advanced.param "compiler.enableMultiStrategies=1"
 #VPP_LINK_FLAGS += --advanced.param "compiler.multiStrategiesWaitOnAllRuns=1"
-VPP_LINK_FLAGS += --vivado.synth.jobs 32
+VPP_LINK_FLAGS += --vivado.synth.jobs 8
 VPP_LINK_FLAGS += --vivado.impl.jobs 8
 
 # =========================================================
