@@ -30,12 +30,13 @@ DATA_DIR              := ../aie_ml
 GRAPH_O               := ${IP_DIR}/libadf.a
 XSA                   := my.xsa
 # STIMULUS_IO           := ${DATA_DIR}/input_sig_i.h ${DATA_DIR}/del_i_optimized.txt ${DATA_DIR}/sig_o.txt
-XRT_INI			  	  := xrt.ini
+XRT_INI			  	    := xrt.ini
 PS_EXE                := ../ps_apps/hw_emu/host.exe
 
 SD_CARD               := $(abspath ../package)
 BUILD_DIR             := build_${TARGET}
 
+export EMBD_EXC       := embedded_exec.sh
 SYSTEM_CFG            := system.cfg
 
 .PHONY: clean all
@@ -62,8 +63,22 @@ ${BUILD_DIR}/${XSA}: ${BUILD_DIR} ${GRAPH_O} ${SYSTEM_CFG}
 			../${GRAPH_O} \
 			--output ${XSA} \
 			2>&1 | tee vpp_link.log
+			
+${EMBD_EXC}:
+	@echo "#!/bin/bash"                                                                        >> ${EMBD_EXC}
+	@echo "#"                                                                                  >> ${EMBD_EXC}
+	@echo "# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved."            >> ${EMBD_EXC}
+	@echo "# SPDX-License-Identifier: MIT"                                                     >> ${EMBD_EXC}
+	@echo "#"                                                                                  >> ${EMBD_EXC}
+	@echo ""                                                                                   >> ${EMBD_EXC}
+	@echo "export XILINX_XRT=/usr"															   >> ${EMBD_EXC}
+ifeq ("$(TARGET)","hw_emu")
+	@echo "export XCL_EMULATION_MODE=hw_emu"                                                   >> ${EMBD_EXC}
+endif
+	@echo ""                                                                                   >> ${EMBD_EXC}
+	@echo "./host.exe a.xclbin"                                                           	   >> ${EMBD_EXC}
 
-${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS} 
+${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS} ${EMBD_EXC}
 	cd ${BUILD_DIR} && \
 		v++ --package --debug --save-temps \
 			--target ${TARGET} \
@@ -77,10 +92,10 @@ ${SD_CARD}: ${BUILD_DIR}/${XSA} ${PS_EXE} ${GRAPH_O} ${KERNEL_IMAGE} ${ROOTFS}
 			../${GRAPH_O} \
 			${XSA} \
 			$(addprefix --package.sd_file=../, ${PS_EXE}) \
-			$(addprefix --package.sd_file=../,embedded_exec.sh) \
+			$(addprefix --package.sd_file=../, ${EMBD_EXC}) \
 			$(addprefix --package.sd_file=../, ${XRT_INI}) \
 			2>&1 | tee vpp_pack.log
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD}/sd_card/platform_desc.txt
 
 clean:
-	rm -rf ${SD_CARD} ${BUILD_DIR}
+	rm -rf ${SD_CARD} ${BUILD_DIR} ${EMBD_EXC}

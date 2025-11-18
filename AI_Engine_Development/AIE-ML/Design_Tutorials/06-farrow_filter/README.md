@@ -15,7 +15,7 @@
 
 # Migrating Fractional Delay Farrow Filter from AIE to AIE-ML Architecture
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -42,13 +42,13 @@ The design requirements are identical here as you are simply migrating the desig
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.1) for setting up the software and installing the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2025.2) for setting up the software and installing the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.1/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.1/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2025.1/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.2/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.2/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2025.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Table of Contents
@@ -77,12 +77,12 @@ Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 #### Source the Vitis Tool
 Enter the following command to source the Vitis tool:
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2025.1/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
 ```
 #### Update the Makefile to switch the device from AIE to AIE-ML.
 Open the Makefile and modify the device from AIE to AIE-ML as shown below:
 ```
-PLATFORM_USE	  := xilinx_vek280_base_202510_1
+PLATFORM_USE	  := xilinx_vek280_base_202520_1
 ```
 Save the file.
 #### Compile the Design for x86 Simulation
@@ -112,7 +112,7 @@ Based on the comparison provided between the AIE and AIE-ML architectures regard
 ![Pipeline Diagram for AIE and AIE-ML](./images/Pipeline_Diagram_of_AIE_and_AIE-ML.png)
 
 ##### How to fix this for AIE-ML?
-Additional AIE APIs that can make full use of the tap values for computation need to be identified. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. You should now adjust the parameter values according to the API details provided in the documentation in the this link **[AIE APIs Special Multiplication](https://download.amd.com/docnav/aiengine/xilinx2025_1/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
+Additional AIE APIs that can make full use of the tap values for computation need to be identified. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. You should now adjust the parameter values according to the API details provided in the documentation in the this link **[AIE APIs Special Multiplication](https://download.amd.com/docnav/aiengine/xilinx2025_2/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
 
 The following figure shows the supported parameters type (coeff x data) for AIE and AIE-ML architecture. **coeff** is *int16* and **data** is *cint16*.
 
@@ -181,7 +181,7 @@ $ make check_sim_output_aie
 The first command compiles graph code for the SystemC simulator, the second command runs the AIE simulation, and the final command invokes MATLAB to compare the simulation output with test vectors and compute raw throughput. The average throughput for the IO ports is displayed at the end of AIE simulation.
 After the final command execution, the console should output as below:
 ```
-Raw Throughput = 438.8 MSPS
+Raw Throughput = 449.0 MSPS
 Max error LSB = 1
 ```
 #### Analyze the Reports
@@ -195,15 +195,15 @@ Select the `Graph` view.
 
 The Graph view shows the kernels in the graph and the input/output ports of the graph. Select the I/O tabs as shown in the above diagram. Observe the Throughput column in the I/O tab.
 
-The output PLIO port throughput shows the value 1755.227974 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is `cint16`, which is four bytes in size. This gives a throughput value of 438.8 MSPS.
+The output PLIO port throughput shows the value 1795.8611 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is `cint16`, which is four bytes in size. This gives a throughput value of 449.0 MSPS.
 
-A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/2.839 = 360.69 MSPS.
+A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/2.77 = 369.68 MSPS.
 
 Note: In the graph, select the output port which will show the net name, in this case it is net6. Then select the `Trace` view, which will show the selected net.
 
 ![Initial_Port_Graph](./images/Initial_Port_Trace.png)
 
-The design requirement is to reach 1 GSPS, but the current performance is only **360.69 MSPS**.
+The design requirement is to reach 1 GSPS, but the current performance is only **369.68 MSPS**.
 
 Close the Vitis Analyzer.
 
@@ -219,7 +219,7 @@ Assuming your AI Engine clock is 1.25 GHz, that means your throughput can potent
 ##### How to determine the II required for farrow_kernel1?
 Navigate to the compiler reports for each tile located at `designs/farrow_port_initial/Work/aie`.
 
-The *farrow_kernel1* is specifically implemented on tile `19_0`. Locate the `19_0.log` file within the `19_0` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=108 cycles*.
+The *farrow_kernel1* is specifically implemented on tile `19_0`. Locate the `19_0.log` file within the `19_0` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=112 cycles*.
 
 In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the loop is implemented. This loop processes 32 samples per iteration, equivalent to BUFFER_SIZE/32 = 1024 samples/32 => 32 samples. Therefore, the goal is to achieve an II of 32.
 
@@ -227,7 +227,7 @@ In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the l
 
 #### First Optimization 
 
-After reviewing the previous analysis, it is evident that the kernel requires II=102 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
+After reviewing the previous analysis, it is evident that the kernel requires II=112 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
 
 In the `designs/farrow_port_initial/farrow_kernel1.cpp` file, within the for loop located at line number 55, the kernel currently performs four filter operations. To optimize, we propose splitting these operations; execute two filter operations in one tile and the remaining two in another tile.
 
@@ -273,12 +273,12 @@ $ make check_sim_output_aie
 ```
 The console should output as below:
 ```
-Raw Throughput = 755.4 MSPS
+Raw Throughput = 754.9 MSPS
 Max error LSB = 1
 ```
 
-This design was able to reach 755.4 MSPS. But still it does not meet goal of 1 GSPS.
-Note: In trace view, the measured throughput is 1024/1.535 = 667.1 MSPS.
+This design was able to reach 754.9 MSPS. But still it does not meet goal of 1 GSPS.
+Note: In trace view, the measured throughput is 1024/1.535 = 664.7 MSPS.
 
 Run the script which will read the II from the compiler log for each tile.
 ```
@@ -288,16 +288,9 @@ The console should output as below:
 ```
 *** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
 *** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
 *** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 ```
@@ -308,7 +301,7 @@ Close the Vitis Analyzer.
 #### Second Optimization 
 The previous setup employs three tiles: two tiles for filters and another for final computations.
 
-As you noticed, the performance has been improved from 371.5 MSPS to 667.1 MSPS. The II has been reduced from 105 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
+As you noticed, the performance has been improved from 369.68 MSPS to 664.9 MSPS. The II has been reduced from 112 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
 
 Instead of managing two filters per tile, each kernel will now handle just one filter operation. You will use four tiles to carry out each filter operation. This adjustment could improve the II and enhance overall performance.
 
@@ -343,7 +336,7 @@ $ make check_sim_output_aie
 ```
 The console should output as below:
 ```
-Raw Throughput = 1062.2 MSPS
+Raw Throughput = 1060.9 MSPS
 Max error LSB = 1
 ```
 #### Analyze the Reports
@@ -355,11 +348,11 @@ $ vitis_analyzer aiesimulator_output/default.aierun_summary
 ![Farrow_Opt2_Graph](./images/Farrow_Opt2_Graph.png)
 Graph view shows the five kernels (four for filters and one for final computation). Select the I/O tabs as shown in the above diagram. Observe the Throughput column in the I/O tab.
 
-The output PLIO port throughput shows the value 4248.962656. This throughput value needs to be divided by four because the data type used is `cint16`, which is four bytes in size. You will get the throughput value as 1062.2 MSPS.
+The output PLIO port throughput shows the value 4243.680066. This throughput value needs to be divided by four because the data type used is `cint16`, which is four bytes in size. You will get the throughput value as 1060.9 MSPS.
 
 A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. 
 
-Because each graph iteration processes 1024 samples, throughput is 1024/1.012 = **1011.8 MSPS**.
+Because each graph iteration processes 1024 samples, throughput is 1024/1.015 = **1008.9 MSPS**.
 
 Note: In the graph, select the output port which will show the net name, in this case it is net9.
 ![Farrow_Opt2_Trace](./images/Farrow_Opt2_Trace.png)
@@ -376,18 +369,10 @@ The console should output as below:
 
 ```
 *** [LOOP_II] *** Tile 18_1 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 18_1 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_1 minII = 29 achieves II = 29
-*** [LOOP_II] *** Tile 19_1 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
 *** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_2 minII = 6 achieves II = 6
-*** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 ```
 
@@ -397,9 +382,9 @@ The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, 
 
 | Design              | Number of Tiles | Throughput  |
 |---------------------|-----------------|-------------|
-| farrow_port_initial |       2         | 360.6 MSPS  |
-| farrow_opt_1        |       3         | 667.1 MSPS  |
-| farrow_opt_2        |       5         | 1011.8 MSPS |
+| farrow_port_initial |       2         | 369.7 MSPS  |
+| farrow_opt_1        |       3         | 664.9 MSPS  |
+| farrow_opt_2        |       5         | 1008.9 MSPS |
 
 Note: Throughput values are measured from Trace.
 
@@ -493,9 +478,9 @@ The diagram below illustrates the entire Vitis tool flow, encompassing the devel
 ![Tool_Flow](./images/Tool_Flow.png)
 
 #### Setup and Initialization
-IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
-https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-1.html
+https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-tutorial>/designs/farrow_gmio/Makefile```. 
 
@@ -536,8 +521,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
 
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 4247.2 MB/s
-Throughput of the graph: 1061.8 MSPS
+Throughput of the graph: 4241.92 MB/s
+Throughput of the graph: 1060.48 MSPS
 ...
 ```
 
@@ -569,8 +554,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
  
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 4499.12 MB/s
-Throughput of the graph: 1124.78 MSPS
+Throughput of the graph: 4497.15 MB/s
+Throughput of the graph: 1124.29 MSPS
 --- PASSED ---
 GMIO transactions finished
 
@@ -584,7 +569,7 @@ This indicates that approximately twice the number of tiles is required for kern
 | Design                 | Tiles for AIE Kernels | Tiles for Buffers | Total Tiles |  Throughput         | Relative MSPS per tile |
 |------------------------|-----------------------|-------------------|-------------|---------------------|------------------------|
 | farrow - AIE (PLIO)    |       2               | 5                 | 5           | 1138 MSPS (HW_EMU)  | 227.6                  |
-| farrow - AIE-ML (GMIO) |       5               | 9                 | 9           | 1061 MSPS (HW_EMU)  | 124.8                  |
+| farrow - AIE-ML (GMIO) |       5               | 8                 | 8           | 1061 MSPS (HW_EMU)  | 132.6                  |
 
 ```* Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.```
 
