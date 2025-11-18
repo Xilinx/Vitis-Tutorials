@@ -42,7 +42,7 @@ print(v3.bytes)  # Returns the byte representation of the varray
 # Typecast the varray
 #################################################################
 print(v3)
-v4 = v3.view(va.uint32)  # Typecast the varray to int16
+v4 = v3.view(va.uint32)  # Typecast the varray to uint32
 print(v4)
 assert(np.all(v3.bytes == v4.bytes))  # The byte representation should be the same
 
