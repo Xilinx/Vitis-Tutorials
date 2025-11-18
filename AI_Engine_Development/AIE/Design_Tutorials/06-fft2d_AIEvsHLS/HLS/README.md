@@ -13,7 +13,7 @@
   </tr>
 </table>
 
-# 2025.1 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
+# 2025.2 Versal 2D-FFT Implementation Using Vitis Acceleration Library Tutorial (XD073)
 
 ## HLS Implementation
 
@@ -123,7 +123,7 @@ Each `make` step to build the design is specified in the following sections. The
  
 ### make kernels: Compile PL Kernels
 
-In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202510_1`) and the HLS kernels and compiles them into their respective XO files. The following commands compile the kernels ( `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0`, and `FFT_2D_PT=2048`).
+In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202520_1`) and the HLS kernels and compiles them into their respective XO files. The following commands compile the kernels ( `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0`, and `FFT_2D_PT=2048`).
 
 ```
 make kernels
@@ -138,7 +138,7 @@ cd $(BUILD_TARGET_DIR); \
 
 v++ --target hw_emu --hls.pre_tcl $$(DIRECTIVES_REPO)/hls_pre.tcl \
    --hls.clock 500000000:fft_2d -D MAT_ROWS=1024 -D MAT_COLS=2048 -D FFT_2D_DT=0 \
-   --platform xilinx_vck190_base_202510_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+   --platform xilinx_vck190_base_202520_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g -c -k fft_2d $(DESIGN_REPO)/pl_src/fft_2d.cpp -o $(BUILD_TARGET_DIR)/fft_2d.hw_emu.xo
 ```
 
@@ -149,7 +149,7 @@ mkdir -p $(BUILD_TARGET_DIR); \
 
 cd $(BUILD_TARGET_DIR); \
 
-v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_202510_1 \
+v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_202520_1 \
    --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g -c -k dma_hls -D FFT_2D_DT=0 \
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
@@ -203,7 +203,7 @@ The expanded command is as follows:
 ```
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -l --platform xilinx_vck190_base_202510_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+v++ -l --platform xilinx_vck190_base_202520_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g --clock.freqHz 500000000:fft_2d_0 --clock.freqHz 250000000:dma_hls_0 --clock.defaultTolerance 0.001 \
    --advanced.param compiler.userPostSysLinkOverlayTcl=$(DIRECTIVES_REPO)/cdc_async.tcl \
    --config $(SYSTEM_CONFIGS_REPO)/x1.cfg --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
@@ -369,7 +369,7 @@ or
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202510_1 \
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202520_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf \
    $(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw.xsa
@@ -441,7 +441,7 @@ and do:
 When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
 
 ```bash
-root@versal-rootfs-common-2025_1:~#
+root@versal-rootfs-common-2025_2:~#
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
@@ -520,7 +520,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2025.1` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2025.2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
