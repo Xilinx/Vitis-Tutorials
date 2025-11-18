@@ -65,7 +65,7 @@ The floorplan view of the SAR BP engine design is shown in the following figure.
 
 ### Resource Utilization
 
-The AI Engine resources for the SAR BP engine are shown below. The design uses 14 tiles for compute and 26 tiles overall for compute and buffering. Recall the earlier system partitioning analysis estimated a total of 31 tiles, indicating this initial provisioning was not overly aggressive. The engine requires a total of four GMIO interface ports. The memory footprint of the design is quite large but the mapper/router is able to automatically find a contention-free solution with a simple area group constraint. 
+The AI Engine resources for the SAR BP engine are shown below. The design uses 14 tiles for compute and 26 tiles overall for compute and buffering. Recall the earlier system partitioning analysis estimated a total of 31 tiles, indicating this initial provisioning was not overly aggressive. The engine requires a total of one GMIO and two PLIO interface ports. The memory footprint of the design is quite large but the mapper/router is able to automatically find a contention-free solution with a simple area group constraint. 
 
 ![figure](../images/bp-engine-aie-resources.png)
 
@@ -92,7 +92,7 @@ The latency of the design can be considered as the time required for processing 
 
 #### Hardware
 
-The single engine version of the design may also be run in hardware on the VCK190 evaluation board. In this case, `NPULSE_USE=586` and `NFRAME=16` to run a full 16 frames with the full compliment of radar pulses for each. Throughput is measured using the `xrt::graph::get_timestamp()` function that returns a time stamp from the AIE array. The difference between two such timestamps provides the number of AI Engine clock cycles between the them. Specifically, two time stamps are taken in [Line 178](../device1/host.cpp#L178) and [Line 208](../device1/host.cpp#L208) of `device1/host.cpp`. A screenshot of this run captured from the VCK190 board is shown below.
+The single engine version of the design may also be run in hardware on the VCK190 evaluation board. In this case, `NPULSE_USE=586` and `NFRAME=16` to run a full 16 frames with the full compliment of radar pulses for each. Throughput is measured using the `xrt::graph::get_timestamp()` function that returns a time stamp from the AIE array. The difference between two such timestamps provides the number of AI Engine clock cycles between them. Specifically, two time stamps are taken in [Line 178](../device1/host.cpp#L178) and [Line 208](../device1/host.cpp#L208) of `device1/host.cpp`. A screenshot of this run captured from the VCK190 board is shown below.
 
 * Note the final throughput computed using `xrt::graph::get_timestamp()` is 2.6 frames per second. This matches well to the estimate computed from the 2-pulse simulation performed via hardware emulation. 
 

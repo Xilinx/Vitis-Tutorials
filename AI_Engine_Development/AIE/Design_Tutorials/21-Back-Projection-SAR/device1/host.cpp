@@ -202,9 +202,10 @@ int main(int argc, char* argv[])
     std::cout << STR_PASSED << "image_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);"  << std::endl;
     std::cout << STR_INFO << "Done Frame " << ff << std::endl;
   } // ff
-  // If I uncomment out these lines I get a bus-error -- why???
-  //   my_graph0.wait();
-  //   std::cout << STR_PASSED << "my_graph0.wait();" << std::endl;
+
+  my_graph0.wait();
+  std::cout << STR_PASSED << "my_graph0.wait();" << std::endl;
+  
   uint64_t toc = my_graph0.get_timestamp();
   my_graph0.end();
   std::cout << STR_PASSED << "my_graph0.end();" << std::endl;
