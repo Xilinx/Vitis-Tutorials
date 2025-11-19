@@ -121,6 +121,22 @@ Following is an example code for controlling graph and associated GMIO data tran
 	delete ghdl;
 	delete hwctx_1;
 
+
+
+**NOTE** 
+
+In Vitis 2025.2, host applications that use xrt::aie::buffer and async calls ( i.e; bufIn->async() ) may encounter runtime failure because AIE resources remains allocated after the deleting the buffer/graph/hw_context objects, preventing subsequent xclbin loads.  Symptoms include errors such as:
+
+[drm:zocl_create_aie [zocl]] *ERROR* Request AIE partition 262, -22
+[drm:zocl_aie_request_part_fd [zocl]] *ERROR* AIE partition 262 does not exist.
+
+As a workaround in 25.2, applications should explicitly call wait() on each xrt::aie::buffer that was launched via async() before deleting the hw context or ending of the applicaiton as shown below
+
+	bufIn->wait();
+	bufIn2->wait();
+
+**Reloading partition**
+
 To reload the same partition multiple times, there can be multiple approaches:
 
 1. Exit and restart the application. When the hardware context is created again in host code, the corresponding AI Engine PDI is reloaded into the partition.
