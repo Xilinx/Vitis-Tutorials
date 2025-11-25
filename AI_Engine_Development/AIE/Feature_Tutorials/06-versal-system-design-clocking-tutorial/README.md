@@ -15,7 +15,7 @@
 
 # Versal System Design Clocking
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -37,16 +37,16 @@ In the design, the following clocking steps are used:
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
 For detailed information, see the Clocking the PL Kernels section [here](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
-**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2025.1 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.1.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
+**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2025.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
 
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2025.1/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4`, and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.1` directory.
+2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run the `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
+3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4`, and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms/`.
 
-This tutorial targets VCK190 production board for 2025.1 version.
+This tutorial targets VCK190 production board for 2025.2 version.
 
 ## Objectives
 
@@ -78,27 +78,27 @@ In this design, you will use three kernels called: **MM2S**, **S2MM**, and **Pol
 Run the following commands.
 
 ```bash
-    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1 /xilinx_vck190_base_202420_1 .xpfm 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1 .xpfm 
         --freqhz=150000000 --config pl_kernels/mm2s.cfg \
 
-    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1 /xilinx_vck190_base_202420_1 .xpfm 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1 .xpfm 
         --freqhz=150000000 --config pl_kernels/s2mm.cfg \
 
-    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1 /xilinx_vck190_base_202420_1 .xpfm 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1 .xpfm 
         --freqhz=200000000 --config ./pl_kernels/polar_clip.cfg \
 ```
 
 OR use MHz, for example: 
 
 ```bash
-    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1 /xilinx_vck190_base_202420_1 .xpfm 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1 .xpfm 
         --freqhz=150MHz --config pl_kernels/mm2s.cfg \
 ```
 
 OR prepare a config file and pass it during v++ compile, for example: 
 
 ```bash
-    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm 
+    v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm 
         --config ./pl_kernels/polar_clip.cfg \
 
    In polar_clip.cfg:
@@ -125,7 +125,7 @@ A brief explanation of the `v++` options:
 | `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
 | `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
-For additional information, see [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command).
+For additional information, see [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-Command).
 
 After completion, you will have the `mm2s.xo`, `s2mm.xo`, and `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
 
@@ -160,7 +160,7 @@ Here you might notice some connectivity and clocking options.
 With the changes made, you can now run the following command. In v++ link command, we have three ways to direct clocking in linker stage: ```--clock-id=<id_value>``` , ```--freqhz``` and ```–clock.freqHz```
 
 ```bash
-    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm 
+    v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm 
     pl_kernels/s2mm.xo pl_kernels/mm2s.xo pl_kernels/polar_clip.xo ./aie/libadf.a --freqhz=200000000:mm2s.ap_clk --freqhz=200000000:s2mm.ap_clk 
     --config system.cfg --save-temps -o tutorial1.xsa
 ```
@@ -204,7 +204,7 @@ Once the linking is done, you can view clock report generated by v++ --link afte
 
    * To compile, PL kernel frequency for Polar_clip  = 200 MHz (same as given in command in step 2.3)
 
-To check the platform frequency, give command at terminal: platforminfo $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1/xilinx_vck190_base_202420_1.xpfm
+To check the platform frequency, give command at terminal: platforminfo $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
 
 Clock frequency used by Vitis for linking are derived in following way:
 
@@ -244,7 +244,7 @@ When the `v++` linker is complete, you can compile the host code that will run o
 
 1. Open `./sw/host.cpp`, and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT/2022.2/html/index.html) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, see [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
+    Do take note that Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, see [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
 
     The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp`, look at line 117 and 118 and comment them out. You should have uncommented the following line:
 
@@ -267,7 +267,7 @@ To run the design on hardware using an SD card, you need to package all the file
 2. In an easier to read command-line view, here is the command:
 
     ```bash
-    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202420_1 /xilinx_vck190_base_202420_1.xpfm \
+    v++ --package --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1.xpfm \
         --package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
