@@ -17,36 +17,24 @@
 Vitis serves both hardware and software activities. To guide through the design flow, the detailed description use link to previous and next step.
 
 #### Overview of Vitis activities
-1.  Hardware integration
+1. Hardware integration
     1. [Compile additional Vitis kernels](./ip/README.md).
     2. Integrating [VSS component](../vss/README.md) and Vitis kernels to a [custom extensible platform](../vivado/README.md) and export to a VMA.
-2. Software / Embedded
+2. [Prepate Software / Embedded platform](./Platform.md)
     1. Generate board support package / drivers.
     2. Apply device tree overlays.
 3. Packaging to delivery container
-    1. Collect binaries, boot artifacts, OS and host applications and deploy on a SD card.
+    1. [Vitis Packaging](./Packaging.md) collect binaries, boot artifacts, OS and host applications and deploy on a SD card.
 
 
-## Hardware integration
-
-This step assumes the following pre-requisite steps is completed:
-Create VSS component   | cint16
-
+## 1. Hardware integration
 
 ### Adding VSS Component and Vitis Components to an extensible platform
 
 This part of the tutorial demonstrates adding a Vitis Subsystem component and additional Vitis PL components to demonstrate integrating both VSS and Vitis kernels onto an extensible platform.
-
-
-## Vitis design description
-The design reuses blocks from previous tutorials to make it easier to compare the mechanics for adding and integrating them to a small system.
-
-
-The example will go through the steps of creating a small AMD Versal™ VCK190 System Example Design consisting of:
- - [3. Importing and integrating DSP Subsystem to Vitis Unified IDE](./README_INTEGRATE.md)
     - [Add RTL Subtractor and HLS mm2s and s2mm Components](./ip/README.md)
-    - Declare connections between VSS Component, Vitis compnents and extensible platform. 
-      [Inspect the config file for the example](../vss/src/vss_conn.cfg)
+    - Declare connections between VSS Component, Vitis compnents and extensible platform.
+      [Inspect the config file for the example](./src/system.cfg)
     - Build System Component and export Vitis Managed Archive (VMA)
 
 The VMA archive is generated with v++ using:
@@ -62,11 +50,24 @@ From top folder, run:
 make vitis_ip vma_export
 ```
 
+After the VMA export, the design is synthesized and implemented in Vivado:
+[Import VMA and finalize the design in Vivado](../vivado/Finalize_Vivado.md)
+
+
+## 2. Prepare Software / Embedded platform
+After building the fixed Vivado platform and prepared [Linux build tools (sysroot), Image and filesystem](../linux/README.md), the device tree overlay is applied and BSP/drivers is generated. See [creating Vitis Platform component](./Platform.md)
+
+## 3. Package to delivery container
+Last step in the flow is to package the design to a suitable container. This tutorial use [Vitis Package](./Packaging.md) to create a SD card folder.
 
 ## Navigation helper
- - [Next step - Import VMA and finalize the design in Vivado](../vivado/Finalize_Vivado.md)
- - [Previous step - Develop Custom Vivado Extensible Platform](../vivado/README.md)
  - [Return to top](../README.md)
+ - [Vitis Subsystem](../vss/README.md)
+ - [Vivado hw platform](../vivado/README.md)
+ - [Prepare Linux](../linux/README.md)
+ - [Host applications](../ps_apps/README.md)
+ - [Vitis sw platform](./Platform.md)
+ - [Vitis Package](./Packaging.md)
 
 
 

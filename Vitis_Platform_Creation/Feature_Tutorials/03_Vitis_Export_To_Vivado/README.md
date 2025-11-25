@@ -151,6 +151,17 @@ param=project.enableUnifiedAIEFlow=true
 
 A cleaned up example for the Vitis linker configuration is provided here: [vitis/src/system.cfg](vitis/src/system.cfg).
 
+## Modifying build recipe
+With the vss folder no longer in use, a few references to old locations need to be updated in the build makefiles.
+The following files require modification
+
+| Modified example | Original file from VSS tutorial
+| -------- | ----------
+| [./Makefile](./Makefile) | [../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/Makefile](../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/Makefile)
+| [./vitis/Makefile](./vitis/Makefile) | [../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/vitis/Makefile](../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/vitis/Makefile)
+| [./ps_apps/linux/aie_dly_test/Makefile](./ps_apps/linux/aie_dly_test/Makefile) | [../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/ps_apps/linux/aie_dly_test/Makefile](../../../Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/ps_apps/linux/aie_dly_test/Makefile)
+
+
 
 
 ## Building the modified design
@@ -169,8 +180,7 @@ export SDKTARGETSYSROOT=<install_path>
 
 ### Build instructions
 
-Makefiles are provided to build everything from the top folder.
-As the VSS rule is no longer applicable, the `make all` rule needs to be modified to ommit `vss` rule.
+Modify or replace the makefiles according to examples and run `make all` from the top folder.
 
 Alternatively run step by step, by choosing from the following:
 ```
