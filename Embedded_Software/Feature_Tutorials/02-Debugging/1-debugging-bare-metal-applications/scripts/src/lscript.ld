@@ -14,9 +14,9 @@ _EL2_STACK_SIZE = DEFINED(_EL2_STACK_SIZE) ? _EL2_STACK_SIZE : 1024;
 
 MEMORY
 {
-   psu_ddr_0_MEM_0 : ORIGIN = 0x0, LENGTH = 0x7FF00000
+   psu_ddr_0_MEM_0 : ORIGIN = 0xA0000000, LENGTH = 0x7FF00000
    psu_ddr_1_MEM_0 : ORIGIN = 0x800000000, LENGTH = 0x80000000
-   psu_ocm_ram_0_MEM_0 : ORIGIN = 0xFFFB0000, LENGTH = 0x40000
+   psu_ocm_ram_0_MEM_0 : ORIGIN = 0xFFFC0000, LENGTH = 0x40000
    psu_qspi_linear_0_MEM_0 : ORIGIN = 0xC0000000, LENGTH = 0x20000000
 }
 
@@ -41,23 +41,23 @@ SECTIONS
    *(.glue_7t)
    *(.ARM.extab)
    *(.gnu.linkonce.armextab.*)
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .init (ALIGN(64)) : {
    KEEP (*(.init))
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .fini (ALIGN(64)) : {
    KEEP (*(.fini))
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .interp : {
    KEEP (*(.interp))
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .note-ABI-tag : {
    KEEP (*(.note-ABI-tag))
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .rodata : {
    . = ALIGN(64);
@@ -128,7 +128,7 @@ SECTIONS
 
 .note.gnu.build-id : {
    KEEP (*(.note.gnu.build-id))
-} > psu_ocm_ram_0_MEM_0
+} > psu_ddr_0_MEM_0
 
 .ctors : {
    . = ALIGN(64);
@@ -314,4 +314,3 @@ _SDA2_BASE_ = __sdata2_start + ((__sbss2_end - __sdata2_start) / 2 );
 
 _end = .;
 }
-

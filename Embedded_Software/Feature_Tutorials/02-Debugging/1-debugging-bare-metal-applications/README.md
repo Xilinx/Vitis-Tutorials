@@ -13,7 +13,7 @@
 
 # Debugging Bare-Metal Applications
 
-***Version: Vitis 2024.2***
+***Version: Vitis 2025.2***
 
 This section showcases the different debugging features available within the AMD Vitis™ embedded software development flow for bare-metal applications. Using an example application project with intentional bugs, the debug guide goes through each issue and leverages the different windows and features available in the application debug session to highlight the potential usage of debug features in a real world scenario.
 
@@ -27,7 +27,7 @@ The example design targets the Xilinx® ZCU102 evaluation platform and implement
 
 ## Build XSA
 
-Launch AMD Vivado™ 2024.2 and source run the following command from the TCL console:
+Launch AMD Vivado™ 2025.2 and source run the following command from the TCL console:
 
 ```
 cd scripts
@@ -67,11 +67,11 @@ Open the XSDB window in the Vitis IDE and execute each command line in the scrip
 
 Running each command one by one lets you to see that the issue in this particular test case is in the download process of the ``testapp_a53`` application to memory. See the [dow](https://docs.amd.com/r/en-US/ug1400-vitis-embedded/dow) command for more information.
 
-In this case, the error message has already pointed out the root cause of the issue. There is a memory write error at 0xFFFB0000 that does not belong to a memory region according to the _Zynq Ultrascale+ MPSoC Technical Reference Manual_ ([UG1085](https://www.xilinx.com/support/documentation/user_guides/ug1085-zynq-ultrascale-trm.pdf#G12.407191)). Checking the linker script in the Vitis IDE confirms that there is a mistake in the OCM memory region description because the base address is not correct.
+In this case, the error message has already pointed out the root cause of the issue. There is a memory write error at 0xA0000000 that does not belong to a memory region according to the _Zynq Ultrascale+ MPSoC Technical Reference Manual_ ([UG1085](https://www.xilinx.com/support/documentation/user_guides/ug1085-zynq-ultrascale-trm.pdf#G12.407191)). Checking the linker script in the Vitis IDE confirms that there is a mistake in the DDR memory region description because the base address is not correct.
 
 ![Linker file wrong](./images/004.png)
 
-Open the linker script in a text editor and modify the base address of the OCM memory region to match with the correct address.
+Open the linker script in a text editor and modify the base address of the DDR memory region to match with the correct address.
 
 ![Linker file correct](./images/005.png)
 
@@ -98,25 +98,32 @@ Select the **Cortex-A53#0** target in the Debug window and check that the interr
 Open ``main.c`` in the file editor and correctly add the ADMA_CH0 interrupt ID. 
 
 ```
-	Status = XSetupInterruptSystem(&ZDma, &XZDma_IntrHandler,
+Status = XSetupInterruptSystem(ZdmaInstPtr, &XZDma_IntrHandler,
 				       Config->IntrId, Config->IntrParent,
 				       XINTERRUPT_DEFAULT_PRIORITY);
 ```
+and remove these lines
 
+```
+u32 wrong_interrupt_id = 0;  
+Status = XSetupInterruptSystem(ZdmaInstPtr, &XZDma_IntrHandler,
+				       wrong_interrupt_id, Config->IntrParent,
+				       XINTERRUPT_DEFAULT_PRIORITY);
+```
 
 Build the application and launch the initially created debug session again. This time, the application is executed completely and the exit point is reached, confirming that the DMA transfer is completed.
 
-![DMA finished](./images/011.png)
+![DMA finished](./images/010.png)
 
 ## Error 3: Unexpected DMA Transfer Result
 
 Despite the successful DMA transfer, the serial output of the application shows that there is an unexpected result, because the destination buffer does not match with the source buffer.
 
-![DMA transfer failure](./images/012.png)
+![DMA transfer failure](./images/011.png)
 
 Launch the debug session and place a breakpoint in the ``return XST_FAILURE`` line for the DMA transfer, so that the execution is halted when the transfer failure is detected and the memory is inspected for further analysis.
 
-![Hit breakpoint](./images/013.png)
+![Hit breakpoint](./images/012.png)
 
 The Vitis IDE provides the following main methods of inspecting the memory content:
 
@@ -128,13 +135,15 @@ These tabs are all context aware, meaning that they display content based on the
 
 The index variable value indicates that the first element of the destination array does not match with the first element on the source buffer. Because both the ZDmaSrcBuf and ZDmaDstBuf variables are static, they are not displayed in the **Variable** window, so you can use the **Expressions** window to inspect them. Select the **Expressions** tab and add both buffers to the list. The displayed expressions confirm that the destination buffer is populated with the default values.
 
-![Expressions window](./images/014.png)
+![Expressions window](./images/013.png)
 
 When a processor core accesses cacheable memory, the read value may not be the value in the physical memory. You can use the Vitis IDE to access the same memory address from a different target not subject to the cache. Targets such as the APU cluster or PSU are not subject to the cache, but they do not have an associated symbol file either, so the Variables and Expressions tables do not apply.
 
-![Invalid expression](./images/015.png)
+![Invalid expression](./images/014.png)
 
 Use the memory window and add the address of both ZDmaSrcBuf (0xB180) and ZDmaDstBuf (0xB1C0). Check the values on ZDmaDstBuf to verify that the DMA transfer is performed properly and the destination buffer is identical to the source buffer.
+
+![Memory window](./images/015.png)
 
 ![Memory window](./images/016.png)
 
@@ -144,7 +153,17 @@ The process of accessing the memory from the APU generates cache maintenance ope
 
 The debugging effort detailed above confirms that there is a cache maintenance operation missing in the application; specifically, cache invalidation prior to reading back the destination buffer after the DMA operation is performed. This operation would ensure that the physical memory is read instead of whatever the cache might have.
 
-Open ``main.c`` in the file editor and add `Xil_DCacheInvalidateRange((INTPTR)ZDmaDstBuf, SIZE);` after the DMA transfer is performed and prior to reading the destination buffer.
+Open ``main.c`` in the file editor and uncomment the below code.
+
+```
+if (!Config->IsCacheCoherent) {
+		Xil_DCacheInvalidateRange((INTPTR)ZDmaDstBuf, SIZE);
+	} else {
+		xil_printf("Debug: System is cache coherent, no manual invalidation needed\n\r");
+	}
+```
+
+After the DMA transfer is performed and prior to reading the destination buffer.
 
 ![Enable DMA interrupt](./images/018.png)
 
@@ -197,7 +216,7 @@ Modify the comparison statement to include the correct boundaries for uppercase 
 
 Build the application and launch the debug session again. This time, the application is executed completely, and the original string is lowercased properly in the destination buffer.
 
-![Success](./images/025.png)
+![Success](./images/024.png)
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
