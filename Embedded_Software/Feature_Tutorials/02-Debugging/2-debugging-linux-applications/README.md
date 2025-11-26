@@ -13,7 +13,7 @@
 
 # Debugging Linux Applications
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 The AMD Vitis™ IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
 
@@ -281,13 +281,13 @@ It is required to configure the PetaLinux project to support Linux application d
 1. Create the PetaLinux project:
 
     ```
-    petalinux-create project --template zynqMP -n ./xilinx-zcu102-v2025.1 --tmpdir /tmp/${USER}/zcu102/petalinux
+    petalinux-create project --template zynqMP -n ./xilinx-zcu102-v2025.2 --tmpdir /tmp/${USER}/zcu102/petalinux
     ```
 
 2. Configure the hardware description:
 
     ```
-    cd xilinx-zcu102-2025.1
+    cd xilinx-zcu102-2025.2
     petalinux-config --get-hw-description <path to XSA>
     ```
 

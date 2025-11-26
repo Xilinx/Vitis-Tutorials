@@ -22,7 +22,7 @@ sysroots:
 	sed -i 's/template/zcu102-rev1.0/' ./xilinx-zcu102-v2025.2/project-spec/configs/config
 	cd ./xilinx-zcu102-v2025.2 && petalinux-build
 	cd ./xilinx-zcu102-v2025.2 && petalinux-build --sdk
-	./xilinx-zcu102-v2025.2/images/linux/sdk.sh -y -d sysroot
+	cd xilinx-zcu102-v2025.2/images/linux/ && unset LD_LIBRARY_PATH && ./sdk.sh -y -d sysroot
 
 unified_workspace:
 	$(RM) -rf ./unified_workspace
