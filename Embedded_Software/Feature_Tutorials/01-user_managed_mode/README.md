@@ -13,7 +13,7 @@
 
 # User Managed Mode in Vitis Unified Embedded IDE
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 This is a new feature with the Vitis Unified Embedded IDE, where users can add a makefile and argument that can be used to create custom builds. This allows the user more control over their project builds instead of letting the tools generate the components.
 
@@ -28,17 +28,15 @@ This tutorial describes three use cases for the **User Managed Mode**.
 
 ### Let’s get started
 
-Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
-
-Select the **Open Explorer View**
+Launch Vitis 2025.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory. The workspace will load in the 'User Maged Mode' view.
 
 ![](./images/user_managed_mode.PNG)
 
 ### Generating Build Configuration
 
-In this use case, we shall be using the Python script introduced in the *04-vitis_scripting_flows* to build a workspace and with a simple Hello World application template. However, users can also utilize the Python script `logs/workspace_journal.py` that gets generated for every Vitis Unified IDE workspace. Make sure you have copied the **unified_workspace.py** python file to your workspace.
+In this use case, we shall be using the Python script introduced in the *04-vitis_scripting_flows* to build a workspace and with a simple Hello World application template. Therefore firstly, you will want to copy the `unified_workspace.py` and `create_xsa.tcl` files to your *01-user_managed_mode* workspace.However, users can also utilize the Python script `logs/workspace_journal.py` that gets generated for every Vitis Unified IDE workspace.  Make sure you have already executed the **create_xsa.tcl** to create the hardware design.
 
-On the left hand side you should see the **User Managed Mode View**. If the **User Managed Mode View** is not there then select the three dots in the explorer view and select **folders** which will load the **User Managed Mode View**. 
+On the left hand side you should see the **User Managed Mode View**. If the **User Managed Mode View** is not there then select the three dots in the explorer view and select **User Managed** which will load the **User Managed Mode View**. 
 
 ![](./images/three_dots.png)
 
@@ -84,7 +82,7 @@ In this use case, we can build the example using the scripts given [here](https:
 
 ### Lets get started
 
-Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2025.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
 Select the **Open Explorer View**
 
@@ -125,7 +123,7 @@ Each section above can be built independently. For example, if users want to mak
 
 ### Lets get started
 
-Launch Vitis 2025.1, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
+Launch Vitis 2025.2, select **open_workspace**, and navigate to the `Vitis-Tutorials/Embedded_Software/Feature_Tutorials/01-user_managed_mode` directory
 
 Select the **Open Explorer View**
 

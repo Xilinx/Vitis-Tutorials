@@ -10,8 +10,7 @@ import vitis
 import os
 import subprocess
 import re
-
-
+import sys
 
 def make_platform(xsa):
     extension = os.path.splitext(xsa)[1]
@@ -99,9 +98,15 @@ def build_uboot(xsa):
         defconfig = "xilinx_zynqmp_virt_defconfig"
     if arch == "versal":
         print("Using xilinx_versal_virt_defconfig")
-        defconfig = "xilinx_versal_virt_defconfig"
-    result = subprocess.run(["cd u-boot-xlnx && make "+defconfig+" && make -f Makefile all -j 32"], shell=True, capture_output=True, text=True)
+        defconfig = "xilinx_versal_virt_defconfig"  
+    result = subprocess.run(["make", defconfig], cwd="u-boot-xlnx", capture_output=True, text=True)
     print(result.stdout)
+    print(result.stderr)
+
+    result2 = subprocess.run(["make", "-f", "Makefile", "all", "-j", "32"], cwd="u-boot-xlnx", capture_output=True, text=True)
+    print(result2.stdout)
+    print(result2.stderr)
+
 
 def build_atf(xsa):
     extension = os.path.splitext(xsa)[1]
