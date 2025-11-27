@@ -15,7 +15,7 @@
 
 # MNIST ConvNet on AIE-ML
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
