@@ -23,9 +23,6 @@ Feature tutorials illustrate specific features of Vitis HLS development flow. So
    
    * - Tutorial
      - Description
-	 
-   * - :doc:`Using Code Analyzer <./01-using_code_analyzer/README>`
-     - Use the pre-synthesis feature called Code Analyzer for the Vitis High-Level Synthesis tool flow.
 
    * - :doc:`Beamformer Analysis <./02-Beamformer_Analysis/README>`
      - Use HLS analysis tools to make low-level optimizations on a subset of the beamformer algorithm.

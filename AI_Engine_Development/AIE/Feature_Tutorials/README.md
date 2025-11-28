@@ -120,7 +120,11 @@ This multi-part tutorial describes how to implement an [infinite impulse respons
  <tr>
  <td align="center"><a href="./26-gentle_intro_to_aie_kernel_programming/">A Gentle Introduction to AI Engine Kernel Programming</a></td>
  <td>In this tutorial, we will guide you on how to get data into and out of a kernel using a simple contrived example.</td>
- </tr>    
+ </tr>
+ <tr>
+ <td align="center"><a href="./27-system-timeline/">System Timeline Tutorial</a></td>
+ <td>This tutorial demostrates how to use System Timeline, a new feature allows the user to trace all subsystems of the device (PL, PS and EI Engine array) and display them in Vitis Analyzer on the same graph with sychronized timeline. </td>
+ </tr>   
  </table>
 
 

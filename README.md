@@ -45,10 +45,10 @@ The default branch always reflects the latest Vitis release. If you need a diffe
 
 Alternatively, you can download the repository as a ZIP file. This includes only the selected branch and is smaller than a full clone. To download a ZIP file of a specific branch, do one of the following:
 - From a browser, select the desired branch. Next, click the green `Code` button and select `Download ZIP`.
-- From a terminal, execute the following command. The following uses the 2025.1 branch as an example.
+- From a terminal, execute the following command. The following uses the 2025.2 branch as an example.
 
 ```code
-wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2025.1.zip && unzip 2025.1.zip 
+wget https://github.com/Xilinx/Vitis-Tutorials/archive/refs/heads/2025.2.zip && unzip 2025.2.zip 
 ```
 
 If you already know exactly which tutorials or folders you need, `git sparse-checkout` is an option to download only those parts. Please refer to Git documentation for usage details.
@@ -362,6 +362,17 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/">Back-Projection SAR on AIE :new: </a>                        
             </td>
         </tr>  
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/27-system-timeline/">System Timeline Tutorial :new: </a>         
+            </td>
+            <td>              
+            </td>
+            <td>
+            </td> 
+            <td>                     
+            </td>
+        </tr>  
     </tbody>
 </table>
 
@@ -458,27 +469,21 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             </td>
         </tr>
         <tr>
-            <td colspan="4" height="48">
+            <td colspan="2" height="48">
                 Vitis High-Level Synthesis (HLS) lets you compile C/C++ code into RTL code. These tutorials offer a broader introduction to the Vitis HLS flows and use cases.
             </td>
         </tr>
         <tr>
-            <td colspan="2" height="24">
+            <td height="24">
                 <strong>Feature Tutorials</strong>
             </td>
-            <td colspan="2" height="24">
+            <td height="24">
                 <strong>Design Tutorials</strong>
             </td>
         </tr>
         <tr>
             <td height="24">
-                <a href="./Vitis_HLS/Feature_Tutorials/01-using_code_analyzer">Using Code Analyzer from Vitis Unified IDE</a>
-            </td>
-            <td>
                 <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP</a>
-            </td>
-            <td>
-                <a href="./Vitis_HLS/Design_Tutorials/01-Polynomial_Vectorization">Polyvec NTT Tutorial using Code Analyzer</a>
             </td>
             <td>
                 <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar</a>

@@ -13,7 +13,7 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -24,7 +24,7 @@ Vitis High-Level Synthesis (HLS) enables you to compile C/C++ code into RTL code
 The labs in this tutorial use:
 
 * BASH Linux shell commands.
-* 2025.1 Vitis core development kit release.
+* Vitis core development kit release.
 
 >**IMPORTANT:**  
 >
@@ -35,7 +35,7 @@ The labs in this tutorial use:
 To configure the environment to run Vitis, run the following scripts which set up the environment to run in a specific command shell.
 
 ```bash
-source <Vitis_install_path>/Vitis/2025.1/settings64.sh
+source <Vitis_install_path>/settings64.sh
 source /opt/xilinx/xrt/setup.sh
 ```
 
