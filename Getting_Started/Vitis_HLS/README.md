@@ -28,7 +28,7 @@ The labs in this tutorial use:
 
 >**IMPORTANT:**  
 >
-> * Before running any of the examples, make sure you have installed the Vitis core development kit as described in [Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) in the Vitis Unified Software Platform Documentation: Application Acceleration Development (UG1393).
+> * Before running any of the examples, make sure you have installed the Vitis Software Platform as described in Vitis release notes [Installing the Vitis](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes/Vitis-Software-Platform-Installation).
 
 ### Setup the environment to run Vitis
 

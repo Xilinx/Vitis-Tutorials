@@ -14,18 +14,18 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
 
 ## Before You Begin
 
 ### Setup Environment
-Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Setting-Up-the-Vitis-Environment).
+Before playing with the libraries, set up the Vitis environment first. For instructions on setting up the Vitis environment, refer to [Setting Up the Vitis Environment](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes/Setting-Up-the-Environment-to-Run-the-Vitis-Software-Platform).
 Below are the example scripts to set up Vitis and XRT, and to specify the location of the platforms you have installed. 
 
 ```
-$ source <Vitis Tool Installation Path>/Vitis/2025.1/settings64.sh
+$ source <Vitis Tool Installation Path>/settings64.sh
 $ source /opt/xilinx/xrt/setup.sh
 $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
@@ -53,128 +53,115 @@ Vitis_Libraries/
 ├── LICENSE.txt
 ├── README.md
 ├── blas/
-├── codec/
-├── data_analytics/
-├── data_compression/
 ├── data_mover/
-├── database/
 ├── dsp/
-├── graph/
-├── hpc/
 ├── motor_control/
-├── quantitative_finance/
 ├── security/
 ├── solver/
-├── sparse/
 ├── ultrasond/
 ├── utils/
 └── vision/
 ~~~
 
-Libraries are written in C++ and typically contain three levels of abstractions:
+Vitis library is organized into L1, L2, and L3 folders, each relating to a different stage of application development.
 
-* L1: Module level, it provides optimized hardware implementation of the core LZ based and data compression specific modules like lz4 compress and snappy compress.
-* L2: Kernel level, a demo on lz4, snappy, zlib, and zstd data compression algorithms are shown via kernel, which internally uses the optimized hardware modules.
-* L3: The software API level wraps the details of offloading acceleration with prebuilt binary (overlay) and allows users to accelerate data compression tasks on the AMD Alveo™ cards without hardware development.
+* L1 : Makefiles and sources in L1 facilitate HLS based flow for quick checks. Tasks at this level include:
+* L2 : Makefiles and sources in L2 facilitate building XCLBIN file from various sources (HDL, HLS or XO files) of kernels with host code written in OpenCL/XRT framework targeting a device. This flow supports:
+* L3 : Makefiles and sources in L3 demonstrate applications developed involving multiple kernels in pipeline. These Makefiles can be used for executing tasks, as with the L2 Makefiles.
 
 In this lab, you are going to use the **dsp** library. So enter the the sub-directory *dsp*, and you can find following directory structure.
 
 ~~~
 dsp/
+├── docs
+│   ├── Doxyfile
+│   ├── Makefile
+│   ├── README.md
+│   └── src
+├── ext
+│   ├── make_utility
+│   ├── README.md
+│   └── xcl2
 ├── Jenkinsfile
-├── L1/
-│   ├── README.md
-│   ├── examples/
-│   ├── include/
-│   ├── meta/
-│   ├── src/
-│   └── tests/
-├── L2/
-│   ├── README.md
-│   ├── benchmarks/
-│   ├── examples/
-│   ├── include/
-│   ├── meta/
-│   └── tests/
+├── L1
+│   ├── examples
+│   ├── include
+│   ├── meta
+│   ├── README.md
+│   ├── src
+│   └── tests
+├── L2
+│   ├── benchmarks
+│   ├── examples
+│   ├── include
+│   ├── meta
+│   ├── README.md
+│   └── tests
+├── library.json
 ├── LICENSE.txt
 ├── README.md
-├── docs/
-│   ├── Doxyfile
-│   ├── Makefile
-│   ├── Makefile.sphinx
-│   ├── README.md
-│   └── src/
-├── ext/
-│   ├── README.md
-│   ├── make_utility/
-│   └── xcl2/
-└── library.json
+
 ~~~
 
 ## Create and run an HLS Component
 
-In this step, you are going to create an HLS component by using the files provided in the [1Dfix_impulse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impulse) L1 examples of the Vitis `dsp` library. The source files and script file are all located under this folder. Here, it is assumed that you have cloned the Vitis Libraries into *<installdir>/Vitis_Libraries* directory.
+In this step, you are going to create an HLS component by using the files provided in the [1Dfix_impulse](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L1/examples/1Dfix_impulse) L1 examples of the Vitis `dsp` library. The source files and script file are all located under this folder. 
 
-1. Go into the `<installdir>/Vitis_libraries/dsp/L1/examples/1Dfix_impulse` folder, create a directory to use as a workspace, and launch the Vitis unified IDE to create an HLS component as described in [Building and Running an HLS Component](https://docs.amd.com/r/en-US/ug1399-vitis-hls/Building-and-Running-an-HLS-Component).
+1. Launch Vitis Unified IDE
+  ```
+  vitis
+  ```
+2. Select **File > New Component > HLS** to create a new HLS component. 
+ 
+  This opens the **Name and Location** page of the **Create HLS Component** wizard 
+  * Enter the **Component name:** `implTest`
+  * Enter the **Component location:** *Point to the folder serves as workspace. e.g. myProject*
+  * Click **Next** to move forward
 
-```
- mkdir myProject
- vitis -w myProject
-```
- 
-The Vitis unified IDE opens as shown below. 
- 
- ![Welcome Screen](images/welcome-screen.png)
- 
- 2. Select **File > New Component > HLS** to create a new HLS component. 
- 
- This opens the **Name and Location** page of the **Create HLS Component** wizard 
- * Enter the **Component name:** `implTest`
- * Enter the **Component location:** *Leave as set for the workspace*
- * Click **Next** to move forward
- 
- This opens the **Configuration File** page
- * Select the **Empty File** radio button
- * Leave the **New configuration file name** as the default: `hls_config`
- * Click **Next** to move forward
- 
- This opens the **Add Source Files** page
- * Under **Design Files** select the **Add Files** command icon, 
- * Browse to the `examples/1Dfix_impulse/src` folder, select the `top_module.cpp` file, and click **Open** to add the file and close the dialog. 
- * In the **CFLAGS** entry field next to the `top_module.cpp` file, paste the following text to provide an include path:
-    `-I<installdir>/Vitis_Libraries/dsp/L1/include/hw/vitis_fft/fixed`
- 
- * Select **Browse** next to **Top Function**
- * Select the `fft_top(int * int *)` top module, and select **OK** to close the dialog box
- 
- * Under **Test Bench Files** select the **Add Files** command icon
- * Browse to `examples/1Dfix_impulse/src` folder, select the `main.cpp` file, and click **Open** to add the file and close the dialog.
- * In the **CFLAGS** entry field next to the `main.cpp` file, paste the following text to provide an include path:
-    `-I<installdir>/Vitis_Libraries/dsp/L1/include/hw/vitis_fft/fixed`
- * Click **Next** to move forward. 
- 
-  ![Add Source Files](images/hls-component-sources.png)
+  ![Add Source Files](./images/create_hls_comp.png)
 
- This opens the **Hardware** page
- * Click **Next** to accept the default part and move forward. 
- 
- This opens the **Settings** page. 
- * Click **Next** to accept all defaults and move forward. 
- 
- This opens the **Summary** page. 
- * Review the page contents and click **Finish** to create the HLS component as defined. 
- 
+  This opens the **Configuration File** page
+  * Select the **Empty File** radio button
+  * Leave the **New configuration file name** as the default: `hls_config`
+  * Click **Next** to move forward
+  
+  This opens the **Add Source Files** page
+  * Under **Design Files** select the **Add Files** command icon, 
+  * Browse to the `<installdir>/Vitis_Libraries/dsp/L1/examples/1Dfix_impulse/src` folder, select the `top_module.cpp` file, and click **Open** to add the file and close the dialog. 
+  * In the **CFLAGS** entry field next to the `top_module.cpp` file, paste the following text to provide an include path: `-I./`
+  
+  * Select **Browse** next to **Top Function**
+  * Select the `fft_top(int * int *)` top module, and select **OK** to close the dialog box
+  
+  * Under **Test Bench Files** select the **Add Files** command icon
+  * Browse to `examples/1Dfix_impulse/src` folder, select the `main.cpp` file, and click **Open** to add the file and close the dialog.
+  * In the **CFLAGS** entry field next to the `main.cpp` file, paste the following text to provide an include path: `-I./`
+  * Click **Next** to move forward. 
 
- 3. The HLS component is created in the Vitis unified IDE and opened in the Flow Navigator. 
- 
-  ![Flow Navigator](images/hls-component-flow.png)
- 
- You can browse into the Settings, view the  and open the `top_module.cpp` file by selecting the source file in the Vitis Components Explorer view. The `top_module.cpp` calls the FFT library and the parameters are defined in the `data_path.hpp` file. For detailed instructions on using the FFT library, refer to the  [Vitis Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html).
+    ![Add Source Files](images/hls-component-sources.png)
 
- * In Flow Navigator select **Run** under the **C Simulation** heading 
- * Select **Run** under the **C Synthesis** heading
- * Select **Run** under the **C/RTL Co-simulation** heading
+  This opens the **Hardware** page
+  * Click **Next** to accept the default part and move forward. 
+  
+  This opens the **Settings** page. 
+  * Click **Next** to accept all defaults and move forward. 
+  
+  This opens the **Summary** page. 
+  * Review the page contents and click **Finish** to create the HLS component as defined. 
+
  
+3. The HLS component is created in the Vitis unified IDE and opened in the Flow Navigator. Now we need to set the relative_roots for the include path. 
+* Open the `hls_config.cfg` configuration file by selecting it under the Settings heading in the Vitis Components Explorer view, or by selecting it from the open `vitis-comp.json` file for the HLS component. 
+* From **All Settings** >  **General**, Click **Add item** under hls.relative_roots, input `<installdir>/Vitis_Libraries/dsp/L1/include/hw/vitis_fft/fixed` 
+
+    ![Flow Navigator](./images/relative_roots.png)
+ 
+ You can browse into the Settings, view and open the `top_module.cpp` file by selecting the source file in the Vitis Explorer view. The `top_module.cpp` calls the FFT library and the parameters are defined in the `data_path.hpp` file. For detailed instructions on using the FFT library, refer to the  [Vitis DSP Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html).
+
+ * In Flow Navigator select **Run** under the **C Simulation** 
+ * Select **Run** under the **C Synthesis** 
+ * Select **Run** under the **C/RTL Co-simulation** 
+
  After C/RTL Co-Simulation, the following results are returned. 
 ~~~
 ...
@@ -227,10 +214,10 @@ The testbench uses a single pulse signal as input to the FFT and the output shou
 
 4. View the Waveform during C/RTL Co-Simulation (optional)
 
- Open the `hls_config.cfg` configuration file by selecting it under the Settings heading in the Vitis Components Explorer view, or by selecting it from the open `vitis-comp.json` file for the HLS component. 
+ Open the `hls_config.cfg` configuration file 
  * Scrool down to the **C/RTL Cosimulation** section of the Config File editor
- * Under **trace_level** select **all**
- * Enable the **wave_debug** option
+ * Under **hls.cosim.trace_level** select **all**
+ * Enable the **hls.cosim.wave_debug** option
  * In the Flow Navigator select **Run** under the **C/RTL Co-simulation** heading
  
 In this way, you get the simulation waveform, such as the following example for a single SSR stream port:
@@ -336,7 +323,7 @@ At this point the tutorial is complete. You can `Run Implementation` from Flow N
 
 In this tutorial, you learned how to leverage a L1 Vitis library element to build your own HLS component and export a Vivado IP. The FFT example is selected for explanation, and you can follow a similar flow to use other library elements.
 
-**Note:** The [Makefile](./Makefile) is provided as a reference if you'd like to explore the CLI flow. 
+**Note:** The [Makefile](./Makefile) is provided as a reference if you'd like to explore the CLI flow. There are multiple ways to run the command-line flow, and the provided Makefile may not represent the optimal approach.
 
 ## Reference
 
