@@ -12,8 +12,8 @@ AIE_CC = aiecompiler
 AIE_TOP_FILE = ../src/tb.cpp
 AIE_OUT_DIR = ./Work
 
-PLATFORM_REPO_PATHS = $(XILINX_VITIS)/base_platforms
-PLATFORM_VERSION = 202420_1
+#PLATFORM_REPO_PATHS = $(XILINX_VITIS)/base_platforms
+PLATFORM_VERSION = 202520_1
 PLATFORM ?= $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_$(PLATFORM_VERSION)/xilinx_vck190_base_$(PLATFORM_VERSION).xpfm
 
 # Compiler settings

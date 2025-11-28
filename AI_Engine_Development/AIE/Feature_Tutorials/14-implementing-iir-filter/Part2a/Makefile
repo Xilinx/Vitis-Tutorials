@@ -28,7 +28,7 @@ aiesim: ./src/kernel.cpp ./src/kernel.hpp ./src/tb.cpp ./src/graph.hpp ./src/C1.
 	echo && \
 	echo "Running..." && \
 	echo && \
-	aiesimulator --pkg-dir=./Work --i=.. --profile | tee aiesim.log
+	aiesimulator --pkg-dir=./Work --input-dir=.. --profile | tee aiesim.log
 	@echo
 	@echo "Checking if Julia is available..."
 

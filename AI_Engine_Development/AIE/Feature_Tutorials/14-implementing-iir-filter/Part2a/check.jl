@@ -36,13 +36,13 @@ ref_file = ws_dir * "data/impresponse.dat";	# impulse response from Julia
 
 if (mode == "aie")
 
-    cp_cmd = `cp build/hw/aiesimulator_output/output.dat build/hw/aiesimulator_output/output.dat.mod`;
-    sed_cmd = `sed -i '/T/d' build/hw/aiesimulator_output/output.dat.mod`; # remove lines which begin with "T"
+    cp_cmd = `cp Emulation-AIE/aiesimulator_output/output.dat Emulation-AIE/aiesimulator_output/output.dat.mod`;
+    sed_cmd = `sed -i '/T/d' Emulation-AIE/aiesimulator_output/output.dat.mod`; # remove lines which begin with "T"
 
     run(cp_cmd);
     run(sed_cmd);
 
-    dut_file = ws_dir * "build/hw/aiesimulator_output/output.dat.mod";	# impulse response from AI engine simulation
+    dut_file = ws_dir * "Emulation-AIE/aiesimulator_output/output.dat.mod";	# impulse response from AI engine simulation
 
 else
 

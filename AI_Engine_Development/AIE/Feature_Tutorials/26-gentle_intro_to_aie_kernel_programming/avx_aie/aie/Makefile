@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 #####################################################################
 
-PLATFORM_REPO_PATHS = $(XILINX_VITIS)/base_platforms
+#PLATFORM_REPO_PATHS = $(XILINX_VITIS)/base_platforms
 CURRENT_DIR = $(shell pwd)
 WKSPC_DIR = $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)
 
@@ -17,7 +17,7 @@ AIE_DATA_DIR = ./data
 RM = rm -f
 RMDIR = rm -rf
 
-PLATFORM_VERSION = 202420_1
+PLATFORM_VERSION = 202520_1
 PLATFORM ?= $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_$(PLATFORM_VERSION)/xilinx_vck190_base_$(PLATFORM_VERSION).xpfm
 
 # AIE compiler settings
