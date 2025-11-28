@@ -59,9 +59,9 @@ Some aspects of each phase is outlined in the following diagram.
 
 ![figure](images/system-partitioning-methodology.png)
 
-### Hough Transform Matlab Model
+### Hough Transform MATLAB Model
 
-A proper algorithm model is required for system partitioning. It is started with the Matlab model shown below. A detailed study of this model identifies key aspects of the system design that impact its solution. For example:
+A proper algorithm model is required for system partitioning. It is started with the MATLAB® model shown below. A detailed study of this model identifies key aspects of the system design that impact its solution. For example:
 
 * The overall compute load complexity is driven by the image size through $R$ and $C$ dimensions.
 * The resolution adopted for $\theta$ through the `theta_res` parameter drives complexity, bandwidth, and histogram storage.
@@ -103,7 +103,7 @@ function [H,theta,rho,rho_calc] = hough_model( BW, theta_res )
 end
 ```
 
-The Matlab model is run and its performance compared to the built-in Matlab function `hough` is found in the Image Processing Toolbox. Here, it is run with a $216\times 240$ image of the AMD Instinct and show "heat maps" of the 2D Hough Transform output histograms for both the Matlab function and the AMD 16-bit Matlab model. 
+The MATLAB model is run and its performance compared to the built-in MATLAB function `hough` is found in the Image Processing Toolbox. Here, it is run with a $216\times 240$ image of the AMD Instinct and show "heat maps" of the 2D Hough Transform output histograms for both the MATLAB function and the AMD 16-bit MATLAB model. 
 
 ![figure](images/hough_model.png)
 
@@ -113,7 +113,7 @@ This section illustrates the details of system partitioning for the Hough Transf
 
 ### Goals
 
-This tutorial aims at identifying the "best we can do" using only AI Engine resources to implement the Hough Transform. To this end, a target throughput requirement of 220 Mpixel/sec (or Mpps) is set and the question is posed, "How many AI Engine tiles are required?" As understood from the Matlab model above, the image size and $\theta$ resolution are key parameters driving compute, bandwidth, and storage. With this in mind, brainstorm solutions for how you can parallelize the Hough Transform algorithm across multiple AI Engine tiles.
+This tutorial aims at identifying the "best we can do" using only AI Engine resources to implement the Hough Transform. To this end, a target throughput requirement of 220 Mpixel/sec (or Mpps) is set and the question is posed, "How many AI Engine tiles are required?" As understood from the MATLAB model above, the image size and $\theta$ resolution are key parameters driving compute, bandwidth, and storage. With this in mind, brainstorm solutions for how you can parallelize the Hough Transform algorithm across multiple AI Engine tiles.
 
 ### Parallelizing Over "Image Tiles"
 
@@ -135,7 +135,7 @@ Having identified some possible parallelization schemes, dive into the Requireme
 
 ### Analyzing Compute Requirements
 
-Next, use a spreadsheet analysis to assess compute requirements. Load the system input parameters on the left side of the spreadsheet shown below and analyze compute parameters on the right side. It is useful to tabulate the numbers of processor cycles required by each loop body in the original Matlab model of the Hough Transform. Based on the AI Engine compute capacity of 32 MACs/cycle for `int16` data types, you can process two MACs/pixel per $\theta$ value in real time. Based on these vector estimates, the spreadsheet indicates to process 5.7 cycles per pixel to meet the 220 Mpps throughput objective. This is equivalent to 45 cycles for the vector processor with its eight lanes SIMD execution. The compute bound for the vector processor is high at 5000 Mpps. However, assuming an 8-cycle "read-modify-write" instruction to update the histogram tables in the third compute workload, the throughput is limited by the scalar processor to 39 Mpps if using 32 tiles. When projected to more tiles, reaching the 220 Mpps target with even 128 tiles is not possible. 
+Next, use a spreadsheet analysis to assess compute requirements. Load the system input parameters on the left side of the spreadsheet shown below and analyze compute parameters on the right side. It is useful to tabulate the numbers of processor cycles required by each loop body in the original MATLAB model of the Hough Transform. Based on the AI Engine compute capacity of 32 MACs/cycle for `int16` data types, you can process two MACs/pixel per $\theta$ value in real time. Based on these vector estimates, the spreadsheet indicates to process 5.7 cycles per pixel to meet the 220 Mpps throughput objective. This is equivalent to 45 cycles for the vector processor with its eight lanes SIMD execution. The compute bound for the vector processor is high at 5000 Mpps. However, assuming an 8-cycle "read-modify-write" instruction to update the histogram tables in the third compute workload, the throughput is limited by the scalar processor to 39 Mpps if using 32 tiles. When projected to more tiles, reaching the 220 Mpps target with even 128 tiles is not possible. 
 
 ![figure](images/analyzing-compute.png)
 

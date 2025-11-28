@@ -63,7 +63,7 @@ The [**README**](../README.md) of AI Engine Development contains important infor
  <tr>
  <td align="center"><a href="./09-debug-walkthrough/">Debug Walkthrough Tutorial</a></td>
  <td>
-This tutorial demonstrates how to debug a multi-processor application using the Versal ACAP AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
+This tutorial demonstrates how to debug a multi-processor application using the Versal adaptive SoC AI Engines, using a beamformer example design. The tutorial illustrates functional debug and performance level debug techniques.</td>
  </tr>
  <tr>
  <td align="center"><a href="./10-aie-dsp-lib-model-composer/">AI Engine DSP Library and Model Composer Tutorial</a></td>
@@ -73,7 +73,7 @@ This tutorial shows how to design AI Engine applications using Model Composer. T
  <tr>
  <td align="center"><a href="./11-ai-engine-emulation-waveform-analysis/">Versal Emulation Waveform Analysis</a></td>
  <td>
-This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal ACAP.</td>
+This tutorial demonstrates how you can use the Vivado logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design for a Versal adaptive SoC.</td>
  </tr>
  <tr>
  <td align="center"><a href="./13-aie-performance-analysis/">AI Engine Performance and Deadlock Analysis Tutorial</a></td>

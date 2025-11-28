@@ -293,7 +293,7 @@ Achieved throughput for:
 
 For the transpose blocks, you can implement these in the PL using block RAMs. The PL is assumed to be clocked at 312.5 MHz.
 A single block RAM stores up to 36 Kbits, and can be configured as 512 x 72 bits with one write and one read port.
-For more information on block RAMS, refer to [Versal ACAP Memory Resources Architecture Manual](https://docs.amd.com/r/en-US/am007-versal-memory/Block-RAM?tocId=4P4QDFML7TiXdlJaQlcRog).
+For more information on block RAMS, refer to [Versal adaptive SoC Memory Resources Architecture Manual](https://docs.amd.com/r/en-US/am007-versal-memory/Block-RAM?tocId=4P4QDFML7TiXdlJaQlcRog).
 A single transform contains 4096 samples, 64 bits each. To achieve our desired throughput, we require two write and two read ports.
 The IFFT transpose blocks that exist in `${DSPLIB_ROOT}/L1/src/hw` are implemented using ping-pong buffers for storage.
 

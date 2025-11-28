@@ -418,14 +418,14 @@ For this tutorial, the graph files are just the header and the implementation fi
 In the graph header file, the *fft1k_128_graph* class is defined, with all the kernel and buffer objects and connection inside it.
 As a first step, the ADF library and kernel header file are included, then six variables are defined through #define compiler directives:
 
-- the number of signal instances $\text{N\\_INST}=128$;
-- the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\\_WIDTH} = 2$;
-- the time interleaving $\theta$ factor $\text{IO\\_ILV}=4$;
-- the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\\_KERS}=\frac{\text{N\\_INST}}{\text{REPS}}=64$;
-- the number of I/O channels, that is $\text{N\\_IO}=\frac{\text{N\\_INST}}{\text{IO\\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\\_WIDTH}}=16$.
-- the maximum number $\text{MAX\\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
+- the number of signal instances $\text{N\_INST}=128$;
+- the width of the PLIO channels in terms of samples, that are CINT16, thus 32 bits wide: $\text{PLIO\_WIDTH} = 2$;
+- the time interleaving $\theta$ factor $\text{IO\_ILV}=4$;
+- the number of kernels, that is equal to the number of instances divided by the batch factor $\text{N\_KERS}=\frac{\text{N\_INST}}{\text{REPS}}=64$;
+- the number of I/O channels, that is $\text{N\_IO}=\frac{\text{N\_INST}}{\text{IO\_ILV}\hspace{1mm}\cdot\hspace{1mm}\text{PLIO\_WIDTH}}=16$.
+- the maximum number $\text{MAX\_BUF}$ of shared buffer that fits into a memory tile. It can be limited either by the memory occupation of the buffer, or by the number of memory interfaces.
   - Note that the formulas suggested in the code are calculated for ping-pong shared buffers and considering input and output buffers packed together (as it spares mem tile interface resources). 
-    $$\text{MAX\\_BUF} = min\left[ \frac{512kB}{\text{BUF\\_SIZE}\cdot\text{DATATYPE\\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\\_KERS}}{\text{N\\_IOs}}} \right]$$
+    $$\text{MAX\_BUF} = min\left[ \frac{512kB}{\text{BUF\_SIZE}\cdot\text{DATATYPE\_BYTES}\cdot 2\cdot 2}\quad; \quad \frac{6}{2\cdot \frac{\text{N\_KERS}}{\text{N\_IOs}}} \right]$$
   - For this reason, the build will work even if MAX_BUF = 0 in the case the design is port-limited, as in such case the buffers are left unconstrained.
 
 In the private section of the class there are only attributes, that are an array of N_IO kernels and two arrays of N_IO shared buffers, one for the inputs and one for the outputs.
@@ -488,7 +488,7 @@ Moreover, to lighten the job of the placer of aiecompiler, and to ensure minimiz
 ```
 
 The second loop is used to instantiate the input and output shared buffers. As a first operation, the buffers are created to match a slice of the 3D tensor, that has a length equal to PLIO_WIDTH, a depth equal to IO_ILV, and a height equal to the number of samples.
-The ports of such buffers are configured to be connected to one I/O from the side facing the PL. On the other side, instead, they are configured to connect one kernel for every two instances they contain. Therefore, since they contain $\text{PLIO\\_WIDTH} \cdot \text{IO\\_ILV}$ instances, the number of ports on the buffer side facing the kernels is equal to 4, meaning that every buffer serves four kernels with two instances each.
+The ports of such buffers are configured to be connected to one I/O from the side facing the PL. On the other side, instead, they are configured to connect one kernel for every two instances they contain. Therefore, since they contain $\text{PLIO\_WIDTH} \cdot \text{IO\_ILV}$ instances, the number of ports on the buffer side facing the kernels is equal to 4, meaning that every buffer serves four kernels with two instances each.
 In the following lines, it is required that the shared buffers are instantiated as ping-pong buffers, thus to reserve double the memory for each. 
 Moreover, the buffers are location constrained to pack together as many input and output buffers per memory tile as possible, being the limitation either the number of ports or the memory size.
 
@@ -660,14 +660,14 @@ After gathering the performance data of the first 3D buffer implementation, we c
 
 After gathering the performance data of the first 3D buffer implementation, because the profiling results showed that the kernels are locked for more than $75\%$ of the time, an idea is to further exploit the capacity and features of the memory tiles to buffer more data and use a quarter of the kernels through data serialization.
 To do so, a further dimension that represents time, can be added for the shared buffer. This fourth dimension will make possible that the number of kernels is less affected by the input time interleaving, by moving a selectable amount of instances from the second dimension (depth) to the fourth one.
-The resulting code restructuring is minimal and involves the aforementioned reshaping of the shared buffer tensor though a new parameter $\text{KER\\_ILV}$, that expresses the number of times that a kernel must run during the acquisition time, at steady state.
-The $\text{KER\\_ILV}$ parameter effectively counteracts the $\text{IO\\_ILV}$ effect, decoupling the spatial-temporal interleaving done for the IOs and the one done inside the AIE-ML, enabling seralization.
+The resulting code restructuring is minimal and involves the aforementioned reshaping of the shared buffer tensor though a new parameter $\text{KER\_ILV}$, that expresses the number of times that a kernel must run during the acquisition time, at steady state.
+The $\text{KER\_ILV}$ parameter effectively counteracts the $\text{IO\_ILV}$ effect, decoupling the spatial-temporal interleaving done for the IOs and the one done inside the AIE-ML, enabling seralization.
 
 The graph header file ``fft1k_128_new_graph.h`` contains the new modified code. Note that the only changes done to the code are the following:
 
 - The shared buffer now has four dimensions: the time dimesion has been added as the third one, and the dimension of the samples (previously the third) is now the fourth.
-- Every time that $\text{IO\\_ILV}$ appears in the code, it has to be divided by $\text{KER\\_ILV}$.
-- The $\text{MAX\\_BUF}$ variable can be now set to three, according to the formulas in the code.
+- Every time that $\text{IO\_ILV}$ appears in the code, it has to be divided by $\text{KER\_ILV}$.
+- The $\text{MAX\_BUF}$ variable can be now set to three, according to the formulas in the code.
   - The number of shared buffers that can fit in a memory tile is still port-limited, but since each shared buffer now serves just one kernel instead of four, the number of required active ports lowers to just one for each ping-pong buffer. This means that three input and three output memory shared buffers can be packed together.
 
 In the following code block shows an excerpt of the third loop. Note the differences with the previous design iterations.

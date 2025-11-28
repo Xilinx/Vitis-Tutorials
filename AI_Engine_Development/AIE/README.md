@@ -31,7 +31,7 @@ To easily find the right documentation corresponding to the development stage yo
 
 The major documentation for AI Engine includes:
 
-- *Versal ACAP AI Engine Architecture Manual* [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)
+- *Versal adaptive SoC AI Engine Architecture Manual* [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)
 - *AI Engine Tools and Flows* [UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
 - *AI Engine Kernel and Graph Programming Guide* [UG1079](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding)
 

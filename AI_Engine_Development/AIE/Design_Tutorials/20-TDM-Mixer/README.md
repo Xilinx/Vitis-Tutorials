@@ -36,7 +36,7 @@ This tutorial targets three goals using the context of the TDM Mixer:
 * Show how the non-linear `sincos()` generator in each AI Engine tile can be used to vectorize workloads involving phase or frequency generation without the use of lookup tables.
 * Provide another example of how AI Engine code can be optimized for improved software pipelining to achieve higher throughputs through simple code refactoring.
 
-Finally, the tutorial also uses the new Vitis Functional Simulation to run functional simulations of AI Engine designs in the Matlab context. This new flow allows the designer to feed I/O's from Matlab directly to and from the AI Engine for x86 functional simulation without the use of I/O files. This direct connection of the x86simulator to your system model context in Matlab facilitates the verification of your algorithm vectorization as you migrate your algorithms to AI Engine.
+Finally, the tutorial also uses the new Vitis Functional Simulation to run functional simulations of AI Engine designs in the MATLAB® context. This new flow allows the designer to feed I/O's from MATLAB directly to and from the AI Engine for x86 functional simulation without the use of I/O files. This direct connection of the x86simulator to your system model context in MATLAB facilitates the verification of your algorithm vectorization as you migrate your algorithms to AI Engine.
 
 ## Corner-Turning using Tile DMA
 
@@ -121,7 +121,7 @@ Note the computation in Line 61-62 involves two 8-lane vector multiplications. T
 
 This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the TDM Mixer implementation in AI Engine against its MATLAB behavioral models. The VFS feature automatically creates "shared objects" of your AI Engine and PL HLS-based kernels in your Versal design, allowing it to be brought into familiar system-level simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose. VFS is a production tool feature in 2025.1.
 
-The Matlab version of VFS is used to validate the TDM Mixer functional performance. The diagram below shows the MATLAB m-code required to use VFS:
+The MATLAB version of VFS is used to validate the TDM Mixer functional performance. The diagram below shows the MATLAB m-code required to use VFS:
 
 * Make sure you source `${XILINX_VITIS}/settings64.sh` before starting your MATLAB session.
 * Create an instance of your AI Engine graph using `vfs.aieGraph` in Line 59.

@@ -146,7 +146,7 @@ fft2d_AIEvsHLS
 
 * [AM011 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am011-versal-acap-trm)
 
-* [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+* [Versal adaptive SoC AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 </details>
 

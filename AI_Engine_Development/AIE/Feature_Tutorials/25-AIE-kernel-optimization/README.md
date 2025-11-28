@@ -514,7 +514,7 @@ As you gain experience working with AI Engine architecture and applying these pr
 
 [[1]]: Versal Adaptive SoC AI Engine Architecture Manual ([AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)).
 
-[[2]]: Vitis Accelerated Flow Reference Guide ([UG1702](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference)).
+[[2]]: Vitis Reference Guide ([UG1702](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference)).
 
 [[3]]: Bilinear interpolation. 16 Dec 2024, 22:13 UTC. In Wikipedia: The Free Encyclopedia. Wikimedia Foundation Inc. Encyclopedia on-line. Available from [wikipedia.org/wiki/Bilinear_interpolation](https://en.wikipedia.org/wiki/Bilinear_interpolation). Internet. Retrieved 19 December 2024.
 

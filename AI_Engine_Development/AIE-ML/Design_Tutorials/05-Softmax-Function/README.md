@@ -31,9 +31,8 @@
 
 [Support](#support)
 
-
-
 ## Introduction
+
 Machine Learning is pervasive in just about any modern application. Whereas machine learning tends to infer processing of structured data, the sub-class of deep learning is often applied to unstructured data where more abstraction is required to extract significant features from a data set. Some applications that have proven to benefit from the application of deep learning are natural language processing and image classification, where the relationship between input data and desired output can be exceedingly complex.
 
 Deep learning solutions are often created in the form of a neural network, as depicted in the following figure.
@@ -77,7 +76,9 @@ $$
 which is attractive because no division is required. However, it has been shown that in practice this formula tends to produce larger computational errors [[1]].
 
 ## Computing the Exponential Function
+
 ### IEEE 754 Format Trick
+
 In addition to basic arithmetic operations, softmax computation depends on efficient evaluation of the exponential function. While there are several ways to accomplish this, an attractive alternative is to estimate the exponential function using a trick based on IEEE 754 floating-point format [[2]]. A double-precision, floating-point number represented by IEEE 754 format is shown in the following figure.
 
 ![figure3](images/ieee754_format.png)
@@ -95,6 +96,7 @@ $$
 A factor of $2^{20}$ represents a binary shift necessary to align with the exponent field of the IEEE 754 format. Residual mantissa bits help provide a degree of interpolation between exponent values. The parameter $C$ is a correction factor meant to mitigate estimation error. It was found that a value of $C=60801$ minimizes RMS error [[2]]. This estimation method might be adapted for other variations of floating-point number representations, such as bfloat16 data type. 
 
 ### Improving Accuracy
+
 While this trick is computationally very efficient, it can result in an estimation error as large as ~4% of the true value. To reclaim lost accuracy, a method was proposed in [[3]] where all 64 bits are used in computation and a correction function $F$ is defined. To derive the solution, begin by expressing the exponential function in the form
 
 $$
@@ -112,6 +114,7 @@ $$
 as a 64-bit signed integer then reinterpreting the result as a double-precision floating-point value. Since all 64 bits are used, a factor $2^{52}$ is necessary to align to the exponential field of the IEEE 754 format.
 
 ### Adapting for bfloat16 Floating-Point
+
 AMD Versal&trade; Edge Adaptive SoCs primarily contain a variant of AI Engine processor, which has bfloat16 floating-point as a native data type. The structure of a bfloat16 number is shown in the following figure.
 
 ![figure4](images/bfloat16_format.png)

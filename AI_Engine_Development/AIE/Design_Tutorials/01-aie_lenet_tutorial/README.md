@@ -39,7 +39,7 @@ Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS),
 
 This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine and PL, including block RAM. The design demonstrates functional partitioning between the AI Engine and PL. It also highlights memory partitioning and hierarchy among DDR memory, PL (block RAM) and AI Engine memory.
 
-The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal ACAP system integration. A Makefile is provided that you can modify to suit your own needs in a different context.
+The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system integration. A Makefile is provided that you can modify to suit your own needs in a different context.
 
 <details>
   <summary>Objectives</summary>
@@ -110,7 +110,7 @@ Note: This tutorial targets the [VCK190 Production board](https://www.xilinx.com
 
 * [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
-* [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+* [Versal adaptive SoC AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 </details>
 

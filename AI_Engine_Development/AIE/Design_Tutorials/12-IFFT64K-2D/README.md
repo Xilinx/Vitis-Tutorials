@@ -39,8 +39,9 @@ A 1D FFT may be implemented on the AI Engine array using a 2D FFT algorithm with
 
 The 2D architecture is not new to AI Engine. [XAPP1356](https://docs.amd.com/r/en-US/xapp1356-fft-ai-engine) first explored its use several years ago to achieve 3.7 Gsps with 10 AI Engine tiles. In this tutorial, we explore using the 2D architecture to implement large point transforms in the SSR > 1 regime: specifically a 64K-pt IFFT @ 2 Gsps. In this scenario, the design requires both AI Engine tile resources for compute and programmable logic (PL) resources for sample reordering as shown in detail below.
 
-## Matlab Model
-A Matlab model of the 64K-pt IFFT implemented as a $256 \times 256$ 2D architecture is shown below. The model & algorithm consist of the following steps:
+## MATLAB Model
+
+A MATLAB® model of the 64K-pt IFFT implemented as a $256 \times 256$ 2D architecture is shown below. The model & algorithm consist of the following steps:
 1. Load the input data in column-major order into a $256 \times 256$ matrix.
 1. Take 256-pt transforms along each row
 1. Perform a point-wise multiplication of the data matrix with a "twiddle matrix" (see code below for its detailed definition)

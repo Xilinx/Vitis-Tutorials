@@ -12,16 +12,14 @@
     </td>
   </tr>
 </table>
+
 # Buffer Descriptors
 
 ## Introduction
 
 DMA programming is performed through _Tiling Parameters_. These parameters describe how the data should be accessed in the memory on a tile basis. Dimension 0 is the dimesion where the data are contiguous in memory. The overall dimension of the buffer is specified and then the tile dimension and the number of tiles to read in each dimension.
 
-This is actually aa EoU layer above the real hardware. The actual DMA programming is controlled through _Buffer Descriptors_. Their usage is cumbersome compared to tiling parameters, that's why the latter are used for DAM programming. Unfortunately from time to time, during AI Engine compilation, you may have error messages like:
-
-```shell
-```
+This is actually an EoU layer above the real hardware. The actual DMA programming is controlled through _Buffer Descriptors_. Their usage is cumbersome compared to tiling parameters, that's why the latter are used for DAM programming. Unfortunately from time to time, during AI Engine compilation, you may have error messages like:
 
 In order to understand why you get this type of message, I encourage you to read this small section.
 

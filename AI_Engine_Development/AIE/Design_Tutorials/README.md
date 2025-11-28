@@ -34,16 +34,17 @@ The **[README](../README.md)** of AI Engine Development contains important infor
  </tr>
  <tr>
  <td align="center"><a href="./02-super_sampling_rate_fir/">Super Sampling Rate FIR Filters</a></td>
- <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal® ACAP AI Engine processor array.</td>
+ <td>The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal™ adaptive SoC AI Engine processor array.</td>
  </tr>
  <tr>
  <td align="center"><a href="./03-beamforming/">Beamforming Design</a></td>
  <td>This tutorial demonstrates the creation of a beamforming system running on the AI Engine, PL, and PS, and the validation of the design running on this heterogeneous domain.</td>
  </tr> 
+ <tr>
  <td align="center"><a href="./04-Polyphase-Channelizer/">Polyphase Channelizer</a></td>
  <td>This tutorial demonstrates an implementation of a system-level design (such as Polyphase Channelizer) using a combination of AI Engine and PL/HLS kernels.</td>
- </tr> 
- </tr> 
+ </tr>
+ <tr> 
  <td align="center"><a href="./05-Prime-Factor-FFT/">Prime Factor FFT-1008</a></td>
  <td>This Versal system example implements a 1008-pt FFT using the Prime Factor Algorithm. The design uses both AI Engine and PL kernels working cooperatively. AI Engine elements are hand-coded using AIE API. PL elements are implemented using Vitis HLS. System integration in Vitis is managed using the new v++ Unified Command Line flow. </td>
  </tr> 
@@ -75,7 +76,7 @@ The **[README](../README.md)** of AI Engine Development contains important infor
  </tr>
  <tr>
  <td align="center"><a href="./10-GeMM_AIEvsDSP/">Versal GeMM Implementation</a></td>
- <td>This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with RTL using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal ACAP system design.</td>
+ <td>This tutorial performs two implementations of a system-level design: one with AI Engine, and the other with RTL using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system design.</td>
  </tr>
  <tr>
  <td align="center"><a href="./11-Bilinear_Interpolation/">Bilinear Interpolation</a></td>

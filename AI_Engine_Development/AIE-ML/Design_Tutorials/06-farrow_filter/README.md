@@ -52,12 +52,14 @@ Before starting this tutorial, run the following steps:
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Table of Contents
+
 - [Migrating the Design from AIE to AIE-ML architecture](#migrating-the-design-from-aie-to-aie-ml-Architecture)
 - [Optimizing the Design for Performance](#optimizing-the-design-for-performance)
 - [Changing the Interface to GMIO](#changing-the-plio-interface-to-gmio-interface)
 - [Running the Design on the Board](#building-and-running-the-design-on-the-board)
 
 ### Objectives
+
 - Migrate the farrow filter from AIE to AIE-ML architecture
 - Optimize the design to meet the required performance
 - Modify the interface to GMIO
@@ -66,32 +68,49 @@ Before starting this tutorial, run the following steps:
 - Run the design on the board 
 
 ### Migrating the Design from AIE to AIE-ML Architecture
+
 #### Change the Project Path
+
 Switch the device from AIE to AIE-ML and then compile the design to ensure it compiles without errors.  \
 Enter the following command to navigate to the project path of the final AIE design:
+
 ```
 cd <path-to-tutorial>/designs/farrow_final_aie
 ```
+
 Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 
 #### Source the Vitis Tool
+
 Enter the following command to source the Vitis tool:
+
 ```
 source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
 ```
+
 #### Update the Makefile to switch the device from AIE to AIE-ML.
+
 Open the Makefile and modify the device from AIE to AIE-ML as shown below:
+
 ```
 PLATFORM_USE	  := xilinx_vek280_base_202520_1
 ```
+
 Save the file.
+
 #### Compile the Design for x86 Simulation
+
 Enter the following command to compile for x86 simulation:
+
 ```
 make x86compile
+
 ```
+
 Notice the compilation error as shown below:
+
 ```
+
 In file included from wrap_farrow_kernel1.cpp:2:
 ./../../farrow_kernel1.cpp:58:19: error: constraints not satisfied for alias template 'sliding_mul_sym_xy_ops' [with Lanes = 8, Points = 8, CoeffStep = 1, DataStepXY = 1, CoeffType = short, DataType = cint16, AccumTag = cacc48]
    58 |     acc_f3 = aie::sliding_mul_sym_xy_ops<8,8,1,1,int16,cint16>::mul_antisym(f_coeffs,0,v_buff,9);
@@ -100,11 +119,15 @@ In file included from wrap_farrow_kernel1.cpp:2:
  1154 |     requires(arch::is(arch::AIE))
       |              ^
 
+
 ```
+
 ##### What does the compile error indicate?
+
 The error message indicates that the AIE API **sliding_mul_sym_xy_ops<>** only supports the AIE architecture and not AIE-ML. You can see the error as `'arch::is(arch::AIE)' evaluated to false`
 
 ##### Why is the AIE API **sliding_mul_sym_xy_ops<>** not supported for AIE-ML?
+
 This API uses only half the tap values because it uses the pre-adder to compute the rest of the samples.  
 
 Based on the comparison provided between the AIE and AIE-ML architectures regarding fixed-point multiplication paths, it appears that the AIE architecture utilizes a pre-adder mechanism that is absent in the AIE-ML architecture.
@@ -112,6 +135,7 @@ Based on the comparison provided between the AIE and AIE-ML architectures regard
 ![Pipeline Diagram for AIE and AIE-ML](./images/Pipeline_Diagram_of_AIE_and_AIE-ML.png)
 
 ##### How to fix this for AIE-ML?
+
 Additional AIE APIs that can make full use of the tap values for computation need to be identified. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. You should now adjust the parameter values according to the API details provided in the documentation in the this link **[AIE APIs Special Multiplication](https://download.amd.com/docnav/aiengine/xilinx2025_2/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
 
 The following figure shows the supported parameters type (coeff x data) for AIE and AIE-ML architecture. **coeff** is *int16* and **data** is *cint16*.
@@ -119,6 +143,7 @@ The following figure shows the supported parameters type (coeff x data) for AIE 
 ![AIE API Parameters](./images/AIE_API_Parameters.png)
 
 ### Initial Porting of Farrow Filter to AIE-ML
+
 #### Modify the Kernel code using AIE API aie::sliding_mul_ops<>
 
 The parameters for **aie:sliding_mul_ops<>** are Lanes, Points, CoeffStep, DataStepX, DataStepY, CoeffType, DataType, AccumTag.
@@ -137,10 +162,13 @@ Other parameters use the same value used for AIE architecture:\
 So, it will be as follows **aie::sliding_mul_ops<16, 8, 1, 1, 1,int16,cint16>;**
 
 Enter the following command to navigate to the project path of the design:
+
 ```
 cd ../farrow_port_initial
 ```
+
 Review the kernel code located under `<path-to-tutorial>/designs/farrow_port_initial/farrow_kernel1.cpp` file. The necessary changes are already made. Study the code and observe the following changes:
+
 - Accumulator size has been changed to `cacc64` (acc_f3, acc_f2, acc_f1, acc_f0) as per the AIE API. 
 - Load the full coefficient values (f_coeffs).
 - Vector iterator size updated for 16 lanes (p_sig_i, p_y3, p_y2, p_y2, p_y0), compared to eight lanes in AIE code.
@@ -158,38 +186,50 @@ No changes to the `farrow_kernel2.cpp` file.
 After finishing the review of the kernel code, proceed to compile and then simulate the design.
 
 #### Compile and Simulate the Design
+
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
+
 ```
 $ make x86compile
 $ make x86sim
 ```
+
 The first command compiles the graph code for simulation on an x86 processor, the second command runs the simulation. 
 
 To verify the results, make sure you have already invoked MATLAB in your command line and run the following command:
+
 ```
 $ make check_sim_output_x86
 ```
+
 This command invokes MATLAB to compare the simulator output against golden test vectors. 
 The console should output `Max error LSB = 1`.
 
 To understand the performance of your initial implementation, you can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands:
+
 ```
 $ make compile
 $ make sim
 $ make check_sim_output_aie
 ```
+
 The first command compiles graph code for the SystemC simulator, the second command runs the AIE simulation, and the final command invokes MATLAB to compare the simulation output with test vectors and compute raw throughput. The average throughput for the IO ports is displayed at the end of AIE simulation.
+
 After the final command execution, the console should output as below:
+
 ```
 Raw Throughput = 449.0 MSPS
 Max error LSB = 1
 ```
+
 #### Analyze the Reports
 
 Enter the following command to launch the Vitis Analyzer and review the reports.
+
 ```
 $ vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
+
 Select the `Graph` view.
 ![Initial_Port_Graph](./images/Initial_Port_Graph.png)
 
@@ -208,6 +248,7 @@ The design requirement is to reach 1 GSPS, but the current performance is only *
 Close the Vitis Analyzer.
 
 ##### How to find the bottleneck in the design? 
+
 Begin by examining the compiler report for each kernel to assess its performance.
 
 In the context of AI Engine processors, Initiation Interval (II) is defined as how often (in cycles) a new iteration of the loop can start.
@@ -217,6 +258,7 @@ For example, if a new iteration of the loop can start every II=16 cycles, and ea
 Assuming your AI Engine clock is 1.25 GHz, that means your throughput can potentially reach 1.25 GSPS excluding any processor overhead. Output throughput is defined as the number of samples produced from your kernel per second.
 
 ##### How to determine the II required for farrow_kernel1?
+
 Navigate to the compiler reports for each tile located at `designs/farrow_port_initial/Work/aie`.
 
 The *farrow_kernel1* is specifically implemented on tile `19_0`. Locate the `19_0.log` file within the `19_0` folder. Search for "minimum length due to resources" in this file. The AIE Compiler optimizes in three stages; use the results from the final stage output. Each loop iteration takes *II=112 cycles*.
@@ -235,14 +277,16 @@ Compare the code below. The initial version using four filter operations versus 
 
 ![Farrow_Inital_and_opt_1](./images/Farrow_inital_and_opt_1.png)
 
-
 ##### Enhancing Performance Through Computation Split Across Multiple Tiles
+
 By dividing the computations across multiple tiles, each kernel is tasked with fewer operations. Instead of handling four filters, each kernel now manages only two filter operations. This adjustment has the potential to enhance the II, thereby improving overall performance.
 
 Enter the following command to change project path:
+
 ```
 cd ../farrow_opt_1
 ```
+
 Review the kernel code `farrow_kernel1.cpp` and `farrow_kernel1.h` located under the `farrow_opt_1` directory.
 - `farrow_kernel1.cpp`
   - Only two filters operations are done
@@ -257,21 +301,27 @@ Review the graph code `farrow_graph.h` located under the `farrow_opt_1` director
 - Observe the connections made between the kernels
 
 #### Compile and Simulate the Design
+
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
+
 ```
 $ make x86compile
 $ make x86sim
 $ make check_sim_output_x86
 ```
+
 The console should output `Max error LSB = 1`.
 
 To understand the performance of your initial implementation, you can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands:
+
 ```
 $ make compile
 $ make sim
 $ make check_sim_output_aie
 ```
+
 The console should output as below:
+
 ```
 Raw Throughput = 754.9 MSPS
 Max error LSB = 1
@@ -281,10 +331,13 @@ This design was able to reach 754.9 MSPS. But still it does not meet goal of 1 G
 Note: In trace view, the measured throughput is 1024/1.535 = 664.7 MSPS.
 
 Run the script which will read the II from the compiler log for each tile.
+
 ```
 $ make get_II
 ```
+
 The console should output as below:
+
 ```
 *** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_0 minII = 29 achieves II = 29
@@ -294,11 +347,13 @@ The console should output as below:
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 ```
+
 The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_4 to perform four filter computations. According to the kernel `farrow_kernel1.cpp`, it contains two `for loops`, each with an II of 29. Consequently, it necessitates 58 cycles for each loop iteration. But the goal is to achieve an II of 32 to achieve 1 GSPS.
 
 Close the Vitis Analyzer.
 
 #### Second Optimization 
+
 The previous setup employs three tiles: two tiles for filters and another for final computations.
 
 As you noticed, the performance has been improved from 369.68 MSPS to 664.9 MSPS. The II has been reduced from 112 to 58 cycles. But the required goal of 1 GSPS has not yet been achieved.
@@ -306,9 +361,11 @@ As you noticed, the performance has been improved from 369.68 MSPS to 664.9 MSPS
 Instead of managing two filters per tile, each kernel will now handle just one filter operation. You will use four tiles to carry out each filter operation. This adjustment could improve the II and enhance overall performance.
 
 Enter the following command to change the project path:
+
 ```
 cd ../farrow_opt_2
 ```
+
 Review the kernel code `farrow_kernel1.cpp` and `farrow_kernel1.h` located under the `farrow_opt_2` directory.
 - farrow_kernel1.cpp
   - Only one filter operation is performed
@@ -320,32 +377,42 @@ Review the graph code `farrow_graph.h` located under the `farrow_opt_2` director
 - Observe the connections made between the kernels
 
 #### Compile and Simulate the Design
+
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
+
 ```
 $ make x86compile
 $ make x86sim
 $ make check_sim_output_x86
 ```
+
 The console should output `Max error LSB = 1`.
 
 To understand the performance of your initial implementation, you can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands:
+
 ```
 $ make compile
 $ make sim
 $ make check_sim_output_aie
 ```
+
 The console should output as below:
+
 ```
 Raw Throughput = 1060.9 MSPS
 Max error LSB = 1
 ```
+
 #### Analyze the Reports
+
 Enter the following command to launch the Vitis Analyzer and review the reports.
 
 ```
 $ vitis_analyzer aiesimulator_output/default.aierun_summary
 ```
+
 ![Farrow_Opt2_Graph](./images/Farrow_Opt2_Graph.png)
+
 Graph view shows the five kernels (four for filters and one for final computation). Select the I/O tabs as shown in the above diagram. Observe the Throughput column in the I/O tab.
 
 The output PLIO port throughput shows the value 4243.680066. This throughput value needs to be divided by four because the data type used is `cint16`, which is four bytes in size. You will get the throughput value as 1060.9 MSPS.
@@ -362,9 +429,11 @@ The design was able to meet the desired 1 GSPS.
 After reviewing the report, close the Vitis Analyzer.
 
 Run the script which will read the II from the compiler log for each tiles.
+
 ```
 $ make get_II
 ```
+
 The console should output as below:
 
 ```
@@ -394,10 +463,12 @@ A `input_gmio` or `output_gmio` object is used to make external memory-mapped co
 Now, we will change the PLIO interface to GMIO interface and do the necessary changes to the graph and test bench (`farrow_graph.h` and `farrow_app_adf.cpp`).
 
 Enter the following command to change project path:
+
 ```
 cd ../farrow_gmio/aie_ml
 ```
-Review the `farrow_graph.h` file. Observe the `class dut_graph` where the input and output ports are declared as GMIO. 
+
+Review the `farrow_graph.h` file. Observe the `class dut_graph` where the input and output ports are declared as GMIO.
 
 ```sig_i =  input_gmio::create("sig_i", 256, 1000);```
 
@@ -409,75 +480,91 @@ In Linux, the virtual address passed to GMIO::gm2aie_nb, GMIO::aie2gm_nb, GMIO::
 
 1. Memory allocated by `GMIO::malloc` for input and ouput data as shown below.
 
-```
+  ```
   short int* sig_i_Array=(short int*)GMIO::malloc(BLOCK_SIZE_sig_in_Bytes);
   int32* del_i_Array=(int32*)GMIO::malloc(BLOCK_SIZE_del_in_Bytes);
   short int* sig_o_Array=(short int*)GMIO::malloc(BLOCK_SIZE_out_Bytes);
-```  
+  ```  
 
 2. Copy the test vectors to the allocated memory.
-```
+
+  ```
   /* Copy the samples to the buffer */
   memcpy(sig_i_Array, input_sig_i, BLOCK_SIZE_sig_in_Bytes);
   
   /* Copy the delay values to the buffer */
   memcpy(del_i_Array, input_del_i,BLOCK_SIZE_del_in_Bytes);
-```
+  ```
+
 3. Initiate the memory-mapped AXI4 transactions for the AI Engine_ML to read from DDR memory spaces. 
-```
+
+  ```
   aie_dut.sig_i.gm2aie_nb(sig_i_Array, BLOCK_SIZE_sig_in_Bytes);
   aie_dut.del_i.gm2aie_nb(del_i_Array, BLOCK_SIZE_del_in_Bytes);
-```
+  ```
+
   - The first argument `sig_i_Array` is the pointer to the start address of the memory space for the transaction
   - The second argument is the transaction size in bytes.
 
 4. Similarly, `aie2gm()` is used to initiate memory-mapped AXI4 transactions for the AI Engine-ML to write to DDR memory spaces.
-```
-aie_dut.sig_o.aie2gm(sig_o_Array, BLOCK_SIZE_out_Bytes);
-```
-`aie_dut.sig_o.aie2gm_nb()` is a non-blocking function in a sense that it returns immediately when the transaction is issued, that is, it does not wait for the transaction to complete. 
+
+    ```
+    aie_dut.sig_o.aie2gm(sig_o_Array, BLOCK_SIZE_out_Bytes);
+    ```
+
+    `aie_dut.sig_o.aie2gm_nb()` is a non-blocking function in a sense that it returns immediately when the transaction is issued, that is, it does not wait for the transaction to complete. 
 
 5. The results are compared with the golden values and printed out.
 
 6. When PS has completed processing, the memory space allocated by GMIO::malloc can be released by GMIO::free.
-```
+
+  ```
   GMIO::free(sig_i_Array);
   GMIO::free(del_i_Array);
   GMIO::free(sig_o_Array);
-```
+  ```
 
 #### Compile and Simulate the Design
 
 Enter the following command to compile (x86compile) and simulate (x86sim) to verify the functional correctness of the design:
+
 ```
 $ make x86compile
 $ make x86sim
 $ make check_sim_output
 ```
+
 The console should output as below:
+
 ```
 Max error LSB = 1
 ```
+
 In the PLIO design, the simulator outputs data to a file, while in GMIO, the data is written to memory. For GMIO, first read the output from global memory and then write it to a file.
 You can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands:
+
 ```
 $ make compile
 $ make sim
 $ make check_sim_output
 ```
+
 The console should output as below:
+
 ```
 Max error LSB = 1
 ```
 
 ### Building and Running the Design on the Board
 
-#### Review of Tool Flow 
+#### Review of Tool Flow
+
 The diagram below illustrates the entire Vitis tool flow, encompassing the development stages for AI kernels, PL kernels, and PS code. Once the development of AIE kernels and PL kernels is completed, the subsequent step involves linking `libadf.a` and all `.xo` kernels with the designated platform. Following the linking stage, the output of the linker, which includes `.xsa` and `host.exe`, is packaged together to generate `.xclbin` and the `SD card image` required for programming the SD card.
   
 ![Tool_Flow](./images/Tool_Flow.png)
 
 #### Setup and Initialization
+
 IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
 https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html
@@ -485,18 +572,23 @@ https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. The remaining environment variables are configured in the top level Makefile ```<path-to-tutorial>/designs/farrow_gmio/Makefile```. 
 
 ##### Host Code with XRT APIs
+
 It is recommended to use the XRT APIs for the host code. The host code has been modified with XRT API. Review the code and then build the project and run it on board.
 
 Enter the following command to change project path:
+
 ```
 $ cd ../ps_apps/hw_emu
 ```
+
 Review the `host.cpp` file.
 
 The XRT APIs are used and XRT profiling is also used to measure the throughput of the design.
 
 ###### Hardware Emulation
+
 Enter the following command to build the design for hardware emulation:
+
 ```
 $ cd <path-to-tutorial>/designs/farrow_gmio/
 $ make clean all TARGET=hw_emu
@@ -505,6 +597,7 @@ $ make clean all TARGET=hw_emu
 This will take about 15 minutes to run. The build process will generate a folder `designs/farrow-gmio/package` containing all the files required for hardware emulation.
 
 Enter the following command to run hardware emulation:
+
 ```
 $ cd <path-to-tutorial>/designs/farrow_gmio/package
 $ ./launch_hw_emu.sh -run-app embedded_exec.sh
@@ -534,6 +627,7 @@ After the hardware emulation run is complete, you can analyze the reports in Vit
 ###### Hardware Run
 
 Enter the following command to build the design for hardware emulation:
+
 ```
 $ cd <path-to-tutorial>/designs/farrow_gmio/
 $ make clean all TARGET=hw
@@ -564,18 +658,21 @@ GMIO transactions finished
 Note: You can safely ignore the warnings.
 
 ## Comparison of AIE vs AIE-ML Farrow Filter Design Implementation
+
 The following table compares the implementation of a farrow filter in AIE and AIE-ML architectures.
 This indicates that approximately twice the number of tiles is required for kernel computation in AIE_ML compared to the AIE architecture to achieve the same performance.
+
 | Design                 | Tiles for AIE Kernels | Tiles for Buffers | Total Tiles |  Throughput         | Relative MSPS per tile |
 |------------------------|-----------------------|-------------------|-------------|---------------------|------------------------|
 | farrow - AIE (PLIO)    |       2               | 5                 | 5           | 1138 MSPS (HW_EMU)  | 227.6                  |
 | farrow - AIE-ML (GMIO) |       5               | 8                 | 8           | 1061 MSPS (HW_EMU)  | 132.6                  |
 
-```* Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.```
+**Note:**Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.
 
 ## Conclusion
 
 This tutorial has demonstrated the following:
+
 - How to migrate the design from AI Engine to AIE-ML architecture.
 - How to optimize the design to meet the required sampling rate.
 - Using the GMIO interface and host code with XRT APIs.

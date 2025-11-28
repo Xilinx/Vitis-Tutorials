@@ -15,14 +15,11 @@
 
 # AI Engine-ML Architecture
 
-
-
-
 ## Introduction
 
-Versal™ AI Edge ACAPs have been develop to target any applications at the edge where balancing performance and power consumption, low latency, size and thermal constraints, and safety and reliability are paramount.
+The Versal™ AI Edge Series has been develop to target any applications at the edge where balancing performance and power consumption, low latency, size and thermal constraints, and safety and reliability are paramount.
 
-As the Versal™ AI Core series they contain also an array of SIMD VLIW DSP processors but with different functionality.
+Like the Versal™ AI Core Series, it also contains an array of SIMD VLIW DSP processors but with different functionality.
 
 ![AI Engine-ML overview](images/AIE-ML-Overview.png)
 

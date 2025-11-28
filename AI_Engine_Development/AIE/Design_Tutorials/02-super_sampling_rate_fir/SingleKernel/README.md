@@ -260,7 +260,9 @@ You can perform the same analysis with throughput by selecting the **I/O** tab o
 
 ### Script Utils
 
-As explained earlier, the directory `Utils` contains a number of utilities that help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to `aiesimulator_output/data` and look at the `Output_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.  `ProcessAIEOutput Output_0.txt`.
+As explained earlier, the directory Utils contains a number of utilities that help in analyzing the design output. First, the output value has to be validated. The input being a set of Dirac impulses, the impulse response of the filter should be recognized throughout the waveform. Navigate to aiesimulator_output/data and look at the `Output_0.txt`. You can see that you have two complex outputs per line, which is prepended with a time stamp.
+
+You can use the following command to display the reconstructed signals: `ProcessAIEOutput Output_0.txt`.
 
 ![missing image](../Images/GraphOutputSingleKernel.jpg)
 
@@ -278,7 +280,7 @@ After simulation the simulator displays the raw throughput at the input and outp
 
 As this is expressed in bytes per second this must be divided by 4 to get it in samples per second (cint16 is encoded with 2 bytes for the real part and 2 bytes for the imaginary part). This makes an estimated throughput of `292.17 Msps`.
 
-The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
+The throughput can be computed from the timeline, but a tool has been created for you in the `Utils` directory to compute it from the output files. In the same directory (`aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
 ```
 Output_0.txt -->   293.24 Msps

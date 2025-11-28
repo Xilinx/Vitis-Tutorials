@@ -37,23 +37,27 @@ A 1D FFT may be implemented on the AI Engine array using a 2D FFT algorithm with
 
 This approach is used in this tutorial to design a 1M-pt FFT for `float` data types that achieves an impressive throughput rate exceeding 32 Gsps. The design partitions all compute to the AI Engine array and uses URAM resources in programmable logic to implement the sample reordering  needed for the "matrix transpose" operation outlined in detail below. 
 
-## Matlab Models
+## MATLAB Models
 
-A Matlab model `matlab/aie_model_fft_fp_1mpt.m` provides a simple algorithmic model of the 1M-pt transform, implementing it using a $1024\times 1024$ 2D architecture. The algorithm performs conceptually the following steps:
+A MATLAB® model `matlab/aie_model_fft_fp_1mpt.m` provides a simple algorithmic model of the 1M-pt transform, implementing it using a $1024\times 1024$ 2D architecture. The algorithm performs conceptually the following steps:
+
 * Write the 1M incoming samples into a $1024\times 1024$ matrix in column major order
 * Perform 1K-pt transforms along the matrix rows
 * Multiply the 2D matrix pointwise with another 2D matrix of equal size filled with "twiddle factors".
 * Perform 1K-pt transforms along the matrix columns
 * Extract the 1M outgoing samples in row-major order
 
-The Matlab models are used to validate the AI Engine design. The I/O testvectors may be generated into the folder `<path-to-design>/aie_src/data` using the following approach below. Note these I/O testvectors are not required to run the design on the VCK190 evaluation board. They are required only for the purpose of simulating the AI Engine portion of the design in isolation using either `x86simulator` or `aiesimulator`.
+The MATLAB models are used to validate the AI Engine design. The I/O testvectors may be generated into the folder `<path-to-design>/aie_src/data` using the following approach below. Note these I/O testvectors are not required to run the design on the VCK190 evaluation board. They are required only for the purpose of simulating the AI Engine portion of the design in isolation using either `x86simulator` or `aiesimulator`.
+
 ```
 [shell]% cd <path-to-design>/aie_src
 [shell]% make testvectors
 ```
+
 ## Design Overview
 
 The figure below shows block diagram of the 1M-pt transform. It may be described as follows:
+
 * The "front-end" compute consists of 32 identical instances of a FFT-1024 kernel followed by a twiddle rotation kernel. The FFT-1024 kernels use 5 AI Engine tiles, one for each radix-4 stage, given $1024=4\times 4\times 4\times 4\times 4$. Each tile employs two 64-bit PLIO streams @ 520 MHz. Given these streams carry `cfloat` data types requiring 64-bits per sample, it follows each PLIO stream may transfer 520 Msps; overall this provides a throughput of $32\times 2\times 520=33.28$ Gsps.
 * The "transpose" block in the PL provides sample reordering that effects the "row-wise" vs "column-wise" processing outlined above -- in effect performing a matrix transpose operation using URAM resources in the PL. Note a very large multi-ported memory resource is required with 64 I/O streams.
 * The "back-end" compute consists of 32 identical instances of an FFT-1024 kernel. Once again, these kernels use 5 AI Engine tiles each with two 64-bit PLIO streams @ 520 MHz. 
@@ -62,22 +66,27 @@ The figure below shows block diagram of the 1M-pt transform. It may be described
 ![figure](images/block-diagram.png)
 
 ### AI Engine Graph View
+
 The diagram below shows the graph view of the AI Engine array for this design. As noted above, the design contains 32 instances of 1024-pt "row" FFTs in the front-end and 32 instances of 1024-pt "column" FFTs in the back-end. Each 1024-pt transform is implemented using 5 tiles in each case. An extra tile implements "twiddle rotation" for each FFT instance in the front-end. Consequently, we can see in the diagram below there are 32 instances of a "6-tile subgraph" that implement the front-end transforms and twiddle rotations, along with 32 instances of a "5-tile subgraph" for the back-end compute processing.
 
 ![figure](images/aie-graph-view.png)
 
 ### AI Engine Array View
+
 The diagram below shows the floor plan view of the AI Engine array. The design requires resources from a $44\times 8$ rectangular region of the array. The three leftmost and rightmost array columns are left unused in this case. 
 
 ![figure](images/aie-array-view.png)
 
 ### VC1902 Floorplan View
+
 The diagram below shows the floorplan view of the VC1902 device, where all the PL resources for the design are highlighted showing the utilization. Since the AI Engine array makes use of PLIO resources distributed across the full width of the die, the PL circuitry exhibits the same characteristic. 
 
 ![figure](images/design-floorplan.png)
 
 ### AI Engine Design Validation
+
 The AI Engine design may be validated in functional simulation using either the X86 or AIE simulators. To use the X86 simulator to compile, simulate, then validate the outputs of the simulation, use the following approach:
+
 ```
 [shell]% cd <path-to-design>/aie_src
 [shell]% make x86_compile
@@ -86,6 +95,7 @@ The AI Engine design may be validated in functional simulation using either the 
 ```
 
 To use the AIE simulator to do the same things plus validate the design I/O throughput as measured from simulated PLIO timestamps, use the following approach:
+
 ```
 [shell]% cd <path-to-design>/aie_src
 [shell]% make aie_compile
@@ -95,6 +105,7 @@ To use the AIE simulator to do the same things plus validate the design I/O thro
 ```
 
 ### VC1902 Timing Closure
+
 The diagram below shows the timing summary report for the overall design. Timing closure is achieved on all end-points. 
 
 ![figure](images/timing-summary.png)
@@ -116,7 +127,9 @@ The diagram below summarizes the PL resources used by the design. BRAM and URAM 
 This design runs on the VCK190 evaluation board using a custom platform and bare metal OS. Consequently, no environment setup is needed to point to base platforms or Linux filesystems. The bitstream may be built directly from the top level Makefile.
 
 ### Hardware
+
 To build the design for hardware, please execute the following steps:
+
 ```
 [shell]% cd <path-to-design>
 [shell]% make all

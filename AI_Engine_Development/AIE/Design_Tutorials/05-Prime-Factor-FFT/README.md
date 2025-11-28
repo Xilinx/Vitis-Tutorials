@@ -39,9 +39,9 @@ A second advantage of the PFA approach is that unlike the popular Cooley-Tukey F
 
 This tutorial illustrates these concepts by designing a PFA-1008 transform in Versal using both AI Engine and PL elements working cooperatively. The PFA approach may be applied here since $1008 = 7 \times 9 \times 16$. This illustrates a PFA implementation in three dimensions. The transforms for each of these three relatively prime factors are implemented on AI Engine using vector-matrix DFT's. RTL implementations for the I/O permutations and intermediate "memory transpose" operations are obtained using Vitis High Level Synthesis (HLS) from untimed C++ models.
 
-## Matlab Models
+## MATLAB Models
 
-The figure below shows a block diagram of a 2D PFA transform. It's corresponding Matlab model is shown immediately below. The algorithm consists of the following five steps:
+The figure below shows a block diagram of a 2D PFA transform. It's corresponding MATLAB® model is shown immediately below. The algorithm consists of the following five steps:
 
 * An input permutation is applied to the input data. The specific input permutation depends on the values of the relative prime factors $N_1$ and $N_2$ as outlined below.
 * The data is organized into an $N_2 \times N_1$ matrix and 1D FFT's are performed along the rows of that matrix.
@@ -49,7 +49,7 @@ The figure below shows a block diagram of a 2D PFA transform. It's corresponding
 * A second set of 1D FFT's are performed along the columns of the original matrix.
 * An output permutation is applied to the output data after being read column-wise out of its 2D matrix form. The specific output permutation depends on the values of $N_1$ and $N_2$ as outlined below.
 
-The Matlab code below shows all of these five steps clearly. The routine `compute_perm_2d()` computes the input permutation `P_i` and output permutation `P_o` applied based on the values of $N_1$ and $N_2$.
+The MATLAB code below shows all of these five steps clearly. The routine `compute_perm_2d()` computes the input permutation `P_i` and output permutation `P_o` applied based on the values of $N_1$ and $N_2$.
 
 ![figure1](images/pfa-2d-block-diagram.png)
 
@@ -72,11 +72,11 @@ function [sig_o] = fft_pfa_2d( sig_i, N1, N2 )
 end
 ```
 
-The figure below shows a block diagram of a 3D PFA transform. It's corresponding Matlab model is shown immediately below. The algorithm consists of the same steps similar to the 2D case above with the following differences:
+The figure below shows a block diagram of a 3D PFA transform. It's corresponding MATLAB model is shown immediately below. The algorithm consists of the same steps similar to the 2D case above with the following differences:
 
 * The I/O permutations now depend on three relatively prime factors $N_1$, $N_2$ and $N_3$. The mathematics specific to these 2D and 3D permutations is given in detail below.
 * The data is now organized in a $N_1 \times N_2 \times N_3$ cube instead of an $N_1 \times N_2$ rectangle. Transforms are taken in 1D along each of these dimensions in order, first along $N_1$, then along $N_2$ and finally along $N_3$.
-* The "matrix transpose" operations required to extract data in the $N_2$ and $N_3$ dimensions involve slightly more complicated "stride" patterns. These patterns are computed by the Matlab routine `compute_addr_3d.m`.
+* The "matrix transpose" operations required to extract data in the $N_2$ and $N_3$ dimensions involve slightly more complicated "stride" patterns. These patterns are computed by the MATLAB routine `compute_addr_3d.m`.
 
 ![figure2](images/pfa-3d-block-diagram.png)
 
@@ -107,7 +107,7 @@ function [sig_o] = fft_pfa_3d( sig_i, N1, N2, N3 )
 end
 ```
 
-The full suite of Matlab models illustrating the operation of the PFA transforms is given in the `matlab` folder of the repo.
+The full suite of MATLAB models illustrating the operation of the PFA transforms is given in the `matlab` folder of the repo.
 
 ### I/O Permutations (2D Case)
 

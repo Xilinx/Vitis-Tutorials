@@ -118,6 +118,7 @@ make SECTION=memtile T1 aie
 ```
 
 This ends up with this error message
+
 ```shell
 INFO: [aiecompiler 77-6570] For port 'TG.G1.mtxin.in[0]', allocated DMA is 'tile: memory, col:10, row:0, channel:0, dir:s2mm'
 INFO: [aiecompiler 77-6570] For port 'TG.G1.mtxin.out[0]', allocated DMA is 'tile: memory, col:10, row:0, channel:0, dir:mm2s'

@@ -53,7 +53,7 @@ Where:
 
 $$ {\mu}=\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{x} / {(ROW*COL)} $$
 
-$$\sigma=\sqrt{{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2}} / {(ROW\*COL-1)}} \approx \sqrt{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2} / {(ROW*COL)}} $$
+$$\sigma=\sqrt{{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2}} / {(ROW*COL-1)}} \approx \sqrt{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2} / {(ROW*COL)}} $$
 
 For designs in the tutorial, following specifications are chosen:
 

@@ -41,12 +41,10 @@ This tutorial uses the LeNet algorithm to implement a system-level design to per
 
 The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system integration. A Makefile is provided that you can modify to suit your needs in a different context.
 
-<details>
-  <summary>Objectives</summary>
-
 ### Objectives
 
 After completing the tutorial, you should be able to:
+
 * Build a complete system design by going through the various steps in the AMD Vitis&trade; unified software platform flow, including creating the AI Engine-ML Adaptive Data Flow (ADF) API graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine-ML and HLS kernels with the platform, and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
 * Develop an understanding of Convolutional Neural Network (CNN) layer details using the LeNet algorithm and how the layers are mapped into data processing and compute blocks.
 * Develop an understanding of the kernels developed in the design; AI Engine-ML kernels to process fully connected convolutional layers and PL kernels to process the input rearrange and max pool and rearrange functions.
@@ -56,12 +54,11 @@ After completing the tutorial, you should be able to:
 * Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface.
 * Develop an understanding of performance measurement and functional/throughput debug at the application level.
 
-</details>
-
 <details>
   <summary>Tutorial Overview</summary>
 
 ## Tutorial Overview
+
 In this application tutorial, the LeNet algorithm is used to perform image classification on an input image using five AI Engine-ML tiles and PL resources, including block RAM. A top-level block diagram is shown in the following figure. An image is loaded from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine-ML. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine-ML tile to perform matrix multiplication. The output from the first AI Engine-ML tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output is fed to the second AI Engine-ML tile and the output from that tile is sent to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine-ML tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine-ML tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine-ML tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. In between the AI Engine-ML and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
 * `mm2s`: a memory-mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine-ML Array.
 * `s2mm`: a stream to memory-mapped kernel to feed data from the AI Engine-ML Array through NoC to DDR memory.
@@ -136,6 +133,7 @@ To build and run the LeNet tutorial,the following tools should be downloaded/ins
 <summary>Environment: Setting Up the Shell Environment</summary>
 
 ## Environment: Setting Up the Shell Environment
+
 When the elements of the Vitis software platform are installed, update the shell environment script. Set the environment variables to your system-specific paths.
 
 Edit `sample_env_setup.sh` script with your file paths:

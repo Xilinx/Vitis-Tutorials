@@ -134,16 +134,16 @@ for (i = 0 ; i < 8 ; i++)
 
 All values in hexadecimal:
 
-| ret <br> Index <br> (Lane) | | xbuf <br> Start | xbuf <br> Offset | Final <br> xbuf <br> Index | | zbuf <br> Start | zbuf <br> Offset | Final <br> zbuf <br> Index |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|  0  | | 2  | B  | D  | | 7 | 0 | 7 |
-| 1   | | 2  | C  | E  | | 7 | 1 | 8 |
-| 2   | | 2  | D  | F  | | 7 | 2 | 9 |
-| 3   | | 2  | E  | 10  | | 7 | 3 | A |
-| 4   | | 2  | F  | 11  | | 7 | 4 | B |
-| 5   | | 2  | 0  | 2   | | 7 | 5 | C |
-| 6   | | 2  | 1  | 3   | | 7 | 6 | D |
-| 7   | | 2  | 2  | 4   | | 7 | 7 | E |
+| ret <br> Index <br> (Lane) | xbuf <br> Start | xbuf <br> Offset | Final <br> xbuf <br> Index | zbuf <br> Start | zbuf <br> Offset | Final <br> zbuf <br> Index |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|  0  | 2  | B  | D  | 7 | 0 | 7 |
+| 1   | 2  | C  | E  | 7 | 1 | 8 |
+| 2   | 2  | D  | F  | 7 | 2 | 9 |
+| 3   | 2  | E  | 10  | 7 | 3 | A |
+| 4   | 2  | F  | 11  | 7 | 4 | B |
+| 5   | 2  | 0  | 2   | 7 | 5 | C |
+| 6   | 2  | 1  | 3   | 7 | 6 | D |
+| 7   | 2  | 2  | 4   | 7 | 7 | E |
 
 
 #### fpneg, fpabs, fpadd, fpsub

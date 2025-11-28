@@ -53,7 +53,7 @@ This section shows the device-level details of the 8-engine design. These are su
 
 ### Hardware Throughput
 
-The 8-engine design was also run in hardware on Vthe CK190 evaluation board. Once again, `NPULSE_USE=586` and `NFRAME=16` was used to run a full 16 frames with the full compliment of radar pulses for each. The throughput was measured using the `xrt::graph::get_timestamp()` function as before. A screenshot captured from the VCK190 board run is shown below.
+The 8-engine design was also run in hardware on the VCK190 evaluation board. Once again, `NPULSE_USE=586` and `NFRAME=16` was used to run a full 16 frames with the full compliment of radar pulses for each. The throughput was measured using the `xrt::graph::get_timestamp()` function as before. A screenshot captured from the VCK190 board run is shown below.
 
 * The final throughput using `xrt::graph::get_timestamp()` is 18.9 frames per second. This is only slighty lower than 8X times the frame rate achieved with the single engine, indicating the data flow remains very efficient even with eight separate engines. 
 

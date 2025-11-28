@@ -56,7 +56,7 @@ This tutorial targets the [VCK190 ES board](https://www.xilinx.com/products/boar
 
 * [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
-* [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+* [Versal adaptive SoC AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 * [AI Engine Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Overview)
 
@@ -121,7 +121,7 @@ If you are a novice user, review the following tutorials to understand the basic
 
 ### System Design Overview
 
-This tutorial showcases a beamforming system with 32 layers and 64 antennas implemented on an XCVC1902 Versal ACAP device in the VCK190 board. The beamforming system consists of a downlink subsystem which contains the DL64A32L AI Engine subgraph and the `dlbf_data`, `dlbf_coeff`, and `dlbf_slave` PL RTL kernels. The beamforming system also consists of the uplink subsystem, which contains the UL64A32L AI Engine subgraph and the `ulbf_data`, `ulbf_coeff`, and `ulbf_slave` PL RTL kernels. Together, the downlink and uplink subsystems implement the uplink and downlink matrix multiplication equations for M=32 layers and N=64 antennas and compute sample data. The results are compared to reference downlink and uplink result data for verification. The entire beamforming system is copied three times to make full use of the available AI Engine and PL resources.
+This tutorial showcases a beamforming system with 32 layers and 64 antennas implemented on an XCVC1902 Versal adaptive SoC device in the VCK190 board. The beamforming system consists of a downlink subsystem which contains the DL64A32L AI Engine subgraph and the `dlbf_data`, `dlbf_coeff`, and `dlbf_slave` PL RTL kernels. The beamforming system also consists of the uplink subsystem, which contains the UL64A32L AI Engine subgraph and the `ulbf_data`, `ulbf_coeff`, and `ulbf_slave` PL RTL kernels. Together, the downlink and uplink subsystems implement the uplink and downlink matrix multiplication equations for M=32 layers and N=64 antennas and compute sample data. The results are compared to reference downlink and uplink result data for verification. The entire beamforming system is copied three times to make full use of the available AI Engine and PL resources.
 
 #### Block Diagram
 

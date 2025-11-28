@@ -401,7 +401,7 @@ Finally, software platform is generated with the `platform generate` command. Th
 * [Clocking Wizard IP](https://www.xilinx.com/products/intellectual-property/clocking_wizard.html)
 * [Processor Reset System Module IP](https://www.xilinx.com/products/intellectual-property/proc_sys_reset.html)
 * [CIPS Product Guide](https://docs.amd.com/access/sources/dita/map?url=pg352-cips&ft:locale=en-US)
-* [Versal ACAP Programmable Network on Chip and Integrated Memory Controller Product Guide](https://docs.amd.com/access/sources/dita/map?url=pg313-network-on-chip&ft:locale=en-US)
+* [Versal adaptive SoC Programmable Network on Chip and Integrated Memory Controller Product Guide](https://docs.amd.com/access/sources/dita/map?url=pg313-network-on-chip&ft:locale=en-US)
 
 ### Support
 

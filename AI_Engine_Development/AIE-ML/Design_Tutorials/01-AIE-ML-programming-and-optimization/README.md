@@ -67,10 +67,9 @@ The various memory levels contains DMAs used to receive/transfer data to/from me
 
 Matrix multiplication is very common algorithm that can be found in numerous standard applications. The basic equation is:
 
-```
 $$ C = A.B $$
 $$ \left( c_{ij} \right)_{\substack{0\leq i \lt M \\ 0 \leq j \lt N}}  =  \sum_{k=0}^{k<K} a_{ik}.b_{kj}$$
-```
+
 
 ![Matrix Multiplication](images/MatrixMult.png)
 
@@ -109,9 +108,7 @@ The *AI Engine-ML* has specific hardware instructions for matrix multiplications
 
 In the example developed in this tutorial the 3 matrices A, B and C are all 64x64 with 8-bit data:
 
-```
 $$A_{64x64}.B_{64x64} = C_{64x64}$$
-```
 
 The mode `4x16x8` will be used so that we need to decompose matrix **A** into `4x16`sub-matrices, matrix **B** into `16x8`sub-matrices in oder to compute **C** using `4x8` sub-results:
 

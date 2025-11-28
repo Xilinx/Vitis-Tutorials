@@ -97,7 +97,7 @@ If you are using Vitis Analyzer to do stall analysis, run the AI Engine simulato
 
 	aiesimulator --pkg-dir=./Work --online -wdb -ctf
 
-**Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
+**Note:** For more information about AI Engine stall analysis using Vitis Analyzer in the hardware emulation flow, refer to the _Versal adaptive SoC AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
 In Vitis Analyzer, the Performance Metrics view gives an overview of the stalls in the design:
 
@@ -121,7 +121,7 @@ Select the stall in **Lock Stalls** in Trace view, and switch to Graph view. The
 
 From the above analysis, the cause of the hang is given. The direct resolution, without modifying kernel code, is to increase the FIFO size between the two kernels.
 
-For more information about AI Engine stall analysis feature, refer to the _Versal ACAP AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
+For more information about AI Engine stall analysis feature, refer to the _Versal adaptive SoC AI Engine Programming Environment User Guide_ ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)).
 
 ## AI Engine Deadlock Detection in the Hardware Emulation Flow
 
@@ -359,7 +359,7 @@ This section provides details of other methods of detecting and analyzing AI Eng
 
 	**Tip:** Cross-probe between **Graph** and **Array** view in Vitis Analyzer to understand kernels, buffers, and the locations of ports. 
 `
-- **Using `devmem` to probe AI Engine registers to see AI Engine status:** By using the `devmem` command, you can read AI Engine registers to see the AI Engine internal status. The register reference can be found in the _Versal ACAP AI Engine Register Reference_ ([AM015](https://www.xilinx.com/html_docs/registers/am015/am015-versal-aie-register-reference.html)).
+- **Using `devmem` to probe AI Engine registers to see AI Engine status:** By using the `devmem` command, you can read AI Engine registers to see the AI Engine internal status. The register reference can be found in the _Versal adaptive SoC AI Engine Register Reference_ ([AM015](https://www.xilinx.com/html_docs/registers/am015/am015-versal-aie-register-reference.html)).
 
 	For example, the core status registers can be found here:
 

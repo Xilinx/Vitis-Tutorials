@@ -67,6 +67,7 @@ After completing the tutorial, you should be able to:
 ### Design Overview
 
 #### AIE
+
 In this design, the multiplication of 2 square matrices (MatA and MatB) is done using a 24-AIE core overlay. MatA is
 divided into 3 x 8 blocks and MatB into 8 x 3 blocks. MatA input is provided 1x8 block at a time, using 8 input streams,
 and MatB is provided using 24 input streams for each 8x3 blocks. Output Matrix MatC is divided into 3x3 blocks and is given out
@@ -74,6 +75,7 @@ as 1x3block at a time using 3 output streams. 24 core overlay is chosen to keep 
 Dimensions, 32x32x32-64x64x64 onwards to 1024x1024x1024 and keep the performance high.
 
 #### DSP
+
 In this design, Matrix multiplication is implemented using Systolic array of 1024 DSP58 Engines. There are 32 DSP58 cascade chains, 
 each chain has 32 DSP58s. Matrix-Matrix multiplication is decomposed into Matrix-Vector multiplication. One Matrix B column vector
 is multiplied by each row of Matrix A. This is achieved by broadcasting Matrix B column vector to DSPs at the same position in each cascade chain, while all 1K elements of Matrix A are read and each element drives one Port A of DSP58. One cascade chain implements
@@ -135,7 +137,7 @@ GeMM_AIEvsDSP
 
 * [AM009 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Revision-History)
 
-* [Versal ACAP AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+* [Versal adaptive SoC AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
 
 </details>
 
@@ -234,8 +236,8 @@ The output of the above command should be as follows:
 
 The Makefile and source files for the AI Engine and HLS implementations are in the `AIE` and `DSP` directories respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links below:
 
-* [AI Engine design implementation](AIE)
-* [DSP design implementation with DSP Engines](DSP)
+* [AI Engine design implementation](AIE/README.md)
+* [DSP design implementation with DSP Engines](DSP/README.md)
 
 ## AI Engine and DSP Implementation Comparison
 

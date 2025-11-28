@@ -67,6 +67,7 @@ source $(XILINX_VITIS)/settings64.sh
 source $(COMMON_IMAGE_VERSAL)/environment-setup-cortexa72-cortexa53-amd-linux
 
 ```
+
 2. Source the environment script:
 
 ```bash
@@ -83,6 +84,7 @@ which aiecompiler
 ```
 
 ## Goals of this Tutorial
+
 ### HPC Applications
 The goal of this tutorial is to create a general-purpose floating point accelerator for HPC applications. This tutorial demonstrates a x24,800 performance improvement using the AI Engine accelerator over the naive C++ implementation on the A72 embedded Arm® processor.
 
@@ -94,9 +96,11 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.00809135|
 
 ### PL Data-Mover Kernels
+
 Another goal of this tutorial is to showcase how to generate PL Data-Mover kernels These kernels moves any amount of data from DDR buffers to AXI-Streams.  
 
 ## The N-Body Problem
+
 The N-Body problem is the problem of predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, we can calculate a particle's velocity and position (`x y z vx vy vz`) will be in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within our universe. With certain assumptions, the laws can be applied to bodies/particles ranging from astronomical size to a golf ball (and even smaller).
 
 #### 12,800 Particles simulated on a 400 tile AI Engine accelerator for 300 timesteps
@@ -128,6 +132,7 @@ If given an initial velocity (v<sub>t</sub>) and position (x<sub>t</sub>), we ca
 * Velocity Equation: v<sub>t+1</sub>=v<sub>t</sub>+a\*ts
 
 ### Gravity Equations - N Bodies
+
 Our NBody simulator will extends the above gravity equation to calcuate positions, accelerations, and velocities in the x, y, and z directions of N bodies in a system.
 For the sake of simplicity in implementation, the following assumptions were made:
 
@@ -172,13 +177,14 @@ The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` dev
 
 *Note:* The entire design is a compute-bound problem, meaning we are limited to how fast the AI Engine tiles compute the floating-point gravity equations. This is not a memory-bound design.
 
-## Where We're Headed ...  
+## Where We're Headed ...
+
 Complete modules 01-07 in the following order:
 
 ### Module 01 - Python Simulations on x86
 The module shows a python implementation of the N-Body Simulator and execution times to run the N-Body Simulator on an x86 machine.
 
-[Read more ...](Module_01_python_sims)
+[Read more ...](Module_01_python_sims/README.md)
 
 ### Module 02 - AI Engine Design
 This module presents the final 400 tile AI Engine design:
@@ -188,20 +194,20 @@ This module presents the final 400 tile AI Engine design:
   * An N-Body System with 100 `nbody_subsystem` graphs (i.e., 400 `nbody()` kernels) which use all 400 AI Engine tile resources
   * Invoke the AI Engine compiler
 
-[Read more...](Module_02_aie)
-
+[Read more...](Module_02_aie/README.md)
+  
 ### Module 03 - PL Kernels
 This modules presents the PL HLS kernels:
 
 * Create datamover PL HLS kernels from AMD Vitis Utility Library
 * Create and simulate packet switching PL HLS kernels
 
-[Read more...](Module_03_pl_kernels)
+[Read more...](Module_03_pl_kernels/README.md)
 
 ### Module 04 - Full System Design
 This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado™ solution.
 
-[Read more...](Module_04_xclbin)
+[Read more...](Module_04_xclbin/README.md)
 
 ### Module 05 - Host Software
 This module presents the host software that enables the entire design:
@@ -209,7 +215,7 @@ This module presents the host software that enables the entire design:
 * Create a C++ N-Body Simulator to profile and compare performance between the A72 processor and AI Engine
 * Create a host application that runs the system design for multiple timesteps and create animation data for post-processing
 
-[Read more...](Module_05_host_sw)
+[Read more...](Module_05_host_sw/README.md)
 
 ### Module 06 - SD Card and Hardware Run
 This module conducts the hardware run:
@@ -217,7 +223,7 @@ This module conducts the hardware run:
 * Execute the host applications and runs the system design on hardware
 * Save animation data from hardware run
 
-[Read more...](Module_06_sd_card_and_hw_run)
+[Read more...](Module_06_sd_card_and_hw_run/README.md)
 
 ### Module 07 - Results  
 This module review the results of the hardware run:
@@ -226,7 +232,7 @@ This module review the results of the hardware run:
 * Estimate the number of GFLOPS of the design
 * Explore ways to increase design bandwidth
 
-[Read more...](Module_07_results)
+[Read more...](Module_07_results/README.md)
 
 ### (Optional) x1_design and x10_design  
 This tutorial contains 3 AI Engine designs:
