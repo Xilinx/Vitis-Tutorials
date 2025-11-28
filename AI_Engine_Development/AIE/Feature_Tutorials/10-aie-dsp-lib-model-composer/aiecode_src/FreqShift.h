@@ -6,4 +6,16 @@ SPDX-License-Identifier: X11
  #include <adf.h>
 
 template <int FRAME_LENGTH>
-void FreqShift(input_window_cint16 * __restrict in, output_window_cint16 * __restrict out);
+void FreqShift(adf::input_buffer<cint16>& __restrict in, 
+               adf::output_buffer<cint16>& __restrict out);
+
+template <int FRAME_LENGTH>
+void FreqShift8(adf::input_buffer<cint16>& __restrict in1, 
+                adf::input_buffer<cint16>& __restrict in2, 
+                adf::input_buffer<cint16>& __restrict in3, 
+                adf::input_buffer<cint16>& __restrict in4, 
+                adf::input_buffer<cint16>& __restrict in5, 
+                adf::input_buffer<cint16>& __restrict in6, 
+                adf::input_buffer<cint16>& __restrict in7, 
+                adf::input_buffer<cint16>& __restrict in8,
+                adf::output_buffer<cint16>& __restrict out);

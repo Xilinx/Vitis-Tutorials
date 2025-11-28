@@ -15,7 +15,7 @@
 
 # Designing with the AI Engine DSPLib and Vitis Model Composer
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -26,11 +26,11 @@ The purpose of this tutorial is to provide hands-on experience for designing AI 
 Install the tools:
 
 * Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * The following MATLAB releases are supported: R2024a, R2024b, R2025a.
+  * The following MATLAB releases are supported: R2024a, R2024b, R2025a, R2025b.
   * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2025.1](https://www.xilinx.com/support/download.html).
+* Get and install [AMD Vitis 2025.2](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2025.1) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2025.2) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -198,18 +198,20 @@ These are there to help you if you cannot complete any of the four stages.
       Notice that before implementing the Decimation Filter the vector length was ``2048``, but after implementation this is reduced to ``1024``.
 
 16. Update the design with the other three filters using the following parameters:
+     
 
-      | Parameter |HB1 |	HB2	| HB3	| Channel Filter |
-      | :--- | :--- |  :--- | :--- | :--- |
-      | Filter Block	| FIR Halfband Decimator | FIR Halfband Decimator	| FIR Halfband Decimator	| FIR Asymmetric Filter |
-      | Input Output data type	| cint16	| cint16	| cint16	| cint16 |
-      | Filter Coefficients Data Type	| int16	| int16	| int16	| int16 |
-      | Filter Coefficients	| hb1_aie	| hb2_aie	| hb3_aie	| cfi |
-      | Filter Length	| N/A | N/A	| N/A | length(cfi) |
-      | Input window size (Number of samples)	| 2048	| 1024	| 512	| 256 |
-      | Scale output down by 2^	| Shift1	| Shift2	| Shift3	| ShiftCF |
-      | Rounding mode | floor	| floor	| floor | floor |
-      | Saturation mode | 0-None | 0-None | 0-None | 0-None |
+| **Parameter**                     | **HB1**                     | **HB2**                     | **HB3**                     | **Channel Filter**          |
+|-----------------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
+| Filter Block                      | FIR Halfband Decimator    | FIR Halfband Decimator    | FIR Halfband Decimator    | FIR Asymmetric Filter      |
+| Input/Output Data Type            | `cint16`                  | `cint16`                  | `cint16`                  | `cint16`                  |
+| Filter Coefficients Data Type     | `int16`                   | `int16`                   | `int16`                   | `int16`                   |
+| Filter Coefficients               | `hb1_aie`                 | `hb2_aie`                 | `hb3_aie`                 | `cfi`                     |
+| Filter Length                     | N/A                       | N/A                       | N/A                       | `length(cfi)`             |
+| Input Window Size (samples)       | 2048                      | 1024                      | 512                       | 256                       |
+| Scale Output Down by 2^           | `Shift1`                  | `Shift2`                  | `Shift3`                  | `ShiftCF`                 |
+| Rounding Mode                     | `floor`                   | `floor`                   | `floor`                   | `floor`                   |
+| Saturation Mode                   | `0-None`                  | `0-None`                  | `0-None`                  | `0-None`                  |
+
 
 17. Update the **Output Size** parameter of the **To Fixed Size** block to ``256``. The design should display like as follows:
 
@@ -276,7 +278,7 @@ In this stage, you will generate the graph code of this design and perform bit-t
 2. Double-click the block **Model Composer Hub** and click on the **Code Generation** tab.
 3. Select the **FIRchain** subsystem, and set the following parameters on the **Analyze** tab:
     * Check **Collect profiling statistics and enable 'printf' for debugging**.
-    * Check **Collect trace data for Vitis Analyzer and viewing internal signals**.
+    * Check **Collect trace data for Vitis Analyzer, view internal signals, and latency**.
 4. Click **Analyze**.
 
 The Simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/ip/FIRchain/src/FIRchain.h``:
@@ -286,18 +288,18 @@ The Simulink design is run to generate the testbench, then the graph code is gen
 #define __XMC_FIRCHAIN_H__
 
 #include <adf.h>
-#include "./FIR_Halfband_Decimator_7c26216f/FIR_Halfband_Decimator_7c26216f.h"
-#include "./FIR_Halfband_Decimator_c4185433/FIR_Halfband_Decimator_c4185433.h"
-#include "./FIR_Halfband_Decimator_69968948/FIR_Halfband_Decimator_69968948.h"
-#include "./FIR_Asymmetric_4303455c/FIR_Asymmetric_4303455c.h"
+#include "./FIR_Halfband_Decimator_e52f70d5/FIR_Halfband_Decimator_e52f70d5.h"
+#include "./FIR_Halfband_Decimator_5d110589/FIR_Halfband_Decimator_5d110589.h"
+#include "./FIR_Halfband_Decimator_f09fd8f2/FIR_Halfband_Decimator_f09fd8f2.h"
+#include "./FIR_Asymmetric_da0a14e6/FIR_Asymmetric_da0a14e6.h"
 #include "aiecode_src/FreqShift.h"
 
 class FIRchain_base : public adf::graph {
 public:
-   FIR_Halfband_Decimator_7c26216f FIR_Halfband_Decimator;
-   FIR_Halfband_Decimator_c4185433 FIR_Halfband_Decimator1;
-   FIR_Halfband_Decimator_69968948 FIR_Halfband_Decimator2;
-   FIR_Asymmetric_4303455c FIR_Asymmetric;
+   FIR_Halfband_Decimator_e52f70d5 FIR_Halfband_Decimator;
+   FIR_Halfband_Decimator_5d110589 FIR_Halfband_Decimator1;
+   FIR_Halfband_Decimator_f09fd8f2 FIR_Halfband_Decimator2;
+   FIR_Asymmetric_da0a14e6 FIR_Asymmetric;
    adf::kernel FreqShift_0;
 
 public:
@@ -317,8 +319,10 @@ public:
       adf::connect net1 (FIR_Halfband_Decimator.out[0], FIR_Halfband_Decimator1.in[0]);
       adf::connect net2 (FIR_Halfband_Decimator1.out[0], FIR_Halfband_Decimator2.in[0]);
       adf::connect net3 (FIR_Halfband_Decimator2.out[0], FIR_Asymmetric.in[0]);
-      adf::connect< adf::window<1024> > net4 (FIR_Asymmetric.out[0], FreqShift_0.in[0]);
-      adf::connect< adf::window<1024> > net5 (FreqShift_0.out[0], Out1);
+      adf::connect net4 (FIR_Asymmetric.out[0], FreqShift_0.in[0]);
+      adf::dimensions(FreqShift_0.in[0]) = {256};
+      adf::connect net5 (FreqShift_0.out[0], Out1);
+      adf::dimensions(FreqShift_0.out[0]) = {256};
    }
 };
 
