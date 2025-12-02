@@ -28,6 +28,7 @@ fft_component.update_top_level_file(top_level_file="src/fft1k_128_graph.cpp")
 # Updating the configuration file
 aiecomp_cfg = client.get_config_file(fft_component.component_location+'/aiecompiler.cfg')
 aiecomp_cfg.set_value(section='aie', key='pl-freq', value="500")
+aiecomp_cfg.set_value(section='aie', key='Xmapper', value="enableUtilOpt")
 
 #                          Updating the graph file
 #______________________________________________________________________________
