@@ -15,7 +15,7 @@
 
 # AI Engine Status Analysis
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 This tutorial shows you how to output a summary of the AI Engine status for further analysis in an AMD Vitis&trade; Analyzer. The main methods to output AI Engine status are as follows:
 
