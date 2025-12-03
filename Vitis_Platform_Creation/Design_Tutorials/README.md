@@ -33,12 +33,6 @@
   <td align="center"><a href="./04_Edge_VCK190_DFX/README.md">Custom Versal DFX Platform Creation Tutorial</a></td>
   <td>This tutorial demonstrates how you can create a custom DFX platform to run acceleration applications for VCK190 evaluation board.</td>
  </tr>
-
- <tr>
- <td align="center"><a href="./01-Edge-KV260/README.md">Custom Kria SOM Platform Creation Example</a></td>
- <td>Extend the <a href="./02-Edge-AI-ZCU104/README.md">ZCU104 custom embedded platform creation example</a> to the popular MPSoC board, the AMD Kria™ SOM KV260 Starter Kit.
-</td>
- </tr>
 </table>
 
 

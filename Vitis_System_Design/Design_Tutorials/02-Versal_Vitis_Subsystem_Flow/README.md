@@ -14,7 +14,7 @@
 
 # Versal Custom Platform Integration using Vitis Subsystem
 
-***Version: Vivado and Vitis 2025.1***
+***Version: Vivado and Vitis 2025.2***
 
 This tutorial demonstrates key features in AMD 2025.1 tools for designing and verifying AI Engine and HLS based DSP subsystem and deploy it on a custom platform.
 

@@ -27,7 +27,6 @@ Briefly speaking, a platform is a package that contains the HPFM (`.xsa`) file a
 - For the **ZYNQMP** device family, refer to [ZCU104 platform tutorial](./Design_Tutorials/02-Edge-AI-ZCU104/)
 - For the **Versal** device family, refer to [VCK190 platform tutorial](./Design_Tutorials/03_Edge_VCK190/)
 - For the **DFX** platform, refer to [DFX platform tutorial](./Design_Tutorials/04_Edge_VCK190_DFX/)
-- For the **SOM** series, refer to [KV260 platform tutorial](./Design_Tutorials/01-Edge-KV260/)
 - For the **PetaLinux** customization, refer to [PetaLinux customization](./Feature_Tutorials/02_petalinux_customization/)
 
 ## Platform Creation Tutorials
@@ -112,22 +111,6 @@ The tutorials under the Vitis Platform Creation category help you learn how to d
         <li><b>Verification</b>: Vector Addition and Vitis-AI</li>
       </ul>
   
-  </td>
- </tr>
-
-  <tr>
-  <td align="center"><a href="./Design_Tutorials/01-Edge-KV260/README.md">Custom Kria SOM Platform Creation Example</a></td>
-  <td>ZYNQ UltraScale+ MPSoC</td>
-  <td>KV260</td>
-  <td>Flat</td>
-  <td>Vivado &<br>Vitis IDE</td>
-  <td>
-      <b>Highlights</b>: Kria SOM Platform creation and usage flow
-      <ul>
-        <li><b>Hardware design</b>: Creating from scratch </li>
-        <li><b>Software design</b>: Using Common Image and showing device tree overlay (DTBO) creation flow</li>
-        <li><b>Verification</b>: Vector Addition and Kria SOM application loading procedure</li>
-      </ul>
   </td>
  </tr>
 </table>

@@ -13,7 +13,7 @@
 
 # Vitis Export to Vivado Flow
 
-***Version: Vivado and Vitis 2025.1***
+***Version: Vivado and Vitis 2025.2***
 
 This tutorial has been subject to change for the last couple of releases following the updates and improvements of the tools.
 
@@ -167,7 +167,7 @@ The following files require modification
 ## Building the modified design
 
 ### Prerequisites
-Setup the Vitis 2025.1 tools
+Setup the Vitis tool
 ```
 source <Vitis_Installation_Path>/settings64.sh
 ```
@@ -208,7 +208,7 @@ git move vss/python vitis/python
 **Note:** This require understanding how to create and manage Vivado projects and block designs using Vivado example design as template.
 
 The tutorial is prepared to quickly retarget to other boards and devices. This can be achieved by adding more alternatives in the Vivado folder.
-If the corresponding board exist [Board Store](https://github.com/Xilinx/XilinxBoardStore/tree/2025.1), then copy either the [vck190](../../../Vitis_System_Design/Design_Tutorial/02-Versal_Vitis_Subsystem_Flow/vivado/vck190) or [vek280](../../../Vitis_System_Design/Design_Tutorial/02-Versal_Vitis_Subsystem_Flow/vivado/vek280) to a new folder matching the board name.
+If the corresponding board exist [Board Store](https://github.com/Xilinx/XilinxBoardStore), then copy either the [vck190](../../../Vitis_System_Design/Design_Tutorial/02-Versal_Vitis_Subsystem_Flow/vivado/vck190) or [vek280](../../../Vitis_System_Design/Design_Tutorial/02-Versal_Vitis_Subsystem_Flow/vivado/vek280) to a new folder matching the board name.
 Then use Vivado example design (Picking an extensible platform) for the specific board and once generated write a new `dr.bd.tcl` file.
 
 The `Makefiles` in the top folder and in `vivado` folder will require modifying the `BOARD_NAME` alternatives so the called scripts get parameter arguments matching the selected board.

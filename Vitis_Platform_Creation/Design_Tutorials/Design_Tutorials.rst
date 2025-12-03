@@ -37,8 +37,5 @@ Vitis Platform Creation: Design Tutorials
      - This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.
 
    * - :doc:`Custom Versal DFX Platform Creation Tutorial <./04_Edge_VCK190_DFX/README>`
-     - This tutorial demonstrates how you can create a custom Vitis platform on VCK190 demo board and validate the platform.
-
-   * - :doc:`Custom Kria SOM Platform Creation Example <./01-Edge-KV260/README>`
-     - Extend the :doc:`Custom Platform Creation Tutorial on MPSoC <./02-Edge-AI-ZCU104/README>` to the popular MPSoC board, the AMD Kria™ SOM KV260 Starter Kit.
+     - This tutorial demonstrates how you can create a custom DFX Vitis platform on VCK190 demo board and validate the platform.
 

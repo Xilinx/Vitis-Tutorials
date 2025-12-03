@@ -14,7 +14,7 @@
 
 # Versal Custom Thin Platform Extensible System
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 This tutorial describes an AMD Versal™ VCK190/VEK280(+es1) System Example Design based on a thin custom platform (minimal clocks and AXI exposed to PL) including HLS/RTL kernels and an AI Engine kernel using a full Makefile build-flow for Vivado™/Petalinux/Yocto/Vitis 2025.1.
 

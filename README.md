@@ -529,18 +529,16 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             </td>
         </tr>
             <tr>
-                <td>
-                    <a href="./Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260">Custom Platform Creation on KV260</a>
-                </td>
                 <td height="24">
+                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
+                </td>
+                <td>
                   <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/">Vitis Export to Vivado Flow :new: </a>
                 </td>
             </tr>
             <tr>
+                <td height="24"> </td>
                 <td>
-                    <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
-                </td>
-                <td height="24">
                   <a href="./Vitis_Platform_Creation/Feature_Tutorials/04_platform_validation">Versal Extensible Hardware Design Validation</a>             
                 </td>
             </tr>
