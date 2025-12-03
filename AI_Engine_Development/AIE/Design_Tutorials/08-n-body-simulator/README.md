@@ -92,8 +92,8 @@ The goal of this tutorial is to create a general-purpose floating point accelera
 |Name|Hardware|Algorithm Complexity|Average Execution Time to Simulate 12,800 Particles for 1 Timestep (seconds)|
 |---|---|--|---|
 |Python N-Body Simulator|x86 Linux Machine|O(N)|14.96|
-|C++ N-Body Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|120.552|
-|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.00809135|
+|C++ N-Body Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|121.295|
+|AI Engine N-Body SImulator|Versal AI Engine IP|O(N)|0.00888979|
 
 ### PL Data-Mover Kernels
 
