@@ -41,7 +41,7 @@ client.set_workspace(path=current_path)
 advanced_options = client.create_advanced_options_dict(board_dtsi="versal-vck190-reva-x-ebm-01-reva",user_dtsi=user_dtsi,dt_overlay="0",dt_zocl="1")
 rp_info_args = client.add_rp_info_args(rp_xsa_path=rp_xsa_path)
 
-platform = client.create_platform_component(name = platform_name,hw_design = static_xsa_path,os = "linux",cpu = "psv_cortexa72",domain_name = "xrt",emu_design = emu_xsa_path,generate_dtb = True, advanced_options = advanced_options, rp_info_args = rp_info_args, desc = " update for vck190_base_dfx latest : A base platform targeting VCK190_BASE_DFX which is the first Versal AI Core series evaluation kit, enabling designers to develop solutions using AI and DSP engines capable of delivering over 100X greater compute performance compared to current server class CPUs. This board includes 8GB of DDR4 UDIMM, 8GB LPDDR4 component, 400 AI engines, 1968 DSP engines, Dual-Core Arm® Cortex®-A72 and Dual-Core Cortex-R5. More information at https://www.xilinx.com/products/boards-and-kits/vck190.html" )
+platform = client.create_platform_component(name = platform_name,hw_design = static_xsa_path,os = "linux",cpu = "psv_cortexa72",domain_name = "xrt",emu_design = emu_xsa_path,generate_dtb = True, rp_info_args = rp_info_args, advanced_options = advanced_options )
 platform = client.get_component(name = platform_name)
 domain = platform.add_domain(cpu = "ai_engine",os = "aie_runtime",name = "aiengine",display_name = "aiengine")  
 domain = platform.get_domain(name = "xrt")
