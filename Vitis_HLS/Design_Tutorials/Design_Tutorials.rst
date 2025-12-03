@@ -11,10 +11,7 @@ Design tutorials illustrate higher-level Vitis™ HLS concepts or design flows, 
    :caption: Design Tutorials
    :hidden:
 
-   Polynomial Vectorization using Number Theoretic Transforms <./01-Polynomial_Vectorization/README.md>
    Adaptive Beamforming for Radar <./02-Beamformer/README.md>
-
-
 
 
 

@@ -1,10 +1,10 @@
-﻿##############################################################################
+##############################################################################
 Embedded Software: Feature Tutorials
 ##############################################################################
 
 
 
-These tutorials illustrate specific features of the Vitis Embedded Software development flow. Some features might not be required by all designs but are still useful for some use cases.
+These tutorials illustrate specific features of the AMD Vitis™ Embedded Software development flow. Some features might not be required by all designs but are still useful for some use cases.
 
 
 .. toctree::
@@ -44,10 +44,10 @@ These tutorials illustrate specific features of the Vitis Embedded Software deve
      
 .. sidebar:: More Information
 
-   See AMD Vitis™ Development Environment on `xilinx.com <https://www.xilinx.com/products/design-tools/vitis.html>`_
+   See Vitis Development Environment on `amd.com <https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html>`_
 
 
 
-.. Copyright © 2020–2024 Advanced Micro Devices, Inc
+.. Copyright © 2020–2025 Advanced Micro Devices, Inc
 
 .. `Terms and Conditions <https://www.amd.com/en/corporate/copyright>`_.
