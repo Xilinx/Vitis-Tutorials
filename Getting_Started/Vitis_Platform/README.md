@@ -14,7 +14,7 @@
 
 # Versal Platform Creation Quick Start
 
-***Vitis Unified IDE 2025.1***, ***Vivado 2025.1***
+***Vitis Unified IDE 2025.2***, ***Vivado 2025.2***
 
 ***Board: VCK190 VEK280***
 
@@ -22,7 +22,7 @@ In this module, we will get started with three steps to quickly create a platfor
 
 This time, we will utilize the AMD Versal™ extensible platform from the CED example, using a pre-built Linux common image and a device tree file generated with the Platform Creation. Next, we will create an embedded Versal acceleration platform using the AMD Vitis™ Unified IDE. Finally, we will validate this platform using the Vector Addition example.
 
-This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization) for reference.
+This is a quick start guide for Versal platform creation. If you have questions about specific steps or settings, or if you need to create a platform for a customer's board, please refer to[Versal Custom Platform Creation Tutorial](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190). Besides, if you need to customize the Linux system image, refer to the [PetaLinux customization page](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/Vitis_Platform_Creation/Feature_Tutorials/02_petalinux_customization) for reference.
 
 ## Step 1: Create Vivado Design and Generate XSA
 
