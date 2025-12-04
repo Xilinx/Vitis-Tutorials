@@ -1,0 +1,1290 @@
+{
+  "NodeConstraints": {
+    "aie_dut.dut.layer_w1.kk": {
+      "tile": {
+        "column": 9,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 9,
+        "row": 3,
+        "bankId": 2,
+        "offset": 9728
+      }
+    },
+    "aie_dut.dut.layer_w5.kk": {
+      "tile": {
+        "column": 9,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 9,
+        "row": 0,
+        "bankId": 1,
+        "offset": 14912
+      }
+    },
+    "aie_dut.dut.layer_w6.kk": {
+      "tile": {
+        "column": 9,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 9,
+        "row": 0,
+        "bankId": 0,
+        "offset": 8384
+      }
+    },
+    "aie_dut.dut.layer_w7.kk": {
+      "tile": {
+        "column": 8,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 8,
+        "row": 1,
+        "bankId": 1,
+        "offset": 0
+      }
+    },
+    "aie_dut.dut.layer_w8.kk": {
+      "tile": {
+        "column": 8,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 8,
+        "row": 1,
+        "bankId": 2,
+        "offset": 8192
+      }
+    },
+    "aie_dut.dut.layer_w9.kk": {
+      "tile": {
+        "column": 8,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 8,
+        "row": 1,
+        "bankId": 0,
+        "offset": 14912
+      }
+    },
+    "aie_dut.dut.layer_w10.kk": {
+      "tile": {
+        "column": 7,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 7,
+        "row": 1,
+        "bankId": 0,
+        "offset": 128
+      }
+    },
+    "aie_dut.dut.layer_w11.kk": {
+      "tile": {
+        "column": 7,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 7,
+        "row": 1,
+        "bankId": 1,
+        "offset": 0
+      }
+    },
+    "aie_dut.dut.layer_w12.kk": {
+      "tile": {
+        "column": 6,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 6,
+        "row": 0,
+        "bankId": 1,
+        "offset": 15168
+      }
+    },
+    "aie_dut.dut.layer_w13.kk": {
+      "tile": {
+        "column": 6,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 6,
+        "row": 0,
+        "bankId": 0,
+        "offset": 14720
+      }
+    },
+    "aie_dut.dut.layer_w14.kk": {
+      "tile": {
+        "column": 6,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 6,
+        "row": 2,
+        "bankId": 0,
+        "offset": 2304
+      }
+    },
+    "aie_dut.dut.layer_w16.kk": {
+      "tile": {
+        "column": 7,
+        "row": 3,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 6,
+        "row": 3,
+        "bankId": 1,
+        "offset": 0
+      }
+    },
+    "aie_dut.dut.layer_w17.kk": {
+      "tile": {
+        "column": 6,
+        "row": 3,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 6,
+        "row": 3,
+        "bankId": 0,
+        "offset": 6656
+      }
+    },
+    "aie_dut.dut.layer_w2.kk": {
+      "tile": {
+        "column": 10,
+        "row": 3,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 10,
+        "row": 3,
+        "bankId": 1,
+        "offset": 1920
+      }
+    },
+    "aie_dut.dut.layer_w18.kk": {
+      "tile": {
+        "column": 7,
+        "row": 2,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 7,
+        "row": 1,
+        "bankId": 2,
+        "offset": 0
+      }
+    },
+    "gmioIn": {
+      "shim": {
+        "column": 9
+      }
+    },
+    "gmioOut": {
+      "shim": {
+        "column": 7
+      }
+    },
+    "aie_dut.dut.layer_w3.kk": {
+      "tile": {
+        "column": 10,
+        "row": 1,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 10,
+        "row": 0,
+        "bankId": 0,
+        "offset": 64
+      }
+    },
+    "aie_dut.dut.layer_w4.kk": {
+      "tile": {
+        "column": 10,
+        "row": 0,
+        "tile_type": "core"
+      },
+      "reserved_memory": {
+        "column": 10,
+        "row": 0,
+        "bankId": 3,
+        "offset": 8192
+      }
+    }
+  },
+  "PortConstraints": {
+    "aie_dut.dut.layer_w1.MT.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 12224
+        }]
+    },
+    "aie_dut.dut.layer_w5.kk.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 2,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w5.kk.in[1]": {
+      "buffers": [{
+          "column": 9,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w5.kk.in[2]": {
+      "buffers": [{
+          "column": 9,
+          "row": 0,
+          "bankId": 0,
+          "offset": 64
+        }, {
+          "column": 9,
+          "row": 2,
+          "bankId": 1,
+          "offset": 11264
+        }]
+    },
+    "aie_dut.dut.layer_w5.kk.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 2,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 2,
+          "bankId": 0,
+          "offset": 8128
+        }]
+    },
+    "aie_dut.dut.layer_w6.kk.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w6.kk.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 0,
+          "bankId": 0,
+          "offset": 192
+        }, {
+          "column": 9,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w7.MT_input.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 0,
+          "bankId": 0,
+          "offset": 192
+        }, {
+          "column": 9,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w7.MT_input.out[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 384
+        }]
+    },
+    "aie_dut.dut.layer_w7.MT_output.in[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 1,
+          "bankId": 1,
+          "offset": 8192
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w7.MT_output.out[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w7.kk.in[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 384
+        }]
+    },
+    "aie_dut.dut.layer_w7.kk.in[1]": {
+      "buffers": [{
+          "column": 8,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 256
+        }]
+    },
+    "aie_dut.dut.layer_w7.kk.in[2]": {
+      "buffers": [{
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 128
+        }]
+    },
+    "aie_dut.dut.layer_w7.kk.out[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 1,
+          "bankId": 1,
+          "offset": 8192
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w8.kk.in[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w8.kk.out[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w9.MT_input.in[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w9.MT_input.out[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 2,
+          "offset": 5120
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 3,
+          "offset": 5120
+        }]
+    },
+    "aie_dut.dut.layer_w9.MT_output.in[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 1,
+          "offset": 8192
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 3,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w9.MT_output.out[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 1,
+          "offset": 1472
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 0,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w9.kk.in[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 2,
+          "offset": 5120
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 3,
+          "offset": 5120
+        }]
+    },
+    "aie_dut.dut.layer_w9.kk.in[1]": {
+      "buffers": [{
+          "column": 8,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 192
+        }]
+    },
+    "aie_dut.dut.layer_w9.kk.in[2]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 8,
+          "row": 1,
+          "bankId": 0,
+          "offset": 320
+        }]
+    },
+    "aie_dut.dut.layer_w9.kk.out[0]": {
+      "buffers": [{
+          "column": 8,
+          "row": 0,
+          "bankId": 1,
+          "offset": 8192
+        }, {
+          "column": 8,
+          "row": 0,
+          "bankId": 3,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w10.kk.in[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 1,
+          "offset": 1472
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 0,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w10.kk.out[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 1,
+          "offset": 12288
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w1.kk.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 12224
+        }]
+    },
+    "aie_dut.dut.layer_w1.kk.in[1]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 1792
+        }]
+    },
+    "aie_dut.dut.layer_w1.kk.in[2]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 1856
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 2,
+          "offset": 9664
+        }]
+    },
+    "aie_dut.dut.layer_w1.kk.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w11.MT_input.in[0]": {
+      "buffers": [{
+          "column": 7,
+          "row": 1,
+          "bankId": 1,
+          "offset": 12288
+        }, {
+          "column": 7,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w11.MT_input.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 1,
+          "offset": 2048
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 3,
+          "offset": 4096
+        }]
+    },
+    "aie_dut.dut.layer_w11.MT_output.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 2,
+          "offset": 12288
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 6528
+        }]
+    },
+    "aie_dut.dut.layer_w11.MT_output.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 10624
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w11.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 1,
+          "offset": 2048
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 3,
+          "offset": 4096
+        }]
+    },
+    "aie_dut.dut.layer_w11.kk.in[1]": {
+      "buffers": [{
+          "column": 7,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 256
+        }]
+    },
+    "aie_dut.dut.layer_w11.kk.in[2]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 16256
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 16192
+        }]
+    },
+    "aie_dut.dut.layer_w11.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 2,
+          "offset": 12288
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 6528
+        }]
+    },
+    "aie_dut.dut.layer_w12.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 10624
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w12.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w13.MT_input.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w13.MT_input.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 3328
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 13568
+        }]
+    },
+    "aie_dut.dut.layer_w13.MT_output.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 2,
+          "offset": 14336
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 3,
+          "offset": 14336
+        }]
+    },
+    "aie_dut.dut.layer_w13.MT_output.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 128
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 1280
+        }]
+    },
+    "aie_dut.dut.layer_w13.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 3328
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 13568
+        }]
+    },
+    "aie_dut.dut.layer_w13.kk.in[1]": {
+      "buffers": [{
+          "column": 6,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 128
+        }]
+    },
+    "aie_dut.dut.layer_w13.kk.in[2]": {
+      "buffers": [{
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 0,
+          "bankId": 0,
+          "offset": 192
+        }]
+    },
+    "aie_dut.dut.layer_w13.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 2,
+          "offset": 14336
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 3,
+          "offset": 14336
+        }]
+    },
+    "aie_dut.dut.layer_w14.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 128
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 1280
+        }]
+    },
+    "aie_dut.dut.layer_w14.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 15360
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 1,
+          "offset": 1536
+        }]
+    },
+    "aie_dut.dut.layer_w16.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 15360
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 1,
+          "offset": 1536
+        }]
+    },
+    "aie_dut.dut.layer_w16.kk.in[1]": {
+      "buffers": [{
+          "column": 7,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w16.kk.in[2]": {
+      "buffers": [{
+          "column": 7,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 64
+        }]
+    },
+    "aie_dut.dut.layer_w16.kk.in[3]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 192
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 128
+        }]
+    },
+    "aie_dut.dut.layer_w16.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 1,
+          "offset": 16128
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 15104
+        }]
+    },
+    "aie_dut.dut.layer_w17.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 1,
+          "offset": 16128
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 15104
+        }]
+    },
+    "aie_dut.dut.layer_w17.kk.in[1]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 448
+        }]
+    },
+    "aie_dut.dut.layer_w17.kk.in[2]": {
+      "buffers": [{
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 6336
+        }, {
+          "column": 6,
+          "row": 3,
+          "bankId": 0,
+          "offset": 6592
+        }]
+    },
+    "aie_dut.dut.layer_w17.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 8256
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w2.MT_output.in[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w18.kk.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 1,
+          "offset": 8256
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w18.kk.in[1]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 3,
+          "offset": 2048
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w18.kk.in[2]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 64
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 2240
+        }]
+    },
+    "aie_dut.dut.layer_w18.kk.out[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 2176
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.data_o.in[0]": {
+      "buffers": [{
+          "column": 6,
+          "row": 2,
+          "bankId": 0,
+          "offset": 2176
+        }, {
+          "column": 6,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w2.kk.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 3,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 3,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w2.kk.out[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 3,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 3,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.MT_input.out[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 1,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.MT_output.in[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 1,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.MT_output.out[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.kk.in[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 1,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 1,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.kk.in[1]": {
+      "buffers": [{
+          "column": 10,
+          "row": 2,
+          "bankId": 0,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 0,
+          "bankId": 0,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w3.kk.in[2]": {
+      "buffers": [{
+          "column": 10,
+          "row": 1,
+          "bankId": 1,
+          "offset": 8192
+        }, {
+          "column": 10,
+          "row": 1,
+          "bankId": 1,
+          "offset": 8320
+        }]
+    },
+    "aie_dut.dut.layer_w3.kk.out[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 1,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 1,
+          "bankId": 3,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w4.kk.in[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 0,
+          "bankId": 1,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w4.kk.out[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 0,
+          "bankId": 0,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w5.MT_input.in[0]": {
+      "buffers": [{
+          "column": 10,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 10,
+          "row": 0,
+          "bankId": 0,
+          "offset": 8192
+        }]
+    },
+    "aie_dut.dut.layer_w5.MT_input.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 2,
+          "bankId": 3,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 2,
+          "bankId": 2,
+          "offset": 0
+        }]
+    },
+    "aie_dut.dut.layer_w5.MT_output.in[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 2,
+          "bankId": 1,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 2,
+          "bankId": 0,
+          "offset": 8128
+        }]
+    },
+    "aie_dut.dut.layer_w5.MT_output.out[0]": {
+      "buffers": [{
+          "column": 9,
+          "row": 0,
+          "bankId": 2,
+          "offset": 0
+        }, {
+          "column": 9,
+          "row": 0,
+          "bankId": 3,
+          "offset": 0
+        }]
+    }
+  }
+}
