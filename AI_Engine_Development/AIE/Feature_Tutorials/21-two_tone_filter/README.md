@@ -15,7 +15,7 @@
 
 # Signal Processing on AI Engine Using Vitis DSP Libraries and Vitis Model Composer
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Introduction
 
@@ -25,10 +25,10 @@ This tutorial guides you to design an FIR filter with an FFT using the DSP libra
 
 Install the tools:
 
-- Get and install **[MathWorks MATLAB® and Simulink® (R2024 or R2024b or R2025a)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
-- Get and install **[AMD Vitis 2025.1](https://www.xilinx.com/support/download.html)**
+- Get and install **[MathWorks MATLAB® and Simulink® (R2025a or R2024b or R2024a)](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml)**
+- Get and install **[AMD Vitis 2025.2](https://www.xilinx.com/support/download.html)**
 
-> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2025.1) for setting up software and installing the VCK190 base platform.
+> IMPORTANT: Before beginning the tutorial, make sure you have read and followed the Vitis Software Platform Release Notes (v2025.2) for setting up software and installing the VCK190 base platform.
 
 ## Overview
 
@@ -262,7 +262,8 @@ Next step is to verify the performance of the design.
 
 In the Graph View, select the *I/O* tab and observe the **Throughput** column for each ports. 
 
-The output PLIO port (PLIO_fft_o) throughput shows the value 2307.80 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of 576.95 MSPS.
+The output PLIO port (PLIO_fft_o) throughput shows the value 2307.08 MBYTES PER SEC (MBPS). To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of 576.77 MSPS.
+Close the Vitis Analyzer.
 
 Optional: By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
 
@@ -376,7 +377,6 @@ make analyze
 ```
 
 Select the Graph view and verify the number of FIR kernels. Similarly, verify the number of FFTs implemented.
-![Graph View - Design 2](./images/Graph_view_ssr_gt1.png)
 
 Review reports such as Array and Trace. 
 
@@ -386,7 +386,7 @@ Next step is to verify the performance of the design.
 
 In the Graph View, select the *I/O* tab and observe the **Throughput** column for each ports. 
 
-The output of four PLIO ports (PLIO_fft_o_0, PLIO_fft_o_1, PLIO_fft_o_2, PLIO_fft_o_3) throughput shows the values 2853.16, 2853.16, 2853.16, 2853.16 MBYTES PER SEC (MBPS) repectively for each ports. To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of for each ports ~713.29 MSPS. There are four outputs and combined throughput of all output is ~2853 Msps.
+The output of four PLIO ports (PLIO_fft_o_0, PLIO_fft_o_1, PLIO_fft_o_2, PLIO_fft_o_3) throughput shows the values 2853.55, 2851.97, 2852.36, 2852.76 MBYTES PER SEC (MBPS) repectively for each ports. To get the throughput in Sample per second, this throughput needs to be divided by four because the data type used is cint16, which is four bytes in size. This gives a throughput value of for each ports ~713 MSPS. There are four outputs and combined throughput of all output is ~2853 Msps.
 
 [Optional]: By running the make throughput command, it lists the throughput for the FIR and FFT output. This uses the custom python script which reads the time stamp from the output file and displays the value.
 
@@ -443,7 +443,7 @@ Click **Next**.
 
 #### Select the Platform
 
-Select the platform as *xilinx_vck190_base_202510_1*.
+Select the platform as *xilinx_vck190_base_202520_1*.
 
 Click **Next** and review the Summary and then select **Finish**.
 
