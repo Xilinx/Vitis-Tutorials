@@ -1,4 +1,4 @@
-#Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 
@@ -103,9 +103,9 @@ $(BUILD_DIR)/README.md:
 	unzip $(BUILD_DIR)/rev1/hw_emu/xsa.zip -d $(BUILD_DIR)/rev1/hw_emu 
 
 xsa_all:
-	$(MAKE) xsa TARGET=hw REV=rev0
-	$(MAKE) xsa TARGET=hw REV=rev1
-	$(MAKE) xsa TARGET=hw_emu REV=rev1
+	$(MAKE) xsa sdt TARGET=hw REV=rev0
+	$(MAKE) xsa sdt TARGET=hw REV=rev1
+	$(MAKE) xsa sdt TARGET=hw_emu REV=rev1
 
 xsa: $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
 
@@ -121,7 +121,18 @@ $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA): $(DEPS)
 		$(XOS)				\
 		--config $(CONFIG_INI)		\
 		-o $(XSA)
+	
+sdt: $(BUILD_DIR)/$(REV)/$(TARGET)/sdt/system.dts
 
+$(BUILD_DIR)/$(REV)/$(TARGET)/sdt/system.dts: $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
+	xsct -eval " \
+		sdtgen set_dt_param -debug enable; \
+		sdtgen set_dt_param -zocl enable; \
+		sdtgen set_dt_param -dir $(BUILD_DIR)/$(REV)/$(TARGET)/sdt; \
+		sdtgen set_dt_param -xsa $(abspath $<); \
+		sdtgen set_dt_param -board_dts versal-vck190-rev1.1-x-ebm-01-reva; \
+		sdtgen generate_sdt; \
+  "
 clean:
 	rm -rf $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
 	rm -rf $(BUILD_DIR)/$(REV)/$(TARGET)

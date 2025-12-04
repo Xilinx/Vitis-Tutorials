@@ -43,7 +43,7 @@ For the hardware build, the ``–-package`` command creates an ``sd_card.img`` f
    ```
 
 7. Power on the board.
-8. Wait until you see the `root@versal-rootfs-common-2025_1` Linux command prompt. Press enter a few times to get past any `xinit` errors.
+8. Wait until you see the `root@versal-rootfs-common-2025_2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 9. Run the following commands into the TeraTerm terminal:
 
    ```

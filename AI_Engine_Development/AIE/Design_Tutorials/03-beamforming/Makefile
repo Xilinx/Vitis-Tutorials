@@ -47,11 +47,11 @@ step2:
 	$(MAKE) -C Module_03_PL_Design kernels
 
 step3:
-	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw REV=rev1
+	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa sdt TARGET=hw REV=rev1
 
 SHELL := /bin/bash
 step3b:
-	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa TARGET=hw_emu REV=rev1
+	$(MAKE) -C Module_04_AI_Engine_and_PL_Integration xsa sdt TARGET=hw_emu REV=rev1
 
 step4:
 	$(MAKE) -C Module_05_Baremetal_Host_Application application MAIN=main_partial

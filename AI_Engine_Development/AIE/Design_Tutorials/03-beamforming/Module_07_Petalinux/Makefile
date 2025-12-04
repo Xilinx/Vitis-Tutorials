@@ -9,27 +9,29 @@ RELATIVE_PROJECT_DIR := ../
 PROJECT_DIR	:= $(shell readlink -f $(RELATIVE_PROJECT_DIR))
 
 MODULE_04_DIR := $(PROJECT_DIR)/Module_04_AI_Engine_and_PL_Integration
+MODULE_07_DIR := $(PROJECT_DIR)/Module_07_Petalinux
 
 # =========================================================
 # BSP
 # =========================================================
-BSP := xilinx-vck190-xsct-v2025.2-final.bsp
+BSP := xilinx-vck190-v2025.2-final.bsp
 
 # =========================================================
 # XSA SELECTION
 # =========================================================
 XSA := $(MODULE_04_DIR)/build/rev1/hw/beamforming.rev1.hw.xsa
-
+SDT_DIR :=$(MODULE_04_DIR)/build/rev1/hw/sdt/
 # =========================================================
 # BSP SELECTION
 # =========================================================
-BSP := xilinx-vck190-xsct-v2025.2-final.bsp
+BSP := xilinx-vck190-v2025.2-final.bsp
 
 # =========================================================
 # BUILD PRODUCTS
 # =========================================================
 BUILD_DIR := build
 PETALINUX_DIR := vck190_linux
+VITIS_BOOT_DIR := $(MODULE_07_DIR)/build/vitis_workspace/platform/export/platform/sw/boot/
 
 # Edit the vck190_linux/project-spec/configs/config
 # PetaLinux Config: Use EXT4 as rootfs format
@@ -87,12 +89,13 @@ update_boot:
 petalinux_create:
 	mkdir $(BUILD_DIR) -p; \
 	cd $(BUILD_DIR); \
-	petalinux-create -t project -s $(BSP_DIR)/$(BSP) -n $(PETALINUX_DIR)
+	petalinux-create project -s $(BSP_DIR)/$(BSP) -n $(PETALINUX_DIR)
 	echo "CONFIG_YOCTO_BUILDTOOLS_EXTENDED=y" >>  $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
+	echo "CONFIG_SYS_INIT_SP_BSS_OFFSET=5242880" >> $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/meta-user/recipes-bsp/u-boot/files/bsp.cfg
 	@sed -i -E 's/.*CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME.+/CONFIG_SUBSYSTEM_INITRAMFS_IMAGE_NAME="petalinux-image-minimal"/' $(BUILD_DIR)/$(PETALINUX_DIR)/project-spec/configs/config
 
 petalinux_config:
-	petalinux-config -p $(BUILD_DIR)/$(PETALINUX_DIR) --get-hw-description=$(XSA) --silentconfig
+	petalinux-config -p $(BUILD_DIR)/$(PETALINUX_DIR) --get-hw-description=$(SDT_DIR) --silentconfig
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_config
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_rootfs_config
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_dtsi
@@ -107,16 +110,27 @@ petalinux_build:
 	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) update_linux.bif
 
 platform:
-	xsct xsct_create_pfm.tcl vck190_custom $(XSA)
+	mkdir -p build/vitis_workspace
+	vitis -s run_sdt.py vck190_custom $(XSA) 
+
+copy_dtb_elf_to_vitis_boot_folder:
+	cd $(VITIS_BOOT_DIR); \
+	rm system.dtb; \
+	rm bl31.elf; \
+	rm u-boot.elf; \
+	cp -f $(MODULE_07_DIR)/build/vck190_linux/images/linux/system.dtb $(VITIS_BOOT_DIR); \
+	cp -f $(MODULE_07_DIR)/build/vck190_linux/images/linux/bl31.elf $(VITIS_BOOT_DIR); \
+	cp -f $(MODULE_07_DIR)/build/vck190_linux/images/linux/u-boot.elf $(VITIS_BOOT_DIR); 
 
 petalinux: $(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/Image
 
-$(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/Image: $(XSA)
+$(BUILD_DIR)/$(PETALINUX_DIR)/images/linux/Image: $(SDT_DIR)
 	$(MAKE) petalinux_create
 	$(MAKE) petalinux_config
 	$(MAKE) petalinux_build
 	$(MAKE) update_boot
 	$(MAKE) platform
+	$(MAKE) copy_dtb_elf_to_vitis_boot_folder
 
 clean:
 	rm -rf $(BUILD_DIR)

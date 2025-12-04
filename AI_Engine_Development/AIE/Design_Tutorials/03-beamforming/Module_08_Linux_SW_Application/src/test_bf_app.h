@@ -8,7 +8,7 @@
 #define __TEST_BF_APP_H__
 
 #include <adf.h>
-#include "xrt.h"
+//#include "xrt.h"
 #include "xrt/xrt_aie.h"
 #include "xrt/xrt_kernel.h"
 

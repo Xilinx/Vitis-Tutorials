@@ -60,7 +60,7 @@ package: aie.xclbin $(BUILD_DIR)/package_$(TARGET)/sd_card.img
 $(BUILD_DIR)/package_$(TARGET)/sd_card.img:
 	cd $(BUILD_DIR); 								\
 	v++ -p  -t $(TARGET) --save-temps                                    		\
-	-f  $(MODULE_07_DIR)/build/platform_repo/vck190_custom/export/vck190_custom/vck190_custom.xpfm     \
+	-f  $(MODULE_07_DIR)/build/vitis_workspace/platform/export/platform/platform.xpfm     \
 	--package.rootfs $(MODULE_07_DIR)/build/vck190_linux/images/linux/rootfs.ext4	\
 	--package.kernel_image ${MODULE_07_DIR}/build/vck190_linux/images/linux/Image   \
 	--package.boot_mode=sd                                              		\
