@@ -1,0 +1,28 @@
+#
+# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+
+import vitis
+import sys
+import os
+
+app_path= os.getcwd()
+cmd_args=len(sys.argv)
+args=str(sys.argv)
+
+client = vitis.create_client()
+client.update_workspace(path="./workspace")
+
+if cmd_args == 1:
+    platform_name=base_pfm_vek385
+else:
+    platform_name=sys.argv[1]
+    
+platform_path=app_path+"/workspace/"+platform_name+"/export/"+platform_name+"/"+platform_name+".xpfm"
+
+if (not os.path.isdir("./workspace/simple_aie_application")):
+    comp = client.create_aie_component(name="simple_aie_application", platform = platform_path, template = "installed_aie_examples/simple")
+
+comp = client.get_component(name="simple_aie_application")
+comp.build(target="hw")
