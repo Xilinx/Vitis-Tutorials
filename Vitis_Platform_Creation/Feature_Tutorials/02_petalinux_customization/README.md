@@ -14,13 +14,13 @@
 
 # PetaLinux Building and System Customization
 
-***Version: PetaLinux 2025.1***
+***Version: PetaLinux 2025.2***
 
 This module demonstrates platform software components customization. Use the PetaLinux tools to create the Linux image and sysroot with XRT support, together with some more advanced tweaks. Among all the customizations, the XRT installation and ZOCL device tree setup are mandatory. Other customizations are optional. The customization purposes are explained and you can pick your desired customization.
 
 Yocto or third-party Linux development tools can also be used as long as they produce the same Linux output products as PetaLinux.
 
-As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage ready-made base platform from [Xilinx website download center](https://www.xilinx.com/support/download.html) and take zcu104 base platform as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement. 
+As XSA file is the mandatory input for Petalinux project. Users can input  XSA file exported from your Vivado project. This time we will leverage ready-made base platform from [Xilinx website download center](https://www.xilinx.com/support/download.html) and take vck190 base platform as an example to show how to do system customization. Of course, you can download other platforms from that page according to your requirement. 
 
 ### Prepare the base platform
 
@@ -34,8 +34,8 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis™ tool, omit this step as AMD Official platforms have already built into the vitis tool installation package.
 
    ```bash
-   unzip xilinx_zcu104_base_202510_1.zip #extract the base platform
-   cd xilinx_zcu104_base_202510_1
+   unzip xilinx_vck190_base_202520_1.zip #extract the base platform
+   cd xilinx_vck190_base_202520_1
    tree -L 2
    .
    ├── hw
@@ -43,10 +43,10 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    ├── hw_emu
    │   └── hw_emu.xsa
    ├── sw
-   │   ├── xilinx_zcu104_base_202510_1
-   │   └── xilinx_zcu104_base_202510_1.spfm
+   │   ├── xilinx_vck190_base_202520_1
+   │   └── xilinx_vck190_base_202520_1.spfm
    ├── version
-   └── xilinx_zcu104_base_202510_1.xpfm
+   └── xilinx_vck190_base_202520_1.xpfm
    4 directories, 5 files
    ```
 
@@ -58,31 +58,29 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    source <petaLinux_tool_install_dir>/settings.sh
    ```
 
-2. Create a PetaLinux project named **zcu104_petalinux** and configure the hw option with the XSA file:
+2. Create a PetaLinux project named **vck190_petalinux** and configure the hw option with the XSA file:
 
    ```bash
    cd workspace
-   petalinux-create --type project --template zynqMP --name zcu104_petalinux
-   cd zcu104_petalinux
-   petalinux-config --get-hw-description=xilinx_zcu104_base_202510_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_zcu104_base_202510_1> directory. If you want to do emulation you can choose hw_emu.xsa 
+   petalinux-create --type project --template versal --name vck190_petalinux
+   cd vck190_petalinux
+   petalinux-config --get-hw-description=xilinx_vck190_base_202520_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_vck190_base_202520_1> directory. If you want to do emulation you can choose hw_emu.xsa 
    ```
 
-   > Note: `--template` option specifies the chipset. zcu104 board adopts the ZYNQMP™ series chip. Therefore, we specify this option as `zynqMP`. If your platform is using Versal™ chipset, set this option to `versal`.
-
-   > Note: If the user is customizing Linux image for VCK190 board, ensure the XSA file is exported from a normal project (not a Vitis extensible project) and includes the device image.
+   > Note: `--template` option specifies the chipset. vck190 board adopts the Versal™ series chip. Therefore, we specify this option as `versal`.
 
    > Note: PetaLinux will use XSA to generate the device tree. Since hardware XSA and hardware emulation XSA have identical peripherals, providing either of them to PetaLinux is acceptable. When simplifying the hardware design for hardware emulation, it is recommended to keep all the peripherals that need device tree and drivers so that the auto-generated device tree can be reused. If the two designs have different addressable peripherals, you will need to create two sets of device trees for hardware running and hardware emulation, separately.
 
 
-3. A petalinux-config menu is launched. Set it to use ZCU104 device tree in the configuration window.
+3. A petalinux-config menu is launched. Set it to use VCK190 device tree in the configuration window.
 
    - Select **DTG Settings->MACHINE_NAME**
-   - Modify it to ```zcu104-revc```. 
+   - Modify it to ```vck190-versal```. 
    - Select **OK -> Exit -> Exit -> Yes** to close this window.
 
    Note: 
    
-     - If you are using an AMD development board, it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. You can check the [UG1144 document](https://www.xilinx.com/content/dam/xilinx/support/documentation/sw_manuals/xilinx2021_2/ug1144-petalinux-tools-reference-guide.pdf) for the corresponding machine name.
+     - If you are using an AMD development board, it is recommended to modify the machine name so that the board configurations would be involved in the DTS auto-generation. You can check the [UG1144 document](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Design-Flow-Overview) for the corresponding machine name.
      - If you are using a custom board, you would need to configure the associated settings (e.g. the PHY information DTS node) in **system-user.dtsi** manually.
      - Device tree is a generic technology in embedded Linux. Search on Google for more information.
 
@@ -153,20 +151,9 @@ Device Tree Generator (DTG) also overrides the interrupt controller (axi_intc_0)
 
 You can review the PetaLinux generated device tree in **project-spec/components/device-tree/device-tree/pl.dtsi** file.
 
-You can also add your custom device tree modifications to **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**. For example this is how you setup sdhci1 to low speed mode.
-
-```
-&sdhci1 {
-      no-1-8-v;
-      disable-wp;
-};
-```
-
-   - **sdhci1** node decreases SD Card speed for better card compatibility on ZCU104 board. This only relates to ZCU104 and is not a part of Vitis acceleration platform requirements. 
-
-   **Note**: an example file [zcu104/system-user.dtsi](ref_files/zcu104/system-user.dtsi) is provided for zcu104 board and [vck190/system-user.dtsi](ref_files/vck190/system-user.dtsi) for VCK190 board.
-
-
+You can also add your custom device tree modifications to **project-spec/meta-user/recipes-bsp/device-tree/files/system-user.dtsi**.
+ 
+   **Note**: an example file [vck190/system-user.dtsi](ref_files/vck190/system-user.dtsi) for VCK190 board.
 
 ### Add EXT4 rootfs support 
 
