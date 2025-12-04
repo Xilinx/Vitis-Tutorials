@@ -1094,7 +1094,7 @@ A summary of resource utilization and power is given in the following table.
 				
 | Number of Compute Cores|Vector Load|Number of Active Memory Banks|Mem R/W Rate|Memory Tiles|Memory Tile Memory Banks|Memory Tile Memory R/W Rate|AIE-ML Mem Tiles|Interconnect Load|Dynamic Power<br/>(in W)| 
 |:----------------------:|:---------:|:---------------------------:|:----------:|:----------:|:----------------------:|:-------------------------:|:--------------:|:---------------:|:-----------------------|
-|       5                |  31.61%   |          60                 |    16.05%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.116          |
+|       5                |  31.62%   |          58              |    16.30%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.116          |
 
 ## Note
 
