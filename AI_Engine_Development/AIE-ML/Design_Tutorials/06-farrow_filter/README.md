@@ -493,7 +493,7 @@ The diagram below illustrates the entire Vitis tool flow, encompassing the devel
 ![Tool_Flow](./images/Tool_Flow.png)
 
 #### Setup and Initialization
-IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2024.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2025.1 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
 https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-1.html
 

@@ -80,7 +80,7 @@ The Debug view will be launched, and users can debug as normal
 
 ## Use Case 2 - Running Platform Creation tutorials
 
-In this use case, we can build the example using the scripts given [here](https://github.com/Xilinx/Vitis-Tutorials/tree/2024.2/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/ref_files/step1_vivado). In particular, we will build the **Edge-AI-ZCU104** Platform.
+In this use case, we can build the example using the scripts given [here](../../../Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/ref_files/step1_vivado/). In particular, we will build the **Edge-AI-ZCU104** Platform.
 
 ### Lets get started
 
@@ -92,7 +92,7 @@ Select the **Open Explorer View**
 
 ### Generating Build Configuration
 
-In this use case, copy the **Makefile**, **export_xsa.tcl** and the **system_step1.tcl** from the [Edge-AT-ZCU104 repository](https://github.com/Xilinx/Vitis-Tutorials/tree/2024.2/Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/ref_files/step1_vivado) into the workspace.
+In this use case, copy the **Makefile**, **export_xsa.tcl** and the **system_step1.tcl** from the [Edge-AT-ZCU104 repository](../../../Vitis_Platform_Creation/Design_Tutorials/02-Edge-AI-ZCU104/ref_files/step1_vivado/) into the workspace.
 
 Right click in the **Explorer** view, and select **Edit Build Configurations** and **New Build Configurations** and set as shown below:
 

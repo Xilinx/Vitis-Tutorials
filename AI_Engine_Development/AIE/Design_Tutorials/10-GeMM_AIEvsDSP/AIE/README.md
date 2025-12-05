@@ -639,7 +639,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2024.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2025.1` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
 
 **Step 9.** Run the following commands in the TeraTerm terminal: 
 
@@ -1322,7 +1322,7 @@ For all applications, designers must work to predefined specifications and build
 
 #### Resource Utilization and Power
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.2 version) tools.
+Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal tools.
 
 The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
 

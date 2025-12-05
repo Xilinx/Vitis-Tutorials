@@ -31,7 +31,7 @@ For example, value at c11, is the product of  a11  * b11 + a12 * b21. Similarly,
 
 ![Matrix Product](./images/2_Matrix_Product.png)
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* (v2024.2) for setting up the software and installing the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, make sure that you have read and followed the *Vitis Software Platform Release Notes* for setting up the software and installing the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 1. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.

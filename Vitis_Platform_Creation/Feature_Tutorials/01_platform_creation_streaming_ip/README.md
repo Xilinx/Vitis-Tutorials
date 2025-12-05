@@ -13,7 +13,7 @@
 
 # Versal Platform Creation with Custom IP
 
-***Version: Vitis 2024.1***
+***Version: Vitis 2025.1***
 
 This tutorial explains how to add custom IPs into a Versal™ adaptive SoC platform. This tutorial is an 'add-on' to the basic [Versal platform creation tutorial](../../Design_Tutorials/03_Edge_VCK190/README.md). Therefore, for each step, there is a pointer to the corresponding part of that tutorial, as required.
 
