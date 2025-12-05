@@ -15,7 +15,7 @@
 
 # Versal GeMM Implementation Using Vitis Acceleration Library and DSP58 Tutorial
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 ## Table of Contents
 
@@ -190,8 +190,8 @@ The script sets up the environment variables and sources scripts explained below
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
 2. The `XILINX_TOOLS_LOCATION` path to the AMD tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2025.1` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2025.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2025.1/sdk.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2025.2` directory is used in the step below.
+4. The platform is set up by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2025.2/sdk.sh` script.
 5. `DSPLIB_VITIS` is the path to the downloaded Vitis Libraries. This is only required for the AI Engine implementation.
 6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If it is not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
@@ -219,7 +219,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the above command should be as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202510_1",
+ "baseName": "xilinx_vck190_base_202520_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -245,8 +245,8 @@ The following table shows a comparison between a 1024 x 1024 x1024 GeMM design i
 
 | Design Target | TOPS<br/> | Average Latency (in μs) | AIE Vector Cores | AIE Vector Load | Active Mem Banks /<br/> Mem R/W Rate | Active AIE Tiles | FF (Regs) /<br/> CLB LUTs | BRAMs | DSPs | Dynamic Power<br/>(in mW) | TOPS per Watt<br/>(in TOPS/Watt) |
 |:-------------:|:----------------------------------:|:-----------------------:|:----------------:|:---------------:|:------------------------------------:|:----------------:|:-------------------------:|:-----:|:----:|:-------------------------:|:---------------------------------------:|
-| AIE           | 1.551     | 3.331                  | 24               | 842.98%             | 252 /<br/>14.245%                        | 43              | 26478 /<br/> 13548        |66       | 0    | 4911                      |  0.320                         |    
-| DSP           | 1.433     |   1497.971              | NA               | NA              | NA                                   | NA               | 70986 /<br/> 17340       | 64     | 1024  | 8758                   | 0.163                            |
+| AIE           | 1.551     | 3.331                  | 24               | 82.96%             | 252 /<br/>13.980%                        | 46              | 26471 /<br/> 13546        |66       | 0    | 4876                      |  0.320                         |    
+| DSP           | 1.433     |   1497.971              | NA               | NA              | NA                                   | NA               | 71086 /<br/> 17324       | 64     | 1024  | 8682                   | 0.165                            |
 
 
 It is important to understand that those 46 AI Engines tiles are not all required for the GeMM compute: 24 AI Engines/vector cores are required for computation, and 22 AI Engines are required for the memory to store the Matrices and also to enable connectivity around the array. The average load on these additional 22 AI Engine tiles is 84.63%.
@@ -280,10 +280,10 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2025_1/ug1451-xrt-release-notes.pdf)
+* [XRT Release Notes](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2025_2/ug1451-xrt-release-notes.pdf)
 
 
-#### [Vitis Unified Software Development Platform 2025.1 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+#### [Vitis Unified Software Development Platform 2025.2 Documentation](https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
 
 
 Below are links to Vitis related information referenced in this tutorial:
