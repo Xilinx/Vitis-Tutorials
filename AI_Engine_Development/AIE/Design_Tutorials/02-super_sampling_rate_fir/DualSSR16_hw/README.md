@@ -15,7 +15,7 @@
 
 # Dual Implementation of a Super Sampling Rate FIR Filter with Dual-Stream Input
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2025.2***
 
 The purpose of this fith part of the tutorial is to implement and run in hardware two instances of SSR with dual-stream I/Os.
 
@@ -38,10 +38,10 @@ The first step is to compile, simulate and visualize the graph with:
 make clean data aie aiesim aiesimviz
 ```
 
-The output display of the average throughput gives different values for the 2 instances just because the reference time taken for G1 and G2 is the same while G1 starts before G2:
+The output display (in the console or log section of Vitis Analyzer) of the average throughput gives different values for the 2 instances just because the reference time taken for G1 and G2 is the same while G1 starts before G2:
 
-- G1 (filenames finishing with 15) output throughput is around 3900MB/s
-- G2 (filenames finishing with 25) output throughput is around 4000MB/s
+- G1 (filenames PhaseOut_N_K_15 finishing with 15) output throughput is around 3900MB/s
+- G2 (filenames PhaseOut_N_K_25 finishing with 25) output throughput is around 4000MB/s
 
 In the 'Array view' one can see clearly the 2 instances with all input and output filenames.
 
