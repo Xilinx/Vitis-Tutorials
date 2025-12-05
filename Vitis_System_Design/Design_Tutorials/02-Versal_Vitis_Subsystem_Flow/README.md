@@ -16,7 +16,7 @@
 
 ***Version: Vivado and Vitis 2025.2***
 
-This tutorial demonstrates key features in AMD 2025.1 tools for designing and verifying AI Engine and HLS based DSP subsystem and deploy it on a custom platform.
+This tutorial demonstrates key features in AMD 2025.2 tools for designing and verifying AI Engine and HLS based DSP subsystem and deploy it on a custom platform.
 
 To show the design, verification and integration activities, the tutorial use simple building blocks to make it easy to track the design results and processing data with visual inspection.
 The example blocks are verified with basic test benches to demonstrate using the verification features, and it's adviced that user complement with more advanced tests to reach acceptable coverage.
@@ -121,7 +121,7 @@ This figure describe the order of which the hardware design components are arran
 ## Getting Started
 
 ### Prerequisites
-Setup the Vitis 2025.1 tools
+Setup the Vitis 2025.2 tools
 ```
 source <Vitis_Installation_Path>/settings64.sh
 ```

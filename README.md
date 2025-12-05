@@ -101,6 +101,37 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
     <tbody>
         <tr>
             <td colspan="4" height="24" align="center">
+                <strong> <a href="./AI_Engine_Development/AIE-MLv2/">AI Engine Development on AIE-MLv2 :new: </a></strong>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" height="48">
+                Learn how to target, develop, and deploy advanced algorithms using Versal AIE-MLv2 architecture in conjunction with PL IP/kernels and software applications running on the embedded processors.
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <strong>Feature Tutorials</strong>
+            </td>
+            <td height="24">
+                <strong>Design Tutorials</strong>
+            </td>
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./AI_Engine_Development/AIE-MLv2/Feature_Tutorials/01-aie-mlv2_a_to_z/">A to Z AIE Bare-metal Flow for VEK385 :new:</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/01-Radio-ML">Radio-ML on AIE-MLv2 :new:</a>
+            </td>            
+        </tr>     
+    </tbody>
+</table>
+
+<table border="0" width="100%">
+    <tbody>
+        <tr>
+            <td colspan="4" height="24" align="center">
                 <strong> <a href="./AI_Engine_Development/AIE-ML/">AI Engine Development on AIE-ML </a></strong>
             </td>
         </tr>
@@ -164,23 +195,23 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/20-aiecompiler-features">AIE Compiler Features </a>
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries :new: </a>
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/06-gemm/">Matrix Compute with Vitis Libraries</a>
             </td>                
             <td>
                 <a href="./Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System">Versal Custom Thin Platform Extensible System</a>           
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/07-Channelizer-Using-Vitis-Libraries">Polyphase Channelizer on AIE-ML using Vitis Libraries :new:</a>                     
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/07-Channelizer-Using-Vitis-Libraries">Polyphase Channelizer on AIE-ML using Vitis Libraries</a>                     
             </td>             
         </tr>            
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters">Tiling Parameter Programming :new: </a>   
+                <a href="./AI_Engine_Development/AIE-ML/Feature_Tutorials/07-tiling-parameters">Tiling Parameter Programming</a>   
             </td>         
             <td>   
             </td>                
             <td>
-                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/08-MNIST-ConvNet">MNIST ConvNet on AIE-ML :new:</a>         
+                <a href="./AI_Engine_Development/AIE-ML/Design_Tutorials/08-MNIST-ConvNet">MNIST ConvNet on AIE-ML</a>         
             </td>
             <td>   
             </td>             
@@ -336,7 +367,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/">AIE Independent Graphs :new: </a>
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/23-AIE_independent_graphs/">AIE Independent Graphs </a>
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/24-aie_pl_interface">RTL / AI Engine interfacing Examples</a>   
@@ -350,16 +381,16 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>     
         <tr>
             <td height="24">
-                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/25-AIE-kernel-optimization/">AIE Kernel Optimization :new: </a>         
+                <a href="./AI_Engine_Development/AIE/Feature_Tutorials/25-AIE-kernel-optimization/">AIE Kernel Optimization </a>         
             </td>
             <td>   
                 <a href="./AI_Engine_Development/AIE/Feature_Tutorials/26-gentle_intro_to_aie_kernel_programming/">AI Engine Kernel Programming :new: </a>                
             </td>
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer :new: </a>
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/20-TDM-Mixer/">Time-Division Multiplexed Mixer </a>
             </td> 
             <td>
-                <a href="./AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/">Back-Projection SAR on AIE :new: </a>                        
+                <a href="./AI_Engine_Development/AIE/Design_Tutorials/21-Back-Projection-SAR/">Back-Projection SAR on AIE </a>                        
             </td>
         </tr>  
         <tr>
@@ -380,7 +411,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
     <tbody>
         <tr>
             <td colspan="4" height="24" align="center">
-                <strong> <a href="./Vitis_System_Design/">Vitis System Design :new: </a></strong>
+                <strong> <a href="./Vitis_System_Design/">Vitis System Design </a></strong>
             </td>
         </tr>
         <tr>
@@ -398,16 +429,16 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>
         <tr>
             <td height="24">
-                <a href="./Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/">Vitis Functional Simulation :new: </a>            
+                <a href="./Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/">Vitis Functional Simulation </a>            
             </td>
             <td>
-                <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation :new: </a>            
+                <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation </a>            
             </td>
             <td>
                 <a href="./Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a>
             </td>
             <td>
-                <a href="./Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/">Versal Custom Platform Integration using Vitis Subsystem :new: </a>
+                <a href="./Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/">Versal Custom Platform Integration using Vitis Subsystem </a>
             </td>            
         </tr>     
     </tbody>
@@ -533,7 +564,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                     <a href="./Vitis_Platform_Creation/Design_Tutorials/04_Edge_VCK190_DFX">Versal Custom DFX Platform Creation Tutorial</a>
                 </td>
                 <td>
-                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/">Vitis Export to Vivado Flow :new: </a>
+                  <a href="./Vitis_Platform_Creation/Feature_Tutorials/03_Vitis_Export_To_Vivado/">Vitis Export to Vivado Flow </a>
                 </td>
             </tr>
             <tr>

@@ -15,7 +15,8 @@
 
 日本語版の Vitis チュートリアルは、次のサイトで提供されています。
 <br>https://docs.amd.com/v/u/ja-JP/UG1605-vitis-tutorials<br><br>
-内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版 (https://github.com/Xilinx/Vitis-Tutorials) をご参照ください。
+内容に相違が生じる場合には原文を優先します。英語版の更新に対応していないことがありますので、日本語版は参考用としてご使用の上、最新情報につきましては、必ず最新英語版 (https://github.com/Xilinx/Vitis-Tutorials) をご参照ください。 
+
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

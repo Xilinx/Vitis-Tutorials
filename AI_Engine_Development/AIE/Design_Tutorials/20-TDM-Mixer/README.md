@@ -119,7 +119,7 @@ Note the computation in Line 61-62 involves two 8-lane vector multiplications. T
 
 ## Vitis Functional Simulation
 
-This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the TDM Mixer implementation in AI Engine against its MATLAB behavioral models. The VFS feature automatically creates "shared objects" of your AI Engine and PL HLS-based kernels in your Versal design, allowing it to be brought into familiar system-level simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose. VFS is a production tool feature in 2025.1.
+This tutorial uses a new tool feature called Vitis Functional Simulation (VFS) to validate the TDM Mixer implementation in AI Engine against its MATLAB behavioral models. The VFS feature automatically creates "shared objects" of your AI Engine and PL HLS-based kernels in your Versal design, allowing it to be brought into familiar system-level simulation frameworks, namely MATLAB and Python. This allows functional verification of your Versal AI Engine and PL designs without leaving your preferred simulation framework and without creating I/O files for this purpose. 
 
 The MATLAB version of VFS is used to validate the TDM Mixer functional performance. The diagram below shows the MATLAB m-code required to use VFS:
 

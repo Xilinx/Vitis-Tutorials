@@ -1,5 +1,28 @@
 # Vitis-Tutorials ChangeLog
 
+## 2025.2 (Dec. 4, 2025)
+
+### New Tutorials
+
+- AI_Engine_Development/AIE-MLv2/Feature_Tutorials/01-aie-mlv2_a_to_z/
+- AI_Engine_Development/AIE-MLv2/Design_Tutorials/01-Radio-ML/ 
+- AI_Engine_Development/AIE/Feature_Tutorials/27-system-timeline/
+
+### Tutorial Updates
+
+- Removed a few tutorials due to discontinued feature support or replacement by consolidated and updated content.
+    - Vitis_HLS/Feature_Tutorials/01-using_code_analyzer/
+    - Vitis_HLS/Design_Tutorials/01-Polynomial_Vectorization/
+    - Vitis_Platform_Creation/Design_Tutorials/01-Edge-KV260/
+    - AI_Engine_Development/AIE/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform/
+
+### EoU Improvements
+
+- Introduce a new sub-category `AIE-MLv2` under `AI_Engine_Development` to host new tutorials focused on Versal Gen2 devices with AI Engine ML v2 architecture.
+
+<details open>
+    <summary>2025.1 Release</summary>
+
 ## 2025.1_update (Sep. 10, 2025)
 
 ### New Tutorials
@@ -50,9 +73,9 @@
 - Introduce a new category `Vitis_System_Design` to host new tutorials focused on system design flows.
 - Remove tutorials from the `Hardware_Acceleration` category in this branch. These tutorials are still available in previous branches. 
 
+</details>
 
-
-<details open>
+<details close>
     <summary>2024.2 Release</summary>
 
 ## 2024.2_update (Feb. 25, 2025) 

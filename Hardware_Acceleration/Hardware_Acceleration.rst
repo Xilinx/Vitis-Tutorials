@@ -8,7 +8,7 @@ Hardware Acceleration
 
 .. important:: 
 
-   **Hardware Acceleration** tutorials are in "regression" mode, meaning we will run regression tests on 2024.1 and newer versions, but will not make any feature updates other than bug fixes. Starting with the 2025.1 release, we will no longer publish updates or new tutorials in this category. If you need to access existing content, please refer to previous branches.
+   **Hardware Acceleration** Starting with the **2025.1** release, we will no longer publish updates or new tutorials in this category. If you need to access existing content, please refer to previous branches.
 
 
 **Version: Vitis 2023.2**

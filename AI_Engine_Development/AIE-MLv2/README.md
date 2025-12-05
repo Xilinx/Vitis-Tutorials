@@ -24,11 +24,6 @@ The tutorials under the AI Engine for Machine Learning v2 (AIE-MLv2) Development
 - The AIE-MLv2 Development [**Design Tutorials**](./Design_Tutorials/) showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
 
 
-### Feature Tutorials
-
-These tutorials target the **VEK385** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
-
-
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

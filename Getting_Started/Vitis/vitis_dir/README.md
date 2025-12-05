@@ -24,7 +24,7 @@ As discussed in the tutorial introduction page, the Vitis linker inputs are kern
 2. `mm2s.xo` and `s2mm.xo`: HLS/PL kernels
 3. `xilinx_vck190_base_202510_1.xpfm`: AMD provided platform
 
-> **Important Note:** This tutorial uses the AMD provided platform. For custom platform flow details, please check tutorials under [Vitis_Platform_Creation](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/Vitis_Platform_Creation)
+> **Important Note:** This tutorial uses the AMD provided platform. For custom platform flow details, please check tutorials under [Vitis_Platform_Creation](../../../Vitis_Platform_Creation/)
 
 With the input kernels and platform ready, we need to define the connection of these kernel using a configuration file, let's call it system.cfg.
 
@@ -116,9 +116,9 @@ save-temps=1
 [package]
 boot_mode=sd
 out_dir=pack_out_dir
-rootfs=<path_platform>/xilinx-versal-common-v2025.1/rootfs.ext4
+rootfs=<path_platform>/xilinx-versal-common-v2025.2/rootfs.ext4
 image_format=ext4
-kernel_image=<path_platform>/xilinx-versal-common-v2025.1/Image
+kernel_image=<path_platform>/xilinx-versal-common-v2025.2/Image
 sd_file=host.exe
 ```
 

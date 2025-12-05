@@ -15,12 +15,14 @@
 
 # AI Engine A-to-Z Flow for Linux
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2025.1***
 
-This tutorial is no longer maintained and is replaced with examples in the [Vitis System Design tutorials](../../../../Vitis_System_Design/Design_Tutorials/README.md).
+> **Note:**
+> This tutorial is no longer maintained and is replaced with examples in the [Vitis System Design tutorials](../../../../Vitis_System_Design/Design_Tutorials/README.md).
+> Previous versions are available in earlier branches.  
+> To access them, switch to an older branch (e.g., `2025.1`).
 
-The last updated version is found in 2025.1 branch available here: [AI Engine A-to-Z Flow for Linux](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.1/AI_Engine_Development/AIE/Feature_Tutorials/18-aie_a_to_z_custom_linux_platform).
-
+<hr class="sphinxhide"></hr>
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

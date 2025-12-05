@@ -29,7 +29,7 @@ There are commandline API for creating Vitis components, API for extracting the 
 
 There is a script attached to this tutorial if users want to rebuild the XSA used in this tutorial.
 
-Launch Vivado 2025.1 and use the TCL commands below
+Launch Vivado 2025.2 and use the TCL commands below
 
 ```
 cd scripts

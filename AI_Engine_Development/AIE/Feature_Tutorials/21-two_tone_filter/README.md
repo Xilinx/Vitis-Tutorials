@@ -135,7 +135,7 @@ Make sure to set the PLATFORM_REPO_PATHS environment variable.
 Enter the following command to source the Vitis tool:
 
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2025.1/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
 ```
 
 #### Set the DSP Library Path
