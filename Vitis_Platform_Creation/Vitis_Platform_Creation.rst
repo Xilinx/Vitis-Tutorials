@@ -25,7 +25,6 @@ Platform Creation Example Quick Access
 * For **ZYNQMP** device family, refer to :doc:`ZCU104 platform tutorial <./docs/Design_Tutorials/02-Edge-AI-ZCU104/README>`
 * For **Versal** device family, refer to :doc:`VCK190 platform tutorial <./docs/Design_Tutorials/03_Edge_VCK190/README>`
 * For :term:`DFX`, refer to :doc:`DFX platform tutorial <./docs/Design_Tutorials/04_Edge_VCK190_DFX/README>`
-* For :term:`SOM` series, refer to :doc:`KV260 platform tutorial <./docs/Design_Tutorials/01-Edge-KV260/README>`
 * For **PetaLinux** customization, refer to :doc:`PetaLinux Customization <./docs/Feature_Tutorials/02_petalinux_customization/README>`
 
 
@@ -137,22 +136,6 @@ Design Tutorials
        - **Hardware design**: Creating the hardware design from scratch without any help from Vivado example design templates.  
        - **Software design**: Using ``createdts`` and Common Image to quick start. 
        - **Verification**: Vector Addition and Vitis-AI.
-
-   * - :doc:`Custom Kria SOM Platform Creation Example <./docs/Design_Tutorials/01-Edge-KV260/README>`
-     - Zynq UltraScale+ MPSoC
-     - KV260
-     - Flat
-     - 
-
-       - Vivado
-       - Vitis IDE
-  
-     - **Highlights**: Kria :term:`SOM` Platform creation and usage flow.
-
-       - **Hardware design**: Creating from scratch.
-       - **Software design**: Using Common Image and showing device tree binary overlay (:term:`DTBO`) creation flow.
-       - **Verification**: Vector Addition and Kria :term:`SOM` application loading procedure.
-
 
 
 

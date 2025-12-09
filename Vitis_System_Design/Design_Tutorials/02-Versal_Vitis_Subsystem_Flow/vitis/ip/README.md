@@ -21,18 +21,19 @@ The xo_hw folder is excluded from the search, as this is where RTL and HLS kerne
 The AIE build is treated separately and will result in a libadf.a file located in aie folder.
 
 ## Adding or removing HLS and RTL components
+
 A component can be removed from the VSS region by deleting the folder and subfolders, and ensure the corresponding .xo file is removed from [xo_hw](./xo_hw) folder
 
 To add a new component, it's easiest to copy one of the below examples and add the corresponding sources files and modify the Makefile and config files accordingly.
 **Note** Make sure to update the Vitis link configuration according to the changes: [../src/system.cfg](../src/system.cfg)
 
 Components used for the Vitis region:
-| Component                        | Type   | Description
-| ---------------------------------|--------|-------------------------------------------------
-| [subtractor](./subtractor/README.md)| RTL    | A subtractor acting as endpoint of the counter values passed through AIE datamover kernels. Only two channels are uses via AIE, the others are connected directly to the counter.
-| [mm2s](./mm2s/README.md)| HLS    | Converts data from DDR memory buffer to the FIR DSP via the AXI Stream data duplicator. The PS application can be used to create the stimuli buffer.
-| [s2mm](./s2mm/README.md)  | HLS    | Converts the AXI Stream output from the vadd_s to DDR memory. Allows the PS application to analyze the output.
 
+| Component                                           | Type | Description                                                                                                                                                |
+|-----------------------------------------------------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [subtractor](./subtractor/README.md)                | RTL  | A subtractor acting as the endpoint for counter values passed through AIE datamover kernels. Only two channels are used via AIE; the others are connected directly to the counter. |
+| [mm2s](./mm2s/README.md)                             | HLS  | Converts data from a DDR memory buffer to the FIR DSP via the AXI Stream data duplicator. The PS application can be used to create the stimulus buffer.     |
+| [s2mm](./s2mm/README.md)                             | HLS  | Converts the AXI Stream output from the `vadd_s` to DDR memory, enabling the PS application to analyze the output.                                          |
 
 [Continue with Vitis integration](../README.md)
 
