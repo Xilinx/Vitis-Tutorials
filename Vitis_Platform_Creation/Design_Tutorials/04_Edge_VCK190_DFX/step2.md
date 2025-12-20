@@ -19,7 +19,7 @@ The unique requirements from DFX platforms are from the device tree.
 
 ## Generating Device Tree
 
-Use the static XSA to generate the base device tree with device tree generator (DTG). The generated device tree (.dts and .dtsi) only includes IP information in the static region. If any IP in the dynamic region needs driver support, you should add them to the device tree manually. AI Engine is an example that needs driver support. Add its information to ``system-user.dtsi``.
+We need to use the static XSA to generate the base device tree with sdtgen and lopper. With Vitis Unified ID flow, The device tree generation (.dts and .dtsi) is automatic that includes IP information in the static region. If any IP in the dynamic region needs driver support, you should add them to the device tree manually. AI Engine is an example that needs driver support. Add its information to ``system-user.dtsi``.
 
 >**Note:** Only one DFX region is supported at the moment; therefore, the ZOCL driver and device tree only supports one dfx_decoupler IP address.
 
@@ -35,7 +35,7 @@ Use the static XSA to generate the base device tree with device tree generator (
 		clock-names = "aclk0";
 		clocks = <0x13>;
 		compatible = "xlnx,ai-engine-2.0\0xlnx,ai-engine-v2.0";
-		power-domains = <0x07 0x18224072>;
+		power-domains = <0x8d 0x18800000>;
 		ranges;
 		reg = <0x200 0x00 0x01 0x00>;
 		xlnx,aie-gen = [01];
@@ -49,7 +49,7 @@ Use the static XSA to generate the base device tree with device tree generator (
 			interrupt-names = "interrupt1\0interrupt2\0interrupt3";
 			interrupt-parent = <0x05>;
 			interrupts = <0x00 0x94 0x04 0x00 0x95 0x04 0x00 0x96 0x04>;
-			power-domains = <0x07 0x18224072>;
+			power-domains = <0x8d 0x18800000>;
 			reg = <0x200 0x00 0x01 0x00>;
 			xlnx,columns = <0x00 0x32>;
 			xlnx,node-id = <0x18800000>;
@@ -68,30 +68,17 @@ A prepared [system-user.dtsi](./ref_file/step2_sw/system-user.dtsi) file is read
 
 If you updated the AI Engine clock frequency, please update the `clock-frequency` of `aie_core_ref_clk_0`.
   
-### Generate the Base Device Tree from the Static XSA
-
-```bash
-createdts -hw <static XSA> \
-    -zocl\
-    -out . \
-    -platform-name vck190_custom_dt \
-    -git-branch xlnx_rel_v2024.2 \
-    -dtsi system-user.dtsi \
-    -board versal-vck190-reva-x-ebm-01-reva \
-    -compile
-```
-
-The generated device tree files are located in ``build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp`` path. You can find the ``system.dtb`` file in ``step2_sw/build/vck190_custom_dt/psv_cortexa72_0/device_tree_domain/bsp/`` directory.
-
-> **NOTE**: Device tree knowledge is a common know-how. Please refer to [AMD Device tree WIKI page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421121/Device+Trees) or [Device Tree WIKI page](https://en.wikipedia.org/wiki/Devicetree#Linux) for more information if you are not familiar with it.
-
 ### Creating the Vitis Platform
 
 The Vitis platform creation workflow for DFX platforms is almost identical to the flat platform with the following exceptions
 
-- The platform creation can only be created with XSCT. Vitis IDE does not support to create DFX platforms.
+- The platform creation can be created with python CLI flow only. Vitis IDE does not support to create DFX platforms.
 
 - When creating the DFX platform, both static XSA and RP XSA are required. Static XSA will be used to create ``boot.bin``. RP XSA is used to link acceleration kernels.
+
+- The device tree generation is automatic with help of sdtgen and lopper part of Vitis tool chain.
+
+- Using [generate_platform.py](./ref_files/step2_sw/generate_platform.py) and [build_platform.py](./ref_files/step2_sw/build_platform.py) we create and build the platform with python CLI flow.
 
 ### Prepare for Platform Packaging
 
@@ -182,9 +169,9 @@ tree -L 3 --charset ascii
 
 A DFX platform can boot the static region during power on. The static boot image can include static region PDI for hardware configuration, Arm® Trusted Firmware `bl31.elf`, `u-boot.elf`, and device tree for U-Boot.
 
-When creating a DFX platform, static `boot.bin` is required. You generate this boot image before creating the platform.
+When creating a DFX platform, static `boot.bin` is required. You generate this boot image before building the platform.
 
-Static PDI is included in the static region XSA. You can use the XSCT command `openhw $(XSA_NAME)_static.xsa` to extract the XSA and find the PDI.
+In between generate platform and build platform we need to create a BOOT.bin component using bootgen, which is showed how to be done in the [Makefile.](./ref_files/step2_sw/Makefile)
 
 Run bootgen command to create the boot.bin.
 
@@ -211,57 +198,22 @@ image {
 
 ### Platform Packaging
 
-Use XSCT command line tool to create the Vitis DFX platform.
+Use Python command line tool to create the Vitis DFX platform.
 
 >**Note:** Vitis IDE support for creating Vitis DFX platforms will be added in the future.
 
-Create a tcl file with XSCT commands.
-
-```Tcl
 # Create a platform project
-platform create -name vck190_dfx_custom \
-    -desc "A custom VCK190 DFX platform" \
-    -hw <Static>.xsa \
-    -rp {id 0 hw <RP>.xsa hw_emu <HW_EMU>.xsa} \
-    -out <Output_Directory> \
-    -no-boot-bsp 
+	vitis -s generate_platform.py \
+		--platform_name $(PLATFORM_NAME) \
+		--static_xsa_path $(STATIC_XSA) \
+		--emu_xsa_path "${HW_EMU_XSA}" \
+		--platform_out "${PLATFORM_OUT_PATH}" \
+		--boot_dir_path "${BOOT_DIR}" \
+		--sd_dir_path "${SD_DIR}" \
+		--rp_xsa_path "${RP_XSA}" \
+		--user_dtsi "$(USER_DTSI)"
 
-# AIE domain
-domain create -name aiengine -os aie_runtime -proc ai_engine
-domain config -qemu-data ./boot
-
-# Add Linux domain
-domain create -name xrt -proc psv_cortexa72 -os linux -sd-dir {./sd_dir} 
-domain config -hw-boot-bin <PATH to Boot.bin>
-domain config -boot {./boot}
-domain config -generate-bif
-domain config -qemu-data ./boot
-
-platform write
-platform generate
-```
-
->**Note:** Replace the file name and directory name in the script with your project file location. If you do not need to support hardware emulation, you can omit the option `-hw_emu` and its value for the command `platform create`.
-
-The `platform create` command needs the following input values:
-
-- `-name`: Platform name
-- `-hw`: Static Hardware XSA file location
-- `-rp`: The reconfigurable partition info with ID, XSA and hardware emulation XSA info. ID is reserved for multi-partition DFX. For now only one partition is supported. Please use `id 0`.
-- `-out`: Platform output path. In this example, we set output directory to ``step2_sw/build/pfm``.
-- `-sd-dir`: The directory that contains the files to be included in the FAT32 partition of the SD card image.
-
-The `domain` command will set up one AI Engine domain and one Linux domain. The Linux domain has SD boot mode. The DFX platform Linux domain requires you to provide the `boot.bin` to boot the static region. It will use files in the `./sd_dir` directory to form the FAT32 partition of the SD card image. You have stored the required files in these directories in [Prepare for Platform Packaging](#prepare-for-platform-packaging) step.
-
-You can pass the values to the script directly by replacing the variable with the actual value, or define them in the header of the Tcl script, or pass the value to XSCT when calling this script.
-
-Here is an example of calling XSCT if you hard code all contents in `xsct_create_pfm.tcl`.
-
-```bash
-xsct xsct_create_pfm.tcl
-```
-
-To support better generalization, the example [Makefile](./ref_files/step2_sw/Makefile) and [xsct_create_pfm.tcl](./ref_files/step2_sw/xsct_create_pfm.tcl) in the `ref_files` directory uses variables to represent the file names and directory location. Refer to them if you would like to get more programmability in your scripts.
+# Refer [generate_platform.py](./ref_files/step2_sw/generate_platform.py) and [build_platform.py](./ref_files/step2_sw/build_platform.py) for more details.
 
 ### Next Step
 

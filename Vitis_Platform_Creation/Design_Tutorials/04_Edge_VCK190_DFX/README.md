@@ -13,7 +13,7 @@
 
 # AMD Versal Custom DFX Platform Creation Tutorial
 
-***Version: 2025.1***
+***Version: 2025.2***
 
 In this module, you will create a custom Dynamic Function eXchange (DFX) platform to run acceleration applications for VCK190 evaluation board. Platforms that support DFX features allows you to reload acceleration kernels during runtime.
 
@@ -65,10 +65,15 @@ Start with [Step 1](./step1.md).
 
 ## Changelog
 
+### 2025.2
+
+- Update system-user.dtsi as per CED design.
+- Update Makefile as per new Python CLI support and python scripts.
+
 ### 2025.1
 
 - Update system-user.dtsi as per CED design.
-- Update Makefile as per mew VADD applications.
+- Update Makefile as per new VADD applications.
 - Update platform settings to change selection of default clock to 156.25Mhz
 
 ### 2023.1

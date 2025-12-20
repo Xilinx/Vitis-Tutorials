@@ -52,7 +52,7 @@ You can verify hardware configuration (clocks, memory) and software configuratio
    Board:                            versal_extensible_dfx_platform_base
    Name:                             versal_extensible_dfx_platform_base
    Version:                          1.0
-   Generated Version:                2025.1
+   Generated Version:                2025.2
    Hardware:                         1
    Software Emulation:               1
    Hardware Emulation:               0
