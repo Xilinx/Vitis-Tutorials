@@ -16,8 +16,6 @@ using namespace pfa1008_dma_snk;
 // Main
 // ------------------------------------------------------------
 
-extern void pfa1008_dma_snk_wrapper( TT_DATA mem[DEPTH], int loop_sel, int loop_cnt,TT_STREAM& sig_i );
-
 int main( void )
 {
   // Create DDR4 contents:
@@ -25,32 +23,32 @@ int main( void )
   TT_STREAM sig_i;
 
   // Configure the same as 'host.cpp' for top level application:
-  int loop_cnt = 4;
-  int loop_sel = 1;
+  unsigned word_count = 8*1008;
 
   // Load stimulus (in order produced by DFT):
   std::minstd_rand gen;
-  for (int ll=0; ll < loop_cnt; ll++) {
-    for (int mm=0; mm < DEPTH; mm++) {
-      TT_DATA data = TT_DATA( gen() );
-      if ( ll == loop_sel ) {
-        ddr4_g[mm] = data;
-      }
-      sig_i.write( data );
+  for (unsigned ww=0,mm=0; ww < word_count; ww++) {
+    TT_DATA data = TT_DATA( gen() );
+    if (ww >= (word_count-DEPTH)) {
+      ddr4_g[mm++] = data;
     }
+    sig_i.write( data );
   }
 
   // Run DUT:
   TT_DATA ddr4_o[DEPTH];
-  pfa1008_dma_snk_wrapper( ddr4_o, loop_sel, loop_cnt, sig_i );
+  unsigned cycle_count = pfa1008_dma_snk_wrapper( ddr4_o, word_count, sig_i );
+  std::cout << "cycle_count: " << cycle_count << std::endl;
 
   // Check output streams:
   bool flag = 0;
   for (int mm=0; mm < DEPTH; mm++) {
     TT_DATA act_g = ddr4_g[mm];
     TT_DATA act_o = ddr4_o[mm];
-    flag |= (act_o != act_g);
-    cout << "mm: " << mm << " act_o: " << act_o << " act_g: " << act_g << endl;
+    bool this_flag = (act_o != act_g);
+    flag |= this_flag;
+    if (this_flag == 1)
+      cout << "mm: " << mm << " act_o: " << act_o << " act_g: " << act_g << endl;
   }
   if ( flag == 0 ) cout << "--- PASSED ---" << endl;
   else             cout << "*** FAILED ***" << endl;

@@ -11,19 +11,30 @@ using namespace pfa1008_dma_snk;
 // Stream Capture
 // ------------------------------------------------------------
 
-void capture_streams( TT_DATA (&buff)[DEPTH], TT_STREAM& sig_i,
-                      const int& loop_sel, const int& loop_cnt )
+unsigned capture_streams( TT_DATA (&buff)[DEPTH], TT_STREAM& sig_i, unsigned int word_count )
 {
- CAPTURE: for (int ll=0; ll < loop_cnt; ll++) {
-#pragma HLS LOOP_TRIPCOUNT min=1 max=8
-  SAMPLE_IN: for (int dd=0; dd < DEPTH; dd++) {
+  unsigned   cnt_smp = 0;
+  unsigned   cnt_cyc = 0;
+  bool     saw_first = 0;
+  TT_ADDR         dd = 0;
+  unsigned      base = word_count - DEPTH;
+  while (cnt_smp < word_count) {
 #pragma HLS pipeline II=1
+    bool   empty = sig_i.empty();
+    bool capture = (cnt_smp < base) ? 0 : 1;
+    if (empty == 0) {
+      saw_first = 1;
       TT_DATA val = sig_i.read();
-      if ( ll == loop_sel ) {
+      if (capture == 1) {
         buff[dd] = val;
+        dd = dd + 1;
       }
-    }  //dd
-  } // ll
+      cnt_smp++;
+    }
+    if (saw_first == 1)
+      cnt_cyc++;
+  }
+  return(cnt_cyc);
 }
 
 // ------------------------------------------------------------
@@ -42,28 +53,31 @@ void read_buffer( TT_DATA mem[DEPTH], TT_DATA (&buff)[DEPTH] )
 // Wrapper
 // ------------------------------------------------------------
 
-void
+unsigned
 pfa1008_dma_snk_wrapper( pfa1008_dma_snk::TT_DATA mem[pfa1008_dma_snk::DEPTH],
-                         int loop_sel,
-                         int loop_cnt,
+                         unsigned int word_count,
                          pfa1008_dma_snk::TT_STREAM& sig_i )
 {
-#pragma HLS interface m_axi      port=mem         bundle=gmem    offset=slave   depth=DEPTH
-#pragma HLS interface axis       port=sig_i
-#pragma HLS interface s_axilite  port=loop_sel    bundle=control
-#pragma HLS interface s_axilite  port=loop_cnt    bundle=control
-#pragma HLS interface s_axilite  port=mem         bundle=control
-#pragma HLS interface s_axilite  port=return      bundle=control
+#pragma HLS interface mode=axis       port=sig_i
+#pragma HLS interface mode=m_axi      port=mem         offset=slave   bundle=gmem1   depth=DEPTH
+#pragma HLS interface mode=s_axilite  port=mem                        bundle=control
+#pragma HLS interface m_axi           port=mem         num_write_outstanding=1  max_write_burst_length=1
+#pragma HLS interface m_axi           port=mem         num_read_outstanding=1  max_read_burst_length=1
+#pragma HLS interface mode=s_axilite  port=word_count                 bundle=control
+#pragma HLS interface mode=s_axilite  port=return                     bundle=control
 #pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[DEPTH];
+  unsigned cycle_count;
 
   // Front end load from DDR4 to PL BRAM:
-  capture_streams( buff, sig_i, loop_sel, loop_cnt );
+  cycle_count = capture_streams( buff, sig_i, word_count );
 
   // Back end transmit from PL BRAM to AIE:
   read_buffer( mem, buff );
+
+  return(cycle_count);
 }
 
 

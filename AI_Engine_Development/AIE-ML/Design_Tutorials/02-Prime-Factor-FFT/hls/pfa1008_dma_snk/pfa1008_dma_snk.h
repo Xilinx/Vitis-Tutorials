@@ -24,7 +24,6 @@ namespace pfa1008_dma_snk {
 // Run:
 // Assume 312.5 MHz clock.
 // We have 32-bit I/O's @ 1250 MHz AIE clock or 128-bit I/O's @ 312.5 MHz
-void pfa1008_dma_snk_wrapper( pfa1008_dma_snk::TT_DATA mem[pfa1008_dma_snk::DEPTH],
-                              int loop_sel,
-                              int loop_cnt,
-                              pfa1008_dma_snk::TT_STREAM& sig_i );
+unsigned pfa1008_dma_snk_wrapper( pfa1008_dma_snk::TT_DATA mem[pfa1008_dma_snk::DEPTH],
+                                  unsigned int word_count,
+                                  pfa1008_dma_snk::TT_STREAM& sig_i );

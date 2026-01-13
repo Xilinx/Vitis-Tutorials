@@ -5,6 +5,7 @@
 # Author: Mark Rollins
 
 DO_COSIM        := false
+DO_OOCPAR       := false
 ECHO            := @echo
 
 KERNEL          := pfa1008_dma_src_wrapper
@@ -27,6 +28,8 @@ ${XO}: ${KERNEL_SRC}
 ifeq (${DO_COSIM},true)
 	vitis-run --mode hls --config hls.cfg --csim --work_dir ${KERNEL}
 	vitis-run --mode hls --config hls.cfg --cosim --work_dir ${KERNEL}
+endif
+ifeq (${DO_OOCPAR},true)
 	vitis-run --mode hls --config hls.cfg --impl --work_dir ${KERNEL}
 endif
 
