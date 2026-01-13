@@ -28,8 +28,7 @@ typedef int TT_DATA;            // Assume cint16 data
 
 static constexpr int32_t         NUM_ITER = -1; // Let the graph run and have DMA_SNK terminate things
 static constexpr int32_t        LOOP_CNT_I = 8;
-static constexpr int32_t        LOOP_CNT_O = 8; // Try to stop it early
-static constexpr int32_t          LOOP_SEL = 0; // ID of loop to capture by DDR SNK PL HLS block
+static constexpr int32_t        LOOP_CNT_O = 1;
 static constexpr unsigned        NSTREAM_I = 2;
 static constexpr unsigned        NSTREAM_O = 2;
 static constexpr unsigned            DEPTH = 1008; // 8 transform x 1008-pt / 2 stream / 4 samples @ 128-bit
@@ -40,6 +39,10 @@ static constexpr unsigned    NUM_SAMPLES_O = DDR_WORD_DEPTH_O * 4; // 32-bit (ci
 
 static constexpr unsigned DDR_BUFFSIZE_I_BYTES = NUM_SAMPLES_I * 4; // Each sample is 4 bytes (32-bits)
 static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each sample is 4 bytes (32-bits)
+static constexpr double THROUGHPUT_TARGET = 2000;
+static constexpr double THROUGHPUT_ERROR_LIMIT = 5;
+
+static unsigned int word_count = LOOP_CNT_O * DEPTH; // # of 128-bit words on each stream
 
 // ------------------------------------------------------------
 // Main
@@ -84,6 +87,9 @@ int main(int argc, char* argv[])
 
   auto dma_snk = xrt::kernel(my_device, xclbin_uuid, "pfa1008_dma_snk_wrapper:{dma_snk}");
   std::cout << STR_PASSED << "auto dma_snk = xrt::kernel(my_device, xclbin_uuid, \"pfa1008_dma_snk_wrapper:{dma_snk}\")" << std::endl;
+
+   auto dma_snk_ip = xrt::ip(my_device, xclbin_uuid, "pfa1008_dma_snk_wrapper:{dma_snk}");
+  std::cout << STR_PASSED << "auto dma_snk_ip = xrt::ip(my_device, xclbin_uuid, \"pfa1008_dma_snk_wrapper:{dma_snk}\")" << std::endl;
 
   xrt::run dma_src_run = xrt::run(dma_src);
   std::cout << STR_PASSED << "xrt::run dma_src_run = xrt::run(dma_src)" << std::endl;
@@ -139,11 +145,8 @@ int main(int argc, char* argv[])
   dma_snk_run.set_arg( 0, dma_snk_bo );
   std::cout << STR_PASSED << "dma_snk.run.set_arg( 0, dma_snk_bo )" << std::endl;
 
-  dma_snk_run.set_arg( 1, LOOP_SEL );
-  std::cout << STR_PASSED << "dma_snk_run.set_arg( 1, LOOP_SEL=" << LOOP_SEL << " )" << std::endl;
-
-  dma_snk_run.set_arg( 2, LOOP_CNT_O );
-  std::cout << STR_PASSED << "dma_snk_run.set_arg( 2, LOOP_CNT_O=" << LOOP_CNT_O << " )" << std::endl;
+  dma_snk_run.set_arg( 1, word_count );
+  std::cout << STR_PASSED << "dma_snk_run.set_arg( 1, word_count=" << word_count << " )" << std::endl;
 
   // ------------------------------------------------------------
   // Run Application
@@ -162,6 +165,18 @@ int main(int argc, char* argv[])
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
+
+  // ------------------------------------------------------------
+  // Throughput
+  // ------------------------------------------------------------
+
+  unsigned cycle_count = dma_snk_ip.read_register(0x10);
+  std::cout << "cycle_count: " << cycle_count << std::endl;
+  double throughput_MSPS = 2.0*(4.0*word_count)/(1.0*cycle_count)*312.5;
+  std::cout << "Throughput (Msps): " << throughput_MSPS << " vs. Target (Msps): " << THROUGHPUT_TARGET << std::endl;
+  double tp_err = 100.0*abs(throughput_MSPS-THROUGHPUT_TARGET)/THROUGHPUT_TARGET;
+  std::cout << "Througput Error (%): " << tp_err << " vs. Error Limit (%): " << THROUGHPUT_ERROR_LIMIT << std::endl;
+  bool flag_t = (tp_err > THROUGHPUT_ERROR_LIMIT);
 
   // ------------------------------------------------------------
   // Retrieve Results
@@ -206,8 +221,16 @@ int main(int argc, char* argv[])
 
   // Done:
   if ( flag == 0 )
+    std::cout << STR_INFO << "--- REGRESSION PASSED ---" << std::endl;
+  else
+    std::cout << STR_ERROR << "*** REGRESSION FAILED ***" << std::endl;
+  if ( flag_t == 0 )
+    std::cout << STR_INFO << "--- THROUGHPUT PASSED ---" << std::endl;
+  else
+    std::cout << STR_ERROR << "*** THROUGHPUT FAILED ***" << std::endl;
+  if (flag == 0 && flag_t == 0)
     std::cout << STR_INFO << "--- PASSED ---" << std::endl;
   else
-    std::cout << STR_INFO << "*** FAILED ***" << std::endl;
-  return(flag);
+    std::cout << STR_ERROR <<"*** FAILED ***" << std::endl;
+  return(flag || flag_t);
 }
