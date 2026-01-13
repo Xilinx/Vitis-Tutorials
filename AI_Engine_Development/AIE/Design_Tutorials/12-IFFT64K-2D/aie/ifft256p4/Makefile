@@ -73,7 +73,7 @@ trace:
 	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
 throughput:
-	@../../scripts/throughput.py aiesimulator_output/data/sig_o_0.txt --iscomplex
+	@../../scripts/check_throughput.py PLIO_i_0 4935.93 5.0
 
 regression:
 	matlab -batch regression
@@ -84,7 +84,7 @@ analyze:
 clean:
 	rm -rf .Xil Work libadf.a
 	rm -rf aiesimulator_output* aiesimulator*.log
-	rm -rf x86simulator_output*
+	rm -rf x86simulator_output* function_wdb_dir
 	rm -rf log log*
 	rm -rf *.xpe *.elf *.db *.soln Map_* xnw* *.lp *.log .xil .Xil *.lp *.db *.log *.exe *.vcd *.json
 	rm -rf vitis_analyzer* pl_sample_counts* pl_sample_count_*
