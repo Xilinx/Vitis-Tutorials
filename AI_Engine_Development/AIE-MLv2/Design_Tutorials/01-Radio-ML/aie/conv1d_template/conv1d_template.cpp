@@ -60,14 +60,15 @@ void conv1d_template<NSAMP,NNODES,KERNEL_SIZE,NWEIGHTS,NSPLIT>::run(  input_buff
   for ( unsigned iter=0,ii=0; iter < NSAMP/16/NSPLIT*NNODES/8; iter++)
   {
     index_offset=1408*ii;   // 1408=8*22*8
-    auto p_data0 = aie::begin_restrict_vector<32>(data_i.data()+index_offset        );
-    auto p_data1 = aie::begin_restrict_vector<32>(data_i.data()+index_offset+176-16 );  //176=8*22. Subtracting 16 allows doing an aligned read. We add this 16 offset later when doing shuffle_down_fill
+    auto p_data0 = aie::begin_restrict_vector<32>(data_i.data()+index_offset        );  // Input nodes 0-7,  16-23, 32-39, 48-55
+    auto p_data1 = aie::begin_restrict_vector<32>(data_i.data()+index_offset+176-16 );  // Input nodes 8-15, 24-31, 40-47, 56-63
+                                                                                        // 176=8*22. Subtracting 16 allows doing an aligned read. We add this 16 offset later when doing shuffle_down_fill
 
     acc_reg0  = aie::zeros<accfloat,32>();
     acc_reg1  = aie::zeros<accfloat,32>();
     acc_reg2  = aie::zeros<accfloat,32>();
     acc_reg3  = aie::zeros<accfloat,32>();
-    // Loop over even input nodes
+    // Loop over input nodes 0-7, 16-23, 32-39, 48-55
     for ( unsigned kk=0; kk < NNODES/8/2; kk++)
         chess_loop_range(NNODES/8/2,)
         chess_prepare_for_pipelining
@@ -98,7 +99,7 @@ void conv1d_template<NSAMP,NNODES,KERNEL_SIZE,NWEIGHTS,NSPLIT>::run(  input_buff
     
     p_weights -= (NNODES/8-1)*KERNEL_SIZE;
     
-    // Loop over odd input nodes
+    // Loop over odd input nodes 8-15, 24-31, 40-47, 56-63
     for ( unsigned kk=0; kk < NNODES/8/2; kk++)
         chess_loop_range(NNODES/8/2,)
         chess_prepare_for_pipelining
