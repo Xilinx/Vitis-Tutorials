@@ -82,7 +82,7 @@ allx86       : clean x86compile x86sim
 
 #${AIE_OUTPUT}: ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 #	$(MAKE) clean
-#	aiecompiler -target=hw -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} |& tee ${LOG_FILE}
+#	aiecompiler -target=hw -v --use-phy-shim=${FLAG} --constraints=${CONSTRAINT_FILE} -include=${AIE_SRC} -include=${AIE_GRAPHS} -include=${AIE_KERNELS}  ${TEST_BENCH} ${OTHER_OPTS} -Xmapper=${MAP_OPT} --platform=${XPFM} -workdir=${WORK_DIR} ${PL_FREQ} 2>&1 | tee ${LOG_FILE}
 
 ${AIE_WS}:
 	mkdir ${AIE_WS}
@@ -117,14 +117,14 @@ ${AIE_OUTPUT}: ${AIE_WS} ${AIE_SRC}/* ${AIE_GRAPHS}/* ${AIE_KERNELS}/*
 		${AIE_XFLAGS} \
 		--config ${AIE_CFG} \
 		${TEST_BENCH} \
-		|& tee ${LOG_FILE}
+		2>&1 | tee ${LOG_FILE}
 
 
 sim:
-	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
+	aiesimulator --pkg-dir=$(WORK_DIR) -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) 2>&1 | tee -a $(SIM_LOG_FILE)
 
 sim_analyzer:
-	aiesimulator --pkg-dir=$(WORK_DIR) --profile --online -wdb -text -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) |& tee -a $(SIM_LOG_FILE)
+	aiesimulator --pkg-dir=$(WORK_DIR) --profile --online -wdb -text -o $(SIM_OUTPUT) --simulation-cycle-timeout $(MAX_CYCLES) 2>&1 | tee -a $(SIM_LOG_FILE)
 
 analyze:
 	vitis_analyzer -report system.wdb
@@ -136,7 +136,7 @@ get_op:
 	grep -v T ${SIM_OUTPUT}/data/output3.txt > ${SIM_OUTPUT}/data/output3_raw.txt
 
 x86sim:
-	x86simulator --pkg-dir=$(WORK_DIR) |& tee -a $(SIM_LOG_FILE)
+	x86simulator --pkg-dir=$(WORK_DIR) 2>&1 | tee -a $(SIM_LOG_FILE)
 
 clean:
 	rm -rf Work Work* $(AIE_WS)

@@ -97,7 +97,7 @@ vitis_ip:
 	$(MAKE) all -C ${IP_DIR}
 
 platform:
-	vitis -s vitis_platform.py |& tee vitis_pfm.log
+	vitis -s vitis_platform.py 2>&1 | tee vitis_pfm.log
 
 link: ${BUILD_DIR} ${BUILD_DIR}/${XSA}
 
@@ -113,7 +113,7 @@ ${BUILD_DIR}/${VMA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			$(addprefix ../, ${VSSFILE}) \
 			--export_archive \
 			--output ${VMA} \
-			|& tee vpp_link.log
+			2>&1 | tee vpp_link.log
 
 ${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 	cd ${BUILD_DIR} && \
@@ -125,7 +125,7 @@ ${BUILD_DIR}/${XSA}: ${XO} ${VSSFILE} ${SYSTEM_CFG}
 			$(addprefix ../, ${VSSFILE}) \
 			--export_archive \
 			--output ${VMA} \
-			|& tee vpp_link.log
+			2>&1 | tee vpp_link.log
 
 package_linux: ${SD_CARD_LINUX}
 
@@ -138,7 +138,7 @@ ${BUILD_DIR}/${XCLBIN}: ${LIBADF}
 			--package.defer_aie_run \
 			$(addprefix ../, ${LIBADF}) \
 			-o ${XCLBIN}
-			|& tee vpp_pack_xclbin.log
+			2>&1 | tee vpp_pack_xclbin.log
 #	make update_ila
 
 #${SD_CARD_LINUX}: ${BUILD_DIR}/${XSA} ${PS_LINUX_EXE} ${GRAPH_O} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${LINUX_DTB}
@@ -161,7 +161,7 @@ ${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${PF
 			$(addprefix --package.sd_file=../, ${PS_LINUX_EXE}) \
 			$(addprefix --package.sd_file=../, ${LINUX_BOOTSCR}) \
 			-o ${XCLBIN} \
-			|& tee vpp_pack_sd.log
+			2>&1 | tee vpp_pack_sd.log
 	echo ${PLATFORM_CUSTOM} > ${SD_CARD_LINUX}/sd_card/platform_desc.txt
 #	make update_ila
 

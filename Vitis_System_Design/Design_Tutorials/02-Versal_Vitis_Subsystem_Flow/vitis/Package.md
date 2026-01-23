@@ -47,7 +47,7 @@ v++ --package --debug --save-temps \
         --package.sd_file=../../ps_apps/linux/exe/aie_dly_test.exe \
         --package.sd_file=../../linux/vck190-versal/images/linux/boot.scr \
         -o my.xclbin \
-        |& tee vpp_pack_sd.log
+        2>&1 | tee vpp_pack_sd.log
 echo vck190_thin > ../package_linux_hw/sd_card/platform_desc.txt
 ```
 

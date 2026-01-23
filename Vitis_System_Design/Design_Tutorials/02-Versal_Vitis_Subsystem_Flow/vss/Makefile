@@ -49,7 +49,7 @@ ${BUILD_DIR}/${VSS}: ${VSS_CFG}
 			$(addprefix ../, ${XO}) \
 			$(addprefix ../, ${LIBADF}) \
 			--out_dir ${VSS} \
-			|& tee vss_link.log
+			2>&1 | tee vss_link.log
 
 crts:
 	$(MAKE) crts -C cosim AIE_WORK=$(AIE_WORK)
