@@ -23,31 +23,31 @@ The AMD Vitis&trade; environment development methodology reflects the heterogene
 
 ![development methodology](./Images/dev_methodology.PNG)
 
-The Vitis environment design flow is an iterative process that might loop through each step multiple times, adding layers or elements to the adaptable system through subsequent iterations. Teams can iterate through the early steps more quickly and take more time with later steps, which provide more detailed performance data.
+The Vitis environment design flow is an iterative process that might loop through each step multiple times, adding layers or elements to the adaptable system through subsequent iterations. Teams can iterate through the early steps and spend more time on later steps, which provide more detailed performance data.
 
-A system-level debug of AI Engine designs that could use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and PS application can be done at several stages in the design flow. The system-level debug of AI Engine designs can be categorized as follows:
+System-level debug of AI Engine designs can be done at several stages in the design flow. This includes AI Engine designs that use up to 400 tiles in the AI Engine domain, PL interfaces and kernels, and the PS application. System-level debug of AI Engine designs can be categorized as follows:
 
 1. Functional debug that involves techniques to uncover bugs in the AI Engine kernel source code.
-2. Performance level debug that involves debug techniques to uncover reasons for the throughput drop or reasons for larger latencies when the AI Engine graph is run either in simulation or in hardware.
+2. Performance-level debug involves debug techniques to uncover reasons for throughput drops or reasons for larger latencies when the AI Engine graph runs in simulation or hardware.
 
 Techniques to uncover both functional and performance level bugs are described in the following sections.  
 
-Source level debug includes visibility into the register contents view, variable values view, breakpoints view, and hence, necessitates a GUI. The Vitis integrated design environment (IDE) is the tool that supports these debug requirements. This tutorial demonstrates how to use the Vitis IDE to manage these challenges and additional tools and methodologies to assist with your design debug.
+Source level debug includes visibility into the register contents view, variable values view, breakpoints view. This necessitates a GUI. The Vitis integrated design environment (IDE) tool supports these debug requirements. This tutorial shows how to use the Vitis IDE to manage these challenges, and covers additional tools and methodologies to assist with your design debug.
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2025.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html>.
+>**IMPORTANT**: Before beginning the tutorial, install the Vitis 2025.2 software. The Vitis release includes all embedded base platforms, including the VCK190 base platform used in this tutorial. Download the Common Images for Embedded Vitis Platforms from: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html>.
 
-The `common image` package contains a prebuilt Linux kernel and root file system that can be used with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
+The `common image` package contains a prebuilt Linux kernel and root file system. You can use  it with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
 
-1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you must run `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
+1. Go to the directory where you unzipped the Versal Common Image package.
+2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
+3. Set `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
+4. Set the PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
 
 This tutorial targets a 2025.2 VCK190 production board.
 
 ## Example Design: Peak Detector
 
-The architecture of the Peak detector consists of three kernels. A **peak_detect** kernel and two postprocessing kernels, **data_shuffle** and **upscale**. The `peak_detect` kernel takes the vector input data of type `int32` and size `16` for every iteration and computes, 1) max(16-lane input) 2) an expression on minimum value using APIs and sends it over stream and buffer respectively. The stream output is broadcasted to the two kernels, `data_shuffle` and `upscale`, for postprocessing.
+The architecture of the Peak Detector consists of three kernels: A **peak_detect** kernel and two postprocessing kernels, **data_shuffle** and **upscale**. The `peak_detect` kernel takes the vector input data of type `int32` and size `16` for every iteration and computes, 1) max(16-lane input) 2) an expression on minimum value using application programming interfaces (APIs). It sends these results over stream and buffer respectively. The stream output is broadcast to the `data_shuffle` and `upscale` kernels for postprocessing.
 
 The complete design is shown in the Vitis analyzer.
 ![Vitis analyzer peak detect](./Images/va_peakdetect.PNG)
@@ -59,14 +59,14 @@ Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and cre
 
 ## Methods
 
-There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodlogies that helps analyzing the design and take decisions to improve.
+There are several ways to debug a system design that include the PS, PL, and AI Engine, or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodologies that help analyze the design and take decisions to improve it.
 
 Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md#Porting-a-Command-Line-Project-to-the-Vitis-IDE-Project).
 
 
 ## Methods
 
-There are several ways to debug a system design that include the PS, PL, and AI Engine or an AI Engine only design. Each method has the intended goal to help debug practice. The following are debug methodologies that help with analyzing the design and making improvements.
+There are several ways to debug a system design that include the PS, PL, and AI Engine, or an AI Engine only design. Each method intends to help debug practice. The following are debug methodologies that help analyze the design and make improvements.
 
 
 ## Debug Methodologies
@@ -163,7 +163,7 @@ Demonstrates how to visualize the trace report in the output console during runt
 <a href="./X86_Simulation/README.md#Memory-access-violation-and-valgrind-support">Memory Access Violation and Valgrind Support</a>
 </td>
 <td>
-Demonstrates how to debug memory access violations in an AI Enigne design using Valgrind support.
+Demonstrates how to debug memory access violations in an AI Engine design using Valgrind support.
 </td>
 </tr>
 
@@ -315,7 +315,7 @@ Explains how to use the AMD Vivado™ XSIM to debug the PL kernels.
 <a href="./HW_Emulation/README.md#Performance-of-the-AI-Engine-Using-the-Hardware-Emulation-Results">Performance of the AI Engine Using Hardware Emulation Results</a>
 </td>
 <td>
-This section profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in a AI Engine simulation.
+Profiles the system for hardware emulation and compares the throughput of the AI Engine design in hardware emulation with the throughput in a AI Engine simulation.
 </td>
 </tr>
 
@@ -324,7 +324,7 @@ This section profiles the system for hardware emulation and compares the through
 <a href="./HW_Emulation/README.md#Command-Line-Project-Source-Code-Debug-with-the-Vitis-Unified-IDE">Command Line Project Source Code Debug with the Vitis IDE</a>
 </td>
 <td>
-This section helps you debug your command line project using the features of the Vitis IDE debugger without porting your system design to the IDE.
+Helps you debug the command line project using the features of the Vitis IDE debugger without porting the system design to the IDE.
 </td>
 </tr>
 
@@ -347,7 +347,7 @@ Explains how to determine the functional correctness of the design by running on
 </td>
 <td>
 Explains how to use error reporting APIs to handle errors in the host code.<br />
- <a href="./Hardware/Stage_1.md#XRT-error-handling-APIs">&nbsp; &nbsp; &nbsp; * XRT error handling APIs</a> - This method reports errors that can be detected during the XRT runtime function call or underneath driver, system, hardware, etc.<br />
+ <a href="./Hardware/Stage_1.md#XRT-error-handling-APIs">&nbsp; &nbsp; &nbsp; * XRT error handling APIs</a> - This method reports errors that can be detected during the XRT runtime function call or underneath driver, system,  and hardware.<br />
  <a href="./Hardware/Stage_1.md#Using-XBUtil">&nbsp; &nbsp; &nbsp; * Using XBUtil</a> - XButil error reporting can accumulate all the errors from various classes and sorts them by timestamp.<br />
 </td>
 </tr>
@@ -381,8 +381,8 @@ Explains how to modify the host code to add APIs in the host application that he
 </td>
 <td>
 Explains how to set up the configuration file `xrt.ini`, and run the hardware design to generate profile data using the XRT flow.<br />
-<a href="./Hardware/Stage_2.md#Open-Multiple-Profile-Runs-in-the-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in Vitis Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
-<a href="./Hardware/Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explaination</a> - This explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
+<a href="./Hardware/Stage_2.md#Open-Multiple-Profile-Runs-in-the-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in Vitis Analyzer</a> - Helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
+<a href="./Hardware/Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explaination</a> - Explains how to analyze AI Engine core,memory and interface profiling data. Also discusses what action should be taken based on the stall time and direct memory access (DMA) lock time.<br />
 </td>
 </tr>
 
@@ -391,7 +391,7 @@ Explains how to set up the configuration file `xrt.ini`, and run the hardware de
 <a href="./Hardware/Stage_2.md#XSDB-Flow"> Hardware Profiling Feature - XSDB Flow</a>
 </td>
 <td>
-This method explains how to use the XSDB-based flow to profile for both baremetal and Linux operating systems.<br />
+Explains how to use the XSDB-based flow to profile for both baremetal and Linux operating systems.<br />
 </td>
 </tr>
 
@@ -400,13 +400,13 @@ This method explains how to use the XSDB-based flow to profile for both baremeta
 <a href="./Hardware/Stage_3.md#Profiling-Using-PL-Profile-Monitors">Profiling Using PL Profile Monitors</a>
 </td>
 <td>
-Explains how to insert PL profile monitors in the v++link command. This helps identify specific PL kernels(s) causing a performance drop.
+Explains how to insert PL profile monitors in the v++link command. This helps identify specific PL kernels causing a performance drop.
 </td>
 </tr>
 
 <tr>
 <td>
-<a href="./Hardware/Stage_3.md#Inserting-ILAs-to-Monitor-Specific-AXI-Interfaces">Inserting ILA(s) to Monitor Specific AXI Interfaces</a>
+<a href="./Hardware/Stage_3.md#Inserting-ILAs-to-Monitor-Specific-AXI-Interfaces">Inserting ILAs to Monitor Specific AXI Interfaces</a>
 </td>
 <td>
 Explains how to insert one or more integrated logic analyzers (ILAs) to monitor specific PL AXI interfaces to help identify exactly where and when a throughput drop occurs. Also helps in identifying whether data is sent correctly to the AI Engine from the PL compenents and received correctly from the AI Engine to the PL.
@@ -448,7 +448,7 @@ This method explains how to use the XSDB-based flow to perform event trace analy
 <a href="./Hardware/Stage_4.md#Event-trace-considerations"> Event Trace Considerations</a>
 </td>
 <td>
-This method explains how to use the XSDB-based flow to perform event trace analysis on anAI Engine design.<br />
+This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
 <a href="./Hardware/Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; - Event Trace Choice Considerations</a> <br />
 <a href="./Hardware/Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; - Number of Event Trace Streams Methodology</a> <br />
 <a href="./Hardware/Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; - Event Trace Limitations</a> <br />
@@ -468,15 +468,15 @@ Explains how to set up the target connection for hardware in the Vitis IDE and d
 
 ## Best Practices
 
-The foundation of the Vitis environment design methodology is an iterative approach and parallel development. As a result, AMD strongly recommends the following best practices:
+The foundation of the Vitis environment design methodology is an iterative approach and parallel development. As a result, AMD recommends the following best practices:
 
 * Develop the adaptable subsystem and the custom platform in parallel.
-* A well-partitioned system means that these two elements can be developed and verified independently, saving time and effort. Debug and verify the AI Engine graph and each of the PL kernels individually before proceeding with integration.
-* Taking this approach maximizes the chances of rapid convergence during the integration phase. It is much easier to debug integration issues when all components are known to be correct.
+* A well-partitioned system means that these two elements can be developed and verified independently, saving time and effort. Debug and verify the AI Engine graph and each PL kernel individually before proceeding with integration.
+* This approach maximizes the chances of rapid convergence during the integration phase. It is easier to debug integration issues when all components are known to be correct.
 * Use a standard AMD platform (such as the VCK190) to integrate, and verify the adaptable subsystem comprised of the AI Engine graph and PL kernels before targeting the custom platform.
-* AMD platforms are preverified and ready to be deployed on hardware. By using a standard AMD platform, developers of AI Engine graphs and PL kernels can verify the adaptable subsystem using simulation or hardware boards without the uncertainties and the complexities of the custom platform.
+* AMD platforms are preverified and ready for hardware deployment. Using a standard AMD platform, developers of AI Engine graphs and PL kernels can verify the adaptable subsystem using simulation or hardware boards without the uncertainties and the complexities of the custom platform.
 * Ensure performance goals are met at each stage of the flow.
-* Performance results do not improve when running the full system in hardware versus simulating individual components in isolation. Therefore, it is essential to thoroughly check for and debug any performance issues as early as possible in the flow. Ensuring that performance goals are met at the component level is easier than in the context of a complex system that includes interactions between all of the components.
+* Performance results do not improve when running the full system in hardware versus simulating individual components in isolation. Therefore, check for and debug performance issues early in the flow. Meeting performance goals at the component level is easier than in a complex system that includes interactions between all components.
 
 ## Support
 
