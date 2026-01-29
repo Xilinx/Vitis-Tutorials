@@ -44,13 +44,13 @@ v++ -l                                     \
 
 ## Full System Design
 
-The AMD Vitis Linker (`v++ -l`) is used to link multiple kernel objects (XO), together with the hardware platform XSA file, to produce the device binary XCLBIN file.
+The AMD Vitis Linker (`v++ -l`) links multiple kernel objects (XO) with the hardware platform XSA file to produce the device binary XCLBIN file.
 
 Review the `conn.cfg` file. It creates an instance of each PL kernel described previously and provides the connection scheme between them and the AI Engine graph. At the end of the file, there are Vivado™ tool options specified to close timing and run the design at 300 MHz.
 
 ## Design Implementation
 
-The following image was taken from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the adaptive SoC device.
+The following image is from the Vivado project for the entire design. It depicts the hardware implementation determined by the place-and-route on the adaptive SoC device.
 
 ![alt text](images/Nbody_Implemented_design.png)
 
@@ -62,12 +62,12 @@ The following image was taken from the Vivado project for the entire design. It 
 
 ## Next Steps
 
-After linking the AI Engine design with the PL datamovers, you are ready to create the host software in the next module, [Module 05 - Host Software](../Module_05_host_sw).
+After linking the AI Engine design with the PL datamovers, you can create the host software. See the next module ([Module 05 - Host Software](../Module_05_host_sw)).
 
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 

@@ -28,9 +28,9 @@ XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
 
 ```
-This path will have the folder `utils` in it along with other libraries. You will be using its L2 Data-Mover generator tool.
+This path contains the folder `utils` along with other libraries. It contains the L2 Data-Mover generator tool.
 
-### Step 2: Generate mm2s_mp.cpp and s2mm_mp.cpp Datamover kernels
+### Step 2: Generate mm2s_mp.cpp and s2mm_mp.cpp Datamover Kernels
 
 ```
 make -f ./ksrc.mk GENKERNEL=$(XFLIB_DIR)/L2/scripts/generate_kernels SPEC=./kernel/spec.json TOOLDIR=./_krnlgen
@@ -39,7 +39,7 @@ Here you use the L2 Data-Mover generator tool ($(XFLIB_DIR)/L2/scripts/generate_
 
 
 ### Step 3: Compile HLS PL Kernels
-Following is an example of how the `mm2s_mp` kernel is compiled.
+Following is an example of how the `mm2s_mp` kernel compiles.
 ```
 v++ -c                                                                 \
     -t hw                                                              \
@@ -59,7 +59,7 @@ The same compilation options are used to compile the `s2mm_mp`, `packet_sender`,
 
 ## HLS PL Kernels
 
-After coming up with 400 tile AI Engine design, the next step is the come up with the way to move data from DDR send it to the AI Engine. We do this by using the the AMD Vitis™ core development kit, to create kernel code in C++ meant to be accelerated on the FPGA. The kernel code is compiled by the Vitis Compiler (`v++ -c`) into kernel objects (XO). The following is a table describing each HLS PL kernel.
+After coming up with 400 tile AI Engine design, the next step is to move data from DDR and send it to the AI Engine. Use the AMD Vitis™ core development kit to create kernel code in C++ for FPGA acceleration. The Vitis Compiler (`v++ -c`) compiles the kernel code into kernel objects (XO). The following table describes each HLS PL kernel.
 
 |Kernel Name| Description| Fmax|
 |---|---| ---|
@@ -74,26 +74,26 @@ Using Vivado timing closure techniques, you can increase the FMax if needed. To 
 
 ### mm2s_mp
 
-The `mm2s_mp` is generated from the `kernel/spec.json` specification. Review this file. Notice the `mm2s_mp` kernel implementation is set to `LoadDdrToStream`, meaning this kernel is used to move data from DDR (AXI-MM) to AXI-Stream. It is specified to have two channels. The first channel moves data from a DDR `buffer` called `ibuff` to an AXI-stream called `s0`. This channel moves the `i` data out of DDR to AXI-Stream. The second channel moves `j` data from DDR buffer `jbuff` to an AXI-Stream `s1` and streams the data directly into the AI Engine's `input_j` port.  
+The `kernel/spec.json` specification generates the `mm2s_mp`. Review this file. Notice the `mm2s_mp` kernel implementation is set to `LoadDdrToStream`, meaning this kernel moves data from the DDR (AXI-MM) to AXI-Stream. It is specified to have two channels. The first channel moves data from a DDR `buffer` called `ibuff` to an AXI-stream called `s0`. This channel moves the `i` data out of DDR to AXI-Stream. The second channel moves `j` data from DDR buffer `jbuff` to an AXI-Stream `s1` and streams the data directly into the AI Engine's `input_j` port.  
 
-### packet_sender
+### Packet_Sender
 
-After `mm2s_mp` kernel loads `i` data onto an AXI-Stream, the `s0` is the input to the `packet_sender` kernel. The `packet_sender` kernel takes raw `i` data and packetizes it for the AI Engine. Review the `kernel/packet_sender.cpp` definition. The `packet_sender` does the following:
+After the `mm2s_mp` kernel loads `i` data onto an AXI-Stream, the `s0` is the input to the `packet_sender` kernel. The `packet_sender` kernel takes raw `i` data and packetizes it for the AI Engine. Review the `kernel/packet_sender.cpp` definition. The `packet_sender` does the following:
 
 * generates a header AXI-Stream packet
 * reads the `rx` stream
 * writes 224 AXI-Stream data packets to one of the 100 `tx` streams
 * asserts `TLAST` appropriately on the last data packet
 
-It repeats these actions so all 100 `tx` streams have a packet header and 224 data packets written to it. This is 1 iteration of data the AI Engine is expecting. The 100 `tx` streams are connected to the 100 `input_i` ports on the AI Engine.
+It repeats these actions so all 100 `tx` streams have a packet header and 224 data packets written to it. This is 1 iteration of data the AI Engine is expecting. The 100 `tx` streams connect to the 100 `input_i` ports on the AI Engine.
 
-### packet_receiver
+### Packet_Receiver
 
-After the AI Engine's 100 N-Body Subsystems crunch the N-Body equations on the `input_i` and `input_j` data, it outputs four data packets on each of the 100 `output_i` ports. Each output data packet can have a header of 0, 1, 2, or 3, indicating that it is coming from `nbody_kernel[0]`,  `nbody_kernel[1]`, `nbody_kernel[2]`, or `nbody_kernel[3]` in each of the nbody_subsystems. The 100 `output_i` ports are connected to the 100 `rx` streams on the `packet_receiver` kernel. The `packet_receiver` kernel receives four packets from each of the 100 `rx` streams, and depending on the packet header, writes the data to `tx0`, `tx1`, `tx2`, or `tx3` streams.
+The AI Engine's 100 N-Body Subsystems crunch the N-Body equations on the `input_i` and `input_j` data. It then outputs four data packets on each of the 100 `output_i` ports. Each output data packet can have a header of 0, 1, 2, or 3. This indicates that it comes from `nbody_kernel[0]`,  `nbody_kernel[1]`, `nbody_kernel[2]`, or `nbody_kernel[3]` in each of the nbody_subsystems. The 100 `output_i` ports connect to the 100 `rx` streams on the `packet_receiver` kernel. The `packet_receiver` kernel receives four packets from each of the 100 `rx` streams, and depending on the packet header, writes the data to `tx0`, `tx1`, `tx2`, or `tx3` streams.
 
 ### s2mm_mp
 
-The `s2mm_mp` kernel is generated from the `kernel/spec.json` specification. Review this file again. Notice that the `s2mm_mp` kernel has an implementation `StoreStreamToMaster` which moves data from AXI-Streams to DDR. The `s2mm_mp` kernel has 4 channels: `k0`,`k1`,`k2`, and `k3`. Each stream writes the data coming from the `tx0`-`tx3` streams to a DDR buffer.  
+The `kernel/spec.json` specification generatees the `s2mm_mp` kernel. Review this file again. Notice that the `s2mm_mp` kernel has an implementation `StoreStreamToMaster` which moves data from AXI-Streams to DDR. The `s2mm_mp` kernel has four channels: `k0`,`k1`,`k2`, and `k3`. Each stream writes the data coming from the `tx0`-`tx3` streams to a DDR buffer.  
 
 ## References
 
@@ -108,10 +108,10 @@ After compiling the PL datamover kernels, you are ready to link the entire hardw
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

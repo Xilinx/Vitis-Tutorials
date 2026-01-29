@@ -19,15 +19,31 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Computing Interpolated Values](#computing-interpolated-values)
-3. [Design Assumptions](#design-assumptions)
-4. [AI Engine Code Vectorization](#ai-engine-code-vectorization)
-5. [Data Interface](#data-interface)
-6. [AI Engine Kernel Processing](#ai-engine-kernel-processing)
-7. [Running the Example](#running-the-example)
-8. [Analyzing Results](#analyzing-results)
-9. [Customizing the Example](#customizing-the-example)
+- [Bilinear Interpolation](#bilinear-interpolation)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Computing Interpolated Values](#computing-interpolated-values)
+  - [Design Assumptions](#design-assumptions)
+  - [AI Engine Code Vectorization](#ai-engine-code-vectorization)
+  - [Data Interface](#data-interface)
+    - [Programmable Logic Component](#programmable-logic-component)
+    - [PLIO Interface](#plio-interface)
+    - [AI Engine Test Vectors](#ai-engine-test-vectors)
+  - [AI Engine Kernel Processing](#ai-engine-kernel-processing)
+    - [Kernel Data Interface](#kernel-data-interface)
+    - [Kernel Code](#kernel-code)
+  - [Running the Example](#running-the-example)
+    - [Generating Test Vectors](#generating-test-vectors)
+    - [Running x86 Simulation](#running-x86-simulation)
+    - [Running AI Engine Simulation](#running-ai-engine-simulation)
+  - [Analyzing Results](#analyzing-results)
+    - [Vitis Analyzer](#vitis-analyzer)
+    - [Test Vector Comparison](#test-vector-comparison)
+  - [Customizing the Example](#customizing-the-example)
+    - [Specifying a Test Image and Output Resolution](#specifying-a-test-image-and-output-resolution)
+    - [Multicore Processing](#multicore-processing)
+  - [References](#references)
+  - [Support](#support)
 
 [References](#references)
 
@@ -39,22 +55,22 @@
 
 Bilinear interpolation is a method for interpolating functions of two variables using repeated linear interpolation. It is commonly used in the following applications:
 
-- Image processing and computer vision, where it is used to resample images and textures. For example, when zooming in or out of an image, bilinear interpolation can be used to estimate color values of new pixels based on color values of the original pixels. [[1]] [[2]]
-- Finite element analysis, where it is used to estimate values of variables such as stress and strain between nodes in a finite element mesh. [[3]]
-- Geographic information systems, where it is used to interpolate elevation or other spatial data from a grid of points. [[4]]
-- Computer graphics, where it is used to map textures onto 3D surfaces or perform texture filtering. [[5]]
+- Image processing and computer vision: For resampling images and textures. For example, when zooming in or out of an image, use bilinear interpolation to estimate color values of new pixels based on color values of the original pixels. [[1]] [[2]]
+- Finite element analysis: For estimating values of variables such as stress and strain between nodes in a finite element mesh. [[3]]
+- Geographic information systems: For interpolating elevation or other spatial data from a grid of points. [[4]]
+- Computer graphics: For mapping textures onto 3D surfaces or perform texture filtering. [[5]]
 
 Bilinear interpolation is one of the simplest and fastest interpolation methods, but it can also introduce some artifacts such as blurring or aliasing. More advanced interpolation methods, such as bicubic interpolation or spline interpolation, can produce smoother and more accurate results, but they are also more computationally expensive.
 
 ## Computing Interpolated Values
 
-The problem of bilinear interpolation is illustrated in Figure 1. It is assumed you know the values of a function at points $(x_1, y_1)$, $(x_1, y_2)$, $(x_2, y_1)$, and $(x_2, y_2)$ defined on a grid, which for practical purposes, can be assumed to be rectilinear. The goal is to estimate the function value at a point with coordinates $(x_q, y_q)$ by using the known values at the surrounding points. In Figure 1, green dots represent known values, and the red dot represents the value to be estimated.
+Figure 1 illustrates the problem of bilinear interpolation. It is assumed you know the values of a function at points $(x_1, y_1)$, $(x_1, y_2)$, $(x_2, y_1)$, and $(x_2, y_2)$ defined on a grid, which for practical purposes, can be assumed to be rectilinear. The goal is to estimate the function value at a point with coordinates $(x_q, y_q)$ by using the known values at the surrounding points. In Figure 1, green dots represent known values, and the red dot represents the value to be estimated.
 
 ![figure1](images/points_1.png)
 
 *Figure 1 - Bilinear Interpolation Problem*
 
-Bilinear interpolation can be viewed as a two-step process, where linear interpolation is first performed over one dimension then the other. The first step of the process is shown in Figure 2, where the function values at the blue dots are computed from the known values at the green dots by using linear interpolation over the variable $x$.
+Bilinear interpolation is a two-step process, where linear interpolation is first performed over one dimension then the other. Figure 2 shows the first step of the process, where the function values at the blue dots are computed from the known values at the green dots by using linear interpolation over the variable $x$.
 
 ![figure2](images/points_2.png)
 
@@ -68,7 +84,7 @@ and
 
 $$f(x_q,y_2) = \frac{(x_2-x_q)}{(x_2-x_1)}f(x_1,y_2) + \frac{(x_q-x_1)}{(x_2-x_1)}f(x_2,y_2).$$
 
-The second step of the process is shown in Figure 3, where the desired value at the red dot is derived from the computed values at the blue dots using linear interpolation over the variable $y$.
+Figure 3 shows the second step of the process, where the desired value at the red dot is derived from the computed values at the blue dots using linear interpolation over the variable $y$.
 
 ![figure3](images/points_3.png)
 
@@ -86,15 +102,15 @@ y_q-y_1 \end{bmatrix}.$$
 
 ## Design Assumptions
 
-While bilinear interpolation may be applied in various applications, an image processing example is used here. In this case, function values correspond to pixel values in the range [0, 255]. Single precision, floating-point numerical format is assumed for interpolated pixel values and interpolation coordinates $(x_q,y_q)$.
+While you can apply bilinear interpolation to various applications, this tutorial uses an image processing example. In this case, function values correspond to pixel values in the range [0, 255]. Single precision, floating-point numerical format is assumed for interpolated pixel values and interpolation coordinates $(x_q,y_q)$.
 
-A reference image is used to generate a lookup table which provides input to the AI Engine. An input image with resolution $x_{res} \times y_{res}$ is assumed to have pixels defined on a grid with unit spacing. The $x$ and $y$ pixel coordinates may be combined using the equation $I = x \times y_{res} + y$ to derive a LUT index $I$, as shown in Figure 4.
+A reference image generates a lookup table which provides input to the AI Engine. An input image with resolution $x_{res} \times y_{res}$ is assumed to have pixels defined on a grid with unit spacing. You can combine the $x$ and $y$ pixel coordinates using the equation $I = x \times y_{res} + y$ to derive a LUT index $I$, as shown in Figure 4.
 
 ![figure4](images/image2lut.png)
 
 *Figure 4 - Image as a Lookup Table*
 
-For any query point, $(x_q,y_q)$, the floating point coordinates can be separated into integer and fractional parts, where $x_q = x_{int}.x_{frac}$ and $y_q = y_{int}.y_{frac}$. The integer parts are used to extract pixel values used in the interpolation equation. The four values required for interpolation are obtained from the LUT using the following relations:
+For any query point, $(x_q,y_q)$, the floating point coordinates can separate into integer and fractional parts, where $x_q = x_{int}.x_{frac}$ and $y_q = y_{int}.y_{frac}$. The integer parts extract pixel values used in the interpolation equation. The four values required for interpolation derive from the LUT using the following relations:
 
 $$
 \begin{aligned}
@@ -105,7 +121,7 @@ $$
 \end{aligned}
 $$
 
-An example of LUT indexing is shown in Figure 4 using the pixels marked with X. Once the four pixel values required for interpolation are obtained, the integer parts of the coordinates $(x_q,y_q)$ are no longer needed and can be assumed to be zero. This simplifies the interpolation equation to
+Figure 4 shows an example of LUT indexing using the pixels marked with X. Once the four pixel values required for interpolation are obtained, the integer parts of the coordinates $(x_q,y_q)$ are no longer needed and you can assume these to be zero. This simplifies the interpolation equation to
 
 $$
 f(x_q,y_q) = \begin{bmatrix} 1-x_{frac} & x_{frac} \end{bmatrix} \begin{bmatrix} f(x_1,y_1) & f(x_1,y_2) \\
@@ -125,7 +141,7 @@ $$
 
 ## AI Engine Code Vectorization
 
-To realize advantages of AI Engine processing, computations must be vectorized. Applying this to pixel interpolation, the calculation may be restated as
+To realize advantages of AI Engine processing, you must vectorize computations. Applying this to pixel interpolation, the calculation can be restated as:
 
 $$f(x_q,y_1) = x_{frac}f(x_2,y_1) + f(x_1,y_1) - x_{frac}f(x_1,y_1)$$
 
@@ -137,9 +153,9 @@ for the first two interpolations in the x coordinate, and
 
 $$f(x_q,y_q) = y_{frac}f(x_q,y_2) + f(x_q,y_1) - y_{frac}f(x_q,y_1)$$
 
-for the final interpolation in the y coordinate. By reformulating the computation in this way, the first two terms in each equation represent a multiply-accumulate (MAC) operation which may be used in a follow-on multiply and subtract from accumulator (MSC) operation to obtain the result. Each interpolated pixel requires 3 MAC plus 3 MSC operations.
+for the final interpolation in the y coordinate. By reformulating the computation in this way, the first two terms in each equation represent a multiply-accumulate (MAC) operation. You can use this in a follow-on multiply and subtract from accumulator (MSC) operation to obtain the result. Each interpolated pixel requires 3 MAC plus 3 MSC operations.
 
-This example uses single precision floating-point for computation. Figure 5 shows the floating-point vector unit of an AI Engine, where it may be observed that the multiply and accumulator units are designed to process eight lanes in parallel. SIMD parallelism is realized by using a pixel-per-lane approach. Since each pixel requires 3 MAC plus 3 MSC operations, each of which may be executed in a single clock cycle, a lower limit on computation requirement would be 0.75 cycles per pixel. This bound on computation should be viewed as a ballpark estimate on expected performance, which is likely unachievable due to overhead, bandwidth limitations, and pipelining inefficiencies.
+This example uses single precision floating-point for computation. Figure 5 shows the floating-point vector unit of an AI Engine. Observe that the multiply and accumulator units process eight lanes in parallel. SIMD parallelism uses a pixel-per-lane approach. Because each pixel requires 3 MAC plus 3 MSC operations, each of which may execute in a single clock cycle, a lower limit on computation requirement would be 0.75 cycles per pixel. Consider this bound on computation as a ballpark estimate on expected performance, which is likely unachievable due to overhead, bandwidth limitations, and pipelining inefficiencies.
 
 ![figure5](images/fp_vector_unit.png)
 
@@ -147,13 +163,13 @@ This example uses single precision floating-point for computation. Figure 5 show
 
 ## Data Interface
 
-When mapping algorithms to AI Engines, the process often becomes a tradeoff between computational efficiency, data bandwidth, and memory utilization. In the previous section, a value of 0.75 cycles per pixel was derived as a lower bound on computational efficiency. Data interfaces are examined next to determine limitations they impose and to provide guidance on a suitable choice.
+When mapping algorithms to AI Engines, the process often becomes a tradeoff between computational efficiency, data bandwidth, and memory utilization. In the previous section, a value of 0.75 cycles per pixel was derived as a lower bound on computational efficiency. Next, examine data interfaces to determine limitations they impose and to provide guidance on a suitable choice.
 
 ### Programmable Logic Component
 
-When considering system partitioning, tasks such as retrieving data from lookup tables and extracting integer and fractional parts of floating-point numbers are better suited to be performed in programmable logic. Efficient use of AI Engines is realized when they are programmed to continually perform vector processing on a steady stream of input data.
+When considering system partitioning, tasks such as retrieving data from lookup tables and extracting integer and fractional parts of floating-point numbers are better suited for programmable logic. AI Engines are most efficient if you program them for continual vector processing on a steady stream of input data.
 
-Data necessary to process a single pixel is comprised of four reference pixels and fractional parts of the $x_q$ and $y_q$ coordinates. Each of these six data values is assumed to be represented as 32-bit, single precision, floating-point values. A conceptual illustration of how input data is derived in programmable logic for each pixel is shown in Figure 6. This example design does not include a programmable logic component but assumes such a component has been used to generate test input data for AI Engine processing.
+Data necessary to process a single pixel comprises four reference pixels and fractional parts of the $x_q$ and $y_q$ coordinates. Assume each of the six data values uses a 32-bit, single-precision, floating-point format. Figure 6 shows a conceptual illustration of how input data is derived in programmable logic for each pixel. This example design does not include a programmable logic component but it assumes such a component has generates test input data for AI Engine processing.
 
 ![figure6](images/vin_fmt.png)
 
@@ -161,7 +177,7 @@ Data necessary to process a single pixel is comprised of four reference pixels a
 
 ### PLIO Interface
 
-Considering that input requires 6 floating-point values per pixel while output is a single floating-point value, it is apparent that the input stream places a more restrictive limit on achievable pixel processing rate. The PLIO interface supports transfer rates of 1 floating-point value per cycle, which depending on speed grade of the AMD Versal™ device, amounts to transfer rates of 1.0 to 1.25 billion floating-point values per second. Since the input requires 6 floating-point values per pixel, the input PLIO would restrict the rate to 6.0 cycles per pixel. In order to match the input limitation more closely to computational efficiency, 3 input PLIO interfaces are used, which brings the limitation down to 2.0 cycles per pixel. The data format for each of the input PLIO interfaces is shown in Figure 7.
+Considering that input requires six floating-point values per pixel while output is a single floating-point value, it is apparent that the input stream places a more restrictive limit on achievable pixel processing rate. The PLIO interface supports transfer rates of one floating-point value per cycle, which depending on speed grade of the AMD Versal™ device, amounts to transfer rates of 1.0 to 1.25 billion floating-point values per second. Since the input requires 6 floating-point values per pixel, the input PLIO would restrict the rate to 6.0 cycles per pixel. To more closely match the input limitation to computational efficiency, three input PLIO interfaces are used. This brings the limitation down to 2.0 cycles per pixel. Figure 7 shows the data format for each of the input PLIO interfaces.
 
 ![figure7](images/pl_if_streams.png)
 
@@ -169,21 +185,21 @@ Considering that input requires 6 floating-point values per pixel while output i
 
 ### AI Engine Test Vectors
 
-When AI Engines graphs are simulated apart from programmable logic and processing systems, text files are used to provide input data. This example uses MATLAB® to generate test vectors, which are sequences of `int32` numbers. Although actual data is single precision floating-point, it is difficult to express such numbers in text format. In order to capture full precision, the 32 bits used to represent a floating-point number (sign, exponent, mantissa) are written as equivalent `int32` values. A similar format is used for files containing output data.
+When AI Engines graphs are simulated apart from programmable logic and processing systems, text files provide input data. This example uses MATLAB® to generate test vectors, which are sequences of `int32` numbers. Although actual data is single precision floating-point, it is difficult to express such numbers in text format. To capture full precision, the 32 bits used to represent a floating-point number (sign, exponent, mantissa) are written as equivalent `int32` values. Files containing output data use a similar format.
 
 ## AI Engine Kernel Processing
 
 ### Kernel Data Interface
 
-The kernel example presented here uses buffered I/O for input and output. This allows for more efficient VLIW parallelism, where load and store instructions can be executed in the same clock cycle as vector processor instructions. The tradeoff is that there is an increased initial latency. Also, the compiler inserts ping pong buffers for each I/O allocated from AI Engine tile memory. Since this example has three inputs and a single output, a total of eight memory banks will be required. This means additional AI Engine tiles are used to accommodate the memory requirement.
+The kernel example presented here uses buffered I/O for input and output. This enables more efficient VLIW parallelism, where load and store instructions can execute in the same clock cycle as vector processor instructions. The tradeoff is that there is an increased initial latency. Also, the compiler inserts ping pong buffers for each I/O allocated from AI Engine tile memory. Because this example has three inputs and a single output, it requires a total of eight memory banks. This means additional AI Engine tiles accommodate the memory requirement.
 
-Another option for I/O is to use direct streaming to or from the AI Engine. There are two 32-bit input and two 32-bit output streams available. Although this would eliminate the need for ping pong buffers, additional cycles would be used in the kernel code to shift vector data. For example, if a `float` vector of size 8 is sent to an output stream, eight clock cycles would be required.
+Another option for I/O is to use direct streaming to or from the AI Engine. There are two 32-bit input and two 32-bit output streams available. Although this removes the need for ping pong buffers, the kernel code would use additional cycles to shift vector data. For example, if a `float` vector of size eight is sent to an output stream, eight clock cycles would be required.
 
-A final option for kernel I/O is possible if the source or destination of data is another AI Engine tile. In this case, the cascade interface may be used. A `float` vector of size 8 could be transferred each clock cycle using the cascade interface.
+A final option for kernel I/O is possible if the data source or destination is another AI Engine tile. In this case, you can use the cascade interface. A `float` vector of size eight could transfer on each clock cycle using the cascade interface.
 
 ### Kernel Code
 
-To improve compute efficiency, kernel code is created to take advantage of VLIW instructions that perform simultaneous vector multiply, load, and store operations. Each invocation of the kernel processes 256 pixels, but this may be changed when generating test vectors for simulation. The kernel code shown here processes two interpolations over the x coordinate followed by an interpolation over the y coordinate for each loop using vectors of size 8. Computation is performed using AI Engine vector instrinsic functions.
+To improve compute efficiency, kernel code takes advantage of VLIW instructions that perform simultaneous vector multiply, load, and store operations. Each invocation of the kernel processes 256 pixels, but this can vary when generating test vectors for simulation. The kernel code shown here processes two interpolations over the x coordinate followed by an interpolation over the y coordinate for each loop using vectors of size 8. AI Engine vector instrinsic functions performs computation.
 
 ```cpp
 void bilinear_kernel::interp(input_buffer<int32, extents<BUFFER_SIZE_IN>>& __restrict in_A, 
@@ -233,11 +249,11 @@ void bilinear_kernel::interp(input_buffer<int32, extents<BUFFER_SIZE_IN>>& __res
 
 ## Running the Example
 
-Running the example requires that both MATLAB and AMD Vitis™ tools are installed and configured correctly. After downloading the files, cd into the ``.../11-Bilinear_Interpolation/aie/`` directory and use the make build process.
+Running the example requires that you install and correctly configure both MATLAB and AMD Vitis™ tools. After downloading the files, cd into the ``.../11-Bilinear_Interpolation/aie/`` directory and use the make build process.
 
 ### Generating Test Vectors
 
-Prior to running the AI Engine graph simulation, test vectors are required to provide input. Files are also provided to compare with AI Engine simulator output for verification. To generate the vectors, run the command:
+Running AI Engine graph simulation requires test vectors to provide input. Files are also provided to compare with AI Engine simulator output for verification. To generate the vectors, run the command:
 
 ```bash
 $ make gen_vectors
@@ -253,7 +269,7 @@ $ make x86sim
 $ make check_x86sim
 ```
 
-The first command compiles graph code for simulation on an x86 processor, the second command runs the simulation, and the final command invokes MATLAB to compare the simulator output with test vectors.
+The first command compiles graph code for simulation on an x86 processor. The second command runs the simulation. The final command invokes MATLAB to compare the simulator output with test vectors.
 
 ### Running AI Engine Simulation
 
@@ -265,7 +281,7 @@ $ make aiesim
 $ make check_aiesim
 ```
 
-The first command compiles graph code for the SystemC simulator, the second command runs the simulation, and the final command invokes MATLAB to compare simulation output with test vectors. If it is desired to generate trace and profile data during simulation, use the sequence:
+The first command compiles graph code for the SystemC simulator. The second command runs the simulation. The final command invokes MATLAB to compare simulation output with test vectors. To generate trace and profile data during simulation, use the sequence:
 
 ```bash
 $ make aiecom
@@ -277,19 +293,19 @@ $ make check_aiesim
 
 ### Vitis Analyzer
 
-Vitis Analyzer is an essential tool for accessing information on compilation, simulation, and implementation of AI Engine graphs. It can be used to obtain a summary on profiling data and to graphically display trace events. The tool may be invoked with the ``vitis_analyzer`` command, or for this example, by entering:
+Vitis Analyzer is an essential tool for accessing information on compilation, simulation, and implementation of AI Engine graphs. Use the tool to obtain a summary on profiling data and to graphically display trace events. Invoke the tool using the ``vitis_analyzer`` command, or for this example, by entering:
 
 ```bash
 $ make analyze
 ```
 
-The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in Figure 8. This simple example shows the kernel along with ping pong buffers associated with input and output ports.
+The Graph view displays connectivity of the AI Engine graph. Figure 8 shows connectivity for this example. This simple example shows the kernel along with ping pong buffers associated with input and output ports.
 
 ![figure8](images/va_graph.png)
 
 *Figure 8 - Vitis Analyzer Graph View*
 
-The Array view displays how the AI Engine graph is mapped to the AI Engine array for the device specified. This example uses a VC1902 Versal AI Core device which contains 400 AI Engine tiles. As shown in Figure 9, this example utilizes one tile for kernel processing and two additional tiles for ping pong buffer and system memory. If more control over placement of memory is desired, design constraints may be specified.
+The Array view displays how the AI Engine graph maps to the AI Engine array for the specified device. This example uses a VC1902 Versal AI Core device which contains 400 AI Engine tiles. As shown in Figure 9, this example uses one tile for kernel processing and two additional tiles for ping pong buffer and system memory. If you require more control over memory placement, specify design constraints.
 
 ![figure9](images/va_array.png)
 
@@ -301,7 +317,7 @@ Figure 10 contains information from the Profile view. The highlighted fields sho
 
 *Figure 10 - Vitis Analyzer Profile View*
 
-This specific example does not achieve the rates mentioned because it is limited by data bandwidth. Figure 11 shows part of the Vitis Analyzer trace view. The cursors show that the time between the end of one kernel invocation to the end of the next is 484.0 ns. During this duration 256 pixels are processed, resulting in a rate of 528.9 MP/s.
+Data bandwidth limits this specific example, so it does not achieve the rates mentioned. Figure 11 shows part of the Vitis Analyzer trace view. The cursors show that the time between the end of one kernel invocation to the end of the next is 484.0 ns. During this duration 256 pixels are processed, resulting in a rate of 528.9 MP/s.
 
 ![figure11](images/va_analyze.png)
 
@@ -309,21 +325,23 @@ This specific example does not achieve the rates mentioned because it is limited
 
 ### Test Vector Comparison
 
-When comparing simulation results against test vectors, a MATLAB script is invoked to perform the processing. An example of a successful comparison is shown in Figure 12.
+When comparing simulation results with test vectors, a MATLAB script performs the processing. Figure 12 shows an example of a successful comparison.
 
 ![figure12](images/check_sim.png)
 
 *Figure 12 - Simulation Verification*
 
-The output provides three different indications of simulation performance. The first is an indication of whether the simulation output matched the corresponding test vector. There will be one comparison for each kernel simulated. The script compares `int32` values which represent floating-point interpolated pixel values. Since there may be slight variations in floating point calculations, the comparison allows for mismatch in the least significant mantissa bits of the floating-point number and may be specified in the comparison script.
+The output provides three different indications of simulation performance. 
 
-The second comparison indicates maximum pixel value difference between AIE simulation results and single precision MATLAB generated vectors. Pixels take on values in the range [0, 255], and this result provides the maximum of the differences between all pairs of corresponding pixels.
+The first is an indication of whether the simulation output matched the corresponding test vector. There is one comparison for each kernel simulated. The script compares `int32` values which represent floating-point interpolated pixel values. Because there can be slight variations in floating point calculations, the comparison enables for mismatch in the least significant mantissa bits of the floating-point number. This can be specified in the comparison script.
+
+The second comparison indicates maximum pixel value difference between AI Engine simulation results and single precision MATLAB generated vectors. Pixels take on values in the range [0, 255], and this result provides the maximum of the differences between all pairs of corresponding pixels.
 
 The final comparison indicates the maximum pixel value difference between AI Engine simulation results and double precision floating-point results generated by the MATLAB ``interp2`` function.
 
 ## Customizing the Example
 
-This example may be easily customized to use different test images, to use a specified output resolution, or to use multiple parallel processing cores for increased throughput. When generating test vectors, instead of using the Makefile, one may manually run scripts in MATLAB with desired function arguments. For example, the equivalent to
+This example can be customized to use different test images, to use a specified output resolution, or to use multiple parallel processing cores for increased throughput. When generating test vectors, instead of using the Makefile, you can manually run scripts in MATLAB with the desired function arguments. For example, the equivalent to:
 
 ```bash
 $ make gen_vectors
@@ -344,25 +362,25 @@ The ``image_transform`` function uses file ``../images/epyc.jpg`` as a test imag
 >> image_transform('image_file')
 ```
 
-Default output resolution in pixels is 1024 $\times$ 1024. A different resolution of $x_{res} \times y_{res}$ may be specified by invoking
+Default output resolution in pixels is 1024 $\times$ 1024. You can specify a different resolution of $x_{res} \times y_{res}$ by invoking:
 
 ```bash
 >> image_transform('image_file', [ xres  yres ])
 ```
 
-The ``image_transform`` function reads the test image file, performs a sequence of linear transformations on image pixel coordinates, and stores these transformations in a file named ``bli_coords.mat`` along with the test image pixel array. When this function is executed in MATLAB, a sequence of image transformations are displayed.
+The ``image_transform`` function reads the test image file, performs a sequence of linear transformations on image pixel coordinates, and stores these transformations in a file named ``bli_coords.mat`` along with the test image pixel array. When this function is executed in MATLAB, it displays a sequence of image transformations.
 
 ### Multicore Processing
 
-The ``genvectors_bilinear_interp`` function generates test vector files assuming a single AI Engine kernel is used for processing. To utilize multiple kernels in parallel, invoke the function as:
+The ``genvectors_bilinear_interp`` function generates test vector files assuming a single AI Engine kernel is used for processing. To use multiple kernels in parallel, invoke the function as:
 
 ```bash
 >> genvectors_bilinear_interp(N)
 ```
 
-where, N is the number of desired kernels. This function extracts one of the coordinate transformations from file ``bli_coords.mat``, performs bilinear interpolation on the pixels, and creates input and output test vectors for AI Engine simulation. The function also generates a file named ``config.h`` used by the AI Engine compiler and simulator to specify number of kernels and number of kernel invocations required to process the entire test image. This function also performs bilinear interpolation in double precision using the MATLAB ``interp2`` function and stores the result in file ``golden_ref.mat``.
+where, N is the number of desired kernels. This function extracts one of the coordinate transformations from file ``bli_coords.mat``, performs bilinear interpolation on the pixels, and creates input and output test vectors for AI Engine simulation. The function also generates a file named ``config.h`` used by the AI Engine compiler and simulator. This specifies the number of kernels and number of kernel invocations required to process the entire test image. This function also performs bilinear interpolation in double precision using the MATLAB ``interp2`` function and stores the result in file ``golden_ref.mat``.
 
-As an example, specifying four kernels should result in the MATLAB Console Window displaying something like
+As an example, specifying four kernels should result in the MATLAB Console Window displaying something like:
 
 ```
 >> genvectors_bilinear_interp(4)
@@ -377,13 +395,13 @@ along with the image shown in Figure 13.
 
 *Figure 13 - MATLAB genvectors_bilinear_interp Output*
 
-Once these MATLAB scripts are run, the rest of the AI Engine build and simulation process proceeds in the same manner. Figure 14 shows how four kernels are assigned to tiles in the AI Engine array.
+After these MATLAB scripts run, the rest of the AI Engine build and simulation process proceeds in the same manner. Figure 14 shows how four kernels are assigned to tiles in the AI Engine array.
 
 ![figure14](images/va_array_4.png)
 
 *Figure 14 - Multicore Kernel Placement in AI Engine Array*
 
-Figure 15 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels will support peak processing rates in the range of approximately 1.7 to 2.1 GP/s, depending on device speed grade.
+Figure 15 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels support peak processing rates in the range of approximately 1.7 to 2.1 GP/s, depending on device speed grade.
 
 ![figure15](images/check_sim_4.png)
 
@@ -412,7 +430,7 @@ Figure 15 shows the result of comparing multicore AI Engine simulation output wi
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>

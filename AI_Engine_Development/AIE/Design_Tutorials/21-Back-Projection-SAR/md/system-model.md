@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -32,10 +32,10 @@ This tutorial adopts the Structural Similarity Index Measure (SSIM) [[2]] as the
 
 ### MATLAB System Model
 
-We start with the baseline MATLAB model for SAR published by Gorham & Moore (see [[4]]). This model is well-known and accepted in the SAR community and provides a solid baseline, and also uses the GOTCHA data set for comparison purposes. We elect to use the same system scenario studied in the paper, namely the "Pass 1 with HH polarization" scenario. This scheme uses an integration angle of 4 degrees centered at 40 degrees azimuth. The scene extent is 100m x 100m with 20 cm pixel spacing, resulting in a 501 x 501 pixel image. Based on the radar parameters, the maximum scene size has a range extent of 101.8 m and a cross-range extent of 108.4 m.
+We start with the baseline MATLAB model for SAR published by Gorham & Moore (refer to [[4]]). This model is well-known and accepted in the SAR community. It provides a solid baseline, and also uses the GOTCHA data set for comparison purposes. We elect to use the same system scenario studied in the paper, namely the "Pass 1 with HH polarization" scenario. This scheme uses an integration angle of 4 degrees centered at 40 degrees azimuth. The scene extent is 100m x 100m with 20 cm pixel spacing, resulting in a 501 x 501 pixel image. Based on the radar parameters, the maximum scene size has a range extent of 101.8 m and a cross-range extent of 108.4 m.
 
 #### Inner Loop Analysis
-The inner loop of the system level MATLAB model as outlined in [[4]] is shown in the following code block. This captures the full algorithmic processing for a single radar pulse. The final SAR image is obtained by processing a large number of radar pulses and combining them coherently. 
+The following code block shows the inner loop of the system level MATLAB model as outlined in [[4]]. This captures the full algorithmic processing for a single radar pulse. The final SAR image is obtained by processing many radar pulses and combining them coherently. 
 ```
 Line  1:  data_o.r_vec = linspace(-data_o.Nfft/2,data_o.Nfft/2-1,data_o.Nfft)*data_o.maxWr/data_o.Nfft;
 Line  2:  % Loop through every pulse:

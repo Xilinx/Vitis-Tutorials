@@ -38,13 +38,13 @@ The python scripts assume you have installed the following packages:
 
 ## Python Simulations on x86 Machine
 
-Review the `test.py` file. Notice that it runs three unit tests: `test_random_x1`, `test_random_x10`, and `test_random_x100`. Each unit test creates two instances of the `Particles` class: `particles_i` and `particles_j`. Each `Particles` object contains arrays of floating point values for the particle positions, particle velocities, and mass (`x y z vx vy vz m`). These arrays are initalized with random values with the `setSphereInitialConditions()` function in `pylib/particles.py` file. The `x` and `y` positions are constrained to be in a sphere by invoking `cos()` and `sin()` functions. The remaining constrains are as follows:
+Review the `test.py` file. Notice that it runs three unit tests: `test_random_x1`, `test_random_x10`, and `test_random_x100`. Each unit test creates two instances of the `Particles` class: `particles_i` and `particles_j`. Each `Particles` object contains arrays of floating point values for the particle positions, particle velocities, and mass (`x y z vx vy vz m`). These arrays are initalized with random values with the `setSphereInitialConditions()` function in `pylib/particles.py` file. Invoke the `cos()` and `sin()` functions to constrain the `x` and `y` positions in a sphere. The remaining constrains are as follows:
 
-* minimum z initial position = -1000
+* minimum z initial position =–1000
 * maximum z initial position = 1000
 * minimum mass = 10
 * maximum mass = 110
-* minimum inital velocity = -2.0
+* minimum inital velocity =–2.0
 * maximum inital velocity = 2.0
 * timestep (ts) = 1
 * softening factor<sup>2</sup> (sf<sup>2</sup>)= 1000
@@ -104,7 +104,7 @@ After running the Python NBody Simulator, you are ready to move to the next modu
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 

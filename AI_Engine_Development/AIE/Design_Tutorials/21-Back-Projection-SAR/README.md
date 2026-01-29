@@ -19,7 +19,7 @@
 
 ## Abstract
 
-Synthetic Aperture Radar (SAR) [[1]] creates a 2D or 3D image of stationary objects or landscapes from a moving platform such as an airplane or spacecraft. The distance travelled over the target by the platform creates a large synthetic antenna aperture that mimics a much larger antenna array yielding superior image resolution. Signal processing combines coherently many radar pulses collected from multiple platform positions above the target. Many algorithms exist to perform SAR. The Back-Projection (BP) algorithm for SAR is one of the easiest to understand and has $O(N^3)$ operations for an $N\times N$ image. While this computational cost is high, BP lends itself naturally to parallel processing [[2]] and finds use in practical systems. This tutorial builds a reference design for BP-based SAR on AI Engines. Using the GOTCHA data set [[3]] with 586 radar pulses, the SAR engine achieves ~2.5 frames per second for a $512\times 512$ image with fewer than 32 tiles. With eight instances of the engine, the design achieves close to 19 frames per second using approximately 224 tiles. 
+Synthetic Aperture Radar (SAR) [[1]] creates a 2D or 3D image of stationary objects or landscapes from a moving platform such as an airplane or spacecraft. The distance travelled over the target by the platform creates a large synthetic antenna aperture that mimics a much larger antenna array yielding superior image resolution. Signal processing combines coherently many radar pulses collected from multiple platform positions above the target. Many algorithms exist to perform SAR. The Back-Projection (BP) algorithm for SAR is one of the easiest to understand and has $O(N^3)$ operations for an $N\times N$ image. While this computational cost is high, BP lends itself to parallel processing [[2]] and finds use in practical systems. This tutorial builds a reference design for BP-based SAR on AI Engines. Using the GOTCHA data set [[3]] with 586 radar pulses, the SAR engine achieves ~2.5 frames per second for a $512\times 512$ image with fewer than 32 tiles. With eight instances of the engine, the design achieves close to 19 frames per second using approximately 224 tiles. 
 
 
 
@@ -39,17 +39,17 @@ Synthetic Aperture Radar (SAR) [[1]] creates a 2D or 3D image of stationary obje
 ## References
 
 [1]:<https://www.wiley.com/en-us/Synthetic+Aperture+Radar+Signal+Processing+with+MATLAB+Algorithms-p-9780471297062> "Synthetic Aperture Radar Signal Processing with MATLAB Algorithms"
-[[1]]: M. Soumekh, "Synthetic Aperture Radar Signal Processing with MATLAB Algorithms", Wiley, April 1999.
+[[1]]: M. Soumekh, "Synthetic Aperture Radar Signal Processing with MATLAB Algorithms," Wiley, April 1999.
 
 [2]:<https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7699/1/SAR-image-formation-toolbox-for-MATLAB/10.1117/12.855375.short> "SAR image formation toolbox for MATLAB"
-[[2]]: L.A. Gorham & L.J. Moore, "SAR Image Formation Toolbox for MATLAB", SPIE Defense, Security, and Sensing, Orlando, FL, 2010.
+[[2]]: L.A. Gorham & L.J. Moore, "SAR Image Formation Toolbox for MATLAB," SPIE Defense, Security, and Sensing, Orlando, FL, 2010.
 
 [3]: <https://www.sdms.afrl.af.mil/index.php?collection=gotcha> "GOTCHA Volumetric SAR Data Set"
-[[3]]: U.S. Air Force, "GOTCHA Volumetric SAR Data Set", U.S. Air Force Sensor Data Management System.
+[[3]]: U.S. Air Force, "GOTCHA Volumetric SAR Data Set," U.S. Air Force Sensor Data Management System.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
 ## License
 

@@ -27,14 +27,14 @@ make animation
 
 The following is a GIF created from the [animation_data_golden.zip](https://www.xilinx.com/bin/public/openDownload?filename=animation_data_golden.zip) file. You should get a similar GIF from your own data.
 
- The image below shows 12,800 particles simulated on a 400 tile AI Engine accelerator for 300 timesteps.
+ The following image shows 12,800 particles simulated on a 400 tile AI Engine accelerator for 300 timesteps.
 
 ![alt text](images/animation.gif)
 
 
 ## Latency Performance Comparisons
 
-Following is a table comparing the executions times to simulate 12,800 particles for one timestep on the different N-Body Simulators explored in this tutorial.  
+The following table compares the execution times to simulate 12,800 particles for one timestep on the various N-Body simulators explored in this tutorial.  
 
 |Name|Hardware|Algorithm|Average Execution Time for 1 Timestep (seconds)|
 |---|---|--|---|
@@ -42,7 +42,7 @@ Following is a table comparing the executions times to simulate 12,800 particles
 |C++ NBody Simulator|A72 Embedded Arm Processor|O(N<sup>2</sup>)|121.295|
 |AI Engine NBody Simulator|Versal AI Engine IP|O(N)|0.00888979|
 
-As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation and a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. A vectorized C++ NBody Simulator O(N) implementation can be created with pthreads, but is left as an exercise for the user.
+As you can see, the N-Body Simulator implemented on the AI Engine offers a x2,800 improvement over the Python O(N) implementation. It also offers a x24,800 improvement over the C++ O(N<sup>2</sup>) implementation. You can use pthreads to create a vectorized C++ NBody Simulator O(N) implementation, but this is not included in this tutorial.
 
 ## Design Throughput Calculations (Effective vs. Theoretical)
 
@@ -56,11 +56,11 @@ The following table describes the total number of floating-point operations (FLO
 
 **Note: Each section is clearly commented in the `nbody.cc` source file.**
 
-**Note: To calculate the total, each `mac` is considered 2 operations (`mul` and `add`).**
+**Note: To calculate the total, each `mac` is considered two operations (`mul` and `add`).**
 
-Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (i.e. 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.0072 seconds. **Therefore the effective throughput of the entire design is ~598.404 GFLOP/s**.  
+Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (that is, 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.0072 seconds. **Therefore the effective throughput of the entire design is ~598.404 GFLOP/s**.  
 
-The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and we're only using less than 1/10th of its potential!
+The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and you are using less than 1/10th of its potential!
 
 |Effective Throughput|Theoretical Peak Throughput|
 |--|--|
@@ -69,7 +69,7 @@ The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera
 This design of an N-Body Simulator on the AI Engine is a straightforward implementation without any major optimizations done. To further maximize the throughput of the entire design:
 
 * you can explore increasing `FMAX` of the PL kernels from 200 MHz to closer to 500 MHz to reduce the latency of moving data from DDR to the AI Engine
-* PL kernels currently implement a round-robin method of transmitting data. They could be designed to cache and schedule in an optimized way to increate data bandwidth
+* PL kernels currently implement a round-robin method of transmitting data. You could design these to optimally cache and schedule to increate data bandwidth
 * you can refactor the `nbody()` kernel to reduce its reliance on the scalar processor and only use the vector processor in each AI Engine tile by approximating inverse square root
 
 ## (Optional) Building x1_design and x10_design
@@ -85,7 +85,7 @@ cd x1_design
 make all TARGET=<hw|hw_emu>
 ```
 
-The image below shows 128 particles simulated for 300 timesteps.
+The following image shows 128 particles simulated for 300 timesteps.
 
 ![alt text](../x1_design/results/images/animation.gif)
 
@@ -98,14 +98,14 @@ cd x10_design
 make all TARGET=<hw|hw_emu>
 ```
 
-The image below shows 1,280 particles simulated for 300 timesteps.
+The following image shows 1,280 particles simulated for 300 timesteps.
 
 ![alt text](../x10_design/results/images/animation.gif)
 
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 

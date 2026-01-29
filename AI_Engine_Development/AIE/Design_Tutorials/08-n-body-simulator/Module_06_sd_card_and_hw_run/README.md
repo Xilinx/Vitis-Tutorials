@@ -47,13 +47,13 @@ v++ -t hw                                                                       
 
 ## SD Card Image Generation
 
-After compiling and linking your kernel code to build the XCLBIN, you need to package the device binary, along with the host applications, to build a package that can be booted and run on the hardware device. The `v++ -p` step, packages the final product into an `sd_card.img` file at the end of the `v++` compile and link process.
+After compiling and linking your kernel code to build the XCLBIN, you need to package the device binary along with the host applications. This package can be booted and run on the hardware device. The `v++ -p` step, packages the final product into an `sd_card.img` file at the end of the `v++` compile and link process.
 
 ## Booting the VCK190 Board
 
 Flash the `sd_card.img` to an sd card and boot your VCK190 production board.
 
-**Step 1.** Ensure your board is powered OFF.
+**Step 1.** Power off you board.
 
 **Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `build/packet_hw/sd_card.img` file an SD card.
 
@@ -88,7 +88,7 @@ export XILINX_XRT=/usr
 
 ## Running the Design on Hardware
 
-Once the Linux command line displays, go to the `/mnt/sd-mmcblk0p1` partition and you should see the files you packaged into the `sd_card.img`. From here run the functional test:
+When the Linux command line displays, go to the `/mnt/sd-mmcblk0p1` partition. You should see the files you packaged into the `sd_card.img`. From here run the functional test:
 
 ```
 ./ps_app.exe --timesteps 1
@@ -150,7 +150,7 @@ After running the design on hardware, you can compare the performance between th
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
 
 
 

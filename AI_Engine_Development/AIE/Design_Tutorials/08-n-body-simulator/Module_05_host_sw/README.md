@@ -72,7 +72,7 @@ $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ ./build/
 The same linking options were used to generate the `build/ps_app_animate.exe` executable.
 
 ## Host Software  
-After the full hardware design is implemented, the next step is to focus on the host software that enables the entire design. In the AMD Vitis™ core development kit, host code is written in C++ language using the Xilinx® runtime (XRT) API. The XRT native API is described on the [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html).
+After you implement the full hardware design, the next step is to focus on the host software that enables the entire design. In the AMD Vitis™ core development kit, host code is in C++ language using the Xilinx® runtime (XRT) API. The [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) describes the native XRT API.
 
 This module compiles the following host applications and custom APIs:
 
@@ -82,10 +82,10 @@ This module compiles the following host applications and custom APIs:
 * `host/main_animate.cpp` - Host application that runs the design for multiple iterations and saves position data to a file to post-process and create an `animation.gif` later.
 
 ## NBodySimulator API
-The NBodySimulator API is a C++ implementation of an N-Body Simulator which runs on the native A72 processor. It also writes the position data to an `animation_data.txt` file which you will post-process later to create an `animation.gif`.
+The NBodySimulator API is a C++ implementation of an N-Body Simulator which runs on the native A72 processor. It also writes the position data to an `animation_data.txt` file, which you post-process later to create an `animation.gif`.
 
 ## Logger API
-The Logger API is used to save logging messages from the host applications to the `run.log` file. The host application can set the log level of which messages are written to the `run.log` and which messages are shown on the console during execution. By default, the log level is set to `LMESSAGE`, meaning all messages will be written to `run.log`. The cout log level is set to `LINFO`, meaning any messages set to `LINFO` will be also displayed on the output console during execution.
+The Logger API saves logging messages from the host applications to the `run.log` file. The host application can set the log level of which messages are written to the `run.log` and which messages display on the console during execution. By default, the log level is `LMESSAGE`. This setting writes all messages to `run.log`. The cout log level is set to `LINFO`, meaning any messages set to `LINFO` also display on the output console during execution.
 
 ### Log Levels:
 
@@ -95,7 +95,7 @@ The Logger API is used to save logging messages from the host applications to th
 * LNONE
 
 ## Host Applications
-The `host/main_xrt.cpp` host application is compiled into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `mm2s_mp` PL kernel's `ibuff` and `jbuff` DDR buffer inputs.  This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the `s2mm_mp` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_golden_i_k0.txt`, `s2m_golden_i_k1.txt`, `s2m_golden_i_k2.txt`, and `s2m_golden_i_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
+The `host/main_xrt.cpp` host application is compiled into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `mm2s_mp` PL kernel's `ibuff` and `jbuff` DDR buffer inputs. This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the `s2mm_mp` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_golden_i_k0.txt`, `s2m_golden_i_k1.txt`, `s2m_golden_i_k2.txt`, and `s2m_golden_i_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
 
 The `host/main_animate.cpp` host application is compiled into the `build/ps_animate.exe` executable. This host application does the following:
 
@@ -108,7 +108,7 @@ The `host/main_animate.cpp` host application is compiled into the `build/ps_anim
 
 The host application repeats these actions for 300 timesteps. You can provide the `--timesteps <num_timesteps>` command line input to specify how many timesteps (iterations) the design runs for.
 
-The following is the general execution flow for the host applications.
+The following figure shows the general execution flow for the host applications.
 
 ![alt text](images/host_app_flow_chart_2.PNG)
 
@@ -124,7 +124,7 @@ The following is the general execution flow for the host applications.
 
 
 ## Next Steps
-After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module, [Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run).
+After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module ([Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run)).
 
 
 
