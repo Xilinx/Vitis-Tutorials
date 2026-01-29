@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -31,33 +31,39 @@
 
 ## Introduction
 
-Bitonic Sorting [[1]] is parallel algorithm for sorting developed originally by Ken Batcher. Designed originally to target hardware sorting networks, the technique sorts $N$ elements in decreasing (or alternately increasing) order using a network with $O(N\log^2(N))$ comparator elements with a parallel sorting delay of $O(\log^2(N))$ time. The algorithm consists of $q(q+1)/2$ "rounds" of parallel pairwise comparisons across the $N$ elements. These rounds of comparisons between pairs of elements occur in a "butterfly network" whose crossover points change with each round to deliver partial sorted results to the next round. Bitonic sorting is attractive on architectures provisioned with many parallel execution units, particular when $N$ is large. Hardware solutions in programmable logic fit well. Software solutions also yield excellent results on Single-Instruction Multiple Data (SIMD) architectures capable of performing many parallel comparisons in a single cycle.
+Bitonic sorting [[1]] is parallel algorithm for sorting, originally developed by Ken Batcher. You target hardware sorting networks to sort $N$ elements in decreasing or increasing order. The network uses $O(N\log^2(N))$ comparator elements with a parallel sorting delay of $O(\log^2(N))$ time. The algorithm consists of $q(q+1)/2$ rounds of parallel pairwise comparisons across the $N$ elements. Each round compares element pairs using a butterfly network with crossover points that change, delivering partially sorted results to the next round. Bitonic sorting is attractive on architectures provisioned with many parallel execution units, particular when $N$ is large. Hardware solutions in programmable logic fit well. Software solutions also yield excellent results on single-instruction multiple data (SIMD) architectures that perform many parallel comparisons in a single cycle.
 
-This tutorial illustrates how to implement a Bitonic SIMD Sorter on AI Engine in Versal for `float` data types. Two examples are given. First, a small example using $N=16$ demonstrates the concept and identifies strategies for vectorization & management of the vector register space. These ideas are then applied to a second larger example using $N=1024$. Profiling & throughput performance are then compared to `std::sort()` which uses Introsort [[2]] employing $O(N\log(N))$ comparisons on a scalar CPU.
+This tutorial illustrates how to implement a bitonic SIMD sorter on AI Engine in Versal for `float` data types. Two examples are given. You start with a small example using $N=16$ to demonstrate the concept and develop strategies for vectorization and management of the vector register space. You then apply these ideas to a second larger example using $N=1024$. Finally, you compare profiling and throughput performance to `std::sort()` using Introsort [[2]] employing $O(N\log(N))$ comparisons on a scalar CPU.
 
 ## Small Bitonic Sorting Example
 
-The diagram below shows a small Bitonic Sorting example with $N=16$ elements. The network consists of $q=10$ rounds of butterfly comparisons. These rounds are collected into $\log_2(N)=4$ stages, where there are a different number of rounds per stage. Stage 0 consists of 1 round, Stage 1 consists of 2 rounds, Stage 2 consists of 3 rounds and Stage 4 consists of 4 rounds. The figure highlights in yellow output samples from that stage whos ordering has not been affected, and highlights in red output samples from that stage whos ordering has been affected. 
+The following diagram shows a small bitonic sorting example with $N=16$ elements. The network consists of $q=10$ rounds of butterfly comparisons. These rounds are collected into $\log_2(N)=4$ stages, where there are a different number of rounds per stage. 
+* Stage 0 consists of one round
+* Stage 1 consists of two rounds
+* Stage 2 consists of three rounds
+* Stage 4 consists of four rounds 
 
-Notice how some identical rounds are included in each stage of processing. For example, the last two rounds of Stage 2 and Stage 3 contain identical processing. This fact is used in the second example below to construct Bitonic Sorting designs for larger $N$.
+The figure highlights in yellow output samples from that stage whos ordering has not been affected. Red highlights output samples from that stage whose ordering has been affected. 
 
-The Bitonic Sorting algorithm works using the following "divide-and-conquer" approach. Each processing stage performs reording of samples in a local fashion with an increasing "span":
-* Stage 0 performs 1 round of butterfly comparisons to output consecutive 2-tuples in sorted order.
-* Stage 1 performs 2 rounds of butterfly comparisons to output consecutive 4-tuples in sorted order.
-* Stage 2 performs 3 rounds of butterfly comparisons to output consecutive 8-tuples in sorted order.
-* Stage 3 performs 4 rounds of butterfly comparisons to output consecutive 16-tuples in sorted order.
+Some identical rounds appear in each stage of processing. For example, the last two rounds of Stage 2 and Stage 3 contain identical processing. You use this fact in the second example to construct bitonic sorting designs for larger $N$.
 
-After all stages of processing, the output of the final round is presented in fully sorted order. 
+The bitonic sorting algorithm uses a divide-and-conquer approach. Each processing stage reorders samples in a local fashion with an increasing span:
+* Stage 0 performs one butterfly comparison round to sort consective 2-tuples.
+* Stage 1 performs two butterfly comparison rounds to sort consecutive 4-tuples.
+* Stage 2 performs three butterfly comparison rounds to sort consective 8-tuples.
+* Stage 3 performs four butterfly comparison rounds to sort consective 16-tuples.
+
+After all stages of processing, the output from the final round is in fully sorted order. 
 
 ![figure](images/bitonic-sort-n16-overall.png)
 
 ### Stage 0
 
-The figure below shows the processing performed by Stage 0. Here a single round of butterflies performs local reordering of pairs of consecutive samples. A total of 8 parallel comparisons must be performed per stage. With `float` data types, this may be done with the `fpmax()` and `fpmin()` intrinsics or using the some of the AIE API calls as shown below.
+The following figure shows the processing performed by Stage 0. Here a single butterfly round reorders local pairs of consecutive samples. You must perform a total of eight parallel comparisons per stage. With `float` data types, you use `fpmax()` and `fpmin()` intrinsics. Alternatively you call the AIE API functions as shown in the example.
 
 ![figure](images/bitonic-sort-n16-stage0.png)
 
-The code block below implements Stage 0 using intrinsics. The full compliment of 16 input samples are stored in a 16-lane vector register. The `fpmax()` and `fpmin()` intrinsics provide the core sorting functionality, each performin 8 parallel comparisons in SIMD fashion in a single cycle. The `fpshuffle16()` intrinsics perform input and output data shuffling so that all eight "top" samples of each butterfly are moved to a single 8-lane vector register, and similarly for the "bottom" samples of each butterfly. After the maximum and minimum samples are identified, they are stored back to the 16-lane vector with smallest values in the top positions and largest values in the bottom positions. Profiling with `aiesimulator` shows this intrinsic code requires 27 cycles per invocation. 
+The following code block implements Stage 0 using intrinsics. You store the full compliment of 16 input samples in a 16-lane vector register. The `fpmax()` and `fpmin()` intrinsics provide the core sorting functionality, each performing eight parallel comparisons in SIMD fashion in a single cycle. The `fpshuffle16()` intrinsics perform input and output data shuffling, moving all eight top butterfly samples to a single 8-lane vector register and all eight bottom samples to another. After identifying the maximum and minimum samples, you store them back in the 16-lane vector. Smaller values occupy the top positions, and larger values occupy the bottom positions. Profiling with `aiesimulator` shows this intrinsic code requires 27 cycles per invocation. 
 
 ```
 void __attribute__((noinline)) bitonic_fp16::stage0_intrinsic( aie::vector<float,16>& vec )
@@ -92,11 +98,11 @@ void __attribute__((noinline)) bitonic_fp16::stage0_api( aie::vector<float,16>& 
 ```
 
 ### Stage 1
-The figure below shows the processing performed by Stage 1. Here two rounds of butterflies perform local reordering of 4-tuples of consecutive samples. As with Stage 0, SIMD instructions perform a total of 8 parallel comparisons per cycle. Notice the second round of butterfly processing is identical to the single round from Stage 0. 
+The following figure shows the processing performed by Stage 1. Two butterfly rounds perform local reordering of 4-tuples of consecutive samples. As with Stage 0, single‑instruction multiple data (SIMD) instructions perform eight parallel comparisons per cycle. The second butterfly round is identical to the single round from Stage 0. 
 
 ![figure](images/bitonic-sort-n16-stage1.png)
 
-The code block below implements the first round of Stage 1 using AIE API. It uses the same 16-lane vector register along with the `aie::max()` and `aie::min()` routines for sample comparison, and the `fpshuffle16()` intrinsic to perform I/O sample extraction for the "top" and "bottom" samples of each butterfly. Note how AI Engine coding style permits a mixed usage of AIE API and intrinsics in the same code using a common set of AIE API register definitions. This makes it very convenient to "drop down" to intrinsics if necessary from within an AIE API coding framework. Profiling reveals this function requires 27 cycles per invocation. 
+The following code block implements the first round of Stage 1 using AIE API. It uses the same 16-lane vector register along with the `aie::max()` and `aie::min()` routines for sample comparison. The `fpshuffle16()` intrinsic extracts I/O samples for the top and bottom butterfly samples. AI Engine coding style supports mixing AIE API and intrinsics in the same code using a common set of AIE API register definitions. This makes it convenient to drop down to intrinsics if necessary from within an AIE API coding framework. Profiling reveals this function requires 27 cycles per invocation. 
 
 ```
 void __attribute__((noinline)) bitonic_fp16::stage1a( aie::vector<float,16>& vec )
@@ -116,11 +122,11 @@ void __attribute__((noinline)) bitonic_fp16::stage1a( aie::vector<float,16>& vec
 ```
 
 ### Stage 2
-The figure below shows the processing performed by Stage 2. Here three rounds of butterflies perform local reordering of 8-tuples of consecutive samples. As with the previous two stages, SIMD instructions perform a total of 8 parallel comparisons per cycle. Notice again how the third round of butterfly processing is identical to the last round from both Stage 0 and Stage 1. 
+The following figure shows the processing performed by Stage 2. Three butterfly rounds reorder 8-tuples of consecutive samples locally. As in the previous two stages, SIMD instructions perform a total of eight parallel comparisons per cycle. The third butterfly round matches the last round from Stage 0 and Stage 1. 
 
 ![figure](images/bitonic-sort-n16-stage2.png)
 
-The code block below implements the first round of Stage 2 using AIE API. It uses the same 16-lane vector register along with the `aie::max()` and `aie::min()` routines for sample comparison, and the `fpshuffle16()` intrinsic to perform I/O sample extraction for the "top" and "bottom" samples of each butterfly. Notice how the code here is identical to that used for the first round of Stage 1 except for the I/O sample extraction permutations. This is due only to the nature of the "top" and "bottom" butterfly sample being located within different positions in the 16-lane vector register. The code for the second round of Stage 2 (not shown here) exhibits exactly the same structure with yet another distinct set of permutations. Profiling reveals both of these function require 27 cycles per invocation.
+The following code block implements the first round of Stage 2 using AIE API. It uses the same 16-lane vector register with `aie::max()` and `aie::min()` for sample comparisons. The `fpshuffle16()` intrinsic extracts I/O samples for the top and bottom butterfly samples. This code matches the first round of Stage 1, except for the I/O sample extraction permutations. These differences occur because the top and bottom butterfly samples sit in different positions within the 16-lane vector register. The second round of Stage 2 (not shown here) follows the same structure with a distinct set of permutations. Profiling reveals both of these function require 27 cycles per invocation.
 
 ```
 void __attribute__((noinline)) bitonic_fp16::stage2a( aie::vector<float,16>& vec )
@@ -140,11 +146,11 @@ void __attribute__((noinline)) bitonic_fp16::stage2a( aie::vector<float,16>& vec
 ```
 
 ### Stage 3
-The figure below shows the processing performed by Stage 3. Here four rounds of butterflies perform local reordering of 16-tuples of consecutive samples. As with the previous three stages, SIMD instructions perform a total of 8 parallel comparisons per cycle. Notice how the last two rounds of butterfly processing is identical to the last rounds from Stage 2. 
+The following figure shows the processing performed by Stage 3. Four butterfly rounds reorder 16-tuples of consecutive samples locally. As in the previous three stages, SIMD instructions perform a total of eight parallel comparisons per cycle. The final two butterfly rounds match the last rounds from Stage 2. 
 
 ![figure](images/bitonic-sort-n16-stage3.png)
 
-The code block below implements the first round of Stage 3 using AIE API. In this case the "bottom" set of butterfly inputs must be reversed in order to perform the required sample comparisons. We use the `aie::reverse()` API for this purpose. After sample comparison a second reversal is used to restore sample placement prior to storage back to the 16-lane register. This round is simpler than previous cases as no I/O permutations are required during sample extraction. Profiling reveals this function requires 27 cycles per invocation.
+The following code block mplements the first round of Stage 3 using AIE API. For this round, you reverse the bottom set of butterfly inputs in order to perform the required sample comparisons. Use the `aie::reverse()` API for this purpose. After sample comparison, reverse the samples again to restore their placement before storing them back in the 16-lane register. This round is simpler than previous cases because no I/O permutations occur during sample extraction. Profiling reveals this function requires 27 cycles per invocation.
 
 ```
 void __attribute__((noinline)) bitonic_fp16::stage3a( aie::vector<float,16>& vec )
@@ -159,31 +165,31 @@ void __attribute__((noinline)) bitonic_fp16::stage3a( aie::vector<float,16>& vec
 
 ### Profiling of $N=16$ Bitonic Sort vs. `std::sort()`
 
-To show the advantage of Bitonic SIMD Sorting we compare its profiling against the `std::sort()` routine provided as part of the C++-17 standard library. The diagram below captured from Vitis Analyzer shows the average # of cycles for each algorithm. A total of 24 random sorting runs were made. The Bitonic sort took the same time of 170 total cycles per invocation. The `std::sort()` cycles were dependent on the particular sort data, taking a minimum of 3,197 cycles, a maximum of 7,061 cycles and an average of 5,073 cycles. This gives Bitonic SIMD sorting an advantage of ~30X over `std::sort()`.
+To show the advantage of bitonic SIMD sorting, you compare its profiling with the `std::sort()` routine from the C++-17 standard library. The following diagram from Vitis Analyzer shows the average number of cycles for each algorithm and a total of 24 random sorting runs. The bitonic sort took the same time of 170 total cycles per invocation. The `std::sort()` cycles were dependent on the particular sort data, taking a minimum of 3,197 cycles, a maximum of 7,061 cycles and an average of 5,073 cycles. This gives bitonic SIMD sorting an advantage of ~30X over `std::sort()`.
 
 ![figure](images/bitonic-sort-n16-profiling.png)
 
 
 ## Large Bitonic Sorting Example
 
-This section reviews the design of a larger Bitonic SIMD sorting example for $N=1024$ samples. This is more challenging than the previous $N=16$ example because the entire array to be sorted no longer fits in the available vector register space. Instead we must store the array in local tile memory and work on smaller portions of the array using the vector registers. The existing $N=16$ code base serves us nicely for this task. It remains to build up the additional stages and memory addressing to manage the computation across the full $N=1024$ array.
+This section reviews the design of a larger Bitonic SIMD sorting example for $N=1024$ samples. This task is more challenging than the $N=16$ example because the entire array no longer fits in the available vector register space. You must store the array in local tile memory and work on smaller portions of the array using the vector registers. The existing $N=16$ code base works well here. You extend it by adding stages and memory addressing to manage computation across the full $N=1024$ array.
 
-The block diagram below shows the Bitonic Sorter design for $N=1024$. The design requires a total of $q(q+1)/2=55$ rounds of processing where $q=\log_2(N)=10$. Once again, these rounds are collected into $q$ stages. The first four stages (ie. Stage 0 to Stage 3) are identical to the stages we have seen earlier in the $N=16$ example. The only difference is these stages operate on the full vector of $N=1024$ samples; they are processed as 64 groups of 16 samples each, where the processing of each group of 16 samples is identical to the previous example. 
+The block diagram shows the bitonic sorter design for $N=1024$. The design requires a total of $q(q+1)/2=55$ rounds of processing when $q=\log_2(N)=10$. These rounds are collected into $q$ stages. The first four stages (Stage 0 to Stage 3) match those from the $N=16$ example. The only difference is these stages operate on the full vector of $N=1024$ sample vector. You process these as 64 groups of 16 samples each, with each group following the same operations as in the earlier example. 
 
-The diagram below breaks apart the ten rounds of Stage 9 to illustrate the nature of processing which occurs from Stages 4 to 9. Each round of a given stage may be categorized by three parameters, "GROUP", "SPAN", and "ITERATION":
-* The GROUP indicates the number of sets of identical processing that occurs in each round. 
-* The SPAN indicates the width or straddle in samples between the "top" (or "bottom") of two consecutive butterflies in the round.
-* The ITERATION indicates the number of SIMD comparisons performed per GROUP (where we know from the $N=16$ example we process 8 samples per SIMD comparison).
+The following diagram breaks apart the ten rounds of Stage 9 to show the nature of processing occuring from Stages 4 to 9. Each round of a stage contains three parameters: **GROUP**, **SPAN**, and **ITERATION**.
+* GROUP: Number of identical processing sets in each round. 
+* SPAN: Width or straddle in samples between the top or bottom of two consecutive butterflies in the round.
+* ITERATION: Number of SIMD comparisons performed per GROUP (process eight samples per comparison as in the $N=16$ example).
 
 ![figure](images/bitonic-sort-n1024-overall.png)
 
-Based on these definitions, each round may be characterized. For example, the first round of Stage 9 may be characterized as <GROUP,SPAN,ITER>=<1,1024,64> since the largest span of the first butterfly is 1024 samples (SPAN=1024). There is a single group of butterflies that span the array vertically (GROUP=1). There are 64 SIMD cycles required to process $8\times64=512$ butterflies in the round (ITER=64). The second round of Stage 9 may be characterized as <GROUP,SPAN,ITER>=<2,256,32> since the span of all butterfiles is 256 samples (SPAN=256), there are two groups (GROUP=2), and there are $8\times32=512$ butterflies in the round (ITER=32).
+Based on these definitions, you can characterize each round. For example, you can characterize the first round of Stage 9 as <GROUP,SPAN,ITER>=<1,1024,64> because the largest span of the first butterfly is 1024 samples (SPAN=1024). There is a single group of butterflies that span the array vertically (GROUP=1). There are 64 SIMD cycles required to process $8\times64=512$ butterflies in the round (ITER=64). You can characterize the second round of Stage 9 as <GROUP,SPAN,ITER>=<2,256,32> because the span of all butterfiles is 256 samples (SPAN=256), there are two groups (GROUP=2), and there are $8\times32=512$ butterflies in the round (ITER=32).
 
-It turns out the first round in Stages 1 to $q$ always contains these butterflies with "reducing span" dropping from the largest span down to a single sample. All other rounds in the stage consist of butterflies with identical spans. This creates two fundamental types of processing that must be managed. For each type, they only differ in the number of groups processed in each round. This is identified in the figure below where the different types of processing are each identified with a unique color. Notice how all of the rounds from Stage 4 onwards are made up of five different types of processing. Three of these originate from Stage 0 and Stage 1. The other two consists of these forms of "reducing span" butterflies vs. "fixed span" butterflies identified above. 
+It turns out the first round in Stage 1 to $q$ always contains these butterflies with reducing span dropping from the largest span down to a single sample. All other rounds in the stage consist of butterflies with identical spans. This creates two fundamental types of processing that you must manage. For each type, they only differ in the number of groups processed in each round. You can identify this in the following figure where the different types of processing are each identified with a unique color. All rounds from Stage 4 and beyond consist of five different types of processing. Three of these originate from Stage 0 and Stage 1. The other two follow the reducing span butterflies and fixed span butterflies identified previously. 
 
 ![figure](images/bitonic-sort-n1024-spreadsheet.png)
 
-The code block below shows the implementation of the "reducing span" algorithm required for the first round of every stage for Stage 4 and above.  Notice how we loop over `GROUP*ITER` iterations of 8-lane comparison operations. For these "reducing span" comparisons we must reverse the order of the bottom butterfly data to perform the proper comparisons. Afterwards, we may omit the reversal prior to storage since the remaining rounds will reorder each half of the samples properly. This omission saves cycles. After processing `ITER` sets of SIMD computations for each `GROUP`, we adjust the butterfly memory pointers and load another 16-lanes of data from memory, storing previously sorted results. 
+The following code block shows the implementation of the reducing span algorithm required for the first round of every stage from Stage 4 and up. You loop over `GROUP*ITER` iterations of 8-lane comparison operations. For these reducing span comparisons, you reverse the order of the bottom butterfly data to perform the proper comparisons. You then omit the reversal before storing results because the remaining rounds reorder each half of the samples. This omission saves cycles. After processing `ITER` sets of SIMD computations for each `GROUP`, adjust the butterfly memory pointers and load another 16-lanes of data from memory, storing previously sorted results. 
 
 ```
 template<unsigned GROUP,unsigned SPAN,unsigned ITER> void __attribute__((noinline)) bitonic_fp1024::stageY(void)
@@ -221,7 +227,7 @@ template<unsigned GROUP,unsigned SPAN,unsigned ITER> void __attribute__((noinlin
 }
 ```
 
-The code block below shows the implementation of the "fixed span" algorithm required for the remaining rounds of every stage for Stage 4 and above. Here no reversal operations are required since the butterfly assignments follow a regular pattern. Again, the memory management adjusts the top and bottom butterfly pointers according to the different `GROUP` and `ITER` to be processed
+The following code block shows the implementation of the fixed span algorithm required for the remaining rounds of every stage from Stage 4 and higher. No reversal operations are required since the butterfly assignments follow a regular pattern. Again, the memory management adjusts the top and bottom butterfly pointers according to the different `GROUP` and `ITER` to be processed
 
 ```
 template<unsigned GROUP,unsigned SPAN,unsigned ITER> void __attribute__((noinline)) bitonic_fp1024::stageB(void)
@@ -261,7 +267,7 @@ template<unsigned GROUP,unsigned SPAN,unsigned ITER> void __attribute__((noinlin
 
 ### Profiling of $N=1024$ Bitonic Sort vs. `std::sort()`
 
-Once again we compare Bitonic SIMD Sorting against the `std::sort()` routine provided as part of the C++-17 standard library. The diagram below captured from Vitis Analyzer shows the average # of cycles for each algorithm. A total of 4 random sorting runs were made. The Bitonic sort takes 217,636 total cycles overall. The `std::sort()` takes 3,157,482 cycles. This gives Bitonic SIMD sorting an advantage of ~14X over `std::sort()` for this larger array size. 
+Again, compare bitonic SIMD sorting with the `std::sort()` routine provided as part of the C++-17 standard library. The following diagram from Vitis Analyzer shows the average number of cycles for each algorithm with a total of four random sorting runs. The bitonic sort takes 217,636 total cycles overall. The `std::sort()` takes 3,157,482 cycles. This gives bitonic SIMD sorting an advantage of ~14X over `std::sort()` for this larger array size. 
 
 ![figure](images/bitonic-sort-n1024-profiling.png)
 
@@ -278,8 +284,8 @@ Once again we compare Bitonic SIMD Sorting against the `std::sort()` routine pro
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+Use GitHub issues to track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023-2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023-2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

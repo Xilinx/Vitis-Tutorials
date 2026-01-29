@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -17,49 +17,49 @@
 
 ## Introduction
 
-The Versal™ AI Edge Series has been develop to target any applications at the edge where balancing performance and power consumption, low latency, size and thermal constraints, and safety and reliability are paramount.
+The AMD Versal™ AI Edge Series targets edge applications where you balance performance, power consumption, low latency, size, thermal constraints, safety, and reliability. 
 
-Like the Versal™ AI Core Series, it also contains an array of SIMD VLIW DSP processors but with different functionality.
+Like the Versal AI Core Series, it contains an array of single instruction multiple data (SIMD), very long instruction word (VLIW) digital signal processor (DSP) processors with different functionality.
 
-![AI Engine-ML overview](images/AIE-ML-Overview.png)
+![AI Engine-ML Overview](images/AIE-ML-Overview.png)
 
-For detailed information about these devices you can refer to:
+For detailed device information, refer to the following documents:
 
 - [WP158 ACAP at the Edge with the Versal AI Edge Series](https://www.xilinx.com/content/dam/xilinx/support/documentation/white_papers/wp518-ai-edge-intro.pdf)
-- [Produc Brief: Versal AI Edge Series](https://www.xilinx.com/content/dam/xilinx/publications/product-briefs/xilinx-versal-AI-edge-product-brief.pdf)
+- [Product Brief: Versal AI Edge Series](https://www.xilinx.com/content/dam/xilinx/publications/product-briefs/xilinx-versal-AI-edge-product-brief.pdf)
 - [Versal AI Edge webpage](https://www.xilinx.com/products/silicon-devices/acap/versal-ai-edge.html#productAdvantages)
 
-In this document I will just give a description of the processor array which is the core of this tutorial.
+This document describes the processor array, the core of this tutorial.
 
-## AI Engine-ML processor array
+## AI Engine-ML Processor Array
 
-The SIMD VLIW AI Engine-ML comes as an array of interconnected processors using AXI-Stream interconnect blocks as shown in the following figure:
+The single instruction multiple data (SIMD) very long instruction word (VLIW) AI Engine-ML comes as an array of interconnected processors using AXI-Stream interconnect blocks, as shown in the following figure:
 
 ![](images/AIEML-Grid.png)
 
-Differences can be seen at this level compared to the AI Engine that is in the Versal™ AI Core devices:
-- At the bottom of the processor array there is 1 (or 2 depending on the device) rows of 512KB memories. These memories can be accessed by the PL and the AI Engine-ML processors through the AXI-Stream interconnect network. DMA channels of 1 memory block has also access to neighbor memories. These memories are called '_shared memories_'
-- AI Engine-ML tiles are all oriented the same way
-  - Cascade stream is always left-to -right, but also top-to-bottom
-  - Neighborhood structure does not depend anymore on the row index
+Differences from the AI Engine in the Versal™ AI Core devices include the following:
+- At the bottom of the processor array, one or two rows of 512 KB memories exist. You can access these memories from the PL and AI Engine-ML processors through the AXI-Stream interconnect network. Direct memory access (DMA) channels of one memory block also access neighbor memories. These memories are referred to as `_shared memories_`
+- AI Engine-ML tiles all orient the same way:
+  - Cascade stream always flows left-to-right, and top-to-bottom
+  - Neighborhood structure no longer depends on the row index
 
-These devices being intended for Machine Learning Inference they have been optimized for this kind of applications:
-- Supported datatype  list is:
-  - (u)int4, (u)int8, (u)int16, bfloat16
+These devices are optimized for machine learning inference:
+- Supported datatype list:
+  - `(u)int4`, `(u)int8`, `(u)int16`, `bfloat16`
   - Number of 8-bit x 8-bit multipliers doubled
-  - Support for 4-bit x 8-bit multiplication (4x more than in previous architecture)
-  - bfloat16: 8-bit exponent, 8-bit mantissa --> keeps dynamic but with less mantissa precision that in the standard float32 (SPFP).
-- Pipeline is optimized for tensor product
-  - permute blocks are no more full crossbars but are limited to specific data selection (tensor products and convolution)
-  - AI Engine-ML processors have now access to their own registers. They can program the DMAs of their local memories.
-  - Local memory is now 64KB long, always with 8x 128-bit wide banks.
+  - Support for 4-bit x 8-bit multiplication (four times more than in previous architecture)
+  - `bfloat16`: 8-bit exponent, 8-bit mantissa keeps dynamic but with less mantissa precision that in the standard `float32` single precision floating point (SPFP).
+- Pipeline optimization for tensor products:
+  - Permute blocks are limited to specific data selection tensor products and convolution.
+  - AI Engine-ML processors access to their own registers. They can program the DMAs of local memories.
+  - Each local memory is now 64 KB with eight times 128-bit wide banks.
 
-Compute Performance is doubled in 8x8 and 16x16 and quadrupled in 4x8.
+You get double compute performance for 8×8 and 16×16 and quadruple for 4×8 operations.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+Track requests and bugs through GitHub issues. For questions, visit [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

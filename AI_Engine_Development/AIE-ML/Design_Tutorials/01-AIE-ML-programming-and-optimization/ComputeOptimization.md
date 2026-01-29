@@ -15,12 +15,12 @@
 
 # Compute Optimization
 
-## AI Engine-ML matrix multiplication Instruction Set
+## AI Engine-ML Matrix Multiplication Instruction Set
 
 
-The *AI Engine-ML* has specific hardware instructions for matrix multiplications. Depending on the bitwidth of the operands, various matrix sizes are supported. In the following table the notation `MxKxN` means that matrix multiplication with a first operand of size M rows x K columns and a second operand of size K rows x N columns is supported.
+The *AI Engine-ML* includes hardware instructions for matrix multiplication. You can use different matrix sizes based on operand bit-width. In the following table, the notation `MxKxN` means you multiply a first operand with M rows and K columns by a second operand with K rows and N columns. 
 
-**Matrix Multiplication modes for real types**
+**Matrix Multiplication Modes for Real Types**
 
 | 8b x 4b | 8b x 8b | 16b x 8b | 8b x 16b | 16b x 16b | 32b x 16b | 16b x 32b | 32b x 32b | bfloat16 x bfloat16
 |---|---|---|---|---|---|---|---|---|
@@ -44,24 +44,23 @@ The *AI Engine-ML* has specific hardware instructions for matrix multiplications
 |   |   |  1x4x8 |   |
 |   |   |  2x4x8 |   |
 
-## IO or Compute bound?
+## IO or Compute-bound?
 
-One thing is to support a matrix multiply of some size, another is to verify that the 2 loads, the store and the compute are equally optimized.
+You need to check more than matrix multiplication size support. Verify that the two loads, the store, and the compute remain equally optimized.
 
-A complete table of the matrix multiply efficiency, including matrices load and vector compute, can be seen here:
-e[Performance Table](FullAIEMLTable.md)
+You can view a complete efficiency table, including matrix load and vector compute details, here: [Performance Table](FullAIEMLTable.md)
 
 
-### Example 1
+### Example One
 
-For example let's take the first element of the table which is 8b x 4b with a matrix size of 4x16x8:
+For example, take the first element of the table: 8b x 4b with a matrix size of 4x16x8.
 
-- The sub matrix **A** is of size 4x16 on 8 bits which is 512 bits: 2 clocks cycles are necessary to load it
-- The sub matrix **B** is of size 16x8 on 4 bits which is 512 bits: 2 clocks cycles are necessary to load it
-- The sub matrix **C** is of size 4x8 on 16 or 32 bits which is 512 or 1024 bits: 2 or 4 clocks cycles are necessary to store it
-- Finally, 512 MACs must be performed for this matrix which can be done in 1 clock cycles.
+- The sub matrix **A** is size 4x16 at 8 bits (512 bits). You need two clock cycles to load it.
+- The sub matrix **B** is size 16x8 at 4 bits (512 bits). You need two clock cycles to load it.
+- The sub matrix **C** is size 4x8 at 16 or 32 bits (512 or 1024 bits). You need two or four clock cycles to store it.
+- You must perform 512 MACs for this matrix, which you can complete in one clock cycle.
 
-The overall efficiency is 50% (result in 16 bits) or 25% (results in 32 bits): 2 or 4 clock cycles for load/store, 1 clock cycle for the compute.
+Overall efficiency is 50 % (16‑bit results) or 25 % (32‑bit results): two or four cycles for load/store and one cycle for compute.
 
 ### Tutorial Example
 
@@ -76,23 +75,23 @@ The overall maximum efficiency is 50%: The limitation comes from the load operat
 
 A simple way to balance load/compute/store operations is to load 2 sub-matrices **A** and 1 sub-matrix **B** to perform 2 multiplication-accumulations for each **B**.
 
-## Code analysis
+## Code Analysis
 
-In this new version of the kernel, we want to load 2 **A** sub-matrices while we load a single **B** sub-matrix. The 2 **A** sub-matrices must belong to the same tile column so that they have to be multiplied by the same **B** sub-matrix.
+In this new version of the kernel, you load two **A** sub-matrices while loading a single **B** sub-matrix. The two **A** sub-matrices must belong to the same tile column so that you multiply them by the same **B** sub-matrix.
 
-The simplest id to take 2 **A** tiles just one above the other, and multiply them by the same **B** sub-matrix. On the **C** side, the 2 tiles that will be computed will be also just one above the other.
+The simplest idea is to take two **A** tiles stacked vertically and multiply them by the same **B** sub-matrix. On the **C** side, the two tiles you compute are also stacked vertically.
 
-In order to avoid too many pointer manipulations, the **A** tiles will be read 2 by 2 from Memory Tile so that they will be stored right next to each other in AI Engine ML Memory. **B** tiles will be read as in the previous basic solutions. Similarly to **A**, **C** tiles will be stored side by side in the AI Engine ML Memory. They will be reorganized when copying into the Memory Tile.
+To avoid excessive pointer manipulations, you read **A** tiles two at a time from the Memory Tile so that they store next to each other in AI Engine ML Memory. You read **B** tiles as in the previous basic solutions. Similarly to **A**, you store **C** tiles side by side in AI Engine-ML memory. You reorganize them when copying into the Memory Tile.
 
-This way to do offloads the pointer manipulation to the DMA programming, freeing some scalar processor cycles.
+This approach offloads pointer manipulation to direct memory access (DMA) programming, freeing some scalar processor cycles.
 
-The next 2 animated GIFs will show how **A** matrix is read from the Memory Tile and how **C** matrix is written to it. You can see that I chose to have **super tiles** consisting of 2 sub-matrices one above the other:
+The next two animated GIFs show how the **A** matrix is read from the memory tile and how **C** matrix is written to it. You can see that you use **super tiles** cconsisting of two sub-matrices stacked vertically:
 
 ![Matrix A read order](images/OptA_Order.gif)
 
 ![Matrix C write order](images/OptC_Order.gif)
 
-These read write orders are obtained using the following tiling parameters:
+You obtain these read write orders using the following tiling parameters:
 
 ```C++
 adf::tiling_parameters ReadAns_pattern = {
@@ -116,9 +115,9 @@ adf::tiling_parameters WriteCns_pattern = {
 };
 ```
 
-These parameters are very similar to the previous ones except that the vertical dimension is doubled.
+These parameters match the previous ones except the vertical dimension is doubled.
 
-The C++ code is also changed as we now load 2 **A** sub-matrices and compute 2 **C** sub matrices per iteration:
+The C++ code also changes, as you now load two **A** sub-matrices and compute two **C** sub-matrices per iteration:
 
 ```C++
 template<typename ITYPE,typename OTYPE, int SHIFT_RESULT>
@@ -178,11 +177,11 @@ adf::output_buffer<OTYPE, adf::extents<adf::inherited_extent, adf::inherited_ext
 }
 ```
 
-The main difference is that we now have 2 `mmul` operators that are used to compute the 2 **C** sub-matrices.
+The main difference is that you now use two `mmul` operators to compute the two **C** sub-matrices.
 
-## Running the tutorial
+## Running the Tutorial
 
-This is done the exact same way as in the previous section replacing `OPT=0` by `OPT=1`.
+You run this the exact same way as in the previous section, replacing `OPT=0` with `OPT=1`.
 
 ```BASH
 make clean-all OPT=1 data x86 x86sim comparex86
@@ -204,15 +203,15 @@ The visualization of the profiling information of the optimized version of the k
 | 32 bits output | 1750 | 58% |
 | 16 bits output | 1121 | 91% |
 
-The 32-bit output version is still not really using very efficiently the hardware because of some difficulties to schedule load/store/compute operations.
+The 32-bit output version still does not use the hardware efficiently because of scheduling load, store, and compute operations.
 
-The 16-bit output version is doing a frog-leap in performances, **C** sub-matrices storage is fast so it can be interleaved very easily in the inner-loop code.
+The 16-bit output version makes a large performance jump. **C** sub-matrix storage is fast, so you interleave it easily in inner-loop code.
 
-Let's have a look to this code:
+You can now look at this code:
 
 ![Inner Loop as seen in vitis_analyzer](images/InnerLoopOpt16bits.png)
 
-Some lines (1568, 1584, ...) are not fully displayed in the interface, we need to get the original assembly code in the compilation directory (aie/Work1/aie/20_0/Release/20_0.lst). Let's focus on the inner loop delimited by the ZLS/ZLE flags (Zero Overhead Loop Start/End):
+Some lines (1568, 1584, ...) do not fully display in the interface. You must get the original assembly code from the AIE compilation directory (`aie/Work1/aie/20_0/Release/20_0.lst`). You now focus on the inner loop marked by the zero overhead loop start (ZLS) and zero overhead loop end (ZLE) flags:
 
 ```C++
 .label ZLS_F_Z14ClassicMatMultIas ... EE_208
@@ -239,21 +238,21 @@ Some lines (1568, 1584, ...) are not fully displayed in the interface, we need t
         1168    PADDA [p0], #-512;            VLDB wh0, [p1, #32];     VST.SRS.s16.s32 bml0, s0, [p2], #64;NOPX;   VSHUFFLE x6, x2, x1, r2;   VMAC cm1, cm0, x8, x1, r0
 ```
 
-In this inner loop code we can see that there are 16 vector instructions VMUL/VMAC out of the 17 lines. This reveals a highly optimized pipelined loop implementation. On almost all lines there are 2 loads and one vector compute instruction, data storage takes only a fourth of the cycles.
+In this inner loop, you see 16 vector multiply (VMUL) or vector multiply-accumulate (VMAC) instructions among 17 lines. This reveals a highly optimized pipelined loop implementation. On almost all lines, you execute two loads and one vector compute instruction. Data storage takes only one-fourth of the cycles.
 
 ## Conclusion
 
-In this section of the tutorial you learnt how to:
+In this section of the tutorial you learned how to:
 
 - Compute the number of cycles needed to load/store matrices.
 - Compute the number of cycles needed to compute a matrix multiplication.
-- How to define a strategy to balance IO and compute burden
-- How to get access to the assembly code to analyze it.
+- Define a strategy to balance input/output (I/O) and compute burden
+- HAccess the assembly code to analyze it.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023-2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

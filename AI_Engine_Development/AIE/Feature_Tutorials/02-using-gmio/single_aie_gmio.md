@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -28,11 +28,11 @@ This example introduces the AI Engine GMIO programming model. It includes three 
 			- [Run AI Engine simulator and hardware flow](#run-ai-engine-simulator-and-hardware-flow)
 	- [Conclusion](#conclusion)
 
-The AI Engine simulator event trace is used to see how performance can be improved step-by-step. The last step introduces code to make GMIO work in hardware.
+Use the AI Engine simulator event trace to identify performance improvements step by step. In the final step, you add code to make GMIO work in hardware.
 
 ## Step 1 - Synchronous GMIO Transfer
 
-In this step, the synchronous GMIO transfer mode is introduced. Change the working directory to `single_aie_gmio/step1`. Looking at the graph code `aie/graph.h`, it can be seen that the design has one output `gmioOut` with type `output_gmio`, one input `gmioIn` with type `input_gmio`, and an AI Engine kernel `weighted_sum_with_margin`.
+In this step, you use the synchronous GMIO transfer mode. Change your working directory to `single_aie_gmio/step1`. When you examine the graph code `aie/graph.h`, the design has one output `gmioOut` of type `output_gmio`, one input `gmioIn` of type `input_gmio`, and one AI Engine kernel `weighted_sum_with_margin`.
 
 ```cpp
 	class mygraph: public adf::graph
@@ -58,7 +58,7 @@ In this step, the synchronous GMIO transfer mode is introduced. Change the worki
 	};
 ```
 
-The GMIO ports `gmioIn` and `gmioOut`, are created and connected as follows:
+Create and connect the GMIO ports `gmioIn` and `gmioOut` as follows:
 
 ```cpp
 	gmioOut = adf::output_gmio::create("gmioOut",64,1000);
@@ -68,22 +68,22 @@ The GMIO ports `gmioIn` and `gmioOut`, are created and connected as follows:
 	adf::connect<>(k_m.out[0], gmioOut.in[0]);
 ```
 
-The GMIO instantiation `gmioIn` represents the DDR memory space to be read by the AI Engine and `gmioOut` represents the DDR memory space to be written by the AI Engine. The creator specifies the logical name of the GMIO, burst length (that can be 64, 128, or 256 bytes) of the memory-mapped AXI4 transaction, and the required bandwidth in MB/s (here 1000 MB/s).
+The GMIO instantiation `gmioIn` represents the DDR memory space that you read using the AI Engine. The `gmioOut` instantiation represents the DDR memory space you write using the AI Engine. You (the creator) specify the GMIO's logical name, burst length (64, 128, or 256 bytes) for the memory-mapped AXI4 transaction, and required bandwidth in MB/s (here 1000 MB/s).
 
-Inside the main function of `aie/graph.cpp`, two 256-element ``int32`` arrays (1024 bytes) are allocated by `GMIO::malloc`. The `dinArray` points to the memory space to be read by the AI Engine and the `doutArray` points to the memory space to be written by the AI Engine. In Linux, the virtual address passed to `GMIO::gm2aie_nb`, `GMIO::aie2gm_nb`, `GMIO::gm2aie`, and `GMIO::aie2gm` must be allocated by `GMIO::malloc`. After the input data is allocated, it can be initialized.
+Inside the main function of `aie/graph.cpp`, you allocate two 256-element ``int32`` arrays (1024 bytes) using `GMIO::malloc`. The `dinArray` points to the memory space you read using the AI Engine. The `doutArray` points to the memory space you write using the AI Engine. In Linux, you must allocate the virtual address passed to `GMIO::gm2aie_nb`, `GMIO::aie2gm_nb`, `GMIO::gm2aie`, and `GMIO::aie2gm` using `GMIO::malloc`. After you allocate the input data, you can initialize it.
 
 ```cpp
 int32* dinArray=(int32*)GMIO::malloc(BLOCK_SIZE_in_Bytes);
 int32* doutArray=(int32*)GMIO::malloc(BLOCK_SIZE_in_Bytes);
 ```
 
-`doutRef` is used for golden output reference. It can be allocated by a standard `malloc` because it does not involve GMIO transfer.
+Use `doutRef` for a golden output reference. You can allocate it by a standard `malloc` because it does not involve GMIO transfer.
 
 ```cpp
 int32* doutRef=(int32*)malloc(BLOCK_SIZE_in_Bytes);
 ```
 
-`GMIO::gm2aie` and `GMIO::gm2aie_nb` are used to initiate read transfers from the AI Engine to DDR memory using memory-mapped AXI transactions. The first argument in `GMIO::gm2aie` and `GMIO::gm2aie_nb` is the pointer to the start address of the memory space for the transaction (here `dinArray`). The second argument is the transaction size in bytes. The memory space for the transaction must be within the memory space allocated by `GMIO::malloc`. Similarly, `GMIO::aie2gm` and `GMIO::aie2gm_nb` are used to initiate write transfers from the AI Engine to DDR memory. `GMIO::gm2aie_nb` and `GMIO::aie2gm_nb` are non-blocking functions that return immediately when the transaction is issued. They do not wait for the transaction to complete. In contrast, the functions, `GMIO::gm2aie` and `GMIO::aie2gm` behave in a blocking manner.
+Use `GMIO::gm2aie` and `GMIO::gm2aie_nb` to initiate read transfers from the AI Engine to DDR memory using memory-mapped AXI transactions. The first argument in `GMIO::gm2aie` and `GMIO::gm2aie_nb` is the pointer to the start address of the memory space for the transaction (here `dinArray`). The second argument is the transaction size in bytes. The memory space for the transaction must be within the memory space allocated by `GMIO::malloc`. Similarly, use `GMIO::aie2gm` and `GMIO::aie2gm_nb` to initiate write transfers from the AI Engine to DDR memory. When you issue the transaction with the non-blocking functions `GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`, they return immediately. They do not wait for the transaction to complete. In contrast, the functions, `GMIO::gm2aie` and `GMIO::aie2gm` behave in a blocking manner.
 
 ```cpp
     gr.gmioIn.gm2aie(dinArray,BLOCK_SIZE_in_Bytes);
@@ -91,13 +91,13 @@ int32* doutRef=(int32*)malloc(BLOCK_SIZE_in_Bytes);
     gr.gmioOut.aie2gm(doutArray,BLOCK_SIZE_in_Bytes);
 ```
 
-The blocking transfer (`gmioIn.gm2aie`) has to be completed before `gr.run()` because the GMIO transfer is in synchronous mode here. But the buffer input of the graph (in PING-PONG manner by default) has only two buffers to store the received data. This means that at the maximum, two blocks of buffer input data can be transferred by GMIO blocking transfer. Otherwise, the `GMIO::gm2aie` will block the design. In this example program, `ITERATION` is set to one.
+Complete the blocking transfer (`gmioIn.gm2aie`) before `gr.run()` because the GMIO transfer is in synchronous mode. By default, the graph's buffer input uses a PING-PONG structure with only two buffers to store the received data. This setup means you can transfer at most two blocks of buffer input data can using the GMIO blocking transfer. Otherwise, `GMIO::gm2aie` stops the design until the buffers free up. In this example program, you set `ITERATION` to one.
 
-Because `GMIO::aie2gm()` is working in synchronous mode, the output processing can be done just after it is completed.
+Because `GMIO::aie2gm()` works in synchronous mode, you can process the output immediately after it finishes.
 
->**Note:** The memory is non-cacheable for GMIO in Linux.
+>**Note:** In Linus, the GMIO uses non-cacheable memory.
 
-In the example program, the design runs four iterations in a loop. In the loop, pre-processing and post-processing are done before and after data transfer.
+In the example program, the design runs four iterations in a loop. Within each loop, you perform pre-processing before and post-processing after data transfer.
 
 ```cpp
     for(int i=0;i<4;i++){
@@ -272,6 +272,6 @@ In this example, you learned about the following core concepts:
 
 Next, review [AIE GMIO Performance Profile](./perf_profile_aie_gmio.md).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

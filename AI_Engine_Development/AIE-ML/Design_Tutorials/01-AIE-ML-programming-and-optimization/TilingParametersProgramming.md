@@ -18,17 +18,17 @@
 
 There are multiple levels of memory in the AI Engine-ML architecture:
 
-- Memory Module attached to the AI Engine-ML (64kB). Access from the processor or using internal DMA with dedicated address generators (2xMM2S, 2xS2MM).
-- memory tile (512 kB): 1 or 2 per column. Access with internal DMAs with dedicated address generator (6xS2MM, 6xMM2S).
-- External memory: DDR or HBM which is also addressed by DMAs located in the PL-AIE array interface.
+- Memory module attached to the AI Engine-ML (64 KB). You can access it from the processor or through internal DMA with dedicated address generators (2xMM2S, 2xS2MM).
+- Memory tile (512 KB): one or two per column. You can access it using internal DMAs with dedicated address generators (6xS2MM, 6xMM2S).
+- External memory: double data rate (DDR) or high bandwidth memory (HBM), addressed by DMAs in the PL-AIE array interface.
 
-Data in these memories can be seen as a single dimension set of data, but depending on the memory the maximum dimensionality can be 3 (AIE Tile DMA, Interface Tile DMA) or 4 (memory tile DMA). Currently (2022.2) DMA BDs of the memory tile and the Interface Tile can be programmed from within the graph.
+You can see data in these memories as a single dimension set. Depending on the memory, maximum dimensionality can be three (AIE tile DMA, interface tile DMA) or four (memory tile DMA). As of 2022.2, you can program DMA BDs of the memory tile and interface tile from within the graph.
 
-This programming process is done through what we call _Tiling Parameters_. These parameters describe how the data should be accessed in the memory on a tile basis. Dimension 0 is the dimesion where the data are contiguous in memory. The overall dimension of the buffer is specified and then the tile dimension and the number of tiles to read in each dimension.
+You perform this programming through *Tiling Parameters*. These parameters describe how you access data in memory on a tile basis. Dimension 0 is where data is contiguous in memory. Specify the overall buffer dimension, then the tile dimension, and finally the number of tiles to read in each dimension.
 
-## Tiling parameter structure
+## Tiling Parameter Structure
 
-The `tiling_parameters`structure is defined as follows:
+The `tiling_parameters` structure is defined as follows:
 
 ```C++
   struct tiling_parameters
@@ -55,7 +55,7 @@ The `tiling_parameters`structure is defined as follows:
 
 ```
 
-One can see in this prameters all the global parameters of the transfer, but the order of the memory access is specified by the `traversing_parameters`:
+You can see in these parameters all the global details of the transfer. The order of memory access is specified by the `traversing_parameters`:
 
 ```C++
 struct traversing_parameters
@@ -75,16 +75,16 @@ struct traversing_parameters
   };    
 ```
 
-Actually a vector of `traversing_parameters` is describing the access order. This allows the user to specify any dimension-wise order, starting with dimension 3 if the data must be ordered that way.
+You define a vector of `traversing_parameters` to describe the access order. This lets you specify any dimension-wise order, starting with dimension three if required.
 
 
-## A graphical Example
+## A Graphical Example
 
-Let suppose we have a buffer named `mtx` stotred in a _shared buffer_:
+Suppose you have a buffer named `mtx` stored in a *shared buffer*:
 
 ![Shared Buffer](images/Graphics-GlobalBuffer.drawio.png)
 
-Its size is 10x6 and there are 4 kernels that want to access it: 2 for wrtiting onto it and 2 for reading from it:
+Its size is 10x6 and four kernels need to access it, two for writing and two for reading from it:
 
 ```C++
 kernel k1, k2, k3, k4;
@@ -98,30 +98,30 @@ mygraph()
 }
 ```
 
-Kernel `k1` is willing to write to the buffer tile by tile. Each tile has a size 3x2 and the origin of the read access is (0,0):
+Kernel `k1` writes to the buffer tile by tile. Each tile is size 3x2 and the read origin is (0,0):
 
 ![First Kernel Access](images/Graphics-Kernel1Access.drawio.png)
 
 The access scheme is as follows:
 
-- Dimension 0: 2 blocks, 3 samples apart
-- Dimension 1: 3 blocks, 2 samples apart.
+- Dimension 0: two blocks, three samples apart
+- Dimension 1: three blocks, two samples apart.
 
 ```C++
 write_access(mtx.in[0]) = tiling({
 .buffer_dimension={10,6}, .tiling_dimension={3,2}, .offset={0,0}, .tile_traversal = {{.dimension=0, .stride=3, .wrap=2}, {.dimension=1, .stride=2, .wrap=3}}});
 ```
 
-Kernel `k2` is also willing to write to the buffer but with different tile size and order:
+Kernel `k2` writes to the buffer with different tile size and order:
 
 ![Second Kernel Access](images/Graphics-Kernel2Access.drawio.png)
 
 The access scheme is as follows:
 
-- Dimension 1: 2 blocks, 3 samples apart
-- Dimension 0: 2 blocks, 2 samples apart
+- Dimension 1: two blocks, three samples apart
+- Dimension 0: two blocks, two samples apart
 
-The origin of the subset is sample at position (6,0):
+The subset origin is at position (6,0):
 
 ```C++
 write_access(mtx.in[1]) = tiling({
@@ -129,11 +129,11 @@ write_access(mtx.in[1]) = tiling({
     .tile_traversal = {{.dimension=1, .stride=3, .wrap=2},{.dimension=0, .stride=2, .wrap=2}}});
 ```
 
-The 2 other kernels `k3, k4` are willing to read from the buffer in a completely different way the buffer has been written to:
+Kernels `k3` and `k4` read from the buffer differently than it was written:
 
 ![Third and Fourth Kernel Access](images/Graphics-Kernel34Access.drawio.png)
 
-These access schemes are defined in the graph with:
+These access schemes are defined in the graph with the following:
 
 ```C++
 read_access(mtx.out[0]) = tiling({
@@ -144,7 +144,7 @@ read_access(mtx.out[1]) = tiling({
    .tile_traversal = {{.dimension=0, .stride=3, .wrap=2}}});
 ```
 
-The overall C++ code, including the connections of the kernels to the shared_buffer will look like this:
+The overall C++ code, including the connections of the kernels to the `shared_buffer` looks like this:
 
 ```C++
 class mygraph : public graph
@@ -174,11 +174,11 @@ class mygraph : public graph
 };
 ```
 
-## Some other examples
+## Some Other Examples
 
-While reading a buffer, if the access is outside the buffer area, the DMA performs zero-padding, replacing non-existent data by zeros:
+When reading a buffer, if the access goes outside the buffer area, the DMA performs zero-padding, replacing non-existent data by zeros:
 
-### 1D Linear with Zero-Padding before
+### 1D Linear with Zero-Padding Before
 
 ```C++
 read_access(mtxB.out[0])=tiling({.buffer_dimension={256}, .tiling_dimension={256}, .offset={-32},
@@ -187,16 +187,16 @@ read_access(mtxB.out[0])=tiling({.buffer_dimension={256}, .tiling_dimension={256
 ![1D zero padding before](images/1DZeroPaddingBefore.png)
 
 
-### 1D linear with zero-padding and truncation
+### 1D Linear with Zero-padding and Truncation
 
 ```C++
 read_access(mtxB.out[0]) = tiling({.buffer_dimension={256}, .tiling_dimension={128}, .offset={-16},
    .tile_traversal = {{.dimension=0, .stride=144, .wrap=2}}, .boundary_dimension={96} });
 ```
 
-![1D zero padding and truncation](images/1DZeroPadding.png)
+![1D Zero Padding and Truncation](images/1DZeroPadding.png)
 
-### 3D Linear with zero padding around
+### 3D Linear with Zero-padding Around
 
 
 ```C++
@@ -210,8 +210,8 @@ read_access(mtxB.out[0]) = tiling({.buffer_dimension={32,4,2}, .tiling_dimension
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+Use GitHub issues to track requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

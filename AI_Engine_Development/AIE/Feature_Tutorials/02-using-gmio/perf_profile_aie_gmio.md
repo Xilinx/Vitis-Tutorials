@@ -6,22 +6,22 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
 
 # AI Engine GMIO Performance Profile
 
-AI Engine tools support one-to-one mapping between GMIO ports and tile DMAs. It does not support mapping multiple GMIO ports to one tile DMA channel. There is a limit to the number of GMIO ports that can be supported for a given device. For example, the XCVC1902 device on the VCK190 board has 16 AI Engines to NoC master unit (NMU) in total. For each AI Engine to NMU, two MM2S and two S2MM channels are supported. Therefore, a maximum of 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs are supported. However, note that these numbers can be further limited by the existing hardware platform.
+AI Engine tools support one-to-one mapping between global memory input/output (GMIO) ports and tile direct memory access (DMA) units. They do not support mapping multiple GMIO ports to one tile DMA channel. Each device supports a limited number of GMIO ports. For example, the XCVC1902 device on the VCK190 board has 16 AI Engines connected to a network on chip (NoC) master unit (NMU). Each AI Engine to NMU supports two memory‑mapped to stream (MM2S) and two stream to memory‑mapped (S2MM) channels. Therefore, the maximum is 32 AI Engine GMIO inputs and 32 AI Engine GMIO outputs. Hardware platform constraints can further reduce these limits. 
 
-In this example, four AI Engine GMIO inputs and four AI Engine GMIO outputs are utilized in the graph and the performance for the graph is profiled through various ways. You will learn about the usage of GMIO for data transfer in this tutorial.  
+In this example, you use four AI Engine GMIO inputs and four AI Engine GMIO outputs in the graph. You profile the graph's performance using various methods. This tutorial teaches you how to use GMIO for data transfer.  
 
 ## Design Introduction
 
-This design has a graph that has four AI Engine kernels. Each kernel has one input and one output. Thus, four AI Engine GMIO inputs and four AI Engine GMIO outputs are connected to the graph.
+This design has a graph that has four AI Engine kernels. Each kernel has one input and one output. Thus, four AI Engine GMIO inputs and four AI Engine GMIO outputs connect to the graph.
 
 Change the working directory to `perf_profile_aie_gmio`. Take a look at the graph code in `aie/graph.h`.
 
@@ -54,9 +54,9 @@ class topgraph: public adf::graph
 	};
 ```
 
-In the previous code, there are location constraints `adf::location` for each kernel and their relative constraints for GMIO inputs and GMIO outputs. This means when GMIO ports are placed on different columns, performance counters will not run out when profiling all ports with the event API at the same time.
+In the previous code, you assign location constraints (`adf::location`) to each kernel and set relative constraints for GMIO inputs and outputs. This setup means that when GMIO ports sit in different columns, performance counters keep working when you profile all ports with the event API simultaneously.
 
-Next, examine the kernel code `aie/vec_incr.cc`. It increments each ``int32`` input by one and additionally outputs the cycle counter of the AI Engine tile. Due to the later introduction, this counter can be used to calculate the system throughput.
+Next, examine the kernel code `aie/vec_incr.cc`. It increments each ``int32`` input by one and outputs the AI Engine tile cycle counter. You can use this counter to calculate the system throughput later.
 
 ```cpp
 using namespace adf;
@@ -79,7 +79,7 @@ void vec_incr(input_buffer<int32,extents<256>>& __restrict data,output_buffer<in
 	}
 ```
 
-Next, examine the host code `sw/host.cpp`. The concepts introduced in [AIE GMIO Programming Model](./single_aie_gmio.md) apply here. This section explains new concepts and how performance profiling is done. Some constants defined in the code are as follows:
+Next, examine the host code `sw/host.cpp`. The concepts introduced in [AIE GMIO Programming Model](./single_aie_gmio.md) apply here. This section introduces new concepts and explains performance profiling. Some constants defined in the code are as follows:
 
 ```cpp
 const int NUM=4;
@@ -92,9 +92,9 @@ const int BLOCK_SIZE_in_Bytes=1024*ITERATION;
 const int BLOCK_SIZE_out_Bytes=1032*ITERATION;
 ```
 
-If it is for hardware flow, `ITERATION` is 8192; otherwise, it is four. This is to ensure that the AI Engine simulator can conclude quickly.
+For hardware flow, set `ITERATION` to 8192; otherwise, set it to four. This setting lets the AI Engine simulator finish in less time.
 
-In the main function, the PS code will profile `NUM` GMIO inputs and outputs, where `NUM` is 4. Non-blocking GMIO APIs (`GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`) are used for GMIO transactions, and `GMIO::wait` is used for output data synchronization.
+In the main function, the PS code profiles `NUM` GMIO inputs and outputs, where `NUM` is four. Use non-blocking GMIO APIs (`GMIO::gm2aie_nb` and `GMIO::aie2gm_nb`) for GMIO transactions, and `GMIO::wait` for output data synchronization.
 
 ```cpp
 //Pre-processing
@@ -277,6 +277,6 @@ In this tutorial, you learned about:
 * Programming a model for AI Engine GMIO
 * Profiling system  using various methods
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

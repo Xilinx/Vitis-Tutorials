@@ -6,31 +6,31 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
 
 # Matrix Multiplication Compute Performance of the AI Engin ML Tiles
 
-This table summarizes IO/Compute balance for all supported input data types and matrix sizes:
+This table summarizes the I/O and compute balance for each supported input data type and matrix size. Review the columns using these definitions:
 
-- Mat A Type: number of bits of Matrix A data type. `bf16`is 16 bit wide.
-- Mat B Type: number of bits of Matrix A data type. `bf16`is 16 bit wide.
-- Compute (MAC/cyc): number of parallel multiplication-accumulations that can be performed by the vector processor of the AI Engine ML
-- M: number of rows of matrix A
-- K: number of columns of matrix A = number of rows of matrix B
+- Mat A Type: number of bits of matrix's A data type (`bf16` is 16 bit wide)
+- Mat B Type: number of bits of matrix's A data type (`bf16` is 16 bit wide)
+- Compute (MAC/cyc): parallel multiply‑accumulate operations per clock cycle on the AI Engine‑ML vector processor
+- M: number of rows in matrix A
+- K: number of columns in matrix A = number of rows of matrix B
 - N: number of columns of matrix B
-- Mat A Size B): number of bytes used to encode matrix A
-- Mat B Size (B): number of bytes used to encode matrix B
-- Load Mat A (cyc): number of cycles necessary to load Matrix A
-- Load Mat B (cyc): number of cycles necessary to load Matrix B
-- Compute (cyc): Number of cycles necessary to compute the matrix multiplication
-- Compute (%): Efficiency of the vector processor usage compared to the max of IO and compute burden
-- IO A (%): Efficiency of the matrix A load  compared to the the max IO and compute burden
-- IO B (%): Efficiency of the matrix B load  compared to the the max IO and compute burden
+- Mat A Size B: bytes required to encode matrix A
+- Mat B Size (B): bytes required to encode matrix B
+- Load Mat A (cyc): ncycles required to load matrix A
+- Load Mat B (cyc): cycles required to load matrix B
+- Compute (cyc): cycles required to perform the multiplication
+- Compute (%): vector processor efficiency compared to the greater of I/O or compute load
+- IO A (%): matrix A load efficiency compared to the greater of I/O or compute load
+- IO B (%): matrix B load efficiency compared to the greater of I/O or compute load
 
 
 | Mat A Type   | Mat B Type   |     Compute (MAC/cyc) |   M |   K |   N |   Mat A Size (B) |   Mat B Size (B) |   Load Mat A (cyc) |   Load Mat B (cyc) |   Compute (cyc) |   Compute (%) |   IO A % |   IO B % |
@@ -67,8 +67,8 @@ This table summarizes IO/Compute balance for all supported input data types and 
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023-2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

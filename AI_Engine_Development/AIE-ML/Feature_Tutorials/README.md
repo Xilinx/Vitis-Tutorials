@@ -6,16 +6,16 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
 
 # Feature Tutorials
 
-The AIE-ML Development Feature Tutorials highlight specific features and flows that help develop AIE-ML applications.
+The AIE-ML Development Feature Tutorials highlight specific features and flows to help you develop AIE-ML applications.
 
  <table style="width:100%">
  <tr>
@@ -24,44 +24,44 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  </tr>
  <tr>
  <td align="center"><a href="./01-aie_a_to_z/">A to Z Bare-metal Flow</a></td>
- <td>This tutorial walks through the steps to create a custom Baremetal platform, and also integrate Baremetal host application along with  an AI Engines graph and PL kernels.</td>
+ <td>In this tutorial you create a custom bare-metal platform and integrate a bare-metal host application with an AI Engine graph and PL kernels.</td>
  </tr>
  <tr>
  <td align="center"><a href="./02-using-gmio/">Using GMIO with AIE-ML</a></td>
- <td>This tutorial introduces the usage of global memory I/O (GMIO) for sharing data between the AI Engine-ML (AIE-ML) and external DDR.</td>
+ <td>In this tutorial, you use global memory input/output (GMIO) to share data between the AIE‑ML and external double data rate (DDR) memory.</td>
  </tr>
  <tr>
  <td align="center"><a href="./03-rtp-reconfiguration/">Runtime Parameter Reconfiguration</a></td>
- <td>Learn how to dynamically update AI Engine-ML (AIE-ML) runtime parameters.</td>
+ <td>In this tutorial, you learn how to dynamically update AIE-ML runtime parameters.</td>
  </tr>
  <tr>
  <td align="center"><a href="./04-packet-switching/">Packet Switching</a></td>
- <td>This tutorial illustrates how to use data packet switching with AI Engine-ML (AIE-ML) designs to optimize efficiency.</td>
+ <td>In this tutorial, you implement data packet switching in AIE‑ML designs to optimize processing efficiency.</td>
  </tr>
  <tr>
  <td align="center"><a href="./05-AI-engine-versal-integration/">AI Engine Versal Integration for Hardware Emulation and Hardware</a></td>
- <td>This tutorial demonstrates creating a system design running on the AI Engine-ML (AIE-ML), PS, and PL and validating the design running on these heterogeneous domains by running Hardware Emulation.</td>
+ <td>In this tutorial, you create a system design that runs on the AIE-ML, processing system (PS), and programmable logic (PL), then validate it using hardware emulation. </td>
  </tr>
  <tr>
  <td align="center"><a href="./13-aie-ml-performance-analysis/">AI Engine-ML Performance Analysis Tutorial</a></td>
- <td> This tutorial introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution. It also demonstrates the analysis of a hang issue using an example. </td>
+ <td> In this tutorial, you learn performance analysis and optimization methods, and explore how synchronization works during graph execution. You also analyze a hang issue using an example. </td>
  </tr>
  <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
- <td>This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.</td>
+ <td>In this tutorial, you learn features that improve AIE and AIE-ML programming, creating more readable and efficient code than earlier compiler versions.</td>
  </tr> 
  <tr>
  <td align="center"><a href="./06-gemm/">Matrix Compute with Vitis Libraries</a></td>
- <td>In this tutorial, we explore how to use matrix multiplication/General Matrix Multiply (GEMM) from the DSP Vitis library. We will examine various design requirements and configure the parameters accordingly. Finally, we will migrate the design to the AIE-ML architecture and compare its performance with AIE architecture.</td>
+ <td>In this tutorial, you use matrix multiplication/general matrix multiply (GEMM) from the DSP Vitis library. You examine design requirements and configure parameters accordingly. Finally, you migrate the design to the AIE‑ML architecture and compare its performance with the AIE architecture.</td>
  </tr>
  <tr>
  <td align="center"><a href="./07-tiling-parameters/">Tiling Parameter Programming</a></td>
- <td>In this tutorial you will learn how to use a major feature of AI Engine-ML devices: tiling parameters.These parameters can be used at all memory levels of the AI Engine-ML: Local memory (memory modules) with the kernel io-buffers, memory tiles (shared memory in adf language) which are used as large intermediate memories in the system and external memory for DDR access.</td>
+ <td>In this tutorial you learn how to use a major feature of AIE-ML devices: tiling parameters. These parameters apply to all memory levels of the AIE-ML. You use them in local memory (memory modules) with kernel I/O buffers, memory tiles (shared memory in the adaptive data flow (ADF) language) for large intermediate storage, and external double data rate (DDR) memory.</td>
  </tr>    
  </table>
 
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

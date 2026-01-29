@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -17,19 +17,19 @@
 
 ## Introduction
 
-The tutorials under the AI Engine Development help you learn how to target, develop, and deploy advanced algorithms using a Versal AI Engine array in conjunction with PL IP/kernels and software applications running on the embedded processors. To successfully deploy AI Engine applications in hardware, you need to be aware of the Vitis and AI Engine tools and flows.
+The tutorials under AI Engine Development help you learn to target, develop, and deploy advanced algorithms using an AMD Versal™ AI Engine array. Do this in conjunction with PL IP/kernels and software applications running on the embedded processors. To successfully deploy AI Engine applications in hardware, you need to understand the Vitis and AI Engine tools and flows.
 
-- The AI Engine Development **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help develop AI Engine applications.
+- The AI Engine Development **[Feature Tutorials](./Feature_Tutorials/)** highlight specific features and flows that help you develop AI Engine applications.
 
-- The AI Engine Development **[Design Tutorials](./Design_Tutorials/)** showcase the two major phases of AI Engine application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
+- The AI Engine Development **[Design Tutorials](./Design_Tutorials/)** showcase two major phases of AI Engine application development: designing the application and developing the kernels. These tutorials demonstrate both phases.
 
 ## Getting Started
 
 ### AI Engine Documentation
 
-To easily find the right documentation corresponding to the development stage you are at, we recommend you use the [AI Engine Design Process Hub](https://docs.amd.com/p/ai-engine-development).
+Use the [AI Engine Design Process Hub](https://docs.amd.com/p/ai-engine-development) to find the right documentation for your current development stage.
 
-The major documentation for AI Engine includes:
+Key AI Engine documentation includes:
 
 - *Versal adaptive SoC AI Engine Architecture Manual* [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine)
 - *AI Engine Tools and Flows* [UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment)
@@ -37,7 +37,7 @@ The major documentation for AI Engine includes:
 
 ### AI Engine Training
 
-If you are new with AI Engine, the following training courses can help you understand the architechure and design flow.
+If you are new to AI Engine, take these training courses to understand the architecture and design flow:
 
 - [Designing with Versal AI Engine 1: Architecture and Design Flow](https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+1)
 - [Designing with Versal AI Engine 2: Graph Programming with AI Engine Kernels](https://xilinxprod-catalog.netexam.com/Search?searchText=Designing+with+Versal+AI+Engine+2)
@@ -45,34 +45,31 @@ If you are new with AI Engine, the following training courses can help you under
 
 ### Environment Settings
 
-**IMPORTANT**: Before beginning the tutorial make sure you have read and followed the *Vitis Release Notes And Installation Guide* ([UG1742](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes)) (v2025.2) for setting up software and installing the VCK190 base platform.
+**IMPORTANT**: Before starting any tutorial, read and follow the *Vitis Release Notes and Installation Guide* ([UG1742](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes)) (v2025.2) to set up software and install the VCK190 base platform.
 
+Follow these steps to set up your environment (do **not** apply to tutorials that do not use the VCK190 base platform):
 
-
-
-Run the following steps to setup environment (do **NOT** apply to tutorials that do not use the VCK190 base platform):
-
-1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2025.2/sdk.sh` command.
-2. Set up your `ROOTFS` to point to the `xilinx-versal-common-v2025.2/rootfs.ext4`.
-3. Set up your `IMAGE` to point to `xilinx-versal-common-v2025.2/Image`.
-4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
+1. Set up your platform: Run the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script from the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you **must** run the `xilinx-versal-common-v2025.2/sdk.sh` command.
+2. Set the `ROOTFS` path: Point it to `xilinx-versal-common-v2025.2/rootfs.ext4`.
+3. Set the `IMAGE` path: Point it to `xilinx-versal-common-v2025.2/Image`.
+4. Set the `PLATFORM_REPO_PATHS` environment variable: Define it based on where you downloaded the platform.
 
 ### Getting Started with AI Engine Development Using the AI Engine Tutorials
 
 ![missing image](AI_Engine_dev_flow.png)
 
-If you are new with the AI Engine Architecture and tools, we recommend that you start with the [A to Z Bare-metal Flow](./Feature_Tutorials/01-aie_a_to_z/), which will guide you through the entire flow from platform creation in AMD Vivado™ to AI Engine application creation, system integration and testing on Hardware using the Vitis IDE.
+If you are new to AI Engine architecture and tools, start with the [A to Z Bare-metal Flow](./Feature_Tutorials/01-aie_a_to_z/). This tutorial takes you step-by-step from platform creation in AMD Vivado™ to AI Engine application creation, system integration, and hardware testing using the Vitis IDE.
 
 #### AI Engine Application Development
 
-To get started with AI Engine application development, we recommend that you look at the following tutorials:
+To start developing AI Engine applications, work through the following tutorials:
 
-- [DSP Library Tutorial](./Feature_Tutorials/08-dsp-library/) which will guide you to create an AI Engine using application using the AMD provided DSP library
-- [AIE DSPLib and Model Composer](./Feature_Tutorials/10-aie-dsp-lib-model-composer/) which will also guide you to create an AI Engine using application using the AMD provided DSP library but using the ModelComposer tool which enables easy designs through a MATLAB Simulink environment.
-- [Using GMIO with AIE](./Feature_Tutorials/02-using-gmio/) which goes through using the GMIOs for connectivity between the AI Engine and the DDR (through the NoC)
-- [Implementing an IIR Filter on the AIE](./Feature_Tutorials/14-implementing-iir-filter/) will guide you into custom kernel coding using a IIR application
+- [DSP Library Tutorial](./Feature_Tutorials/08-dsp-library/): Learn to create an AI Engine application using the AMD DSP library.
+- [AIE DSPLib and Model Composer](./Feature_Tutorials/10-aie-dsp-lib-model-composer/): Learn to create an AI Engine application using the AMD provided DSP library with ModelComposer, enabling MATLAB Simulink-based design.
+- [Using GMIO with AIE](./Feature_Tutorials/02-using-gmio/): Learn how to connect AI Engine to DDR memory through the GMIO interface and NoC.
+- [Implementing an IIR Filter on the AIE](./Feature_Tutorials/14-implementing-iir-filter/): Learn custom kernel coding with an IIR filter application.
 
-The following tutorials describe some features of the AI Engine, which might be useful for your application:
+Other tutorials covering useful AI Engine features include:
 
 - [Runtime Parameter Reconfiguration](./Feature_Tutorials/03-rtp-reconfiguration/)
 - [Packet Switching](./Feature_Tutorials/04-packet-switching/)
@@ -80,25 +77,24 @@ The following tutorials describe some features of the AI Engine, which might be 
 
 #### AI Engine Application Debug and Optimization
 
-After you have written your first AI Engine application you might want to verify the correct functionality of your graphs and kernels using x86 simulation and AI Engine simulation. In this regards, the following tutorials will be useful for you:
+After writing your first AI Engine application, verify that your graphs and kernels function correctly using x86 and AI Engine simulation. Use these tutorials to assist with debugging and optimization:
 
-- [Debug Walkthrough Tutorial](./Feature_Tutorials/09-debug-walkthrough/) will guide you to analyze the performance of your AI Engine application and help you with debugging functional issues.
-
-- [AIE Performance and Deadlock Analysis](./Feature_Tutorials/13-aie-performance-analysis/) which introduces you to performance analysis and optimization methods, and shows you how synchronization works in graph execution.
+- [Debug Walkthrough Tutorial](./Feature_Tutorials/09-debug-walkthrough/): Analyze performance and debug functional issues.
+- [AIE Performance and Deadlock Analysis](./Feature_Tutorials/13-aie-performance-analysis/): Learn performance analysis, optimization methods, and graph execution synchronization.
 
 #### System Integration
 
-When your AI Engine Application meets your expectation (in terms of functionality and performances), it will be the right time to integrate it with the rest of the Versal System. At this stage, the following tutorials will be useful for you:
+When your AI Engine application meets functional and performance expectations, integrate it into the Versal system. Use these tutorials:
 
-- [AIE Versal Integration](./Feature_Tutorials/05-AI-engine-versal-integration/). This tutorial demonstrates creating a system design running on the AI Engine, PS, and Programmable Logic (PL).
-- [Versal System Design Clocking](./Feature_Tutorials/06-versal-system-design-clocking-tutorial/). In this tutorial, you will learn clocking concepts for the Vitis compiler and how to define clocking for an ADF Graph, as well as PL kernels using clocking automation functionality.
-- [Versal Emulation Waveform Analysis](./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/) which demonstrates how you can use the Vivado Design Suite logic simulator (XSIM) waveform GUI, and the Vitis analyzer to debug and analyze your design.
+- [AIE Versal Integration](./Feature_Tutorials/05-AI-engine-versal-integration/): Build a design running on the AI Engine, PS, and PL.
+- [Versal System Design Clocking](./Feature_Tutorials/06-versal-system-design-clocking-tutorial/): Learn clocking concepts for the Vitis compiler and define clocking for an ADF Graph and PL kernels using automation.
+- [Versal Emulation Waveform Analysis](./Feature_Tutorials/11-ai-engine-emulation-waveform-analysis/):Use the Vivado Design Suite logic simulator GUI and Vitis analyzer to debug and analyze your design.
 
 ## Available Tutorials
 
 ### Feature Tutorials
 
-These tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
+These tutorials target the **VCK190** board. Use the following table to find available tutorials and see the features and flows each one demonstrates. The columns list specific features and flows so you can identify tutorials that match what you want to learn.
 
  <table style="width:100%">
  <tr>
@@ -108,8 +104,8 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td width="7%" align="center"><b>IDE Flow</b>
  <td width="7%" align="center"><b>Libraries Used</b>
  <td width="7%" align="center"><b>HLS Kernel</b>
- <td width="7%" align="center"><b>x86 simulator</b>
- <td width="7%" align="center"><b>aie simulator</b>
+ <td width="7%" align="center"><b>x86 Simulator</b>
+ <td width="7%" align="center"><b>AIE Simulator</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
@@ -455,7 +451,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
 
 ### Design Tutorials
 
-These tutorials target the **VCK190** board. The table below lists the tutorials available, and the features and flows showcased in all of these tutorials. The various columns correspond to specific features/flows supported in these tutorials and will help you identify tutorials that showcase specific flows and features that you are interested in.
+These tutorials target the **VCK190** board. The following table lists the tutorials, features, and flows highlighted in these tutorials. The columns correspond to specific features and flows supported in these tutorials and help you identify tutorials that showcase specific flows and features that interest you.
 
  <table style="width:100%">
  <tr>
@@ -465,8 +461,8 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td width="7%" align="center"><b>IDE Flow</b>
  <td width="7%" align="center"><b>Libraries Used</b>
  <td width="7%" align="center"><b>HLS Kernel</b>
- <td width="7%" align="center"><b>x86 simulator</b>
- <td width="7%" align="center"><b>aie simulator</b>
+ <td width="7%" align="center"><b>x86 Simulator</b>
+ <td width="7%" align="center"><b>AIE Simulator</b>
  <td width="7%" align="center"><b>HW Emu</b>
  <td width="7%" align="center"><b>HW</b>
  <td width="7%" align="center"><b>Event Trace in HW</b>
@@ -739,7 +735,7 @@ These tutorials target the **VCK190** board. The table below lists the tutorials
  <td> </td>
  </tr> 
  <tr>
- <td align="center"><a href="./Design_Tutorials/19-Softmax-Function/">Softmax Function on AI Engine</a></td>
+ <td align="center"><a href="./Design_Tutorials/19-Softmax-Function/">SoftMax Function on AI Engine</a></td>
  <td>Base</td>
  <td>Linux</td>
  <td> </td>
