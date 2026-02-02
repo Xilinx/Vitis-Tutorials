@@ -28,7 +28,7 @@ In this stage, you can profile the AI Engine Core, Interface, and Memory modules
 <td>
 Explains how to set up the configuration file `xrt.ini` and run the hardware design to generate profile data using the XRT flow.<br />
 <a href="./Stage_2.md#Open-Multiple-Profile-Runs-in-the-Vitis-Analyzer">&nbsp; &nbsp; &nbsp; - Open multiple profile runs in the AMD Vitis&trade; Analyzer</a> - This exercise helps you understand how to open different profile summaries (two different runs) in a single Vitis Analyzer view.<br />
-<a href="./Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explanation</a> - This explains how to analyze the AI Engine core, memory, and interface profiling data. Also discusses what action should be taken based on the stall time and DMA lock time.<br />
+<a href="./Stage_2.md#Profiling-Data-Explanation">&nbsp; &nbsp; &nbsp; - Profiling Data Explanation</a> - This explains how to analyze the AI Engine core, memory, and interface profiling data. Also discusses what action is to be taken based on the stall time and DMA lock time.<br />
 </td>
 </tr>
 	
@@ -48,11 +48,11 @@ It is expected that you already generated the hardware image from Stage 1. If no
 
 ## Hardware Profiing Features
 
-In this tutorial, you will learn how to use hardware profiling features to inspect the design. Two flows, XSDB and XRT flow, are supported to profile the AI Engine design. The profiling feature requires no design source code change to collect profiling data. No special options are required to build the design.
+In this tutorial, you learn how to use hardware profiling features to inspect the design. Two flows, XSDB and XRT flow, are supported to profile the AI Engine design. The profiling feature requires no design source code change to collect profiling data. No special options are required to build the design.
 
 ### XRT Flow
 
-1. Once the board is powered up, and you see the Linux console after PetaLinux boots up, create a `xrt.ini` file on the SD card using the following lines:
+1. After the board is powered up, and you see the Linux console after PetaLinux boots up, create a `xrt.ini` file on the SD card using the following lines:
 
    ```
    [Debug]
@@ -68,7 +68,7 @@ In this tutorial, you will learn how to use hardware profiling features to inspe
 
    ```
 
-   For more information on these profile settings, refer to the *AI Engine Tools and Flows User Guide* ([UG1076](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow)).
+   For more information on these profile settings, refer to the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow).
 2. Save the `xrt.ini` file, and it is safe to do power-cycle on the device, whenever you add/edit the `xrt.ini` file to avoid seeing any abnormal results:
 
    ```
@@ -82,7 +82,7 @@ In this tutorial, you will learn how to use hardware profiling features to inspe
    * summary.csv
    * xrt.run_summary
 
-4. Open the xrt.run_summary using `vitis_analyzer xrt.run_summary`, click **Set Compile Directory** under the AI Engine Compile Directory in the **Summary** view, and point to the `Work/graph.aiecompile_summary` file.
+4. Open the xrt.run_summary using `vitis_analyzer xrt.run_summary`. Click **Set Compile Directory** under the AI Engine Compile Directory in the **Summary** view, and point to the `Work/graph.aiecompile_summary` file.
 5. This opens the Vitis Analyzer window. Click the **Profile_Summary** and navigate to **AI Engine & Memory** as follows:
 ![profile core memory](./Images/profile_core_memory.PNG)
 

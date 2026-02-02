@@ -53,7 +53,7 @@ Explains how to use error reporting APIs to handle errors in the host code.<br /
 Explains different techniques (XRT, XBUtil, and XSDB) to analyze the design by running on hardware and helps to choose from the following methodologies:<br />
  <a href="./Stage_1.md#AI-Engine-status-using-XRT"> &nbsp; &nbsp; &nbsp;- AI Engine status using XRT</a> - Using XRT is fast and the host executable can automatically reads the `xrt.ini` file to configure the runtime. - <br />
 <a href="./Stage_1.md#Manual-AI-Engine-status-using-the-XBUtil-utility">&nbsp; &nbsp; &nbsp;- Manual AI Engine Status Using the XBUtil Utility</a> - XBUtil is a standalone command utility included with XRT and does not require any special file to handle. You can directly use XBUtil commands on the console after boot.<br />
- <a href="./Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; - Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for baremetal applications in addition to the Linux-based applications.<br />
+ <a href="./Stage_1.md#Deadlock-detection-using-XSDB">&nbsp; &nbsp; &nbsp; - Deadlock detection using XSDB</a> - XSDB runs independent of XRT and can analyze the results before, during, or after design runs. Also, you can use the XSDB for bare-metal applications in addition to the Linux-based applications.<br />
 </td>
 </tr>
 
@@ -62,7 +62,7 @@ Explains different techniques (XRT, XBUtil, and XSDB) to analyze the design by r
 <a href="./Stage_1.md#Using-APIs-in-the-Host-Application">Using APIs in the Host Application</a>
 </td>
 <td>
-Explains how to modify the host code to add APIs in the host application that helps profiling the design for getting througput, latency, and bandwidth.<br />
+Explains how to modify the host code to add APIs in the host application that helps profiling the design for getting throughput, latency, and bandwidth.<br />
  <a href="./Stage_1.md#Profiling-Graph-throughput">&nbsp; &nbsp; &nbsp; - Profiling Graph throughput</a> - Provides insight on how to modify the host code for profiling the number of samples sent and received.<br />
 <a href="./Stage_1.md#Profiling-to-count-Samples-sent-and-received">&nbsp; &nbsp; &nbsp;- Profiling to count the samples sent and received (Exercise Step)</a> - Provides insight on how to modify the host code for profiling the number of samples sent and received.<br />
 </td>
@@ -149,7 +149,7 @@ It is necessary to analyze the run results to handle the design stalls by tracki
  ```
 
 4. Observe the hang, and kill the application by pressing `Ctrl+c` or suspend using `Ctrl+z`.
-5. Copy all these files back to the local workspace where the AI Enigne compile `Work/` directory is present, and open the `xrt.run_summary` file in the Vitis Analyzer.
+5. Copy all these files back to the local workspace where the AI Engine compile `Work/` directory is present, and open the `xrt.run_summary` file in the Vitis Analyzer.
 
  ```
  vitis_analyzer -a xrt.run_summary`
@@ -162,7 +162,7 @@ Clicking each stall highlights the corresponding path in the graph view.
 
  * `Tile Status - Status column`: Shows the Tiles (24,0),(25,0) are in lock stall and the tile (25,1) is in stream stall. If there are no stalls, you can see the `Disabled/Done` state.
  * `Tile Status - Stalled Net/Port`: Shows the corresponding Nets/Ports where the stall happened. Observe the small bubble at the stream port of the peak_detect kernel in the graph view.
- * `Tile Status - PC`: Shows the current Program Counter value. It can be crossprobed with the  compiler generated source code by clicking on it.
+ * `Tile Status - PC`: Shows the current Program Counter value. It can be cross-probed with the  compiler generated source code by clicking on it.
  * `DMA Status`: Shows each tile's DMA input/output channel status.
 
  For more information, refer to [Analyzing AI Engine Status in Vitis Analyzer](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Stall-Analysis-in-the-Vitis-IDE) in the *AI Engine Tools and Flows User Guide* (UG1076).
@@ -198,7 +198,7 @@ Clicking each stall highlights the corresponding path in the graph view.
 
 ### Deadlock Detection Using XSDB
 
-It is also possible to examine the status of the AI Engine using XSDB both on Linux and baremetal operating systems. This feature allows you to debug applications and detect the status of the AI Engine in situations where the board is in a deadlock or hung state. Unlike the xbutil command which requires XRT, the XSDB command runs independent of XRT.
+It is also possible to examine the status of the AI Engine using XSDB both on Linux and bare-metal operating systems. This feature allows you to debug applications and detect the status of the AI Engine in situations where the board is in a deadlock or hung state. Unlike the xbutil command which requires XRT, the XSDB command runs independent of XRT.
 
 1. Run the hardware server from the computer that connects to the target board. To do so, launch the hw_server from the computer that has a JTAG connection to the VCK190 board.
 ![launch hw server](./Images/launch_hwServer.png)
@@ -258,11 +258,11 @@ To better understand the usage of error handling XRT APIs, an out of bound acces
 	aie aie0: Asserted tile error event 60 at col 25 row 1
 	```
 
-	* Above is the error propogated from the AI Engine array and is used to debug the application specific errors. For the list of error events, refer to the topic [AI Engine Error Events](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Error-Events). Notice the `error event 60` above which represents the **DM address out of range**, and the address out of range is happening in `col 25 row 1`.
+	* Above is the error propagated from the AI Engine array and is used to debug the application specific errors. For the list of error events, refer to the topic [AI Engine Error Events](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/AI-Engine-Error-Events). Notice the `error event 60` above which represents the **DM address out of range**, and the address out of range is happening in `col 25 row 1`.
 	* You can open the graph compile summary in Vitis Analyzer and identify the kernel corresponding to the tile which is `peak_detect` in this case.
 	* You can debug this out of bound access at AI Engine simulation level - Refer to [Debugging memory access violations](../AIE_Simulation/README.md#Debugging-memory-access-violations) for more information.
 
-	The other message in the console represents an asynchronous error ouput.
+	The other message in the console represents an asynchronous error output.
 
 	```
 	Error Driver (4): DRIVER_AIE
@@ -339,7 +339,7 @@ It can be defined as the average number of bytes produced (or consumed) per seco
 
 4. Also, do the necessary changes to the `Makefile`, so that the compilation and linking of the host code is successful considering the ADF APIs are included. It is recommended that you replace the `Makefile` with the `Makefile.host_profile`. Make sure to take a backup of the original file before replacing.
 5. Do `make host` and `make package TARGET=hw` to generate the modified hardware, `sd_card.img`.
-6. Program the device with the new hardware image, and observe the following message in the Linux console that prints the througput of the port `out0`:
+6. Program the device with the new hardware image, and observe the following message in the Linux console that prints the throughput of the port `out0`:
 
 	```
 	run mm2s

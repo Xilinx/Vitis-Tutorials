@@ -26,7 +26,9 @@ The goal of this stage is to determine the exact programmable logic (PL) kernel 
 <a href="./Stage_3.md#Profiling-Using-PL-Profile-Monitors">Profiling Using the PL Profile Monitors</a>
 </td>
 <td>
-Explains how to insert a PL profile monitors in the `v++link` command. This helps identify specific PL kernels(s) causing a performance drop.
+
+Explains how to insert a PL profile monitors in the `v++link` command. This helps identify specific PL kernels causing a performance drop.
+
 </td>
 </tr>
 
@@ -47,7 +49,7 @@ Clone the git repository, and get the design files to walk through this section 
 
 ## Profiling Using PL Profile Monitors
 
-In this section, you will walk through the process of insering PL profile monitors to identify specific PL kernels that causes the potential drop in performance.
+This section explains the process of insering PL profile monitors to identify specific PL kernels that causes the potential drop in performance.
 
 This is a three step process:
 
@@ -62,7 +64,7 @@ This is a three step process:
    VPP_LINK_FLAGS := -l -t $(TARGET) --platform $(BASE_PLATFORM) $(KERNEL_XO) $(GRAPH_O) --profile.data all:all:all --save-temps -g --config $(CONFIG_FILE) -o $(PFM).xsa
    ```
 
-   The `--profile.data:<arg>` option enables the monitoring of data ports through the monitor IP that are added into the design. In this example, `<arg>` is set to `all:all:all`, i.e, assign the data profile to all CUs; you can find the names from the `system.cfg` file as `s2mm_1`,`s2mm_2` and `mm2s`* and interfaces of all kernels, `s2mm` and `mm2s`.
+   The `--profile.data:<arg>` option enables the monitoring of data ports through the monitor IP that are added into the design. In this example, `<arg>` is set to `all:all:all`, that is, assign the data profile to all CUs; you can find the names from the `system.cfg` file as `s2mm_1`,`s2mm_2` and `mm2s`* and interfaces of all kernels, `s2mm` and `mm2s`.
 3. Do `make all TARGET=hw`, and a hardware image `sd_card.img` gets generated inside the `sw/` directory.
 4. Flash the `sd_card.img` file to the SD card. You can follow step 3 in [Running the Design on Hardware](./Stage_1.md#Running-the-Design-on-Hardware) section.
 5. Create a `xrt.ini` file with content as follows:
@@ -95,9 +97,9 @@ This is a three step process:
    vitis_analyzer xrt.run_summary
    ```
 
-8. Once the Vitis Analyzer opens, click the `Profile Summary` in the left side pane, and navigate to the **Compute Unit Utilization**. Observe the compute units and kernels. Also note the time and clock frequency as follows.
+8. After the Vitis Analyzer opens, click the `Profile Summary` in the left side pane, and navigate to the **Compute Unit Utilization**. Observe the compute units and kernels. Also note the time and clock frequency as follows.
 ![CU Utilization](./Images/cu_utilization.PNG)
-9. You can get the data transfer for each compute unit and total Read/write in megabytes by navigating to **Kernel Data Transfers** -> **Top Kernel Transfer** as follows:
+9. You can get the data transfer for each compute unit and total Read/write in MB by navigating to **Kernel Data Transfers** -> **Top Kernel Transfer** as follows:
 ![Top kernel transfer](./Images/top_kernel_transfer.PNG)
 10. From the **Kernel Data Transfers** -> **Kernel Transfer** tab, you can get the transfer rate, througput utilization (%), and latency details.
 
@@ -119,7 +121,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 
    Make sure the compute unit name matches with the one specified in the `system.cfg` file. In this exercise, monitor the stream _output from `mm2s` module going to the AI Engine, going to `s2mm` module_.
    >**NOTE:** V++ allows multiple `--debug.chipscope` lines to meet design debug needs.
-2. Build the design. Especially, if you have already compiled the AI Engine design and PL modules; it is required to run the linking step in the `Makefile` and repackage to generate the SD card image.
+2. Build the design. Especially, if you have already compiled the AI Engine design and PL modules. Run the linking step in the `Makefile` and repackage to generate the SD card image.
 
    ```
    make clean
@@ -134,7 +136,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 
    ![vivado ila](./Images/vivado_ILA.PNG)
 
-4. Flash the SD card with the ILA-enabled design, plug in the flashed SD card on to the `VCK190` SD card slot, and boot up the board.
+4. Flash the SD card with the ILA-enabled design, plug- in the flashed SD card on to the `VCK190` SD card slot, and boot up the board.
 
 #### Set Up the Connection in Vivado
 
@@ -159,7 +161,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 ![hw_ila_1](./Images/hw_ila_1.PNG)
 11. Select the `+` button from the **Trigger Setup - hw_ila_1** window, and select the `TVALID` signal probes, and click **OK**.
 ![add probes](./Images/add_probes.PNG)
-12. Once the probes are added, select `1 (logical one)` from the dropdown in the `Value` column for all three probes. This is required to capture the signals when `TVALID` is high.
+12. After the probes are added, select `1 (logical one)` from the dropdown in the `Value` column for all three probes. This is required to capture the signals when `TVALID` is high.
 13. Observe the **Core status** as `IDLE` in the **Settings-hw_ila_1** window. Now, select the `>(Play)` button at the top to capture the configured signals, and observe the status changes to `Waiting for Trigger` as follows:
 ![ILA status](./Images/ILA_status.PNG)
 14. Wait for the ILA to be ready to capture signals, and run the application on the `VCK190` board.
@@ -179,12 +181,12 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 1. Expand the `slot_0 : mm2s_s : Interface`. The `mm2s_s : TVALID` shows `1`, which indicates a valid data is available at the time marker pointed. Moving the time marker across the timeline, changes the AXI protocol values indicating value changes at that particular time.
 
    This is the method to determine when/what valid data is sent/received.
-   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in the _Vivado Design Suite User Guide: Programming and Debugging_ (UG908).
+   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in the [Vivado Design Suite User Guide: Programming and Debugging (UG908)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug908-vivado-programming-debugging).
 
 ## Support
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

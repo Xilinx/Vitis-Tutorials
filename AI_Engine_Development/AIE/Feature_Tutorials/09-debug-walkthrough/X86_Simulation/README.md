@@ -17,11 +17,11 @@
 
 ## Introduction
 
-The x86simulator supports faster simulation to help verify the kernel's functionalities. It applies systemC model instead of the register transfer level (RTL) model to achieve faster build and runtime. The hardware constraints, such as heap/stack sizes and program memory size, are not verified in the software emulator.
+The x86simulator supports faster simulation to help you verify the kernel's functionalities. It applies systemC model instead of the register transfer level (RTL) model to achieve faster build and runtime. The hardware constraints, such as heap/stack sizes and program memory size, are not verified in the software emulator.
 
 Before starting this tutorial:
 
-* It is expected that you have run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
+* Run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
 * Create a system project manually using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](../CreateIDESystemProj.md).
 
 ## Features
@@ -33,7 +33,7 @@ Before starting this tutorial:
  <a href="./README.md#Build-and-simulate-in-Vitis-IDE">Build and Simulate in the Vitis IDE</a>
 </td>
 <td>
-Demonstrates how to use the Vitis IDE to build and simulate an AI Engine design.
+Demonstrates how to use the AMD Vitis&trade; IDE to build and simulate an AI Engine design.
 </td>
 </tr>
 
@@ -161,15 +161,15 @@ Demonstrates how to use a GDB server to debug the design.
 ## Build and Simulate in the Vitis IDE
 
 
-1. Once the Vitis IDE is opened and the system project is created manually, select the **AI Engine Component** from the left-side pane, and expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings. 
+1. Once the Vitis IDE is open and the system project is created, select the **AI Engine Component** from the left pane. Expand to locate and select the `aiecompiler.cfg` file to open the compiler configuration settings. 
 2. Select the **Module-Specific** settings and click **Add item** under the **Pre-processor** setting.
 ![build settings](./Images/Build_setting.PNG)
-3. Add `-O0` to the Pre-processor option. This improves the debug visibility.
-4. Now, in the **Flow** navigator window, select the **Build** option under **X86 SIMULATION**. This builds the AI Engine component for x86simulation target. Once the build completes, you see the **Compilation Complete** and **Build Finished Successfully** messages in the console. Also a green tick mark as highlighted below.
+1. Add `-O0` to the Pre-processor option to improve debug visibility.
+2. In the **Flow** navigator, select **Build** under **X86 SIMULATION**. This builds the AI Engine component for the x86simulation target. Once the build completes, you see **Compilation Complete** and **Build Finished Successfully** messages in the console and a green tick mark.
 ![build output](./Images/Build_output.PNG)
-5. In the **Flow** navigator window, under **X86SIMULATION**, select the **Run** option. If there is no existing launch configuration, you need to create one by clicking on **Create Configuration** -> **New Launch Configuration** -> **x86sim**. 
+1. In the **Flow** navigator window, under **X86SIMULATION**, select **Run**. If there is no existing launch configuration, create one by clicking **Create Configuration** -> **New Launch Configuration** -> **x86sim**. 
 ![Create_Configuration](./Images/create_configuration.PNG)
-6. You can change the **Launch Config Name** and click **Run** button to start simulation for x86simulation target. When the simulation complete, you see the following output in the console.
+1. You can change the **Launch Config Name** and click **Run** to start simulation for x86simulation target. When the simulation complete, you see the following output in the console.
 ![simulator output](./Images/x86simulator_output.PNG)
 
 
@@ -177,14 +177,14 @@ Demonstrates how to use a GDB server to debug the design.
 
 ## Debug Using printf()
 
-The simplest form of tracing is to use a formatted `printf()` statement in the code for printing debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. You can add `printf()` statements to your code to be processed during x86 simulation, and remove them or comment them out for hardware builds. To help identify which kernel is printing which line, the `X86SIM_KERNEL_NAME` macro can be useful.
+The simplest form of tracing is to use a formatted `printf()` statement in the code to print debug messages. Visual inspection of intermediate values and addresses can help you understand the progress of program execution. You can add `printf()` statements to your code to be processed during x86 simulation, and remove them or comment them out for hardware builds. To identify which kernel prints a line, use the `X86SIM_KERNEL_NAME` macro.
 
-This section talks about adding a `printf()` statement in the source code, compile and run `x86simulator`, and check the output in the console.
+This section discusses adding a `printf()` statement in the source code, compile, and run `x86simulator`, and checking the output in the console.
 
 1. From the Vitis IDE, browse to the *[AI Engine]* component and expand **Sources** → **kernels** → **click** on `peak_detect.cc`.
-2. Add `#include <adf/x86sim/x86simDebug.h>` at the beginning of the source file and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` after for the loop.
-3. To compile the project, select the **Build** option under **X86 SIMULATION** in **FLOW** navigator. 
-4. To run the project, select the **Run** option under **X86SIMULATION** in **Flow** navigator.
+2. Add `#include <adf/x86sim/x86simDebug.h>` at the beginning of the source file and `printf("%s: %s, %d\n", __FUNCTION__, X86SIM_KERNEL_NAME, __LINE__);` after the for loop.
+3. To compile the project, select **Build** under **X86 SIMULATION** in **Flow** navigator. 
+4. To run the project, select **Run** under **X86SIMULATION** in **Flow** navigator.
 5. The expected result is as follows.
    ![printf support](./Images/printf_support.PNG)
 6. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
@@ -193,7 +193,7 @@ This section talks about adding a `printf()` statement in the source code, compi
 
 ## Debug Using printf with Vector Datatypes
 
-The x86simulator supports printing vector output data value via `printf()`. This section talks about visualizing vector values using the x86simulator.
+The x86simulator supports printing vector output data value via `printf()`. This section explains visualizing vector values using the x86simulator.
 
 1. Add the following lines in the `peak_detect.cc`.
 
@@ -203,38 +203,38 @@ The x86simulator supports printing vector output data value via `printf()`. This
       printf("Iteration-%d -> Vector-%d -> value = %d\n",i,pp,print_ptr[pp]);
    ```
 
-2. Recompile the project either by hitting the **build** option in the Flow navigator.
+2. Recompile the project by selecting the **Build** option in the Flow navigator.
 3. Run the x86simulation, and observe the following `printf` statements in the console.
 ![vector printf](./Images/vector_printf.PNG)
-4. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
+1. Remove the added `printf` statement from the `peak_detect.cc` file to use it for other features.
 
 # Section 4
 
 ## Debug Using the Vitis IDE Debugger
 
-This section walks you through a debug methodology that uses the Vitis IDE debugger. You can learn how to invoke the debugger, add breakpoints, view intermediate values, etc.
+This section discusses a debug methodology that uses the Vitis IDE debugger. You can learn how to invoke the debugger, add breakpoints, and view intermediate values.
 
-1. After the design is built for the x86simulation target, click on **Flow** Navigator -> **X86 Simulation** -> **Debug** option.
+1. After the design is built for the x86simulation target, click **Flow Navigator** -> **X86 Simulation** -> **Debug**.
 2. This gets you to the debug mode in the Vitis IDE and waits in the `graph.cpp` file (after the *main()* function).
-3. Open any source file from the Explorer window, and add the breakpoint of interest. For example, open the *peak_detect.cc* source file, and add the breakpoint at line (`vin = *InIter++`) after for loop.
-4. Observe the different debug functionalities/controls available, that is, step-in, step-over, step-return, resume, terminate, disconnect, etc.
+3. Open any source file from the Explorer window, and add the breakpoint of interest. For example, open the `peak_detect.cc` source file, and add the breakpoint at line (`vin = *InIter++`) after for loop.
+4. Observe the different debug functionalities/controls available: step-in, step-over, step-return, resume, terminate, disconnect.
 ![debug controls](./Images/debug_controls.PNG)
-5. Press **Resume** button in the toolbar. Observe the simulation stops at the user-defined breakpoint as follows.
+1. Press **Resume**. Observe the simulation stopping at the user-defined breakpoint.
 ![breakpoint](./Images/break_point.PNG)
-6. You can inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. 
+1. Inspect the array value `v_in` `(aie::vector<int32,16>)` from the Variables view. 
 
-**Note** : You can drag the complete debug window from left-side pane down to the output console in the bottom pane and expand the Variables view to enlarge the area. You can restore it back to the original size by dragging back to the left-side. 
+**Note** : You can drag the debug window from the left pane to the output console in the bottom pane and expand the Variables view to enlarge the area. Drag it back to restore the original layout.
 ![rearranging_debugMode](./Images/rearranging_debugMode.PNG)
 
-7. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data →  0: 16)`. (Value-"16" based on the iteration in your case).
+1. Expand the variable, `v_in`, and continue expanding to `(Vin → data → val -> data -> __elems_ → __elems_[0] → val → VBitDataBase<32,true,false> → data →  0: 16)`. (Value-"16" based on the iteration in your case).
 ![variables view](./Images/variables_view.PNG)
-8. You can either continue stepping for all iterations, or remove the breakpoint and hit the **Run** button in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, you can switch back to **Vitis Component** view.
+1. Continue stepping for all iterations, or remove the breakpoint and click **Run** in the taskbar. It completely runs the simulation for all iterations. Once you are done with debugging, switch back to **Vitis Component** view.
 
 # Section 5
 
 ## x86simulator Options for Debugging
 
-The following table lists some x86simulator options which are used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the *AI Engine Tools and Flows User Guide* (UG1076).
+The following table lists x86simulator options used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
 
 |Option |Description|
 |:----|:----|
@@ -242,9 +242,9 @@ The following table lists some x86simulator options which are used for debugging
 |--trace|Enables trace of kernel stall events.|
 |--valgrind|Runs the simulator under Valgrind to detect access violations.|
 
-All x86simulator supported features allow you to debug designs without using the debugger and do not require any instrumentation of kernel code.
+All x86simulator supported features allow you to debug designs without using the debugger and do not require any instrumentation of the kernel code.
 
-One obvious way to specify these options is to add them to the Launch configuration settings in the Vitis IDE. To do this, hover your mouse over the **Run** option in the **Flow** navigator and click on the settings button. Now, in the launch configuration window, click on the **X86 Simulator Options** as shown below.
+One way to specify these options is to add them to the launch configuration settings in the Vitis IDE. Hover over the **Run** option in the **Flow** navigator and click on the settings button. In the launch configuration window, click **X86 Simulator Options** as shown below.
 
 ![launch_config_settings](./Images/launch_config_settings.PNG)
 
@@ -286,12 +286,12 @@ pkg-dir= <Path to work directory>
 
 ### Data Dump
 
-This feature allows you to dump and inspect data traffic at kernel ports with data types. Examine how this feature is helpful.
+This feature allows you to dump and inspect data traffic at kernel ports with data types. Examine how this feature helps.
 
-1. Open the `src/kernels/data_shuffle.cc` file in the *AI Engine* component, and comment out the line `if(remainder == 0)`.
+1. Open the `src/kernels/data_shuffle.cc` file in the AI Engine component, and comment out the line `if(remainder == 0)`.
 2. Build the project, open the `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options` file, and update the dump feature from `no` to `yes`.
-3. Select the **Run** option under **X86SIMULATION** in **Flow** navigator.
-4. Once the simulation is completed, you can observe the following messages in the console.
+3. Select **Run** under **X86SIMULATION** in the **Flow** navigator.
+4. After simulation completes, observe the following messages in the console.
 
    ```
    Processing './x86simulator_output/dump/x86sim_dump.data'
@@ -329,25 +329,25 @@ This feature allows you to dump and inspect data traffic at kernel ports with da
 
    ```
 
-Observe that one text file per each port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
+Observe that one text file per port of each kernel is generated using the `--dump` feature and the filenames are in the format of `<graph-name>_<sub-graph-class-name>_<sub-graph-instance-name>_<kernel-index>_[in]/[out]_index.txt` for graph input/output files.
 
-5. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/dump/mygraph_in_out_0.txt` file, and note the `Iteration` and `snapshot` values recorded in that file. This matches with the dimensions (buffer size) specified in the graph code per iteration.
+1. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/dump/mygraph_in_out_0.txt` file, and note the `Iteration` and `snapshot` values recorded in that file. These match the dimensions (buffer size) specified in the graph code per iteration.
 
-6. Similarly, you can open the input/output of all the kernels in a graph, and observe the intermediate outputs as well as the interface ports.
+2. Similarly, open the input and output of all the kernels in a graph to observe the intermediate outputs and the interface ports.
 
 ### Deadlock Detection
 
-AI Engine designs can run into simulator hangs. A common cause is insufficient input data for the requested number of graph iterations, mismatch between production and consumption of stream data, cyclic dependency with stream, cascade stream or asynchronous buffers, or wrong order of blocking protocol calls (acquisition of async buffers, read/write from streams).
+AI Engine designs can run into simulator hangs. Common causes include insufficient input data for the requested number of graph iterations, mismatch between production and consumption of stream data, cyclic dependency with stream, cascade stream or asynchronous buffers, or wrong order of blocking protocol calls (acquisition of async buffers, read/write from streams).
 
-By default, the x86simulation detects the deadlock (if any), and the messages that appear in the console guides you on debugging further.
+By default, the x86simulation detects deadlocks (if any). Console messages guide you on further debugging.
 
 #### Scenario 1
 
 1. For example, open the `src/kernels/data_shuffle.cc`, and comment out line 24.
 
-2. Compile the design by rebuilding the *AI Engine* Component.
+2. Compile the design by rebuilding the AI Engine Component.
 
-3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
+3. Run x86simulation by selecting **Run** under **X86SIMULATION** in **Flow** navigator.
 
 4. Observe that the x86simulator detects error and output messages on the console. In addition to that, the file, `${PROJECT_PATH}/Emulation-SW/x86simulator_output/simulator_state_post_analysis.dot`, is generated.
 
@@ -375,43 +375,43 @@ By default, the x86simulation detects the deadlock (if any), and the messages th
    Simulation completed successfully returning zero
    ```
 
-   This is the textual representation of the deadlock path (starting to the end). To get the pictorial representation of the same, you need to use the `dot` application.
+   This is the textual representation of the deadlock path (starting to the end). To get the pictorial representation of the same, use the `dot` application.
 
 5. Locate the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/simulator_state_post_analysis.dot` file path in your terminal.
 
-6. Issue the command `dot -Tpng simulator_state_post_analysis.dot > simulator_state_post_analysis.png`, and open the file.
+6. Issue the command `dot -Tpng simulator_state_post_analysis.dot > simulator_state_post_analysis.png` and open the file.
 
    ![dot file](./Images/dot_file.PNG)
 
-   The paths in the red indicate the root cause of the deadlock. In this design, if you observe carefully, observe the graph path 'n3-c7-n2-c6-n5', the edge `c7` is not sending enough data to the edge `c6`. From your graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producing kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
-7. Revert the changes you have done on `src/kernels/data_shuffle.cc`.
+   Paths shown in red indicate the root cause of the deadlock. In this design, observe the graph path 'n3-c7-n2-c6-n5', the edge `c7` is not sending enough data to the edge `c6`. From the graph code, `in[1]` is the stream input of the kernel `data_shuffle`. This kernel expects stream data every iteration. However, the producer kernel sends one stream output every 16 input samples. This in turn caused the kernel to stop functioning, and the complete design went into the deadlock situation. Hence, the path from node `n3` to `n5` is also shown as red.  
+7. Revert the changes to `src/kernels/data_shuffle.cc`.
 
 #### Scenario 2
 
 1. Empty the file `data/inx.txt`. Make sure to backup the file before emptying it.
-2. Repeat the steps 1-6, and observe the deadlock path now.
+2. Repeat steps 1-6, and observe the deadlock path.
 
    ![dot file](./Images/dot_file.PNG)
 
-   In this case, due to the insufficient input data to fill the input buffer, the kernel went into the hang state waiting for the input data.
+   In this case, insufficient input data to fill the input buffer causes the kernel to hang waiting for input data.
 
 3. Make sure you revert the changes for other exercises.
 
-   >**IMPORTANT:** The absence of deadlock for a x86 simulation does not mean absence of deadlock in a SystemC simulation. X86 simulation does not model timing and resource constraints, and thus, there are fewer causes of deadlock. On the other hand, if x86 simulation deadlocks, SystemC simulation deadlocks as well, so it is beneficial to fix the deadlock in x86 simulation before proceeding with SystemC simulation.
+   >**IMPORTANT:** Absence of deadlock in x86 simulation does not mean absence of deadlock in a SystemC simulation. X86 simulation does not model timing and resource constraints, so, there are fewer causes of deadlock. On the other hand, if x86 simulation deadlocks, SystemC simulation deadlocks as well. Fix the deadlock in x86 simulation before proceeding to SystemC simulation.
 
 ### Trace Report in the File
 
-Trace capability is used for debugging simulation hangs without the need for instrumenting kernel code or using the GDB.
+Trace capability is used to debug simulation hangs without instrumenting kernel code or using GDB.
 
-Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) section, where the stream data from the producer kernel does not match with the consumer kernel. Now see how to visualize the information using the trace feature of the x86simulator.
+Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) section, where the stream data from the producer kernel does not match the consumer kernel. Now see how to visualize the information using the trace feature of the x86simulator.
 
-1. Make the changes to the source code as mentioned in the Deadlock Detection section, Scenario 1, and build the project.
+1. Make changes to the source code as mentioned in the Deadlock Detection section, Scenario 1, and build the project.
 
-2. Open the launch configuration settings and select the **Enable trace** option.
+2. Open the launch configuration settings and select **Enable trace**.
 
-3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
+3. Run x86simulation by selecting **Run** under **X86SIMULATION** in the **Flow** navigator.
 
-4. Once the run completes, you can see the following information in the console.
+4. After the run completes, you can see the following information in the console.
 
    ```
    Processing './x86simulator_output/trace/x86sim_event_trace.data'
@@ -427,25 +427,25 @@ Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) 
 
 5. Open the `$(COMPONENT_NAME)/Output/x86sim/x86simulator_output/trace/x86sim_event_trace.data.txt` file, and observe the trace events.
 
-6. Observe the events corresponding to all the kernels. Say, for `mygraph.d_s`. Go to the last but one timestamp on that kernel, and locate the `stream stall begin in[1]` followed by `thread terminated`, as the deadlock happened.
+6. Observe events for all kernels. For `mygraph.d_s`, go to the last but one timestamp on that kernel, and locate the `stream stall begin in[1]` followed by `thread terminated`, indicating the deadlock.
 
-7. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many samples of data got processed.
+7. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many data samples were processed.
 
-For more details on the kind of events that are recorded, refer to the [Trace Report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the *AI Engine Tools and Flows User Guide* (UG1076).
+For more details on recorded events, refer to the [Trace Report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
 
 ### Trace Report in the Output Console
 
-This is in continuation to the [Trace Report in the File](./README.md#Trace-Report-in-the-File) topic. Here, try to look at the trace events in the console, rather than opening the file, `x86sim_event_trace.data.txt`.
+This is in continuation to the [Trace Report in the File](./README.md#Trace-Report-in-the-File) topic. Here, view trace events in the console rather than opening the file, `x86sim_event_trace.data.txt`.
 
 >**NOTE:** Make sure you are still using the design changes that are done as part of exercising the deadlock situation.
 
-1. Make sure the *AI Engine* component is successfully built for X86 Simulation target.
+1. Make sure the *AI Engine* component is built for x86 simulation target.
 
-2. Open the launch configuration settings and select the **Enable trace print** option.
+2. Open the launch configuration settings and select **Enable trace print**.
 
-3. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
+3. Run x86 simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator.
 
-4. Observe the output in the console that has timestamp, internal name of the kernel, and event type.
+4. Observe console output that shows timestamp, internal kernel name, and event type.
 
    ```
    x86simulator --pkg-dir=./Work --i=.. --trace-print
@@ -459,19 +459,18 @@ This is in continuation to the [Trace Report in the File](./README.md#Trace-Repo
       746420                          ker_i3        kernel wait on run begin 0
    ```
 
-   Here you can notice that the output in the console is not as polished as the file generated by `--trace`. But this is useful when your design runs for long time, and you wish to see the event while the simulation is running.
+   Here you can notice that the output console is less polished than files generated by `--trace`. But this is useful when your design runs for long, and you want to see the event while the simulation is running.
    
-You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
+Uncheck the **Trace print** option for other option and revert any changes to the source.
 
-You may uncheck the **Trace print** option to exercise the other options. Also revert any changes to the source files.
 
 # Section 6
 
 ## Memory Access Violation and Valgrind Support
 
-Memory access violations occur when a kernel is reading or writing out of bounds of an object or reading uninitialized memory. This can manifest itself in multiple ways like a simulator crash or hang. The `x86simulator --valgrind` option will find memory access violations in kernel source code.
+Memory access violations occur when a kernel reads or writes out of bounds of an object or reads uninitialized memory. Symptoms include simulator crashes or hangs. The `x86simulator --valgrind` option finds memory access violations in kernel source code.
 
->**NOTE:** Valgrind needs to be installed for this feature to work. AMD recommends using Valgrind version 3.16.1. This option allows detection of memory access violations in kthe ernel source code using the `x86simulator` with Valgrind. The following kinds of access violations can be detected:
+>**NOTE:** Valgrind must be installed for this feature to work. AMD recommends Valgrind version 3.16.1. This option detects memory access violations in the kernel source code using `x86simulator` with Valgrind. The following kinds of access violations can be detected:
 >
 > * Out-of-bounds write
 > * Out-of-bounds read
@@ -479,7 +478,7 @@ Memory access violations occur when a kernel is reading or writing out of bounds
 
 ### Set Up the Environment Variables
 
-`x86simulator` requires `VALGRIND_HOME`, `VALGRIND_LIB`, and `PATH` environmental variables to be configured per your host computer configuration. Exit out of the Vitis IDE, and set up the following environmental variables and relaunch the Vitis IDE. For example:
+`x86simulator` requires `VALGRIND_HOME`, `VALGRIND_LIB`, and `PATH` environmental variables configured for your host computer configuration. Exit the Vitis IDE, and set the following environmental variables, and relaunch the Vitis IDE. For example:
 
 ```
 export PATH=<Install_Path>/valgrind/3.16.1/:$PATH
@@ -487,8 +486,8 @@ export VALGRIND_HOME=<Install_Path>/valgrind/3.16.1/
 export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
 ```
 
-1. After relaunching the Vitis IDE tool, either by enabling the **Valgrind** option in the launch configuration settings or by updating the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options`.
-2. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in **Flow** navigator..
+1. After relaunching, enable the **Valgrind** option in the launch configuration settings or update the configuration file, `$(COMPONENT_NAME)/Output/x86sim/Work/options/x86sim.options`.
+2. Run x86simulation by selecting the **Run** option under **X86SIMULATION** in the **Flow** navigator.
 3. With no violations in the kernel code, the valgrind messages looks similar to the following in the console:
 
    ```
@@ -511,9 +510,9 @@ export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
    ==21151== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
    ```
 
-4. Add the memory read violation to the kernel code, and try to see the valgrind messages.
-5. Open `src/kernels/peak_detect.cc`, and change the line 25 to `v_in = *(InIter+8500000500)`.
-6. Build the *AI Engine* component, and run the x86simulation. This time observe the console carefully for the following messages in the output console:
+4. Add the memory read violation to the kernel code, and see the valgrind messages.
+5. Open `src/kernels/peak_detect.cc`, and change line 25 to `v_in = *(InIter+8500000500)`.
+6. Build the *AI Engine* component, and run the x86simulation. Observe the console for the following messages in the output console:
 
    ```
    x86simulator --pkg-dir=./Work --i=.. --valgrind
@@ -532,11 +531,11 @@ export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
    /proj/xbuilds/SWIP/2023.1_0427_0137/installs/lin64/Vitis/2023.1/aietools/bin/x86simulator: line 374: 15387 Segmentation fault      valgrind $VALGRIND_ARGS $X86SIM_PROG
    ```
 
-   Valgrind points out the file that has out of bound read access with the line number as shown above.
+   Valgrind points out the file that has out-of-bound read access with the line number as shown above.
 
 ### Section 6 Exercise Step
 
-1. Add the following lines of code that creates an uninitialized variable in any kernel code and see how the Valgrind helps in identifying the issue:
+1. Add the following lines of code to create an uninitialized variable in any kernel code and observe how Valgrind helps identify the issue:
 
    ```
    int demo;
@@ -547,25 +546,25 @@ export VALGRIND_LIB=<Install_Path>valgrind/3.16.1/lib/
 
 ## Using the GDB Debugger in the Command Line
 
-The x86 simulation features that works in the Vitis IDE and also works in the command line. The Vitis IDE provides a GUI-based debug support to control the flow by setting the breakpoints and viewing the intermediate values while executing. It is also possible to do the similar debugging for command line projects using the GDB capabilities. This section walks through different steps to debug the code using the GDB.
+The x86 simulation features that work in the Vitis IDE and also works on the command line. The Vitis IDE provides a GUI-based debug support to control the flow by setting the breakpoints and viewing the intermediate values while executing. You can perform similar debugging for command-line projects using the GDB capabilities. This section discusses different steps to debug the code using GDB.
 
-To start with, locate the necessary files to compile and run the simulation as a standalone, and then add the GDB capabilities step-by-step.
+First, locate the necessary files to compile and run the simulation standalone. Then add GDB capabilities step-by-step.
 
-Before beginning, it is expected to set the environment variables as described in [Introduction](../README.md#Introduction). Also, it is assumed that you have cloned the git repository.
+Before beginning, set environment variables as described in [Introduction](../README.md#Introduction). Also, make sure you have cloned the Git repository.
 
 ### x86simulation on the Command Line
 
 1. Go to the ${Tutorial_Directory}/cmd_src, and locate the `Makefile`.
-2. Do `make aie` in the Linux terminal. This command runs the compilation.
-3. Do `make sim` to simulate the AI Engine graph for the x86sim target.
+2. Run `make aie` in the Linux terminal. This command runs the compilation.
+3. Run `make sim` to simulate the AI Engine graph for the x86 simulation target.
 
 ### x86simulation with the GDB
 
-This topic walks you through running the x86simulator with the GDB.
+This topic explains running x86simulator with GDB.
 
-1. Running the `x86simulator` with the `--gdb` command line switch breaks immediately before entering `main()` in the `graph.cpp` file. This pauses execution before any AI Engine kernels have started because the graph has not been run. To exit the GDB, type `quit` or `help` for more commands.
+1. Running the `x86simulator` with the `--gdb` command line switch breaks immediately before entering `main()` in the `graph.cpp` file. Execution pauses before any AI Engine kernels start because the graph has not run. To exit GDB, type `quit` or `help` for more commands.
 
-   Now, update the configuration file, `${PROJECT_PATH}/Work/options/x86sim.options`, by changing the `gdb=no` to `gdb=yes`, then do `make sim` or directly issue the command, `x86simulator --gdb`, to launch the x86simulator.
+   Now, update the configuration file, `${PROJECT_PATH}/Work/options/x86sim.options`, by changing the `gdb=no` to `gdb=yes`. Then run `make sim` or directly issue the command, `x86simulator --gdb`, to launch the x86simulator.
 
    ```
    [Thread debugging using libthread_db enabled]
@@ -581,7 +580,7 @@ This topic walks you through running the x86simulator with the GDB.
    7      mygraph.init();
    ```
 
-2. After `x86simulator` is launched successfully with the GDB, set up a breakpoint using the `break` command.
+2. After `x86simulator` launches successfully with GDB, set up a breakpoint using the `break` command.
 
    ```
    (gdb) break data_shuffle
@@ -617,8 +616,8 @@ This topic walks you through running the x86simulator with the GDB.
    #7  0x00007ffff6be096d in clone () from /lib64/libc.so.6
    ```
 
-5. You can also set the breakpoint of your interest in any kernel source code at any line. For example, using `break ./../.././aie/kernels/data_shuffle.cc:21` sets the breakpoint at line 21 in the `data_shuffle.cc` source code.
-6. You can remove all breakpoints by typing `delete` and continue execution until end of the program. Issue `quit` to exit out of the GDB.
+5. You can set the breakpoint of your interest in any kernel source code at any line. For example, using `break ./../.././aie/kernels/data_shuffle.cc:21` sets the breakpoint at line 21 in the `data_shuffle.cc` source code.
+6. You can remove all breakpoints by typing `delete` and continue execution until the end of the program. Issue `quit` to exit GDB.
 
    ```
    (gdb) delete
@@ -650,9 +649,9 @@ This topic walks you through running the x86simulator with the GDB.
 
 ### x86simulator Using the GDB Server
 
-This feature uses the GDB server to debug and requires two terminals working together. One terminal for `x86simulator` and the other terminal for `GDB server`.
+This feature uses the GDB server to debug and requires two terminals working together. One terminal runs `x86simulator` and the other terminal runs `GDB server`.
 
-1. In Terminal 1, update the configuration file, `${PROJECT_PATH}/Work/options/x86sim.options`, by changing the `valgrind-gdb=no` to `valgrind-gdb=yes`, and issue the command, `x86simulator`, or directly issue the command, `x86simulator --valgrind-gdb`, directly.
+1. In Terminal 1, update the configuration file, `${PROJECT_PATH}/Work/options/x86sim.options`, by changing `valgrind-gdb=no` to `valgrind-gdb=yes`, and issue the command, `x86simulator`, or directly issue the command, `x86simulator --valgrind-gdb`.
 
    ```
    >>x86simulator --valgrind-gdb
@@ -694,7 +693,7 @@ This feature uses the GDB server to debug and requires two terminals working tog
    Reading symbols from ./Work/pthread/sim.out...
    ```
 
-4. In Terminal 2, issue the command, `target remote | <VALGRIND_INSTALL_PATH/valgrind/3.16.1/bin/vgdb`:
+4. In Terminal 2, issue the command `target remote | <VALGRIND_INSTALL_PATH/valgrind/3.16.1/bin/vgdb`:
 
    ```
    (gdb) target remote | /tools/baton/valgrind/3.16.1/bin/vgdb
@@ -707,7 +706,7 @@ This feature uses the GDB server to debug and requires two terminals working tog
    (gdb)
    ```
 
-5. From now, you can follow the steps 1-5, and set the breakpoint of interest, observe local values, stack values etc, and finally once the GDB server exited normally, you can observe the Terminal 1 for the valgrind runs completion and overall status summaries.
+5. From here, follow steps 1-5 to set breakpoints of interest, observe local values, and stack values. When the GDB server exits normally, observe Terminal 1 for the Valgrind runs completion and overall status summaries.
 
    ```
    INFO: Reading options file './Work/options/x86sim.options'.
@@ -730,6 +729,6 @@ Insert an out-of-bound read access error as mentioned in [Memory Access Violatio
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

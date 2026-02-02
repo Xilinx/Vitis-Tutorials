@@ -28,7 +28,7 @@ This stage helps you determine the AI Engine kernel or graph construct causing d
 <a href="./Stage_4.md#Build-the-design"> Build the Design for Event Trace Analysis</a>
 </td>
 <td>
-Explains how to use the different event trace options for compiling and its significance. Also walks through the steps to generate a hardware image.<br />
+Explains how to use the different event trace options for compiling and its significance. Also lists the steps to generate a hardware image.<br />
 <a href="./Stage_4.md#Prepare-for-the-Hardware-Run">&nbsp; &nbsp; &nbsp; - Prepare for the Hardware Run</a>
 </td>
 </tr>
@@ -49,7 +49,7 @@ Explains how to do an AI Engine event trace and analysis by setting up the confi
 <a href="./Stage_4.md#XSDB-Flow"> Event Trace Analysis - XSDB Flow</a>
 </td>
 <td>
-This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
+This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br/>
 </td>
 </tr>
 
@@ -62,16 +62,15 @@ This method explains how to use the XSDB-based flow using HSDP to perform event 
 </td>
 </tr>
 	
-	
 <tr>
 <td>
 <a href="./Stage_4.md#Event-trace-considerations"> Event Trace Considerations</a>
 </td>
 <td>
-This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br />
-<a href="./Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; - Event Trace Choice Considerations</a> <br />
+This method explains how to use the XSDB-based flow to perform event trace analysis on an AI Engine design.<br/>
+<a href="./Stage_4.md#Event-Trace-Choice-Considerations">&nbsp; &nbsp; &nbsp; - Event Trace Choice Considerations</a> <br/>
 <a href="./Stage_4.md#Number-of-Event-Trace-Streams-Methodology">&nbsp; &nbsp; &nbsp; - Number of Event Trace Streams Methodology</a> <br />
-<a href="./Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; - Event Trace Limitations</a> <br />
+<a href="./Stage_4.md#Event-Trace-Limitations">&nbsp; &nbsp; &nbsp; - Event Trace Limitations</a> <br/>
 </td>
 </tr>
 	
@@ -91,23 +90,23 @@ This tutorial targets the event trace feature running on the hardware board that
 
 Before starting this tutorial:
 
-* It is expected that you cloned the git repository, and the design files are ready to build.
-* It is expected that you have run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
+* Clone the git repository, and the design files are ready to build.
+* Run the steps to set the environment variables as described in [Introduction](../README.md#Introduction).
 
 ### Build the Design
 
-To run the event trace on hardware, it is required to compile the AI Engine graph with `--event-trace` and other appropriate flags. The flags are categorized based on the way the trace data needs to be captured.
+To run the event trace on hardware, compile the AI Engine graph with `--event-trace` and other appropriate flags. The flags are categorized based on the way the trace data needs to be captured.
 
-* Using the `runtime` as an argument, you can compile the AI Engine graph to be set up for event trace, and specify the type of profile data to capture at runtime.
+* Using the `runtime` as an argument, compile the AI Engine graph to be set up for event trace, and specify the type of profile data to capture at runtime.
 * The other way is to specify one of the `functions`, `functions_partial_stalls`, or `functions_all_stalls` as a type of profile data during compile time, and recompile the design to capture a different type of data during runtime.
 
-For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Tracing-Options) in *AI Engine Tools and Flows User Guide* (UG1076).
+For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Tracing-Options) in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
 
 This tutorial uses the `--event-trace=runtime`, `--event-trace-port=plio`, `--num-trace-streams=8`, and `--xlopt=0` options.
 
 * `--event-trace=runtime` option enables runtime event trace configuration.
 * `--event-trace-port=plio` option sets the AI Engine event tracing port to be `plio`. Default is `gmio`.
-* `--num-trace-streams=8` option sets the number of trace streams to be 8 to collect the generated event trace data.
+* `--num-trace-streams=8` option sets the number of trace streams to be eight to collect the generated event trace data.
 * `--xlopt=0` option disables the aiecompiler optimization for debug purposes.
 
 Design with the `--event-trace=runtime` option in the build that enables runtime events during compile time. This only needs to build the design once and allows different event trace levels to be generated during runtime via the XSDB or XRT flow.
@@ -144,7 +143,7 @@ After the design is built, you are ready to run on the hardware board.
       graph_based_aie_tile_metrics = all:all:all_stalls
    ```
 
-   More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the *AI Engine Tools and Flows User Guide* (UG1076).
+   More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
 
 2. Run the application.
 
@@ -164,7 +163,7 @@ After the design is built, you are ready to run on the hardware board.
 #### Launch the Vitis Analyzer to Examine the Event Trace Files
 
 1. Open the Vitis Analyzer using the `vitis_analyzer xrt.run_summary` command.
-2. It is required to set the design's compile summary file when you run the Vitis Analyzer for first time on the design.
+2. Set the design's compile summary file when you run the Vitis Analyzer for first time on the design.
 3. Select **Trace** from the left pane of the Vitis Analyzer. Initially, details of the event are not shown.
    ![initial trace](./Images/Initial_trace.PNG)
 4. Zoom in to see the detailed information for each state of the AI Engine tiles.
@@ -237,20 +236,20 @@ Based on the design, select GMIO if the design has limited PL resources left for
 
 #### Event Trace Limitations
 
-1. Due to limited resources, overruns can be seen from the event trace. Follow [Number of Event Trace Streams Methodology](#number-of-event-trace-streams-methodology) to configure the number of trace streams to minimize the overruns issue.
-2. It is required that the `--broadcast-enable-core` option is used to compile the design. This is to eliminate time sync issues where the start time of each tile is off by ~100 ns or more.
+1. Due to limited resources, you can see overruns from the event trace. Follow [Number of Event Trace Streams Methodology](#number-of-event-trace-streams-methodology) to configure the number of trace streams to minimize the overruns issue.
+2. Use the `--broadcast-enable-core` option to compile the design. This is to eliminate time sync issues where the start time of each tile is off by ~100 ns or more.
 3. Run forever applications are supported by the XSDB flow only.
 
 
 ### Event Trace Analysis Using HSDP
 In the traditional hardware event trace, the trace information is stored in DDR memory available in the Versal device initially, and offloaded to SD card after the application run completes. This imposes limitations on the amount of trace information that can be stored and analyzed. AI Engine trace offload via HSDP(High Speed Debug Port)  has more DDR memory in the SmartLynq+ module and supports analyzing large quantities of trace information for complex designs. 
 
-	1. To run the event trace on hardware, it is required to compile the AI Engine graph with  `-event-trace-port=plio` option. This sets the event tracing port to PLIO. 
+1. To run the event trace on hardware, compile the AI Engine graph with  `-event-trace-port=plio` option. This sets the event tracing port to PLIO. 
        Note: If the event tracing port is set to GMIO, the AI Engine trace cannot be offloaded via HSDP.
 
       Add `--aie.event-trace-port=plio` to AIE_FLAGS in Makefile 
 
-	2. After the AI Engine graph and the C/C++ kernels are compiled, and any RTL kernels are packaged, the Vitis v++ --link command links them with the target platform to build the platform file (XSA). For offloading the AI Engine trace via HSDP, it is required to add the `–profile.aie_trace_offload=HSDP` option to the v++ -link command. Add below lines in system.cfg file
+2.  After the AI Engine graph and the C/C++ kernels are compiled, and any RTL kernels are packaged, the Vitis v++ --link command links them with the target platform to build the platform file (XSA). For offloading the AI Engine trace via HSDP, it is required to add the `–profile.aie_trace_offload=HSDP` option to the v++ -link command. Add below lines in system.cfg file
 	```
 	[profile]
 	aie_trace_offload=HSDP
@@ -258,31 +257,32 @@ In the traditional hardware event trace, the trace information is stored in DDR 
 	With this, a new HSDP IP gets instantiated for AI Engine trace offload and all the PLIO event trace streams are connected to the HSDP IP.  You can see System_DPA getting instantiated in VitisRegion.
 ![debug_hub](./Images/debug_hub_insertion.png)
 	
-	3. Only the host program with XRT APIs controlling the AI Engine graph should be used for offloading AI Engine trace via HSDP.
+1. Only the host program with XRT APIs controlling the AI Engine graph should be used for offloading AI Engine trace via HSDP.
 	
-	4. Package the HSDP enabled XSA file generated during linking step and libadf.a to generate a sd_card image.
+2. Package the HSDP enabled XSA file generated during linking step and libadf.a to generate a sd_card image.
 
 
 #### Setup SmartLynq+ Module, and Connect to Versal Device
 
-	• You must download and install the latest microSD card image and SmartLynq+ application package to set up the SmartLynq+ module correctly. For more information on this installation process, see Downloading and Installing SW Tools. Once the setup of SmartLynq+ is done, you need to connect the Versal device evaluation board.
+• Download and install the latest microSD card image and SmartLynq+ application package to set up the SmartLynq+ module correctly. For more information on this installation process, see Downloading and Installing SW Tools. Once the setup of SmartLynq+ is done, connect the Versal device evaluation board.
 	
-	• The SmartLynq+ module can be accessed by a host system using the USB 3.0 connection. The driver setup information for both Windows and Linux environments is provided in the USB 3.0 Host Connection.
+• The SmartLynq+ module can be accessed by a host system using the USB 3.0 connection. The driver setup information for both Windows and Linux environments is provided in the USB 3.0 Host Connection.
 	
-	• For more information on connecting the Versal device evaluation board, see Connection to Versal Evaluation Boards SmartLynq+ Module User Guide (UG1514).
-	Note: Embedded Design Tutorial walks you through a system design example for High-Speed Debug Port with SmartLynq+ module.
+• For more information on connecting the Versal device evaluation board, see Connection to Versal Evaluation Boards in [SmartLynq+ Module User Guide (UG1514)](https://docs.amd.com/go/en-US/ug1514-smartlynq-plus-module).
+
+**Note**: Embedded Design Tutorial walks you through a system design example for High-Speed Debug Port with SmartLynq+ module.
 	
-	• Additional information on overview of the SmartLynq+ module for the Versal adaptive SoCs is available in SmartLynq+ Module User Guide (UG1514).
+• Additional information on overview of the SmartLynq+ module for the Versal adaptive SoCs is available in [SmartLynq+ Module User Guide (UG1514)](https://docs.amd.com/go/en-US/ug1514-smartlynq-plus-module).
 
 #### Launch XSDB, and Offload Trace Information
 
 After loading the HSDP enabled Linux image on Versal Evaluation board:
 
-	1. Power on the Versal Evaluation board and SmartLynq+ module.
+1. Power on the Versal Evaluation board and SmartLynq+ module.
 	
-	2. Observe the Linux boot messages in the minicom application (SmartLynq+ module can be used as a serial terminal to remotely view the UART output from the  Versal board using the pre-installed minicom application).
+2. Observe the Linux boot messages in the minicom application (SmartLynq+ module can be used as a serial terminal to remotely view the UART output from the  Versal board using the pre-installed minicom application).
 	
-	3. Launch XSDB from your local directory, where the AI Engine design Work/ directory is located.
+3. Launch XSDB from your local directory, where the AI Engine design Work/ directory is located.
 
 	``` xsdb
 		%xsdb connect -url TCP:${COMPUTER NAME/IP}:3121
@@ -291,13 +291,13 @@ After loading the HSDP enabled Linux image on Versal Evaluation board:
 		%xsdb source $::env(XILINX_VITIS)/scripts/vitis/util/aie_trace.tcl
 		%xsdb  `aietrace start -graphs mygraph -work-dir Work/ -link-summary tutorial.xsa.link_summary -graph-based-aie-tile-metrics "all:all:all_stalls"`
 	```
-	Note: You should be able to use all the options specified in XSDB Flow. However, the options -baseaddress and -depth are not applicable for HSDP offload. XSDB issues an error if you try to use these options.
+**Note**: You should be able to use all the options specified in XSDB Flow. However, the options -baseaddress and -depth are not applicable for HSDP offload. XSDB issues an error if you try to use these options.
 	
-	6. Run the application on the hardware. Make sure xrt.ini file does not contain any AI Engine trace configurations which conflicts with the configuration given by XSDB.
-	7. Stop AI Engine trace using the command `aietrace stop`. You should see the file hsdp_event_trace0.txt corresponding to the AI Engine trace and a JSON file that contains event configuration.
-	8. Now, the dumped trace should be processed using the hw_analyze command to generate the .wdb file which can be used in Vitis IDE.
+4. Run the application on the hardware. Make sure xrt.ini file does not contain any AI Engine trace configurations which conflicts with the configuration given by XSDB.
+5. Stop AI Engine trace using the command `aietrace stop`. You should see the file hsdp_event_trace0.txt corresponding to the AI Engine trace and a JSON file that contains event configuration.
+6. Now, the dumped trace should be processed using the hw_analyze command to generate the .wdb file which can be used in Vitis IDE.
 	`hwanalyze --pkg-dir=<WORK_DIR> --trace=hsdp_event_trace_aie.txt --trace_config=<PATH_TO_JSON> -wdb`
-	9. Launch the Vitis IDE and open the .wdb file to analyze the event trace.
+7. Launch the Vitis IDE and open the .wdb file to analyze the event trace.
 
 You can calculate the execution time of one iteration as follows. Place the marker at the start and end of the iteration and (1) - (2) gives 262.4 ns which is ~= 329 cycles. This matches with the Function time in the profile data from both the AI Engine simulation 
 
@@ -305,7 +305,7 @@ You can calculate the execution time of one iteration as follows. Place the mark
 
 #### Limitations
 
-• The AI Engine trace offload via HSDP is supported only in Hardware and not for Hardware emulation. 
+• The AI Engine trace offload through HSDP is supported only in Hardware and not for Hardware emulation. 
 
 • Supported only for non-DFX platform.
 
@@ -325,7 +325,7 @@ This section uses the system project built using the Vitis IDE and launch the ID
 5. Then generate the sd_card.img by **Flow -> Hardware -> Package -> Build Package **. 
 6. Prepare the target hardware by flashing the `sd_card.img` on to the VCK190. 
 7. Plug in the sd_card into the SD card slot, and power up the board.
-8. Once the boot completes, type `ifconfig` in the hardware console. This is required to set up the Linux TCF agent to connect with the host.
+8. After the boot completes, type `ifconfig` in the hardware console. This is required to set up the Linux TCF agent to connect with the host.
 
    ```
    versal-rootfs-common-20231:/run/media/mmcblk0p1# ifconfig
@@ -377,7 +377,7 @@ This section uses the system project built using the Vitis IDE and launch the ID
 
 ### Limitations of the Source Code Debug on Hardware
 
-* There are maximum of four breakpoints available for each tile. One of these four breakpoints is assigned to first line of `main()` function by default and can be cleared and then assigned to other lines during debug.
+* There are a maximum of four breakpoints available for each tile. One of these four breakpoints is assigned to first line of `main()` function by default and can be cleared and then assigned to other lines during debug.
 * Due to the compiler, the `-O0` option is not supported; non-sequential execution when stepping through the source code is expected.
 * If an individual kernel is highlighted, select the **resume** button to continue execution until the next breakpoint or blocked to wait for I/O. If the PeakDetect design is highlighted, select the **resume** button to resume all kernels execution until meet each kernel's breakpoint or blocked waiting for each kernel's I/O operation.
   Due to compiler optimization, some variables' values are stored in registers. "N/A" is shown in the variables view for those optimized variables' values.

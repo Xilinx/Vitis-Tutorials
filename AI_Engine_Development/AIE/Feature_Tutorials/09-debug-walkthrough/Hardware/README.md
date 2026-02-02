@@ -17,7 +17,7 @@
 
 ## Getting Started
 
-To excercise and walk through the different hardware debug methodologies, it is required to clone the git repository, get the design files ready to build, and generate the hardware image file (`sd_card.img`).
+To exercise and walk through the different hardware debug methodologies, clone the git repository, get the design files ready to build, and generate the hardware image file (`sd_card.img`).
 
 Make sure you set the environment variables as explained in this [link](../README.md#Introduction).
 
@@ -52,7 +52,7 @@ In this stage, you can profile the AI Engine Core, Interface, and Memory modules
 
 The goal of this stage is to determine the exact PL kernel causing a throughput drop by:
 
-* Inserting one or more integrated logic analyzers (ILAs) to monitor specific PL AXI interfaces to help identify exactly where and when a thorughput drop occurs.
+* Inserting one or more integrated logic analyzers (ILAs) to monitor specific PL AXI interfaces to help identify exactly where and when a throughput drop occurs.
 * Replacing the PL kernels.
 * Profiling using PL profile monitors.
 
