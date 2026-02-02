@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -19,18 +19,18 @@
 
 ## Introduction
 
-The purpose of this tutorial is to provide hands-on experience for designing AI Engine applications using Model Composer. This tool is a set of blocksets for Simulink that makes it easy to develop applications for AMD devices, integrating RTL/HLS blocks for the programmable logic (PL), as well as AI Engine blocks for the AI Engine array. Vitis Model Composer can be used to create complex systems targeting the PL (RTL and HLS blocksets) and the AI Engine array (AIE blockset) at the same time. The complete system can be simulated in Simulink, and the code generated (RTL for the PL and C++ graph for the AI Engine array).
+The purpose of this tutorial is to provide hands-on experience designing AI Engine applications using Vitis Model Composer. Use Model Composer's block sets for Simulink® to develop applications for AMD devices. Integrate register transfer level (RTL) or high‑level synthesis (HLS) blocks for programmable logic (PL) and AI Engine blocks for the AI Engine array. You can use the Vitis Model Composer to create complex systems targeting the PL (RTL and HLS block sets) and the AI Engine array (AIE block set) simultaneously. Simulate the complete system in Simulink® and generate RTL code for PL and C++ graph for AI Engine array.
 
 ## Before You Begin
 
 Install the tools:
 
-* Get and install [MATLAB and Simulink](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
-  * The following MATLAB releases are supported: R2024a, R2024b, R2025a, R2025b.
-  * Do not forget to also install the DSP System Toolbox (necessary for this tutorial).
-* Get and install [AMD Vitis 2025.2](https://www.xilinx.com/support/download.html).
+* Get and install [MATLAB® and Simulink®](https://www.mathworks.com/products/get-matlab.html?s_tid=gn_getml).
+  * Supported MATLAB® releases: R2024a, R2024b, R2025a, R2025b.
+  * Also install the DSP System Toolbox (required for this tutorial).
+* Get and install [Vitis 2025.2](https://www.xilinx.com/support/download.html).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have read and followed the *Vitis Software Platform Release Notes* (v2025.2) for setting up software and installing the VCK190 base platform.
+>**IMPORTANT**: Before beginning the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2025.2) for software set up and VCK190 base platform installation.
 
 ## Overview
 
@@ -38,10 +38,10 @@ Install the tools:
 
 ![Decimation Filter Chain](Images/DecimationChain.svg "Decimation Filter Chain")
 
-1. Open MATLAB by typing `model_composer`. The path to the various blocksets of Model Composer are automatically added.
-2. In order to initialize the tutorial environment, type `setupLab` in the **MATLAB** command window.
+1. Open MATLAB® by typing `model_composer`. The path to the Model Composer block sets load automatically.
+2. Type `setupLab`in the **MATLAB** command window to initialize the tutorial environment.
 
-This function includes the directory ``LabUtils`` in the search path, and runs the filter coefficients initialization. The output in the MATLAB command window is:
+This function includes the directory ``LabUtils`` in the search path, and runs the filter coefficients initialization. The output in the MATLAB® command window is:
 
 ```
 >> setupLab
@@ -67,17 +67,17 @@ Channel Filter Norm: 32768
 >>
 ```
 
-In the workspace sub-window, you can see that a number of variables that are defined:
+In the workspace sub-window, review the defined variables:
 
-* ``hb1``, ``hb2``, ``hb3``, ``cfi``: Coefficients of the filters which are used in the Simulink model.
-* ``hb1_aie``, ``hb2_aie``, ``hb3_aie``, ``cfi_aie``: Coefficients vectors which are used in the AI Engine design:
-  * For half-band filters, this vector contains only the lefthand side non-null taps including the centre tap.
-  * For symmetric filters, this vector contains only the lefthand side taps, including the center tap if the filter length is odd.
-* Shift1, Shift2, Shift3, ShiftCF: The number of bits bits by which the result has to be shifted before the result is sent to the ouput port.
+* ``hb1``, ``hb2``, ``hb3``, ``cfi``: Filter coefficients used in the Simulink® model.
+* ``hb1_aie``, ``hb2_aie``, ``hb3_aie``, ``cfi_aie``: Coefficients vectors for the AI Engine design:
+  * For half-band filters, each vector includes only the left-hand side non-null taps and the center tap.
+  * For symmetric filters, each vector includes only the left-hand side taps, plus the center tap if the filter length is odd.
+* Shift1, Shift2, Shift3, ShiftCF: The number of bits to shift results before sending to the output port.
 
 ![Workspace](Images/Workspace.png "Workspace variables")
 
-There are 4 additional files:
+There are four additional files:
 
 * `VMC_DSPLib_Solution_Stage1.slx`
 * `VMC_DSPLib_Solution_Stage2.slx`
@@ -88,7 +88,7 @@ These are there to help you if you cannot complete any of the four stages.
 
 ## Stage 1: Create and Simulate the Design
 
-1. On the MATLAB GUI, select the **Home Tab**, and click **Simulink**.
+1. On the MATLAB® GUI, select the **Home Tab** and click **Simulink**.
 
       ![missing image](Images/Image_001.png)
 
@@ -96,7 +96,7 @@ These are there to help you if you cannot complete any of the four stages.
 
       ![missing image](Images/Image_002.png)
 
-      Perform the next two steps to enhance the User Experience. This allows you to have an instant access to the initialization file and to automatically call it when opening the design or when you update it.
+      Perform the next two steps to improve usability. Gain instant access to the initialization file and automatically call it when opening or updating the design.
 
 3. Right-click in the canvas, and select **Model Properties**:
     * Click the **Callbacks** tab.
@@ -106,7 +106,7 @@ These are there to help you if you cannot complete any of the four stages.
 
       ![missing image](Images/Image_003.png)
 
-4. Click on the canvas, and type `subsys`. Select the first **Subsystem** displayed in the list (Subsystem, Simulink/Ports & Subsystem).
+4. Click the canvas, and type `subsys`. Select the first **Subsystem** displayed in the list (Subsystem, Simulink/Ports & Subsystem).
 
    ![missing image](Images/Image_004.png)
 
@@ -121,13 +121,13 @@ These are there to help you if you cannot complete any of the four stages.
    * Type `open('CreateFilter.m');` in the edit window on the right.
    * Click **Apply** and **OK**.
 
-   Now when you double-click this block, you will open the initialization matlab function (`CreateFilter.m`) in the MATLAB editor. Save the model **CTRL+S**, and assign the name **VMC_DSPLib**.
+   Double-click this block to open the initialization MATLAB® function (`CreateFilter.m`) in the MATLAB® editor. Save the model **CTRL+S**, and assign the name **VMC_DSPLib**.
 
-5. Click the **Library Browser** icon.
+5. Click **Library Browser**.
 
    ![missing image](Images/Image_006.png)
 
-   In the list of libraries, you will find the **AMD Toolbox**. This contains four sub-libraries:
+   In the list of libraries find the **AMD Toolbox**. This contains four sub-libraries:
 
    * AI Engine
    * HDL
@@ -146,8 +146,8 @@ These are there to help you if you cannot complete any of the four stages.
 
 6. Click the **DSP** sub-section. There are two sub-menu entries:
 
-   - Buffer IO: which contains filter implementations using frame-based input and output.
-   - Stream IO : which contains filter implementations using streaming input and output.
+   * Buffer IO: which contains filter implementations using frame-based input and output.
+   * Stream IO : which contains filter implementations using streaming input and output.
 
 7. Click the **Buffer IO** sub-section and place the **FIR Halfband Decimator** block in the canvas as shown in the following figure.
 
@@ -170,14 +170,14 @@ These are there to help you if you cannot complete any of the four stages.
 
 9. Create the following two blocks by clicking the canvas and typing the beginning of the name of the block. Then enter the given parameters:
 
-   | Name to Type | Block Name to Select | Parameters |
-   | :--- | :--- | :--- |
-   | random   | Random Source  |  Source Type: Uniform <br> Minimum: -20000  <br> Maximum: 20000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex|
-   | cast  | Cast  | Output data type: int16  |
+   |Name to Type | Block Name to Select | Parameters |
+   |:--- | :--- | :--- |
+   |random   | Random Source  |  Source Type: Uniform <br> Minimum: –20000  <br> Maximum: 20000  <br>  Sample time: 1   <br> Samples per frame: 2048   <br> Complexity: complex|
+   |cast  | Cast  | Output data type: int16  |
 
 10. Cascade the three blocks: **Random Source**, **Cast**, **AIE FIR Filter**.
 
-11. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink blocks. **Open** `ReferenceChain.slx`. Copy the block **HB1** over to your design.
+11. The file ``ReferenceChain.slx`` contains the decimation chain using Simulink® blocks. **Open** `ReferenceChain.slx`. Copy the block **HB1** over to your design.
 12. Copy the small set of blocks (**To Fixed Size**, **Subtract**, **Scope**, **Vitis Model Composer Hub**) to create the following design:
 
       ![missing image](Images/Image_009.png)
@@ -198,7 +198,6 @@ These are there to help you if you cannot complete any of the four stages.
       Notice that before implementing the Decimation Filter the vector length was ``2048``, but after implementation this is reduced to ``1024``.
 
 16. Update the design with the other three filters using the following parameters:
-     
 
 | **Parameter**                     | **HB1**                     | **HB2**                     | **HB3**                     | **Channel Filter**          |
 |-----------------------------------|----------------------------|----------------------------|----------------------------|----------------------------|
@@ -221,7 +220,7 @@ These are there to help you if you cannot complete any of the four stages.
 
 ## Stage 2: Further Analysis of the Design
 
-When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink, the spectrum can be easily displayed using a spectrum scope.
+When creating a DSP design, one of the most important parameters to consider is the spectrum. In Simulink®, the spectrum can be easily displayed using a spectrum scope.
 
 1. Left-click the canvas and type ``spectrum``.
 2. Connect the spectrum scope at the output of the last filter (the Channel Filter):
@@ -234,13 +233,13 @@ When creating a DSP design, one of the most important parameters to consider is 
    ![missing image](Images/Image_014.png)
 
 
-   Now add a block coming from a standard templated C++ kernel which source is in the directory ``aiecode_src``. This function will be a frequency shift operation that will be placed after the downsampling chain.
+   Now add a block coming from a standard templated C++ kernel which source is in the directory ``aiecode_src``. This function is a frequency shift operation that is placed after the down sampling chain.
 
 4. Select the block **AIE Kernel** from the **User-defined Functions** section of the AI Engine Library and place it in the canvas:
 
    ![missing image](Images/Image_017.png)
 
-5. **Double-click** the block; a GUI will display. Populate it with the following data:
+5. **Double-click** the block and populate the GUI with the following data:
 
    * **Kernel header file**: ``aiecode_src/FreqShift.h``
    * **Kernel function**: ``FreqShift``
@@ -248,23 +247,23 @@ When creating a DSP design, one of the most important parameters to consider is 
 
       ![missing image](Images/Image_018.png)
 
-6. Click **Import**. A new GUI will appear. **FRAME_LENGTH** is a template parameter, set its value to ``256``, as this is the size of the data frames at this stage. Set the window size for both the input and output ports to ``256`` samples. Then, click **OK**.
+6. Click **Import**. A new GUI appears. **FRAME_LENGTH** is a template parameter, set its value to ``256``, as this is the size of the data frames at this stage. Set the window size for both the input and output ports to ``256`` samples. Then, click **OK**.
 
    ![missing image](Images/Image_019.png)
 
-7. Place this new block between the **'FIR Asymmetric'** and **'To Fixed Size'** blocks. Grab the **'FreqShift'** block from the **Reference Chain** Simulink design, and place it after the **ChannelFilter** Simulink block. Your design should now look as follows:
+7. Place this new block between the **'FIR Asymmetric'** and **'To Fixed Size'** blocks. Grab the **'FreqShift'** block from the **Reference Chain** Simulink® design, and place it after the **ChannelFilter** Simulink® block. Your design now looks like this:
 
    ![missing image](Images/Image_020.png)
 
-8. Click **Run**. The new filter will get compiled and a new spectrum will be displayed:
+8. Click **Run**. The new filter gets compiled and a new spectrum displays:
 
    ![missing image](Images/Image_021.png)
 
 9. Switch the **Stop Time** back to ``5000`` and verify that the difference is still 0.
 
-   Developing an AI Engine graph in Model Composer is relatively straightforward. What you have learned here is that you can easily place a spectrum scope within the design at the output of a design, but actually it could be placed anywhere in between two blocks without modifying anything in the kernels and the graph. Furthermore, Simulink has a lot of specific blocksets that can be used to generate test vectors, create a reference model, and compare the signals at any point in the design.
+   Developing an AI Engine graph in Model Composer is relatively straightforward. You can place a spectrum scope at the design output or between two blocks without modifying kernels or the graph. Use Simulink® to generate test vectors, create reference models, and compare signals at any point in the design.
 
-   If you want to save some data in a workspace variable for some more complex analysis. This can be done using the **Variable Size Signal** to Workspace block within the **AMD Toolbox --> AI Engine --> Tools  blockset**:
+   Save data in a workspace variable for complex analysis using the **Variable Size Signal to Workspace** block in **AMD Toolbox --> AI Engine --> Tools  blockset**:
 
    ![missing image](Images/Image_015.png)
 
@@ -272,16 +271,16 @@ When creating a DSP design, one of the most important parameters to consider is 
 
 ## Stage 3: Generate the Code and Perform Emulation-AI Engine
 
-In this stage, you will generate the graph code of this design and perform bit-true and cycle-approximate simulations with the AI Engine Simulator.
+In this stage, you generate the graph code of this design and perform bit-true and cycle-approximate simulations with the AI Engine Simulator.
 
 1. Select the four AIE FIR Filters and the Frequency shifting block, and type **CTRL+G** to group them in a subsystem. Assign a new name: **FIRchain**.
-2. Double-click the block **Model Composer Hub** and click on the **Code Generation** tab.
+2. Double-click the block **Model Composer Hub** and select the **Code Generation** tab.
 3. Select the **FIRchain** subsystem, and set the following parameters on the **Analyze** tab:
     * Check **Collect profiling statistics and enable 'printf' for debugging**.
     * Check **Collect trace data for Vitis Analyzer, view internal signals, and latency**.
 4. Click **Analyze**.
 
-The Simulink design is run to generate the testbench, then the graph code is generated and compiled. The source code can be viewed in ``./code/ip/FIRchain/src/FIRchain.h``:
+Run the Simulink® design to generate the testbench. Generate and compile the graph code. View the source code in ``./code/ip/FIRchain/src/FIRchain.h``:
 
 ```C++
 #ifndef __XMC_FIRCHAIN_H__
@@ -358,17 +357,17 @@ Finally, the bit-exact simulation (Emulation-AIE) is performed and the result co
 
 5. In the Model Composer Hub, click **Open Vitis Analyzer**.
 
-Vitis Analyzer is launched. From here you can see the **Graph View**, the **Array View**, the **Trace View**, and the **Profile** information.
+Vitis Analyzer launches and you can view the **Graph View**, **Array View**, **Trace View**, and **Profile** information.
 
 ![missing image](Images/Image_022.png)
 
 ![missing image](Images/Image_023.png)
 
- Vitis Model Composer can also plot the output of the cycle-approximate AI Engine simulation and calculate a throughput estimate. The AI Engine's throughput is calculated by counting the number of output data points and dividing by the time. In this case, three frames are received, but only two interframe idle time are taken into account. To obtain a more accurate throughput estimate, you can use data cursors to select a specific time region over which to calculate throughput:
+ Vitis Model Composer can also plot the output of the cycle-approximate AI Engine simulation and calculate a throughput estimate. AI Engine calculates throughput by counting the number of output data points and dividing by the time. In this example, three frames are received, but only two interframe idle time are counted. To obtain a more accurate throughput estimate, you can use data cursors to select a specific time region over which to calculate throughput:
 
-6. In the Model Composer Hub, click on **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
+6. In the Model Composer Hub, click **View AIE Simulation output and throughput**. The Simulation Data Inspector opens and shows the output of the AI Engine.
 7. Select the `Out1` signal from the list on the left.
-8. Click on the drop-down of a plot icon, then select the **Two cursors** option.
+8. Click the drop-down of a plot icon, then select the **Two cursors** option.
 
    ![missing image](Images/CursorSelection.PNG)
 
@@ -376,11 +375,11 @@ Vitis Analyzer is launched. From here you can see the **Graph View**, the **Arra
 
    ![missing image](Images/Image_024.png)
 
-Here the estimated throughput is 28 MSPS instead of the expected 125 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. Here it is very easy to see that the input stream feeds the data @250 MSPS instead of the 1000 MSPS that were expected in the design. The reason is that the input bitwidth is 32 bits at a rate of 250MHz (default value) as can be seen at the end of the FIRchain.h file.
+Here the estimated throughput is 28 MSPS instead of the expected 125 MSPS. You can use Vitis Analyzer to track the reason of this throughput reduction. The input stream feeds the data at 250 MSPS instead of the 1000 MSPS specified in the design. This occurs because the input bitwidth is 32 bits at a rate of 250 MHz by default. Confirm this setting at the end of the `FIRchain.h` file.
 
 ## Stage 4: Increasing the PLIO Bitwidth and Re-generate
 
-Solving this problem is fairly easy. Navigate inside the **FIRchain** sub-system. Get the **PLIO** block from **AMD Toolbox / AI Engine / Interface**, or just type **plio** in the canvas. Double-click on the new block and specify:
+To solve this problem navigate inside the **FIRchain** sub-system. Get the **PLIO** block from **AMD Toolbox / AI Engine / Interface**, or type **plio** in the canvas. Double-click the new block and specify:
 
 * **PLIO width (bits)**: 128
 * Check **Specify PLIO frequency**
@@ -400,10 +399,10 @@ This gives around 125 MSPS which is 1/8th of the input sample rate (1 GSPS). Thi
 
 ## Conclusion
 
-Model Composer is a very efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks will be available in subsequent releases).
+Model Composer is an efficient way to create graphs either using your own kernels or using the DSPLib FIR Filter (other blocks are available in subsequent releases).
 
-This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. All the source and sink blocks can be used anywhere, allowing you to efficiently debug your design in all corner cases.
+This tool shows its incredible flexibility when it comes to display spectrum or save data at any stage of the graph. You can use all the source and sink blocks anywhere, allowing you to efficiently debug your design in all corner cases.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

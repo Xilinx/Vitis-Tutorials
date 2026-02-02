@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -33,9 +33,9 @@
 
 ## Introduction
 
-A fractional delay filter is a common digital signal processing (DSP) algorithm found in many applications including digital receivers in modems and is required for timing synchronization.
+A fractional delay filter is a common digital signal processing (DSP) algorithm found in many applications including digital receivers in modems. This is a requirement for timing synchronization.
 Assuming you have a signal $x_n$ sampled uniformly with a sampling frequency $F_s$ (samples per second), this means samples exist at $x(nT_s)$ where $T_s=1/F_s$ and $n$ is an integer. Because the receiver timing is initially unknown, demodulating the signal at these intervals can result in inter-symbol interference due to samples not landing in the middle of the eye diagram.
-This introduces the need for a fractional delay filter so samples can be produced at $x(nT_s + uT_s)$ where $-0.5 < u < 0.5$ is the unknown fractional delay parameter to be identified at the receiver. In some cases, this fractional delay is time-varying, for example, as $u(nT_s)$, and so the time-recovered signal can be given as $x(nT_s + u(nT_s)\cdot T_s)$. Reference [[1]] provides some background on timing recovery in such systems.
+This introduces the need for a fractional delay filter so samples can produce at $x(nT_s + uT_s)$ where $-0.5 < u < 0.5$ is the unknown fractional delay parameter to be identified at the receiver. In some cases, this fractional delay is time-varying, for example, as $u(nT_s)$, and so the time-recovered signal can be given as $x(nT_s + u(nT_s)\cdot T_s)$. Reference [[1]] provides some background on timing recovery in such systems.
 
 The ideal fractional delay filter is an allpass filter with infinite impulse response achieved using a time-shifted $sinc()$ function. Such a filter is not implementable, so an approximation must be made.
 One such approximation is the use of Polynomial Interpolation where the samples at $x(nT_s + u(nT_s)\cdot T_s)$ are computed through the help of neighbouring samples. For a continuous-time signal $x(t)$, a polynomial of order p is a function of the form: $x(t)$ = $c_p$ $t^p$ + $c_{p-1}$ $t^{p-1}$ + ... + $c_1$ $t$ + $c_0$. The assumption is if Polynomial order $p$ is chosen high enough, you can interpolate our given samples to find values at desired time indexes with sufficient accuracy.
@@ -90,19 +90,19 @@ Implement the Farrow filter complying with the following requirements:
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
->**NOTE:** In real applications, Farrow filters are often seen operating at a lower sampling rate. However, multiple instances of filters with a lower sampling rate can be implemented on AI Engine using a time-division multiplexed (TDM) form of such a high sampling rate filter with only minor changes required to its existing codebase.
+>**NOTE:** In real applications, Farrow filters often operate at lower sampling rates. You can implement multiple instances of filters with a lower sampling rate on AI Engine using a time-division multiplexed (TDM) forms of a high sampling rate filter. Make only minor codebase changes to use the TDM approach.
 
 ### Compute Analysis
 
-Based on the specified sampling rate and Figure 2, you need to perform 19 MACs every cycle where each MAC operation involves a `cint16` data with a `int16` coefficient.
+Based on the specified sampling rate and Figure 2, perform 19 multiply‑accumulate (MAC) operations every cycle. Each MAC operation involves a `cint16` data with a `int16` coefficient.
 
-Based on the specified data and coefficient types, you should be able to perform 16 `cint16` x `int16` MACs every cycle in a single tile, as described in Table 1 of the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Functional-Overview).
+Based on the specified data and coefficient types, you can perform 16 `cint16` x `int16` MACs every cycle in a single tile. Table 1 of the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Functional-Overview) describes this.
 
 ### Bandwidth Analysis
 
-Every cycle, the specified filter consumes a single pair of 'data' (`cint16`) and 'delay' (`int16`) input samples and produces a `cint16` output sample. This can be achieved with three PLIOs connected to a single tile using streams or buffers. Even though the variable fractional delay parameter $u(nT_s)$ is specified to be `int16`, each PLIO delivers 32-bits per clock cycle.
+Every cycle, the specified filter consumes a single pair of `cint16` data and one `int16` delay input sample. The filter produces a `cint16` output sample. You can achieve this with three programmable logic input‑output (PLIO) interfaces connected to a single tile using streams or buffers. Even though the variable fractional delay parameter $u(nT_s)$ is `int16`, each PLIO delivers 32-bits per clock cycle.
 
-For this reason, the needed `int16` value is sign extended to `int32` while the sample gets delivered to the tile, then drops to `int16` again during compute. Alternatively, two `int16` delay samples can be packed into a single `int32` sample.
+For this reason, the needed `int16` value is sign extended to `int32` while the sample gets delivered to the tile, then drops to `int16` again during compute. Alternatively, you can pack two `int16` delay samples into a single `int32` sample.
 
 ### Storage Analysis
 
@@ -112,17 +112,17 @@ A single AI Engine tile has 32 KB of local tile memory and has access to three n
 
 ## AI Engine Implementation and Optimization
 
-Inspecting Figure 2 more closely, you can see that:
+Inspecting Figure 2 more details, you can see that:
 
-* Intermediate output f3 and f1 is running an 8-tap anti-symmetric filter on an input signal. This can be easily computed using the `aie::sliding_mul_sym_xy_ops<>::mul_antisym()` API.
-* Similarly, f2 and f0 can also be computed using the `aie::sliding_mul_sym_xy_ops<>::mul_sym()` API.
-* The bottom section of Figure 2 corresponding to Horner's rule can be computed using `aie::mul()` and `aie::mac()` instructions.
+* Compute intermediate outputs `f3` and `f1` by running an 8-tap anti-symmetric filter on an input signal using: `aie::sliding_mul_sym_xy_ops<>::mul_antisym()` API.
+* Similarly, compute `f2` and `f0` using the `aie::sliding_mul_sym_xy_ops<>::mul_sym()` API.
+* Compute the bottom section of Figure 2 corresponding to Horner's rule using `aie::mul()` and `aie::mac()` instructions.
 
 ### Initial Farrow Design
 
-Navigating to `farrow_initial` and inspecting `farrow_kernel.cpp`, you see a version of the implementation that is coded primarily to get a functionally correct output, without spending any effort on optimizing throughput performance.
+Navigate to `farrow_initial` and inspect `farrow_kernel.cpp`. Observe that the code focuses on producing functionally correct output without optimizing throughput performance.
 
-Once inside `farrow_initial`, you can perform x86 functional simulation and compare against the golden output generated by the MATLAB model by running the following command:
+Inside `farrow_initial`, run the x86 functional simulation and compare the results to the golden output generated by the MATLAB® model. Use the following command:
 
 ```
 $ make x86compile
@@ -130,15 +130,15 @@ $ make x86sim
 $ make check_sim_output_x86
 ```
 
-The first command compiles the graph code for simulation on an x86 processor, the second command runs the simulation, and the final command invokes MATLAB to compare the simulator output against golden test vectors.
+The first command compiles the graph code for simulation on an x86 processor, the second command runs the simulation, and the final command invokes MATLAB® to compare the simulator output with golden test vectors.
 
-Alternatively, you can issue `make x86all`. The console should output `Max error LSB = 1`.
+Alternatively, you can run `make x86all`. The console should output `Max error LSB = 1`.
 
-To understand the performance of your initial implementation, you can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands. In the context of AI Engine processors, Initiation Interval is defined as how often (in cycles) a new iteration of the loop can start.
+To understand the performance of your initial implementation, you can perform AI Engine emulation using the SystemC simulator by entering the following sequence of commands. In the context of AI Engine processors, initiation interval (II) defines how often, in cycles, a new loop iteration can start.
 
 For example, if a new iteration of the loop can start every II=16 cycles, and each loop iteration produces 16 samples, that means the processor is producing the equivalent of one sample per clock (excluding processor overhead).
 
-Assuming your AI Engine clock is 1.25 GHz, that means your throughput can potentially reach 1.25 Gsps excluding any processor overhead. Output throughput is defined as number of samples produced from your kernel per second. Run the following command:
+Assuming your AI Engine clock is 1.25 GHz, that means your throughput can reach 1.25 Gsps excluding any processor overhead. Output throughput defines the number of samples produced from your kernel per second. Run the following command:
 
 ```
 $ make compile
@@ -147,9 +147,9 @@ $ make get_II
 $ make check_sim_output_aie
 ```
 
-The first command compiles graph code for the SystemC simulator, the second command runs the simulation, the third command calls a python script to extract Initiation Interval from the compiled design, and the final command invokes MATLAB to compare simulation output with test vectors and compute raw throughput.
+The first command compiles graph code for the SystemC simulator, the second command runs the simulation, the third command calls a python script to remove II from the compiled design, and the final command invokes MATLAB to compare simulation output with test vectors and compute raw throughput.
 
-Alternatively, you can issue `make all`. The console should output:
+Alternatively, you can issue `make all`. The console outputs the following:
 
 ```
 *** LOOP_II *** Tile: 24_0	minII: 46	beforeII: 116	afterII: 116	Line: 77	File: farrow_kernel.cpp
@@ -157,7 +157,7 @@ Raw Throughput = 216.3 MSPS
 Max error LSB = 1
 ```
 
-Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates a graph and array view shown below.
+Launch `vitis_analyzer vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates a graph and array view.
 
 ![figure5](images/farrow_initial_graph_view.png)
 
@@ -180,14 +180,14 @@ In vitis_analyzer, select the trace view and set markers to measure the throughp
 
 Inspecting `farrow_initial/aie/farrow_kernel.cpp` and `farrow_initial/aie/farrow_kernel.h`, you can quickly observe a few possible optimizations.
 
-1. There are four vector registers with the same content (v_buff3/2/1/0). Those can be replaced with one.
-2. There are four separate vector registers to store filter coefficients (f3-f0_coeffs). These can be combined into one, while using different indices in `aie::sliding_mul_sym_ops()` to select the proper coefficients.
-3. There are four state variables to store the same content in tile memory (f3-f0_state). Those can be replaced with one.
-4. The required 16 bits of the 32-bit $u(nT_s)$ signal arrive in interleaved fashion in a vector register. To extract the needed samples, the `aie::filter_even()` API is used which consumes additional cycles. This can be simplified by placing the 16-bit samples of interest consecutively followed by zero stuffing the remaining bits. This requires a different input simulation file for the rearranged $u(nT_s)$ signal, hence `gen_vectors.m` producing an additional `del_i` text file.
+1. There are four vector registers with the same content (v_buff3/2/1/0). You can replace those with one.
+2. There are four separate vector registers to store filter coefficients (f3-f0_coeffs). You can combine them into one, while using different indices in `aie::sliding_mul_sym_ops()` to select the proper coefficients.
+3. There are four state variables to store the same content in tile memory (f3-f0_state). You can replace those with one.
+4. The required 16 bits of the 32-bit $u(nT_s)$ signal arrive in interleaved fashion in a vector register. To remove the needed samples, use the `aie::filter_even()` API which consumes additional cycles. You can simplify this by placing the 16-bit samples of interest consecutively followed by zero stuffing the remaining bits. This requires a different input simulation file for the rearranged $u(nT_s)$ signal, hence `gen_vectors.m` producing an additional `del_i` text file.
 
-Once those changes are implemented in the `farrow_optimization1/aie` folder, you can repeat the previously mentioned steps to characterize the design.
+After you implement the changes in `farrow_optimization1/aie`, you can repeat the previously mentioned steps to characterize the design.
 
-After running `make all`, the console should display:
+After running `make all`, the console displays the following:
 
 ```
 *** LOOP_II *** Tile: 24_0	minII: 28	beforeII: 91	afterII: 82	Line: 62	File: farrow_kernel.cpp
@@ -195,47 +195,47 @@ Raw Throughput = 301.1 MSPS
 Max error LSB = 1
 ```
 
-Achieved II dropped from 116 to 82, but you are still not where you need to be, so further optimization is needed.
+Achieved II dropped from 116 to 82, but you are still not where you need to be. You need further optimization.
 
 ### Second Farrow Optimization
 
-Inspecting design files in the `farrow_optimize1/aie` folder, you can observe that the amount of vector registers you need every cycle (v_buff,f_coeff,del,y3-y0,z2,z1) exceeds the total supported by the chip as specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files). This leads to "vector register spillage" where the processor must use additional cycles to save intermediate compute results from vector registers to the stack memory (and vice-versa) to manage the vector register hardware resource. Refactoring the code to use fewer register resources can eliminate this additional overhead.
+Inspect the design files in `farrow_optimize1/aie` tp evaluate vector register usage per cycle. The required registers (`v_buff`,`f_coeff`, `del` ,`y3-y0` ,`z2` , `z1`) exceed the total supported by the chip as specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files). This leads to *vector register spillage* where the processor must use additional cycles to save intermediate compute results from vector registers to the stack memory (and vice-versa) to manage the vector register hardware resource. Refactoring the code to use fewer register resources can remove this additional overhead.
 
 ![figure7](images/AM009_vector_registers.png)
 
-Also, given the AI Engine Fixed-point Vector Unit Multiplication and Upshift Paths also specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files) shown below, the multiplication of vector and accumulator registers is not supported.
+Given the AI Engine Fixed-point vector unit multiplication and upshift paths specified in the *Versal Adaptive SoC AI Engine Architecture Manual* [(AM009)](https://docs.amd.com/r/en-US/am009-versal-ai-engine/Register-Files), the multiplication of vector and accumulator registers is not supported.
 
-Therefore, intermediate output z2 shown in Figure 2 needs to pass through Shift-round Saturate (SRS) Path so it is converted from accumulator register into vector register before it gets used in the next `aie::mac()` instruction (same applies to intermediate output z1).
+Pass intermediate output `z2` shown in Figure 2 through the shift-round saturate (SRS) path. Convert it from an accumulator register into a vector register. This happens before it gets used in the next `aie::mac()` instruction (the same applies to intermediate output `z1`).
 
-This restriction presents a challenge to the compiler limiting pipelined scheduling opportunities.
+This restriction presents a challenge to the compiler limiting pipeline scheduling opportunities.
 
 ![figure8](images/AM009_Fixed-point_Vector_Unit_Multiplication_and_Upshift_Paths.png)
 
-Due to reasons above, breaking the single `for` loop into multiple smaller ones is expected to improve performance.
+Due to reasons previously mentioned, you can expect improved performance by breaking the single `for` loop into multiple smaller ones.
 
-To accomplish this, intermediate compute results need to be stored in scratch pad tile memory before they are read as input to each subsequent `for` loop. Reserving memory for these intermediate outputs is shown in `farrow_kernel.h`, example `alignas(32) TT_SIG y3[BUFFER_SIZE];`.
-Accessing that memory location is done through vector iterator defined in`farrow_kernel.cpp`; for example, `auto p_y3 = aie::begin_restrict_vector<8>(y3);`.
+To accomplish this, store intermediate compute results in scratch pad tile memory before reading them as input for each subsequent `for` loop. Reserve memory for intermediate outputs as shown in `farrow_kernel.h`, for example `alignas(32) TT_SIG y3[BUFFER_SIZE];`.
+Access the reserved memory using a vector iterator defined in`farrow_kernel.cpp`, for example `auto p_y3 = aie::begin_restrict_vector<8>(y3);`.
 
-The use of `_restrict` is intended to allow more aggressive compiler optimization, by explicitly stating that no memory dependency will be caused by pointer aliasing. For more information, see *AI Engine Kernel and Graph Programming Guide* (UG1079) - [Restrict Keyword](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Restrict-Keyword?tocId=qE8HLaIwMuwjEVOsjtyQgg).
+Use `_restrict` to enable more aggressive compiler optimizations by stating no memory dependency occurs from pointer aliasing. For more information, see *AI Engine Kernel and Graph Programming Guide* (UG1079) - [Restrict Keyword](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Restrict-Keyword?tocId=qE8HLaIwMuwjEVOsjtyQgg).
 
-Finally, replace:
+Finally, replace the following lines:
 
 ```
     acc_x = aie::mul(*p_y3++,del);
     *p_z2++ = aie::add(acc_x.to_vector<TT_SIG>(DNSHIFT),*p_y2++);
 ```
 
-with:
+With the optimized version:
 
 ```
     acc_x = aie::mac(aie::from_vector<TT_ACC>(*p_y2++,DNSHIFT), *p_y3++,del);
     *p_z2++ = acc_x.to_vector<TT_SIG>(DNSHIFT);
 ```
 
-While these are functionally equivalent, the second code snippet allows for better pipelining and scheduling opportunities.
+While these are functionally equivalent, the second code snippet remains functionally equivalent but enables better pipelining and scheduling opportunities.
 
-Once those changes are implemented into the design files in the `farrow_optimization2/aie` folder, you can repeat the previously mentioned steps to characterize the design.
-After running `make all`, the console should display:
+Implement these changes in the design files in `farrow_optimization2/aie`. Repeat the previous characterization steps to measure the updated design’s performance.
+After running `make all`, the console displays:
 
 ```
 *** LOOP_II *** Tile: 25_0	minII: 16	beforeII: 29	afterII: 16	Line: 62	File: farrow_kernel.cpp
@@ -246,9 +246,9 @@ Raw Throughput = 768.3 MSPS
 Max error LSB = 1
 ```
 
-Because you have four `for` loops, `make get_II` generates four II numbers, one for each loop. These loops run consecutively, so the total II is the sum of all, which is 25 > 16. To meet your budget of 16 cycles, you will need to split your loops into two tiles, with the first tile containing the first loop and the second tile contains the three remaining loops.
+Because you have four `for` loops, `make get_II` generates four II numbers, one for each loop. These loops run consecutively, so the total II is the sum of all, which is 25 > 16. To meet your budget of 16 cycles, you need to split your loops into two tiles, with the first tile containing the first loop and the second tile contains the three remaining loops.
 
-Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates array view shown below. Notice the increased size of the sysmem to accommodate scratch pad memory reserved for intermediate kernel results.
+Launch `vitis_analyzer` with `vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates array view as shown in the following. Notice the increased system memory (`sysmem`) size to accommodate scratch pad memory reserved for intermediate kernel results.
 
 ![figure9](images/farrow_optimize2_array_view.png)
 
@@ -258,9 +258,9 @@ Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary
 
 The final version of the implementation splits the four for loops into two kernels as previously discussed. The final optimization performed in this version of the implementation is with regards to the storage of intermediate result z2 and z1 shown in Figure 2.
 
-Because the loops in `farrow_kernel2.cpp` are accessed sequentially, and the memory banks support reading and writing in the same clock cycle, the same memory bank can be used to store both intermediate results z2 and z1 as long as a different pointer address is used.
+The loops in `farrow_kernel2.cpp` run sequentially. Memory banks support simultaneous read and write per clock cycle. Store both results in the same memory bank. Use different pointer addresses to store `z2` and `z1` within the shared bank. 
 
-Once those changes are implemented into design files in the `farrow_final/aie` folder, repeat the previously mentioned steps to characterize the design. After running `make all`, the console should display:
+Implement the changes the `farrow_final/aie` design files. Repeat the earlier characterization steps to evaluate performance. Run `make all` and confirm the console displays the expected output:
 
 ```
 *** LOOP_II *** Tile: 24_1	minII: 3	beforeII: 16	afterII: 3	Line: 50	File: farrow_kernel2.cpp
@@ -271,13 +271,13 @@ Raw Throughput = 1150.0 MSPS
 Max error LSB = 1
 ```
 
-Launch vitis_analyzer, `vitis_analyzer Work/farrow_app.aiecompile_summary`. The current implementation generates the summary view shown below. The final design uses two compute tiles and a total of five tiles when taking buffers into consideration.
+Launch `vitis_analyzer`, `vitis_analyzer Work/farrow_app.aiecompile_summary`. The current implementation generates the summary view. The final design uses two compute tiles and a total of five tiles when taking buffers into consideration.
 
 ![figure10](images/farrow_final_summary_view.png)
 
 *Figure 10 - Farrow Filter Final Implementation Summary View*
 
-Launch vitis_analyzer `vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates the views shown below. Notice the new ping-pong buffers associated with the intermediate outputs connected between the two kernels.
+Launch `vitis_analyzer` with `vitis_analyzer aiesimulator_output/default.aierun_summary`. The current implementation generates the views as shown in the following figure. Observe the new ping-pong buffers associated with the intermediate outputs connected between the two kernels.
 
 ![figure11](images/farrow_final_graph_view.png)
 
@@ -297,9 +297,9 @@ Steady state throughput is 1024/913e-6 = 1122 Msps.
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Install the Vitis 2025.2 software before starting the tutorial. Downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
 
 ### Hardware Emulation
 
@@ -308,7 +308,7 @@ Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where yo
 [shell]% make clean all TARGET=hw_emu
 ```
 
-This will take about 90 minutes to run. The build process will generate a folder ```15-farrow_filter/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
+This takes about 90 minutes to run. The build process generates ```15-farrow_filter/package``` containing all the files required for hardware emulation. This can be run as shown below. An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch the Vivado waveform GUI to observe the top-level AXI signal ports in the design.
 
 ```
 [shell]% cd <path-to-design>/15-farrow_filter/package
@@ -316,7 +316,7 @@ This will take about 90 minutes to run. The build process will generate a folder
 ```
 
 After hardware emulation run is complete, you can measure throughput in Vivado by inspecting the waveforms.
->**NOTE:** The AI Engine component is built to execute four graph iterations, each with 1024 samples, but the host application will execute the AI Engine component four times.
+>**NOTE:** The AI Engine component executes four graph iterations, each processing 1024 samples. The host application executes the AI Engine component four times.
 
 ![figure14](images/farrow_hw_emu.png)
 
@@ -324,27 +324,26 @@ After hardware emulation run is complete, you can measure throughput in Vivado b
 
 Throughput measured through the traces is 1024 x 4 x 4/14.5e-6 = 1130 Msps.
 
-After hardware emulation run is complete, the following is displayed on the terminal. Here, throughput is measured using XRT APIs. For more information, refer to *AI Engine Tools and Flows User Guide* [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Support-for-Event-APIs).
+After the hardware emulation run completes, the following displays on the terminal. Measure throughput using XRT APIs. For more information, refer to *AI Engine Tools and Flows User Guide* [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Support-for-Event-APIs).
 
 ![figure15](images/farrow_hw_emu_terminal.png)
 
-
 ### Hardware
 
-The design can be built for the VCK190 board using the Makefile as follows:
+You can build the design for the VCK190 board using the Makefile as follows:
 
 ```
 [shell]% cd <path-to-design>/15-farrow_filter
 [shell]% make clean all TARGET=hw
 ```
 
-The build process will generate the SD card image in the ```<path-to-design>/15-farrow_filter/package/sd_card``` folder. After flashing sd_card.img into the sd card, power on the board and run the design. The following is displayed on the terminal.
+The build process generates the SD card image in the ```<path-to-design>/15-farrow_filter/package/sd_card``` folder. After flashing sd_card.img into the sd card, power on the board and run the design. The following is displayed on the terminal.
 
 ![figure16](images/farrow_hw_terminal.png)
 
 ## Summary and Conclusion
 
-In this tutorial, you built a time-varying fractional delay filter based on polynomial approximation and Farrow structure that runs above 1 Gsps. Emphasis is put on highlighting some common performance optimization steps applied to the design to meet required throughput targets.
+In this tutorial, you built a time-varying fractional delay filter based on polynomial approximation and Farrow structure that runs over 1 Gsps. Put emphasis on highlighting some common performance optimization steps applied to the design to meet required throughput targets.
 
 ## References
 
@@ -359,8 +358,7 @@ In this tutorial, you built a time-varying fractional delay filter based on poly
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2023–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -19,53 +19,52 @@
 
 ## Introduction
 
-The AMD Versal AI Engine can be connected to the Programmable Logic (PL) using AXI compliant AXI4-Stream interfaces. In most availabe examples, the connectivity between the PL and the AI Engine is shown using HLS kernels connected to the DDR as the default VCK190 base platform does not include any other blocks than the infrastructure blocks. To accelerate part of an application, connecting the AI Engine to a user's existing RTL requires knowledge of the AXI-Stream protocol and how it can be used to connect with the AI Engines using the AMD Vitis&trade; Acceleration flow. It might require some modification or bridging from the existing RTL. For example, to communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interace (for example, it needs to be able to handle back pressure when tready is low).
-This tutorial shows multiple examples on how to connect RTL blocks with AXI4-Stream present in a custom platform to the AI Engine using the Vitis Acceleration flow.
+Connect the AMD Versal™ AI Engine to the programmable logic (PL) using AXI compliant AXI4-Stream interfaces. In most examples, connectivity between the PL and the AI Engine uses high‑level synthesis (HLS) kernels connected to the double data rate (DDR) memory. This is because the default VCK190 base platform includes only infrastructure blocks. To accelerate part of an application, connect the AI Engine to your existing RTL design. You need knowledge of the AXI-Stream protocol and its use for AI Engine connections in the Vitis acceleration flow. Your RTL might require some modification or bridging from the existing RTL. For example, to communicate with the AI Engine, the RTL needs to have a compliant AXI4-Stream interface (it needs to be able to handle back pressure when `tready` is Low).
+This tutorial shows multiple examples of connecting RTL blocks with AXI4-Stream present in a custom platform to the AI Engine using the Vitis Acceleration flow.
   
 ---
 ## Part 1 - Connecting RTL AXI4-Stream Interfaces (included in Block Design) to the AI Engine
 
 ### Platform
 
-This example is creating a custom platform, including RTL blocks with AXI4-Stream master and slave interfaces to be connected to the AI Engine.
+In this example, you create a custom platform that includes RTL blocks with AXI4-Stream master and slave interfaces connected to the AI Engine.
 
-### Hardware Platform creation
-The platform is created using the AMD Versal&trade; Extensible Platform Configurable Example Design (CED) included in AMD Vivado&trade;.
+### Hardware Platform Creation
+You create the platform using the Versal extensible platform configurable example design (CED) included in AMD Vivado™.
 
 ![Versal Extensible Platform CED](./images/versal_extensible_example.jpg)
 
-In this example, custom IPs are added to the block design. The first one AXI4S_Counter is a counter, which generates data on a 64-bit AXI4-Stream interface. The second one, dummy Sink, is an AXI4-Stream slave that accepts any data and drop it (tready always high).
-The AXI4-Stream interfaces of these two IPs are not connected to any Slave or Master interfaces. They are connected to the AI Engine using the V++ linker.
+In this example, you add custom IPs to the block design. The first one, `AXI4S_Counter` is a counter that generates data on a 64-bit AXI4-Stream interface. The second one, `dummy Sink`, is an AXI4-Stream slave that accepts any data and drops it (`tready` is always High). The AXI4-Stream interfaces of these two IP blcoks do not connect to any slave or master interfaces. You connect them to the AI Engine using the V++ linker.
 
 ![Custom IPs](./images/custom_IPs.jpg)
 
->***Note:*** The AI Engine expects AXI4-Stream compliant interfaces to be connected to its AXI4-Stream interfaces. While the following user guide focuses on designing Video IPs, it might contain useful consideration when designing any AXI4-Stream IP.
+>***Note:*** The AI Engine expects AXI4-Stream-compliant interfaces connected to its AXI4-Stream interfaces. Although the following guide focuses on designing Video IPs, it also contains considerations useful for designing any AXI4-Stream IP.
 >
 > [UG934 - AXI4-Stream Video IP and System Design](https://docs.amd.com/r/en-US/ug934_axi_videoIP/AXI4-Stream-Video-IP-and-System-Design-Guide)
 
-For the V++ linker to be aware that the two AXI4-Stream interfaces are available, add two interfaces as part of the platform properties. They need to have a unique SP tag.
+For the V++ linker to detect the two AXI4-Stream interfaces, add them to the platform properties. Assign each a unique SP tag.
 
-This is done using the following TCL commands:
+Use the following Tcl commands:
 ```
 set_property PFM.AXIS_PORT {M00_AXIS {type "M_AXIS" sptag "master_axi_1" is_range "false"}} [get_bd_cells /AXI4S_Counter_0]
 set_property PFM.AXIS_PORT {S00_AXIS {type "S_AXIS" sptag "slave_axi_1" is_range "false"}} [get_bd_cells /dummy_sink_0]
 ```
-Or this can be done through the Vivado GUI using the Platform Tab.
+Or you can do this through the Vivado GUI using the Platform tab.
 
 ![Platform settings](./images/AXIS_pfm_settings.jpg)
 
-> ***Note***: The preceding flow assumes that the RTL AXI4-Stream interfaces are part of the block design (BD). In some designs, the RTL might be outside of the BD. In this case, it is possible to simply add an interface port to the BD set as AXI4-Stream (xilinx.com:interface:axis_rtl:1.0) and add an IP in the BD, which would only wire all the interface nets as a pass-through. The option is shown in the **Part 2**.
+> ***Note***: The preceding flow assumes that the RTL AXI4-Stream interfaces are part of the block design (BD). In some designs, the RTL exists outside the BD. In that case, you can simply add an interface port to the BD set as AXI4-Stream (xilinx.com:interface:axis_rtl:1.0). Then add an IP in the BD to pass through all interface nets. The option appears in the **Part 2**.
 
-The Vivado Platorm can be generated using the following make command:
+You can generate the Vivado Platform with the following make command:
 ```
 make vivado_platform
 ```
-The Vivado project is generated under Vivado/build/custom_pfm_strmIn_strmOut
+The Vivado project generates under `Vivado/build/custom_pfm_strmIn_strmOut`.
 
 ### Vitis V++ Link
-In this example, you have an AI Engine application (simple FIR filter) with one input PLIO and one output PLIO. Connect these two PLIOs to the custom RTL AXI4-Stream interfaces using the V++ linker as part of the Vitis acceleration flow. 
+In this example, you have an AI Engine application, a simple finite impulse response (FIR) filter, with one input programmable logic input/output (PLIO) and one output PLIO. Connect these two PLIOs to the custom register transfer level (RTL) AXI4-Stream interfaces using the V++ linker in the Vitis acceleration flow. 
 
-In the AI Engine application, you can see the two PLIOs declared as follows:
+In the AI Engine application, you declare the two PLIOs interfaces as follows:
 ```
 sig_i =  input_plio::create("PLIO_i_0",plio_64_bits, "data/sig_i.txt" );
 sig_o = output_plio::create("PLIO_o_0",plio_64_bits, "data/sig_o.txt" );
