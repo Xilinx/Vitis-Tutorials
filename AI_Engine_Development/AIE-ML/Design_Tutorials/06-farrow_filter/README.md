@@ -19,11 +19,11 @@
 
 ## Introduction
 
-The fractional delay filter, a common digital signal processing (DSP) algorithm, is used in many applications, including digital receivers in modems. It is essential for timing synchronization.
+Use the fractional delay filter, a common digital signal processing (DSP) algorithm, in applications including digital receivers in modems. It is essential for timing synchronization.
 
 The *Fractional Delay Farrow Filter* design is already implemented for the AIE architecture.
 
-Before starting this tutorial on migrating the design from AIE to AIE-ML architecture, understand the Farrow Filter and its implementation details with the AIE architecture. This understanding provides a foundation for grasping the differences and considerations involved in the migration process.
+Before starting this tutorial on migrating the design from AIE to AIE-ML architecture, make sure you understand the Farrow Filter. Familiarize yourself with its implementation details within the AIE architecture. This understanding provides a foundation for grasping the differences and considerations involved in the migration process.
 
 Study this tutorial **[Fractional Delay Forrow Filter Targeting AIE Architecture](../../../AIE/Design_Tutorials/15-farrow_filter/README.md)** to understand the following:
 
@@ -31,22 +31,22 @@ Study this tutorial **[Fractional Delay Forrow Filter Targeting AIE Architecture
 2. Requirements and AIE System Partitioning
 3. AI Engine Implementation and Optimization
 
-Now that you are familiar with the Farrow Filter and its implementation in the AIE architecture, you are ready to migrate the farrow filter to the AIE-ML architecture.
+Now that you are familiar with the Farrow Filter and its implementation in the AIE architecture. You are ready to migrate the farrow filter to the AIE-ML architecture.
 
 The design requirements are identical here as you are simply migrating the design to AIE-ML architecture:
 
-|Requirements| |
+| Requirements|
 |---|---|
 | Sampling rate | 1 GSPS |
 | I/O data type | `cint16` |
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
-**IMPORTANT**: Before beginning the tutorial, make sure to read and follow *Vitis Software Platform Release Notes* (v2025.2) for setting up the software and installing the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, read and follow *Vitis Software Platform Release Notes* (v2025.2) to set up the software and install the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you _must_ run `xilinx-versal-common-v2025.2/sdk.sh`.
+1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you *must* run `xilinx-versal-common-v2025.2/sdk.sh`.
 2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.2/rootfs.ext4`.
 3. Set up your IMAGE to point to `xilinx-versal-common-v2025.2/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
@@ -124,7 +124,7 @@ In file included from wrap_farrow_kernel1.cpp:2:
 
 ##### What does the compile error indicate?
 
-The error message indicates that the AIE API **sliding_mul_sym_xy_ops<>** only supports the AIE architecture and not AIE-ML. You can see the error as `'arch::is(arch::AIE)' evaluated to false`
+The error message indicates that the AIE API **sliding_mul_sym_xy_ops<>** only supports the AIE architecture and not AIE-ML. The error `'arch::is(arch::AIE)' evaluated to false` displays.
 
 ##### Why is the AIE API **sliding_mul_sym_xy_ops<>** not supported for AIE-ML?
 
@@ -136,7 +136,7 @@ The comparison between the AIE and AIE-ML architectures highlights differences i
 
 ##### How to fix this for AIE-ML?
 
-Identify the additional AIE APIs that can make full use of the tap values for computation. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. You must now adjust the parameter values according to the API details provided in the documentation in this link **[AIE APIs Special Multiplication](https://download.amd.com/docnav/aiengine/xilinx2025_2/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
+Identify the additional AIE APIs that can make full use of the tap values for computation. One such API is `aie::sliding_mul_ops<Lanes, Points, CoeffStep, DataStepXY, DataStepY, int16, cint16>;`. Now, adjust the parameter values according to the API details provided in the documentation in this link **[AIE APIs Special Multiplication](https://download.amd.com/docnav/aiengine/xilinx2025_2/aiengine_api/aie_api/doc/group__group__mul__special.html#structaie_1_1sliding__mul__ops)**.
 
 The following figure shows the supported parameters type (coeff x data) for AIE and AIE-ML architecture. **coeff** is *int16* and **data** is *cint16*.
 
@@ -271,7 +271,7 @@ In `designs/farrow_port_initial/farrow_kernel1.cpp`, examine line 55 where the l
 
 After reviewing the previous analysis, it is evident that the kernel requires II=112 cycles to execute each loop iteration. Now, explore strategies to optimize the `farrow_kernel1.cpp` kernel to achieve an II of 32.
 
-In the `designs/farrow_port_initial/farrow_kernel1.cpp` file, within the for loop located at line number 55, the kernel currently performs four filter operations. To optimize, we propose splitting these operations; execute two filter operations in one tile and the remaining two in another tile.
+In the `designs/farrow_port_initial/farrow_kernel1.cpp` file, within the for loop located at line number 55, the kernel currently performs four filter operations. To optimize, we suggest executing two filter operations in one tile and the other two in a different tile.
 
 Compare the following code. The initial version using four filter operations versus the suggested version with two filter operations use two tiles to perform four filter computations. In the `farrow_opt_1` design, **farrow_kernel1** instantiates twice to perform four filter operations.
 
@@ -279,7 +279,7 @@ Compare the following code. The initial version using four filter operations ver
 
 ##### Enhancing Performance Through Computation Split Across Multiple Tiles
 
-By dividing the computations across multiple tiles, fewer operations are assigned to each kernel. Instead of handling four filters, each kernel now manages only two filter operations. This adjustment has the potential to enhance the II, thereby improving overall performance.
+We divide the computations across multiple tiles to assign fewer operations to each kernel. Instead of handling four filters, each kernel now manages only two filter operations. This adjustment has the potential to enhance the II, thereby improving overall performance.
 
 Enter the following command to change project path:
 
@@ -348,7 +348,7 @@ The console display the following output:
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 ```
 
-The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_4 to perform four filter computations. According to the kernel `farrow_kernel1.cpp`, it contains two `for loops`, each with an II of 29. Consequently it necessitates 58 cycles for each loop iteration, but the goal is to achieve an II of 32 to achieve 1 GSPS.
+The implementation of `farrow_kernel1.cpp` spans across tiles 19_0 and 19_4 to perform four filter computations. According to the kernel `farrow_kernel1.cpp`, it contains two `for loops`, each with an II of 29. Consequently, it necessitates 58 cycles for each loop iteration but the goal is to achieve an II of 32 to achieve 1 GSPS.
 
 Close the Vitis Analyzer.
 
@@ -503,8 +503,8 @@ In Linux, the virtual address passed to GMIO::gm2aie_nb, GMIO::aie2gm_nb, GMIO::
   aie_dut.del_i.gm2aie_nb(del_i_Array, BLOCK_SIZE_del_in_Bytes);
   ```
 
-  - The first argument `sig_i_Array` is the pointer to the start address of the memory space for the transaction
-  - The second argument is the transaction size in bytes.
+- The first argument `sig_i_Array` is the pointer to the start address of the memory space for the transaction
+- The second argument is the transaction size in bytes.
 
 4. Similarly, use `aie2gm()` to initiate memory-mapped AXI4 transactions for the AI Engine-ML to write to DDR memory spaces.
 
@@ -516,7 +516,7 @@ In Linux, the virtual address passed to GMIO::gm2aie_nb, GMIO::aie2gm_nb, GMIO::
 
 5. Compare the results with the golden values and print them out.
 
-6. When PS has completed processing, the memory space allocated by GMIO::malloc can be released by GMIO::free.
+6. When PS completes processing, GMIO::free can release the memory space allocated by GMIO::malloc.
 
   ```
   GMIO::free(sig_i_Array);
@@ -565,7 +565,7 @@ The following diagram shows the entire Vitis tool flow, encompassing the develop
 
 #### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed AMD Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software. Make sure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
 <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html>
 
@@ -573,7 +573,7 @@ Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where yo
 
 ##### Host Code with XRT APIs
 
-AMD recommends to use the XRT APIs for the host code. The host code is modified with XRT API. Review the code and then build the project and run it onboard.
+AMD recommends to use the XRT APIs for the host code. XRT API modifies the host code. Review the code and then build the project and run it onboard.
 
 Enter the following command to change project path:
 
@@ -583,7 +583,7 @@ $ cd ../ps_apps/hw_emu
 
 Review the `host.cpp` file.
 
-To measure the throughput of the design, the XRT APIs and XRT profiling are used.
+To measure the throughput of the design, use the XRT APIs and XRT profiling.
 
 ###### Hardware Emulation
 
@@ -594,7 +594,7 @@ $ cd <path-to-tutorial>/designs/farrow_gmio/
 $ make clean all TARGET=hw_emu
 ```
 
-This takes about 15 minutes to run. The build process generates a folder `designs/farrow-gmio/package` containing all the files required for hardware emulation.
+This takes about 15 minutes to run. The build process generates a `designs/farrow-gmio/package` folder containing all the files required for hardware emulation.
 
 Enter the following command to run hardware emulation:
 
@@ -633,7 +633,7 @@ $ cd <path-to-tutorial>/designs/farrow_gmio/
 $ make clean all TARGET=hw
 ```
 
-The build process will generate the SD card image in the `<path-to-tutorial>/designs/farrow_gmio/package/sd_card` folder.
+The build process generates the SD card image in the `<path-to-tutorial>/designs/farrow_gmio/package/sd_card` folder.
 You can flash the `sd_card.img` using baleno etcher app. Then insert the SD Card into VEK280 board and power ON the board.
 
 ```

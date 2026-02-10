@@ -41,18 +41,16 @@ AMD Vitis™ Libraries introduced two new IP elements to simplify building Chann
 * [TDM FIR](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fir-TDM.html)
 * [2D FFT/IFFT Vitis subsystem](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fft-vss.html)
 
-This tutorial explains how you can leverage these IP blocks to build high performance channelizers using a combination of AIE-ML and programmable logic (PL) resources in AMD Versal™ adaptive SoC devices.
-The content of this tutorial is also available as an on-demand video, second session of [AMD Versal™ AI Engine for DSP Webinar Series](https://webinar.amd.com/AMD-Versal-tm-AI-Engine-for-DSP-Webinar-Series/en).
+This tutorial shows you how to use these IP blocks to build high-performance channelizers. It combines AIE-ML and programmable logic (PL) resources in AMD Versal™ adaptive SoC devices.
+The content of this tutorial is also available as an on-demand video. See second session of [AMD Versal™ AI Engine for DSP Webinar Series](https://webinar.amd.com/AMD-Versal-tm-AI-Engine-for-DSP-Webinar-Series/en).
 
-The polyphase channelizer [[1]] simultaneously down-converts a set of frequency-division multiplexed (FDM) channels that carried in a single data stream using an efficient approach based on digital signal processing.
-Channelizer use is ubiquitous in many wireless communications systems.
-Channelizer sampling rates increase steadily as capabilities of RF-DAC and RF-ADC technology advance, making implementation challenging in high-speed reconfigurable devices such as field programmable gate arrays (FPGAs).
+The polyphase channelizer [[1]] simultaneously down-converts a set of frequency-division multiplexed (FDM) channels. These channels are carried in a single data stream. It uses an efficient approach based on digital signal processing. Channelizer use is ubiquitous in many wireless communications systems. Channelizer sampling rates increase steadily with advancements in RF-DAC and RF-ADC technology. These advancements make implementation challenging in high-speed reconfigurable devices like field-programmable gate arrays (FPGAs).
 
 ![figure1](images/channelizer_diagram.png)
 
 You can implement a 1D IFFT using a 2D IFFT algorithm with higher efficiency overall in cases of larger point size and SSR > 1 regime. This requires resources that span AIE and PL. 
 
-Note: To reproduce any of the steps below, begin by cloning [Vitis_Libraries](https://github.com/Xilinx/Vitis_Libraries) and set DSPLIB_ROOT path to point to the cloned repo path.
+Note: To reproduce any of the following steps. Begin by cloning [Vitis_Libraries](https://github.com/Xilinx/Vitis_Libraries) and set DSPLIB_ROOT path to point to the cloned repo path.
 
 ## Channelizer Requirements
 
@@ -74,7 +72,7 @@ The filterbank used by the channelizer uses K=36 taps per phase, leading to a to
 ## System Partitioning
 
 System Partitioning is the process of designing an embedded system for heterogeneous compute.
-This involves analyzing the polyphase channelizer algorithm characteristics and its functional blocks to identify which block should be implemented in AI Engines versus PL, and establish a data flow with sufficient bandwidth to support the required computations.
+Analyze the polyphase channelizer algorithm characteristics and its functional blocks. Identify the block to implement in AI Engines versus programmable logic (PL). Establish a data flow with sufficient bandwidth to support the required computations.
 For more information on system partitioning methodology, refer to *Versal Adaptive SoC System and Solution Planning Methodology Guide* [(UG1504)](https://docs.amd.com/r/en-US/ug1504-acap-system-solution-planning-methodology/AI-Engine-System-Partitioning-Planning).
 
 ![figure2](images/system_partitioning_overview.png)
@@ -82,8 +80,8 @@ For more information on system partitioning methodology, refer to *Versal Adapti
 ![figure3](images/system_partitioning_objectives.png)
 
 The channelizer has two fundemental building blocks and those are the Polyphase Filterbank and IFFT.
-The approach of this tutorial is to analyze compute, storage and I/O bandwidth requirements for the filterbank and IFFT to understand how many AI Engine tiles are expected to be used.
-We will then instantiate and characterize the IP blocks and look for optimization opportunities. 
+This tutorial aims to analyze compute, storage, and I/O bandwidth requirements for the filterbank and IFFT. Understanding these requirements helps determine the expected usage of the number of AI Engine tiles.
+We then instantiate and characterize the IP blocks and look for optimization opportunities. 
 
 ### Filterbank System Partitioning
 
@@ -91,10 +89,10 @@ We will then instantiate and characterize the IP blocks and look for optimizatio
 
 The filterbank has a total of 4096 channels, each with 36 taps of type int32. The sampling rate of each channel is 2e9/4096 = 488.28125 Ksps.
 
-Based on the specified data and coefficient types, AI Engine should be able to perform 8 `cint16` x `int32` MACs every cycle in a single tile.
+Based on the specified data and coefficient types, AI Engine must be able to perform 8 `cint16` x `int32` MACs every cycle in a single tile.
 For more information, refer to Table 1 of the *Versal Adaptive SoC AIE-ML Architecture Manual* [(AM020)](https://docs.amd.com/r/en-US/am020-versal-aie-ml/Functional-Overview). 
 
-Assuming we use part `xcve2802-vsvh1760-2MP-e-S`, AI Engine can be clocked at 1.25 GHz, as described in *Versal AI Core Series Data Sheet: DC and AC Switching Characteristics* [(DS957)](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics).
+Assuming we use part `xcve2802-vsvh1760-2MP-e-S`, you can clock the AI Engine at 1.25 GHz, as described in *Versal AI Core Series Data Sheet: DC and AC Switching Characteristics* [(DS957)](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics).
 A general rule of thumb is to reserve some margin for processor overhead in the range of 20-25%.
 
 The number of tiles required based on compute-bound analysis = 2e9 x 36 / 8 / 1.25e9 x 1.25 = 9 tiles.
@@ -104,8 +102,8 @@ The number of tiles required based on compute-bound analysis = 2e9 x 36 / 8 / 1.
 The filterbank requires storage for the filter coefficients and state, requiring 8 Bytes and 4 Bytes per coefficient or sample.
 Total storage required for the filterbank = 4096 x 36 x 4B + 4096 x 35 x 4B = 1136 KB.
 
-A single AIE-ML tile has 64 KB of local tile memory and has access to three neighboring tile memories for a total size of 256 KB.
-Some storage needs to be reserved for sysmem, which is required by the processor to store stack and heap.
+A single AIE-ML tile has 64 KB of local tile memory. This tile has access to three neighboring tile memories for a total size of 256 KB.
+Reserve some storage for sysmem, which the processor requires to store stack and heap.
 
 This leads to a solution which requires ~18 tiles for the filterbank. Rounding up to a power of 2 results in a simpler PL solution to avoid managing state.
 Number of tiles based on storage-bound analysis = 32 tiles.
@@ -122,8 +120,8 @@ For the chosen I/O datatypes and sampling rate, bandwidth requirement translates
 
 #### Filterbank Library Characterization
 
-Based on the analysis above, we learned that our filterbank will be storage-bound, requiring 32 tiles. 
-We can instantiate the TDM FIR IP based on the configuration below. For more information on the definition of these parameters, refer to [Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/rst/class_xf_dsp_aie_fir_tdm_fir_tdm_graph.html).
+Based on the preceeding analysis, we learned that our filterbank is storage-bound, requiring 32 tiles. 
+We can instantiate the TDM FIR IP based on the following configuration. For more information on the definition of these parameters, refer to [Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/rst/class_xf_dsp_aie_fir_tdm_fir_tdm_graph.html).
 
 ```
   typedef cint16                      TT_DATA;
@@ -169,7 +167,7 @@ You can use the following approach to tradeoff throughput for storage:
 * Apply `single_buffer` constraint on the input. For more information, refer to *AI Engine Kernel and Graph Programming Guide* [UG1076](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Buffer-Allocation-Control).
 * Add placement constraints to store each tile's storage requirements locally.
 
-Code snippet below taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how this can be done.
+The following code snippet taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how to execute this action.
 
 ```
   single_buffer(dut.tdmfir.m_firKernels[ii+0].in[0]);
@@ -206,14 +204,14 @@ Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tile
 
 In this tutorial, we explore the use of 2D IFFT IP to implement a 4K-pt IFFT @ 2 GSPS. The resources span AIE + PL. To learn more about this IP, refer to [Vitis Libraries - 2D FFT/IFFT Vitis subsystem](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-fft-vss.html).
 
-The IP offers two modes to implement the IFFT set via VSS_MODE parameter: Mode 1 and Mode 2. This tutorial will use Mode 1.
+The IP offers two modes to implement the IFFT set through VSS_MODE parameter: Mode 1 and Mode 2. This tutorial uses Mode 1.
 
 Mode 1 implements the row and column transforms in AI Engine while implementing the transpose operations in AIE+PL as follows:
-* The middle transpose is implemented using resources in AIE+PL and is able to use single buffering (half the resources) compared to 2025.1 Vitis Libraries.
-* For powers-of-two SSRs, the front and back transpose operations are implemented in AIE leveraging either DMA or memory tiles, depending on datatype and transform sizes.   
+* The middle transpose is implemented using resources in AIE+PL and can use single buffering (half the resources) compared to 2025.1 Vitis Libraries.
+* For powers-of-two SSRs, the front and back transpose operations implemented in AIE leveraging either DMA or memory tiles, depending on datatype and transform sizes.
   ![figure10](images/2D_4k_IFFT_VSS_MODE_1_SSR_POWER_2.png)
 
-  Otherwise, the front and back transpose operations are implemented in the PL.
+  Otherwise, implement the front and back transpose operations in the PL.
 
   ![figure11](images/2D_4k_IFFT_VSS_MODE_1.png)
 
@@ -223,13 +221,13 @@ Mode 2 splits the IFFT into a front section mapped to AI Engine and a back secti
 
 #### Available Workflows for IFFT-2D IP
 
-The IFFT-2D IP can be used through two different approaches:
+You can use the IFFT-2D IP through two different approaches:
 
-1) **Vitis Subsystem (VSS) - Recommended**: The IP automatically handles leaf block connectivity and produces a `.vss` file. This is the recommended workflow for most users. See the [Vitis Libraries IFFT-2D VSS example](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L2/examples/vss_fft_ifft_1d) for reference.
+1) **Vitis Subsystem (VSS) - Recommended**: The IP automatically handles leaf block connectivity and produces a `.vss` file. This is the recommended workflow for most users. Refer to [Vitis Libraries IFFT-2D VSS example](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L2/examples/vss_fft_ifft_1d) for reference.
 
 2) **Manual Leaf Block Instantiation**: You manually instantiate and connect the individual leaf blocks that make up the IFFT-2D IP. This tutorial demonstrates this workflow, which provides greater control over design placement and avoids reserving full columns for the FFT implementation.
 
-**Note**: To understand which leaf blocks are required and how they should be connected, you can first use approach 1 to instantiate the IP as a VSS, examine the generated leaf blocks and their connectivity, and then manually instantiate and connect these blocks in your custom configuration.
+**Note**: To understand the required leaf blocks and how they must connect, first use approach 1 to instantiate the IP as a VSS. Then, examine the generated leaf blocks and their connectivity. After that, manually instantiate and connect these blocks in your custom configuration.
 
 #### IFFT-2D Library Characterization
 
@@ -255,7 +253,7 @@ For more information on the definition of these parameters, refer to [Vitis Libr
   static constexpr unsigned TP_TWIDDLE_MODE = 0;
 ```
 
-Note that vss_fft_ifft_1d_graph is made up of three AI Engine kernels:
+Note that vss_fft_ifft_1d_graph consists of three AI Engine kernels:
 * Front FFT/IFFT
 * Point-wise twiddle multiplication
 * Back FFT/IFFT
@@ -282,9 +280,9 @@ This means, we need SSR=5 to meet our target throughput of 2 GSPS.
 
 #### IFFT-2D Library Optimization
 
-While an SSR=5 should be sufficient from a resource count perspective, using a SSR that is a power of 2 simplifies the overall design and allows the direct mapping of TDM FIR outputs into 2D IFFT input. For this reason, we proceed with SSR=8. 
+While an SSR=5 is sufficient from a resource count perspective, using a SSR that is a power of 2 simplifies the overall design and allows the direct mapping of TDM FIR outputs into 2D IFFT input. For this reason, we proceed with SSR=8.
 
-We can also apply the `single_buffer` constraint on some of the I/Os of this block to reduce the storage requirements at the expense of some degradation in throughput. Using `single_buffer` on the I/Os of the front FFT and on the input of the back FFT allows us to place the design in a compact (8x2) placement.
+We can also apply the `single_buffer` constraint on some I/Os of this block to reduce the storage requirements at the expense of some degradation in throughput. Using `single_buffer` on the I/Os of the front FFT and on the input of the back FFT lets you place the design in a compact (8x2) placement.
 
 ```
 [shell]% cd <path-to-design>/aie/ifft4096_2d
@@ -301,15 +299,15 @@ Achieved throughput for:
 
 The AI Engine portion of the design is implementing the front/back transpose operations. What remains is the middle transpose block, done in PL.
 
-The IFFT mid transpose block that exist in `${DSPLIB_ROOT}/L1/src/hw/mid_transpose`. The PL will run at 312.5 MHz and use 128-bit interfaces. A 128-bit interface contains two cint32 samples, so this block needs to be instantiated with 2x SSR value chosen for AIE portion i.e. 16. A PL splitter/merger block shall be connected on each side of this transpose block to match these SSR assumptions. These exist in `${DSPLIB_ROOT}/L1/src/hw/common_fns/axis_split_join`.
+The IFFT mid transpose block that exist in `${DSPLIB_ROOT}/L1/src/hw/mid_transpose`. The PL runs at 312.5 MHz and use 128-bit interfaces. A 128-bit interface contains two cint32 samples, so instantiate this block with 2x SSR value selected for AIE portion, that is, 16. A PL splitter/merger block must connect on each side of this transpose block to match these SSR assumptions. These exist in `${DSPLIB_ROOT}/L1/src/hw/common_fns/axis_split_join`.
 
 ### Design Summary
 
 - TDM FIR uses 32 AI Engine tiles with 32 IO streams
-- The 4k-pt IFFT is implemented using 2D architecture (with Mode 1) with resources split between 16 AI Engine tiles (compute), 6 memory tiles (front/back transpose) and PL (middle transpose).
+- Implement the 4k-pt IFFT using 2D architecture (with Mode 1) with resources split between 16 AI Engine tiles (compute), 6 memory tiles (front/back transpose) and PL (middle transpose).
 - From a bandwidth perspective, the design requires 2 input and 4 output streams.
-- Custom HLS blocks (split and merge) are built to manage connectivity between the IPs.
-- Output ports of AI Engine going to PL may arrive at different times causing minor throughput loss. Those can be compensated by adding FIFOs during v++ linking step, [Specifying-Streaming-Connections](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Specifying-Streaming-Connections).
+- Build custom HLS blocks (split and merge) to manage connectivity between the IPs.
+- Output ports of AI Engine going to PL can arrive at different times causing minor throughput loss. You can compensate those by adding FIFOs during v++ linking step, [Specifying-Streaming-Connections](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Specifying-Streaming-Connections).
 
 ![figure15](images/channelizer_solution_synthesis.png)
 
@@ -325,7 +323,7 @@ You can build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial, ensure you have installed AMD Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, install AMD Vitis™ 2025.2 software. Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```.
 
@@ -348,7 +346,7 @@ An optional `-g` can be applied to the ```launch_hw_emu.sh``` command to launch 
 [shell]% cd <path-to-design>/package
 [shell]% ./launch_hw_emu.sh -g -run-app embedded_exec.sh
 ```
-After hardware emulation run is complete, the following is displayed on the terminal.
+After hardware emulation run is complete, you view the following in the terminal.
 
 ![figure17](images/channelizer_hw_emu.png)
 
