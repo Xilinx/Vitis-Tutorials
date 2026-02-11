@@ -1,5 +1,5 @@
 #/*
-#Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
@@ -18,7 +18,7 @@ PLATFORM ?= $(ROOT_DIR)/ws/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_N
 #PLATFORM ?=$(ROOT_DIR)/test/vek280_custom/export/vek280_custom/vek280_custom.xpfm
 
 VADD_WORK=$(ROOT_DIR)/vadd_work
-AIE_WORK = $(ROOT_DIR)/aieml_system_design/
+AIE_WORK = $(ROOT_DIR)/aieml_work
 
 
 
@@ -61,7 +61,11 @@ cpVaddCode:
 	cp $(XILINX_VITIS)/samples/vadd/* vadd_work -r
 	cp makefile_vadd vadd_work/Makefile
 
-
+cpAieCode:
+	rm aieml_work -rf
+	mkdir -p aieml_work
+	cp $(XILINX_VITIS)//samples/aie_system_examples/aie-ml_sys_design/* aieml_work -a
+	cp makefile_aieml aieml_work/Makefile
 
 
 vadd_emu: cpVaddCode
@@ -70,10 +74,10 @@ vadd_emu: cpVaddCode
 # vadd_hw is a place-holder for manual build and test on hardware
 vadd_hw: cpVaddCode
 	$(MAKE) -C $(VADD_WORK) sd_card TARGET=hw PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
-aieml_emu:  $(SYSROOT)/
+aieml_emu:  cpAieCode
 	cp makefile_aieml $(AIE_WORK)/Makefile
 	$(MAKE) -C $(AIE_WORK) run TARGET=hw_emu PLATFORM=$(PLATFORM) DEV_ARCH=versal HOST_ARCH=aarch64 EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)/
-aieml_hw:  $(SYSROOT)/
+aieml_hw:  cpAieCode
 	cp makefile_aieml $(AIE_WORK)/Makefile
 	$(MAKE) -C $(AIE_WORK) clean
 	$(MAKE) -C $(AIE_WORK) all TARGET=hw PLATFORM=$(PLATFORM) HOST_ARCH=aarch64 DEV_ARCH=versal EDGE_COMMON_SW=$(COMMON_IMAGE_VERSAL) SYSROOT=$(SYSROOT)

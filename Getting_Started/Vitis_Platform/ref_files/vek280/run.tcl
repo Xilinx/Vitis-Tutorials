@@ -1,5 +1,5 @@
 #/*
-#Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2023-2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
@@ -24,7 +24,9 @@ xhub::install [xhub::get_xitems *ext_platform*]
 create_project project_1 ./project_1 -part  xcve2802-vsvh1760-2MP-e-S -force 
 set_property board_part xilinx.com:vek280:part0:1.2 [current_project]
 create_bd_design "ext_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Include_AIE.VALUE true Include_BDC.VALUE false Include_DDR.VALUE true}
+
+# Adding additional default clock to instantiate example design command to facilitate clock over-riding from system.cfg file.
+instantiate_example_design -template xilinx.com:design:ext_platform:1.0 -design ext_platform -options { Clock_Options.VALUE {clk_out1 625 0 true clk_out2 100.000 1 false} Include_AIE.VALUE true Include_BDC.VALUE false IRQS.VALUE 63}
 # Other options are default
 # - Three clocks
 # - 32 interrupt
