@@ -29,6 +29,10 @@ Design tutorials illustrate higher-level concepts or design flows, walk through 
  <td align="center"><a href="./02-Versal_Vitis_Subsystem_Flow/">Versal Custom Platform Integration using Vitis Subsystem</a></td>
  <td>An end to end system design tutorial using Vitis Subsystem design and Vitis Export to Vivado Flow as described in UG1701. Check out the <a href="./02-Versal_Vitis_Subsystem_Flow/README.md#features-demonstrated-in-this-tutorial">features demonstrated in this tutorial</a>. </td>
  </tr>
+
+ <td align="center"><a href="./03-Versal_AI_Edge_Gen2_Design_Flow/">Versal AI Edge Gen2 Design flow with Vitis Unified IDE</a></td>
+ <td>Create an acceleration application for the VEK385 Evaluation board, starting from an extensible XSA with pre-built YOCTO binaries supporting EDF flow and built together in Vitis Unified IDE. <a href="./03-Versal_AI_Edge_Gen2_Design_Flow/README.md#features-demonstrated-in-this-tutorial">features demonstrated in this tutorial</a>. </td>
+ </tr>
  </table>
  
 <p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
