@@ -49,7 +49,7 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <tr>
  <td align="center"><a href="./20-aiecompiler-features/">AIE Compiler Features</a></td>
  <td>In this tutorial, you learn features that improve AIE and AIE-ML programming, creating more readable and efficient code than earlier compiler versions.</td>
- </tr> 
+ </tr>
  <tr>
  <td align="center"><a href="./06-gemm/">Matrix Compute with Vitis Libraries</a></td>
  <td>In this tutorial, you use matrix multiplication/general matrix multiply (GEMM) from the DSP Vitis library. You examine design requirements and configure parameters accordingly. Finally, you migrate the design to the AIE‑ML architecture and compare its performance with the AIE architecture.</td>
@@ -57,10 +57,8 @@ The AIE-ML Development Feature Tutorials highlight specific features and flows t
  <tr>
  <td align="center"><a href="./07-tiling-parameters/">Tiling Parameter Programming</a></td>
  <td>In this tutorial you learn how to use a major feature of AIE-ML devices: tiling parameters. These parameters apply to all memory levels of the AIE-ML. You use them in local memory (memory modules) with kernel I/O buffers, memory tiles (shared memory in the adaptive data flow (ADF) language) for large intermediate storage, and external double data rate (DDR) memory.</td>
- </tr>    
+ </tr>
  </table>
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 

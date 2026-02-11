@@ -19,7 +19,7 @@
 
 ## Introduction
 
-provides a complete end‑to‑end flow for a bare‑metal host application using AI Engines and programmable logic (PL) kernels. The tutorial is based on the 2025.2 Vitis unified software platform.
+Provides a complete end‑to‑end flow for a bare‑metal host application using AI Engines and programmable logic (PL) kernels. The tutorial is based on the 2025.2 AMD Vitis™ unified software platform.
 
 The version for AIE is compatible with AIE-ML. Refer to the following tutorial and replace references to the VCK190 board with the VEK280 board in each step:
 [AI Engine A-to-Z](../../../AIE/Feature_Tutorials/01-aie_a_to_z/README.md)
