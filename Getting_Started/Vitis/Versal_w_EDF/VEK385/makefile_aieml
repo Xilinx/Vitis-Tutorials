@@ -1,0 +1,279 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+
+# =============================================================================
+# Project Configuration
+# =============================================================================
+ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+TARGET ?= hw_emu
+MODE := hw_emu
+
+# =============================================================================
+# Toolchain Configuration
+# =============================================================================
+
+SYSROOT := ${YOCTO_ARTIFACTS}/sysroots/cortexa72-cortexa53-amd-linux
+
+# =============================================================================
+# File Names and Paths
+# =============================================================================
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/vek385_base_reva/vek385_base_reva.xpfm
+
+LINK_OUT := $(FIXED_XSA_NAME)_$(TARGET).xsa
+XCLBIN := gm2aie.xclbin
+AIE_WORK = $(ROOT_DIR)/aieml_work/
+
+# =============================================================================
+# QEMU Configuration
+# =============================================================================
+export QEMU_COMBINED := edf_qemu_images
+export COMBINED := combined
+export WIC_PARTITION := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
+
+DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image
+QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
+YOCTO_QEMU_ARTIFACTS := 
+
+# =============================================================================
+# SoC Configuration
+# =============================================================================
+EMBEDDED_EXEC_SCRIPT := embedded_exec.sh
+
+# =============================================================================
+# Build Directories
+# =============================================================================
+TEMP_DIR := _x.$(TARGET)
+BUILD_DIR := build_dir.$(TARGET)
+PKG_DIR := package.$(TARGET)
+AIE_WORKDIR := ./_aie
+
+# =============================================================================
+# Compiler Tools
+# =============================================================================
+XCXX := v++
+XAIE := aiecompiler
+
+ifeq ($(EMU_PS),X86)
+CXX := g++
+else
+CXX := $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++
+endif
+
+GCC_FLAGS := -Wall -c \
+			 -std=c++17 \
+			 -Wno-int-to-pointer-cast \
+			 --sysroot=$(SYSROOT) \
+
+GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
+				-I$(SYSROOT)/usr/include \
+				-I./ -I../aieml/ \
+				-I${XILINX_VITIS}/aietools/include \
+				-I${XILINX_VITIS}/include
+
+
+GCC_LIB := -Wall -std=c++17 \
+		   -L$(SYSROOT)/usr/lib \
+		   --sysroot=$(SYSROOT) \
+		   -L${XILINX_VITIS}/aietools/lib/aarch64.o \
+		   -ladf_api_xrt -lxrt_coreutil -lpthread -lrt -ldl -luuid
+
+ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
+ifeq ($(EMU_PS), X86)
+       GCC_LIB := -lxrt_coreutil -L${XILINX_VITIS}/aietools/lib/lnx64.o -L${XILINX_XRT}/lib
+       GCC_FLAGS := -Wall -c -std=c++17 -Wno-int-to-pointer-cast -I${XILINX_XRT}/include
+       GCC_INCLUDES := -I./src/ -I./ -I${XILINX_VITIS}/aietools/include
+else
+       GCC_LIB := -lxrt_coreutil -L$(SYSROOT)/usr/lib --sysroot=$(SYSROOT) -L${XILINX_VITIS}/aietools/lib/aarch64.o
+endif
+endif
+# =============================================================================
+# Source Files
+# =============================================================================
+GRAPH_SRC := ../aieml/graph.cpp
+S2MM_SRC := ../aieml/s2mm.cpp
+
+# =============================================================================
+# Build Artifacts
+# =============================================================================
+GRAPH_XO := libsdf.a
+S2MM_XO := s2mm.xo
+XOS := $(S2MM_XO) $(GRAPH_XO)
+
+# =============================================================================
+# Compiler Flags
+# =============================================================================
+GRAPH_FLAGS := \
+	--nodot-graph=true \
+	-log-level=5 \
+	-v \
+	-include="../aieml/" \
+	-include="../aieml/kernels" \
+	-include="./" \
+	--output-archive=$(GRAPH_XO)
+
+S2MM_FLAGS := --config ../aieml/cfg/s2mm.cfg
+LINK_FLAGS := --config ../aieml/cfg/binary_container_1-link.cfg
+PKG_FLAGS := --package.defer_aie_run --config ../aieml/cfg/package.cfg --package.out_dir $(PKG_DIR)
+
+XAIE_FLAGS := \
+	-include="${XILINX_VITIS_AIETOOLS}/include" \
+	-include="./" \
+	-workdir "$(AIE_WORKDIR)"
+
+# Application Configuration
+# =============================================================================
+#ELF := $(ROOT_DIR)/application/build/application
+HOST_SRC := ../aieml/host.cpp
+HOST_SRC_XRT := $(ROOT_DIR)/_aie/ps/c_rts/aie_control_xrt.cpp
+EXECUTABLE = ./application
+
+# =============================================================================
+# Build Rules
+# =============================================================================
+.PHONY: check-EDF-common-image all build host integration package clean ultraclean help run_emu sd_card run_hw qemu_combined  insert_image
+
+all: run_emu
+sd_card: run_hw
+
+#target : check  whether the EDF common image is ready, *.wic.ufs image is for hardware emulation 
+#IMAGE1 flag is used for internal users.
+#IMAGE2 flag is used for external users.
+check-EDF-common-image:
+	@IMAGE1="$(YOCTO_ARTIFACTS)/$(QEMU_IMAGES)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	if [ ! -f "$$IMAGE1" ] && [ ! -f "$$IMAGE2" ]; then \
+	    echo "Error: EDF image not found in either:"; \
+	    echo "  - $$IMAGE1"; \
+	    echo "  - $$IMAGE2"; \
+	    echo "Please contact your FAE or download it from the secure site."; \
+	    exit 1; \
+	fi; \
+	echo "EDF common image exists. Proceeding..."
+
+build: $(LINK_OUT)
+
+$(GRAPH_XO): $(GRAPH_SRC)
+	@echo "Building AI Engine graph..."
+	$(XAIE) $(XAIE_FLAGS) --platform $(PLATFORM) $(GRAPH_FLAGS) $<
+
+$(S2MM_XO): $(S2MM_SRC)
+	@echo "Building PL kernel..."
+	@mkdir -p $(TEMP_DIR)
+	$(XCXX) $(XCXX_COMMON_OPTS) -t $(TARGET) --platform $(PLATFORM) -c -o $@ $< -k s2mm $(S2MM_FLAGS)
+
+$(LINK_OUT): $(GRAPH_XO) $(S2MM_XO)
+	@echo "Linking kernels..."
+	@mkdir -p $(BUILD_DIR)
+	$(XCXX) $(XCXX_COMMON_OPTS) -t $(TARGET) --platform $(PLATFORM) \
+		--temp_dir $(TEMP_DIR) -l -o $@ $^ $(LINK_FLAGS)
+
+$(XCLBIN): $(LINK_OUT)
+	@echo "Generating XCLBIN..."
+	$(XCXX) $(PKG_FLAGS) -s -f $< $(GRAPH_XO) -t $(TARGET) -p -o $@
+
+sd_card: integration
+
+integration:
+	@echo "Starting integration for target: $(TARGET)"
+	$(RM) -rf $(LINK_OUT)
+	$(MAKE) build TARGET=$(TARGET)
+	@echo "Integration complete for target: $(TARGET)"
+
+package: $(XCLBIN)
+	@echo "XCLBIN and PDI generated for target: $(TARGET)"
+
+host: $(EXECUTABLE)
+
+$(EXECUTABLE): $(HOST_SRC) 
+ifneq ($(EMU_PS), X86)
+endif 
+		$(CXX) $(HOST_SRC) $(GCC_FLAGS) $(GCC_INCLUDES) $(SIZES_D) -o application.o
+		$(CXX) $(HOST_SRC_XRT) $(GCC_FLAGS) $(GCC_INCLUDES) $(SIZES_D) -o aie_control_xrt.o
+		$(CXX) application.o aie_control_xrt.o $(GCC_LIB) -o $(EXECUTABLE)
+	@echo "COMPLETE: Host application created."
+
+run_hw:
+	@echo "Preparing hardware run environment..."
+	$(MAKE) build
+	$(MAKE) package TARGET=hw
+	$(MAKE) host
+	@mkdir -p hw_run/
+	@cp -rf ./package.hw/gm2aie.dtbo ./package.hw/gm2aie.pdi ./gm2aie.xclbin ./application $(EMBEDDED_EXEC_SCRIPT) hw_run/
+	@echo "Copy hw_run to your board and execute embedded_exec.sh"
+
+qemu_combined:
+	@echo "Preparing QEMU combined images..."
+	$(RM) -rf ${QEMU_COMBINED}
+	@mkdir -p ${QEMU_COMBINED}/${COMBINED}
+	@if ls ${YOCTO_ARTIFACTS}/${DISK_IMAGES}/*.bin >/dev/null 2>&1; then \
+		echo "Copying from YOCTO_ARTIFACTS..."; \
+		cp -prf ${YOCTO_ARTIFACTS}/${DISK_IMAGES}/* ${QEMU_COMBINED}/${COMBINED}/; \
+		cp -prf ${YOCTO_ARTIFACTS}/${QEMU_IMAGES}/* ${QEMU_COMBINED}/${COMBINED}/; \
+	elif ls ${YOCTO_QEMU_ARTIFACTS}/*.bin >/dev/null 2>&1; then \
+		echo "Primary source not found, copying from YOCTO_QEMU_ARTIFACTS..."; \
+		cp -prf ${YOCTO_QEMU_ARTIFACTS}/* ${QEMU_COMBINED}/${COMBINED}/; \
+	else \
+		echo "Error: Required .bin files not found in either source directory."; \
+		exit 1; \
+	fi
+
+
+insert_image:
+	@echo "Inserting images into base camp WIC..."
+	@bash -c '\
+	unset LD_LIBRARY_PATH; \
+	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu/environment-setup-x86_64-petalinux-linux; \
+	echo "Sourced environment"; \
+	wic cp --sector-size=4096 ./run_app_hw_emu.sh ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied run_app_hw_emu.sh"; \
+	wic cp --sector-size=4096 ./application ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied host application"; \
+	wic cp --sector-size=4096 ./gm2aie.xclbin ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied xclbin"; \
+	wic cp  --sector-size=4096 ./package.hw_emu/gm2aie.dtbo ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied dtbo"; \
+	wic cp --sector-size=4096 ./package.hw_emu/gm2aie.pdi ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	echo "Copied pdi"'
+
+run_emu:
+	@echo "Starting hardware emulation..."
+	$(MAKE) build
+	$(MAKE) package TARGET=hw_emu
+	$(MAKE) host
+	$(MAKE) qemu_combined
+	$(MAKE) insert_image TARGET=hw_emu
+	$(MAKE) start_emu
+
+start_emu:
+	$(ROOT_DIR)/package.hw_emu/launch_hw_emu.sh \
+		-qemu-config $(ROOT_DIR)/${QEMU_COMBINED}/${COMBINED}/${COMBINED}.qemuboot.conf \
+		-login "amd-edf" -password "amd-edf" \
+		-run-app "mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh" | tee embedded_run.log; exit $${PIPESTATUS[0]}
+
+# =============================================================================
+# Cleanup Rules
+# =============================================================================
+clean:
+	@echo "Cleaning build artifacts..."
+	$(RM) -rf _aie *.xsa tmp binary_container_1 drivers extracted \
+		libsdf.a s2mm.xo .ipcache .Xil $(XCLBIN) *.pdi \
+		*.log *.summary *.db build_dir.* _x.* *.csv *.isd *.package_summary \
+		analyzer_input
+
+ultraclean: clean
+	$(RM) package.* -rf *.link_summary *_x *.txt *.json *summary sysroots \
+		environment-setup-x86_64-petalinux-linux \
+		version-x86_64-petalinux-linux \
+		x86_64-qemu-xilinx-nativesdk-standalone-2025.2+release-stable.sh
+
+# =============================================================================
+# Help
+# =============================================================================
+help:
+	@echo "Makefile usage:"
+	@echo "  make build TARGET=<hw_emu|hw>     Build kernels and link"
+	@echo "  make integration TARGET=<hw_emu|hw>  Clean and rebuild all"
+	@echo "  make package TARGET=<hw_emu|hw>     Generate XCLBIN and PDI"
+	@echo "  make clean                         Clean build and temp files"
+	@echo "  make ultraclean                    Clean everything"
+	@echo "  make help                          Show this help message"
