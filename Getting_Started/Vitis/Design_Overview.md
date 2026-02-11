@@ -33,10 +33,10 @@ We will use the AMD provided platform instead of a custom platform to steer away
 
 Here is the step-by-step guide to design a Versal design from scratch:
 
-1. [**Prepare AI Engine kernel**](./AIE_Kernel/README.md)
-2. [**Prepare HLS kernels**](./HLS_Kernels/README.md)
-3. [**Create a host application using AMD VCK190 platform**](./Host_srcs/README.md)
-4. [**Use Vitis Linker and Packager to build the design**](./vitis_dir/README.md)
+1. [**Prepare AI Engine kernel**](./Versal_w_PetaLinux/VCK190/AIE_Kernel/README.md)
+2. [**Prepare HLS kernels**](./Versal_w_PetaLinux/VCK190/HLS_Kernels/README.md)
+3. [**Create a host application using AMD VCK190 platform**](./Versal_w_PetaLinux/VCK190/Host_srcs/README.md)
+4. [**Use Vitis Linker and Packager to build the design**](./Versal_w_PetaLinux/VCK190/vitis_dir/README.md)
 
 
 <hr class="sphinxhide"></hr>

@@ -3,10 +3,16 @@
 
 all: linker packager
 TARGET                ?= hw_emu
+MODE	 = linux
+ARCH = aie
 
-
-PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
-
+ifeq ($(ARCH), aie)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+else ifeq ($(ARCH), aie-ml)
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm
+else
+$(error ARCH is not supported)
+endif
 
 # Rootfs and Image
 export IMAGE  		= ${COMMON_IMAGE_VERSAL}/Image
@@ -35,7 +41,7 @@ packager:
 	./a.xsa -o a.xclbin
 
 run: 
-	cd pack_out_dir;	./launch_hw_emu.sh -run-app post_boot.sh
+	cd pack_out_dir;	./launch_hw_emu.sh
 
 
 clean:

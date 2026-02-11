@@ -35,7 +35,7 @@ Use the balenaEtcher/similar tools to flash the SD card. Plugin the SD card to t
 ### 3.  Running the design and application on the VCK190
 
 After the Linux boot is complete, use the below commands to run the `host.exe` and `a.xclbin`
-`versal-rootfs-common-20242:/mnt#`
+`versal-rootfs-common-20252:/mnt#`
 
 ```
 sudo su

@@ -28,7 +28,7 @@ AMD Vitis Unified Software Platform offers range of libraries along with compile
 The first and foremost component to get started with Vitis Acceleration flow is an **extensible hardware platform**.
 The XSA file generated from Vivado is an extensible hardware platform, the word extensible means the platform is not complete yet and more logic will be added later to the platform.
 Also, to quickly get started with Versal designing, AMD provides platforms targeted to the respective boards.
-For customer platfoms and steps to create an extensible hardware platform, please refer to the [Platform Tutorial](../../Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/)
+For customer platfoms and steps to create an extensible hardware platform, please refer to the [Platform Tutorial](https://github.com/Xilinx/Vitis-Tutorials/blob/2025.2/Vitis_Platform_Creation/Design_Tutorials/03_Edge_VCK190/step1.md)
 
 ```mermaid
 graph TD;

@@ -17,7 +17,7 @@
 Hardware Emulation helps to validate the Processing Subsystem (PS), AI Engine (AIE) and Programmable Logic (PL) by mimicking the hardware as closely as possible by using cycle-approximate models.
 The Vitis tools take care of stitching all three component and generate a script (launch_hw_emu.sh) to launch the Hardware Emulation.
 
-![HW EMU Block](support_files/HW_EMU_BLOCK.png)
+![HW EMU Block](./support_files/HW_EMU_BLOCK.png)
 
 The simulation of full system by using QEMU and RTL Simulator. The host application runs on the QEMU and AI Engine and PL logic is run on the RTL simulator.
 

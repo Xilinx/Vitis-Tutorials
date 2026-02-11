@@ -22,9 +22,9 @@ As discussed in the tutorial introduction page, the Vitis linker inputs are kern
 
 1. `libadf.a`: AI Engine kernel
 2. `mm2s.xo` and `s2mm.xo`: HLS/PL kernels
-3. `xilinx_vck190_base_202510_1.xpfm`: AMD provided platform
+3. `xilinx_vck190_base_202520_1.xpfm`: AMD provided platform
 
-> **Important Note:** This tutorial uses the AMD provided platform. For custom platform flow details, please check tutorials under [Vitis_Platform_Creation](../../../Vitis_Platform_Creation/)
+> **Important Note:** This tutorial uses the AMD provided platform. For custom platform flow details, please check tutorials under [Vitis_Platform_Creation](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/Vitis_Platform_Creation)
 
 With the input kernels and platform ready, we need to define the connection of these kernel using a configuration file, let's call it system.cfg.
 
@@ -54,7 +54,7 @@ As all the inputs for the linker are ready, we can use the below command to run 
 
 ```
 v++ --link --target hw/hw_emu \
-			--platform  xilinx_vck190_base_202510_1.xpfm \
+			--platform  xilinx_vck190_base_202520_1.xpfm \
 			--config ./system.cfg \
 			s2mm.xo mm2s.xo \
 			libadf.a \
@@ -110,7 +110,7 @@ In the below configuration file, we are inputting the platform, run target, boot
 Creating a configuration file for the packager may not be mandatory and all the below options can also used as an argument to the v++ --package command instead of using a configuration file.
 
 ```
-platform=xilinx_vck190_base_202510_1
+platform=xilinx_vck190_base_202520_1
 save-temps=1
 
 [package]
