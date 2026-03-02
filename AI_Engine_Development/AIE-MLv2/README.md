@@ -13,16 +13,15 @@
   </tr>
 </table>
 
-# AI Engine for Machine Learning v2 (AIE-MLv2) Development
+# AI Engine for Machine Learning v2 (AIE-ML v2) Development
 
 ## Introduction
 
-The tutorials under the AI Engine for Machine Learning v2 (AIE-MLv2) Development help you learn how to target, develop, and deploy advanced algorithms using a Versal AIE-ML array in conjunction with PL IP/kernels and software applications running on the embedded processors.
+The AI Engine for Machine Learning v2 (AIE-ML v2) tutorials show how to target, develop, and deploy algorithms on a Versal AIE-ML array with PL IP and kernels and embedded software.
 
-- The AIE-MLv2 Development [**Feature Tutorials**](./Feature_Tutorials/) highlight specific features and flows that help develop AI Engine-MLv2 applications.
+- The AIE-ML v2 Development [**Feature Tutorials**](./Feature_Tutorials/) highlight specific features and flows that help develop AI Engine-ML v2 applications.
 
-- The AIE-MLv2 Development [**Design Tutorials**](./Design_Tutorials/) showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
-
+- The AIE-ML v2 Development [**Design Tutorials**](./Design_Tutorials/) showcase the two major phases of AI Engine-ML application development: architecting the application and developing the kernels. These tutorials demonstrate both phases.
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

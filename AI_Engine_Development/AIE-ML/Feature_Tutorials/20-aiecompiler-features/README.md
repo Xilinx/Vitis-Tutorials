@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -17,12 +17,11 @@
 
 ***Version: Vitis 2025.2***
 
-
 ## Introduction
 
 This tutorial targets AIE-ML device, but shares test cases and description files with [AIE 20-aiecompiler-features](../../../AIE/Feature_Tutorials/20-aiecompiler-features).
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2025.2 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. 
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2025.2 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that this tutorial uses.
 
 Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
 
@@ -30,25 +29,25 @@ This tutorial targets VEK280 board.
 
 ## Objectives
 
-After completing this tutorial, you will be able to:
+After completing this tutorial, you can do the following:
 
-- Work with multirate design that allow the compiler to handle frame length mismatch between consecutive kernels in a kernel chain.
+- Work with multirate design that the compiler to handle frame length mismatch between consecutive kernels in a kernel chain.
 - Send output data to different other kernels for stream-based and buffer-based I/O.
 - Conditionally instantiate graph objects.
 
-This tutorial is based on simple data passthrough to avoid another level of complexity.
+The basis of this tutorial is on simple data passthrough to avoid another level of complexity.
 
 ## Tutorial Sections
 
 This tutorial contains 3 different sections that are independant one from each other.
 
-Follow instructions in [AIE Compiler Features](../../../AIE/Feature_Tutorials/20-aiecompiler-features/Readme.md). But, **run all make commands with `ARCH=aie-ml`**. 
+Follow instructions in [AIE Compiler Features](../../../AIE/Feature_Tutorials/20-aiecompiler-features/Readme.md). But, **run all make commands with `ARCH=aie-ml`**.
 
 ### Conditional Objects
 
 The following examples illustrate various ways to generate conditional objects at the graph level. All examples are available in different source directories: `src1` to `src4`. They can be compiled using: `make CASE=N clean data aie aieviz` with `N= 1,2,3,4`. Type `make help` to get the list of all available examples.
 
-All these examples can be compiled for the AI Engine ML architecture by including `ARCH=aie-ml` in the `make` command.
+You can compile all these examples for the AI Engine ML architecture by including `ARCH=aie-ml` in the `make` command.
 
 #### Case 1
 
@@ -98,12 +97,12 @@ make ARCH=aie-ml VERSION=2 clean buffer aie aiesim aieviz
 
 #### Split and Merge (Buffer)
 
-In this new example, two branches are fed with the same PLIO and connected on the output side to a kernel that will compute the difference between the two branch outputs.
-
+Two branches share the same PLIO. Their outputs connect to a kernel that computes the difference between the branches.
 
 ```BASH
 make ARCH=aie-ml VERSION=3 clean buffer aie
 ```
+
 Let run the simulation and visualize:
 
 ```BASH
@@ -126,9 +125,9 @@ make ARCH=aie-ml VERSION=2 clean stream aie aiesim aieviz
 
 In this configuration, the repetition rates are seven (DownConv) and five (UpConv). The simulation duration is slightly more than 40 µs.
 
-#### Split and Merge (stream)
+#### Split and Merge (Stream)
 
-In this new example, two branches are fed with the same PLIO and connected on the output side to a kernel that will compute the difference between the two branch outputs.
+Two branches share the same PLIO. Their outputs connect to a kernel that computes the difference between the branches.
 
 `VERSION=3` of this design stalls almost immediately because this design needs FIFOs set up at the input and output of each branch.
 

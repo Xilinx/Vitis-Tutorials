@@ -21,9 +21,9 @@
 
 This tutorial targets AIE-ML device, but shares test cases and description files with [AIE 03-rtp-reconfiguration](../../../AIE/Feature_Tutorials/03-rtp-reconfiguration).
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2025.2 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the AMD Vitis™ 2025.2 software. The Vitis release includes all the embedded base platforms including the VEK280 base platform that this tutorial uses. Also, make sure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using Vitis tools.
+The Common Image package includes a prebuilt Linux kernel and root file system for AMD Versal boards, supporting embedded development with Vitis tools.
 
 Before starting this tutorial, run the following steps:
 
@@ -36,7 +36,7 @@ This tutorial targets the VEK280 board for the 2025.2 version.
 
 ## Objectives
 
-After completing this tutorial, you will be able to:
+After completing this tutorial, you can do the following:
 
 * Specify a scalar or array parameter as part of a kernel function signature.
 * Connect a parameterized kernel into a graph, exposing the parameter for runtime updates.
@@ -45,7 +45,7 @@ After completing this tutorial, you will be able to:
 * Use XRT API to control graph execution and RTP operations.
 * Verify the system by HW co-simulation and running in hardware.
 
-**Known issue in 2025.2**: There may exist hardware execution issue in asynchronous array RTP update & read. When it happens, please wait for an update in the tool or a patch. Otherwise, you may continue to use 2024.1 instead.
+**Known issue in 2025.2**: There can exist hardware execution issue in asynchronous array RTP update & read. When it happens, wait for an update in the tool or a patch. Otherwise, continue to use 2024.1 instead.
 
 ## Steps
 
@@ -58,7 +58,7 @@ make aie ARCH=aie-ml
 ```
 
 To run `aiesimulator`, run:
-	
+
 ```
 make aiesim ARCH=aie-ml
 ```
@@ -90,7 +90,7 @@ cd /run/media/mm*1
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
