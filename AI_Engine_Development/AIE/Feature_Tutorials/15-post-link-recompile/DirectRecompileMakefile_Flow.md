@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -37,9 +37,9 @@ cd WithoutIntermediatePlatform
 
 ## Phase 1: Compile AI Engine application and PL Kernels and Link the System
 
-In this lab, all the operations are completed within a terminal. A Makefile contains all the operations for the phases of this lab.  Open it in any editor or display it in the terminal using `more`, `less`, or `cat`.
+In this lab, all the operations complete within a terminal. A Makefile contains all the operations for the phases of this lab. Open it in any editor or display it in the terminal using `more`, `less`, or `cat`.
 
-Phase 1 is completed in the following stages:
+Phase 1 completes in the following stages:
 
 1. `kernels`: Build the PL kernels. The output is a number of XO files, which are packaged RTL kernels.
 
@@ -49,7 +49,7 @@ Phase 1 is completed in the following stages:
 
 There are also optional stages to simulate the AI Engine application using the `aiesim` target and `run_emu` to launch hardware emulation that includes all the PL kernels.
 
-In the terminal, type `make clean phase1`. All the required stages (`kernels`, `aie`, and `link`) are run in the terminal as well as in hardware emulation (`package` and `run_emu`).
+In the terminal, type `make clean phase1`. All the required stages (`kernels`, `aie`, and `link`) run in the terminal and in hardware emulation (`package` and `run_emu`).
 
 Check the placement of the AI Engine kernels using an AMD Vitis&trade; Analyzer and opening the `graph.aiecompile_summary` file.
 
@@ -62,7 +62,7 @@ cd /run/media/mmcblk0p1
 ./host.exe a.xclbin
 ```
 
-At the end of the simulation, the following message is displayed:
+At the end of the simulation, the following message displays:
 
 ```
 mm2s (DataIn1) completed with status(4)
@@ -84,7 +84,7 @@ You can get out of QEMU by hitting **Ctrl** + **a x**.
 
 ## Phase 2: Recompile the AI Engine Application, Package the New System, and Rerun Hardware Emulation
 
-AI Engine compilation in phase 1 generates numerous files in the `Work` directory. The `Work/temp/graph_aie_routed.aiecst` file contains all the constraints that can be used during AI Engine compilation to get the exact same placement. From this file, extract the constraints related to the PLIO interface nodes, removing the other nodes and all the port constraints:
+AI Engine compilation in phase 1 generates numerous files in the `Work` directory. The `Work/temp/graph_aie_routed.aiecst` file contains all the constraints that you can use during AI Engine compilation to get the exact same placement. From this file, remove the constraints related to the programmable logic input output (PLIO) interface nodes, removing the other nodes and all the port constraints:
 
 ```BASH
 {
@@ -119,28 +119,28 @@ AI Engine compilation in phase 1 generates numerous files in the `Work` director
 
 Phase 2 contains the following stages:
 
- 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case, it uses new interface constraints. The kernel itself has not changed but a kernel location constraint has been added to the graph so that you can see a big difference in the kernel placement. Check this new placement using Vitis Analyzer on the compile summary.
+ 1. `aie2`: As in the previous phase, this stage builds an AI Engine application, but in this case, it uses new interface constraints. The kernel itself has not changed but a kernel location constraint is added to the graph so that you can see a big difference in the kernel placement. Check this new placement using Vitis Analyzer on the compile summary.
 
  2. `package2`: Create the PDI to load onto the device (`hw_emu`).
 
  3. `run_emu`: Launch the simulation and verify that the output is still correct.
 
-Run `make phase2` to go over all steps. Simulation is done in the same way as in phase 1, but it takes more time due to the longer routing path.
+Run `make phase2` to go over all steps. Simulate the design as in phase 1. Expect a longer runtime due to the extended routing path.
 
 ## Perform On-Board Testing
 
-1. To perform on-board testing, the same stages can be replicated but with a different target:
+1. To perform on-board testing, you can replicate the same stages with a different target:
 
 - For phase 1, type `make TARGET=hw clean phase1`.
 - For phase 2, type `make TARGET=hw phase2`.
 
-2. When the two phases are completed, there will be an `sd_card.img` file in the directory. Use a standard SD card imager with this file to initialize an SD card.
+2. After completing both phases, locate the `sd_card.img` file in the directory. Use a standard SD card imager with this file to initialize an SD card.
 
 3. Place the SD card in the top SD card slot of your board.
 
 4. Open a serial terminal connected to the right COM port of your VCK190 and switch on your board.
 
-5. The system boots. When this is finished, change the directory before launching the PS application.
+5. After the system boots, change the directory before launching the PS application.
 
 ```
 cd /run/media/mmcblk0p1
@@ -150,12 +150,12 @@ cd /run/media/mmcblk0p1
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+GitHub issues track requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2021–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2021–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

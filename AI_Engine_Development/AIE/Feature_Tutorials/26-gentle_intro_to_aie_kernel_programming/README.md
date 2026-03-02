@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -19,46 +19,46 @@
 
 ## Overview
 
-This tutorial contains the code presented in the [webinar](https://webinar.amd.com/A-Gentle-Introduction-to-AI-Engine-Kernel-Programming/en) of the same name. It shows you how an [AI Engine](https://www.amd.com/en/products/adaptive-socs-and-fpgas/technologies/ai-engine.html) kernel program gets data from, and outputs data to its environment. A *contrived* task, which utilizes all the port types, is proposed. [Julia](https://julialang.org) scripts are used to design unit tests for each component kernel to create stimulus and reference to verify the functionality of the kernels. The components are then assembled to complete the task. Makefiles are provided to build the program and run simulations so that the reader can focus on the programming aspects of AI engine kernel design.
+This tutorial contains the code presented in the [webinar](https://webinar.amd.com/A-Gentle-Introduction-to-AI-Engine-Kernel-Programming/en) of the same name. This tutorial demonstrates how an [AI Engine](https://www.amd.com/en/products/adaptive-socs-and-fpgas/technologies/ai-engine.html) kernel program gets data from and outputs data to its environment. This tutorial proposes a *contrived* task which uses all port types. [Julia](https://julialang.org) scripts design unit tests for each component kernel to create stimulus and reference to verify the functionality of the kernels. You then assemble components to complete the task. The provided Makefiles allow you to build the program and run simulations so you can focus on the programming aspects of AI engine kernel design.
 
 ## Introduction
 
-The [Versal Adaptive SoC](https://www.amd.com/en/products/adaptive-socs-and-fpgas/versal.html) product family introduced a new computing resource. This computing resource consists of a 2D array of independently running scalar and vector processors called "AI Engines" (AIE), capable of running at a maximum clock frequency of 1.3 GHz [[DS957](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics)].
+The [Versal Adaptive SoC](https://www.amd.com/en/products/adaptive-socs-and-fpgas/versal.html) product family introduced a new computing resource consisting of a 2D array of independently running scalar and vector processors. These processors are called AI Engines (AIE) and are capable of running at a maximum clock frequency of 1.3 GHz [[DS957](https://docs.amd.com/r/en-US/ds957-versal-ai-core/AI-Engine-Switching-Characteristics)].
 
 ## A Brief Overview of AI Engine Tiles and Kernels
 
-Each AI Engine is located on a "tile" which contains the processors, local memory, and a programmable [AXI Stream Interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). The interconnect allows communication with non-adjacent tiles, programmable logic (PL), the processor system (PS), and external memory (see Fig.1). This tutorial focuses on the first generation AIE architecture described in [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine).
+Each AI Engine is on a tile containing the processors, local memory, and a programmable [AXI Stream Interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). The interconnect enables communication with non-adjacent tiles, programmable logic (PL), the processor system (PS), and external memory (Figure 1). This tutorial focuses on the first generation AIE architecture described in [AM009](https://docs.amd.com/r/en-US/am009-versal-ai-engine).
 
-![Fig. 1: AI engine array](./images/aie_array.png)
-*Fig. 1: AI Engine Array*
+![Figure 1: AI engine array](./images/aie_array.png)
+*Figure 1: AI Engine Array*
 
-Each AIE tile has 16 KB of program memory and 32 KB of data memory. Data memory may be shared with adjacent tiles.
+Each AIE tile has 16 KB of program memory and 32 KB of data memory. You can share this memory with adjacent tiles.
 
-AXI Stream connections are defined by an adaptive dataflow (ADF) graph that is created by the user.
+You create an adaptive dataflow (ADF) graph and define AXI Stream connections.
 
-A C++ program running on the AI Engine (referred to as a "kernel") reads data (for example, sampled signals from multiple antennas), processes the data (for examplw, perform beamforming), and outputs the results for possible further processing.
+A C++ program running on the AI Engine (referred to as a kernel) reads, processes, and outputs data for further processing. For example, the program reads sampled signals from multiple antennas, processes the data to perform beamforming, and outputs the results for further processing.
 
-An adaptive SoC may have tens to hundreds of these AIE tiles in [hard IP cores](https://en.wikipedia.org/wiki/Semiconductor_intellectual_property_core), depending on the device (see [Versal AI Core Series Product Selection Guide (XMP452)
+An adaptive SoC can have tens to hundreds of these AIE tiles in [hard IP cores](https://en.wikipedia.org/wiki/Semiconductor_intellectual_property_core), depending on the device. For more details, refer to [Versal AI Core Series Product Selection Guide (XMP452)
 ](https://docs.amd.com/v/u/en-US/versal-ai-core-product-selection-guide)).
 
 This arrangement of multiple independent processors has huge potential for parallel processing.
 
 ## Scalar and Vector Processors
 
-The AI Engine is a VLIW (very long instruction word) processor with separate slots for scalar and vector instructions.
+The AI Engine is a very long instruction word (VLIW) processor with separate slots for scalar and vector instructions.
 
-![Fig. 2: Scalar and vector units](./images/scalar_and_vector.png)
-*Fig. 2: Scalar and vector units*
+![Figure 2: Scalar and vector units](./images/scalar_and_vector.png)
+*Figure 2: Scalar and vector units*
 
-Use AIE intrinsics (special functions recognized by the compiler) to access the SIMD (single instruction multiple data) capabilities of the vector processor. You can also use the available high-level API to create architecture-agnostic programs which can abstract away from the low-level details of intrinsics [see [AI Engine Intrinsics and API User Guides](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html)]. [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) provides a graphical design environment to create AI Engine designs.
+AIE intrinsics are special functions recognized by the compiler. Use these to access the single instruction multiple data (SIMD) capabilities of the vector processor. You can also use the available high-level API to create architecture-agnostic programs which can abstract away from the low-level details of intrinsics. For more details, refer to [AI Engine Intrinsics and API User Guides](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html)]. [Vitis Model Composer](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-model-composer.html) provides a graphical design environment to create AI Engine designs.
 
 ## AVX Versus AI Engine APIs
 
-If you are familiar with using AVX (Advanced Vector eXtensions) on an x86 processor, using AIE APIs should be straightforward.
+Using AIE APIs is similar to using Advanced Vector eXtensions (AVX) on an x86 processor.
 
 ### Vector Addition with AVX Intrinsics
 
-On an x86 CPU with AVX support, the code to add the elements of two vectors looks something like this:
+On an x86 CPU with AVX support, the code to add the elements of two vectors looks similar to the following:
 
 #### vadd_avx.cpp
 
@@ -98,7 +98,7 @@ int main() {
 
 ### Vector Addition with AIE API
 
-Using the high-level APIs on an AI engine, it looks something like this:
+Using the high-level APIs on an AI engine is similar to the following:
 
 #### vadd_aie.cpp
 
@@ -129,16 +129,16 @@ void vadd() {
 } // end vadd()
 ```
 
-Comparing the relevant lines side-by-side:
+The following compares the relevant lines side-by-side:
 
 |**AVX CPU**|**AIE API**|**Notes**|
 |:---|:---|:---|
 | __m256 vx = _mm256_loadu_ps(x); | v8f vx = aie::load_v<vsize>(x); | transfer from memory to vector register |
 | __m256 vy = _mm256_loadu_ps(y); | v8f vy = aie::load_v<vsize>(y); | transfer from memory to vector register |
 | __m256 vz = _m256_add_ps(vx, vy); | v8f vz = aie::add(vx, vy); | add the elements of the vector registers |
-| __m256_storeu_ps(z, vz); | aie::store(z, vz); | store vector regsiter to memory |
+| __m256_storeu_ps(z, vz); | aie::store(z, vz); | store vector register to memory |
 
-For this specific example, you can see that there is a one-to-one correspondence between the instructions for AVX on an x86 CPU and the high-level API on an AI Engine.
+For this specific example, there is a one-to-one correspondence between the instructions for AVX on an x86 CPU and the high-level API on an AI Engine.
 
 #### Building and Running the AVX CPU Program
 
@@ -153,7 +153,7 @@ Checking for AVX capabilities on this machine by looking at /proc/cpuinfo...
 This machine supports AVX!
 ```
 
-Only if the result, "This machine supports AVX!", appears should you build and execute the program.
+Build and execute the program `nly` after you get the result, *This machine supports AVX!*.
 
 ```
 $ make
@@ -182,64 +182,64 @@ Simulation completed successfully returning zero
 
 ## AI Engine APIs
 
-The AI engine APIs are provided as header files allowing a higher level of abstraction than intrinsics. They are also architecture-agnostic, that is, the generated intrinsics match the selected target device. Browse through the [AI Engine API User Guide](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html) to view the available functions (see Fig. 3).
+AIE APIs are header files allowing a higher level of abstraction than intrinsics. They are also architecture-agnostic meaning the generated intrinsics match the selected target device. Browse through the [AI Engine API User Guide](https://www.xilinx.com/htmldocs/aiengine_intrinsics_start.html) to view the available functions (Figure 3).
 
-![Fig. 3: AI Engine API User Guide](./images/api_user_guide.png)
-*Fig. 3: AI Engine API User Guide*
+![Figure 3: AI Engine API User Guide](./images/api_user_guide.png)
+*Figure 3: AI Engine API User Guide*
 
-The following figure shows how an intrinsic and an API with the same basic operation, such as multiply-accumulate, may differ.
+The following figure shows how an intrinsic and an API with the same basic operation, such as multiply accumulate can differ.
 
-![Fig. 4: Intrinsic vs. API](./images/intrinsic_vs_api.png)
-*Fig. 4: Intrinsic vs. API*
+![Figure 4: Intrinsic vs. API](./images/intrinsic_vs_api.png)
+*Figure 4: Intrinsic vs. API*
 
 >**Note:** Intrinsics have more parameters, allowing more flexibility, but require more detailed knowledge of the architecture. APIs assume a specific use-case, allowing the use of fewer parameters.
 
-The use of APIs is highly recommended, and only utilize intrinsics to optimize critical portions of the code. Note that intrinsics and APIs may be mixed together in the same kernel code.
+The use of APIs is highly recommended. Use only intrinsics to optimize critical portions of the code. Note that intrinsics and APIs can mix together in the same kernel code.
 
-## Modfied Kahn Process Network (KPN)
+## Modified Kahn Process Network (KPN)
 
-One way to implement a system capable of parallel computing is with a Kahn Process Network (KPN). Wikipedia states that "A Kahn process network (KPN, or process network) is a distributed model of computation in which a group of deterministic sequential processes communicate through *unbounded* first in, first out channels. The model requires that reading from a channel is blocking while writing is non-blocking. Due to these key restrictions, the resulting process network exhibits deterministic behavior that does not depend on the timing of computation nor on communication delays."
+One way to implement a system capable of parallel computing is with a Kahn process network (KPN). Wikipedia states: "A Kahn process network (KPN, or process network) is a distributed model of computation in which a group of deterministic sequential processes communicate through *unbounded* first in, first out channels. The model requires that reading from a channel is blocking while writing is non-blocking. Due to these key restrictions, the resulting process network exhibits deterministic behavior that does not depend on the timing of computation nor on communication delays."
 
-Fig. 5 shows an example of a KPN. Note that all the nodes T1 through T4 may run simultaneously as they are separate processes. The key contribution of Kahn's proposal was defining *when* a node would execute.
+Figure 5 shows an example of a KPN. Note that all the nodes T1 through T4 may run simultaneously as they are separate processes. The key contribution of Kahn's proposal was defining *when* a node executes.
 
-![Fig. 5: Example of a Kahn Process Network (KPN)](./images/kpn.png)
-*Fig. 5: Example of a Kahn Process Network (KPN)*
+![Figure 5: Example of a Kahn Process Network (KPN)](./images/kpn.png)
+*Figure 5: Example of a Kahn Process Network (KPN)*
 
-As *unbounded* FIFO (first-in, first-out) channels are physically unrealizable, the AIE array implements a *modified* KPN where the channels are bounded. A well-designed system where all delays are balanced is still deterministic as possible stalls (caused by empty input buffers, full output buffers, or resource contention) always consume the same number of cycles.
+As *unbounded* first-in, first-out (FIFO) channels are physically unrealizable, the AIE array implements a *modified* KPN with bound channels. A well-designed system with balanced delays is still deterministic as possible stalls (caused by empty input buffers, full output buffers, or resource contention) always consume the same number of cycles.
 
-A modified Kahn Process Network (KPN) desribed in an ADF (advanced data flow) graph encapsulates how the AIE tiles (the "nodes" in the modified KPN) exchange data with the "outside world". In an AI engine array, the buffers (also called "edges") are implemented as streams or shared memories. Note that a sequential process (also called a "node") *stalls* that is, halts execution, when:
+A modified KPN described in an ADF graph encapsulates how AIE tiles (the "nodes" in the modified KPN) exchange data with the outside world. In an AI engine array, you implement the buffers (also called edges) as streams or shared memories. Note that a sequential process (also called a "node") *stalls* or halts execution, when the following happens:
 
 * an input stream is empty
 * an output stream is full
-* a shared memory bank is being accessed by another tile
+* another tile is accessing a shared memory bank
 
 You can minimize stalls by allocating FIFOs of sufficient depth, or dedicating a memory bank to a kernel.
 
 ![](./images/kpn.gif)
 
-See [AI Engine Programming: A Kahn Process Network Evolution (WP552)](https://docs.amd.com/r/en-US/wp552-ai-kpn/Kahn-Process-Network) for more information.
+For details, refer to [AI Engine Programming: A Kahn Process Network Evolution (WP552)](https://docs.amd.com/r/en-US/wp552-ai-kpn/Kahn-Process-Network).
 
-## Which Applications are Best Suited for AI Engines?
+## Applications Best Suited for AI Engines
 
-The vector unit in the first generation AI engine architecture supports the datatypes shown in Fig. 6.
+The vector unit in the first generation AI engine architecture supports the datatypes shown in Figure 6.
 
-![Fig. 6: Datatypes supported in the vector unit of the 1st generation AIE architecture](./images/dtypes.png)
-*Fig. 6: Datatypes supported in the vector unit of the 1st generation AIE architecture*
+![Figure 6: Datatypes supported in the vector unit of the 1st generation AIE architecture](./images/dtypes.png)
+*Figure 6: Datatypes supported in the vector unit of the 1st generation AIE architecture*
 
-Note that the rightmost column shows the number of MAC (multiply-accumulate) operations that one tile can perform in one cycle. Thus, with 8-bit operands, one AIE tile can perform 128 MACs/cycle. Fig. 7 shows what calculation is actually performed in one cycle.
+Note that the rightmost column shows the number of multiply accumulate (MAC) operations that one tile can perform in one cycle. Thus, with 8-bit operands, one AIE tile can perform 128 MACs/cycle. Figure 7 shows what calculation is actually performed in one cycle.
 
-![Fig. 7: Int8 MACs/cycle for 1st generation AIE architecture](./images/macs_per_cycle.png)
-*Fig. 7: Int8 MACs/cycle for 1st generation AIE architecture*
+![Figure 7: Int8 MACs/cycle for 1st generation AIE architecture](./images/macs_per_cycle.png)
+*Figure 7: Int8 MACs/cycle for 1st generation AIE architecture*
 
-Thus, applications utilizing matrix-matrix or matrix-vector multipliations such as polyphase filters (also called channelizers), FIR/IIR filters, FFTs, beamforming, MIMO signal processing and many others can benefit greatly from using AI Engines.
+Applications using matrix-matrix or matrix-vector multiplications, such as polyphase filters (channelizers), FIR/IIR filters, FFTs, beamforming, MIMO signal processing, and many others can benefit by using AI Engines.
 
-Other tasks like image, video, audio procecssing, scientific simulations, data compression, networking, speech recognition, machine learning, cryptography and others may also be able to take advantage of the SIMD capabilities of the AI Engine.
+Other tasks like image, video, audio processing, scientific simulations, data compression, networking, speech recognition, machine learning, cryptography and others can also take advantage of the SIMD capabilities of the AI Engine.
 
-Note that "peak theoretical compute capability" mentioned in Fig. 7 is an *upper bound*, and can *never* be realized when solving a *practical* problem. There are periods during which no calculations can be performed to allow data ingress and egress, or when the compute units need to wait for the results of a previous operation to become available.
+Note that "peak theoretical compute capability" mentioned in Figure 7 is an *upper bound*, and can *never* be realized when solving a *practical* problem. There are periods when you cannot perform calculations to enable data ingress and egress, or when the compute units need to wait for the results of a previous operation to become available.
 
 ## Code Required to Create a Program to Run on an AI Engine
 
-You require three "pieces" of code to use an AI Engine:
+You require three pieces of code to use an AI Engine:
 
 * Kernel code: C/C++ code that runs on the AI engine.
 * ADF graph code: C++ code that describes how the kernel communicates with the outside world. This code sets the connections in the AXI-S interconnect on the AIE tile.
@@ -281,7 +281,7 @@ public:
 
 ### Graph Code Structure
 
-The ADF graph (or sometimes, simply, "graph") contains information on how the AIE kernel "communicates" with the outside world. The tools use the information in this file to manage the resources (memory, ports, stream connections, etc.) that are used by the kernel.
+The ADF graph (or simply "graph") contains information on how the AIE kernel communicates with the outside world. The tools use the information in this file to manage the resources (memory, ports, stream connections, and more) that the kernel uses.
 
 ```C++
 class theGraph : public graph {   // inherit properties of adf::graph
@@ -303,7 +303,7 @@ public:
 
 ### Test Bench/Control Code Structure  
 
-This is the "top-level file" referred to in the AMD Vitis™ GUI. When running simulations, this program runs on the host PC, not on the AI Engine, and not on the processing system (PS).
+This is the "top-level file" referred to in the AMD Vitis™ GUI. When running simulations, this program runs on the host PC, not on the AI Engine, and not on the PS.
 
 ```C++
 #include graph.hpp  // include ADF graph header file
@@ -322,53 +322,53 @@ int main() {
 
 ## AI Engine Kernel Input and Output Types
 
-There are four input and output types (see Fig. 8):
+There are four input and output types (Figure 8):
 
-![Fig. 8: AIE kernel port types](./images/port_types.png)
-*Fig. 8: AIE Kernel Port Types*
+![Figure 8: AIE kernel port types](./images/port_types.png)
+*Figure 8: AIE Kernel Port Types*
 
 * **Stream**
   
-  Streams use an [AXI-4 stream interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). A stream is 32 bits wide. Streams may come from and go to programmable logic (PL) or another AIE tile. Depending on the architecture, an AIE tile may have one or two input streams, and one or two output streams. Streams are useful when data has to be processed sequentially and has the potential to provide the lowest latency at the expense of lower throughput. Using the first generation AI Engine architecture as an example, an AIE tile can receive 64 bits of data through two input streams in one cycle.
+  Streams use an [AXI-4 stream interface](https://docs.amd.com/r/en-US/pg256-sdfec-integrated-block/AXI4-Stream-Interface). A stream is 32 bits wide. Streams can come from and go to PL or another AIE tile. Depending on the architecture, an AIE tile can have one or two input streams, and one or two output streams. Streams are useful when data processes sequentially and has the potential to provide the lowest latency at the expense of lower throughput. Using the first generation AI Engine architecture as an example, an AIE tile can receive 64 bits of data through two input streams in one cycle.
 
 * **Buffer**
 
-  Buffers use local memory on the AIE tile or adjacent tiles. Buffer data can come from and go to GMIO (global memory I/O, i.e., external DDR), PL, or an adjacent AIE tile. An AIE tile can perform two 256-bit loads from memory and one 256-bit write to memory. Using buffers allows higher throughput at the expense of higher latency since the buffer needs to be filled before it can be accessed.
+  Buffers use local memory on the AIE tile or adjacent tiles. Buffer data can come from and go to global memory input/output (GMIO) (external DDR), PL, or an adjacent AIE tile. An AIE tile can perform two 256-bit loads from memory and one 256-bit write to memory. Using buffers enables higher throughput at the expense of higher latency because you need to fill the buffer before accessing it.
 
 * **Accumulator cascade**
 
-  Several algorithms require a sum-of-products calculation. A long sum may be distributed across multiple AIE tiles, with each tile calculating a partial sum and cascading (or passing) a partial sum to an adjacent tile (see Fig. 9).
+  Several algorithms require a sum-of-products calculation. You can distribute a long sum across multiple AIE tiles, with each tile calculating a partial sum and cascading (or passing) a partial sum to an adjacent tile (Figure 9).
 
-  ![Fig. 9: Accumulator cascade intuition](./images/acc_cascade.png)
-  *Fig. 9: Accumulator Cascade iIntuition*
+  ![Figure 9: Accumulator cascade intuition](./images/acc_cascade.png)
+  *Figure 9: Accumulator Cascade iIntuition*
 
-  For example, instead of summing 32 products in four cycles (eight sum-of-products calculated in one cycle), splitting the operation into four partial sums of eight products and cascading the partial sums may provide a result in one cycle. This reduces latency at the expense of using more AIE tiles.
+  For example, instead of summing 32 products in four cycles (eight sum-of-products calculated in one cycle), splitting the operation into four partial sums of eight products and cascading the partial sums can provide a result in one cycle. This reduces latency at the expense of using more AIE tiles.
 
 * **Runtime parameter (RTP)**
 
-  Use runtime parameters to have the processor system (PS) modify the behavior of a kernel program or obtain state and status information.
+  Use runtime parameters to have the PS modify the behavior of a kernel program or obtain state and status information.
 
-  Runtime parameters are specified as scalar function arguments
+  Runtime parameters specify scalar function arguments:
 
   * Input RTP: pass-by-value
   * Output RTP: pass-by-reference
 
-  In the ADF graph, they may be specified as:
+  In the ADF graph, they can be:
 
-  * **Asynchronous**: You must provide the RTP at least once and reuse on every function invocation until updated
+  * **Asynchronous**: You must provide the RTP at least one time and reuse on every function invocation until updated
   * **Synchronous**: You must provide the RTP on every function invocation
 
-  Fig. 10 shows a kernel function using input and output RTPs.
+  Figure 10 shows a kernel function using input and output RTPs.
 
-  ![Fig. 10: Function with input and output RTPs](./images/rtp.png)
-  *Fig. 10: Function with Input and Output RTPs*
+  ![Figure 10: Function with input and output RTPs](./images/rtp.png)
+  *Figure 10: Function with Input and Output RTPs*
 
-## A **_Contrived_** Task to Illustrate How to Access AIE Kernel I/O Ports
+## A **_Contrived_** Task to Show How to Access AIE Kernel I/O Ports
 
-The *contrived* task shown in Fig. 11 shows how to access the input and output ports available to an AIE tile within a kernel program.
+The *contrived* task shown in Figure 11 shows how to access the input and output ports available to an AIE tile within a kernel program.
 
-![Fig. 11: A contrived task to illustrate the different I/O ports on the AI engine](./images/gentle_example.png)
-*Fig. 11: A Contrived Task to Illustrate the Different I/O Ports on the AI Engine*
+![Figure 11: A contrived task to show the different I/O ports on the AI engine](./images/gentle_example.png)
+*Figure 11: A Contrived Task to Show the Different I/O Ports on the AI Engine*
 
 The left side of the figure shows the mathematical description. Bold uppercase variables denote matrices, with the subscripts denoting the matrix sizes. Bold lowercase variables denote vectors, with the subscripts denoting the vector sizes. Italicized variables denote scalars.
 
@@ -382,12 +382,12 @@ Calculation steps:
 
 The block diagram on the right shows the required calculations more clearly. Note that it also shows the dependencies between calculations, which as a bonus, also shows which calculations can be done in parallel.
 
-In this *contrived* task, the input matrices are provided through buffers, and the input vectors through streams. The resultant vector **u** is handled as an accumulator cascade, and the scalar `w` as an input RTP.
+In this *contrived* task, buffers provide the input matrices and the input vectors through streams. The resultant vector **u** is handled as an accumulator cascade, and the scalar `w` as an input RTP.
 
 Note that two simulation modes are available when developing AIE kernels:
 
-* Functional: Source code is compiled to run on the x86 host development platform. This allows fast simulations to check the veracity of the code.
-* Emulation: Source code is compiled to run on the AI engine. It is slower than functional simulation but provides cycle approximate information to estimate throughput and latency when using real hardware.
+* Functional: Source code compiles to run on the x86 host development platform. This enables fast simulations to check the veracity of the code.
+* Emulation: Source code compiles to run on the AI engine. It is slower than functional simulation but provides cycle approximate information to estimate throughput and latency when using real hardware.
 
 ## Sample Code for Stream Input and Output
 
@@ -419,7 +419,7 @@ The input stream port is declared as ``input_stream\<T\>``, where ``T`` is the t
 ``readincr_v\<N\>( )`` is an API which takes **N** values from an input stream and places them into a vector register. Note that:
 
 * The AIE tile stream is 32 bits wide running at 1.25 GHz on the [VCK190 platform](https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vck190.html)
-* The PL stream may be 32, 64, or 128 bits wide (defined in the ADF graph) running at a slower clock (usually half or a quarter of the AIE clock)
+* The PL stream can be 32, 64, or 128 bits wide (defined in the ADF graph) running at a slower clock (usually half or a quarter of the AIE clock)
 * There are FIFO and [clock domain crossing](https://www.maven-silicon.com/blog/clock-domain-crossing) circuits at the AIE array and PL boundary such that:
   * a 32-bit PL stream running at half the AIE clock will provide 32-bit data to the AIE tile at half the AIE tile rate, potentially resulting in stalls (with the AIE tile waiting for data to be available)
   * a 64-bit PL stream running at half the AIE clock can provide 32-bit data to the AIE tile at the AIE tile rate
@@ -488,22 +488,22 @@ Examine the input and output streams with [Vitis Analyzer](https://docs.amd.com/
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary &
 ```
 
-Click on **Trace** in the **Analysis** pane (see Fig. 12).
+Click **Trace** in the **Analysis** pane (Figure 12).
 
 ![Vitis Analyzer: Trace Menu](./images/trace_menu.png)
-*Fig. 12: Vitis Analyzer: Trace Menu*
+*Figure 12: Vitis Analyzer: Trace Menu*
 
-Double-click on the **Run - default - AIE SIMULATION** window to maximize it (see Fig. 13).
+Double-click the **Run - default - AIE SIMULATION** window to maximize it (Figure 13).
 
-![Fig. 13: default - AIE SIMULATOR window](./images/default_aiesim.png)
-*Fig. 13: Default - AIE SIMULATOR Window*
+![Figure 13: default - AIE SIMULATOR window](./images/default_aiesim.png)
+*Figure 13: Default - AIE SIMULATOR Window*
 
-Double-click on the Vitis Analyzer window to maximize it (double-click again to restore).
+Double-click the Vitis Analyzer window to maximize it (double-click again to restore).
 
 ![Stream Trace Data](./images/trace_data.png)
-*Fig. 14: Stream Trace Data*
+*Figure 14: Stream Trace Data*
 
-The function is executed twice (as specified in ``src/tb.cpp``), processing eight vectors per invocation. Note that there are no spaces between the data in the input stream, but the output stream is "bursty". This code is not optimized. Optimization in outside the scope of this tutorial.
+Execute the function twice (as specified in ``src/tb.cpp``), processing eight vectors per invocation. Note that there are no spaces between the data in the input stream, but the output stream is "bursty." This code is not optimized. Optimization in outside the scope of this tutorial.
 
 ## Sample Code for Buffer Input and Output
 
@@ -609,21 +609,21 @@ Examine the placement of the input and output buffers in the AIE array with Viti
 ```sh
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary &
 ```
-Click on <span style="color: orange; font-family: Consolas;">Array</span> in the <span style="color: orange; font-family: Consolas;">Analysis</span> pane and zoom in on the <span style="color: orange; font-family: Consolas;">matmul</span> kernel (see Fig. 15).
+Click on <span style="color: orange; font-family: Consolas;">Array</span> in the <span style="color: orange; font-family: Consolas;">Analysis</span> pane and zoom in on the <span style="color: orange; font-family: Consolas;">matmul</span> kernel (see Figure 15).
 
  <table class="sphinxhide" width="100%">
  <tr width="100%">
     <td><img src="./images/buffer_array.png" width="100%"/></td>
  </tr>
  <tr width="100%">
-    <td align="center">Fig. 15: matmul in AIE tile array</td>
+    <td align="center">Figure 15: matmul in AIE tile array</td>
  </tr>
 </table>
 <br />
 
 Note that the purple blocks in the PL (marked "Input" and "Output") are simulation artifacts. In an actual design, circuits have to placed in PL to achieve the desired functionality (provide or receive data).
 
-Location constraints in the ADF graph (see ``src/graph.hpp``) direct the mapping tool to place the buffers in the same tile as the kernel.
+Location constraints in the ADF graph (``src/graph.hpp``) direct the mapping tool to place the buffers in the same tile as the kernel.
 
 ```C++
       // location constraints on buffers
@@ -714,7 +714,7 @@ $
 
 ## Sample Code for Runtime Parameter (RTP)
 
-The following code segment shows how a runtime parameter is used to generate a sum or difference of the cascade input and an input vector.
+The following code segment shows how to use a runtime parameter to generate a sum or difference of the cascade input and an input vector.
 
 ```C++
 template<unsigned nelems, unsigned burst_count>
@@ -753,7 +753,7 @@ void sumdiff(
 } // end sumdiff()
 ```
 
-The input RTP is declared as ``const int8 mode`` in the function argument list. Within the code, a simple ``if`` statement selects whether a sum or difference is output.
+Declare the input RTP as ``const int8 mode`` in the function argument list. Within the code, a simple ``if`` statement selects whether a sum or difference is output.
 
 ### Unit Test for SumDiff Module
 
@@ -791,7 +791,7 @@ You now have all the kernels required to create the *contrived* task.
 
 ### Advanced Dataflow Graph
 
-The code for the advanced dataflow (ADF) graph is divided into the following segments for easier perusal.
+The code for the ADF graph is divided into the following segments for easier perusal.
 
 ```C++
 #pragma once
@@ -814,7 +814,7 @@ private:
     kernel k_sumdiff;                                   // sum-difference
 ```
 
-The ADF graph is a header file and inherits from the ``adf::graph`` class. The kernels are declared as ``private`` members. All other members are ``public``.
+The ADF graph is a header file and inherits from the ``adf::graph`` class. Declare the kernels as ``private`` members. All other members are ``public``.
 
 ```C++
 public:
@@ -853,7 +853,7 @@ The input RTP is declared as an ``input_port``. All other ports are coming from 
         source(k_sumdiff) = "src/sumdiff.cpp";
 ```
 
-Other declarations must be placed within the graph constructor. In the code segment above, the function associated with the kernel and its template parameters are defined during kernel creation. The location of the source code for each kernel must also be declared.
+Place other declarations within the graph constructor. In the previous code segment, you define the function associated with the kernel and its template parameters during kernel creation. You also declare the location of the source code for each kernel.
 
 ```C++
         runtime<ratio>(k_sqmag)   = 1.0;    // only this kernel will be placed on this tile
@@ -991,26 +991,26 @@ $ make all | tee build.log
 
 Note that the DUT and reference results match.
 
-Use the Vitis Analyzer to examine the placement of the kernels in the AIE tile array (see Fig. 16).
+Use the Vitis Analyzer to examine the placement of the kernels in the AIE tile array (Figure 16).
 
 ```sh
 $ vitis_analyzer Emulation-HW/aiesimulator_output/default.aierun_summary
 ```
 
 ![Contrived Task Kernels in the AIE Tile Array](./images/contrived_array.png)
-*Fig. 16: Contrived Task Kernels in the AIE Tile Array*
+*Figure 16: Contrived Task Kernels in the AIE Tile Array*
 
 Note that the ``k_mtxvec`` and ``k_sumdiff`` kernels share a cascade stream connection (highlighted in the figure) and hence you must place them adjacent to each other.
 
-In the Vitis Analyzer, double-click on "Graph" in the Analysis pane to see the connections between kernels (see Fig. 17).
+In the Vitis Analyzer, double-click on "Graph" in the Analysis pane to view the connections between kernels (Figure 17).
 
-![Fig. 17: Contrived task graph](./images/contrived_graph.png)
-*Fig. 17: Contrived Task Graph*
+![Figure 17: Contrived task graph](./images/contrived_graph.png)
+*Figure 17: Contrived Task Graph*
 
-Open the trace view and check whether the matrix multipliers start roughly at the same time (see Fig. 18).
+Open the trace view and check whether the matrix multipliers start roughly at the same time (Figure 18).
 
 ![Contrived Task Matrix Multiplier Kernels Trace](./images/contrived_trace.png)
-*Fig. 18: Contrived Task Matrix Multiplier Kernels Trace*
+*Figure 18: Contrived Task Matrix Multiplier Kernels Trace*
 
 ## Conclusion
 
@@ -1030,8 +1030,8 @@ Ask questions on the forum!
 
 ## Support
 
-GitHub issues are used for tracking requests and bugs. For questions go to the [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US).
+GitHub issues track requests and bugs. For questions go to the [AI Engine Architecture & Tools Forum](https://adaptivesupport.amd.com/s/topic/0TO2E000000YKXjWAO/ai-engine-architecture-tools?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
