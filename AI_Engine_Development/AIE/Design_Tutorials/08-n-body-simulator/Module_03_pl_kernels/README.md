@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -20,9 +20,11 @@
 ```
 make all
 ```
+
 or, follow steps 1-3 as follows:
 
-### Step 1: Set the Vitis Utility Library path
+### Step 1: Set the Vitis Utility Library Path
+
 ```
 XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/utils
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
@@ -35,11 +37,13 @@ This path contains the folder `utils` along with other libraries. It contains th
 ```
 make -f ./ksrc.mk GENKERNEL=$(XFLIB_DIR)/L2/scripts/generate_kernels SPEC=./kernel/spec.json TOOLDIR=./_krnlgen
 ```
+
 Here you use the L2 Data-Mover generator tool ($(XFLIB_DIR)/L2/scripts/generate_kernels). This tool uses the `kernel/spec.json` specification to write `kernel/mm2s_mp.cpp` and `kernel/s2mm_mp.cpp` HLS kernel source files.
 
-
 ### Step 3: Compile HLS PL Kernels
+
 Following is an example of how the `mm2s_mp` kernel compiles.
+
 ```
 v++ -c                                                                 \
     -t hw                                                              \
@@ -55,6 +59,7 @@ v++ -c                                                                 \
     -o './build/_x_temp.hw_emu.xilinx_vck190_base_202420_1/mm2s_mp.xo'  \
     ./kernel/mm2s_mp.cpp                                                 
 ```
+
 The same compilation options are used to compile the `s2mm_mp`, `packet_sender`, and `packet_receiver` kernels.
 
 ## HLS PL Kernels
@@ -102,6 +107,7 @@ The `kernel/spec.json` specification generatees the `s2mm_mp` kernel. Review thi
 * [Vitis Utilities Library Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/utils/index.html)
 
 * [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands)
+  
 ## Next Steps
 
 After compiling the PL datamover kernels, you are ready to link the entire hardware design together in the next module, [Module 04 - Full System Design](../Module_04_full_system_design).
@@ -109,8 +115,6 @@ After compiling the PL datamover kernels, you are ready to link the entire hardw
 ### Support
 
 GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 

@@ -6,16 +6,16 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
 
 # Partition Reloading
 
-This tutorial covers the packaging requirements and host code programming guidance for partition reloading. The compilation and linking guidance can be found in [Compiling AI Engine Graphs for Independent Partitions](./independent_graphs.md).
+This tutorial covers the packaging requirements and host code programming guidance for partition reloading. Find the compilation and linking guidance in [Compiling AI Engine Graphs for Independent Partitions](./independent_graphs.md).
 
 ## Generate AI Engine-only and PL-only XCLBIN
 
@@ -25,27 +25,27 @@ You must use the v++ packager to generate AI Engine-only and PL-only XCLBIN file
 
 To generate an AI Engine-only XCLBIN for a specific partition, use the following command:
 
-	${VCC} -p -s -t ${TARGET} -f ${XSA} \
-		--package.defer_aie_run \
-		--package.aie_overlay ./<PR>/libadf.a \
-		--output <PR>.xclbin 
+ ${VCC} -p -s -t ${TARGET} -f ${XSA} \
+  --package.defer_aie_run \
+  --package.aie_overlay ./<PR>/libadf.a \
+  --output <PR>.xclbin
 
 * PL-only XCLBIN: Contains PL metadata.
 
 To generate PL-only XCLBIN, use the following command:
 
-	${VCC} -p -s -t ${TARGET} -f ${XSA} \
-		--config package_pl_only.cfg \
-		--output pl.xclbin 
+ ${VCC} -p -s -t ${TARGET} -f ${XSA} \
+  --config package_pl_only.cfg \
+  --output pl.xclbin
 
 The content of `package_pl_only.cfg`:
 
-	[advanced]
-	param=package.generateFlatPlVersalXclbin=1
+ [advanced]
+ param=package.generateFlatPlVersalXclbin=1
 
-For more information on generating AI Engine-only and PL-only XCLBIN, please refer to [UG1076: Programming-the-PS-Host-Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
+For more information on generating AI Engine-only and PL-only XCLBIN, refer to [UG1076: Programming-the-PS-Host-Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
 
-## Host code for controlling Graph and Partition Reloading
+## Host Code for Controlling Graph and Partition Reloading
 
 The host code for controlling graph and partition reloading usually contains following steps:
 
@@ -53,7 +53,7 @@ The host code for controlling graph and partition reloading usually contains fol
 
 2. Load the PL-only XCLBIN and retrieve the PL UUID. Then, create a hardware context for the PL region.
 
-3. Load the AI Engine-only XCLBIN and retrieve the AI Engine UUID. Create hardware contexts for AI Engine partitions as needed—multiple contexts can be created for different partitions.
+3. Load the AI Engine-only XCLBIN and retrieve the AI Engine UUID. Create hardware contexts for AI Engine partitions as needed. You can create multiple contexts for different partitions.
 
 4. Create buffer objects, PL kernel handles, and graph handles. Each object or handle is associated with a specific hardware context.
 
@@ -121,29 +121,25 @@ Following is an example code for controlling graph and associated GMIO data tran
 	delete ghdl;
 	delete hwctx_1;
 
+**NOTE** In Vitis 2025.2, host applications that use xrt::aie::buffer and async calls (that is, bufIn->async() ) can encounter runtime failure because AIE resources remains allocated after the deleting the buffer/graph/hw_context objects, preventing subsequent xclbin loads. Symptoms include errors such as:
 
-
-**NOTE** 
-
-In Vitis 2025.2, host applications that use xrt::aie::buffer and async calls ( i.e; bufIn->async() ) may encounter runtime failure because AIE resources remains allocated after the deleting the buffer/graph/hw_context objects, preventing subsequent xclbin loads.  Symptoms include errors such as:
-
-[drm:zocl_create_aie [zocl]] *ERROR* Request AIE partition 262, -22
+[drm:zocl_create_aie [zocl]] *ERROR* Request AIE partition 262,–22
 [drm:zocl_aie_request_part_fd [zocl]] *ERROR* AIE partition 262 does not exist.
 
-As a workaround in 25.2, applications should explicitly call wait() on each xrt::aie::buffer that was launched via async() before deleting the hw context or ending of the applicaiton as shown below
+As a workaround in 25.2, applications should explicitly call wait() on each xrt::aie::buffer launched using async() before deleting the hw context or ending the application (shown as follows).
 
 	bufIn->wait();
 	bufIn2->wait();
 
-**Reloading partition**
+**Reloading Partition**
 
 To reload the same partition multiple times, there can be multiple approaches:
 
-1. Exit and restart the application. When the hardware context is created again in host code, the corresponding AI Engine PDI is reloaded into the partition.
+1. Exit and restart the application. When you create the hardware context again in host code, the corresponding AI Engine PDI reloads into the partition.
 
-2. Use C++ `new` and `delete` to explicitly allocate and destroy the hardware context (along with any objects created on it) before each reload, shown as above code. When the hardware context is created by the `new` method, the corresponding AI Engine PDI is reloaded into the partition.
+2. Use C++ `new` and `delete` to explicitly allocate and destroy the hardware context (along with any objects created on it) before each reload, shown as above code. When the hardware context is created by the `new` method, the corresponding AI Engine PDI reloads into the partition.
 
-3. Leverage C++ local scoping to ensure that the AI Engine hardware context and its associated operations are created and automatically destroyed between reloads.
+3. Leverage C++ local scoping. This ensures that the AI Engine hardware context and its associated operations are created and automatically destroyed between reloads.
 
 For example (where the sub-function serves as the local scope between reloads):
 
@@ -195,7 +191,7 @@ For example (where the sub-function serves as the local scope between reloads):
 		s2mm_run.wait();
 		out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 	
-		int match = 0;	
+		int match = 0;
 		int base=10;
 		for (int i = 0; i < ITERATION; i++) {
 			for(int j=0;j<ELEM_per_iter;j++){
@@ -243,7 +239,7 @@ Note that all above concepts apply on the following reference designs:
 
 ## Reference Design 1: (./partition_reload_same_graph)
 
-The design contains 3 partitions in directories `partition_reload_same_graph/pr0_gmio`, `partition_reload_same_graph/pr1_rtp` and `partition_reload_same_graph/pr2_perf`. The graph code can be found in `aie` directories in the partitions. The host code for running each partition seperately can be found in `sw` directories in the partitions. And the `partition_reload_same_graph/sw` directory contains host code for controlling multiple partitions. 
+The design contains 3 partitions in directories `partition_reload_same_graph/pr0_gmio`, `partition_reload_same_graph/pr1_rtp` and `partition_reload_same_graph/pr2_perf`. The graph code is in the `aie` directories in the partitions. The host code for running each partition seperately can be found in the `sw` directories in the partitions. And the `partition_reload_same_graph/sw` directory contains host code for controlling multiple partitions.
 
 To build design ready for HW, run the following command:
 
@@ -252,7 +248,7 @@ cd <TUTORIAL_PATH>/partition_reload_same_graph
 make package
 ```
 
-Boot with sd_card.img and change the working directory to `/run/media/mmcblk0p1`. Run applications to control the separate partitions (each exe controls one partition):
+Boot with `sd_card.img` and change the working directory to `/run/media/mmcblk0p1`. Run applications to control the separate partitions (each `exe` controls one partition):
 
 ```
 ./host0.exe pr0.xclbin
@@ -323,9 +319,8 @@ After completing this tutorial, you learned:
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-

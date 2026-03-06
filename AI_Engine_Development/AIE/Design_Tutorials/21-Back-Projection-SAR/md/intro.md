@@ -17,21 +17,21 @@
 ## Introduction
 
 ### Goals
-This tutorial implements the Back-Projection (BP) algorithm for Synthetic Aperture Radar (SAR) on AI Engines. The goal is to show a larger system design example with several different computational workloads. BP makes a good example because it contains a half-dozen workloads with different characteristics that must be stitched together into an efficient data flow between DDR and the AI Engine over the NoC using GMIO. The tutorial shows the following AI Engine design concepts:
+
+This tutorial implements the Back-Projection (BP) algorithm for Synthetic Aperture Radar (SAR) on AI Engines. The goal is to show a larger system design example with several different computational workloads. BP makes a good example because it contains six workloads with different characteristics. These must be stitched together into an efficient data flow between DDR and the AI Engine over the NoC using GMIO. The tutorial shows the following AI Engine design concepts:
 
 * Using system partitioning methodology to plan and de-risk a larger system design example.
 * Using multi-rate AI Engine scheduling to coordinate processing of different workloads at the system level.
-* Implementing vectorized function approximation kernels for `cos()`, `sin()` and `sqrt()` using new Vitis DSP Library IPs.
+* Implementing vectorized function approximation kernels for `cos()`, `sin()` and `sqrt()` using new Vitis DSP Library IP cores.
 * Managing dynamic range across several AI Engine kernels and compute workloads.
 * Optimizing the throughput performance of a single AI Engine compute engine.
 * Illustrating how to parallelize the system level application across multiple compute engines to increase throughput.
 
 ### GOTCHA Volumetric SAR Data Set
 
-This tutorial uses the "GOTCHA Volumetric SAR Data Set" [[1]] to develop, validate, test, and characterize the performance of the BP algorithm on AI Engines. This data set is from the U.S. Air Force Sensor Data Management System and is available for public download from the following link. The repository consists of SAR phase history data. The data was collected at X-band with a 640 MHz bandwidth, and full azimuth coverage at eight elevation angles with full polarization. The target scene consists of many civilian vehicles and calibration targets. 
+This tutorial uses the "GOTCHA Volumetric SAR Data Set" [[1]] to develop, validate, test, and characterize the performance of the BP algorithm on AI Engines. This data set is from the U.S. Air Force Sensor Data Management System and is available for public download from the following link. The repository consists of SAR phase history data. The data was collected at X-band with a 640 MHz bandwidth, and full azimuth coverage at eight elevation angles with full polarization. The target scene consists of many civilian vehicles and calibration targets.
 
 To run the design examples provided in this tutorial, download the GOTCHA data set to `<path-to-tutorial>/GOTCHA-CP` such that each of its eight different elevation angle folders appear as `<path-to-tutorial>/GOTCHA-CP/DATA/pass1` through `<path-to-tutorial>/GOTCHA-CP/DATA/pass8`, respectively.
-
 
 ### References
 

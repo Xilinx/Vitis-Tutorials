@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -20,10 +20,13 @@
 ```
 make all
 ```
+
 or, follow steps 1 and 2 as follows:
 
 ## Step 1: Compile Host Software
+
 Following is an example of how to compile the `../Module_02_aie/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp` file.
+
 ```
 XFLIB_DIR_REL_PATH :=$(DSPLIB_VITIS)/data_mover
 XFLIB_DIR := $(shell readlink -f $(XFLIB_DIR_REL_PATH))
@@ -48,9 +51,11 @@ $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ -Wall -c
                       -o ./build/aie_control_xrt.o
                       ../Module_02_aie/build/Work_x4_x100/ps/c_rts/aie_control_xrt.cpp
 ```
+
 The same compilation options were used to compile the `host/nbody.cpp`, `host/log.cpp`, `host/main_xrt.cpp`, and `host/main_animate.cpp` files.
 
 ## Step 2: Link Host Software
+
 Following is an example of how to link the `build/aie_control.o`, `build/nbody.o`, `build/log.o`, and `build/ps_app.o` into a `build/ps_app.exe` executable:
 
 ```
@@ -69,9 +74,11 @@ $(XILINX_VITIS)/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ ./build/
                       -L$(XILINX_VITIS)/aietools/lib/aarch64.o  \
                       -o ./build/ps_app.exe
 ```
+
 The same linking options were used to generate the `build/ps_app_animate.exe` executable.
 
-## Host Software  
+## Host Software
+
 After you implement the full hardware design, the next step is to focus on the host software that enables the entire design. In the AMD Vitis™ core development kit, host code is in C++ language using the Xilinx® runtime (XRT) API. The [XRT site](https://xilinx.github.io/XRT/master/html/xrt_native_apis.html) describes the native XRT API.
 
 This module compiles the following host applications and custom APIs:
@@ -82,12 +89,14 @@ This module compiles the following host applications and custom APIs:
 * `host/main_animate.cpp` - Host application that runs the design for multiple iterations and saves position data to a file to post-process and create an `animation.gif` later.
 
 ## NBodySimulator API
+
 The NBodySimulator API is a C++ implementation of an N-Body Simulator which runs on the native A72 processor. It also writes the position data to an `animation_data.txt` file, which you post-process later to create an `animation.gif`.
 
 ## Logger API
+
 The Logger API saves logging messages from the host applications to the `run.log` file. The host application can set the log level of which messages are written to the `run.log` and which messages display on the console during execution. By default, the log level is `LMESSAGE`. This setting writes all messages to `run.log`. The cout log level is set to `LINFO`, meaning any messages set to `LINFO` also display on the output console during execution.
 
-### Log Levels:
+### Log Levels
 
 * LMESSAGE
 * LINFO
@@ -95,9 +104,10 @@ The Logger API saves logging messages from the host applications to the `run.log
 * LNONE
 
 ## Host Applications
-The `host/main_xrt.cpp` host application is compiled into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `mm2s_mp` PL kernel's `ibuff` and `jbuff` DDR buffer inputs. This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. Once the `s2mm_mp` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_golden_i_k0.txt`, `s2m_golden_i_k1.txt`, `s2m_golden_i_k2.txt`, and `s2m_golden_i_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
 
-The `host/main_animate.cpp` host application is compiled into the `build/ps_animate.exe` executable. This host application does the following:
+The `host/main_xrt.cpp` host application compiles into the `build/ps_app.exe` executable. This host application reads in the `m2s_i.txt` and `input_j.txt` files that initalize the `mm2s_mp` PL kernel's `ibuff` and `jbuff` DDR buffer inputs. This host application starts the PL kernels and the AI Engine graph and waits for one iteration of data to flow through the design. When the `s2mm_mp` PL kernel completes, this host application compares the AI Engine output to the golden output files (`s2m_golden_i_k0.txt`, `s2m_golden_i_k1.txt`, `s2m_golden_i_k2.txt`, and `s2m_golden_i_k3.txt` files). If there are any data mismatches, then the `TEST FAILED`, else the `TEST PASSED`. If you provide the `--profile` command line input, this host application also calculates the execution times for the C++ N-Body Simulator and the AI Engine N-Body Simulator for comparison.
+
+The `host/main_animate.cpp` host application compiles into the `build/ps_animate.exe` executable. This host application does the following:
 
 * uses the NBodySimulator API to generate initial data (`input_i` and `input_j`)
 * save the position data (x,y,and z) for all 12,800 particles to the `animation_data.txt`
@@ -122,11 +132,9 @@ The following figure shows the general execution flow for the host applications.
 
 * [Vitis Building-and-Running-the-Application Documentation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Building-and-Running-the-System)
 
-
 ## Next Steps
+
 After compiling the host software, you are ready to create the sd_card.img and run the design on hardware in the next module ([Module 06 - SD Card and Hardware Run](../Module_06_sd_card_and_hw_run)).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

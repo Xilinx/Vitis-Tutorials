@@ -63,7 +63,7 @@ Flash the `sd_card.img` to an sd card and boot your VCK190 production board.
 
 **Step 5.** Connect your computer to the VCK190 board using the included USB cable.
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
+**Step 6.** Open a Tera Term terminal and select the correct COM port. Set the port settings to the following:
 
 ```
 Port: <COMMXX>
@@ -79,7 +79,7 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 8.** Wait until you see the `root@versal-rootfs-common-<tools-version>` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
-**Step 9.** Run the following commands into the TeraTerm terminal:
+**Step 9.** Run the following commands into the Tera Term terminal:
 
 ```
 cd /mnt/sd-mmcblk0p1
@@ -104,7 +104,7 @@ Next profile and compare the execution times for the C++ N-Body Simulator runnin
 ./ps_app.exe --timesteps 1 --profile
 ```
 
-The output on the console should be something like this:
+The output on the console displays similar to the following:
 
 ```
 Initializing ADF API...
@@ -147,12 +147,9 @@ scp animation_data.txt <user>@<ip-address>:/<project-dir>/Module_07_results/data
 
 After running the design on hardware, you can compare the performance between the Python, C++, and AI Engine NBody Simulators in the next module, [Module 07 - Results](../Module_07_results).
 
-
 ### Support
 
 GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

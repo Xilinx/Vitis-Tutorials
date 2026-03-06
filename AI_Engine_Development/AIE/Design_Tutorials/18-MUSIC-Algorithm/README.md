@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -39,7 +39,7 @@
 
 ## Introduction
 
-This tutorial implements the Multiple Signal Classification (MUSIC) Algorithm [1] on the AI Engine. MUSIC is a popular algorithm for Direction of Arrival (DOA) estimation in antenna array systems. This tutorial assumes a system model with an 8-element uniform linear array (ULA). The algorithm chosen for AI Engine implementation operates directly on 128 x 8 data snapshots using a QR-Factorization followed by a Singular Value Decomposition (SVD) to obtain the basis vectors of the noise subspace. The QRD algorithm uses the well known modified Gram-Schmidt approach. The SVD algorithm adopts a one-sided Jacobi rotation approach with a fixed set of four iterations. 
+This tutorial implements the Multiple Signal Classification (MUSIC) Algorithm [1] on the AI Engine. MUSIC is a popular algorithm for Direction of Arrival (DOA) estimation in antenna array systems. This tutorial assumes a system model with an 8-element uniform linear array (ULA). The algorithm chosen for AI Engine implementation operates directly on 128 x 8 data snapshots using a QR-Factorization followed by a Singular Value Decomposition (SVD) to obtain the basis vectors of the noise subspace. The QRD algorithm uses the well known modified Gram-Schmidt approach. The SVD algorithm adopts a one-sided Jacobi rotation approach with a fixed set of four iterations.
 
 This tutorial implements the MUSIC algorithm fully in the AI Engine and validates its performance in real time hardware running on the VC1902 device (-2M speed grade) on the VCK190 evaluation board. A Hardware-in-the-Loop (HIL) demonstrator connects a host computer running MATLAB® over TCP/IP to the VCK190 board that delivers buffered array snapshots to the board and receives DOA estimates back in real time to demonstrate a best effort DOA estimation throughput rate of 1 MHz. The following table summarizes the system parameters for this tutorial.
 
@@ -71,7 +71,7 @@ The signal $\textbf{a}(t)=[a_1(t),\ldots,a_N(t)]$ received by the ULA at time $t
 
 ## Subspace Algorithm
 
-MUSIC performs DOA estimation using a subspace approach involving a peak search across the noise subspace of the array. The critical first step requires identification of the basis vectors of this noise subspace. Several approaches are possible. Eigenspace methods are popular. This tutorial adopts an algorithm based on QR-Decomposition and SVD as these algorithms can be implemented efficiently on the AI Engine. Data flow is simplified because this approach operates directly on the snapshot matrix $\textbf{A}$. 
+MUSIC performs DOA estimation using a subspace approach involving a peak search across the noise subspace of the array. The critical first step requires identification of the basis vectors of this noise subspace. Several approaches are possible. Eigenspace methods are popular. This tutorial adopts an algorithm based on QR-Decomposition and SVD because you can implement these algorithms efficiently on the AI Engine. Data flow is simplified because this approach operates directly on the snapshot matrix $\textbf{A}$. 
 
 The following figure demonstrates the overall concept. The snapshot matrix $\textbf{A}$ is "tall and skinny" with dimensions $128\times 8$. The basis vectors of the noise subspace $\textbf{V}_r$ may be computed from a two step procedure. First, a QR-Decomposition of the snapshot matrix $\textbf{A}=\textbf{Q}\textbf{R}$ produces the $\textbf{R}$ matrix with upper triangular portion $\textbf{R}_r$. The $\textbf{Q}$ matrix may be discarded. Second, the SVD of $\textbf{R}_r=\textbf{U}_r\textbf{S}_r\textbf{V}_r^\dagger$ provides a basis for the desired noise subsplace by selecting the appropriate columns of $\textbf{V}_r^\dagger$ based on identifying the noise subspace singular values from $\textbf{S}_r$. This subspace identification may be performed simply by extracting the $S$ smallest singular values if $S$ is known, or the # of active signals may be identified online using simple (that is, "thresholding") or more advanced (that is, "information theoretic") techniques. This tutorial assumes $S$ is known.
 
@@ -79,19 +79,19 @@ The following figure demonstrates the overall concept. The snapshot matrix $\tex
 
 ## MUSIC Spectrum Estimation
 
-Once identified, MUSIC uses the columns of the noise subspace $\textbf{V}_r$ to identify incident signal directions orthogonal to that subspace. This involves sweeping the steering vector (as a function of the DOA) against these noise subspace basis vectors to compute the strength of the so-called MUSIC pseudo-spectrum given in the following equation. The index $P$ represents the index of the first noise singular value (assuming they have been sorted in descending order). Also $\textbf{V}_r(j)$ denotes the $j$-th column of $\textbf{V}_r$. Once again, $P$ may be assumed known or estimated using various techniques. The $\times$ operator below represents an inner product. The $\textbf{s}(k)$ represents the steering vector which is a function of the array manifold and the presumed direction of arrival.
+When identified, MUSIC uses the columns of the noise subspace $\textbf{V}_r$ to identify incident signal directions orthogonal to that subspace. This involves sweeping the steering vector (as a function of the DOA) against these noise subspace basis vectors to compute the strength of the so-called MUSIC pseudo-spectrum given in the following equation. The index $P$ represents the index of the first noise singular value (assuming they have been sorted in descending order). Also $\textbf{V}_r(j)$ denotes the $j$-th column of $\textbf{V}_r$. You can assume $P$ is known or estimated using various techniques. The $\times$ operator below represents an inner product. The $\textbf{s}(k)$ represents the steering vector which is a function of the array manifold and the presumed direction of arrival.
 
 ![figure](images/music-spectrum-equation.png)
 
-MUSIC may solve the preceding equation either directly by looking for the peaks of the pseudo-spectrum that occur when the steering vector becomes orthogonal to the noise subspace. This occurs in the preceding equation when its denominator goes to zero. Computing these peaks requires a costly division operator. Instead, the denominator can inspect instead for its nulls. This typically gives a similar result but requires no division operator. This tutorial uses the latter approach to reduce the compute workload. 
+MUSIC can solve the preceding equation either directly by looking for the peaks of the pseudo-spectrum that occur when the steering vector becomes orthogonal to the noise subspace. This occurs in the preceding equation when its denominator goes to zero. Computing these peaks requires a costly division operator. Instead, the denominator can inspect instead for its nulls. This typically gives a similar result but requires no division operator. This tutorial uses the latter approach to reduce the compute workload. 
 
 ## MATLAB Model
 
-MATLAB models of MUSIC validate the algorithmic approach taken and provide a means to synthesize I/O data for the AI Engine implementation. The system model may be found in the `<path-to-repo>/matlab/System` folder. You can configure the system parameters shown in the following code in the `Configuration/testCfg.m` file. After editing this file (or going with its default settings), you can run the MUSIC model using the `testMusic.m` script from the `<path-to-repo>/matlab/System` folder.
+MATLAB models of MUSIC validate the algorithmic approach taken and provide a means to synthesize I/O data for the AI Engine implementation. The system model is in the `<path-to-repo>/matlab/System` folder. You can configure the system parameters shown in the following code in the `Configuration/testCfg.m` file. After editing this file (or going with its default settings), you can run the MUSIC model using the `testMusic.m` script from the `<path-to-repo>/matlab/System` folder.
 
 ![figure](images/testCfg-MATLAB-model.png)
 
-Running the MATLAB model produces the console and figure output as follows. It shows statistics for the accuracy of the Gram-Schmidt QRD used by the tutorial versus the built-in `qr()` MATLAB function. The consolde also provides the difference between the MATLAB `svd()` versus the one-sided Jacobi algorithm with four iterations used by the tutorial. The figure plots the peaks of the MUSIC pseudo-spectrum along with the nulls of its corresponding denominator which are identified instead by the approach adopted in the tutorial. As well as the console and figure output, the MATLAB model generates a detailed dump of the system signals in the top-level `data` folder.
+Running the MATLAB model produces the console and figure output as follows. It shows statistics for the accuracy of the Gram-Schmidt QRD used by the tutorial versus the built-in `qr()` MATLAB function. The consolde also provides the difference between the MATLAB `svd()` versus the one-sided Jacobi algorithm with four iterations used by the tutorial. The figure plots the peaks of the MUSIC pseudo-spectrum along with the nulls of its corresponding denominator which are identified instead by the approach adopted in the tutorial. The MATLAB model generates a detailed dump of the system signals, as well as console and figure output in the top-level `data` folder.
 
 ![figure](images/testMusic-console-output.png)
 
@@ -99,11 +99,11 @@ Running the MATLAB model produces the console and figure output as follows. It s
 
 ## AI Engine Subgraph Designs
 
-The full MUSIC algorithm on AI Engine is built from a data flow graph containing six different subgraphs: IO Adapter, QRD, SVD, DOA, Scanner, and Finder. This section provides an overview of each one of these subgraphs.
+The full MUSIC algorithm on AI Engine is built from a data flow graph containing six different subgraphs. These are: IO Adapter, QRD, SVD, DOA, Scanner, and Finder. This section provides an overview of each one of these subgraphs.
 
 ### IO Adapter Subgraph
 
-The IO Adapter subgraph delivers the $\textbf{A}$ matrix from the input PLIO to the QRD subgraph. Buffers are used for I/O for all downstream MUSIC subgraphs. All of these subgraphs may use a single I/O buffer read over a high bandwidth memory interface, moving from tile to tile in a linear fashion. This is clarified in more detail in the following section. No bandwidth limitations are encountered downstream due to this use of the 256-bit AI Engine memory interface. However, the design must be fed by two PLIO streams @ 32-bits for 1250 MHz to achieve a 1 $\mu s$ throughput overall. The IO Adapter subgraph sinks two input PLIO streams and combines them into a single output buffer containing the input $\textbf{A}$ matrix to be processed by the first QRD subgraph. Two streams are required because the $128\times 8$ elements of $\textbf{A}$ cannot be transferred over a single PLIO in 1 $\mu s$. The following block diagram shows the AI Engine physical array view for the IO Adapter subgraph.
+The IO Adapter subgraph delivers the $\textbf{A}$ matrix from the input PLIO to the QRD subgraph. All downstream MUSIC subgraphs use buffers. These subgraphs can use a single I/O buffer read over an HBM interface, moving from tile to tile in a linear fashion. The folowing section explains this in detail. No bandwidth limitations are present downstream due to the use of the 256-bit AI Engine memory interface. However, two PLIO streams @ 32-bits for 1250 MHz must feed the design to achieve a 1 $\mu s$ throughput overall. The IO Adapter subgraph sinks two input PLIO streams. It then combines them into a single output buffer containing the input $\textbf{A}$ matrix for processing by the first QRD subgraph. This requires two streams because the $128\times 8$ elements of $\textbf{A}$ cannot transfer over a single PLIO in 1 $\mu s$. The following block diagram shows the AI Engine physical array view for the IO Adapter subgraph.
 
 ![figure](images/io-adapter-physical-array.png)
 
@@ -191,7 +191,7 @@ function [U,S,V] = svd_one_sided_jacobi( A, max_iter )
 end
 ```
 
-For completeness, the following MATLAB code defines the compute workload for the one-sided Jacobi rotation. This renders the two vectors `Xv` and `Yv` orthogonal. This workload contains some vectorizable dot product operations along with some $sqrt()$, $inv()$, and squaring operations. These can map to the AI Engine vector data path or can leverage the non-linear hardware accelerator on the scalar data path. 
+For completeness, the following MATLAB code defines the compute workload for the one-sided Jacobi rotation. This renders the two vectors `Xv` and `Yv` orthogonal. This workload contains some vectorizable dot product operations along with some $sqrt()$, $inv()$, and squaring operations. These can map to the AI Engine vector datapath or can leverage the non-linear hardware accelerator on the scalar datapath.
 
 ```
 function [res] = calc_ei_2t(x,y)
@@ -231,17 +231,17 @@ end
 
 You can parallelize the SVD across multiple AI Engine tiles in a manner similar to the QRD. The most aggressive scheme assigns a single AI Engine tile to each inner-most loop body—in essence the system of three nested loops fully flattens. It turns out this scheme is overkill for the throughput target of 1 $\mu s$. Instead, it is possible to partition three inner loop body workloads to each AI Engine tile and still meet the requirement. This saves considerable resources; The SVD requires only $38$ tiles in total.
 
-The following screenshot shows the kernel object creation in the `adf::graph` of the SVD graph implementation in `svd_graph.h`. The code comments indicate which indices $(p,q)$ are assigned to each tile. Each tile is assigned three inner loop workloads. The last tile is only assigned two inner loop workloads. However, the last tile also performs the final workload to compute the singular values required by the MUSIC algorithm for identifying the noise subspace basis vectors. 
+The following screenshot shows the kernel object creation in the `adf::graph` of the SVD graph implementation in `svd_graph.h`. The code comments indicate which indices $(p,q)$ are assigned to each tile. Each tile is assigned three inner loop workloads. The last tile is only assigned two inner loop workloads. However, the last tile also performs the final workload to compute the singular values required by the MUSIC algorithm for identifying the noise subspace basis vectors.
 
 ![figure](images/svd-loop-unrolling-to-tiles.png)
 
-The following diagram shows the AI Engine physical array view for the SVD subgraph. The data flow graph has a linear structure similar to the QRD graph, although requires less memory resources. This is because the $\textbf{U}$, $\textbf{S}$, and $\textbf{V}$ matrices are all $8\times 8$ in this case. 
+The following diagram shows the AI Engine physical array view for the SVD subgraph. The data flow graph has a linear structure similar to the QRD graph, although requires less memory resources. This is because the $\textbf{U}$, $\textbf{S}$, and $\textbf{V}$ matrices are all $8\times 8$ in this case.
 
 ![figure](images/svd-physical-array.png)
 
 ### DOA Subgraph
 
-The DOA subgraph estimates the MUSIC Spectrum $\hat{\textbf{P}}_m$ defined earlier at $256$ equally spaced bins. To achieve the target throughput of 1 $\mu s$, the workload is partitioned across a number of tiles where each tile computes the spectrum for $L$ consecutive points. The following diagram shows this. Meeting the throughput requires a value of $L=4$, equivalent to $64$ AI Engine tiles. 
+The DOA subgraph estimates the MUSIC Spectrum $\hat{\textbf{P}}_m$ defined earlier at $256$ equally spaced bins. To achieve the target throughput of 1 $\mu s$, the workload is partitioned across a number of tiles where each tile computes the spectrum for $L$ consecutive points. The following diagram shows this. Meeting the throughput requires a value of $L=4$, equivalent to $64$ AI Engine tiles.
 
 ![figure](images/doa-sw-pipelining.png)
 
@@ -251,11 +251,11 @@ The following diagram shows the AI Engine physical array view for the DOA subgra
 
 ### Scanner Subgraph
 
-The Scanner subgraph performs a coarse-grained search of the MUSIC spectrum computed by the DOA subgraph, looking for regions of the spectrum that fall under a "null threshold". The Scanner breaks apart the $256$ spectrum bins into $32$ contiguous groups of $8$ bins each. It produces $32$ output tags that set to true if there exists a bin value in that group which falls under the given null threshold. Meeting the 1 $\mu s$ throughput target requires two AI Engine tiles, where each tile processes $128$ of the $256$ available bins. The following diagram outlines this algorithmic approach.
+The Scanner subgraph performs a coarse-grained search of the MUSIC spectrum computed by the DOA subgraph, looking for regions of the spectrum that fall under a "null threshold." The Scanner breaks apart the $256$ spectrum bins into $32$ contiguous groups of $8$ bins each. It produces $32$ output tags that set to true if there exists a bin value in that group which falls under the given null threshold. Meeting the 1 $\mu s$ throughput target requires two AI Engine tiles, where each tile processes $128$ of the $256$ available bins. The following diagram outlines this algorithmic approach.
 
 ![figure](images/scanner-algorithm.png)
 
-The following diagram shows the AI Engine physical array view for the Scanner subgraph. As noted previously, the design requires $2$ tiles and some additional storage for I/O buffers. 
+The following diagram shows the AI Engine physical array view for the Scanner subgraph. As noted previously, the design requires $2$ tiles and some additional storage for I/O buffers.
 
 ![figure](images/scanner-physical-array.png)
 
@@ -271,15 +271,15 @@ This section provides an overview of the top-level VC1902 design of the MUSIC al
 
 ![figure](images/music-vivado-ipi.png)
 
-The following diagram shows the final AI Engine physical array floorplan for the MUSIC design. Some minimal floorplanning steers the kernel locations by the tools. You could do additional floorplanning to tighten up the local tile memory placements. The tiles associated with each MUSIC subgraph have been color coded for ease of identification. The design consists of six different subgraphs: IO Adapter $(1)$, QRD $(36)$, SVD $(38)$, DOA $(64)$, Scanner $(2)$, Finder $(16)$. The full design requires a total of $157$ compute tiles. Arrows in the diagram identify the "snake-like" data flow. Alternative placements are possible.
+The following diagram shows the final AI Engine physical array floorplan for the MUSIC design. Some minimal floorplanning steers the kernel locations by the tools. You can do additional floorplanning to tighten up the local tile memory placements. The tiles associated with each MUSIC subgraph have been color coded for ease of identification. The design consists of six different subgraphs: IO Adapter $(1)$, QRD $(36)$, SVD $(38)$, DOA $(64)$, Scanner $(2)$, Finder $(16)$. The full design requires a total of $157$ compute tiles. Arrows in the diagram identify the "snake-like" data flow. Alternative placements are possible.
 
 ![figure](images/music-physical-array.png)
 
-The following diagram shows the final PL floorplan of the VC1902 device. Most of these highlighted resources involve circuitry required to support the base platform of the VCK190 evaluation board and are not related to the MUSIC algorithm itself. 
+The following diagram shows the final PL floorplan of the VC1902 device. Most of these highlighted resources involve circuitry required to support the base platform of the VCK190 evaluation board and are not related to the MUSIC algorithm itself.
 
 ![figure](images/music-vivado-floorplan.png)
 
-The following diagram captures the device level resource utilization of the VC1902 device. The design is using a small portion of the available PL resources. 
+The following diagram captures the device level resource utilization of the VC1902 device. The design is using a small portion of the available PL resources.
 
 ![figure](images/music-vivado-resources.png)
 
@@ -312,7 +312,7 @@ export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
 
 ### Hardware Emulation
 
-This tutorial is not set up to run hardware emulation as it contains a full "Hardware-in-the-Loop" demonstrator outlined below. It is only necessary to build the top-level design for hardware to generate an SD card to run on the VCK190 evaluation board. 
+This tutorial is not set up to run hardware emulation as it contains a full "Hardware-in-the-Loop" demonstrator outlined as follows. It is only necessary to build the top-level design for hardware to generate an SD card to run on the VCK190 evaluation board.
 
 ### Hardware
 
@@ -323,7 +323,7 @@ You can build the design for the VCK190 evaluation board using the `Makefile` as
 [shell]% make all TARGET=hw
 ```
 
-The build process generates the SD card image in the `<path-to-repo>/package/sd_card` folder. 
+The build process generates the SD card image in the `<path-to-repo>/package/sd_card` folder.
 
 ## Hardware-in-the-Loop Demo
 
@@ -331,7 +331,7 @@ This section provides an overview of the HIL demo system, including how to use M
 
 ### Architecture
 
-The following diagram shows the architecture of the HIL system. It consists of a host computer connected to the VCK190 evaluation board. The HIL starts and terminates on the host computer. 
+The following diagram shows the architecture of the HIL system. It consists of a host computer connected to the VCK190 evaluation board. The HIL starts and terminates on the host computer.
 
 ![figure](images/hil-architecture.png)
 
@@ -342,7 +342,7 @@ The HIL system performs the following operational steps:
 1. A system MATLAB model that runs on the host computer generates a set of synthetic snapshots from a simulation model. $S$ targets are configured to move at constant velocities while emitting an EM signal. This results in incident signals towards the ULA with given angles with respect to the boresight direction.
 2. The host computer runs the MUSIC model on the generated snapshots and generates reference results for the detected DOAs. The results are compared to values produced by the AI Engine implementation. You can perform steps 1 and 2 again after Step 5.
 3. The VC1902 PS application initializes the hardware data path including memory buffers, PL data movers, and AI Engine configuration.
-4. The VC1902 PS application starts a TCP server to accept incoming TCP connection requests on a port specified via a command line parameter.
+4. The VC1902 PS application starts a TCP server to accept incoming TCP connection requests on a port specified through a command line parameter.
 5. The host computer starts a TCP client on the port number on which the TCP server accepts incoming TCP/IP packets.
 6. The TCP client on the host computer sends the configured number of snapshots in a single batch carried in TCP/IP packets. A frame encapsulates each snapshot in the batch. The frame includes a header that provides start of frame, a sequence number, snapshot type and several other system and MUSIC configuration parameters. See the [Appendix](#appendix).
 7. PS client data extracts the payload from incoming TCP/IP packets and collects data in the memory buffers in DDR4 before initiating the hardware pipeline.
@@ -372,7 +372,7 @@ The HIL system uses MATLAB version R2023a Update 4.
 
 ### MATLAB Folder Structure
 
-The MATLAB folder tree includes both the `HIL` folder and the `SYSTEM` folder. The HIL system does not use the `SYSTEM` folder — it contains golden system and MUSIC models. A copy of the MUSIC models is in the `HIL` folder and is used by the HIL system. So the `HIL` folder is self-contained.
+The MATLAB folder tree includes both the `HIL` folder and the `SYSTEM` folder. The HIL system does not use the `SYSTEM` folder—it contains golden system and MUSIC models. A copy of the MUSIC models is in the `HIL` folder and is used by the HIL system. So the `HIL` folder is self-contained.
 
 ![figure](images/hil-MATLAB0.png)
 
@@ -428,13 +428,13 @@ Step #2: Run the script `createDemoDir('dir-name')` to archive the generated bat
 
 You can run any archived snapshot data through the HIL system by continuing with the following steps.
 
-Step #3: Configure or update the highlighted parameters in the `Configuration/hilCfg.m` and save the file. This time set `cfg.demoData` to `'archived'` and then set `cfg.demoDataSet` to the name of the archived data set. 
+Step #3: Configure or update the highlighted parameters in the `Configuration/hilCfg.m` and save the file. This time set `cfg.demoData` to `'archived'` and then set `cfg.demoDataSet` to the name of the archived data set.
 
 ![figure](images/hil-MATLAB8.png)
 
 Step #4: Configure or update the IP address and port number in `TcpIp/getIpAddr.m` and save the file. This might already be correctly set.
 
-Step #5: Set the parameter `cfg.nSource` in the `Configuration/systemCfg.m` file to the number of sources to match the archived data. Run the `sendSnapshots.m` script. The script sends the archived shapshots to the remote server. The client enters listening mode and waits for a response from the server. When it receives the response, the MATLAB models launch visualization as outlined previously. Again, the TCP/IP server remains in listening mode for a fixed amount of time while the client performs data visualization. If the server receives no new data from the TCP/IP client during the wait time window, the server resends the previous responses, and MATLAB continues with data visualization. To send new data, send the `clear client` command again, as outlined earlier. 
+Step #5: Set the parameter `cfg.nSource` in the `Configuration/systemCfg.m` file to the number of sources to match the archived data. Run the `sendSnapshots.m` script. The script sends the archived shapshots to the remote server. The client enters listening mode and waits for a response from the server. When it receives the response, the MATLAB models launch visualization as outlined previously. Again, the TCP/IP server remains in listening mode for a fixed amount of time while the client performs data visualization. If the server receives no new data from the TCP/IP client during the wait time window, the server resends the previous responses, and MATLAB continues with data visualization. To send new data, send the `clear client` command again, as outlined earlier.
 
 ### Playback Videos
 
@@ -444,7 +444,7 @@ Playback videos are available under the `Video` folder after the visualization g
 
 ### Client and Server on MATLAB
 
-Use the following steps to run the HIL on two instances of MATLAB. Here you are not running MUSIC on the VCK190 evaluation board, but instead are using a second MATLAB instance to emulate the board. 
+Use the following steps to run the HIL on two instances of MATLAB. Here you are not running MUSIC on the VCK190 evaluation board, but instead are using a second MATLAB instance to emulate the board.
 
 Step #1: Start two instances of MATLAB. Set the root directory for the two instances to `HIL/MatlabClient` and `HIL/MatlabServer` respectively.
 
@@ -464,7 +464,7 @@ Step #6: The client instance plots the responses it receives.
 
 ## Conclusions
 
-This tutorial presented a high-performance AI Engine implementation of the popular MUSIC algorithm for estimating DOA using an antenna array. The MUSIC algorithm employed here adopts a QRD/SVD approach for subspace estimation that is well matched to the AI Engine compute capacity. Software pipelining techniques were employed to create a massively parallel data flow graph across $157$ AI Engine compute tiles to implement a high-performance implementation capable of processing $128\times 8$ data snaphots at a sustained throughput rate of 1 $\mu s$ per snapshot. The full MUSIC algorithm including noise subspace basis identification, MUSIC spectrum evaluation, and null detection is implemented fully in the AI Engine array with no supporting logic from PL required. A comprehensive Hardware-in-the-Loop demonstrator system is built using an external host running MATLAB to communicate to the VCK190 evaluation board over Ethernet. 
+This tutorial presented a high-performance AI Engine implementation of the popular MUSIC algorithm for estimating DOA using an antenna array. The MUSIC algorithm employed here adopts a QRD/SVD approach for subspace estimation that is well matched to the AI Engine compute capacity. Software pipelining techniques were employed to create a massively parallel data flow graph across $157$ AI Engine compute tiles to implement a high-performance implementation capable of processing $128\times 8$ data snaphots at a sustained throughput rate of 1 $\mu s$ per snapshot. The full MUSIC algorithm including noise subspace basis identification, MUSIC spectrum evaluation, and null detection is implemented fully in the AI Engine array with no supporting logic from PL required. A comprehensive Hardware-in-the-Loop demonstrator system is built using an external host running MATLAB to communicate to the VCK190 evaluation board over Ethernet.
 
 ## References
 
@@ -512,7 +512,6 @@ Connect the VCK190 board serial console to your computer (USBC port 8):
 3. Note the number of the first COM port, for example `COM10`.
 4. Run PuTTY and open the noted serial port with speed set to 115200.
 
-
 ![figure](images/appendix-putty-config.png)
 
 5. Set the board DIP switch 6 as shown below.
@@ -531,12 +530,12 @@ Connect the VCK190 board serial console to your computer (USBC port 8):
 
 9. If logging in for the first time, the system prompts you to set a new password. Follow the prompts.
 
-### Simple Ethernet Configuration 
+### Simple Ethernet Configuration
 
 Use the following steps when the VCK190 board and MATLAB host computer are on the same local network:
 
 1. Log in as root user on the VCK190 using `sudo su`.
-2. Connect the board to network via ethernet port 17 (the top one) and find the IP address it obtains over DHCP on the first ethernet port via `ifconfig eth0` (for example the obtained address may be 192.168.1.10).
+2. Connect the board to network using ethernet port 17 (the top one) and find the IP address it obtains over DHCP on the first ethernet port using `ifconfig eth0` (for example the obtained address can be 192.168.1.10).
 3. If DHCP is not available on your network, assign the board IP address manually. Make sure the IP address belongs to a valid subnet (for example `ifconfig eth0 192.168.1.10`).
 4. Note the board IP address and use it when connecting from MATLAB.
 
@@ -562,14 +561,14 @@ For remote testing through a corporate VPN connection, configure your network to
   * For example, the address is 192.168.137.79
   * NOTE: subnet 137 is automatically assigned by Windows
 * Again open the VPN network adapter Properties, Sharing tab.
-* Click the Settings… button and add a port forwarding rule such that the incoming TCP connections to a certain port forward to the VCK190 board. For example, Port 8888 must be the same port number the VCK190 host application is listening to.
+* Click **Settings…** and add a port forwarding rule such that the incoming TCP connections to a certain port forward to the VCK190 board. For example, Port 8888 must be the same port number the VCK190 host application listens to.
 
 ![figure](images/appendix-port-forwarding.png)
 
 * Apply the changes. At this point, any TCP connection originating from the VPN network to the specified port are forwarded to the board.
 * Note the IP address you will need for establishing the TCP connection. In this case, it is not the board IP address, but the VPN adapter IP address.
-  * Right-click the VPN network adapter, select Status, click Details…
-  * Note the IPv4 address, which will belong to your VPN subnet.
+  * Right-click the VPN network adapter, select Status, click **Details…**.
+  * Note the IPv4 address. This belongs to your VPN subnet.
   * Use this IP address when connecting from MATLAB.
 
 ### Running the PS Application
@@ -589,8 +588,8 @@ Use the following steps to test the Fidus MUSIC algorithm with MATLAB:
 ### Testing with MATLAB
 
 * Connect MATLAB to the board by specifying `<target ip address>:<tcp port>` as described in the network configuration section, and send the input data.
-* The application receives N input snapshots from MATLAB via the TCP protocol, extracts the payload data, initializes the input and output DMA memory buffers, and executes one or more iterations of the Fidus MUSIC algorithm implementation on the AIE engine.
-* The output data from N snapshots collects in the memory and is then sent back to MATLAB via the TCP connection. This happens one batch at a time, with a fixed delay between the batches.
+* The application receives N input snapshots from MATLAB using the TCP protocol, extracts the payload data, initializes the input and output DMA memory buffers, and executes one or more iterations of the Fidus MUSIC algorithm implementation on the AIE engine.
+* The output data from N snapshots collects in the memory and is then sent back to MATLAB using the TCP connection. This happens one batch at a time, with a fixed delay between the batches.
 * Observe the MATLAB visualization and the application console output.
 
 ![figure](images/appendix-host-app-responding.png)

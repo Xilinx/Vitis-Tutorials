@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -51,6 +51,7 @@ You can run this tutorial on the [VCK190 Board](https://www.xilinx.com/products/
       * [Embedded Platform VCK190 Base or VCK190 Base](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 
 ### *Environment*: Setting Up Your Shell Environment
+
 After installing the elements of the Vitis software platform, update the shell environment script. Set the necessary environment variables to your system specific paths for xrt, platform location, and AMD tools.
 
 1. Edit the `sample_env_setup.sh` script with your file paths:
@@ -86,8 +87,8 @@ which aiecompiler
 ## Goals of this Tutorial
 
 ### HPC Applications
-The goal of this tutorial is to create a general-purpose floating point accelerator for HPC applications. This tutorial demonstrates a x24,800 performance improvement using the AI Engine accelerator over the naive C++ implementation on the A72 embedded Arm® processor.
 
+The goal of this tutorial is to create a general-purpose floating point accelerator for HPC applications. This tutorial demonstrates a x24,800 performance improvement using the AI Engine accelerator over the naive C++ implementation on the A72 embedded Arm® processor.
 
 |Name|Hardware|Algorithm Complexity|Average Execution Time to Simulate 12,800 Particles for 1 Timestep (seconds)|
 |---|---|--|---|
@@ -103,18 +104,20 @@ Another goal of this tutorial is to showcase how to generate PL Data-Mover kerne
 
 The N-Body problem relates to predicting the motions of a group of N objects which each have a gravitational force on each other. For any particle `i` in the system, the summation of the gravitational forces from all the other particles results in the acceleration of particle `i`. From this acceleration, you can calculate a particle's velocity and its position (`x y z vx vy vz`) in the next timestep. Newtonian physics describes the behavior of very large bodies/particles within the universe. With certain assumptions, the laws can apply to bodies/particles ranging from astronomical size to a golf ball (and even smaller).
 
-#### 12,800 Particles simulated on a 400 tile AI Engine accelerator for 300 timesteps
+### 12,800 Particles Simulated on a 400 tile AI Engine Accelerator for 300 timesteps
 
 ![alt text](Module_07_results/images/animation.gif)
 
 The colormap simulates the Red Shift effect in astronomy. Red particles are farther away in space (`-z` direction). Blue particles are closer to you in space (`+z` direction).
 
 ### Newton's Second Law of Motion
+
 Newton's Second Law of motion (in mathmatical form) states the force on body (`i`) equals the body's mass times acceleration.
 
 ![alt text](images/newtons_second_law_eq.PNG)
 
 ### Gravity Equations - Two Bodies
+
 When the force on body `i` is caused by its gravitational attraction to body `j`, you can calculate that force using the following gravity equation:
 
 ![alt text](images/bodys_equation.PNG)
@@ -152,7 +155,7 @@ To calculate acceleration for the `x`, `y`, and `z` directions of any particle `
 When you have your accelerations, calculate the new velocities in the `x`, `y`, and `z` directions:
 ![alt text](images/velocity_equations_2.PNG)
 
-Using these gravity equations, you can calculate your particles' new positions and velocities `x y z vx vy vz` at timestep `t+1`. Then repeat the calculations for the next timestep after. If there are many particles in the system and/or you are simulating for many timesteps, the compute intensive nature of this problem becomes clear. This algorithm has a computational complexity of *O(N<sup>2</sup>)* due to the iterative nature of the process. This is a great opportunity for implementing an accelerator in hardware.
+Using these gravity equations, you can calculate your particles' new positions and velocities `x y z vx vy vz` at timestep `t+1`. Then repeat the calculations for the next timestep after. If there are many particles in the system and / or you are simulating for many timesteps, the compute intensive nature of this problem becomes clear. This algorithm has a computational complexity of *O(N<sup>2</sup>)* due to the iterative nature of the process. This is a great opportunity for implementing an accelerator in hardware.
 
 In Module_01-Python Simulations on x86, you can try the `nbody.py` to see how slow the particle simulation runs in software only. The particle simulation runs much faster with accelerators implemented in hardware (AI Engine).
 
@@ -161,11 +164,13 @@ You can vectorize this algorithm to reduce the complexity to O(N). In the AI Eng
 Source: [GRAPE-6: Massively-Parallel Special-Purpose Computer for Astrophysical Particle Simulations](https://academic.oup.com/pasj/article/55/6/1163/2056223)
 
 ### System Design Overview
-The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` device on the VCK190 board. The simulator consists of PL HLS datamover kernels from the AMD Vitis Utility Library (`mm2s_mp` and `s2mm_mp`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Additionaly, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
+
+The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` device on the VCK190 board. The simulator consists of PL HLS datamover kernels from the AMD Vitis Utility Library (`mm2s_mp` and `s2mm_mp`), custom HLS kernels that enable packet switching (`packet_sender` and `packet_receiver`), and a 400 tile AI Engine design. Also, the design consists of host applications that enable the entire design, verify the data coming out of the AI Engine, and run the design for multiple timesteps.
 
 ![alt text](images/System_diagram.PNG)
 
 #### Dataflow
+
 * The host applications store input data (`i` and `j`) in global memory (DDR) and turn on the PL HLS kernels (running at 300 MHz) and the AI Engine graph (running at 1GHz).
 * Data moves from DDR to the dual-channel HLS datamover kernel `mm2s_mp`. The `i` data goes into one channel and the `j` data goes into the other channel. Here, data movement switches from AXI-MM to AXI-Stream. The read/write bandwith of DDR is set to the default 0.04 Gbps.
 * The AI Engine graph performs packet switching on the `input_i` data, so the `i` data must be packaged appropriately before going to the AI Engine. So from the `mm2s_mp` kernel, the data streams to the HLS `packet_sender` kernel. The `packet_sender` kernel sends a packet header and appropriately asserts `TLAST` before sending packets of `i` data to the 100 `input_i` ports in the AI Engine.
@@ -177,26 +182,29 @@ The N-Body Simulator is implemented on an `XCVC1902 AMD Versal Adaptive SoC` dev
 
 *Note:* The entire design is a compute-bound problem, limited by how fast the AI Engine tiles compute the floating-point gravity equations. This is not a memory-bound design.
 
-## Where we are Headed....
+## Where we are Headed...
 
 Complete modules 01-07 in the following order:
 
 ### Module 01 - Python Simulations on x86
+
 The module shows a python implementation of the N-Body Simulator and execution times to run the N-Body Simulator on an x86 machine.
 
 [Read more ...](Module_01_python_sims/README.md)
 
 ### Module 02 - AI Engine Design
+
 This module presents the final 400 tile AI Engine design:
 
-  * A single AI Engine kernel (`nbody()`)
-  * An N-Body Subsystem with 4 `nbody()` kernels which are packet switched (`nbody_subsystem` graph)
-  * An N-Body System with 100 `nbody_subsystem` graphs (that is., 400 `nbody()` kernels) which use all 400 AI Engine tile resources
-  * Invoke the AI Engine compiler
+* A single AI Engine kernel (`nbody()`)
+* An N-Body Subsystem with 4 `nbody()` kernels which are packet switched (`nbody_subsystem` graph)
+* An N-Body System with 100 `nbody_subsystem` graphs (that is., 400 `nbody()` kernels) which use all 400 AI Engine tile resources
+* Invoke the AI Engine compiler
 
 [Read more...](Module_02_aie/README.md)
   
 ### Module 03 - PL Kernels
+
 This modules presents the PL HLS kernels:
 
 * Create datamover PL HLS kernels from AMD Vitis Utility Library
@@ -205,12 +213,15 @@ This modules presents the PL HLS kernels:
 [Read more...](Module_03_pl_kernels/README.md)
 
 ### Module 04 - Full System Design
+
 This module shows how to link the AI Engine design and PL kernels together into a single XCLBIN and view the actual hardware implementation Vivado™ solution.
 
 [Read more...](Module_04_xclbin/README.md)
 
 ### Module 05 - Host Software
+
 This module presents the host software that enables the entire design:
+
 * Create a functional host application that compares AI Engine output data to golden data
 * Create a C++ N-Body Simulator to profile and compare performance between the A72 processor and AI Engine
 * Create a host application that runs the system design for multiple timesteps and create animation data for post-processing
@@ -218,15 +229,19 @@ This module presents the host software that enables the entire design:
 [Read more...](Module_05_host_sw/README.md)
 
 ### Module 06 - SD Card and Hardware Run
+
 This module conducts the hardware run:
+
 * Create the `sd_card.img`
 * Execute the host applications and runs the system design on hardware
 * Save animation data from hardware run
 
 [Read more...](Module_06_sd_card_and_hw_run/README.md)
 
-### Module 07 - Results  
+### Module 07 - Results
+
 This module review the results of the hardware run:
+
 * Create an animation for 12,800 particle for 300 timesteps
 * Compare latency results between Python x86, C++ Arm A72, and AI Engine N-Body Simulator designs
 * Estimate the number of GFLOPS of the design
@@ -234,8 +249,10 @@ This module review the results of the hardware run:
 
 [Read more...](Module_07_results/README.md)
 
-### (Optional) x1_design and x10_design  
+### (Optional) x1_design and x10_design
+
 This tutorial contains 3 AI Engine designs:
+
 * x100_design (100 Compute Units using all 400 AI Engine tiles)
 * x10_design (10 Compute Units using 40 AI Engine tiles)
 * x1_design (1 Compute Unit using 4 AI Engine tiles)
@@ -243,9 +260,11 @@ This tutorial contains 3 AI Engine designs:
 Modules_01-07 builds walks through building the final 100 Compute Unit design. The intermediate designs (`x1_design` and `x10_design`) are also provided if you want to build an N-Body Simulator with shorter build times. Alternatively, use them to run hardware emulation in a reasonable amount of time.  
 
 ## Build Flows
+
 This tutorial has two build flows you can choose from depending on your comfort level with AMD design processes.  
 
 ### For Advanced Users
+
 If you are already familiar with the creating AI Engine designs and AMD Vitis projects, you may just want to build the entire design with a single command. You can do this by running the following command from the top-level folder:
 
 *Estimated Time: 6 hours*

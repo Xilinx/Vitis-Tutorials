@@ -19,11 +19,14 @@
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial, install Vitis™ 2025.2 software and download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial:
 
-Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
+* Install Vitis™ 2025.2 software
+* Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-The remaining environment variables are configured in the top level Makefile ```<path-to-design>/21-Back-Projection-SAR/Makefile``` file.
+Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found in [this link](../../../AIE#environment-settings).
+
+The remaining environment variables are configured in the top level Makefile ```<path-to-design>/21-Back-Projection-SAR/Makefile```.
 
 ```
 RELEASE=2025.2
@@ -42,6 +45,7 @@ export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
 ### Single Engine Design Build
 
 You can build the single engine SAR design for the VCK190 board using the Makefile as follows:
+
 ```
 [shell]% cd <path-to-design>/21-Back-Projection-SAR
 [shell]% make dev1
@@ -52,6 +56,7 @@ The build process with generate the SD card image in the ```<path-to-design>/21-
 ### Multiple Engine Design Build
 
 You can uild the multiple engine SAR design for the VCK190 board using the Makefile as follows:
+
 ```
 [shell]% cd <path-to-design>/21-Back-Projection-SAR
 [shell]% make dev8

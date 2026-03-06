@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -21,7 +21,7 @@
 
 [Introduction](#introduction)
 
-[Before You Begin](#Before-you-begin)
+[Before You Begin](#before-you-begin)
 
 [Building the LeNet Design](#building-the-lenet-design)
 
@@ -35,23 +35,23 @@
 
 ## Introduction
 
-The AMD Versal&trade; adaptive SoC AI Engine-Machine Learning (AIE-ML) series has emerged in response to the surging demand for machine learning and compute-intensive applications. This groundbreaking architecture integrates the AIE-ML, the dual-core Arm® Cortex®-A72, Cortex-R5F processor (PS), and leading-edge programmable logic (PL), interconnected through a high-bandwidth NoC. Collaboratively, the AIE-ML and PL synergize their unique capabilities to efficiently tackle specific functions. Crafted with a customized memory hierarchy, AI interconnect's multi-cast stream capability, and extensive support for AI-optimized vector instructions, the Versal adaptive SoC AIE-MLs are optimized for diverse compute-intensive applications. These systems notably outshine in areas such as machine learning inference acceleration within data center applications, achieving deterministic latency and minimal neural network latency while delivering outstanding performance per watt.
+The AMD Versal&trade; adaptive SoC AI Engine-Machine Learning (AIE-ML) series has emerged in response to the surging demand for machine learning and compute-intensive applications. This groundbreaking architecture integrates the AIE-ML, the dual-core Arm® Cortex®-A72, Cortex-R5F processor (PS), and leading-edge programmable logic (PL), interconnected through a high-bandwidth NoC. Collaboratively, the AIE-ML and PL synergize their unique capabilities to efficiently tackle specific functions. Crafted with a customized memory hierarchy, AI interconnect's multi-cast stream capability, and extensive support for AI-optimized vector instructions, the Versal adaptive SoC AIE-MLs are optimized for diverse compute-intensive applications. These systems excel in areas such as machine learning inference acceleration within data center applications. They achieve deterministic latency and minimal neural network latency while delivering outstanding performance per watt.
 
-This tutorial uses the LeNet algorithm to implement a system-level design to perform image classification using the AI Engine-ML and PL, including block RAM. The design demonstrates functional partitioning between the AI Engine-ML and PL. It also highlights memory partitioning and hierarchy among Memory tile, DDR memory, PL (block RAM) and AI Engine-ML memory.
+This tutorial uses the LeNet algorithm. It implements a system-level design to perform image classification using the AI Engine-ML and PL, including block RAM. The design demonstrates functional partitioning between the AI Engine-ML and PL. It also highlights memory partitioning and hierarchy among Memory tile, DDR memory, PL (block RAM) and AI Engine-ML memory.
 
 The tutorial takes you through hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system integration. You can modify the provided Makefile to suit your needs in a different context.
 
 ### Objectives
 
-After completing the tutorial, you should be able to:
+After you complete the tutorial, you can do the following:
 
-* Build a complete system design by going through the various steps in the AMD Vitis&trade; unified software platform flow, including creating the AI Engine-ML Adaptive Data Flow (ADF) API graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine-ML and HLS kernels with the platform and packaging the design. You will also be able to run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
+* Build a complete system design by going through the various steps in the AMD Vitis&trade; unified software platform flow, including creating the AI Engine-ML Adaptive Data Flow (ADF) API graph, compiling the A72 host application and compiling PL kernels, using the Vitis compiler (V++) to link the AI Engine-ML and HLS kernels with the platform and packaging the design. You can also run the design through the hardware emulation and hardware flow in a mixed System C/RTL cycle-accurate/QEMU-based simulator.
 * Develop an understanding of Convolutional Neural Network (CNN) layer details using the LeNet algorithm and understand how the layers map into data processing and compute blocks.
 * Develop an understanding of the kernels developed in the design; AI Engine-ML kernels to process fully connected convolutional layers and PL kernels to process the input rearrange and max pool and rearrange functions.
 * Develop an understanding of memory tiles and configuration of the shared buffer.
 * Develop an understanding of the AI Engine-ML IP interface using the AXI4-Stream interface.
 * Develop an understanding of memory hierarchy in a system-level design involving DDR memory, PL block RAM, and AI Engine-ML memory.
-* Develop an understanding of graph control APIs to enable run-time updates using the run-time parameter (RTP) interface.
+* Develop an understanding of graph control APIs to enable runtime updates using the runtime parameter (RTP) interface.
 * Develop an understanding of performance measurement and functional/throughput debug at the application level.
 
 <details>
@@ -59,7 +59,8 @@ After completing the tutorial, you should be able to:
 
 ## Tutorial Overview
 
-In this application tutorial, the LeNet algorithm performs image classification on an input image using five AI Engine-ML tiles and PL resources, including block RAM. The following figure shows a top-level block diagram. An image loads from DDR memory through the Network on Chip (NoC) to block RAM and then to the AI Engine-ML. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine-ML tile to perform matrix multiplication. The output from the first AI Engine-ML tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output feeds into the second AI Engine-ML tile. The second AI-Engine ML tile sends the output to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine-ML tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine-ML tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine-ML tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. Between the AI Engine-ML and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
+In this application tutorial, the LeNet algorithm performs image classification on an input image. It uses five AI Engine-ML tiles and PL resources, including block RAM. The following figure shows a top-level block diagram. An image loads from DDR memory through the network on chip (NoC) to block RAM and then to the AI Engine-ML. The PL input pre-processing unit receives the input image and sends the output to the first AI Engine-ML tile to perform matrix multiplication. The output from the first AI Engine-ML tile goes to a PL unit to perform the first level of max pool and data rearrangement (M1R1). The output feeds into the second AI Engine-ML tile. The second AI Engine ML tile sends the output to the PL to perform the second level max pooling and data rearrangement (M2R2). The output is then sent to a fully connected layer (FC1) implemented in two AI Engine-ML tiles and uses the rectified linear unit layer (ReLu) as an activation function. The outputs from the two AI Engine-ML tiles are then fed into a second fully connected layer implemented in the `core04` AI Engine-ML tile. The output is sent to a data conversion unit in the PL and then to the DDR memory through the NoC. Between the AI Engine-ML and PL units is a datamover module (refer to the LeNet Controller in the following figure) that contains the following kernels:
+
 * `mm2s`: a memory-mapped to stream kernel to feed data from DDR memory through the NoC to the AI Engine-ML Array.
 * `s2mm`: a stream to memory-mapped kernel to feed data from the AI Engine-ML Array through NoC to DDR memory.
 
@@ -73,6 +74,7 @@ In the design, there are two major PL kernels. The input pre-processing units, M
   <summary>Directory Structure</summary>
 
 ### Directory Structure
+
 ```
 lenet
 |____design......................contains AI Engine-ML kernel, HLS kernel source files, and input data files.
@@ -93,7 +95,8 @@ lenet
 </details>
 
 ## Before You Begin
-Note: This tutorial targets the VEK280 Production board (see https://www.xilinx.com/products/boards-and-kits/vek280.html). If you have already purchased this board, download the necessary files from the website and ensure that you have the correct licenses installed.
+
+Note: This tutorial targets the [VEK280 Production board](https://www.xilinx.com/products/boards-and-kits/vek280.html). If you have already purchased this board, download the necessary files from the website and make sure that you have the correct licenses installed.
 
 <details>
 
@@ -137,12 +140,15 @@ To build and run the LeNet tutorial, download and install the following the foll
 After installing the elements of the Vitis software platform, update the shell environment script. Set the environment variables to your system-specific paths.
 
 Edit `sample_env_setup.sh` script with your file paths:
+
 ```bash
 export PLATFORM_REPO_PATHS=<YOUR-PLATFORM-DIRECTORY>
 
 source <XILNX-TOOLS-LOCATION>/Vitis/<TOOLS-BUILD>/settings64.sh
 ```
+
 Then source the environment script:
+
 ```bash
 source sample_env_setup.sh
 ```  
@@ -153,16 +159,20 @@ source sample_env_setup.sh
 <summary>Validation: Confirming Tool Installation</summary>
 
 ### Validation: Confirming Tool Installation
+
 ```bash
 which vitis
 which aiecompiler
 ```
 
 Confirm that you have the VEK280 Production Base Platform.
+
 ```bash
 platforminfo --list | grep -m 1 -A 9 vek280_es1_base
 ```
-Output of the preceding command should be as follows:
+
+Output of the preceding command is as follows:
+
 ```bash
 "baseName": "xilinx_vek280_es1_base_202520_1",
             "version": "1.0",
@@ -183,51 +193,62 @@ Output of the preceding command should be as follows:
   <summary>LeNet Design Build</summary>
 
 ### LeNet Design Build
+
 In this section, you build and run the LeNet design. You also compile the AI Engine-ML design and integrate it into a larger system design (including the PL kernels and PS host application). You can review [Integrating the Application Section in the AI Engine-ML Documentation](#ai-engine-documentation) for the general flow. The following image shows the Vitis tool flow with the `make` targets (in blue) and input source files and output file generation (in red) at each step.
 
 ![Image of LeNet Vitis Tool Flow](images/Lenet_vitis_toolflow.PNG)
 
-At the end of this section, the design flow generates a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine-ML compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VEK280 board.   
+At the end of this section, the design flow generates a new directory (called `build/`) that contains the `Work/`, `hw_emu/`, and `hw/` subfolders. The `Work/` subfolder is an output from the AI Engine-ML compiler. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VEK280 board.
 
 </details>
 
 ## Make Steps
+
 To run the following `make` steps (for example, `make kernels`, `make graph`), you must be in the LeNet tutorial folder.
 <details>	
 <summary>Build the Entire Design with a Single Command</summary>
 
 ### Build the Entire Design with a Single Command
+
 If you are an advanced user and are already familiar with the AI Engine-ML and Vitis kernel compilation flows, you can build the entire design with one command:
 
 ```bash
 make all TARGET=hw_emu
 ```
+
 or
+
 ```bash
 make all TARGET=hw EN_TRACE=0
 ```
+
 or
+
 ```bash
+
 make all TARGET=hw EN_TRACE=1
 ```
 
 The default value of EN_TRACE is 0. This command runs the `make kernels`, `make graph`, `make xsa`, `make application`, and `make package` for hardware emulation. Also use it for running on hardware (VeK280 board), depending on the `TARGET` you specify. Also, if the `TARGET` specified is hardware, you can set `EN_TRACE` to 1 to enable trace to measure throughput.  
 
 You can also run the following command to build the entire LeNet tutorial *and* launch hardware emulation:
+
 ```bash
 make run TARGET=hw_emu
 ```
+
 </details>
 
 <details>
   <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
+
 In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vek280_es1_base_202520_1`) and the AI Engine-ML kernels and graph. It then compiles them into their respective XO files. In this design, the `dma_hls` kernel compiles as an XO file, and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
-The `ip_repo` folder contains the unzipped files.
+The `ip_repo` contains the unzipped files.
 
 The following commands compile the kernels (default TARGET=hw_emu).
 
@@ -236,15 +257,16 @@ make kernels
 ```
 
 The expanded command is as follows:
+
 ```
 mkdir -p ./build/hw_emu
 
 cd ./build/hw_emu
 
-v++       --target hw_emu			     \
+v++       --target hw_emu                           \
           --platform xilinx_vek280_es1_base_202520_1     \
           --save-temps                               \
-	  --temp_dir _x	                             \
+          --temp_dir _x                             \
           --verbose                                  \
           -c ../../design/pl_src/datamover/dma_hls.cpp\
           -k dms_hls                                 \
@@ -252,6 +274,7 @@ v++       --target hw_emu			     \
 
  cd ../../;
  ```
+
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
@@ -277,16 +300,21 @@ v++       --target hw_emu			     \
   <summary>make graph: Creating the AI Engine-ML ADF Graph for Vitis Compiler Flow</summary>
 
 ### make graph: Creating the AI Engine-ML ADF Graph for Vitis Compiler Flow
+
 You can connect an ADF graph to an extensible Vitis platform. You can connect the graph I/Os either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives.
+
 * The AI Engine-ML ADF C++ graph of the design contains AI Engine-ML kernels and PL kernels.
 * The C++ graph defines all interconnects between kernels.
 * All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. All connections from graph to PLIO map onto ports on the AI Engine-ML subsystem graph that connects using the Vitis compiler connectivity directives. The Vitis compiler does not permit dangling ports or implicit connections.
 
 To compile the graph using the Makefile flow type:
+
 ```
 make graph
 ```
+
 The following AI Engine-ML compiler command compiles the AI Engine-ML design graph:
+
 ```
 cd ./build;
 aiecompiler --include= ./design/aie_src \
@@ -301,6 +329,7 @@ aiecompiler --include= ./design/aie_src \
 
 cd ../../;
  ```
+
 |Switch|Description|
 |  ---  |  ---  |
 |--include=\<string\>|Specify compile-time include directory (zero or more).|
@@ -325,9 +354,11 @@ The following is a description of the output objects that results from executing
   <summary>make xsa: Use Vitis Tools to Link AI Engine-ML and HLS Kernels with the Platform</summary>
 
 ### make xsa: Use Vitis Tools to Link AI Engine-ML and HLS Kernels with the Platform
+
 After the AI Engine‑ML kernels, graph, and the PL HLS kernels compile, you can use the Vitis compiler to link them with the platform. This process generates an XCLBIN file and an XSA file.
 
 ### Platform
+
 You can use the Vitis tools to integrate the AI Engine-ML, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective. The hardware designer typically provides the platform (or you can opt to use one of the many extensible base platforms provided by AMD). The Vitis tool builds the hardware design and integrates the AI Engine-ML and PL kernels into the design.
 
 To test this feature in this tutorial, use the base VEK280 platform to build the design.
@@ -339,6 +370,7 @@ make xsa
 ```
 
 The expanded command is as follows:
+
 ```
 cd ./build/hw_emu;
 
@@ -359,6 +391,7 @@ cd ../../;
 ```
 
 If EN_TRACE=1, the command expands as follows:
+
 ```
 cd ./build/hw;
 
@@ -413,8 +446,8 @@ param=compiler.addOutputTypes=hw_export
 
 |Switch|Comment|
 |  ---  |  ---  |
-|--connectivity.nk|Number of kernels. `mm2s:2:mm2s_0.mm2s_1` means that the Vitis compiler should instantiate two MM2S kernels and name those instances `mm2s_0` and `mm2s_1`.|
-|--connectivity.stream_connect|How the kernels connect to IPs, platforms, or other kernels. The output of the AI Engine-ML compiler tells you the interfaces to connect. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler should connect the port `s` of `mm2s` to the port `lte_0` of AI Engine-ML port 0. The name of the AI Engine-ML port is the one defined in `graph.cpp` PLIO instantiation.|
+|--connectivity.nk|Number of kernels. `mm2s:2:mm2s_0.mm2s_1` means that the Vitis compiler instantiates two MM2S kernels and name those instances `mm2s_0` and `mm2s_1`.|
+|--connectivity.stream_connect|How the kernels connect to IP, platforms, or other kernels. The output of the AI Engine-ML compiler tells you the interfaces to connect. `mm2s_0.s:ai_engine_0.lte_0` means that the Vitis compiler connects the port `s` of `mm2s` to the port `lte_0` of AI Engine-ML port 0. The name of the AI Engine-ML port is the one defined in `graph.cpp` PLIO instantiation.|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file. This XSA file is necessary to create a post-Vivado fixed platform for Vitis software development.|
 
 The Vitis compiler calls AMD Vivado &trade; IP integrator under the hood to build the design. The platform and kernels are input to the AMD Vivado&trade; Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which Vivado propduces the XSA depends on the `-target` option set on the Vitis compiler command line.
@@ -428,50 +461,55 @@ Now you have generated the XCLBIN file which executes your design on the platfor
   <summary>make application: Compile the Host Application</summary>
 
 ### make application: Compile the Host Application
+
 You can compile the host application by following the typical cross-compilation flow for the Cortex-A72. To build the application, run the following command:
+
 ```
 make application
 ```
+
 or
+
 ```
-aarch64-linux-gnu-g++   -O							\
-                        -c							\
-			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
-			-DXAIE_DEBUG						\
+aarch64-linux-gnu-g++   -O                                                      \
+                        -c                                                      \
+                        -D__linux__                                             \
+                        --sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
+                        -DXAIE_DEBUG                                            \
                         -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
-			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib \
-			../build//Work/ps/c_rts/aie_control_xrt.cpp   \
-			-o ../build/app_control.o                   
+                        -I $(XILINX_VITIS_AIETOOLS)/include                     \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib \
+                        ../build//Work/ps/c_rts/aie_control_xrt.cpp     \
+                        -o ../build/app_control.o                   
 
-aarch64-linux-gnu-g++   -O							\
-                        -c							\
-			-D__linux__                         			\
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
-			-DXAIE_DEBUG						\
+aarch64-linux-gnu-g++   -O                                                      \
+                        -c                                                      \
+                        -D__linux__                                             \
+                        --sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
+                        -DXAIE_DEBUG                                            \
                         -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include/xrt \
-			-I $(XILINX_VITIS_AIETOOLS)/include                     \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include \
-			-I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib \
-			../design/aie_src/main.cpp                              \
-			-o ../build/lenet_app.o                    
+                        -I $(XILINX_VITIS_AIETOOLS)/include                     \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/include \
+                        -I $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib \
+                        ../design/aie_src/main.cpp                              \
+                        -o ../build/lenet_app.o                    
 
-aarch64-linux-gnu-g++   ./build/app_control.o			                \
-			./build/lenet_app.o			                \
-			--sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
-			-L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib\
-                        -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o    		\
-                        -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o       		\
-                        -ladf_api_xrt                      		        \
-                        -lxrt_coreutil                          		\
-                        -std=c++14                          		        \
-			-o ../build/lenet_aie_xrt.elf
+aarch64-linux-gnu-g++   ./build/app_control.o                                   \
+                        ./build/lenet_app.o                                     \
+                        --sysroot=$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux \
+                        -L$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/sysroots/aarch64-xilinx-linux/usr/lib\
+                        -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o                \
+                        -L$(XILINX_VITIS_AIETOOLS)/lib/lnx64.o                  \
+                        -ladf_api_xrt                                           \
+                        -lxrt_coreutil                                          \
+                        -std=c++14                                              \
+      -o ../build/lenet_aie_xrt.elf
 
 cd ../../;
 
 ```
+
 |Switch|Description|
 |  ---  |  ---  |
 |-O \| Optimize.| Optimizing compilation takes more time, and a lot more memory for a large function. With -O, the compiler tries to reduce code size and execution time, without performing any optimizations that take a great deal of compilation time.|
@@ -487,7 +525,7 @@ The following is a description of the input sources compiled by the AI Engine-ML
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|design/aie_src/main.cpp|Source application file for the `lenet_aie_xrt.elf` that will run on an A72 processor.|
+|design/aie_src/main.cpp|Source application file for the `lenet_aie_xrt.elf` that runs on an A72 processor.|
 |build/Work/ps/c_rts/aie_control_xrt.cpp|This is the AI Engine-ML control code generated implementing the graph APIs for the LeNet graph.|
 
 The following is a description of the output objects that results from executing the AI Engine-ML compiler command with the preceding inputs and options.
@@ -495,19 +533,24 @@ The following is a description of the output objects that results from executing
 |Output Objects|Description|
 |  ---  |  ---  |
 |build/lenet_aie_xrt.elf|The executable that runs on an A72 processor.|
+
 </details>
 
 <details>
   <summary>make package: Package the Design</summary>
 
 ### make package: Package the Design
+
 With the AI Engine-ML outputs and new platform created, you can now generate the Programmable Device Image (PDI) and a package to use on an SD card. The PDI contains all executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications and the XCLBIN file.
 
 The command to run this step is as follows (default TARGET=hw_emu):
+
 ```
 make package
 ```
+
 or
+
 ```
 
 v++	-p  							\
@@ -590,24 +633,30 @@ The output of the Package step is the package directory that contains the conten
   <summary>make run_emu: Run Hardware Emulation</summary>
 
 ### make run_emu: Run Hardware Emulation
+
 After packaging, you can run emulation on hardware. To run emulation, use the following command:
 
-***Note***: The upgraded AI Engine model might exhibit some issues. As a temporary solution, set mtmodel as false by `setenv MTMODEL false` command before running hw_emu. This issue has does not occur in subsequent releases.
+***Note***: The upgraded AI Engine model can exhibit some issues. As a temporary solution, set mtmodel as false by `setenv MTMODEL false` command before running `hw_emu`. This issue does not occur in subsequent releases.
 
 ```
 make run_emu
 ```
+
 or
+
 ```
 cd ./build/hw_emu/package
 ./launch_hw_emu.sh
 ```
-When launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero, and after a few minutes, you see the root Linux prompt display:
+
+When launched, the QEMU simulator load displays. Wait for the autoboot countdown to go to zero, and after a few minutes, notice the root Linux prompt display:
+
 ```bash
 root@versal-rootfs-common-2025_2:~#
 ```
 
-Sometimes, the following error might display:
+Sometimes, the following error displays:
+
 ```
 root@versal-rootfs-common-2025_2:~## xinit: giving up
 xinit: unable to connect to X server: Connection refused
@@ -619,12 +668,13 @@ Enabling notebook extension jupyter-js-widgets/extension...
 ```
 
 After the root prompt displays, run the following commands to run the design:  
+
 ```
 cd /mnt/
 ./lenet_aie_xrt.elf a.xclbin
 ```
 
-The `lenet_aie_xrt.elf` should execute, and after a few minutes, you should see the output with *TEST PASSED* on the console. When this displays, run the following keyboard command to exit the QEMU instance:
+The `lenet_aie_xrt.elf` executes, and after a few minutes, the output with *TEST PASSED* displays on the console. When this displays, run the following keyboard command to exit the QEMU instance:
 
 ```
 #To exit QEMU Simulation
@@ -636,7 +686,8 @@ Press Ctrl+A, let go of the keyboard, and then press x.
 <details>
   <summary>TARGET=hw: Run on Hardware</summary>
 
-## Run on Hardware	  
+## Run on Hardware
+
 To run your design on hardware, re-run the following steps with TARGET=hw:
 
 ```
@@ -644,6 +695,7 @@ make kernels TARGET=hw
 make xsa TARGET=hw
 make package TARGET=hw
 ```
+
 These command create a `build/hw` folder with the kernels, `xsa`, and `package` for a hardware run.
 
 Now follow **Steps 1-9** to run the `lenet_aie_xrt.elf` executable on your VEK280 board:
@@ -658,7 +710,7 @@ Now follow **Steps 1-9** to run the `lenet_aie_xrt.elf` executable on your VEK28
 
 **Step 5.** Connect your computer to the VEK280 board using the included USB cable.
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following:
+**Step 6.** Open a Tera Term terminal and select the correct COM port. Set the port settings to the following:
 
 ```
 Port: <COMMXX>
@@ -672,20 +724,19 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2025_2` Linux command prompt. Press `Enter` a few times to get past any `xinit` errors.
+**Step 8.** Wait until the `root@versal-rootfs-common-2025_2` Linux command prompt displays. Press `Enter` a few times to get past any `xinit` errors.
 
-**Step 9.** Run the following commands into the TeraTerm terminal:
+**Step 9.** Run the following commands into the Tera Term terminal:
 
 ```
 cd /mnt/
 ./lenet_aie_xrt.elf a.xclbin
 ```
 
-
 </details>
 
-
 ## Hardware Design Details
+
 <details>
   <summary>LeNet Architecture and AI Engine-ML/PL Function Partitioning</summary>
 
@@ -701,8 +752,10 @@ The following figure shows the architecture of the LeNet design. Later sections 
   <summary>Design Platform Details</summary>
 
 ## Design Platform Details
-The base platform instantiates the CIPS, NoC, and AI Engine-ML, and creates interfaces among them. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application developed. That is, the PL kernels present in each design might vary. An ADF graph connects to an extensible Vitis platform where the graph I/Os connect either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives.
+
+The base platform instantiates the CIPS, NoC, and AI Engine-ML, and creates interfaces among them. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application developed. That is, the PL kernels present in each design can vary. An ADF graph connects to an extensible Vitis platform where the graph I/Os connect either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives.
 For this design, the `v++ -l` step adds the components (make XCLBIN in the preceding tool flow section), and includes the following:
+
 * AI Engine-ML kernel `graph.o`
 * Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
 * LeNet kernel (`lenet_kernel.xo`)
@@ -720,40 +773,42 @@ To see a schematic view of the design with the extended platform (as shown in th
 	<summary>AI Engine-ML and PL Kernel details</summary>
 
 ### AI Engine-ML and PL Kernel Details
+
 The design implements the LeNet CNN to perform digital classification on gray scale images. The [Tutorial Overview](#tutorial-overview) section covers AI Engine-ML kernels and more details are in the [Software Design Details](#software-design-details) section.
 
 The PL kernels perform the following functions:
-*  Loading input images of LeNet into block RAMs through the AXI interfaces
-*  Moving and rearranging data from one AI Engine-ML to another
+
+* Loading input images of LeNet into block RAMs through the AXI interfaces
+* Moving and rearranging data from one AI Engine-ML to another
 
 The AI Engine-ML kernels are mainly used to perform matrix multiplication due to their high INT8 MAC performance.
 
 The PL kernel, `lenet_kernel` is pre-compiled. It handles most of the data processing functions, and contains the following modules.
 
-**Input Rearrange (IPR)**
+#### Input Rearrange (IPR)
 
 The LeNet algorithm in this design starts with an image of size 28x28 input imported from DDR memory through the NoC. An input rearrange function is implemented in PL to arrange pixels from the input according to a 5x5 convolution kernel and pad with seven zeros to form 32 pixels to form a 576x32 matrix. The matrix is sent to the first AI Engine-ML tile (Conv1) using an AXI4-Stream interface to perform matrix multiplication.
 
-**Max Pool and Data Rearrangement Set 1 (M1R1)**
+#### Max Pool and Data Rearrangement Set 1 (M1R1)
 
 The pooling operation in CNN enables the detection of the object when presented with different versions of the images by reducing the size of the feature map. From the types of pooling available, 'max' is chosen to account for distortion.
 In this design, the output from the first AI Engine-ML tile (core01) is a 576x8 matrix which is of 4x8 blocks. It is re-arranged as 4x4 using shared buffers This is sent to the PL. Each of the columns in the matrix corresponds to a 24x24 dimensional image laid out in the row-major format. The network for implementation has only six output features for the Conv1 layers and hence, two of the eight columns do not contain real images. Then a max pool operation occurs and a value returns from a 2x2 matrix, as seen in the green squares in the following diagram.
 
 ![Image of LeNet Maxpool1](images/Lenet_maxpool1.PNG)
 
-The RAMB36 module stores the resulting 144x8 byte matrix which then goes through a rearrange operation. This operation writes data into six RAMB18s populated with zeros in the appropriate positions and the fanout table generates addresses. Each RAMB18 is 2048x8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512x32. These block RAMS are rearranged to four block RAMS and five register files. After the rearrange function, the data is output as six images each of 64x25 dimension. Additionally, shared buffer configuration has been integrated after kernel core01 output, modifying the data arrangement from 4x8 to 4x4 matrices for enhanced data handling. The data for the previous image must go to memory-mapped AXI4 before writing of the new image starts.
+The RAMB36 module stores the resulting 144x8 byte matrix which then goes through a rearrange operation. This operation writes data into six RAMB18s populated with zeros in the appropriate positions and the fanout table generates addresses. Each RAMB18 is 2048x8 (depth x width). The arrays then go through a second stage or rearrange operation where each array is configured in read mode and 512x32. These block RAMS are rearranged to four block RAMS and five register files. After the rearrange function, the data is output as six images each of 64x25 dimension. Also, shared buffer configuration has been integrated after kernel core01 output, modifying the data arrangement from 4x8 to 4x4 matrices for enhanced data handling. The data for the previous image must go to memory-mapped AXI4 before writing of the new image starts.
 
-Also, in M1R1 are two instances of the AXI2BRAM module, one at the PL-AI Engine-ML interface and another at the AI Engine-ML-PL interface. At the PL-AI Engine-ML interface, data is coming into the module in AXI4-Stream format from the AI Engine-ML.
+Also, in M1R1 are two instances of the AXI2BRAM module. One is at the PL-AI Engine-ML interface and one is at the AI Engine-ML-PL interface. At the PL-AI Engine-ML interface, data enters the module in AXI4-Stream format from the AI Engine-ML.
 
 The AXI stream supplies a data rate of 128 bits/cycle at 312.5 MHz and the data is written into four 32-bit RAMB18. A corresponding set of operations occurs at the AI Engine-ML-PL interface.
 
-**Max Pool and Data Rearrangement Set 2 (M2R2)**
+#### Max Pool and Data Rearrangement Set 2 (M2R2)
 
 This module performs the similar operations of max pooling and data rearrangement to M1R1 but on a smaller set of the feature map. It moves and rearranges data from AI Engine-ML tile core02, to AI Engine-ML tiles core03 and core05. The module moves output from the second AI Engine-ML tile, core02 to the PL as 16 images of 8x8. This represents the 2D image as a column in a row-major order, laid out as an array of 64x16 bytes. Then a max pool operation occurs and a value returns from a 2x2 matrix. A register file configured as 16 images of 4x4 bytes stores the results. These are re-arranged before moving to the two AI Engine-ML tiles, core03 and core05, using two AXI4-Streams.
 
-**Data Mover Kernel**
+#### Data Mover Kernel
 
-The PL-based data mover kernel consists of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine-ML tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine-ML tile, core04, and streams out the data to DDR memory through the NoC. Modification incorporated to integrate shared buffer configuration after kernel core01, core02, and core04 outputs, facilitates the rearrangement of data in the shared buffer within the AIE-ML array. This converts the output matrix from 4x8 arrangements to 4x4 matrices for optimized processing. The side-facing NoC uses a memory-mapped AXI4 interface (MM-AXI4) and the side facing the AI Engine-ML array uses an AXI4-Stream interface.
+The PL-based data mover kernel consists of MM2S and S2MM kernels. This module gets the initial image from DDR memory through the NoC and sends the data to AI Engine-ML tile, core01 (after input processing unit inside `lenet_kernel`). It also receives data from AI Engine-ML tile, core04, and streams out the data to DDR memory through the NoC. Modification incorporated to integrate shared buffer configuration after kernel core01, core02, and core04 outputs, enables data rearrangement in the shared buffer in the AIE-ML array. This converts the output matrix from 4x8 arrangements to 4x4 matrices for optimized processing. The side-facing NoC uses a memory-mapped AXI4 interface (MM-AXI4). The side facing the AI Engine-ML array uses an AXI4-Stream interface.
 
 </details>
 
@@ -789,7 +844,8 @@ The AI Engine-ML compiler writes a summary of compilation results called `lenet.
 
 `vitis_analyzer build/lenet_x1/hw/Work/graph.aiecompile_summary`
 
-The following figure shows the graph representation of the AI Engine-ML kernels. The five cores correspond to the description shown in the block diagram in the [Tutorial Overview](#tutorial-overview) section. 
+The following figure shows the graph representation of the AI Engine-ML kernels. The five cores correspond to the description shown in the block diagram in the [Tutorial Overview](#tutorial-overview) section.
+
 * core01 implements the first convolutional layer
 * core02 implements the second convolutional layer
 * core03 and 05 implement FC1 and ReLu
@@ -819,6 +875,7 @@ This section describes the overall data-flow graph specification of the LeNet de
 The `graph.cpp` file contains the overall graph definition of the design. The following steps describe the definition of the graph.
 
 #### Include ADF Library
+
 ```
 #pragma once
 
@@ -827,11 +884,13 @@ using namespace adf;
 ```
 
 #### Define the Graph Class
+
 Define the LeNet graph class by using the objects defined in the appropriate name space. It must include the Adaptive Data Flow (ADF) library. All user graphs derive from the class graph, for example, in this design:
 
 `class myGraph : public graph`.
 
 #### Declare PLIO Ports
+
 Declare top level ports to the graph:
 
 ```
@@ -839,7 +898,9 @@ public:
    output_plio out[3];
    input_plio in[4];
 ```
+
 #### Define the Graph Constructor
+
 Define graph constructor `myGraph()`
 
 Use `input_plio::create` function to create input and output PLIO ports, for example:
@@ -855,29 +916,34 @@ Use `source` function to source the kernel files and `runtime<ratio>` to provide
 source(core01) = "core01.cc";
 runtime<ratio>(core01) = 0.6;
 ```
+
 The source file `core01.cc` contains the source code for core01. The ratio of the function runtime compared to the cycle budget, known as the runtime ratio, must be between 0 and 1.
 
 ```
 source(core01) = "core01.cc";
 runtime<ratio>(core01) = 0.6;
 ```
+
 #### Add Connectivity Information
+
 Use the templated connect<> object to add connectivity information. The connection can be buffer<> or stream. If using a window connection, you must specify buffer parameters.
 In this description, ports are referred to by indices. An example of the connection between the input port of the graph and input of an AI Engine-ML kernel is as follows:
 
 ```
 connect(in[0].out[0], core01.in[0]);
 dimensions(core01.in[0]) = {(ROW_A * COL_A)/4};
-
 ```
-In this case, the parameters correspond to the matrix dimension. 
+
+In this case, the parameters correspond to the matrix dimension.
 An example of connection of weights already loaded in AI Engine-ML tile is:
+
 ```
 connect<>(core01lut,core01);
 ```
+
 Based on the datatype of `core01lut`, the API call is inferred as a look up table in the AI Engine-ML tile.
 
-#### Shared Buffer Configuration 
+#### Shared Buffer Configuration
 
 The shared buffer rearranges the data from a 4x8 output matrix to a desired 4x4 matrix without altering the PL kernel. This rearrangement facilitates compatibility between the modified matrix operation and the subsequent stages of processing, ensuring that the output size remains consistent with the subsequent operations in the pipeline.
 
@@ -889,15 +955,16 @@ tensor01 = shared_buffer<int32_t>::create({ 2,4,144 }, 1, 1);
 connect(tensor01.out[0],out[0].in[0]);
 ```
 
-**Write Access Tiling Parameters**:
+##### Write Access Tiling Parameters
+
 The write_access configuration for buffer tensor01.in[0] sets it to manage a 3D data layout of 2x4x144 elements. This arrangement resembles a block of data containing 144 layers, each resembling two matrices, where every layer represents a 2x4 matrix. Together, these layers form a structure with two rows and four columns in each layer, thereby establishing the 2x4x144 data.
 
 ```
 write_access(tensor01.in[0]) =tiling({ .buffer_dimension = { 2, 4 , 144},.tiling_dimension = { 2, 4 ,144},.offset = { 0, 0 ,0}});
 ```
 
+##### Read Access Tiling Parameters
 
-**Read Access Tiling Parameters**:
 The read_access statement for tensor01.out[0] configures data retrieval from a 2x4x144 buffer. It defines the desired layout as 1x4x1 and initiates data reading from the buffer's origin (position 0,0,0). Additionally, the .tile_traversal parameter provides instructions for navigating through the buffer's dimensions during data retrieval:
 
 **For the first dimension (0)**: Traversal moves with a stride of one and wraps after every two steps. It means after reaching the end of this dimension, the traversal loops back to the start every two steps.
@@ -914,8 +981,9 @@ read_access(tensor01.out[0])=tiling({ .buffer_dimension = { 2, 4 ,144},.tiling_d
 The write access pattern for the memory tile on the input side and the read access pattern on the output side, both follow a 3D linear addressing scheme. These addressing schemes are specifically configured within the graph, ensuring efficient data handling through a defined tiling parameter. Review [Tiling-Parameters-Specification](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph/Tiling-Parameters-Specification) to understand the tiling parameter for different addressing modes.
 
 #### LeNet Top Level Application
+
 Define a top-level application file (`graph.cpp` in this design) 
-The main program is the driver of the graph(graph.cpp). It contains an instance of the graph class and is used to load, execute, and terminate the graph. This is done by using the Run Time Graph control API calls, which in this design are as follows:
+The main program is the driver of the graph(graph.cpp). It contains an instance of the graph class and loads, executes, and terminates the graph. To do this, use the runtime Graph control API calls, which in this design are as follows:
 
 ```
    myGraph g;
@@ -928,12 +996,14 @@ The main program is the driver of the graph(graph.cpp). It contains an instance 
       return 0;
    }
 ```
+
 </details>
 
 <details>
   <summary>PL Kernels</summary>
 
 ### PL Kernels
+
 In addition to kernels operating in the AI Engine-ML array, this design specifies two kernels to run on the PL region of the device (written in HLS C++), `lenet_kernel`, and `dma_hls`. Note: The `dma_hls` kernel integrates into the design during the Vitis kernel compilation, whereas the `lenet_kernel` is only brought in later in the Vitis link stage, because the kernel is pre-packaged.
 
 The `dma_hls` kernel is an IP, which contains `dma_mm2s` and `dma_s2mm`. `dma_mm2s` reads data from a memory-mapped AXI4 interface and writes it to an AXI4-Stream interface. `dma_s2mm` reads data from an AXI4-Stream interface and writes it to a memory-mapped AXI4 interface. The kernel specifies the following pragmas:
@@ -943,6 +1013,7 @@ The `dma_hls` kernel is an IP, which contains `dma_mm2s` and `dma_s2mm`. `dma_mm
 * #pragma HLS INTERFACE s_axilite
 * #pragma HLS PIPELINE II=1
 * #pragma HLS DATAFLOW
+  
 </details>
 
 <details>
@@ -952,10 +1023,11 @@ The `dma_hls` kernel is an IP, which contains `dma_mm2s` and `dma_s2mm`. `dma_mm
 
 The LeNet tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine-ML graph and data mover PL kernels. Review [Programming the PS Host Application Section in the AI Engine-ML Documentation](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) to understand the process to create a host application.
 
-In addition to the PS host application (`main.cpp`), you must also compile the AI Engine-ML control code must also be compiled. The AI Engine-ML compiler generates this control code (`aie_control_xrt.cpp`) when compiling the AI Engine-ML design graph and kernel code.
+In addition to the PS host application (`main.cpp`), you must also compile the AI Engine-ML control code. The AI Engine-ML compiler generates this control code (`aie_control_xrt.cpp`) when compiling the AI Engine-ML design graph and kernel code.
 The PS host application uses the AI Engine-ML control code to do the following:
+
 * Control the initial loading of the AI Engine-ML kernels.
-* Run the graph for several iterations, update the run time parameters associated with the graph, exit, and reset the AI Engine-ML tiles.
+* Run the graph for several iterations, update the runtime parameters associated with the graph, exit, and reset the AI Engine-ML tiles.
 
 The following figure shows the PS Host application stack diagram for the LeNet tutorial.
 
@@ -964,12 +1036,14 @@ The following figure shows the PS Host application stack diagram for the LeNet t
 The steps to run the A72 application are as follows:
 
 #### 1. Include graph.cpp
+
 Include the `graph.cpp` AI Engine-ML application file. This file contains the instantiation of the AI Engine-ML LeNet data flow graph object.
 ```
 #include graph.cpp
 ```
 
 #### 2. Check Command Line Argument
+
 The `main` function represents the beginning of the A72 application. It takes in three command line arguments, an elf file, an XCLBIN file, and an iteration count.
 
 ```
@@ -981,8 +1055,11 @@ if((argc < 2) || (argc > 3)) {
 ```
 
 #### 3. Open XCLBIN and Create Data Mover Kernel Handles
+
 The A72 application loads the XCLBIN binary file and creates the data mover kernels to execute on the device. The steps are as follows:
+
 * Open device and load XCLBIN
+
 ```
 auto dhdl = xrtDeviceOpen(0);
 auto xclbin = load_xclbin(dhdl, xclbinFilename);
@@ -994,14 +1071,17 @@ auto top = reinterpret_cast<const axlf*>(xclbin.data());
 `xrtKernelHandle dmahls_khdl = xrtPLKernelOpen(dhdl, top->m_header.uuid, "dma_hls:{dma_hls_0}");`
 
 #### 4. Allocate Buffers for Input Data and Results in Global Memory
+
 The A72 application allocates buffer objects (BO) to store input data and output results in global memory (DDR). For example:
 ```
 xrtBufferHandle in_bohdl = xrtBOAlloc(dhdl, input_size_in_bytes,  0, 0);
 auto in_bomapped = reinterpret_cast<uint32_t*>(xrtBOMap(in_bohdl));
 ```
+
 Additionally, the `memcpy` and `memset` functions initialize the data in global memory.
 
 #### 5. Open Graph, Obtain Handle, and Execute Graph
+
 The following registration function was added in 2025.2 for XRT to use ADF API callbacks:
 
 `adf::registerXRT(dhdl, top->m_header.uuid);`
@@ -1012,6 +1092,7 @@ The following registration function was added in 2025.2 for XRT to use ADF API c
 ***Note***: There is no reading or updating of coefficients in the LeNet design.
 
 #### 6. Execute the Data Mover Kernels and Generate the Output Results
+
 * Open the PL kernels and obtain handles with the `xrtPLKernelOpen` function.
 * Create kernel handle to start `dma_hls_0` PL kernel using the `xrtRunOpen` function.
 * Set the `dma_hls_0` kernel arguments using the  `xrtRunSetArg` function.
@@ -1020,9 +1101,11 @@ The following registration function was added in 2025.2 for XRT to use ADF API c
 * Close the run handles and close the opened kernel handles using `xrtRunClose` and `xrtKernelClose`.
 
 #### 7. Verify Output Results
+
 Compare data in `out_bomapped` to golden reference data in `golden.h`.
 
 #### 8. Release Allocated Resources
+
 After post-processing the data, release the allocated objects using `xrtBOFree`, `xrtGraphClose` and `xrtDeviceClose` functions.
 
 </details>
@@ -1030,23 +1113,29 @@ After post-processing the data, release the allocated objects using `xrtBOFree`,
 </details>
 
 ## Throughput Measurement Details
-To measure throughput, run the design in hardware and capture trace data in run time.
+
+To measure throughput, run the design in hardware and capture trace data in runtime.
 To set up the flow to measure throughput, build the design with `TARGET`=hw and `EN_TRACE`=1. A xrt.ini with the following contents is included:
+
 ```
 [Debug]
 xrt_trace=true
 data_transfer_trace=fine
 trace_buffer_size=500M
 ```
+
 Then run the design with the steps in **Run on Hardware** in [Make Steps](#make-steps). Transfer the .csv and \_summary files back to the design directory, for example:
+
 ```
 scp -r *.csv *_summary <user>@10.10.71.101:<path>
 ```
+
 Then run the Vitis analyzer on the summary file, for example, `vitis_analyzer xrt.run_summary &`.
 The following is the snapshot of the time trace for the LeNet design run in hw.
 ![HW result of Lenet design](images/Lenet_trace.PNG)
 
 Throughput calculation is as follows:
+
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
 					 = 741.447 us
@@ -1057,11 +1146,13 @@ Throughput = (no of images / processing time)
            = 134871.407 images/s
 
 ```
+
 The following is the snapshot of the time trace for the LeNet design run in Emulator.
 
 ![Emulation result of Lenet design](images/Lenet_hw_emu_Processing_time.PNG)
 
 Throughput calculation is as follows:
+
 ```
 Difference in timeline (processing time) = (End Timestamp of strm_in - Start Timestamp of strm_in)
 					 = 741.465 us
@@ -1072,6 +1163,7 @@ Throughput = (no of images / Processing time)
 ```
 
 ## Power Measurement Details
+
 Power is measured using vcdanalyze and Xilinx Power Estimator (XPE) for Versal (2025.2 version) tools.
 
 The vcdanalyze tool is used to generate a `graph.xpe` file, which can be an input to XPE for viewing the AI Engine-ML resource utilization and power. The steps are as follows:
@@ -1083,37 +1175,35 @@ cd $(BUILD_TARGET_DIR); \
 aiesimulator $(AIE_SIM_FLAGS) --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
 cd $(BUILD_TARGET_DIR); \
 vcdanalyze --vcd x$(VCD_FILE_NAME).vcd --xpe 
-
 ```
 
-2. If you do not already have it installed, download and install [PDM for Versal Version 2025.2](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of PDM, see [this page](https://docs.amd.com/r/en-US/ug1556-power-design-manager).
+2. If you do not already have it installed, download and install [PDM for Versal Version 2025.2](https://www.xilinx.com/products/design-tools/power-design-manager.html). For full documentation of PDM, refer to [this page](https://docs.amd.com/r/en-US/ug1556-power-design-manager).
 
 3. Create the project and choose the default part as XCVE2802-VSVH1760-2MP-E-S.
 
-4. Load the `graph.xpe` into AI Engine tab of PDM to see the AI Engine-ML power consumption and resource utilization for lenet design:
+4. Load the `graph.xpe` into AI Engine tab of PDM to view the AI Engine-ML power consumption and resource utilization for lenet design:
 
 ![Image of Lenet XPE Util and Power Measurement](images/Lenet_xpe.png)
 
-
 The following table provides a summary of resource utilization and power.
-				
-| Number of Compute Cores|Vector Load|Number of Active Memory Banks|Mem R/W Rate|Memory Tiles|Memory Tile Memory Banks|Memory Tile Memory R/W Rate|AIE-ML Mem Tiles|Interconnect Load|Dynamic Power<br/>(in W)| 
+
+| Number of Compute Cores|Vector Load|Number of Active Memory Banks|Mem R/W Rate|Memory Tiles|Memory Tile Memory Banks|Memory Tile Memory R/W Rate|AIE-ML Mem Tiles|Interconnect Load|Dynamic Power<br/>(in W)|
 |:----------------------:|:---------:|:---------------------------:|:----------:|:----------:|:----------------------:|:-------------------------:|:--------------:|:---------------:|:-----------------------|
 |       5                |  31.62%   |          58              |    16.30%  |     4      |        12              |          20.00%           |      4         |     11.04%      |         1.116          |
 
 ## Note
 
-Due to profiling issues, a script calculates vector load and memory utilization. This will be fixed in the subsequent release.
+Due to profiling issues, a script calculates vector load and memory utilization. Subsequent releases address this.
 
 ## References
 
 The following documents provide supplemental information for this tutorial.
 
-#### [AI Engine-ML Documentation](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
+### [AI Engine-ML Documentation](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-graph)
 
 Contains sections on how to develop AI Engine-ML graphs, how to use the AI Engine-ML compiler, AI Engine-ML simulation, and performance analysis.
 
-#### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
+### [Xilinx Runtime (XRT) Architecture](https://xilinx.github.io/XRT/master/html/index.html)
 
 The following are the links to the XRT information used by this tutorial:
 
@@ -1132,7 +1222,6 @@ The following are the links to Vitis related information referenced in this tuto
 * [Vitis Application Acceleration Development Flow Tutorials](https://github.com/Xilinx/Vitis-Tutorials)
 
 * [Vitis HLS](https://docs.amd.com/r/en-US/ug1399-vitis-hls)
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

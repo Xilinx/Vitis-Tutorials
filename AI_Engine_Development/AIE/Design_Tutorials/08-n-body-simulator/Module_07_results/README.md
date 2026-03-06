@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -30,7 +30,6 @@ The following is a GIF created from the [animation_data_golden.zip](https://www.
  The following image shows 12,800 particles simulated on a 400 tile AI Engine accelerator for 300 timesteps.
 
 ![alt text](images/animation.gif)
-
 
 ## Latency Performance Comparisons
 
@@ -60,7 +59,7 @@ The following table describes the total number of floating-point operations (FLO
 
 Thus, each `nbody()` kernel executes ~10.7 million FLOP/iteration. Since we have 400 AI Engine tiles (that is, 400 `nbody()` kernels) that execute simulatenously, the total number for the entire AI Engine array becomes ~4.2 billion FLOP/iteration. We calculated each iteration of the entire design (including data movement from DDR to AI Engine) takes an average of 0.0072 seconds. **Therefore the effective throughput of the entire design is ~598.404 GFLOP/s**.  
 
-The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s, and you are using less than 1/10th of its potential!
+The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera FLOP/s. You are using less than 1/10th of its potential!
 
 |Effective Throughput|Theoretical Peak Throughput|
 |--|--|
@@ -69,12 +68,12 @@ The theoretical peak throughput the AI Engine array alone can acheive is ~8 Tera
 This design of an N-Body Simulator on the AI Engine is a straightforward implementation without any major optimizations done. To further maximize the throughput of the entire design:
 
 * you can explore increasing `FMAX` of the PL kernels from 200 MHz to closer to 500 MHz to reduce the latency of moving data from DDR to the AI Engine
-* PL kernels currently implement a round-robin method of transmitting data. You could design these to optimally cache and schedule to increate data bandwidth
+* PL kernels currently implement a round-robin method of transmitting data. You can design these to optimally cache and schedule to increate data bandwidth
 * you can refactor the `nbody()` kernel to reduce its reliance on the scalar processor and only use the vector processor in each AI Engine tile by approximating inverse square root
 
 ## (Optional) Building x1_design and x10_design
 
-What has been presented so far is the 100 compute unit AI Engine design utilizing all 400 AI Engine tiles. However, to get there you had to create the intermediate AI Engine designs that contain a single compute unit (4 tiles) and 10 compute units (40 tiles). If you wish to run the `aiesimulator`, hardware emulation, or build an AI Engine NBody Simulator with significantly shorter build times, feel free to build the `x1_design` or `x10_design`.
+What has been presented so far is the 100 compute unit AI Engine design utilizing all 400 AI Engine tiles. However, to get there you had to create the intermediate AI Engine designs that contain a single compute unit (4 tiles) and 10 compute units (40 tiles). If you want to run the `aiesimulator`, hardware emulation, or build an AI Engine NBody Simulator with significantly shorter build times, feel free to build the `x1_design` or `x10_design`.
 
 ### Building the x1_design (simulates 128 particles)
 
@@ -102,12 +101,9 @@ The following image shows 1,280 particles simulated for 300 timesteps.
 
 ![alt text](../x10_design/results/images/animation.gif)
 
-
 ### Support
 
 GitHub issues are used to track requests and bugs. For questions go to [support.xilinx.com](http://support.xilinx.com/).
-
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

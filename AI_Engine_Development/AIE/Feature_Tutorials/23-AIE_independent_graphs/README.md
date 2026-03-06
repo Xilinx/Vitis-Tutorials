@@ -18,12 +18,12 @@
 
 ## Introduction
 
-This tutorial demonstrates the workflow for compiling AI Engine graphs within AI Engine partitions. It also covers the process of reloading these partitions. 
-The AI Engine graphs, which are distributed across different partitions, are independently verified using the AI Engine simulator. Then the V++ linker and packager integrate them onto the device using. 
+This tutorial demonstrates the workflow for compiling AI Engine graphs within AI Engine partitions. It also covers the process of reloading these partitions.
+The AI Engine graphs, which are distributed across different partitions, are independently verified using the AI Engine simulator. Then the V++ linker and packager integrate them onto the device using.
 This workflow is particularly well-suited for collaborative development, where multiple teams work concurrently on different parts of a system project. Also when integrating user-developed designs with vendor-provided IP (for example, from AMD).
 
->**IMPORTANT**: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software. 
-The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses. 
+>**IMPORTANT**: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software.
+The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses.
 Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 The 'common image' package contains a pre-built Linux kernel and root file system. You can use this with the AMD Versal™ board for embedded design development using Vitis tools.
@@ -39,13 +39,13 @@ This tutorial targets the VCK190 production board for the 2025.2 version.
 
 ## Overview
 
-The AI Engine supports column-based partitions. This is enabled by creating independent graphs that you can compile and simulate separately. 
-Each graph maps to a specific column or a contiguous set of columns on the AI Engine array. During the v++ link stage, you can integrate multiple partitions 
+The AI Engine supports column-based partitions. This is enabled by creating independent graphs that you can compile and simulate separately.
+Each graph maps to a specific column or a contiguous set of columns on the AI Engine array. During the v++ link stage, you can integrate multiple partitions
 together, provided there is no overlap in the resource usage by the graphs in those partitions.
 
 Following is a conceptual illustration of the AI Engine partitions (independent graphs) flow:
 
->Note: The following image is not the exact design of the tutorial 
+>Note: The following image is not the exact design of the tutorial.
 
 ![AIE_partitions](./images/AIE_partitions.PNG)
 

@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to the Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to the Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -64,13 +64,13 @@ Bilinear interpolation is one of the simplest and fastest interpolation methods,
 
 ## Computing Interpolated Values
 
-Figure 1 illustrates the problem of bilinear interpolation. It is assumed you know the values of a function at points $(x_1, y_1)$, $(x_1, y_2)$, $(x_2, y_1)$, and $(x_2, y_2)$ defined on a grid, which for practical purposes, can be assumed to be rectilinear. The goal is to estimate the function value at a point with coordinates $(x_q, y_q)$ by using the known values at the surrounding points. In Figure 1, green dots represent known values, and the red dot represents the value to be estimated.
+The following figure shows the problem of bilinear interpolation. It is assumed you know the values of a function at points $(x_1, y_1)$, $(x_1, y_2)$, $(x_2, y_1)$, and $(x_2, y_2)$ defined on a grid, which for practical purposes, can be assumed to be rectilinear. The goal is to estimate the function value at a point with coordinates $(x_q, y_q)$ by using the known values at the surrounding points. In the following figure, green dots represent known values, and the red dot represents the value to be estimated.
 
 ![figure1](images/points_1.png)
 
 *Figure 1 - Bilinear Interpolation Problem*
 
-Bilinear interpolation is a two-step process, where linear interpolation is first performed over one dimension then the other. Figure 2 shows the first step of the process, where the function values at the blue dots are computed from the known values at the green dots by using linear interpolation over the variable $x$.
+Bilinear interpolation is a two-step process, where linear interpolation is first performed over one dimension then the other. The following figure shows the first step of the process. Here, the function values at the blue dots are computed from the known values at the green dots, using linear interpolation over the variable $x$.
 
 ![figure2](images/points_2.png)
 
@@ -94,7 +94,7 @@ The resulting interpolated point is
 
 $$f(x_q,y_q) = \frac{(y_2-y_q)}{(y_2-y_1)}f(x_q,y_1) + \frac{(y_q-y_1)}{(y_2-y_1)}f(x_q,y_2).$$
 
-Combining equations, the bilinear interpolation formula may be expressed as
+Combining equations, the bilinear interpolation formula can be expressed as
 
 $$f(x_q,y_q) = \frac{1}{(x_2-x_1)(y_2-y_1)} \begin{bmatrix} x_2-x_q & x_q-x_1 \end{bmatrix} \begin{bmatrix} f(x_1,y_1) & f(x_1,y_2) \\ 
 f(x_2,y_1) & f(x_2,y_2) \end{bmatrix} \begin{bmatrix} y_2-y_q \\
@@ -104,7 +104,7 @@ y_q-y_1 \end{bmatrix}.$$
 
 While you can apply bilinear interpolation to various applications, this tutorial uses an image processing example. In this case, function values correspond to pixel values in the range [0, 255]. Single precision, floating-point numerical format is assumed for interpolated pixel values and interpolation coordinates $(x_q,y_q)$.
 
-A reference image generates a lookup table which provides input to the AI Engine. An input image with resolution $x_{res} \times y_{res}$ is assumed to have pixels defined on a grid with unit spacing. You can combine the $x$ and $y$ pixel coordinates using the equation $I = x \times y_{res} + y$ to derive a LUT index $I$, as shown in Figure 4.
+A reference image generates a lookup table which provides input to the AI Engine. An input image with resolution $x_{res} \times y_{res}$ is assumed to have pixels defined on a grid with unit spacing. You can combine the $x$ and $y$ pixel coordinates using the equation $I = x \times y_{res} + y$ to derive a LUT index $I$, as shown in the following figure.
 
 ![figure4](images/image2lut.png)
 
@@ -121,7 +121,7 @@ $$
 \end{aligned}
 $$
 
-Figure 4 shows an example of LUT indexing using the pixels marked with X. Once the four pixel values required for interpolation are obtained, the integer parts of the coordinates $(x_q,y_q)$ are no longer needed and you can assume these to be zero. This simplifies the interpolation equation to
+The preceding figure shows an example of LUT indexing using the pixels marked with X. When the four pixel values required for interpolation are obtained, the integer parts of the coordinates $(x_q,y_q)$ are no longer needed and you can assume these to be zero. This simplifies the interpolation equation to
 
 $$
 f(x_q,y_q) = \begin{bmatrix} 1-x_{frac} & x_{frac} \end{bmatrix} \begin{bmatrix} f(x_1,y_1) & f(x_1,y_2) \\
@@ -177,7 +177,7 @@ Data necessary to process a single pixel comprises four reference pixels and fra
 
 ### PLIO Interface
 
-Considering that input requires six floating-point values per pixel while output is a single floating-point value, it is apparent that the input stream places a more restrictive limit on achievable pixel processing rate. The PLIO interface supports transfer rates of one floating-point value per cycle, which depending on speed grade of the AMD Versal™ device, amounts to transfer rates of 1.0 to 1.25 billion floating-point values per second. Since the input requires 6 floating-point values per pixel, the input PLIO would restrict the rate to 6.0 cycles per pixel. To more closely match the input limitation to computational efficiency, three input PLIO interfaces are used. This brings the limitation down to 2.0 cycles per pixel. Figure 7 shows the data format for each of the input PLIO interfaces.
+Considering that input requires six floating-point values per pixel while output is a single floating-point value, it is apparent that the input stream places a more restrictive limit on achievable pixel processing rate. The PLIO interface supports transfer rates of one floating-point value per cycle, which depending on speed grade of the AMD Versal™ device, amounts to transfer rates of 1.0 to 1.25 billion floating-point values per second. Because the input requires six floating-point values per pixel, the input PLIO restricts the rate to 6.0 cycles per pixel. To more closely match the input limitation to computational efficiency, three input PLIO interfaces are used. This brings the limitation down to 2.0 cycles per pixel. Figure 7 shows the data format for each of the input PLIO interfaces.
 
 ![figure7](images/pl_if_streams.png)
 
@@ -193,9 +193,9 @@ When AI Engines graphs are simulated apart from programmable logic and processin
 
 The kernel example presented here uses buffered I/O for input and output. This enables more efficient VLIW parallelism, where load and store instructions can execute in the same clock cycle as vector processor instructions. The tradeoff is that there is an increased initial latency. Also, the compiler inserts ping pong buffers for each I/O allocated from AI Engine tile memory. Because this example has three inputs and a single output, it requires a total of eight memory banks. This means additional AI Engine tiles accommodate the memory requirement.
 
-Another option for I/O is to use direct streaming to or from the AI Engine. There are two 32-bit input and two 32-bit output streams available. Although this removes the need for ping pong buffers, the kernel code would use additional cycles to shift vector data. For example, if a `float` vector of size eight is sent to an output stream, eight clock cycles would be required.
+Another option for I/O is to use direct streaming to or from the AI Engine. There are two 32-bit input and two 32-bit output streams available. Although this removes the need for ping pong buffers, the kernel code would use additional cycles to shift vector data. For example, if a `float` vector of size eight is sent to an output stream, eight clock cycles are required.
 
-A final option for kernel I/O is possible if the data source or destination is another AI Engine tile. In this case, you can use the cascade interface. A `float` vector of size eight could transfer on each clock cycle using the cascade interface.
+A final option for kernel I/O is possible if the data source or destination is another AI Engine tile. In this case, you can use the cascade interface. A `float` vector of size eight can transfer on each clock cycle using the cascade interface.
 
 ### Kernel Code
 
@@ -293,7 +293,7 @@ $ make check_aiesim
 
 ### Vitis Analyzer
 
-Vitis Analyzer is an essential tool for accessing information on compilation, simulation, and implementation of AI Engine graphs. Use the tool to obtain a summary on profiling data and to graphically display trace events. Invoke the tool using the ``vitis_analyzer`` command, or for this example, by entering:
+Vitis Analyzer is an essential tool for accessing information on compilation, simulation, and implementation of AI Engine graphs. Use the tool to obtain a summary on profiling data and to graphically display trace events. Launch the tool using the ``vitis_analyzer`` command, or for this example, by entering:
 
 ```bash
 $ make analyze
@@ -311,7 +311,7 @@ The Array view displays how the AI Engine graph maps to the AI Engine array for 
 
 *Figure 9 - Vitis Analyzer Array View*
 
-Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 537 cycles to process 256 pixels of data. For lowest speed Versal devices, this would translate to a peak processing rate of ~476.7 MP/s. Highest speed devices would have a peak processing rate of ~595.9 MP/s. Kernel computation can be further improved by coding to take advantage of more efficient software pipelining, which has shown that a rate of 667 MP/s is achievable.
+Figure 10 contains information from the Profile view. The highlighted fields show that the bilinear interpolation kernel takes 537 cycles to process 256 pixels of data. For lowest speed Versal devices, this translate to a peak processing rate of ~476.7 MP/s. Highest speed devices have a peak processing rate of ~595.9 MP/s. Kernel computation can be further improved by coding to take advantage of more efficient software pipelining. This has shown that a rate of 667 MP/s is achievable.
 
 ![figure10](images/va_profile.png)
 
@@ -331,9 +331,9 @@ When comparing simulation results with test vectors, a MATLAB script performs th
 
 *Figure 12 - Simulation Verification*
 
-The output provides three different indications of simulation performance. 
+The output provides three different indications of simulation performance.
 
-The first is an indication of whether the simulation output matched the corresponding test vector. There is one comparison for each kernel simulated. The script compares `int32` values which represent floating-point interpolated pixel values. Because there can be slight variations in floating point calculations, the comparison enables for mismatch in the least significant mantissa bits of the floating-point number. This can be specified in the comparison script.
+The first is an indication of whether the simulation output matched the corresponding test vector. There is one comparison for each kernel simulated. The script compares `int32` values which represent floating-point interpolated pixel values. Because there can be slight variations in floating point calculations, the comparison enables for mismatch in the least significant mantissa bits of the floating-point number. You can specify this in the comparison script.
 
 The second comparison indicates maximum pixel value difference between AI Engine simulation results and single precision MATLAB generated vectors. Pixels take on values in the range [0, 255], and this result provides the maximum of the differences between all pairs of corresponding pixels.
 
@@ -341,7 +341,7 @@ The final comparison indicates the maximum pixel value difference between AI Eng
 
 ## Customizing the Example
 
-This example can be customized to use different test images, to use a specified output resolution, or to use multiple parallel processing cores for increased throughput. When generating test vectors, instead of using the Makefile, you can manually run scripts in MATLAB with the desired function arguments. For example, the equivalent to:
+You can customize this example to use different test images, use a specified output resolution, or to use multiple parallel processing cores for increased throughput. When generating test vectors, instead of using the Makefile, you can manually run scripts in MATLAB with the desired function arguments. For example, the equivalent to:
 
 ```bash
 $ make gen_vectors
@@ -356,7 +356,7 @@ is to invoke MATLAB and run
 
 ### Specifying a Test Image and Output Resolution
 
-The ``image_transform`` function uses file ``../images/epyc.jpg`` as a test image by default. A different file named ``image_file`` may be specified when invoking the function in MATLAB. 
+The ``image_transform`` function uses file ``../images/epyc.jpg`` as a test image by default. You can specify a different file named ``image_file`` when invoking the function in MATLAB.
 
 ```bash
 >> image_transform('image_file')
@@ -368,7 +368,7 @@ Default output resolution in pixels is 1024 $\times$ 1024. You can specify a dif
 >> image_transform('image_file', [ xres  yres ])
 ```
 
-The ``image_transform`` function reads the test image file, performs a sequence of linear transformations on image pixel coordinates, and stores these transformations in a file named ``bli_coords.mat`` along with the test image pixel array. When this function is executed in MATLAB, it displays a sequence of image transformations.
+The ``image_transform`` function reads the test image file, performs a sequence of linear transformations on image pixel coordinates, and stores these transformations in a file named ``bli_coords.mat`` along with the test image pixel array. When this function executes in MATLAB, it displays a sequence of image transformations.
 
 ### Multicore Processing
 
@@ -380,7 +380,7 @@ The ``genvectors_bilinear_interp`` function generates test vector files assuming
 
 where, N is the number of desired kernels. This function extracts one of the coordinate transformations from file ``bli_coords.mat``, performs bilinear interpolation on the pixels, and creates input and output test vectors for AI Engine simulation. The function also generates a file named ``config.h`` used by the AI Engine compiler and simulator. This specifies the number of kernels and number of kernel invocations required to process the entire test image. This function also performs bilinear interpolation in double precision using the MATLAB ``interp2`` function and stores the result in file ``golden_ref.mat``.
 
-As an example, specifying four kernels should result in the MATLAB Console Window displaying something like:
+As an example, specifying four kernels results in the MATLAB Console Window displaying something like:
 
 ```
 >> genvectors_bilinear_interp(4)
@@ -395,13 +395,13 @@ along with the image shown in Figure 13.
 
 *Figure 13 - MATLAB genvectors_bilinear_interp Output*
 
-After these MATLAB scripts run, the rest of the AI Engine build and simulation process proceeds in the same manner. Figure 14 shows how four kernels are assigned to tiles in the AI Engine array.
+After these MATLAB scripts run, the rest of the AI Engine build and simulation process proceeds in the same manner. The following figure shows how four kernels are assigned to tiles in the AI Engine array.
 
 ![figure14](images/va_array_4.png)
 
 *Figure 14 - Multicore Kernel Placement in AI Engine Array*
 
-Figure 15 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels support peak processing rates in the range of approximately 1.7 to 2.1 GP/s, depending on device speed grade.
+Figure 15 shows the result of comparing multicore AI Engine simulation output with test vectors. Based on profile results, four kernels support peak processing rates in the range of approximately 1.7 to 2.1 GP/s. This depends on device speed grade.
 
 ![figure15](images/check_sim_4.png)
 
@@ -411,7 +411,7 @@ Figure 15 shows the result of comparing multicore AI Engine simulation output wi
 
 [1]:<https://en.wikipedia.org/wiki/Bilinear_interpolation> "Bilinear interpolation"
 
-[[1]]: Bilinear interpolation. 17 May 2023, 14:05 UTC. In Wikipedia: The Free Encyclopedia. Wikimedia Foundation Inc. Encyclopedia on-line. Available from https://en.wikipedia.org/wiki/Bilinear_interpolation. Internet. Retrieved 4 August 2023.
+[[1]]: Bilinear interpolation. May 17 2023, 14:05 UTC. In Wikipedia: The Free Encyclopedia. Wikimedia Foundation Inc. Encyclopedia online. Available from https://en.wikipedia.org/wiki/Bilinear_interpolation. Internet. Retrieved August 4 2023.
 
 [2]: <https://ieeexplore.ieee.org/document/1409828> "A novel approach to real-time bilinear interpolation"
 [[2]]: K. T. Gribbon and D. G. Bailey, "A novel approach to real-time bilinear interpolation," Proceedings. DELTA 2004. Second IEEE International Workshop on Electronic Design, Test and Applications, Perth, WA, Australia, 2004, pp. 126-131, doi: 10.1109/DELTA.2004.10055.
@@ -424,14 +424,13 @@ Figure 15 shows the result of comparing multicore AI Engine simulation output wi
 
 [[4]] P. He et al., "Super-Resolution of Digital Elevation Model with Local Implicit Function Representation," 2022 International Conference on Machine Learning and Intelligent Systems Engineering (MLISE), Guangzhou, China, 2022, pp. 111-116, doi: 10.1109/MLISE57402.2022.00030.
 
-[5]: <https://bartwronski.com/2020/04/14/bilinear-texture-filtering-artifacts-alternatives-and-frequency-domain-analysis/> "Bilinear texture filtering – artifacts, alternatives, and frequency domain analysis"
+[5]: <https://bartwronski.com/2020/04/14/bilinear-texture-filtering-artifacts-alternatives-and-frequency-domain-analysis/> "Bilinear texture filtering–artifacts, alternatives, and frequency domain analysis"
 
-[[5]] Wronski, B. (2020, April 14). *Bilinear texture filtering – artifacts, alternatives, and frequency domain analysis.* https://bartwronski.com/2020/04/14/bilinear-texture-filtering-artifacts-alternatives-and-frequency-domain-analysis/
+[[5]] Wronski, B. (2020, April 14). *Bilinear texture filtering–artifacts, alternatives, and frequency domain analysis.* https://bartwronski.com/2020/04/14/bilinear-texture-filtering-artifacts-alternatives-and-frequency-domain-analysis/
 
 ## Support
 
 GitHub issues are used to track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
-
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
