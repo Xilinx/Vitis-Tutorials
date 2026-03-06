@@ -1,6 +1,7 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
+.PHONY: all aie hls host vitis run_hw_emu clean
 
 vitis := ./vitis_dir/a.xclbin
 
@@ -25,8 +26,8 @@ host:
 	make all -C Host_srcs
 
 
-# The below command will do cd to Vits_dir directory and run the makefile available in Vits_dir directory
-# make all -C Vits_dir will run the linker and packager to target the hw_emu/hw to run the design on hw_emu/hw
+# The below command will do cd to vitis_dir directory and run the makefile available in vitis_dir directory
+# make all -C vitis_dir will run the linker and packager to target the hw_emu/hw to run the design on hw_emu/hw
 vitis: 
 	make all -C vitis_dir
 

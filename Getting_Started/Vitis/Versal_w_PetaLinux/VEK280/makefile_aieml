@@ -5,9 +5,11 @@
 
 ############################## Setting up Project Variables ##############################
 TARGET := hw_emu
+VERSION=2025.2
+#COMMON_IMAGE_VERSAL :=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux
 SD_IMAGE_FILE := $(EDGE_COMMON_SW)/Image
-PLATFORM ?= /proj/rdi/xbuilds/released/2025.2/2025.2_2025.2_released/internal_platforms/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm 
+PLATFORM := $(PLATFORM_REPO_PATHS)/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm 
 
 EMU_PS := QEMU
 ifeq ($(TARGET), sw_emu)
@@ -200,9 +202,8 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 		--package.sd_file aieml_system $(LINK_OUTPUT) $(LIBADF) -o $(XCLBIN)
 	@echo "COMPLETE: emulation package created."
 else
-	v++ $(VPP_FLAGS) -t hw --platform $(PLATFORM) -p $(LINK_OUTPUT) $(LIBADF) --package.defer_aie_run -o $(XCLBIN)
-	v++ $(VPP_PFLAGS) -t hw --platform $(PLATFORM) -p --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file ./data --package.sd_file aieml_system --package.sd_file $(XCLBIN) 
-	@echo "### ***** dfx sd_card generation done! ***** ###"
+	v++ $(VPP_PFLAGS) -p -t hw --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file ./data --package.sd_file aieml_system $(LINK_OUTPUT) $(LIBADF) -o $(XCLBIN)
+	@echo "### ***** sd_card generation done! ***** ###"
 endif
 ###################################################################################################
 
@@ -232,7 +233,7 @@ else
 endif
 
 check_edge_sw:
-ifndef EDGE_COMMON_SW
+ifndef COMMON_IMAGE_VERSAL
 	$(error EDGE_COMMON_SW variable is not set, please download and use the pre-built image from https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html)
 endif
 

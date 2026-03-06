@@ -123,7 +123,7 @@ flowchart LR
 3. To compile the binaries:
 
    ```
-   cd <path_to_Tutorial>/Getting_Started/Vitis/Versal_w_Petalinux/<platform_to_test>
+   cd <path_to_Tutorial>/Getting_Started/Vitis/Versal_w_PetaLinux/<platform_to_test>
    make sd_card
    ```
    # Hardware Run
@@ -144,7 +144,7 @@ Refer to [UG1366](https://docs.amd.com/r/en-US/ug1366-vck190-eval-bd) to get mor
 
 ### 2.  Flash the SD Card
 
-Use the balenaEtcher/similar tools to flash the SD card. Plugin the SD card to the VCK190 board to initate the boot.
+Use the balenaEtcher/similar tools to flash the SD card. Plug in the SD card to the VCK190 board to initiate the boot.
 
 ### 3.  Running the design and application on the VCK190
 
@@ -163,13 +163,11 @@ cd /run/media/mmcblk0p1
 TEST PASSED
 ```
 
-![HW Results]()
-
 With the above results on the hardware run, we have reached to the end of this tutorial.
 
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

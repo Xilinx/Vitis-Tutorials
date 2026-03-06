@@ -1,20 +1,21 @@
 #/*
-#Copyright (C) 2023, Advanced Micro Devices, Inc.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
 ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
 VERSION  := 2025.2
-COMMON_IMAGE_VERSAL ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
-SYSROOT := $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
+#COMMON_IMAGE_VERSAL ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux/
+PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_dfx_202520_1/xilinx_vck190_base_dfx_202520_1.xpfm
 
 # === Put ALL build artifacts under this temp root ===
 TMP_ROOT ?= $(ROOT_DIR)/tmp
 
-.PHONY: help
+.PHONY: help dfx1_xo dfx2_xo dfx1_graph dfx2_graph build_xsa build_xclbin sd_card
 help:
 	@echo "Makefile usage"
+	@echo "  make sd_card       ## build complete design in one go. into tmp/"
 	@echo "  make build_xsa     ## build both dfx1.xsa and dfx2.xsa into tmp/"
 	@echo "  make build_xclbin  ## build both dfx1.xclbin and dfx2.xclbin into tmp/"
 	@echo "  make clean         ## remove the tmp/ directory"
@@ -117,7 +118,6 @@ $(DFX2_BUILD_DIR)/.dirs:
 	@touch $@
 
 # ============================ HLS COMPILE (XO) ============================
-.PHONY: dfx1_xo dfx2_xo
 
 dfx1_xo: $(DFX1_KERNEL_XO)
 $(DFX1_BUILD_DIR)/%.xo: $(DFX1_DIR)/hls/%.cpp | $(DFX1_BUILD_DIR)/.dirs
@@ -132,7 +132,6 @@ $(DFX2_BUILD_DIR)/%.xo: $(DFX2_DIR)/hls/%.cpp | $(DFX2_BUILD_DIR)/.dirs
 	  --save-temps -g -o $@
 
 # ============================ AIE BUILD (libadf.a) ============================
-.PHONY: dfx1_graph dfx2_graph
 
 dfx1_graph: $(DFX1_GRAPH_O)
 $(DFX1_GRAPH_O): $(DFX1_GRAPH) | $(DFX1_BUILD_DIR)/.dirs
@@ -159,7 +158,6 @@ $(DFX2_LINK_OUTPUT): $(DFX2_KERNEL_XO) $(DFX2_GRAPH_O)
 	  --save-temps -g -o $@
 	@echo "COMPLETE: $@"
 
-.PHONY: build_xsa
 build_xsa: $(DFX1_LINK_OUTPUT) $(DFX2_LINK_OUTPUT)
 
 # ============================ XCLBIN (link to xclbin) ============================
@@ -167,15 +165,16 @@ $(DFX1_XCLBIN): $(DFX1_LINK_OUTPUT)
 	$(VPP) -p --platform $(PLATFORM) -t $(TARGET) $(DFX1_GRAPH_O) $(DFX1_LINK_OUTPUT) \
 	  --temp_dir $(DFX1_BUILD_DIR)/_x --log_dir $(DFX1_BUILD_DIR)/logs --report_dir $(DFX1_BUILD_DIR)/reports \
 	  --package.defer_aie_run \
+	  --package.no_image \
 	  --save-temps -g -o $@
 
 $(DFX2_XCLBIN): $(DFX2_LINK_OUTPUT)
 	$(VPP) -p --platform $(PLATFORM) -t $(TARGET) $(DFX2_GRAPH_O) $(DFX2_LINK_OUTPUT) \
 	  --temp_dir $(DFX2_BUILD_DIR)/_x --log_dir $(DFX2_BUILD_DIR)/logs --report_dir $(DFX2_BUILD_DIR)/reports \
 	  --package.defer_aie_run \
+	  --package.no_image \
 	  --save-temps -g -o $@
 
-.PHONY: build_xclbin
 build_xclbin: $(DFX1_XCLBIN) $(DFX2_XCLBIN)
 
 #=======compile the host.
@@ -193,13 +192,13 @@ RUN_APP_SCRIPT=$(ROOT_DIR)/run_aie.sh
 PACKAGE_OUT=$(TMP_ROOT)/package_$(TARGET)
 SD_CARD =sd_card.img
 sd_card: $(SD_CARD)
-$(SD_CARD):$(EXECUTABLE) $(DFX2_XCLBIN) $(DFX1_XCLBIN)
+$(SD_CARD):$(EXECUTABLE) $(DFX1_XCLBIN) $(DFX2_XCLBIN)
 	$(VPP) -p  --platform $(PLATFORM) -t $(TARGET) $(DFX1_XCLBIN) $(DFX1_GRAPH_O) \
 	--package.out_dir $(PACKAGE_OUT) \
-	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 \
+	--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
 	--package.image_format=ext4 \
 	--package.boot_mode=sd \
-	--package.kernel_image=$(COMMON_IMAGE_VERSAL)/Image \
+	--package.kernel_image=$(EDGE_COMMON_SW)/Image \
 	--package.sd_file $(RUN_APP_SCRIPT) \
 	--package.sd_file $(DFX1_XCLBIN) \
 	--package.sd_file $(DFX2_XCLBIN) \

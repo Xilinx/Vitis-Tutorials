@@ -57,9 +57,9 @@ Ensure you have the following installed on your machine:
 
 * Vitis tools
 * Versal AI Edge Series VEK280 Evaluation Kit
-* Commom Image
+* Common Image
 
 **NOTE: Hardware run flow for VEK280 is as same as VCK190 board flow. Please refer steps documented for [VCK190 board hardware run](../VCK190_dfx/README.md).**
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

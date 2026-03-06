@@ -1,16 +1,9 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
-ARCH = aie
+.PHONY: all clean
 
-ifeq ($(ARCH), aie)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
-else ifeq ($(ARCH), aie-ml)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm
-else
-$(error ARCH is not supported)
-endif
-
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
 
 s2mm = ./s2mm/s2mm.xo
 mm2s = ./mm2s/mm2s.xo

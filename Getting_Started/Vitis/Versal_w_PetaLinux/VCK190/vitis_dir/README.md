@@ -72,7 +72,7 @@ Here is a quick video of how the block design look like before running the linke
 2. No "VitisRegion" in the block design
 3. No MM2S and S2MM kernels
 
-![Extensible_XSA](../support_files/Extensible_XSA.gif)
+![Extensible_XSA](../../../support_files/Extensible_XSA.gif)
 
 
 #### After the Linker Run (Fixed XSA)
@@ -84,7 +84,7 @@ Here is a quick video of how the block design look like after running the linker
 3. The VitisRegion gets added by the Vitis Linker that includes the HLS/PL kernels
 4. Changes in noc_ddr4 interfaces
 
-![Fixed_XSA](../support_files/Fixed_XSA.gif)
+![Fixed_XSA](../../../support_files/Fixed_XSA.gif)
 
 ##### Vitis Linker command and its output
 
@@ -142,11 +142,11 @@ v++ --package \
 | v++ --package  | SD_CARD image containing boot files, application executable and xclbin file | vpp_<xsa_name>.log | <xsa_name>.xclbin.package_summary |
 
 
-Next Chapter: [Running the Hardware Emulation](../Running_the_Hardware_Emulation.md)
+Next Chapter: [Running the Hardware Emulation](../../../Running_the_Hardware_Emulation.md)
 
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -14,7 +14,7 @@
 
 # Host Application Compilation
 
-To write an application code for A72 targeting the Linux OS, we can make use of [AMD Runtime Library (XRT)](../Keywords.md). 
+To write an application code for A72 targeting the Linux OS, we can make use of AMD Runtime Library (XRT). 
 As the XRT manages the hardware access, use of XRT APIs help the application development. 
 
 Before we deep dive into the host code development, let's understand the goal of the application code:
@@ -135,6 +135,6 @@ Next Chapter: [Use Vitis Linker and Packager to build the design](../vitis_dir/R
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

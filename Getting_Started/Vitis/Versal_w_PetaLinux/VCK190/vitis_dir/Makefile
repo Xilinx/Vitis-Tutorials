@@ -1,18 +1,13 @@
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
+
+.PHONY: all linker packager run clean
 
 all: linker packager
 TARGET                ?= hw_emu
 MODE	 = linux
-ARCH = aie
 
-ifeq ($(ARCH), aie)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
-else ifeq ($(ARCH), aie-ml)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm
-else
-$(error ARCH is not supported)
-endif
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
 
 # Rootfs and Image
 export IMAGE  		= ${COMMON_IMAGE_VERSAL}/Image
@@ -45,10 +40,10 @@ run:
 
 
 clean:
-	rm v++*
-	rm ./pack_out_dir -rf
+	rm -f v++*
+	rm -rf ./pack_out_dir
 	rm -rf _x _ide
-	rm a.*
-	rm xcd.log
-	rm vpp_link.log
-	rm vivado.*
+	rm -f a.*
+	rm -f xcd.log
+	rm -f vpp_link.log
+	rm -f vivado.*

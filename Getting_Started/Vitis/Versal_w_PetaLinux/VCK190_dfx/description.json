@@ -4,11 +4,11 @@
     "gui": "false",
     "flow": "versal",
 
-    "platform_allowlist": [ "vek280"],
+    "platform_allowlist": [ "vck190"],
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "GS_vitis",
+        "test_name": "VCK190_dfx",
         "jobs": [
             {
                 "max_memory_MB": 65536,
@@ -20,19 +20,16 @@
             }
         ],
         "targets": [
-            "vitis_hw_emu",
             "vitis_hw_build",
             "vitis_hw_run"
         ],
         "category": "canary",
 	"make_options": [
-            "EMU_CMD=\\\"./launch_hw_emu.sh -run-app run_aieml.sh \\\"",
-            "EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/", 
-            "EMBEDDED_EXEC_SCRIPT=./run_aieml.sh"
+            "EMBEDDED_PACKAGE_OUT=./tmp/package_hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./run_aie.sh"
 	    ],
         "custom_build_target": {
-            "all": "all",
-            "hw": "sd_card"
+            "all": "sd_card"
         },
         "custom_board_target": "run_test",
         "tasks": {

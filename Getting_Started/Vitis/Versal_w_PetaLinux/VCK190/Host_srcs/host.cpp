@@ -1,8 +1,13 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-#include <stdint.h> 
-  
- // XRT APIS are used for both the AIE Graph and PL Kernels 
+/*
+Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+ // XRT APIS are used for both the AIE Graph and PL Kernels
 #include "experimental/xrt_kernel.h" 
 #include "experimental/xrt_graph.h" 
 #include <cstring> 

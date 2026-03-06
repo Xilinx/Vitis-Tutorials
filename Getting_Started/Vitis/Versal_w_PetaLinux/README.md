@@ -41,7 +41,7 @@ This section of the tutorial explains how to build HLS and AIE kernels, along wi
 3. To compile the binaries:
 
    ```
-   cd <path_to_Tutorial>/Getting_Started/Vitis/Versal_w_Petalinux/<platform_to_test>
+   cd <path_to_Tutorial>/Getting_Started/Vitis/Versal_w_PetaLinux/<platform_to_test>
    make all
    ```
    Please refer Makefile of each tutorial for more details on the commands.
@@ -49,8 +49,8 @@ This section of the tutorial explains how to build HLS and AIE kernels, along wi
 Ensure you have the following installed on your machine:
 
 * Vitis tools
-* Versal Commom Image and sysroot
+* Versal Common Image and sysroot
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

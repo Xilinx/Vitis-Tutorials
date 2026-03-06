@@ -1,18 +1,12 @@
 #/*
-#Copyright (C) 2023-2025, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 #*/
 
 ROOT_DIR=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-ABS_BUILD_PATH=$(ROOT_DIR)/build
-ABS_HW_PATH=$(ABS_BUILD_PATH)/vivado
-BD_TCL=run.tcl
-ABS_BD_TCL=$(ROOT_DIR)/$(BD_TCL)								  
 VERSION=2025.2
-COMMON_IMAGE_VERSAL ?=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
-SYSROOT=$(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
-XSA_NAME=vek280_custom
-PLATFORM_NAME=vek280_custom
+COMMON_IMAGE_VERSAL ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+SYSROOT ?= $(COMMON_IMAGE_VERSAL)/sysroots/cortexa72-cortexa53-amd-linux/
 PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm
 
 AIE_WORK = $(ROOT_DIR)/aieml_work/

@@ -57,8 +57,8 @@ Ensure you have the following installed on your machine:
 
 * Vitis tools
 * Versal AI Core Series VCK190 Evaluation Kit
-* Commom Image
+* Common Image
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -81,7 +81,7 @@ Simple_Graph()
 	{
 		in0 = adf::input_plio::create("DataIn1", adf::plio_32_bits, "../data_srcs/MatrixA.txt");
 		in1 = adf::input_plio::create("DataIn2", adf::plio_32_bits, "../data_srcs/MatrixB.txt");
-		out_put = adf::output_plio::create("DataOut1", adf::plio_32_bits, "../data_srcs/ouput.txt");
+		out_put = adf::output_plio::create("DataOut1", adf::plio_32_bits, "../data_srcs/output.txt");
 
 		k1 = kernel::create(MatMul);
 		source(k1) = "../design_srcs/MatMul.cpp";
@@ -151,6 +151,6 @@ Next Chapter: [Prepare HLS kernels](../HLS_Kernels/README.md)
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
