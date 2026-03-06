@@ -44,118 +44,138 @@
 
 ## Introduction
 
-Machine Learning is pervasive in just about any modern application. Whereas machine learning tends to infer processing of structured data, the sub-class of deep learning is often applied to unstructured data where more abstraction is required to extract significant features from a data set. Some applications which have proven to benefit from the application of deep learning are natural language processing and image classification, where the relationship between input data and desired output can be exceedingly complex.
+Machine Learning appears in almost all modern applications. Machine learning typically processes structured data, while deep learning focuses on unstructured data requiring greater abstraction to remove significant features from a dataset. Applications that benefit from deep learning include natural language processing and image classification. In these cases, the relationship between input data and desired output can be highly complex.
 
-Deep learning solutions are often created in the form of a neural network, as depicted in the following figure.
+Deep learning solutions often use a neural network, as shown in the following figure.
 
 ![figure1](images/neural_network.png)
 
 *Figure 1 - Artificial Neural Network*
 
-An artificial neural network is comprised of layers of neurons intended to mimic behavior of the human brain. Each layer consists of nodes which are connected to adjacent layers. The number of nodes in a layer and number of hidden layers can vary depending on implementation. Nodes in the graph represent individual neurons which may be depicted in more detail as shown in the following figure.
+An artificial neural network contains layers of neurons designed to mimic behavior of the human brain. Each layer has nodes connected to adjacent layers. The number of nodes and the number of hidden layers vary by implementation. Nodes in the graph represent individual neurons.
 
 ![figure2](images/neuron.png)
 
 *Figure 2 - Artificial Neuron*
 
-Input data to each layer is multiplied by a weight before being summed together. These weights are determined by training the neural network using empirical data. The activation function transforms the weighted sum of inputs into an output signal. Activation functions add non-linearity to neural networks, enabling them to effectively approximate any complex function of the input data. Different types of activation functions are available to use within the various layers of the neural network. An activation function often applied to the output layer is known as softmax.
+Each layer multiplies its input data by a weight before summing the results. Training the neural network with empirical data determines these weights.
+
+The activation function converts the weighted sum of inputs into an output signal. Activation functions introduce non‑linearity, allowing neural networks to approximate complex functions of the input data. You can use various activation functions across different layers. A common activation function for the output layer is softmax.
 
 ## Softmax Function Definition
 
-The softmax function is defined for a vector of real values $\mathbf{z} = \left( z_1, z_2, \ldots , z_M \right)$ by the equation
+The softmax function is defined for a vector of real values $\mathbf{z} = \left( z_1, z_2, \ldots , z_M \right)$ by the equation:
 
 $$
 \Large {\sigma \left( \mathbf{z} \right) {\small i}} = {\frac{e^{z_i}}{\sum\nolimits_{j=1}^{M} e^{z_j}}}
 $$
 
-where $z_i$ are the individual outputs of the layer. Softmax differs from other popular activation functions in that it takes into account the entire layer and scales outputs so they sum to a value of 1. Each individual output can then be interpreted as a probability. So in classification problems, softmax output may be interpreted as probability that the input data belongs to a specified class.
+Here, $z_i$ represents each individual layer output. Softmax considers the entire layer, scaling outputs so they sum to a value of 1. Each individual output is interpretable as a probability. In classification problems, interpret softmax output as probability that the input data belongs to a specified class.
 
-When computing the softmax function, there is a risk of overflow occurring during evaluation of the individual exponential functions that comprise the formula. For single-precision floating-point numbers, the exponential function overflows when input values exceed ~88.723. To avoid overflow, the softmax function is often evaluated using the equivalent formula
+Overflow can occur when computing exponential functions in softmax. For single‑precision floating‑point numbers, exponential overflow occurs when inputs exceed approximately 88.723.
+
+To avoid overflow, evaluate softmax using the equivalent formula:
 
 $$
 \Large {\sigma \left( \mathbf{z} \right) {\small i}} = {\frac{e^{z_i - \alpha}}{\sum\nolimits_{j=1}^{M} e^{z_j- \alpha}}}
 $$
 
-where $\alpha$ is a real-valued constant. In particular, $\alpha$ is often chosen to be the maximum of all $z_i$ values comprising the input vector. By subtracting the maximum value from all others, inputs to the exponential functions are constrained to the range $(-\infty, 0]$, which in turn limits the exponential function values to the range $[0, 1]$.
+Choose $\alpha$ as the maximum $z_i$ value in the input vector. Subtracting the maximum constrains exponential inputs to $(-\infty, 0]$, which limits the exponential function values to the range $[0, 1]$.
 
-Another alternative to evaluating the softmax function is to use the equivalent formula
+Another alternative to evaluating the softmax function is to use the equivalent formula:
 
 $$
 \Large {\sigma \left( \mathbf{z} \right) {\small i}} = \exp \left( z_i - \log \sum\nolimits_{j=1}^{M} e^{z_j} \right)
 $$
 
-which is attractive because no division is required. However, it has been shown that in practice this formula tends to produce larger computational errors [[1]].
+This approach requires no division but often produces larger computational errors [[1]].
 
 ## Computing the Exponential Function
 
 ### IEEE 754 Format Trick
 
-In addition to basic arithmetic operations, softmax computation depends on efficient evaluation of the exponential function. While there are several ways to accomplish this, an attractive alternative is to estimate the exponential function using a trick based on IEEE 754 floating-point format [[2]]. A double-precision, floating-point number represented by IEEE 754 format is shown in the following figure.
+Softmax computation, beyond basic arithmetic, requires efficient evaluation of the exponential function. Several methods exist, but a useful alternative estimates the exponential function using a technique based on IEEE 754 floating‑point format [[2]].
+
+The following figure shows a double‑precision floating‑point number represented in IEEE 754 format.
 
 ![figure3](images/ieee754_format.png)
 
 *Figure 3 - IEEE 754 Format for Double-Precision Numbers*
 
-This format is used to represent a number $(-1)^s(1+m)2^{x-x_0}$, where $s$ is a sign bit, $m$ is the 52-bit fractional part of a normalized mantissa, and $x$ is an 11-bit exponent with bias $x_0 = 1023$.
+The IEEE 754 format represents a number as $(-1)^s(1+m)2^{x-x_0}$, where $s$ is a sign bit, $m$ is the 52-bit fractional part of a normalized mantissa, and $x$ is an 11-bit exponent with bias $x_0 = 1023$.
 
-Approximation is based on the identity $e^y = 2^{y/log(2)}$. So for any floating-point number $y$, the value $e^y$ is approximated by setting the exponent $x$ of the result to $y/log(2) + x_0$. To perform the computation, it helps to divide a double precision number into two groups comprised of upper 32 bits and lower 32 bits. The lower 32 bits are set to 0 in this approximation, while the upper 32 bits are the same bits used to represent the signed 32-bit integer value
+The approximation uses the identity $e^y = 2^{y/log(2)}$. For any floating-point number $y$, approximate $e^y$ by setting the exponent $x$ to $y/log(2) + x_0$. To compute this efficiently, divide a double-precision number into two groups: the upper 32 bits and lower 32 bits. In this method, set the lower 32 bits to zero while keeping the upper 32 bits identical to those representing the signed 32‑bit integer:
 
 $$
 I_{upper} = \left\lfloor \frac{2^{20}y}{log(2)} + 2^{20}x_0 - C \right\rfloor .
 $$
 
-A factor of $2^{20}$ represents a binary shift necessary to align with the exponent field of the IEEE 754 format. Residual mantissa bits help provide a degree of interpolation between exponent values. The parameter $C$ is a correction factor meant to mitigate estimation error. It was found that a value of $C=60801$ minimizes RMS error [[2]]. This estimation method may be adapted for other variations of floating-point number representations, such as 32-bit single-precision floating-point.
+A factor of $2^{20}$ represents a binary shift necessary to align with the exponent field of the IEEE 754 format. Residual mantissa bits help provide a degree of interpolation between exponent values. The parameter $C$ is a correction factor meant to mitigate estimation error. A value of $C=60801$ minimizes root‑mean‑square (RMS) error [[2]]. This estimation method can adapt to other floating-point formats, such as 32-bit single-precision floating-point.
 
 ### Improving Accuracy
 
-While this trick is computationally very efficient, it can result in an estimation error as large as 4% of the true value. To reclaim lost accuracy, a method was proposed in [[3]] where all 64 bits are used in computation and a correction function $F$ is defined. To derive the solution, begin by expressing the exponential function in the form
+Although the IEEE 754 trick is computationally efficient, it can produce estimation errors up to 4 % of the true value. A method described in [[3]] restores accuracy by using all 64 bits and applying a correction function $F$.
+
+Begin by expressing the exponential function as:
 
 $$
 e^y = 2^{y/log(2)} = 2^{y_{i}} \cdot 2^{y_{f}} \approx 2^{y_{i}} \cdot \left( 1 + m - F \right),
 $$
 
-where $y_i$ and $y_f$ are the integer and fractional parts of $y/log(2)$, respectively. The correction function is defined by solving for $F = 1 + m - 2^{y_{f}}$. Since $m \equiv y_{f}$, an equivalent expression is $F \left( y_{f} \right) = 1 + y_{f} - 2^{y_{f}}$. The correction function $F \left( y_f \right)$ may be modeled as a polynomial, where $y_f$ is defined over the range $[0, 1)$.
+where $y_i$ and $y_f$ are the integer and fractional parts of $y/log(2)$, respectively. Define $F = 1 + m - 2^{y_{f}}$. Given that $m \equiv y_{f}$, rewrite $F \left( y_{f} \right) = 1 + y_{f} - 2^{y_{f}}$. Model $F \left( y_f \right)$ as a polynomial where $y_f$ is defined over the range $[0, 1)$.
 
-The exponential function estimate is obtained by computing
+Estimate the exponential function by computing:
 
 $$
 I = \left\lfloor \frac{2^{52}}{log(2)} \left( y - log(2) F(y_f) \right) + 2^{52}x_0 \right\rfloor
 $$
 
-as a 64-bit signed integer then reinterpreting the result as a double-precision floating-point value. Since all 64 bits are used, a factor $2^{52}$ is necessary to align to the exponent field of the IEEE 754 format.
+Interpret (I) as a 64‑bit signed integer, then reinterpret the result as a double‑precision floating‑point value. Using all 64 bits requires a factor $2^{52}$ to align the exponent field with IEEE 754 format.
 
 ### Adapting for Single-Precision Floating-Point
 
-AMD Versal&trade; Core Adaptive SoCs primarily contain a variant of AI Engine processor which has single-precision floating-point as a native data type. A single-precision floating-point format, known as binary32, is specified by the IEEE 754 standard as shown in Figure 4.
+AMD Versal™ Core Adaptive SoCs primarily contain a variant of AI Engine processor with a single-precision floating-point as a native data type. The IEEE 754 standard specifies binary32 single‑precision floating‑point format, shown in the following figure.
 
 ![figure4](images/ieee754_float_format.png)
 
 *Figure 4 - IEEE 754 Single-Precision Floating-Point Format*
 
-This format is structurally similar to double-precision format, but with reduced dynamic range and precision due to fewer bits being used to represent the exponent and mantissa. To adapt exponential function approximation to single-precision floating-point data types, the equation becomes
+The format resembles double-precision format but has reduced dynamic range and precision due to fewer exponent and mantissa bits. To adapt exponential function approximation to single-precision floating-point data types, use the equation:
 
 $$
 I = \left\lfloor \frac{2^{23}}{log(2)} \left( y - log(2) F(y_f) \right) + 2^{23}x_0 \right\rfloor
 $$
 
-where $x_0 = 127$ and $I$ is computed as a signed 32-bit integer which is then reinterpreted as single-precision floating-point.
+Here, $x_0 = 127$ and $I$ is computed as a signed 32-bit integer, then reinterpreted as single-precision floating-point.
 
-The correction function $F(y_f)$ may be approximated with a polynomial. As an example, the polynomial $p(x) = p_4 x^4 + p_3 x^3 + p_2 x^2 + p_1 x + p_0$ with $p_4 = -1.367030945e^{-2}$, $p_3 = -5.174499750e^{-2}$, $p_2 = -2.416043580e^{-1}$, $p_1 = 3.070270717e^{-1}$, and $p_0 = -3.492907808e^{-6}$ was obtained through Chebyshev approximation. Polynomials with degree greater than 4 appear to offer no additional benefit when computing with single precision. Utilizing this polynomial as the correction function results in approximation of the exponential function having a maximum error of less than 0.0015%. 
+Approximate the correction function $F(y_f)$ with a polynomial. One example is:
 
-For comparison, another version of [Softmax Function Tutorial](../../../AIE-ML/Design_Tutorials/05-Softmax-Function/) is available for the AIE-ML variant of AI Engines, where bfloat16 is the native floating-point data type. 
+$p(x) = p_4 x^4 + p_3 x^3 + p_2 x^2 + p_1 x + p_0$ where
+
+- $p_4 = -1.367030945e^{-2}$
+- $p_3 = -5.174499750e^{-2}$
+- $p_2 = -2.416043580e^{-1}$
+- $p_1 = 3.070270717e^{-1}$
+- $p_0 = -3.492907808e^{-6}$
+
+These values come from Chebyshev approximation. Polynomials of degree greater than four offer no additional benefit for single-precision calculations. Using this polynomial as the correction function yields exponential approximations with maximum error under 0.0015%.
+
+For comparison, another version of [Softmax Function Tutorial](../../../AIE-ML/Design_Tutorials/05-Softmax-Function/) is available for the AIE-ML variant of AI Engines, where bfloat16 is the native floating-point data type.
 
 ## AI Engine Implementation
 
-One of the key parameters impacting the amount of computation required for evaluating the softmax function is the number of classes. For the example presented here, 2048 classes are used to represent the output nodes of a neural network. Since data is in single-precision floating-point format, the floating-point vector unit of the AI Engine, shown in the following figure, is required. The floating-point multiply unit is designed to process vectors with eight lanes, so softmax computation is designed to accommodate a SIMD factor of eight.
+A key parameters affecting softmax computation is the number of classes. In the example here, 2048 classes represent the output nodes of a neural network. Because data uses single-precision floating-point format, the floating-point vector unit of the AI Engine is required, as shown in the following figure. The floating-point multiply unit processes vectors with eight lanes. Softmax computation is designed to accommodate a single‑instruction multiple‑data (SIMD) factor of eight.
 
 ![figure5](images/fp_vector_unit.png)
 
 *Figure 5 - AI Engine Floating-Point Vector Unit*
 
-From the preceding figure, you can observe that the floating-point vector processor has a pipeline depth of seven. To improve compute efficiency, kernel processing should be designed to keep the pipeline full. This is not the case when a computation needs to wait for intermediate results to proceed. To take full advantage of software pipelining, computation is broken up into components, where intermediate results are stored in data memory. Each loop in the kernel processes a specific computation for the entire number of classes in the softmax function, eight elements at a time. Each invocation of the kernel computes a single softmax vector comprising the values for all outputs according to the following processing order:
+The preceding figure shows the floating-point vector processor with a pipeline depth of seven. Design kernel processing to keep the pipeline full for maximum compute efficiency. Efficiency decreases when computation waits for intermediate results. To leverage software pipelining, break computation into components and store intermediate results in data memory.
+
+Each kernel loop performs a specific computation for all classes in the softmax function, eight elements per iteration. Each kernel invocation computes a single softmax vector containing all output values in the following order:
 
 1. Read and store all input values while searching for the maximum value. (single loop)
-2. Compute exponential function of all values. (10 computational loops, includes subtraction of maximum from input and correction polynomial evaluation)
+2. Compute exponential function of all values. (ten computational loops, includes subtraction of maximum from input and correction polynomial evaluation)
 3. Sum all exponentials and invert sum to obtain scaling factor. (single loop plus scalar processor inverse operation)
 4. Multiply all exponentials by scaling factor and send result to output. (single loop)
 
@@ -163,19 +183,19 @@ From the preceding figure, you can observe that the floating-point vector proces
 
 ### Kernel Data Interface
 
-While this kernel is designed for single-precision floating-point processing, the function signature indicates that data type at the interface is `int32` for both input and output.
+The kernel is designed for single‑precision floating‑point processing, but the function signature uses `int32` for both input and output.
 
 ```cpp
 void softmax_kernel::softmax(input_stream<int32>* in, output_stream<int32>* out)
 ```
 
-Each of these `int32` values represents the 32-bits of a single-precision floating-point value in IEEE 754 format. When used by the kernel, values are reinterpreted as floating-point for processing. The reason for this is that when performing AI Engine simulation, text files are used for input and output of data. Use of `int32` preserves all bits of the floating-point number when read from or written to a text file and allows for test vector matching at the bit level.
+Each `int32` value contains the 32-bits of a single-precision floating-point number in IEEE 754 format. The kernel reinterprets these values as floating-point for processing.
 
-Also of note is that streaming interfaces are used for input and output, which reduces latency and eliminates the need for ping pong buffers in data memory.
+Using `int32` preserves all bits of the floating-point number when reading from or writing to text files during AI Engine simulation. This approach enables direct bit=level comparison for test vector matching. Streaming interfaces handle input and output, reducing latency and eliminating the need for ping‑pong buffers in data memory.
 
 ### Kernel Code
 
-The first processing loop of the kernel is shown below. Note that iterators are defined for work buffers specified in data memory to hold intermediate results. The processing loop reads input values for softmax computation and stores them to memory while searching for the maximum input value.
+The first processing loop of the kernel appears in the following code. The kernel defines iterators for work buffers in data memory to store intermediate results. The processing loop reads input values for softmax computation, stores them in memory, and searches for the maximum input value.
 
 ```cpp
 // work buffers in data memory
@@ -204,7 +224,11 @@ pWbufB -= (BUFFSZ/8);
 chess_separator();
 ```
 
-The next segment of kernel code, as shown below, is comprised of the first three computational loops used to evaluate the exponential function of all inputs. The first loop subtracts the maximum value from all inputs then multiplies the result by a scale factor of $\log_{2}e$, which is equivalent to $\frac{1}{\log(2)}$. The scale factor is defined in the kernel header file. The second loop computes `floor()` of the scaled values. Since conversion to fixed-point utilizes a rounding function, a value of 0.5 is subtracted first, to make the output equivalent to `floor()`. One caveat is that this does not compute `floor()` for very small, negative values. The third loop computes the fractional value $x - \lfloor x \rfloor$. Iterators for data memory are reset after each loop to prepare them for follow-on processing.
+The next kernel code segment contains the first three computational loops used to evaluate the exponential function of all inputs. The first loop subtracts the maximum value from all inputs, then multiplies the result by a scale factor of ${\log_{2}}e$. This is equivalent to $\frac{1}{\log(2)}$. The kernel header factor defines this scale factor.
+
+The second loop computes `floor()` of the scaled values. Because fixed‑point conversion uses a rounding function, subtract 0.5 first to match `floor()` output. This approach fails to compute `floor()` correctly for small, negative values.
+
+The third loop computes the fractional value $x - \lfloor x \rfloor$. Iterators for data memory are reset after each loop to prepare them for follow-on processing.
 
 ```cpp
 /****** Start of computation of exponential function of all input values ******/
@@ -385,7 +409,7 @@ pWbufC -= (BUFFSZ/8);
 chess_separator();
 ```
 
-With the exponential function of all inputs computed, the softmax function is evaluated by the kernel code shown below. The first loop sums exponential values in individual vector lanes. Next, individual vector lanes are summed, and the scalar processor is invoked to compute a scale factor, which is the inverse of the sum. The final loop multiples all the exponential values by the scale factor and sends the result to output.
+After computing exponential values for all inputs, the kernel evaluates the softmax function in the following code segment. The first loop sums exponential values in individual vector lanes. The kernel then sums the lanes and uses the scalar processor to compute a scale factor, which is the inverse of the sum. The final loop multiplies all exponential values by the scale factor and sends the results to the output.
 
 ```cpp
 // accumulate all vectors to determine scale factor
@@ -417,17 +441,17 @@ for (unsigned i=0; i < BUFFSZ/8; i++)
 
 ## Running the Example
 
-Running the example requires that both MATLAB and AMD Vitis™ tools are installed and configured correctly. After downloading the files, cd into the ``.../19-Softmax-Function/aie/`` directory and use the make build process.
+Running the example requires that both MATLAB and Vitis tools are installed and configured correctly. After downloading the files, change directory into ``.../19-Softmax-Function/aie/`` and build using ``make``.
 
 ### Generating Test Vectors
 
-Prior to running the AI Engine graph simulation, test vectors are required to provide input. Scripts are also provided to compare with AI Engine simulator output for verification. To generate the vectors, run the command:
+Before running the AI Engine graph simulation, generate test vectors to provide input. Scripts compare with AI Engine simulator output for verification. To generate the vectors, run the command:
 
 ```bash
 $ make gen_vectors
 ```
 
-Test vectors are included with this tutorial, so this step isn't strictly necessary prior to AI Engine simulation. If desired, you can run the ``matlab/genvectors_softmax_aie_float32.m`` function from the MATLAB environment to generate test vectors. This function accepts input arguments specifying the number of softmax classes and the number of softmax vectors to generate. This function also creates a file ``aie/src/config.h`` which configures the AIE kernel and simulation to properly process the generated testvectors.
+Test vectors are included with this tutorial, so generation is optional before AI Engine simulation. If desired, run the ``matlab/genvectors_softmax_aie_float32.m`` function from MATLAB to generate test vectors. The function accepts input arguments specifying the number of softmax classes and the number of softmax vectors to generate. This function also creates a ``aie/src/config.h`` file to configure the AIE kernel and simulation for processing generated test vectors.
 
 ### Running x86 Simulation
 
@@ -451,7 +475,7 @@ $ make aiesim
 $ make check_aiesim
 ```
 
-The first command compiles graph code for the SystemC simulator, the second command runs the simulation, and the final command invokes MATLAB to compare simulation output with test vectors. If it is desired to generate trace and profile data during simulation, use the sequence:
+The first command compiles graph code for the SystemC simulator, the second command runs the simulation, and the final command invokes MATLAB to compare simulation output with test vectors. To generate trace and profile data during simulation, run the following sequence:
 
 ```bash
 $ make aiecom
@@ -463,31 +487,31 @@ $ make check_aiesim
 
 ### Vitis Analyzer
 
-Vitis Analyzer is an essential tool for accessing information on compilation, simulation, and implementation of AI Engine graphs. It can be used to obtain a summary on profiling data and to graphically display trace events. The tool may be invoked with the ``vitis_analyzer`` command, or for this example, by entering:
+Vitis Analyzer provides information on compilation, simulation, and implementation of AI Engine graphs. Use it to obtain a summary on profiling data and to graphically display trace events. Launch the tool with the ``vitis_analyzer`` command. For this example, enter:
 
 ```bash
 $ make analyze
 ```
 
-The Graph view displays connectivity of the AI Engine graph, which for this example, is displayed in the following figure. This simple example shows a softmax kernel with streaming data input and output. Also visible are four buffers in data memory used for holding intermediate computations.
+The graph view displays connectivity of the AI Engine graph. This simple example shows a softmax kernel with streaming data input and output. Also visible are four buffers in data memory used for holding intermediate computations.
 
 ![figure6](images/va_sm_graph.png)
 
 *Figure 6 - Vitis Analyzer Graph View*
 
-The Array view displays how the AI Engine graph is mapped to the AI Engine array for the device specified. This example uses a VC1902 Versal AI Core device, which contains 400 AI Engine tiles. As shown in the following figure, this example utilizes two AI Engine tiles. One tile is used for kernel processing along with containing work buffers in data memory. The amount of memory required for these buffers depends on the number of classes in the softmax function. For this example with 2048 classes, the entire 32 kB associated with the tile is utilized. This requires a second tile to accommodate system memory, shown in red.
+The array view shows how the AI Engine graph maps to the AI Engine array for the specified device. This example uses a VC1902 Versal AI Core device with 400 AI Engine tiles. The following figure shows two AI Engine tiles in use. One tile handles kernel processing and contains work buffers in data memory. The memory requirement for these buffers depends on the number of classes in the softmax function. with 2048 classes, the tile uses its entire 32 kB memory. This requires a second tile to accommodate system memory, shown in red.
 
 ![figure7](images/va_sm_array.png)
 
 *Figure 7 - Vitis Analyzer Array View*
 
-The following figure contains information from the Profile view. The highlighted fields show that the softmax kernel takes 25,306 cycles to process 2048 classes. For lowest speed grade Versal devices, this would translate to a processing rate of ~39,516 softmax computations per second. Higher speed grade devices could have a peak rate of ~49,395 softmax computations per second.
+The following figure contains information from the Profile view. The highlighted fields show that the softmax kernel takes 25,306 cycles to process 2048 classes. For lowest speed grade Versal devices, this translates to a processing rate of ~39,516 softmax computations per second. Higher speed grade devices can have a peak rate of ~49,395 softmax computations per second.
 
 ![figure8](images/va_sm_profile.png)
 
 *Figure 8 - Vitis Analyzer Profile View*
 
-The following figure shows part of the Vitis Analyzer trace view. The cursors show that the time between the end of one kernel invocation to the end of the next is 20.256 $\mu s$. Additional overhead causes softmax computation rate to decrease slightly to ~49,368 computations per second in higher speed grade devices. This particular implementation is limited by computation efficiency. To improve processing rate, you can further optimize code, or possibly trade off accuracy by eliminating the polynomial correction factor from exponential function evaluation.
+The following figure shows part of the Vitis Analyzer trace view. The cursors show that the time between the end of one kernel invocation to the end of the next is 20.256 $\mu s$. Additional overhead causes softmax computation rate to decrease slightly to ~49,368 computations per second in higher speed grade devices. Computation efficiency limits this particular implementation. To improve processing rate, you can further optimize code, or possibly trade off accuracy by eliminating the polynomial correction factor from exponential function evaluation.
 
 ![figure9](images/va_sm_trace.png)
 
@@ -495,15 +519,15 @@ The following figure shows part of the Vitis Analyzer trace view. The cursors sh
 
 ### Test Vector Comparison
 
-When comparing simulation results against test vectors, a MATLAB script is invoked to perform the processing. An example of a successful comparison is shown in the following figure.
+A MATLAB script processes simulation results and compares them with test vectors. The following figure shows an example of a successful comparison.
 
 ![figure10](images/sm_check_sim.png)
 
 *Figure 10 - Simulation Verification*
 
-The output provides two different indications of simulation performance. The first is an indication of whether the simulation output matched corresponding test vectors. There is one comparison for each softmax function evaluated. The script compares `int32` values which represent single-precision floating-point softmax function values. Since there might be variation when comparing floating-point results, the comparison allows for mismatch in the least significant mantissa bit of the floating-point number. The number of allowed LSB mismatches might be adjusted in the MATLAB script.
+The output shows two indicators of simulation performance. The first indicator reveals whether the simulation output matches corresponding test vectors. There is one comparison for each softmax function evaluated. The script compares `int32` values which represent single-precision floating-point softmax function values. Because floating-point results can vary, the comparison allows mismatch in the least significant mantissa bit of the floating-point number. Adjust the number of allowed LSB mismatches in the MATLAB script.
 
-The second comparison indicates the maximum difference between AI Engine simulation results and double-precision floating-point results generated by MATLAB processing. For each softmax computation, the maximum error is specified along with the two values compared. Also shown for each softmax computation is the summation of all terms, which should ideally be 1.0.
+The second comparison indicates the maximum difference between AI Engine simulation results and double-precision floating-point results generated by MATLAB processing. For each softmax computation, the output specifies the maximum error and the two values compared. The results also show the summation of all terms for each softmax computation. Ideally, this summation equals 1.0.
 
 ## References
 
@@ -518,11 +542,10 @@ The second comparison indicates the maximum difference between AI Engine simulat
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
-
+GitHub issues track requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

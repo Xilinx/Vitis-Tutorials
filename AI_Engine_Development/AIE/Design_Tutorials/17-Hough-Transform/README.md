@@ -7,7 +7,7 @@
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
       <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
-        </br>
+        <br>
       <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
@@ -28,51 +28,51 @@
 
 [Support](#support)
 
-
 ## Introduction
 
-This tutorial discusses the process of planning the implementation of a well-known image processing algorithm, mapping, and partitioning it to the resources available in an AMD Versal&trade; Adaptive SoC device. The goal is to partition the compute workloads of the application across the heterogeneous compute domains of the device, namely the Processor Subsystem (PS), the Programmable Logic (PL), and the AI Engine (AIE). Then identify a "data flow" through the device to pass data between storage locations and these compute domains. This requires analysis of the Compute, Storage, and Bandwidth requirements of the system algorithms and aligning those to the available device resources to discover a workable system solution. This is known as System Partitioning, and the process is illustrated using the well-known Hough Transform.
+This tutorial discusses planning and implementing a well-known image processing algorithm on an AMD Versal™ Adaptive SoC device. The goal is to partition compute workloads across the device's heterogeneous compute domains: processor subsystem (PS), programmable logic (PL), and AI Engine (AIE). Then, identify a data flow to pass data between storage locations and compute domains. This requires analyzing Compute, Storage, and Bandwidth requirements and aligning them to available device resources. This process is system partitioning, shown here using the Hough Transform.
 
-### What is the Hough Transform?
+### What is the Hough Transform
 
-The Hough Transform is a feature extraction technique for computer vision and image processing. It was invented in 1959 to detect lines in the machine analysis of monochromatic bubble chamber photographs, patented in 1962, and popularized and extended in support from lines to other objects by Duda & Hart in 1972 [1]. Only the line detection style of Hough Transform  is considered in this tutorial. 
+The Hough Transform is a feature extraction technique for computer vision and image processing. It was invented in 1959 to detect lines in bubble chamber photographs. It was patented in 1962 and popularized by Duda and Hart in 1972 [1]. This tutorial uses the line detection style of Hough Transform only.
 
-The Hough Transform detects lines in an image using a parameteric representation by transforming the line in 2D from its normal $(x,y)$ coordinates into a new $(\rho,\theta)$ domain where $\rho$ represents the line drawn from the origin to where it meets the line at a 90 degree angle, and $\theta$ identifies the angle that perpendicular line makes to the x-axis. This is shown in the following diagram. Notice how all points on the red line have the same $(\rho,\theta)$ values. Consequently, if every pixel in the image is associated with a $(\rho,\theta)$ pair, lines in the original image may be identified in the $(\rho,\theta)$ plane by observing the relative occurance of these pairs -- via a histogram of the $(\rho,\theta)$ data. These histogram statistics are collected by the Hough Transform in the $(\rho,\theta)$ plane to identify lines in the original image. 
+The Hough Transform detects lines using a parametric representation. It transforms lines from normal $(x,y)$ coordinates into a $(\rho,\theta)$ domain. Here, $\rho$ represents the perpendicular distance from the origin, and $\theta$ identifies the angle to the x-axis. The following diagram shows this transformation. Notice all points on the red line have the same $(\rho,\theta)$ values. When every pixel associates with a $(\rho,\theta)$ pair, you can identify lines through histogram analysis. These histogram statistics in the $(\rho,\theta)$ plane identify lines in the original image.
 
 ![figure](images/parametric_line_format.png)
 
-### What is System Partitioning?
+### What is System Partitioning
 
-System Partitioning is used to architect an embedded system for hetergeneous compute by partitioning the application workload across the various compute elements in the device. Once partitioned, a workable "data flow" identifies the path taken between subsystems in the device as data moves between storage and compute resources. Along the way, I/O bandwidth is managed carefully within interface limits. Data storage locations are identified based on suitability of interface bandwidths, storage depths, and compute requirements. In the end, a workable system solution is identified that eliminates risk from the device selection. This is all accomplished using a combination of analysis and prototyping work without implementing the full design. This solution scope is outlined in the following diagram.
+Use system partitioning to architect an embedded system for heterogeneous compute by partitioning the application workload across the various compute elements in the device. After partitioning, a workable data flow identifies the path taken between subsystems in the device as data moves between storage and compute resources. Manage I/O bandwidth within interface limits. Select data storage locations based on suitability of interface bandwidths, storage depths, and compute requirements. Identify a workable system solution that eliminates risk from the device selection. This is all accomplished using a combination of analysis and prototyping work without implementing the full design. The following diagram outlines the solution scope.
 
 ![figure](images/what-is-system-partitioning.png)
 
 ### System Partitioning Methodology
 
-The following methodology is defined to steer the system partitioning analysis activities:
-1. Requirements Gathering -- An analysis step to compare system/algorithm requirements against device resources.
-2. Solution Synthesis -- A conceptual step to identify possible solutions based on specific partitions and their resulting data flows.
-3. Partitioning Validation -- A  feasibility assessment driven by detailed analysis and prototyping to identify shortcomings and reduce risk.
-4. Iterate to System Feasibility -- Revise, rework, and re-envision until a suitable low-risk solution is identified.
+Use the following methodology to guide your system partitioning analysis activities:
 
-Some aspects of each phase is outlined in the following diagram.
+1. Requirements Gathering -- Analyze system and algorithm requirements in relation to device resources.
+2. Solution Synthesis -- Identify possible solutions based on specific partitions and resulting data flows.
+3. Partitioning Validation -- Assess feasibility through detailed analysis and prototyping to identify shortcomings and reduce risk.
+4. Iterate to System Feasibility -- Revise, rework, and re-envision until achieving a suitable low‑risk solution.
+
+The following diagram outlines aspects of each phase.
 
 ![figure](images/system-partitioning-methodology.png)
 
 ### Hough Transform MATLAB Model
 
-A proper algorithm model is required for system partitioning. It is started with the MATLAB® model shown below. A detailed study of this model identifies key aspects of the system design that impact its solution. For example:
+You need a proper algorithm model for system partitioning. Begin with the MATLAB® model shown in the following example. A detailed study of this model identifies key aspects of the system design that impact its solution. For example:
 
-* The overall compute load complexity is driven by the image size through $R$ and $C$ dimensions.
+* The image size drives the overall compute load complexity through $R$ and $C$ dimensions.
 * The resolution adopted for $\theta$ through the `theta_res` parameter drives complexity, bandwidth, and histogram storage.
 * The algorithm exhibits a "dual-nested for-loop" character.
 * The algorithm employs lookup tables through `cos_theta` and `sin_theta`.
-* The algorithm has been quantized to use `int16` data types.
+* The algorithm is quantized to use `int16` data types.
 * There are multiple compute workloads: for `rho_i`, `addr` and histogram update `H`.
 
 ```
 function [H,theta,rho,rho_calc] = hough_model( BW, theta_res )
-   if     (nargin == 1) theta_res = 180; 
+   if     (nargin == 1) theta_res = 180;
    elseif (nargin ~= 2) error('hough_model(BW,theta_res)'); end
    [R,C] = size(BW);
    rho_max = ceil(sqrt((R-1)^2 + (C-1)^2));
@@ -85,7 +85,7 @@ function [H,theta,rho,rho_calc] = hough_model( BW, theta_res )
    rho = [-rho_max:1:rho_max];
    Nt = numel(theta);
    Nr = numel(rho);
-   H = zeros(Nr,Nt); 
+   H = zeros(Nr,Nt);
    rho_calc = zeros(R,C,Nt);
    % Compute transform:
    for yy = 0 : R-1
@@ -103,27 +103,27 @@ function [H,theta,rho,rho_calc] = hough_model( BW, theta_res )
 end
 ```
 
-The MATLAB model is run and its performance compared to the built-in MATLAB function `hough` is found in the Image Processing Toolbox. Here, it is run with a $216\times 240$ image of the AMD Instinct and show "heat maps" of the 2D Hough Transform output histograms for both the MATLAB function and the AMD 16-bit MATLAB model. 
+Run the MATLAB model and compare its performance to the built-in MATLAB `hough` function from the Image Processing Toolbox. Run it with a $216\times 240$ image of the AMD Instinct. View heat maps of the 2D Hough Transform output histograms for both the MATLAB function and the AMD 16-bit MATLAB model.
 
 ![figure](images/hough_model.png)
 
 ## System Partitioning
 
-This section illustrates the details of system partitioning for the Hough Transform. The ultimate system goals, techniques to parallelize the algorithm over multiple AI Engine tiles, analyzing storage, compute, and bandwidth and their impacts on the partitioning choices are considered. A spreadsheet analysis steers us to some early conclusions on what might be feasible, but some detailed prototyping work is required to refine these estimates to finally identify a more accurate scoping of how many AI Engine resources are required to achieve the design objectives. 
+This section demonstrates system partitioning details for the Hough Transform. It considers system goals, parallelization techniques, and analysis of storage, compute, and bandwidth impacts. A spreadsheet analysis provides early conclusions on feasibility. Detailed prototyping work is necessary to refine estimates and accurately scope the AI Engine resources required.
 
 ### Goals
 
-This tutorial aims at identifying the "best we can do" using only AI Engine resources to implement the Hough Transform. To this end, a target throughput requirement of 220 Mpixel/sec (or Mpps) is set and the question is posed, "How many AI Engine tiles are required?" As understood from the MATLAB model above, the image size and $\theta$ resolution are key parameters driving compute, bandwidth, and storage. With this in mind, brainstorm solutions for how you can parallelize the Hough Transform algorithm across multiple AI Engine tiles.
+This tutorial aims at identifying the best achievable performance using only AI Engine resources to implement the Hough Transform. Set a target throughput of 220 megapixels per second (MP/s) and ask, "How many AI Engine tiles are required?" From the MATLAB model, understand that image size and $\theta$ resolution are key parameters influencing compute, bandwidth, and storage. With this knowledge, brainstorm ways to parallelize the Hough Transform algorithm across multiple AI Engine tiles.
 
-### Parallelizing Over "Image Tiles"
+### Parallelizing Over Image Tiles
 
-One obvious way to increase throughput is to parallelize the image over AI Engine tiles directly such that each tile sees only a small portion of the original image. This is shown in the following diagram. In this way, each tile computes a full Hough transform for the portion of the image that it sees. This yields a linear reduction in its compute workload and a similar reduction in the input bandwidth delivered to each tile. There is no reduction in tile memory for histogram storage. One consequence of this approach is that you must combine the histogram outputs from each tile, resulting in an additional compute workload to combine together all tile results.
+One obvious way to increase throughput is to parallelize the image over AI Engine tiles directly. Each tile sees only a small portion of the original image. The following diagram shows this approach. Each tile computes a full Hough transform for its image portion. This yields linear reductions in compute workload and input bandwidth per tile. Tile memory for histogram storage is not reduced. You must combine histogram outputs from each tile, adding extra compute workload.
 
 ![figure](images/parallelize-over-tiles.png)
 
-### Parallelizing Over "Theta"
+### Parallelizing Over Theta
 
-An alternative strategy partitions the Hough Transform such that each tile sees the full image but computes only a partial transform over a subset of the $\theta$ range. This also leads to a linear reduction in compute, but does not achieve any input bandwidth reduction. This scheme benefits from a linear reduction in the tile histogram storage. Collect the histogram outputs from each tile, but there is no extra compute workload involved with this approach.
+An alternative strategy partitions the Hough Transform so each tile sees the full image. Each tile computes only a partial transform over a $\theta$ subset. This achieves linear compute reduction but no input bandwidth reduction. This scheme benefits from linear reduction in tile histogram storage. Collect histogram outputs from each tile without extra compute workload.
 
 ![figure](images/parallelize-over-theta.png)
 
@@ -135,42 +135,43 @@ Having identified some possible parallelization schemes, dive into the Requireme
 
 ### Analyzing Compute Requirements
 
-Next, use a spreadsheet analysis to assess compute requirements. Load the system input parameters on the left side of the spreadsheet shown below and analyze compute parameters on the right side. It is useful to tabulate the numbers of processor cycles required by each loop body in the original MATLAB model of the Hough Transform. Based on the AI Engine compute capacity of 32 MACs/cycle for `int16` data types, you can process two MACs/pixel per $\theta$ value in real time. Based on these vector estimates, the spreadsheet indicates to process 5.7 cycles per pixel to meet the 220 Mpps throughput objective. This is equivalent to 45 cycles for the vector processor with its eight lanes SIMD execution. The compute bound for the vector processor is high at 5000 Mpps. However, assuming an 8-cycle "read-modify-write" instruction to update the histogram tables in the third compute workload, the throughput is limited by the scalar processor to 39 Mpps if using 32 tiles. When projected to more tiles, reaching the 220 Mpps target with even 128 tiles is not possible. 
+Next, use a spreadsheet analysis to assess compute requirements. Load the system input parameters on the left side of the spreadsheet and analyze compute parameters on the right side. It is useful to tabulate the numbers of processor cycles required by each loop body in the original MATLAB model of the Hough Transform. Given an AI Engine compute capacity of 32 MACs/cycle for `int16` data types, you can process two MACs/pixel per $\theta$ value in real time. Based on these vector estimates, the spreadsheet indicates to process 5.7 cycles per pixel to meet the 220 MP/s throughput objective. This equals 45 cycles for the vector processor with eight-lane single‑instruction multiple‑data (SIMD) execution. The compute bound for the vector processor is high at 5000 MP/s. Assuming an 8-cycle read-modify-write instruction to update histogram tables, throughput becomes limited by the scalar unit. With 32 tiles, throughput reaches only 39 MP/s. Even with 128 tiles, reaching the 220 MP/s target is impossible.
 
 ![figure](images/analyzing-compute.png)
 
 ### Analyzing I/O Bandwidth Requirements
 
-The bandwidth analysis for this design is straightforward. The input bandwidth is satisfied with a single PLIO. The output histogram size per tile is small, and neither an output bandwidth nor latency target is established. The computed frame duration is 235 us assuming the given image size and 220 Mpps target throughput. A single output PLIO stream can transfer the full histogram result in 1 us; this is less than 1% of the image frame and seems reasonable.
+The bandwidth analysis for this design is straightforward. You satisfy the input bandwidth with a single programmable logic input/output (PLIO). The output histogram size per tile is small, and you set no output bandwidth or latency target. The computed frame duration is 235 μs assuming the given image size and 220 MP/s target throughput. A single output PLIO stream transfers the full histogram result in 1 μs, less than 1% of the image frame. This transfer rate is reasonable.
 
 ![figure](images/analyzing-bandwidth.png)
 
 ### SIMD / Vectorization
 
-An important aspect of System Partitioning for AI Engine is to consider how the SIMD vector data path may be leveraged for high performance compute. This usually involves investigating strategies for "vectorization" or assigning signal samples to lanes. For the $\rho$ computation of the Hough Transform, a workable scheme involves using `mac16()` intrinsics to process four pixels at a time. 
+When performing system partitioning for the AI Engine, consider how the SIMD vector data path supports high-performance compute. Investigate vectorization strategies or assign signal samples to lanes. For the $\rho$ computation of the Hough Transform, a workable scheme involves using `mac16()` intrinsics to process four pixels at a time.
 
-* In one vector register, four copies of four different $\theta$ values are loaded to allow you to process four $\theta$ values for four different pixels in a single instruction. This produces sixteen histogram outputs per cycle and two such computes per loop body are scheduled.
-* In a second vector register, load four $(x,y)$ pixel values into lanes aligned properly to their $\theta$ counterparts in the other register. 
+* In one vector register, load four copies of four different $\theta$ values. Process four $\theta$ values for four pixels in one instruction, producing 16 histogram outputs per cycle. Schedule two computes per loop body.
+* In a second vector register, load four $(x,y)$ pixel values into lanes aligned to their $\theta$ counterparts in the other register.
 
 ### Solution Synthesis
 
-Based on the previous spreadsheet analysis, it is anticipated that a 32-tile AI Engine design might be limited to ~39 Mpps throughput due to the read-modify-write updates of the histogram counts on the scalar processor. It is difficult to nail down more accurately a means to achieving a 220 Mpps throughput objective from this early analysis. Some accurate prototyping work is required on a proposed solution to validate assumptions and obtain more accurate performance projections.
+Based on the spreadsheet analysis, a 32-tile AI Engine design reaches about ~39 MP/s throughput. The limitation comes from read-modify-write updates of histogram counts on the scalar unit. Perform more accurate prototyping to validate assumptions and obtain performance projections. This early analysis cannot nail down a means to achieving 220 MP/s throughput.
 
-Based on the early spreadsheet analysis work, a Solution Proposal is as follows:
+Based on the early spreadsheet analysis work, a solution proposal is as follows:
+
 * Assume a 32-tile solution where each tile computes four of the 128 $\theta$ values
 * Each tile uses local tile memory for storage of $\cos$ and $\sin$ LUTs
 * Use the `mac16()` vectorization outlined above operating at four pixels per cycle
 * A 5.1 KB histogram LUT is expected in each tile as predicted from the storage analysis above
 
-From early spreadsheet work, a throughput limited to ~39 Mpps is anticipated and the target is II=45 for the vectorized compute, but expect performance to be limited by the histogram updates. Now code this early prototype to validate and accurately quantify these assumptions.
+From early spreadsheet work, a throughput limited to ~39 MP/s is anticipated and the target is II=45 for the vectorized compute, but expect performance to be limited by the histogram updates. Now code this early prototype to validate and accurately quantify these assumptions.
 
-The following diagram shows the AI Engine graph view for a single tile of this prototype design. All 32 tiles are identical. The floor plan view of the composite design is also shown. This design was profiled on the given image to tabulate accurately the its throughput performance and to obtain the cycle count performance of each function.
+The following diagram shows the AI Engine graph view for a single tile of this prototype design. All 32 tiles are identical. The floor plan view of the composite design is also shown. Profile the design on the given image to tabulate its throughput performance accurately and to obtain the cycle count performance of each function.
 
 ![figure](images/prototype-aie-design.png)
 
 ### Partitioning Validation
 
-Coding up the Hough Transform prototype yields additional insight into the design and a deeper understanding of its performance limitations. Indeed, as predicting, the histogram update code (shown below) illustrates the exact "read-modify-write" form anticipated from the start. It is difficult to identify any means to vectorize it and remove this performance bottleneck. 
+Coding up the Hough Transform prototype yields additional insight into the design and a deeper understanding of its performance limitations. Indeed, as predicted, the histogram update code shows the exact read-modify-write form anticipated from the start. It is difficult to identify any means to vectorize it and remove this performance bottleneck.
 
 ```
 template <int COUNT_NUM>
@@ -196,24 +197,25 @@ template <int COUNT_NUM>
   }
 ```
 
-The following diagram tabulates the profiling data generated by the compiler for the 32-tile Hough Transform prototype design when run on the $216\times 240$ image. The important conclusions are quite clear:
-* The `update_countsA/B()` routines require ~183 cycles each representing ~90% of the total cycles
-* The `theta_compute()` routine requires ~277,204 cycles representing ~10% of the total cycles, and equivalent to ~42 cycles per II (very close to the original spreadsheet estimate of 45)
-* The overall throughput is $216\times 240/(0.8\times2,650,436) = ~24$ Mpps
+The following diagram tabulates the profiling data generated by the compiler for the 32-tile Hough Transform prototype design when run on the $216\times 240$ image. The important conclusions are clear:
 
-From detailed prototyping, you have now quantified the throughput performance of the Hough Transform accurately, and these results might be used to revise the original spreadsheet estimates to produce accurate projections of how to achieve a 220 Mpps throughput target. 
+* The `update_countsA/B()` routines require ~183 cycles each representing ~90% of the total cycles
+* The `theta_compute()` routine requires ~277,204 cycles representing ~10% of the total cycles. This is equivalent to ~42 cycles per II, very close to the spreadsheet estimate of 45.
+* The overall throughput is $216\times 240/(0.8\times2,650,436) = ~24$ MP/s
+
+From detailed prototyping, you have accurately quantified the Hough Transform throughput performance. These results can revise the original spreadsheet estimates. This produces accurate projections for achieving a 220 MP/s throughput target.
 
 ![figure](images/partitioning-validation.png)
 
 ### Iterating to System Feasibility
 
-Now having an accurate cost model of the Hough Transform from prototyping, you are in a position to explore alternate solutions via scaling. Here, consider "Image Partitioning" in addition to "Theta Partitioning" as a means to scale up the throughput. In this scheme, partition out portions of the images to 32-tile clusters, where each cluster is computing partial histograms for four $\theta$ values (as in the prototype). Using this approach, you can scale throughput linearly higher. As shown in the following diagram, you can achieve ~ 220 Mpps with ~275 tiles.
+With an accurate cost model from prototyping, you can explore alternate solutions through scaling. Consider "Image Partitioning" plus "Theta Partitioning" to scale up throughput. In this scheme, partition image portions to 32-tile clusters. Each cluster computes partial histograms for four $\theta$ values (as in the prototype). This approach scales throughput linearly higher. The following diagram shows achieving ~ 220 MP/s with ~275 tiles.
 
 ![figure](images/system-feasibility.png)
 
 ## Conclusions
 
-This tutorial uses the Hough Transform as a working example to illustrate the concepts of System Partitioning, and how this methodology is used to scope new AI Engine designs and to more generally partition hetergeneous compute workloads across the resources available in Versal Adaptive SoCs. Through requirements gathering, solution synthesis, prototype validation, and iterative refinement, system applications might be successfully partitioned to these devices using common analysis tools such as spreadsheets and targeted prototyping & profiling. 
+This tutorial uses the Hough Transform to show system partitioning concepts. It shows how this methodology scopes new AI Engine designs and partitions heterogeneous compute workloads across Versal Adaptive SoC resources. Through requirements gathering, solution synthesis, prototype validation, and iterative refinement, applications can be successfully partitioned. Common analysis tools include spreadsheets and targeted prototyping & profiling.
 
 ## References
 
@@ -221,10 +223,10 @@ This tutorial uses the Hough Transform as a working example to illustrate the co
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-<hr class="sphinxhide"></hr>
+<hr class="sphinxhide">
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2024–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2024–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
