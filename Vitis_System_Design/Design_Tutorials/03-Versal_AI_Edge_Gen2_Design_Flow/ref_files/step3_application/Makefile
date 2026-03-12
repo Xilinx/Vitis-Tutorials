@@ -13,7 +13,7 @@ MODE := hw_emu
 # Toolchain Configuration
 # =============================================================================
 
-SYSROOT := $(ROOT_DIR)/sysroots/cortexa72-cortexa53-amd-linux/
+SYSROOT := $(YOCTO_ARTIFACTS)/amd-cortexa78-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux/
 
 # =============================================================================
 # Platform Configuration
@@ -22,8 +22,7 @@ FIXED_XSA_PATH := $(ROOT_DIR)/../step2_vitis_integration/
 FIXED_XSA_NAME := sys_gm2aie
 PLATFORM_NAME := vek385_fixed_platform_$(TARGET)
 PLATFORM := $(ROOT_DIR)/$(PLATFORM_NAME)/export/$(PLATFORM_NAME)/$(PLATFORM_NAME).xpfm
-DTBO := $(ROOT_DIR)/$(PLATFORM_NAME)/hw/linux_dt/pl.dtbo
-
+DTBO := ../step2_vitis_integration/package.hw/gm2aie.dtbo
 # =============================================================================
 # Application Configuration
 # =============================================================================
@@ -33,14 +32,13 @@ HOST_SRC := $(ROOT_DIR)/../step2_vitis_integration/_aie/ps/c_rts/aie_control_xrt
 # =============================================================================
 # QEMU Configuration
 # =============================================================================
-export QEMU_COMBINED := base_camp_images
+export QEMU_COMBINED := edf_qemu_images
 export COMBINED := combined
 export WIC_PARTITION := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
 
-YOCTO_ARTIFACTS :=
+YOCTO_ARTIFACTS ?=
 DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image
 QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
-YOCTO_QEMU_ARTIFACTS := 
 # =============================================================================
 # SoC Configuration
 # =============================================================================
@@ -92,11 +90,6 @@ $(PLATFORM):
 		--mode=$(MODE)
 	@echo "INFO: Platform created:" && find . -name "*.xpfm"
 #user should download SDk to install it manually.
-$(SYSROOT):
-	bash -c '\
-	unset LD_LIBRARY_PATH; \
-	sh ${YOCTO_ARTIFACTS}//amd-cortexa78-mali-common_meta-edf-app-sdk/installer/amd-edf-glibc-x86_64-meta-edf-app-sdk-cortexa72-cortexa53-amd-cortexa78-mali-common-toolchain.sh -d . -y '
-sysroot: $(SYSROOT)
 
 host: $(ELF)
 $(ELF): $(HOST_SRC)
@@ -109,11 +102,9 @@ prepare_run_hw:
 	@echo "Preparing hardware run environment..."
 	$(MAKE) -C ../step2_vitis_integration package TARGET=hw
 	$(MAKE) pfm MODE=$(TARGET) 
-	$(MAKE) sysroot
 	$(MAKE) host 
 	@mkdir -p hw_run/
 	@cp -rf $(DTBO) ../step2_vitis_integration/package.hw/gm2aie.pdi ../step2_vitis_integration/gm2aie.xclbin $(ELF) $(EMBEDDED_EXEC_SCRIPT) hw_run/
-	@mv hw_run/gm2aie.pdi hw_run/vpl_gen_fixed_pld.pdi
 	@echo "Copy hw_run to your board and execute embedded_exec.sh"
 
 qemu_combined:
@@ -155,7 +146,6 @@ run_emu:
 	$(MAKE)  check-EDF-common-image
 	$(MAKE) -C ../step2_vitis_integration package TARGET=hw_emu
 	$(MAKE) pfm MODE=hw_emu TARGET=hw_emu
-	$(MAKE) sysroot
 	$(MAKE) host
 	$(MAKE) qemu_combined
 	$(MAKE) insert_image TARGET=hw_emu

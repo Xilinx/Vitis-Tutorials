@@ -12,7 +12,7 @@ if [ -f platform_desc.txt ]; then
 	cp platform_desc.txt /etc/xocl.txt
 fi
 echo "INFO: Load the pdi and dtbo using fpgautil"
-fpgautil -b vpl_gen_fixed_pld.pdi  -o pl.dtbo
+fpgautil -b gm2aie.pdi  -o gm2aie.dtbo
 
 ./application gm2aie.xclbin
 return_code=$?

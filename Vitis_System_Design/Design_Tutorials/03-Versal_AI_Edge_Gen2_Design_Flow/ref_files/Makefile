@@ -7,10 +7,9 @@ TARGET=hw_emu
 XSA := $(ROOT_DIR)/step1_vivado/build/vivado/project_1/vek385_$(TARGET).xsa
 FIXED_XSA_EMU := step2_vitis_integration/ys_gm2aie_hw_emu.xsa
 FIXED_XSA_HW := step2_vitis_integration/ys_gm2aie_hw.xsa
-YOCTO_ARTIFACTS := 
+YOCTO_ARTIFACTS ?= 
 DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image/
-
-YOCTO_QEMU_ARTIFACTS := 
+YOCTO_QEMU_ARTIFACTS ?=
 QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
 .PHONY: all sd_card clean ultraclean help
 
