@@ -17,28 +17,28 @@
 
 ***Version: Vitis 2025.2***
 
-In this second part of the tutorial, you will dispatch the computations over multiple AI Engines and analyze the performances that can be achieved.
+The second part of the tutorial dispatches the computations over multiple AI Engines and analyzes the performances that the system can achieve.
 
 Navigate to the `MultiKernel` directory to continue.
 
 ## Designing the Kernel
 
-As in the Single-kernel tutorial, this design will use the streaming input and output but the performances must be improved. The limitations can come from two sources:
+As in the Single-kernel tutorial, this design uses the streaming input and output but requires improved performance. The limitations can come from two sources:
 
 - Limit on the bandwidth side
 - Limit in the compute performance side
 
-In the single-kernel section of the tutorial, the maximum throughput was 225 Msps, which shows that the streams are starved due to a limitation of the compute performance. The data type `cint16` is 32-bit wide and the maximum bandwidth of the AXI-Stream connection array is 1x `cint16` per clock cycle on a single stream. In the single-kernel part, four of them were read in four clock cycles, but the computation was taking 16 clock cycles for the 32 taps. For the optimal trade-off, the computation should take only four clock cycles for each of the four input samples read from the stream. In four clock cycles, eight taps can be processed, the complete filtering operation should be split onto four AI Engines.
+In the single-kernel section of the tutorial, the maximum throughput was 225 MSPS, which shows that a limitation of the compute performance starves the streams. The data type `cint16` is 32-bit wide and the maximum bandwidth of the AXI-Stream connection array is 1x `cint16` per clock cycle on a single stream. In the single-kernel part, the system read four of them in four clock cycles, but the computation was taking 16 clock cycles for the 32 taps. For the optimal trade-off, the computation must take only four clock cycles for each of the four input samples read from the stream. In four clock cycles, the system can process eight taps, so the complete filtering operation splits onto four AI Engines.
 
-The Single-Kernel Filter can be represented by this convolution:
+This convolution represents the Single-Kernel Filter:
 
 ![missing image](../Images/FourKernelDivision_1.jpg)
 
-After subdivision into four Kernels, each one on a different AI Engine, the filter can be represented by four smaller filters in parallel running on the same data stream, except that for some of these kernels, the beginning of the stream is discarded:
+After dividing into four kernels, each one on a different AI Engine, the filter has this representation: four smaller filters in parallel running on the same data stream, except that for some of these kernels, the system discards the beginning of the stream:
 
 ![missing image](../Images/FourKernelDivision_2.jpg)
 
-The four AI Engines  perform the computations for a subset of the coefficients. Their results must be added together to get the overall result. The AI Engine architecture allows a number of accumulators to be sent to a neighboring AI Engine to be used as a starting point for a number of `mac` operations. For computations being performed on four lanes, the accumulator vector is `v4cacc48`, which is a 384-bit vector that can be sent to the next AI Engine in the chain in one clock cycle.
+The four AI Engines perform the computations for a subset of the coefficients. You must add their results together to get the overall result. The AI Engine architecture allows sending a number of accumulators to a neighboring AI Engine for use as a starting point for a number of `mac` operations. For computations being performed on four lanes, the accumulator vector is `v4cacc48`, which is a 384-bit vector that can be sent to the next AI Engine in the chain in one clock cycle.
 
 ![missing image](../Images/FourKernels.jpg)
 
@@ -195,7 +195,7 @@ To shorten the place time by a few seconds, constrain the core location. A singl
 location<kernel>(k[0]) = tile(25,0);
 ```
 
-All the kernels need to discard a specific number of elements. This is handled by the initialization function as this must be done beforehand and only once:
+All the kernels need to discard a specific number of elements. This initialization function handles this as this must be done beforehand and only one time:
 
 ```C++
 // Discard first elements of the stream, depending on position in the cascade
@@ -218,7 +218,7 @@ for(int i=0;i<NChunks;i++)
     connect<stream>(in[i],k[i].in[0]);
 ```
 
-The initialization function is  simple. It simply reads data from the input stream. Because there is no argument, the raw API for stream access must be used:
+The initialization function is  simple. It simply reads data from the input stream. Because there is no argument, you must use the raw API for stream access:
 
 ```C++
 template<int Delay>
@@ -295,7 +295,7 @@ The ouput port throughput in Msps (cint16) is: `1188.49 Msps`.
 
 The performance of this architecture can also be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
-```
+```text
 Output_0.txt -->  1188.49 Msps
 
 -----------------------
@@ -304,13 +304,12 @@ Output_0.txt -->  1188.49 Msps
 Total Throughput -->    1188.49 Msps
 ```
 
-This architecture achieves close to 1.25 Gsps performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases when the frame length is increased.
-
+This architecture achieves close to 1.25 GSPS performance. It is slightly less because of the number of cycles spent for initialization when the kernels are called (the quiet zones in the output graph). This performance increases with frame length.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

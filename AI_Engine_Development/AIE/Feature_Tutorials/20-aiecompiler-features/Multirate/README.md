@@ -12,24 +12,24 @@
     </td>
   </tr>
 </table>
- 
+
 # Multirate AI Engine Graphs
 
 ## Introduction
 
-Kernels can be created with a fixed size input/output frame of data. These kernels can be preceded and followed by other kernels that have their own frame size requirements. There can be mismatches in between these frame sizes and that is why the `aiecompiler` offers a mechanism to automatically compute a number of runs of each kernel, for one iteration of the system, so that the overall sizes for all kernel interfaces are matching.
+You can create kernels with a fixed size input/output frame of data. These kernels can precede and follow other kernels that have their own frame size requirements. Mismatches can occur between these frame sizes, so the `aiecompiler` offers a mechanism to automatically compute a number of runs of each kernel, for one iteration of the system. This ensures the overall sizes for all kernel interfaces match.
 
-This mechanism is completed by an API which provide these numbers of runs if the compiler does not have access to the frame length (streaming I/Os).
+An API completes this mechanism by providing the numbers of runs if the compiler does not have access to the frame length (streaming I/Os).
 
 ## Multirate Examples
 
 All examples use three kernels:
 
-- UpConv_7_5: Up-conversion 7/5, which is a passthrough with data extrapolation at the end.
+- UpConv_7_5: Up-conversion 7/5, which is a passthrough filter with data extrapolation at the end.
 - DownConv_5_7: Down-conversion which is a data truncation.
 - Subtract: This kernel takes two inputs and subtracts them. This is a merge show case.
 
-All kernels have the same input frame length (`InputSize`) which brings the compiler to take decisions in terms of number of calls for each kernel to harmonize the number of data produced and consumed on the whole system. The frame length can be seen in the `system_settings.h` file:
+All kernels have the same input frame length (`InputSize`). The compiler decides on the number of calls for each kernel to harmonize the number of data produced and consumed on the whole system. You can view the frame length in the `system_settings.h` file:
 
 ```C++
 #define BaseSize (5*7)
@@ -41,16 +41,16 @@ All kernels have the same input frame length (`InputSize`) which brings the comp
 
 Various parameters appear here:
 
-- `BaseSize`: As the input size has to be divided by 5 or 7, depending on whether it is an up-conversion or a down-conversion, this ``BaseSize`` is necessary to handle only integer results.
-- `VECTOR_LENGTH`: Kernels are optimized to use only vectors that are 256 bits in size.
+- `BaseSize`: As the input size must divide by 5 or 7, depending on whether it is an up-conversion or a down-conversion, this ``BaseSize`` is necessary to handle only integer results.
+- `VECTOR_LENGTH`: Kernels optimize to use only vectors that are 256 bits in size.
 - `InputSize`: Size of the input frame.
 - `NIterations`: Number of iterations of the entire system.
 
 ![No image!](images/Multirate-FrameLength.drawio.png)
 
-## I/O-buffer Interface
+## I/O-Buffer Interface
 
-### UpConv then DownConv
+### UpConv Then DownConv
 
 This simple design has an up-converter 7/5 followed by a down-converter 5/7.
 
@@ -58,11 +58,11 @@ This simple design has an up-converter 7/5 followed by a down-converter 5/7.
 make VERSION=1 buffer aie
 ```
 
-In this design, the up-Converter is followed by the down-Converter. The buffer size does not match as the output frame length is 784 samples while the input frame length is always 560 samples. The compiler has to find the number of runs of two kernels so that the global output frame length of the up-converter matches the global input frame length of the down-converter.
+In this design, the down-converter follows the up-converter. The buffer size does not match as the output frame length is 784 samples while the input frame length is always 560 samples. The compiler must find the number of runs of two kernels. This ensures that the global output frame length of the up-converter matches the global input frame length of the down-converter.
 
-For each iteration, the compiler decides to run five times the up-converter and seven times the down-converter. This is explained below.
+For each iteration, the compiler runs five times the up-converter and seven times the down-converter. The following section explains this.
 
-```
+```text
 ************************************************************************
 
 INFO: [aiecompiler 77-5917] Repetition count for G.G1.k1 is 5.
@@ -71,11 +71,11 @@ INFO: [aiecompiler 77-5917] Repetition count for G.G1.k2 is 7.
 ************************************************************************
 ```
 
-The compiler needs to find the smallest repetition rate. The problem is as follows:
+The compiler must find the smallest repetition rate. The problem is as follows:
 
 - The up-converter consumes **S** samples and produces **S.(7/5)**.
 - The down-converter consumes **S** samples and produces **S.(5/7)**
-- How many times (minimum) should the converters be run so that the number of samples consumed by the down-converter (n2) is equal to the number of samples produced by the up-converter (n1)?
+- How many times (minimum) must the converters run so that the number of samples consumed by the down-converter (n2) equals the number of samples produced by the up-converter (n1)?
 
 $$
 n1.S.(7/5) = n2.S
@@ -87,7 +87,7 @@ The minimal solutions are:
 - n1 = 5
 - n2 = 7
 
-which is what has been found by the compiler.
+which the compiler found.
 
 ![No image](images/Multirate-UpDownConversion.drawio.png)
 
@@ -137,7 +137,7 @@ int main(void) {
 }
 ```
 
-You can see in the main `for` loop that for each iteration this kernel is ran seven times. You can run the simulation and visualize the result:
+You can see in the main `for` loop that for each iteration, this kernel runs seven times. You can run the simulation and visualize the result:
 
 ```BASH
 make aiesim aieviz
@@ -145,9 +145,9 @@ make aiesim aieviz
 
 The four iterations (20 runs of the up-converter and 28 runs of the down-converter) take approximately 14 µs.
 
-Input and output have the same throughput as this is shown by the simulator output:
+Input and output have the same throughput. The simulator output shows this:
 
-```
+```text
 --------------------------------------------------------------------------------------------------
 Port Name           | Type              | Average Throughput
 --------------------------------------------------------------------------------------------------
@@ -155,7 +155,6 @@ input64_1           | IN                | 3898.550725 MBps
 output64_1          | OUT               | 3551.947228 MBps  
 --------------------------------------------------------------------------------------------------
 ```
-
 
 ### DownConv then UpConv
 
@@ -165,9 +164,9 @@ In this design the first kernel in the dataflow is the down-converter 5/7 follow
 make VERSION=2 clean buffer aie aiesim aieviz
 ```
 
-The compiler decides that for each iteration it should run seven times the down-converter and five times the up-converter.
+The compiler decides that for each iteration it runs seven times the down-converter and five times the up-converter.
 
-```
+```text
 ************************************************************************
 
 INFO: [aiecompiler 77-5917] Repetition count for G.G2.k1 is 7.
@@ -184,11 +183,11 @@ You can run the simulation and visualize the result:
 make aiesim aieviz
 ```
 
-The four iterations (28 runs of the down-converter and 20 runs of the up-converter) take approximately 14µs.
+The four iterations (28 runs of the down-converter and 20 runs of the up-converter) take approximately 14 µs.
 
-Input and output have the same throughput as this is shown by the simulator output:
+Input and output have the same throughput. The simulator output shows this:
 
-```
+```text
 --------------------------------------------------------------------------------------------------
 Port Name           | Type              | Average Throughput
 --------------------------------------------------------------------------------------------------
@@ -197,12 +196,11 @@ output64_1          | OUT               | 4943.565168 MBps
 --------------------------------------------------------------------------------------------------
 ```
 
-The throughput is higher than the previous situation because in between the 2 kernels the throughput is much less so the processing is much faster. The result is a much higher throughput at the IO ports of the design.
-
+The throughput is higher than the previous situation because between the two kernels the throughput is much less so the processing is much faster. The result is a much higher throughput at the I/O ports of the design.
 
 ### Split and Merge
 
-In this new example, two branches are fed with the same PLIO and connected on the output side to a kernel that will compute the difference between the two branch outputs.
+In this new example, two branches receive data from the same PLIO and connect on the output side to a kernel that computes the difference between the two branch outputs.
 
 ![No image!!](images/TwoBranchesIObuf.png)
 
@@ -212,7 +210,7 @@ make VERSION=3 clean buffer aie
 
 The repetition rate as decided by the compiler is:
 
-```
+```text
 ************************************************************************
 
 INFO: [aiecompiler 77-5917] Repetition count for G.G3_nofifo.G1.k1 is 35.
@@ -224,11 +222,11 @@ INFO: [aiecompiler 77-5917] Repetition count for G.G3_nofifo.G1.k2 is 49.
 ************************************************************************
 ```
 
-You can see that **G1.k1** and **G2.k1** which are fed from the same source are run 35 times for each iteration.
+You can see that **G1.k1** and **G2.k1** which receive data from the same source run 35 times for each iteration.
 
-In the previous sections, it was shown that you must run **k1** either five times (**5.n** with **n>0**) for the first example (G1) or seven times (**7.n** with **n>0**) for the second example (G2). This leads to a different number of samples consumed by the two branches. To get an equal number of samples consumed by the two branches, G1 repetition ratios should be multiplied by 7, the G2 repetition rations should be multiplied by 5, leading to  a repetition rate of 35 on the first kernel of the two branches.
+The previous sections showed that you must run **k1** either five times (**5.n** with **n>0**) for the first example (G1) or seven times (**7.n** with **n>0**) for the second example (G2). This leads to a different number of samples consumed by the two branches. To get an equal number of samples consumed by the two branches, multiply G1 repetition ratios by 7 and multiply the G2 repetition ratios by 5, leading to a repetition rate of 35 on the first kernel of the two branches.
 
-Let run the simulation:
+Run the simulation:
 
 ```BASH
 make aiesim aieviz
@@ -238,11 +236,11 @@ The four iterations take approximately 91 µs.
 
 ## Stream Interface
 
-The same exercise can be done using the streaming interface. Here the compiler has no clue about the size of the input and output frame (the inner loop can be an infinite loop), and you have to specify the repetition count for each kernel.
+The same exercise can occur using the streaming interface. Here, the compiler has no clue about the size of the input and output frame (the inner loop can be an infinite loop). You must specify the repetition count for each kernel.
 
 ### No Repetition Count Indicated
 
-This design uses the chain down-converter 5/7 and up-converter 7/5 using streaming interfaces but there is no repetition count indicated in the graph code.
+This design uses the chain down-converter 5/7 and up-converter 7/5 using streaming interfaces. There is no repetition count indicated in the graph code.
 
 ```BASH
 make VERSION=0 clean stream aie
@@ -250,7 +248,7 @@ make VERSION=0 clean stream aie
 
 As exposed in the console window, the default repetition rate for the two kernels is 1:
 
-```
+```text
 ************************************************************************
 
 INFO: [aiecompiler 77-5917] Repetition count for G.G2_norep.k1 is 1.
@@ -265,13 +263,13 @@ You can run the simulation with a time limitation:
 make STOP=10000 aiesim_stop
 ```
 
-The Trace view can be seen in the following image:
+The Trace view appears in the following image:
 
 ![No image!!](images/StreamNoRepet.png)
 
-In the previous image, you can see that the down-converter is running four times for the four iterations, but the up-converter is waiting for new data. The down-converter gets 2240 samples and produces 1600 samples. The up-converter is waiting for 2240 samples, but gets only 1600, so it waits for the remaining block of data, generating a stream stall event.
+The previous image shows that the down-converter is running four times for the four iterations, but the up-converter is waiting for new data. The down-converter gets 2240 samples and produces 1600 samples. The up-converter is waiting for 2240 samples, but gets only 1600. Therefore, it waits for the remaining block of data, thus generating a stream stall event.
 
-### UpConv then DownConv
+### UpConv Then DownConv
 
 ```BASH
 make VERSION=1 clean stream aie aiesim aieviz
@@ -279,7 +277,7 @@ make VERSION=1 clean stream aie aiesim aieviz
 
 In this configuration, the repetition rates are five (UpConv) and seven (DownConv). The simulation duration is slightly less 40 µs.
 
-### DownConv then UpConv
+### DownConv Then UpConv
 
 ```BASH
 make VERSION=2 clean stream aie aiesim aieviz
@@ -289,18 +287,18 @@ In this configuration, the repetition rates are seven (DownConv) and five (UpCon
 
 ### Split and Merge
 
-In this new example, two branches are fed with the same PLIO and connected on the output side to a kernel that will compute the difference between the two branch outputs.
+In this new example, two branches receive data from the same PLIO and connect on the output side to a kernel that computes the difference between the two branch outputs.
 
 ![No image!!](images/TwoBranchesStream.png)
 
 `VERSION=3` of this design stalls almost immediately because this design needs FIFOs set up at the input and output of each branch.
 
-`VERSION=4` sets these FIFOs and the overall simulation lasts approximately 275 µs. This one does not work for AI Engine-ML as the FIFO is too large for this architecture. 
+`VERSION=4` sets these FIFOs and the overall simulation lasts approximately 275 µs. This one does not work for AI Engine-ML as the FIFO is too large for this architecture.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

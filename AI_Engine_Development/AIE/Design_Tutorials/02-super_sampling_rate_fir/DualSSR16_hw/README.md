@@ -17,20 +17,19 @@
 
 ***Version: Vitis 2025.2***
 
-The purpose of this fith part of the tutorial is to implement and run in hardware two instances of SSR with dual-stream I/Os.
+The purpose of this fifth part of the tutorial is to implement and run in hardware two instances of SSR with dual-stream I/Os.
 
 Navigate to the `DualSSR16_hw` directory to continue.
 
-## Goal of this hardware implementation
+## Goal of This Hardware Implementation
 
-In this section we are doing some cosmetic changes to be able to implement multiple times the same filter with different names for the input and output data.
+This section implements cosmetic changes that enable multiple implementations of the same filter with different names for the input and output data.
 
-The 2 instances, G1 and G2, will span from column 15 to 22 and from column 25 to 32.
+The two instances, G1 and G2, span from column 15 to 22 and from column 25 to 32.
 
-We will use this design to check in hardware the latency and throughput at some PLIO ports.
+Use this design to check in hardware the latency and throughput at some PLIO ports.
 
-
-## Compile the graph
+## Compile the Graph
 
 The first step is to compile, simulate and visualize the graph with:
 
@@ -38,23 +37,22 @@ The first step is to compile, simulate and visualize the graph with:
 make clean data aie aiesim aiesimviz
 ```
 
-The output display (in the console or log section of Vitis Analyzer) of the average throughput gives different values for the 2 instances just because the reference time taken for G1 and G2 is the same while G1 starts before G2:
+The output display (in the console or log section of the Vitis Analyzer) shows different average throughput values for the two instances. This occurs because the reference time for G1 and G2 is the same, while G1 starts before G2:
 
-- G1 (filenames PhaseOut_N_K_15 finishing with 15) output throughput is around 3900MB/s
-- G2 (filenames PhaseOut_N_K_25 finishing with 25) output throughput is around 4000MB/s
+- G1 (filenames PhaseOut_N_K_15 finishing with 15) output throughput is around 3900 MB/s
+- G2 (filenames PhaseOut_N_K_25 finishing with 25) output throughput is around 4000 MB/s
 
-In the 'Array view' one can see clearly the 2 instances with all input and output filenames.
+In the 'Array view', you can see the two instances with all input and output filenames.
 
+## Build Hardware and Generate `sd_card.img`
 
-## Build hardware and generate `sd_card.img`
+Type `make all_hw` and go grab a coffee! This takes 1 to 2 hours to compile graph and PL kernels, link the system, and generate an SD card image.
 
-Type `make all_hw` and go grab a coffee! This will take 1 or 2h to compile graph and PL kernels, link the system and generate an SD card image.
+After you have flashed an SD card with the generated image, you can use it to test various XRT profile and trace features.
 
-Once you have flashed an SDCard with the generated image, you can use it to test various XRT profile and trace features.
+### Logging in for the First Time
 
-### Logging in for the first time
-
-copy your sd_card.img on a micro-sd card and insert it in the board. You may have your own way to do this, but let me give you mine.
+Copy your sd_card.img to a micro-SD card and insert it in the board.
 
 - First boot: default user is `petalinux` and you set the password to p.
 - sudo su and change the password of root `passwd root`: set it to r.
@@ -66,12 +64,12 @@ copy your sd_card.img on a micro-sd card and insert it in the board. You may hav
 - cd pest1
 - ./embedded_exec.sh
 
-Each time you run `./newdir` a new ptest directory is created with a copy of the original files in it. You can edit the `xrt.ini` file to profile and trace various parameters.
+Each time you run `./newdir`, the script creates a new ptest directory with a copy of the original files. You can edit the `xrt.ini` file to profile and trace various parameters.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

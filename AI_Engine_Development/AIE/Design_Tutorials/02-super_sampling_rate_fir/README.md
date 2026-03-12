@@ -21,16 +21,18 @@
 
 AMD Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
-FIR filter architecture is a rich and fruitful electrical engineering domain, especially when the input sampling rate becomes higher than the clock rate of the device (Super Sampling Rate or SSR). For the PL, there exists a number of solutions that are already available using turnkey IP solution (FIR Compiler). The AI Engine array is a completely new processor and processor array architecture with enormous compute capabilities, so an efficient filtering architecture has to be found using all the capabilities of the AI Engine array, but also all the communications that are possible with the PL.
+FIR filter architecture is a rich and fruitful electrical engineering domain, especially when the input sampling rate becomes higher than the clock rate of the device (Super Sampling Rate or SSR). For the PL, there exists a number of solutions that are already available using turnkey IP solution (FIR Compiler). The AI Engine array is a completely new processor and processor array architecture with enormous compute capabilities. You must find an efficient filtering architecture using all the capabilities of the AI Engine array and all the communications possible with the PL.
 
-The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR Filters on a Versal adaptive SoC AI Engine processor array.
+The purpose of this tutorial is to provide a methodology to enable you to make appropriate choices depending on the filter characteristics, and to provide examples on how to implement Super Sampling Rate (SSR) FIR filters on a Versal adaptive SoC AI Engine processor array.
 
 ## Before You Begin
 
-Before beginning this tutorial, you should be familiar with Versal adaptive SoC architecture and more specifically on the AI Engine array processor and interconnect architecture.
+Before beginning this tutorial, familiarise yourself with Versal adaptive SoC architecture, and specifically, the AI Engine array processor and interconnect architecture.
 
-**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the Vitis 2025.2 software. The Vitis release includes all the embedded base platforms, including the VCK190 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from this link: [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html).
-The `common image` package contains a prebuilt Linux kernel and root file system that can be used with the Versal board for embedded design development using Vitis.
+>**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ 2025.2 software platform. The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html).
+
+The `common image` package contains a prebuilt Linux kernel and root file system that you can use with the Versal board for embedded design development using the AMD Vitis™ software platform.
+
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
@@ -53,7 +55,7 @@ You can now start the tutorial.
 
 ## SSR FIR Tutorial
 
-This tutorial is decomposed into multiple steps:
+This tutorial has multiple steps:
 
 1. [Summary of AI Engine Architecture](#AIE_Architecture)
 2. [What is a FIR Filter?](#FIR_Filter)
@@ -65,12 +67,11 @@ This tutorial is decomposed into multiple steps:
    2. [Double Stream](DualStreamSSR/README.md)
 7. [Hardware implementation of 2 Dual-Stream SSR filters](DualSSR16_hw/README.md)
 
-
 <a name="AIE_Architecture"></a>
 
 ## Summary of AI Engine Architecture
 
-You should have already read the [AI Engine Detailed Architecture](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf), so the purpose of this chapter is simply to highlight the features of the AI Engine that are useful for this tutorial.
+Ensure that you have already read the [AI Engine Detailed Architecture](https://docs.amd.com/go/en-US/am009-versal-ai-engine). The purpose of this chapter is to highlight the features of the AI Engine that are useful for this tutorial.
 
 Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
@@ -80,64 +81,65 @@ The SIMD VLIW AI Engines come as an array of interconnected processors using the
 
 ![missing image](./Images/AIEngineArray.jpg)
 
-All arrays (processors, memory modules, AXI interconnects) are driven by a single clock. The slowest speed grade device can run @1 GHz. The highest speedgrade allows 1.3 GHz clock rates. The device used in the VCK190, which will be used in this tutorial, is the `xcvc1902-vsva2197-2MP-e-S` running at 1.25 GHz.
-The AI Engine allows for numerous connection possibilities with the surrounding environment as shown in the following figure.
+A single clock drives all arrays (processors, memory modules, AXI interconnects). The slowest speed grade device can run @1 GHz. The highest speedgrade enables 1.3 GHz clock rates. The device used in the VCK190, which you can use in this tutorial, is the `xcvc1902-vsva2197-2MP-e-S` running at 1.25 GHz.
+
+The AI Engine enables numerous connection possibilities with the surrounding environment as shown in the following figure.
 
 ![missing image](./Images/AIEngine.jpg)
 
-### Memory interface
+### Memory Interface
 
 ![missing image](./Images/AIE_MemIF.jpg)
 
-Each AI Engine is surrounded by 4x 32 kB memories, each one being divided in four pairs of banks. The bandwidth is  high:
+Each AI Engine has four 32 kB memories surrounding it, with each one divided into four pairs of banks. The bandwidth is high:
 
-* 2 reads / cycle on 32 bytes (256 bits) each
-  * Each bank has a single port, the accesses must be done on different banks to achieve 2x 256 bits/cycle.
-* 1 write / cycle on 32 bytes (256 bits)
+* Two reads / cycle on 32 bytes (256-bit) each
+  * Each bank has a single port. The system must access different banks to achieve `2 x 256 bits/cycle`.
+* One write / cycle on 32 bytes (256-bit)
   * On another bank to achieve the highest bandwidth.
 * Be aware that you need also to feed the memories using DMAs or other AI Engines.
 
-### Streaming interface
+### Streaming Interface
 
 ![missing image](./Images/AIE_Streams.jpg)
 
-The streaming interface is based on two incoming streams and two outgoing streams, each one on 32 bits per clock cycle. These four streams are handled by a stream FIFO that allows the processor to use different bitwidths to access these streams:
+The streaming interface uses two incoming streams and two outgoing streams, each one on 32 bits per clock cycle. A stream FIFO handles these four streams and enables the processor to use different bit widths to access these streams:
 
-* 2 streams in, 2 streams out:
-  * Each one 4 bytes/cycle or 16 bytes/ 4 cycles
+* Two streams in, two streams out:
+  * Each one 4 bytes per cycle or 16 bytes per four cycles
 * Parallel access to streams per VLIW:
-  * 2 reads (4/16 bytes), 1 write (4/16 bytes)
-  * OR 1 read (4/16 bytes), 2 writes (4/16 bytes)
-* Using 1 stream:
-  * 4 bytes/cycle read and 4 bytes/cycle write
-* Using the 2 streams and the 16-byte access option:
+  * Two reads (4/16 bytes), one write (4/16 bytes)
+  * OR one read (4/16 bytes), two writes (4/16 bytes)
+* Using one stream:
+  * 4 bytes per cycle read and 4 bytes per cycle write
+* Using the two streams and the 16-byte access option:
   * Reads and/or writes can be dispatched over time
-  * On an average 8 bytes/cycle read and 8 bytes/cycle write
+  * On an average 8 bytes per cycle read and 8 bytes per cycle write
 
-Accessing the data to/from the streams using the 128-bit interface does not increase the bandwidth, but limits the number of accesses that must be scheduled within the microcode of the VLIW processor.
+Accessing the data to/from the streams using the 128-bit interface does not increase the bandwidth. Instead, it limits the number of accesses that must be scheduled within the microcode of the VLIW processor.
 
 ### Cascade Streams
 
 ![missing image](./Images/AIE_Cascade.jpg)
 
-The cascade stream allows an AI Engine processor to transfer the value of some of its accumulator register (384 bits) to its neighbor (on the left or right depending on the row):
+The cascade stream enables an AI Engine processor to transfer the value of some of its accumulator register (384-bit) to its neighbor (on the left or right depending on the row):
 
-* It is capable of 8x 48-bit word transfer v8acc48 or v4cacc48 in a single cycle.
+* It is capable of eight 48-bit word transfer `v8acc48` or `v4cacc48` in a single cycle.
 * 48 bits is the number of bits of the result of a 16 bits x 16 bits multiplication.
-* If the transfer concerns a 768-bit register, it takes 2 clock cycles.
+* If the transfer concerns a 768-bit register, it takes two clock cycles.
 
 <a name="FIR_Filter"></a>
 
-## What is a FIR Filter?
+## FIR Filters
 
-The purpose of this tutorial is not to train you to be an expert in Digital Signal Processing. Howver, to grasp the basics of FIR filtering, it is necessary to understand the computations that are required, and the data that is consumed and produced by the compute block.
+The purpose of this tutorial is not to train you to be an expert in digital signal processing (DSP). However, to grasp the basics of finite impulse response (FIR) filtering, you must understand the computations required, and the data that the compute block consumes and produces.
 
-A digital signal is an analog signal (audio, radio frequencies) that has been received by a converter (Analog to Digital Converter: ADC), which performs two operations:
+A digital signal is an analog signal (audio, radio frequencies) that a converter (Analog to Digital Converter: ADC) receives. It performs two operations:
 
-* **Slicing**: The impinging signal is sliced into very small time slots on which its amplitude is approximated by a constant value.
-* **Quantizing**: Digital systems understand only bits. The constant value at the output of the slicer is transformed into an integer value whose maximum represents the maximum amplitude that the system can receive.
+* **Slicing**: The system slices the impinging signal into small time slots on which a constant value approximates its amplitude.
+* **Quantization**: Digital systems understand only bits. The constant value at the output of the slicer transforms into an integer value whose maximum represents the maximum amplitude that the system can receive.
 
-As a result, the digital signal at the output of the ADC is simply a series of *N*-bits values (called samples) that can be processed to extract some useful information. The most basic operation is to multiply some samples by some specific coefficients and accumulate these values to create a "summary" of this part of the signal.
+As a result, the digital signal at the output of the ADC is simply a series of *N*-bits values (called samples) that the system can process to extract some useful information. The most basic operation multiplies some samples by some specific coefficients and accumulates these values to create a "summary" of this part of the signal.
 
 A filtering operation performs this using a sliding window on the signal as shown in the following figure:
 
@@ -147,7 +149,7 @@ Input data samples are in general called **x** (blue squares), the coefficients 
 
 ![missing image](./Images/FIR_Equation.jpg)
 
-DSP experts may say that this equation represents a *correlation* and not a *convolution,* which is the mathematical expression of the filtering operation. The easy answer may be to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients).
+DSP experts could say that this equation represents a *correlation* and not a *convolution,* which is the mathematical expression of the filtering operation. The easy answer is to say that it is simply a question of coefficients ordering (and perhaps conjugation for complex coefficients).
 
 That is why you always see the two lines at the beginning of the various `graph.h` files:
 
@@ -159,8 +161,7 @@ std::vector<cint16> taps = std::vector<cint16>({
 std::vector<cint16> taps_aie(taps.rbegin(),taps.rend());
 ```
 
-The first line is the taps vector definition in the correct order for a DSP expert, and the second line defines the vector that is used in the AI Engine implementation as the same vector but in the reverse order.
-
+The first line is the taps vector definition in the correct order for a DSP expert. The second line defines the vector that is used in the AI Engine implementation. This is the same vector but in the reverse order.
 
 <a name="UtilsDirectory"></a>
 
@@ -168,30 +169,30 @@ The first line is the taps vector definition in the correct order for a DSP expe
 
 For this tutorial, a number of utilities have been created that you can reuse for your own purposes.
 
-First, to allow these utilities to be called from anywhere during this tutorial, add this directory in your ***PATH*** but also indicate to `python` that this directory contains some libraries and should be checked during imports.
+First, to call these utilities from anywhere during this tutorial, add this directory to your ***PATH*** and indicate to `python` that this directory contains some libraries. The system checks this directory during imports.
 
 Navigate to the `Utils` directory, and type `source InitPythonPath` to have this directory in your path for Python libraries and executable search path.
 
 ### GenerateStreams
 
-This utility will use a library ***GenerationLib.py*** to generate input data suitable for the cases you want to test. It is called by typing `GenerateStreamsGUI`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
+This utility uses a library ***GenerationLib.py*** to generate input data suitable for the cases you want to test. Call it by typing `GenerateStreamsGUI`. This displays a GUI in which you can select the appropriate parameters to generate the correct input data files:
 
 ![missing image](./Images/GenerateStreams.jpg)
 
 You have access to a number of parameters:
 
 * *Data Type*: By default, `cint16`, as this is what you use throughout this tutorial.
-* *PLIO Width*: By default, `64`, as this is the width which is used in this tutorial.
+* *PLIO Width*: By default, `64`. This tutorial uses this width.
 * *Number of Phases*: For Super Sampling Rate Filters.
 * *Number of Streams*: For the SSR filters using the 2 streams of the AI Engines.
 * *Number of Samples per Stream per Phase*: Each stream contains a number of samples defined there.
-* *Number of Frames*: Simulations are launched for a limited number of Frames.
+* *Number of Frames*: The system launches simulations for a limited number of Frames.
 * *Base of the Filename*: `PhaseIn` by default, which generates the following names:
   * Single Stream, Single Phase: `PhaseIn_0.txt`
-  * Single Stream, Polyphase: `PhaseIn_0.txt`, `PhaseIn_1.txt`, ...
-  * Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_0.txt`, `PhaseIn_1_0.txt`, `PhaseIn_1_0.txt`, ...
+  * Single Stream, Polyphase: `PhaseIn_0.txt`, `PhaseIn_1.txt`, and so on
+  * Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_0.txt`, `PhaseIn_1_0.txt`, `PhaseIn_1_0.txt`, and so on
 
-Another possibility is to type `GenerateStreams` with the same parameters. If you type `GenerateStreams` without parameters, a usage text is displayed:
+Another possibility is to type `GenerateStreams` with the same parameters. If you type `GenerateStreams` without parameters, the system displays a usage text:
 
 ```BASH
 >>GenerateStreams
@@ -220,10 +221,10 @@ This utility takes all generated outputs and displays the reconstructed signal. 
 
 If your output signals are stored in files named `output_0.txt`, navigate to the output directory and type `ProcessAIEOutput output_*` to process the output of the AI Engines.
 
-Two other files are generated:
+The system generates two other files:
 
 * `Atot.txt`, which is the output phase by phase.
-* `out.txt`, which is the textfile of the reconstructed signal.
+* `out.txt`, which is the text file of the reconstructed signal.
 
 ### StreamThroughput
 
@@ -231,12 +232,12 @@ This utility computes the throughput concerning all AI Engine output files given
 
 ### `GetDeclare.sh`
 
-This utility has been created to view the template arguments that were used for kernel declaration in the Double Stream SSR case. It can be easily modified to be adapted to different cases.
+This utility views the template arguments used for kernel declaration in the Double Stream SSR case. You can modify it to adapt to different cases.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br>></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br>></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

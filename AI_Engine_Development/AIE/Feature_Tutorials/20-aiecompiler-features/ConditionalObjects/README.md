@@ -14,11 +14,10 @@
 </table>
 
 # Conditional Objects Instantiation
- 
 
 ## Introduction
 
-In some situations, you may want to have parameterizable graphs where some ports may or may not exist. Kernels may be different depending on parameters and there might be a variable number of ports, and some sub-graphs may or may not be instantiated. These cases are covered by the `aiecompiler` conditional port feature.
+In some situations, you want to have parameterizable graphs where some ports exist conditionally. Kernels can differ depending on parameters. There can be a variable number of ports, and you can instantiate some sub-graphs conditionally. The `aiecompiler` conditional port feature covers these cases.
 
 ## Basics of Conditional Instantiation
 
@@ -30,7 +29,7 @@ typename std::conditional< BOOLEAN_CONDITION , TYPE_IF_TRUE , TYPE_IF_FALSE >::t
 
 If `BOOLEAN_CONDITION` is True, then `VARIABLE` is generated with type `TYPE_IF_TRUE`. If the condition is False, `VARIABLE` is also generated but with type `TYPE_IF_FALSE`.
 
-For `aiecompiler` environment, the `BOOLEAN_CONDITION` will be generally passed through template parameter. Though `VARIABLE` is always created, the type is different depending on the condition. In the examples provided, `TYPE_IF_TRUE` is the port type, graph class name that is of interest, and `TYPE_IF_FALSE` is a dummy type like `int` or `std::tuple<>`.
+For `aiecompiler` environment, the `BOOLEAN_CONDITION` is passed through template parameter. Though `VARIABLE` is always created, the type is different depending on the condition. In the examples provided, `TYPE_IF_TRUE` is the port type, graph class name that is of interest, and `TYPE_IF_FALSE` is a dummy type like `int` or `std::tuple<>`.
 
 ## Conditional Usage Examples
 
@@ -38,10 +37,9 @@ The following examples illustrate various ways to generate conditional objects a
 
 All these examples can be compiled either for the AI Engine architecture `ARCH=aie` (default value) or the AI Engine ML architecture `ARCH=aie-ml`.
 
-
 ### Case 1: Conditional Cascade Port
 
-In this design, a graph is instantiated with a template parameter. Depending on parameter values, a kernel with an input cascade port, an output cascade port, both of them, or none of them is declared as the kernel of the graph. If there is no cascade output port, a streaming output port is declared. As the number of ports depends on the parameter value, the graph will expose a variable number of ports.
+In this design, a graph is instantiated with a template parameter. Depending on parameter values, a kernel with an input cascade port, an output cascade port, both of them, or none of them is declared as the kernel of the graph. If there is no cascade output port, a streaming output port is declared. As the number of ports depends on the parameter value, the graph exposes a variable number of ports.
 
 ```C++
 template<bool HAS_CASCADE_IN, bool HAS_CASCADE_OUT>
@@ -89,7 +87,7 @@ struct SubGraph: public graph
 };
 ```
 
-You can instantiate multiple sub-graphs with various parameters in order to create the complete graph. The testcase of the tutorial is the following:
+You can instantiate multiple sub-graphs with various parameters to create the complete graph. The test case of the tutorial is the following:
 
 ```C++
 struct TestGraph: public graph
@@ -143,7 +141,7 @@ In this example, an array of different kernel type and different size are create
                               std::array<Sub0<2>, 3>>::type _subs;
 ```
 
-If ID parameter is equal to 1, an array of two kernels parametrized with value 1 is generated. If ID is not equal to 1, the array length is 3 and the kernel is parametrized with 2.
+If ID parameter is equal to 1, an array of two kernels parameterized with value 1 is generated. If ID is not equal to 1, the array length is 3 and the kernel is parameterized with 2.
 
 Type `make CASE=2 aie aieviz` to visualize the resulting graph of this testcase.
 
@@ -159,7 +157,7 @@ struct MyGraph: public graph
     output_plio _plioO;
 
     constexpr static bool hasSub0() {return ID & 0x1;}
-    constexpr static bool hasSub1() {returcn ID & 0x2;}
+    constexpr static bool hasSub1() {return ID & 0x2;}
 
     typename std::conditional<hasSub0(), Sub0, int >::type _sub0;
     typename std::conditional<hasSub1(), Sub1, int >::type _sub1;
@@ -174,7 +172,7 @@ Type `make CASE=3 aie aieviz` to visualize the resulting graph of this testcase.
 
 ### Case 4: Conditional RTP Ports
 
-Last but not least, in this fourth testcase, a template parameter allows you to choose between a kernel that has RTP ports and another one which does not have these ports.
+Last but not least, in this fourth test case, a template parameter allows you to choose between a kernel that has runtime parameter (RTP) ports and another one which does not have these ports.
 
 ```C++
 template<bool HAS_RTPS>
@@ -205,16 +203,16 @@ struct Sub0: public graph
 };
 ```
 
-In the testcase, two of these graphs are instantiated: one without RTPs and another one with RTP ports. The resulting graph in the Vitis Analyzer is as follows:
+In the test case, two of these graphs are instantiated: one without runtime parameters (RTPs) and another one with RTP ports. The resulting graph in the Vitis Analyzer is as follows:
 
 ![No Image](images/Case4_ByGraph.png)
 
-Type `make CASE=4 aie aieviz` to visualize the resulting graph of this testcase.
+Type `make CASE=4 aie aieviz` to visualize the resulting graph of this test case.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -16,15 +16,13 @@
 # AI Engine Compiler Features
 
 ***Version: Vitis 2025.2***
- 
-
 ## Introduction
 
-The `aiecompiler` is evolving and therefore it may be difficult for you to keep up with new features. This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.
+The `aiecompiler` is evolving. This tutorial shares a variety of features that are useful for AI Engine / AI Engine-ML (AIE-ML) programming to create more visible and efficient code compared to early versions of the compiler.
 
 >**IMPORTANT**: Before beginning the tutorial, make sure that you have installed the AMD Vitis™ Unified Software Platform 2025.2.  
 
-Data generation for this tutorial requires [Python 3](https://www.python.org/downloads/). The following packages are required:
+Data generation for this tutorial requires [Python 3](https://www.python.org/downloads/). You need the following packages:
 
 - os
 - sys
@@ -34,27 +32,25 @@ All these designs will compile for AI Engine architecture (VCK190 production boa
 
 ## Objectives
 
-After completing this tutorial, you will be able to:
+After completing this tutorial, you can:
 
-- Work with multirate design that allow the compiler to handle frame length mismatch between consecutive kernels in a kernel chain.
+- Work with multirate designs that allow the compiler to handle frame length mismatch between consecutive kernels in a kernel chain.
 - Send output data to different other kernels for stream-based and buffer-based I/O.
 - Conditionally instantiate graph objects.
 
-This tutorial is based on simple data passthrough to avoid another level of complexity.
-
+This tutorial uses simple data passthrough to avoid another level of complexity.
 
 ## Tutorial Sections
-
 
 | Section Link | Description |
 |:---|:---|
 | [Conditional Objects](ConditionalObjects) | Shows how to conditionally instantiate graph objects |
-| [Multirate](Multirate) | Explains how to handle mismatching frame length in between kernels |
+| [Multirate](Multirate) | Explains how to handle mismatching frame length between kernels |
 | [Multicast](Multicast) | Provides examples on how to manipulate stream/buffer multicasting with multirate |
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
 <hr class="sphinxhide"></hr>
 

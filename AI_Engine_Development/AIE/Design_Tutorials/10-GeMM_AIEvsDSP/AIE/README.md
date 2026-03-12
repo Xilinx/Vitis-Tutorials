@@ -13,51 +13,44 @@
   </tr>
 </table>
 
-# AI Engine Implementation 
+# AI Engine Implementation
 
 ## Table of Contents
 
-[Building the Design](#Building-the-Design)
-
-[Hardware Design Details](#Hardware-Design-Details)
-
-[Software Design Details](#Software-Design-Details)
-
-[Performance Details](#Performance-Details)
+- [Building the Design](#building-the-design)
+  - [Design Build](#design-build)
+  - [Make Steps](#make-steps)
+- [Hardware Design Details](#hardware-design-details)
+  - [GeMM AI Engine Implementation Architecture and AI Engine/PL Function Partitioning](#gemm-ai-engine-implementation-architecture-and-ai-enginepl-function-partitioning)
+  - [AI Engine Kernels and Graph Representation](#ai-engine-kernels-and-graph-representation)
+  - [PL Data Mover Kernel](#pl-data-mover-kernel)
+- [Software Design Details](#software-design-details)
+  - [PS Host Application](#ps-host-application)
+- [Performance Details](#performance-details)
+  - [Resource Utilization and Power](#resource-utilization-and-power)
+  - [Throughput and Latency](#throughput-and-latency)
 
 ## Building the Design
 
-<details>
-<summary>Design Build</summary> 
-
 ### Design Build
 
-In this section, you build and run the GeMM design using the AI Engine implementation. You compile the AI Engine design and integrate it into a larger system design (including the PL kernels and PS host application). Review the [Integrating the Application section in the AI Engine Documentation](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Using-the-Vitis-Unified-IDE) for the general flow. 
+In this section, you build and run the GeMM design using the AI Engine implementation. You compile the AI Engine design and integrate it into a larger system design. This includes the PL kernels and PS host application. Review the [Integrating the Application section in the AI Engine Documentation](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Using-the-Vitis-Unified-IDE) for the general flow.
 
-At the end of this section, the design flow will generate a new directory (called `build/`). Underneath are sub-directories named `(gemm_$(MAT_DIMS)/` (for example, `gemm_32x32x32/`) depending on the Mat A and Mat B dimensions and the number of instances `x$(GEMM_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds, targeted to `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
-
-</details>
-
-<details>
-<summary>Make Steps</summary> 
+At the end of this section, the design flow generates a new directory (called `build/`). Underneath are sub-directories named `(gemm_$(MAT_DIMS)/` (for example, `gemm_32x32x32/`). The sub-directory naming depends on the Mat A and Mat B dimensions and the number of instances `x$(GEMM_INSTS)` chosen in the build. Each sub-directory contains the `hw_emu/` and/or `hw/` subfolders. The respective subfolders contain `Work/` and `libadf.a`, outputs from the AI Engine compiler, the host app executable and the builds. The builds target either `hw` or `hw_emu` respectively. The `hw_emu/` subfolder contains the build for hardware emulation. The `hw/` subfolder contains the build for hardware run on a VCK190 board.
 
 ### Make Steps
 
-To run the following `make` steps (that is, `make kernels`, `make graph`, and so on), you must be in the `AIE/` folder. The options that can be specified in the `make` steps are as follows.
+To run the following `make` steps (that is, `make kernels`, `make graph`, and so on), you must be in the `AIE/` folder. You can specify the following options in the `make` steps.
 
-`TARGET:` This can be set to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow respectively. The default option is `hw_emu`.
-
-`GEMM_INSTS:` This is set to `1` by default and is not allowed to be changed right.
-
-`GEMM_SIZE`: Matrix Dimensions Involved. `32` means Mat A (input matrix 1), B (input matrix 2) and C (output matrix) are square matrices of dimension `32`. Permissible values are `32`, `64`, `128`, `256`, `512`, and `1024`.
-
-`ITER_CNT:` The number of iterations the design is run. The default is `1`.
-
-`EN_TRACE:` Flag to enable trace profiling. `0` is disabled and `1` is enabled. The default is `0` (disabled).
+- `TARGET:` Set this to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow respectively. The default option is `hw_emu`.
+- `GEMM_INSTS:` Defaults to `1` and cannot be changed currently.
+- `GEMM_SIZE`: Matrix Dimensions Involved. `32` means Mat A (input matrix 1), B (input matrix 2) and C (output matrix) are square matrices of dimension `32`. Permissible values are `32`, `64`, `128`, `256`, `512`, and `1024`.
+- `ITER_CNT:` The number of iterations the design runs. The default is `1`.
+- `EN_TRACE:` Flag to enable trace profiling. Use `0` to disable and `1` to enable. The default is `0` (disabled).
 
 The Makefile uses the following directory references:
 
-```
+```makefile
 ## Relative gemm directory
 RELATIVE_PROJECT_DIR := ./
 
@@ -99,45 +92,35 @@ AIE_SIM_IO_DIR := $(AIE_SIM_IO_BASE_DIR)/gemm_$(MAT_DIMS)_ioFiles
 
 ```
 
-</details>
-
-<details>
-<summary>Build the Entire Design with a Single Command</summary>
-
 ### Build the Entire Design with a Single Command
 
-If you are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design for each case of `gemm_$(MAT_DIMS)` with one command: 
+If you are already familiar with the AI Engine and Vitis kernel compilation flows, you can build the entire design. Use one command for each case of `gemm_$(MAT_DIMS)`:
 
 ```bash
 make run (default target is hardware emulation, 1 instance, gemm_$(MAT_DIMS) matrix dimensions, iterations=1 and no trace-profiling )
 ```
-or 
+
+or,
 
 ```bash
 make run TARGET=hw ITER_CNT=16 EN_TRACE=1 GEMM_SIZE=64 (hardware, 16 iterations, , matrix dimentions 64 for Mat A, B and C and enable trace profiling )
 ```
 
-This command runs the `make kernels`,`make graph`,`make xsa`,`make application`,`make package`, and `make run_emu` for hardware emulation or to run on hardware (VCK190 board) depending on the `TARGET` you specify. The settings also apply to the individual make steps listed below.
+This command runs the `make kernels`,`make graph`,`make xsa`,`make application`,`make package`, and `make run_emu` targets. The targets build for hardware emulation or to run on hardware (VCK190 board). The build type depends on the `TARGET` you specify. The settings also apply to the individual make steps listed in the following section.
 
-The generated files for each `gemm_$(MAT_DIMS)` are placed under an individual directory: `$(BUILD_TARGET_DIR)/`. Each `make` step to build the design is specified in the following sections. These sections also detail the options used and the location of input and output files in each case.
-
-</details>
-
-<details>
-<summary>make kernels: Compiling PL Kernels</summary> 
+The system places the generated files for each `gemm_$(MAT_DIMS)` under an individual directory: `$(BUILD_TARGET_DIR)/`. The following sections specify each `make` step to build the design. These sections also detail the options used and the location of input and output files in each case.
 
 ### make kernels: Compiling PL Kernels
 
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202420_1`). It also takes the AI Engine kernels and graph. The compiler then compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`).
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202420_1`) and the AI Engine kernels and graph and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`). 
-
-```
+```bash
 make kernels
 ```
 
-The command alongwith the options used is as follows (for `dma_hls`):
+The command with the options used is as follows (for `dma_hls`):
 
-```
+```makefile
 $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo: 
 	mkdir -p $(BUILD_TARGET_DIR); \
 	cd $(BUILD_TARGET_DIR); \
@@ -146,49 +129,44 @@ $(BUILD_TARGET_DIR)/$(DATAMOVER_KERNEL_XO).xo:
 		$(DATAMOVER_KERNEL_SRC) -o $@
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used. 
+Refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/vitis-v-and-vitis-run-Commands) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used.
 
 |Switch|Description|
-|  ---  |  ---  |
+|---|---|
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
 |--save-temps \| -s|Directs the Vitis compiler command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermediate files to.|
-|--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
-|--verbose|Display verbose/debug information.|
+|--temp_dir <string>|Lets you manage the location where the tool writes temporary files created during the build process. The Vitis compiler writes temporary results and then removes them unless you specify the `--save-temps` option.|
+|--verbose|Displays verbose/debug information.|
 |--compile \| -c|Required for compilation to generate XO files from kernel source files.|
-|--kernel \<arg\>\|-k \<arg\>|Compile only the specified kernel from the input file. Only one -k option is allowed per Vitis compiler command.|
-|--output \| -o|Specifies the name of the output file generated by the V++ command. The DMA HLS kernels output should be XO.|
+|--kernel \<arg\>\|-k \<arg\>|Compiles only the specified kernel from the input file. Only one -k option is allowed per Vitis compiler command.|
+|--output \| -o|Specifies the name of the output file generated by the V++ command. The DMA HLS kernels output must be XO.|
 
 |Input|Description|
-|  ---  |  ---  |
-|$(PL_SRC_REPO)/dma_hls.cpp|Defines the data mover PL kernel.|
+|---|---|
+|$(PL_SRC_REPO)/dma_hls.cpp|Defines the data mover PL kernel|
 
 |Output|Description|
-|  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo|The data mover kernel object file.|
-
-</details>
-
-<details>
-<summary>make graph: Creating the AI Engine ADF Graph for the Vitis Compiler Flow</summary> 
+|---|---|
+|$(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo|The data mover kernel object file|
 
 ### make graph: Creating the AI Engine ADF Graph for Vitis Compiler Flow
 
-An ADF graph can be connected to an extensible Vitis platform (the graph I/Os can be connected either to platform ports or to ports on Vitis kernels through Vitis compiler connectivity directives). 
+You can connect an ADF graph to an extensible Vitis platform. Connect the graph I/Os either to platform ports or to ports on Vitis kernels. Use Vitis compiler connectivity directives for the connections.
 
-* The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels. 
-* All interconnects between kernels are defined in the C++ graph
-* All interconnections to external I/O are fully specified in the C++ simulation testbench (`graph.cpp`) that instantiates the C++ ADF graph object. 
+- The AI Engine ADF C++ graph of the design contains AI Engine kernels and PL kernels
+- The C++ graph defines all interconnects between kernels
+- All interconnections to external I/O are fully specified in the C++ simulation test bench (`graph.cpp`) that instantiates the C++ ADF graph object
 
 To compile the graph using the Makefile flow type (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
 
-```
+```bash
 make graph
 ```
 
-The following AI Engine compiler command, alongwith the options used, compiles the AI Engine design graph: 
+The following AI Engine compiler command and the options used, compiles the AI Engine design graph:
 
-```
+```text
 ...
 AIE_FLAGS := -include=$(AIE_SRC_REPO)
 AIE_FLAGS += -include=$(DSPLIB_ROOT)/L1/include/aie
@@ -230,12 +208,12 @@ $(LIBADF_A):  $(AIE_SRC_REPO)/graph.*
 	aiecompiler $(AIE_FLAGS) $(GRAPH_SRC_CPP) 2>&1 | tee -a aiecompiler.log
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment) for full AI Engine programming environment documentation.
+Refer to [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment) for full AI Engine programming environment documentation.
 
-The following table provides a summary of the switches used. 
+The following table provides a summary of the switches used.
 
 |Switch|Description|
-|  ---  |  ---  |
+|---|---|
 |--include=\<string\>|Specify compile-time include directory (zero or more).|
 |--verbose\|-v|Verbose output of the AI Engine compiler emits compiler messages at various stages of compilation. These debug and tracing logs provide useful messages on the compilation process.|
 |--Xpreproc="-D\<Pre-processor Macro String\>"|Specify compile time macro.|
@@ -247,33 +225,29 @@ The following table provides a summary of the switches used.
 The following is a description of the output objects that results from executing the AI Engine compiler (`aiecompiler`) command.
 
 |Inputs Sources|Description|
-|  ---  |  ---  |
-|$(AIE_SRC_REPO)/graph.cpp|Defines the GeMM graph objects.|
+|---|---|
+|$(AIE_SRC_REPO)/graph.cpp|Defines the GeMM graph objects|
 
 |Output Objects|Description|
-|  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/libadf.a|Compiled AI Engine design graph.|
-|$(BUILD_TARGET_DIR)/Work/|Directory that contains all outputs of the AI Engine compiler.|
-</details>
-
-<details>
-<summary>make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform</summary> 
+|---|---|
+|$(BUILD_TARGET_DIR)/libadf.a|Compiled AI Engine design graph|
+|$(BUILD_TARGET_DIR)/Work/|Directory that contains all outputs of the AI Engine compiler|
 
 ### make xsa: Using the Vitis Tools to Link AI Engine and HLS Kernels with the Platform
 
-After the AI Engine kernels and graph and PL HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate a XSA file. 
+After compiling the AI Engine kernels, graph, and PL HLS kernels, you can link them with the platform. Use the Vitis compiler to generate an XSA file.
 
-The Vitis tools allow you to integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can opt to use one of the many extensible base platforms provided by AMD, and use the Vitis tools to build the hardware design and integrate the AI Engine and PL kernels into it.
- 
-To test this feature in this tutorial, use the base VCK190 platform to build the design. The command to run this step is shown in the following example (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
+Vitis tools integrate the AI Engine, HLS, and RTL kernels into an existing extensible platform. This is an automated step from a software developer perspective. The hardware designer provides the chosen platform. Alternatively, you can use one of the many extensible base platforms provided by AMD. The Vitis tools can then build the hardware design and integrate the AI Engine and PL kernels.
 
-```
+To test this feature in this tutorial, use the base VCK190 platform to build the design. The following example shows the command to run this step (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
+
+```bash
 make xsa
-``` 
+```
 
 The command along with the options used is as follows:
 
-```
+```text
 ...
 VPP_FLAGS := --platform $(PLATFORM)
 VPP_FLAGS += --save-temps
@@ -310,22 +284,23 @@ $(BUILD_TARGET_DIR)/$(XSA):$(KERNEL_XOS) $(SYSTEM_CONFIGS_REPO)/*
 	cd $(BUILD_TARGET_DIR);	\
 	v++ -l $(VPP_FLAGS) $(VPP_LINK_FLAGS) -t $(TARGET) -o $@ $(KERNEL_XOS) $(LIBADF_A)
 ```
-See [this page](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-the-System) for a detailed description of Vitis linking options.
+
+Refer to [this page](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Linking-the-System) for a detailed description of Vitis linking options.
 
 |Switch|Description|
-|  ---  |  ---  |
+|---|---|
 |--platform \| -f|Specifies the name of a supported acceleration platform as specified by the $PLATFORM_REPO_PATHS environment variable or the full path to the platform XPFM file.|
-|--save-temps \| -s|Directs the V++ command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location to write the intermediate files to.|
-|--temp_dir <string>|This allows you to manage the location where the tool writes temporary files created during the build process. The temporary results are written by the Vitis compiler, and then removed, unless the `--save-temps` option is also specified.|
+|--save-temps \| -s|Directs the V++ command to save intermediate files/directories created during the compilation and link process. Use the `--temp_dir` option to specify a location. Specify where to write the intermediate files.|
+|--temp_dir <string>|This lets you manage the location where the tool writes temporary files created during the build process. The Vitis compiler writes temporary results. Then it removes them unless you specify the `--save-temps` option.|
 |--verbose|Display verbose/debug information.|
 |--config <config_file>|Specifies a configuration file containing V++ switches.|
 |--output \| -o|Specifies the name of the output file generated by the V++ command. In this design the outputs of the DMA HLS kernels and the PL kernels interfacing with the AI Engine are in XO files.|
-|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/profile-Options) for detailed profiling options.|
-|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/profile-Options) for detailed profiling options.|
+|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IP cores. You must specify this option during linking. Refer to [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/profile-Options) for detailed profiling options.|
+|--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. Refer to [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/profile-Options) for detailed profiling options.|
 
-The information to tell the linker how to connect the AI Engine and PL kernels together is described in a configuration file, `system_configs/x$(GEMM_INSTS).cfg`. The file describes the overall connection scheme of the system.
+A configuration file, `system_configs/x$(GEMM_INSTS).cfg`, tells the linker how to connect the AI Engine and PL kernels together. The file describes the overall connection scheme of the system.
 
-```
+```ini
 [connectivity]
 nk=dma_hls:1:dma_hls_0
 
@@ -377,33 +352,29 @@ param=hw_emu.enableProfiling=false
 
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file.
+Refer to [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file.
 
 |Switch|Comment|
-|  ---  |  ---  |
+|---|---|
 |--connectivity.nk|Number of kernels. `dma_hls:1:dma_hls_0` means that the Vitis compiler should instantiate one dma_hls kernel and name the instance `dma_hls_0`.|
-|--connectivity.stream_connect|How the kernels will connect to IPs, platforms, or other kernels. The output of the AI Engine compiler tells you the interfaces that need to be connected. `dma_hls_0.strmOut_to_A0:ai_engine_0.DataIn0` means that the Vitis compiler should connect the port `strmOut_to_A0` of the `dma_hls` PL kernel to the shim channel of the AI Engine with the logical name `DataIn0`, defined in `$(AIE_SRC_REPO)/graph.cpp` as part of the PLIO instantiation.|
-|param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
+|--connectivity.stream_connect|How the kernels connect to IP cores, platforms, or other kernels. The output of the AI Engine compiler tells you the interfaces that need to be connected. For example, `dma_hls_0.strmOut_to_A0:ai_engine_0.DataIn0` means the Vitis compiler should connect a specific port. It connects the port `strmOut_to_A0` of the `dma_hls` PL kernel to the shim channel. The shim channel is for the AI Engine with the logical name `DataIn0`. This name is defined in `$(AIE_SRC_REPO)/graph.cpp` as part of the PLIO instantiation.|
+|param=compiler.addOutputTypes=hw_export|This option tells the Vitis compiler that besides creating an XCLBIN file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
-The Vitis compiler calls the Vivado™ IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line. 
+The AMD Vitis™ compiler calls the AMD Vivado™ IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite. The Vivado tool generates either a simulation XSA or an XSA after running place and route on the design. The `-target` option set on the Vitis compiler command line determines when the Vivado tool produces the XSA.
 
-You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now have generated the XCLBIN file that will be used to execute your design on the platform.
-
-</details>
-
-<details>
-<summary>make application: Compiling the Host Application</summary> 
+You can now view the Vivado project in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now generated the XCLBIN file that your design uses to execute on the platform.
 
 ### make application: Compiling the Host Application
 
 You can compile the host application by following the typical cross-compilation flow for the Cortex A72. To build the application, run the following command (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
 
-```
+```bash
 make application
 ```
-or
 
-```
+or,
+
+```bash
 application: graph $(BUILD_TARGET_DIR)/$(APP_ELF)
 
 REG_GCC_FLAGS := $(GCC_FLAGS)
@@ -417,54 +388,46 @@ $(BUILD_TARGET_DIR)/$(APP_ELF): $(HOST_APP_SRC)/* $(LIBADF_A)
 	$(CXX) $(BUILD_TARGET_DIR)/app_control.o $(BUILD_TARGET_DIR)/gemm_aie_app.o $(GCC_INC_LIB) $(GCC_LIB) -o $(BUILD_TARGET_DIR)/$(APP_ELF)
 ```
 
-
-See [this page](https://xilinx.github.io/XRT/master/html/index.html) for XRT documentation. See [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) for details of host application programming.
-
-
+Refer to [this page](https://xilinx.github.io/XRT/master/html/index.html) for XRT documentation. Refer to [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) for details of host application programming.
 
 |Switch|Description|
-|  ---  |  ---  |
-|-O \| Optimize.| Optimizing compilation takes more time and a lot more memory for a large function. With -O, the compiler tries to reduce code size and execution time, without performing any of the optimizations that can take a great deal of compilation time.|
-|-D__linux__|
-|-DXAIE_DEBUG|Enable debug interface capabilities where certain core status, event status, or stack trace can be dumped out.|
+|---|---|
+|-O \| Optimize.|Optimizing compilation takes more time and a lot more memory for a large function. With -O, the compiler tries to reduce code size and execution time, without performing any of the optimizations that can take a great deal of compilation time.|
+|-D__linux__| |
+|-DXAIE_DEBUG|Enable debug interface capabilities where certain core status, event status, or stack trace can be dumped.|
 |-D\<Pre-processor Macro String\>=\<value\>|Pass pre-processor macro definitions to the cross-compiler.|
 |-I \<dir\>|Add the directory `dir` to the list of directories to be searched for header files.|
-|-o \<file\>|Place output in file `<file>`. This applies regardless of the output being produced, whether it be an executable file, an object file, an assembler file, or preprocessed C code.|
-|--sysroot=\<dir\>|Use `dir` as the logical root directory for headers and libraries. For example, if the compiler normally searches for headers in `/usr/include` and libraries in `/usr/lib`, it instead searches `dir/usr/include` and `dir/usr/lib`. This is automatically set by the `env_setup.sh` script.|
+|-o \<file\>|Place output in file `<file>`. This applies to any output type, including executable files, object files, assembly language files, or preprocessed C code.|
+|--sysroot=\<dir\>|Use `dir` as the logical root directory for headers and libraries. For example, if the compiler normally searches for headers in `/usr/include` and libraries in `/usr/lib`, it instead searches `dir/usr/include` and `dir/usr/lib`. The `env_setup.sh` script automatically sets this option.|
 |-l\<library\>|Search the library named `library` when linking. The GeMM tutorial requires the `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for `-l`.|
 
-The following is a description of the input sources compiled by the AI Engine compiler command. 
+The following is a description of the input sources compiled by the AI Engine compiler command.
 
 |Inputs Sources|Description|
-|  ---  |  ---  |
-|$(HOST_APP_SRC_REPO)/gemm_aie_app.cpp|Source application file for the `gemm_aie_xrt.elf` that will run on an A72 processor.|
+|---|---|
+|$(HOST_APP_SRC_REPO)/gemm_aie_app.cpp|Source application file for the `gemm_aie_xrt.elf` that runs on an A72 processor.|
 |$(BUILD_TARGET_DIR)/Work/ps/c_rts/aie_control_xrt.cpp|This is the AI Engine control code generated implementing the graph APIs for the GeMM graph.|
 
-The following is a description of the output objects that results from executing the AI Engine compiler command with the above inputs and options. 
+The following is a description of the output objects that results from executing the AI Engine compiler command with the above inputs and options.
 
 |Output Objects|Description|
-|  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/gemm_aie_xrt.elf|The executable that will run on an A72 processor.|
-
-</details>
-
-<details>
-<summary>make package: Packaging the Design</summary> 
+|---|---|
+|$(BUILD_TARGET_DIR)/gemm_aie_xrt.elf|The executable that runs on an A72 processor.|
 
 ### make package: Packaging the Design
 
-With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
+With the AI Engine outputs created, as well as the new platform, you can now generate the programmable device image (PDI). You can also generate a package for use on an SD card. The PDI contains all the executables, bitstreams, and configurations of the device. The packaged SD card directory contains everything to boot Linux. It also includes the generated applications and the XCLBIN.
 
 The command to run this step is as follows (default `TARGET=hw_emu`, `GEMM_INSTS=1`, `GEMM_SIZE=32`, `ITER_CNT=1` and `EN_TRACE=0`):
 
-```
+```bash
 make package
-``` 
-
-or
-
 ```
+
+or,
+
+```text
 ...
 PKG_FLAGS := -t $(TARGET)
 PKG_FLAGS += --save-temps
@@ -503,21 +466,21 @@ $(EMBEDDED_PACKAGE_OUT): $(PROFILING_CONFIGS_REPO)/* $(EXEC_SCRIPTS_REPO)/* $(BU
 	v++ -p $(PKG_FLAGS)
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Package-Options) for more details about packaging the system.
+Refer to [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/Package-Options) for more details about packaging the system.
 
 |Switch|Description|
-|  ---  |  ---  |
+|---|---|
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from amd.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from amd.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd>. Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies the \<ext4\|fat32\> output image file format. `ext4` is the Linux file system and `fat32` is the Windows file system.|
-|--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card` directory.|
-|--package.defer_aie_run| Load the AI Engine application with the ELF file, but wait to run it until graph run directs it. This is required in the PS based AI Engine flow.|
+|--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. You can use this option multiple times. This allows specifying multiple files to add to the `sd_card` directory.|
+|--package.defer_aie_run|Load the AI Engine application with the ELF file, but wait to run it until graph run directs it. The PS based AI Engine flow requires this.|
 
 |Inputs Sources|Description|
-|  ---  |  ---  |
+|---|---|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xrt|The PS host application needs the XRT headers in this folder to execute.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/rootfs.ext4|The root filesystem file for PetaLinux.|
 |$(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal/Image|The pre-built PetaLinux image that the processor boots from.|
@@ -525,28 +488,23 @@ See [this page](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/
 |$(BUILD_TARGET_DIR)/vck190_aie_gemm.hw_emu.xsa|The XCLBIN file created in the `make xsa` step.|
 |$(BUILD_TARGET_DIR)/libadf.a|The compiled AI Engine design graph created in the `make graph` step.|
 
-The output of the Vitis compiler package step is the package directory that contains the contents to run hardware emulation. 
+The output of the Vitis compiler package step is the package directory that contains the contents to run hardware emulation.
 
 |Output Objects|Description|
-|  ---  |  ---  |
+|---|---|
 |$(BUILD_TARGET_DIR)/package|The hardware emulation package that contains the boot file, hardware emulation launch script, PLM and PMC boot files, PMC and QEMU command argument specification files, and Vivado simulation folder.|
-
-</details>
-
-<details>
-<summary>make run_emu: Running Hardware Emulation</summary>
 
 ### make run_emu: Running Hardware Emulation
 
-After packaging, everything is set to run hardware emulation. To run emulation, use the following command (default `TARGET=hw_emu`):
+After packaging, you have everything set to run hardware emulation. To run emulation, use the following command (default `TARGET=hw_emu`):
 
-```
+```bash
 make run_emu 
 ```
 
-or
+or,
 
-```
+```text
 ###########################################################################
 Hardware Emulation Goto:
 $(BUILD_TARGET_DIR)/package
@@ -556,172 +514,137 @@ and do:
 
 ```
 
-When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up: 
+When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
 
 ```bash
-
 root@versal-rootfs-common-2024_2:~#
-
 ```
 
 After the root prompt comes up, run the following commands to run the design:  
 
-```
+```bash
 mount /dev/mmcblk0p1 /mnt
 cd /mnt
 ./gemm_aie_xrt.elf a.xclbin
 ```
 
-The `gemm_aie_xrt.elf` executes. After a few minutes, you should see the output with `TEST PASSED` on the console. When this is shown, run the following keyboard command to exit the QEMU instance: 
+The `gemm_aie_xrt.elf` executes. After a few minutes, you can see the output with `TEST PASSED` on the console. When the system shows this, run the following keyboard command to exit the QEMU instance:
 
-```
+```text
 #To exit QEMU Simulation
 Press CtrlA, let go of the keyboard, and then press x 
 ```
 
 To run with waveform, do the following:
 
-```
+```bash
 cd $(BUILD_TARGET_DIR)/package
 ./launch_hw_emu.sh -g
 ```
 
-The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Go back to the terminal and wait for the Linux prompt to show up. In the XSIM Waveform Viewer, you see the signals you added to the waveform adjusting over the execution of the design. When this is done, hit the pause button and close the window to end the emulation.
+The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Go back to the terminal and wait for the Linux prompt to show up. In the XSIM Waveform Viewer, you see the signals you added. These signals adjust over the execution of the design. When this is done, hit the pause button. Then close the window to end the emulation.
 
 The following figure shows a waveform view of the gemm_32x32x32 - 1x design.
 
 ![Image of GeMM AIE HW_EMU Run Waveform View For 32x32x32 Design](images/gemm_aie_hw_emu_waveform_view_32x32x32.PNG)
 
-</details>
-
-<details>
-<summary>TARGET=hw: Running on Hardware</summary>
-
 ### Running on Hardware
 
 To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps specified above).
 
-```
+```bash
 make kernels xsa package TARGET=hw 
 ```
 
-These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run. 
+These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run.
 
 Run the following step to set up the execution file, generated images, and base images (`$(BUILD_TARGET_DIR)/package/sd_card` and `$(BUILD_TARGET_DIR)/package/sd_card.img`).
 
-```
+```bash
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `gemm_aie_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `gemm_aie_xrt.elf` executable on your VCK190 board.
 
-**Step 1.** Ensure your board is powered off. 
+1. Ensure your board is powered off.
+2. Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card.
+3. Plug the flashed SD card into the top slot of the VCK190 board.
+4. Set the switch (`SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON`).
+5. Connect your computer to the VCK190 board using the USB cable included with the board.
+6. Open a Tera Term terminal and select the correct COM port. Set the port settings to the following:
 
-**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card. 
+      ```bash
+      Port: <COMMXX>
+      Speed: 115200
+      Data: 8 bit
+      Parity: none
+      Stop Bits: 1 bit
+      Flow control: none
+      Transmit delay: 0 msec/char 0 msec/line
+      ```
 
-**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board. 
+7. Power on the board.
+8. Wait until you see the `root@versal-rootfs-common-2024.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors.
+9. Run the following commands in the Tera Term terminal:
 
-**Step 4.** Set the switch (`SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON`).
+      ```bash
+      cd /mnt/sd-mmcblk0p1
 
-**Step 5.** Connect your computer to the VCK190 board using the USB cable included with the board. 
-
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following: 
-
-```
-Port: <COMMXX>
-Speed: 115200
-Data: 8 bit
-Parity: none
-Stop Bits: 1 bit
-Flow control: none
-Transmit delay: 0 msec/char 0 msec/line
-```
-
-**Step 7.** Power on the board.
-
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2024.2` Linux command prompt. Press **Enter** a few times to get past any `xinit` errors. 
-
-**Step 9.** Run the following commands in the TeraTerm terminal: 
-
-```
-cd /mnt/sd-mmcblk0p1
-
-./gemm_aie_xrt.elf a.xclbin
-```
-
-</details>
+      ./gemm_aie_xrt.elf a.xclbin
+      ```
 
 ## Hardware Design Details
-<details>
-<summary>GeMM AI Engine Implementation Architecture and AI Engine/PL Function Partitioning</summary>
 
 ### GeMM AI Engine Implementation Architecture and AI Engine/PL Function Partitioning
 
-The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface are running at 312.5 MHz.
+The following figure shows a high-level block diagram of the design. The test harness consists of the AI Engine and data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and AI Engines, with a data width of 128 bits. The data mover kernels and the AI Engine array interface run at 312.5 MHz.
 
-The data mover is a PL-based data generator and checker. It generates constant matrices as inputs and checks the output of the gemm core for its output.
+The data mover is a PL-based data generator and checker. It generates constant matrices as inputs and checks the output of the GeMM core for its output.
 
 #### GeMM Block Diagram for Matrices 32x32x32 to 1024x1024x1024
+
 ![Image of GeMM AIE Implementation Architecture GeMM 32x32x32 to 1024x1024x1024](images/gemm_aie_block_diagram_common.PNG)
-
-
-</details>
-
-<details>
-<summary>Design Details</summary>
 
 ### Design Details
 
-The design in this tutorial starts with a base platform containing the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform by adding the AI Engine graphs and PL kernels. To add the various functions in a system-level design, PL kernels are added to the base platform depending on the application (that is, the PL kernels present in each design might vary). An ADF graph is connected to an extensible Vitis platform where the graph I/Os are connected either to the platform ports or to ports on Vitis kernels through the Vitis compiler connectivity directives. In the design, the components are added by the Vitis compiler `-l` step (see [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)) and include the following:
+The design in this tutorial starts with a base platform. This platform contains the control interface and processing system (CIPS), NoC, AI Engine, and the interfaces among them. The Vitis compiler linker step builds on top of the base platform. It adds the AI Engine graphs and PL kernels. PL kernels are added to the base platform depending on the application. The specific PL kernels present in each design might vary. An ADF graph connects to an extensible Vitis platform. The graph I/Os connect either to the platform ports or to ports on Vitis kernels. This connection uses Vitis compiler connectivity directives. The Vitis compiler `-l` step adds the components (refer to [make XSA](#make-xsa-using-the-vitis-tools-to-link-ai-engine-and-hls-kernels-with-the-platform)). These include the following:
 
+- `libadf.a`
+- Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
+- Connection interfaces defined in the system configuration file
 
-* `libadf.a`
-* Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
-* Connection interfaces defined in the system configuration file
+For a schematic view of the design with the extended platform as shown in the following figure, open the following in the Vivado IDE:
 
-To see a schematic view of the design with the extended platform as shown in the following figure, open the following in Vivado:
-
-```
+```bash
 `build/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 ```
 
 ![Image of GeMM AIE Vivado BD GeMM 32x32x32](images/gemm_aie_vivado_bd_32x32x32.PNG)
 
-In this design, the GeMM computation happens in multiple stages. The input is split and broadcast to multiple cores, the number of rows in Mat A and the number of columns in Mat B is split into several blocks, based on the cascade length and so on, and then each block in Mat A is multiplied with the corresponding block in Mat B, which generates blocks of outputs, which finally propagated for to the final output.
+In this design, the GeMM computation happens in multiple stages. The input is split and broadcast to multiple cores. The number of rows in Mat A and the number of columns in Mat B is split into several blocks. This splitting is based on the cascade length. Then each block in Mat A is multiplied with the corresponding block in Mat B. This generates blocks of outputs. These blocks finally propagate to the final output.
 
-The datamover kernel provides the parallel inputs required by the GeMM AIE graph, and finally, the data coming out of the AI Engines is streamed to a PL kernel where it is checked against the expected constant pattern. If there is a mismatch, it is recorded in the variable `errCnt`, which is read in the host app to determine whether the test has passed or failed.
+The datamover kernel provides the parallel inputs required by the GeMM AIE graph. The data coming out of the AI Engines is streamed to a PL kernel. In this kernel, the data is compared to the expected constant pattern. If there is a mismatch, the system records it in the variable `errCnt`. The host app reads this variable to determine whether the test has passed or failed.
 
-The system debugging and profiling IP (DPA) is added to the PL region of the device to capture AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface are both operating at 312.5 MHz.
-
-</details>
-
-<details>
-<summary>AI Engine and PL Kernels</summary>
+The system debugging and profiling IP (DPA) is added to the PL region of the device. It captures AI Engine runtime trace data if the `EN_TRACE` option is enabled in the design. The `dma_hls` kernel and the AI Engine array interface are both operating at 312.5 MHz.
 
 ### AI Engine and PL Kernels
 
-The top-level AI Engine graph, `graph.cpp`, contains two sub-graphs: `aiesynth_graph` and `GeMM`. The `aiesynth_graph` performs the block-level GeMM and the `GeMM` graph.
+The top-level AI Engine graph, `graph.cpp`, contains two subgraphs: `aiesynth_graph` and `GeMM`. The `aiesynth_graph` performs the block-level GeMM and the `GeMM` graph.
 
 #### dma_hls
 
-The PL-based data mover consists of the `dma_hls` kernel, which generates constant Inputs for Mat A and B and checks the output of GeMM graph for the expected constant pattern.
+The PL-based data mover consists of the `dma_hls` kernel. It generates constant inputs for Mat A and B and checks the output of GeMM graph for the expected constant pattern.
 
-* It internally comprises four loops (`inp_A`, `inp_B`, and `out_C`), with all concurrently scheduled.
-* The data width is 128 bits at both the AXI4-stream I/O sides, running at 312.5 MHz.
-
-</details>
+- It internally comprises four loops (`inp_A`, `inp_B`, and `out_C`), with all concurrently scheduled.
+- The data width is 128 bits at both the AXI4-stream I/O sides, running at 312.5 MHz.
 
 ## Software Design Details
 
 The software design in the AI Engine GeMM tutorial consists of the following sections:
 
-<details>
-<summary>Methodology</summary>
-
 ### Methodology
 
 The following figure elaborates on the AI Engine implementation methodology.
-
 
 #### GeMM Block Diagram Methodology for Matrices 32x32x32 to 1024x1024x1024
 
@@ -731,9 +654,9 @@ The following figure elaborates on the AI Engine implementation methodology.
 
 ##### Independent Cores
 
-The kernels in the AI Engine graph for `aiesynth_graph` are to be configured to be independent, with runtime ratios set to >= 0.6 so that each can be run independently of the other.
+The kernels in the AI Engine graph for `aiesynth_graph` must be configured to be independent, with runtime ratios set to >= 0.6 so that each can run independently of the other.
 
-```
+```cpp
 ...
 for(int i = 0; i < 8; i++) {
             adf::runtime<ratio>(sg_0_0_kernels[i]) = 0.9;
@@ -743,8 +666,9 @@ for(int i = 0; i < 8; i++) {
 
 ##### Window Streaming Buffer Config
 
-The `graph.h` graph performs GeMM with graph window streaming buffer size as `WINDOW_SIZE`, which is fixed to matrix dimension.
-```
+The `graph.h` graph performs GeMM with graph window streaming buffer size as `WINDOW_SIZE`. The buffer size remains fixed to matrix dimension.
+
+```cpp
 ...
    #define SPLIT 3
    #define CASC_LN 8
@@ -774,14 +698,14 @@ The `graph.h` graph performs GeMM with graph window streaming buffer size as `WI
    
    //defining GEMM_SIZE_ZP_A
    #if (GEMM_SIZE % DIM_A) == 0 
-       #define GEMM_SIZE_ZP_A GEMM_SIZE			
+       #define GEMM_SIZE_ZP_A GEMM_SIZE
    #else 
-       #define GEMM_SIZE_ZP_A (GEMM_SIZE - (GEMM_SIZE % DIM_A) + DIM_A)	
+       #define GEMM_SIZE_ZP_A (GEMM_SIZE - (GEMM_SIZE % DIM_A) + DIM_A)
    #endif
    
    //defining GEMM_SIZE_ZP_B
    #if (GEMM_SIZE % (DIM_B*SPLIT)) == 0 
-       #define GEMM_SIZE_ZP_B GEMM_SIZE			
+       #define GEMM_SIZE_ZP_B GEMM_SIZE
    #else 
        #define GEMM_SIZE_ZP_B ((GEMM_SIZE) - ((GEMM_SIZE) % (DIM_B*SPLIT)) + (DIM_B*SPLIT))
    #endif
@@ -802,9 +726,9 @@ The data mover comprises four loops (`inp_A`, `inp_B`, and `out_C`), with all co
 
 ##### Concurrent Scheduling
 
-Concurrent scheduling is required so that each function runs independently and the execution of one function is not blocking the other. The concurrent scheduling of the three functions `inp_A`, `inp_B`, and `out_C` is achieved using `#pragma HLS DATAFLOW` as shown in the following example.
+Concurrent scheduling is required so that each function runs independently. This ensures the execution of one function does not block the other. The concurrent scheduling of the three functions `inp_A`, `inp_B`, and `out_C` uses `#pragma HLS DATAFLOW`. The following example shows this usage.
 
-```
+```cpp
 #pragma HLS DATAFLOW
    
    ap_uint<21> errCnt = 0;
@@ -869,41 +793,29 @@ The following figure shows the data mover functional call graph view.
 
 #### Streaming Interface Data Width
 
-The streaming interface data width is kept at 128 bits to reduce read/write overhead while processing data.
-
-</details>
-
-<details>
-<summary>AI Engine Kernels and Graph Representation</summary>
+The streaming interface data is 128 bits wide to reduce read/write overhead while processing data.
 
 ### AI Engine Kernels and Graph Representation
 
-An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. These kernels can be stitched together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
+An AI Engine kernel is a C/C++ program written using specialized intrinsic calls that target the VLIW vector processor. The AI Engine compiler compiles the kernel code to produce an executable ELF file for each of the AI Engines being used in the design. Review the [AI Engine Kernel Programming](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding) section in the AI Engine documentation for a high-level overview of kernel programming. You can stitch these kernels together to function as AI Engine graphs written in C++. In this design, the AI Engine compiler writes a summary of compilation results. You can view the graph by running the following command:
 
 `vitis_analyzer $(BUILD_TARGET_DIR)/Work/graph.aiecompile_summary`
 
-The following figures show the graph representation of the AI Engine kernels (default gemm_32x32x32), it shows the compute units.
+The following figures show the graph representation of the AI Engine kernels (default gemm_32x32x32). It shows the compute units.
 
 ![Image of GeMM AI Engine Graph GeMM 32x32x32](images/gemm_aie_graph_vitis_analyzer_32x32x32.PNG)
 
-</details>
-
-<details>
-<summary>Adaptive Data Flow (ADF) Graph</summary>
-
 ### Adaptive Data Flow (ADF) Graph
 
-This section describes the overall data flow graph specification of the GeMM design using AI Engine which is compiled by the AI Engine compiler.
+This section describes the overall data flow graph specification of the GeMM design using AI Engines. The AI Engine compiler compiles this graph.
 
-The overall graph definition of the design is contained in the `graph.cpp` file. The top-level graph contains two sub-graphs, `aiesynth_graph` and `GeMM`. The following describes the definition of the sub-graphs.
+The `graph.cpp` file contains the overall graph definition of the design. The top-level graph contains two sub-graphs, `aiesynth_graph` and `GeMM`. The following describes the definition of the sub-graphs.
 
 #### Defining the Graph Class
 
+Define the graph classes by using the objects defined in the appropriate namespace. It must include the ADF library and [Vitis DSP Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/dsp-lib-func.html#matrix-multiply) for GeMM. A general specification is put in for the ADF namespace:
 
-Define the graph classes by using the objects defined in the appropriate name space. It must include the ADF library and [Vitis DSP Library](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/dsp-lib-func.html#matrix-multiply) for GeMM. A general specification is put in for the ADF namespace:
-
-
-```
+```cpp
    class GeMM: public adf::graph
    {
       public:
@@ -974,7 +886,7 @@ Define the graph classes by using the objects defined in the appropriate name sp
 
 Define a top-level application file (`graph.cpp` in this design) that contains an instance of the graph class:
 
-```
+```cpp
 #include "graph.h"
 
 int base_col = 0, base_row = 0, matrixCtr = 0;
@@ -995,24 +907,19 @@ GeMM g;
 #endif
 ```
 
-</details>
-
-<details>
-<summary>PL Data Mover Kernel</summary>
-
 ### PL Data Mover Kernel
 
-In addition to the kernels operating in the AI Engine array, this design specifies a data mover kernel to run in the PL region of the device (written in HLS C++). The data mover kernel is brought into the design during the Vitis kernel compilation. The software design of the data mover kernel is described in the following sections. 
+Besides the kernels operating in the AI Engine array, this design also specifies a data mover kernel to run in the PL region of the device. This is written in HLS C++. The Vitis kernel compilation brings the data mover kernel into the design. The following sections describe the software design of the data mover kernel.
 
 #### dma_hls (dma_hls.cpp)
 
-The `dma_hls` kernel write and reads data to AXI4-Stream interfaces.
+The `dma_hls` kernel writes and reads data to AXI4-Stream interfaces.
 
 ##### Top Function Declaration
 
-The `dma_hls` kernel takes the following arguments which was declared in `dma_hls.h`:
+The `dma_hls` kernel takes the following arguments. These arguments are declared in `dma_hls.h`:
 
-```
+```cpp
 int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
@@ -1053,14 +960,14 @@ int dma_hls(
    );
 ```
 
-- `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit size from 1-1024. In this design, the bit size is set to 128.
-- `hls::stream<ap_axiu<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface, which is set to 128. The remaining three parameters should be set to 0.
+- `ap_int<N>` is an arbitrary precision integer data type defined in `ap_int.h` where `N` is a bit size from 1-1024. In this design, the bit size is 128.
+- `hls::stream<ap_axiu<D,0,0,0>>` is a data type defined in `ap_axi_sdata.h`. It is a special data class used for data transfer when using a streaming platform. The parameter `<D>` is the data width of the streaming interface. This is set to 128. The remaining three parameters are set to 0.
 
 ##### Top Function Definition
 
 Use the `dataflow` pragma for concurrently scheduling the three functions `inp_A`, `inp_B`, and `out_C`.
 
-```
+```cpp
 int dma_hls(
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A0,
    hls::stream<ap_axiu<128, 0, 0, 0>> &strmOut_to_A1,
@@ -1189,195 +1096,186 @@ int dma_hls(
    
    return errCnt;
 }
-  ```
+```
 
-The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in the kernel is provided in the following table.
+The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. Refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. The following table provides a summary of the HLS pragmas used in the kernel.
 
 |Switch|Description|
-|  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the config_compile -pipeline_style command, but can be overridden in the PIPELINE pragma or directive. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
-|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. See [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) for more information.|
-|#pragma HLS loop_tripcount|When manually applied to a loop, specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. See [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount) for more information.|
- 
-</details>
-
-<details>
-<summary>PS Host Application</summary>
+|---|---|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations happen in zero time through formal function arguments. In a RTL design, these same input and output operations must happen through a port in the design interface. These operations typically use a specific input/output (I/O) protocol. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The `config_compile -pipeline_style` command defines the default type of pipeline. However, the PIPELINE pragma or directive can override it. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
+|#pragma HLS dataflow|The DATAFLOW pragma enables task-level pipelining. It allows functions and loops to overlap in their operation. This increases the concurrency of the RTL implementation and increases the overall throughput of the design. Refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow) for more information.|
+|#pragma HLS loop_tripcount|When manually applied to a loop, specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive applies to analysis only. It does not impact the results of synthesis. Refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount) for more information.|
 
 ### PS Host Application
 
-The GeMM AI Engine tutorial uses the embedded processing system (PS) as an external controller to control the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation to understand the process to create a host application.
+The GeMM AI Engine tutorial uses the embedded processing system (PS) as an external controller. It controls the AI Engine graph and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the AI Engine documentation. This documentation helps you understand the process to create a host application.
 
-In addition to the PS host application (`gemm_aie_app.cpp`), the AI Engine control code must also be compiled. This control code (`aie_control_xrt.cpp`) is generated by the AI Engine compiler when compiling the AI Engine design graph and kernel code. The AI Engine control code is used by the PS host application for the following purposes:
+You must also compile the AI Engine control code. The AI Engine compiler generates this control code (`aie_control_xrt.cpp`). It generates the code when compiling the AI Engine design graph and kernel code. The PS host application uses the AI Engine control code for the following purposes:
 
-* Controlling the initial loading of the AI Engine kernels.
-* Running the graph for several iterations, updating the runtime parameters associated with the graph, exiting, and resetting the AI Engine tiles.
+- Controlling the initial loading of the AI Engine kernels
+- Running the graph for several iterations, updating the runtime parameters associated with the graph, exiting, and resetting the AI Engine tiles
 
 The steps to run the A72 application are as follows:
 
 1. Include `graph.cpp` and other required headers. Define the required macros. The `graph.cpp` AI Engine application file contains the instantiation of the AI Engine GeMM data flow graph object.
 
-```
-#include <stdint.h>
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <cstring>
+   ```cpp
+   #include <stdint.h>
+   #include <fstream>
+   #include <iostream>
+   #include <string>
+   #include <cstring>
 
-#include "adf/adf_api/XRTConfig.h"
+   #include "adf/adf_api/XRTConfig.h"
 
-#include "experimental/xrt_aie.h"
-#include "experimental/xrt_kernel.h"
-#include "experimental/xrt_bo.h"
+   #include "experimental/xrt_aie.h"
+   #include "experimental/xrt_kernel.h"
+   #include "experimental/xrt_bo.h"
 
-#define OPTIMIZED_OVERLAY 1
+   #define OPTIMIZED_OVERLAY 1
 
-#if OPTIMIZED_OVERLAY
+   #if OPTIMIZED_OVERLAY
 
-// HLS Datamover Loops and Graph will run Infinitely...
-#if ITER_CNT == -1
-   #define MATA_SZ -1 
-   #define MATB_SZ -1
-   #define MATC_SZ -1
+   // HLS Datamover Loops and Graph run Infinitely...
+   #if ITER_CNT == -1
+      #define MATA_SZ -1 
+      #define MATB_SZ -1
+      #define MATC_SZ -1
 
-#else
-     #define MATA_SZ (((GEMM_SIZE_ZP_A) * GEMM_SIZE / CASC_LN) / 8) * ITER_CNT * ((GEMM_SIZE_ZP_B/SPLIT) / DIM_B)
-     #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE_ZP_B ) / (CASC_LN*SPLIT) ) / 8) * ITER_CNT * (GEMM_SIZE_ZP_A / DIM_A) 
-     #define MATC_SZ (((GEMM_SIZE_ZP_A * GEMM_SIZE_ZP_B ) / SPLIT ) / 8) * ITER_CNT
-#endif
+   #else
+      #define MATA_SZ (((GEMM_SIZE_ZP_A) * GEMM_SIZE / CASC_LN) / 8) * ITER_CNT * ((GEMM_SIZE_ZP_B/SPLIT) / DIM_B)
+      #define MATB_SZ (((GEMM_SIZE * GEMM_SIZE_ZP_B ) / (CASC_LN*SPLIT) ) / 8) * ITER_CNT * (GEMM_SIZE_ZP_A / DIM_A) 
+      #define MATC_SZ (((GEMM_SIZE_ZP_A * GEMM_SIZE_ZP_B ) / SPLIT ) / 8) * ITER_CNT
+   #endif
 
-#endif
+   #endif
 
-```
+   ```
 
 2. Check the command line argument. The beginning of the A72 application is represented by the `main` function. It takes in one command line argument: an XCLBIN file.
 
-```
-int main(int argc, char** argv)
-```
-
-3. Open the XCLBIN and create data mover kernel handles. The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device. The steps are:
-
-   * Open the device and load the XCLBIN:
-
-   ```
-   auto dhdl = xrtDeviceOpen(0);
-   auto xclbin = load_xclbin(dhdl, xclbinFilename);
-   auto top = reinterpret_cast<const axlf*>(xclbin.data());
-   ```
-   * Open the data mover kernel and obtain handles to start the HLS PL kernels (see the following example for the `dma_hls` PL kernel):
-
-   ```
-   xrtKernelHandle dma_hls_khdl;
-   xrtRunHandle dma_hls_rhdl;
-
-   // Open kernel handle exclusively to read the ap_return register later for reporting error...
-   dma_hls_khdl = xrtPLKernelOpenExclusive(dhdl, top->m_header.uuid, dma_hls_obj);
-   dma_hls_rhdl = xrtRunOpen(dma_hls_khdl);
+   ```cpp
+   int main(int argc, char** argv)
    ```
 
-4. Open the graph, obtain the handle, and execute the graph: 
+3. Open the XCLBIN and create data mover kernel handles. The A72 application loads the XCLBIN binary file. Then it creates the data mover kernels to execute on the device. The steps are:
 
-   * The A72 processor opens and obtains its handle using the ` xrtGraphOpen` function.
-   * The A72 processor resets the graph using the `xrtGraphReset` function and runs the graph execution using the `xrtGraphRun` function.
+   i. Open the device and load the XCLBIN:
+
+      ```cpp
+      auto dhdl = xrtDeviceOpen(0);
+      auto xclbin = load_xclbin(dhdl, xclbinFilename);
+      auto top = reinterpret_cast<const axlf*>(xclbin.data());
+      ```
+
+   ii. Open the data mover kernel and obtain handles to start the HLS PL kernels (see the following example for the `dma_hls` PL kernel):
+
+      ```cpp
+      xrtKernelHandle dma_hls_khdl;
+      xrtRunHandle dma_hls_rhdl;
+
+      // Open kernel handle exclusively to read the ap_return register later for reporting error...
+      dma_hls_khdl = xrtPLKernelOpenExclusive(dhdl, top->m_header.uuid, dma_hls_obj);
+      dma_hls_rhdl = xrtRunOpen(dma_hls_khdl);
+      ```
+
+4. Open the graph, obtain the handle, and execute the graph:
+
+   - The A72 processor opens and obtains its handle using the `xrtGraphOpen` function.
+   - The A72 processor resets the graph using the `xrtGraphReset` function and runs the graph execution using the `xrtGraphRun` function.
 
 5. Execute the data mover kernels and generate the output results:
 
-   * Set the `dma_hls` kernel arguments using the `xrtRunSetArg` function.
-   * Start the `dma_hls` kernels using the `xrtRunStart` function.
-   * Wait for `dma_hls` execution to finish using the `xrtRunWait` runction.
+   - Set the `dma_hls` kernel arguments using the `xrtRunSetArg` function.
+   - Start the `dma_hls` kernels using the `xrtRunStart` function.
+   - Wait for `dma_hls` execution to finish using the `xrtRunWait` function.
 
-6. Verify the output results by reading the `ap_return` in `$(BUILD_TARGET_DIR)/_x/dma_hls.$(TARGET)/dma_hls/dma_hls/ip/drivers/dma_hls_v1_0/src/xdma_hls_hw.h` using the `xrtKernelRegister` API, as shown below:
+6. Verify the output results by reading the `ap_return` in `$(BUILD_TARGET_DIR)/_x/dma_hls.$(TARGET)/dma_hls/dma_hls/ip/drivers/dma_hls_v1_0/src/xdma_hls_hw.h` using the `xrtKernelRegister` API, as shown in the following snippet:
 
- ```
- void golden_check(uint32_t *errCnt, char insts)
-   {
-      //////////////////////////////////////////
-      // Compare results
-      //////////////////////////////////////////
+   ```cpp
+   void golden_check(uint32_t *errCnt, char insts)
+      {
+         //////////////////////////////////////////
+         // Compare results
+         //////////////////////////////////////////
 
-      // Reading the error count for the ap_return reg of the hls kernel...
-      xrtKernelReadRegister(dma_hls_khdl, 0x10, &instance_errCnt);
-      
-      //std::cout << "gemm_" << insts << std::endl;
-      printf("gemm_%d ", insts);
-      std::cout << (instance_errCnt ? "Failed! " : "Passed! ") << "With error count " << instance_errCnt << ".\n" << std::endl;
+         // Reading the error count for the ap_return reg of the hls kernel...
+         xrtKernelReadRegister(dma_hls_khdl, 0x10, &instance_errCnt);
+         
+         //std::cout << "gemm_" << insts << std::endl;
+         printf("gemm_%d ", insts);
+         std::cout << (instance_errCnt ? "Failed! " : "Passed! ") << "With error count " << instance_errCnt << ".\n" << std::endl;
 
-      // Adding instance error to the total error count...
-      *errCnt += instance_errCnt;
-   }
-```
+         // Adding instance error to the total error count...
+         *errCnt += instance_errCnt;
+      }
+   ```
 
 7. Release allocated resources. After post-processing the data, release the allocated objects and handles using the `xrtRunClose`, `xrtKernelClose`, `xrtGraphClose`, and `xrtDeviceClose` functions.
 
-</details>
-
 ## Performance Details
 
-For all applications, designers must work to predefined specifications and build a system for their specific deployment by meeting their system requirements with respect to their available resources, latency, throughput, performance, and power. In this section, it is outlined how to measure those characteristics for the AI Engine implementation in this tutorial.
+For all applications, designers must work to predefined specifications. They build a system for their specific deployment by meeting system requirements. These requirements include available resources, latency, throughput, performance, and power. This section outlines how to measure those characteristics for the AI Engine implementation in this tutorial.
 
-<details>
-<summary>Resource Utilization and Power</summary> 
+### Resource Utilization and Power
 
-#### Resource Utilization and Power
+Resource utilization and power are measured using Vivado Design Suite, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.2 version) tools.
 
-Resource utilization and power are measured using Vivado, vcdanalyze, and Xilinx Power Estimator (XPE) for Versal (2024.2 version) tools.
-
-The registers and CLB LUT utilization information can be found in the Vivado project if you perform the following steps:
+Use the following steps to find the registers and CLB LUT utilization information in the Vivado project:
 
 1. Open the Vivado project: ``$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr``.
 
-2. Go to **Open Implemented Design** then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for gemm_32x32x32:
+2. Go to **Open Implemented Design**, then click **Report Utilization**. In the Utilization tab shown in the following figure, select **ai_engine_0** and view the **Registers** and **CLB LUTs** for gemm_32x32x32:
 
-![Image of GeMM AIE 32x32x32 Utilization](images/gemm_aie_vivado_resources_32x32x32.PNG)
+   ![Image of GeMM AIE 32x32x32 Utilization](images/gemm_aie_vivado_resources_32x32x32.PNG)
 
-** Or **
+or,
 
-1. Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
+Do `make report_metrics TARGET=hw`, (recipe expanded below), alongwith relevant options, to generate `utilization_hierarchical.txt` under `$(BLD_REPORTS_DIR)/` directory:
 
-```
-...
-VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
-...
-REPORTS_REPO := $(PROJECT_REPO)/reports_dir
-BLD_REPORTS_DIR := $(REPORTS_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
-...
-report_metrics: xsa $(BLD_REPORTS_DIR)
+   ```cpp
+   ...
+   VIVADO_METRICS_SCRIPTS_REPO := $(DESIGN_REPO)/vivado_metrics_scripts
+   ...
+   REPORTS_REPO := $(PROJECT_REPO)/reports_dir
+   BLD_REPORTS_DIR := $(REPORTS_REPO)/gemm_$(MAT_DIMS)/x$(GEMM_INSTS)
+   ...
+   report_metrics: xsa $(BLD_REPORTS_DIR)
 
-ifeq ($(TARGET),hw_emu)
-	@echo "This build target (report-metrics) not valid when design target is hw_emu"
+   ifeq ($(TARGET),hw_emu)
+      @echo "This build target (report-metrics) not valid when design target is hw_emu"
 
-else
-	rm -rf $(BLD_REPORTS_DIR)
-	mkdir -p $(BLD_REPORTS_DIR)
-	cd $(BLD_REPORTS_DIR); \
-	vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
+   else
+      rm -rf $(BLD_REPORTS_DIR)
+      mkdir -p $(BLD_REPORTS_DIR)
+      cd $(BLD_REPORTS_DIR); \
+      vivado -mode batch -source $(VIVADO_METRICS_SCRIPTS_REPO)/report_metrics.tcl $(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr
 
-endif
-...
-```
+   endif
+   ...
+   ```
 
-The vcdanalyze tool is used to generate a `graph.xpe` file which can be input to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
+The vcdanalyze tool generates a `graph.xpe` file. You can input this file to XPE for viewing the AI Engine resource utilization and power. The steps are as follows:
 
 1. Run `make vcd` (recipe expanded below) to create the `graph.xpe` file under `$(BUILD_TARGET_DIR)/aiesim_xpe/`:
 
-```
-vcd: graph create_ioFiles $(XPE_FILE)
+   ```cpp
+   vcd: graph create_ioFiles $(XPE_FILE)
 
-$(XPE_FILE): $(BLD_TGT_VCD_FILE)
-	cd $(BUILD_TARGET_DIR); \
-	vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
+   $(XPE_FILE): $(BLD_TGT_VCD_FILE)
+      cd $(BUILD_TARGET_DIR); \
+      vcdanalyze --vcd $(VCD_FILE_NAME).vcd --xpe
 
 
-$(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
-	cd $(BUILD_TARGET_DIR); \
-	aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
-```
+   $(BLD_TGT_VCD_FILE): $(AIE_SRC_REPO)/aiesim_data/*
+      cd $(BUILD_TARGET_DIR); \
+      aiesimulator $(AIE_SIM_FLAGS) --profile --dump-vcd $(VCD_FILE_NAME) 2>&1 | tee -a vcd.log
+   ```
 
-Load the `graph.xpe` into PDM to see the AI Engine power comsumption and resource utilization for the gemm_32x32x32 design:
+2. Load the `graph.xpe` into PDM to see the AI Engine power comsumption and resource utilization for the gemm_32x32x32 design:
 
-![Image of GeMM AIE XPE Util and Power Measurement 32x32x32](images/gemm_aie_xpe_32x32x32.PNG)
+   ![Image of GeMM AIE XPE Util and Power Measurement 32x32x32](images/gemm_aie_xpe_32x32x32.PNG)
 
 A summary of resource utilization and power for all variations is given in the following table.
 
@@ -1390,25 +1288,20 @@ A summary of resource utilization and power for all variations is given in the f
 |     512x512x512    |         24              |   71.42%    |         252                   |     12.125%  |           43           |         13.41%    |  13507    |   3006    |          4524             |
 |  1024x1024x1024    |         24              |   82.96%    |         252                   |     13.980%  |           43           |         12.57%    |  13540    |   2834    |          4876             |
 
-</details>
-
-<details>
-<summary>Throughput and Latency</summary> 
-
 #### Throughput and Latency
 
-Throughput is measured in mega-samples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the GeMM kernel and the first sample from the same being received by the data mover. Both of which can be measured either via viewing the runtime generated trace texts using Vitis analyzer or viewing the waveform viewer in the hw emulation. The steps to measure throughput and latency via runtime generated trace texts are listed below:
+Throughput is measured in mega-samples transferred per second (MSPS). Latency defines the time between the first sample being sent by the data mover into the GeMM kernel and the first sample from the same being received by the data mover. You can measure both by viewing the runtime generated trace texts using Vitis analyzer or viewing the waveform viewer in the hw emulation. The following steps measure throughput and latency via runtime generated trace texts:
 
 1. Compile the design using `EN_TRACE=1`. It automatically includes a `xrt.ini` file while packaging, which comprises the following:
 
-   ```
+   ```cpp
    [Debug]
    xrt_trace=true
    data_transfer_trace=fine
    trace_buffer_size=8M
    ```
 
-   Refer to the [xrt.ini](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/xrt.ini-File) documentation for more information. 
+   Refer to the [xrt.ini](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/xrt.ini-File) documentation for more information.
 
 2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
@@ -1416,79 +1309,73 @@ Throughput is measured in mega-samples transferred per second (MSPS). Latency is
 
 4. The snapshot of the timeline trace for the AI Engine run with `ITER_CNT=1` is shown in the following figure:
 
-![Image of GeMM AI Engine implementation Timeline Trace 32x32x32](images/gemm_aie_trace_32x32x32.PNG)
+   ![Image of GeMM AI Engine implementation Timeline Trace 32x32x32](images/gemm_aie_trace_32x32x32.PNG)
 
-The time reported by trace is with the dma_hls kernel running at 312.50MHz. 
+   The time reported by trace is with the dma_hls kernel running at 312.50 MHz.
 
-```
-Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
+   ```text
+   Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
 
-Processing Time (with 312.50MHZ)    =  4.093 us
+   Processing Time (with 312.50 MHz)    =  4.093 us
 
+   Latency = (Start of  processing of Stream input A & B )- (Start of  processing Timestamp of Stream output C)
 
-Latency = (Start of  processing of Stream input A & B )- (Start of  processing Timestamp of Stream output C)
-
-
-
-Throughput = (Samples transferred) / processing time
-           = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 4.093us
-           = 4002.9319 MSamples/s
-           = 4002.9319 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 8005.8636 MB/s
-```
+   Throughput = (Samples transferred) / processing time
+            = ( (ROWS x COLS) x Iterations ) / processing time
+            = (32 x 32) x 16 / 4.093us
+            = 4002.9319 MSamples/s
+            = 4002.9319 x 2 MB/s (As each sample is int16 = 2 bytes)
+            = 8005.8636 MB/s
+   ```
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces.
 
-The throughput and latency calculations for the GeMM 32x32x32 design based on the `hw_emu` run is shown below alongwith the snapshot of the timeline trace of hw emulation:
-![Image of GeMM AIE HW_EMU Run Waveform View For 32x32x32 Design](images/gemm_aie_hw_emu_waveform_view_32x32x32.PNG)
+   The following shows the throughput and latency calculations for the GeMM 32x32x32 design based on the `hw_emu` run along with the snapshot of the timeline trace of hw emulation:
 
-```
-Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
-                = 4.022us
+   ![Image of GeMM AIE HW_EMU Run Waveform View For 32x32x32 Design](images/gemm_aie_hw_emu_waveform_view_32x32x32.PNG)
 
-Latency:
-   = Difference between beginning of sending of input A & B  and receiving of output C
-   = (Start of  processing of Stream input A & B -
-     (Start of  processing Timestamp of Stream output C
-   = 0.304us
+   ```text
+   Processing Time = (Start of Processing Timestamp of Stream output C) - (End of Processing Timestamp of Stream output C)
+                  = 4.022 us
 
-Throughput = (Samples transferred) / processing time
-           = ( (ROWS x COLS) x Iterations ) / processing time
-           = (32 x 32) x 16 / 4.022us
-           = 4073.5952 MSamples/s
-           = 4073.5952 x 2 MB/s (As each sample is int16 = 2bytes)
-           = 8147.1904 MB/s
-```
+   Latency:
+      = Difference between beginning of sending of input A & B  and receiving of output C
+      = (Start of  processing of Stream input A & B -
+      (Start of  processing Timestamp of Stream output C
+      = 0.304us
 
-A summary of throughput and latency for all variations is shown in the following table.
+   Throughput = (Samples transferred) / processing time
+            = ( (ROWS x COLS) x Iterations ) / processing time
+            = (32 x 32) x 16 / 4.022 us
+            = 4073.5952 MSamples/s
+            = 4073.5952 x 2 MB/s (As each sample is int16 = 2 bytes)
+            = 8147.1904 MB/s
+   ```
+
+The following table shows a summary of throughput and latency for all variations.
 
 | GeMM Configuration | Data Transfer Size | Latency<br/>(in μs) | Throughput<br/>(in MSPS)  | TOPs   | Matrices/s<br/>(in 10^6/s)|
 |:------------------:|:------------------:|:-------------------:|:-------------------------:|:------:|:-------------------------:|
-|        32x32x32    |         1024       |        0.304        |           4076.636        | 0.260  |         3.9781            |    
+|        32x32x32    |         1024       |        0.304        |           4076.636        | 0.260  |         3.9781            |
 |        64x64x64    |         4096       |        0.633        |           5680.999        | 0.727  |         1.3874            |
 |     128x128x128    |        16384       |        2.371        |           2920.499        | 0.747  |         0.1782            |
 |     256x256x256    |        65536       |        3.180        |           2290.347        | 1.172  |         0.0349            |
 |     512x512x512    |       262144       |        1.782        |           1298.522        | 1.369  |         0.0049            |
 |  1024x1024x1024    |      1048576       |        3.331        |           757.482         | 1.551  |         0.0007            |
 
-*Note:	Tabulated based on hw_emu
-</details>
-
-<details>
-<summary>TOPs per Watt</summary> 
+>**Note**: Tabulated based on hw_emu.
 
 #### TOPs per Watt
 
 TOPs per Watt is represented as TOPs/Power in Watts. The following example shows the calculation for the gemm 32x32x32 design:
 
-```
+```text
 TOPs per Watt = TOPs / Power(Watt)
               = (0.2854 / 2.792) MSPS/Watt
               = 0.102233 TOPs/Watt
 ```
 
-A summary of TOPs per Watt for all variations is shown in the following table below.
+The following table shows a summary of TOPs per Watt for all variations.
 
 | GeMM Configuration | TOPs per Watt |
 |:------------------:|:-------------:|
@@ -1499,14 +1386,9 @@ A summary of TOPs per Watt for all variations is shown in the following table be
 |     512x512x512    |     0.3034    |
 |  1024x1024x1024    |     0.3208    |
 
-</details>
-
-<details>
-<summary>Consolidated Summary</summary> 
-
 #### Consolidated Summary
 
-A consolidated summary of observations for all the point sizes and all the corresponding instance variations is shown in the following table.
+The following table shows a consolidated summary of observations for all the point sizes and all the corresponding instance variations.
 
 | GeMM Configuration | Perf<br/>(in MSPS) | Latency<br/>(in μs) | TOPs  | No. of Compute Cores | Vector Load | No. of Active Mem Banks | Mem R/W Rate | Active AIE Tiles | Dynamic Power<br/>(in mW) | TOPs per Watt |
 |:------------------:|:------------------:|:-------------------:|:-----:|:--------------------:|:-----------:|:-----------------------:|:------------:|:----------------:|:-------------------------:|:-------------:|
@@ -1517,22 +1399,12 @@ A consolidated summary of observations for all the point sizes and all the corre
 |     512x512x512    |        1337.522    |        1.782        | 1.369 | 24                   |  71.42%     | 252                     | 12.125%      | 46               |   4524                    |     0.3034    |
 |  1024x1024x1024    |         769.482    |        3.3312       | 1.551 | 24                   |  82.96%     | 252                     | 13.980%      | 46               |   4876                    |     0.3208    |
 
-User may find an a much tighter placement solution which may reduce the power consumption further and lead to a more favourable performance, as indicated by the low Vector Load.
-
-</details>
+A tighter placement solution could reduce power consumption further and lead to more favorable performance, as the low Vector Load indicates.
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions go to [forums.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
 
-
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
-
-
-
-
-
-
