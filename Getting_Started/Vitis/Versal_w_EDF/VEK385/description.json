@@ -1,0 +1,52 @@
+{
+    "name": "Versal_W_EDF_VEK385",
+    "description": "VEK385",
+    "gui": "false",
+    "flow": "versal",
+
+    "platform_allowlist": [ "vek385_base_reva"],
+    "platform_blocklist": [],
+
+    "testinfo": {
+        "test_name": "GS_PFM_VEK385",
+        "jobs": [
+            {
+                "index": 0,
+                "dependency": [],
+                "env": "",
+                "cmd": "",
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 300,
+                    "vitis_hw_emu": 120,
+                    "vitis_hw_run": 30
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_emu",
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "category": "canary",
+	"make_options": [
+            "EMU_CMD=\"./aie2ps_work/package.hw_emu/launch_hw_emu.sh -qemu-config ./aie2ps_work/edf_qemu_images/combined/combined.qemuboot.conf -login 'amd-edf' -password 'amd-edf' -run-app 'mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh'\"",
+            "EMBEDDED_PACKAGE_OUT=./aie2ps_work/package.hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./aie2ps_work/embedded_exec.sh"
+	    ],
+        "custom_build_target": {
+            "all": "all"
+        },
+        "custom_board_target": "run_test",
+        "configuration": "segmented",
+        "compilation": "edf",
+        "tasks": {
+            "board" : {
+                "pre_exec" : ["./env_setup_yocto_edf.sh"]
+            },
+           "build": {
+               "pre_exec": ["./env_setup_yocto_edf.sh"]
+           }
+        }
+    }
+}

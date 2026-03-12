@@ -12,7 +12,7 @@ MODE := hw_emu
 # Toolchain Configuration
 # =============================================================================
 
-SYSROOT := ${YOCTO_ARTIFACTS}/sysroots/cortexa72-cortexa53-amd-linux
+SYSROOT := $(YOCTO_ARTIFACTS)/amd-cortexa78-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux/
 
 # =============================================================================
 # File Names and Paths
@@ -21,7 +21,7 @@ PLATFORM ?= ${PLATFORM_REPO_PATHS}/vek385_base_reva/vek385_base_reva.xpfm
 
 LINK_OUT := $(FIXED_XSA_NAME)_$(TARGET).xsa
 XCLBIN := gm2aie.xclbin
-AIE_WORK = $(ROOT_DIR)/aieml_work/
+AIE_WORK = $(ROOT_DIR)/aie2ps_work/
 
 # =============================================================================
 # QEMU Configuration
@@ -66,7 +66,7 @@ GCC_FLAGS := -Wall -c \
 
 GCC_INCLUDES := -I$(SYSROOT)/usr/include/xrt \
 				-I$(SYSROOT)/usr/include \
-				-I./ -I../aieml/ \
+				-I./ -I../aie2ps/ \
 				-I${XILINX_VITIS}/aietools/include \
 				-I${XILINX_VITIS}/include
 
@@ -89,8 +89,8 @@ endif
 # =============================================================================
 # Source Files
 # =============================================================================
-GRAPH_SRC := ../aieml/graph.cpp
-S2MM_SRC := ../aieml/s2mm.cpp
+GRAPH_SRC := ../aie2ps/graph.cpp
+S2MM_SRC := ../aie2ps/s2mm.cpp
 
 # =============================================================================
 # Build Artifacts
@@ -106,14 +106,14 @@ GRAPH_FLAGS := \
 	--nodot-graph=true \
 	-log-level=5 \
 	-v \
-	-include="../aieml/" \
-	-include="../aieml/kernels" \
+	-include="../aie2ps/" \
+	-include="../aie2ps/kernels" \
 	-include="./" \
 	--output-archive=$(GRAPH_XO)
 
-S2MM_FLAGS := --config ../aieml/cfg/s2mm.cfg
-LINK_FLAGS := --config ../aieml/cfg/binary_container_1-link.cfg
-PKG_FLAGS := --package.defer_aie_run --config ../aieml/cfg/package.cfg --package.out_dir $(PKG_DIR)
+S2MM_FLAGS := --config ../aie2ps/cfg/s2mm.cfg
+LINK_FLAGS := --config ../aie2ps/cfg/binary_container_1-link.cfg
+PKG_FLAGS := --package.defer_aie_run --config ../aie2ps/cfg/package.cfg --package.out_dir $(PKG_DIR)
 
 XAIE_FLAGS := \
 	-include="${XILINX_VITIS_AIETOOLS}/include" \
@@ -123,7 +123,7 @@ XAIE_FLAGS := \
 # Application Configuration
 # =============================================================================
 #ELF := $(ROOT_DIR)/application/build/application
-HOST_SRC := ../aieml/host.cpp
+HOST_SRC := ../aie2ps/host.cpp
 HOST_SRC_XRT := $(ROOT_DIR)/_aie/ps/c_rts/aie_control_xrt.cpp
 EXECUTABLE = ./application
 

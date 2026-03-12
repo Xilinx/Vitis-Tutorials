@@ -24,7 +24,7 @@ adf::kernel sq;
   out0 = adf::output_plio::create("DataOut",adf::plio_32_bits ,"data/output.txt");
 
     sq = adf::kernel::create( mysquare ) ; 
-    adf::source(sq) = "../aieml/kernels/mysquare.cc";
+    adf::source(sq) = "../aie2ps/kernels/mysquare.cc";
 
     runtime<ratio>(sq) = 0.6;
 
