@@ -18,6 +18,9 @@ TP_FIR_LEN = 36;
 
 Niter = 4;
 
+NPORTS_I=2;
+NPORTS_O=4;
+
 Nsamp = Niter * NCHAN;
 Ntaps = NCHAN * TP_FIR_LEN;
 
@@ -79,11 +82,8 @@ fprintf(fid,'#pragma once\n');
 fprintf(fid,'#define TAPS_INIT_0 { ');
 range = [1:NCHAN];
 taps_u = reshape(taps_hw(range,:),1,[]);
-for ii = 1 : numel(taps_u)
-    if (ii == numel(taps_u)) fprintf(fid,'%d }\n',taps_u.int(ii));
-    else                                       fprintf(fid,'%d, ',  taps_u.int(ii));
-    end
-end
+fprintf(fid,'%d, ',  taps_u.int(1:end-1));
+fprintf(fid,'%d }\n',taps_u.int(end));
 fclose(fid);
 
 % ------------------------------------------------------------
@@ -102,6 +102,9 @@ for cc = 1 : NCHAN
   filterbank_o(cc,:) = filter(taps_use(cc,:),1,double(sig_i(cc,:)));
 end
 filterbank_o = fi(filterbank_o,TT,FF);
+
+filterbank_i_pkt = reshape(sig_i,FB_SSR,[],Niter);
+filterbank_o_pkt = reshape(filterbank_o,FB_SSR,[],Niter);
 
 % ------------------------------------------------------------
 % Generate twiddles for extra rotation:
@@ -155,6 +158,16 @@ sig_o = fi(sig_o,TT,FF);
 [~,~,~] = rmdir('data','s');
 [~,~,~] = mkdir('data');
 
+% Packet headers should be alined with Work/reports/packet_switching_report.json
+packet_header = ["0xFFF0008","0x8FFF0000","0x8FFF000C","0xFFF0004",...
+                 "0x8FFF0009","0xFFF0001","0xFFF000D","0x8FFF0005",...
+                 "0x8FFF000A","0xFFF0002","0xFFF000E","0x8FFF0006",...
+                 "0xFFF000B","0x8FFF0003","0x8FFF000F","0xFFF0007"];
+% packet_header = ["0x8FFF0000","0xFFF0001","0xFFF0002","0x8FFF0003",...
+%                  "0xFFF0004","0x8FFF0005","0x8FFF0006","0xFFF0007",...
+%                  "0xFFF0008","0x8FFF0009","0x8FFF000A","0xFFF000B",...
+%                  "0x8FFF000C","0xFFF000D","0xFFF000E","0x8FFF000F"];
+
 % Generate IO signals for HW_EMU:
 fid_i = fopen(sprintf('data/sig_i.txt'),'w');
 data_i = reshape(sig_i,1,[]);
@@ -173,21 +186,40 @@ end
 fclose(fid_o);
 
 % Generate input signals for AIE-only simulation:
-for nn = 1 : FB_SSR
-  fid_i = fopen(sprintf('data/filterbank_i_%d.txt',nn-1),'w');
-  fid_o = fopen(sprintf('data/filterbank_o_%d.txt',nn-1),'w');
-  range = nn:FB_SSR:NCHAN;
-  data_i = reshape(sig_i       (range,:),1,[]);
-  data_o = reshape(filterbank_o(range,:),1,[]);
-  for ii = 1 : 2 : numel(data_i)
-    fprintf(fid_i,'%d %d %d %d\n',...
-            real(data_i(ii  )).int,imag(data_i(ii  )).int,real(data_i(ii+1)).int,imag(data_i(ii+1)).int);
-  end
-  for ii = 1 : numel(data_o)
-    fprintf(fid_o,'%d %d\n',...
-            real(data_o(ii  )).int,imag(data_o(ii  )).int);
+
+N_STREAMS_SPLIT_FROM_PKT = FB_SSR/NPORTS_I;
+
+for nn = 1 : NPORTS_I
+  fid_i = fopen(sprintf('data/filterbank_i_%d.csv',nn-1),'w');
+  fprintf(fid_i,'CMD, D, D, TKEEP, TLAST\n');
+  for kk=1:Niter
+      data_i = filterbank_i_pkt((nn-1)*N_STREAMS_SPLIT_FROM_PKT+1:nn*N_STREAMS_SPLIT_FROM_PKT,:,kk);
+      offset=0;
+      for jj=1:N_STREAMS_SPLIT_FROM_PKT
+          if (jj~=1 && mod(jj-1,2)==0 ) % 2 output ports per input port
+              offset=offset+1;
+          end
+          data_ii = data_i(mod((jj-1)*8 + 1,N_STREAMS_SPLIT_FROM_PKT)+offset,:);
+          fprintf(fid_i,'DATA, %d, %d, 0x0, 0\n',hex2dec(packet_header(mod((jj-1)*8 + 1,N_STREAMS_SPLIT_FROM_PKT)+offset)),typecast([real(data_ii.int(1)),imag(data_ii.int(1))],'uint32'));
+          for ii = 2 : 2 : numel(data_ii)-1
+              fprintf(fid_i,'DATA, %d, %d, 0x0, 0\n',typecast([real(data_ii.int(ii)),imag(data_ii.int(ii))],'uint32'),typecast([real(data_ii.int(ii+1)),imag(data_ii.int(ii+1))],'uint32'));
+          end
+          fprintf(fid_i,'DATA, %d, %d, 0x0F, 1\n',typecast([real(data_ii.int(ii+2)),imag(data_ii.int(ii+2))],'uint32'),0);
+      end
   end
   fclose(fid_i);
+end
+
+for nn = 1 : NPORTS_O
+  fid_o = fopen(sprintf('data/filterbank_o_%d.txt',nn-1),'w');
+  for kk=1:Niter
+      data_o = filterbank_o_pkt((nn-1)*FB_SSR/NPORTS_O+1:nn*FB_SSR/NPORTS_O,:,kk);
+      data_o = reshape(transpose(data_o),1,[]);
+      for ii = 1 : numel(data_o)
+          fprintf(fid_o,'%d %d\n',...
+              real(data_o(ii  )).int,imag(data_o(ii  )).int);
+      end
+  end
   fclose(fid_o);
 end
 

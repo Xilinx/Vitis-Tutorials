@@ -52,9 +52,9 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		compile profile throughput
+all:		compile profile throughput check_sim_output_aie
 
-x86all: 	clean x86com x86sim
+x86all: 	x86com x86sim check_sim_output_x86
 
 gen_vectors:
 	matlab -batch "gen_vectors"
@@ -75,7 +75,7 @@ profile:
 	aiesimulator --profile --online -wdb -text 2>&1 | tee -a ${LOG_FILE}
 
 throughput:
-	@for z in `seq 0 31`; do \
+	@for z in `seq 0 3`; do \
 		../../scripts/throughput.py aiesimulator_output/data/filterbank_o_$${z}.txt --iscomplex;\
 	done;
 	@for z in `seq 0 7`; do \
@@ -88,8 +88,11 @@ throughput:
 get_II:
 	@scripts/get_loop_II.py Work/aie/
 
-regression:
-	matlab -batch regression
+check_sim_output_aie:
+	matlab -batch "check_sim_output('hw')"
+
+check_sim_output_x86:
+	matlab -batch "check_sim_output('x86sim')"
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary

@@ -50,7 +50,7 @@ The polyphase channelizer [[1]] simultaneously down-converts a set of frequency-
 
 You can implement a 1D IFFT using a 2D IFFT algorithm with higher efficiency overall in cases of larger point size and SSR > 1 regime. This requires resources that span AIE and PL. 
 
-Note: To reproduce any of the following steps. Begin by cloning [Vitis_Libraries](https://github.com/Xilinx/Vitis_Libraries) and set DSPLIB_ROOT path to point to the cloned repo path.
+Note: To reproduce any of the steps below, begin by cloning [Vitis_Libraries](https://github.com/Xilinx/Vitis_Libraries) and set DSPLIB_ROOT path to point to the `<cloned_repo_path>/dsp`.
 
 ## Channelizer Requirements
 
@@ -160,30 +160,30 @@ We also observe that the achieved throughput is higher than the requirement, 409
 
 ![figure7](images/filterbank_characterize_trace_view.png)
 
-It is possible to trade-off throughput for storage.
+Below is a table summary of predicated vs actual resources with a note on what could be done to bring down resources closer to predicated levels.
+
+|  | Predicted | Actual | Notes |
+| ---   | --- | --- | --- |
+|  AI Engine Tiles   | 32   | 64   | Use `single_buffer` on input ports + tight placement constraints |
+|  PLIOs (in/out)  | 2/4   | 32/32   | Use **new** [Packet Switching IP](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-pkt_switch.html)|
+|  Throughput (Gsps)  | >2   | 3.3   | Usage of above will result in some throughput degradation |
 
 #### Filterbank Library Optimization
-You can use the following approach to tradeoff throughput for storage:
+You can use the following approach to tradeoff throughput for storage, reducing the number of used AI Engine tiles:
 * Apply `single_buffer` constraint on the input. For more information, refer to *AI Engine Kernel and Graph Programming Guide* [UG1076](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Buffer-Allocation-Control).
 * Add placement constraints to store each tile's storage requirements locally.
 
-The following code snippet taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how to execute this action.
+  Code snippet below taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how this can be done.
 
-```
+  ```
   single_buffer(dut.tdmfir.m_firKernels[ii+0].in[0]);
-  std::string file_i0 = "data/filterbank_i_" + std::to_string(ii) + ".txt";
-  std::string file_o0 = "data/filterbank_o_" + std::to_string(ii) + ".txt";
-  sig_i[ii] =  input_plio::create("PLIO_i_"+std::to_string(ii), plio_64_bits, file_i0 );
-  sig_o[ii] = output_plio::create("PLIO_o_"+std::to_string(ii), plio_64_bits, file_o0 );
-  connect<>(     sig_i[ii].out[0], dut.sig_i[ii] );
-  connect<>( dut.sig_o[ii],            sig_o[ii].in[0] );
   location<kernel>   (dut.tdmfir.m_firKernels[ii])                 =      tile(start_index+xoff,0);
   location<stack>    (dut.tdmfir.m_firKernels[ii])                 =      bank(start_index+xoff,0,3);
   location<parameter>(dut.tdmfir.m_firKernels[ii].param[0])        =      bank(start_index+xoff,0,3);
   location<parameter>(dut.tdmfir.m_firKernels[ii].param[1])        =   address(start_index+xoff,0,0x4C00);
   location<buffer>   (dut.tdmfir.m_firKernels[ii].in[0])           =      bank(start_index+xoff,0,0);
   location<buffer>   (dut.tdmfir.m_firKernels[ii].out[0])          = {    bank(start_index+xoff,0,1), bank(start_index+xoff,0,3) };
-```
+  ```
 
 Compile and simulate the design to confirm it works as expected.
 
@@ -199,6 +199,91 @@ Inspecting vitis_analyzer, we observe that our resource count dropped to 32 tile
 
 
 ![figure9](images/filterbank_trace_view.png)
+
+To reduce the number of input and output PLIOs, we can use the newly introduced [Vitis Libraries Packet Switching IP](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/user_guide/L2/func-pkt_switch.html).
+
+```
+  using TT_FIR = xf::dsp::aie::fir::tdm::fir_tdm_graph<TT_DATA,TT_COEFF,TP_FIR_LEN,TP_SHIFT,TP_RND,TP_INPUT_WINDOW_VSIZE,
+                                       TP_TDM_CHANNELS,TP_NUM_OUTPUTS,TP_DUAL_IP,TP_SSR,TP_SAT,TP_CASC_LEN,TT_OUT_DATA>;
+
+  static constexpr unsigned           NPORT_I = 2;
+  static constexpr unsigned           NPORT_O = 4;
+  xf::dsp::aie::pkt_switch_graph<TP_SSR, NPORT_I, NPORT_O, TT_FIR> tdmfir;
+```
+
+Compile the design to understand updated resources usage:
+
+```
+[shell]% cd <path-to-design>/aie/tdm_fir
+[shell]% make clean compile
+[shell]% vitis_analyzer Work/firbank_app.aiecompile_summary
+```
+
+![figure](images/filterbank_resource_summary.png)
+
+Under the hood, the IP instantiates 2 x pktsplit<16> and 4 x pktmerge<8>.
+
+![figure](images/filterbank_graph_view.png)
+
+We have 4k samples that need to be distributed between 32 parallel filters, hence each filter shall receive 128 samples. From here, we have to key decisions to make:
+
+* Size of the packet, i.e. number of samples per packet. A smaller packet requires less buffering in the PL but has higher bandwidth overhead since packet header needs to be sent more often, while the opposite is true for a larger packet. Edge cases are
+  * Packet size = 1 can be simulated by commenting out `gen_vectors.m` line 127-146 and uncommenting line 167-177. This should double the bandwidth requirement since packet header has to be specified for every sample. When simulating the design, we observe that the system incurrs additional cycles of latency for packet arbitration. Therefore, this option is not ideal to proceed with.
+  * Packet size = 128 results in minimal packet switching overhead but requires a full transform double-buffered storage in PL
+* Order of the packets
+  * Linear ordering: Since the # output ports > # input ports, distributing the packets in linear order means output_0 starts producing samples way before output_1. Simiarly, output_2 before output_3. This can be simulated by commenting out `gen_vectors.m` line 127-146 and uncommenting line 149-164. The large latency (~0.84us, measured in aiesimulator) delta between output ports will results in stalling and degraded throughput when connecting the TDM to the rest of the channelizer. This latency can be absorbed by adding large FIFOs on TDM output in system.cfg, but this consumes PL resources. More on applying FIFOs on stream connections can be found in [Specifying Streaming Connections • Embedded Design Development Using Vitis User Guide (UG1701)](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Specifying-Streaming-Connections).
+      ![figure](images/pkt_tdm.png)
+  * Interleaved ordering: Alternatively, we can distribute the packets such that each output port receives one packet at at a time. Therefore, input_0 receives input data for tdm_0, tdm_8, tdm_1, tdm_9, etc. Doing so comes at no cost and results in latency delta reduction down to ~0.091us, measured in aiesimulator.
+
+Run `gen_vectors.m` and simulate the design to understand achieved throughput:
+
+```
+[shell]% cd <path-to-design>/aie/tdm_fir
+[shell]% make gen_vectors
+[shell]% make profile
+[shell]% vitis_analyzer aiesimulator_output/default.aierun_summary
+```
+
+Below we measure the aiesimulator throughput for the optimized packet switching-based TDM => 4096/1.833 = 2234 Msps.
+![figure](images/tdm_filterbank_throughput.png)
+
+#### Packet Sender
+
+The `packet_sender` is an HLS kernel that bridges between the continuous data stream from DDR memory and the AI Engine's packet-switched interface. It performs two critical functions:
+
+1. **Data Reorganization**: The consumer function reads continuous cint16 sample streams and reorganizes them into an interleaved pattern optimized for packet distribution. Samples are read from two input streams alternately and written to stream-of-blocks buffers (`ss0` and `ss1`) in a specific pattern that ensures balanced packet timing downstream.
+
+2. **Packet Formation**: The producer function reads from the buffered data and formats AXI-Stream packets with proper headers and sideband signals. Each packet consists of:
+   - **Header beat**: 32-bit AI Engine packet header (containing routing ID) + first 3 cint16 samples
+   - **Middle beats**: 31 beats of continuous data (4 samples per beat)
+   - **Last beat**: Final sample with TLAST=1 and TKEEP=0x000F to mark packet boundary
+
+Key implementation details:
+- **Dataflow architecture**: Consumer and producer run concurrently using HLS dataflow pragma
+- **Stream-of-blocks**: Two 512-word × 128-bit LUTRAM buffers (zero BRAM usage) synchronize the consumer and producer
+- **Interleaved ordering**: Packets are distributed in stride-8 pattern (0,8,1,9,2,10,3,11,4,12,5,13,6,14,7,15) to minimize latency delta between the 4 AI Engine output ports of the packet-switched TDM FIR (~0.091us vs 0.84us for linear ordering, as described earlier). This reduces downstream stalls when connecting the TDM FIR to the IFFT, avoiding the need for large FIFOs to absorb timing skew between streams.
+- **TKEEP signaling**: Critical for width converter compatibility - uses 0xFFFF for valid data and 0x000F for partial last beat
+- **Performance**: Achieves 2.5 Gsps total throughput (1.25 Gsps per stream) at 312.5 MHz with 128-bit interfaces
+
+The kernel processes 4096 input samples per stream and generates 16 packets per stream, with each packet containing 128 samples. Packet headers are generated from routing IDs defined in `packet_ids_c.h`, which is produced by the AI Engine compiler.
+
+#### Packet Receiver
+
+The `packet_receiver` is an HLS kernel that performs cross-port packet switching from 4 input AXI Stream ports to 8 output AXI Stream ports, reorganizing data from the AI Engine's packet-switched TDM FIR outputs back into polyphase streams for the IFFT. It performs two critical functions:
+
+1. **Packet Reception and Buffering**: The producer function reads packets from 4 input ports and routes them to 32 dedicated stream-of-blocks buffers based on packet ID. Each input port receives 8 packets sequentially, with packet IDs extracted from the 32-bit AI Engine header (bits [4:0]). The design supports out-of-order packet arrival through a two-level lookup mechanism: extracting the index from header bits [4:0], then looking up the actual packet ID from `packet_ids_N` arrays to determine the destination buffer.
+
+2. **Data Reorganization and Output**: The consumer function reads from the buffered packets and reorganizes samples into 8 output streams with interleaved ordering. Each output port receives 4 packets (strided pattern: output N receives packets N, N+8, N+16, N+24), with samples written in round-robin fashion across the packets to ensure balanced timing.
+
+Key implementation details:
+- **32 independent stream-of-blocks**: One dedicated 128-sample buffer per packet with ping-pong double buffering (depth=2) for concurrent producer/consumer operation
+- **LUTRAM implementation**: Zero BRAM usage - all 512 Kb of storage (32 packets × 128 samples × 64 bits × 2 buffers) implemented in distributed RAM
+- **Array partitioning**: Cyclic factor=2 partitioning splits each buffer into even/odd memory banks, enabling dual-write optimization for producer II=1
+- **Out-of-order packet support**: Header-based routing using `packet_ids_N[header[4:0]]` lookup ensures correct data flow regardless of packet arrival order from upstream AI Engine processing
+- **Cross-port switching**: Input port N receives packets (N×8) to (N×8+7), while output port N receives packets N, N+8, N+16, N+24
+- **Performance**: Achieves 2.38 Gsps sustained throughput (95.2% efficiency) at 312.5 MHz with 128-bit interfaces, validated in RTL co-simulation
+
+The kernel processes 4096 samples per transform (32 packets × 128 samples), with each packet containing a 32-bit header followed by 128 cint32 samples. The two-level packet ID lookup mechanism (defined in `packet_receiver.h` using values from `packet_ids_c.h`) provides flexible mapping between AI Engine packet IDs and internal routing, critical for robust integration with the asynchronous AI Engine fabric.
 
 ### IFFT-2D System Partitioning
 
@@ -225,7 +310,7 @@ You can use the IFFT-2D IP through two different approaches:
 
 1) **Vitis Subsystem (VSS) - Recommended**: The IP automatically handles leaf block connectivity and produces a `.vss` file. This is the recommended workflow for most users. Refer to [Vitis Libraries IFFT-2D VSS example](https://github.com/Xilinx/Vitis_Libraries/tree/main/dsp/L2/examples/vss_fft_ifft_1d) for reference.
 
-2) **Manual Leaf Block Instantiation**: You manually instantiate and connect the individual leaf blocks that make up the IFFT-2D IP. This tutorial demonstrates this workflow, which provides greater control over design placement and avoids reserving full columns for the FFT implementation.
+2) **Manual Leaf Block Instantiation**: Users manually instantiate and connect the individual leaf blocks that make up the IFFT-2D IP. This tutorial demonstrates this workflow, which provides greater control over design placement and avoids reserving full columns for the FFT implementation.
 
 **Note**: To understand the required leaf blocks and how they must connect, first use approach 1 to instantiate the IP as a VSS. Then, examine the generated leaf blocks and their connectivity. After that, manually instantiate and connect these blocks in your custom configuration.
 
@@ -350,7 +435,7 @@ After hardware emulation run is complete, you view the following in the terminal
 
 ![figure17](images/channelizer_hw_emu.png)
 
-Throughput can be measured by inspecting the traces. The design processes 8 transforms, each with 4k samples in 15.56us. Throughput = 8 x 4096 / 14.57 = 2250 Msps.
+Throughput can be measured by inspecting the traces. The design processes 8 transforms, each with 4k samples in 15.56us. Throughput = 8 x 4096 / 14.58 = 2250 Msps.
 
 ![figure18](images/channelizer_hw_emu_trace.png)
 

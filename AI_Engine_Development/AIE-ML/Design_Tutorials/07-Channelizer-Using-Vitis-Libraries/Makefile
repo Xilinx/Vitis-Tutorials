@@ -39,8 +39,8 @@ all:	channelizer
 channelizer:
 	$(MAKE) compile -C aie/channelizer
 	$(MAKE) all -C hls/channelizer_dma_src
-	$(MAKE) all -C hls/split_1x16
-	$(MAKE) all -C hls/merge_4x1
+	$(MAKE) all -C hls/packet_sender
+	$(MAKE) all -C hls/packet_receiver
 	$(MAKE) all -C hls/ifft_mid_splitter
 	$(MAKE) all -C hls/ifft_mid_transpose
 	$(MAKE) all -C hls/ifft_mid_joiner
@@ -52,8 +52,8 @@ channelizer:
 clean:
 	$(MAKE) clean -C aie/channelizer
 	$(MAKE) clean -C hls/channelizer_dma_src
-	$(MAKE) clean -C hls/split_1x16
-	$(MAKE) clean -C hls/merge_4x1
+	$(MAKE) clean -C hls/packet_sender
+	$(MAKE) clean -C hls/packet_receiver
 	$(MAKE) clean -C hls/ifft_mid_splitter
 	$(MAKE) clean -C hls/ifft_mid_transpose
 	$(MAKE) clean -C hls/ifft_mid_joiner

@@ -10,8 +10,8 @@
 class dut_graph : public graph {
 public:
   channelizer_graph dut;
-  std::array< input_plio,firbank_graph::TP_SSR>      sig_i;
-  std::array<output_plio,firbank_graph::TP_SSR>      sig_o;
+  std::array< input_plio,firbank_graph::NPORT_I>     sig_i;
+  std::array<output_plio,firbank_graph::NPORT_O>     sig_o;
   std::array< input_plio,ifft4096_2d_graph::TP_SSR>  front_i;
   std::array< input_plio,ifft4096_2d_graph::TP_SSR>   back_i;
   std::array<output_plio,ifft4096_2d_graph::TP_SSR>  front_o;
@@ -37,73 +37,52 @@ public:
                              0, 0, 0, 0, 1, 1, 1, 1,
                              2, 2, 2, 2, 3, 3, 3, 3 };
 
-    int start_plio = 25;
     int start_fb = 30;
     for (unsigned ii=0; ii < firbank_graph::TP_SSR; ii+=4) {
 
-      single_buffer(dut.firbank.tdmfir.m_firKernels[ii+0].in[0]);
-      std::string file_i0 = "data/filterbank_i_" + std::to_string(ii) + ".txt";
-      std::string file_o0 = "data/filterbank_o_" + std::to_string(ii) + ".txt";
+      single_buffer(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+0].in[0]);
+      location<kernel>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii])                 =      tile(start_fb+FBX[ii],FBY[ii]);
+      location<stack>    (dut.firbank.tdmfir.graph_instance.m_firKernels[ii])                 =      bank(start_fb+FBX[ii],FBY[ii],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii].param[0])        =      bank(start_fb+FBX[ii],FBY[ii],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii].param[1])        =   address(start_fb+FBX[ii],FBY[ii],0x4C00);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii].in[0])           =      bank(start_fb+FBX[ii],FBY[ii],0);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii].out[0])          = {    bank(start_fb+FBX[ii],FBY[ii],1), bank(start_fb+FBX[ii],FBY[ii],3) };
+
+      single_buffer(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1].in[0]);
+      location<kernel>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1])                 =      tile(start_fb+FBX[ii+1],FBY[ii+1]);
+      location<stack>    (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1])                 =      bank(start_fb+FBX[ii+1],FBY[ii+1],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1].param[0])        =      bank(start_fb+FBX[ii+1],FBY[ii+1],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1].param[1])        =   address(start_fb+FBX[ii+1],FBY[ii+1],0x4C00);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1].in[0])           =      bank(start_fb+FBX[ii+1],FBY[ii+1],0);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+1].out[0])          = {    bank(start_fb+FBX[ii+1],FBY[ii+1],1), bank(start_fb+FBX[ii+1],FBY[ii+2],3) };
+
+      single_buffer(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2].in[0]);
+      location<kernel>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2])                 =      tile(start_fb+FBX[ii+2],FBY[ii+2]);
+      location<stack>    (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2])                 =      bank(start_fb+FBX[ii+2],FBY[ii+2],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2].param[0])        =      bank(start_fb+FBX[ii+2],FBY[ii+2],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2].param[1])        =   address(start_fb+FBX[ii+2],FBY[ii+2],0x4C00);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2].in[0])           =      bank(start_fb+FBX[ii+2],FBY[ii+2],0);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+2].out[0])          = {    bank(start_fb+FBX[ii+2],FBY[ii+2],1), bank(start_fb+FBX[ii+2],FBY[ii+2],3) };
+
+      single_buffer(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3].in[0]);
+      location<kernel>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3])                 =      tile(start_fb+FBX[ii+3],FBY[ii+3]);
+      location<stack>    (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3])                 =      bank(start_fb+FBX[ii+3],FBY[ii+3],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3].param[0])        =      bank(start_fb+FBX[ii+3],FBY[ii+3],3);
+      location<parameter>(dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3].param[1])        =   address(start_fb+FBX[ii+3],FBY[ii+3],0x4C00);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3].in[0])           =      bank(start_fb+FBX[ii+3],FBY[ii+3],0);
+      location<buffer>   (dut.firbank.tdmfir.graph_instance.m_firKernels[ii+3].out[0])          = {    bank(start_fb+FBX[ii+3],FBY[ii+3],1), bank(start_fb+FBX[ii+3],FBY[ii+3],3) };
+    }
+    for (unsigned ii=0; ii < firbank_graph::NPORT_I; ii++) {
+      std::string file_i0 = "data/filterbank_i_" + std::to_string(ii) + ".csv";
       sig_i[ii] =  input_plio::create("PLIO_i_"+std::to_string(ii), plio_64_bits, file_i0 );
+      connect<>(     sig_i[ii].out[0], dut.sig_i[ii] );
+      location<PLIO>(sig_i[ii]) = shim(32);
+    }
+    for (unsigned ii=0; ii < firbank_graph::NPORT_O; ii++) {
+      std::string file_o0 = "data/filterbank_o_" + std::to_string(ii) + ".txt";
       sig_o[ii] = output_plio::create("PLIO_o_"+std::to_string(ii), plio_64_bits, file_o0 );
-      connect<>( sig_i[ii].out[0], dut.sig_i[ii] );
-      connect<>( dut.sig_o[ii], sig_o[ii].in[0] );
-      location<kernel>   (dut.firbank.tdmfir.m_firKernels[ii])                 =      tile(start_fb+FBX[ii],FBY[ii]);
-      location<stack>    (dut.firbank.tdmfir.m_firKernels[ii])                 =      bank(start_fb+FBX[ii],FBY[ii],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii].param[0])        =      bank(start_fb+FBX[ii],FBY[ii],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii].param[1])        =   address(start_fb+FBX[ii],FBY[ii],0x4C00);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii].in[0])           =      bank(start_fb+FBX[ii],FBY[ii],0);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii].out[0])          = {    bank(start_fb+FBX[ii],FBY[ii],1), bank(start_fb+FBX[ii],FBY[ii],3) };
-      location<PLIO>(sig_i[ii]) = shim(start_plio+FBX[ii]);
-      location<PLIO>(sig_o[ii]) = shim(start_plio+FBX[ii]);
-
-      single_buffer(dut.firbank.tdmfir.m_firKernels[ii+1].in[0]);
-      std::string file_i1 = "data/filterbank_i_" + std::to_string(ii+1) + ".txt";
-      std::string file_o1 = "data/filterbank_o_" + std::to_string(ii+1) + ".txt";
-      sig_i[ii+1] =  input_plio::create("PLIO_i_"+std::to_string(ii+1), plio_64_bits, file_i1 );
-      sig_o[ii+1] = output_plio::create("PLIO_o_"+std::to_string(ii+1), plio_64_bits, file_o1 );
-      connect<>( sig_i[ii+1].out[0], dut.sig_i[ii+1] );
-      connect<>( dut.sig_o[ii+1], sig_o[ii+1].in[0] );
-      location<kernel>   (dut.firbank.tdmfir.m_firKernels[ii+1])                 =      tile(start_fb+FBX[ii+1],FBY[ii+1]);
-      location<stack>    (dut.firbank.tdmfir.m_firKernels[ii+1])                 =      bank(start_fb+FBX[ii+1],FBY[ii+1],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+1].param[0])        =      bank(start_fb+FBX[ii+1],FBY[ii+1],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+1].param[1])        =   address(start_fb+FBX[ii+1],FBY[ii+1],0x4C00);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+1].in[0])           =      bank(start_fb+FBX[ii+1],FBY[ii+1],0);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+1].out[0])          = {    bank(start_fb+FBX[ii+1],FBY[ii+1],1), bank(start_fb+FBX[ii+1],FBY[ii+2],3) };
-      location<PLIO>(sig_i[ii+1]) = shim(start_plio+FBX[ii+1]);
-      location<PLIO>(sig_o[ii+1]) = shim(start_plio+FBX[ii+1]);
-
-      single_buffer(dut.firbank.tdmfir.m_firKernels[ii+2].in[0]);
-      std::string file_i2 = "data/filterbank_i_" + std::to_string(ii+2) + ".txt";
-      std::string file_o2 = "data/filterbank_o_" + std::to_string(ii+2) + ".txt";
-      sig_i[ii+2] =  input_plio::create("PLIO_i_"+std::to_string(ii+2), plio_64_bits, file_i2 );
-      sig_o[ii+2] = output_plio::create("PLIO_o_"+std::to_string(ii+2), plio_64_bits, file_o2 );
-      connect<>( sig_i[ii+2].out[0], dut.sig_i[ii+2] );
-      connect<>( dut.sig_o[ii+2], sig_o[ii+2].in[0] );
-      location<kernel>   (dut.firbank.tdmfir.m_firKernels[ii+2])                 =      tile(start_fb+FBX[ii+2],FBY[ii+2]);
-      location<stack>    (dut.firbank.tdmfir.m_firKernels[ii+2])                 =      bank(start_fb+FBX[ii+2],FBY[ii+2],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+2].param[0])        =      bank(start_fb+FBX[ii+2],FBY[ii+2],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+2].param[1])        =   address(start_fb+FBX[ii+2],FBY[ii+2],0x4C00);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+2].in[0])           =      bank(start_fb+FBX[ii+2],FBY[ii+2],0);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+2].out[0])          = {    bank(start_fb+FBX[ii+2],FBY[ii+2],1), bank(start_fb+FBX[ii+2],FBY[ii+2],3) };
-      location<PLIO>(sig_i[ii+2]) = shim(start_plio+FBX[ii+2]);
-      location<PLIO>(sig_o[ii+2]) = shim(start_plio+FBX[ii+2]);
-
-      single_buffer(dut.firbank.tdmfir.m_firKernels[ii+3].in[0]);
-      std::string file_i3 = "data/filterbank_i_" + std::to_string(ii+3) + ".txt";
-      std::string file_o3 = "data/filterbank_o_" + std::to_string(ii+3) + ".txt";
-      sig_i[ii+3] =  input_plio::create("PLIO_i_"+std::to_string(ii+3), plio_64_bits, file_i3 );
-      sig_o[ii+3] = output_plio::create("PLIO_o_"+std::to_string(ii+3), plio_64_bits, file_o3 );
-      connect<>( sig_i[ii+3].out[0], dut.sig_i[ii+3] );
-      connect<>( dut.sig_o[ii+3], sig_o[ii+3].in[0] );
-      location<kernel>   (dut.firbank.tdmfir.m_firKernels[ii+3])                 =      tile(start_fb+FBX[ii+3],FBY[ii+3]);
-      location<stack>    (dut.firbank.tdmfir.m_firKernels[ii+3])                 =      bank(start_fb+FBX[ii+3],FBY[ii+3],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+3].param[0])        =      bank(start_fb+FBX[ii+3],FBY[ii+3],3);
-      location<parameter>(dut.firbank.tdmfir.m_firKernels[ii+3].param[1])        =   address(start_fb+FBX[ii+3],FBY[ii+3],0x4C00);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+3].in[0])           =      bank(start_fb+FBX[ii+3],FBY[ii+3],0);
-      location<buffer>   (dut.firbank.tdmfir.m_firKernels[ii+3].out[0])          = {    bank(start_fb+FBX[ii+3],FBY[ii+3],1), bank(start_fb+FBX[ii+3],FBY[ii+3],3) };
-      location<PLIO>(sig_i[ii+3]) = shim(start_plio+FBX[ii+3]);
-      location<PLIO>(sig_o[ii+3]) = shim(start_plio+FBX[ii+3]);
+      connect<>( dut.sig_o[ii],            sig_o[ii].in[0] );
+      location<PLIO>(sig_o[ii]) = shim(32);
     }
     for ( unsigned ff=0; ff < ifft4096_2d_graph::TP_SSR; ff++) {
       std::string fname_i0 = "data/fft_front_i_" + std::to_string(ff) + ".txt";
@@ -135,16 +114,16 @@ public:
             location<stack>    (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = bank(34+ff,4,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[0])                         = bank(34+ff,4,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[1])                         = bank(34+ff,4,3);
-            location<PLIO>(front_i[ff])                                                                             = shim(24);
-            location<PLIO>(front_o[ff])                                                                             = shim(24);
+            location<PLIO>(front_i[ff])                                                                             = shim(31);
+            location<PLIO>(front_o[ff])                                                                             = shim(31);
 
             location<kernel>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = tile(30+ff,4);
             single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
             location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = bank(30+ff,4,0);
             location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = {bank(30+ff,4,1),bank(30+ff,4,2)};
             location<stack> (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(30+ff,4,3);
-            location<PLIO>(back_i[ff])                                                                              = shim(22);
-            location<PLIO>(back_o[ff])                                                                              = shim(22);
+            location<PLIO>(back_i[ff])                                                                              = shim(29);
+            location<PLIO>(back_o[ff])                                                                              = shim(29);
       }
       else{
             location<kernel>   (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = tile(34+ff-4,5);
@@ -158,16 +137,16 @@ public:
             location<stack>    (dut.ifft4096_2d.ifft4096_2d.frontFFTGraph[ff].FFTwinproc.m_fftKernels[0])           = bank(34+ff-4,5,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[0])                         = bank(34+ff-4,5,3);
             location<parameter>(dut.ifft4096_2d.ifft4096_2d.m_fftTwRotKernels[ff].param[1])                         = bank(34+ff-4,5,3);
-            location<PLIO>(front_i[ff])                                                                             = shim(23);
-            location<PLIO>(front_o[ff])                                                                             = shim(23);
+            location<PLIO>(front_i[ff])                                                                             = shim(30);
+            location<PLIO>(front_o[ff])                                                                             = shim(30);
 
             location<kernel>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = tile(30+ff-4,5);
             single_buffer   (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0]);
             location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].in[0])         = bank(30+ff-4,5,0);
             location<buffer>(dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0].out[0])        = {bank(30+ff-4,5,1),bank(30+ff-4,5,2)};
             location<stack> (dut.ifft4096_2d.ifft4096_2d.backFFTGraph[ff].FFTwinproc.m_fftKernels[0])               = bank(30+ff-4,5,3);
-            location<PLIO>(back_i[ff])                                                                              = shim(21);
-            location<PLIO>(back_o[ff])                                                                              = shim(21);
+            location<PLIO>(back_i[ff])                                                                              = shim(28);
+            location<PLIO>(back_o[ff])                                                                              = shim(28);
       }
 #endif
     }

@@ -10,8 +10,8 @@ TARGET                ?= hw
 
 IP_DIR                := ../aie/channelizer
 DATA_DIR              := ../aie/channelizer/data
-XO_VSS                := ../hls/split_1x16/split_1x16_wrapper.xo \
-                         ../hls/merge_4x1/merge_4x1_wrapper.xo \
+XO_VSS                := ../hls/packet_sender/packet_sender_wrapper.xo \
+                         ../hls/packet_receiver/packet_receiver_wrapper.xo \
                          ../hls/ifft_mid_splitter/splitter.xo \
                          ../hls/ifft_mid_transpose/mid_transpose_wrapper.xo \
                          ../hls/ifft_mid_joiner/joiner.xo \

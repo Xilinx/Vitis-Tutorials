@@ -20,8 +20,8 @@ using namespace adf;
 class channelizer_graph : public graph {
 public:
 
-  std::array< port< input>,firbank_graph::TP_SSR>  sig_i;
-  std::array<port< output>,firbank_graph::TP_SSR>  sig_o;
+  std::array< port< input>,firbank_graph::NPORT_I>  sig_i;
+  std::array<port< output>,firbank_graph::NPORT_O>  sig_o;
   std::array< port< input>,ifft4096_2d_graph::TP_SSR>  front_i;
   std::array< port< input>,ifft4096_2d_graph::TP_SSR>   back_i;
   std::array<port< output>,ifft4096_2d_graph::TP_SSR>  front_o;
@@ -33,8 +33,10 @@ public:
   // Constructor:
   channelizer_graph( void ) : firbank{TAPS_INIT_0}
   {
-    for ( unsigned ff=0; ff < firbank_graph::TP_SSR; ff++) {
+    for ( unsigned ff=0; ff < firbank_graph::NPORT_I; ff++) {
       connect<>( sig_i[ff],       firbank.sig_i[ff] );
+    }
+    for ( unsigned ff=0; ff < firbank_graph::NPORT_O; ff++) {
       connect<>( firbank.sig_o[ff], sig_o[ff] );
     }
     for ( unsigned ff=0; ff < ifft4096_2d_graph::TP_SSR; ff++) {

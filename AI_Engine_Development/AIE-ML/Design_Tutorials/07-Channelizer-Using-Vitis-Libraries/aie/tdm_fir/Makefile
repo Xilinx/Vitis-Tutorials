@@ -2,7 +2,7 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
-# Author: Mark Rollins
+# Author: Faisal El-Shabani
 
 SIM_FIFO          := false
 
@@ -29,9 +29,9 @@ endif
 
 .PHONY: clean x86com x86sim sim profile throughput
 
-all:		compile profile throughput
+all:		compile profile throughput check_sim_output_aie
 
-x86all: 	clean x86com x86sim
+x86all: 	x86com x86sim check_sim_output_x86
 
 gen_vectors:
 	matlab -batch "gen_vectors"
@@ -55,15 +55,18 @@ trace:
 	time aiesimulator --online -wdb -text 2>&1 |  tee -a log
 
 throughput:
-	@for z in `seq 0 31`; do \
+	@for z in `seq 0 3`; do \
 		../../scripts/throughput.py aiesimulator_output/data/filterbank_o_$${z}.txt --iscomplex;\
 	done;
 
 loop_II:
 	@../../scripts/get_loop_II.py Work/aie
 
-regression:
-	matlab -batch regression
+check_sim_output_aie:
+	matlab -batch "check_sim_output('hw')"
+
+check_sim_output_x86:
+	matlab -batch "check_sim_output('x86sim')"
 
 analyze:
 	vitis_analyzer aiesimulator_output/default.aierun_summary

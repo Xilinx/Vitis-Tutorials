@@ -76,11 +76,8 @@ fprintf(fid,'#pragma once\n');
 fprintf(fid,'#define TAPS_INIT_0 { ');
 range = [1:NCHAN];
 taps_u = reshape(taps_hw(range,:),1,[]);
-for ii = 1 : numel(taps_u)
-    if (ii == numel(taps_u)) fprintf(fid,'%d }\n',taps_u.int(ii));
-    else                                       fprintf(fid,'%d, ',  taps_u.int(ii));
-    end
-end
+fprintf(fid,'%d, ',  taps_u.int(1:end-1));
+fprintf(fid,'%d }\n',taps_u.int(end));
 fclose(fid);
 
 % ------------------------------------------------------------
