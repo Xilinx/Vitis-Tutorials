@@ -93,7 +93,7 @@ source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
 Open the Makefile and modify the device from AIE to AIE-ML as shown in the follwing:
 
 ```
-PLATFORM_USE  := xilinx_vek280_base_202520_1
+PART := xcve2802-vsvh1760-2MP-e-S
 ```
 
 Save the file.

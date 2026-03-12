@@ -6,16 +6,14 @@
 
 AIE_SIM_ONLY      ?= true
 
-# PLATFORM_USE	  := xilinx_vck190_base_202520_1
-PLATFORM_USE	  := xilinx_vek280_base_202520_1
-PLATFORM          := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
+PART := xcve2802-vsvh1760-2MP-e-S
 
 MY_APP             = farrow_app.cpp
 MY_SOURCES         = ${MY_APP} farrow_graph.h farrow_kernel1.cpp farrow_kernel1.h farrow_kernel2.cpp farrow_kernel2.h
 LOG_FILE           = log
 OTHER_OPTS         = --aie.pl-freq=625.0 --aie.Xchess="-std=c++17"
 ALL_INCLUDE       := --include=${PWD}
-AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} --platform=${PLATFORM} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
+AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} --part=${PART} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
 
 ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --aie.Xpreproc="-DAIE_SIM_ONLY"
@@ -66,5 +64,6 @@ get_II:
 	@../../scripts/get_loop_II.py Work/aie/
 
 clean:
-	@rm -rf Work* .Xil function_wdb_dir .crashReporter .AIE_SIM_CMD_LINE_OPTIONS AIECompiler.log xcd.log log aiesimulator_output x86simulator_output diff_output pl_sample_count* tmp vitis_analyzer.* xsc_report.log diag_report.log libadf.a sol.db t.txt Map_Report.csv AIESimulator.log
+	@rm -rf Work* .Xil function_wdb_dir .crashReporter .AIE_SIM_CMD_LINE_OPTIONS AIECompiler.log xcd.log log aiesimulator_output x86simulator_output diff_output pl_sample_count* tmp vitis_analyzer.* xsc_report.log diag_report.log libadf.a sol.db t.txt Map_Report.csv AIESimulator.log aiesimulator_debug.log qemu_rp.log throughput_info.json
+
 	@rm -rf ISS_RPC_SERVER_PORT system_flat.wcfg system.wcfg system.wdb tmp.vcd.vcd trdata.aiesim vcdanalyze.log vitis_analyzer_pid* logs VCDAnalyze.log

@@ -15,7 +15,7 @@ MY_SOURCES         = ${MY_APP} farrow_graph.h farrow_kernel1.cpp farrow_kernel1.
 LOG_FILE           = log
 OTHER_OPTS         = --aie.pl-freq=625.0 --aie.Xchess="-std=c++17"
 ALL_INCLUDE       := --include=${PWD}
-AIE_TRACE_HW 	  := --aie.event-trace-port=gmio --aie.event-trace=runtime	
+AIE_TRACE_HW      := --aie.event-trace-port=gmio --aie.event-trace=runtime
 AIE_FLAGS         := --aie.verbose ${ALL_INCLUDE} ${MY_APP} ${OTHER_OPTS} ${AIE_TRACE_HW} --platform=${PLATFORM} --aie.Xmapper=BufferOptLevel9 --aie.xlopt=1
 
 ifeq (${AIE_SIM_ONLY},true)
@@ -61,5 +61,5 @@ get_II:
 	@../../../scripts/get_loop_II.py Work/aie/
 
 clean:
-	@rm -rf Work* .Xil function_wdb_dir .crashReporter .AIE_SIM_CMD_LINE_OPTIONS AIECompiler.log xcd.log log aiesimulator_output x86simulator_output diff_output pl_sample_count* tmp vitis_analyzer.* xsc_report.log diag_report.log libadf.a sol.db t.txt Map_Report.csv AIESimulator.log
+	@rm -rf Work* .Xil function_wdb_dir .crashReporter .AIE_SIM_CMD_LINE_OPTIONS AIECompiler.log xcd.log log aiesimulator_output x86simulator_output diff_output pl_sample_count* tmp vitis_analyzer.* xsc_report.log diag_report.log libadf.a sol.db t.txt Map_Report.csv AIESimulator.log aiesimulator_debug.log qemu_rp.log sig_o_gen.txt
 	@rm -rf ISS_RPC_SERVER_PORT system_flat.wcfg system.wcfg system.wdb tmp.vcd.vcd trdata.aiesim vcdanalyze.log vitis_analyzer_pid* logs VCDAnalyze.log
