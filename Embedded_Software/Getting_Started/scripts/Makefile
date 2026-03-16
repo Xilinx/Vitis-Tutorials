@@ -12,19 +12,19 @@ all: clean zcu102
 
 zcu102:
 	vivado -mode batch -source create_zcu102_xsa.tcl
-	vitis -s build_workspace.py -s zcu102
+	vitis -s build_workspace.py -b zcu102
 
 vck190:
 	vivado -mode batch -source create_vck190_xsa.tcl
-	vitis -s build_workspace.py -s vck190
+	vitis -s build_workspace.py -b vck190
 
 vek280:
 	vivado -mode batch -source create_vek280_xsa.tcl
-	vitis -s build_workspace.py -s vek280
+	vitis -s build_workspace.py -b vek280
 
 vek385:
 	vivado -mode batch -source create_vek385_xsa.tcl
-	vitis -s build_workspace.py -s vek385
-
+	vitis -s build_workspace.py -b vek385
+  
 clean:
 	$(RM) -rf ./unified_workspace
