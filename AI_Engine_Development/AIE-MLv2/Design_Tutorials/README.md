@@ -15,7 +15,7 @@
 
 # Design Tutorials
 
-The AI Engine Development Design Tutorials showcase the two major phases of AI Engine-MLv2 application development: architecting the application and developing the kernels. Both phases are demonstrated in these tutorials.
+The AI Engine Development Design Tutorials showcase the two major phases of AI Engine-ML v2 application development: architecting the application and developing the kernels. These tutorials demonstrate both phases.
 
  <table style="width:100%">
  <tr>
@@ -28,7 +28,7 @@ The AI Engine Development Design Tutorials showcase the two major phases of AI E
  </td>
  </tr>
  </table>
- 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

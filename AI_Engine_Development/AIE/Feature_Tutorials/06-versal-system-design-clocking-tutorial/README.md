@@ -19,25 +19,26 @@
 
 ## Introduction
 
-Developing an accelerated AI Engine design for the VCK190 can be done using the Vitis compiler (`v++`). This compiler can be used to compile programmable logic (PL) kernels and connect these PL kernels to the AI Engine and PS device.
+You can use the AMD Vitis™ compiler (`v++`) to develop an accelerated AI Engine design for the VCK190. You can also use this compiler to compile programmable logic (PL) kernels and connect these PL kernels to the AI Engine and PS device.
 
-In this tutorial, you will learn clocking concepts for the Vitis compiler and how to define clocking for an ADF Graph, as well as PL kernels using clocking automation functionality. The design being used is a simple classifier design as shown in the following figure:
+This tutorial covers clocking concepts for the Vitis compiler. It shows how to define clocking for an ADF Graph and PL kernels using clocking automation functionality. The design is a simple classifier design as shown in the following figure:
 
 ![Design](./images/design.png)
+
 Prerequisites for this tutorial are:
 
-* Familiarity with the `v++ -c --mode aie` flow.
-* Familiarity with the `gcc` style command line compilation.
+* Familiarity with the `v++ -c --mode aie` flow
+* Familiarity with the `gcc` style command line compilation
 
-In the design, the following clocking steps are used:
+This design uses the following clocking steps:
 
 | Kernel Location | Compile Setting |
 | --- | --- |
 | Interpolator, Polar Clip, & Classifier | AI Engine Frequency (1 GHz) |
 | `mm2s` & `s2mm` | 150 MHz and 100 MHz (`v++ -c` & `v++ -l`) |
-For detailed information, see the Clocking the PL Kernels section [here](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
+For detailed information, refer  the Clocking the PL Kernels section [here](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Clocking-the-PL-Kernels).
 
-**IMPORTANT**: Before beginning the tutorial, make sure you have installed the Vitis 2025.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that is used in this tutorial. In addition, ensure you have downloaded the Common Images for Embedded Vitis Platforms from this link: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html> The common image package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™  board for embedded design development using Vitis.
+**IMPORTANT**: Before beginning the tutorial, install the Vitis 2025.2 software. The Vitis release includes all the embedded base platforms including the VCK190 base platform that this tutorial uses. Also download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html). The common image package contains a prebuilt Linux kernel and root file system that you can use with the AMD Versal™ board for embedded design development using Vitis.
 
 Before starting this tutorial, run the following steps:
 
@@ -50,15 +51,15 @@ This tutorial targets VCK190 production board for 2025.2 version.
 
 ## Objectives
 
-You will learn the following:
+This tutorial demonstrates:
 
-* Clocking in Versal for PL and AIE kernels using --freqhz directive. 
+* Clocking in Versal for PL and AIE kernels using the `--freqhz` directive.
 
-## Step 1 - Building ADF Graph
+## Step 1 - Building the ADF Graph
 
-The ADF graph has connections to the PL through the PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This will help with determining what kind of clock can be set on the PL kernels that are going to connect to the PLIO. Here you will set the reference frequency to be 200 MHz for all PLIO interfaces.
+The ADF graph has connections to the PL through PLIO interfaces. These interfaces can have reference clocking either from the `graph.cpp` through the `PLIO()` constructor or through the `--pl-freq`. This helps determine what kind of clock to set on the PL kernels that connect to the PLIO. In this example, the reference frequency is set to 200 MHz for all PLIO interfaces.
 
-**NOTE**: If you do not specify the `--pl-freq`, it will be set to 1/4 the frequency of the AI Engine frequency.
+**NOTE**: If you do not specify the `--pl-freq`, it defaults to 1/4 the frequency of the AI Engine frequency.
 
 ```bash
 v++ -c --mode aie --target=hw -include="$(XILINX_VITIS)/aietools/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./" --freqhz=200000000 --aie.workdir=./Work aie/graph.cpp
@@ -66,14 +67,14 @@ v++ -c --mode aie --target=hw -include="$(XILINX_VITIS)/aietools/include" --incl
 
 | Flag | Description |
 | ---- | ----------- |
-| --target | Target how the compiler will build the graph. Default is `hw`. |
+| --target | Target how the compiler builds the graph. Default is `hw`. |
 | --include | All the typical include files needed to build the graph. |
 | --freqhz=200000000 | Sets all PLIO reference frequencies (in MHz). |
-| --aie.workdir | The location of where the work directory will be created. |
+| --aie.workdir | The location of where the work directory is created. |
 
 ## Step 2 - Clocking the PL Kernels
 
-In this design, you will use three kernels called: **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that will receive data from the AI Engine, process the data, and send it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph, and these are specified when compiling the kernel, and when linking the design together. There are different methods to acheive clocking. 
+In this design, you use three kernels, **MM2S**, **S2MM**, and **Polar_Clip**, to connect to the PLIO. The **MM2S** and **S2MM** are AXI memory-mapped to AXI4-Stream HLS designs to handle mapping from DDR and streaming the data to the AI Engine. The **Polar_Clip** is a free running kernel that only contains two AXI4-Stream interfaces (input and output) that receives data from the AI Engine, processes the data, and sends it back to the AI Engine. Clocking of these PLIO kernels is separate from the ADF Graph. You specify these when compiling the kernel and when linking the design together. There are different methods to achieve clocking.
 
 Run the following commands.
 
@@ -88,21 +89,21 @@ Run the following commands.
         --freqhz=200000000 --config ./pl_kernels/polar_clip.cfg \
 ```
 
-OR use MHz, for example: 
+OR use MHz, for example:
 
 ```bash
     v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1 /xilinx_vck190_base_202520_1 .xpfm 
         --freqhz=150MHz --config pl_kernels/mm2s.cfg \
 ```
 
-OR prepare a config file and pass it during v++ compile, for example: 
+OR prepare a config file and pass it during v++ compile, for example:
 
 ```bash
     v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm 
         --config ./pl_kernels/polar_clip.cfg \
 
    In polar_clip.cfg:
-	[hls]
+    [hls]
 	flow_target=vitis
 	syn.file=polar_clip.cpp
 	syn.cflags=-I.
@@ -114,32 +115,31 @@ OR prepare a config file and pass it during v++ compile, for example:
 	freqhz=200MHz
 ```
 
-
 A brief explanation of the `v++` options:
 
 | Flag/Switch | Description |
-| --- | ---|
+| --- | --- |
 | `-c` | Tells `v++` to run the compiler.|
 | `--mode` | Tells `v++` to run the HLS mode for the PL compilation.|
-| `--platform` | (required) The platform to be compiled towards.|
-| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
+| `--platform` | (required) The platform to compile towards.|
+| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this helps the compiler make optimizations based on kernel timing.|
 | `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
-For additional information, see [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-Command).
+For additional information, refer to the [Vitis Compiler Command](https://docs.amd.com/r/en-US/ug1702-vitis-accelerated-reference/v-Command).
 
-After completion, you will have the `mm2s.xo`, `s2mm.xo`, and `polar_clip.xo` files ready to be used by `v++`. The host application will communicate with these kernels to read/write data into memory.
+After completion, you have the `mm2s.xo`, `s2mm.xo`, and `polar_clip.xo` files ready for use by `v++`. The host application communicates with these kernels to read/write data into memory.
 
 ## Step 3 - `v++` linker -- Building the System
 
-Now that you have a compiled graph (`libadf.a`), the PLIO kernels (`mm2s.xo`, `s2mm.xo`, and `polar_clip.xo`), you can link everything up for the VCK190 platform.
+Now that you have a compiled graph (`libadf.a`) and the PLIO kernels (`mm2s.xo`, `s2mm.xo`, and `polar_clip.xo`), you can link everything up for the VCK190 platform.
 
 A few things to remember in this step:
 
-1. For PLIO kernels, you need to specify their connectivity for the system.
+1. For PLIO kernels, you must specify their connectivity for the system.
 2. Specify the clocking per PL kernel.
 3. You need to determine the `TARGET`: *hw* or *hw_emu*.
 
-To link kernels up to the platform and AI Engine, you will need to look at the `system.cfg` file. For this design, the config file looks like this:
+To link kernels up to the platform and AI Engine, look at the `system.cfg` file. For this design, the config file looks like this:
 
 ```ini
 [connectivity]
@@ -152,12 +152,12 @@ stream_connect=polar_clip.out_sample:ai_engine_0.clip_out
 stream_connect=ai_engine_0.DataOut1:s2mm.s
 ```
 
-Here you might notice some connectivity and clocking options.
+Note some connectivity and clocking options here:
 
 * `nk`: This defines your PL kernels as such: `<kernel>:<count>:<naming>`. For this design, you only have one of each `s2mm`, `mm2s`, and `polar_clip` kernels.
 * `stream_connect`: This tells `v++` how to hook up the previous two kernels to the AI Engine instance. Remember, AI Engine only handles stream interfaces.
 
-With the changes made, you can now run the following command. In v++ link command, we have three ways to direct clocking in linker stage: ```--clock-id=<id_value>``` , ```--freqhz``` and ```–clock.freqHz```
+With the changes made, run the following command. In v++ link command, there are three ways to direct clocking in linker stage: ```--clock-id=<id_value>``` , ```--freqhz```, and ```–clock.freqHz```
 
 ```bash
     v++ --link --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm 
@@ -165,9 +165,9 @@ With the changes made, you can now run the following command. In v++ link comman
     --config system.cfg --save-temps -o tutorial1.xsa
 ```
 
-OR use system.cfg file to direct the clock using global ```freqhz``` option and using ```[clock]``` directive. 
+OR use system.cfg file to direct the clock using global ```freqhz``` option and using ```[clock]``` directive.
 
-```bash 	
+```bash
     [connectivity]
 	nk=mm2s:1:mm2s
 	nk=s2mm:1:s2mm
@@ -181,80 +181,81 @@ OR use system.cfg file to direct the clock using global ```freqhz``` option and 
     [clock]
 	freqHz=100000000:polar_clip.ap_clk
 ```
- 
-| Flag/Switch | Description |
-| --- | ---|
-| `--link` | Tells `v++` that it will be linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
-| `--target` | Tells `v++` how far of a build it should go, hardware (which will build down to a bitstream) or hardware emulation (which will build the emulation models).|
-| `--platform` |  Same from the previous two steps.|
-| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this will help with the compiler make optimizations based on kernel timing.|
-| `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc.|
 
-Once the linking is done, you can view clock report generated by v++ --link after pre-synthesis: ``automation_summary_pre_synthesis.txt``
+| Flag/Switch | Description |
+| --- | --- |
+| `--link` | Tells `v++` that it is linking a design, so only the `*.xo` and `libadf.a` files are valid inputs. |
+| `--target` | Tells `v++` how far of a build it should go, hardware (which builds down to a bitstream) or hardware emulation (which builds the emulation models). |
+| `--platform` | Same from the previous two steps. |
+| `--freqhz` | Tells the Vitis compiler to use a specific clock defined by a nine digit number. Specifying this helps the compiler make optimizations based on kernel timing. |
+| `--config` | to specify the kernel config file that contains settings for synthesis like top function, kernel name etc. |
+
+After linking completes, you can view clock report generated by v++ --link after pre-synthesis: ``automation_summary_pre_synthesis.txt``
 
    ![IPI Diagram](./images/clocking_summary.png)
 
-    **IMPORTANT: Do not change anything in this view. This is only for demonstration purposes.**
+   **IMPORTANT: Do not change anything in this view. This is only for demonstration purposes.**
 
-   * As we can see that AIE compile frequency= 200 MHz (same as given in command in step 1)
+* As you can see, the AIE compile frequency= 200 MHz (same as given in command in step 1)
+* To compile, PL kernel frequency for mm2s = 150 MHz (same as given in command in step 2.1)
+* To compile, PL kernel frequency for s2mm = 150 MHz (same as given in command in step 2.2)
+* To compile, PL kernel frequency for Polar_clip  = 200 MHz (same as given in command in step 2.3)
 
-   * To compile, PL kernel frequency for mm2s = 150 MHz (same as given in command in step 2.1)
+To check the platform frequency, give command at terminal: 
 
-   * To compile, PL kernel frequency for s2mm = 150 MHz (same as given in command in step 2.2)
+```bash
+platforminfo $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+```
 
-   * To compile, PL kernel frequency for Polar_clip  = 200 MHz (same as given in command in step 2.3)
+The Vitis platform derives the clock frequency used for linking in the following way:
 
-To check the platform frequency, give command at terminal: platforminfo $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+* Clock frequency used in linking for mm2s = 200 MHz (CLI)
+* Clock frequency used in linking for s2mm = 200 MHz (CLI)
+* Clock frequency used in linking for polar_clip = 100 MHz (config file)
 
-Clock frequency used by Vitis for linking are derived in following way:
+Because these clock frequencies do not match the platform clock frequency, the Vitis platform picks the clock frequency from the platform which is within the default tolerance (+/- 10%) limit. If the link frequency is outside the limit of tolerance, the Vitis platform instantiates a new MMCM to generate the clock frequency used in linking.
 
-    * Clock frequency used in linking for mm2s = 200 MHz (CLI)
+So, for linking, the Vitis platform uses the clock frequency in the following way:
 
-    * Clock frequency used in linking for s2mm = 200 MHz (CLI)
+* For mm2s:
 
-    * Clock frequency used in linking for polar_clip = 100 MHz (config file)
+   Frequency given during linking = 200 MHz
 
-Since these clock frequencies are not matching with the platform clock frequency, so vitis picked the clock frequency from the platform which is coming under the default tolerance (+/- 10%). If link frequency is outside the limit of tolerance new MMCM would be instantiated by Vitis to generate the clock frequency used in linking.
+   Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
 
-So, for linking, the clock frequency used by Vitis in a following way:
-
-    For mm2s:
+* For s2mm:
 
     Frequency given during linking = 200 MHz
 
-    Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
+   Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
 
-    For s2mm:
-
-    Frequency given during linking = 200 MHz
-
-    Frequency used by Vitis = 208.33 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
-
-    For polar_clip:
+* For polar_clip:
 
     Frequency given during linking = 100 MHz
 
     Frequency used by Vitis = 104.17 MHz (platform clock coming under the default tolerance of clock frequency given in link command)
 
-**NOTE: Any change to the `system.cfg` file can also be done on the command line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).**
+>**NOTE:** You can make any changes to the `system.cfg` file using the command line. Make sure to familiarize yourself with the Vitis compiler options by referring to the documentation [here](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File).
 
 ## Step 4 - Compiling Host Code
 
-When the `v++` linker is complete, you can compile the host code that will run on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT** or representation of the root file system, that can be used to cross-compile the host code.
+When the `v++` linker is complete, compile the host code that runs on the Linux that comes with the platform. Compiling code for the design requires the location of the **SDKTARGETSYSROOT** or representation of the root file system, that can be used to cross-compile the host code.
 
 1. Open `./sw/host.cpp`, and familiarize yourself with the contents. Pay close attention to API calls and the comments provided.
 
-    Do take note that Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT) is used in the host application. This API layer is used to communicate with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, see [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
+    Note that this tutorial uses the Xilinx Runtime [(XRT)](https://xilinx.github.io/XRT) in the host application. This API layer communicates with the PL, specifically the PLIO kernels for reading and writing data. To understand how to use this API in an AI Engine application, refer to [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application).
 
-    The output size of the kernel run is half of what was allocated earlier. This is something to keep in mind. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call will be adjusted. If this is not changed, it will hang because XRT is waiting for the full length to be processed when in reality half the count was done (even though all the data will be present). In the `host.cpp`, look at line 117 and 118 and comment them out. You should have uncommented the following line:
+    Keep in mind that the output size of the kernel run is half of what was allocated earlier. By changing the `s2mm` kernel from a 32-bit input/output to a 64-bit input/output, the kernel call adjusts. If this is not changed, it hangs because XRT is waiting for the full length to process. In reality, half the count was completed (even though all the data is present). In the `host.cpp`, look at line 117 and 118 and comment them out. Uncomment the following line:
 
    ```C++
    xrtRunHandle s2mm_rhdl = xrtKernelRun(s2mm_khdl, out_bohdl, nullptr, sizeOut/2);
    ```
 
 2. Open the `Makefile`, and familiarize yourself with the contents. Take note of the `GCC_FLAGS` and `GCC_LIB`.
-   * `GCC_FLAGS`: Should be self-explanatory that you will be compiling this code with C++.
-   * `GCC_LIB`: Has the list of all the specific libraries you will be compiling and linking with. This is the minimum list of libraries needed to compile an AI Engine application for Linux.
+
+   * `GCC_FLAGS`: You are compiling this code with C++.
+   * `GCC_LIB`: Has the list of all the specific libraries you are compiling and linking with. This is the minimum list of libraries needed to compile an AI Engine application for Linux.
+
 3. Close the makefile and run the command: `make host`.
 
 With the host application fully compiled, you can now move to packaging the entire system.
@@ -285,7 +286,7 @@ To run the design on hardware using an SD card, you need to package all the file
     | --- | --- |
     | `--package.rootfs` | This specifies the root file system to be used. In the case of the tutorial it is using the pre-built one from the platform. |
     | `--package.kernel_image` | This is the Linux kernel image to be used. This is also a using a pre-built one from the platform. |
-    | `--package.boot_mode` | Used to specify how the design is to be booted. For this tutorial, an SD card will be used, and it will create a directory with all the contents needed to boot from one. |
+    | `--package.boot_mode` | Used to specify how the design is to be booted. For this tutorial, an SD card is used, and it creates a directory with all the contents needed to boot from one. |
     | `--package.image_format` | Tells the packager the format of the Kernel image and root file system. For Linux, this should be `ext4`. |
     | `--package.defer_aie_run` | This tells the packager that when building the boot system to program the AI Engine, to stop execution. In some designs, you do not want the AI Engine to run until the application is fully loaded. |
     | `--package.sd_file` | Specify this to tell the packager what additional files need to be copied to the `sd_card` directory and image. |
@@ -313,11 +314,11 @@ Modifying the target for both **Step 3** and **Step 5**, link and package a desi
 
 In this tutorial you learned the following:
 
-* Adjusted clocking for PL Kernels and PLIO Kernels
+* How to adjust clocking for PL Kernels and PLIO Kernels
 * How to modify the `v++` linker options through the command-line, as well as the config file
-* How datawidth converters, clock-domain crossing, and FIFOs are inserted in `v++`
+* How to insert datawidth converters, clock-domain crossing, and FIFOs in `v++`
 * How to run an AI Engine application on a VCK190 board
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

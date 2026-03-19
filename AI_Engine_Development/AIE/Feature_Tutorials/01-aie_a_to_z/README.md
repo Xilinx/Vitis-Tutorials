@@ -19,9 +19,9 @@
 
 This tutorial introduces a complete end-to-end flow for a bare-metal host application using AI Engines and PL kernels. The tutorial is based on the 2025.2 Vitis unified software platform.
 
->**NOTE**: This tutorial has been written for multiple versions of the tools. Each version available can be found in the specific Github branch. The recommendation is to use the latest version available.
+>**NOTE**: Different versions of this tutorial correspond to different versions of the tools. You can find each version available in the specific Github branch. AMD recommends using the latest version available.
 
-The flow is broken into four different steps shown in the following diagram.
+The flow has four different steps as shown in the following diagram.
 
 ![missing image](images/diagram_22.1.png)
 
@@ -29,7 +29,6 @@ The flow is broken into four different steps shown in the following diagram.
 
 [Start with AI Engine Development Using a Base Platform](./02-aie_application_creation.md)
 
-
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

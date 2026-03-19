@@ -15,34 +15,34 @@
 
 # Introduction - AI Engine Development
 
-In this section of the tutorial, you will learn how to create a new AI Engine application project from a template, and run through the ***Emulation-AIE*** process.
+In this section of the tutorial, learn how to create a new AI Engine application project from a template and run through the ***Emulation-AIE*** process.
 
 ## Step 1: Create a new AI Engine Application Project
 
 1. Open the Vitis Unified IDE if you have closed it. You can use the same workspace as the previous stage or create a new one.
 
-2. Click on ***View > Examples*** to view the application examples installed with Vitis
+2. Click ***View > Examples*** to view the application examples installed with the Vitis IDE.
 
-3. Under **AI Engine Examples > Installed AI Engine Examples** select the ***Simple*** example
+3. Under **AI Engine Examples > Installed AI Engine Examples** select the ***Simple*** example.
 
       ![missing image](images/232_aie_simple_ex.jpg)
 
-4. Click ***Create AI Engine Component from Template***
+4. Click ***Create AI Engine Component from Template***.
 
       ![missing image](images/232_aie_simple_ex2.jpg)
 
-      >**NOTE:** In the description of the template, it says that the template works only for AI Engine Emulation and software (x86) simulation. In the following steps, you will learn how to make it work on hardware.  
+      >**NOTE:** In the description of the template, it says that the template works only for AI Engine Emulation and software (x86) simulation. In the following steps, learn how to make it work on hardware.
 
-5. Set the component name as ***simple_aie_application*** and click ***Next***
+5. Set the component name as ***simple_aie_application*** and click ***Next***.
 
       ![missing image](images/232_aie_app_pg1.jpg)
 
 6. On the platform page, select the platform you want to use:
 
       * If you have created the platform following step 1, select the **base_pfm_vck190** platform you just created. If you do not use the same workspace from last step, click **Add**, and select the folder `base_pfm_vck190/export` to add the platform into this workspace.
-      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis installation.
+      * If you have skipped step 1, select the VCK190 base platform (xilinx_vck190_base_202510_1) which is part of the Vitis platform installation.
 
-      >**NOTE 1:** There is a current limitation in the Vitis IDE when using the base platform (xilinx_vck190_base_202510_1). Recommendation is to follow step 1 to create a custom platform from vivado
+      >**NOTE 1:** There is a current limitation in the Vitis IDE when using the base platform (vck190_base_202510_1). The recommendation is to follow step 1 to create a custom platform from the Vivado IDE.
 
       ![missing image](images/232_aie_app_pg2.jpg)
 
@@ -59,7 +59,7 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
 9. Open the file `project.h` to see the graph. You can see that the graph (simpleGraph) has one input and one output and implements two kernels with the same function. The output of the first kernel feeds the second one.
 
-      ```
+      ```cpp
       first = kernel::create(simple);
       second = kernel::create(simple);
       adf::connect(in.out[0], first.in[0]);
@@ -71,10 +71,9 @@ In this section of the tutorial, you will learn how to create a new AI Engine ap
 
       ![missing image](images/aie_app_graph.png)
 
-10. Open the file `kernels/kernels.cc` to see what function will be implemented in the kernels.
-You can see that this is a simple operation which is doing the sum of the real and imaginary parts of the input to create the real part of the output and the subtraction the real and imaginary part of the input to create the imaginary part of the output.
+10. Open the file `kernels/kernels.cc` to see what function the kernels implement. You can see that this is a simple operation which does the sum of the real and imaginary parts of the input to create the real part of the output and the subtraction of the real and imaginary part of the input to create the imaginary part of the output.
 
-      ```
+      ```cpp
       void simple(adf::input_buffer<cint16> & in, adf::output_buffer<cint16> & out) {
         cint16 c1, c2;
         cint16* inItr = in.data();
@@ -90,11 +89,11 @@ You can see that this is a simple operation which is doing the sum of the real a
 
 ### Step 2: Build the Project and Run Through Emulation-AIE
 
-1. In the flow navigator, make sure the **simple_aie_application** component is selected and click on ***Build*** under **AIE SIMULATOR / HARDWARE**
+1. In the flow navigator, make sure the **simple_aie_application** component is selected and click on ***Build*** under **AIE SIMULATOR / HARDWARE**.
 
       ![missing image](images/232_aie_app_build.jpg)
 
-2. To run the System C simulation (called **Emulation-AIE** or **AIE SIMULATOR**),  in the Flow navigator, make sure the **simple_aie_application** component is selected and click on ***Run*** under **AIE SIMULATOR / HARDWARE**
+2. To run the SystemC simulation (called **Emulation-AIE** or **AIE SIMULATOR**) in the Flow navigator, make sure the **simple_aie_application** component is selected. Click ***Run*** under **AIE SIMULATOR / HARDWARE**.
 
     ![missing image](images/232_aie_app_run_aiesim.jpg)
 
@@ -102,10 +101,10 @@ You can see that this is a simple operation which is doing the sum of the real a
 
       ![missing image](images/232_aie_app_emu.jpg)
 
-> Note:  The ai engine application creation can be automated by running "make aie_app"
+>**Note**: You can automate the AI Engine application creation by running "make aie_app".
 
 <p align="center"><a href="./03-pl_application_creation.md">Go to System Integration</a></b></p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

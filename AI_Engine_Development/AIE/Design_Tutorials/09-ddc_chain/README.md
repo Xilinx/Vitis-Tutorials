@@ -17,32 +17,11 @@
 
 ***Version: Vitis 2025.2***
 
-## Table of Contents <!-- omit from toc -->
-
-- [Digital Down-conversion Chain: Converting from Intrinsics to API](#digital-down-conversion-chain-converting-from-intrinsics-to-api)
-  - [Introduction](#introduction)
-  - [Upgrading Tools, Device Speed Grade, and Makefile](#upgrading-tools-device-speed-grade-and-makefile)
-  - [Upgrading the Code](#upgrading-the-code)
-    - [Converting Kernel Functions to Kernel Classes](#converting-kernel-functions-to-kernel-classes)
-    - [Migrating from Windows to Buffers](#migrating-from-windows-to-buffers)
-    - [Replacing Intrinsics with APIs](#replacing-intrinsics-with-apis)
-    - [Relocating Global Variables to Kernel Class Data Members](#relocating-global-variables-to-kernel-class-data-members)
-    - [Handling State Variables to Enable x86sim](#handling-state-variables-to-enable-x86sim)
-    - [Updating Older Pragmas](#updating-older-pragmas)
-    - [Supporting x86 Compilation and Simulation](#supporting-x86-compilation-and-simulation)
-  - [Building and Running the Design](#building-and-running-the-design)
-    - [Setup and Initialization](#setup-and-initialization)
-    - [x86 Functional Simulation](#x86-functional-simulation)
-    - [Hardware Simulation](#hardware-simulation)
-  - [Summary](#summary)
-  - [Support](#support)
-  - [License](#license)
-
 ## Introduction
 
-Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
+AMD Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. Data scientists and software and hardware developers can program and optimize the hardware and software. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
-This tutorial demonstrates the steps to upgrade a 32-branch digital down-conversion chain so that it is compliant with the latest tools and coding practice. Examples for the following changes with side-by-side view of the original and upgraded code are included in the tutorial.
+This tutorial demonstrates the steps to upgrade a 32-branch digital down-conversion chain so that it is compliant with the latest tools and coding practice. The tutorial includes examples for the following changes with side-by-side view of the original and upgraded code.
 
 - Converting coding style from kernel functions to kernel C++ classes
 - Relocating global variables to kernel class data members
@@ -60,10 +39,9 @@ You can find the design description in the [Digital Down-conversion Chain Implem
 
 ![figure1](images/Makefile_differences.png)
 
-Important changes to the Makefile are listed below:
+You must make the following important changes to the Makefile:
 
-- Upgrade part speed grade xcvc1902-vsva2197-1LP-e-S-es1 (previously specified by ``--device``) to xcvc1902-vsva2197-2MP-e-S (specified by ``--platform``). As can be seen in the following table (referenced from Versal AI Core Series Data Sheet: DC
-and AC Switching Characteristics [(DS957)](https://www.xilinx.com/support/documents/data_sheets/ds957-versal-ai-core.pdf)), this increases the AI Engine clock frequency from 1 GHz to 1.25 GHz.
+- Upgrade part speed grade xcvc1902-vsva2197-1LP-e-S-es1 (previously specified by ``--device``) to xcvc1902-vsva2197-2MP-e-S (specified by ``--platform``). The following table shows this change (referenced from Versal AI Core Series Data Sheet: DC and AC Switching Characteristics [(DS957)](https://docs.amd.com/go/en-US/ds957-versal-ai-core)), which increases the AI Engine clock frequency from 1 GHz to 1.25 GHz.
 
   ![figure2](images/ds957_table74.png)
 
@@ -77,11 +55,11 @@ and AC Switching Characteristics [(DS957)](https://www.xilinx.com/support/docume
 
 ### Converting Kernel Functions to Kernel Classes
 
-Functionality included in the `init()` function is migrated to the new kernel C++ class constructor. The main kernel function wrapper is migrated to a new class `run()` member function.
+The new kernel C++ class constructor incorporates functionality from the `init()` function. The new class `run()` member function incorporates the main kernel function wrapper.
 
 ![figure3](images/functions_to_classes_1.png)
 
-Create a header file for the class. You are required to write the `static void registerKernelClass()` method in the header file. Inside the `registerKernelClass()` method, call the `REGISTER_FUNCTION` macro. This macro is used to register the class run method to be executed on the AI Engine core to perform the kernel functionality.
+Create a header file for the class. You must write the `static void registerKernelClass()` method in the header file. Inside the `registerKernelClass()` method, call the `REGISTER_FUNCTION` macro. This macro registers the class run method to execute on the AI Engine core to perform the kernel functionality.
 
 ![figure4](images/functions_to_classes_2.png)
 
@@ -91,7 +69,7 @@ When creating the kernel in the upper graph or subgraph, use `kernel::create_obj
 
 ### Migrating from Windows to Buffers
 
-Windows I/O connections between kernels were deprecated in the 2023.2 release of the AMD Vitis™ software platform. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how the source code of a design should change to upgrade it to buffer I/Os. The following figures show the steps required (repeated for every kernel) to upgrade I/O connections from Windows to buffers.
+The 2023.2 release of the AMD Vitis™ software platform deprecated Windows I/O connections between kernels. The AI Engine Kernel and Graph Programming Guide [(UG1079)](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Comparison-between-Buffer-Ports-and-Windows) describes how to change the source code of a design to upgrade it to buffer I/Os. To upgrade I/O connections from Windows to buffers, repeat the following steps for every kernel.
 
 1. Make the changes shown in the following figure in the ``kernel.cc`` file:
 
@@ -117,17 +95,17 @@ The following example shows a side-by-side comparison of intrinsic-based code co
 
 ### Handling State Variables to Enable x86sim
 
-Move the state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as shown below. More information can be found in the in Memory Model section of the AI Engine Tools and Flows User Guide [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Memory-Model).
+Move the state variables instantiation from ``kernel::run`` to class member or use ``thread_local``, as shown in the following figure. For more information, refer to the Memory Model section of the AI Engine Tools and Flows User Guide [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Memory-Model).
 
 ![figure11](images/handling_state_variables_x86sim.png)
 
 ### Updating Older Pragmas
 
-Update `chess_alignof` to `alignas`. This is highlighted in the previous figure.
+Update `chess_alignof` to `alignas`. The previous figure highlights this change.
 
 ### Supporting x86 Compilation and Simulation
 
-x86 compilation and functionally correct simulation is enabled using the following actions:
+The following actions enable x86 compilation and functionally correct simulation:
 
 - Modifying the Makefile to include target=x86sim capability.
 
@@ -139,45 +117,43 @@ x86 compilation and functionally correct simulation is enabled using the followi
 
 ## Building and Running the Design
 
-The 32-branch digital down-conversion design can be built using the command line.
+You can build the 32-branch digital down-conversion design using the command line.
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial ensure you have installed Vitis™ 2025.2 software. Ensure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, install the AMD Vitis™ 2025.2 software platform. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html). 
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
 
 ### x86 Functional Simulation
 
-The DDC design can be built and simulated targeting x86sim to functionally verify the C code as follows:
+You can build and simulate the DDC design targeting x86sim to functionally verify the C code as follows:
 
 ```shell
 [shell]% cd <path-to-09-ddc_chain-dir>
 [shell]% make x86all
 ```
 
-The number of simulation samples mismatch compared to expected outputs is displayed. 
+The number of simulation samples mismatch compared to expected outputs is displayed.
 
 ### Hardware Simulation
 
-The DDC design can be built and simulated by targeting hardware using the Makefile as follows:
+You can build and simulate the DDC design by targeting hardware using the Makefile as follows:
 
 ```shell
 [shell]% cd <path-to-09-ddc_chain-dir>
 [shell]% make all
 ```
 
-The number of simulation samples mismatch compared to expected outputs is displayed. 
-Achieved throughput for all branches against minimum requirement is also displayed.
+The simulation displays the number of samples mismatch compared to expected outputs. The simulation also displays achieved throughput for all branches against minimum requirement.
 
 ## Summary
 
-In this tutorial, we highlight steps that an AI Engine designer can take to upgrade their design to use APIs instead of intrinsics.
-The upgraded AIE API version achieves the same throughput performance as the original code base, while being easier to read and maintain.
+In this tutorial, we highlight steps that an AI Engine designer can take to upgrade their design to use APIs instead of intrinsics. The upgraded AIE API version achieves the same throughput performance as the original code base, while being easier to read and maintain.
 
-Table below summarizes key parameters for the older design (ran on newer version of the tools) and compares it to upgraded design.
+The following table summarizes key parameters for the older design (ran on newer version of the tools) and compares it to upgraded design.
 
-||Original|Upgraded|
+|Parameters|Original|Upgraded|
 |---|---|---|
 |Support x86sim | No | Yes |
 | Intrinsics vs API | Intrinsics | Mostly APIs |
@@ -187,7 +163,7 @@ Table below summarizes key parameters for the older design (ran on newer version
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
 
 ## License
 

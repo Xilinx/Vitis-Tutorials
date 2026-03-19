@@ -15,10 +15,10 @@
 
 # Conclusion
 
-This tutorial provides a detailed review of several methods for implementing highperformance FFT and DFT algorithms on the AI Engine array. These include the Stockham algorithm implemented by the Vitis DSPlib or coded by hand using the AI Engine API and a direct-form DFT for small point sizes implemented as a vector-matrix multiplication. Both approaches can achieve a broad spectrum of FFT and DFT point sizes and throughput rates for practical applications.
+This tutorial provides a detailed review of several methods for implementing high performance FFT and DFT algorithms on the AI Engine array. These include the Stockham algorithm implemented by the AMD Vitis™ DSPlib or coded by hand using the AI Engine API and a direct-form DFT for small point sizes implemented as a vector-matrix multiplication. Both approaches can achieve a broad spectrum of FFT and DFT point sizes and throughput rates for practical applications.
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
