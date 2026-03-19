@@ -1,0 +1,44 @@
+{
+    "name": "Versal_VCK190_Segmented_Config_Petalinux",
+    "description": "To guide users through creating an acceleration application for the VCK190 board using segmented configuration with Petalinux-based software development.",
+    "gui": "false",
+    "flow": "versal",
+    "platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "VSD_04_VCK190-SEG-PETALINUX",
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup_versal.sh"
+            },
+            "board": {
+                "pre_exec": "./env_setup_versal.sh"
+            }
+         },
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_hw_build": 300
+                }
+            }
+        ],
+        "targets": [
+            "vitis_hw_build",
+            "vitis_hw_run"
+        ],
+        "make_options": [
+            "CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++",
+            "HOST_ARCH=aarch64",
+            "EMBEDDED_PACKAGE_OUT=./step3_application/package_sd.hw/", 
+            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+        ],
+        "custom_build_target":
+        {
+            "all": "all",
+            "hw" : "sd_card"
+        },
+        "custom_board_target": "run_test" 
+    }
+}
+
