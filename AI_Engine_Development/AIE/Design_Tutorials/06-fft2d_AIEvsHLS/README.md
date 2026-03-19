@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -21,44 +21,47 @@
 
 [Introduction](#introduction)
 
-[Before You Begin](#Before-you-Begin)
+[Before You Begin](#before-you-begin)
 
-[Design Implementations](#Design-Implementations)
+[Design Implementations](#design-implementations)
 
-[AI Engine and HLS Implementation Comparison](#AI-Engine-and-HLS-Implementation-Comparison)
+[AI Engine and HLS Implementation Comparison](#ai-engine-and-hls-implementation-comparison)
 
-[References](#References)
+[References](#references)
 
-[Known Issues](#Known-Issues)
+[Known Issues](#known-issues)
 
 ## Introduction
 
-Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
+AMD Versal™ adaptive SoCs combine programmable logic (PL), processing system (PS), and AI Engines with leading-edge memory and interfacing technologies to deliver powerful heterogeneous acceleration for any application. The hardware and software are targeted for programming and optimization by data scientists and software and hardware developers. A host of tools, software, libraries, IP, middleware, and frameworks enable Versal adaptive SoCs to support all industry-standard design flows.
 
-This tutorial performs two implementations of a system-level design: one with an AI Engine and the other with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system design.
+This tutorial performs two implementations of a system-level design: one with an AI Engine and another with HLS using the DSP Engines. In each implementation, the tutorial takes you through the hardware emulation and hardware flow in the context of a complete Versal adaptive SoC system design.
 
-A Makefile is provided for each implementation. It can be used to create the design for `cint16` and `acfloat` datatypes for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048), different numbers of fft_2d HLS kernel/AI Engine graph instances (1, 5, and 10), and lastly for different targets (hw_emu and hw).
+A Makefile is available for each implementation. You can use it to create the design for the following:
 
-The design documentation demonstrates hardware and software design details, including the methodology for each implementation, elaborating on the functional partitioning. The compilation, execution, measurement steps, and observations are given.
+* `cint16` and `acfloat` datatypes for various point sizes (32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048)
+* Different numbers of fft_2d HLS kernel/AI Engine graph instances (1, 5, and 10)
+* Different targets (hw_emu and hw)
+
+The design documentation demonstrates hardware and software design details, including the methodology for each implementation, elaborating on the functional partitioning. The documentation provides compilation, execution, measurement steps, and observations.
 
 <details>
   <summary>Objectives</summary>
 
-
 ### Objectives
 
-After completing the tutorial, you should be able to:
+After completing the tutorial, you can do the following:
 
-* Develop a system-level 2D-FFT design by identifying and deploying an algorithm on AI Engines or PL and DSP Engines using AMD Vitis&trade; HLS. 
-* Build a complete system design by going through the following steps in the Vitis flow:
+* Develop a system-level 2D-FFT design by identifying and deploying an algorithm on AI Engines or PL and DSP Engines using AMD Vitis&trade; HLS.
+* Build a complete system design using the following steps in the Vitis flow:
   * Create the AI Engine Adaptive Data Flow API (ADF) graph.
   * Compile the A72 host application and PL kernels.
   * Use the Vitis compiler (V++) to link the AI Engine and HLS kernels with the platform.
   * Package the design.
   * Run the design through the hardware emulation and flow in a mixed SystemC/RTL cycle-accurate/QEMU-based simulator.
 * Develop a consistent harness to have the data mover kernels maintain a similar interface with AI Engine or HLS/PL kernels (using AXI4-Stream).
-* Understand graph control APIs for AI Engine implementation and HLS APIs for controlling HLS/PL kernels.
-* Understand the methodological differences between a design created using AI Engines and one created using PL and DSP Engines via HLS.
+* Understand graph control APIs for AI Engine implementation, and HLS APIs for controlling HLS/PL kernels.
+* Understand the methodological differences between a design created using AI Engines and one created using PL and DSP Engines using HLS.
 * Understand metrics, including utilization, performance/throughput, and power across various instances of FFT arrays of different dimensions.
 
 </details>
@@ -68,7 +71,7 @@ After completing the tutorial, you should be able to:
 
 ### Design Overview
 
-This design aims to implement a 2D-FFT algorithm performed on (for example) a 1024 x 2048 matrix using 1024- and 2048-point 1D-FFT kernels. The pseudo-code to implement the algorithm is shown in the following example:
+This design implements a 2D-FFT algorithm performed on (for example) a 1024 x 2048 matrix using 1024- and 2048-point 1D-FFT kernels. The following example shows the pseudo code to implement the algorithm:
 
 ```
 x = rand(a,b);         % Create matrix of dimensions m x n
@@ -84,15 +87,15 @@ x_col = x_col.’;       % Transpose
 x_2fft - x_col         % Calculate the error difference
 ```
 
-In calculating each 1D-FFT, one dimension is kept constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as a reference, and the error difference is calculated.
+In calculating each 1D-FFT, one dimension remains constant while the other is computed. The transpose function is applied after each 1D-FFT compute. The transpose function moves the entry along each element of the dimension to the corresponding element of the other dimension. A golden data set is generated as a reference, and the error difference is calculated.
 
-A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through the Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value = 1 or 1.5, depending on the cint16 or cfloat datatype) input to the row-wise 1D-FFT and check its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
+A similar algorithm is deployed in the two implementations using either the AI Engines or HLS targeting the PL and DSP Engines. The design compiles through the Vitis compiler, creates a PetaLinux-based platform using a script, and generates the PDI and host application. Instead of the transpose part, however, a PL-based data generator and checker (referred to as a data mover) is used to give an impulse (value = 1 or 1.5, depending on the cint16 or cfloat datatype) input to the row-wise 1D-FFT. It also checks its output against the expected FFT output for the same (the first row containing all 1s and remaining 0s).
 
-The transposed pattern generated within the PL is streamed as input to the col-wise 1D-FFT. Its output is checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application, which is used to declare a pass or fail of the test case.
+The transposed pattern generated within the PL is streamed as input to the col-wise 1D-FFT. Its output is checked against the expected output (all 1s). The data mover kernel returns the total error count in both stages to the host application. The application declares a pass or fail of the test case.
 
-To help you compare the methodology of the AI Engine and HLS-based implementations, the design-build process can be modified to analyze how each implementation scales with different numbers of instances (x1, x5, and x10) of various matrix array dimensions (rows x cols = 32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048). 
+To help you compare the methodology of the AI Engine and HLS-based implementations, you can modify the design-build process to analyze how each implementation scales with different numbers of instances (x1, x5, and x10) of various matrix array dimensions (rows x cols = 32 x 64, 64 x 128, 128 x 256, 256 x 512, and 1024 x 2048).
 
-A similar set of harnesses is developed and maintained between the two implementations. This allows you to generate and check input/output vectors using the PL-based data mover kernels and moving data to and from the AI and HLS kernels. In both cases, Xilinx Runtime (XRT) running on A72 controls data flow in compute, and data mover kernels through graph control APIs. These graph control APIs control the AI Engine kernels and HLS APIs, which control the HLS/PL kernels.
+A similar set of harnesses is developed and maintained between the two implementations. This lets you to generate and check input/output vectors using the PL-based data mover kernels, and to move data to and from the AI and HLS kernels. In both cases, Xilinx Runtime (XRT) running on A72 controls data flow in compute, and data mover kernels through graph control APIs. These graph control APIs control the AI Engine kernels and HLS APIs, which control the HLS/PL kernels.
 
 </details>
 
@@ -132,60 +135,59 @@ fft2d_AIEvsHLS
 |    |       |directives.................contains directives for various vitis compilation stages like hls.pre_tcl etc.
 |    |       |hw_emu_files...............contains hw_emu launch script
 ```
+
 </details>
 
 ## Before You Begin
 
 <details>
-	
-<summary>Documentation: Explore AI Engine Architecture</summary> 
+
+<summary>Documentation: Explore AI Engine Architecture</summary>
 
 ### Documentation: Explore AI Engine Architecture
 
-* [AI Engine Development Design Process](https://www.xilinx.com/support/documentation-navigation/design-process/ai-engine-development.html)
+* [AI Engine Development Design Process](https://docs.amd.com/p/ai-engine-development)
 
 * [AM011 AI Engine Architecture Manual](https://docs.amd.com/r/en-US/am011-versal-acap-trm)
 
-* [Versal adaptive SoC AI Engines for Dummies](https://forums.xilinx.com/t5/Design-and-Debug-Techniques-Blog/Versal-ACAP-AI-Engines-for-Dummies/ba-p/1132493)
+* [Versal adaptive SoC AI Engines for Dummies](https://adaptivesupport.amd.com/s/article/1132493?language=en_US)
 
 </details>
 
 <details>
-<summary>Installing the Tools</summary> 
-	
+<summary>Installing the Tools</summary>
+
 ### Installing the Tools
 
 To build and run the 2D-FFT tutorial (AI Engine and HLS implementations), perform the following steps:
 
-* Install the [Vitis Software Platform](https://www.xilinx.com/products/design-tools/vitis/vitis-platform.html).
+* Install the [Vitis Software Platform](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html)
 
 * Obtain licenses for AI Engine tools.
 
+* [DSP Library(DSPLIB) Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
-
-*  [DSP Library(DSPLIB) Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
-
-* Download the [DSP Library] (https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
+* Download the [DSP Library](https://github.com/Xilinx/Vitis_Libraries/tree/master/dsp)
 
 </details>
 
 <details>
-<summary>Platform</summary> 
+<summary>Platform</summary>
 
 ### Platform
 
-Before beginning the tutorial, make sure you have read and followed the [Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software.
+Before beginning the tutorial, read and follow the [Vitis Software Platform Release Notes](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Software-Platform-Release-Notes) for setting up software.
 
-This tutorial targets the [VCK190 production board](https://www.xilinx.com/products/boards-and-kits/vck190.html). If you have already purchased this board, download the necessary files by following installation steps and ensure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
+This tutorial targets the [VCK190 production board](https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vck190.html). If you have already purchased this board, download the necessary files by following installation steps and make sure you have the correct licenses installed. If you do not have a board and the required license, contact your AMD sales contact.
 
 </details>
 
 <details>
 <summary>Setting Up the Environment</summary>
- 
-### Setting up the Environment
 
-When the Vitis software platform elements are installed, update the shell environment script. Set the environment variables to your system-specific paths.
+### Setting Up the Environment
+
+After installing the Vitis software platform elements, update the shell environment script. Set the environment variables to your system-specific paths.
 
 To set up XRT, if you have not done this already, run the following command:
 
@@ -197,23 +199,23 @@ In the design directory of each implementation, edit `env_setup.sh` script with 
 
 ```bash
 source env_setup.sh
-``` 
+```
 
-The script sets up the environment variables and sources scripts explained below:
+The script sets up the environment variables and sources scripts, explained as follows:
 
 1. The `PLATFORM_REPO_PATHS` environment variable is based on where you downloaded the platform.
-2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is used to source the `settings64.sh` script.
-3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2025.2` directory is used in the step below.
-4. The platform is set up by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you _must_ run the `xilinx-versal-common-v2025.2/sdk.sh` script.
+2. The `XILINX_TOOLS_LOCATION` path to the Xilinx tools is for sourcing the `settings64.sh` script.
+3. The `XLNX_VERSAL` path to the `xilinx-versal-common-v2025.2` directory is used in the step following step.
+4. Running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download sets up the platform. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, you *must* run the `xilinx-versal-common-v2025.2/sdk.sh` script.
 5. `DSPLIB_ROOT` is the path to the downloaded Vitis DSP Libraries. This is only required for the AI Engine implementation.
-6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can be packaged in the Vitis compiler packaging step. If not set up, this environment variable is automatically excluded from packaging.
+6. In the script, you can optionally set up an `XRT_ROOT` environment variable, pointing to XRT - RPMs, which can you can package in the Vitis compiler packaging step. If not set up, this environment variable is automatically excluded from packaging.
 7. The script also sets up the `PLATFORM` variable pointing to the required `.xpfm` file of the target platform set by the variable `tgt_plat`.
 
 </details>
 
 <details>
-<summary>Confirming Tool Installation</summary> 
-	
+<summary>Confirming Tool Installation</summary>
+
 ### Confirming Tool Installation
 
 To confirm that you have installed the correct tools, run the following command:
@@ -229,7 +231,7 @@ To confirm you have the VCK190 base platform, run the following command:
 platforminfo --list | grep -m 1 -A 9 vck190
 ```
 
-The output of the above command should be as follows:
+The output of the preceding command is as follows:
 
 ```bash
  "baseName": "xilinx_vck190_base_202520_1",
@@ -247,7 +249,7 @@ The output of the above command should be as follows:
 
 ## Design Implementations
 
-The Makefile and source files for the AI Engine and HLS implementations are in the `AIE` and `DSP` directories, respectively. For the documentation of the flow to build the design and details of the hardware and software design, follow each of the links as follows:
+The Makefile and source files for the AI Engine and HLS implementations are in the `AIE` and `DSP` directories, respectively. For documentation of the flow to build the design and details of the hardware and software design, refer to the following links:
 
 * [AI Engine design implementation](AIE)
 * [HLS design implementation with DSP Engines](HLS)
@@ -264,16 +266,16 @@ The following table compares a 1024 x 2048 point 10-instance FFT-2D design imple
 These observations give a clear indication of where the AI Engines in Versal can offer improvements:
 
 * Reduced latency by ~19.054%.
-* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~88K FFs, ~56K LUTs, and 250 BRAMs are reduced to 72 AI Engines, 11k FFs, and 3K LUTs.
+* Moving to AI Engine implementation reduces the PL and DSP resources considerably; 180 DSPs, ~88K FFs, ~56K LUTs, and 250 BRAMs reduce to 72 AI Engines, 11k FFs, and 3K LUTs.
 
-It is important to understand that those 72 AI Engines are not all required for the 2D-FFT compute: 20 AI Engines/vector cores are required for computation, and 52 AI Engines are required for the memory to store the FFT twiddle factors and also to enable connectivity around the array. The average load on these additional 52 AI Engine tiles is only 79%. This means that if your application needs it, these AI Engines can be shared with other functions to run sequentially, or they can use user constraints to better map and route this function to a reduced number of AI Engine tiles (see [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router).
+It is important to understand that those 72 AI Engines are not all required for the 2D-FFT compute. Computation requires 20 AI Engines/vector cores. Memory requires 52 AI Engines for Storing the FFT twiddle factors and enabling connectivity around the array. The average load on these additional 52 AI Engine tiles is only 79%. This means that if your application needs it, you can share these AI Engines with other functions to run sequentially. Alternatively, they can use user constraints to better map and route this function to a reduced number of AI Engine tiles. Refer to [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Mapper/Router-Methodology) for details on the AI Engine mapper/router.
 
-Additionally, increasing the number of instances in the AI Engine design is easier than the HLS design, which runs into timing closure issues, especially for higher FFT point size designs.
+Also, increasing the number of instances in the AI Engine design is easier than the HLS design, which runs into timing closure issues. This is especially true for higher FFT point size designs.
 
 **Measurement:**
 
-1. AI Engine design resource utilization is measured using Xilinx Power Estimator (XPE) and AMD Vivado&trade; (report utilization under implementation for FFs and CLB LUTs). For the HLS design, resource utilization is measured using Vivado.
-2. AI Engine power consumption is measured using XPE. HLS power consumption is measured using Vivado (report power under implementation).
+1. You can use Xilinx Power Estimator (XPE) and AMD Vivado&trade; (report utilization under implementation for FFs and CLB LUTs) to measure AI Engine design resource utilization. Vivado measures resource utilization in the HLS design.
+2. XPE measures AI Engine power consumption. Vivado (report power under implementation) measures HLS power consumption.
 3. Throughput is measured using viewing runtime profiling generated trace texts in `vitis_analyzer`.
 
 For detailed instructions on taking measurements of the parameters, refer to the individual implementation section.
@@ -286,11 +288,11 @@ Contains sections on how to develop AI Engine graphs, how to use the AI Engine c
 
 #### Vitis DSP Libraries
 
-* [Vitis DSP Libraries Comprehensive Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html) 
+* [Vitis DSP Libraries Comprehensive Documentation](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/index.html)
 
 #### Xilinx Runtime (XRT) Architecture
 
-Below are links to the XRT information used by this tutorial: 
+Following are links to the XRT information used by this tutorial:
 
 * [XRT Documentation](https://xilinx.github.io/XRT/master/html/index.html): Explains general XRT API calls used in the PS Host Application.
 
@@ -298,11 +300,13 @@ Below are links to the XRT information used by this tutorial:
 
 * [XRT AIE API](https://github.com/Xilinx/XRT/blob/master/src/runtime_src/core/include/experimental/xrt_aie.h): Documents the AI Engine XRT API calls
 
-* [XRT Release Notes](https://docs.amd.com/r/en-US/ug1451-xrt-release-notes)
+* [XRT Release Notes](https://docs.amd.com/r/en-US/ug1742-vitis-release-notes/Vitis-Release-Notes)
 
-#### Vitis Unified Software Development Platform Documentation (https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation)
+#### Vitis Unified Software Development Platform Documentation
 
-Below are links to Vitis related information referenced in this tutorial:
+* https://docs.amd.com/v/u/en-US/ug1416-vitis-documentation
+
+Following are links to Vitis-related information referenced in this tutorial:
 
 * [Vitis Application Acceleration Development Flow Documentation](https://docs.amd.com/v/u/en-US/ug1393-vitis-application-acceleration)
 
@@ -312,12 +316,13 @@ Below are links to Vitis related information referenced in this tutorial:
 
 ## Known Issues
 
-The timestamps represented in the hardware execution generated trace have known an issue due to which they are scaled compared to the actual. This issue will be fixed in the subsequent tool versions. All calculations/observations in this tutorial are based on the hw_emu runs.
+The timestamps represented in the hardware execution generated trace have a known issue due to how they are scaled compared to the actual. This issue will be fixed in subsequent tool versions. All calculations/observations in this tutorial use the hw_emu runs.
 
 ## Support
 
-Requests and bugs are tracked using GitHub issues. For questions, go to [forums.xilinx.com](http://forums.xilinx.com/).
+Requests and bugs are tracked using GitHub issues. For questions, go to [Adaptive SoC & FPGA Support](https://adaptivesupport.amd.com/s/?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

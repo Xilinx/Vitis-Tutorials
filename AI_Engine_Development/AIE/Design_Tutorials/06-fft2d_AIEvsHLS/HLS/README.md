@@ -6,9 +6,9 @@
         <img alt="AMD logo" src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%">
       </picture>
       <h1>AMD Vitis™ AI Engine Tutorials</h1>
-      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">See Vitis™ Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis.html">Refer to Vitis™ Development Environment on amd.com</a>
         </br>
-      <a href="https://www.amd.com/en/products/software/vitis-ai.html">See Vitis™ AI Development Environment on amd.com</a>
+      <a href="https://www.amd.com/en/products/software/vitis-ai.html">Refer to Vitis™ AI Development Environment on amd.com</a>
     </td>
   </tr>
 </table>
@@ -19,13 +19,13 @@
 
 ## Table of Contents
 
-[Building the Design](#Building-the-Design)
+[Building the Design](#building-the-design)
 
-[Hardware Design Details](#Hardware-Design-Details)
+[Hardware Design Details](#hardware-design-details)
 
-[Software Design Details](#Software-Design-Details)
+[Software Design Details](#software-design-details)
 
-[Performance Details](#Performance-Details)
+[Performance Details](#performance-details)
 
 ## Building the Design
 
@@ -34,24 +34,24 @@
 
 ### Design Build
 
-In this section, you build and run the 2D-FFT design using the HLS/DSP implementation. You compile and integrate the HLS/DSP design into a larger system design (including the PL kernels and PS host application).
+In this section, you build and run the 2D-FFT (Fast Fourier Transform) design using the HLS/DSP implementation. You compile and integrate the HLS/DSP design into a larger system design (including the PL kernels and PS host application).
 
-At the end of this section, the design flow generates a new directory (called `build/`). Underneath are subdirectories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/`, depending on the value of the datatype `${FFT_2D_DT}`, the values of the matrix dimensions (`${MAT_ROWS}`, `${MAT_COLS}`) and the number of instances (`$(FFT_2D_INSTS)`) chosen in the build. Each subdirectory contains the `hw_emu/` and/or `hw/` subfolders. These subfolders contain a host app executable and the builds targeted to `hw` or `hw_emu`, respectively. The `hw_emu/` subfolder contains the build for the hardware emulation. The `hw/` subfolder contains the build for a hardware run on a VCK190 board.
+At the end of this section, the design flow generates a new directory (called `build/`). Underneath are subdirectories named `(cint16_dsns-cfloat_dsns)/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/`, depending on the value of the datatype `${FFT_2D_DT}`, the values of the matrix dimensions (`${MAT_ROWS}`, `${MAT_COLS}`) and the number of instances (`$(FFT_2D_INSTS)`) chosen in the build. Each subdirectory contains the `hw_emu/` or `hw/` subfolders. These subfolders contain a host app executable and the builds targeted to `hw` or `hw_emu`, respectively. The `hw_emu/` subfolder contains the build for the hardware emulation. The `hw/` subfolder contains the build for a hardware run on a VCK190 board.
 
 </details>
 
 <details>
-<summary>Make Steps</summary> 
-	
+<summary>Make Steps</summary>
+
 ### Make Steps
 
-To run the following `make` steps (for example, `make kernels`, `make xsa`, and so on), you must be in the `HLS/` folder. The following options can be specified in the `make` steps. Instructions for how to apply them are provided later in this section.
+To run the following `make` steps (for example, `make kernels` and `make xsa`), you must be in the `HLS/` directory. You can specify the following options in the `make` steps. Instructions for how to apply them are provided later in this section.
 
-`TARGET:` This option can be set to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow. The default is `hw_emu`.
+`TARGET:` You cans et this option to `hw` or `hw_emu` to build the design in the hardware or hardware emulation flow. The default is `hw_emu`.
 
-`FFT_2D_INSTS:` This option can be set to 1, 5, or 10 to build the design with the number of kernel instances. The default is `1`.
+`FFT_2D_INSTS:` You can set this option to 1, 5, or 10 to build the design with the number of kernel instances. The default is `1`.
 
-`ITER_CNT:` The number of iterations the design is run. The default is `16`.
+`ITER_CNT:` The number of iterations the design runs. The default is `16`.
 
 `FFT_2D_PT:` FFT 2D point. Permissible values are `64`, `128`, `256`, `512`, and `2048`.
 
@@ -106,7 +106,7 @@ If you are already familiar with the HLS and AMD Vitis&trade; kernel compilation
 make run ( default hardware emulation, cint16 datatype, 1 instance, iterations=16, matrix dimentions rows=1024 and columns=2048, no trace-profiling )
 ```
 
-or 
+or
 
 ```bash
 make run TARGET=hw FFT_2D_DT=0 FFT_2D_INSTS=5 ITER_CNT=16 EN_TRACE=1 FFT_2D_PT=64 (hardware, 5 instances, 16 iterations, enable trace profiling, matrix dimentions rows=32 and columns=64 )
@@ -120,7 +120,7 @@ Each `make` step to build the design is specified in the following sections. The
 
 <details>
 <summary>make kernels: Compiling PL Kernels</summary>
- 
+
 ### make kernels: Compile PL Kernels
 
 In this step, the Vitis compiler takes any V++ kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202520_1`) and the HLS kernels and compiles them into their respective XO files. The following commands compile the kernels ( `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0`, and `FFT_2D_PT=2048`).
@@ -154,8 +154,7 @@ v++ --target hw_emu --hls.clock 250000000:dma_hls --platform xilinx_vck190_base_
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used.
-
+Refer to [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/v-Command) for a detailed description of all Vitis compiler switches. The following table provides a summary of the switches used.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -183,25 +182,25 @@ See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-accelerati
 
 <details>
 <summary>make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform</summary>
- 
+
 ### make xsa: Using the Vitis Tools to Link HLS Kernels with the Platform
 
-After the HLS kernels have been compiled, you can use the Vitis compiler to link them with the platform to generate an XSA file.
+After the HLS kernels compile, you can use the Vitis compiler to link them with the platform to generate an XSA file.
 
-The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer (or you can opt to use one of the many extensible base platforms provided by Xilinx and the Vitis tools build the hardware design and integrate the HLS kernels into the design).
- 
+The Vitis tools allow you to integrate the HLS kernels into an existing extensible platform. This is an automated step from a software developer perspective where the platform chosen is provided by the hardware designer. Alternatively, you can use one of the extensible base platforms provided by AMD and the Vitis tools to build the hardware design and integrate the HLS kernels into the design.
+
 To test this feature in this tutorial, use the base VCK190 platform to build the design.
- 
+
 The command to run this step is shown as follows (default `FFT_2D_DT=0`, `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=8`, `EN_TRACE=0`, `FFT_2D_PT=2048`):
 
 ```
 make xsa
-``` 
+```
 
 The expanded command is as follows:
 
 ```
-cd $(BUILD_TARGET_DIR);	\
+cd $(BUILD_TARGET_DIR); \
 
 v++ -l --platform xilinx_vck190_base_202520_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g --clock.freqHz 500000000:fft_2d_0 --clock.freqHz 250000000:dma_hls_0 --clock.defaultTolerance 0.001 \
@@ -242,7 +241,7 @@ If `EN_TRACE` is enabled, the following Vitis compiler flags are also set:
 ```
 For higher values of `FFT_2D_INSTS`, only the `strmInp_from_colwiseFFT` port is profiled to avoid too much data.
 
-See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System) for a detailed description of Vitis linking options. The following table provides a summary of the switches used.
+Refer to [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Linking-the-System) for a detailed description of Vitis linking options. The following table provides a summary of the switches used.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -252,7 +251,7 @@ See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-accelerati
 |--verbose|Display verbose/debug information.|
 |--output \| -o|Specifies the name of the output file generated by the V++ command. In this design the outputs of the HLS/DSP kernels with their interfacing with the PL kernels are in XO files.|
 |--vivado.prop \<arg\>|Specifies properties for the AMD Vivado&trade; Design Suite to be used during synthesis and implementation of the FPGA binary (xsa). See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/vivado-Options) for detailed Vivado options.|
-|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IPs. This option needs to be specified during linking. See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
+|--profile.data [<kernel_name>\|all]:[<cu_name>\|all]:[<interface_name>\|all]\(:[counters\|all]\)|Enables monitoring of data ports through the monitor IP cores. This option needs to be specified during linking. See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
 |--profile.trace_memory \<FIFO\>:\<size\>\|\<MEMORY\>[\<n\>]|When building the hardware target \(-t=hw\), use this option to specify the type and amount of memory to use for capturing trace data. See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/profile-Options) for detailed profiling options.|
 |--config <config_file>|Specifies a configuration file containing V++ switches.|
 
@@ -277,19 +276,17 @@ param=hw_emu.enableProfiling=false
 param=compiler.addOutputTypes=hw_export
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file. A summary of the configuration options used is provided in the following table.
-
+Refer to [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Vitis-Compiler-Configuration-File) for a detailed description of the Vitis compiler configuration file. A summary of the configuration options used is provided in the following table.
 
 |Switch|Comment|
 |  ---  |  ---  |
 |--connectivity.nk|Number of kernels. `dma_hls:1:dma_hls_0` means that the Vitis compiler should instantiate one dma_hls kernel and name the instance `dma_hls_0`.|
-|--connectivity.stream_connect|How the kernels connect to IPs, platforms, or other kernels. The elaborates the streaming port connections like. `dma_hls_0.strmOut_to_rowiseFFT:fft_2d_0.strmFFTrows_inp` means that the Vitis compiler should connect the port `strmOut_to_rowiseFFT` of `dma_hls_0` HLS kernel to the `strmFFTrows_inp` of the `fft_2d_0` HLS kernel.|
+|--connectivity.stream_connect|How the kernels connect to IP cores, platforms, or other kernels. The elaborates the streaming port connections like. `dma_hls_0.strmOut_to_rowiseFFT:fft_2d_0.strmFFTrows_inp` means that the Vitis compiler should connect the port `strmOut_to_rowiseFFT` of `dma_hls_0` HLS kernel to the `strmFFTrows_inp` of the `fft_2d_0` HLS kernel.|
 |param=compiler.addOutputTypes=hw_export| This option tells the Vitis compiler that besides creating an XSA file, it also outputs an XSA file which is needed to create a post-Vivado fixed platform for Vitis software development.|
 
 The Vitis compiler calls the AMD Vivado&trade; IP integrator under the hood to build the design. The platform and kernels are input to the Vivado Design Suite, which produces a simulation XSA or an XSA after running place and route on the design. The point at which the XSA is produced from Vivado depends on the `-target` option set on the Vitis compiler command line.
 
 You can now view the Vivado project, which is located in the `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj` directory. You have now generated the XSA file, `$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xsa`, that is used to execute your design on the platform.
-
 
 </details>
 
@@ -306,7 +303,7 @@ make application
 or
 
 ```
-cd $(BUILD_TARGET_DIR);	\
+cd $(BUILD_TARGET_DIR); \
 
 aarch64-xilinx-linux-g++ -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack-protector-strong \
    -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Werror=format-security --sysroot=$(SDKTARGETSYSROOT) -O -c \
@@ -321,8 +318,7 @@ aarch64-xilinx-linux-g++  -mcpu=cortex-a72.cortex-a53 -march=armv8-a+crc -fstack
    -o $(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf
 ```
 
-See [this page](https://xilinx.github.io/XRT/) for XRT documentation. See [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Best-Practices-for-Host-Programming) for details of host application programming.
-
+Refer to [this page](https://xilinx.github.io/XRT/) for XRT documentation. Refer to [this page](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Best-Practices-for-Host-Programming) for details of host application programming.
 
 |Switch|Description|
 |  ---  |  ---  |
@@ -336,7 +332,7 @@ See [this page](https://xilinx.github.io/XRT/) for XRT documentation. See [this 
 |-l\<library\>|Search the library named `library` when linking. The 2D-FFT tutorial requires `adf_api_xrt` and `xrt_coreutil` libraries.|
 |-L \<dir\>|Add directory `<dir>` to the list of directories to be searched for -l.|
 
-The following is a description of the input sources compiled by the cross-compiler compiler command. 
+The following is a description of the input sources compiled by the cross-compiler compiler command.
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
@@ -351,23 +347,23 @@ The following is a description of the output objects that results from executing
 </details>
 
 <details>
-<summary>make package: Packaging the Design</summary> 
- 
+<summary>make package: Packaging the Design</summary>
+
 ### make package: Packaging the Design
 
-With the HLS/DSP outputs created, and the new platform, you can now generate the programmable device image (PDI) and a package to be used on an SD card. The PDI contains all the executables, bitstreams, and device configurations. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
+With the HLS/DSP outputs created, and the new platform, you can now generate the programmable device image (PDI) and a package for use on an SD card. The PDI contains all the executables, bitstreams, and device configurations. The packaged SD card directory contains everything to boot Linux, the generated applications, and the XCLBIN.
 
 The command to run this step is as follows (default `TARGET=hw_emu`, `EN_TRACE=0`, `FFT_2D_INSTS=1`, `FFT_2D_DT=0` and  `FFT_2D_PT=2048`):
 
 ```
 make package
-``` 
+```
 
-or 
+or
 
 ```
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
-cd $(BUILD_TARGET_DIR);	\
+cd $(BUILD_TARGET_DIR); \
 
 v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202520_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
@@ -387,32 +383,31 @@ If the `XRT_ROOT` is set, the following Vitis compiler flags are also set:
    --package.sd_dir $(XRT_ROOT)
 ```
 
-See [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Packaging) for more details about packaging the system.
-
+Refer to [this page](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Packaging) for more details about packaging the system.
 
 |Switch|Description|
 |  ---  |  ---  |
 |--target \| -t [hw\|hw_emu]|Specifies the build target.|
 |--package \| -p|Packages the final product at the end of the Vitis compile and link build process.|
-|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
-|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from xilinx.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
+|--package.rootfs \<arg\>|Where \<arg\> specifies the absolute or relative path to a processed Linux root file system file. The platform RootFS file is available for download from amd.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
+|--package.kernel_image \<arg\>|Where \<arg\> specifies the absolute or relative path to a Linux kernel image file. Overrides the existing image available in the platform. The platform image file is available for download from amd.com. Refer to the [Vitis Software Platform Installation](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Installation) for more information.|
 |--package.boot_mode \<arg\>|Where \<arg\> specifies <ospi\|qspi\|sd> Boot mode used for running the application in emulation or on hardware.|
 |--package.image_format|Where \<arg\> specifies \<ext4\|fat32\> output image file format. `ext4` is the Linux file system and `fat32` is the Windows file system.|
 |--package.sd_file|Where \<arg\> specifies an ELF or other data file to package into the `sd_card` directory/image. This option can be used repeatedly to specify multiple files to add to the `sd_card`.|
 
 |Inputs Sources|Description|
 |  ---  |  ---  |
-|$(XRT_ROOT)|The PS host application needs the XRT headers in this folder to execute. Set in the `env_setup.sh`.|
+|$(XRT_ROOT)|The PS host application needs the XRT headers in this directory to execute. Set in the `env_setup.sh`.|
 |$(XLNX_VERSAL)/rootfs.ext4|The root filesystem file for PetaLinux.|
 $(XLNX_VERSAL)/Image|The pre-built PetaLinux image the processor boots from.|
 |$(BUILD_TARGET_DIR)/fft_2d_hls_xrt.elf|The PS host application executable created in the `make application` step.|
 |$(BUILD_TARGET_DIR)/vck190_hls_fft_2d.hw_emu.xsa|The XSA file created in the `make xsa` step.|
 
-The output of the V++ Package step is the package directory that contains the contents to run hardware emulation. 
+The output of the V++ Package step is the package directory that contains the contents to run hardware emulation.
 
 |Output Objects|Description|
 |  ---  |  ---  |
-|$(BUILD_TARGET_DIR)/package|The hardware emulation package that contains the boot file, hardware emulation launch script, the PLM and PMC boot files, the PMC and QEMU command argument specification files, and the Vivado simulation folder.|
+|$(BUILD_TARGET_DIR)/package|The hardware emulation package that contains the boot file, hardware emulation launch script, the PLM and PMC boot files, the PMC and QEMU command argument specification files, and the Vivado simulation directory.|
 
 </details>
 
@@ -438,7 +433,8 @@ and do:
 ./launch_hw_emu.sh or ./launch_hw_emu.sh -g (for waveform viewer)...
 
 ```
-When hardware emulation is launched, you see the QEMU simulator load. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt comes up:
+
+When hardware emulation is launched, the QEMU simulator load displays. Wait for the autoboot countdown to go to zero. After a few minutes, the root Linux prompt displays:
 
 ```bash
 root@versal-rootfs-common-2025_2:~#
@@ -465,6 +461,7 @@ To run with waveform, do the following:
 cd $(BUILD_TARGET_DIR)/package
 ./launch_hw_emu.sh -g
 ```
+
 The XSIM Waveform Viewer is launched. Drag and drop the signals into the viewer and click **Play** to start the emulation. Return to the terminal and wait for the Linux prompt to appear. In the XSIM Waveform Viewer, you see the signals you added to the waveform adjusting over the execution of the design. When done, hit the pause button and close the window to end the emulation.
 
 The following figure shows a waveform view of the 32x64 - 1x design.
@@ -478,7 +475,7 @@ The following figure shows a waveform view of the 32x64 - 1x design.
 
 ### Running on Hardware
 
-To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (see the preceding `make` steps previouly specified).
+To run the design in hardware, rerun the following `make` steps with `TARGET=hw` and other applicable options (refer to the preceding `make` steps previouly specified).
 
 ```
 make kernels TARGET=hw
@@ -486,7 +483,7 @@ make xsa TARGET=hw
 make package TARGET=hw 
 ```
 
-These commands create a `$(BUILD_TARGET_DIR)` folder with the kernels, XSA, and `package` for a hardware run.
+These commands create a `$(BUILD_TARGET_DIR)` directory with the kernels, XSA, and `package` for a hardware run.
 
 Run the following step to set up the execution file, generated images, and base images (`$(BUILD_TARGET_DIR)/package/sd_card` and `$(BUILD_TARGET_DIR)/package/sd_card.img`).
 
@@ -494,19 +491,19 @@ Run the following step to set up the execution file, generated images, and base 
 make run_emu TARGET=hw 
 ```
 
-These commands create a `build/hw` folder with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_hls_xrt.elf` executable on your VCK190 board. 
+These commands create a `build/hw` directory with the kernels, XSA, and `package` for a hardware run. Follow steps 1-9 to run the `fft_2d_hls_xrt.elf` executable on your VCK190 board.
 
-**Step 1.** Ensure your board is powered off. 
+**Step 1.** Ensure your board is powered off.
 
-**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card. 
+**Step 2.** Use an SD card writer (such as balenaEtcher) to flash the `sd_card.img` file to an SD card.
 
-**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board. 
+**Step 3.** Plug the flashed SD card into the top slot of the VCK190 board.
 
 **Step 4.** Set the switch (`SW1 Mode\[3:0\]=1110 = OFF OFF OFF ON`).
 
-**Step 5.** Connect your computer to the VCK190 board using the USB cable included with the board. 
+**Step 5.** Connect your computer to the VCK190 board using the USB cable included with the board.
 
-**Step 6.** Open a TeraTerm terminal and select the correct COM port. Set the port settings to the following: 
+**Step 6.** Open a Tera Term terminal and select the correct COM port. Set the port settings to the following:
 
 ```
 Port: <COMMXX>
@@ -520,9 +517,9 @@ Transmit delay: 0 msec/char 0 msec/line
 
 **Step 7.** Power on the board.
 
-**Step 8.** Wait until you see the `root@versal-rootfs-common-2025.2` Linux command prompt. Press enter a few times to get past any `xinit` errors. 
+**Step 8.** Wait until you see the `root@versal-rootfs-common-2025.2` Linux command prompt. Press enter a few times to get past any `xinit` errors.
 
-**Step 9.** Run the following commands in the TeraTerm terminal: 
+**Step 9.** Run the following commands in the Tera Term terminal:
 
 ```
 cd /mnt/sd-mmcblk0p1
@@ -532,13 +529,11 @@ cd /mnt/sd-mmcblk0p1
 
 </details>
 
-
 ## Hardware Design Details
-
 
 <details>
 <summary>2D-FFT HLS Implementation Architecture and DSP/PL Function Partitioning</summary>
-	
+
 ### 2D-FFT HLS Implementation Architecture and DSP/PL Function Partitioning
 
 The following figure shows a high-level block diagram of the design. The test harness consists of the HLS FFT kernels using DSP Engines and the data mover HLS kernels (`dma_hls`). In this setup, there is an AXI4-Stream interface between the data mover kernels and DSP Engines, with a data width of 128-bits. The data mover kernel runs at 250 MHz, and the HLS/DSP kernel runs at 500 MHz.
@@ -560,7 +555,7 @@ The design in this tutorial starts with a base platform containing the control i
 * Data mover kernel (`dma_hls.[hw|hw_emu].xo`)
 * Connections interfaces defined in the system configuration file
 
-To see a schematic view of the design with the extended platform as shown in the following figure, open the following in Vivado:
+To view a schematic view of the design with the extended platform as shown in the following figure, open the following in Vivado:
 
 `build/fft2d_$(MAT_ROWS)x$(MAT_COLS)/x$(FFT_2D_INSTS)/[hw|hw_emu]/_x/link/vivado/vpl/prj/prj.xpr`
 
@@ -574,7 +569,7 @@ The system debugging and profiling IP (DPA) is added to the PL region of the dev
 
 <details>
 <summary>HLS/PL Kernels</summary>
-	
+
 ### HLS/PL Kernels
 
 The top-level HLS/DSP kernel, `fft_2d`, contains two sub-functions: `fft_rows` and `fft_cols`. Each sub-function contains the individual HLS/DSP kernels which perform `MAT_COLS` and `MAT_ROWS` point FFT, respectively.
@@ -612,7 +607,7 @@ The following figure elaborates on the HLS implementation using DSP Engines meth
 
 ##### Concurrent Scheduling
 
-Concurrent scheduling is required so that each function runs independently and the execution of one function does not block the other. Both DSP/HLS subfunctions, `fft_rows` and `fft_cols`, are configured independently of one other, with concurrent scheduling achieved using `#pragma HLS DATAFLOW`.
+Concurrent scheduling is required so that each function runs independently and the execution of one function does not block the other. Both DSP/HLS subfunctions, `fft_rows` and `fft_cols`, are configured independently, with concurrent scheduling achieved using `#pragma HLS DATAFLOW`.
 
 ```
 ...
@@ -720,21 +715,21 @@ The streaming interface data width is kept as 128-bits to reduce read/write over
 
 #### Frequency Selection
 
-In the HLS implementation, due to timing closure limitations, the `fft_2d` kernel is kept at 500 MHz and the data mover is kept at 250 MHz.
+In the HLS implementation, due to timing closure limitations, the `fft_2d` kernel remains at 500 MHz and the data mover remains at 250 MHz.
 
 #### Timing Closure
 
-For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xsa` step above. These strategies are required because timing closure does not happen for the design if the default implementation settings are used.
+For timing closure of the whole design, different implementation properties are used, as mentioned in the `make xsa` step above. These strategies are required because timing closure is not achieved for the design if the default implementation settings are used.
 
 For the purposes of achieving timing closure for the 256 x 512 point x10 and 1024 x 2048 point x10 designs, over 200 implementation strategies were used, out of which three met timing. Out of that, those with the least power were chosen as the implementation strategy in the `v++ -l / make xsa` step.
 
-For more information about implementation strategies, see the _Vivado Implementation User Guide_ [UG904](https://docs.amd.com/r/en-US/ug904-vivado-implementation)
+For more information about implementation strategies, refer to the _Vivado Implementation User Guide_ [UG904](https://docs.amd.com/r/en-US/ug904-vivado-implementation)
 
 </details>
 
 <details>
 <summary>HLS/DSP Kernel Representation</summary>
-	
+
 ### HLS/DSP Kernel Representation
 
 An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www.xilinx.com/products/intellectual-property/fft.html#overview) instantiated in the HLS kernel using the [HLS FFT library](https://docs.amd.com/r/en-US/ug1399-vitis-hls/FFT-IP-Library). Additionally, the kernel has the input and output wrappers for reading and writing data into and out of the FFT core. You can view the function call graph in the Vitis HLS GUI, as shown in the following figure.
@@ -745,7 +740,7 @@ An HLS/DSP kernel comprises the [Fast Fourier Transform LogiCORE IP](https://www
 
 <details>
 <summary>Data Flow</summary>
-	
+
 ### Data Flow
 
 This section describes the overall data flow of the 2D-FFT design using the HLS FFT library, which is compiled using the Vitis compiler. Refer to [C/C++ Kernels](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/Developing-PL-Kernels-using-C) for information.
@@ -809,7 +804,6 @@ Include the required headers and function declarations. Declare input and output
    
 ```
 
-
 #### FFT Core Config Structure
 
 Define the FFT config structure used to instantiate the FFT LogiCORE IP in `$(PL_SRC_REPO)/fft_2d.h`, as follows for the `fft_rows` function:
@@ -844,6 +838,7 @@ Define the FFT config structure used to instantiate the FFT LogiCORE IP in `$(PL
    typedef hls::ip_fft::status_t<configRow> statusRow_t;
 ...
 ```
+
 #### Top Function
 
 The function is declared in the `$(PL_SRC_REPO)/fft_2d.h` file, and is defined in `$(PL_SRC_REPO)/fft_2d.cpp` as follows:
@@ -936,6 +931,7 @@ void fft_rows(
       writeOut_row(strm_out, out);
    }
 ```
+
 ##### Reading Data
 
 The `readIn_row` function reads data for the `fftRow` functions. It is defined in the following example:
@@ -1113,14 +1109,14 @@ void writeOut_row(hls::stream<ap_axiu<128, 0, 0, 0>> &strm_out,
 }
 ```
 
-The `fft_2d` kernel specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. See [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
+The `fft_2d` kernel specifies HLS pragmas to help optimize the kernel code and adhere to interface protocols. Refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/HLS-Pragmas) for detailed documentation of all HLS pragmas. A summary of the HLS pragmas used in this kernel is given in the following table.
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
 |#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow).|
-|#pragma HLS array_reshape|The `ARRAY_RESHAPE` pragma reforms the array with vertical remapping and concatenating elements of arrays by increasing bit widths. This reduces the amount of block RAM consumed while providing parallel access to the data. This pragma creates a new array with fewer elements but with greater bit width, allowing more data to be accessed in a single clock cycle. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-array_reshape).|
+|#pragma HLS array_reshape|The `ARRAY_RESHAPE` pragma reforms the array with vertical remapping and concatenating elements of arrays by increasing bit widths. This reduces the amount of block RAM consumed while providing parallel access to the data. This pragma creates a new array with fewer elements but with greater bit width, allowing more data to be accessed in a single clock cycle. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-array_reshape).|
 
 </details>
 
@@ -1216,19 +1212,19 @@ The `dma_hls` kernel also specifies HLS pragmas to help optimize the kernel code
 
 |Switch|Description|
 |  ---  |  ---  |
-|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
-|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
-|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow).|
-|#pragma HLS loop_tripcount|When manually applied to a loop, this pragma specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. For more information, see [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount).|
+|#pragma HLS INTERFACE|In C/C++ code, all input and output operations are performed, in zero time, through formal function arguments. In a RTL design, these same input and output operations must be performed through a port in the design interface and typically operate using a specific input/output (I/O) protocol. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-interface).|
+|#pragma HLS PIPELINE II=1|Reduces the initiation interval (II) for a function or loop by allowing the concurrent execution of operations. The default type of pipeline is defined by the `config_compile -pipeline_style` command, but can be overridden in the `PIPELINE` pragma or directive. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-pipeline).|
+|#pragma HLS dataflow|The `DATAFLOW` pragma enables task-level pipelining, allowing functions and loops to overlap in their operation, increasing the concurrency of the RTL implementation and increasing the overall throughput of the design. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-dataflow).|
+|#pragma HLS loop_tripcount|When manually applied to a loop, this pragma specifies the total number of iterations performed by a loop. The `LOOP_TRIPCOUNT` pragma or directive is for analysis only, and does not impact the results of synthesis. For more information, refer to [this page](https://docs.amd.com/r/en-US/ug1399-vitis-hls/pragma-HLS-loop_tripcount).|
 
 </details>
 
 <details>
 <summary>PS Host Application</summary>
-	
+
 ### PS Host Application
 
-The 2D-FFT HLS/DSP tutorial uses the embedded processing system (PS) as an external controller to control the 2D-FFT and data mover PL kernels. Review the [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the documentation to understand the process to create a host application.
+The 2D-FFT HLS/DSP tutorial uses the embedded processing system (PS) as an external controller to control the 2D-FFT and data mover PL kernels. Refer to [Programming the PS Host Application](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Programming-the-PS-Host-Application) section in the documentation to understand the process to create a host application.
 
 The PS host application (`fft_2d_hls_app.cpp`) is cross-compiled to get the executable. The steps in the tutorial to run the A72 application are as follows.
 
@@ -1281,7 +1277,7 @@ int main(int argc, char** argv)
 3. Open the XCLBIN and create the data mover kernel handles. The A72 application loads the XCLBIN binary file and creates the data mover kernels to be executed on the device. The steps are:
 
    - Open the device and load the XCLBIN:
-
+   - 
    ```
    auto dhdl = xrtDeviceOpen(0);
    auto xclbin = load_xclbin(dhdl, xclbinFilename);
@@ -1299,7 +1295,7 @@ int main(int argc, char** argv)
    ...
    ```
    - For the dms_hls kernel, see the following example:
-
+   - 
    ```
    ...
    xrtKernelHandle dma_hls_khdl;
@@ -1349,9 +1345,9 @@ For all applications, designers must work to predefined specifications and build
 <details>
 <summary>Resource Utilization</summary>
 
-#### Resource Utilization
+### Resource Utilization
 
-Resource utilization is measured using the Vivado tool. The registers, CLB LUTs, BRAMs, and DSP Engine utilization information can be found in the Vivado project if you perform the following steps:
+The Vivado tool measures resource utilization. The registers, CLB LUTs, BRAMs, and DSP Engine utilization information can be found in the Vivado project if you perform the following steps:
 
 1. Open the Vivado project: `$(BUILD_TARGET_DIR)/_x/link/vivado/vpl/prj/prj.xpr`.
 2. Open **Implemented Design** and click **Report Utilization**.
@@ -1378,6 +1374,7 @@ endif
 A summary of resource utilization for all variations is shown in the following table.
 
 ##### cint16 Designs
+
 | Number of Instances | FFT Configurations    | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
 |:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
 | 1                | 64 point (32 x 64)       | 4814      | 2905     | 4     | 8                  |
@@ -1397,6 +1394,7 @@ A summary of resource utilization for all variations is shown in the following t
 | 10               | 2048 point (1024 x 2048) | 88447     | 56429    | 250   | 180                |
 
 ##### cfloat Designs
+
 | Number of Instances | FFT Configurations    | FF (Regs) | CLB LUTs | BRAMs | No. of DSP Engines |
 |:----------------:|:------------------------:|:---------:|:--------:|:-----:|:------------------:|
 | 1                | 64 point (32 x 64)       | 11585     | 6644    | 4      | 24                 |
@@ -1432,6 +1430,7 @@ Power is measured using the Vivado tool. The steps for retrieving this informati
 A summary of power utilization for all variations is given in the following table.
 
 ##### cint16 Designs
+
 | Number of Instances | FFT Configurations       | Dynamic Power (in W) |
 |:----------------:|:------------------------:|:---------------------:|
 | 1                | 64 point (32 x 64)       |    0.288               |
@@ -1451,6 +1450,7 @@ A summary of power utilization for all variations is given in the following tabl
 | 10               | 2048 point (1024 x 2048) |    6.819               |
 
 ##### cfloat Designs
+
 | Number of Instances | FFT Configurations       | Dynamic Power (in mW) |
 |:----------------:|:------------------------:|:---------------------:|
 | 1                | 64 point (32 x 64)       |    0.542              |
@@ -1470,7 +1470,9 @@ A summary of power utilization for all variations is given in the following tabl
 | 10               | 2048 point (1024 x 2048) |    12.949             |
 
 ##### Power from XPE vs HW
+
 **cint16**
+
 | Number of Instances | FFT Configurations       | XPE Load(in W) | HW Load(in W) |
 |:-----------------:|:--------------------------:|:--------------:|:-------------:|
 | 10                | 512 point (256x512)        |    15.362       |   4.25563    |
@@ -1481,28 +1483,25 @@ A summary of power utilization for all variations is given in the following tabl
 | 10                | 512 point (256x512)        |  21.407        |  6.39027      |
 | 10                | 2048 point (1024x2048)     |  23.353        |  7.366042     |
 
-
 </details>
 
 <details>
-<summary>Throughput and Latency</summary> 
+<summary>Throughput and Latency</summary>
 
 #### Throughput and Latency
 
 Throughput is measured in megasamples transferred per second (MSPS). Latency is defined as the time between the first sample being sent by the data mover into the `fft_rows` function in the `fft_2d_0` kernel and the first sample from the `fft_cols` function in the `fft_2d_0` kernel being received by the data mover. It is measured by viewing the runtime generated trace texts using `vitis_analyzer`. The steps to measure throughput and latency are listed as follows:
 
-
 1. Compile the design using `EN_TRACE=1`. It automatically includes a `xrt.ini` file while packaging, which comprises the following:
 
-```
-[Debug]
-xrt_trace=true
-data_transfer_trace=fine
-trace_buffer_size=500M
-```
+    ```
+   [Debug]
+    xrt_trace=true
+    data_transfer_trace=fine
+    trace_buffer_size=500M
+    ```
 
- For more information, refer to the [xrt.ini](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation.
-
+    For more information, refer to the [xrt.ini](https://docs.amd.com/r/en-US/ug1393-vitis-application-acceleration/xrt.ini-File) documentation.
 
 2. After execution on the board, transfer the generated `device_trace_0.csv`, `hal_host_trace.csv`, and `xrt.run_summary` files back to your system.
 
@@ -1510,7 +1509,7 @@ trace_buffer_size=500M
 
 4. The snapshot of the timeline trace for the AI Engine 32 x 64 point 1-instance design run with `ITER_CNT=16` is shown in the following figure:
 
-![Image of 2D-FFT HLS Engine implementation 1x Timeline Trace](images/fft_2d_hls_trace_32x64_iter16.PNG)
+    ![Image of 2D-FFT HLS Engine implementation 1x Timeline Trace](images/fft_2d_hls_trace_32x64_iter16.PNG)
 
 5. The profiling setup in the Makefile measures the execution time and all the interfaces. For higher instance designs only, `strmInp_from_colwiseFFT` is profiled.
 
@@ -1563,10 +1562,10 @@ Throughput = (Samples transferred) / processing time
            = 2,084.08 MB/s
 ```
 
-
 Summary of Throughput & Latency for all Variations:
 
 ##### cint16 Designs
+
 | Number of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point (32 x 64)           | 32768              |   521.020                        | 521.020                           |   5.072                      |       5.072                 |
@@ -1584,7 +1583,9 @@ Summary of Throughput & Latency for all Variations:
 | 10               | 256 point<br/>(128 x 256)    | 524288             |   511.807                        | 5118.07                           |   68.108                     |       68.108                |
 | 10               | 512 point<br/>(256 x 512)    | 2097152            |   578.220                        | 5782.20                           |   236.937                    |       236.937               |
 | 10               | 2048 point<br/>(1024 x 2048) | 33554432           |   627.748                        | 6277.48                           |   4211.296                   |       4211.296              |
+
 ##### cfloat Designs
+
 | Number of Instances | FFT Configurations           | Data Transfer size | Average Throughput<br/>(in MSPS) | Aggregate Throughput<br/>(in MSPS) | Average Latency<br/>(in μs) | Minimum Latency<br/>(in μs) |
 |:----------------:|:----------------------------:|:------------------:|:--------------------------------:|:----------------------------------:|:---------------------------:|:---------------------------:|
 | 1                | 64 point (32 x 64)           | 32768              |   503.008                        |   503.0087                         |  5.312                      |  5.312                      |
@@ -1711,8 +1712,9 @@ These observations show that with an increase in the FFT point size, the through
 
 #### Support
 
-Requests and bugs are tracked using GitHub issues. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+Requests and bugs are tracked using GitHub issues. For questions go to [Adaptive SoC & FPGA Support](https://adaptivesupport.amd.com/s/?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
