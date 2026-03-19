@@ -1,0 +1,31 @@
+{
+    "name": "Embedded_F_05-debugging",
+    "description": "Vitis Debugging with PS Trace",
+    "gui": "false",
+    "flow": "vitis",
+	"platform_allowlist": ["vck190"],
+    "platform_blocklist": [],
+    "testinfo": {
+        "test_name": "ES_F_05-Deb-Bar",
+        "disable": false,
+        "jobs": [
+            {
+                "max_memory_MB": 65536,
+                "max_time_min": {
+                    "vitis_hw_build": 180
+                }
+            }
+        ],        
+        "targets": [
+            "vitis_hw_emu"
+        ],
+	"custom_build_target": {
+            "all": "all"
+        },
+        "tasks": {
+            "build": {
+                "pre_exec": "./env_setup.sh"
+            }
+         }       
+    }
+}
