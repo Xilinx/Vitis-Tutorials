@@ -173,7 +173,8 @@ You can use the following approach to tradeoff throughput for storage, reducing 
 * Apply `single_buffer` constraint on the input. For more information, refer to *AI Engine Kernel and Graph Programming Guide* [UG1076](https://docs.amd.com/r/en-US/ug1079-ai-engine-kernel-coding/Buffer-Allocation-Control).
 * Add placement constraints to store each tile's storage requirements locally.
 
-  Code snippet below taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how this can be done.
+ Code snippet below taken from `<path-to-design>/aie/tdm_fir/firbank_app.cpp` shows an example of how this can be done.
+
 
   ```
   single_buffer(dut.tdmfir.m_firKernels[ii+0].in[0]);

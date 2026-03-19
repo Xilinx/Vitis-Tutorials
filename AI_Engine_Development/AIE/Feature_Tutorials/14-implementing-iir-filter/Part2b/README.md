@@ -19,51 +19,53 @@
 
 ## Preliminaries
 
-In Part 2a, we examined the generated assembler code and found a `NOP` (no operation) between the `VFPMAC` (vector floating-point multiply-accumulate) mnemonics. This `NOP` is unavoidable as a floating-point accumulation requires two cycles (see Fig. 26 of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)).
+In Part 2a, we examined the generated assembler code and found a `NOP` (no operation) between the `VFPMAC` (vector floating-point multiply accumulate) mnemonics. This `NOP` is unavoidable as a floating-point accumulation requires two cycles (see Figure `Pipeline Diagram of AI Engine Fixed-point Vector Unit Multiplication and Upshift Paths` of [AM009](https://www.xilinx.com/support/documentation/architecture-manuals/am009-versal-ai-engine.pdf)).
 
-We can split the matrix-vector multiplication into two separate multiply-accumulate operations to perform a floating-point accumulation on each cycle.
+We can split the matrix-vector multiplication into two separate multiply accumulate operations to perform a floating-point accumulation on each cycle.
 
-***Note:*** Instead of the "traditional" method of multiplying each row of the matrix by the column vector, we effectively scale each *column* of the matrix by the corresponding element in the vector with the multiply-accumulate API.
+***Note:*** Use the multiply accumulate API to scale each matrix column by the corresponding vector element, rather than multiplying each matrix row by the column vector.
 
 ![Fig. 1](./images/eqn5.PNG "Equation 5")
 
-Thus, splitting the vector additions into even and odd parts allow us to perform independent multiply-accumulate operations:
+Thus, splitting the vector additions into even and odd parts allow us to perform independent multiply accumulate operations:
 
 ![Fig. 2](./images/eqn6.PNG "Equation 6")
 
-Also, the AI Engine has two load units. The Julia program `aie_iir_2b.jl` is modified to split the matrix into even and odd columns and generate two separate header files.
+Also, the AI Engine has two load units. The Julia program `aie_iir_2b.jl` splits the matrix into even and odd columns and generates two header files.
 
 We start by using the AI Engine APIs.
 
 ## Kernel Header
+
 ```C++
-#ifndef __KERNEL_HPP__	// include guard to prevent multiple inclusion
+#ifndef __KERNEL_HPP__ // include guard to prevent multiple inclusion
 
 	#define __KERNEL_HPP__
 
-	#include <adf.h>			// Adaptive DataFlow header
-	#include <aie_api/aie.hpp>	// header files for high-level intrinsics
+	#include <adf.h>            // Adaptive DataFlow header
+	#include <aie_api/aie.hpp> // header files for high-level intrinsics
 
-	using Vector8f = aie::vector<float, 8>;		// vector of 8 floating-point elements
-	using Vector16f = aie::vector<float, 16>;	// vector of 16 floating-point elements
-	using VAcc8f = aie::accum<accfloat, 8>;		// accumulator with 8 floating-point elements
+	using Vector8f = aie::vector<float, 8>;     // vector of 8 floating-point elements
+	using Vector16f = aie::vector<float, 16>;   // vector of 16 floating-point elements
+	using VAcc8f = aie::accum<accfloat, 8>;    // accumulator with 8 floating-point elements
 
-	define USE_API	// comment out to use low-level intrinsics
+	define USE_API  // comment out to use low-level intrinsics
 
-	const unsigned burst_cnt = 256;	// process burst_cnt * 8 samples per function invocation
+	const unsigned burst_cnt = 256;  // process burst_cnt * 8 samples per function invocation
 
 	template<unsigned id>
 	void SecondOrderSection(
-		adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
-		adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
-		const float (&C_e)[48],		// run-time parameter: SIMD matrix of coefficients (even columns)
-		const float (&C_o)[48]		// run-time parameter: SIMD matrix of coefficients (odd columns)
+		adf::input_buffer<float> & __restrict idata,    // 8 input samples per iteration
+		adf::output_buffer<float> & __restrict odata,  // 8 output samples per iteration
+		const float (&C_e)[48],    // run-time parameter: SIMD matrix of coefficients (even columns)
+		const float (&C_o)[48]    // run-time parameter: SIMD matrix of coefficients (odd columns)
 	);
 
 #endif // __KERNEL_HPP__
 ```
 
 ## Kernel Code (AI Engine API)
+
 ```C++
 #include <aie_api/aie_adf.hpp>
 
@@ -71,27 +73,27 @@ We start by using the AI Engine APIs.
 
 template<unsigned id>
 void SecondOrderSection(
-	adf::input_buffer<float> & __restrict idata,	// 8 input samples per iteration
-	adf::output_buffer<float> & __restrict odata,	// 8 output samples per iteration
-	const float (&C_e)[48],		// run-time parameter: SIMD matrix of coefficients (even columns)
-	const float (&C_o)[48]		// run-time parameter: SIMD matrix of coefficients (odd columns)
+	adf::input_buffer<float> & __restrict idata,    // 8 input samples per iteration
+	adf::output_buffer<float> & __restrict odata,  // 8 output samples per iteration
+	const float (&C_e)[48],    // run-time parameter: SIMD matrix of coefficients (even columns)
+	const float (&C_o)[48]    // run-time parameter: SIMD matrix of coefficients (odd columns)
 ) {
-	static Vector8f state_reg = aie::zeros<float, 8>();	// clear states
+	static Vector8f state_reg = aie::zeros<float, 8>(); // clear states
 	// input/output iterators
 	auto inIter = aie::begin_vector<8>(idata);
 	auto outIter = aie::begin_vector<8>(odata);
 	for (auto i = 0; i < burst_cnt; i++) {
-		Vector8f xreg_hi = *inIter++;		// fetch input samples
+		Vector8f xreg_hi = *inIter++;     // fetch input samples
 		Vector16f xreg = aie::concat(state_reg, xreg_hi);
 		auto ecoeff_iter = aie::begin_vector<8>(&C_e[0]);
 		auto ocoeff_iter = aie::begin_vector<8>(&C_o[0]);
-		VAcc8f acc_e = aie::zeros<accfloat, 8>();	// even accumulator
-		VAcc8f acc_o = aie::zeros<accfloat, 8>();	// odd accumulator
+		VAcc8f acc_e = aie::zeros<accfloat, 8>();    // even accumulator
+		VAcc8f acc_o = aie::zeros<accfloat, 8>();   // odd accumulator
 		for (auto j = 0; j < 6; j++) {
-			acc_e = aie::mac(acc_e, xreg.get(2 * j + 4), *ecoeff_iter++);	// even columns
-			acc_o = aie::mac(acc_o, xreg.get(2 * j + 5), *ocoeff_iter++);	// odd columns
+			acc_e = aie::mac(acc_e, xreg.get(2 * j + 4), *ecoeff_iter++);    // even columns
+			acc_o = aie::mac(acc_o, xreg.get(2 * j + 5), *ocoeff_iter++);   // odd columns
 		} // end for (auto j = 0; j < 6; j ++)
-		acc_o = aie::add(acc_o, acc_e.to_vector());	// acc_o += acc_e
+		acc_o = aie::add(acc_o, acc_e.to_vector()); // acc_o += acc_e
 		Vector8f yout = acc_o.to_vector();
 		// update states
 		state_reg = xreg_hi;
@@ -102,11 +104,13 @@ void SecondOrderSection(
 } // end SecondOrderSection()
 
 ```
+
 Note the two loops in the function:
+
 ```C++
-for (auto i = 0; i < burst_cnt; i++) {	// process more samples to reduce overhead
+for (auto i = 0; i < burst_cnt; i++) {  // process more samples to reduce overhead
 	...
-	for (auto j = 0; j < 6; j++) {	// matrix-vector multiplication
+	for (auto j = 0; j < 6; j++) {  // matrix-vector multiplication
 		...
 	}
 }
@@ -115,27 +119,28 @@ for (auto i = 0; i < burst_cnt; i++) {	// process more samples to reduce overhea
 The outer `for` loop is added such that more samples can be processed during each function call, thereby reducing the ratio of function call cycles to processing cycles and improving throughput.
 
 ## Graph Code
+
 ```C++
-#ifndef __GRAPH_H__			// include guard to prevent multiple inclusion
+#ifndef __GRAPH_H__      // include guard to prevent multiple inclusion
 
 	#define __GRAPH_H__
 
-	#include <adf.h>		// Adaptive DataFlow header
+	#include <adf.h>    // Adaptive DataFlow header
 
 	#include "kernel.hpp"
 
 	using namespace adf;
 
 	// dataflow graph declaration
-	class the_graph : public graph {	// inherit all properties of the adaptive     dataflow graph
+	class the_graph : public graph { // inherit all properties of the adaptive dataflow graph
 
 		public:
 			input_plio pl_in;
 			output_plio pl_out;
 
 			kernel section1;
-			input_port cmtx_e;	// input port for SIMD matrix coefficients (even columns)
-			input_port cmtx_o;	// input port for SIMD matrix coefficients (odd columns)
+			input_port cmtx_e;   // input port for SIMD matrix coefficients (even columns)
+			input_port cmtx_o;   // input port for SIMD matrix coefficients (odd columns)
 
 			// constructor
 			the_graph() {
@@ -174,6 +179,7 @@ The outer `for` loop is added such that more samples can be processed during eac
 ```
 
 ## Testbench Code
+
 ```C++
 #include "kernel.hpp"
 #include "graph.hpp"
@@ -190,14 +196,14 @@ the_graph my_graph;
 // main simulation program
 int main() {
 
-	my_graph.init();	// load the DFG into the AI engine array, establish connectivity, etc.
+	my_graph.init();    // load the DFG into the AI engine array, establish connectivity, etc.
 
 	my_graph.update(my_graph.cmtx_e, C1_e, 48);
 	my_graph.update(my_graph.cmtx_o, C1_o, 48);
 
-	my_graph.run(1);	// run the DFG for the specified number of iterations
+	my_graph.run(1);    // run the DFG for the specified number of iterations
 
-	my_graph.end();		// housekeeping
+	my_graph.end();    // housekeeping
 
 	return (0);
 
@@ -205,11 +211,14 @@ int main() {
 ```
 
 ## Analysis (using AI Engine API)
+
 ### Generated Code
+
 ![Fig. 3](./images/api_asm.PNG "API Assembler Code")
-There are 13 `VFPMAC`s in the generated assembly code: six for each even and odd column and another for summing the final accumulator results. The `VFPMAC` instructions are not as tightly packed. That is, some `VFPMAC`s have other instructions between them. There are two sections where the 13 `VFPMACs` occur, effectively halving the number of iterations in the outer loop.
+There are 13 `VFPMAC`s in the generated assembly code: six for each even and odd column and another for summing the final accumulator results. The `VFPMAC` instructions are not as tightly packed. That is, some `VFPMAC`s have other instructions between them. There are two sections where the 13 `VFPMACs` occur, halving the number of iterations in the outer loop.
 
 ### Throughput
+
 The `burst_cnt` variable determines the number of samples processed during each function call. The inner loop processes eight samples per iteration, so the total number of processed samples is `burst_cnt` * 8.
 
 The throughput is obtained as follows (see `api_thruput.xlsx`):
@@ -222,20 +231,22 @@ The throughput is obtained as follows (see `api_thruput.xlsx`):
 The throughput with a 1 GHz clock for different values of `burst_cnt` are as follows:
 
 <b>IIR Throughput (with API)</b>
-|                           |       |       |       |       |       |       |     |
+
+|                           |       |       |       |       |       |       |       |
 |---------------------------|-------|-------|-------|-------|-------|-------|-------|
 |burst_cnt					|1		|8		|16		|32		|64		|128	|256	|
 |num_samples				|8		|64		|128	|256	|512	|1024	|2048	|
-|num_cycles (API)			|187	|492	|940	|1836	|3628	|7212	|14379	|					
+|num_cycles (API)			|187	|492	|940	|1836	|3628	|7212	|14379	|
 |API Throughput (Msa/sec)	|42.78	|130.08	|136.17	|139.43	|141.12	|141.99	|142.43	|
 
 *clk_freq: 1 GHz
 
-The AI Engine APIs are a header-only implementation that acts as a "buffer" between the user and the low-level intrinsics (LLI) to increase the level of abstraction.
+The AI Engine APIs are a header-only implementation that acts as a "buffer" between you and the low-level intrinsics (LLI) to increase the level of abstraction.
 
 We modify the kernel code to use low-level intrinsics (LLI).
 
 ## Kernel Code (LLI)
+
 ```C++
 #include <aie_api/aie_adf.hpp>
 
@@ -274,6 +285,7 @@ void SecondOrderSection(
 } // end SecondOrderSection()
 
 ```
+
 ***Note:***
 
 * The use of the `chess_flatten_loop` pragma. This pragma unrolls the loop completely, eliminating the loop construct. Documentation on compiler pragmas can be found in the AI Engine Lounge.
@@ -286,14 +298,14 @@ Note the tighter "spacing" between `VFPMAC`s. Also, the `SecondOrderSection<1>` 
 The measured throughput is as follows (see `lli_thruput.xlsx`):
 
 <b>IIR Throughput (with LLI)</b>
-|                           |       |       |       |       |       |       |     |
-|---------------------------|-------|-------|-------|-------|-------|-------|-------|
+
+|-------------------------- |-------|-------|-------|-------|-------|-------|-------|
 |burst_cnt					|1		|8		|16		|32		|64		|128	|256	|
 |num_samples				|8		|64		|128	|256	|512	|1024	|2048	|
-|num_cycles (LLI)			|186	|250	|458	|874	|1706	|3370	|6698	|					
+|num_cycles (LLI)			|186	|250	|458	|874	|1706	|3370	|6698	|
 |LLI Throughput (Msa/sec)	|43.01	|256.00	|279.48	|292.91	|300.12	|303.86	|305.76	|
 
-*clk_freq: 1GHz
+*clk_freq: 1 GHz
 
 Comparing the API and LLI throughput:
 ![Fig. 5](./images/api_vs_lli.PNG "API vs. LLI Throughput")
@@ -302,11 +314,12 @@ Comparing the API and LLI throughput:
 * The throughput "saturates" at around `burst_cnt` = 64.
 
 ## Conclusions
+
 The AI Engine API is intended to improve productivity by increasing the level of abstraction relative to the low-level intrinsics.
 ![Fig. 6](./images/api_vs_lli_table.PNG "API vs LLI Table")
 We recommend using the AI Engine API and only low-level intrinsics to achieve more performance to meet target specifications.
 
-Throughput may be improved using the following techniques:
+You can improve throughput using the following techniques:
 
 * Reduce function call overhead by processing as many samples within the function as possible.
 * For floating-point accumulation, use two accumulators with low-level intrinsics.
@@ -314,11 +327,11 @@ Throughput may be improved using the following techniques:
 Can the throughput be improved even further?
 
 * Floating-point allows 8 MACs per cycle. Using 32-bit fixed-point coefficients with 16-bit data allow 16 MACs per cycle, potentially doubling the throughput. 16-bit fixed-point coefficients with 16-bit data allow 32 MACs per cycle, potentially quadrupling the throughput. 16-bit fixed-point coefficients with 8-bit data allow 64 MACs per cycle, potentially improving the throughput by 8x.
-* Assuming that we stick with a floating-point implementation, doubling the number of processed samples *and* the number of AI Engines (That is, two AI Engines, each processing eight samples from a 16-sample window) *may* double the throughput.
+* Assuming that we stick with a floating-point implementation, doubling the number of processed samples *and* the number of AI Engines (That is, two AI Engines, each processing eight samples from a 16-sample window) *can* double the throughput.
 
 # Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+Requests and bugs are tracked using GitHub issues. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

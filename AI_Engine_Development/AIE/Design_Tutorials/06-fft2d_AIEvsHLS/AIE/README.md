@@ -1455,9 +1455,7 @@ Furthermore, the FFT point sizes increase and the power does _not_ increase prop
 
 #### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
-
-
+Requests and bugs are tracked using GitHub issues. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

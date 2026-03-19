@@ -19,17 +19,17 @@
 
 This is a multi-part tutorial on implementing an [infinite impulse response (IIR) filter](https://en.wikipedia.org/wiki/Infinite_impulse_response) on the AI Engine.
 
-Part 1a shows how to parallelize the IIR filter difference equation for a *single* second-order section and implement it on the SIMD AI engine vector processor.
+Part 1a describes how to parallelize the IIR filter difference equation for a single second-order section. It also describes how to implement the parallelized difference equation on the SIMD vector processor in the AI Engine.
 
-Part 1b shows implementing a sixth-order low pass elliptic IIR filter with three-second order sections and changing the filter coefficients dynamically using run-time parameters.
+Part 1b describes implementing a sixth-order low-pass elliptic IIR filter with three second-order sections and changing filter coefficients at runtime using runtime parameters.
 
-Part 2a illustrates the process of minimizing latency and increasing throughput.
+Part 2a shows the process of minimizing latency and increasing throughput.
 
 Part 2b introduces more techniques to improve throughput further.
 
 This tutorial also provides [Julia](https://julialang.org/) scripts to calculate the IIR filter coefficients and generate test data.
 
-Future parts will cover performance optimization.
+Future parts are cover performance optimization.
 
 This tutorial assumes that you are familiar with the fundamentals of AI Engine kernel development.
 
@@ -37,7 +37,7 @@ Use the [AI Engine, DSP IP and Tools](https://forums.xilinx.com/t5/AI-Engine-DSP
 
 ## Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+GitHub issues are used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 

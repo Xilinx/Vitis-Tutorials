@@ -27,18 +27,18 @@ This section shows how to modify the ADF graph and the testbench for a sixth-ord
 
 `aie_iir_1b.jl` is a [Julia](https://julialang.org/) script which can design and generate the required SIMD coefficients for an arbitrary IIR filter.
 
-In its pristine state, the user parameters are as follows:
+In its pristine state, the configurable parameters are as follows:
 
 ```Julia
-first_set = true;	# true: 1st set; false: 2nd set
+first_set = true; # true: 1st set; false: 2nd set
 
 if first_set
-    fp = 10.0e6         	# passband frequency
-    coeff_file_suffix = "a"	# file suffix to distinguish different coefficient sets
-                        	# with the same architecture
+    fp = 10.0e6          # passband frequency
+    coeff_file_suffix = "a" # file suffix to distinguish different coefficient sets
+                         # with the same architecture
 else
-    fp = 20.0e6         	# passband frequency
-    coeff_file_suffix = "b" 	# 2nd set of coefficients
+    fp = 20.0e6          # passband frequency
+    coeff_file_suffix = "b"  # 2nd set of coefficients
 end # if first_set
 
 fs = 100.0e6            # sampling frequency
@@ -60,7 +60,7 @@ julia> include("aie_iir_1b.jl")
 
 This plots the filter characteristics and generates three coefficient files (C[1~3]a.h), as there are six poles in the filter.
 
-![Fig. 1](./images/filt10.PNG "6<sup>th</sup> order elliptical LPF, BW=10MHz")
+![Fig. 1](./images/filt10.PNG "6<sup>th</sup> order elliptical LPF, BW=10 MHz")
 
 The kernel code remains the same, but the ADF graph and testbench must be slightly modified to accommodate the additional sections.
 
@@ -73,104 +73,104 @@ The modified ADF graph looks like this:
 `graph.hpp`
 
 ```C++
-#ifndef __GRAPH_H__			// include guard to prevent multiple inclusion
+#ifndef __GRAPH_H__ // include guard to prevent multiple inclusion
 
-	#define __GRAPH_H__
+ #define __GRAPH_H__
 
-	#include <adf.h>		// Adaptive DataFlow header
+ #include <adf.h> // Adaptive DataFlow header
 
-	#include "kernel.hpp"
+ #include "kernel.hpp"
 
-	using namespace adf;
+ using namespace adf;
 
-	// dataflow graph declaration
-	class the_graph : public graph {	// inherit all properties of the adaptive     dataflow graph
+ // dataflow graph declaration
+ class the_graph : public graph { // inherit all properties of the adaptive     dataflow graph
 
-		private:
-			kernel section1;
-			kernel section2;
-			kernel section3;
+ private:
+ kernel section1;
+ kernel section2;
+ kernel section3;
 
-		public:
-			input_plio in;		// input port for data to enter the kernel
-			input_port cmtx1;	// input port for SIMD matrix coefficients
-			input_port cmtx2;
-			input_port cmtx3;
-			output_plio out;	// output port for data to leave the kernel
+ public:
+ input_plio in; // input port for data to enter the kernel
+ input_port cmtx1; // input port for SIMD matrix coefficients
+ input_port cmtx2;
+ input_port cmtx3;
+ output_plio out; // output port for data to leave the kernel
 
-			// constructor
-			the_graph() {
+ // constructor
+ the_graph() {
 
-				// associate the kernel with the function to be executed
-				section1 = kernel::create(SecondOrderSection<1>);
-				section2 = kernel::create(SecondOrderSection<2>);
-				section3 = kernel::create(SecondOrderSection<3>);
+ // associate the kernel with the function to be executed
+ section1 = kernel::create(SecondOrderSection<1>);
+ section2 = kernel::create(SecondOrderSection<2>);
+ section3 = kernel::create(SecondOrderSection<3>);
 
-				// declare data widths and files for simulation
-				#ifndef RTP_SWITCH
-					in = input_plio::create(plio_32_bits, "data/input.dat");
-				#else
-					in = input_plio::create(plio_32_bits, "data/two_freqs.dat");
-				#endif // RTP_SWITCH
-				out = output_plio::create(plio_32_bits, "output.dat");
+ // declare data widths and files for simulation
+ #ifndef RTP_SWITCH
+ in = input_plio::create(plio_32_bits, "data/input.dat");
+ #else
+ in = input_plio::create(plio_32_bits, "data/two_freqs.dat");
+ #endif // RTP_SWITCH
+ out = output_plio::create(plio_32_bits, "output.dat");
 
-				const unsigned num_samples = 8;
+ const unsigned num_samples = 8;
 
-				// declare buffer sizes
-				dimensions(section1.in[0]) = {num_samples};
-				dimensions(section1.out[0]) = {num_samples};
+ // declare buffer sizes
+ dimensions(section1.in[0]) = {num_samples};
+ dimensions(section1.out[0]) = {num_samples};
 
-				dimensions(section2.in[0]) = {num_samples};
-				dimensions(section2.out[0]) = {num_samples};
+ dimensions(section2.in[0]) = {num_samples};
+ dimensions(section2.out[0]) = {num_samples};
 
-				dimensions(section3.in[0]) = {num_samples};
-				dimensions(section3.out[0]) = {num_samples};
+ dimensions(section3.in[0]) = {num_samples};
+ dimensions(section3.out[0]) = {num_samples};
 
-				// establish connections
-				connect(in.out[0], section1.in[0]);			
-				connect<parameter>(cmtx1, adf::async(section1.in[1]));
+ // establish connections
+ connect(in.out[0], section1.in[0]); 
+ connect<parameter>(cmtx1, adf::async(section1.in[1]));
 
-				connect(section1.out[0], section2.in[0]);
-				connect<parameter>(cmtx2, adf::async(section2.in[1]));
+ connect(section1.out[0], section2.in[0]);
+ connect<parameter>(cmtx2, adf::async(section2.in[1]));
 
-				connect(section2.out[0], section3.in[0]);
-				connect<parameter>(cmtx3, adf::async(section3.in[1]));
+ connect(section2.out[0], section3.in[0]);
+ connect<parameter>(cmtx3, adf::async(section3.in[1]));
 
-				connect(section3.out[0], out.in[0]);
+ connect(section3.out[0], out.in[0]);
 
-				// specify which source code file contains the kernel function
-				source(section1) = "kernel.cpp";
-				source(section2) = "kernel.cpp";
-				source(section3) = "kernel.cpp";
+ // specify which source code file contains the kernel function
+ source(section1) = "kernel.cpp";
+ source(section2) = "kernel.cpp";
+ source(section3) = "kernel.cpp";
 
-				// !!! temporary value: assumes this kernel dominates the AI Engine tile !!!
-				runtime<ratio>(section1) = 1.0;
-				runtime<ratio>(section2) = 1.0;
-				runtime<ratio>(section3) = 1.0;
+ // !!! temporary value: assumes this kernel dominates the AI Engine tile !!!
+ runtime<ratio>(section1) = 1.0;
+ runtime<ratio>(section2) = 1.0;
+ runtime<ratio>(section3) = 1.0;
 
-			} // end the_graph()
+} // end the_graph()
 
-	}; // end class the_graph
+ }; // end class the_graph
 
 #endif // __GRAPH_H__
 ```
 
 ***Notes:***
 
-* Two additional kernels (sections) are added.
-* Two additional `input_port` declarations for the coefficients of the new sections are added.
-* Two additional `kernel::create()` statements are added.
-* The [network topology](https://en.wikipedia.org/wiki/Network_topology) are modified such that the three sections are cascaded.
-* Additional `source()` and `runtime<ratio>()` statements are added.
+* Added two additional kernels (sections).
+* Added two additional `input_port` declarations for the coefficients of the new sections
+* Added two additional `kernel::create()` statements.
+* The [network topology](https://en.wikipedia.org/wiki/Network_topology) are modified such that the three sections cascade.
+* Added Additional `source()` and `runtime<ratio>()` statements.
 
 ## Testbench Code
 
-The testbench may look something like this:
+The testbench can look something like this:
 
 `tb.cpp`
 
 ```C++
-//#define RTP_SWITCH		// comment out to check impulse response
+//#define RTP_SWITCH // comment out to check impulse response
 
 #include "kernel.hpp"
 #include "graph.hpp"
@@ -179,9 +179,9 @@ The testbench may look something like this:
 #include "C3a.h"
 
 #ifdef RTP_SWITCH
-	#include "C1b.h"
-	#include "C2b.h"
-	#include "C3b.h"
+ #include "C1b.h"
+ #include "C2b.h"
+ #include "C3b.h"
 #endif // RTP_SWITCH
 
 using namespace std;
@@ -190,51 +190,51 @@ using namespace adf;
 // specify the DFG
 the_graph my_graph;
 
-const unsigned num_pts = 256;						// number of sample points in "input.dat"
+const unsigned num_pts = 256; // number of sample points in "input.dat"
 
 #ifndef RTP_SWITCH
-	const unsigned num_iterations = num_pts/8;		// number of iterations to run
+ const unsigned num_iterations = num_pts/8; // number of iterations to run
 #else
-	const unsigned num_iterations = num_pts/8/2;	// number of iterations to run
+ const unsigned num_iterations = num_pts/8/2; // number of iterations to run
 #endif // RTP_SWITCH
 
 // main simulation program
 int main() {
 
-	my_graph.init();	// load the DFG into the AI Engine array, establish connectivity, etc.
+ my_graph.init(); // load the DFG into the AI Engine array, establish connectivity, etc.
 
-	my_graph.update(my_graph.cmtx1, C1a, 96);
-	my_graph.update(my_graph.cmtx2, C2a, 96);
-	my_graph.update(my_graph.cmtx3, C3a, 96);
+ my_graph.update(my_graph.cmtx1, C1a, 96);
+ my_graph.update(my_graph.cmtx2, C2a, 96);
+ my_graph.update(my_graph.cmtx3, C3a, 96);
 
-	#ifndef RTP_SWITCH
-		my_graph.run(num_iterations);	// run the DFG for the specified number of iterations
-	#else
-		// run with set "a" for 1st half
-		my_graph.run(num_iterations);	// run the DFG for the specified number of iterations
-		my_graph.wait();	// wait for all iterations to finish before loading new coefficients
+ #ifndef RTP_SWITCH
+ my_graph.run(num_iterations); // run the DFG for the specified number of iterations
+ #else
+  // run with set "a" for 1st half
+ my_graph.run(num_iterations); // run the DFG for the specified number of iterations
+ my_graph.wait(); // wait for all iterations to finish before loading new coefficients
 
-		// load set "b"
-		my_graph.update(my_graph.cmtx1, C1b, 96);
-		my_graph.update(my_graph.cmtx2, C2b, 96);
-		my_graph.update(my_graph.cmtx3, C3b, 96);
+ // load set "b"
+ my_graph.update(my_graph.cmtx1, C1b, 96);
+ my_graph.update(my_graph.cmtx2, C2b, 96);
+ my_graph.update(my_graph.cmtx3, C3b, 96);
 
-		my_graph.run(num_iterations);	// run the DFG for the specified number of iterations
+ my_graph.run(num_iterations); // run the DFG for the specified number of iterations
 
-	#endif // RTP_SWITCH
+ #endif // RTP_SWITCH
 
-	my_graph.end();	// housekeeping
+ my_graph.end(); // housekeeping
 
-	return (0);
+ return (0);
 
 } // end main()
 ```
 
 ***Notes:***
 
-* With `#define RTP_SWITCH` commented out, only one set of coefficients is loaded and we can check the impulse response as before.
+* With `#define RTP_SWITCH` commented out, only one set of coefficients loads and you can check the impulse response as before.
 * An additional set of coefficients is included for the other sections.
-* Additional `my_graph.update()` statements are added for the other sections.
+* Added additional `my_graph.update()` statements for the other sections.
 
 ## Building and Running the Design
 
@@ -247,7 +247,7 @@ We use `Emulation-SW` to verify the functionality of the design. Similar to Part
 We set `first_set` to `false` in `aie_iir_1b.jl` as follows to generate another set of coefficients for an LPF with a passband of 20 MHz.
 
 ```Julia
-first_set = false;	# true: 1st set; false: 2nd set
+first_set = false; # true: 1st set; false: 2nd set
 ...
 ```
 
@@ -265,7 +265,7 @@ Move the generated `two_freqs.dat` to `data`.
 
 In the testbench (`tb.cpp`), we *uncomment* `#define RTP_SWITCH` to include the second set of coefficients.
 
-***Note:*** A `wait()` statement is *required* to allow the specified number of iterations to complete before loading the new set of coefficients.
+***Note:*** A `wait()` statement is *required* to let the specified number of iterations to complete before loading the new set of coefficients.
 
 The output of the AI Engines is as follows (use `check2.jl`):
 
@@ -273,9 +273,9 @@ The output of the AI Engines is as follows (use `check2.jl`):
 
 The first half of the plot used coefficients for a 10 MHz filter. Thus, only the noisy 2 MHz component passed and the 18 MHz component was significantly attenuated.
 
-In the second half, the coefficients are for a 20 MHz filter. Thus, both 2 MHz and 18 MHz components are seen at the output.
+In the second half, the coefficients are for a 20 MHz filter. Thus, you can see both 2 MHz and 18 MHz components at the output.
 
-The complete design is included in the `data` and `src` directories. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building an AMD Vitis™ design from scratch.
+The `data` and `src` directories include the complete design. Refer to the aie_exp/Part1 tutorial if you are unfamiliar with building an AMD Vitis™ design from scratch.
 
 ## Conclusion
 
@@ -283,11 +283,11 @@ We showed how a sixth-order IIR filter composed of three second-order sections i
 
 We also showed how changing coefficients at runtime using asynchronous runtime parameters is possible.
 
-In Part 1, we focused only on functional verification using `Emulation-SW`. We will analyze the design and optimize it for throughput in upcoming installments.
+In Part 1, we focused only on functional verification using `Emulation-SW`. We analyze the design and optimize it for throughput in upcoming installments.
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
+Requests and bugs are tracked using GitHub issues. For questions go to [forums.xilinx.com](http://forums.xilinx.com/).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
 
