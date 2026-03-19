@@ -30,12 +30,14 @@
         ],
         "category": "canary",
 	"make_options": [
-            "EMU_CMD=\\\"./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf -login \\\"amd-edf\\\" -password \\\"amd-edf\\\" -run-app \\\"mount /dev/sda2 /media; cd /media; ./embedded_exec.sh\\\"\\\"",
             "EMBEDDED_PACKAGE_OUT=./package", 
-            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh"
+            "EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh",
+	    "WIC_IMAGE=amd-cortexa78-mali-common_edf-linux-disk-image/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic",
+	    "OSPI_IMAGE=versal-2ve-2vm-vek385-sdt-seg_edf-ospi/edf-ospi-versal-2ve-2vm-vek385-sdt-seg.bin"	
 	    ],
         "custom_build_target": {
-            "all": "all"
+            "all": "all",
+	    "hw": "all"	
         },
         "custom_board_target": "run_test",
         "configuration": "segmented",
