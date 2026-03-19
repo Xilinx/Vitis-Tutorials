@@ -1,5 +1,22 @@
 # Vitis-Tutorials ChangeLog
 
+## 2025.2_update (Mar. 12, 2026)
+
+### New Tutorials
+
+- AI_Engine_Development/AIE-MLv2/Design_Tutorials/02-Channelizer-Using-Vitis-Libraries/
+- AI_Engine_Development/AIE-MLv2/Design_Tutorials/06-farrow_filter/
+- Vitis_System_Design/Design_Tutorials/03-Versal_AI_Edge_Gen2_Design_Flow/
+- Vitis_System_Design/Design_Tutorials/04-Versal_AIE_Advanced_Flow_VSS_VMA_NPM/
+- Vitis_System_Design/Design_Tutorials/05-Versal_Segmented_configuration_Petalinux_Flow/
+- Embedded_Software/Feature_Tutorials/02-Debugging/5-ps_trace/
+
+### Tutorial Updates
+
+- Revamped Getting Started tutorial to include new features  
+    - Getting_Started/Vitis/Versal_w_EDF/
+    - Getting_Started/Vitis/Versal_w_PetaLinux/
+
 ## 2025.2 (Dec. 4, 2025)
 
 ### New Tutorials

@@ -105,7 +105,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             </td>
         </tr>
         <tr>
-            <td colspan="2" height="48">
+            <td colspan="4" height="48">
                 Learn how to target, develop, and deploy advanced algorithms using Versal AIE-MLv2 architecture in conjunction with PL IP/kernels and software applications running on the embedded processors.
             </td>
         </tr>
@@ -113,7 +113,7 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             <td height="24">
                 <strong>Feature Tutorials</strong>
             </td>
-            <td height="24">
+            <td colspan="3" height="24">
                 <strong>Design Tutorials</strong>
             </td>
         </tr>
@@ -123,7 +123,13 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             </td>
             <td>
                 <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/01-Radio-ML">Radio-ML on AIE-MLv2 :new:</a>
-            </td>            
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/02-Channelizer-Using-Vitis-Libraries/">Channelizer on AIE-MLv2 using Vitis Libraries :new:</a>
+            </td>
+            <td>
+                <a href="./AI_Engine_Development/AIE-MLv2/Design_Tutorials/06-farrow_filter/">Fractional Delay Farrow Filter on AIE-MLv2 :new:</a>
+            </td>                                  
         </tr>     
     </tbody>
 </table>
@@ -420,10 +426,10 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
             </td>
         </tr>
         <tr>
-            <td colspan="2" height="24">
+            <td colspan="1" height="24">
                 <strong>Feature Tutorials</strong>
             </td>
-            <td colspan="2" height="24">
+            <td colspan="3" height="24">
                 <strong>Design Tutorials</strong>
             </td>
         </tr>
@@ -432,15 +438,28 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
                 <a href="./Vitis_System_Design/Feature_Tutorials/01-Vitis_Functional_Simulation/">Vitis Functional Simulation </a>            
             </td>
             <td>
-                <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation </a>            
-            </td>
-            <td>
-                <a href="./Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a>
+                <a href="./Vitis_System_Design/Design_Tutorials/01-Versal_Custom_Thin_Platform_Extensible_System/">Versal Custom Thin Platform Extensible System</a>    
             </td>
             <td>
                 <a href="./Vitis_System_Design/Design_Tutorials/02-Versal_Vitis_Subsystem_Flow/">Versal Custom Platform Integration using Vitis Subsystem </a>
+            </td>
+            <td>
+                <a href="./Vitis_System_Design/Design_Tutorials/03-Versal_AI_Edge_Gen2_Design_Flow/">Versal AI Edge Gen2 Design flow with Vitis Unified IDE :new: </a>
             </td>            
         </tr>     
+        <tr>
+            <td height="24">
+                <a href="./Vitis_System_Design/Feature_Tutorials/02-Vitis_Subsystem_Simulation/">Vitis Subsystem Simulation </a>     
+            </td>
+            <td>
+                <a href="./Vitis_System_Design/Design_Tutorials/04-Versal_AIE_Advanced_Flow_VSS_VMA_NPM/">Flexible AIE Development Flow :new: </a>        
+            </td>
+            <td>
+                <a href="./Vitis_System_Design/Design_Tutorials/05-Versal_Segmented_configuration_Petalinux_Flow/">VCK190 Segmented Configuration with Petalinux :new: </a>
+            </td>
+            <td>
+            </td>            
+        </tr>   
     </tbody>
 </table>
 
