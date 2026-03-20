@@ -19,7 +19,7 @@ export STIMULUS_DIR   := ${IP_DIR}/data
 
 export APP_EXE        := ../ps_apps/host.exe
 
-export SD_CARD        := $(abspath ../package)
+export SD_CARD        := $(abspath ../package.$(TARGET)/sd_card)
 export BUILD_DIR      := build_${TARGET}
 
 export EMBD_EXC       := embedded_exec.sh
@@ -38,7 +38,7 @@ help::
 ifeq (${TARGET},hw)
   all:	${SD_CARD}
 else
-  all:	${SD_CARD} qemu_combined copy_wic
+  all:	${SD_CARD} qemu_combined copy_wic run_emu
 endif
 
 ${BUILD_DIR}:
@@ -93,7 +93,7 @@ copy_wic:
 	./run_copy_wic.sh
 
 run_emu:
-	cd ../package && ./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf -login "amd-edf" -password "amd-edf" -run-app " mount /dev/sda2 /media; cd /media; ./${EMBD_EXC}"
+	cd $(SD_CARD) && ./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf -login "amd-edf" -password "amd-edf" -run-app " mount /dev/sda2 /media; cd /media; ./${EMBD_EXC}"
 
 clean:
 	/bin/rm -rf ${SD_CARD} ${BUILD_DIR} *.o ${QEMU_COMBINED} .Xil ${EMBD_EXC} .ipcache
