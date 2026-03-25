@@ -6,7 +6,7 @@
     "platform_allowlist": ["vek280"],
     "platform_blocklist": [],
     "testinfo": {
-        "test_name": "GS_pfm",
+        "test_name": "GS_PFM-2",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_versal.sh"

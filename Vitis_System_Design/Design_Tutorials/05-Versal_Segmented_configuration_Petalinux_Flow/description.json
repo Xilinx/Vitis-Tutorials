@@ -6,7 +6,7 @@
     "platform_allowlist": ["vck190"],
     "platform_blocklist": [],
     "testinfo": {
-        "test_name": "VSD_04_VCK190-SEG-PETALINUX",
+        "test_name": "VSD_05_Versal-Gen1-SEG-PETALINUX",
         "tasks": {
             "build": {
                 "pre_exec": "./env_setup_versal.sh"

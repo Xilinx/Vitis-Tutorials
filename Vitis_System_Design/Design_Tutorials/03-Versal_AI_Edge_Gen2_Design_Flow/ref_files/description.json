@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "Versal_AI_Edge_Gen2_Design_Flow",
+        "test_name": "VSD_D_03-Versal-Gen2-DF",
         "jobs": [
             {
                 "index": 0,

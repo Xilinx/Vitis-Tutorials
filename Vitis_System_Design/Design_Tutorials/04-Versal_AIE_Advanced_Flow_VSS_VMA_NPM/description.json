@@ -6,7 +6,7 @@
     "platform_allowlist": [ "vek280"],
     "platform_blocklist": [],
     "testinfo": {
-        "test_name": "VSD_D_03-VSS_NPM",
+        "test_name": "VSD_D_04-VSS-NPM",
         "disable": false,
         "jobs": [
             {

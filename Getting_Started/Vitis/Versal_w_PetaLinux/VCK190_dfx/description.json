@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "VCK190_dfx",
+        "test_name": "GS_Vitis-1-dfx",
         "jobs": [
             {
                 "max_memory_MB": 65536,

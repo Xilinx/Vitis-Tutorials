@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "GS_PFM_VEK385",
+        "test_name": "GS_PFM-EDF",
         "jobs": [
             {
                 "index": 0,

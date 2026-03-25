@@ -8,7 +8,7 @@
     "platform_blocklist": [],
 
     "testinfo": {
-        "test_name": "GS_vitis",
+        "test_name": "GS_Vitis-2",
         "jobs": [
             {
                 "max_memory_MB": 65536,
