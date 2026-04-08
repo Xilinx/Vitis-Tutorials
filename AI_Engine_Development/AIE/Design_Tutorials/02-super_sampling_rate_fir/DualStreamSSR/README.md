@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -234,7 +234,7 @@ for(int col=0;col<NPhases;col++)
 
 ## Compilation and Analysis
 
-Navigate to the `MultiKernel` directory. In the `Makefile`, three methods define the build process:
+Navigate to the `DualStreamSSR` directory. In the `Makefile`, three methods define the build process:
 
 - `aie`
   - Compiles the graph and the kernels
@@ -254,11 +254,11 @@ To have the simulation running, you must generate input data. There are two poss
 
 Click **Generate** and then **Exit**. The generated files `PhaseIn_0_0.txt` through `PhaseIn_7_7.txt` should contain mainly 0s, with a few 1s and 2s. The number of samples per stream is half of the one that the C++ code declares because in the C++ code this is the length of the concatenation of both input streams.
 
-Type `make all` and wait for the `vitis_analyzer` GUI to display. The AMD Vitis™ Analyzer can show the graph, how the device implements it, and the complete timeline of the simulation. In this specific case, the graph is simple (a single kernel) and the implementation is on a single AI Engine.
+Type `make all` and wait for the `vitis_analyzer` GUI to display. The AMD Vitis™ Analyzer can show the graph, how the device implements it, and the complete timeline of the simulation. In this case, the graph contains 64 kernels arranged in an 8x8 grid, and the implementation uses 64 AI Engines.
 
 Click **Graph** to visualize the graph of the application:
 
-![missing image](../Images/Graph8Phases.png )
+![missing image](../Images/Graph8Phases.png)
 
 The 64 kernels and their 16 independent input streams are clearly visible. The top graph is for the output phases 0, 2, 4, and 6, the phases where the cascade stream goes from left to right on the physical device, and the bottom graph is for the phases 1, 3, 5, and 7 where the cascade stream goes from right to left.
 
@@ -355,7 +355,7 @@ which is almost the expected maximum.
 
 ## Support
 
-GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 

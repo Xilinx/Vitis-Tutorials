@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -121,7 +121,7 @@ At this point, consider latencies within the kernels. The operation scheduling p
 
 Overall, the latency from 'read' to 'write' spans approximately 20-25 clock cycles (call it L, L~25). In the left-hand column, the data input from row one to row two needs a FIFO of length ~75 (3L). The input to row two is approximately the same as row zero. The system feeds row three simultaneously with row one. The following table shows the latencies as multiples of L:
 
-| Column 0 | Column 1 | Column 2 | Column 3 |
+| | Column 0 | Column 1 | Column 2 | Column 3 |
 | ---: | :---: | :---: | :---: | :---: |
 | **Row 3** | 3L  | 2L  | L  | 0  |
 | **Row 2** | 0  | L  | 2L  | 3L  |
@@ -229,7 +229,7 @@ for(int row = 0;row<NPhases;row++)
 
 ## Compilation and Analysis
 
-Navigate to the `MultiKernel` directory. The `Makefile` defines three methods:
+Navigate to the `SingleStreamSSR` directory. The `Makefile` defines three methods:
 
 - `aie`
   - Compiles the graph and the kernels
@@ -249,7 +249,7 @@ To run the simulation, generate input data. There are two possibilities:
 
 Click **Generate** and then **Exit**. The generated files, `PhaseIn_0.txt` to `PhaseIn_3.txt`, must contain mainly 0s, with a few 1s and 2s.
 
-Type `make all` and wait for the `vitis_analyzer` GUI to display. The AMD Vitis™ Analyzer shows the graph, its device implementation, and the complete simulation timeline. In this specific case, the graph is simple (a single kernel) and the implementation is on a single AI Engine.
+Type `make all` and wait for the `vitis_analyzer` GUI to display. The AMD Vitis™ Analyzer shows the graph, its device implementation, and the complete simulation timeline. In this case, the graph contains 16 kernels arranged in a 4x4 grid, and the implementation uses 16 AI Engines.
 
 Click **Graph** to visualize the graph of the application:
 
@@ -310,8 +310,8 @@ This architecture achieves close to 5 GSPS performance. The system spends cycles
 
 ## Support
 
-GitHub issues are used for tracking requests and bugs. For questions, go to [adaptivesupport.amd.com](https://adaptivesupport.amd.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc</sub><br></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

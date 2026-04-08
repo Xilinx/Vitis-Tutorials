@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -27,7 +27,7 @@ The purpose of this tutorial is to provide a methodology to enable you to make a
 
 ## Before You Begin
 
-Before beginning this tutorial, familiarise yourself with Versal adaptive SoC architecture, and specifically, the AI Engine array processor and interconnect architecture.
+Before beginning this tutorial, familiarize yourself with Versal adaptive SoC architecture, and specifically, the AI Engine array processor and interconnect architecture.
 
 >**IMPORTANT**: Before beginning the tutorial, install the AMD Vitis™ 2025.2 software platform. The Vitis release includes all the embedded base platforms, including the VCK190 base platform that this tutorial uses. Also, download the Common Images for Embedded Vitis Platforms from this link: [https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html).
 
@@ -48,7 +48,7 @@ Data generation for this tutorial requires Python:
 
 ### Accessing the Tutorial Reference Files
 
-1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials.git`.
+1. To access the reference files, type the following into a terminal: `git clone https://github.com/Xilinx/Vitis-Tutorials`.
 2. Navigate to the `Vitis-Tutorials/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir/` directory, and type `source addon_setup.sh` to update the path for Python libraries and executable.
 
 You can now start the tutorial.
@@ -81,7 +81,7 @@ The SIMD VLIW AI Engines come as an array of interconnected processors using the
 
 ![missing image](./Images/AIEngineArray.jpg)
 
-A single clock drives all arrays (processors, memory modules, AXI interconnects). The slowest speed grade device can run @1 GHz. The highest speedgrade enables 1.3 GHz clock rates. The device used in the VCK190, which you can use in this tutorial, is the `xcvc1902-vsva2197-2MP-e-S` running at 1.25 GHz.
+A single clock drives all arrays (processors, memory modules, AXI interconnects). The slowest speed grade device can run at 1 GHz. The highest speedgrade enables 1.3 GHz clock rates. The device used in the VCK190, which you can use in this tutorial, is the `xcvc1902-vsva2197-2MP-e-S` running at 1.25 GHz.
 
 The AI Engine enables numerous connection possibilities with the surrounding environment as shown in the following figure.
 
@@ -190,7 +190,7 @@ You have access to a number of parameters:
 * *Base of the Filename*: `PhaseIn` by default, which generates the following names:
   * Single Stream, Single Phase: `PhaseIn_0.txt`
   * Single Stream, Polyphase: `PhaseIn_0.txt`, `PhaseIn_1.txt`, and so on
-  * Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_0.txt`, `PhaseIn_1_0.txt`, `PhaseIn_1_0.txt`, and so on
+  * Dual streams, Polyphase:  `PhaseIn_0_0.txt`, `PhaseIn_0_1.txt`, `PhaseIn_1_0.txt`, `PhaseIn_1_1.txt`, and so on
 
 Another possibility is to type `GenerateStreams` with the same parameters. If you type `GenerateStreams` without parameters, the system displays a usage text:
 
@@ -238,6 +238,6 @@ This utility views the template arguments used for kernel declaration in the Dou
 
 GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br>></br></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

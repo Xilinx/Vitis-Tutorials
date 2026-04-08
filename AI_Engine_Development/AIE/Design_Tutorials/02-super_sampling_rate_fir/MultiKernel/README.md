@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -218,7 +218,7 @@ for(int i=0;i<NChunks;i++)
     connect<stream>(in[i],k[i].in[0]);
 ```
 
-The initialization function is  simple. It simply reads data from the input stream. Because there is no argument, you must use the raw API for stream access:
+The initialization function is simple. It simply reads data from the input stream. Because there is no argument, you must use the raw API for stream access:
 
 ```C++
 template<int Delay>
@@ -254,7 +254,7 @@ To have the simulation running, input data must be generated. There are 2 possib
 
 Click **Generate** then **Exit**. The generated file `PhaseIn_0.txt` should contain mainly 0's, with a few 1's and 10's.
 
-Type `make all` and wait for `vitis_analyzer` GUI to display. The AMD Vitis&trade; analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this specific case, the graph is  simple (a single kernel) and the implementation is on a single AI Engine.
+Type `make all` and wait for `vitis_analyzer` GUI to display. The AMD Vitis™ Analyzer is able to show the graph, how it has been implemented in the device, and the complete timeline of the simulation. In this case, the graph contains four kernels connected by cascade streams, and the implementation uses four AI Engines.
 
 Click **Graph** to visualize the graph of the application:
 
@@ -262,7 +262,7 @@ Click **Graph** to visualize the graph of the application:
 
 The four kernels and their four independent input streams are clearly visible. A single input with a FIFO of eight between each AI Engine can also be implemented.
 
-Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
+Click **Array** to visualize where the kernel has been placed, and how it is fed from the PL:
 
 ![missing image](../Images/Array4Kernels.jpg)
 
@@ -276,7 +276,7 @@ Now the output of the filter can be displayed. The input being a set of Dirac im
 
 ![missing image](../Images/GraphOutput4Kernels.jpg)
 
-The top graph reflects the outputs where the abscissa is the time at which this output occured. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.
+The top graph reflects the outputs where the abscissa is the time at which this output occurred. The four frames are clearly localized; there is no output for a number of clock cycles. On the bottom graph, a zoom on the output is displayed and the filter impulse response is recognizable.
 
 After simulation the simulator displays the raw throughput at the input and output ports:
 
@@ -291,7 +291,7 @@ After simulation the simulator displays the raw throughput at the input and outp
 |             | 64 bits output 0                   | OUT   | 4753.946147       |
 ```
 
-The ouput port throughput in Msps (cint16) is: `1188.49 Msps`.
+The output port throughput in Msps (cint16) is: `1188.49 Msps`.
 
 The performance of this architecture can also be measured using the timestamped output. In the same directory (`aiesimulator_output/data`), type `StreamThroughput Output_0.txt`:
 
@@ -308,7 +308,7 @@ This architecture achieves close to 1.25 GSPS performance. It is slightly less b
 
 ## Support
 
-GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 

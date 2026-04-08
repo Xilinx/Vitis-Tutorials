@@ -56,7 +56,7 @@ There are two types of interfaces: windows and streams. Memory access (for store
 
 Window interfaces are used in a 'ping-pong' manner to allow for continuous data transfer while maintaining continuous processing. When multiple kernels map to the same AI Engine and communicate through windows, these windows use a single buffer because the kernels do not run simultaneously. Ping-pong buffering processes data only when the buffer completely fills, incurring minimum latency equal to the buffer filling duration. When an AI Engine kernel uses window interfaces, it must acquire a lock to gain access ownership to this memory. Lock acquisition and release takes a minimum of seven cycles per lock, which reduces the time allowed for processing.
 
-As a rule of thumb, 900 MSPS (@ 25 GHz) is the maximum sample rate for which window interfaces are a viable solution. When kernel processing takes only a fraction of input window fill time, the **utilization ratio** falls below 1, enabling multiple kernels to map onto a single AI Engine.
+As a rule of thumb, 900 MSPS (@ 1.25 GHz) is the maximum sample rate for which window interfaces are a viable solution. When kernel processing takes only a fraction of input window fill time, the **utilization ratio** falls below 1, enabling multiple kernels to map onto a single AI Engine.
 
 In this tutorial, the goal is to achieve the maximum performance filter implementation, leading to a streaming interface at the input and the output.
 
@@ -242,7 +242,7 @@ Click **Graph** to visualize the graph of the application:
 
 ![missing image](../Images/GraphSingleKernel.jpg)
 
-Click **Array** to visualize where the kernel has been placed, and how it is fed from the the PL:
+Click **Array** to visualize where the kernel has been placed, and how it is fed from the PL:
 
 ![missing image](../Images/ArraySingleKernel.jpg)
 
@@ -250,7 +250,7 @@ Click **Trace** to look how the entire simulation went through. This may be usef
 
 ![missing image](../Images/TimelineSingleKernel.jpg)
 
-Vitis Analyzer allows you to analyze latency and thoughput of the design. Click the **Latency** tab on the lower panel. Right-click on the input port and choose **Plot Continuous Latency**. By default, the number of interval is specified as the **No of Intervals** defined on the duration of the simulation. By default this is the number of iteration. Click **OK** and the following plot is displayed:
+Vitis Analyzer allows you to analyze latency and throughput of the design. Click the **Latency** tab on the lower panel. Right-click on the input port and choose **Plot Continuous Latency**. By default, the number of intervals is specified as the **No of Intervals** defined on the duration of the simulation. By default this is the number of iterations. Click **OK** and the following plot is displayed:
 
 ![missing image](../Images/ContinuousLatency.png)
 
@@ -294,7 +294,7 @@ Each of the four output samples need 16 `mul4`/`mac4` instructions, so the maxim
 
 ## Support
 
-GitHub issues are used for tracking requests and bugs. For questions, go to [adaptivesupport.amd.com](https://adaptivesupport.amd.com/).
+GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc</sub><br></br></p>
 
