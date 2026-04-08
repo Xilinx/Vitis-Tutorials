@@ -1,5 +1,5 @@
 
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 SDKTARGETSYSROOT ?= ${SYSROOT}
@@ -20,6 +20,8 @@ ${HOST_EXE}: ${HOST_OBJ}
 
 aie_control_xrt.cpp: ${AIE_CTRL_CPP}
 	cp -f ${AIE_CTRL_CPP} .
+
+.PHONY: clean
 
 clean:
 	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} aie_control_xrt.cpp

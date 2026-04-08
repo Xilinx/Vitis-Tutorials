@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -52,10 +52,6 @@ After completing this tutorial, you can:
 **Step 2 - AI Engine GMIO Performance Profile**: Introduces ways to create a performance profile of the AI Engine GMIO. Learn about the maximum supported GMIO ports and network on chip (NoC) bandwidth. For details, refer to [AIE GMIO Performance Profile](./perf_profile_aie_gmio.md).
 
 > **Note**: This tutorial provides a Makefile. If ``make`` commands exist, you can run them. Detailed commands appear for clarity, and you can run them manually.
-
-Each step’s design is self‑contained. You can start at any step based on your experience and needs.
-However, concepts and options from earlier steps might not appear later.
-For best results, start at the beginning and work through to completion.
 
 > **Note**: In this tutorial, the designs are self-contained in each step. You can start at any step based on your experience and requirements. However, concepts and options from earlier steps might not appear later. For best results, start at the beginning and work through to completion.
 

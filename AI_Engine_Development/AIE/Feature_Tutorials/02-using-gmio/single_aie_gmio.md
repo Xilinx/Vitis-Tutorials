@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -95,7 +95,7 @@ Complete the blocking transfer (`gmioIn.gm2aie`) before `gr.run()` because the G
 
 Because `GMIO::aie2gm()` works in synchronous mode, you can process the output immediately after it finishes.
 
->**Note:** In Linus, the GMIO uses non-cacheable memory.
+>**Note:** In Linux, the GMIO uses non-cacheable memory.
 
 In the example program, the design runs four iterations in a loop. Within each loop, you perform pre-processing before and post-processing after data transfer.
 
@@ -152,7 +152,7 @@ The red arrow denotes the dependency between data transfer and kernel execution.
 
 In the previous step, it was identified that the sequential manner of data transfer and kernel execution is the main bottleneck of the design performance. In this step, the AI Engine kernel is replaced with a vectorized version to reduce kernel execution time. Change the working directory to `single_aie_gmio/step2`. The vectorized kernel code is in `aie/weighted_sum.cc`.
 
-Besides the kernel update, you van perform asynchronous GMIO transfers for inputs. Skip synchronous GMIO transfers for outputs in this step. The purpose of mixing synchronous and asynchronous GMIO transfers is to overlap data transfer and kernel execution, thereby improving the performance.
+Besides the kernel update, you can perform asynchronous GMIO transfers for inputs. Skip synchronous GMIO transfers for outputs in this step. The purpose of mixing synchronous and asynchronous GMIO transfers is to overlap data transfer and kernel execution, thereby improving the performance.
 
 Examine the code in the main function `aie/graph.cpp`. `ITERATION` is four, and the graph is executed by four iterations with `gr.run(ITERATION)` and the GMIO transaction from memory to AI Engine is through non-blocking GMIO API `gr.gmioIn.gm2aie_nb(dinArray,BLOCK_SIZE_in_Bytes);`. It does not block the following executions. However, you can continue to use the blocking GMIO API for output data.
 
@@ -188,7 +188,7 @@ Click the **Trace** tab in the Vitis Analyzer. The events are shown as follows:
 
 The red arrow denotes the dependency between data transfer and kernel execution and the orange rectangle shows the overlap between data transfer and kernel execution. It can be seen that the kernel execution time has reduced (by comparing to data transfer) and data transfer and kernel execution are overlapping. The next step explores asynchronous output data transfer and its synchronization mechanism.
 
-### Step 3 - Asynchronous GMIO Transfer and Hardware Flow
+## Step 3 - Asynchronous GMIO Transfer and Hardware Flow
 
 In this step, you will see how to asynchronously transfer output data with non-blocking GMIO API, and how to use `GMIO::wait` to perform data synchronization. In addition, you will see how to run the AI Engine program with GMIO in hardware.
 

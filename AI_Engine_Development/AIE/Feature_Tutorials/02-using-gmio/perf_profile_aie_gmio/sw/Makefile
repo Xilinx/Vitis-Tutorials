@@ -1,5 +1,5 @@
 
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 HOST_EXE     = ../host.exe
@@ -17,5 +17,7 @@ ${HOST_EXE}: ${HOST_OBJ}
 %.o: %.cpp
 	${CXX} ${CXXFLAGS} -o $@ $<
 
+.PHONY: clean
+
 clean:
-	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE} 
+	rm -rf ${HOST_OBJ} .Xil ${HOST_EXE}

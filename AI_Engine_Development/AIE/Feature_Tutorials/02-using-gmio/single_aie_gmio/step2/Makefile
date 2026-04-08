@@ -1,5 +1,5 @@
 
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 TARGET   = hw
@@ -26,7 +26,7 @@ AIE_SIM_CMD = aiesimulator --pkg-dir=./Work --dump-vcd foo
 
 LDCLFLAGS=
 
-.PHONY: clean
+.PHONY: aie aiesim clean
 
 ###
 # Guarding Checks. Do not modify.
