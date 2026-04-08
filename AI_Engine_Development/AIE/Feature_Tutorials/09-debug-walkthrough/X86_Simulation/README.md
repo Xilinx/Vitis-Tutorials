@@ -234,7 +234,7 @@ This section discusses a debug methodology that uses the Vitis IDE debugger. You
 
 ## x86simulator Options for Debugging
 
-The following table lists x86simulator options used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
+The following table lists x86simulator options used for debugging. For the complete set of x86simulator options, refer to [Simulator Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Simulator-Options) in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2026.1%20English&url=ug1076-ai-engine-environment).
 
 |Option |Description|
 |:----|:----|
@@ -431,7 +431,7 @@ Consider Scenario 1 in the [Deadlock Detection](./README.md#Deadlock-detection) 
 
 7. You can also add `–dump` to the simulator options, open the `.txt` files, and observe the `snapshot` and `iteration` values to understand how many data samples were processed.
 
-For more details on recorded events, refer to the [Trace Report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
+For more details on recorded events, refer to the [Trace Report](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Trace-Report) section in the [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2026.1%20English&url=ug1076-ai-engine-environment).
 
 ### Trace Report in the Output Console
 

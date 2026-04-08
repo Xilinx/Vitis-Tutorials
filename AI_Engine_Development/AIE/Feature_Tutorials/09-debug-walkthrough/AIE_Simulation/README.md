@@ -17,7 +17,7 @@
 
 ## Introduction
 
-The AI Engine simulator (aiesimulator) models the timing and resources of the AI Engine array and uses transaction-level SystemC models for the NoC and double-data rate (DDR) memory. This enables faster performance analysis of AI Engine applications and accurate estimation of the AI Engine resource use with cycle-approximate timing information. This accounts for hardware constraints, such as heap/stack sizes and proram memory size, to verify the design and track detailed timing information that makes the simulation slow and resource intensive.
+The AI Engine simulator (aiesimulator) models the timing and resources of the AI Engine array and uses transaction-level SystemC models for the NoC and double-data rate (DDR) memory. This enables faster performance analysis of AI Engine applications and accurate estimation of the AI Engine resource use with cycle-approximate timing information. This accounts for hardware constraints, such as heap/stack sizes and program memory size, to verify the design and track detailed timing information that makes the simulation slow and resource intensive.
 
 The AI Engine simulator lets you step through AI Engine compiler-generated assembly code to aid code optimization. However, source level visibility can be limited due to compiler optimization. This section discusses important features that ease debugging at the AIE simulation level.  
 
@@ -192,7 +192,7 @@ This section discusses a debug methodology that uses the Vitis IDE debugger. You
     >**NOTE:**
     >
     >1. You should see the stack trace for all kernel functions mapped to a tile. For example, in this case, the kernel `peak_detect` mapped to tile [25,0]. When you select the `core[25,0]` in the `Debug` window, the **CALL STACK** shows only the trace information corresponding to the `core[25,0]`.
-    >2. Not all lines in the source code allow placing the breakpoint. When you try to place the breakpoint at a particular line (for example, line 27), the breakpoint is adjusted to the line 32 in the same source code with an **Info** message at the bottom corner as highlighted below. This compiler optimized the particular operation, and breakponts can be placed only at lines not optimized by the compiler.  
+    >2. Not all lines in the source code allow placing the breakpoint. When you try to place the breakpoint at a particular line (for example, line 27), the breakpoint is adjusted to the line 32 in the same source code with an **Info** message at the bottom corner as highlighted below. This compiler optimized the particular operation, and breakpoints can be placed only at lines not optimized by the compiler.  
     >
     >       ![breakpoint placement](./Images/breakpoint_placement.PNG)
     >
@@ -230,7 +230,7 @@ This section discusses a debug methodology that uses the Vitis IDE debugger. You
 This section explains how to enable profiling and trace in the Vitis IDE. Use these options to get performance metrics and generate trace data for visualization in the Vitis Analyzer.
 
 1. In the Flow navigator, under AIE SIMULATION/HARDWARE, select **Run Settings**.
-2. Under **aie_component_aiesim_1** Configuration, select the **Generate Trace** check box, Trace Tyep **VCD**, and leave the default option **VCD** with the filename *foo*.
+2. Under **aie_component_aiesim_1** Configuration, select the **Generate Trace** check box, Trace Type **VCD**, and leave the default option **VCD** with the filename *foo*.
 3. Under the Profile Options tab, enable the **Generate Profile** check box. Keep the other default options.
     >**NOTE:** You can also enable profile generation for selected tiles.
     >![profile trace run config](./Images/Profie_trace_runconfig.PNG)
@@ -260,7 +260,7 @@ This topic shows a practical scenario of deadlock in aiesimulation and simulator
 3. Run the aiesimulation by selecting **AIE SIMULATOR/HARDWARE** → **Run**, and observe the hang.
 4. Wait for a few seconds to confirm the hang. Click the background operations icon located in the bottom right corner that shows the in progress view, then terminate the simulation process.
 ![simulation hang](./Images/simulation_hang.PNG)
-1. The AI Engine simulator provides an option to exit the simulation if all active cores are stalled aftfor a specific time period (in ns).
+1. The AI Engine simulator provides an option to exit the simulation if all active cores are stalled after a specific time period (in ns).
 2. For example, add `--hang-detect-time=60` in the **Run configurations** -> **Additional Arguments**, and rerun the aiesimulation. The simulation exits with the following information in the console.
 
    ```
@@ -408,7 +408,7 @@ The AI Engine Pipeline view in the Vitis IDE enables you to correlate instructio
 
 ## Design Performance Debug
 
-To estimate design performance during the AI Engine simulation, analyze the profile results. This section explains topics that are most commonly used to assess hoverall kernel performance.
+To estimate design performance during the AI Engine simulation, analyze the profile results. This section explains topics that are most commonly used to assess overall kernel performance.
 
 Refer to the Section 4 [Enabling Profile and Trace Options](./README.md#Enabling-profile-and-trace-options) to enable profiling in the Vitis IDE.
 
@@ -452,6 +452,6 @@ Vitis IDE generates the same report after the AI Engine simulation completes. Vi
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

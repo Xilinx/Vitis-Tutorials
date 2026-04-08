@@ -296,8 +296,8 @@ In this topic, you will walk through using the APIs in the host code to profile 
 It can be defined as the average number of bytes produced (or consumed) per second:
 
 1. To profile the design and calculate the port throughput, you should add the APIs in the host code.
-2. The code changes to profile the design for port throughput calculation are available in `Hardware/src/host_PortTP.cpp`. You can either do changes in `sw/host.cpp` manually by referring to `Hardware/src/host_PortTP.cpp`, or replace the `sw/host.cpp`. Make sure to take the backup of the file before replacing.
-3. In the `Hardware/src/host_PortTP.cpp`, the changes to profile the design are summarized as follows:
+2. The code changes to profile the design for port throughput calculation are available in `Hardware/sw/host_PortTP.cpp`. You can either do changes in `sw/host.cpp` manually by referring to `Hardware/sw/host_PortTP.cpp`, or replace the `sw/host.cpp`. Make sure to take the backup of the file before replacing.
+3. In the `Hardware/sw/host_PortTP.cpp`, the changes to profile the design are summarized as follows:
 
 	a. Notice in the `host.cpp`, it contains only Native XRT APIs and no ADF APIs are used. For example, a graph handle is created using the `uuid` of `xclbin` and extracted the graph details using the `xrt::graph` API.
 
@@ -367,6 +367,6 @@ Revert back all the changes in source code to exercise other features in this tu
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

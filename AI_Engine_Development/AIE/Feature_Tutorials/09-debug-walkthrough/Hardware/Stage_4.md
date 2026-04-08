@@ -100,7 +100,7 @@ To run the event trace on hardware, compile the AI Engine graph with `--event-tr
 * Using the `runtime` as an argument, compile the AI Engine graph to be set up for event trace, and specify the type of profile data to capture at runtime.
 * The other way is to specify one of the `functions`, `functions_partial_stalls`, or `functions_all_stalls` as a type of profile data during compile time, and recompile the design to capture a different type of data during runtime.
 
-For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Tracing-Options) in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
+For more information on different event trace options for AI Engine compilation, refer to [Event Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/Event-Tracing-Options) in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2026.1%20English&url=ug1076-ai-engine-environment).
 
 This tutorial uses the `--event-trace=runtime`, `--event-trace-port=plio`, `--num-trace-streams=8`, and `--xlopt=0` options.
 
@@ -143,7 +143,7 @@ After the design is built, you are ready to run on the hardware board.
       graph_based_aie_tile_metrics = all:all:all_stalls
    ```
 
-   More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug1076-ai-engine-environment).
+   More details about these settings are explained in [XRT Trace Options](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Flow) in the in [AI Engine Tools and Flows User Guide (UG1076)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2026.1%20English&url=ug1076-ai-engine-environment).
 
 2. Run the application.
 
@@ -387,6 +387,6 @@ This section uses the system project built using the Vitis IDE and launch the ID
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

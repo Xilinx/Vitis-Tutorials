@@ -15,7 +15,7 @@
 
 # AI Engine Debug Walkthrough Tutorial - From Simulation to Hardware
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -34,16 +34,16 @@ Techniques to uncover both functional and performance level bugs are described i
 
 Source level debug includes visibility into the register contents view, variable values view, breakpoints view. This necessitates a GUI. The Vitis integrated design environment (IDE) tool supports these debug requirements. This tutorial shows how to use the Vitis IDE to manage these challenges, and covers additional tools and methodologies to assist with your design debug.
 
->**IMPORTANT**: Before beginning the tutorial, install the Vitis 2025.2 software. The Vitis release includes all embedded base platforms, including the VCK190 base platform used in this tutorial. Download the Common Images for Embedded Vitis Platforms from: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025.2.html>.
+>**IMPORTANT**: Before beginning the tutorial, install the Vitis 2026.1 software. The Vitis release includes all embedded base platforms, including the VCK190 base platform used in this tutorial. Download the Common Images for Embedded Vitis Platforms from: <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2026.1.html>.
 
 The `common image` package contains a prebuilt Linux kernel and root file system. You can use  it with a Versal adaptive SoC board for embedded design development using Vitis. Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you unzipped the Versal Common Image package.
-2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
-3. Set `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
+2. In a Bash shell, run `/Common Images Dir/xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux script`. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run `/Common Images Dir/xilinx-versal-common-v2026.1/sdk.sh`.
+3. Set `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2026.1` directory.
 4. Set the PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
 
-This tutorial targets a 2025.2 VCK190 production board.
+This tutorial targets a 2026.1 VCK190 production board.
 
 ## Example Design: Peak Detector
 
@@ -53,13 +53,6 @@ The complete design is shown in the Vitis analyzer.
 ![Vitis analyzer peak detect](./Images/va_peakdetect.PNG)
 
 ## Vitis IDE Project
-
-Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md#Porting-a-Command-Line-Project-to-the-Vitis-IDE-Project).
-
-
-## Methods
-
-There are several ways to debug a system design that include the PS, PL, and AI Engine, or an AI Engine only design. Each method has the intended goal to help debug practice. The following are some debug methodologies that help analyze the design and take decisions to improve it.
 
 Use the design files from `<tutorial_path>/09-debug-walkthrough/cmd_src` and create a system project manually in Unified Vitis IDE using the steps mentioned in [Port a Command Line Project to a Vitis IDE System Project](./CreateIDESystemProj.md#Porting-a-Command-Line-Project-to-the-Vitis-IDE-Project).
 
@@ -275,7 +268,7 @@ Introduces an out of bound read access, and explains how to identify the violati
 <a href="./AIE_Simulation/README.md#Kernel-debug">Single Kernel Debug</a>
 </td>
 <td>
-Explains how to debug a single kernel design usign a pipeline view in the Vitis IDE.
+Explains how to debug a single kernel design using a pipeline view in the Vitis IDE.
 </td>
 </tr>
 
@@ -482,6 +475,6 @@ The foundation of the Vitis environment design methodology is an iterative appro
 
 GitHub issues will be used for tracking requests and bugs. For questions, go to [support.xilinx.com](https://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

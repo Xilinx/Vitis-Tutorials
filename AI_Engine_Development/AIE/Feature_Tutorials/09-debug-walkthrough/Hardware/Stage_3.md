@@ -181,7 +181,7 @@ The v++ `--debug` opiton is used to enable the ILA IP core and insert in the des
 1. Expand the `slot_0 : mm2s_s : Interface`. The `mm2s_s : TVALID` shows `1`, which indicates a valid data is available at the time marker pointed. Moving the time marker across the timeline, changes the AXI protocol values indicating value changes at that particular time.
 
    This is the method to determine when/what valid data is sent/received.
-   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in the [Vivado Design Suite User Guide: Programming and Debugging (UG908)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2025.2%20English&url=ug908-vivado-programming-debugging).
+   >**NOTE:** The default buffer size allocated while creating a BD design in Vivado might not be sufficient enough to capture the data of all iterations. For more information on viewing ILA probe data, refer to the [Viewing ILA Probe Data in the Waveform Viewer](https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging/Viewing-ILA-Probe-Data-in-the-Waveform-Viewer) in the [Vivado Design Suite User Guide: Programming and Debugging (UG908)](https://docs.amd.com/access/sources/dita/map?Doc_Version=2026.1%20English&url=ug908-vivado-programming-debugging).
 
 ## Support
 
