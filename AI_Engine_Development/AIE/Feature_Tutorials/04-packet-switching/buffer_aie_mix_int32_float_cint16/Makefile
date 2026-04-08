@@ -1,5 +1,5 @@
 
-#Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 #SPDX-License-Identifier: MIT
 
 TARGET   = hw_emu
@@ -33,7 +33,7 @@ VPP_SPEC =system.cfg
 VPP_FLAGS=--save-temps --verbose --config ${VPP_SPEC}  
 LDCLFLAGS=
 
-.PHONY: clean
+.PHONY: all run sd_card aie aiesim xsa kernels host package run_hw_emu clean
 
 ###
 # Guarding Checks. Do not modify.

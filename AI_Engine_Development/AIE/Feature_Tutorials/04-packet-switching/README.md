@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -17,7 +17,7 @@
 
 ***Version: Vitis 2025.2***
 
-AI Engine kernels can share a single processor and execute in an interleaved manner. Also, they can share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how the system generates, distributes, and consumes packets in a graph computation. Explicit packet switching is typically recommended when many low bandwidth streams from a common programmable logic (PL) source distribute to different AI Engine destinations. Similarly, many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because multiple streams share a single physical channel, you minimize the number of AI Engine - PL interface streams used.
+AI Engine kernels can share a single processor and execute in an interleaved manner. In addition, they can also share multiple stream connections on a single physical channel. The explicit packet switching feature allows fine-grain control over how packets are generated, distributed, and consumed in a graph computation. Explicit packet switching is typically recommended in cases where many low bandwidth streams from a common programmable logic (PL) source can be distributed to different AI Engine destinations. Similarly, many low bandwidth streams from different AI Engine sources to a common PL destination can also take advantage of this feature. Because a single physical channel is shared between multiple streams, you minimize the number of AI Engine - PL interface streams used.
 
 This tutorial covers three main steps.
 
@@ -36,9 +36,9 @@ The 'common image' package contains a prebuilt Linux kernel and root file system
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell, run the ``/**Common Images Dir**/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux`` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ``/**Common Images Dir**/xilinx-versal-common-v2025.2/sdk.sh``.
-3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the ``/**Common Images Dir**/xilinx-versal-common-v2025.2`` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to ``$XILINX_VITIS/base_platforms``.
+2. In a Bash shell, run the `/**Common Images Dir**/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/**Common Images Dir**/xilinx-versal-common-v2025.2/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and Image files located in the `/**Common Images Dir**/xilinx-versal-common-v2025.2` directory.
+4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms`.
 
 This tutorial targets VCK190 production board for 2025.2 version.
 
@@ -66,7 +66,7 @@ After completing this tutorial, you can:
 
 ### Support
 
-GitHub issues are used for tracking requests and bugs. For questions go to [forums](https://adaptivesupport.amd.com/s/?language=en_US).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](https://adaptivesupport.amd.com/s/topiccatalog).
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 

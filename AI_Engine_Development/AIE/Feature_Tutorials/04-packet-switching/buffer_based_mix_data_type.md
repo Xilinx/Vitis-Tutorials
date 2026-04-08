@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -122,13 +122,13 @@ The difference in the PS application from [Buffer Based AI Engine Kernels](./buf
 
 Correspondingly, the pre-processing and post-processing of this data has been changed.
 
-1. Run HW emulation with the following ``make` command to build the HW system and host application.
+1. Run HW emulation with the following `make` command to build the HW system and host application.
 
    ```
    make run_hw_emu
    ```
 
-   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the ``Versal>`` prompt to resume the system booting.
+   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the `Versal>` prompt to resume the system booting.
 
 2. After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
 
@@ -174,8 +174,8 @@ Next, review [Packet Stream Based AI Engine Kernels](./pktstream_based_aie_kerne
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](https://adaptivesupport.amd.com/s/topiccatalog).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

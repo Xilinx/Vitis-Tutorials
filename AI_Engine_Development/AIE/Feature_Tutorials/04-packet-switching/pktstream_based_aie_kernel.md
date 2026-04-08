@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -19,9 +19,9 @@ Packet stream-based AI Engine kernels allow fine-grain control over how packets 
 
 The PL side and PS side of this example is the same as [Buffer Based AI Engine Kernels](./buffer_based_aie_kernel.md). Refer to:
 
-* [Packet Format](./buffer_based_aie_kernel.md/#Packet-Format)
-* [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md/#Example-PL-Kernels-for-Packet-Switching)
-* [Example PS code for Packet Switching](./buffer_based_aie_kernel.md/#Example-PS-code-for-Packet-Switching)
+* [Packet Format](./buffer_based_aie_kernel.md#packet-format)
+* [Example PL Kernels for Packet Switching](./buffer_based_aie_kernel.md#example-pl-kernels-for-packet-switching)
+* [Example PS code for Packet Switching](./buffer_based_aie_kernel.md#example-ps-code-for-packet-switching)
 
 ## Packet Stream Interfaces and Operations
 
@@ -129,13 +129,13 @@ Note that `input_pktstream` is read as integer input. It needs to be `reinterpre
    make aiesim
    ```
 
-2. Run HW emulation with the following make command (it will build the HW system and host application) :
+2. Run HW emulation with the following `make` command (it will build the HW system and host application) :
 
    ```
    make run_hw_emu
    ```
 
-   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the ``Versal>`` prompt to resume the system booting.
+   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the `Versal>` prompt to resume the system booting.
 
 3. After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
 
@@ -180,8 +180,8 @@ In this tutorial you learned about:
 
 ### Support
 
-GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](https://adaptivesupport.amd.com/s/topiccatalog).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

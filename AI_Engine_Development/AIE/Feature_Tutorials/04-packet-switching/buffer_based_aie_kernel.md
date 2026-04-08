@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -34,7 +34,7 @@ Then this example:
 
 ## Construct Graph with Packet Switching Capability
 
-To explicitly control the multiplexing and de-multiplexing of packets, two new templated node classes are added to the ADF graph library: `pktsplit<n>` and `pktmerge<n>`. A node instance of class `pktmerge<n>` is a n:1 multiplexer of n packet streams producing a single packet stream. A node instance of class `pktsplit<n>` is a 1:n de-multiplexer of a packet stream producing n different packet streams.
+To explicitly control the multiplexing and de-multiplexing of packets, two new templated node classes are added to the ADF graph library: `pktsplit<n>` and `pktmerge<n>`. A node instance of class `pktmerge<n>` is an n:1 multiplexer of n packet streams producing a single packet stream. A node instance of class `pktsplit<n>` is a 1:n de-multiplexer of a packet stream producing n different packet streams.
 
 >**Note:** The maximum number of allowable packet streams is thirty-two on a single physical channel (**n≤32**).
 
@@ -86,7 +86,7 @@ Run the make command `make aie` to compile the graph. Then open the compiled sum
 
 ![graph](./images/pic1.png)
 
-It is seen that every `sp` output has been assigned a unique packet ID. Also, every `mg` input has been assigned a unique ID. The packet IDs can vary on different implementations. The AI Engine compiler generates a JSON file that contains all the packet ID infomation `Work/reports/packet_switching_report.json`. It also generates header files that define unique macro variables for the packet IDs. These files are `Work/temp/packet_ids_c.h` and `Work/temp/packet_ids_v.h`, which can be directly included in the C or Verilog source code.
+It is seen that every `sp` output has been assigned a unique packet ID. Also, every `mg` input has been assigned a unique ID. The packet IDs can vary on different implementations. The AI Engine compiler generates a JSON file that contains all the packet ID information `Work/reports/packet_switching_report.json`. It also generates header files that define unique macro variables for the packet IDs. These files are `Work/temp/packet_ids_c.h` and `Work/temp/packet_ids_v.h`, which can be directly included in the C or Verilog source code.
 
 For example, in this test case, the `Work/temp/packet_ids_c.h` file is as follows.
 
@@ -431,7 +431,7 @@ Note that there is no special packet switching handling in the PS code. It is al
    make run_hw_emu
    ```
 
-   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the ``Versal>`` prompt to resume the system booting.
+   >**Tip:** If the keyboard is accidentally hit and stops the system booting automatically, type boot at the `Versal>` prompt to resume the system booting.
 
 2. After Linux has booted, run the following commands at the Linux prompt (this is only for HW cosim).
 
@@ -477,6 +477,6 @@ In this step, you learned about the following concepts.
 
 Next, review [Buffer Based AI Engine Kernels with Mixed Data Types](./buffer_based_mix_data_type.md).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
