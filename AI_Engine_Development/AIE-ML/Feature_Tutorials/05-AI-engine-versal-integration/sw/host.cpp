@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
 */
 
 #include <fstream>
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 	auto cghdl = xrt::graph(device,xclbin_uuid,"clipgraph");
 	
 	printf("graph run\n");
-	//Run th graph for 1 iteration
+	//Run the graph for 1 iteration
 	cghdl.run(1);
 	
 	//Graph end

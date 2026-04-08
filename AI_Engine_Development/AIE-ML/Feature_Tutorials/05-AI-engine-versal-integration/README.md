@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -15,7 +15,7 @@
 
 # AI Engine Versal Integration
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -295,7 +295,7 @@ v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vek280_base_202520_1/xilinx_vek280
 
 Now you have a generated `.xsa` to execute your design on the platform.
 
-### 3.Compile the A72 Host Application
+### 3. Compile the A72 Host Application
 
 >**Note:** Use the Arm cross-compiler `aarch64-xilinx-linux-g++` in hardware emulation. Make sure to setback the `SYSROOT` and `CXX` variables as mentioned in the **Introduction**.
 
@@ -343,7 +343,7 @@ cd ..
 
 >**NOTE:** By default the `--package` flow creates a `a.xclbin` automatically if the `-o` switch is not set.
 
-### 5.Run Hardware Emulation
+### 5. Run Hardware Emulation
 
 After packaging, everything is set to run emulation. Because you ran `aiesimulator` with profiling enabled, you can bring that to hardware emulation. You can pass the `aiesim_options.txt` to the `launch_hw_emu.sh` which enables the profiling options used in `aiesimulator` to be applied to hardware emulation. To do this, add the `-aie-sim-options ../aiesimulator_output/aiesim_options.txt`.
 
