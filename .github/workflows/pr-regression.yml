@@ -1,0 +1,430 @@
+name: PR Tutorial Regression
+
+on:
+  pull_request:
+    branches: ['*_next']
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.svg'
+      - '**/*.rst'
+      - '**/*.gif'
+      - 'docs-jp/**'
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
+env:
+  REGRESSION_REPO: swm/VT-Regression-Infra
+
+defaults:
+  run:
+    shell: bash   # uses 'bash -eo pipefail' so pipe failures (e.g. make | tee) propagate
+
+jobs:
+  # ─── Discover affected tutorials ───
+  discover:
+    runs-on: [self-hosted, linux]
+    outputs:
+      has-sim: ${{ steps.discover.outputs.has-sim }}
+      has-hw-emu: ${{ steps.discover.outputs.has-hw-emu }}
+      has-hw-build: ${{ steps.discover.outputs.has-hw-build }}
+      affected-count: ${{ steps.discover.outputs.affected-count }}
+      tool-version: ${{ steps.version.outputs.tool_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          sparse-checkout: |
+            **/test.yml
+            **/description.json
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+
+      - name: Detect tool version from branch
+        id: version
+        run: |
+          BRANCH="${{ github.event.pull_request.base.ref || github.ref_name }}"
+          # Extract version prefix: "2025.2_next" -> "2025.2", "2026.1_staging" -> "2026.1"
+          VER=$(echo "$BRANCH" | grep -oP '^\d{4}\.\d+' || echo "2026.1")
+          echo "tool_version=$VER" >> "$GITHUB_OUTPUT"
+          echo "Detected tool version: $VER from branch: $BRANCH"
+
+      - name: Discover affected tutorials
+        id: discover
+        run: |
+          uvx --with pyyaml python3 _regression/scripts/generate_matrix.py \
+            --mode pr \
+            --repo "${{ github.workspace }}" \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --tool-version "${{ steps.version.outputs.tool_version }}" \
+            --output-dir matrix-data
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: matrix-data
+          path: matrix-data/
+          retention-days: 5
+
+  # ─── Load matrices (secret-free job to avoid GHE output masking) ───
+  load-matrices:
+    needs: discover
+    runs-on: [self-hosted, linux]
+    outputs:
+      sim-matrix: ${{ steps.load.outputs.sim-matrix }}
+      hw-emu-matrix: ${{ steps.load.outputs.hw-emu-matrix }}
+      hw-build-matrix: ${{ steps.load.outputs.hw-build-matrix }}
+      tool-version: ${{ needs.discover.outputs.tool-version }}
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: matrix-data
+
+      - name: Set matrix outputs
+        id: load
+        run: |
+          for stage in sim hw-emu hw-build; do
+            file="${stage}.json"
+            if [ -f "$file" ]; then
+              # Output slim index matrix (name+path+timeout only) to stay under
+              # GHE runner's secret scanner size threshold (~20KB).
+              # Full config is read from matrix-data artifact at runtime.
+              slim=$(python3 -c "
+          import json
+          data = json.loads(open('$file').read().strip())
+          idx = [{'name':e['name'],'path':e['path'],'timeout':e['timeout']} for e in data]
+          print(json.dumps(idx, separators=(',',':')))
+          ")
+              delimiter="MATRIX_EOF_$(echo "$stage" | tr 'a-z-' 'A-Z_')"
+              {
+                echo "${stage}-matrix<<${delimiter}"
+                echo "$slim"
+                echo "${delimiter}"
+              } >> "$GITHUB_OUTPUT"
+            fi
+          done
+
+  # ─── Simulation tests ───
+  sim-tests:
+    needs: [discover, load-matrices]
+    if: needs.discover.outputs.has-sim == 'true'
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        tutorial: ${{ fromJSON(needs.load-matrices.outputs.sim-matrix) }}
+    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    timeout-minutes: ${{ matrix.tutorial.timeout }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ matrix.tutorial.path }}
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: matrix-data
+          path: _matrix-data
+
+      - name: Load tutorial config
+        id: cfg
+        run: |
+          python3 << 'PYEOF'
+          import json, os
+          data = json.loads(open("_matrix-data/sim.json").read().strip())
+          entry = next(e for e in data if e["name"] == os.environ["TUTORIAL_NAME"])
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              for k, v in entry.items():
+                  if v is not None:
+                      f.write(f"{k}={v}\n")
+          PYEOF
+        env:
+          TUTORIAL_NAME: ${{ matrix.tutorial.name }}
+
+      - name: "Run: ${{ matrix.tutorial.name }} [${{ steps.cfg.outputs.target }}]"
+        working-directory: ${{ matrix.tutorial.path }}
+        run: |
+          SECONDS=0
+          _BUILD_LOG="${GITHUB_WORKSPACE}/_build-logs/${{ matrix.tutorial.name }}/build.log"
+          mkdir -p "$(dirname "$_BUILD_LOG")"
+          source "${{ github.workspace }}/_regression/env/${{ needs.load-matrices.outputs.tool-version }}/${{ steps.cfg.outputs.env_script }}"
+          source "${{ github.workspace }}/_regression/env/resolve_platform.sh" "${{ steps.cfg.outputs.platform }}"
+          ${{ steps.cfg.outputs.run }} 2>&1 | tee "$_BUILD_LOG"
+          echo "{\"duration_s\": $SECONDS}" > "$(dirname "$_BUILD_LOG")/build-meta.json"
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: logs-sim-${{ matrix.tutorial.name }}
+          path: |
+            _build-logs/${{ matrix.tutorial.name }}/build.log
+            _build-logs/${{ matrix.tutorial.name }}/build-meta.json
+          retention-days: 20
+
+  # ─── Hardware emulation tests ───
+  hw-emu-tests:
+    needs: [discover, load-matrices]
+    if: needs.discover.outputs.has-hw-emu == 'true'
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        tutorial: ${{ fromJSON(needs.load-matrices.outputs.hw-emu-matrix) }}
+    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    timeout-minutes: ${{ matrix.tutorial.timeout }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ matrix.tutorial.path }}
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: matrix-data
+          path: _matrix-data
+
+      - name: Load tutorial config
+        id: cfg
+        run: |
+          python3 << 'PYEOF'
+          import json, os
+          data = json.loads(open("_matrix-data/hw-emu.json").read().strip())
+          entry = next(e for e in data if e["name"] == os.environ["TUTORIAL_NAME"])
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              for k, v in entry.items():
+                  if v is not None:
+                      f.write(f"{k}={v}\n")
+          PYEOF
+        env:
+          TUTORIAL_NAME: ${{ matrix.tutorial.name }}
+
+      - name: "Run: ${{ matrix.tutorial.name }} [${{ steps.cfg.outputs.target }}]"
+        working-directory: ${{ matrix.tutorial.path }}
+        run: |
+          SECONDS=0
+          _BUILD_LOG="${GITHUB_WORKSPACE}/_build-logs/${{ matrix.tutorial.name }}/build.log"
+          mkdir -p "$(dirname "$_BUILD_LOG")"
+          source "${{ github.workspace }}/_regression/env/${{ needs.load-matrices.outputs.tool-version }}/${{ steps.cfg.outputs.env_script }}"
+          source "${{ github.workspace }}/_regression/env/resolve_platform.sh" "${{ steps.cfg.outputs.platform }}"
+          ${{ steps.cfg.outputs.run }} 2>&1 | tee "$_BUILD_LOG"
+          echo "{\"duration_s\": $SECONDS}" > "$(dirname "$_BUILD_LOG")/build-meta.json"
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: logs-hw-emu-${{ matrix.tutorial.name }}
+          path: |
+            _build-logs/${{ matrix.tutorial.name }}/build.log
+            _build-logs/${{ matrix.tutorial.name }}/build-meta.json
+          retention-days: 20
+
+  # ─── Hardware build + board run (merged) ───
+  hw-build-tests:
+    needs: [discover, load-matrices]
+    if: needs.discover.outputs.has-hw-build == 'true'
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        tutorial: ${{ fromJSON(needs.load-matrices.outputs.hw-build-matrix) }}
+    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    timeout-minutes: ${{ matrix.tutorial.timeout }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ matrix.tutorial.path }}
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: matrix-data
+          path: _matrix-data
+
+      - name: Load tutorial config
+        id: cfg
+        run: |
+          python3 << 'PYEOF'
+          import json, os
+          data = json.loads(open("_matrix-data/hw-build.json").read().strip())
+          entry = next(e for e in data if e["name"] == os.environ["TUTORIAL_NAME"])
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              for k, v in entry.items():
+                  if v is not None:
+                      f.write(f"{k}={v}\n")
+          PYEOF
+        env:
+          TUTORIAL_NAME: ${{ matrix.tutorial.name }}
+
+      - name: "Build: ${{ matrix.tutorial.name }} [${{ steps.cfg.outputs.target }}]"
+        id: build
+        working-directory: ${{ matrix.tutorial.path }}
+        run: |
+          SECONDS=0
+          _BUILD_LOG="${GITHUB_WORKSPACE}/_build-logs/${{ matrix.tutorial.name }}/build.log"
+          mkdir -p "$(dirname "$_BUILD_LOG")"
+          source "${{ github.workspace }}/_regression/env/${{ needs.load-matrices.outputs.tool-version }}/${{ steps.cfg.outputs.env_script }}"
+          source "${{ github.workspace }}/_regression/env/resolve_platform.sh" "${{ steps.cfg.outputs.platform }}"
+          ${{ steps.cfg.outputs.run }} 2>&1 | tee "$_BUILD_LOG"
+          echo "{\"duration_s\": $SECONDS}" > "$(dirname "$_BUILD_LOG")/build-meta.json"
+
+      - name: "Run on board: ${{ matrix.tutorial.name }} [${{ steps.cfg.outputs.platform }}]"
+        id: run
+        if: steps.build.outcome == 'success' && steps.cfg.outputs.run_cmd
+        continue-on-error: true
+        working-directory: ${{ matrix.tutorial.path }}
+        run: |
+          SECONDS=0
+          _LOG_DIR="${GITHUB_WORKSPACE}/_build-logs/${{ matrix.tutorial.name }}"
+          source "${{ github.workspace }}/_regression/env/${{ needs.load-matrices.outputs.tool-version }}/${{ steps.cfg.outputs.run_env_script || steps.cfg.outputs.env_script }}"
+          source "${{ github.workspace }}/_regression/env/resolve_platform.sh" "${{ steps.cfg.outputs.platform }}"
+          ${{ steps.cfg.outputs.run_cmd }} 2>&1 | tee "$_LOG_DIR/run.log"
+          echo "{\"duration_s\": $SECONDS}" > "$_LOG_DIR/run-meta.json"
+
+      - name: Record step outcomes
+        if: always()
+        run: |
+          echo '{"build":"${{ steps.build.outcome }}","run":"${{ steps.run.outcome }}"}' > "${GITHUB_WORKSPACE}/_build-logs/${{ matrix.tutorial.name }}/step-outcomes.json"
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: logs-hw-build-${{ matrix.tutorial.name }}
+          path: |
+            _build-logs/${{ matrix.tutorial.name }}/build.log
+            _build-logs/${{ matrix.tutorial.name }}/step-outcomes.json
+            _build-logs/${{ matrix.tutorial.name }}/build-meta.json
+            _build-logs/${{ matrix.tutorial.name }}/run-meta.json
+          retention-days: 20
+
+  # ─── Post results to PR ───
+  pr-comment:
+    needs: [discover, load-matrices, sim-tests, hw-emu-tests, hw-build-tests]
+    if: always()
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+
+      - uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          path: all-logs
+
+      - name: Generate report
+        run: |
+          mkdir -p all-logs
+          uvx --with pyyaml --with jinja2 python3 _regression/scripts/generate_report.py \
+            --logs all-logs \
+            --output report.html \
+            --check check.json \
+            --title "PR #${{ github.event.pull_request.number }} Regression" \
+            --tool-version "${{ needs.load-matrices.outputs.tool-version }}"
+          python3 -c "import json; print(json.load(open('check.json'))['summary'])" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish test results
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('check.json')) {
+              core.warning('check.json not found, skipping check run');
+              return;
+            }
+            const check = JSON.parse(fs.readFileSync('check.json', 'utf8'));
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'PR Regression Results',
+              head_sha: context.sha,
+              status: 'completed',
+              conclusion: check.conclusion,
+              output: {
+                title: check.title,
+                summary: check.summary,
+              },
+            });
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pr-regression-report
+          path: report.html
+          retention-days: 20
+
+      - name: Post results to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const affectedCount = '${{ needs.discover.outputs.affected-count }}';
+            const toolVersion = '${{ needs.load-matrices.outputs.tool-version }}';
+            const simResult = '${{ needs.sim-tests.result }}' || 'skipped';
+            const hwEmuResult = '${{ needs.hw-emu-tests.result }}' || 'skipped';
+            const hwBuildResult = '${{ needs.hw-build-tests.result }}' || 'skipped';
+
+            const icon = (r) => r === 'success' ? ':white_check_mark:' :
+                                r === 'failure' ? ':x:' :
+                                r === 'skipped' ? ':fast_forward:' : ':grey_question:';
+
+            const body = [
+              '## Tutorial Regression Results',
+              '',
+              `**Tool Version**: ${toolVersion}`,
+              `**Affected Tutorials**: ${affectedCount}`,
+              '',
+              '| Stage | Result |',
+              '|-------|--------|',
+              `| Simulation | ${icon(simResult)} ${simResult} |`,
+              `| HW Emulation | ${icon(hwEmuResult)} ${hwEmuResult} |`,
+              `| HW Build + Run | ${icon(hwBuildResult)} ${hwBuildResult} |`,
+              '',
+              '_Full report available in workflow artifacts (incl. per-tutorial build vs run breakdown)._',
+            ].join('\n');
+
+            // Find and update existing comment, or create new one
+            const marker = '## Tutorial Regression Results';
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(c => c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: context.issue.number,
+                body: body,
+              });
+            }
