@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -53,7 +53,7 @@ This tutorial uses a matrix multiplication example, a common algorithm in machin
 
 Before starting, understand the *AI Engine-ML* architecture and buffer descriptor programming:
 
-- **AI Engine ML Architecture:**: [am020](https://docs.amd.com/r/en-US/am020-versal-aie-ml)
+- **AI Engine ML Architecture:** [am020](https://docs.amd.com/r/en-US/am020-versal-aie-ml)
 - **Programming Buffer Descriptors with Tiling Parameters:** [UG1603](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding)
 
 A short introduction to **AI Engine-ML** architecture is available [here](AIEngineMLArchitecture.md).
@@ -62,7 +62,7 @@ Memory levels contain DMAs that transfer data between memory and programmable lo
 
 ## Matrix Multiplication
 
-Matrix multiplication appears in many applicatons. The basic equation is as follows:
+Matrix multiplication appears in many applications. The basic equation is as follows:
 
 $$ C = A.B $$
 $$ \left( c_{ij} \right)_{\substack{0\leq i \lt M \\ 0 \leq j \lt N}}  =  \sum_{k=0}^{k<K} a_{ik}.b_{kj}$$
@@ -70,7 +70,7 @@ $$ \left( c_{ij} \right)_{\substack{0\leq i \lt M \\ 0 \leq j \lt N}}  =  \sum_{
 
 ![Matrix Multiplication](images/MatrixMult.png)
 
-Natural matrix storage is column-major: all columns of row 0 are stored sequentially, then row 1, and so on.
+Natural matrix storage is row-major: all columns of row 0 are stored sequentially, then row 1, and so on.
 
 ![Matrix Storage](images/DataStorage.png)
 
@@ -148,7 +148,7 @@ subK ?= 16
 subN ?= 8
 
 #Default Number of iterations
-NIterations ?= 16
+NIterations ?= 4
 ```
 
 The `system_settings.h` header file defines all internal kernel sizes. 
@@ -198,12 +198,12 @@ adf::tiling_parameters ReadAns_pattern = {
 };
 ```
 
-Dimension 0 represents the number of columns; dimension 1 represents the number of rows. Write data for the memory tile in column-major order. Read **A** block-by-block, column‑major. Read **B**block‑by‑block, row‑major. Write **C** block‑by‑block, column‑major.
+Dimension 0 represents the number of columns; dimension 1 represents the number of rows. Write data for the memory tile in row‑major order. Read **A** block-by-block, row‑major. Read **B** block‑by‑block, column‑major. Write **C** block‑by‑block, row‑major.
 
 The following GIF shows the read/write order for **A**, **B**, and **C** blocks:
 
 
-![No Image!](images/FullMatrixDataAccess.gif)
+![Full Matrix Data Access](images/FullMatrixDataAccess.gif)
 
 
 Declare kernel‑level storage as 2D for clarity, even though you use 1D pointer access in code:
@@ -286,8 +286,8 @@ public:
     input_plio inA2,inB2;
     output_plio outC2;
 
-    **MatrixMultiply<int8,int32,0,10> MMult1;
-    MatrixMultiply<int8,int16,6,20> MMult2;**
+    MatrixMultiply<int8,int32,0,10> MMult1;  // int8 -> int32, no shift, column 10
+    MatrixMultiply<int8,int16,6,20> MMult2; // int8 -> int16, shift 6, column 20
 
 
     TestMatMult(){
@@ -367,7 +367,7 @@ Two tiles contain kernels:
 
 ![Two Tiles contain kernels](images/TwoTilesKernels.png)
 
-Start with the `int32` kernel. In the **Total Function Time** tab , check the number of cycles required to compute the matrix multiplication:
+Start with the `int32` kernel. In the **Total Function Time** tab, check the number of cycles required to compute the matrix multiplication:
 
 ![Performance of int32 version of the kernel](images/BasicPerf32bits.png)
 

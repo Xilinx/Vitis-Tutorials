@@ -25,9 +25,9 @@ Like the Versal AI Core Series, it contains an array of single instruction multi
 
 For detailed device information, refer to the following documents:
 
-- [WP158 ACAP at the Edge with the Versal AI Edge Series](https://www.xilinx.com/content/dam/xilinx/support/documentation/white_papers/wp518-ai-edge-intro.pdf)
-- [Product Brief: Versal AI Edge Series](https://www.xilinx.com/content/dam/xilinx/publications/product-briefs/xilinx-versal-AI-edge-product-brief.pdf)
-- [Versal AI Edge webpage](https://www.xilinx.com/products/silicon-devices/acap/versal-ai-edge.html#productAdvantages)
+- [WP158 ACAP at the Edge with the Versal AI Edge Series](https://docs.amd.com/v/u/Xz0szg2HiN1YFYfaJVXcrQ)
+- [Product Brief: Versal AI Edge Series](https://www.amd.com/content/dam/xilinx/publications/product-briefs/xilinx-versal-AI-edge-product-brief.pdf)
+- [Versal AI Edge webpage](https://www.amd.com/en/products/adaptive-socs-and-fpgas/versal/ai-edge-series.html)
 
 This document describes the processor array, the core of this tutorial.
 
@@ -38,7 +38,7 @@ The single instruction multiple data (SIMD) very long instruction word (VLIW) AI
 ![](images/AIEML-Grid.png)
 
 Differences from the AI Engine in the Versal™ AI Core devices include the following:
-- At the bottom of the processor array, one or two rows of 512 KB memories exist. You can access these memories from the PL and AI Engine-ML processors through the AXI-Stream interconnect network. Direct memory access (DMA) channels of one memory block also access neighbor memories. These memories are referred to as `_shared memories_`
+- At the bottom of the processor array, one or two rows of 512 KB memories exist. You can access these memories from the PL and AI Engine-ML processors through the AXI-Stream interconnect network. Direct memory access (DMA) channels of one memory block also access neighbor memories. These memories are referred to as *shared memories*
 - AI Engine-ML tiles all orient the same way:
   - Cascade stream always flows left-to-right, and top-to-bottom
   - Neighborhood structure no longer depends on the row index

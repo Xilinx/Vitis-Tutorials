@@ -46,7 +46,7 @@ The *AI Engine-ML* includes hardware instructions for matrix multiplication. You
 
 ## IO or Compute-bound?
 
-You need to check more than matrix multiplication size support. Verify that the two loads, the store, and the compute remain equally optimized.
+You need to check more than matrix multiplication size support. Verify that the two loads, the store, and the computation remains equally optimized.
 
 You can view a complete efficiency table, including matrix load and vector compute details, here: [Performance Table](FullAIEMLTable.md)
 
@@ -64,7 +64,7 @@ Overall efficiency is 50 % (16‑bit results) or 25 % (32‑bit results): tw
 
 ### Tutorial Example
 
-In this tutorial, the matrix sizes are the same but the input data type is `int8` for both **A** and **B** matrices but the output data type can be either `int16` or `int32`.
+In this tutorial, the matrix sizes are the same, but the input data type is `int8` for both **A** and **B** matrices, but the output data type can be either `int16` or `int32`.
 
 - The sub matrix **A** is of size 4x16 on 8 bits which is 512 bits: 2 clocks cycles are necessary to load it
 - The sub matrix **B** is of size 16x8 on 8 bits which is 1024 bits: 4 clocks cycles are necessary to load it
@@ -85,7 +85,7 @@ To avoid excessive pointer manipulations, you read **A** tiles two at a time fro
 
 This approach offloads pointer manipulation to direct memory access (DMA) programming, freeing some scalar processor cycles.
 
-The next two animated GIFs show how the **A** matrix is read from the memory tile and how **C** matrix is written to it. You can see that you use **super tiles** cconsisting of two sub-matrices stacked vertically:
+The next two animated GIFs show how the **A** matrix is read from the memory tile and how **C** matrix is written to it. You can see that you use **super tiles** consisting of two sub-matrices stacked vertically:
 
 ![Matrix A read order](images/OptA_Order.gif)
 
@@ -168,11 +168,11 @@ adf::output_buffer<OTYPE, adf::extents<adf::inherited_extent, adf::inherited_ext
             *pC++ = ctile1.template to_vector<OTYPE>(SHIFT_RESULT);
             *pC++ = ctile2.template to_vector<OTYPE>(SHIFT_RESULT);
 
-            pA -= 2 * NTilesPerCol_A; // Back to begining of row
+            pA -= 2 * NTilesPerCol_A; // Back to beginning of row
             // For matrix B the next tile is used
         }
         pA += 2 * NTilesPerCol_A;              // Next Row
-        pB -= NTilesPerCol_B * NTilesPerRow_B; // Back to begining of matrix B
+        pB -= NTilesPerCol_B * NTilesPerRow_B; // Back to beginning of matrix B
     }
 }
 ```
@@ -247,7 +247,7 @@ In this section of the tutorial you learned how to:
 - Compute the number of cycles needed to load/store matrices.
 - Compute the number of cycles needed to compute a matrix multiplication.
 - Define a strategy to balance input/output (I/O) and compute burden
-- HAccess the assembly code to analyze it.
+- Access the assembly code to analyze it.
 
 ## Support
 

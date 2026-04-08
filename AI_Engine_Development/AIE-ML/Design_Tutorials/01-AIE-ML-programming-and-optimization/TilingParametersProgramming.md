@@ -157,19 +157,19 @@ class mygraph : public graph
     mtx = shared_buffer<int>::create({10, 6}, 2, 2); // 10x6, 2 write-inputs, 2 read-outputs
     connect<> n1(k1.out[0], mtx.in[0]);
     write_access(mtx.in[0]) = tiling({
-  .buffer_dimension={10,6}, .tiling_dimension={3,2}, .offset={0,0},                         .tile_traversal = {{.order=0, .stride=3, .wrap=2}, {.order=1, .stride=2, .wrap=3}}});
+  .buffer_dimension={10,6}, .tiling_dimension={3,2}, .offset={0,0},                         .tile_traversal = {{.dimension=0, .stride=3, .wrap=2}, {.dimension=1, .stride=2, .wrap=3}}});
     connect<> n2(k2.out[0], mtx.in[1]);
     write_access(mtx.in[1]) = tiling({
   .buffer_dimension={10,6}, .tiling_dimension={2,3}, .offset={6,0},
-                         .tile_traversal = {{.order=0, .stride=2, .wrap=2}, {.order=1, .stride=3, .wrap=2}}});
+                         .tile_traversal = {{.dimension=0, .stride=2, .wrap=2}, {.dimension=1, .stride=3, .wrap=2}}});
     connect<> n3(mtx.out[0], k3.in[0]);
     read_access(mtx.out[0]) = tiling({
   .buffer_dimension={10,6}, .tiling_dimension={2,6}, .offset={0,0},
-  .tile_traversal = {{.order=0, .stride=2, .wrap=2}}});
+  .tile_traversal = {{.dimension=0, .stride=2, .wrap=2}}});
     connect<> n4(mtx.out[1], k4.in[0]);
     read_access(mtx.out[1]) = tiling({
   .buffer_dimension={10,6}, .tiling_dimension={3,6}, .offset={4,0},
-  .tile_traversal = {{.order=0, .stride=3, .wrap=2}}});
+  .tile_traversal = {{.dimension=0, .stride=3, .wrap=2}}});
  }
 };
 ```

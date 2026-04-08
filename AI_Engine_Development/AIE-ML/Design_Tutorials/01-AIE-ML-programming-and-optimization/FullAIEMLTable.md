@@ -13,12 +13,12 @@
   </tr>
 </table>
 
-# Matrix Multiplication Compute Performance of the AI Engin ML Tiles
+# Matrix Multiplication Compute Performance of the AI Engine-ML Tiles
 
 This table summarizes the I/O and compute balance for each supported input data type and matrix size. Review the columns using these definitions:
 
 - Mat A Type: number of bits of matrix's A data type (`bf16` is 16 bit wide)
-- Mat B Type: number of bits of matrix's A data type (`bf16` is 16 bit wide)
+- Mat B Type: number of bits of matrix B's data type (`bf16` is 16 bit wide)
 - Compute (MAC/cyc): parallel multiply‑accumulate operations per clock cycle on the AI Engine‑ML vector processor
 - M: number of rows in matrix A
 - K: number of columns in matrix A = number of rows of matrix B
