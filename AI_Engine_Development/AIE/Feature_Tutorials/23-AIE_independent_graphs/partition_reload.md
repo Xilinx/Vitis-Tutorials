@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -239,7 +239,7 @@ Note that all above concepts apply on the following reference designs:
 
 ## Reference Design 1: (./partition_reload_same_graph)
 
-The design contains 3 partitions in directories `partition_reload_same_graph/pr0_gmio`, `partition_reload_same_graph/pr1_rtp` and `partition_reload_same_graph/pr2_perf`. The graph code is in the `aie` directories in the partitions. The host code for running each partition seperately can be found in the `sw` directories in the partitions. And the `partition_reload_same_graph/sw` directory contains host code for controlling multiple partitions.
+The design contains 3 partitions in directories `partition_reload_same_graph/pr0_gmio`, `partition_reload_same_graph/pr1_rtp` and `partition_reload_same_graph/pr2_perf`. The graph code is in the `aie` directories in the partitions. The host code for running each partition separately can be found in the `sw` directories in the partitions. And the `partition_reload_same_graph/sw` directory contains host code for controlling multiple partitions.
 
 To build design ready for HW, run the following command:
 
@@ -266,7 +266,7 @@ Following host application executes and reloads multiple partitions:
 
 The design contains 3 partitions in directories `partition_reload_diff_graph/pr0_gmio`, `partition_reload_diff_graph/pr1_rtp` and `partition_reload_diff_graph/pr2_perf`. The graph code can be found in `aie` directories in the partitions. Another different graph for the same partition can be found in `partition_reload_diff_graph/pr0_gmio/aie2` and `partition_reload_diff_graph/pr1_rtp/aie2`.
 
-The host code for running each partition seperately can be found in `sw` directories in the partitions. And the `partition_reload_diff_graph/sw` directory contains host code for controlling multiple partitions. 
+The host code for running each partition separately can be found in `sw` directories in the partitions. The `partition_reload_diff_graph/sw` directory contains host code for controlling multiple partitions.
 
 To build design ready for HW, run the following command:
 
@@ -291,7 +291,7 @@ Following host application executes and reloads multiple partitions with differe
 
 ## Reference Design 3: (./AIE_reload_whole_array)
 
-The design contains 1 partition in directorie `AIE_reload_whole_array/pr1_rtp` that targets the whole AI Engine array. The graph code can be found in `aie` directory. The host code can be found in `AIE_reload_whole_array/pr1_rtp/sw` directory. 
+The design contains 1 partition in directory `AIE_reload_whole_array/pr1_rtp` that targets the whole AI Engine array. The graph code can be found in `aie` directory. The host code can be found in `AIE_reload_whole_array/pr1_rtp/sw` directory. 
 
 To build design ready for HW, run the following command:
 
@@ -319,8 +319,8 @@ After completing this tutorial, you learned:
 
 ### Support
 
-GitHub issues are used to track requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [AMD Adaptive Support](https://adaptivesupport.amd.com/s/topiccatalog).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

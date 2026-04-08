@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -34,7 +34,7 @@ Look at aie.cfg:
 enable-partition=6:1:pr0 
 ```
 
-It defines the partition named  `pr0`. The partition starts from column `6` and totally `1` column.
+It defines the partition named `pr0`. The partition starts from column `6` and spans a total of `1` column.
 
 When compiling AI Engine graph with preceding configuration file, it constrains all the resources to be within the constrained columns.
 
@@ -44,7 +44,7 @@ To compile the graph, run the following command:
 make aie
 ```
 
-To simulator the graph, run the following command:
+To simulate the graph, run the following command:
 
 ```
 make aiesim
@@ -152,8 +152,8 @@ After completing this tutorial, you learned:
 
 ### Support
 
-GitHub issues are used to track requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [AMD Adaptive Support](https://adaptivesupport.amd.com/s/topiccatalog).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

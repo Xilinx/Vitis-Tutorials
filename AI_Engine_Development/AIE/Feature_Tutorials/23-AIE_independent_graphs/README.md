@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -19,7 +19,7 @@
 ## Introduction
 
 This tutorial demonstrates the workflow for compiling AI Engine graphs within AI Engine partitions. It also covers the process of reloading these partitions.
-The AI Engine graphs, which are distributed across different partitions, are independently verified using the AI Engine simulator. Then the V++ linker and packager integrate them onto the device using.
+The AI Engine graphs, which are distributed across different partitions, are independently verified using the AI Engine simulator. Then the V++ linker and packager integrate them onto the device.
 This workflow is particularly well-suited for collaborative development, where multiple teams work concurrently on different parts of a system project. Also when integrating user-developed designs with vendor-provided IP (for example, from AMD).
 
 >**IMPORTANT**: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software.
@@ -55,13 +55,13 @@ For code examples and guidance on the partition reload process, refer to [UG1076
 
 This tutorial includes reference designs tailored for specific use cases:
 
-* **Compiling AI Engine Graphs for Independent Partitions**: Refer to [Comple Independent Graphs](./independent_graphs.md). The corresponding reference design is in [independent_graphs](./independent_graphs).
+* **Compiling AI Engine Graphs for Independent Partitions**: Refer to [Compile Independent Graphs](./independent_graphs.md). The corresponding reference design is in [independent_graphs](./independent_graphs).
 
 * **Reload partitions with the same graphs**: Refer to [Partition Reload](./partition_reload.md). The corresponding reference design is in [partition_reload_same_graph](./partition_reload_same_graph).
 
 * **Reload partitions with different graphs**: Refer to [Partition Reload](./partition_reload.md). The corresponding reference design is in [partition_reload_diff_graph](./partition_reload_diff_graph).
 
-* **Reload the entire AI Engine array as a signle partition**: Refer to [Partition Reload](./partition_reload.md). The corresponding reference design is in [AIE_reload_whole_array](./AIE_reload_whole_array).
+* **Reload the entire AI Engine array as a single partition**: Refer to [Partition Reload](./partition_reload.md). The corresponding reference design is in [AIE_reload_whole_array](./AIE_reload_whole_array).
 
 ## Summary
 
@@ -77,8 +77,8 @@ Completing this tutorial teaches you how to do the following:
 
 ### Support
 
-GitHub issues are used to track requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues are used to track requests and bugs. For questions, go to [AMD Adaptive Computing Support Community](https://adaptivesupport.amd.com/s/topiccatalog).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2022–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2022–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
