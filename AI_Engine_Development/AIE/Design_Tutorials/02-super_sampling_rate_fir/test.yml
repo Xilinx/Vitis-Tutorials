@@ -1,0 +1,11 @@
+name: AIE_D_02-SSR-FIR
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_aie_sim:
+    timeout: 200m
+    run: make run TARGET=aiesim LOCAL=${GITHUB_LIBS_REPO}/Vitis-In-Depth-Tutorial/AI_Engine_Development/Design_Tutorials/02-super_sampling_rate_fir
+      PYTHONPATH=${LOCAL}/Utils:${PYTHONPATH} PATH=${LOCAL}/Utils:$PATH

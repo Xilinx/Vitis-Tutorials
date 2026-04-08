@@ -1,0 +1,11 @@
+name: AIE_D_16-1M-Point-FFT
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make all TARGET=hw HOST_GCC=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-none/bin/aarch64-none-elf-gcc

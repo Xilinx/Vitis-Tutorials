@@ -1,0 +1,16 @@
+name: VCK190_dfx
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make sd_card TARGET=hw EMBEDDED_PACKAGE_OUT=./tmp/package_hw/ EMBEDDED_EXEC_SCRIPT=./run_aie.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMBEDDED_PACKAGE_OUT=./tmp/package_hw/ EMBEDDED_EXEC_SCRIPT=./run_aie.sh

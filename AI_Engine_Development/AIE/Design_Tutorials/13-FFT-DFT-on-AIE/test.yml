@@ -1,0 +1,11 @@
+name: AIE_D_13-FFT-DFT-on-AIE
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    memory: 64GB
+    run: make all TARGET=aiesim

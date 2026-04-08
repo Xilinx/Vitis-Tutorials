@@ -1,0 +1,8 @@
+name: AIE_F_02-gmio_step1
+category: canary
+platform: [vck190]
+flow: versal
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    run: make aiesim TARGET=aiesim

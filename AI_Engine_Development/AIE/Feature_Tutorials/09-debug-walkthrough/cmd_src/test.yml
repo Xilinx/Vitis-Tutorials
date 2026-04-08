@@ -1,0 +1,23 @@
+name: AIE_F_09-debug
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 500m
+    run: make all TARGET=hw_emu EDGE_COMMON_SW=${COMMON_IMAGE_VERSAL} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -timeout 18000 -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./sw
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_build:
+    timeout: 470m
+    run: make all TARGET=hw EDGE_COMMON_SW=${COMMON_IMAGE_VERSAL} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -timeout 18000 -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./sw
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    run: make run_test TARGET=hw EDGE_COMMON_SW=${COMMON_IMAGE_VERSAL} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -timeout 18000 -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./sw
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

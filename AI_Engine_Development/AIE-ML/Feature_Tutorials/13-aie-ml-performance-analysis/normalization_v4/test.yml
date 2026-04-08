@@ -1,0 +1,26 @@
+name: AIE-ML_F_13-normalization_v4
+category: canary
+platform: [vek280]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 200m
+    memory: 64GB
+    run: make run TARGET=hw_emu CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ SYSROOT=${SYSROOT}
+      SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4 IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh
+      -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_build:
+    timeout: 470m
+    memory: 64GB
+    run: make sd_card TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ SYSROOT=${SYSROOT}
+      SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4 IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh
+      -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ SYSROOT=${SYSROOT}
+      SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4 IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh
+      -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

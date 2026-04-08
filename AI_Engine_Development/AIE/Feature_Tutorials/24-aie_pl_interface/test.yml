@@ -1,0 +1,10 @@
+name: AIE_F_24-aie_pl_interface
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 470m
+    run: make all_designs TARGET=hw

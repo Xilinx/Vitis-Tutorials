@@ -1,0 +1,8 @@
+name: AIE-MLv2_F_01-aie-mlv2_a_to_z
+category: canary
+platform: [vek385_base_reva]
+flow: versal
+targets:
+  vitis_hw_build:
+    timeout: 470m
+    run: make all TARGET=hw

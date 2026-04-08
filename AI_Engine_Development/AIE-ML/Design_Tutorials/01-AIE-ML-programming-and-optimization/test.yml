@@ -1,0 +1,20 @@
+name: AIE-ML_D_01-Programming
+category: canary
+platform: [vek280]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make run_hw_emu TARGET=hw_emu EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make run_hw_emu TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

@@ -1,0 +1,11 @@
+name: AIE-ML_D_04-AIE-API-based-FFT-many-instances
+category: canary
+platform: [vek280]
+flow: versal
+targets:
+  vitis_x86_sim:
+    timeout: 60m
+    run: make run TARGET=x86sim
+  vitis_aie_sim:
+    timeout: 100m
+    run: make run TARGET=aiesim

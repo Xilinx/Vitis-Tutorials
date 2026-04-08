@@ -1,0 +1,11 @@
+name: ES_F_05-Vit-Ver
+category: canary
+platform: [zcu104]
+flow: vitis
+env:
+  build: env_setup.sh
+targets:
+  vitis_hw_emu:
+    timeout: 240m
+    memory: 64GB
+    run: make all TARGET=hw_emu

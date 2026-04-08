@@ -1,0 +1,21 @@
+name: AIE_D_07-FIR_AIE
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 500m
+    memory: 75GB
+    run: make sd_card TARGET=hw EN_TRACE=1 LAUNCH_HW_EMU_EXEC=1
+  vitis_hw_run:
+    timeout: 90m
+    memory: 75GB
+    run: make run_test TARGET=hw EN_TRACE=1 LAUNCH_HW_EMU_EXEC=1
+  vitis_hw_emu:
+    timeout: 200m
+    memory: 75GB
+    run: make run TARGET=hw_emu EN_TRACE=1 LAUNCH_HW_EMU_EXEC=1
+sync_sd_card: true
