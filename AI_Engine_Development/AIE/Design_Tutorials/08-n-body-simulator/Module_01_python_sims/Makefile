@@ -25,25 +25,25 @@ all: tests
 # ################ TARGET: make tests ################
 tests: 
 	mkdir -p build
-	python3 test.py -v 
+	uvx --with numpy python3 test.py -v 
 
 # ################ TARGET: make animations ################
 animations: build/animation_128_particles.gif build/animation_1280_particles.gif build/animation_12800_particles.gif
 
 build/animation_128_particles.gif: 
 	mkdir -p build
-	CREATE_ANIMATION_DATA=ON python3 test.py PySimUnitTest.test_random_x1 -v 
-	python3 pylib/animate.py build/animation_data_128_particles.txt 128 build/animation_128_particles.gif
+	CREATE_ANIMATION_DATA=ON uvx --with numpy python3 test.py PySimUnitTest.test_random_x1 -v 
+	uvx --with numpy --with matplotlib --with pandas python3 pylib/animate.py build/animation_data_128_particles.txt 128 build/animation_128_particles.gif
 
 build/animation_1280_particles.gif:
 	mkdir -p build
-	CREATE_ANIMATION_DATA=ON python3 test.py PySimUnitTest.test_random_x10 -v 
-	python3 pylib/animate.py build/animation_data_1280_particles.txt 1280 build/animation_1280_particles.gif
+	CREATE_ANIMATION_DATA=ON uvx --with numpy python3 test.py PySimUnitTest.test_random_x10 -v 
+	uvx --with numpy --with matplotlib --with pandas python3 pylib/animate.py build/animation_data_1280_particles.txt 1280 build/animation_1280_particles.gif
 
 build/animation_12800_particles.gif:
 	mkdir -p build
-	CREATE_ANIMATION_DATA=ON python3 test.py PySimUnitTest.test_random_x100 -v 
-	python3 pylib/animate.py build/animation_data_12800_particles.txt 12800 build/animation_12800_particles.gif
+	CREATE_ANIMATION_DATA=ON uvx --with numpy python3 test.py PySimUnitTest.test_random_x100 -v 
+	uvx --with numpy --with matplotlib --with pandas python3 pylib/animate.py build/animation_data_12800_particles.txt 12800 build/animation_12800_particles.gif
 
 clean:
 	rm -rf *~

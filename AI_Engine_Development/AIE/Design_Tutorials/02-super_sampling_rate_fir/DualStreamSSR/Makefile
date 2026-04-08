@@ -52,7 +52,7 @@ NFrames := $(shell echo " $(NFRAMES) + 1" | bc)
 data:
 	rm -rf data
 	mkdir -p data
-	../Utils/GenerateStreams cint16 64 8 2 $(NSamples) $(NFrames) Dirac data/PhaseIn
+	uvx --with numpy python3 ../Utils/GenerateStreams cint16 64 8 2 $(NSamples) $(NFrames) Dirac data/PhaseIn
 
 aie:   $(SRCS)
 	$(AIE_CC) $(AIE_FLAGS) $(AIE_GRAPH_FILES)
@@ -64,10 +64,10 @@ aieviz:
 	vitis_analyzer aiesimulator_output/default.aierun_summary
 	
 throughput:
-	cd aiesimulator_output/data/ && $(UTILS)/StreamThroughput PhaseOut_*.txt
+	cd aiesimulator_output/data/ && uvx --with numpy python3 $(UTILS)/StreamThroughput PhaseOut_*.txt
 	
 waveform:
-	cd aiesimulator_output/data/ && $(UTILS)/ProcessAIEOutput PhaseOut_*.txt
+	cd aiesimulator_output/data/ && uvx --with numpy python3 $(UTILS)/ProcessAIEOutput PhaseOut_*.txt
 
 clean:
 	$(RMDIR) $(AIE_OUT_DIR) $(AIE_DATA_DIR) *.vcd _ide libadf.a *.log *.json aiesimulator_output *.csv *.db pl_sampl* .Xil .AIE_SIM*

@@ -37,7 +37,7 @@ allcases:
 
 data:
 	mkdir -p data
-	CreateLinearData.py int32 32 4096 > data/input.txt
+	uvx --with numpy python3 ./CreateLinearData.py int32 32 4096 > data/input.txt
 
 
 aie: ${LIBADF}
