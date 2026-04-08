@@ -123,7 +123,7 @@ jobs:
       max-parallel: 10
       matrix:
         tutorial: ${{ fromJSON(needs.load-matrices.outputs.sim-matrix) }}
-    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    runs-on: [self-hosted, "${{ needs.load-matrices.outputs.tool-version }}"]
     timeout-minutes: ${{ matrix.tutorial.timeout }}
     steps:
       - uses: actions/checkout@v4
@@ -185,7 +185,7 @@ jobs:
       max-parallel: 8
       matrix:
         tutorial: ${{ fromJSON(needs.load-matrices.outputs.hw-emu-matrix) }}
-    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    runs-on: [self-hosted, "${{ needs.load-matrices.outputs.tool-version }}"]
     timeout-minutes: ${{ matrix.tutorial.timeout }}
     steps:
       - uses: actions/checkout@v4
@@ -247,7 +247,7 @@ jobs:
       max-parallel: 4
       matrix:
         tutorial: ${{ fromJSON(needs.load-matrices.outputs.hw-build-matrix) }}
-    runs-on: [self-hosted, vitis, "${{ needs.load-matrices.outputs.tool-version }}"]
+    runs-on: [self-hosted, "${{ needs.load-matrices.outputs.tool-version }}"]
     timeout-minutes: ${{ matrix.tutorial.timeout }}
     steps:
       - uses: actions/checkout@v4
