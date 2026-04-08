@@ -139,7 +139,7 @@ You can build the design by running individual make steps with your chosen optio
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, the Vitis compiler uses any kernels (register transfer level (RTL) or high-level synthesis C (HLS C)) in the PL region of the target platform (`xilinx_vck190_base_202520_1`). The compiler creates the  respective XO files.
+In this step, the Vitis compiler uses any kernels (register transfer level (RTL) or high-level synthesis C (HLS C)) in the PL region of the target platform (`xilinx_vck190_base_202610_1`). The compiler creates the  respective XO files.
 
 Run the following command to compile the kernels. The defaults are `TARGET=hw_emu`, `N_FIR_FILTERS=1`, `N_FIR_TAPS=15`, `FIR_WINDOW_SIZE=256`, and `EN_TRACE=0`:
 
@@ -157,7 +157,7 @@ v++ 	--target hw_emu					\
 	--hls.clock 300000000:datamover 		\
         -D N_FIR_TAPS=$(N_FIR_TAPS)                     \
         -D N_FIR_FILTERS=$(N_FIR_FILTERS)               \
-	--platform xilinx_vck190_base_202520_1		\
+	--platform xilinx_vck190_base_202610_1		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x	\
 	--verbose 					\
@@ -215,7 +215,7 @@ aiecompiler     -include=$(DSPLIB_ROOT)/L1/src/aie 		\
 		-include=$(DSPLIB_ROOT)/L1/include/aie 		\
 		-include=$(DSPLIB_ROOT)/L2/include/aie 		\
 		-include=design/aie_src 		\
-		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm 	\
+		--platform=$(PLATFORM_REPO_PATHS)/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm 	\
 		--workdir=Work 					\
 	        --Xpreproc="-DITER_CNT=$(ITER_CNT)"             \
 		--Xpreproc="-DN_FIR_FILTERS=$(N_FIR_FILTERS)"   \
@@ -277,7 +277,7 @@ The expanded command is as follows:
 cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu
 
 v++ 	-l 						\
-	--platform xilinx_vck190_base_202520_1		\
+	--platform xilinx_vck190_base_202610_1		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x		\
 	--verbose 					\
@@ -461,7 +461,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/winSz_$(FIR_WINDOW_SIZE)/x$(N_AIE_PER_FIR)_aie_per_fir/hw_emu/_x	\
-	-f xilinx_vck190_base_202520_1												\
+	-f xilinx_vck190_base_202610_1												\
 	--package.sd_dir $(XRT_ROOT) 									\
 	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 						\
 	--package.kernel_image $(COMMON_IMAGE_VERSAL)/Image 						\

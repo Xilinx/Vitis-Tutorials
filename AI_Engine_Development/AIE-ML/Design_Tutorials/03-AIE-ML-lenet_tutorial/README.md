@@ -126,7 +126,7 @@ To build and run the LeNet tutorial, download and install the following the foll
 
 * Install the [Vitis Software Platform 2025.2](https://docs.amd.com/r/en-US/ug1701-vitis-accelerated-embedded/Vitis-Software-Platform-Installation)
 
-* Obtain a license to enable beta devices in AMD tools (to use the `xilinx_vek280_es1_base_202520_1` platform)
+* Obtain a license to enable beta devices in AMD tools (to use the `xilinx_vek280_es1_base_202610_1` platform)
 
 * Obtain licenses for AI Engine-ML tools
 
@@ -174,7 +174,7 @@ platforminfo --list | grep -m 1 -A 9 vek280_es1_base
 Output of the preceding command is as follows:
 
 ```bash
-"baseName": "xilinx_vek280_es1_base_202520_1",
+"baseName": "xilinx_vek280_es1_base_202610_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",
@@ -244,7 +244,7 @@ make run TARGET=hw_emu
 
 ### make kernels: Compile PL Kernels
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vek280_es1_base_202520_1`) and the AI Engine-ML kernels and graph. It then compiles them into their respective XO files. In this design, the `dma_hls` kernel compiles as an XO file, and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vek280_es1_base_202610_1`) and the AI Engine-ML kernels and graph. It then compiles them into their respective XO files. In this design, the `dma_hls` kernel compiles as an XO file, and the `Lenet_kernel` has already been pre-compiled as an XO file. You can access the source code by unzipping the XO file.
 
 `unzip lenet_kernel.xo`
 
@@ -264,7 +264,7 @@ mkdir -p ./build/hw_emu
 cd ./build/hw_emu
 
 v++       --target hw_emu                           \
-          --platform xilinx_vek280_es1_base_202520_1     \
+          --platform xilinx_vek280_es1_base_202610_1     \
           --save-temps                               \
           --temp_dir _x                             \
           --verbose                                  \
@@ -375,7 +375,7 @@ The expanded command is as follows:
 cd ./build/hw_emu;
 
 v++       -l                                                \
-          --platform xilinx_vek280_es1_base_202520_1            \
+          --platform xilinx_vek280_es1_base_202610_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -396,7 +396,7 @@ If EN_TRACE=1, the command expands as follows:
 cd ./build/hw;
 
 v++       -l                                                \
-          --platform xilinx_vek280_es1_base_202520_1            \
+          --platform xilinx_vek280_es1_base_202610_1            \
           --save-temps                                      \
 	  --temp_dir _x	                                    \
           --verbose                                         \
@@ -557,7 +557,7 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vek280_es1_base_202520_1  			\
+	-f xilinx_vek280_es1_base_202610_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/Image \
@@ -584,7 +584,7 @@ v++	-p  							\
  	-t hw_emu					        \
 	--save-temps						\
 	--temp_dir ./build/hw_emu/_x			        \
-	-f xilinx_vek280_es1_base_202520_1  			\
+	-f xilinx_vek280_es1_base_202610_1  			\
 	--package.sd_dir $(PLATFORM_REPO_PATHS)/sw/versal/xrt 	\
 	--package.rootfs $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
 	--package.kernel_image $(PLATFORM_REPO_PATHS)/sw/versal/xilinx-versal-common-v2025.2/Image \

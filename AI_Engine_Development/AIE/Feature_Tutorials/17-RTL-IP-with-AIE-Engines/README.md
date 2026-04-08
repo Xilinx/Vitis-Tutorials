@@ -33,7 +33,7 @@ Before starting this tutorial, run the following steps:
 1. Go to the directory where you have unzipped the Versal Common Image package.
 2. In a Bash shell run `/Common Images Dir/amd-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, run the `/Common Images Dir/amd-versal-common-v2025.2/sdk.sh`.
 3. Set up your ROOTFS and IMAGE to point to `rootfs.ext4` and image files located in the `/Common Images Dir/amd-versal-common-v2025.2` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms/amd_vck190_base_202520_1/amd_vck190_base_202520_1.xpfm`
+4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms/amd_vck190_base_202610_1/amd_vck190_base_202610_1.xpfm`
 
 **NOTE**: This tutorial targets the 2025.2 VCK190 production board.
 
@@ -165,7 +165,7 @@ To interface the ADF graph to the `polar_clip` RTL kernel and the `mm2s` and `s2
 2. Compile the graph using the following command:
 
    ```bash
-   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm aie/graph.cpp
+   v++ --mode aie -c  --target=hw --include="/include" --include="./aie" --include="./data" --include="./aie/kernels" --include="./"  --aie.workdir=./Work --platform=${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm aie/graph.cpp
    ```
 
    or
@@ -192,7 +192,7 @@ Because there is no HLS kernel in the ADF graph, the `system.cfg` file that dete
 3. Build the emulation design using the following command:
 
     ```bash
-    v++ -l --platform ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
+    v++ -l --platform ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm s2mm.xo mm2s.xo polar_clip.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
     ```
 
     or
@@ -233,7 +233,7 @@ To package the design, run the following command:
 ```bash
 cd ./sw
 v++ -p -t hw_emu \
-    -f ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm \
+    -f ${XILINX_VITIS}/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
     --package.rootfs=${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \

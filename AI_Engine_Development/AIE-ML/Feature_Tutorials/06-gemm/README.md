@@ -525,7 +525,7 @@ cd ../../aie-ml/gemm_16x32x8
 Open the ```Makefile``` file and review the code. The only modification is the updated platform name.
 
 ```
-PLATFORM_USE      := xilinx_vek280_base_202520_1
+PLATFORM_USE      := xilinx_vek280_base_202610_1
 ```
 
 ### Design Variant 1: Single Tile (AIE-ML)

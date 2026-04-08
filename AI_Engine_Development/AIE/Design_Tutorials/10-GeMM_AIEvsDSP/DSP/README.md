@@ -178,7 +178,7 @@ The expanded command is as follows:
 ```bash
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -l --platform xilinx_vck190_base_202520_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
+v++ -l --platform xilinx_vck190_base_202610_1 --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x \
    --verbose -g --clock.freqHz 500000000:gemm_large_ocm_0 --clock.defaultTolerance 0.001 \
    --config $(SYSTEM_CONFIGS_REPO)/gemm.cfg --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
    --vivado.prop run.synth_1.{STEPS.SYNTH_DESIGN.ARGS.CONTROL_SET_OPT_THRESHOLD}={16} \
@@ -320,7 +320,7 @@ or,
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd $(BUILD_TARGET_DIR);	\
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202520_1 \
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202610_1 \
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4 --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd \
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4 --package.sd_file $(BUILD_TARGET_DIR)/gemm_dsp_xrt.elf \
    $(BUILD_TARGET_DIR)/gemm.hw.xclbin

@@ -125,7 +125,7 @@ Use the following individual `make` steps to build the design with their applica
 <summary>make kernels: Compile PL Kernels</summary>
 
 ### make kernels: Compile PL Kernels
-In this step, you use the Vitis compiler to compile any kernels (RTL or HLS C) in the PL region of the target platform `xilinx_vck190_base_202520_1` into their respective XO files.
+In this step, you use the Vitis compiler to compile any kernels (RTL or HLS C) in the PL region of the target platform `xilinx_vck190_base_202610_1` into their respective XO files.
 
 Run the following commands to compile kernels (default `TARGET=hw_emu`, `N_FIR_FILTERS=1`, `N_FIR_TAPS=15`, `EN_TRACE=0`):
 
@@ -144,7 +144,7 @@ v++ --target hw_emu					\
 	--hls.clock 500000000:fir_hls 			\
 	-D N_FIR_FILTERS=$(N_FIR_FILTERS)		\
 	-D N_FIR_TAPS=$(N_FIR_TAPS)			\
-	--platform xilinx_vck190_base_202520_1		\
+	--platform xilinx_vck190_base_202610_1		\
 	--include design/pl_src 		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x 					\
@@ -158,7 +158,7 @@ v++ --target hw_emu					\
 	--hls.clock 300000000:datamover 			\
 	-D N_FIR_FILTERS=$(N_FIR_FILTERS)		\
 	-D N_FIR_TAPS=$(N_FIR_TAPS)			\
-	--platform xilinx_vck190_base_202520_1		\
+	--platform xilinx_vck190_base_202610_1		\
 	--include design/pl_src 			\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x 					\
@@ -217,7 +217,7 @@ The expanded command is as follows:
 cd build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu
 
 v++ -l 				\
-	--platform xilinx_vck190_base_202520_1 		\
+	--platform xilinx_vck190_base_202610_1 		\
 	--include design/pl_src 		\
 	--save-temps 					\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x \
@@ -363,7 +363,7 @@ v++	-p  							\
 	-t hw_emu						\
 	--save-temps						\
 	--temp_dir build/fir_$(N_FIR_TAPS)_taps/x$(N_FIR_FILTERS)_firs/hw_emu/_x			\
-	-f xilinx_vck190_base_202520_1									\
+	-f xilinx_vck190_base_202610_1									\
 	--package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4 						\
 	--package.kernel_image $(COMMON_IMAGE_VERSAL)/Image 						\
 	--package.boot_mode=sd										\

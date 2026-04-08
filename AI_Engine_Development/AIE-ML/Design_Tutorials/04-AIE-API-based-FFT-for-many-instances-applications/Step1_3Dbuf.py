@@ -9,7 +9,7 @@ import os
 
 # Current directory and various path variables
 cwd = os.getcwd()+'/'
-vek280_base = os.environ.get('PLATFORM_REPO_PATHS') + '/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm'
+vek280_base = os.environ.get('PLATFORM_REPO_PATHS') + '/xilinx_vek280_base_202610_1/xilinx_vek280_base_202610_1.xpfm'
 my_workspace = cwd + 'AIEML_API_FFT_Tutorial'
 sources = cwd + 'src/'
 

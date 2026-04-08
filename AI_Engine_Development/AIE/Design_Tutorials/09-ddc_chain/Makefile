@@ -7,7 +7,7 @@
 #           Set COMMSLIB_ROOT to the absolute path to commslib
 # #########################################################################
 
-VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202520_1
+VERSAL_VITIS_PLATFORM      = xilinx_vck190_base_202610_1
 VITIS_PLATFORM_DIR         = ${PLATFORM_REPO_PATHS}/${VERSAL_VITIS_PLATFORM}
 export PLATFORM            = ${VITIS_PLATFORM_DIR}/${VERSAL_VITIS_PLATFORM}.xpfm
 

@@ -3,7 +3,7 @@
 
 .PHONY: all clean
 
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm
 
 s2mm = ./s2mm/s2mm.xo
 mm2s = ./mm2s/mm2s.xo

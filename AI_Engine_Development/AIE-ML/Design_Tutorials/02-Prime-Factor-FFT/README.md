@@ -165,7 +165,7 @@ The remaining environment variables are configured in the top level Makefile ```
 ```makefile
 RELEASE=2025.2
 BOARD=vek280
-BASE_NUM=202520_1
+BASE_NUM=202610_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}

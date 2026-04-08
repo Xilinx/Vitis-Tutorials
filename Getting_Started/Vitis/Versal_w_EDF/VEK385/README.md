@@ -12,7 +12,7 @@ Welcome to Vitis Getting Started!
 
 This tutorial showcases the important steps to build the AIE kernel dedicated for Versal AI Edge Gen2 architecture along with a Host application and running the design on the hardware and hardware emulation.
 
-This tutorial uses pre-built xilinx_vek385_base_202520_1.xpfm from Vitis installation path to compile AIE kernels.
+This tutorial uses pre-built xilinx_vek385_base_202610_1.xpfm from Vitis installation path to compile AIE kernels.
 
 The pre-built VEK385 platform has:
 

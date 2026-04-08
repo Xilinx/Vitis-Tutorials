@@ -300,7 +300,7 @@ The remaining environment variables are configured in the top-level Makefile ```
 ```
 RELEASE=2025.2
 
-PLATFORM_NAME              = xilinx_vck190_base_202520_1
+PLATFORM_NAME              = xilinx_vck190_base_202610_1
 PLATFORM_PATH              = ${PLATFORM_REPO_PATHS}
 
 export PLATFORM            = ${PLATFORM_PATH}/${PLATFORM_NAME}/${PLATFORM_NAME}.xpfm

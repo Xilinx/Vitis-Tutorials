@@ -20,7 +20,7 @@ MY_SOURCES        := ${MY_APP}.cpp sar_engine_graph.h \
 		  ../bp_update/bp_update_graph.h ../bp_update/bp_update.h ../bp_update/bp_update.cpp \
 	          ../interp1/interp1_graph.h ../interp1/interp1.h ../interp1/interp1.cpp
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
+PLATFORM_USE      := xilinx_vck190_base_202610_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

@@ -6,7 +6,7 @@
 .PHONY: run
 
 
-PFM_NAME := xilinx_vck190_base_202520_1
+PFM_NAME := xilinx_vck190_base_202610_1
 
 run:
 	make -C SingleKernel PFM_NAME=$(PFM_NAME) run

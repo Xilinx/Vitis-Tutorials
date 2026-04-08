@@ -10,7 +10,7 @@ export TARGET                      = hw_emu
 
 RELEASE=2025.2
 BOARD=vck190
-BASE_NUM=202520_1
+BASE_NUM=202610_1
 
 # Platform Selection...
 VERSAL_VITIS_PLATFORM      = xilinx_${BOARD}\_base_${BASE_NUM}

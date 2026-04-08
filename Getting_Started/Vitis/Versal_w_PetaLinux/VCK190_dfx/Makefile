@@ -7,7 +7,7 @@ ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 VERSION  := 2025.2
 #COMMON_IMAGE_VERSAL ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
 SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux/
-PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_dfx_202520_1/xilinx_vck190_base_dfx_202520_1.xpfm
+PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_dfx_202610_1/xilinx_vck190_base_dfx_202610_1.xpfm
 
 # === Put ALL build artifacts under this temp root ===
 TMP_ROOT ?= $(ROOT_DIR)/tmp

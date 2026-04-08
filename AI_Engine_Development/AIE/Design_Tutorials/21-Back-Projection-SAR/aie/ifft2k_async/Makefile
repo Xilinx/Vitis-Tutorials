@@ -13,7 +13,7 @@ MY_SOURCES        := ${MY_APP}.cpp ifft2k_async_graph.h ifft2k_async.h ifft2k_as
 	             ifft2k_async_twiddles_internal.h ifft2k_async_twiddles_external.h \
 		     slope_offset.h slope_offset.cpp dummy_async.h dummy_async.cpp
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
+PLATFORM_USE      := xilinx_vck190_base_202610_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

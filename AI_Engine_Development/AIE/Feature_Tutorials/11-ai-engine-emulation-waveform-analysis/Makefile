@@ -7,7 +7,7 @@ XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_
 ROOTFS = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4
 IMAGE = ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v2025.2/Image
 SDKTARGETSYSROOT ?= ${SYSROOT}
-BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+BASE_PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm
 
 
 # Makefile input options

@@ -39,7 +39,7 @@ Before starting this tutorial, run the following steps:
 2. In a Bash shell, run the `/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the `SDKTARGETSYSROOT` and `CXX` variables. If the script is not present, run the `/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh`.
 3. Set up your `ROOTFS` and `IMAGE` to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/xilinx-versal-common-v2025.2` directory.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable to `$XILINX_VITIS/base_platforms`.
-This tutorial targets VCK190 production board for 2025.2 version and the makefiles are set up to use `xilinx_vck190_base_202520_1` automatically.
+This tutorial targets VCK190 production board for 2025.2 version and the makefiles are set up to use `xilinx_vck190_base_202610_1` automatically.
 
 Data generation for this tutorial requires Python:
 

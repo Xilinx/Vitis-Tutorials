@@ -27,7 +27,7 @@ source <PATH TO petalinux-v2025.2-final>/settings.sh
 # =========================================================
 # Platform Selection...
 # =========================================================
-tgt_plat=xilinx_vck190_base_202520_1
+tgt_plat=xilinx_vck190_base_202610_1
 export PLATFORM=$PLATFORM_REPO_PATHS/$tgt_plat/$tgt_plat\.xpfm
 
 echo ""

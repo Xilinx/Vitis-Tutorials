@@ -34,7 +34,7 @@ Before starting this tutorial, run the following steps:
 1. Navigate to the directory where you have unzipped the Versal Common Image package.
 2. In a Bash shell, run the ```/Common Images Dir/xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux``` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the ```/Common Images Dir/xilinx-versal-common-v2025.2/sdk.sh```.
 3. Set up your ROOTFS, and IMAGE to point to the ```rootfs.ext4``` and Image files located in the ```/Common Images Dir/xilinx-versal-common-v2025.2``` directory.
-4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/base_platforms/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm```.
+4. Set up your PLATFORM_REPO_PATHS environment variable to ```$XILINX_VITIS/base_platforms/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm```.
 
 This tutorial targets VCK190 production board for 2025.2 version.
 
@@ -96,7 +96,7 @@ make aie TARGET=hw
 Or
 
 ```bash
-v++ -c --mode aie --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --aie.xlopt=0 --work_dir=./Work aie/graph.cpp
+v++ -c --mode aie --target hw --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm --include "$XILINX_VITIS/aietools/include" --include "./aie" --include "./data" --include "./aie/kernels" --include "./" --aie.xlopt=0 --work_dir=./Work aie/graph.cpp
 ```
 
 The generated output from `aiecompiler` is the `Work` directory and the `libadf.a` file. This file contains the compiled AI Engine configuration, graph, and Kernel `.elf` files.
@@ -269,8 +269,8 @@ make kernels TARGET=hw_emu
 or
 
 ```bash
-v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm --config pl_kernels/s2mm.cfg
-v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm --config pl_kernels/mm2s.cfg
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm --config pl_kernels/s2mm.cfg
+v++ -c --mode hls --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm --config pl_kernels/mm2s.cfg
 ```
 
 ### 2. Using v++ to Link AI Engine and HLS Kernels with the Platform
@@ -296,7 +296,7 @@ make xsa TARGET=hw_emu
 or
 
 ```bash
-v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
+v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw_emu --save-temps -g --config system.cfg -o tutorial.xsa
 ```
 
 Now you have a generated `.xsa` that can be used to execute your design on the platform.
@@ -335,7 +335,7 @@ Or
 ```bash
 cd ./sw
 v++ --package -t hw_emu \
-    -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm \
+    -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
     --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
     --package.image_format=ext4 \
     --package.boot_mode=sd \
@@ -434,7 +434,7 @@ After packaging, everything is set to run emulation. Because you ran `aiesimulat
     or
 
     ```bash
-    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
+    v++ -l --platform $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm s2mm.xo mm2s.xo libadf.a -t hw --save-temps -g --config system.cfg -o tutorial.xsa
    ```
 
 2. Then re-run the packaging step with:
@@ -448,7 +448,7 @@ After packaging, everything is set to run emulation. Because you ran `aiesimulat
     ```bash
     cd ./sw
     v++ --package -t hw \
-        -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm \
+        -f $PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm \
         --package.rootfs=$PLATFORM_REPO_PATHS/sw/versal/xilinx-versal-common-v2025.2/rootfs.ext4 \
         --package.image_format=ext4 \
         --package.boot_mode=sd \
@@ -480,7 +480,7 @@ You should see **TEST PASSED**. You have successfully run your design on hardwar
 In this tutorial you learned the following:
 
 * How to compile PLIO and PL Kernels using `v++ -c`
-* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vck190_base_202520_1` platform
+* How to link the `libadf.a`, PLIO, and PL kernels to the `xilinx_vck190_base_202610_1` platform
 * How to use Vitis Analyzer to explore the various reports generated from compilation and emulation/simulation
 * How to package your host code, and the generated `xclbin` and `libadf.a` into an SD card directory
 * How to execute the design for hardware emulation

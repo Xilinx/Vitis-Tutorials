@@ -9,7 +9,7 @@ export TARGET                      ?= hw_emu
 
 export AIE_SIM_ONLY                := false
 
-#PLATFORM_USE	  := xilinx_vek280_base_202520_1
+#PLATFORM_USE	  := xilinx_vek280_base_202610_1
 PLATFORM_USE	  		:= vek385_base_reva
 export PLATFORM         := ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 export SYSROOT			= ${YOCTO_ARTIFACTS}/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk/sysroots/cortexa72-cortexa53-amd-linux

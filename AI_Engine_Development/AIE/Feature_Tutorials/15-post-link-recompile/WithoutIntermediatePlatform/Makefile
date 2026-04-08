@@ -7,7 +7,7 @@
 
 # Makefile input options
 TARGET ?= hw_emu
-PFM_NAME ?= xilinx_vck190_base_202520_1
+PFM_NAME ?= xilinx_vck190_base_202610_1
 
 #Directories
 FILES_DIR ?= $(PWD)/../Files
@@ -74,7 +74,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202520_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202610_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2025.2/rootfs.ext4)

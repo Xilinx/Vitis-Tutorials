@@ -125,7 +125,7 @@ The following sections specify each `make` step to build the design. These secti
 
 ### make kernels: Compiling PL Kernels
 
-In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202520_1`) and the AI Engine kernels and graphs and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`).
+In this step, the Vitis compiler takes any Vitis compiler kernels (RTL or HLS C) in the PL region of the target platform (`xilinx_vck190_base_202610_1`) and the AI Engine kernels and graphs and compiles them into their respective XO files. The following commands compile the kernels (default `TARGET=hw_emu`, `FFT_2D_INSTS=1`, `ITER_CNT=16`, `FFT_2D_DT=0` and `FFT_2D_PT=2048`).
 
 ```
 make kernels
@@ -138,7 +138,7 @@ mkdir -p $(BUILD_TARGET_DIR); \
 
 cd $(BUILD_TARGET_DIR); \
 
-v++ --target hw_emu --hls.clock 312500000:dma_hls --platform xilinx_vck190_base_202520_1 \
+v++ --target hw_emu --hls.clock 312500000:dma_hls --platform xilinx_vck190_base_202610_1 \
    --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g -c -k dma_hls -D FFT_2D_DT=0 \
    $(DESIGN_REPO)/pl_src/dma_hls.cpp -o $(BUILD_TARGET_DIR)/dma_hls.hw_emu.xo
 ```
@@ -195,7 +195,7 @@ aiecompiler -include=$(AIE_SRC_REPO) -include=<DSPLIB_ROOT>/L1/include/aie \
    -include=<DSPLIB_ROOT>/L2/include/aie \
    -include=<DSPLIB_ROOT>/L2/tests/aie/common/inc \
    --verbose --Xpreproc="-DFFT2D_INSTS=1" --Xpreproc="-DMAT_ROWS=1024" --Xpreproc="-DMAT_COLS=2048" --Xpreproc="-DFFT_2D_DT=0" \
-   --platform=<PLATFORM_REPO_PATHS/xilinx_vck190_base_202520_1>/xilinx_vck190_base_202520_1.xpfm \
+   --platform=<PLATFORM_REPO_PATHS/xilinx_vck190_base_202610_1>/xilinx_vck190_base_202610_1.xpfm \
    --log-level=5 --test-iterations=2 --dataflow --heapsize=7000 \
    --Xchess="main:bridge.llibs=softfloat m" --workdir=Work $(AIE_SRC_REPO)/graph.cpp 2>&1 | tee -a aiecompiler.log 
 
@@ -248,7 +248,7 @@ The expanded command is as follows:
 ```
 cd $(BUILD_TARGET_DIR); \
 
-v++ -l --platform xilinx_vck190_base_202520_1 --save-temps \
+v++ -l --platform xilinx_vck190_base_202610_1 --save-temps \
    --temp_dir $(BUILD_TARGET_DIR)/_x --verbose -g --clock.freqHz 312500000:dma_hls_0 \
    --clock.defaultTolerance 0.001 --config $(SYSTEM_CONFIGS_REPO)/x1.cfg \
    --vivado.prop fileset.sim_1.xsim.simulate.log_all_signals=true \
@@ -405,7 +405,7 @@ or
 cp $(PROJECT_REPO)/run_script.sh $(BUILD_TARGET_DIR)/
 cd$(BUILD_TARGET_DIR); \
 
-v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202520_1\
+v++ -p -t hw --save-temps --temp_dir $(BUILD_TARGET_DIR)/_x -f xilinx_vck190_base_202610_1\
    --package.rootfs $(XLNX_VERSAL)/rootfs.ext4\
    --package.kernel_image $(XLNX_VERSAL)/Image --package.boot_mode=sd\
    --package.out_dir $(BUILD_TARGET_DIR)/package --package.image_format=ext4\

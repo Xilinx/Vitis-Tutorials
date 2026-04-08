@@ -7,7 +7,7 @@
 TARGET   = hw_emu
 HOST_EXE = host.exe
 
-PFM_NAME := xilinx_vck190_base_202520_1
+PFM_NAME := xilinx_vck190_base_202610_1
 PFM_NAME := $(strip $(PFM_NAME))
 PLATFORM := ${PLATFORM_REPO_PATHS}/${PFM_NAME}/${PFM_NAME}.xpfm
 

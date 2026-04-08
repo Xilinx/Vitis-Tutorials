@@ -234,7 +234,7 @@ platforminfo --list | grep -m 1 -A 9 vck190
 The output of the preceding command is as follows:
 
 ```bash
- "baseName": "xilinx_vck190_base_202520_1",
+ "baseName": "xilinx_vck190_base_202610_1",
             "version": "1.0",
             "type": "sdsoc",
             "dataCenter": "false",

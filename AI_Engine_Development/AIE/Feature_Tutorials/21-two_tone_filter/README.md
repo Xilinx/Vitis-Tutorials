@@ -452,7 +452,7 @@ Follow these steps to add the design files:
 
 Follow these steps to select the platform:
 
-1. Select the platform as *xilinx_vck190_base_202520_1*.
+1. Select the platform as *xilinx_vck190_base_202610_1*.
 2. Click **Next** and review the Summary and then select **Finish**.
 
 After closing the summary, you can see the Vitis Unified IDE. Review the following:

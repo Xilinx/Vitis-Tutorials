@@ -14,7 +14,7 @@ MY_SOURCES        := ${MY_APP}.cpp conv2d_w5_graph.h \
                      conv2d_w5A.h conv2d_w5A.cpp conv2d_w5B.h conv2d_w5B.cpp conv2d_w5C.h conv2d_w5C.cpp \
                      conv2d_w5D.h conv2d_w5D.cpp
 
-PLATFORM_USE      := xilinx_vek280_base_202520_1
+PLATFORM_USE      := xilinx_vek280_base_202610_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

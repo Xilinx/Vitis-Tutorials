@@ -19,7 +19,7 @@
 
 Welcome to Vitis Getting Started!
 
-In this tutorial we will showcase how to swap in and out two different AIE Graphs and HLS kernel dynamically using a single host application. For this use case we are using pre-built xilinx_vck190_base_dfx_202520_1.xpfm platform to compile AIE and HLS kernel.
+In this tutorial we will showcase how to swap in and out two different AIE Graphs and HLS kernel dynamically using a single host application. For this use case we are using pre-built xilinx_vck190_base_dfx_202610_1.xpfm platform to compile AIE and HLS kernel.
 
 **Note: This tutorial only supports HW flow.**
 

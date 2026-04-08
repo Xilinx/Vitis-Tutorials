@@ -20,7 +20,7 @@ Welcome to Vitis Getting Started!
 
 This tutorial showcases the important steps to build the HLS and AIE kernel dedicated for AIE-ML architecture along with a Host application and running the design on the hardware and hardware emulation.
 
-This tutorial uses pre-built xilinx_vek280_base_202520_1.xpfm from Vitis installation path to compile HLS and AIE kernels.
+This tutorial uses pre-built xilinx_vek280_base_202610_1.xpfm from Vitis installation path to compile HLS and AIE kernels.
 
 Please go through the Makefile provided in this tutorial to better understand the Vitis tool flow. At the end of each section, a link to the next chapter is included.
 

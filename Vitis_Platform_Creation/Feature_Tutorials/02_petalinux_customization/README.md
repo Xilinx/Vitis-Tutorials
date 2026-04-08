@@ -34,8 +34,8 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
 2. Download the base platform and place it under `workspace`  folder. Then extract it. If you have already installed the Vitis™ tool, omit this step as AMD Official platforms have already built into the vitis tool installation package.
 
    ```bash
-   unzip xilinx_vck190_base_202520_1.zip #extract the base platform
-   cd xilinx_vck190_base_202520_1
+   unzip xilinx_vck190_base_202610_1.zip #extract the base platform
+   cd xilinx_vck190_base_202610_1
    tree -L 2
    .
    ├── hw
@@ -43,10 +43,10 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    ├── hw_emu
    │   └── hw_emu.xsa
    ├── sw
-   │   ├── xilinx_vck190_base_202520_1
-   │   └── xilinx_vck190_base_202520_1.spfm
+   │   ├── xilinx_vck190_base_202610_1
+   │   └── xilinx_vck190_base_202610_1.spfm
    ├── version
-   └── xilinx_vck190_base_202520_1.xpfm
+   └── xilinx_vck190_base_202610_1.xpfm
    4 directories, 5 files
    ```
 
@@ -64,7 +64,7 @@ As XSA file is the mandatory input for Petalinux project. Users can input  XSA f
    cd workspace
    petalinux-create --type project --template versal --name vck190_petalinux
    cd vck190_petalinux
-   petalinux-config --get-hw-description=xilinx_vck190_base_202520_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_vck190_base_202520_1> directory. If you want to do emulation you can choose hw_emu.xsa 
+   petalinux-config --get-hw-description=xilinx_vck190_base_202610_1/hw/hw.xsa  # After you extract the base platform, you can find hw.xsa or hw_emu.xsa under <xilinx_vck190_base_202610_1> directory. If you want to do emulation you can choose hw_emu.xsa 
    ```
 
    > Note: `--template` option specifies the chipset. vck190 board adopts the Versal™ series chip. Therefore, we specify this option as `versal`.

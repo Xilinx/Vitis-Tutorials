@@ -20,7 +20,7 @@ Welcome to Vitis Getting Started!
 
 This tutorial discusses the important concepts of the Vitis tool flow, building the components, building the design and running the design on the hardware and hardware emulation.
 
-This tutorial uses pre-built xilinx_vck190_base_202520_1.xpfm from Vitis installation path to compile HLS and AIE kernels.
+This tutorial uses pre-built xilinx_vck190_base_202610_1.xpfm from Vitis installation path to compile HLS and AIE kernels.
 
 Please read the tutorial in the same order as listed here to better understand the Vitis tool flow. At the end of each section, a link to the next chapter is included.
 

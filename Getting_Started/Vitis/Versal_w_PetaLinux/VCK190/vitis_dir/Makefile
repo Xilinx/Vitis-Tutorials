@@ -7,7 +7,7 @@ all: linker packager
 TARGET                ?= hw_emu
 MODE	 = linux
 
-PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm
 
 # Rootfs and Image
 export IMAGE  		= ${COMMON_IMAGE_VERSAL}/Image

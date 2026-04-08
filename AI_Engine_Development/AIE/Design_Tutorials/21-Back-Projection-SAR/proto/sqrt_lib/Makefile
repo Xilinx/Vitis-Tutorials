@@ -11,7 +11,7 @@ SIM_FIFO          := false
 MY_APP            := sqrt_lib_app
 MY_SOURCES        := ${MY_APP}.cpp sqrt_lib_graph.h
 
-PLATFORM_USE      := xilinx_vck190_base_202520_1
+PLATFORM_USE      := xilinx_vck190_base_202610_1
 PLATFORM          ?= ${PLATFORM_REPO_PATHS}/${PLATFORM_USE}/${PLATFORM_USE}.xpfm
 
 CHECK_FIFO        := --aie.evaluate-fifo-depth --aie.Xrouter=disablePathBalancing

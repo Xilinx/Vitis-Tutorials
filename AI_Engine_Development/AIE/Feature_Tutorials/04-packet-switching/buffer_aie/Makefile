@@ -6,9 +6,9 @@ TARGET   = hw_emu
 ARCH = aie
 
 ifeq ($(ARCH), aie)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202520_1/xilinx_vck190_base_202520_1.xpfm
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vck190_base_202610_1/xilinx_vck190_base_202610_1.xpfm
 else ifeq ($(ARCH), aie-ml)
-	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202520_1/xilinx_vek280_base_202520_1.xpfm
+	PLATFORM ?= ${PLATFORM_REPO_PATHS}/xilinx_vek280_base_202610_1/xilinx_vek280_base_202610_1.xpfm
 else
 $(error ARCH is not supported)
 endif
@@ -47,7 +47,7 @@ __check_defined = \
 		$(error Undefined $1$(if $2, ($2))))
 
 guard-PLATFORM_REPO_PATHS:
-	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202520_1)
+	$(call check_defined, PLATFORM_REPO_PATHS, Set your where you downloaded xilinx_vck190_base_202610_1)
 
 guard-ROOTFS:
 	$(call check_defined, ROOTFS, Set to: xilinx-versal-common-v2025.2/rootfs.ext4)
