@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -28,7 +28,7 @@ Data generation for this tutorial requires [Python 3](https://www.python.org/dow
 - sys
 - numpy
 
-All these designs will compile for AI Engine architecture (VCK190 production board using `ARCH=aie` in `make` command line) and the AI Engine ML architecture (VEK280 board using `ARCH=aie-ml` in `make` command line)
+All these designs will compile for AI Engine architecture (VCK190 production board using `ARCH=aie` in `make` command line) and the AI Engine ML architecture (VEK280 board using `ARCH=aie-ml` in `make` command line).
 
 ## Objectives
 
@@ -54,6 +54,6 @@ GitHub issues are used for tracking requests and bugs. For questions, go to [sup
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

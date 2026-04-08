@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -23,15 +23,15 @@ There are situations where data is split (multicast) but the various branches do
 
 ## Case 1: Stream and Buffer Multicasting
 
-When the data source is a stream and all the input interfaces of the destinations are streaming interfaces, the `aiecopiler` has nothing special to do. The AXI-Stream interface interconnect connects the destinations to the same source.
+When the data source is a stream and all the input interfaces of the destinations are streaming interfaces, the `aiecompiler` has nothing special to do. The AXI-Stream interface interconnect connects the destinations to the same source.
 
-![No image](images/MulticastStream.png)
+![Stream multicasting graph view](images/MulticastStream.png)
 
 >**Note:** Be aware of inefficiencies and deadlocks. You have to introduce FIFOs on the various paths to overcome stream stalls on some branches.
 
 The situation is different when the source and destination are buffers. Only the four neighbors can access memory interfaces exclusively, and they cannot be extended further. That is why the `aiecompiler` uses the AXI-Stream interconnect and the DMAs (MM2S -> S2MM) to multicast the source memory content to the destination memories.
 
-![No image](images/MulticastBuffer.png)
+![Buffer multicasting graph view with DMA infrastructure](images/MulticastBuffer.png)
 
 The compiler added all the infrastructure `_dma[0] ... _dma[4]` to multicast the data to all destination memories.
 
@@ -64,7 +64,7 @@ This case being single rate, the throughput is the same for all the ports.
 
 The architecture is exactly the same but the repetition counts are different from case 1:
 
-![No image](images/RepetitionCounts.png)
+![Multirate buffer multicasting repetition counts](images/RepetitionCounts.png)
 
 Type `make CASE=2 clean data aie aieviz` and explore the graph view and the array view shown by the AMD Vitis™ Analyzer.
 
@@ -86,6 +86,8 @@ Here the system is single rate. The only difference between the cores are the in
 
 GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

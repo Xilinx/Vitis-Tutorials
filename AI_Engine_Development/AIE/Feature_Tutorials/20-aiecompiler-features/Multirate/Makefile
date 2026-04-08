@@ -1,7 +1,6 @@
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
- 
 VERSION ?= 1
 ARCH ?= aie
 
@@ -32,7 +31,7 @@ X86_SIM_CMD = x86simulator --pkg-dir=./WorkX86 --trace --trace-print
 
 BUFFER_vs_STREAM ?= 1
 
-.PHONY: data buffer stream evalfifo disptypeio dispfifo disprepetition
+.PHONY: run allcases data disprepetition dispfifo disptypeio buffer stream evalfifo aie x86 aiesim aiesim_stop aieviz x86sim aiecmp aiecmp1 aiecmp2 x86cmp x86cmp1 x86cmp2 clean clean_all
 
 run:
 	make clean data aie aiesim
@@ -79,7 +78,7 @@ stream:
 
 evalfifo:
 	$(eval AIE_CMPL_CMD += --evaluate-fifo-depth)
-	echo "AIE compiler set to evluate FIFO sizes"
+	echo "AIE compiler set to evaluate FIFO sizes"
 
 aie: ${LIBADFAIE}
 ${LIBADFAIE}: src/*

@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -127,7 +127,7 @@ struct TestGraph: public graph
 
 Four sub-graphs are instantiated with various parameters and then connected together. The graph as shown by the AMD Vitis™ Analyzer is:
 
-![No Image](images/Case1_ByGraph.png)
+![Case 1 graph view showing four sub-graphs with conditional cascade ports](images/Case1_ByGraph.png)
 
 Type `make CASE=1 clean data aie aieviz` to get this visualization.
 
@@ -205,7 +205,7 @@ struct Sub0: public graph
 
 In the test case, two of these graphs are instantiated: one without runtime parameters (RTPs) and another one with RTP ports. The resulting graph in the Vitis Analyzer is as follows:
 
-![No Image](images/Case4_ByGraph.png)
+![Case 4 graph view showing conditional RTP ports](images/Case4_ByGraph.png)
 
 Type `make CASE=4 aie aieviz` to visualize the resulting graph of this test case.
 
@@ -213,6 +213,8 @@ Type `make CASE=4 aie aieviz` to visualize the resulting graph of this test case
 
 GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -46,7 +46,7 @@ Various parameters appear here:
 - `InputSize`: Size of the input frame.
 - `NIterations`: Number of iterations of the entire system.
 
-![No image!](images/Multirate-FrameLength.drawio.png)
+![Multirate frame length diagram](images/Multirate-FrameLength.drawio.png)
 
 ## I/O-Buffer Interface
 
@@ -89,7 +89,7 @@ The minimal solutions are:
 
 which the compiler found.
 
-![No image](images/Multirate-UpDownConversion.drawio.png)
+![Up-conversion then down-conversion data flow](images/Multirate-UpDownConversion.drawio.png)
 
 The resulting code for the tile containing the down-converter is:
 
@@ -175,7 +175,7 @@ INFO: [aiecompiler 77-5917] Repetition count for G.G2.k2 is 5.
 ************************************************************************
 ```
 
-![No image !](images/Multirate-DownUpConversion.drawio.png)
+![Down-conversion then up-conversion data flow](images/Multirate-DownUpConversion.drawio.png)
 
 You can run the simulation and visualize the result:
 
@@ -202,7 +202,7 @@ The throughput is higher than the previous situation because between the two ker
 
 In this new example, two branches receive data from the same PLIO and connect on the output side to a kernel that computes the difference between the two branch outputs.
 
-![No image!!](images/TwoBranchesIObuf.png)
+![Split and merge graph with I/O buffer interface](images/TwoBranchesIObuf.png)
 
 ```BASH
 make VERSION=3 clean buffer aie
@@ -265,7 +265,7 @@ make STOP=10000 aiesim_stop
 
 The Trace view appears in the following image:
 
-![No image!!](images/StreamNoRepet.png)
+![Stream trace view without repetition count](images/StreamNoRepet.png)
 
 The previous image shows that the down-converter is running four times for the four iterations, but the up-converter is waiting for new data. The down-converter gets 2240 samples and produces 1600 samples. The up-converter is waiting for 2240 samples, but gets only 1600. Therefore, it waits for the remaining block of data, thus generating a stream stall event.
 
@@ -289,7 +289,7 @@ In this configuration, the repetition rates are seven (DownConv) and five (UpCon
 
 In this new example, two branches receive data from the same PLIO and connect on the output side to a kernel that computes the difference between the two branch outputs.
 
-![No image!!](images/TwoBranchesStream.png)
+![Split and merge graph with stream interface](images/TwoBranchesStream.png)
 
 `VERSION=3` of this design stalls almost immediately because this design needs FIFOs set up at the input and output of each branch.
 
@@ -299,6 +299,8 @@ In this new example, two branches receive data from the same PLIO and connect on
 
 GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/topiccatalog?language=en_US).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
+<hr class="sphinxhide"></hr>
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2023–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

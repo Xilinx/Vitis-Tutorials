@@ -1,4 +1,4 @@
-# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 CASE ?= 1
@@ -33,7 +33,7 @@ allcases:
 	make CASE=1 ARCH=aie-ml run
 	make CASE=2 ARCH=aie-ml run
 
-.PHONY: data help _help
+.PHONY: all run allcases data aie aiesim aieviz help _help clean
 
 data:
 	mkdir -p data
@@ -56,8 +56,8 @@ help:
 _help:
 	echo -e "\n\n===========================================\n"
 	echo "Targeted Architectures:"
-	echo "ARCH=1: AI Engine (default)"
-	echo "ARCH=2: AI Engine ML"
+	echo "ARCH=aie: AI Engine (default)"
+	echo "ARCH=aie-ml: AI Engine ML"
 	echo " "
 	echo "Example list:"
 	echo "CASE=1: Single rate broadcast"

@@ -1,4 +1,4 @@
-# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 
 CASE ?= 1
@@ -37,7 +37,7 @@ allcases:
 run: clean data aie aiesim
 
 
-.PHONY: data help _help
+.PHONY: all allcases run data aie aiesim aieviz help _help clean
 
 data:
 	mkdir -p data
@@ -62,8 +62,8 @@ help:
 _help:
 	echo -e "\n\n===========================================\n"
 	echo "Targeted Architectures:"
-	echo "ARCH=1: AI Engine (default)"
-	echo "ARCH=2: AI Engine ML"
+	echo "ARCH=aie: AI Engine (default)"
+	echo "ARCH=aie-ml: AI Engine ML"
 	echo " "
 	echo "Example list:"
 	echo "CASE=1: conditional Cascade port  (default)"
