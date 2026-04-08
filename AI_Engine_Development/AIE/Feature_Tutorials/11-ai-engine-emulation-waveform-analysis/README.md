@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -487,6 +487,6 @@ In this tutorial you learned:
 * View TLM signals and how they interact with the AI Engine and Versal adaptive SoC blocks.
 * Open and view Trace and Profile information in Vitis Analyzer.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

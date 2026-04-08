@@ -1,7 +1,6 @@
-# /*
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+#
+# Copyright Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: X11
-# */
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
 

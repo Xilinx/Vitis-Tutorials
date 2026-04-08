@@ -1,7 +1,7 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
-*/
+ * Copyright Advanced Micro Devices, Inc.
+ * SPDX-License-Identifier: X11
+ */
 
 #ifndef FIR24_SYM_H
 #define FIR24_SYM_H
