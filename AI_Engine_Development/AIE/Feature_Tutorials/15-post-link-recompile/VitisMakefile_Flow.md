@@ -13,7 +13,7 @@
   </tr>
 </table>
 
-# Lab 2: Post-Link Recompile of an AI Engine Application</h1>
+# Lab 2: Post-Link Recompile of an AI Engine Application
 
 ## Initialization
 
@@ -35,7 +35,7 @@ cd WithIntermediatePlatform
 
 ## Phase 1: Creating a Fixed Platform from an AI Engine Application and PL Kernels
 
-This lab uses the same files as the [AMD Vitis&trade; IDE flow](VitisIDE_Flow.md), but all the operations complete within a terminal.
+This lab uses the same files as [Lab 1](DirectRecompileMakefile_Flow.md), but all the operations complete within a terminal.
 
 1. To complete phase 1, change directory: `cd Phase1`.
 
@@ -49,7 +49,7 @@ This lab uses the same files as the [AMD Vitis&trade; IDE flow](VitisIDE_Flow.md
 
 There are also optional stages to simulate the AI Engine application using the `aiesim` target and `run_emu` to launch hardware emulation that includes all the PL kernels.
 
-In the terminal, type `make clean phase1` ro run all the required stages (`kernels`, `aie`, and `link`) in the terminal and the hardware emulation (`package` and `run_emu`).
+In the terminal, type `make clean phase1` to run all the required stages (`kernels`, `aie`, and `link`) in the terminal and the hardware emulation (`package` and `run_emu`).
 
 Check the placement of the AI Engine kernels using Vitis Analyzer and opening the `graph.aiecompile_summary` file.
 
