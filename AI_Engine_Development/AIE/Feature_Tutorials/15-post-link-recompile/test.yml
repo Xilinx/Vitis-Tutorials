@@ -1,0 +1,12 @@
+name: AIE_F_15-post-link-WithoutIntermediatePlatform
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 200m
+    run: make all_phases TARGET=hw_emu CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EDGE_COMMON_SW=${EDGE_COMMON_SW} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

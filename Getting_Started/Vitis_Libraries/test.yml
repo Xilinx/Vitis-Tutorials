@@ -1,0 +1,17 @@
+name: GS_Vitis_Lib
+category: canary
+platform: [u200]
+flow: hls
+env:
+  build: env_setup_alveo.sh
+  board: env_setup_alveo.sh
+targets:
+  hls_csim:
+    timeout: 60m
+    run: make all TARGET=csim
+  hls_csynth:
+    timeout: 120m
+    run: make all TARGET=csynth
+  hls_cosim:
+    timeout: 120m
+    run: make all TARGET=cosim

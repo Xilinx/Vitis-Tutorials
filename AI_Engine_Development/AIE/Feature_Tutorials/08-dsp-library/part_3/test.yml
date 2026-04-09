@@ -1,0 +1,10 @@
+name: AIE_F_08-dsp-lib_part3
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    run: make all-aie TARGET=aiesim

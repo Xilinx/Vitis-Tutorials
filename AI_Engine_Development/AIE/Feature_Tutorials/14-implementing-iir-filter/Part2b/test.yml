@@ -1,0 +1,8 @@
+name: AIE_F_14-iir_part2b
+category: canary
+platform: [vck190]
+flow: versal
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    run: make all TARGET=aiesim

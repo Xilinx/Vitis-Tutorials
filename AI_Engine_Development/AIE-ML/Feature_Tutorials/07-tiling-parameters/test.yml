@@ -1,0 +1,13 @@
+name: AIE-ML_F_07-Tiling_Parameters
+category: canary
+platform: [vek280]
+flow: versal
+env:
+  build: env_setup_versal.sh
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    run: make run_tests TARGET=aiesim ARCH=aie-ml
+  vitis_x86_sim:
+    timeout: 60m
+    run: make run_tests TARGET=x86sim ARCH=aie-ml

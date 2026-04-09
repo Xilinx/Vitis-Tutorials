@@ -53,11 +53,11 @@ disp_repetition:
 
 data:
 	mkdir -p $(DATA_DIR)
-	$(UTILS_DIR)/CreateNDData.py 2 $(Base) 5 $(Dimensions) $(MaxIterations) > $(DATA_DIR)/Input.txt ;\
-	$(UTILS_DIR)/CreateNDData.py 2 100 3 64 512 $(MaxIterations) > $(DATA_DIR)/Input_Large.txt ;\
-	$(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 256 $(MaxIterations) > $(DATA_DIR)/Input_1D_256.txt ; \
-	$(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 1024 $(MaxIterations) > $(DATA_DIR)/Input_1D_1024.txt ; \
-	$(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 64 $(MaxIterations) > $(DATA_DIR)/Input_1D_64.txt ; \
+	uvx --with numpy python3 $(UTILS_DIR)/CreateNDData.py 2 $(Base) 5 $(Dimensions) $(MaxIterations) > $(DATA_DIR)/Input.txt ;\
+	uvx --with numpy python3 $(UTILS_DIR)/CreateNDData.py 2 100 3 64 512 $(MaxIterations) > $(DATA_DIR)/Input_Large.txt ;\
+	uvx --with numpy python3 $(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 256 $(MaxIterations) > $(DATA_DIR)/Input_1D_256.txt ; \
+	uvx --with numpy python3 $(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 1024 $(MaxIterations) > $(DATA_DIR)/Input_1D_1024.txt ; \
+	uvx --with numpy python3 $(UTILS_DIR)/CreateNDData.py 2 $(Base) 2 64 $(MaxIterations) > $(DATA_DIR)/Input_1D_64.txt ; \
 
 
 # Test cases

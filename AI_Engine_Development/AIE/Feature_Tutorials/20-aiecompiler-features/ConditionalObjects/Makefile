@@ -41,9 +41,9 @@ run: clean data aie aiesim
 
 data:
 	mkdir -p data
-	CreateLinearData.py int32 32 4096 > data/in1.txt
-	CreateLinearData.py int16 32 4096 > data/in2.txt
-	CreateLinearData.py int8 32 4096 > data/in4.txt
+	uvx --with numpy python3 ./CreateLinearData.py int32 32 4096 > data/in1.txt
+	uvx --with numpy python3 ./CreateLinearData.py int16 32 4096 > data/in2.txt
+	uvx --with numpy python3 ./CreateLinearData.py int8 32 4096 > data/in4.txt
 
 
 aie: ${LIBADF}

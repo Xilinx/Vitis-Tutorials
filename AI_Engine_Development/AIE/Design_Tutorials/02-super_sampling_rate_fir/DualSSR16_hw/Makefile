@@ -88,7 +88,7 @@ data:
 	rm -rf data
 	rm -rf aie/data
 	mkdir -p data
-	../Utils/GenerateStreams cint16 $(PLIOW) 8 2 256 4 Dirac data/PhaseIn
+	uvx --with numpy python3 ../Utils/GenerateStreams cint16 $(PLIOW) 8 2 256 4 Dirac data/PhaseIn
 	./rename_files.sh 15 25
 	cp -r data aie/data
 	

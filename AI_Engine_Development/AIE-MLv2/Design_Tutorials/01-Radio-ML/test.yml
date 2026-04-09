@@ -1,0 +1,26 @@
+name: AIE-MLv2_D_01-Radio-ML
+category: canary
+platform: [vek385_base_reva]
+flow: versal
+env:
+  build: env_setup_yocto_edf.sh
+  board: env_setup_yocto_edf.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make all TARGET=hw_emu EMU_CMD="./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf
+      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./embedded_exec.sh"" EMBEDDED_PACKAGE_OUT=./package
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make all TARGET=hw EMU_CMD="./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf -login
+      "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./embedded_exec.sh"" EMBEDDED_PACKAGE_OUT=./package
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMU_CMD="./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf
+      -login "amd-edf" -password "amd-edf" -run-app "mount /dev/sda2 /media; cd /media; ./embedded_exec.sh"" EMBEDDED_PACKAGE_OUT=./package
+      EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

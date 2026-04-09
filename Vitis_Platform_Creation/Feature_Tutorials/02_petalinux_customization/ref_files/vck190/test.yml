@@ -1,0 +1,16 @@
+name: PFM_F_02-petalinux_vck190
+category: canary
+platform: [vck190]
+flow: vitis
+env:
+  build: env_setup_petalinux.sh
+  board: env_setup_petalinux.sh
+targets:
+  vitis_hw_build:
+    timeout: 480m
+    run: make sd_card TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EMU_CMD="./launch_hw_emu.sh -run-app run_app.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./run_app.sh
+  vitis_hw_run:
+    timeout: 60m
+    run: make run_test TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EMU_CMD="./launch_hw_emu.sh -run-app run_app.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./run_app.sh

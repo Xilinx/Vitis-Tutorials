@@ -19,7 +19,7 @@ all: clean animation
 
 animation:
 	mkdir -p build
-	python3 ../Module_01_python_sims/pylib/animate.py data/animation_data.txt 12800 build/animation.gif
+	uvx --with numpy --with matplotlib --with pandas python3 ../Module_01_python_sims/pylib/animate.py data/animation_data.txt 12800 build/animation.gif
 
 clean:
 	rm -rf *~

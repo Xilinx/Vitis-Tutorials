@@ -1,0 +1,9 @@
+name: AIE_F_25-AIE-Kernel-Optimization
+category: canary
+platform: [vck190]
+flow: versal
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    memory: 64GB
+    run: make all TARGET=aiesim

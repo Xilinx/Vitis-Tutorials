@@ -1,0 +1,9 @@
+name: AIE-ML_D_08-MNIST-ConvNet
+category: canary
+platform: [vek280]
+flow: versal
+targets:
+  vitis_aie_sim:
+    timeout: 50m
+    memory: 64GB
+    run: make all TARGET=aiesim

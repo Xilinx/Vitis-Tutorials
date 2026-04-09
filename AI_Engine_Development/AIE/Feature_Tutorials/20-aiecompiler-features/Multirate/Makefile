@@ -55,7 +55,7 @@ allcases:
 
 data:
 	mkdir -p data
-	CreateData.py 2 100000 1 100000 > data/Input_64.txt
+	uvx --with numpy python3 ./CreateData.py 2 100000 1 100000 > data/Input_64.txt
 
 disprepetition:
 	DisplayRepetition

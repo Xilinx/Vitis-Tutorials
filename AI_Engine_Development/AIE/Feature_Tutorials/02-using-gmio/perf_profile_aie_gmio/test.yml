@@ -1,0 +1,18 @@
+name: AIE_F_02-gmio_perf
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 470m
+    run: make sd_card TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EDGE_COMMON_SW=${EDGE_COMMON_SW} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    run: make run_test TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EDGE_COMMON_SW=${EDGE_COMMON_SW} SYSROOT=${SYSROOT} SDKTARGETSYSROOT=${SYSROOT} ROOTFS=${EDGE_COMMON_SW}/rootfs.ext4
+      IMAGE=${EDGE_COMMON_SW}/Image EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh" EMBEDDED_PACKAGE_OUT=./ EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

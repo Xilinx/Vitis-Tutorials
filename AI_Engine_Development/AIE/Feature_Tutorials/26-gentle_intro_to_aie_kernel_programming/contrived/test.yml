@@ -1,0 +1,11 @@
+name: AIE_F_26-contrived
+category: canary
+platform: [vck190]
+flow: versal
+targets:
+  vitis_x86_sim:
+    timeout: 60m
+    run: make all TARGET=x86sim CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+  vitis_aie_sim:
+    timeout: 60m
+    run: make all TARGET=aiesim CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64

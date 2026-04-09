@@ -1,0 +1,18 @@
+name: AIE_D_08-N-Body
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 470m
+    run: make build TARGET=hw_emu
+  vitis_hw_build:
+    timeout: 470m
+    run: make run TARGET=hw
+  vitis_hw_run:
+    timeout: 600m
+    run: make run_test TARGET=hw
+sync_sd_card: true

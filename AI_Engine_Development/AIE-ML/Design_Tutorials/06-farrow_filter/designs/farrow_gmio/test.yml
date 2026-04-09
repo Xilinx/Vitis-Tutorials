@@ -1,0 +1,17 @@
+name: AIE-ML_D_06-Fa-Filter--GMIO
+category: canary
+platform: [vek280]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 240m
+    run: make all TARGET=hw_emu EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./package EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_build:
+    timeout: 300m
+    run: make all TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./package EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh
+  vitis_hw_run:
+    timeout: 30m
+    run: make run_test TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app embedded_exec.sh " EMBEDDED_PACKAGE_OUT=./package EMBEDDED_EXEC_SCRIPT=./embedded_exec.sh

@@ -1,0 +1,17 @@
+name: AIE_D_03-beamforming
+category: canary
+platform: [vck190]
+flow: versal
+env:
+  build: env_setup_petalinux_versal.sh
+  board: env_setup_petalinux_versal.sh
+targets:
+  vitis_hw_build:
+    timeout: 960m
+    memory: 75GB
+    run: make sd_card TARGET=hw EN_TRACE=1
+  vitis_hw_run:
+    timeout: 90m
+    memory: 75GB
+    run: make run_test TARGET=hw EN_TRACE=1
+sync_sd_card: true

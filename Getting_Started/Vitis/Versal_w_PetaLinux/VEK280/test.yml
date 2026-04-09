@@ -1,0 +1,23 @@
+name: GS_vitis
+category: canary
+platform: [vek280]
+flow: versal
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 120m
+    memory: 64GB
+    run: make all TARGET=hw_emu EMU_CMD="./launch_hw_emu.sh -run-app run_aieml.sh " EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./run_aieml.sh
+  vitis_hw_build:
+    timeout: 300m
+    memory: 64GB
+    run: make sd_card TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app run_aieml.sh " EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./run_aieml.sh
+  vitis_hw_run:
+    timeout: 30m
+    memory: 64GB
+    run: make run_test TARGET=hw EMU_CMD="./launch_hw_emu.sh -run-app run_aieml.sh " EMBEDDED_PACKAGE_OUT=./aieml_work/package.hw/
+      EMBEDDED_EXEC_SCRIPT=./run_aieml.sh

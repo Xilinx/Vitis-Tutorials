@@ -1,0 +1,13 @@
+name: VHLS_D_02-beamformer
+category: canary
+platform: [u200]
+flow: hls
+targets:
+  hls_csim:
+    timeout: 60m
+    memory: 75GB
+    run: make all TARGET=csim
+  hls_csynth:
+    timeout: 120m
+    memory: 75GB
+    run: make all TARGET=csynth

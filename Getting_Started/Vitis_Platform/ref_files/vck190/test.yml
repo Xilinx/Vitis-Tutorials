@@ -1,0 +1,20 @@
+name: GS_pfm
+category: canary
+platform: [vck190]
+flow: vitis
+env:
+  build: env_setup_versal.sh
+  board: env_setup_versal.sh
+targets:
+  vitis_hw_emu:
+    timeout: 200m
+    run: make all TARGET=hw_emu CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EMU_CMD="./launch_hw_emu.sh -run-app run_vadd.sh" EMBEDDED_PACKAGE_OUT=./vadd_work/package.hw/ EMBEDDED_EXEC_SCRIPT=./run_vadd.sh
+  vitis_hw_build:
+    timeout: 480m
+    run: make sd_card TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EMU_CMD="./launch_hw_emu.sh -run-app run_vadd.sh" EMBEDDED_PACKAGE_OUT=./vadd_work/package.hw/ EMBEDDED_EXEC_SCRIPT=./run_vadd.sh
+  vitis_hw_run:
+    timeout: 60m
+    run: make run_test TARGET=hw CXX=${XILINX_VITIS}/gnu/aarch64/lin/aarch64-linux/bin/aarch64-linux-gnu-g++ HOST_ARCH=aarch64
+      EMU_CMD="./launch_hw_emu.sh -run-app run_vadd.sh" EMBEDDED_PACKAGE_OUT=./vadd_work/package.hw/ EMBEDDED_EXEC_SCRIPT=./run_vadd.sh

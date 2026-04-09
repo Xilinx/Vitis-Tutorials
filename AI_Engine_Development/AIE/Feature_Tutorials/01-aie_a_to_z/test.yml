@@ -1,0 +1,8 @@
+name: AIE_F_01-aie_a_to_z
+category: canary
+platform: [vck190]
+flow: versal
+targets:
+  vitis_hw_build:
+    timeout: 470m
+    run: make all TARGET=hw
