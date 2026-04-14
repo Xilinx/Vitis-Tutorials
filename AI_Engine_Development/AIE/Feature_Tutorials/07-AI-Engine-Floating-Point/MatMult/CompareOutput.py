@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-# SPDX-License-Identifier: X11
+# Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
+# SPDX-License-Identifier: MIT
 #
 
 
 
 
 
-from re import I
 import sys
 import numpy as np
 from math import *
@@ -47,9 +46,9 @@ def main(args):
                     Error = Error +1
                     if Error > 10:
                         print("Stops Comparison here. Too many Errors!!!")
-                        break
                         fp1.close()
                         fp2.close()
+                        break
 
     if Error == 0:
         print("No Error. test PASSED\n\n")

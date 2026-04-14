@@ -314,7 +314,7 @@ The floating-point pipeline of the AI Engine has no post-add lane reduction hard
 The floating-point accumulator has a latency of two clock cycles, so you cannot use two `fpmac` instructions using the same accumulator back to back, but only every other cycle. You can optimize code by using two accumulators, used in turn, that add at the end to get the final result.
 
 - Navigate to the `FIRFilter` directory.
-- Type `make allaie` in the console and wait for completion of the three following stages:
+- Type `make allaie` in the console and wait for completion of the four following stages:
   1. `aie`
   2. `aiesim`
   3. `aiecmp`
@@ -325,7 +325,7 @@ The last stage opens `vitis_analyzer` that allows you to visualize the graph of 
 In this design, you learned:
 
 - How to use real floating-point data and coefficients in FIR filters.
-- How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
+- How to handle complex floating-point data and complex floating-point coefficients in FIR filters.
 - How to organize the compute sequence.
 - How to use `fpmul`, `fpmac`, and `fpadd` in the real and complex case.
 
@@ -359,17 +359,18 @@ Because intrinsics are lane by lane computation oriented, this design uses this 
 The code explains all the parameter settings for the `fpmul/mac_conf` intrinsics.
 
 - Navigate to the `MatMult` directory.
-- Type `make all` in the console and wait for the completions of the three stages:
+- Type `make allaie` in the console and wait for completion of the four following stages:
   1. `aie`
   2. `aiesim`
-  3. `aieviz`
+  3. `aiecmp`
+  4. `aieviz`
 
 The last stage opens `vitis_analyzer` that allows you to visualize the graph of the design and the simulation process timeline.
 
-In this design you learned:
+In this design, you learned:
 
 - How to organize matrix multiply compute sequence when using real or complex floating-point numbers.
-- How to handle complex floating-point data and complex floating-points coefficients in FIR filters.
+- How to handle complex floating-point data and complex floating-point coefficients in matrix multiply operations.
 - How to use `fpmul_conf` and `fpmac_conf` intrinsics.
 
 ## Support
