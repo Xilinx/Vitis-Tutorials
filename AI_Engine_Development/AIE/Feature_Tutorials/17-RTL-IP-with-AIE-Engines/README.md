@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -31,8 +31,8 @@ The 'common image' package contains a prebuilt Linux kernel and root file system
 Before starting this tutorial, run the following steps:
 
 1. Go to the directory where you have unzipped the Versal Common Image package.
-2. In a Bash shell run `/Common Images Dir/amd-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, run the `/Common Images Dir/amd-versal-common-v2025.2/sdk.sh`.
-3. Set up your ROOTFS and IMAGE to point to `rootfs.ext4` and image files located in the `/Common Images Dir/amd-versal-common-v2025.2` directory.
+2. In a Bash shell run the `/Common Images Dir/amd-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script. This script sets up the SDKTARGETSYSROOT and CXX variables. If the script is not present, you must run the `/Common Images Dir/amd-versal-common-v2025.2/sdk.sh`.
+3. Set up your ROOTFS and IMAGE to point to the `rootfs.ext4` and `Image` files located in the `/Common Images Dir/amd-versal-common-v2025.2` directory.
 4. Set up your PLATFORM_REPO_PATHS environment variable to `$XILINX_VITIS/base_platforms/amd_vck190_base_202610_1/amd_vck190_base_202610_1.xpfm`
 
 **NOTE**: This tutorial targets the 2025.2 VCK190 production board.
@@ -41,8 +41,8 @@ Before starting this tutorial, run the following steps:
 
 In this tutorial, learn:
 
-* To create a custom RTL kernel (outside the ADF graph) to use with ADF graphs
-* To modify the ADF graph code to incorporate PLIO between AI Engines and RTL kernels
+* How to create a custom RTL kernel (outside the ADF (AI Dataflow) graph) to be used with the ADF graph.
+* How to modify the ADF graph code to incorporate PLIO (Platform I/O) between AIE and RTL kernels.
 
 ## Tutorial Overview
 
@@ -84,7 +84,7 @@ Follow these steps to package your RTL code as a Vivado IP and generate a Vitis 
         ipx::associate_bus_interfaces -busif out_sample -clock ap_clk [ipx::current_core]
         ```
 
-    * On lines 38 and 39 the `FREQ_HZ` bus parameter is removed. The Vivado IP integrator uses this parameter for correct association of the clock interface. The Vitis compiler sets this during the compilation process. Having it set in the IP can cause the compiler to incorrectly link the clocks.
+    * On lines 38 and 39 the `FREQ_HZ` bus parameter is removed. This parameter is used in Vivado IP integrator to ensure correct association of the clock interface. The Vitis compiler sets this during the compilation process, and having it set in the IP may cause the compiler to incorrectly link the clocks.
 
         ```tcl
         ipx::remove_bus_parameter FREQ_HZ [ipx::get_bus_interfaces in_sample -of_objects [ipx::current_core]]
@@ -208,14 +208,14 @@ You must use the appropriate `SYSROOT` path for the design.
 To build the host application, run the following command:
 
 ```bash
-aarch64-linux-gnu-g++ -Wall -c -std=c++14 -Wno-int-to-pointer-cast \
+aarch64-linux-gnu-g++ -Wall -c -std=c++17 -Wno-int-to-pointer-cast \
     --sysroot=${SDKTARGETSYSROOT}  \
     -I$(SDKTARGETSYSROOT)/usr/include/xrt \
     -I-I$(SDKTARGETSYSROOT)/usr/include \
     -o host.o host.cpp
 aarch64-linux-gnu-g++ *.o -lxrt_coreutil \
     --sysroot=${SDKTARGETSYSROOT} \
-    -std=c++14 -o host.exe
+    -std=c++17 -o host.exe
 ```
 
 or

@@ -1,6 +1,6 @@
 /*
-Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: X11
+Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
+SPDX-License-Identifier: MIT
 */
 #ifndef __KERNELS_H__
 #define __KERNELS_H__
