@@ -255,7 +255,7 @@ adf::port<adf::direction::in> value;
 adf::connect<adf::parameter>(value, k.in[1]); 
 ```
 
-Note that for RTP input, the default behavior is synchronous. It is same as:
+Note that for RTP input, the default behavior is synchronous. This is the same as:
 
 ```cpp
 adf::connect<adf::parameter>(value, sync(k.in[1]));

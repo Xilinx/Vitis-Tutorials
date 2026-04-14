@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -17,11 +17,11 @@
 
 ***Version: Vitis 2025.2***
 
-This tutorial introduces you on design partitioning into AIE-ML device. By various performance analysis techniques introduced, the design is optimized. The performance is also verified in hardware in each optimization step.
+This tutorial demonstrates design partitioning on AI Engine ML (AIE-ML) devices. By various performance analysis techniques introduced, the design is optimized. The performance is also verified in hardware in each optimization step.
 
->**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis software platform 2025.2. The AMD Vitis™ release includes all the embedded base platforms including the VEK280 base platform that this tutorial uses. Also, make sure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT**: Before beginning the tutorial make sure you have installed the Vitis software platform 2025.2. The Vitis release includes all the embedded base platforms including the VEK280 base platform that is used in this tutorial. In addition, ensure that you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
-The Common Image package includes a prebuilt Linux kernel and root file system for AMD Versal boards, supporting embedded development with Vitis tools.
+The ‘common image’ package contains a prebuilt Linux kernel and root file system that can be used with the AMD Versal™ board for embedded design development using the Vitis tools.
 
 Before starting this tutorial, run the following steps:
 
@@ -34,9 +34,9 @@ This tutorial targets VEK280 board for 2025.2 version.
 
 ## Objectives
 
-After completing this tutorial, you can do the following:
+After completing this tutorial, you will be able to:
 
-* Construct AI Engine graph and use shared buffers (for AIE-ML memory tiles)
+* Construct AI Engine (AIE) graph and use shared buffers (for AIE-ML memory tiles)
 * Use simulation to do hang analysis
 * Use simulation and Vitis Analyzer to do profiling and performance analysis
 * Learn the concept of design partition and optimization for AIE-ML device
@@ -45,7 +45,7 @@ After completing this tutorial, you can do the following:
 
 This tutorial targets z-score normalization that scales elements of a frame, making the frame output have $\mu=0$ and $\sigma=1$ distributions (mean=0, deviation=1).
 
-Assume the input frame is a `COL * ROW` matrix (data is stored in column first). For each element in a frame, it computes the corresponding element as:
+Assume the input frame is a `COL * ROW` matrix (data is stored column first). For each element in a frame, it computes the corresponding element as:
 
 $$ {x^{'}}={\frac{x-\mu}{\sigma}} $$
 
@@ -55,7 +55,7 @@ $$ {\mu}=\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{x} / {(ROW*COL)} $$
 
 $$\sigma=\sqrt{{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2}} / {(ROW*COL-1)}} \approx \sqrt{\sum_{i=0}^{ROW}\sum_{i=0}^{COL}{{(x-\mu)}^2} / {(ROW*COL)}} $$
 
-For designs in the tutorial, choose the following specifications:
+For the designs in this tutorial, the following specifications were chosen:
 
 * COL=256
 * ROW=384
@@ -69,7 +69,7 @@ So, based on the analysis, a design is constructed: [Normalization Version 1](./
 
 ![Version 1 Graph View](./images/graph1.PNG)
 
-The data transfers to a memtile, and multicasted to three kernels `mean`, `deviation` and `norm`. Kernel `mean` calculates the mean value and sends it to `deviation`. Kernel `deviation` calculates the deviation value and sends it with the mean value to `norm`. Kernel `norm` generates the normalization value and sends them out.
+The data is transferred to a memtile, and multicasted to three kernels `mean`, `deviation` and `norm`. Kernel `mean` calculates the mean value and sends it to `deviation`. Kernel `deviation` calculates the deviation value and sends it with the mean value to `norm`. Kernel `norm` will generates the normalization value and sends them out.
 
 Look at [Normalization Version 1 Graph Code](./normalization_v1/aie/graph.h):
 
@@ -90,7 +90,7 @@ Look at [Normalization Version 1 Graph Code](./normalization_v1/aie/graph.h):
   repetition_count(k_norm)=ROW*COL/K_ROW/K_COL;
   ```
 
-* The write access and read access of the memtile is linear. For tiling parameters usage, refer to [Tiling Parameters Specification](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Tiling-Parameters-Specification).
+* The write access and read access of the memtile is linear. For tiling parameters usage, you may refer to [Tiling Parameters Specification](https://docs.amd.com/r/en-US/ug1603-ai-engine-ml-kernel-coding/Tiling-Parameters-Specification).
 
   ```
   mtxA = shared_buffer<bfloat16>::create({COL,ROW}, 1, 1);
@@ -100,19 +100,19 @@ Look at [Normalization Version 1 Graph Code](./normalization_v1/aie/graph.h):
 
   Look at the kernel `mean` code [Normalization Version 1 Mean Kernel Code](./normalization_v1/aie/mean.cc):
 
-* The kernel will generate the mean value after 6 iterations of the kernel. So, the output buffer of `mean` is defined as an asynchronous buffer `output_async_buffer`.
+* The kernel will generate the mean value after 6 iterations of the kernel. So, the output buffer of `mean` is defined as an asynchronous buffer `output_async_buffer`. 
 * `__attribute__((noinline))` is added to the kernel function to improve debuggability.
 
   ```
   template<int COL, int ROW, int REPEAT>
   __attribute__((noinline)) void mean(input_buffer<bfloat16> & __restrict data, output_async_buffer<bfloat16> & __restrict out){
-    ......
-      if(iteration==REPEAT){
-      out.acquire();
-      bfloat16* pout=out.data();
-      *pout=(bfloat16)(aie::reduce_add(acc.to_vector<float>()) / ROW / COL / REPEAT);
-      out.release();
-    ......
+  	......
+  	if(iteration==REPEAT){
+  		out.acquire();
+  		bfloat16* pout=out.data();
+  		*pout=(bfloat16)(aie::reduce_add(acc.to_vector<float>()) / ROW / COL / REPEAT);
+  		out.release();
+  	......
   }
   ```
 
@@ -177,7 +177,7 @@ Note: For testing purposes, the host code (sw/host.cpp) has been modified to sle
 sleep(10);
 ```
 
-To break down the dependency of the input data of the kernels, it's able to use three different channels of the memtile. See the solution in next version.
+To break down the dependency of the input data of the kernels, it's able to utilize 3 different channels of the memtile. See the solution in next version.
 
 ## Steps - Version 2
 
@@ -292,8 +292,8 @@ mtxB = shared_buffer<bfloat16>::create({COL,ROW}, NUM, 1);
 write_access(mtxA.in[0]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW}, .offset={0,0} });
 read_access(mtxB.out[0]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW}, .offset={0,0} });
 for(int i=0;i<NUM;i++){
-read_access(mtxA.out[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={K_COL,K_ROW}, .offset={0,K_ROW*i} });
-write_access(mtxB.in[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={K_COL,K_ROW}, .offset={0,K_ROW*i} });
+	read_access(mtxA.out[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={K_COL,K_ROW}, .offset={0,K_ROW*i} });
+	write_access(mtxB.in[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={K_COL,K_ROW}, .offset={0,K_ROW*i} });
 }
 ```
 
@@ -309,7 +309,7 @@ Open the simulation result by `vitis_analyzer aiesimulator_output/default.aierun
 
 Some observations from above running result:
 
-* Kernel execution is in parallel. The last kernel has an additional summarization task. So, it takes more time than other kernels.
+* Kernel execution is in parallel. The last kernel has an additional summarization task. So, it takes more time than other kernels. 
 
 * The data transferring from memtile to PL takes a much longer time than the kernels' execution time. Similar for PL input data to memtile.
 
@@ -373,8 +373,8 @@ const int PLIO_NUM=3;
 mtxA = shared_buffer<bfloat16>::create({COL,ROW}, PLIO_NUM, NUM);
 mtxB = shared_buffer<bfloat16>::create({COL,ROW}, NUM, PLIO_NUM);
 for(int i=0;i<PLIO_NUM;i++){
-write_access(mtxA.in[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW/PLIO_NUM}, .offset={0,ROW/PLIO_NUM*i} });
-read_access(mtxB.out[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW/PLIO_NUM}, .offset={0,ROW/PLIO_NUM*i} });
+	write_access(mtxA.in[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW/PLIO_NUM}, .offset={0,ROW/PLIO_NUM*i} });
+	read_access(mtxB.out[i]) = tiling({.buffer_dimension={COL,ROW}, .tiling_dimension={COL,ROW/PLIO_NUM}, .offset={0,ROW/PLIO_NUM*i} });
 }
 ```
 
@@ -439,6 +439,7 @@ Kernel Data Transfer | 8192 (cycles/iteration)
 Graph Throughput (sim) | 9993.49 MB/s
 Graph Throughput (HW) | 9728.82 MB/s
 
+
 > **NOTE**: The kernel performance is improved because default xlopt level is used in version 4. In previous versions, `--xlopt=0` is added to improve debuggability.
 
 ### Conclusion
@@ -451,8 +452,8 @@ In this tutorial, you learned about multiple aspects of AIE-ML designing:
 
 ### Support
 
-GitHub issues are used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
+GitHub issues will be used for tracking requests and bugs. For questions go to [forums](http://forums.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

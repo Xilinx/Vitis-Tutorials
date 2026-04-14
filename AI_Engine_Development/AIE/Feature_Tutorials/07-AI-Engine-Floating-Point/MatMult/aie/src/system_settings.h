@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 SPDX-License-Identifier: MIT
 */
 
@@ -17,7 +17,7 @@ Floating-Point case
 Complex Floating-Point case
   Dimensions
     A: Ra x Ca    With Ra = 2.ra  and Ca = 4.ca
-    B: Rb x Cb    With Rb = Ca (=8.ra) and Cb = 4.cb
+    B: Rb x Cb    With Rb = Ca (=4.ca) and Cb = 4.cb
 
     C: Ra x Cb
 */

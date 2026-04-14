@@ -1,6 +1,6 @@
 % MIT License
 %
-% Copyright (C) 2023 Advanced Micro Devices, Inc. All rights reserved.
+% Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 %
 % Permission is hereby granted, free of charge, to any person obtaining a copy
 % of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 
 % floating-point reference
 A1 = reshape(1:128,16,8);
-A2 = A+10;
+A2 = A1+10;
 SaveFloat([A1;A2],'inputa_float.txt');
 
 B1 = reshape(64:-1:1,8,8);

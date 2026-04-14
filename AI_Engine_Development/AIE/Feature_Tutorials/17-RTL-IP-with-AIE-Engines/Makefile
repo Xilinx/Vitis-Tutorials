@@ -1,5 +1,5 @@
-#Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
-#SPDX-License-Identifier: X11
+#Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
+#SPDX-License-Identifier: MIT
 
 
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/AI_Engine_Development/*}')
@@ -79,7 +79,7 @@ $(GRAPH_O): $(GRAPH)
 ########################################################
 # Once the kernels and graph are generated, you can build
 # the new platform. This creates an XSA and the use of
-# generetate-platform.sh to build the actual platform
+# generate-platform.sh to build the actual platform
 xclbin: $(GRAPH_O) $(KERNEL_XO)
 	$(VPP) $(VPP_LINK_FLAGS) || (echo "task: [xclbin] failed error code: $$?"; exit 1)
 ########################################################

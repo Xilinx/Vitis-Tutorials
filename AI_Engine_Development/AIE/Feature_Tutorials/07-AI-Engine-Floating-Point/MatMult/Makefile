@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 
@@ -28,6 +28,8 @@ X86_CMPL_CMD = v++ --compile --mode aie --target x86sim --include=$(SRCDIR) --in
 
 AIE_SIM_CMD = aiesimulator --pkg-dir=$(WORKDIRAIE) --dump-vcd $(AIEDIR)/foo --output-dir=$(AIEDIR)/aiesimulator_output
 X86_SIM_CMD = x86simulator --pkg-dir=$(WORKDIRX86) --output-dir=$(AIEDIR)/x86simulator_output
+
+.PHONY: allaie allx86 run run_nocmp aie x86 aiesim x86sim aiecmp x86cmp aieviz clean aieclean otherclean
 
 allaie: clean aie aiesim aiecmp aieviz
 
@@ -68,7 +70,7 @@ x86cmp:
 	CompareOutput.py aie/data/ref_outputcc_cfloat.txt aie/x86simulator_output/cfloat_conj_output.txt
 
 aieviz:
-	vitis_analyzer vitis_analyzer aie/aiesimulator_output/default.aierun_summary
+	vitis_analyzer aie/aiesimulator_output/default.aierun_summary
 
 clean: aieclean
 

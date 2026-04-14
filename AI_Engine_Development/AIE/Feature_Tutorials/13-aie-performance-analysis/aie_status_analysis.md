@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -17,7 +17,7 @@
 
 ***Version: Vitis 2025.2***
 
-This tutorial shows you how to output a summary of the AI Engine status for further analysis in an AMD Vitis™ Analyzer. The main methods to output AI Engine status are as follows:
+This tutorial shows you how to output a summary of the AI Engine status for further analysis in an AMD Vitis&trade; Analyzer. The main methods to output AI Engine status are as follows:
 
 - **Automated and periodic AI Engine status output:** After initial setup in `xrt.ini`, this method requires minimal user intervention because the tool outputs the status at specified time intervals.
 
@@ -31,106 +31,81 @@ You can then open the status output in Vitis Analyzer for further analysis.
 
 ## Setting Up and Running the Design
 
-1. Change the directory to `testcase_nofifo_hang`.
-2. Modify the host code (`sw/host.cpp`) to call `gr.end();`, which causes the design to hang forever.
-3. Build the hardware package. Use the following example commands:
+1. Change the directory to `testcase_nofifo_hang`. 
+2. Modify the host code (`sw/host.cpp`) to call `gr.end();`, which causes the design to hang forever. 
+3. Build the hardware package. See the example commands below:
 
-    ```shell
-    cd testcase_nofifo_hang
-    sed -i 's/gr.end(.*);/gr.end();/' sw/host.cpp
-    make package TARGET=hw
-    ```
+	```
+	cd testcase_nofifo_hang
+	sed -i 's/gr.end(.*);/gr.end();/' sw/host.cpp
+	make package TARGET=hw
+	```
 
 4. Boot from the SD card. In Linux, change the working directory to `/run/media/mmcblk0p1`:
 
-    ```shell
-    cd /run/media/mmcblk0p1
-    ```
+	```
+	cd /run/media/mmcblk0p1
+	```
 
 5. Choose one of the following options to dump the AI Engine status.
 
-    **Option 1: Automated and Periodic AI Engine Status Output**:
+## **Option 1: Automated and Periodic AI Engine Status Output**
 
-    1. In the working directory `/run/media/mmcblk0p1`, create the file `xrt.ini`, and put the following contents into it:
+In the working directory `/run/media/mmcblk0p1`, create the file `xrt.ini`, and put the following contents into it:
 
-       ```text
-       [Debug]
-       aie_status=true
-       ```
 
-    2. You can also specify the interval at which the AI Engine status should be probed and analyzed:
+	[Debug]
+	aie_status=true
 
-       ```text
-       [Debug]
-       aie_status=true
-       aie_status_interval_us=10000
-       ```
+You can also specify the interval at which the AI Engine status should be probed and analyzed:
 
-    3. Run the application:
+	[Debug]
+	aie_status=true
+	aie_status_interval_us=10000
 
-       ```shell
-       ./host.exe a.xclbin
-       ```
+Run the application:
+	
+	./host.exe a.xclbin
 
-       After some time, messages such as the following are printed:
+After some time, messages such as the following will be printed:
 
-       ```text
-       [XRT] WARNING: Potential deadlock/hang found in AI Engines. Graph : gr
-       [XRT] WARNING: Potential stuck cores found in AI Engines. Graph : gr Tile : (25,0) Status 0x1001 : Enable,Stream_Stall_MS0
-       [XRT] WARNING: Potential stuck cores found in AI Engines. Graph : gr Tile : (24,0) Status 0x201 : Enable,Lock_Stall_E
-       ```
+	[XRT] WARNING: Potential deadlock/hang found in AI Engines. Graph : gr
+	[XRT] WARNING: Potential stuck cores found in AI Engines. Graph : gr Tile : (25,0) Status 0x1001 : Enable,Stream_Stall_MS0
+	[XRT] WARNING: Potential stuck cores found in AI Engines. Graph : gr Tile : (24,0) Status 0x201 : Enable,Lock_Stall_E
+	
+**Note:** These messages indicate that the design might be stuck. However, it is your responsibility to determine if it is a true deadlock based on the design. 
 
-       **Note:** These messages indicate that the design might be stuck. Determine if it is a true deadlock based on the design.
+Wait for some time. Either kill the application run by hitting **Ctrl+C** or suspend it by hitting **Ctrl+Z**. You will then see that multiple files are generated in the working directory:
 
-       Wait for some time. Either kill the application run by hitting **Ctrl+C** or suspend it by hitting **Ctrl+Z**. The system generates multiple files in the working directory:
+* `xrt.run_summary`
+* `aie_status_edge_XXX.json`
+* `aieshim_status_edge_XXX.json`
+* `summary.csv`
 
-       - `xrt.run_summary`
-       - `aie_status_edge_XXX.json`
-       - `aieshim_status_edge_XXX.json`
-       - `summary.csv`
+Copy them to the local server for further analysis in Vitis Analyzer. 
 
-       Copy them to the local server for further analysis in Vitis Analyzer.
+### **Analyzing the Automated Status Output**
 
-    **Option 2: Manual output the AI Engine status**
+Open the run summary file with the following command:
 
-    1. In Linux, run the application:
+		vitis_analyzer xrt.run_summary
 
-       ```shell
-       /run/media/mmcblk0p1
-       ./host.exe a.xclbin
-       ```
+In Vitis Analyzer, click **Set Compile Directory** in Summary view. 
 
-    2. After the design runs for some time, either kill the application run by hitting **Ctrl+C** or suspend it by hitting **Ctrl+Z**. Dump the AI Engine status into a JSON file:
+In the prompted dialog box, click the **...** button, and select the AI Engine compile summary (such as `./Work/graph.aiecompile_summary`) to set the AI Engine compile summary. 
 
-       ```shell
-       xbutil examine -r aie -d 0 -f json -o xbutil_status.json
-       ```
+The graph view is as shown in the following figure.
 
-    3. Copy the JSON output to a local server for further analysis in Vitis Analyzer.
+![graph view](./images/aie_status2.PNG)
 
-### Analyzing the Automated Status Output
+**1:** Kernel `k[0]` is trying to write to `k[1]`, but has stalled at the output stream port. See the red circle on the kernel instance.
 
-1. Open the run summary file with the following command:
+**2:** Kernel `k[1]` is trying to read from buffers `buf1` and `buf1d`, but has stalled. See the red circle on the kernel instance.
 
-   ```shell
-   vitis_analyzer xrt.run_summary
-   ```
+The DMA Status window also shows the information about the status of DMA channels.
 
-2. In Vitis Analyzer, click **Set Compile Directory** in Summary view.
+![graph view](./images/aie_status3.PNG)
 
-3. In the prompted dialog box, click the **...** button, and select the AI Engine compile summary (such as `./Work/graph.aiecompile_summary`) to set the AI Engine compile summary.
-
-   The following figure shows the graph view.
-
-   ![graph view](./images/aie_status2.PNG)
-
-   **1:** Kernel `k[0]` is trying to write to `k[1]`, but has stalled at the output stream port. See the red circle on the kernel instance.
-
-   **2:** Kernel `k[1]` is trying to read from buffers `buf1` and `buf1d`, but has stalled. See the red circle on the kernel instance.
-
-   The DMA Status window also shows the information about the status of DMA channels.
-
-   ![graph view](./images/aie_status3.PNG)
 
 **1:** The data input from the PL is trying to write to the buffer `buf0` (BD0), but it cannot.
 
@@ -138,36 +113,58 @@ The Buffers view shows the buffer status of the graph. Click the **Buffers** win
 
 ![graph view](./images/aie_status4.PNG)
 
-The Buffers window highlights the PING-PONG buffers. The Lock Status column shows the buffer lock status. The different statuses are as follows:
 
-- **Acquired for read:** The consumer kernel has acquired the buffer for read.
-- **Released for read:** The producer kernel has released the buffer for read.
-- **Acquired for write:** The producer kernel has acquired the buffer for write.
-- **Released for write:** The consumer kernel has released the buffer for write.
+The PING-PONG buffers are highlighted in the Buffers window. The Lock Status column shows the buffer lock status. The different statuses are as follows:
 
-In this example, it shows that `buf1` is "Acquired for write" and `buf1d` is "Released for write." This indicates that `k[0]` has already acquired `buf1` for write. The `buf1d` buffer is released for write, but not released for read. Consequently, `k[1]` cannot acquire the buffers `buf1` and `buf1d` for read, so `k[1]` stalls.
 
-### Analyzing the Manual Status Output
+- **Acquired for read:** The buffer has been acquired for read by the consumer kernel.
+
+- **Released for read:** The buffer has been released for read by the producer kernel.
+
+- **Acquired for write:** The buffer has been acquired for write by the producer kernel.
+
+- **Released for write:** The buffer has been released for write by the consumer kernel.
+
+In this example, it shows that `buf1` is "Acquired for write" and `buf1d` is "Released for write". It indicates that `buf1` has already been acquired for write by `k[0]`. The `buf1d` buffer is released for write, but not released for read. Consequently, the buffers `buf1` and `buf1d` are not able to be acquired for read by `k[1]`, and `k[1]` is stalled. 
+
+## **Option 2: Manual output the AI Engine status**
+
+In Linux, run the application:
+	
+	/run/media/mmcblk0p1
+	./host.exe a.xclbin
+
+After the design runs for some time, either kill the application run by hitting **Ctrl+C** or suspend it by hitting **Ctrl+Z**. Dump the AI Engine status into a JSON file:
+
+	xbutil examine -r aie -d 0 -f json -o xbutil_status.json
+	 
+Copy the JSON output to a local server for further analysis in Vitis Analyzer. 
+
+### **Analyzing the Manual Status Output**
 
 1. In Vitis Analyzer, click **Import Xbutil/Xsdb JSON Output...**.
 
 2. In the prompted window, set the following options:
 
-   - **Xbutil/Xsdb JSON Output File**: Select the JSON file that was manually generated with the `xbutil` command. For example, select the file `xbutil_status.json`.
-   - **AI Engine Compile Summary**: Select the AI Engine compile summary file. For example, `./Work/graph.aiecompile_summary`.
-   - **Save Run Summary**: The run summary to be written. A default name is provided. You can use the run summary to reload the analysis next time.
+	• **Xbutil/Xsdb JSON Output File**: Select the JSON file that was manually generated with the `xbutil` command. For example, select the file `xbutil_status.json`.
 
-   The Vitis Analyzer shows the Graph and Array views. The analysis is similar to **Analyzing the Automated Status Output**.
+	• **AI Engine Compile Summary**: Select the AI Engine compile summary file. For example, `./Work/graph.aiecompile_summary`.
 
-    ![graph view](./images/aie_status5.PNG)
+	• **Save Run Summary**: The run summary to be written. A default name is provided. The run summary can be used to reload the analysis next time.
+
+The Graph and Array views are shown in Vitis Analyzer. The analysis is similar to **Analyzing the Automated Status Output**.
+
+![graph view](./images/aie_status5.PNG)
 
 ### Conclusion
 
 After completing this tutorial, you have learned how to output the live status of the AI Engine and how to analyze it in Vitis Analyzer.
 
+
 #### Support
 
-GitHub issues are used for tracking requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
+GitHub issues will be used for tracking requests and bugs. For questions go to [AMD Adaptive Support Community](https://adaptivesupport.amd.com/s/topiccatalog).
+
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
