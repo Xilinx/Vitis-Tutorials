@@ -2,7 +2,7 @@ name: Full Tutorial Regression
 
 on:
   schedule:
-    - cron: '0 2 * * 0'      # Weekly Sunday 2am
+    - cron: '0 14 * * 3'     # Weekly Wednesday 10pm CST (2pm UTC)
   workflow_dispatch:
     inputs:
       tool_version:
