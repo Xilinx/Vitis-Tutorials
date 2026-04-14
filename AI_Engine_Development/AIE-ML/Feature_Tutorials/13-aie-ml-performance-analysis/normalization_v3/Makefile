@@ -66,7 +66,7 @@ launch_hw_emu.sh: package_hw_emu
 
 clean:
 	rm -rf _x v++_* ${XOS} ${OS} ${LIBADF} *.o.* *.o *.xpe *.xo.* \
-	       vek280_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Map_Report.csv \
+	       vek280_aie_base*.xclbin* *.xsa *.log *.jou xnwOut Work Work_x86 Map_Report.csv \
 	       ilpProblem* sol.db drivers .Xil
 	make -C pl_kernels clean
 	make -C sw clean

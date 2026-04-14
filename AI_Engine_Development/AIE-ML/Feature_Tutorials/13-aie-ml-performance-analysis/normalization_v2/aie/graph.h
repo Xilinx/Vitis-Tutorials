@@ -1,7 +1,7 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-*/
+ * Copyright Advanced Micro Devices, Inc.
+ * SPDX-License-Identifier: MIT
+ */
 #ifndef GRAPH_MODULE_H
 #define GRAPH_MODULE_H
 

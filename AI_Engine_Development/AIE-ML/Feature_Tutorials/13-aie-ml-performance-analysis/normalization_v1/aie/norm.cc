@@ -1,7 +1,7 @@
 /*
-Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
-SPDX-License-Identifier: MIT
-*/
+ * Copyright Advanced Micro Devices, Inc.
+ * SPDX-License-Identifier: MIT
+ */
 #include <aie_api/aie.hpp>
 #include <aie_api/aie_adf.hpp>
 using namespace adf;
