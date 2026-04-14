@@ -1,4 +1,4 @@
-﻿<table class="sphinxhide" style="width:100%;">
+<table class="sphinxhide" style="width:100%;">
   <tr>
     <td align="center">
       <picture>
@@ -19,7 +19,7 @@
 
 AI Engine graph execution uses locks for memory synchronization. The stream interfaces have inherent data synchronization through backward or forward pressure.
 
-This example introduces the Trace view to show how kernels with buffers and streams are executed and synchronized. Performance measurement methods are also introduced to help you identify the performance bottlenecks in the design. An optimized version of the design is then introduced.
+This example introduces the Trace view to show how kernels with buffers and streams are executed and synchronized. Performance measurement methods are also introduced to help you identify the performance bottlenecks in the design. An optimized version of the design is then introduced. 
 
 **Note:** The default working directory in this step is `testcase_ssfifo`, unless explicitly stated otherwise.
 
@@ -27,13 +27,13 @@ This example introduces the Trace view to show how kernels with buffers and stre
 
 1. Run the following `make` command to compile the design:
 
-    ```shell
+    ```
     make aie
     ```
 
-2. Open the compile result in an AMD Vitis™ Analyzer. You can find it in the following directory:
+2. Open the compile result in an AMD Vitis&trade; Analyzer. It is found in the following directory:
 
-    ```shell
+    ```
     vitis_analyzer Work/graph.aiecompile_summary
     ```
 
@@ -41,49 +41,49 @@ This example introduces the Trace view to show how kernels with buffers and stre
 
     ![Graph View](./images/figure1.PNG)
 
-The design contains two kernels, `aie_dest1` and `aie_dest2`. A stream connection and a buffer connection (ping-pong buffers `buf1` and `buf1d`) connect these two kernels. The stream connection contains two stream switch FIFOs, `Fifo0(24,0)` and `Fifo1(24,0)`. These dedicated FIFOs reside in the stream switch of AI Engine array tile 24_0. The design inserts these FIFOs to prevent deadlock (refer to [AI Engine Hang Analysis](./aie_hang_analysis.md)).
+There are two kernels, `aie_dest1` and `aie_dest2` in the design. These two kernels are connected through a stream connection and a buffer connection (ping-pong buffers `buf1` and `buf1d`). The stream connection contains two stream switch FIFOs, `Fifo0(24,0)` and `Fifo1(24,0)`. These hardened FIFOs are in the stream switch of AI Engine array tile 24_0. These FIFOs are inserted to prevent deadlock in the design (see [AI Engine Hang Analysis](./aie_hang_analysis.md)). 
 
-The input from the PL connects to the ping-pong buffers `buf0` and `buf0d`, which kernel `aie_dest1` reads. Kernel `aie_dest2` connects its output to the PL through a stream connection.
+The input from the PL is connected to the ping-pong buffers `buf0` and `buf0d`, which are read by kernel `aie_dest1`. The output of kernel `aie_dest2` is connected to the PL through a stream connection.
 
 The code for `aie_dest1` is as follows:
-
-```cpp
-using namespace adf;
-__attribute__ ((noinline)) void aie_dest1(input_buffer<int32,extents<32>> &in, 
-       output_stream<int32> *out, output_buffer<int32,extents<32>> &outm){
-	auto inIter=aie::begin_vector<4>(in);
-	auto outmIter=aie::begin_vector<4>(outm);
-	aie::vector<int32,4> tmp;
-	for(int i=0;i<8;i++)
-	chess_prepare_for_pipelining
-	{
-		tmp=*inIter++;
-		writeincr(out,tmp);
-		*outmIter++=tmp;
+    
+    ```
+	using namespace adf;
+	__attribute__ ((noinline)) void aie_dest1(input_buffer<int32,extents<32>> &in, 
+        output_stream<int32> *out, output_buffer<int32,extents<32>> &outm){
+		auto inIter=aie::begin_vector<4>(in);
+		auto outmIter=aie::begin_vector<4>(outm);
+		aie::vector<int32,4> tmp;
+		for(int i=0;i<8;i++)
+		chess_prepare_for_pipelining
+		{
+			tmp=*inIter++;
+			writeincr(out,tmp);
+			*outmIter++=tmp;
+		}
 	}
-}
-```
+    ```
 
 It reads 32 `int` values from the input buffer and writes them to the stream and buffer output. The `__attribute__ ((noinline))` command instructs the tool the keep the hierarchy of the kernel function.
 
 The code for `aie_dest2` is as follows:
 
-```cpp
-using namespace adf;
-__attribute__ ((noinline)) void aie_dest2(input_stream<int32> *in, input_buffer<int32,extents<32>> &inm, 
-       output_stream<int32> *outm){
-	auto inmIter=aie::begin_vector<4>(inm);
-	aie::vector<int32,4> tmp;
-	aie::vector<int32,4> tmp2;
-	for(int i=0;i<8;i++)
-	chess_prepare_for_pipelining
-	{
-		tmp=readincr_v<4>(in);
-		tmp2=*inmIter++;
-		writeincr(outm,tmp+tmp2);
+    ```
+	using namespace adf;
+	__attribute__ ((noinline)) void aie_dest2(input_stream<int32> *in, input_buffer<int32,extents<32>> &inm, 
+        output_stream<int32> *outm){
+		auto inmIter=aie::begin_vector<4>(inm);
+		aie::vector<int32,4> tmp;
+		aie::vector<int32,4> tmp2;
+		for(int i=0;i<8;i++)
+		chess_prepare_for_pipelining
+		{
+			tmp=readincr_v<4>(in);
+			tmp2=*inmIter++;
+			writeincr(outm,tmp+tmp2);
+		}
 	}
-}
-```
+    ```
 
 It reads from the stream input and the buffer, and writes to the stream output.
 
@@ -91,17 +91,17 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
 1. Use the following command to run an AI Engine simulator:
   
-    ```shell
+    ```
     make aiesim
     ```
-
+    
 2. Open the running result by accessing the following directory:
 
-    ```shell
+    ```
     vitis_analyzer aiesimulator_output/default.aierun_summary
     ```
-
-    **Note:** `aiesimulator` uses the `--dump-vcd` option to dump the VCD file for trace.
+    
+    **Note:** The `--dump-vcd` option is used by `aiesimulator` to dump the VCD file for trace.
 
 3. Click **Trace** view in Vitis Analyzer. Zoom in to view the first few runs of the design:
 
@@ -111,17 +111,18 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
     **1:** Tile 24_0 DMA s2mm channel 0 (`s2mm.Ch0.BD0.lock0`) starts. It acquires the lock of ping of input buffer (`buf0`) to `aie_dest1` and transfers data from the PL to `buf0`. Refer to [Graph View](./images/figure1.PNG) for the position of the buffer in the graph.
 
+
     **2:** After DMA s2mm channel 0 BD 0 completes, DMA s2mm channel 0 BD 1 (`s2mm.CH0.BD1.lock1`) starts. It acquires the lock of pong of input buffer (`buf0d`) and transfers data from the PL to `buf0d`.
 
     **3a:** The `aie_dest1` kernel (in tile 25_0) acquires the lock of `buf0` (shown as `read lock allocated`). 
 
     **3b:** `aie_dest1` acquires the lock of ping of output buffer (`buf1`) as well.
 
-    **4a:** After `aie_dest1` acquires the locks of its input buffer (`buf0`) and output buffer (`buf1`), it starts. If it cannot acquire any lock, it runs into lock stall.
+    **4a:** After `aie_dest1` acquires the locks of its input buffer (`buf0`) and output buffer (`buf1`), it starts. If any lock cannot be acquired, it will run into lock stall.
 
     **4b:** After tile 24_0 DMA s2mm channel 0 BD 1 (`s2mm.CH0.BD1.lock1`) completes, it switches back to DMA s2mm channel 0 BD 0 (`s2mm.CH0.BD1.lock0`). At first, `buf0` is still read by `aie_dest1` (`read lock allocated`), so it sticks at `DMA lock req` in red. After the read lock of the buffer is released, it acquires the lock and starts data transfer from PL.
 
-    **5:** After `aie_dest1` completes, it releases the output buffer (`buf1`). The kernel `aie_dest2` acquires the lock of `buf1` (`read lock allocated`).
+    **5:** After `aie_dest1` completes, it releases the output buffer (`buf1`). The kernel `aie_dest2` acquires the lock of `buf1` (`read lock allocated`). 
 
     **6a:** After the lock of `buf1` is acquired, `aie_dest2` starts.
 
@@ -131,11 +132,11 @@ It reads from the stream input and the buffer, and writes to the stream output.
 
     **7:** After `aie_dest1` acquires the locks of its input buffer (`buf0d`) and output buffer (`buf1d`), it starts.
 
-    **8:** After `aie_dest1` completes, it releases the output buffer (`buf1d`). Kernel `aie_dest2` acquires the lock of `buf1d` (`read lock allocated`).
+    **8:** After `aie_dest1` completes, it releases the output buffer (`buf1d`). Kernel `aie_dest2` acquires the lock of `buf1d` (`read lock allocated`). 
 
     **9:** After the lock of `buf1d` is acquired, `aie_dest2` starts.
 
-    **Note:** The stream interface does not need to acquire lock. It has an inherent backward and forward pressure for data synchronization. Every lock that acquires and releases event has some cycles of overhead.
+    **Note:** The stream interface does not need to acquire lock; it has inherent backward and forward pressure for data synchronization. Every lock acquires and releases event has some cycles of overhead.
 
 ## Graph Performance Measurement
 
@@ -143,7 +144,8 @@ There are multiple ways to measure performance:
 
 1. The AI Engine simulator output contains a timestamp for each piece of output data. It is possible to make performance calculations both manually and by using scripts. For example, the output of the example (`aiesimulator_output/data/output.txt`) looks like the following:
 
-    ```text
+
+    ```
     T 652800 ns
     2 
     ......
@@ -151,23 +153,23 @@ There are multiple ways to measure performance:
     30 
     ```
 
-    The first samples come out in `652800 ps`, and the last samples come out in `10889600 ps`. You can calculate the throughput as follows:
+    The first samples come out in `652800 ps`, and the last samples come out in `10889600 ps`. The throughput therefore can be calculated as follows:
 
-    Total time = 10889600 - 652800 = 10236800 ps
-    Total bytes = 128 * 100 = 12800 bytes
-    Throughput = 12800/(10236800*1e-6) = 1250.3 MB/s
+        Total time = 10889600 - 652800 = 10236800 ps
+        Total bytes = 128 * 100 = 12800 bytes
+        Throughput = 12800/(10236800*1e-6) = 1250.3 MB/s
+        
+    This method does _not_ measure the latency of the first kernel execution to produce the output data. Make sure that the graph runs a number large enough that this overhead can be neglected. 
 
-    This method does _not_ measure the latency of the first kernel execution to produce the output data. Make sure that the graph runs a number large enough that this overhead can be neglected.
+2. AMD provides event APIs for performance profiling purposes. These APIs use performance counters in shim tiles to do profiling. The following enumeration usages are introduced in this tutorial:
 
-2. AMD provides event APIs for performance profiling purposes. These APIs use performance counters in shim tiles to do profiling. This tutorial introduces the following enumeration usages:
-
-    - **event::io_stream_start_to_bytes_transferred_cycles:** This records the start of a running event with a performance counter, and records the event when the system transfers a specific amount of data with another performance counter. Therefore, the return number with this enumeration is the total cycles required to receive that amount of data. Stop the profiled stream after the system transfers this amount of data.
-
-    - **event::io_stream_running_event_count:** This counts how many running events have occurred between `start_profiling` and `read_profiling`. You can use it to count how much data the system has transferred, whether the graph is running infinitely or not.
+    - **event::io_stream_start_to_bytes_transferred_cycles:** This records the start of a running event with a performance counter, and records the event that a specific amount of data is transferred with another performance counter. The return number with this enumeration is therefore the total cycles required to receive that amount of data. The profiled stream should be stopped after this amount of data has been transferred.
+    
+    - **event::io_stream_running_event_count:** This counts how many running events have occurred between `start_profiling` and `read_profiling`. It can be used to count how much data has been transferred, whether the graph is running infinitely or not.
 
     Take a look at `aie/graph.cpp`. The code to perform profiling is as follows:
 
-    ```cpp
+    ```
     int iterations=100;
     int bytes_per_iteration=128;
     int total_bytes=bytes_per_iteration * iterations;
@@ -187,16 +189,16 @@ There are multiple ways to measure performance:
 
     The output of AI Engine simulator looks like the following:
 
-    ```text
+    ```
     cycle count:12665
     Throughput of the graph: 1263.324122 MB/s
     ```
 
-    You can apply the event API in AI Engine simulator, hardware emulation, and hardware flows.
+    The event API can be applied in AI Engine simulator, hardware emulation, and hardware flows.
+    
+    There are equivalent XRT event APIs for profiling in hardware and hardware emulation flows. The code can be found in `sw/host.cpp`.
 
-    There are equivalent XRT event APIs for profiling in hardare and hardware emulation flows. You can find the code in `sw/host.cpp`.
-
-3. You can also find the performance result in the AI Engine simulator profile report. Add the `--profile` option to `aiesimulator`, open Vitis Analyzer, and open the **Profile** view. You can view the profile result as shown in the following figure:
+3. The performance result can also be found in the AI Engine simulator profile report. Add the `--profile` option to `aiesimulator`, open Vitis Analyzer, and open the **Profile** view. The profile result can be viewed as shown in the following figure:
 
     ![Profile View](./images/figure3.PNG)
 
@@ -208,30 +210,30 @@ There are multiple ways to measure performance:
 
     ![PL_TO_SHIM](./images/figure4.PNG)
 
-    Search it for multiple times. When it stabilizes, you can see that every eight cycles, it happens once. This is because the option `pl-freq=312.5` for the AI Engine compiler sets the frequency of the PL at 312.5 MHz and the AI Engine-PL interface is 32-bit width, which is one-fourth of the best achievable performance.
+    Search it for multiple times. When it is stable, it can be seen that every eight cycles, it happens once. This is because the frequency of the PL has been set at 312.5 MHz by the option `pl-freq=312.5` for the AI Engine compiler and AI Engine-PL interface is 32-bit width, which is one-fourth of the best achievable performance. 
 
     From a best performance and best resource perspective, you might select a 64-bit interface at 625 MHz if timing allows. If not, it is possible to have the PL running at 312.5 MHz with a 128-bit width interface. 
+    
+5. The following methods are introduced in [AI Engine Performance Profile](https://github.com/Xilinx/Vitis-Tutorials/blob/2025.2/AI_Engine_Development/AIE/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md): 
 
-5. The following methods are introduced in [AI Engine Performance Profile](https://github.com/Xilinx/Vitis-Tutorials/blob/master/AI_Engine_Development/Feature_Tutorials/02-using-gmio/perf_profile_aie_gmio.md): 
-
-    - Profiling by C++ class API
-    - Profiling by AI Engine cycles from AI Engine kernels
-    - Profiling by event API
+    * Profiling by C++ class API
+    * Profiling by AI Engine cycles from AI Engine kernels
+    * Profiling by event API
 
 ## Design Optimization Considerations
 
-In this section, the reference design is in `testcase_dmafifo_opt`. From performing the above analysis, you can see that the bottleneck of this design contains the following issues:
+In this section, the reference design is in `testcase_dmafifo_opt`. From performing the above analysis, it can be seen that the bottleneck of this design contains the following issues:
 
 - The interface bandwidth is not optimal. The design uses a PLIO width of 32 bits running at 312.5 MHz. Change it to 128 bits running at 312.5 MHz. The relevant code is in `aie/graph.h`:
-
-    ```cpp
+ 
+    ```
 	in=input_plio::create("Datain0", plio_128_bits,  "data/input.txt");
 	dataout=output_plio::create("Dataout0", plio_128_bits,  "data/output.txt");
     ```
+ 
+- The overhead of the graph iterations is too large. The hierarchy of the design should not be touched. Increase the buffer size from 128 bits to 4096 bits. To avoid deadlock, the FIFO size also needs to be increased. The relevant code is in `aie/graph.h`:
 
-- The overhead of the graph iterations is too large. Do not touch the hierarchy of the design. Increase the buffer size from 128 bits to 4096 bits. To avoid deadlock, the FIFO size also needs to be increased. The relevant code is in `aie/graph.h`:
-
-    ```cpp
+    ```
     connect< >net0(in, k[0].in[0]);
     connect< stream >net1(k[0].out[0], k[1].in[0]);
     connect< >net2(k[0].out[1], k[1].in[1]);
@@ -239,11 +241,11 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
     fifo_depth(net1)=1024;
     ```
 
-    **Note:** When the FIFO depth is large, the design uses the DMA FIFO. _Do not_ set the FIFO depth to larger than (_or equal to_) 8192 for a single DMA FIFO.
+    **Note:** When the FIFO depth is large, the DMA FIFO is used. _Do not_ set the FIFO depth to larger than (_or equal to_) 8192 for a single DMA FIFO.
 
-- The kernel is not well-pipelined. As well as increasing the loop count to deal with more data, add more instructions in the loop body and add a `__restrict` keyword to the ports to make the tool schedule instructions more freely. The optimized code for `aie_dest1` is as follows:
+- The kernel is not well-pipelined. As well as increasing the loop count to deal with more data, more instructions should be added in the loop body and a `__restrict` keyword should be added to the ports to make the tool schedule instructions more freely. The optimized code for `aie_dest1` is as follows:
 
-    ```cpp
+    ```
 	using namespace adf;
 	__attribute__ ((noinline)) void aie_dest1(input_buffer<int32,extents<1024>> & __restrict in, 
         output_stream<int32> * __restrict out, output_buffer<int32,extents<1024>> & __restrict outm){
@@ -263,50 +265,61 @@ In this section, the reference design is in `testcase_dmafifo_opt`. From perform
 	}
     ```
 
-Similar optimization is done for `aie_dest2`. For more information about loop analysis and optimization, refer to the _AI Engine Kernel Coding Best Practices Guide_.
+    Similar optimization is done for `aie_dest2`. For more information about loop analysis and optimization, refer to the _AI Engine Kernel Coding Best Practices Guide_.
 
-1. After making these optimizations, run the following command:
+After making these optimizations, run the following command:
 
-    ```shell
+    
+    ```
     make aiesim
     ```
+    
+    
+It can be seen that the design performance can be increased from around 828 MBps to around 3748 MBps. This is approaching the theoretical limit of the design (4 GBps). 
 
-    You can see that the design performance increases from around 828 MB/s to around 3748 MB/s. This is approaching the theoretical limit of the design (4 GB/s).
+Next, run the design in hardware emulation:
 
-2. Run the design in hardware emulation:
-
-    ```shell
+    
+    ```
     make run_hw_emu
     ```
+    
+    
+In QEMU, run the following commands:
 
-3. In QEMU, run the following commands:
-
-    ```shell
+    
+    ```
 	mount /dev/mmcblk0p1 /mnt
 	cd /mnt
     ./host.exe a.xclbin
     ```
+    
 
-4. Build the design for hardware:
+Build the design for hardware:
 
-    ```shell
+    
+    ```
     make package TARGET=hw
     ```
-
+    
+    
 The performance in hardware is similar:
 
-```text
-cycle count:110610
-Throughput of the graph: 4628.88 MB/s
-```
+    
+    ```
+    cycle count:110610
+    Throughput of the graph: 4628.88 MB/s
+    ```
+    
 
 ### Conclusion
 
-This example has shown several different ways to do performance analysis and profiling. It has also introduced some optimization skills. In the next section, take a look at how deadlocks might occur, and how to analyze them. See [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
+This example has shown a number of different ways to do performance analysis and profiling. Some optimization skills have also been introduced. In the next section, take a look at how deadlocks might occur, and how to analyze them. See [AI Engine Deadlock Analysis](./aie_hang_analysis.md).
 
 #### Support
 
-GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
+GitHub issues will be used for tracking requests and bugs. For questions go to [AMD Adaptive Support Community](https://adaptivesupport.amd.com/s/topiccatalog).
+
 
 <p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
