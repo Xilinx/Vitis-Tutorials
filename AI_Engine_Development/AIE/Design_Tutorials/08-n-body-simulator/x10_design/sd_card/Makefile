@@ -102,6 +102,7 @@ $(EMBEDDED_PACKAGE_OUT)/sd_card.img: $(PACKAGE_FILES) $(XSA_OUTPUT_DIR)/hpc.xsa 
 	--package.kernel_image $(SDKTARGETSYSROOT)/../../Image \
 	--package.sd_file $(EMBEDDED_EXEC_SCRIPT) \
 	--package.boot_mode=sd \
+	--package.generate_sdcard \
 	--package.image_format=ext4 \
 	$(SD_FILES_WITH_PREFIX)
 	@echo "### ***** sd_card generation done! ***** ###"

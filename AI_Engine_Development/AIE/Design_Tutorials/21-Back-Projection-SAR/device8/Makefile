@@ -94,6 +94,7 @@ ${SD_CARD}: ${KERNEL_IMAGE} ${ROOTFS} ${STIMULUS_IO} ${BUILD_DIR}/${XSA} ${APP_E
 			--platform ${PLATFORM} \
 			--package.out_dir ${SD_CARD} \
 			--package.boot_mode=sd \
+			--package.generate_sdcard \
 			--package.image_format=ext4 \
 			--package.kernel_image=${KERNEL_IMAGE} \
 			--package.rootfs=${ROOTFS}  \

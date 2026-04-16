@@ -62,6 +62,7 @@ package_${TARGET}: ${XSA} ${LIBADF} ${HOST_EXE}
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \
 		--package.boot_mode=sd \
+		--package.generate_sdcard \
 		--package.image_format=ext4 \
 		--package.defer_aie_run \
 		--package.sd_dir data \

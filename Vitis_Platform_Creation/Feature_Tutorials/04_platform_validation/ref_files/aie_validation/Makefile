@@ -55,6 +55,7 @@ build: ${FIXED_XSA} ${LIBADF}
 	${VCC} -p -t ${TARGET} -f ${FIXED_PLATFORM} \
 	    --package.defer_aie_run \
         --package.boot_mode sd \
+        --package.generate_sdcard \
         --package.image_format=fat32 \
         --package.out_dir package_${TARGET} \
 		--package.ps_elf main.elf,a72-0 $^ 

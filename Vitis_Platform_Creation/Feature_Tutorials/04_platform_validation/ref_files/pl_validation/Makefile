@@ -58,6 +58,7 @@ ${HOST_EXE}: ${FIXED_PLATFORM} sw/main.cpp
 package:$(FIXED_XSA) 
 	${VCC} -p -t ${TARGET} -f ${FIXED_PLATFORM} \
         --package.boot_mode sd \
+        --package.generate_sdcard \
         --package.image_format=fat32 \
         --package.out_dir package.${TARGET} \
 		--package.ps_elf main.elf,a72-0 $^ 

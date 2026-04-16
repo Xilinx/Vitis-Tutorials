@@ -86,6 +86,7 @@ $(BUILD_TARGET_MAIN_DIR)/$(PACKAGE_DIR)/$(SD_CARD_IMG):
 		--package.out_dir $(PACKAGE_DIR)	\
 		--package.domain aiengine 		\
 		--package.boot_mode=sd 			\
+		--package.generate_sdcard \
 		--package.image_format=fat32 		\
 		--package.ps_elf $(PS_ELF),a72-0	
 

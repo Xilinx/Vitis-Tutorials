@@ -92,6 +92,7 @@ ${SD_CARD_LINUX}: ${BUILD_DIR}/${XSA} ${PS_LINUX_EXE} ${GRAPH_O} ${LINUX_KERNEL}
 			--platform ${XPFM_VIVADO} \
 			--package.out_dir ${SD_CARD_LINUX} \
 			--package.boot_mode=sd \
+			--package.generate_sdcard \
 			--package.image_format=${LINUX_ROOTFS_TYPE} \
 			--package.kernel_image=${LINUX_KERNEL} \
 			--package.rootfs=${LINUX_ROOTFS}  \

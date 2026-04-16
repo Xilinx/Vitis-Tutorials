@@ -150,6 +150,7 @@ ${SD_CARD_LINUX}: ${LIBADF} ${PS_LINUX_EXE} ${LINUX_KERNEL} ${LINUX_ROOTFS} ${PF
 			--package.defer_aie_run \
 			--package.out_dir $(addprefix ../,${SD_CARD_LINUX}) \
 			--package.boot_mode=sd \
+			--package.generate_sdcard \
 			--package.no_image \
 			--package.image_format=${LINUX_ROOTFS_TYPE} \
 			--package.sd_file=$(addprefix ../, ${LINUX_KERNEL}) \

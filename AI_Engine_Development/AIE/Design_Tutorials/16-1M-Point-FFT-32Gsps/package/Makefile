@@ -29,6 +29,7 @@ $(SD_CARD):	$(SOURCES)
 	    --platform ../../$(PLATFORMNAME) \
 	    --package.domain aie_runtime_domain \
 	    --package.boot_mode sd \
+	    --package.generate_sdcard \
 	    --package.image_format fat32 \
 	    --package.ps_elf ../$(MAIN_ELF),a72-0 \
 	    ../$(LIBNAME) \

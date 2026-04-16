@@ -152,6 +152,7 @@ package2: guard-PLATFORM_REPO_PATHS
 		--package.rootfs=${ROOTFS} \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
+		--package.generate_sdcard \
 		--package.kernel_image=${IMAGE} \
 		--package.defer_aie_run \
 		--package.sd_file host.exe  $(XSA) libadf2.a \

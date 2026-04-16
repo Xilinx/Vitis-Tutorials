@@ -198,6 +198,7 @@ $(SD_CARD):$(EXECUTABLE) $(DFX1_XCLBIN) $(DFX2_XCLBIN)
 	--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
 	--package.image_format=ext4 \
 	--package.boot_mode=sd \
+	--package.generate_sdcard \
 	--package.kernel_image=$(EDGE_COMMON_SW)/Image \
 	--package.sd_file $(RUN_APP_SCRIPT) \
 	--package.sd_file $(DFX1_XCLBIN) \

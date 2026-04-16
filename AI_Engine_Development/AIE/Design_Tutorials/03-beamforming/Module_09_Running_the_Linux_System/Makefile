@@ -64,6 +64,7 @@ $(BUILD_DIR)/package_$(TARGET)/sd_card.img:
 	--package.rootfs $(MODULE_07_DIR)/build/vck190_linux/images/linux/rootfs.ext4	\
 	--package.kernel_image ${MODULE_07_DIR}/build/vck190_linux/images/linux/Image   \
 	--package.boot_mode=sd                                              		\
+	--package.generate_sdcard \
 	--package.out_dir $(EMBEDDED_PACKAGE_OUT)                   	 		\
 	--package.image_format=ext4                                         		\
 	--package.defer_aie_run                                             		\

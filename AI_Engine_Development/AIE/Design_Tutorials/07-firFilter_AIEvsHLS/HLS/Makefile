@@ -373,6 +373,7 @@ PKG_FLAGS += -f $(PLATFORM)
 PKG_FLAGS += --package.rootfs $(COMMON_IMAGE_VERSAL)/rootfs.ext4
 PKG_FLAGS += --package.kernel_image $(COMMON_IMAGE_VERSAL)/Image
 PKG_FLAGS += --package.boot_mode=sd
+PKG_FLAGS += --package.generate_sdcard
 PKG_FLAGS += --package.out_dir $(EMBEDDED_PACKAGE_OUT)
 PKG_FLAGS += --package.image_format=ext4
 PKG_FLAGS += --package.sd_file $(BUILD_TARGET_DIR)/$(APP_ELF) $(BUILD_TARGET_DIR)/$(XSA)
