@@ -1,4 +1,4 @@
-name: GS_pfm
+name: GS_pfm_vck190
 category: canary
 platform: [vck190]
 flow: vitis

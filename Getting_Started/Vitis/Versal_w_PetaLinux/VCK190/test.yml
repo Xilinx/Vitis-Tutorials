@@ -1,4 +1,4 @@
-name: GS_vitis
+name: GS_vitis_vck190
 category: canary
 platform: [vck190]
 flow: versal

@@ -1,4 +1,4 @@
-name: GS_pfm
+name: GS_pfm_vek280
 category: canary
 platform: [vek280]
 flow: vitis
