@@ -363,7 +363,7 @@ jobs:
             await github.rest.checks.create({
               ...context.repo,
               name: 'PR Regression Results',
-              head_sha: context.sha,
+              head_sha: context.payload.pull_request.head.sha,
               status: 'completed',
               conclusion: check.conclusion,
               output: {
