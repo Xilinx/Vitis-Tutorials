@@ -125,7 +125,7 @@ $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA): $(DEPS)
 sdt: $(BUILD_DIR)/$(REV)/$(TARGET)/sdt/system.dts
 
 $(BUILD_DIR)/$(REV)/$(TARGET)/sdt/system.dts: $(BUILD_DIR)/$(REV)/$(TARGET)/$(XSA)
-	xsct -eval " \
+	sdtgen -eval " \
 		sdtgen set_dt_param -debug enable; \
 		sdtgen set_dt_param -zocl enable; \
 		sdtgen set_dt_param -dir $(BUILD_DIR)/$(REV)/$(TARGET)/sdt; \

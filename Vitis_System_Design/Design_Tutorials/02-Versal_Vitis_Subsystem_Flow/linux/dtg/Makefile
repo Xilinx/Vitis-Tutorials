@@ -48,7 +48,6 @@ ${DTB_FILE}: ${XSA_FILE}
 	make build_dts
 #	make include_board
 	make include_dtsi
-#	make build_xsct
 	make build_dtb
 	make dump_dts
 
@@ -63,15 +62,10 @@ ${DTC}:
 	cd ${DTC} && make
 	export PATH=$PATH:${DTC_PATH}
 
-build_xsct:
-	$(ECHO) "dtg/build_xsct: Currently errors out, but should be the prefered method"
-	xsct -eval "createdts -hw ${XSA_FILE} -zocl -out . -platform-name ${PLATFORM_CUSTOM} -git-branch ${DTG_VERSION} -dtsi ${DTSI_DIR}/${DTSI_FILE} -compile"
-	cp ./${PLATFORM_CUSTOM}/psv_cortexa72_0/device_tree_domain/bsp/system.dtb ${DTB_FILE}
-
 build_sdt:
 	$(ECHO) "dtg/build_sdt: Generating the system device tree with zocl enabled"
 	rm -rf sdt_out
-	xsct -eval "source src/xsct_utils.tcl; run_sdtgen -version 2025.2 -xsa $(XSA_FILE) -sdt_dt_zocl 1"
+	xsdb -eval "source src/xsct_utils.tcl; run_sdtgen -version 2025.2 -xsa $(XSA_FILE) -sdt_dt_zocl 1"
 
 lop_procs:
 	$(ECHO) "dtg/lop_procs: Extract the procs from SDT using Lopper"
@@ -102,15 +96,15 @@ lop_dtb:
 build_dts:
 	$(ECHO) "dtg/build_dts: Building the dts from the supplied xsa"
 	rm -rf ${DTS}
-	xsct -eval "source src/build_dts.tcl; build_dts $(XSA_FILE) ${DTS}"	
+	xsdb -eval "source src/build_dts.tcl; build_dts $(XSA_FILE) ${DTS}"	
 
 include_board:
 	$(ECHO) "dtg/include_board: Currently not needed since included by the supplied xsa"
-	xsct -eval "source src/build_dts.tcl; include_board ${DTS}"
+	xsdb -eval "source src/build_dts.tcl; include_board ${DTS}"
 
 include_dtsi:
 	$(ECHO) "dtg/include_dtsi: Adding custum specific parameters to the dts"
-	xsct -eval "source src/build_dts.tcl; include_dtsi ${DTSI_DIR} $(DTSI_FILE) ${DTS}"
+	xsdb -eval "source src/build_dts.tcl; include_dtsi ${DTSI_DIR} $(DTSI_FILE) ${DTS}"
 	
 build_dtb:
 	$(ECHO) "dtg/build_dtb: Building the dtb from the generated dts"
