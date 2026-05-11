@@ -78,7 +78,7 @@ data:
 	mkdir -p data
 	echo $(PWD)
 	echo $(ROOTDIR)
-	$(UTILS_DIR)/CreateLinearData.py int16 $(PLIOW) $(NSamples)  > data/input.txt
+	uvx --with numpy python3 $(UTILS_DIR)/CreateLinearData.py int16 $(PLIOW) $(NSamples)  > data/input.txt
 	cp -rf data $(ROOTDIR)
 
 aie: ${LIBADF}

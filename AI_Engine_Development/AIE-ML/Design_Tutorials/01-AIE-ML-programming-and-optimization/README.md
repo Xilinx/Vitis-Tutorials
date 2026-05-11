@@ -39,6 +39,8 @@ You need [Python 3](https://www.python.org/downloads/) with the following packag
 - `numpy`
 - `random`
 
+The Makefile uses [`uvx`](https://docs.astral.sh/uv/) to automatically manage the `numpy` dependency in an isolated environment. If you prefer to install `numpy` in your own Python environment (e.g., `pip install numpy`), replace `uvx --with numpy python3` with `python3` in `aie/Makefile`.
+
 ## Objectives
 
 After completing this tutorial, you learn how to:

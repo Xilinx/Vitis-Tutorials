@@ -37,6 +37,8 @@ Data generation for this tutorial requires [Python 3](https://www.python.org/dow
 - sys
 - numpy
 
+The Makefile uses [`uvx`](https://docs.astral.sh/uv/) to automatically manage the `numpy` dependency in an isolated environment. If you prefer to install `numpy` in your own Python environment (e.g., `pip install numpy`), replace `uvx --with numpy python3` with `python3` in `aie/Makefile`.
+
 >**Note**: This tutorial assumes that you have a basic understanding of the Adaptive Data Flow (ADF) API and Xilinx® Runtime (XRT) API usage. For more information about ADF API and XRT usage, refer to AI Engine Runtime Parameter Reconfiguration Tutorial and the Versal Adaptive SoC AI Engine Programming Environment User Guide ([UG1076](https://docs.amd.com/access/sources/dita/map?isLatest=true&ft:locale=en-US&url=ug1076-ai-engine-environment)).
 
 ## Objectives

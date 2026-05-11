@@ -67,7 +67,7 @@ sd_card: all
 
 data:
 	if [ ! -d "data" ]; then mkdir data ; fi
-	../Utils/GenerateMatrices.py $(sizeM) $(sizeK) $(sizeN) $(subM) $(subK) $(subN) 8 $(NIterations) 1 data $(PLIOW)
+	uvx --with numpy python3 ../Utils/GenerateMatrices.py $(sizeM) $(sizeK) $(sizeN) $(subM) $(subK) $(subN) 8 $(NIterations) 1 data $(PLIOW)
 
 all_aie: clean data aie aiesim
 
