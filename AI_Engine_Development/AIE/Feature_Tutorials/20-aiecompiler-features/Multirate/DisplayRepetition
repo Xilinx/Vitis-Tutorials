@@ -6,7 +6,24 @@ echo " "
 echo "************************************************************************ "
 echo " "
 
-grep -e "Repetition count" AIECompiler.log
+REPORT=""
+for d in WorkAie WorkX86; do
+	[ -f "$d/reports/compiler_report.json" ] && REPORT="$d/reports/compiler_report.json" && break
+done
+
+if [ -n "$REPORT" ]; then
+	python3 -c "
+import json, sys
+with open(sys.argv[1]) as f:
+    data = json.load(f)
+for nid, info in data.get('scheduling', {}).items():
+    if 'repetition_count' in info:
+        name = data.get('blockInstances', {}).get(nid, {}).get('qualifiedName', nid)
+        print(f'Repetition count for {name} is {info[\"repetition_count\"]}.')
+" "$REPORT"
+else
+	echo "No compiler_report.json found in WorkAie or WorkX86."
+fi
 
 echo " "
 echo "************************************************************************ "

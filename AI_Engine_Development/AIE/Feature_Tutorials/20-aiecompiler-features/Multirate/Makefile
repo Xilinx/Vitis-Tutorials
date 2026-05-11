@@ -58,7 +58,7 @@ data:
 	uvx --with numpy python3 ./CreateData.py 2 100000 1 100000 > data/Input_64.txt
 
 disprepetition:
-	DisplayRepetition
+	./DisplayRepetition
 
 dispfifo:
 	if [ -f ./AIESim_FIFO_Guidance.json ]; then more ./AIESim_FIFO_Guidance.json ; fi
@@ -91,7 +91,7 @@ ${LIBADFAIE}: src/*
 x86:${LIBADFX86}
 ${LIBADFX86}: src/*
 	${X86_CMPL_CMD} --aie.Xpreproc "-DBUFFER_vs_STREAM=$(BUFFER_vs_STREAM)"
-	DisplayRepetition
+	./DisplayRepetition
 
 aiesim: ${LIBADFAIE}
 	${AIE_SIM_CMD}
