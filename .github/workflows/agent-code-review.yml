@@ -1,0 +1,40 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  REGRESSION_REPO: swm/VT-Regression-Infra
+
+jobs:
+  review:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+      - name: Review PR
+        env:
+          AGENT_PROMPT: >-
+            Review PR #${{ github.event.pull_request.number }}
+            in repo ${{ github.repository }}.
+            The PR branch is checked out in the current directory.
+            The base branch is ${{ github.event.pull_request.base.ref }}.
+            Follow your system prompt instructions.
+        run: |
+          _regression/scripts/agent_wrapper.sh \
+            --system-prompt _regression/agents/code-reviewer.md \
+            --max-turns 15 \
+            --max-budget-usd 3 \
+            "$AGENT_PROMPT"

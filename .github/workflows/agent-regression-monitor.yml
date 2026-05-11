@@ -1,0 +1,60 @@
+name: Regression Monitor
+
+on:
+  workflow_run:
+    workflows: ["Full Tutorial Regression"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: 'GHE Actions run ID to analyze'
+        required: true
+      repo:
+        description: 'Repository (owner/name)'
+        default: 'swm/Vitis-Tutorials'
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+env:
+  REGRESSION_REPO: swm/VT-Regression-Infra
+
+jobs:
+  monitor:
+    runs-on: [self-hosted]
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+      - name: Resolve run parameters
+        id: params
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run_id=${{ inputs.run_id }}" >> "$GITHUB_OUTPUT"
+            echo "repo=${{ inputs.repo }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_id=${{ github.event.workflow_run.id }}" >> "$GITHUB_OUTPUT"
+            echo "repo=${{ github.repository }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Analyze and manage issues
+        env:
+          AGENT_PROMPT: >-
+            Analyze regression run ${{ steps.params.outputs.run_id }}
+            in repo ${{ steps.params.outputs.repo }}.
+            Use the _regression directory for scripts.
+            Follow your system prompt instructions to analyze failures,
+            match against existing issues, and create or update issues.
+        run: |
+          _regression/scripts/agent_wrapper.sh \
+            --system-prompt _regression/agents/regression-monitor.md \
+            --max-turns 30 \
+            --max-budget-usd 8 \
+            "$AGENT_PROMPT"

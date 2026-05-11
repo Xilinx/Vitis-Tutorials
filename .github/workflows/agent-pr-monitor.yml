@@ -1,0 +1,40 @@
+name: PR Pipeline Monitor
+
+on:
+  workflow_run:
+    workflows: ["PR Tutorial Regression"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+env:
+  REGRESSION_REPO: swm/VT-Regression-Infra
+
+jobs:
+  monitor:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REGRESSION_REPO }}
+          path: _regression
+
+      - name: Post results to PR
+        env:
+          AGENT_PROMPT: >-
+            A PR regression pipeline just completed.
+            Run ID: ${{ github.event.workflow_run.id }},
+            repo: ${{ github.repository }},
+            conclusion: ${{ github.event.workflow_run.conclusion }},
+            branch: ${{ github.event.workflow_run.head_branch }}.
+            Follow your system prompt instructions to fetch results
+            and post them to the associated PR.
+        run: |
+          _regression/scripts/agent_wrapper.sh \
+            --system-prompt _regression/agents/pr-monitor.md \
+            --max-turns 20 \
+            --max-budget-usd 5 \
+            "$AGENT_PROMPT"
