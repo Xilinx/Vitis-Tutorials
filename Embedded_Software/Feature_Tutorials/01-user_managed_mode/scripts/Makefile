@@ -74,7 +74,7 @@ uboot: u-boot-xlnx $(XSA)
 	export PATH="$(shell pwd)/dtc_install/usr/bin:$(shell pwd)/dtc:$$PATH" && \
 	cd u-boot-xlnx && \
 	make xilinx_zynqmp_virt_defconfig && \
-	make -f Makefile all -f 32
+	make -f Makefile all -j 32
 
 generate_boot_script:
 	$(RM) -rf boot_script.py
