@@ -15,8 +15,6 @@ on:
 permissions:
   contents: read
   actions: read
-  checks: write
-  pull-requests: write
 
 env:
   REGRESSION_REPO: swm/VT-Regression-Infra
@@ -321,8 +319,8 @@ jobs:
             _build-logs/${{ matrix.tutorial.name }}/run-meta.json
           retention-days: 20
 
-  # ─── Post results to PR ───
-  pr-comment:
+  # ─── Generate summary (write-free — actual posting done by pr-regression-report.yml via workflow_run) ───
+  summary:
     needs: [discover, load-matrices, sim-tests, hw-emu-tests, hw-build-tests]
     if: always()
     runs-on: [self-hosted, linux]
@@ -349,82 +347,32 @@ jobs:
             --tool-version "${{ needs.load-matrices.outputs.tool-version }}"
           python3 -c "import json; print(json.load(open('check.json'))['summary'])" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Publish test results
-        uses: actions/github-script@v7
-        if: always()
+      - name: Save PR metadata for report workflow
+        run: |
+          python3 -c "
+          import json
+          meta = {
+              'pr_number': ${{ github.event.pull_request.number }},
+              'head_sha': '${{ github.event.pull_request.head.sha }}',
+              'affected_count': '${{ needs.discover.outputs.affected-count }}',
+              'tool_version': '${{ needs.load-matrices.outputs.tool-version }}',
+              'sim_result': '${{ needs.sim-tests.result }}' or 'skipped',
+              'hw_emu_result': '${{ needs.hw-emu-tests.result }}' or 'skipped',
+              'hw_build_result': '${{ needs.hw-build-tests.result }}' or 'skipped',
+          }
+          json.dump(meta, open('pr-meta.json', 'w'), indent=2)
+          "
+
+      - uses: actions/upload-artifact@v3
         with:
-          script: |
-            const fs = require('fs');
-            if (!fs.existsSync('check.json')) {
-              core.warning('check.json not found, skipping check run');
-              return;
-            }
-            const check = JSON.parse(fs.readFileSync('check.json', 'utf8'));
-            await github.rest.checks.create({
-              ...context.repo,
-              name: 'PR Regression Results',
-              head_sha: context.payload.pull_request.head.sha,
-              status: 'completed',
-              conclusion: check.conclusion,
-              output: {
-                title: check.title,
-                summary: check.summary,
-              },
-            });
+          name: pr-report-data
+          path: |
+            pr-meta.json
+            check.json
+          retention-days: 5
 
       - uses: actions/upload-artifact@v3
         with:
           name: pr-regression-report
           path: report.html
           retention-days: 20
-
-      - name: Post results to PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const affectedCount = '${{ needs.discover.outputs.affected-count }}';
-            const toolVersion = '${{ needs.load-matrices.outputs.tool-version }}';
-            const simResult = '${{ needs.sim-tests.result }}' || 'skipped';
-            const hwEmuResult = '${{ needs.hw-emu-tests.result }}' || 'skipped';
-            const hwBuildResult = '${{ needs.hw-build-tests.result }}' || 'skipped';
-
-            const icon = (r) => r === 'success' ? ':white_check_mark:' :
-                                r === 'failure' ? ':x:' :
-                                r === 'skipped' ? ':fast_forward:' : ':grey_question:';
-
-            const body = [
-              '## Tutorial Regression Results',
-              '',
-              `**Tool Version**: ${toolVersion}`,
-              `**Affected Tutorials**: ${affectedCount}`,
-              '',
-              '| Stage | Result |',
-              '|-------|--------|',
-              `| Simulation | ${icon(simResult)} ${simResult} |`,
-              `| HW Emulation | ${icon(hwEmuResult)} ${hwEmuResult} |`,
-              `| HW Build + Run | ${icon(hwBuildResult)} ${hwBuildResult} |`,
-              '',
-              '_Full report available in workflow artifacts (incl. per-tutorial build vs run breakdown)._',
-            ].join('\n');
-
-            // Find and update existing comment, or create new one
-            const marker = '## Tutorial Regression Results';
-            const { data: comments } = await github.rest.issues.listComments({
-              ...context.repo,
-              issue_number: context.issue.number,
-            });
-
-            const existing = comments.find(c => c.body.startsWith(marker));
-            if (existing) {
-              await github.rest.issues.updateComment({
-                ...context.repo,
-                comment_id: existing.id,
-                body: body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                ...context.repo,
-                issue_number: context.issue.number,
-                body: body,
-              });
-            }

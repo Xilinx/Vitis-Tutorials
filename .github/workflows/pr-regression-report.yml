@@ -1,0 +1,134 @@
+name: PR Regression Report
+
+on:
+  workflow_run:
+    workflows: ["PR Tutorial Regression"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Download artifacts from PR workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+              ...context.repo,
+              run_id: context.payload.workflow_run.id,
+            });
+
+            for (const artifact of artifacts.data.artifacts) {
+              if (['pr-report-data', 'pr-regression-report'].includes(artifact.name)) {
+                const download = await github.rest.actions.downloadArtifact({
+                  ...context.repo,
+                  artifact_id: artifact.id,
+                  archive_format: 'zip',
+                });
+                fs.writeFileSync(`${artifact.name}.zip`, Buffer.from(download.data));
+                core.info(`Downloaded ${artifact.name} (${artifact.size_in_bytes} bytes)`);
+              }
+            }
+
+      - name: Extract artifacts
+        run: |
+          mkdir -p report-data report-html
+          if [ -f pr-report-data.zip ]; then
+            unzip -o pr-report-data.zip -d report-data
+          else
+            echo "::error::pr-report-data.zip not found — PR workflow may not have produced artifacts"
+            exit 1
+          fi
+          if [ -f pr-regression-report.zip ]; then
+            unzip -o pr-regression-report.zip -d report-html
+          fi
+
+      - name: Publish check run
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const checkPath = 'report-data/check.json';
+            if (!fs.existsSync(checkPath)) {
+              core.warning('check.json not found, skipping check run');
+              return;
+            }
+            const meta = JSON.parse(fs.readFileSync('report-data/pr-meta.json', 'utf8'));
+            const check = JSON.parse(fs.readFileSync(checkPath, 'utf8'));
+            await github.rest.checks.create({
+              ...context.repo,
+              name: 'PR Regression Results',
+              head_sha: meta.head_sha,
+              status: 'completed',
+              conclusion: check.conclusion,
+              output: {
+                title: check.title,
+                summary: check.summary,
+              },
+            });
+
+      - name: Post results to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const meta = JSON.parse(fs.readFileSync('report-data/pr-meta.json', 'utf8'));
+            const prNumber = meta.pr_number;
+            if (!prNumber) {
+              core.warning('No PR number in metadata, skipping comment');
+              return;
+            }
+
+            const icon = (r) => r === 'success' ? ':white_check_mark:' :
+                                r === 'failure' ? ':x:' :
+                                r === 'skipped' ? ':fast_forward:' : ':grey_question:';
+
+            const body = [
+              '## Tutorial Regression Results',
+              '',
+              `**Tool Version**: ${meta.tool_version}`,
+              `**Affected Tutorials**: ${meta.affected_count}`,
+              '',
+              '| Stage | Result |',
+              '|-------|--------|',
+              `| Simulation | ${icon(meta.sim_result)} ${meta.sim_result} |`,
+              `| HW Emulation | ${icon(meta.hw_emu_result)} ${meta.hw_emu_result} |`,
+              `| HW Build + Run | ${icon(meta.hw_build_result)} ${meta.hw_build_result} |`,
+              '',
+              '_Full report available in workflow artifacts (incl. per-tutorial build vs run breakdown)._',
+            ].join('\n');
+
+            const marker = '## Tutorial Regression Results';
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find(c => c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: prNumber,
+                body: body,
+              });
+            }
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: pr-regression-report
+          path: report-html/
+          retention-days: 20
