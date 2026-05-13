@@ -15,7 +15,7 @@
 
 # 1 Million Point `float` FFT @ 32 Gsps on AI Engine
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-PLATFORMDIR  ?= platform
+PLATFORMDIR  ?= platform/workspace
 PF_STDNAME   ?= base_pfm_vck190
 PLATFORMNAME ?= $(PLATFORMDIR)/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).xpfm
 

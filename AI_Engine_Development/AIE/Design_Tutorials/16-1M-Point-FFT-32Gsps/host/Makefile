@@ -12,8 +12,7 @@ MAIN_ELF     = main.elf
 
 HOST_GCC 	 ?= aarch64-none-elf-gcc
 
-PLATFORM_SW  = $(PF_STDNAME)/export/$(PF_STDNAME)/sw/$(PF_STDNAME)/
-SW_PLATFORM  = ../link/$(BUILD_DIR)/$(PLATFORM_SW)
+SW_PLATFORM  = ../link/workspace/sw_platform/export/sw_platform/sw
 SOURCES      = ../link/$(BUILD_DIR) ../link/$(BUILD_DIR)/$(XSA)
 
 #------------------------------------
@@ -45,13 +44,13 @@ $(BUILD_DIR)/$(MAIN_ELF):	$(SOURCES)
 	echo "#define NUM_ITE_STP $(NUMITE_STP_HW)" >> ./test_cfg.h; \
 	echo "#define NUM_TST     $(NUMTST_HW)" >> ./test_cfg.h; \
 	echo "#define IS_COSIM    $(IS_COSIM)" >> ./test_cfg.h ; \
-	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
+	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_psv_cortexa72_0/include \
 	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++17 -o main.o ../main.cpp; \
-	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_domain/bspinclude/include \
+	$(HOST_GCC) -I../$(SW_PLATFORM)/standalone_psv_cortexa72_0/include \
 	        -I$(XILINX_VITIS)/aietools/include -I./ -c -std=c++17 -o platform.o ../platform.cpp; \
 	$(HOST_GCC) platform.o main.o -mcpu=cortex-a72 -Wl,-T -Wl,../../host/lscript.ld \
-		-L../$(SW_PLATFORM)standalone_domain/bsplib/lib -L$(XILINX_VITIS)/aietools/lib/aarchnone64.o \
-	        -Wl,--start-group,-lxil,-lgcc,-lc,-lstdc++,--end-group -o $(MAIN_ELF); }
+		-L../$(SW_PLATFORM)/standalone_psv_cortexa72_0/lib -L$(XILINX_VITIS)/aietools/lib/aarchnone64.o \
+	        -Wl,--start-group,-lxil,-lxilpm,-lxilstandalone,-lxiltimer,-lgcc,-lc,-lstdc++,--end-group -o $(MAIN_ELF); }
 
 clean:
 	/bin/rm -rf $(BUILD_DIR)

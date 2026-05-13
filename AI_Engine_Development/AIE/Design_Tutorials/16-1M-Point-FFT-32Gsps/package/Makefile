@@ -5,7 +5,7 @@
 
 TARGET       ?= hw
 PF_STDNAME   ?= base_pfm_vck190
-PLATFORMNAME ?= platform/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).xpfm
+PLATFORMNAME ?= platform/workspace/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).xpfm
 
 LIBNAME      = ../aie_src/libadf.a
 BUILD_DIR    = build_$(TARGET)
@@ -27,7 +27,7 @@ $(SD_CARD):	$(SOURCES)
 	v++ --package --debug \
 	    --target $(TARGET) \
 	    --platform ../../$(PLATFORMNAME) \
-	    --package.domain aie_runtime_domain \
+	    --package.domain aie_runtime \
 	    --package.boot_mode sd \
 	    --package.generate_sdcard \
 	    --package.image_format fat32 \

@@ -21,7 +21,7 @@ export PART_NUMBER = xcvc1902-vsva2197-2MP-e-S
 # Define PLATFORM DIRECTORY
 #------------------------------------
 export PF_STDNAME  = base_pfm_vck190
-export PLATFORMNAME = platform/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).xpfm
+export PLATFORMNAME = platform/workspace/$(PF_STDNAME)/export/$(PF_STDNAME)/$(PF_STDNAME).xpfm
 
 .PHONY: all clean cleanall
 
