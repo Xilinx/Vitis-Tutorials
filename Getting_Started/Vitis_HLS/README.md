@@ -13,7 +13,7 @@
 
 # Vitis HLS Analysis and Optimization
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -74,6 +74,6 @@ This tutorial describes how to create an HLS component using the Vitis Unified I
 <a class="sphinxhide" href="./README.md">Return to Main Page</a> — <a class="sphinxhide" href="./../README.md">Return to Getting Started Pathway</a>
 </p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

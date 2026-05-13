@@ -107,6 +107,6 @@ You have the optimized but uncompiled C++ code (`dct.cpp`) that you saved in an 
 <a class="sphinxhide" href="../README.md">Return to Main Page</a> — <a class="sphinxhide" href="./README.md">Return to Start of Tutorial</a>
 </p>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
