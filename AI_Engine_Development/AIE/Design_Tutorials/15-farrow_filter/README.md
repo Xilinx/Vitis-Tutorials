@@ -15,7 +15,7 @@
 
 # Fractional Delay Farrow Filter
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -297,7 +297,7 @@ Steady state throughput is 1024/913e-6 = 1122 Msps.
 
 ### Setup and Initialization
 
-IMPORTANT: Install the Vitis 2025.2 software before starting the tutorial. Downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Install the Vitis 2026.1 software before starting the tutorial. Downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
 
@@ -322,7 +322,7 @@ After hardware emulation run is complete, you can measure throughput in Vivado b
 
 *Figure 14 - Farrow Filter Final Implementation Hardware Emulation*
 
-Throughput measured through the traces is 1024 x 4 x 4/14.5e-6 = 1130 Msps.
+Throughput measured through the traces is 1024 x 4 x 4/14.43e-6 = 1135 Msps.
 
 After the hardware emulation run completes, the following displays on the terminal. Measure throughput using XRT APIs. For more information, refer to *AI Engine Tools and Flows User Guide* [(UG1076)](https://docs.amd.com/r/en-US/ug1076-ai-engine-environment/XRT-Support-for-Event-APIs).
 

@@ -15,7 +15,7 @@
 
 # Migrating Fractional Delay Farrow Filter from AIE to AIE-ML Architecture
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -42,13 +42,13 @@ The design requirements are identical here as you are simply migrating the desig
 | Coefficients data type | `int16` |
 | Delay input data type | `int16` |
 
-**IMPORTANT**: Before beginning the tutorial, read and follow *Vitis Software Platform Release Notes* (v2025.2) to set up the software and install the VEK280 base platform.
+**IMPORTANT**: Before beginning the tutorial, read and follow *Vitis Software Platform Release Notes* (v2026.1) to set up the software and install the VEK280 base platform.
 
 Before starting this tutorial, run the following steps:
 
-1. Set up your platform by running the `xilinx-versal-common-v2025.2/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you *must* run `xilinx-versal-common-v2025.2/sdk.sh`.
-2. Set up your ROOTFS to point to the `xilinx-versal-common-v2025.2/rootfs.ext4`.
-3. Set up your IMAGE to point to `xilinx-versal-common-v2025.2/Image`.
+1. Set up your platform by running the `xilinx-versal-common-v2026.1/environment-setup-cortexa72-cortexa53-amd-linux` script as provided in the platform download. This script sets up the `SYSROOT` and `CXX` variables. If the script is not present, you *must* run `xilinx-versal-common-v2026.1/sdk.sh`.
+2. Set up your ROOTFS to point to the `xilinx-versal-common-v2026.1/rootfs.ext4`.
+3. Set up your IMAGE to point to `xilinx-versal-common-v2026.1/Image`.
 4. Set up your `PLATFORM_REPO_PATHS` environment variable based upon where you downloaded the platform.
 
 ## Table of Contents
@@ -85,7 +85,7 @@ Make sure to set the `PLATFORM_REPO_PATHS` environment variable.
 Enter the following command to source the Vitis tool:
 
 ```
-source /<TOOL_INSTALL_PATH>/Vitis/2025.2/settings.sh
+source /<TOOL_INSTALL_PATH>/Vitis/2026.1/settings.sh
 ```
 
 #### Update the Makefile to switch the device from AIE to AIE-ML
@@ -218,7 +218,7 @@ The first command compiles the graph code for the SystemC simulator. The second 
 After the final command execution, the console must output as the following:
 
 ```
-Raw Throughput = 449.0 MSPS
+Raw Throughput = 414.5 MSPS
 Max error LSB = 1
 ```
 
@@ -235,15 +235,15 @@ Select the `Graph` view.
 
 The Graph view shows the kernels in the graph and the input/output ports of the graph. Select the I/O tabs as shown in the preceeding diagram. Observe the Throughput column in the I/O tab.
 
-The output PLIO port throughput shows the value 1795.8611 MBYTES PER SEC (MBPS). To obtain the throughput in samples per second, divide the throughput by four. The data type used, `cint16`, is four bytes in size. This calculation results in a throughput value of 449.0 mega samples per second (MSPS).
+The output PLIO port throughput shows the value 1731.1918 MBYTES PER SEC (MBPS). To obtain the throughput in samples per second, divide the throughput by four. The data type used, `cint16`, is four bytes in size. This calculation results in a throughput value of 414.5 mega samples per second (MSPS).
 
-A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/2.77 = 369.68 MSPS.
+A more accurate throughput measurement can be made by measuring the steady state achieved in the final graph iteration. In vitis_analyzer, select the trace view and set markers to measure the throughput of this final iteration as shown below. Because each graph iteration processes 1024 samples, throughput = 1024/3.021 = 338.96 MSPS.
 
 Note: In the graph, select the output port which shows the net name, in this case it is net6. Then select the `Trace` view, which shows the selected net.
 
 ![Initial_Port_Graph](./images/Initial_Port_Trace.png)
 
-The design requirement is to reach 1 GSPS, but the current performance is only **369.68 MSPS**.
+The design requirement is to reach 1 GSPS, but the current performance is only **338.96 MSPS**.
 
 Close the Vitis Analyzer.
 
@@ -445,13 +445,13 @@ The console must output as the following:
 *** [LOOP_II] *** Tile 19_4 minII = 29 achieves II = 29
 ```
 
-The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, and 19_4. Based on the preceeding results, these tiles successfully achieved an II of 29 for each of their respective for loops, meeting the desired performance targets.
+The implementation of `farrow_kernel1.cpp` spans across tiles 18_1, 19_0, 19_1, 19_2 and 19_4. Based on the preceeding results, these tiles successfully achieved an II of 29 for each of their respective for loops, meeting the desired performance targets.
 
 ### Comparison of the Optimizations
 
 | Design              | Number of Tiles | Throughput  |
 |---------------------|-----------------|-------------|
-| farrow_port_initial |       2         | 369.7 MSPS  |
+| farrow_port_initial |       2         | 338.9 MSPS  |
 | farrow_opt_1        |       3         | 664.9 MSPS  |
 | farrow_opt_2        |       5         | 1008.9 MSPS |
 
@@ -476,7 +476,7 @@ DDR memory connects to the AI Engine kernels using the preceeding port specifica
 
 Review the test bench `farrow_app_adf.cpp`, updated for GMIO interface.
 
-In Linux, the virtual address passed to GMIO::gm2aie_nb, GMIO::aie2gm_nb, GMIO::gm2aie and, GMIO::malloc must allocate GMIO::aie2gm. Ypu can initialize it after the allocation of the input data.
+In Linux, the virtual address passed to GMIO::gm2aie_nb, GMIO::aie2gm_nb, GMIO::gm2aie and, GMIO::malloc must allocate GMIO::aie2gm. You can initialize it after the allocation of the input data.
 
 1. Memory allocated by `GMIO::malloc` for input and ouput data as shown as the following:
 
@@ -565,7 +565,7 @@ The following diagram shows the entire Vitis tool flow, encompassing the develop
 
 #### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software. Make sure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
+IMPORTANT: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2026.1 software. Make sure you have downloaded the Common Images for Embedded Vitis Platforms from this link.
 
 <https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2025-2.html>
 
@@ -614,8 +614,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
 
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 4241.92 MB/s
-Throughput of the graph: 1060.48 MSPS
+Throughput of the graph: 4208.8 MB/s
+Throughput of the graph: 1052.2 MSPS
 ...
 ```
 
@@ -647,8 +647,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
  
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 4497.15 MB/s
-Throughput of the graph: 1124.29 MSPS
+Throughput of the graph: 4494.18 MB/s
+Throughput of the graph: 1123.55 MSPS
 --- PASSED ---
 GMIO transactions finished
 
@@ -663,8 +663,8 @@ This indicates that approximately twice the number of tiles is required for kern
 
 | Design                 | Tiles for AIE Kernels | Tiles for Buffers | Total Tiles |  Throughput         | Relative MSPS per tile |
 |------------------------|-----------------------|-------------------|-------------|---------------------|------------------------|
-| farrow - AIE (PLIO)    |       2               | 5                 | 5           | 1138 MSPS (HW_EMU)  | 227.6                  |
-| farrow - AIE-ML (GMIO) |       5               | 8                 | 8           | 1061 MSPS (HW_EMU)  | 132.6                  |
+| farrow - AIE (PLIO)    |       2               | 5                 | 5           | 1134.64 MSPS (HW_EMU)  | 226.9                  |
+| farrow - AIE-ML (GMIO) |       5               | 8                 | 8           | 1052.2 MSPS (HW_EMU)  | 131.5                  |
 
 **Note:**Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.
 
