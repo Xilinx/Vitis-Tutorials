@@ -14,7 +14,7 @@
 
 # Getting Started With Vitis Libraries
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 This tutorial focuses on how to leverage the AMD Vitis™ Libraries to build your own design. The tutorial will use FFT's L1 library as an example. It contains instructions from cloning the library, compile, and simulate on its own till instantiate it into top-level design.
 
@@ -35,7 +35,7 @@ $ export PLATFORM_REPO_PATHS=<Platform Installation Path>
 
 Now clone the Vitis Libraries into local path.
 
-The Vitis Library is open source on AMD GitHub: https://github.com/Xilinx/Vitis_Libraries. 
+The [Vitis Library is open source on AMD GitHub](https://github.com/Xilinx/Vitis_Libraries). 
 
 Assuming that you are using `<installdir>` as working directory, then use following command to clone the Vitis Library repository into the working directory:
 
@@ -266,7 +266,7 @@ Double click on the IP and click `OK` to add it into the project. Now you should
 
 2. Open the **fft_wrap.v** file to take a look at its port signals. 
 
-Along with the clock, reset, and control signals (start, done, idle, ready), there are four input steam ports (*inData_x* and *inData_x_ce*) and four output stream ports (*outData_x* and *outData_x*we*). The input and output data bus are simply validated by *_ce* or *_we* signals. In the testbench file **fft_tb.v**, read the input data from **datain.txt** file, divide them into four data streams, and then send them to the fft module. Four output data streams are received and compared with the reference data file **dataref.txt**. The test datasets are identical with the simulation example in */home/project/Vitis_Libraries/dsp/L1/examples/1Dfix_impulse* directory.
+Along with the clock, reset, and control signals (start, done, idle, ready), there are four input steam ports (*inData_x* and *inData_x_ce*) and four output stream ports (*outData_x* and *outData_x*we*). The input and output data bus are simply validated by *_ce* or *_we* signals. In the testbench file **fft_tb.v**, read the input data from **datain.txt** file, divide them into four data streams, and then send them to the fft module. Four output data streams are received and compared with the reference data file **dataref.txt**. The test datasets are identical with the simulation example in `<installdir>/Vitis_Libraries/dsp/L1/examples/1Dfix_impulse` directory.
 
 ~~~
 module fft_wrap (
@@ -327,9 +327,9 @@ In this tutorial, you learned how to leverage a L1 Vitis library element to buil
 
 ## Reference
 
-Documentation on Vitis Libraries: https://docs.amd.com/r/en-US/Vitis_Libraries
+[Documentation on Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries)
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2020–2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2020–2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
