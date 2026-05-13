@@ -12,14 +12,14 @@ BOOTGEN = $(XILINX_VITIS)/bin/bootgen
 XSCT    = $(XILINX_VITIS)/bin/xsct
 
 #platform specific
-PLATFORM = xilinx_vek280_base
+#PLATFORM = xilinx_vek280_base
 CPU_ARCH = a72
 BOARD    = versal-vek280-revb
 CORE     = psv_cortexa72_0
 
 #versioning
-VERSION          ?= 202420_1
-VER              ?= 202420.1
+VERSION          ?= 202610_1
+VER              ?= 202610.1
 
 #common
 TOP_DIR         ?= $(shell readlink -f .)
@@ -42,7 +42,8 @@ SW_FILES         = $(IMAGE_DIR)/boot.scr $(BOOT_DIR)/u-boot.elf $(BOOT_DIR)/bl31
 BOOT_FILES       = u-boot.elf bl31.elf
 
 #platform related
-PLATFORM_NAME    = $(PLATFORM)_$(VERSION)
+#PLATFORM_NAME    = $(PLATFORM)_$(VERSION)
+PLATFORM_NAME    = xilinx_vek280_base_$(VERSION)
 PLATFORM_SW_SRC  = $(TOP_DIR)/platform
 PLATFORM_DIR     = $(TOP_DIR)/platform_repo
 
