@@ -1,6 +1,6 @@
 name: VCK190_dfx
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base_dfx]
 flow: versal
 env:
   build: env_setup_versal.sh

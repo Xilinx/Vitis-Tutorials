@@ -1,6 +1,6 @@
 name: AIE_D_01-LeNet
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: versal
 env:
   build: env_setup_versal.sh

@@ -1,6 +1,6 @@
 name: GS_pfm_vck190
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: vitis
 env:
   build: env_setup_versal.sh

@@ -1,6 +1,6 @@
 name: AIE-ML_F_05-versal-INTG
 category: canary
-platform: [vek280]
+platform: [xilinx_vek280_base]
 flow: versal
 env:
   build: env_setup_versal.sh

@@ -1,6 +1,6 @@
 name: AIE-ML_D_04-AIE-API-based-FFT-many-instances
 category: canary
-platform: [vek280]
+platform: [xilinx_vek280_base]
 flow: versal
 targets:
   vitis_x86_sim:

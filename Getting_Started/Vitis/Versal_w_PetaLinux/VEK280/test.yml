@@ -1,6 +1,6 @@
 name: GS_vitis_vek280
 category: canary
-platform: [vek280]
+platform: [xilinx_vek280_base]
 flow: versal
 env:
   build: env_setup_versal.sh

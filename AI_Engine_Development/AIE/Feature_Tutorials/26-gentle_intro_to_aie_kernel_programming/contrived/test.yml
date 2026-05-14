@@ -1,6 +1,6 @@
 name: AIE_F_26-contrived
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: versal
 targets:
   vitis_x86_sim:

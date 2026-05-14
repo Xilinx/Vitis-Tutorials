@@ -1,6 +1,6 @@
 name: AIE-ML_F_06-gemm--ssr
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: versal
 env:
   build: env_setup.sh

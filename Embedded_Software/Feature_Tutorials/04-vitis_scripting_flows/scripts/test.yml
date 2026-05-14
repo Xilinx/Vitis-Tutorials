@@ -1,6 +1,6 @@
 name: ES_F_04-Scr
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: vitis
 env:
   build: env_setup_zynqmp_notoolchain.sh

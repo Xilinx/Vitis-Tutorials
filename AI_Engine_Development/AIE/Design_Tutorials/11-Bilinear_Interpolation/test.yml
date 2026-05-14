@@ -1,6 +1,6 @@
 name: AIE_D_11-Bilinear-Interpolation
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base]
 flow: versal
 targets:
   vitis_aie_sim:

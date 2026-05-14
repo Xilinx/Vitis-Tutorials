@@ -1,6 +1,6 @@
 name: GS_pfm_vek280
 category: canary
-platform: [vek280]
+platform: [xilinx_vek280_base]
 flow: vitis
 env:
   build: env_setup_versal.sh

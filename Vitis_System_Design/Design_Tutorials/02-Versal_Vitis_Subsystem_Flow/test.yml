@@ -1,6 +1,6 @@
 name: VSD_D_02-VSS
 category: canary
-platform: [vck190, vek280]
+platform: [xilinx_vck190_base, xilinx_vek280_base]
 flow: versal
 env:
   build: env_setup_petalinux.sh

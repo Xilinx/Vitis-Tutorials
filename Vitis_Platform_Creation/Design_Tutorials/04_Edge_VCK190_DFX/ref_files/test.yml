@@ -1,6 +1,6 @@
 name: PFM_D_04_VCK190_DFX
 category: canary
-platform: [vck190]
+platform: [xilinx_vck190_base_dfx]
 flow: vitis
 env:
   build: env_setup_versal.sh
