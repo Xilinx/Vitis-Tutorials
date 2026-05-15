@@ -85,7 +85,7 @@ ${HOST_EXE}: ${GRAPH} ./Work/ps/c_rts/aie_control_xrt.cpp
 	$(MAKE) -C sw/
 
 package: guard-ROOTFS guard-IMAGE guard-PLATFORM_REPO_PATHS package_${TARGET}
-package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE} 
+package_${TARGET}: ${LIBADF} ${XSA} ${HOST_EXE}
 	${VCC} -p -t ${TARGET} -f ${PLATFORM} \
 		--package.rootfs ${ROOTFS} \
 		--package.kernel_image ${IMAGE} \

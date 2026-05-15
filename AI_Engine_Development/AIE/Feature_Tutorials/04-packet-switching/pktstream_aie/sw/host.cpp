@@ -133,6 +133,18 @@ int main(int argc, char* argv[]) {
 	xrtRunWait(s2mm_r2);
 	xrtRunWait(s2mm_r3);
 	xrtRunWait(s2mm_r4);
+
+	std::cout<<" s2mm wait complete"<<std::endl;
+
+	// >>> ADD THESE LINES <
+	// wait for mm2s and packet kernels to complete
+	xrtRunWait(mm2s_r1);
+	xrtRunWait(mm2s_r2);
+	xrtRunWait(mm2s_r3);
+	xrtRunWait(mm2s_r4);
+	xrtRunWait(hls_packet_sender_r);
+	xrtRunWait(hls_packet_receiver_r);
+	std::cout<<" mm2s and packet kernel waits complete"<<std::endl;
 	std::cout<<" s2mm wait complete"<<std::endl;
 
 	// post-processing data;
