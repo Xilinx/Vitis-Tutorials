@@ -84,7 +84,7 @@ help::
 	@echo  " Use the make recipes with required values for options mentioned below-"
 	@echo  "    TARGET             -specifies target: Hardware or Emulation. Values: hw_emu(default), hw"
 	@echo  "    FFT_2D_DT          -specifies FFT Datatype. Values: 0(cint16, default), 1(cfloat)"
-	@echo  "    FFT_2D_PT          -specifies FFT Point. Values: 64, 128, 256, 512, 2048(default)"
+	@echo  "    FFT_2D_PT          -specifies FFT Point. Values: 64, 128, 256(default), 512, 2048"
 	@echo  "    FFT_2D_INSTS       -specifies number of FFT instances. Values: 1(default), 5 and 10"
 	@echo  "    PL_FREQ        	 -specifies HLS kernel frequencies. Values: 250Mhz(default)"
 	@echo  "    ITER_CNT           -specifies design iteration count: Values: 16(default)"
@@ -187,12 +187,12 @@ endif
 #   FFT_2D_PT =  128:   64 x  128
 #   FFT_2D_PT =  256:  128 x  256
 #   FFT_2D_PT =  512:  256 x  512
-#   FFT_2D_PT = 2048: 1024 x 2048 (default)
+#   FFT_2D_PT = 2048: 1024 x 2048
 #
-#   MAT_ROWS: No. of rows in the Inp Matrix (default 1024)
-#   MAT_COLS: No. of cols in the Inp Matrix (default 2048)
+#   MAT_ROWS: No. of rows in the Inp Matrix (default 128)
+#   MAT_COLS: No. of cols in the Inp Matrix (default 256)
 # =========================================================
-FFT_2D_PT := 2048
+FFT_2D_PT := 256
 
 MAT_COLS := $(FFT_2D_PT)
 MAT_ROWS := $(shell echo $$(( $(MAT_COLS) / 2 )))
