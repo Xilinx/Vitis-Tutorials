@@ -338,7 +338,7 @@ jobs:
 
       - name: Generate report
         run: |
-          mkdir -p all-logs
+          rm -rf all-logs && mkdir all-logs
           uvx --with pyyaml --with jinja2 python3 _regression/scripts/generate_report.py \
             --logs all-logs \
             --output report.html \
