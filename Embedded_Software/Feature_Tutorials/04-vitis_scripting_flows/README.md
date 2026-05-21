@@ -11,7 +11,7 @@
   </tr>
 </table>
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 # Vitis Embedded Scripting Flows
 
@@ -723,13 +723,13 @@ xsdb.help("functions")
 Users can connect to a hw_server running on a localhost, or remote (as shown below)
 
 ```
-session.connect(url="TCP:lentinus15:3121")
+session.connect(url="TCP:localhost:3121")
 ```
 
 If users are debugging remotely where the host machine and target device are not on the same machine, then it is recommended to use a symbol server
 
 ```
-session.connect("--symbol", url="TCP:lentinus15:3121")
+session.connect("--symbol", url="TCP:localhost:3121")
 ```
 
 ### Connect to GDB
@@ -890,7 +890,7 @@ In the use case below, the XSDB API are used to connect to a Zynq Ultrascale tar
 ```
 import xsdb
 session = xsdb.start_debug_session()
-session.connect(url="TCP:lentinus15:3121")
+session.connect(url="TCP:localhost:3121")
  
 # Add the Microblaze PMU to target
 psu = session.targets("--set", filter="name =~ *PSU*")
