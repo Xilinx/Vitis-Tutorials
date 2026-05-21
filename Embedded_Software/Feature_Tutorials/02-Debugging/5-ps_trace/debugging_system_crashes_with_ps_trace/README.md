@@ -8,7 +8,7 @@
 
 # Debugging Baremetal System Crashes with PS Trace
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Blinking LEDs on VCK190 via GPIO
 

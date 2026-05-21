@@ -8,7 +8,7 @@
 
 # Debugging with PS Trace in Vitis
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Overview
 
@@ -24,7 +24,7 @@ This tutorial introduces PS Trace, a hardware-accelerated instruction tracing fe
 
 PS Trace is a new feature (previously a pre-release feature) in the Vitis Unified IDE that allows developers to monitor every assembly instruction executed by the CPU, providing users with insights for online diagnosis, performance debugging, and post-run data analysis. PS Trace leverages the **ARM Embedded Trace Macrocell (ETM)** enabling embedded developers to perform **non-intrusive, hardware-accelerated instruction tracing** with unprecedented visibility into processor execution flow.
 
-The PS Trace feature is a long term project. In the 2025.2 release, the PS Trace extension enables users to view and analyze trace data from a single trace source on an Arm processor. More ease-of-use enhancements and more processor types will be added in the future. In this release users could configure the trace during runtime and visualize the trace file after trace is stopped.
+The PS Trace feature is a long term project. In the 2026.1 release, the PS Trace extension enables users to view and analyze trace data from a single trace source on an Arm processor. More ease-of-use enhancements and more processor types will be added in the future. In this release users could configure the trace during runtime and visualize the trace file after trace is stopped.
 
 ### Key Capabilities
 
