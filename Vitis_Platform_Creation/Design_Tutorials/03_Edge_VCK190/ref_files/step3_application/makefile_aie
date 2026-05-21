@@ -170,6 +170,7 @@ else
 		--platform $(PLATFORM) \
 		--package.out_dir $(PACKAGE_OUT) \
 		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
+		--package.generate_sdcard \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
 		--package.kernel_image $(SD_IMAGE_FILE) \
@@ -183,6 +184,7 @@ else
 		--platform $(PLATFORM) \
 		--package.out_dir $(PACKAGE_OUT) \
 		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
+		--package.generate_sdcard \
 		--package.image_format=ext4 \
 		--package.boot_mode=sd \
 		--package.kernel_image=$(SD_IMAGE_FILE) \
