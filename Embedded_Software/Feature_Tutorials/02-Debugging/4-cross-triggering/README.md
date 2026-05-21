@@ -12,8 +12,7 @@
 </table>
 
 # Cross Triggering in Vitis Unified Embedded IDE
-
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 Embedded systems can be complex, that may contain multiple processors. You can also debug across software and hardware domains and can use PS-PL cross triggering. However, In this simple tutorial, you learn how we can debug over multiple processors using cross triggering.
 
@@ -62,7 +61,7 @@ int main()
 }
 ```
 
-Launch AMD Vitis™ Unified embedded tool in 2025.2 and open the **lab1** workspace.
+Launch AMD Vitis™ Unified embedded tool in 2026.1 and open the **lab1** workspace.
 
 ![](./images/applications.PNG)
 

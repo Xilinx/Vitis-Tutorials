@@ -1,11 +1,11 @@
 #
-# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 # Author: Stephen MacMahon
 
 SHELL := /bin/bash
-VERSION ?= 2025.2
+VERSION ?= 2026.1
 REMOTE ?= localhost
 PREBUILT ?= 0
 LAB ?= 1
@@ -18,7 +18,7 @@ build_sw: unified_workspace
 create_xsa:
 	if [ $(PREBUILT) == 0 ]; then \
 		$(RM) -rf ./zcu102; \
-		vivado -mode tcl -source create_xsa.tcl; \
+		vivado -mode tcl -source hw_design.tcl; \
 	else \
 		mkdir ./zcu102; \
 		cp ./prebuilt/design_1_wrapper.xsa ./zcu102; \
