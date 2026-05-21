@@ -15,7 +15,7 @@
 
 # AI Engine Kernel Optimization Lab
 
-***Version: Vitis 2025.1***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
