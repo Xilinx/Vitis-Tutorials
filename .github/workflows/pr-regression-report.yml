@@ -90,7 +90,7 @@ jobs:
                                 r === 'failure' ? ':x:' :
                                 r === 'skipped' ? ':fast_forward:' : ':grey_question:';
 
-            const body = [
+            const bodyParts = [
               '## Tutorial Regression Results',
               '',
               `**Tool Version**: ${meta.tool_version}`,
@@ -102,8 +102,23 @@ jobs:
               `| HW Emulation | ${icon(meta.hw_emu_result)} ${meta.hw_emu_result} |`,
               `| HW Build + Run | ${icon(meta.hw_build_result)} ${meta.hw_build_result} |`,
               '',
-              '_Full report available in workflow artifacts (incl. per-tutorial build vs run breakdown)._',
-            ].join('\n');
+            ];
+
+            if (meta.skip_summary && Object.keys(meta.skip_summary).length > 0) {
+              bodyParts.push('### Intentionally Skipped');
+              bodyParts.push('');
+              bodyParts.push('| Tutorial | Target | Reason |');
+              bodyParts.push('|----------|--------|--------|');
+              for (const [tut, skipMap] of Object.entries(meta.skip_summary).sort()) {
+                for (const [target, reason] of Object.entries(skipMap).sort()) {
+                  bodyParts.push(`| ${tut} | ${target} | ${reason} |`);
+                }
+              }
+              bodyParts.push('');
+            }
+
+            bodyParts.push('_Full report available in workflow artifacts (incl. per-tutorial build vs run breakdown)._');
+            const body = bodyParts.join('\n');
 
             const marker = '## Tutorial Regression Results';
             const { data: comments } = await github.rest.issues.listComments({

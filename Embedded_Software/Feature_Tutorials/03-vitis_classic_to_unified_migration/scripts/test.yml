@@ -4,8 +4,5 @@ platform: [zcu104]
 flow: vitis
 env:
   build: env_setup_zynqmp_notoolchain.sh
-targets:
-  vitis_hw_emu:
-    timeout: 240m
-    memory: 64GB
-    run: make all TARGET=hw_emu
+skip:
+  vitis_hw_emu: "xsct disabled in 2026.1 — tutorial uses xsct for classic workspace creation"

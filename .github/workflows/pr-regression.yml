@@ -334,23 +334,36 @@ jobs:
       - uses: actions/download-artifact@v3
         continue-on-error: true
         with:
+          name: matrix-data
+          path: _matrix-data
+
+      - uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
           path: all-logs
 
       - name: Generate report
         run: |
           rm -rf all-logs && mkdir all-logs
+          SKIP_FLAG=""
+          if [ -f _matrix-data/skip-summary.json ]; then
+            SKIP_FLAG="--skip-summary _matrix-data/skip-summary.json"
+          fi
           uvx --with pyyaml --with jinja2 python3 _regression/scripts/generate_report.py \
             --logs all-logs \
             --output report.html \
             --check check.json \
             --title "PR #${{ github.event.pull_request.number }} Regression" \
-            --tool-version "${{ needs.load-matrices.outputs.tool-version }}"
+            --tool-version "${{ needs.load-matrices.outputs.tool-version }}" \
+            $SKIP_FLAG
           python3 -c "import json; print(json.load(open('check.json'))['summary'])" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Save PR metadata for report workflow
         run: |
           python3 -c "
-          import json
+          import json, os
+          skip_path = '_matrix-data/skip-summary.json'
+          skip_summary = json.loads(open(skip_path).read()) if os.path.exists(skip_path) else {}
           meta = {
               'pr_number': ${{ github.event.pull_request.number }},
               'head_sha': '${{ github.event.pull_request.head.sha }}',
@@ -359,6 +372,7 @@ jobs:
               'sim_result': '${{ needs.sim-tests.result }}' or 'skipped',
               'hw_emu_result': '${{ needs.hw-emu-tests.result }}' or 'skipped',
               'hw_build_result': '${{ needs.hw-build-tests.result }}' or 'skipped',
+              'skip_summary': skip_summary,
           }
           json.dump(meta, open('pr-meta.json', 'w'), indent=2)
           "

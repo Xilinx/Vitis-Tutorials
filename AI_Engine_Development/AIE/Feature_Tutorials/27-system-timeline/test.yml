@@ -5,6 +5,8 @@ flow: versal
 env:
   build: env_setup_versal.sh
   board: env_setup_versal.sh
+skip:
+  vitis_hw_emu: "System Timeline is hardware-only — hw_emu not supported (see XSW Confluence)"
 targets:
   vitis_hw_build:
     timeout: 470m

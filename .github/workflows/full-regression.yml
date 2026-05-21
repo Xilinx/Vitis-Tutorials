@@ -333,17 +333,28 @@ jobs:
       - uses: actions/download-artifact@v3
         continue-on-error: true
         with:
+          name: matrix-data
+          path: _matrix-data
+
+      - uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
           path: all-logs
 
       - name: Generate report
         run: |
           rm -rf all-logs && mkdir all-logs
+          SKIP_FLAG=""
+          if [ -f _matrix-data/skip-summary.json ]; then
+            SKIP_FLAG="--skip-summary _matrix-data/skip-summary.json"
+          fi
           uvx --with pyyaml --with jinja2 python3 _regression/scripts/generate_report.py \
             --logs all-logs \
             --output report.html \
             --check check.json \
             --title "Full Regression - ${{ needs.load-matrices.outputs.tool-version }}" \
-            --tool-version "${{ needs.load-matrices.outputs.tool-version }}"
+            --tool-version "${{ needs.load-matrices.outputs.tool-version }}" \
+            $SKIP_FLAG
           python3 -c "import json; print(json.load(open('check.json'))['summary'])" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish test results
