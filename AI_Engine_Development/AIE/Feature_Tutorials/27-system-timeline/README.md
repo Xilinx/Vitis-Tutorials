@@ -10,7 +10,7 @@
 
 # System Timeline Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 This tutorial is based on a basic design to test the Vitis System Timeline feature.
 
@@ -166,7 +166,7 @@ tile_based_interface_tile_metrics = all:output_throughputs
 # PLIO
 reuse_buffer = true
 periodic_offload = true
-buffer_offload_interval_us = 50
+poll_timers_interval_us = 50
 buffer_size = 100M
 
 tile_based_aie_tile_metrics = all:functions
@@ -217,7 +217,7 @@ Zooming in where the AI Engine graph starts, you can see the PL kernels **gen2s*
 
 ![Missing image](images/StartGraph.png)
 
-The polling interval is crucial in event alignment. Reducing the polling interval improves event alignment in the timeline at the expense of increased timestamp file size. To show the effect of different polling intervals, modify the `buffer_offload_interval_us` parameter in `xrt.ini` file. The default value is 50 µs. The following example shows 100 µs:
+The polling interval is crucial in event alignment. Reducing the polling interval improves event alignment in the timeline at the expense of increased timestamp file size. To show the effect of different polling intervals, modify the `poll_timers_interval_us` parameter in `xrt.ini` file. The default value is 50 µs. The following example shows 100 µs:
 
 ![Missing image](images/StartGraphV2.png)
 
