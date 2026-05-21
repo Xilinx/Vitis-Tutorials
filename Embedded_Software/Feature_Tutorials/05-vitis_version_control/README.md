@@ -8,7 +8,7 @@
 
 # Version Control in Vitis Unified IDE
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 This guide is designed to help you understand and efficently use the built-in version control tools integrated within the Vitis Unified IDE. Version control among different teams is a key concept and therefore this tutorial will guide you through the essential workflows to streamline the development process within your own team. We will look at three different version control techniques within the Vitis Unified IDE
 
