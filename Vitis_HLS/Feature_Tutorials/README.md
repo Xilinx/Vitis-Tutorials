@@ -23,6 +23,10 @@ Feature tutorials illustrate specific features of the Vitis™ HLS development f
  <td width="65%" align="center"><b>Description</b>
  </tr>
  <tr>
+ <td align="center"><a href="./01-performance-pragma/">Streamlined Optimization with Vitis HLS Performance Pragma</a></td>
+ <td>Apply the top-level Performance Pragma to a 2D convolution design to meet a system-wide throughput goal without hand-tuning individual loops.</td>
+ </tr>
+ <tr>
  <td align="center"><a href="./02-Beamformer_Analysis/">HLS Micro-Optimization Tutorial using Beamformer IP</a></td>
  <td>Use HLS analysis tools to make low-level optimizations on a subset of the beamformer algorithm.</td>
  </tr>
