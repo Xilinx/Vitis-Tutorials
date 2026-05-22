@@ -1,0 +1,11 @@
+name: VHLS_F_01-performance-pragma
+category: canary
+platform: [u200]
+flow: hls
+targets:
+  hls_csim:
+    timeout: 60m
+    run: make all TARGET=csim
+  hls_csynth:
+    timeout: 120m
+    run: make all TARGET=csynth

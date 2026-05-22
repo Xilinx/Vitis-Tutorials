@@ -1,5 +1,11 @@
 # Vitis-Tutorials ChangeLog
 
+## 2025.2_update (May 22, 2026)
+
+### New Tutorials
+
+- Vitis_HLS/Feature_Tutorials/01-performance-pragma/
+
 ## 2025.2_update (Mar. 12, 2026)
 
 ### New Tutorials

@@ -533,10 +533,17 @@ If you already know exactly which tutorials or folders you need, `git sparse-che
         </tr>
         <tr>
             <td height="24">
-                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP</a>
+                <a href="./Vitis_HLS/Feature_Tutorials/01-performance-pragma">Streamlined Optimization with Vitis HLS Performance Pragma :new:</a>
             </td>
             <td>
                 <a href="./Vitis_HLS/Design_Tutorials/02-Beamformer">Adaptive Beamforming for Radar</a>
+            </td>            
+        </tr>
+        <tr>
+            <td height="24">
+                <a href="./Vitis_HLS/Feature_Tutorials/02-Beamformer_Analysis">HLS Micro-Optimization Tutorial using Beamformer IP</a>
+            </td>
+            <td>
             </td>            
         </tr>     
     </tbody>

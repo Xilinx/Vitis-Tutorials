@@ -1,0 +1,28 @@
+ {
+    "name": "Vitis_HLS_Performance_Pragma",
+    "description": "Streamlined Optimization with Vitis HLS Performance Pragma",
+    "flow": "hls",
+
+    "platform_allowlist": ["u200"],
+
+    "testinfo": {
+        "test_name": "VHLS_F_01-performance-pragma",
+        "jobs": [
+            {
+                "max_memory_MB": 32768,
+                "max_time_min": {
+                    "vitis_sw_emu": 60
+                }
+            }
+        ],
+        "targets": [
+            "hls_csim",
+            "hls_csynth"
+        ],
+        "category": "canary",
+        "custom_build_target":
+        {
+            "all": "all"
+        }
+    }
+}
