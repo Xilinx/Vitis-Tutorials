@@ -76,7 +76,7 @@ int run(int argc, char* argv[]){
 	// wait for s2mm done
 	auto state = s2mm_run.wait();
 	std::cout << "s2mm completed with status(" << state << ")\n";
-	
+
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
 	std::ofstream out("out.txt",std::ofstream::out);

@@ -57,6 +57,7 @@ int run(int argc, char* argv[]){
 	ghdl.run(iterations);
 	ghdl.end();
 	s2mm_run.wait();
+	mm2s_run.wait();
 	// Wait graph for some cycles
 	long long cycle_count = handle.read();
 	std::cout<<"cycle count:"<<cycle_count<<std::endl;
