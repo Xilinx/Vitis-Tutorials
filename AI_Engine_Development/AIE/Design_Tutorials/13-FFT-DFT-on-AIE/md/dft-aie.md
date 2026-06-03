@@ -47,7 +47,7 @@ The following figure shows the AI Engine graph for the $N=16$ DFT design. The fo
 
 ## Throughput Measurement for the `dft16` Design
 
-The following figure shows the AMD Vitis™ Analyzer trace for the $N=16$ DFT design, where throughput is measured by identifying the total time taken to process 8192 samples in a single kernel invocation. The design achieves a throughput of 7.635 μs or 8192 / 7.635 μs = 1073 MSPS. This throughput rate is achieved on each of the designs eight PLIOs, indicating the design achieves its SSR=8 objective.
+The following figure shows the AMD Vitis™ Analyzer trace for the $N=16$ DFT design, where throughput is measured by identifying the total time taken to process 8192 samples in a single kernel invocation. The design achieves a throughput of 7.614 μs or 8192 / 7.614 μs = 1076 MSPS. This throughput rate is achieved on each of the designs eight PLIOs, indicating the design achieves its SSR=8 objective.
 
 ![figure](../images/dft16_throughput.png)
 

@@ -19,7 +19,7 @@ Author: Faisal El-Shabani
 
 # Porting of Channelizer to Versal AI Edge Series Gen 2 (AIE-ML v2) leveraging Vitis Libraries
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -52,7 +52,7 @@ Author: Faisal El-Shabani
 
 ## Introduction
 
-The purpose of this tutorial is to demonstrate how to port an AIE-ML [reference design](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/AI_Engine_Development/AIE-ML/Design_Tutorials/07-Channelizer-Using-Vitis-Libraries) to AIE-ML v2 with minimal code changes. You do this by leveraging [Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries) which contain templatized DSP IPs that allow you to target all AI Engine variants.
+The purpose of this tutorial is to demonstrate how to port an AIE-ML [reference design](https://github.com/Xilinx/Vitis-Tutorials/tree/2026.1/AI_Engine_Development/AIE-ML/Design_Tutorials/07-Channelizer-Using-Vitis-Libraries) to AIE-ML v2 with minimal code changes. You do this by leveraging [Vitis Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries) which contain templatized DSP IPs that allow you to target all AI Engine variants.
 
 The tutorial targets the same System Requirements as the original tutorial, and highlights the changes required to build this design.
 
@@ -203,7 +203,7 @@ You can build the polyphase channelizer design from the command line.
 
 IMPORTANT: Before beginning the tutorial, ensure you have completed the following:
 
-- Installed AMD Vitis™ 2025.2 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
+- Installed AMD Vitis™ 2026.1 software and set `PLATFORM_REPO_PATHS` to the value `<Vitis_tools>/base_platforms`.
 - Created directory `<path-to-design>/yocto_artifacts` and set environment variable YOCTO_ARTIFACTS to that path.
 - From [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) package 25.11:
   - Downloaded amd-cortexa78-mali-common_meta-edf-app-sdk, run the script and set path output to `<path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`.

@@ -396,7 +396,7 @@ struct axis_pkt {
 
 ### Prerequisites
 
-- Vitis HLS 2025.2 or later
+- Vitis HLS 2026.1 or later
 - Target: `xc2ve3858-ssva2112-2MP-e-S` (Versal AI Edge Gen 2)
 - Clock: 312.5 MHz (3.2 ns period)
 

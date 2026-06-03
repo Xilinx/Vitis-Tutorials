@@ -132,18 +132,18 @@ This throughput level is equivalent to 32/152.8e-9 = 209 MSPS. This provides the
 
 The system can improve throughput of buffer-based AI Engine transforms at the expense of additional latency using "batch processing." This technique employs a buffer size that is larger than the transform size. This way, the switching overhead from ping to pong buffers occurs only once per batch instead of every transform. Overall, throughput improves at the expense of additional latency because it takes longer to buffer multiple data sets.
 
-The following table illustrates the impact of using `REPEAT=128` over `REPEAT=1` for the AIE API version of the FFT-32 design. The overall throughput increased from 209 Msps to 312 MSPS, while the latency increased significantly due to the buffering up of 128 transforms.
+The following table illustrates the impact of using `REPEAT=128` over `REPEAT=1` for the AIE API version of the FFT-32 design. The overall throughput increased from 209 Msps to 315 MSPS, while the latency increased significantly due to the buffering up of 128 transforms.
 
 In practice, the fundamental 128 KB limit of neighboring AI Engine local tile memory limits batch processing improvements, particularly for larger transforms. Additional techniques are required to further improve throughput.
 
 |Design            |# of AI Engines| `REPEAT`|Throughput (MSPS)| Latency (us)|
 |------------------|---------------|---------|-----------------|-------------|
 |`fft32_r2`        | 1             | 1       | 209             | 0.446       |
-|`fft32_r2`        | 1             | 128     | 312             | 26.2        |
-|`fft32_dsplib`    | 1             | 1       | 222             | 0.443       |
-|`fft32_dsplib`    | 1             | 128     | 367             | 22.29       |
-|`fft_dsplib_split`| 3             | 1       | 363             | 0.408       |
-|`fft_dsplib_ssr`  | 4             | 128     | 474             | 9.52        |
+|`fft32_r2`        | 1             | 128     | 315             | 26.2        |
+|`fft32_dsplib`    | 1             | 1       | 225             | 0.423       |
+|`fft32_dsplib`    | 1             | 128     | 358             | 22.85       |
+|`fft_dsplib_split`| 3             | 1       | 381             | 0.392       |
+|`fft_dsplib_ssr`  | 4             | 128     | 531             | 8.604       |
 
 ## Single-Tile DSPlib Design
 
@@ -211,13 +211,13 @@ The following figure shows the AI Engine graph for `fft32_dsplib`. The AI Engine
 
 ## Throughput and Latency Measurements for `fft32_dsplib` Design
 
-The throughput and latency measured using Vitis Analyzer are shown to be 144 ns and 443.2 ns, in the following figures. This throughput level is equivalent to 32/144e-9 = 222 MSPS. Note that a higher QoR is achieved by the Vitis DSP library IP.
+The throughput and latency measured using Vitis Analyzer are shown to be 142.4 ns and 423.2 ns, in the following figures. This throughput level is equivalent to 32/142.4e-9 = 225 MSPS. Note that a higher QoR is achieved by the Vitis DSP library IP.
 
 ![figure](../images/fft32_dsplib_throughput.png)
 
 ![figure](../images/fft32_dsplib_latency.png)
 
-The Vitis DSP library supports the same "batch processing" approach to improving throughput. Set the `TP_WINDOW_SIZE` parameter to hold multiple transforms and reduce the overhead. The previous code block is set up to do this using the `REPEAT` parameter. When set to `REPEAT=128`, a throughput and latency of 11.14 μs and 22.29 μs are achieved, respectively. This throughput level is equivalent to 128*32/11.14e-6 = 367 MSPS. These results are summarized and compared to the earlier design in the table above.
+The Vitis DSP library supports the same "batch processing" approach to improving throughput. Set the `TP_WINDOW_SIZE` parameter to hold multiple transforms and reduce the overhead. The previous code block is set up to do this using the `REPEAT` parameter. When set to `REPEAT=128`, a throughput and latency of 11.434 μs and 22.85 μs are achieved, respectively. This throughput level is equivalent to 128*32/11.434e-6 = 358 MSPS. These results are summarized and compared to the earlier design in the table above.
   
 ## Optimization Technique: Split Stages
 
@@ -232,7 +232,7 @@ The paragraphs and markdown formatting are now correctly formatted.
 
 ## Throughput and Latency Measurements for `fft32_dsplib_split` Design
 
-With the `REPEAT` parameter set to unity, indicating the buffer size was set to match the transform size, the throughput, and latency measured using Vitis Analyzer are shown to be 88 ns and 408.8 ns, respectively, in the following figures. This throughput level is equivalent to 32/88e-9 = 363 Msps.
+With the `REPEAT` parameter set to unity, indicating the buffer size was set to match the transform size, the throughput, and latency measured using Vitis Analyzer are shown to be 84 ns and 392 ns, respectively, in the following figures. This throughput level is equivalent to 32/88e-9 = 381 Msps.
 
 ![figure](../images/fft32_dsplib_split_throughput.png)
 
@@ -262,7 +262,7 @@ One scaling limitation of the Vitis DSP Library FFT IP is the following. The sup
 
 ## Throughput and Latency measurements for `fft32_dsplib_ssr` Design
 
-With the `REPEAT` parameter set to 128, the throughput and latency as measured using Vitis Analyzer are shown to be 8.631 μs and 9.52 μs, respectively, in the following figures. This throughput level is equivalent to 128*32/8.631e-6 = 474 MSPS. This can be compared to the other FFT-32 designs in the previous table.
+With the `REPEAT` parameter set to 128, the throughput and latency as measured using Vitis Analyzer are shown to be 7.716 μs and 8.604 μs, respectively, in the following figures. This throughput level is equivalent to 128*32/7.716e-6 = 531 MSPS. This can be compared to the other FFT-32 designs in the previous table.
 
 ![figure](../images/fft32_dsplib_ssr_throughput.png)
 

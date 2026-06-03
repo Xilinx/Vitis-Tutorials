@@ -8,7 +8,7 @@ ECHO                  := @echo
 
 QEMU_PREBUILT          := amd-cortexa78-mali-common_vek385_qemu_prebuilt
 export QEMU_COMBINED   := base_camp_images
-export WIC_PARTITION   := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
+export WIC_PARTITION   := edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
 
 export DUT       = dut
 export XCLBIN    = ${DUT}.xclbin
