@@ -21,7 +21,7 @@
 
 IMPORTANT: Before beginning the tutorial:
 
-* Install Vitis™ 2025.2 software
+* Install Vitis™ 2026.1 software
 * Download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found in [this link](../../../AIE#environment-settings).
@@ -29,7 +29,7 @@ Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where yo
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/21-Back-Projection-SAR/Makefile```.
 
 ```
-RELEASE=2025.2
+RELEASE=2026.1
 
 TOP_DIR                   ?= $(shell readlink -f .)
 PLATFORM_NAME              = xilinx_vck190_base_202610_1
@@ -64,5 +64,5 @@ You can uild the multiple engine SAR design for the VCK190 board using the Makef
 
 The build process with generate the SD card image in the ```<path-to-design>/21-Back-Projection-SAR/package8/sd_card``` folder.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

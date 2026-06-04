@@ -38,5 +38,5 @@ To run the design examples provided in this tutorial, download the GOTCHA data s
 [1]: <https://www.sdms.afrl.af.mil/index.php?collection=gotcha> "GOTCHA Volumetric SAR Data Set"
 [[1]]: U.S. Air Force, "GOTCHA Volumetric SAR Data Set," U.S. Air Force Sensor Data Management System.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

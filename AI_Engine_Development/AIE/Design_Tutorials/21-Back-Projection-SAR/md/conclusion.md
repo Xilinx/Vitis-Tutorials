@@ -29,5 +29,5 @@ The tutorial showed some important concepts and new features in the Versal AI En
 
 The tutorial provides full device level designs for both the single engine and 8-engine versions of the design. The tutorial explores opportunities for further design optimization, including migrating the PL URAM buffers to DDR and to use a GMIO-based data flow. This topic is currently under study.
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

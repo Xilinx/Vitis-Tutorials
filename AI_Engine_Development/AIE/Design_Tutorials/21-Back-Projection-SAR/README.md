@@ -15,7 +15,7 @@
 
 # Back-Projection for Synthetic Aperture Radar on AI Engines
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Abstract
 
@@ -59,7 +59,7 @@ Components: xilinx-files
 
 The MIT License (MIT)
 
-Copyright (c) 2025 Advanced Micro Devices, Inc.
+Copyright (c) 2026 Advanced Micro Devices, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -80,5 +80,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -17,7 +17,7 @@ export PREBUILT_LINUX_PATH = ${COMMON_IMAGE_VERSAL}
 
 .PHONY:		all dev1 dev8 clean_dev1 clean_dev8 clean_all
 
-all:	dev1 dev8
+all:	dev8
 
 dev1:
 	$(MAKE) all -C aie/sar_top_1engine
