@@ -15,7 +15,7 @@
 
 # Digital Down-conversion Chain: Converting from Intrinsics to API
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -121,7 +121,7 @@ You can build the 32-branch digital down-conversion design using the command lin
 
 ### Setup and Initialization
 
-IMPORTANT: Before beginning the tutorial, install the AMD Vitis™ 2025.2 software platform. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html). 
+IMPORTANT: Before beginning the tutorial, install the AMD Vitis™ 2026.1 software platform. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html). 
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. The remaining environment variables are configured in the top level Makefile.
 
@@ -161,7 +161,7 @@ The following table summarizes key parameters for the older design (ran on newer
 | Functionally correct | Yes | Yes |
 | Throughput (MSPS)| ~247/224 | ~247/224 |
 
-## Support
+## Support 
 
 GitHub issues are used to track requests and bugs. For questions, go to [support.amd.com](https://adaptivesupport.amd.com/s/?language=en_US).
 

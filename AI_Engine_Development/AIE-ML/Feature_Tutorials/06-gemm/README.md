@@ -15,7 +15,7 @@
 
 # Matrix Compute with Vitis Libraries on AIE and AIE-ML
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Introduction
 
@@ -31,7 +31,7 @@ For example, `c11` equals `(a11 x b11) + (a12 x b21)`. Similarly, `c33` equals `
 
 ![Matrix Product](./images/2_Matrix_Product.png)
 
-**IMPORTANT**: Before starting the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2025.2) to set up the software and install the VEK280 base platform.
+**IMPORTANT**: Before starting the tutorial, read and follow the *Vitis Software Platform Release Notes* (v2026.1) to set up the software and install the VEK280 base platform.
 
 Then complete the following steps:
 1. Set your `PLATFORM_REPO_PATHS` environment variable based on the directory where you downloaded the platform.
@@ -337,7 +337,7 @@ $ make check_sim_output_aie
 - `make profile`: Start the AIE simulation.
 - `make check_sim_output_aie`: Invoke MATLAB® to compare simulation output with golden test vectors.
 
-The AIE simulation displays average throughput for the I/O ports at completion. The output port `PLIO_0_o` throughput is 1112.56 MB/s.
+The AIE simulation displays average throughput for the I/O ports at completion. The output port `PLIO_0_o` throughput is 1125 MB/s.
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the expected console output is: 
 ```
@@ -401,7 +401,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The output port PLIO_0_o throughput is 2452.11 MB/s.
+The output port PLIO_0_o throughput is 2500 MB/s.
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -429,8 +429,8 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1125 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2500 MBPS   |
 
 ## Design Variant 3: 8-tile design with TP_CASC_LEN=4 and TP_SSR=2
 
@@ -471,7 +471,7 @@ $ make check_sim_output_aie
 ```
 
 The average throughput for the IO ports is displayed at the end of AIE simulation.
-The throughput for the output port is approximately 3815.2 MBYTES/S (for example, `PLIO_0_o + PLIO_1_o`).
+The throughput for the output port is approximately 4375 MBYTES/S (for example, `PLIO_0_o + PLIO_1_o`).
 
 After running the last command (`make check_sim_output_aie`) to verify the results, the console should output as follows: 
 ```
@@ -504,9 +504,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput  |
 |---------------------|-------------|--------|---------|---------|-------------|
-| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS   |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS   |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1125 MBPS   |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2500 MBPS   |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 4375 MBPS   |
 
 
 ## Migrate the Design from AIE to AIE-ML and Evalute the Performance Differences
@@ -561,9 +561,9 @@ Close the Vitis Analyzer.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS       |                   |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS       |                   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1125 MBPS       | 1529 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2500 MBPS       |                   |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 4375 MBPS       |                   |
 
 ## Design Variant 2: 4-tile Design with TP_CASC_LEN=4 (AIE-ML)
 
@@ -581,7 +581,7 @@ $ make profile
 $ make check_sim_output_aie
 ```
 
-At the end of AIE simulation, review the average throughput for the I/O ports. The throughput for the output port is approximately 3029 MB/s.
+At the end of AIE simulation, review the average throughput for the I/O ports. The throughput for the output port is approximately 3164 MB/s.
 
 The expected console output after running the `make check_sim_output_aie` command to verify the results is: 
 ```
@@ -604,9 +604,9 @@ Close the Vitis Analyzer after completing your review.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MBPS       | 1529 MBPS         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MBPS       | 3033 MBPS         |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MBPS       |                   |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1125 MBPS       | 1529 MBPS         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2500 MBPS       | 3164 MBPS         |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 4375 MBPS       |                   |
 
 ## Design Variant 3: 8-tile Design with TP_CASC_LEN=4 and TP_SSR=2 (AIE-ML)
 
@@ -624,7 +624,7 @@ $ make profile
 $ make check_sim_output_aie
 ```
 
-At simulation completion, review the average throughput for the I/O ports. The throughput for the combined output ports (`PLIO_0_o + PLIO_1_o`) is approximately 6702 MB/s.
+At simulation completion, review the average throughput for the I/O ports. The throughput for the combined output ports (`PLIO_0_o + PLIO_1_o`) is approximately 6614 MB/s.
 
 The expected console output after running the `make check_sim_output_aie` command to verify the results is:
 ```
@@ -647,12 +647,12 @@ Close the Vitis Analyzer after completing your review.
 
 | Design              | TP_CASC_LEN | TP_SSR | NPORT_I | NPORT_O | Throughput (AIE)|Throughput (AIE-ML)|
 |---------------------|-------------|--------|---------|---------|-----------------|-------------------|
-| Design Variant 1    |      1      |    1   |    1    |    1    | 1112 MB/S       | 1529 MB/S         |
-| Design Variant 2    |      4      |    1   |    4    |    1    | 2447 MB/S       | 3033 MB/S         |
-| Design Variant 3    |      4      |    2   |    8    |    2    | 3770 MB/S       | 6754 MB/S         |
+| Design Variant 1    |      1      |    1   |    1    |    1    | 1125 MB/S       | 1529 MB/S         |
+| Design Variant 2    |      4      |    1   |    4    |    1    | 2500 MB/S       | 3164 MB/S         |
+| Design Variant 3    |      4      |    2   |    8    |    2    | 4375 MB/S       | 6614 MB/S         |
 
 
-From the table, for **Design Variant 3**, on the AIE-ML architecture runs approximately **1.7x** faster than the AIE architecture.
+From the table, for **Design Variant 3**, on the AIE-ML architecture runs approximately **1.5x** faster than the AIE architecture.
 
 **Why does the AIE-ML architecture outperform the AIE architecture?**
 
