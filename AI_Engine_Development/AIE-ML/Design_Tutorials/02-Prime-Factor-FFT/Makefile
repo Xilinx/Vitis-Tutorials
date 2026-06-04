@@ -7,7 +7,7 @@
 ECHO                               = @echo
 export TARGET                      ?= hw
 
-RELEASE=2025.2
+RELEASE=2026.1
 BOARD=vek280
 BASE_NUM=202610_1
 

@@ -26,10 +26,6 @@ void load_buffer( TT_DATA mem[DEPTH], TT_DATA (&buff)[DEPTH] )
 
 void transmit( TT_DATA (&buff)[DEPTH], TT_STREAM& sig_o, const int& loop_cnt )
 {
-  // Push out dummy writes to account for latency involved in PL HLS data path:
-  //    pfa1008_permute_i:   NFFT/4+0 cycles
-  //    pfa1008_permute_o:   NFFT/4+0 cycles
-  //                Total:   NFFT/2+0 cycles
   static constexpr int LATENCY = NFFT/2;
  REPEAT: for (int ll=0; ll < loop_cnt; ll++) {
 #pragma HLS LOOP_TRIPCOUNT min=1 max=8
@@ -38,10 +34,20 @@ void transmit( TT_DATA (&buff)[DEPTH], TT_STREAM& sig_o, const int& loop_cnt )
       sig_o.write( buff[dd] );
     } // dd
   } // ll
- RUN_LATENCY: for (int dd=0; dd < LATENCY; dd++) {
+}
+
+// ------------------------------------------------------------
+// Zero Pad
+// ------------------------------------------------------------
+
+void zero_pad( TT_STREAM& sig_o )
+{
+  // Add 22.9 us of latency at 312.5 MHz = 7156 cycles:
+  static constexpr int NUM_ZERO_PAD = 7156;
+ ZERO_PAD: for (int zz=0; zz < NUM_ZERO_PAD; zz++) {
 #pragma HLS PIPELINE II=1
     sig_o.write( TT_DATA(0) );
-  } // dd
+  } // zz
 }
 
 // ------------------------------------------------------------
@@ -58,16 +64,19 @@ pfa1008_dma_src_wrapper( pfa1008_dma_src::TT_DATA mem[pfa1008_dma_src::DEPTH],
 #pragma HLS interface s_axilite  port=loop_cnt    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[DEPTH];
+#pragma HLS bind_storage variable=buff latency=3
 
   // Front end load from DDR4 to PL BRAM:
   load_buffer( mem, buff );
 
   // Back end transmit from PL BRAM to AIE:
   transmit( buff, sig_o, loop_cnt );
+
+  // Zero-pad to account for latency from DMA_SRC to DMA_SNK:
+  zero_pad( sig_o );
 }
 
 

@@ -15,7 +15,7 @@
 
 # Prime Factor FFT-1008 on AIE-ML
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -156,14 +156,14 @@ The following figure summarizes the PL resources required to implement the desig
 
 ### Setup and Initialization
 
->**IMPORTANT:** Before beginning the tutorial, install the Vitis 2025.2 software platform. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+>**IMPORTANT:** Before beginning the tutorial, install the Vitis 2026.1 software platform. Also, download the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. You can find additional information on this process [here](../../../AIE#environment-settings).
 
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/02-Prime-Factor-FFT/Makefile``` file.
 
 ```makefile
-RELEASE=2025.2
+RELEASE=2026.1
 BOARD=vek280
 BASE_NUM=202610_1
 

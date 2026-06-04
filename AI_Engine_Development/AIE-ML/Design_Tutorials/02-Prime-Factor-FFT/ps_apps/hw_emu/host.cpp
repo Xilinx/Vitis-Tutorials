@@ -29,8 +29,7 @@ typedef int TT_DATA;            // Assume cint16 data
 
 static constexpr int32_t         NUM_ITER = -1; // Let the graph run and have DMA_SNK terminate things
 static constexpr int32_t        LOOP_CNT_I = 8;
-static constexpr int32_t        LOOP_CNT_O = 6;
-static constexpr int32_t          LOOP_SEL = 0; // ID of loop to capture by DDR SNK PL HLS block
+static constexpr int32_t        LOOP_CNT_O = 8;
 static constexpr unsigned            DEPTH = 1008; // 4 transform x 1008-pt / 4 samples @ 128-bit
 static constexpr unsigned DDR_WORD_DEPTH_I = DEPTH;
 static constexpr unsigned DDR_WORD_DEPTH_O = DEPTH;
@@ -42,7 +41,7 @@ static constexpr unsigned DDR_BUFFSIZE_O_BYTES = NUM_SAMPLES_O * 4; // Each samp
 static constexpr double THROUGHPUT_TARGET = 1000;
 static constexpr double THROUGHPUT_ERROR_LIMIT = 5;
 
-static unsigned int word_count = LOOP_CNT_O * NUM_SAMPLES_I / 4; // # of 128-bit words passing through monitor
+static unsigned int word_count = LOOP_CNT_O * NUM_SAMPLES_O / 4; // # of 128-bit words passing through monitor
 
 // ------------------------------------------------------------
 // Main
@@ -162,6 +161,9 @@ int main(int argc, char* argv[])
   std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
 
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
+
+  dma_src_run.wait();
+  std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;

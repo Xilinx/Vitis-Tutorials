@@ -31,13 +31,9 @@ public:
 
   pfa1008_graph( void )
   {
-#ifdef AIE_SIM_ONLY
     sig_i =  input_plio::create("PLIO_sig_i",plio_64_bits,"data/sig_i_aie.txt");
     sig_o = output_plio::create("PLIO_sig_o",plio_64_bits,"data/sig_o_aie.txt");
-#else
-    sig_i =  input_plio::create("PLIO_sig_i",plio_64_bits);
-    sig_o = output_plio::create("PLIO_sig_o",plio_64_bits);
-#endif
+
     connect<>( sig_i.out[0],      dft7.sig_i       );
     connect<>( dft7.sig_o,        transpose0.sig_i );
     connect<>( transpose0.sig_o,  dft9.sig_i       );

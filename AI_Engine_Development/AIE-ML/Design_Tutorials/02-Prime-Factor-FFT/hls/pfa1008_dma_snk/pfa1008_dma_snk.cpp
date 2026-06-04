@@ -65,10 +65,10 @@ pfa1008_dma_snk_wrapper( pfa1008_dma_snk::TT_DATA mem[pfa1008_dma_snk::DEPTH],
 #pragma HLS interface m_axi           port=mem         num_read_outstanding=1  max_read_burst_length=1
 #pragma HLS interface mode=s_axilite  port=word_count                 bundle=control
 #pragma HLS interface mode=s_axilite  port=return                     bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[DEPTH];
+#pragma HLS bind_storage variable=buff latency=3
   unsigned cycle_count;
 
   // Front end load from DDR4 to PL BRAM:
