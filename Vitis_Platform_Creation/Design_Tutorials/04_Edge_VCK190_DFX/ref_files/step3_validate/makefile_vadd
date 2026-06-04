@@ -77,7 +77,21 @@ $(LINK_OUTPUT): $(TEMP_DIR)/vadd.xo
 sd_card: $(SD_CARD)
 
 $(SD_CARD): $(EXECUTABLE) $(LINK_OUTPUT)
+ifeq ($(TARGET), hw_emu)
+	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) \
+		--package.out_dir $(PACKAGE_OUT) \
+		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
+		--package.generate_sdcard \
+		--package.bl31 $(EDGE_COMMON_SW)/bl31.elf \
+		--package.uboot $(EDGE_COMMON_SW)/u-boot.elf \
+		--package.sd_file $(EDGE_COMMON_SW)/boot.scr \
+		--package.sd_file $(SD_IMAGE_FILE) \
+		--package.sd_file ../$(RUN_APP_SCRIPT) \
+		--package.sd_file $(EXECUTABLE) \
+		-o $(BUILD_DIR)/vadd.xclbin
+else
 	v++ -p $(VPP_PFLAGS) $(LINK_OUTPUT) $(VPP_FLAGS) -t $(TARGET) --platform $(PLATFORM) --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(SD_IMAGE_FILE)  --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file $(EXECUTABLE) -o $(BUILD_DIR)/vadd.xclbin
+endif
 
 ############################## Setting Rules for Host (Building Host Executable) ##############################
 $(EXECUTABLE): $(HOST_SRCS)

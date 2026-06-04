@@ -164,16 +164,18 @@ ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
 		--platform $(PLATFORM) \
 		--package.out_dir $(PACKAGE_OUT) \
 		--package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 \
-		--package.image_format=ext4 \
-		--package.boot_mode=sd \
-		--package.kernel_image $(SD_IMAGE_FILE) \
+		--package.generate_sdcard \
+		--package.bl31 $(EDGE_COMMON_SW)/bl31.elf \
+		--package.uboot $(EDGE_COMMON_SW)/u-boot.elf \
+		--package.sd_file $(EDGE_COMMON_SW)/boot.scr \
+		--package.sd_file $(EDGE_COMMON_SW)/Image \
 		--package.defer_aie_run \
 		--package.sd_file ../$(RUN_APP_SCRIPT) \
 		--package.sd_file aie_adder $(LINK_OUTPUT) $(GRAPH_O) -o $(XCLBIN)
 	@echo "COMPLETE: emulation package created."
 else
 	v++ $(VPP_FLAGS) -t hw --platform $(PLATFORM) -p $(LINK_OUTPUT) $(GRAPH_O) --package.defer_aie_run -o $(XCLBIN)
-	v++ $(VPP_PFLAGS) -t hw --platform $(PLATFORM) -p --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file aie_adder --package.sd_file $(XCLBIN) 
+	v++ $(VPP_PFLAGS) -t hw --platform $(PLATFORM) -p --package.out_dir $(PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.image_format=ext4 --package.boot_mode=sd --package.kernel_image=$(SD_IMAGE_FILE) --package.sd_file ../$(RUN_APP_SCRIPT) --package.sd_file aie_adder --package.sd_file $(XCLBIN)
 	@echo "### ***** dfx sd_card generation done! ***** ###"
 endif
 
