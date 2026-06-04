@@ -57,9 +57,9 @@ void transmit( TT_SAMPLE (&buff)[NSTREAM][NROW][DEPTH], TT_STREAM sig_o[NSTREAM]
 {
   // Extra "ll" loop iteration since ifft_transpose() has same latency as a single transpose operation
  REPEAT: for (int ll=0; ll <= loop_cnt; ll++) {
-#pragma HLS LOOP_TRIPCOUNT min=1 max=8
+#pragma HLS LOOP_TRIPCOUNT min=1 max=9
   RUN_DEPTH: for (int cc=0,rr=0,dd=0; cc <NROW*DEPTH; cc+=2) { // Send two samples per stream word
-#pragma HLS PIPELINE II=1
+#pragma HLS PIPELINE II=1 rewind
     STREAM1: for (int ss=0; ss < NSTREAM; ss++) {
         TT_SAMPLE val0 = (ll != loop_cnt) ? buff[ss][rr][dd  ] : TT_SAMPLE(0);
         TT_SAMPLE val1 = (ll != loop_cnt) ? buff[ss][rr][dd+1] : TT_SAMPLE(0);
@@ -70,6 +70,21 @@ void transmit( TT_SAMPLE (&buff)[NSTREAM][NROW][DEPTH], TT_STREAM sig_o[NSTREAM]
       dd = (dd == DEPTH-2) ? 0 : dd+2; // Send two samples per stream word
     } // cc
   } // ll
+}
+
+// ------------------------------------------------------------
+// Zero Stuff
+// ------------------------------------------------------------
+
+void zero_stuff( TT_STREAM sig_o[NSTREAM] )
+{
+  // Send zeros for ~2 us at 312.5 MHz to flush system latency (625 cycles)
+ ZERO_STUFF: for (int cc=0; cc < 625; cc++) {
+#pragma HLS PIPELINE II=1
+    for (int ss=0; ss < NSTREAM; ss++) {
+      sig_o[ss].write( TT_DATA(0) );
+    }
+  }
 }
 
 // ------------------------------------------------------------
@@ -86,19 +101,20 @@ ifft_dma_src_wrapper( ifft_dma_src::TT_DATA mem[ifft_dma_src::NFFT/2],
 #pragma HLS interface s_axilite  port=loop_cnt    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_SAMPLE buff[NSTREAM][NROW][DEPTH];
 #pragma HLS array_partition variable=buff dim=1
-#pragma HLS bind_storage variable=buff type=RAM_T2P impl=uram
-#pragma HLS dependence variable=buff type=intra false
+#pragma HLS bind_storage variable=buff type=RAM_T2P impl=uram latency=3
 
   // Front end load from DDR4 to PL BRAM:
   load_buffer( mem, buff );
 
   // Back end transmit from PL BRAM to AIE:
   transmit( buff, sig_o, loop_cnt );
+
+  // Zero-Stuff to account for system latency (allows sink block to finish -- system latency ~30 us)
+  zero_stuff( sig_o );
 }
 
 

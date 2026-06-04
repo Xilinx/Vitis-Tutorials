@@ -19,7 +19,7 @@ void capture_streams( TT_SAMPLE (&buff)[NSTREAM][DEPTH*DEPTH/NSTREAM], TT_STREAM
 #pragma HLS LOOP_TRIPCOUNT min=1 max=8
     for (int cc=0,addr=0; cc < DEPTH/NSTREAM; cc++) {
       for (int rr=0; rr < DEPTH/2; rr++) {
-#pragma HLS pipeline II=1
+#pragma HLS pipeline II=1 rewind
         for (int ss=0; ss < NSTREAM; ss++) {
           TT_SAMPLE val1, val0;
           ( val1, val0 ) = sig_i[ss].read();
@@ -46,15 +46,15 @@ void read_buffer( TT_DATA mem[NFFT/2], TT_SAMPLE (&buff)[NSTREAM][DEPTH*DEPTH/NS
     int ss0=0;
     for (int cc=0; cc < NFFT_1D; cc+=2) {
 #pragma HLS PIPELINE II=1
-      int ss1 = (ss0 + 1) % NSTREAM;
+      int ss1 = (ss0 == NSTREAM-1) ? 0 : ss0 + 1;
       int addr1 = (ss0 == NSTREAM-1) ? addr0 + DEPTH : addr0;
       TT_SAMPLE val0 = buff[ss0][addr0];
       TT_SAMPLE val1 = buff[ss1][addr1];
       mem[mm++] = ( val1, val0 );
-      if ( ss0 == NSTREAM-1 || ss1 == NSTREAM-1 ) {
+      if ( ss0 >= NSTREAM-2 ) {
         addr0 = addr0 + DEPTH;
       }
-      ss0 = (ss0 + 2) % NSTREAM;
+      ss0 = (ss0 >= NSTREAM-2) ? (ss0 + 2 - NSTREAM) : (ss0 + 2);
     }
   }
 }
@@ -75,12 +75,11 @@ ifft_dma_snk_wrapper( ifft_dma_snk::TT_DATA mem[ifft_dma_snk::NFFT/2],
 #pragma HLS interface s_axilite  port=loop_cnt    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_SAMPLE buff[NSTREAM][DEPTH*DEPTH/NSTREAM];
 #pragma HLS array_partition variable=buff dim=1
-#pragma HLS bind_storage variable=buff type=RAM_T2P impl=uram
+#pragma HLS bind_storage variable=buff type=RAM_T2P impl=uram latency=3
 
   // Front end load from DDR4 to PL BRAM:
   capture_streams( buff, sig_i, loop_sel, loop_cnt );

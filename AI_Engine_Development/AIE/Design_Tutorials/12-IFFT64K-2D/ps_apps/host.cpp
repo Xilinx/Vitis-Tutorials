@@ -33,7 +33,7 @@ typedef int32_t TT_DATA;            // Assume int32 data for I/O data (will be c
 
 static constexpr int32_t         NUM_ITER = -1; // Let the graph run and have DMA_SNK terminate things
 static constexpr int32_t        LOOP_CNT_I = 8;
-static constexpr int32_t        LOOP_CNT_O = 4; // Try to stop it early
+static constexpr int32_t        LOOP_CNT_O = 8; 
 static constexpr int32_t          LOOP_SEL = 0; // ID of loop to capture by DDR SNK PL HLS block
 static constexpr unsigned          NFFT_1D = 256;
 static constexpr unsigned            DEPTH = NFFT_1D * NFFT_1D; // 1 transform
@@ -158,18 +158,24 @@ int main(int argc, char* argv[])
   dma_snk_run.set_arg( 2, LOOP_CNT_O );
   std::cout << STR_PASSED << "dma_snk_run.set_arg( 2, LOOP_CNT_O=" << LOOP_CNT_O << " )" << std::endl;
 
-  dma_src_run.start();
-  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
-
-  dma_snk_run.start();
+  dma_snk_run.start();  
   std::cout << STR_PASSED << "dma_snk_run.start()" << std::endl;
 
+  dma_src_run.start();
+  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
+  
   // Wait for all kernels to end:
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
+
+  dma_src_run.wait();
+  std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;
 
+  // dma_src_run.wait();
+  // std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
+  
   // ------------------------------------------------------------
   // Retrieve Results
   // ------------------------------------------------------------
