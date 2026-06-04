@@ -1,145 +1,139 @@
-﻿<table class="sphinxhide" width="100%">
+<table class="sphinxhide" width="100%">
  <tr width="100%">
-    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Getting Started with Versal™ AI Edge Gen2 with Vitis™ Unified IDE</h1>
+    <td align="center"><img src="https://raw.githubusercontent.com/Xilinx/Image-Collateral/main/xilinx-logo.png" width="30%"/><h1>Getting Started with AMD Versal™ AI Edge Gen2 VEK385 with Vitis™ Unified IDE (EDF flow)</h1>
     <a href="https://www.xilinx.com/products/design-tools/vitis.html">See Vitis Development Environment on xilinx.com</br></a>
     </td>
  </tr>
 </table>
 
-***Version: Vitis 2025.2 and Vivado 2025.2***
+***Version: Vitis 2026.1 and Vivado 2026.1***
 
-Welcome to Vitis Getting Started!
+Welcome to the Vitis Getting Started tutorial for the VEK385 EDF flow.
 
-This tutorial showcases the important steps to build the AIE kernel dedicated for Versal AI Edge Gen2 architecture along with a Host application and running the design on the hardware and hardware emulation.
+This tutorial showcases the steps to build an AI Engine 2-PS (AIE2-PS) graph along with a host application, and run the design in hardware emulation (QEMU) and on the VEK385 board.
 
-This tutorial uses pre-built xilinx_vek385_base_202610_1.xpfm from Vitis installation path to compile AIE kernels.
+This tutorial uses the pre-built `vek385_base_reva.xpfm` platform from the Vitis installation (`${PLATFORM_REPO_PATHS}/vek385_base_reva/vek385_base_reva.xpfm`) to compile the AIE2-PS kernels.
 
 The pre-built VEK385 platform has:
 
-   - Base part: PS and PS-to-NoC-DDR connectivity
-
-   - Extensible part: PL and AIE regions
+- Base part: PS and PS-to-NoC-DDR connectivity
+- Extensible part: PL and AIE regions
 
    ![Application development](images/ced_structure.svg)
 
-The base part will serve as the foundation to generate the EDF WIC image. For more information about AMD EDF, please refer to the official [AMD Wiki page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3250585601/AMD+Embedded+Development+Framework+EDF#Introduction-to-the-AMD-Embedded-Development-Framework).  The extensible part will later be used to link with your custom kernels, ensuring your development flow is fully aligned with the AMD EDF methodology.
+The base part serves as the foundation to generate the EDF WIC image. The extensible part is later linked with the AIE2-PS kernels, producing a fixed XSA that is used to build the host application and the device PDI.
 
-   >Note: This CED design based platforms enables segmented configuration by default. The PS-NoC-to-LPDDR is used to initialize the LPDDR memory and provide access to it during system bring-up. For more details about segmented configuration, please refer to [UG1273](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/Segmented-Configuration).
+> **Note:** The CED-design-based platform enables segmented configuration by default. The PS-NoC-to-LPDDR is used to initialize the LPDDR memory and provide access to it during system bring-up. For more details, refer to [UG1273](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/Segmented-Configuration).
 
- Then, you'll develop the AIE kernels and link them with the extensible XSA to produce a fixed XSA. Finally, you'll develop the acceleration application based on this fixed XSA.
+This tutorial is aligned with the AMD **Embedded Development Framework (EDF)**. For more information, see the official [AMD EDF Wiki page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3250585601/AMD+Embedded+Development+Framework+EDF#Introduction-to-the-AMD-Embedded-Development-Framework).
 
-Please go through the Makefile provided in this tutorial to better understand the Vitis tool flow.
+Please go through the [Makefile](./Makefile) and [makefile_aie2ps](./makefile_aie2ps) provided in this tutorial to better understand the Vitis EDF tool flow.
 
-This tutorial is aligned with the AMD Embedded Development Framework (EDF). For more information about AMD EDF, please refer to the official [AMD Wiki page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3250585601/AMD+Embedded+Development+Framework+EDF#Introduction-to-the-AMD-Embedded-Development-Framework)
+## Design overview
 
-To build this tutorial:
-1. Source Vitis 2025.2:
+- AIE2-PS graph implementing a GMIO-based input/output flow (`gm2aie`), with the AIE array streaming data through PL-less GMIO ports.
+- Host application that loads the xclbin, drives the graph, and verifies the result.
 
-   ```
+## Prerequisites
+
+1. Source Vitis 2026.1:
+
+   ```bash
    source <path_to_vitis_install>/settings64.sh
    ```
-1. [Download](../README.md) the EDF Images.
-2. Set up the sysroot
 
-    ```
-    source <path-to-design>/yocto_artifacts/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk.sh -d ./yocto_artifacts/ -y
-    ```
-3. To compile the binaries for HW EMU flow
-    
-    ```
-    make all
-    ```
-     
-4. To compile the binaries for HW only flow
-    
-    ```
-    make sd_card
-    ```
-4. Run on VEK385 board
+2. Export `PLATFORM_REPO_PATHS` and `YOCTO_ARTIFACTS`:
 
-    - Boot the board using the QSPI BIN file downloaded in the previous step, following the instructions outlined in chapter `How to boot a board using the pre-built Images: OSPI Boot` in  [AMD WDF Wiki Page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#AMDEDFGettingstarted-DiscoveryandEvaluationAMDVersaldeviceportfolio-How-to-boot-a-board-using-the-pre-built-Images%3A-OSPI-Boot).
-    - Program the `edf-linux-disk-image-amd-cortexa78-mali-common.rootfs-20250730090230.wic.xz` to a SD card. Refer to the chapter of `Writing the EDF Linux® disk image (wic) to the secondary boot media : SD card ` in  [AMD WDF Wiki Page](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio#AMDEDFGettingstarted-DiscoveryandEvaluationAMDVersaldeviceportfolio-How-to-boot-a-board-using-the-pre-built-Images%3A-OSPI-Boot).
+   ```bash
+   export PLATFORM_REPO_PATHS=<path_to_vitis_install>/base_platforms
+   export YOCTO_ARTIFACTS=<path-to-design>/yocto_artifacts
+   ```
 
-      > **NOTE:** Eject the SD card properly from the system after programming it.
+3. Download the EDF Yocto artifacts for Versal Gen2 (Cortex-A78) from the [Embedded Development Framework (EDF) downloads page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html) (package matching Vitis 2026.1):
 
-    - Insert the SD card, and boot the VEk385 board with QSPI boot mode (SW!: ON,ON,ON,OFF = 0001) and power on.
+   - `amd-cortexa78-mali-common_meta-edf-app-sdk` — install into `${YOCTO_ARTIFACTS}/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk`:
 
-    - Connect to UART console.
+     ```bash
+     ./amd-edf-glibc-x86_64-meta-edf-app-sdk-cortexa72-cortexa53-amd-cortexa78-mali-common-toolchain.sh \
+         -d ${YOCTO_ARTIFACTS}/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk -y
+     ```
 
-    - Launch the test application from UART console.
+   - `amd-cortexa78-mali-common_edf-platform-disk-image` — unzip and move into `${YOCTO_ARTIFACTS}/`.
+   - `amd-cortexa78-mali-common_vek385_qemu_prebuilt` — unzip and move into `${YOCTO_ARTIFACTS}/`.
+   - `versal-2ve-2vm-vek385-multidomain_edf-ospi` — OSPI flash image used for on-board OSPI boot.
 
-    <details>
-    <summary><strong>Use the following steps to run the application</strong></summary>
+4. Set up the EDF sysroot environment:
 
-     You will need to log in with user `amd-edf` first and set up a new password (it is then also the sudo password):
+   ```bash
+   source ${YOCTO_ARTIFACTS}/amd-cortexa78-mali-common_meta-edf-app-sdk/sdk/environment-setup-cortexa72-cortexa53-amd-linux
+   ```
 
-    - Log into the system
+## Building the design
 
-         ```bash
-         amd-edf login:amd-edf
-         You are required to change your password immediately (administrator enforced).
-         New password:
-         Retype new password:
-         amd-edf:~$ sudo su
-         We trust you have received the usual lecture from the local System
-         Administrator. It usually boils down to these three things:
-               #1) Respect the privacy of others.
-               #2) Think before you type.
-               #3) With great power comes great responsibility.
-         Password:
-         amd-edf:/home/amd-edf#
-         ```
+### Hardware emulation (QEMU)
 
-    - Use SCP to download the application and other files required to the current folder. Required files are listed as below:
+```bash
+make all
+```
 
-        - Application: `WorkSpace/application/build/application`
-        - DTBO: `WorkSpace/vek385_fixed_hw/export/vek385_fixed_hw/sw/boot/container.dtbo`
-        - XCLBIN: `WorkSpace/integration_project/build/hw/package/container.xclbin`
-        - PDI: `WorkSpace/integration_project/build/hw/package/package/vpl_gen_fixed_pld.pdi`
+This compiles the AIE2-PS graph, builds the host application, packages with `--package.defer_aie_run`, assembles the QEMU combined image, copies the host application, `gm2aie.xclbin`, `gm2aie.pdi`, `gm2aie.dtbo`, `emconfig.json`, and `run_app_hw_emu.sh` into the WIC rootfs using `wic cp`, and launches `launch_hw_emu.sh` with the EDF `combined.qemuboot.conf`. The QEMU session auto-logs in as `amd-edf`, mounts `/dev/sda2`, and executes `run_app_hw_emu.sh`.
 
-       Use the scp command to transfer files to the current working directory. For example, to download the application file:
+### Hardware (OSPI boot)
 
-        ```
-        amd-edf:/home/amd-edf# scp  <user_name>@<IP of host where IDE is running on>:<path to workspace>/WorkSpace/application/build/application .
-        ```
-        >Note: Using an SD card to copy the files to your board also works.
+```bash
+make sd_card
+```
 
-    - Run the application
+This builds everything for `TARGET=hw` and prepares `aie2ps_work/package.hw/` with the `gm2aie.pdi`, `gm2aie.dtbo`, `gm2aie.xclbin`, host `application`, and `embedded_exec.sh` ready to copy to the VEK385 board.
 
-        ```
-        amd-edf:/home/amd-edf# ls 
-        amd-edf:/home/amd-edf# application container.dtbo container.xclbin vpl_gen_fixed_pld.pdi
-        amd-edf:/home/amd-edf# fpgautil -b container.pdi  -o container.dtbo
-        amd-edf:/home/amd-edf# ./application container.xclbin
+## Running on the VEK385 board
 
-   </details>  
+Refer to the AMD EDF Wiki for full details on booting the VEK385 board: [AMD EDF Getting Started — Discovery and Evaluation of AMD Versal device portfolio](https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/3258155011/AMD+EDF+Getting+started+-+Discovery+and+Evaluation+AMD+Versal+device+portfolio).
 
-    - Expected print on UART console
+1. Program the OSPI flash with the `versal-2ve-2vm-vek385-multidomain_edf-ospi` image, following the chapter *How to boot a board using the pre-built Images: OSPI Boot* in the Wiki link above.
+2. Program the EDF platform rootfs WIC (`edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.xz`) to a microSD card, following the chapter *Writing the EDF Linux® disk image (wic) to the secondary boot media : SD card* in the Wiki link above.
 
-    <details>
-    <summary><b>Show Log</b></summary>
+   > **Note:** Eject the SD card properly from the host system after programming it.
 
-    ```
-    amd-edf:/home/amd-edf# fpgautil -b container.pdi  -o container.dtbo
-    amd-edf:/home/amd-edf# ./application cecontainer.xclbin
-    Initializing ADF API...
-    XAIEFAL: INFO: Resource group Avail is created.
-    XAIEFAL: INFO: Resource group Static is created.
-    XAIEFAL: INFO: Resource group Generic is created.
-    run s2mm
-    Address of inputArray  in hex format  : 0x873d5000
-    graph int completed            Run API start with iterations of 4
-    Wait of  gmio completed 
-    graph end
-    s2mm completed with status(4)
-    Releasing remaining XRT objects...
-    GMIO 2020.2 Native XRT Testcase...
-    TEST PASSED
-    INFO: Embedded host run completed.
-    ```
-    </details>
+3. Insert the microSD card into the VEK385 and set boot mode to OSPI (`SW1 = ON,ON,ON,OFF` = `0001`).
+4. Power on the board and open the UART console.
+5. Log in as `amd-edf` (set a new password on first login):
 
+   ```bash
+   amd-edf login: amd-edf
+   amd-edf:~$ sudo su
+   ```
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+6. Copy the contents of `aie2ps_work/package.hw/` (host `application`, `gm2aie.pdi`, `gm2aie.dtbo`, `gm2aie.xclbin`, and `embedded_exec.sh`) to the board (via `scp` or by placing them on the SD card).
+7. Run the application:
+
+   ```bash
+   amd-edf:/home/amd-edf# ./embedded_exec.sh
+   ```
+
+   Expected output:
+
+   ```text
+   INFO: Load the pdi and dtbo using fpgautil
+   Initializing ADF API...
+   XAIEFAL: INFO: Resource group Avail is created.
+   XAIEFAL: INFO: Resource group Static is created.
+   XAIEFAL: INFO: Resource group Generic is created.
+   run s2mm
+   graph end
+   s2mm completed with status(4)
+   Releasing remaining XRT objects...
+   TEST PASSED
+   INFO: Embedded host run completed.
+   ```
+
+## Cleaning
+
+```bash
+make clean       # remove intermediate build artifacts
+make ultraclean  # remove the entire aie2ps_work/ working directory
+```
+
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (C) 2025, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 
 # =============================================================================
 # Project Configuration
@@ -28,11 +28,21 @@ AIE_WORK = $(ROOT_DIR)/aie2ps_work/
 # =============================================================================
 export QEMU_COMBINED := edf_qemu_images
 export COMBINED := combined
-export WIC_PARTITION := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
+export WIC_FILE := edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs
+export WIC_PARTITION := $(WIC_FILE):2
+export WIC_BOOT_PARTITION := $(WIC_FILE):1
 
-DISK_IMAGES := amd-cortexa78-mali-common_edf-linux-disk-image
+DISK_IMAGES := amd-cortexa78-mali-common_edf-platform-disk-image
 QEMU_IMAGES	:= amd-cortexa78-mali-common_vek385_qemu_prebuilt
-YOCTO_QEMU_ARTIFACTS := 
+YOCTO_QEMU_ARTIFACTS :=
+
+# v++ packager emits a BOOT.bin that bundles bootloader + our design's PDI.
+# We swap the prebuilt's BOOT-versal-2ve-2vm-vek385-multidomain.bin with this one
+# so the PLM loads our PL/AIE2-PS bitstream during boot rather than the generic
+# prebuilt.
+VPP_BOOT_BIN     = $(PKG_DIR)/BOOT.bin
+BOOT_BIN_BOARD   = $(QEMU_COMBINED)/$(COMBINED)/BOOT-versal-2ve-2vm-vek385-multidomain.bin
+QEMU_OSPI_BIN    = $(QEMU_COMBINED)/$(COMBINED)/qemu-ospi.bin
 
 # =============================================================================
 # SoC Configuration
@@ -130,7 +140,7 @@ EXECUTABLE = ./application
 # =============================================================================
 # Build Rules
 # =============================================================================
-.PHONY: check-EDF-common-image all build host integration package clean ultraclean help run_emu sd_card run_hw qemu_combined  insert_image
+.PHONY: check-EDF-common-image all build host integration package emconfig aiesim_options copy_bin clean ultraclean help run_emu sd_card run_hw qemu_combined insert_image
 
 all: run_emu
 sd_card: run_hw
@@ -139,8 +149,8 @@ sd_card: run_hw
 #IMAGE1 flag is used for internal users.
 #IMAGE2 flag is used for external users.
 check-EDF-common-image:
-	@IMAGE1="$(YOCTO_ARTIFACTS)/$(QEMU_IMAGES)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
-	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	@IMAGE1="$(YOCTO_ARTIFACTS)/$(QEMU_IMAGES)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
+	IMAGE2="$(YOCTO_QEMU_ARTIFACTS)/edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs"; \
 	if [ ! -f "$$IMAGE1" ] && [ ! -f "$$IMAGE2" ]; then \
 	    echo "Error: EDF image not found in either:"; \
 	    echo "  - $$IMAGE1"; \
@@ -182,6 +192,44 @@ integration:
 package: $(XCLBIN)
 	@echo "XCLBIN and PDI generated for target: $(TARGET)"
 
+# emconfig.json describes the platform/board topology to XRT in emulation mode
+# (XCL_EMULATION_MODE=hw_emu). The cosim XRT shim in the guest reads it from
+# the host application's working directory; we ship it alongside the host exe
+# in /media (see insert_image).
+emconfig: $(LINK_OUT)
+	@echo "Generating emconfig.json from $(LINK_OUT)..."
+	emconfigutil --platform $(LINK_OUT) --od . --nd 1
+
+# aiesim_options.txt points launch_hw_emu.sh's AIE simulator backend at the
+# absolute path of the AIE compiler workdir, which is where xsim looks for the
+# graph/CDO/elfs it needs to cosimulate the AIE side.
+AIESIM_OPTIONS := aiesim_options.txt
+aiesim_options: $(AIESIM_OPTIONS)
+$(AIESIM_OPTIONS):
+	@echo "Writing $(AIESIM_OPTIONS) (points AIE simulator at $(ROOT_DIR)/$(AIE_WORKDIR))"
+	@rm -f $@
+	@echo "AIE_PKG_DIR=$(ROOT_DIR)/$(AIE_WORKDIR)" > $@
+
+# Replace the prebuilt loose BOOT-versal-2ve-2vm-vek385-multidomain.bin AND
+# patch the OSPI flash image (qemu-ospi.bin) with the BOOT.bin emitted by
+# v++ --package. VEK385 boots in OSPI mode (mode=8): runqemu reads BOOT.bin
+# from MTD offset 0 of qemu-ospi.bin, so the OSPI image must also be patched
+# for the PLM to load our PL/AIE2-PS PDI rather than the generic prebuilt.
+copy_bin:
+	@if [ -f $(VPP_BOOT_BIN) ]; then \
+		echo "Replacing $(BOOT_BIN_BOARD) with locally-built $(VPP_BOOT_BIN)"; \
+		$(RM) $(BOOT_BIN_BOARD); \
+		cp $(VPP_BOOT_BIN) $(BOOT_BIN_BOARD); \
+		echo "Patching $(QEMU_OSPI_BIN) with $(VPP_BOOT_BIN) (OSPI boot image)"; \
+		dd if=$(BOOT_BIN_BOARD) of=$(QEMU_OSPI_BIN) conv=notrunc; \
+		echo "Refreshing boot.bin symlink so wic cp + runqemu pick up the new BOOT.bin"; \
+		$(RM) $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+		ln -sf BOOT-versal-2ve-2vm-vek385-multidomain.bin $(QEMU_COMBINED)/$(COMBINED)/boot.bin; \
+	else \
+		echo "WARNING: $(VPP_BOOT_BIN) not found; keeping prebuilt $(BOOT_BIN_BOARD)."; \
+		echo "         The design PL/AIE2-PS PDI will not be loaded during boot."; \
+	fi
+
 host: $(EXECUTABLE)
 
 $(EXECUTABLE): $(HOST_SRC) 
@@ -222,7 +270,7 @@ insert_image:
 	@echo "Inserting images into base camp WIC..."
 	@bash -c '\
 	unset LD_LIBRARY_PATH; \
-	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu/environment-setup-x86_64-petalinux-linux; \
+	source $(XILINX_VITIS)/data/emulation/qemu/comp/qemu_edf/environment-setup-x86_64-amdedfsdk-linux; \
 	echo "Sourced environment"; \
 	wic cp --sector-size=4096 ./run_app_hw_emu.sh ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
 	echo "Copied run_app_hw_emu.sh"; \
@@ -233,14 +281,23 @@ insert_image:
 	wic cp  --sector-size=4096 ./package.hw_emu/gm2aie.dtbo ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
 	echo "Copied dtbo"; \
 	wic cp --sector-size=4096 ./package.hw_emu/gm2aie.pdi ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
-	echo "Copied pdi"'
+	echo "Copied pdi"; \
+	if [ -f ./emconfig.json ]; then \
+	  wic cp --sector-size=4096 ./emconfig.json ./$(QEMU_COMBINED)/$(COMBINED)/$(WIC_PARTITION); \
+	  echo "Copied emconfig.json"; \
+	else \
+	  echo "WARNING: emconfig.json not found, skipping (XRT cosim may not find device)"; \
+	fi'
 
 run_emu:
 	@echo "Starting hardware emulation..."
 	$(MAKE) build
 	$(MAKE) package TARGET=hw_emu
+	$(MAKE) emconfig
+	$(MAKE) aiesim_options
 	$(MAKE) host
 	$(MAKE) qemu_combined
+	$(MAKE) copy_bin
 	$(MAKE) insert_image TARGET=hw_emu
 	$(MAKE) start_emu
 
@@ -248,6 +305,7 @@ start_emu:
 	$(ROOT_DIR)/package.hw_emu/launch_hw_emu.sh \
 		-qemu-config $(ROOT_DIR)/${QEMU_COMBINED}/${COMBINED}/${COMBINED}.qemuboot.conf \
 		-login "amd-edf" -password "amd-edf" \
+		-aie-sim-options $(ROOT_DIR)/$(AIESIM_OPTIONS) \
 		-run-app "mount /dev/sda2 /media; cd /media; ./run_app_hw_emu.sh" | tee embedded_run.log; exit $${PIPESTATUS[0]}
 
 # =============================================================================
@@ -262,9 +320,9 @@ clean:
 
 ultraclean: clean
 	$(RM) package.* -rf *.link_summary *_x *.txt *.json *summary sysroots \
-		environment-setup-x86_64-petalinux-linux \
-		version-x86_64-petalinux-linux \
-		x86_64-qemu-xilinx-nativesdk-standalone-2025.2+release-stable.sh
+		environment-setup-x86_64-amdedfsdk-linux \
+		version-x86_64-amdedfsdk-linux \
+		x86_64-qemu-xilinx-nativesdk-standalone-2026.1+release-stable.sh
 
 # =============================================================================
 # Help
