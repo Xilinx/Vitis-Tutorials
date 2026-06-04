@@ -60,7 +60,7 @@ The top level Makefile of this tutorial builds the Python virtual environment ba
 To create this Python virtual environment, run the following code:
 
 ```bash
-% make venv
+% make my-venv
 % source my-venv/bin/activate
 % python --version
 ```
@@ -446,7 +446,32 @@ Build the Radio-ML ConvNet Modulation Classifier design for hardware emulation w
 
 This takes about 90 minutes to run. The build process generates a `package` folder containing all the files required for hardware emulation. Hardware emulation is then launched and run producing the outputs that follow. Apply an optional `-g` to the `launch_hw_emu.sh` command to launch Vivado waveform GUI to observe the top-level AXI signal ports in the design. Edit [vitis/Makefile](vitis/Makefile) `run_emu` target to do this.
 
-![figure](images/hw-emu.png)
+~~~
+PASSED:  Read all IO/RTP files
+PASSED:  Read modulation_classes.txt file
+PASSED:  auto my_graph  = xrt::graph(my_device, xclbin_uuid, "aie_dut")
+PASSED:  my_graph.reset()
+PASSED:  Transferred design RTP's to AIE graphs
+PASSED:  xrt::aie::profiling handle(my_device);
+PASSED:  my_graph.run( NUM_ITER=8 )
+Graph completed execution
+Model accuracy is within tolerance of 0.05
+Inference # = 0 golden_classification = OOK implementation_classification = OOK
+Inference # = 1 golden_classification = 4ASK implementation_classification = 4ASK
+Inference # = 2 golden_classification = 8ASK implementation_classification = 8ASK
+Inference # = 3 golden_classification = BPSK implementation_classification = BPSK
+Inference # = 4 golden_classification = QPSK implementation_classification = QPSK
+Inference # = 5 golden_classification = 8PSK implementation_classification = 8PSK
+Inference # = 6 golden_classification = 16PSK implementation_classification = 16PSK
+Inference # = 7 golden_classification = 32PSK implementation_classification = 32PSK
+==============================
+Cycle count: 690196
+Approx Inference Throughput: 14.4886 KHz
+==============================
+
+--- PASSED ---
+INFO: Embedded host run completed.
+~~~
 
 ### Hardware
 

@@ -240,8 +240,8 @@ PASSED:  xrt::aie::profiling handle(my_device);
 INFO:    Started profiling timers...
 
 PASSED:  my_graph.run( ITERATION=4 )
-Throughput of the graph: 7831.74 MB/s
-Throughput of the graph: 1957.93 MSPS
+Throughput of the graph: 7787.07 MB/s
+Throughput of the graph: 1946.77 MSPS
 --- PASSED ---
 GMIO transactions finished
 INFO: Embedded host run completed.
@@ -299,9 +299,9 @@ The following table compares the farrow filter implementation across AIE, AIE-ML
 
 | Design                  | Tiles for AIE Kernels | Tiles for Buffers | Total Tiles |  Throughput         | Relative MSPS per tile |
 |-------------------------|-----------------------|-------------------|-------------|---------------------|------------------------|
-| farrow - AIE (PLIO)     |       2               | 5                 | 5           | 1138 MSPS (HW_EMU)  | 227.6                  |
-| farrow - AIE-ML (GMIO)  |       5               | 8                 | 8           | 1061 MSPS (HW_EMU)  | 132.6                  |
-| farrow - AIE-MLv2 (GMIO)|       5               | 10                | 10          | 1958 MSPS (HW_EMU)  | 195.8                  |
+| farrow - AIE (PLIO)     |       2               | 5                 | 5           | 1135 MSPS (HW_EMU)  | 227.6                  |
+| farrow - AIE-ML (GMIO)  |       5               | 8                 | 8           | 1052 MSPS (HW_EMU)  | 131.5                  |
+| farrow - AIE-MLv2 (GMIO)|       5               | 10                | 10          | 1947 MSPS (HW_EMU)  | 194.7                  |
 
 ```* Total Tiles: Represents the total count of tiles, including those that have both kernels and buffers within the same tile.```
 

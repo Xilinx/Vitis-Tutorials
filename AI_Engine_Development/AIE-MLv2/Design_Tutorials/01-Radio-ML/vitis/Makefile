@@ -6,7 +6,7 @@
 
 QEMU_PREBUILT          := amd-cortexa78-mali-common_vek385_qemu_prebuilt
 export QEMU_COMBINED   := base_camp_images
-export WIC_PARTITION   := edf-linux-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
+export WIC_PARTITION   := edf-platform-disk-image-amd-cortexa78-mali-common.rootfs.wic.ufs:2
 
 export DUT       = dut
 export XCLBIN    = ${DUT}.xclbin
@@ -93,7 +93,7 @@ copy_wic:
 	./run_copy_wic.sh
 
 run_emu:
-	cd $(SD_CARD) && ./launch_hw_emu.sh -qemu-config ../vitis/${QEMU_COMBINED}/combined.qemuboot.conf -login "amd-edf" -password "amd-edf" -run-app " mount /dev/sda2 /media; cd /media; ./${EMBD_EXC}"
+	cd $(SD_CARD) && ./launch_hw_emu.sh -qemu-config $(CURDIR)/${QEMU_COMBINED}/combined.qemuboot.conf -login "amd-edf" -password "amd-edf" -run-app " mount /dev/sda2 /media; cd /media; ./${EMBD_EXC}"
 
 clean:
 	/bin/rm -rf ${SD_CARD} ${BUILD_DIR} *.o ${QEMU_COMBINED} .Xil ${EMBD_EXC} .ipcache
