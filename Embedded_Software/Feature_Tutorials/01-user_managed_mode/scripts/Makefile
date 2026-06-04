@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2024, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2026, Advanced Micro Devices, Inc. All rights reserved.
 # SPDX-License-Identifier: MIT
 #
 # Author: Stephen MacMahon
@@ -7,14 +7,14 @@
 .PHONY: all clean_all clean_atf clean_dtb clean_boot_script clean_platform clean_uboot create_xsa dtb make_platform
 
 SHELL := /bin/bash
-VERSION ?= 2025.2
+VERSION ?= 2026.1
 BOARD ?= zcu102-rev1.0
 XSA ?= ./zcu102/design_1_wrapper.xsa
 
 ATF_REPO ?= https://github.com/Xilinx/arm-trusted-firmware.git
-ATF_CHECKOUT ?= xilinx-v2025.1
+ATF_CHECKOUT ?= xilinx-v2025.2
 UBOOT_REPO ?= https://github.com/Xilinx/u-boot-xlnx.git
-UBOOT_CHECKOUT ?= xilinx-v2025.1
+UBOOT_CHECKOUT ?= xilinx-v2025.2
 SDT_OUT ?= sdt_out 
 USER_DTSI ?= prebuilt_linux/user_dts/system-user.dtsi 
 
@@ -34,7 +34,7 @@ $(XSA): create_xsa.tcl
 
 make_platform: $(XSA)
 	rm -rf tmp/base_platform tmp/zynqmp_fsbl tmp/zynqmp_pmufw
-	vitis -s ./xsct_script.py make_platform $(XSA)
+	vitis -s ./vitis_script.py make_platform $(XSA)
 
 dtb: gen_sdt 
 
@@ -61,10 +61,10 @@ dtc_compile: dtc_build
 	gcc -I my_dts -E -nostdinc -I include -undef -D__DTS__ -x assembler-with-cpp -o system.dts sdt_out/system-top.dts && \
 	$(shell pwd)/dtc/dtc -I dts -O dtb -o system.dtb system.dts
 
-atf: arm-trusted-firmware $(XSA) xsct_script.py
+atf: arm-trusted-firmware $(XSA) vitis_script.py
 	$(MAKE) -C arm-trusted-firmware clean
 	export CROSS_COMPILE=aarch64-none-elf-; \
-	vitis -s ./xsct_script.py build_atf $(XSA)
+	vitis -s ./vitis_script.py build_atf $(XSA)
 
 uboot: u-boot-xlnx $(XSA)
 	$(MAKE) -C u-boot-xlnx clean 
@@ -78,7 +78,7 @@ uboot: u-boot-xlnx $(XSA)
 
 generate_boot_script:
 	$(RM) -rf boot_script.py
-	vitis -s ./xsct_script.py generate_boot_script $(XSA)
+	vitis -s ./vitis_script.py generate_boot_script $(XSA)
 
 jtag_boot:
 	vitis -s ./boot_script.py
