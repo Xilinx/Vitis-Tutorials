@@ -15,7 +15,7 @@
 
 # Vitis Introduction and Getting Started Tutorial
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 Welcome to Vitis Getting Started!
 
@@ -24,7 +24,7 @@ In this tutorial we will showcase how to swap in and out two different AIE Graph
 **Note: This tutorial only supports HW flow.**
 
 ###  Following is the pictorial representation of DFX Design development Flow:
-**Vitis 2025.2**
+**Vitis 2026.1**
 
 ```mermaid
 flowchart LR
@@ -108,7 +108,7 @@ flowchart LR
 
 ## Prerequisites
 
-1. Source Vitis 2025.2:
+1. Source Vitis 2026.1:
 
    ```
    source <path_to_vitis_install>/settings64.sh
@@ -117,7 +117,7 @@ flowchart LR
 2. Export the following variable:
 
    ```
-   export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2025.2>
+   export COMMON_IMAGE_VERSAL=<path_to_common_image: xilinx-versal-common-v2026.1>
    ```
 
 3. To compile the binaries:
@@ -149,7 +149,7 @@ Use the balenaEtcher/similar tools to flash the SD card. Plug in the SD card to 
 ### 3.  Running the design and application on the VCK190
 
 After the Linux boot is complete, use the below commands to run the `host.exe`, `dfx1.xclbin` as well as `dfx2.xclbin`
-`versal-rootfs-common-20252:/mnt#`
+`versal-rootfs-common-20261:/mnt#`
 
 ```
 sudo su

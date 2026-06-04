@@ -4,8 +4,7 @@
 #*/
 
 ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-VERSION  := 2025.2
-#COMMON_IMAGE_VERSAL ?= ${PLATFORM_REPO_PATHS}/sw/versal/xilinx-versal-common-v$(VERSION)/
+VERSION  := 2026.1
 SYSROOT := $(EDGE_COMMON_SW)/sysroots/cortexa72-cortexa53-amd-linux/
 PLATFORM = $(PLATFORM_REPO_PATHS)/xilinx_vck190_base_dfx_202610_1/xilinx_vck190_base_dfx_202610_1.xpfm
 
