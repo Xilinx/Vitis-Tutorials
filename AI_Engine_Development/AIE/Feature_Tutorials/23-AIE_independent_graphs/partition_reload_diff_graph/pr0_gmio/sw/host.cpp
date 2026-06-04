@@ -51,13 +51,13 @@ int main(int argc, char ** argv) {
 			dinArray[i]=i;
     	}
 
-		auto ghdl=new xrt::graph(*hwctx_1,"gr");
+		auto ghdl=new xrt::graph(*hwctx_1,"pr0_gr");
 		std::cout<<"Open partition 0 with graph1 successfully"<<std::endl;
-		xrt::aie::buffer *bufIn=new xrt::aie::buffer(*hwctx_1, "gr.gmioIn");
+		xrt::aie::buffer *bufIn=new xrt::aie::buffer(*hwctx_1, "pr0_gr.gmioIn");
 		//memory group is 0, depending on the platform
 		bufIn->async(*din_buffer, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0); 
     	ghdl->run(ITERATION);
-		xrt::aie::buffer *bufOut=new xrt::aie::buffer(*hwctx_1, "gr.gmioOut");
+		xrt::aie::buffer *bufOut=new xrt::aie::buffer(*hwctx_1, "pr0_gr.gmioOut");
 		//memory group is 0, depending on the platform
 		bufOut->async(*dout_buffer, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	//PS can do other tasks here when data is transferring
@@ -110,12 +110,12 @@ int main(int argc, char ** argv) {
 			dinArray2[i]=i;
     		}		
 
-		auto ghdl2=new xrt::graph(*hwctx_2,"gr");
+		auto ghdl2=new xrt::graph(*hwctx_2,"pr0_gr");
 		std::cout<<"Open pr0 graph2 successfully"<<std::endl;
-		xrt::aie::buffer *bufIn2=new xrt::aie::buffer(*hwctx_2, "gr.gmioIn");
+		xrt::aie::buffer *bufIn2=new xrt::aie::buffer(*hwctx_2, "pr0_gr.gmioIn");
 		bufIn2->async(*din_buffer2, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
     	ghdl2->run(ITERATION);
-		xrt::aie::buffer *bufOut2=new xrt::aie::buffer(*hwctx_2, "gr.gmioOut");
+		xrt::aie::buffer *bufOut2=new xrt::aie::buffer(*hwctx_2, "pr0_gr.gmioOut");
 		bufOut2->async(*dout_buffer2, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	//PS can do other tasks here when data is transferring
     	std::cout<<"Waiting for graph to be completed"<<std::endl;

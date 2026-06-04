@@ -48,13 +48,13 @@ int run_gmio(xrt::device &device, std::string &xclbinfile_gr1, std::string &xclb
 			dinArray[i]=i;
     	}
 
-		auto ghdl=new xrt::graph(*hwctx_1,"gr");
+		auto ghdl=new xrt::graph(*hwctx_1,"pr0_gr");
 		std::cout<<"Open partition 0 with graph1 successfully"<<std::endl;
-		xrt::aie::buffer *bufIn=new xrt::aie::buffer(*hwctx_1, "gr.gmioIn");
+		xrt::aie::buffer *bufIn=new xrt::aie::buffer(*hwctx_1, "pr0_gr.gmioIn");
 		//memory group is 0, depending on the platform
 		bufIn->async(*din_buffer, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0); 
     	ghdl->run(ITERATION);
-		xrt::aie::buffer *bufOut=new xrt::aie::buffer(*hwctx_1, "gr.gmioOut");
+		xrt::aie::buffer *bufOut=new xrt::aie::buffer(*hwctx_1, "pr0_gr.gmioOut");
 		//memory group is 0, depending on the platform
 		bufOut->async(*dout_buffer, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	//PS can do other tasks here when data is transferring
@@ -105,12 +105,12 @@ int run_gmio(xrt::device &device, std::string &xclbinfile_gr1, std::string &xclb
 			dinArray2[i]=i;
     		}		
 
-		auto ghdl2=new xrt::graph(*hwctx_2,"gr");
+		auto ghdl2=new xrt::graph(*hwctx_2,"pr0_gr");
 		std::cout<<"Open pr0 graph2 successfully"<<std::endl;
-		xrt::aie::buffer *bufIn2=new xrt::aie::buffer(*hwctx_2, "gr.gmioIn");
+		xrt::aie::buffer *bufIn2=new xrt::aie::buffer(*hwctx_2, "pr0_gr.gmioIn");
 		bufIn2->async(*din_buffer2, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
     	ghdl2->run(ITERATION);
-		xrt::aie::buffer *bufOut2=new xrt::aie::buffer(*hwctx_2, "gr.gmioOut");
+		xrt::aie::buffer *bufOut2=new xrt::aie::buffer(*hwctx_2, "pr0_gr.gmioOut");
 		bufOut2->async(*dout_buffer2, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	//PS can do other tasks here when data is transferring
     	std::cout<<"Waiting for graph to be completed"<<std::endl;
@@ -168,20 +168,21 @@ int run_rtp(xrt::device &device, std::string &xclbinFilename_pl, std::string &xc
 	auto s2mm_run = s2mm(out_bo, nullptr, ELEM_per_iter*ITERATION);//1st run for s2mm has started
 	auto datagen_run = datagen(nullptr, ELEM_per_iter*ITERATION,0);
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr1_gr");
 	ghdl.run(ITERATION);
 	int value[16]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 	if(rtp_type==0){
-		ghdl.update("gr.k.in[1]",10);
+		ghdl.update("pr1_gr.k.in[1]",10);
 	}else if(rtp_type==1){
-		ghdl.update("gr.k.in[1]",value);
+		ghdl.update("pr1_gr.k.in[1]",value);
 	}
 	ghdl.end();
 
 	s2mm_run.wait();
+	datagen_run.wait();
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
-	static int match = 0;	
+	static int match = 0;
 	int base=10;
 	for (int i = 0; i < ITERATION; i++) {
 		for(int j=0;j<ELEM_per_iter;j++){
@@ -246,12 +247,13 @@ int run_perf(xrt::device &device, std::string &xclbinFilename_pl, std::string &x
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
 	std::cout<<"PL kernel launching done "<<std::endl;
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr2_gr");
 	ghdl.run(iterations);
 	std::cout<<"Graph run enqueue done"<<std::endl;
 	ghdl.end();
 	std::cout<<"Graph done"<<std::endl;
 	s2mm_run.wait();
+	mm2s_run.wait();
 	std::cout<<"s2mm done"<<std::endl;
 
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);

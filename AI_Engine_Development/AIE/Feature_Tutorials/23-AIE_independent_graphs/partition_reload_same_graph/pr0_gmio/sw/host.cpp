@@ -53,12 +53,12 @@ int main(int argc, char ** argv) {
 			dinArray[i]=i;
     	}
 
-		auto ghdl=xrt::graph(hwctx_1,"gr");
+		auto ghdl=xrt::graph(hwctx_1,"pr0_gr");
 		std::cout<<"Open graph pr0 successfully"<<std::endl;
-		xrt::aie::buffer bufIn(hwctx_1, "gr.gmioIn");
+		xrt::aie::buffer bufIn(hwctx_1, "pr0_gr.gmioIn");
 		bufIn.async(din_buffer, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
     	ghdl.run(ITERATION);
-		xrt::aie::buffer bufOut(hwctx_1, "gr.gmioOut");
+		xrt::aie::buffer bufOut(hwctx_1, "pr0_gr.gmioOut");
 		bufOut.async(dout_buffer, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	//PS can do other tasks here when data is transferring
     	std::cout<<"Waiting for graph to be completed"<<std::endl;

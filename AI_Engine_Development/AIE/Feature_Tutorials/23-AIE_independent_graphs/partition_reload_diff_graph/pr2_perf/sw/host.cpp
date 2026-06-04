@@ -59,12 +59,13 @@ int run(int argc, char* argv[]){
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
 	std::cout<<"PL kernel launching done "<<std::endl;
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr2_gr");
 	ghdl.run(iterations);
 	std::cout<<"Graph run enqueue done"<<std::endl;
 	ghdl.end();
 	std::cout<<"Graph done"<<std::endl;
 	s2mm_run.wait();
+	mm2s_run.wait();
 	std::cout<<"s2mm done"<<std::endl;
 
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);

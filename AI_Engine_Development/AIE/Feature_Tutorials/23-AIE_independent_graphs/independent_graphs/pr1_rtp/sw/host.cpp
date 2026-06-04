@@ -44,6 +44,7 @@ int run(int argc, char* argv[]){
 	ghdl.end();
 
 	s2mm_run.wait();
+	datagen_run.wait();
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
 	int match = 0;	

@@ -67,6 +67,7 @@ int run(int argc, char* argv[]){
 	ghdl.end();
 	std::cout<<"Graph done"<<std::endl;
 	s2mm_run.wait();
+	mm2s_run.wait();
 	std::cout<<"s2mm done"<<std::endl;
 
 #ifdef EVENT_PROFILING

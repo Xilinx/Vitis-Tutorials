@@ -42,12 +42,12 @@ int run_gmio(xrt::device &device, xrt::uuid &uuid_aie){
 			dinArray[i]=i;
     	}
 
-		auto ghdl=xrt::graph(hwctx,"gr");
+		auto ghdl=xrt::graph(hwctx,"pr0_gr");
 		std::cout<<"Open graph pr0_gr successfully"<<std::endl;
-		xrt::aie::buffer bufIn(hwctx, "gr.gmioIn");
+		xrt::aie::buffer bufIn(hwctx, "pr0_gr.gmioIn");
 		bufIn.async(din_buffer, XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_SIZE_in_Bytes, 0);
     	ghdl.run(ITERATION);
-		xrt::aie::buffer bufOut(hwctx, "gr.gmioOut");
+		xrt::aie::buffer bufOut(hwctx, "pr0_gr.gmioOut");
 		bufOut.async(dout_buffer, XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_SIZE_in_Bytes, 0);
     	std::cout<<"Waiting for graph to be completed"<<std::endl;
     	bufOut.wait();//Wait for gmioOut to complete
@@ -93,15 +93,16 @@ int run_rtp(xrt::device &device, xrt::uuid &uuid_pl, xrt::uuid &uuid_aie){
 	auto s2mm_run = s2mm(out_bo, nullptr, ELEM_per_iter*ITERATION);//1st run for s2mm has started
 	auto datagen_run = datagen(nullptr, ELEM_per_iter*ITERATION,0);
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr1_gr");
 	ghdl.run(ITERATION);
-	ghdl.update("gr.k.in[1]",10);
+	ghdl.update("pr1_gr.k.in[1]",10);
 	ghdl.end();
 
 	s2mm_run.wait();
+	datagen_run.wait();
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
-	int match = 0;	
+	int match = 0;
 	int base=10;
 	for (int i = 0; i < ITERATION; i++) {
 		for(int j=0;j<ELEM_per_iter;j++){
@@ -145,12 +146,13 @@ int run_perf(xrt::device &device, xrt::uuid &uuid_pl, xrt::uuid &uuid_aie){
 	auto mm2s_run = mm2s(in_bo, nullptr, OUTPUT_SIZE);
 	std::cout<<"PL kernel launching done "<<std::endl;
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr2_gr");
 	ghdl.run(iterations);
 	std::cout<<"Graph run enqueue done"<<std::endl;
 	ghdl.end();
 	std::cout<<"Graph done"<<std::endl;
 	s2mm_run.wait();
+	mm2s_run.wait();
 	std::cout<<"s2mm done"<<std::endl;
 
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);

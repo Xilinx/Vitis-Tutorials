@@ -37,17 +37,18 @@ int run(char* xclbinFilename_pl, char* xclbinFilename_aie, int rtp_type){
 	auto s2mm_run = s2mm(out_bo, nullptr, ELEM_per_iter*ITERATION);//1st run for s2mm has started
 	auto datagen_run = datagen(nullptr, ELEM_per_iter*ITERATION,0);
 
-	auto ghdl=xrt::graph(hwctx_aie,"gr");
+	auto ghdl=xrt::graph(hwctx_aie,"pr1_gr");
 	ghdl.run(ITERATION);
 	int value[16]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 	if(rtp_type==0){
-		ghdl.update("gr.k.in[1]",10);
+		ghdl.update("pr1_gr.k.in[1]",10);
 	}else if(rtp_type==1){
-		ghdl.update("gr.k.in[1]",value);
+		ghdl.update("pr1_gr.k.in[1]",value);
 	}
 	ghdl.end();
 
 	s2mm_run.wait();
+	datagen_run.wait();
 	out_bo.sync(XCL_BO_SYNC_BO_FROM_DEVICE);
 
 	int match = 0;	
