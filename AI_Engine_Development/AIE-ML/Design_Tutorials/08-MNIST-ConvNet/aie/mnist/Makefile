@@ -72,7 +72,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 

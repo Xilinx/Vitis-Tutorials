@@ -25,7 +25,6 @@ clean:
 	make clean -C aie/conv2d_w5
 	make clean -C aie/dense_w7
 	make clean -C aie/mnist
-	/bin/rm -rf my-venv
 	/bin/rm -rf .ipynb_checkpoints Thumbs.db
 	/bin/rm -rf aie/conv2d_w1/bias_trained.txt
 	/bin/rm -rf aie/conv2d_w1/taps_trained.txt
