@@ -13,7 +13,7 @@
 
 # Vitis Functional Simulation
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -47,19 +47,41 @@ Source the appropriate settings file:
 
 ### Python
 
-Launch Python (supports 3.9 to 3.13). The "numpy" module is required.
+Launch Python (supports 3.9 to 3.14). The following modules are required:
 
+- `numpy`
+- `scipy`
+- `matplotlib`
+
+To set up a virtual environment with all dependencies:
+
+```bash
+python3 -m venv my-venv
+source my-venv/bin/activate
+pip install --upgrade pip
+pip install numpy scipy matplotlib
 ```
-# import the following two modules
+
+Then in your Python script:
+
+```python
 import vfs
 import varray as va
 ```
 
-> Optional: Create a virtual environment to install necessary modules or simply `source create_venv.sh`.
+### DSPLIB_ROOT (for DSP Library examples)
+
+Some AIE examples (`aie/firComplex`, `aie/FIRasyncRTP`) use the Vitis DSP Library. Set the `DSPLIB_ROOT` environment variable to point to the DSP library root:
+
+```
+# Clone the library if you don't have it:
+git clone https://github.com/Xilinx/Vitis_Libraries.git
+export DSPLIB_ROOT=<path_to_Vitis_Libraries>/dsp
+```
 
 ### MATLAB
 
-Launch MATLAB (supports 2024a, 2024b and 2025a).
+Launch MATLAB (supports 2025a, 2025b and 2026a).
 
 ## Available Examples
 
@@ -71,11 +93,17 @@ This directory contains simple AI Engine Graphs and HLS kernels to show how to g
 | [`aie/GraphMultiplyByComplex`](aie/GraphMultiplyByComplex) | Simple design showcasing the basic structure of a VFS code |
 | [`aie/bfloat16`](aie/bfloat16) | Demonstrates partial data being passed to the AIE graph |
 | [`aie/FIRasyncRTP`](aie/FIRasyncRTP) | Instantiation of a symmetric FIR filter with async RTP port from [Vitis_Libraries](https://docs.amd.com/r/en-US/Vitis_Libraries/dsp/rst/class_xf_dsp_aie_fir_sr_sym_fir_sr_sym_graph.html) |
+| [`aie/firComplex`](aie/firComplex) | Complex-data FIR filter using Vitis DSP Library with scipy validation |
+| [`aie/multiplyWithPreproc`](aie/multiplyWithPreproc) | Demonstrates passing preprocessor definitions (`Xpreproc`) to AIE compilation |
 | [`aie/gmio`](aie/gmio) | Simple weighted-sum design that leverages GMIO |
 | [`hls/SumOfFour`](hls/SumOfFour) | Simple design showcasing the basic structure of a VFS code |
 | [`hls/array_pointer_data_type`](hls/array_pointer_data_type) | Demonstrates a kernel with array and pointer inputs |
 | [`hls/arrayOfHlsStreams`](hls/arrayOfHlsStreams) | Demonstrates using an HLS kernel where the ports are arrays of streams |
 | [`hls/kernel_invert`](hls/kernel_invert) | Demonstrates usage of the fixed-point varray data type |
+| [`hls/complexArguments`](hls/complexArguments) | HLS kernel with complex data types (`cuint32`, `cfloat`) |
+| [`hls/apfixArgument`](hls/apfixArgument) | HLS kernel demonstrating `ap_fixed` / `ap_ufixed` fixed-point data types |
+| [`hls/apintArguments`](hls/apintArguments) | HLS kernel using `ap_int` / `ap_uint` with stream interfaces |
+| [`hls/floatArguments`](hls/floatArguments) | HLS kernel with `float` and `double` stream interfaces |
 | [`aie_hls/64kifft`](aie_hls/64kifft) | 64k-point IFFT implemented using a 2D breakdown containing resources in both AI Engine and PL. Also includes a Jupyter notebook version. [Link](https://github.com/Xilinx/Vitis-Tutorials/tree/2025.2/AI_Engine_Development/AIE/Design_Tutorials/12-IFFT64K-2D) to original design. |
 
 ## Support
@@ -84,6 +112,6 @@ GitHub issues are used for tracking requests and bugs. For questions, go to [Sup
 
 <hr class="sphinxhide"></hr>
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2026 Advanced Micro Devices, Inc.</sub></p>
 
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>
