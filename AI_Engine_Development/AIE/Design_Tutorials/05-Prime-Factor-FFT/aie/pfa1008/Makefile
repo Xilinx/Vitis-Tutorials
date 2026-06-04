@@ -45,7 +45,7 @@ ifeq (${AIE_SIM_ONLY},true)
 	AIE_FLAGS := ${AIE_FLAGS} --Xpreproc="-DAIE_SIM_ONLY"
 endif
 
-.PHONY: help clean x86com x86sim sim profile throughput
+.PHONY: help clean x86com x86sim sim profile throughput_ok
 
 help::
 	@echo "Makefile Usage:"
@@ -67,7 +67,7 @@ help::
 	@echo "  make clean"
 	@echo "      Command to remove all the generated files."
 
-all:		${AIE_OUTPUT}
+all:		${AIE_OUTPUT} sim throughput_ok
 
 x86all: 	clean x86com x86sim
 
@@ -92,13 +92,13 @@ profile:
 trace:
 	aiesimulator --online -wdb -ctf 2>&1| tee -a log
 
-throughput:
-	@../../scripts/throughput.py aiesimulator_output/data/dft7_o_0.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/dft7_o_1.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/dft9_o_0.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/dft9_o_1.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/dft16_o_0.txt --iscomplex
-	@../../scripts/throughput.py aiesimulator_output/data/dft16_o_1.txt --iscomplex
+throughput_ok:
+	@../../scripts/check_throughput.py PLIO_dft7_o_0.txt 4250.0 5.0
+	@../../scripts/check_throughput.py PLIO_dft7_o_1.txt 4250.0 5.0
+	@../../scripts/check_throughput.py PLIO_dft9_o_0.txt 4250.0 5.0
+	@../../scripts/check_throughput.py PLIO_dft9_o_1.txt 4250.0 5.0
+	@../../scripts/check_throughput.py PLIO_dft16_o_0.txt 4250.0 5.0
+	@../../scripts/check_throughput.py PLIO_dft16_o_1.txt 4250.0 5.0
 
 regression:
 	matlab -batch regression

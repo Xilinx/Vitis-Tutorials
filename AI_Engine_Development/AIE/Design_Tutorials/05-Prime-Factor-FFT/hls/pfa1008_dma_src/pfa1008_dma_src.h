@@ -27,3 +27,5 @@ namespace pfa1008_dma_src {
 void pfa1008_dma_src_wrapper( pfa1008_dma_src::TT_DATA mem[pfa1008_dma_src::NSTREAM*pfa1008_dma_src::DEPTH],
                               int loop_cnt,
                               pfa1008_dma_src::TT_STREAM sig_o[pfa1008_dma_src::NSTREAM] );
+
+void zero_pad( pfa1008_dma_src::TT_STREAM sig_o[pfa1008_dma_src::NSTREAM] );

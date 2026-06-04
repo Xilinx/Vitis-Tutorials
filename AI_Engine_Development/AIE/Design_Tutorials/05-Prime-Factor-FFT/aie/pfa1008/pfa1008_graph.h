@@ -48,7 +48,6 @@ public:
       std::string pname_dft9_o = "PLIO_dft9_o_" + std::to_string(ii);
       std::string pname_dft16_i = "PLIO_dft16_i_" + std::to_string(ii);
       std::string pname_dft16_o = "PLIO_dft16_o_" + std::to_string(ii);
-#ifdef AIE_SIM_ONLY
       std::string fname_dft7_i = "data/dft7_i_" + std::to_string(ii) + ".txt";
       std::string fname_dft7_o = "data/dft7_o_" + std::to_string(ii) + ".txt";
       std::string fname_dft9_i = "data/dft9_i_" + std::to_string(ii) + ".txt";
@@ -61,23 +60,21 @@ public:
       dft9_o[ii] = output_plio::create(pname_dft9_o,plio_64_bits,fname_dft9_o);
       dft16_i[ii] =  input_plio::create(pname_dft16_i,plio_64_bits,fname_dft16_i);
       dft16_o[ii] = output_plio::create(pname_dft16_o,plio_64_bits,fname_dft16_o);
-#else
-      dft7_i[ii] =  input_plio::create(pname_dft7_i,plio_64_bits);
-      dft7_o[ii] = output_plio::create(pname_dft7_o,plio_64_bits);
-      dft9_i[ii] =  input_plio::create(pname_dft9_i,plio_64_bits);
-      dft9_o[ii] = output_plio::create(pname_dft9_o,plio_64_bits);
-      dft16_i[ii] =  input_plio::create(pname_dft16_i,plio_64_bits);
-      dft16_o[ii] = output_plio::create(pname_dft16_o,plio_64_bits);
-#endif
+
     // Connect inputs and outputs:
-      connect<stream,stream>( dft7_i[ii].out[0],  dft7.sig_i[ii] );
-      connect<stream,stream>( dft7.sig_o[ii],     dft7_o[ii].in[0] );
+      connect<stream,stream>d7i( dft7_i[ii].out[0],  dft7.sig_i[ii] );
+      connect<stream,stream>d7o( dft7.sig_o[ii],     dft7_o[ii].in[0] );
 
-      connect<stream,stream>( dft9_i[ii].out[0],  dft9.sig_i[ii] );
-      connect<stream,stream>( dft9.sig_o[ii],     dft9_o[ii].in[0] );
+      connect<stream,stream>d9i( dft9_i[ii].out[0],  dft9.sig_i[ii] );
+      connect<stream,stream>d9o( dft9.sig_o[ii],     dft9_o[ii].in[0] );
 
-      connect<stream,stream>( dft16_i[ii].out[0], dft16.sig_i[ii] );
-      connect<stream,stream>( dft16.sig_o[ii],    dft16_o[ii].in[0] );
+      connect<stream,stream>d16i( dft16_i[ii].out[0], dft16.sig_i[ii] );
+      connect<stream,stream>d16o( dft16.sig_o[ii],    dft16_o[ii].in[0] );
+
+      // Introduce FIFOs to absorb stream stalling on PLIOs using stream connections (32 cycles @ 312.5 PLIO ):
+      fifo_depth(d7o) = 256;
+      fifo_depth(d9o) = 256;
+      fifo_depth(d16o) = 256;
     } // ii
 
     // ==================== DFT7 Placement ====================

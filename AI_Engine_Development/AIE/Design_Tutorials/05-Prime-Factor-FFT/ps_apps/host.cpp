@@ -27,8 +27,8 @@ static const char*    STR_INFO   = "INFO:    ";
 typedef int TT_DATA;            // Assume cint16 data
 
 static constexpr int32_t         NUM_ITER = -1; // Let the graph run and have DMA_SNK terminate things
-static constexpr int32_t        LOOP_CNT_I = 8;
-static constexpr int32_t        LOOP_CNT_O = 1;
+static constexpr int32_t        LOOP_CNT_I = 16;
+static constexpr int32_t        LOOP_CNT_O = 16;
 static constexpr unsigned        NSTREAM_I = 2;
 static constexpr unsigned        NSTREAM_O = 2;
 static constexpr unsigned            DEPTH = 1008; // 8 transform x 1008-pt / 2 stream / 4 samples @ 128-bit
@@ -155,13 +155,16 @@ int main(int argc, char* argv[])
   my_graph.run(NUM_ITER);
   std::cout << STR_PASSED << "my_graph.run( NUM_ITER=" << NUM_ITER << " )" << std::endl;
 
-  dma_src_run.start();
-  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
-
   dma_snk_run.start();
   std::cout << STR_PASSED << "dma_snk_run.start()" << std::endl;
 
+  dma_src_run.start();
+  std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
+
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
+
+  dma_src_run.wait();
+  std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;

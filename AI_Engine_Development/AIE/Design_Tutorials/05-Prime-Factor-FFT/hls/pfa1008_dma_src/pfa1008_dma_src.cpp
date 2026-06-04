@@ -38,16 +38,9 @@ void load_buffer( TT_DATA mem[NSTREAM*DEPTH], TT_DATA (&buff)[NSTREAM][DEPTH] )
 
 void transmit( TT_DATA (&buff)[NSTREAM][DEPTH], TT_STREAM sig_o[NSTREAM], const int& loop_cnt )
 {
-  // Push out dummy writes to account for latency involved in PL HLS data path:
-  //    pfa1008_permute_i:   NFFT/8+1 cycles
-  //    pfa1008_transpose1:  NFFT/8+2 cycles
-  //    pfa1008_transpose2:  NFFT/8+1 cycles
-  //    pfa1008_permute_o:   NFFT/8+0 cycles
-  //                Total:   NFFT/2+4 cycles
-  static constexpr int LATENCY = NFFT/2+4;
  REPEAT: for (int ll=0; ll < loop_cnt; ll++) {
-#pragma HLS LOOP_TRIPCOUNT min=1 max=8
-  RUN_DEPTH: for (int dd=0; dd < (DEPTH+LATENCY); dd++) {
+#pragma HLS LOOP_TRIPCOUNT min=1 max=16
+  RUN_DEPTH: for (int dd=0; dd < DEPTH; dd++) {
 #pragma HLS PIPELINE II=1
       TT_DATA ss0_val, ss1_val;
       TT_SAMPLE val0[4], val1[4];
@@ -74,6 +67,18 @@ void transmit( TT_DATA (&buff)[NSTREAM][DEPTH], TT_STREAM sig_o[NSTREAM], const 
 // Wrapper
 // ------------------------------------------------------------
 
+void zero_pad( TT_STREAM sig_o[NSTREAM] )
+{
+  // This latency equals approx 4.6 us to account for data path latency between DMA_SRC and DMA_SNK:
+  static constexpr int LATENCY = 1438;
+
+  PAD_ZERO: for (int ii=0; ii < LATENCY; ii++) {
+#pragma HLS PIPELINE II=1
+    sig_o[0].write( TT_DATA(0) );
+    sig_o[1].write( TT_DATA(0) );
+  }
+}
+
 void
 pfa1008_dma_src_wrapper( pfa1008_dma_src::TT_DATA mem[pfa1008_dma_src::DEPTH*pfa1008_dma_src::NSTREAM],
                          int loop_cnt,
@@ -84,17 +89,19 @@ pfa1008_dma_src_wrapper( pfa1008_dma_src::TT_DATA mem[pfa1008_dma_src::DEPTH*pfa
 #pragma HLS interface s_axilite  port=loop_cnt    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[NSTREAM][DEPTH];
-#pragma HLS array_partition variable=buff dim=1
+  #pragma HLS bind_storage variable=buff latency=3 impl=bram type=RAM_2P
 
   // Front end load from DDR4 to PL BRAM:
   load_buffer( mem, buff );
 
   // Back end transmit from PL BRAM to AIE:
   transmit( buff, sig_o, loop_cnt );
+
+  // Zero pad to account for latency of data path:
+  zero_pad( sig_o );
 }
 
 
