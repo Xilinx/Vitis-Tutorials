@@ -68,8 +68,8 @@ figure;
 range = [1:1000];
 subplot(4,1,1); plot(real(sig_o).int(range),'b.-'); hold on; plot(real(vfs_o(range)),'r.--'); hold off; title('Real');
 subplot(4,1,2); plot(imag(sig_o).int(range),'b.-'); hold on; plot(imag(vfs_o(range)),'r.--'); hold off; title('Imag');
-subplot(4,1,3); plot(real(sig_o).int(range)-real(vfs_o(range)),'k.-'); title('Error (Real)');
-subplot(4,1,4); plot(imag(sig_o).int(range)-imag(vfs_o(range)),'k.-'); title('Error (Imag)');
+subplot(4,1,3); plot(double(real(sig_o).int(range))-cast(real(vfs_o(range)),'double'),'k.-'); title('Error (Real)');                                                                                     
+subplot(4,1,4); plot(double(imag(sig_o).int(range))-cast(imag(vfs_o(range)),'double'),'k.-'); title('Error (Imag)');    
 
 % ------------------------------------------------------------
 % Save I/O files for simulation
