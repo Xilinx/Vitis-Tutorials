@@ -26,10 +26,10 @@ static const char*    STR_INFO   = "INFO:    ";
 
 typedef int TT_DATA;            // Assume cint16 data
 
-static constexpr unsigned         NUM_ITER = 2;
+static constexpr int32_t         NUM_ITER = -1;
 static constexpr int32_t          DFT_PERM = 1;
 static constexpr int32_t        LOOP_CNT_I = 8; // 512 x 4 x 4 = 8K samples per stream (1 graph iterations)
-static constexpr int32_t        LOOP_CNT_O = 4; // Try to stop it early
+static constexpr int32_t        LOOP_CNT_O = 8; 
 static constexpr int32_t          LOOP_SEL = 0; // ID of loop to capture by DDR SNK PL HLS block
 static constexpr unsigned        NSTREAM_I = 7;
 static constexpr unsigned        NSTREAM_O = 8;
@@ -163,6 +163,9 @@ int main(int argc, char* argv[])
   std::cout << STR_PASSED << "dma_src_run.start()" << std::endl;
 
   std::cout << std::endl << STR_INFO << "Waiting for kernels to end..." << std::endl << std::endl;
+
+  dma_src_run.wait();
+  std::cout << STR_PASSED << "dma_src_run.wait()" << std::endl;
 
   dma_snk_run.wait();
   std::cout << STR_PASSED << "dma_snk_run.wait()" << std::endl;

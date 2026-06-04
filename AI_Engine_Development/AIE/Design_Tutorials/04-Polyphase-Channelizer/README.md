@@ -15,7 +15,7 @@
 
 # Polyphase Channelizer
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 ## Table of Contents
 
@@ -180,14 +180,14 @@ Build the polyphase channelizer design from the command line.
 
 ### Setup & Initialization
 
-IMPORTANT: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2025.2 software. Make sure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
+IMPORTANT: Before beginning the tutorial, make sure you have installed AMD Vitis™ 2026.1 software. Make sure you have downloaded the Common Images for Embedded Vitis Platforms from [this link](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms.html).
 
 Set the environment variable ```COMMON_IMAGE_VERSAL``` to the full path where you have downloaded the Common Images. Then set the environment variable ```PLATFORM_REPO_PATHS``` to the value ```$XILINX_VITIS/base_platforms```. Additional information on this process may be found [here](../../../AIE#environment-settings).
 
 The remaining environment variables are configured in the top level Makefile ```<path-to-design>/04-Polyphase-Channelizer/Makefile``` file.
 
 ```
-RELEASE=2025.2
+RELEASE=2026.1
 
 TOP_DIR                   ?= $(shell readlink -f .)
 PLATFORM_NAME              = xilinx_vck190_base_202610_1
@@ -353,5 +353,5 @@ The following table shows a comparison between power estimates in compilation ve
 
 GitHub issues are used for tracking requests and bugs. For questions, go to [support.xilinx.com](http://support.xilinx.com/).
 
-<p class="sphinxhide" align="center"><sub>Copyright © 2023-2025 Advanced Micro Devices, Inc.</sub></p>
+<p class="sphinxhide" align="center"><sub>Copyright © 2023-2026 Advanced Micro Devices, Inc.</sub></p>
 <p class="sphinxhide" align="center"><sup><a href="https://www.amd.com/en/corporate/copyright">Terms and Conditions</a></sup></p>

@@ -81,12 +81,10 @@ void dma_stream_snk_wrapper( TT_DATA mem[NSTREAM*DEPTH], int loop_sel, int loop_
 #pragma HLS interface s_axilite  port=dft_perm    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[NSTREAM][DEPTH];
-  //#pragma HLS bind_storage variable=buff latency=3 impl=bram type=RAM_2P
-#pragma HLS array_partition variable=buff dim=1
+  #pragma HLS bind_storage variable=buff latency=3 impl=bram type=RAM_2P latency=3
 
   // Capture channelizer output streams to PL BRAM:
   capture_streams( buff, sig_i, loop_sel, loop_cnt );

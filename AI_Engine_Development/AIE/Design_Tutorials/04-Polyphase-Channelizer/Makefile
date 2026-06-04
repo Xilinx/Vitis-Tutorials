@@ -8,7 +8,7 @@ ECHO                               = @echo
 
 export TARGET                      = hw
 
-RELEASE=2025.2
+RELEASE=2026.1
 
 TOP_DIR                   ?= $(shell readlink -f .)
 PLATFORM_NAME              = xilinx_vck190_base_202610_1

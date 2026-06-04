@@ -48,6 +48,23 @@ void transmit( TT_DATA (&buff)[NSTREAM][DEPTH], TT_STREAM sig_o[NSTREAM], const 
 }
 
 // ------------------------------------------------------------
+// Zero Pad
+// ------------------------------------------------------------
+
+void zero_pad( TT_STREAM sig_o[NSTREAM] )
+{
+  // Pad output streams with zeros to cover ~200 ns latency at 312.5 MHz (64 cycles x 3.2 ns = 204.8 ns).
+  // This allows the DMA_SRC to complete without backpressure stall from DMA_SNK.
+  static constexpr int PAD_DEPTH = 64;
+ ZERO_PAD: for (int dd=0; dd < PAD_DEPTH; dd++) {
+#pragma HLS PIPELINE II=1
+   ZERO_STREAM: for (int ss=0; ss < NSTREAM; ss++) {
+      sig_o[ss].write( TT_DATA(0) );
+    }
+  }
+}
+
+// ------------------------------------------------------------
 // Wrapper
 // ------------------------------------------------------------
 
@@ -58,18 +75,19 @@ void dma_stream_src_wrapper( TT_DATA mem[NSTREAM*DEPTH], int loop_cnt, TT_STREAM
 #pragma HLS interface s_axilite  port=loop_cnt    bundle=control
 #pragma HLS interface s_axilite  port=mem         bundle=control
 #pragma HLS interface s_axilite  port=return      bundle=control
-#pragma HLS DATAFLOW
 
   // Internal buffer:
   TT_DATA buff[NSTREAM][DEPTH];
-  //#pragma HLS bind_storage variable=buff latency=3 impl=bram type=RAM_2P
-#pragma HLS array_partition variable=buff dim=1
+  #pragma HLS bind_storage variable=buff latency=3 impl=bram type=RAM_2P latency=3
 
   // Front end load from DDR4 to PL BRAM:
   load_buffer( mem, buff );
 
   // Back-end transmit from PL BRAM contents:
   transmit( buff, sig_o, loop_cnt );
+
+  // Zero-pad for latency of downstream graph/kernels to DMA_SNK (~200 ns):
+  zero_pad( sig_o );
 }
 
 
