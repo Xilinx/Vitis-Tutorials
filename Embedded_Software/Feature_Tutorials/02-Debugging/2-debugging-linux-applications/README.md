@@ -13,7 +13,7 @@
 
 # Debugging Linux Applications
 
-***Version: Vitis 2025.2***
+***Version: Vitis 2026.1***
 
 The AMD Vitis™ IDE provides a familiar environment for debugging Linux applications for a target platform. This section covers the following Linux application debug features:
 
